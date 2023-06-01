@@ -221,3 +221,14 @@ bool devTEF_Radio_Get_Identification (uint16_t *device, uint16_t *hw_version, ui
   *sw_version = Convert8bto16b(buf + 4);
   return r;
 }
+
+bool devTEF_Radio_Set_Wavegen(bool mode, int16_t amplitude, uint16_t freq)
+{
+  if (mode == true) {
+	devTEF_Set_Cmd(TEF_AUDIO, Cmd_Set_Input, 5, 240);
+	return devTEF_Set_Cmd(TEF_AUDIO, Cmd_Set_WaveGen, 15, 5, 0, amplitude*10, freq, amplitude*10 , freq);
+  } else {
+	devTEF_Set_Cmd(TEF_AUDIO, Cmd_Set_Input, 5, 0);
+	return devTEF_Set_Cmd(TEF_AUDIO, Cmd_Set_WaveGen, 15, 0);
+  }
+}  

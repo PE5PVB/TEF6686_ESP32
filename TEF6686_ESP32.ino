@@ -534,6 +534,7 @@ void setup() {
   ShowBW();
   setupmode = false;
   sprite.createSprite(313, 18);
+  radio.tone(50, -5, 2000);
 }
 
 void loop() {

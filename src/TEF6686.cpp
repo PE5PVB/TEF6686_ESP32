@@ -423,3 +423,10 @@ uint16_t TEF6686::tune_AM(uint8_t up, uint8_t stepsize) {
   Radio_SetFreq_AM(Radio_GetCurrentFreq_AM());
   return Radio_GetCurrentFreq_AM();
 }
+
+void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {
+	devTEF_Audio_Set_Mute(0);
+	devTEF_Radio_Set_Wavegen(1, amplitude, frequency);
+	delay (time);
+	devTEF_Radio_Set_Wavegen(0, 0, 0);
+}

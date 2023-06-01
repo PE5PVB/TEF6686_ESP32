@@ -63,6 +63,7 @@ class TEF6686 {
     void setStereoLevel(uint16_t start);
     void setUnMute();
     void setVolume(int16_t volume);
+	void tone(uint16_t time, int16_t amplitude, uint16_t frequency);
     uint8_t af_counter;
 
   private:

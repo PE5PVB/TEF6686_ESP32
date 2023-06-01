@@ -25,12 +25,14 @@ typedef enum
   Cmd_Set_RDS             = 81,
   Cmd_Get_Quality_Status  = 128,
   Cmd_Get_RDS_Status      = 130,
-  Cmd_Get_Signal_Status   = 133,
+  Cmd_Get_Signal_Status   = 133
 } TEF_RADIO_COMMAND;
 
 typedef enum
 { Cmd_Set_Volume = 10,
   Cmd_Set_Mute = 11,
+  Cmd_Set_Input = 12,
+  Cmd_Set_WaveGen = 24
 } TEF_AUDIO_COMMAND;
 
 typedef enum
@@ -68,3 +70,4 @@ bool devTEF_Radio_Set_Highcut_Level(uint16_t mode, uint16_t start, uint16_t slop
 bool devTEF_Radio_Set_Highcut_Noise(uint16_t mode, uint16_t start, uint16_t slope);
 bool devTEF_Radio_Set_Highcut_Mph(uint16_t mode, uint16_t start, uint16_t slope);
 bool devTEF_Radio_Set_RDS(bool fullsearchrds);
+bool devTEF_Radio_Set_Wavegen(bool mode, int16_t amplitude, uint16_t freq);
