@@ -373,18 +373,10 @@ void setup() {
   btStop();
   Serial.begin(115200);
 
-  if (iMSset == 1 && EQset == 1) {
-    iMSEQ = 2;
-  }
-  if (iMSset == 0 && EQset == 1) {
-    iMSEQ = 3;
-  }
-  if (iMSset == 1 && EQset == 0) {
-    iMSEQ = 4;
-  }
-  if (iMSset == 0 && EQset == 0) {
-    iMSEQ = 1;
-  }
+  if (iMSset == 1 && EQset == 1) iMSEQ = 2;
+  if (iMSset == 0 && EQset == 1) iMSEQ = 3;
+  if (iMSset == 1 && EQset == 0) iMSEQ = 4;
+  if (iMSset == 0 && EQset == 0) iMSEQ = 1;
 
   tft.init();
 
@@ -598,49 +590,32 @@ void loop() {
 
       if (millis() >= lowsignaltimer + 300) {
         lowsignaltimer = millis();
-        if (band == 0) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus); else radio.getStatus_AM(SStatus, USN, WAM, OStatus, BW, MStatus);
+        if (band == 0) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus);
         if (screenmute == true) readRds();
-        if (menu == false) doSquelch();
+        if (menu == false) {
+          doSquelch();
+          GetData();
+        }
       }
 
     } else {
-      if (band == 0) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus); else radio.getStatus_AM(SStatus, USN, WAM, OStatus, BW, MStatus);
+      if (band == 0) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus);
       if (menu == false) {
         doSquelch();
         readRds();
-        if (screenmute == false) {
-          ShowModLevel();
-        }
-      }
-    }
-
-    if (menu == false) {
-      if (screenmute == false) {
-        if (band == 0) {
-          showPI();
-          showPTY();
-          showCT();
-          showPS();
-          showRadioText();
-          showPS();
-          ShowStereoStatus();
-        }
-        ShowOffset();
-        ShowSignalLevel();
-        ShowBW();
+        GetData();
+        if (screenmute == false) ShowModLevel();
       }
     }
 
     XDRGTKRoutine();
 
-    if (menu == true && menuopen == true && menuoption == 110)
-    {
-      if (band == 0) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus); else radio.getStatus_AM(SStatus, USN, WAM, OStatus, BW, MStatus);
+    if (menu == true && menuopen == true && menuoption == 110) {
+      if (band == 0) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus);
       if (millis() >= lowsignaltimer + 500 || change2 == true) {
         lowsignaltimer = millis();
         change2 = false;
-        if (SStatus > SStatusold || SStatus < SStatusold)
-        {
+        if (SStatus > SStatusold || SStatus < SStatusold) {
           String count = String(SStatus / 10, DEC);
           if (screenmute == false) {
             tft.setTextColor(TFT_BLACK);
@@ -656,8 +631,7 @@ void loop() {
             tft.setTextFont(6);
             tft.print(SStatusold / 10);
             tft.print(".");
-            if (SStatusold < 0)
-            {
+            if (SStatusold < 0) {
               String negative = String (SStatusold % 10, DEC);
               if (SStatusold % 10 == 0) tft.print("0");  else tft.print(negative[1]);
             } else {
@@ -677,8 +651,7 @@ void loop() {
             tft.setTextFont(6);
             tft.print(SStatus / 10);
             tft.print(".");
-            if (SStatus < 0)
-            {
+            if (SStatus < 0) {
               String negative = String (SStatus % 10, DEC);
               if (SStatus % 10 == 0) tft.print("0"); else tft.print(negative[1]);
             } else {
@@ -703,8 +676,8 @@ void loop() {
     if (change > 200 && store == true) {
       detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A));
       detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B));
-      EEPROM.writeUInt(0, radio.getFrequency());
-      EEPROM.writeUInt(47, radio.getFrequency_AM());
+      EEPROM.writeUInt(0, frequency);
+      EEPROM.writeUInt(47, frequency_AM);
       EEPROM.writeByte(46, band);
       EEPROM.commit();
       store = false;
@@ -714,6 +687,23 @@ void loop() {
   }
 }
 
+void GetData() {
+  if (screenmute == false) {
+    if (band == 0) {
+      showPI();
+      showPTY();
+      showCT();
+      showPS();
+      showRadioText();
+      showPS();
+      ShowStereoStatus();
+    }
+    ShowOffset();
+    ShowSignalLevel();
+    ShowBW();
+  }
+
+}
 void PWRButtonPress() {
   if (menu == false) {
     unsigned long counterold = millis();
@@ -747,8 +737,8 @@ void PWRButtonPress() {
 }
 
 void StoreFrequency() {
-  EEPROM.writeUInt(0, radio.getFrequency());
-  EEPROM.writeUInt(47, radio.getFrequency_AM());
+  EEPROM.writeUInt(0, frequency);
+  EEPROM.writeUInt(47, frequency_AM);
   EEPROM.writeByte(46, band);
   EEPROM.commit();
 }
@@ -759,11 +749,10 @@ void SelectBand() {
     tunemode = false;
     BWreset = true;
     BWset = 2;
-    if (radio.getFrequency_AM() > 0) frequency_AM = radio.getFrequency_AM();
-    radio.setFrequency_AM(frequency_AM);
+    radio.SetFreqAM(frequency_AM);
     freqold = frequency_AM;
     doBW;
-    radio.getStatus_AM(SStatus, USN, WAM, OStatus, BW, MStatus);
+    radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus);
     if (screenmute == false) BuildDisplay();
     tft.drawString("PI:", 216, 195, 2);
     tft.drawString("PS:", 6, 195, 2);
@@ -781,7 +770,7 @@ void SelectBand() {
     BWset = 0;
     radio.power(0);
     delay(50);
-    radio.setFrequency(frequency, LowEdgeSet, HighEdgeSet, fullsearchrds);
+    radio.SetFreq(frequency);
     freqold = frequency_AM;
     doBW;
     radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus);
@@ -803,6 +792,7 @@ void BWButtonPress() {
       doStereoToggle();
     }
   }
+
   while (digitalRead(BWBUTTON) == LOW) delay(50);
   delay(100);
 }
@@ -892,32 +882,39 @@ void ShowStepSize() {
   tft.fillRect(224, 38, 15, 4, TFT_GREYOUT);
   tft.fillRect(193, 38, 15, 4, TFT_GREYOUT);
   if (band == 0) tft.fillRect(148, 38, 15, 4, TFT_GREYOUT); else tft.fillRect(162, 38, 15, 4, TFT_GREYOUT);
+  if (band == 0) tft.fillRect(116, 38, 15, 4, TFT_GREYOUT); else tft.fillRect(128, 38, 15, 4, TFT_GREYOUT);
   if (stepsize == 1) tft.fillRect(224, 38, 15, 4, TFT_GREEN);
   if (stepsize == 2) tft.fillRect(193, 38, 15, 4, TFT_GREEN);
   if (stepsize == 3) {
     if (band == 0) tft.fillRect(148, 38, 15, 4, TFT_GREEN); else tft.fillRect(162, 38, 15, 4, TFT_GREEN);
   }
+  if (stepsize == 4) {
+    if (band == 0) tft.fillRect(116, 38, 15, 4, TFT_GREEN); else tft.fillRect(128, 38, 15, 4, TFT_GREEN);
+  }
 }
 
 void RoundStep() {
   if (band == 0) {
-    int freq = radio.getFrequency();
+    unsigned int freq = frequency;
     if (freq % 10 < 3) {
-      radio.setFrequency(freq - (freq % 10 - 5) - 5, LowEdgeSet, HighEdgeSet, fullsearchrds);
+      frequency = (freq - freq % 10);
     }
     else if (freq % 10 > 2 && freq % 10 < 8) {
-      radio.setFrequency(freq - (freq % 10 - 5) , LowEdgeSet, HighEdgeSet, fullsearchrds);
+      frequency = (freq - (freq % 10 - 5));
     }
     else if (freq % 10 > 7) {
-      radio.setFrequency(freq - (freq % 10 - 5) + 5, LowEdgeSet, HighEdgeSet, fullsearchrds);
+      frequency = (freq - (freq % 10) + 10);
     }
-  } else {
-    int freq = radio.getFrequency_AM();
-    if (freq < 2000) radio.setFrequency_AM((freq / 9) * 9); else radio.setFrequency_AM((freq / 5) * 5);
+    radio.SetFreq(frequency);
+  }
+  if (band == 1) {
+    unsigned int freq = frequency_AM / 9;
+    frequency_AM = freq * 9;
+    radio.SetFreqAM(frequency_AM);
   }
   while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
 
-  if (band == 0) EEPROM.writeUInt(0, radio.getFrequency()); else EEPROM.writeUInt(47, radio.getFrequency_AM());
+  if (band == 0) EEPROM.writeUInt(0, frequency); else EEPROM.writeUInt(47, frequency_AM);
   EEPROM.commit();
 }
 
@@ -931,7 +928,7 @@ void ButtonPress() {
     if (counter - counterold < 1000) {
       if (tunemode == false) {
         stepsize++;
-        if (stepsize > 3) stepsize = 0;
+        if (stepsize > 4) stepsize = 0;
 
         if (screenmute == false) ShowStepSize();
 
@@ -1084,7 +1081,7 @@ void KeyUp() {
       seek = true;
       Seek(direction);
     } else {
-      if (band == 0) frequency = radio.tuneUp(stepsize, LowEdgeSet, HighEdgeSet, fullsearchrds); else frequency_AM = radio.tuneUp_AM(stepsize);
+      TuneUp();
     }
       if (USBstatus == true) if (band == 0) Serial.println("T" + String(frequency * 10)); else Serial.println("T" + String(frequency_AM));
     radio.clearRDS(fullsearchrds);
@@ -1223,7 +1220,7 @@ void KeyDown() {
       seek = true;
       Seek(direction);
     } else {
-      if (band == 0) frequency = radio.tuneDown(stepsize, LowEdgeSet, HighEdgeSet, fullsearchrds); else frequency_AM = radio.tuneDown_AM(stepsize);
+      TuneDown();
     }
       if (USBstatus == true) if (band == 0) Serial.println("T" + String(frequency * 10)); else Serial.println("T" + String(frequency_AM));
     radio.clearRDS(fullsearchrds);
@@ -1358,8 +1355,6 @@ void KeyDown() {
   }
 }
 
-
-
 void readRds() {
   if (band == 0) {
     RDSstatus = radio.readRDS();
@@ -1387,6 +1382,7 @@ void readRds() {
       Serial.print ("P");
       Serial.print (String(((radio.rds.rdsA >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsA >> 8) & 0xF, HEX));
       Serial.print (String(((radio.rds.rdsA) >> 4) & 0xF, HEX) + String((radio.rds.rdsA) & 0xF, HEX));
+      if (radio.rds.correct == false) Serial.print("?");
       Serial.print ("\n");
 
       XDRGTKRDS = "R";
@@ -1632,8 +1628,8 @@ void BuildDisplay() {
 void ShowFreq(int mode) {
   if (setupmode == false) {
     if (band == 1) {
-      if (freqold < 2000 && radio.getFrequency_AM() >= 2000 && stepsize == 0) if (radio.getFrequency_AM() != 27000 && freqold != 144) radio.setFrequency_AM(2000);
-      if (freqold >= 2000 && radio.getFrequency_AM() < 2000 && stepsize == 0) if (radio.getFrequency_AM() != 144 && freqold != 27000) radio.setFrequency_AM(1998);
+      if (freqold < 2000 && frequency_AM >= 2000 && stepsize == 0) if (frequency_AM != 27000 && freqold != 144) radio.SetFreqAM(2000);
+      if (freqold >= 2000 && frequency_AM < 2000 && stepsize == 0) if (frequency_AM != 144 && freqold != 27000) radio.SetFreqAM(1998);
     }
   }
 
@@ -1641,7 +1637,7 @@ void ShowFreq(int mode) {
     detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A));
     detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B));
     if (band == 1) {
-      unsigned int freq = radio.getFrequency_AM();
+      unsigned int freq = frequency_AM;
       String count = String(freq, DEC);
       if (count.length() != freqoldcount || mode != 0) {
         tft.setTextColor(TFT_BLACK);
@@ -1652,7 +1648,7 @@ void ShowFreq(int mode) {
       freqold = freq;
       freqoldcount = count.length();
     } else {
-      unsigned int freq = radio.getFrequency() + ConverterSet * 100;
+      unsigned int freq = frequency + ConverterSet * 100;
       String count = String(freq / 100, DEC);
       if (count.length() != freqoldcount || mode != 0) {
         tft.setTextColor(TFT_BLACK);
@@ -1661,9 +1657,11 @@ void ShowFreq(int mode) {
         if (freqoldcount >= 4) tft.setCursor (44, 45);
         tft.setTextFont(7);
         tft.print(freqold / 100);
-        tft.print(".");
-        if (freqold % 100 < 10) tft.print("0");
-        tft.print(freqold % 100);
+        if (band == 0) {
+          tft.print(".");
+          if (freqold % 100 < 10) tft.print("0");
+          tft.print(freqold % 100);
+        }
       }
 
       tft.setTextColor(TFT_YELLOW, TFT_BLACK);
@@ -1721,10 +1719,8 @@ void ShowSignalLevel() {
   int16_t smeter = 0;
   int16_t segments;
 
-  if (SStatus > 0)
-  {
-    if (SStatus < 1000)
-    {
+  if (SStatus > 0) {
+    if (SStatus < 1000) {
       sval = 51 * ((pow(10, (((float)SStatus) / 1000))) - 1);
       smeter = int16_t(sval);
     } else {
@@ -1738,8 +1734,7 @@ void ShowSignalLevel() {
 
   if (menu == false) analogWrite(SMETERPIN, smeter);
 
-  if (SStatus > (SStatusold + 3) || SStatus < (SStatusold - 3))
-  {
+  if (SStatus > (SStatusold + 3) || SStatus < (SStatusold - 3)) {
     if (SStatus > 1200) SStatus = 1200;
     if (SStatus < -400) SStatus = -400;
     String count = String(abs(SStatus / 10), DEC);
@@ -1759,8 +1754,7 @@ void ShowSignalLevel() {
     tft.setCursor (294, 110);
     tft.setTextFont(4);
     tft.print(".");
-    if (SStatus < 0)
-    {
+    if (SStatus < 0) {
       String negative = String (SStatus % 10, DEC);
       if (SStatus % 10 == 0) tft.print("0"); else tft.print(negative[1]);
     } else {
@@ -1780,8 +1774,7 @@ void ShowSignalLevel() {
 
 void ShowRDSLogo(bool RDSstatus) {
   if (screenmute == false) {
-    if (RDSstatus != RDSstatusold)
-    {
+    if (RDSstatus != RDSstatusold) {
       if (RDSstatus == true) tft.drawBitmap(110, 5, RDSLogo, 67, 22, TFT_SKYBLUE); else tft.drawBitmap(110, 5, RDSLogo, 67, 22, TFT_GREYOUT);
       RDSstatusold = RDSstatus;
     }
@@ -1789,13 +1782,10 @@ void ShowRDSLogo(bool RDSstatus) {
 }
 
 void ShowStereoStatus() {
-  if (StereoToggle == true)
-  {
+  if (StereoToggle == true) {
     if (band == 0) Stereostatus = radio.getStereoStatus(); else Stereostatus = 0;
-    if (Stereostatus != Stereostatusold)
-    {
-      if (Stereostatus == true && screenmute == false)
-      {
+    if (Stereostatus != Stereostatusold) {
+      if (Stereostatus == true && screenmute == false) {
         tft.drawCircle(81, 15, 10, TFT_RED);
         tft.drawCircle(81, 15, 9, TFT_RED);
         tft.drawCircle(91, 15, 10, TFT_RED);
@@ -1934,8 +1924,7 @@ void ShowModLevel() {
       color = TFT_GREEN;
       if (segments > 8) color = TFT_ORANGE;
       if (segments > 9) color = TFT_RED;
-      if (MStatus > (segments + 1) * 10)
-      {
+      if (MStatus > (segments + 1) * 10) {
         hold = segments;
         tft.fillRect(20 + segments * 14, 139, 12, 8, color);
       } else {
@@ -2239,8 +2228,7 @@ void ShowUSBstatus() {
 }
 
 void XDRGTKRoutine() {
-  if (Serial.available() > 0)
-  {
+  if (Serial.available()) {
     buff[buff_pos] = Serial.read();
     if (buff[buff_pos] != '\n' && buff_pos != 16 - 1) {
       buff_pos++;
@@ -2248,8 +2236,7 @@ void XDRGTKRoutine() {
       buff[buff_pos] = 0;
       buff_pos = 0;
 
-      switch (buff[0])
-      {
+      switch (buff[0]) {
         case 'x':
           Serial.println("OK");
           if (band != 0) {
@@ -2370,7 +2357,7 @@ void XDRGTKRoutine() {
               band = 1;
               SelectBand();
             } else {
-              radio.setFrequency_AM(frequency_AM);
+              radio.SetFreqAM(frequency_AM);
             }
             Serial.print("M1\n");
           } else if (freqtemp > 64999 && freqtemp < 108001) {
@@ -2380,7 +2367,7 @@ void XDRGTKRoutine() {
               SelectBand();
               Serial.print("M0\n");
             } else {
-              radio.setFrequency(frequency, 65, 108, fullsearchrds);
+              radio.SetFreq(frequency);
             }
           }
           if (band == 0) Serial.print("T" + String(frequency * 10) + "\n"); else Serial.print("T" + String(frequency_AM) + "\n");
@@ -2390,22 +2377,17 @@ void XDRGTKRoutine() {
           break;
 
         case 'S':
-          if (buff[1] == 'a')
-          {
+          if (buff[1] == 'a') {
             scanner_start = (atol(buff + 2) + 5) / 10;
-          } else if (buff[1] == 'b')
-          {
+          } else if (buff[1] == 'b') {
             scanner_end = (atol(buff + 2) + 5) / 10;
-          } else if (buff[1] == 'c')
-          {
+          } else if (buff[1] == 'c') {
             scanner_step = (atol(buff + 2) + 5) / 10;
-          } else if (buff[1] == 'f')
-          {
+          } else if (buff[1] == 'f') {
             scanner_filter = atol(buff + 2);
-          } else if (scanner_start > 0 && scanner_end > 0 && scanner_step > 0 && scanner_filter >= 0)
-          {
-            frequencyold = radio.getFrequency();
-            radio.setFrequency(scanner_start, 65, 108, fullsearchrds);
+          } else if (scanner_start > 0 && scanner_end > 0 && scanner_step > 0 && scanner_filter >= 0) {
+            frequencyold = frequency;
+            radio.SetFreq(scanner_start);
             Serial.print('U');
             if (scanner_filter < 0) {
               BWset = 0;
@@ -2451,17 +2433,12 @@ void XDRGTKRoutine() {
               tft.print("SCANNING...");
             }
             frequencyold = frequency / 10;
-            for (freq_scan = scanner_start; freq_scan <= scanner_end; freq_scan += scanner_step)
-            {
-              radio.setFrequency(freq_scan, 65, 108, fullsearchrds);
+            for (freq_scan = scanner_start; freq_scan <= scanner_end; freq_scan += scanner_step) {
+              radio.SetFreq(freq_scan);
               Serial.print(freq_scan * 10, DEC);
               Serial.print('=');
               delay(10);
-              if (band == 0) {
-                radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus);
-              } else {
-                radio.getStatus_AM(SStatus, USN, WAM, OStatus, BW, MStatus);
-              }
+              if (band == 0) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus); else  radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus);
               Serial.print((SStatus / 10) + 10, DEC);
               Serial.print(',');
             }
@@ -2472,7 +2449,7 @@ void XDRGTKRoutine() {
               tft.setCursor (90, 60);
               tft.print("SCANNING...");
             }
-            radio.setFrequency(frequencyold, 65, 108, fullsearchrds);
+            radio.SetFreq(frequencyold);
             if (screenmute == false) ShowFreq(0);
             radio.setFMABandw();
           }
@@ -2545,10 +2522,93 @@ void XDRGTKRoutine() {
   }
 }
 
+void TuneUp() {
+  unsigned int temp;
+  if (stepsize == 0) {
+    if (band == 1) {
+      if (frequency_AM < 1998) {
+        temp = 9;
+        frequency_AM = (frequency_AM / 9) * 9;
+      } else {
+        temp = 5;
+        frequency_AM = (frequency_AM / 5) * 5;
+      }
+    } else {
+      temp = 5;
+    }
+  }
+  if (stepsize == 1) temp = 1;
+  if (stepsize == 2) temp = 10;
+  if (stepsize == 3) temp = 100;
+  if (stepsize == 4) temp = 1000;
+
+  if (band == 0) {
+    frequency += temp;
+    if (frequency >= (HighEdgeSet * 100) + 1) {
+      frequency = LowEdgeSet * 100;
+    }
+    radio.SetFreq(frequency);
+  }
+
+  if (band == 1) {
+    frequency_AM += temp;
+    if (frequency_AM > 27000) {
+      frequency_AM = 144;
+    }
+    radio.SetFreqAM(frequency_AM);
+  }
+  radio.clearRDS(fullsearchrds);
+}
+
+void TuneDown() {
+  unsigned int temp;
+  if (stepsize == 0) {
+    if (band == 1) {
+      if (frequency_AM <= 2000) {
+        if (frequency_AM == 2000) {
+          frequency_AM = 1998;
+          temp = 0;
+        } else {
+          temp = 9;
+          frequency_AM = (frequency_AM / 9) * 9;
+        }
+      } else {
+        temp = 5;
+        frequency_AM = (frequency_AM / 5) * 5;
+      }
+    } else {
+      temp = 5;
+    }
+  }
+  if (stepsize == 1) temp = 1;
+  if (stepsize == 2) temp = 10;
+  if (stepsize == 3) temp = 100;
+  if (stepsize == 4) temp = 1000;
+
+  if (band == 0) {
+    frequency -= temp;
+    if (frequency < LowEdgeSet * 100) frequency = HighEdgeSet * 100;
+    radio.SetFreq(frequency);
+  }
+
+  if (band == 1) {
+    if (temp == 1000 && frequency_AM <= 1440)
+    {
+      frequency_AM = 27000;
+    } else {
+      frequency_AM -= temp;
+      if (frequency_AM < 144) frequency_AM = 27000;
+    }
+    radio.SetFreqAM(frequency_AM);
+  }
+  radio.clearRDS(fullsearchrds);
+}
+
+
 void Seek(bool mode) {
   if (band == 0) {
     radio.setMute();
-    if (mode == false) frequency = radio.tuneDown(stepsize, LowEdgeSet, HighEdgeSet, fullsearchrds); else frequency = radio.tuneUp(stepsize, LowEdgeSet, HighEdgeSet, fullsearchrds);
+    if (mode == false) TuneDown(); else TuneUp();
     delay(50);
     ShowFreq(0);
       if (USBstatus == true) if (band == 0) Serial.print("T" + String(frequency * 10) + "\n"); else Serial.print("T" + String(frequency_AM) + "\n");

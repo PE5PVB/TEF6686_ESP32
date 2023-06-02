@@ -4,9 +4,6 @@
 #include "Tuner_Patch_Lithio_V205_p512.h"
 #include <Wire.h>
 
-bool debug_tx = false;
-bool debug_rx = false;
-
 static const unsigned char tuner_init_tab[] = {
   7, 0x20, 0x0B, 0x01, 0x03, 0x98, 0x00, 0x00,
   5, 0x20, 0x14, 0x01, 0x00, 0x00,
@@ -52,51 +49,24 @@ static const unsigned char tuner_init_tab9216[] = {
   2, 0xff, 100,
 };
 
-bool Tuner_WriteBuffer(unsigned char *buf, uint16_t len)
-{
+bool Tuner_WriteBuffer(unsigned char *buf, uint16_t len) {
   Wire.beginTransmission(0x64);
-  if (debug_tx == true) {
-    Serial.println();
-  }
-  for (uint16_t i = 0; i < len; i++) {
-    if (debug_tx == true) {
-      if (buf[i] < 0x10) {
-        Serial.print("0");
-      }
-      Serial.print(buf[i], HEX);
-      Serial.print(" ");
-    }
-    Wire.write(buf[i]);
-  }
+  for (uint16_t i = 0; i < len; i++) Wire.write(buf[i]);
   uint8_t r = Wire.endTransmission();
   delay(2);
   return (r == 0) ? 1 : 0;
 }
 
-bool Tuner_ReadBuffer(unsigned char *buf, uint16_t len)
-{
+bool Tuner_ReadBuffer(unsigned char *buf, uint16_t len) {
   Wire.requestFrom(0x64, len);
-  if (debug_rx == true) {
-    Serial.println();
-  }
   if (Wire.available() == len) {
-    for (uint16_t i = 0; i < len; i++) {
-      if (debug_rx == true) {
-        if (buf[i] < 0x10) {
-          Serial.print("0");
-        }
-        Serial.print(buf[i], HEX);
-        Serial.print(" ");
-      }
-      buf[i] = Wire.read();
-    }
+    for (uint16_t i = 0; i < len; i++) buf[i] = Wire.read();
     return 1;
   }
   return 0;
 }
 
-bool Tuner_Patch_Load(const unsigned char *pLutBytes, uint16_t size)
-{
+bool Tuner_Patch_Load(const unsigned char *pLutBytes, uint16_t size) {
   unsigned char buf[24 + 1];
   uint16_t i, len;
   uint16_t r;
@@ -107,24 +77,17 @@ bool Tuner_Patch_Load(const unsigned char *pLutBytes, uint16_t size)
     len = (size > 24) ? 24 : size;
     size -= len;
 
-    for (i = 0; i < len; i++)
-      buf[1 + i] = pLutBytes[i];
-
+    for (i = 0; i < len; i++) buf[1 + i] = pLutBytes[i];
     pLutBytes += len;
 
-    if (1 != (r = Tuner_WriteBuffer(buf, len + 1)))
-    {
-      break;
-    }
+    if (1 != (r = Tuner_WriteBuffer(buf, len + 1))) break;
   }
   return r;
 }
 
 
-bool Tuner_Table_Write(const unsigned char *tab)
-{
-  if (tab[1] == 0xff)
-  {
+bool Tuner_Table_Write(const unsigned char *tab) {
+  if (tab[1] == 0xff) {
     delay(tab[2]);
     return 1;
   } else {
@@ -152,12 +115,18 @@ void Tuner_Patch(byte TEF) {
   Wire.write(0x00);
   Wire.write(0x74);
   Wire.endTransmission();
-  if (TEF == 101) {
-    Tuner_Patch_Load(pPatchBytes101, PatchSize101);
-  } else if (TEF == 102) {
-    Tuner_Patch_Load(pPatchBytes102, PatchSize102);
-  } else if (TEF == 205) {
-    Tuner_Patch_Load(pPatchBytes205, PatchSize205);
+  switch (TEF) {
+    case 101:
+      Tuner_Patch_Load(pPatchBytes101, PatchSize101);
+      break;
+
+    case 102:
+      Tuner_Patch_Load(pPatchBytes102, PatchSize102);
+      break;
+
+    case 205:
+      Tuner_Patch_Load(pPatchBytes205, PatchSize205);
+      break;
   }
   Wire.beginTransmission(0x64);
   Wire.write(0x1c);
@@ -170,12 +139,18 @@ void Tuner_Patch(byte TEF) {
   Wire.write(0x00);
   Wire.write(0x75);
   Wire.endTransmission();
-  if (TEF == 101) {
-    Tuner_Patch_Load(pLutBytes101, LutSize101);
-  } else if (TEF == 102) {
-    Tuner_Patch_Load(pLutBytes102, LutSize102);
-  } else if (TEF == 205) {
-    Tuner_Patch_Load(pLutBytes205, LutSize205);
+  switch (TEF) {
+    case 101:
+      Tuner_Patch_Load(pLutBytes101, LutSize101);
+      break;
+
+    case 102:
+      Tuner_Patch_Load(pLutBytes102, LutSize102);
+      break;
+
+    case 205:
+      Tuner_Patch_Load(pLutBytes205, LutSize205);
+      break;
   }
   Wire.beginTransmission(0x64);
   Wire.write(0x1c);
@@ -193,10 +168,8 @@ bool Tuner_Init(void) {
   uint16_t r;
   const unsigned char *p = tuner_init_tab;
 
-  for (uint16_t i = 0; i < sizeof(tuner_init_tab); i += (p[i] + 1))
-  {
-    if (1 != (r = Tuner_Table_Write(p + i)))
-      break;
+  for (uint16_t i = 0; i < sizeof(tuner_init_tab); i += (p[i] + 1)) {
+    if (1 != (r = Tuner_Table_Write(p + i))) break;
   }
   return r;
 }
@@ -205,10 +178,8 @@ bool Tuner_Init4000(void) {
   uint16_t r;
   const unsigned char *p = tuner_init_tab4000;
 
-  for (uint16_t i = 0; i < sizeof(tuner_init_tab4000); i += (p[i] + 1))
-  {
-    if (1 != (r = Tuner_Table_Write(p + i)))
-      break;
+  for (uint16_t i = 0; i < sizeof(tuner_init_tab4000); i += (p[i] + 1)) {
+    if (1 != (r = Tuner_Table_Write(p + i))) break;
   }
   return r;
 }
@@ -217,10 +188,8 @@ bool Tuner_Init9216(void) {
   uint16_t r;
   const unsigned char *p = tuner_init_tab9216;
 
-  for (uint16_t i = 0; i < sizeof(tuner_init_tab9216); i += (p[i] + 1))
-  {
-    if (1 != (r = Tuner_Table_Write(p + i)))
-      break;
+  for (uint16_t i = 0; i < sizeof(tuner_init_tab9216); i += (p[i] + 1)) {
+    if (1 != (r = Tuner_Table_Write(p + i))) break;
   }
   return r;
 }
