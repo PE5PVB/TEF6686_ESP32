@@ -209,6 +209,7 @@ bool cleanup;
 bool direction;
 bool dropout;
 bool fullsearchrds;
+bool showrdserrors = true;
 bool LowLevelInit = false;
 bool menu;
 bool menuopen = false;
@@ -1357,7 +1358,7 @@ void KeyDown() {
 
 void readRds() {
   if (band == 0) {
-    RDSstatus = radio.readRDS();
+    RDSstatus = radio.readRDS(showrdserrors);
     ShowRDSLogo(RDSstatus);
 
     if (RDSstatus == 0) {
@@ -1463,7 +1464,7 @@ void showCT() {
     if (radio.rds.offsetplusmin == true) timeoffset = (-1 * radio.rds.offset) / 2; else timeoffset = radio.rds.offset / 2;
     byte rdshour = radio.rds.hours + timeoffset;
     rdshour = (((int)rdshour + 24) % 24);
-    setTime((radio.rds.hours + timeoffset), radio.rds.minutes, 0, 0, 0, 0);
+    setTime(rdshour, radio.rds.minutes, 0, 0, 0, 0);
     rds_clock = ((hour() < 10 ? "0" : "") + String(hour()) + ":" + (minute() < 10 ? "0" : "") + String(minute()));
   } else {
     rds_clock = "";

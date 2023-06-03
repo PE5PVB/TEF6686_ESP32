@@ -54,7 +54,7 @@ class TEF6686 {
   public:
     af_  af[50];
     rds_ rds;
-    bool readRDS(void);
+    bool readRDS(bool showrdserrors);
     void SetFreq(uint16_t frequency);
     void SetFreqAM(uint16_t frequency);
     bool getProcessing(uint16_t &highcut, uint16_t &stereo, uint16_t &sthiblend, uint8_t &stband_1, uint8_t &stband_2, uint8_t &stband_3, uint8_t &stband_4);
@@ -97,8 +97,7 @@ class TEF6686 {
     void tone(uint16_t time, int16_t amplitude, uint16_t frequency);
 
   private:
-    uint8_t ascii_converter   (uint8_t src);
-    uint16_t rdsTimeOut  = 32768;
+    uint16_t rdsTimeOut = 32768;
     uint8_t ps_process;
     uint8_t rt_process;
     char ps_buffer[9];
