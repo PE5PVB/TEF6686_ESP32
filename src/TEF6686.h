@@ -43,6 +43,7 @@ typedef struct _rds_ {
   bool afclear;
   bool rtAB;
   bool correct;
+  bool correctPI;
 } rds_;
 
 typedef struct _af_ {

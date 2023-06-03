@@ -272,6 +272,8 @@ bool TEF6686::readRDS(bool showrdserrors)
   rds.errors = rdsErr;
   bool x;
   if (showrdserrors == false) x = rdsErrCheck; else x = true;
+  if (rdsErrCheck) rds.correct = true; else rds.correct = false;
+
   if (rdsDataReady && x)
   {
     //PI
@@ -283,14 +285,10 @@ bool TEF6686::readRDS(bool showrdserrors)
     rds.picode[3] = Hex[(rds.rdsA & 0x000FU)];
     rds.picode[4] = '\0';
     rds_group  = (rds.rdsB >> 11);
-
-    if (rdsErrCheck) rds.correct = true; else rds.correct = false;
-
-    switch (rds_group)
-    {
+    if (rds.correctPI == false && rds.correct == true) rds.correctPI = true;
+    switch (rds_group) {
       case RDS_GROUP_0A:
-      case RDS_GROUP_0B:
-        {
+      case RDS_GROUP_0B: {
           //RDS Programm-Service
           offset = rds.rdsB & 0x03;
           if ((offset == 0) && (ps_process == 0)) ps_process = 1;
@@ -309,51 +307,52 @@ bool TEF6686::readRDS(bool showrdserrors)
             rds.hasPS = true;
           }
 
-          //PTY
-          rds.stationTypeCode = (rds.rdsB >> 5) & 0x1F;
-          rds.hasPTY = true;
-          strcpy(rds.stationType, PTY[rds.stationTypeCode]);
+          if (rds.correct) {
+            //PTY
+            rds.stationTypeCode = (rds.rdsB >> 5) & 0x1F;
+            rds.hasPTY = true;
+            strcpy(rds.stationType, PTY[rds.stationTypeCode]);
 
-          //TP-TA-EON-MS
-          if ((bitRead(rds.rdsB, 4)) == 1 && ((bitRead(rds.rdsB, 10)) == 0)) rds.hasEON = true; else rds.hasEON = false;
-          if ((bitRead(rds.rdsB, 4)) == 0 && ((bitRead(rds.rdsB, 10)) == 1)) rds.hasTP = true; else rds.hasTP = false;
-          rds.hasTA = (bitRead(rds.rdsB, 4)) && (bitRead(rds.rdsB, 10)) & 0x1F;
-          rds.MS = (bitRead(rds.rdsB, 3)) & 0x1F;
+            //TP-TA-EON-MS
+            if ((bitRead(rds.rdsB, 4)) == 1 && ((bitRead(rds.rdsB, 10)) == 0)) rds.hasEON = true; else rds.hasEON = false;
+            if ((bitRead(rds.rdsB, 4)) == 0 && ((bitRead(rds.rdsB, 10)) == 1)) rds.hasTP = true; else rds.hasTP = false;
+            rds.hasTA = (bitRead(rds.rdsB, 4)) && (bitRead(rds.rdsB, 10)) & 0x1F;
+            rds.MS = (bitRead(rds.rdsB, 3)) & 0x1F;
 
-          //AF
-          uint8_t  af_controlCode = rds.rdsC >> 8;
-          if ((af_controlCode < 224) && (af_counter < 50))
-          {
-            uint16_t buffer0 = (rds.rdsC >> 8);
-            uint16_t buffer1 = (rds.rdsC & 0xFF);
-            rds.hasAF = true;
-            if (buffer0 != 0 && buffer1 != 0)
+            //AF
+            uint8_t  af_controlCode = rds.rdsC >> 8;
+            if ((af_controlCode < 224) && (af_counter < 50))
             {
-              buffer0 = buffer0 * 10 + 8750;
-              buffer1 = buffer1 * 10 + 8750;
-              bool isDouble = false;
-              isDouble = checkDouble(buffer0);
-              if (!isDouble && buffer0 != 0) {
-                af[af_counter].frequency = buffer0;
-                af_counter++;
-              }
+              uint16_t buffer0 = (rds.rdsC >> 8);
+              uint16_t buffer1 = (rds.rdsC & 0xFF);
+              rds.hasAF = true;
+              if (buffer0 != 0 && buffer1 != 0)
+              {
+                buffer0 = buffer0 * 10 + 8750;
+                buffer1 = buffer1 * 10 + 8750;
+                bool isDouble = false;
+                isDouble = checkDouble(buffer0);
+                if (!isDouble && buffer0 != 0) {
+                  af[af_counter].frequency = buffer0;
+                  af_counter++;
+                }
 
-              isDouble = checkDouble(buffer1);
-              if (!isDouble && buffer1 != 0) {
-                af[af_counter].frequency = buffer1;
-                af_counter++;
+                isDouble = checkDouble(buffer1);
+                if (!isDouble && buffer1 != 0) {
+                  af[af_counter].frequency = buffer1;
+                  af_counter++;
+                }
               }
             }
           }
         } break;
 
       case RDS_GROUP_1A:
-        if (rds.rdsC < 255) rds.ECC = rds.rdsC;
+        if (rds.correct) if (rds.rdsC < 255) rds.ECC = rds.rdsC;
         break;
 
       case RDS_GROUP_2A:
-      case RDS_GROUP_2B:
-        {
+      case RDS_GROUP_2B: {
           boolean limit_reached = false;
           rds.hasRT = true;
           offset = (rds.rdsB & 0xf) * 4;
@@ -413,34 +412,35 @@ bool TEF6686::readRDS(bool showrdserrors)
         } break;
 
       case RDS_GROUP_4A:
-      case RDS_GROUP_4B:
-        {
-          uint32_t mjd;
-          rds.hasCT = true;
-          mjd = (rds.rdsB & 0x03);
-          mjd <<= 15;
-          mjd += ((rds.rdsC >> 1) & 0x7FFF);
+      case RDS_GROUP_4B: {
+          if (rds.correct) {
+            uint32_t mjd;
+            rds.hasCT = true;
+            mjd = (rds.rdsB & 0x03);
+            mjd <<= 15;
+            mjd += ((rds.rdsC >> 1) & 0x7FFF);
 
-          long J, C, Y, M;
-          uint8_t LocalOffset;
-          J = mjd + 2400001 +  68569;
-          C = 4 * J / 146097;
-          J = J - (146097 * C + 3) / 4;
-          Y = 4000 * (J + 1) / 1461001;
-          J = J - 1461 * Y / 4 + 31;
-          M = 80 * (J + 0) / 2447;
+            long J, C, Y, M;
+            uint8_t LocalOffset;
+            J = mjd + 2400001 +  68569;
+            C = 4 * J / 146097;
+            J = J - (146097 * C + 3) / 4;
+            Y = 4000 * (J + 1) / 1461001;
+            J = J - 1461 * Y / 4 + 31;
+            M = 80 * (J + 0) / 2447;
 
-          rds.days = J - 2447 * M / 80;
-          J = M / 11;
+            rds.days = J - 2447 * M / 80;
+            J = M / 11;
 
-          rds.months = M +  2 - (12 * J);
-          rds.years = 100 * (C - 49) + Y + J;
-          rds.hours = ((rds.rdsD >> 12) & 0x0f);
-          rds.hours += ((rds.rdsC <<  4) & 0x0010);
-          rds.minutes = ((rds.rdsD >>  6) & 0x3f);
-          rds.offsetplusmin = ((bitRead(rds.rdsD, 5)) & 0x3f);
-          rds.offset = (rds.rdsD & 0x3f);
-          rds.hasCT = true;
+            rds.months = M +  2 - (12 * J);
+            rds.years = 100 * (C - 49) + Y + J;
+            rds.hours = ((rds.rdsD >> 12) & 0x0f);
+            rds.hours += ((rds.rdsC <<  4) & 0x0010);
+            rds.minutes = ((rds.rdsD >>  6) & 0x3f);
+            rds.offsetplusmin = ((bitRead(rds.rdsD, 5)) & 0x3f);
+            rds.offset = (rds.rdsD & 0x3f);
+            rds.hasCT = true;
+          }
         } break;
 
       case RDS_GROUP_10A:
@@ -448,8 +448,7 @@ bool TEF6686::readRDS(bool showrdserrors)
       case RDS_GROUP_11A:
       case RDS_GROUP_11B:
       case RDS_GROUP_12A:
-      case RDS_GROUP_12B:
-        {
+      case RDS_GROUP_12B: {
           if (useRTPlus)
           {
             uint16_t  content_byte_1 = (rds.rdsB & 0x07);
@@ -576,6 +575,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.stationTextOffset  = 0;
   rds.errors = 0;
   rds.correct = 0;
+  rds.correctPI = 0;
   rt_process = 0;
   ps_process = 1;
   af_counter = 0;
