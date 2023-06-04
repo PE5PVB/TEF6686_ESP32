@@ -42,7 +42,7 @@ During boot hold:
 ```
 **ALL OTHER SETTINGS SHOULD BE REMARKED!**
 
-From v1.16 you **need to** update your ESP32 boards in board manager to v2.x
+From v1.16 you **need to** update your ESP32 boards in board manager to v2.x  
 In case you experience QRM from the screen on 90MHz, try to lower the SPI_FREQUENCY parameter.
 
 ### Connecting analog signal meter
