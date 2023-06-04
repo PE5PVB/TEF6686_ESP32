@@ -1,5 +1,6 @@
 #include "src/TEF6686.h"
 #include "src/constants.h"
+#include "src/language.h"
 #include <EEPROM.h>
 #include <Wire.h>
 #include <TFT_eSPI.h>         // https://github.com/Bodmer/TFT_eSPI
@@ -48,6 +49,7 @@ bool Stereostatusold;
 bool StereoToggle = true;
 bool store;
 bool tuned;
+byte language = 0;
 byte tunemode;
 byte memorypos;
 byte memoryposold;
@@ -263,8 +265,8 @@ void setup() {
     EEPROM.commit();
     tft.fillScreen(TFT_BLACK);
     tft.setTextColor(TFT_WHITE);
-    tft.drawCentreString("Rotary direction changed", 150, 70, 4);
-    tft.drawCentreString("Please release button", 150, 100, 4);
+    tft.drawCentreString(myLanguage[language][1], 150, 70, 4);
+    tft.drawCentreString(myLanguage[language][2], 150, 100, 4);
     while (digitalRead(BWBUTTON) == LOW) delay(50);
   }
 
@@ -280,8 +282,8 @@ void setup() {
     EEPROM.commit();
     tft.fillScreen(TFT_BLACK);
     tft.setTextColor(TFT_WHITE);
-    tft.drawCentreString("Screen flipped", 150, 70, 4);
-    tft.drawCentreString("Please release button", 150, 100, 4);
+    tft.drawCentreString(myLanguage[language][3], 150, 70, 4);
+    tft.drawCentreString(myLanguage[language][2], 150, 100, 4);
     while (digitalRead(MODEBUTTON) == LOW) delay(50);
   }
 
@@ -289,8 +291,8 @@ void setup() {
     analogWrite(SMETERPIN, 511);
     tft.fillScreen(TFT_BLACK);
     tft.setTextColor(TFT_WHITE);
-    tft.drawCentreString("Calibrate analog meter", 150, 70, 4);
-    tft.drawCentreString("Release button when ready", 150, 100, 4);
+    tft.drawCentreString(myLanguage[language][4], 150, 70, 4);
+    tft.drawCentreString(myLanguage[language][5], 150, 100, 4);
     while (digitalRead(PWRBUTTON) == LOW) delay(50);
     analogWrite(SMETERPIN, 0);
   }
@@ -300,14 +302,14 @@ void setup() {
     tft.setTextColor(TFT_WHITE);
     if (optenc == 0) {
       optenc = 1;
-      tft.drawCentreString("encoder set to optical", 150, 70, 4);
+      tft.drawCentreString(myLanguage[language][6], 150, 70, 4);
     } else {
       optenc = 0;
-      tft.drawCentreString("encoder set to standard", 150, 70, 4);
+      tft.drawCentreString(myLanguage[language][7], 150, 70, 4);
     }
     EEPROM.writeByte(42, optenc);
     EEPROM.commit();
-    tft.drawCentreString("Please release button", 150, 100, 4);
+    tft.drawCentreString(myLanguage[language][2], 150, 100, 4);
     while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
   }
 
@@ -316,7 +318,7 @@ void setup() {
   tft.pushImage (0, 99, 211, 140, pe5pvblogo);
   tft.pushImage (239, 200, 80, 30, nxplogo);
   tft.setTextColor(TFT_SKYBLUE);
-  tft.drawCentreString("FM/AM receiver", 160, 10, 4);
+  tft.drawCentreString(myLanguage[language][8], 160, 10, 4);
   tft.setTextColor(TFT_YELLOW);
   tft.drawCentreString("Software " + String(VERSION), 160, 30, 2);
   tft.setTextColor(TFT_WHITE);
@@ -336,7 +338,7 @@ void setup() {
     tft.drawString("Tuner: TEF6689 Lithio FMSI DR (" + String(version) + ")", 80, 60, 2);
   } else {
     tft.setTextColor(TFT_RED);
-    tft.drawString("Tuner: !None!", 80, 60, 2);
+    tft.drawString(myLanguage[language][9], 80, 60, 2);
     while (true);
     for (;;);
   }
@@ -837,7 +839,7 @@ void ButtonPress() {
       switch (menuoption) {
         case 30:
           tft.setTextColor(TFT_WHITE);
-          tft.drawCentreString("Volume:", 150, 70, 4);
+          tft.drawCentreString(myLanguage[language][10], 150, 70, 4);
           tft.drawString("dB", 170, 110, 4);
 
           tft.setTextColor(TFT_YELLOW);
@@ -846,7 +848,7 @@ void ButtonPress() {
 
         case 50:
           tft.setTextColor(TFT_WHITE);
-          tft.drawCentreString("Converter:", 150, 70, 4);
+          tft.drawCentreString(myLanguage[language][11], 150, 70, 4);
           tft.drawString("MHz", 170, 110, 4);
           tft.setTextColor(TFT_YELLOW);
 
@@ -855,7 +857,7 @@ void ButtonPress() {
 
         case 70:
           tft.setTextColor(TFT_WHITE);
-          tft.drawCentreString("Low bandedge:", 150, 70, 4);
+          tft.drawCentreString(myLanguage[language][12], 150, 70, 4);
           tft.drawString("MHz", 170, 110, 4);
           tft.setTextColor(TFT_YELLOW);
           tft.drawRightString(String(LowEdgeSet + ConverterSet, DEC), 165, 110, 4);
@@ -863,7 +865,7 @@ void ButtonPress() {
 
         case 90:
           tft.setTextColor(TFT_WHITE);
-          tft.drawCentreString("High bandedge:", 150, 70, 4);
+          tft.drawCentreString(myLanguage[language][13], 150, 70, 4);
           tft.drawString("MHz", 170, 110, 4);
           tft.setTextColor(TFT_YELLOW);
           tft.drawRightString(String(HighEdgeSet + ConverterSet, DEC), 165, 110, 4);
@@ -871,7 +873,7 @@ void ButtonPress() {
 
         case 110:
           tft.setTextColor(TFT_WHITE);
-          tft.drawCentreString("RF Level offset:", 150, 70, 4);
+          tft.drawCentreString(myLanguage[language][14], 150, 70, 4);
           tft.drawString("dB", 170, 110, 4);
           tft.drawString("dBuV", 190, 157, 4);
           tft.setTextColor(TFT_YELLOW);
@@ -882,7 +884,7 @@ void ButtonPress() {
 
         case 130:
           tft.setTextColor(TFT_WHITE);
-          tft.drawCentreString("Stereo threshold:", 150, 70, 4);
+          tft.drawCentreString(myLanguage[language][15], 150, 70, 4);
           if (StereoLevel != 0) tft.drawString("dBuV", 170, 110, 4);
           tft.setTextColor(TFT_YELLOW);
           if (StereoLevel != 0) tft.drawRightString(String(StereoLevel, DEC), 165, 110, 4); else tft.drawRightString("Off", 165, 110, 4);
@@ -890,7 +892,7 @@ void ButtonPress() {
 
         case 150:
           tft.setTextColor(TFT_WHITE);
-          tft.drawCentreString("High Cut corner:", 150, 70, 4);
+          tft.drawCentreString(myLanguage[language][16], 150, 70, 4);
           if (HighCutLevel != 0) tft.drawString("Hz", 170, 110, 4);
           tft.setTextColor(TFT_YELLOW);
           if (HighCutLevel != 0) tft.drawRightString(String(HighCutLevel * 100, DEC), 165, 110, 4); else tft.drawRightString("Off", 165, 110, 4);
@@ -898,7 +900,7 @@ void ButtonPress() {
 
         case 170:
           tft.setTextColor(TFT_WHITE);
-          tft.drawCentreString("Highcut threshold:", 150, 70, 4);
+          tft.drawCentreString(myLanguage[language][17], 150, 70, 4);
           if (HighCutOffset != 0) tft.drawString("dBuV", 170, 110, 4);
           tft.setTextColor(TFT_YELLOW);
           if (HighCutOffset != 0) tft.drawRightString(String(HighCutOffset, DEC), 165, 110, 4); else tft.drawRightString("Off", 165, 110, 4);
@@ -906,7 +908,7 @@ void ButtonPress() {
 
         case 190:
           tft.setTextColor(TFT_WHITE);
-          tft.drawCentreString("Low level threshold:", 150, 70, 4);
+          tft.drawCentreString(myLanguage[language][18], 150, 70, 4);
           tft.drawString("dBuV", 150, 110, 4);
           tft.setTextColor(TFT_YELLOW);
           tft.drawRightString(String(LowLevelSet, DEC), 145, 110, 4);
@@ -914,7 +916,7 @@ void ButtonPress() {
 
         case 210:
           tft.setTextColor(TFT_WHITE);
-          tft.drawCentreString("Contrast:", 150, 70, 4);
+          tft.drawCentreString(myLanguage[language][19], 150, 70, 4);
           tft.drawString("%", 170, 110, 4);
           tft.setTextColor(TFT_YELLOW);
           tft.drawRightString(String(ContrastSet, DEC), 165, 110, 4);
@@ -1404,25 +1406,25 @@ void BuildMenu() {
   if (HighCutOffset != 0) tft.drawRightString("dBuV", 305, 170, 2);
   tft.drawRightString("dBuV", 305, 190, 2);
   tft.drawRightString("%", 305, 210, 2);
-  tft.drawString("Set volume", 20, 30, 2);
-  tft.drawString("Set converter offset", 20, 50, 2);
-  tft.drawString("Set low bandedge", 20, 70, 2);
-  tft.drawString("Set high bandedge", 20, 90, 2);
-  tft.drawString("Set level offset", 20, 110, 2);
-  tft.drawString("Set Stereo sep. threshold", 20, 130, 2);
-  tft.drawString("Set high cut corner frequency", 20, 150, 2);
-  tft.drawString("Set High cut threshold", 20, 170, 2);
-  tft.drawString("Set low level threshold", 20, 190, 2);
-  tft.drawString("Set Display brightness", 20, 210, 2);
+  tft.drawString(myLanguage[language][20], 20, 30, 2);
+  tft.drawString(myLanguage[language][21], 20, 50, 2);
+  tft.drawString(myLanguage[language][22], 20, 70, 2);
+  tft.drawString(myLanguage[language][23], 20, 90, 2);
+  tft.drawString(myLanguage[language][24], 20, 110, 2);
+  tft.drawString(myLanguage[language][25], 20, 130, 2);
+  tft.drawString(myLanguage[language][26], 20, 150, 2);
+  tft.drawString(myLanguage[language][27], 20, 170, 2);
+  tft.drawString(myLanguage[language][28], 20, 190, 2);
+  tft.drawString(myLanguage[language][29], 20, 210, 2);
   tft.setTextColor(TFT_YELLOW);
   if (VolSet > 0) tft.drawRightString("+" + String(VolSet, DEC), 270, 30, 2); else tft.drawRightString(String(VolSet, DEC), 270, 30, 2);
   tft.drawRightString(String(ConverterSet, DEC), 270, 50, 2);
   tft.drawRightString(String(LowEdgeSet + ConverterSet, DEC), 270, 70, 2);
   tft.drawRightString(String(HighEdgeSet + ConverterSet, DEC), 270, 90, 2);
   if (LevelOffset > 0) tft.drawRightString("+" + String(LevelOffset, DEC), 270, 110, 2); else tft.drawRightString(String(LevelOffset, DEC), 270, 110, 2);
-  if (StereoLevel != 0) tft.drawRightString(String(StereoLevel, DEC), 270, 130, 2); else tft.drawRightString("Off", 270, 130, 2);
-  if (HighCutLevel != 0) tft.drawRightString(String(HighCutLevel * 100, DEC), 270, 150, 2); else tft.drawRightString("Off", 270, 150, 2);
-  if (HighCutOffset != 0) tft.drawRightString(String(HighCutOffset, DEC), 270, 170, 2); else tft.drawRightString("Off", 270, 170, 2);
+  if (StereoLevel != 0) tft.drawRightString(String(StereoLevel, DEC), 270, 130, 2); else tft.drawRightString(myLanguage[language][30], 270, 130, 2);
+  if (HighCutLevel != 0) tft.drawRightString(String(HighCutLevel * 100, DEC), 270, 150, 2); else tft.drawRightString(myLanguage[language][30], 270, 150, 2);
+  if (HighCutOffset != 0) tft.drawRightString(String(HighCutOffset, DEC), 270, 170, 2); else tft.drawRightString(myLanguage[language][30], 270, 170, 2);
   tft.drawRightString(String(LowLevelSet, DEC), 270, 190, 2);
   tft.drawRightString(String(ContrastSet, DEC), 270, 210, 2);
   analogWrite(SMETERPIN, 0);
@@ -1439,8 +1441,8 @@ void MuteScreen(int setting) {
     tft.fillScreen(TFT_BLACK);
     tft.drawRect(0, 0, 320, 240, TFT_BLUE);
     tft.setTextColor(TFT_WHITE);
-    tft.drawCentreString("Screen is muted!", 160, 30, 4);
-    tft.drawCentreString("To unmute uncheck RF+ box", 160, 60, 2);
+    tft.drawCentreString(myLanguage[language][31], 160, 30, 4);
+    tft.drawCentreString(myLanguage[language][32], 160, 60, 2);
   }
 }
 
@@ -1861,7 +1863,7 @@ void doSquelch() {
       tft.setTextColor(TFT_BLACK);
       tft.setCursor (216, 168);
       if (Squelchold == -100) {
-        tft.print("OFF");
+        tft.print(myLanguage[language][33]);
       } else if (Squelchold == 920) {
         tft.print("ST");
       } else {
@@ -1870,7 +1872,7 @@ void doSquelch() {
       tft.setTextColor(TFT_WHITE);
       tft.setCursor (216, 168);
       if (Squelch == -100) {
-        tft.print("OFF");
+        tft.print(myLanguage[language][33]);
       } else if (Squelch == 920) {
         tft.print("ST");
       } else {
@@ -2192,7 +2194,7 @@ void XDRGTKRoutine() {
               tft.setTextFont(2);
               tft.setTextColor(TFT_BLACK);
               tft.setCursor (240, 168);
-              if (Squelchold == -100) tft.print("OFF"); else if (Squelchold > 920) tft.print("ST"); else tft.print(Squelchold / 10);
+              if (Squelchold == -100) tft.print(myLanguage[language][33]); else if (Squelchold > 920) tft.print("ST"); else tft.print(Squelchold / 10);
             }
           }
           break;
@@ -2385,7 +2387,7 @@ void XDRGTKRoutine() {
               tft.setTextFont(4);
               tft.setTextColor(TFT_BLACK);
               tft.setCursor (90, 60);
-              tft.print("SCANNING...");
+              tft.print(myLanguage[language][34]);
             }
             radio.SetFreq(frequencyold);
             if (screenmute == false) ShowFreq(0);
@@ -2573,8 +2575,8 @@ void SetTunerPatch() {
     tft.fillScreen(TFT_BLACK);
     tft.setTextColor(TFT_WHITE);
     analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
-    if (TEF == 0) tft.drawCentreString("Tuner not detected", 150, 70, 4); else tft.drawCentreString(String("Tuner version set: v") + String(TEF), 150, 70, 4);
-    tft.drawCentreString("Please restart tuner", 150, 100, 4);
+    if (TEF == 0) tft.drawCentreString(myLanguage[language][35], 150, 70, 4); else tft.drawCentreString(String(myLanguage[language][36]) + String(TEF), 150, 70, 4);
+    tft.drawCentreString(myLanguage[language][37], 150, 100, 4);
     EEPROM.writeByte(54, TEF);
     EEPROM.commit();
     while (true);
