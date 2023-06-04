@@ -33,13 +33,14 @@ bool cleanup;
 bool direction;
 bool dropout;
 bool fullsearchrds;
-bool showrdserrors = true;
-bool LowLevelInit = false;
+bool showrdserrors;
+bool LowLevelInit;
+bool memorystore;
 bool menu;
-bool menuopen = false;
+bool menuopen;
 bool power = true;
 bool RDSstatusold;
-bool screenmute = false;
+bool screenmute;
 bool seek;
 bool setupmode;
 bool SQ;
@@ -47,8 +48,10 @@ bool Stereostatusold;
 bool StereoToggle = true;
 bool store;
 bool tuned;
-bool tunemode = false;
-bool USBstatus = false;
+byte tunemode;
+byte memorypos;
+byte memoryposold;
+bool USBstatus;
 bool XDRMute;
 byte band;
 byte BWset;
@@ -58,7 +61,7 @@ byte EQset;
 byte freqoldcount;
 byte iMSEQ;
 byte iMSset;
-byte LowLevelSet;
+byte memoryband[30];
 byte optenc;
 byte rotarymode;
 byte SNR;
@@ -83,6 +86,7 @@ int HighCutOffset;
 int HighEdgeSet;
 int LevelOffset;
 int LowEdgeSet;
+int LowLevelSet;
 int lowsignaltimer;
 int menuoption = 30;
 int MStatusold;
@@ -129,13 +133,14 @@ uint16_t BW;
 uint16_t MStatus;
 uint16_t USN;
 uint16_t WAM;
-uint8_t buff_pos = 0;
+uint8_t buff_pos;
 uint8_t RDSstatus;
 unsigned int change;
 unsigned int freq_scan;
 unsigned int frequency;
 unsigned int frequency_AM;
 unsigned int frequencyold;
+unsigned int memory[30];
 unsigned int scanner_end;
 unsigned int scanner_start;
 unsigned int scanner_step;
@@ -147,10 +152,9 @@ TFT_eSprite sprite = TFT_eSprite(&tft);
 
 void setup() {
   setupmode = true;
-  EEPROM.begin(56);
-  if (EEPROM.readByte(41) != 15) {
-    EEPROM.writeByte(2, 0);
-    EEPROM.writeByte(3, 0);
+  EEPROM.begin(221);
+  if (EEPROM.readByte(43) != 16) {
+    EEPROM.writeByte(43, 16);
     EEPROM.writeUInt(0, 10000);
     EEPROM.writeInt(4, 0);
     EEPROM.writeInt(8, 0);
@@ -161,19 +165,24 @@ void setup() {
     EEPROM.writeInt(28, 0);
     EEPROM.writeInt(32, 70);
     EEPROM.writeInt(36, 0);
-    EEPROM.writeByte(41, 15);
+    EEPROM.writeByte(40, 0);
+    EEPROM.writeByte(41, 0);
     EEPROM.writeByte(42, 0);
-    EEPROM.writeByte(43, 20);
     EEPROM.writeByte(44, 1);
     EEPROM.writeByte(45, 1);
     EEPROM.writeByte(46, 0);
     EEPROM.writeUInt(47, 828);
+    EEPROM.writeByte(51, 0);
     EEPROM.writeByte(52, 0);
     EEPROM.writeByte(53, 0);
     EEPROM.writeByte(54, 0);
-    EEPROM.writeByte(55, 0);
+    EEPROM.writeInt(55, 20);
+    EEPROM.writeByte(59, 1);
+    for (int i = 0; i < 30; i++) EEPROM.writeByte(i + 60, 0);
+    for (int i = 0; i < 30; i++) EEPROM.writeUInt((i * 4) + 100, 8750);
     EEPROM.commit();
   }
+
   frequency = EEPROM.readUInt(0);
   VolSet = EEPROM.readInt(4);
   ConverterSet = EEPROM.readInt(8);
@@ -184,17 +193,21 @@ void setup() {
   StereoLevel = EEPROM.readInt(28);
   HighCutLevel = EEPROM.readInt(32);
   HighCutOffset = EEPROM.readInt(36);
-  stepsize = EEPROM.readByte(42);
-  LowLevelSet = EEPROM.readByte(43);
+  stepsize = EEPROM.readByte(40);
+  tunemode = EEPROM.readByte(41);
+  optenc = EEPROM.readByte(42);
   iMSset = EEPROM.readByte(44);
   EQset = EEPROM.readByte(45);
   band = EEPROM.readByte(46);
   frequency_AM = EEPROM.readUInt(47);
+  memorypos = EEPROM.readByte(51);
   rotarymode = EEPROM.readByte(52);
   displayflip = EEPROM.readByte(53);
   TEF = EEPROM.readByte(54);
-  optenc = EEPROM.readByte(55);
-  EEPROM.commit();
+  LowLevelSet = EEPROM.readInt(55);
+  showrdserrors = EEPROM.readByte(59);
+  for (int i = 0; i < 30; i++) memoryband[i] = EEPROM.readByte(i + 60);
+  for (int i = 0; i < 30; i++) memory[i] = EEPROM.readUInt((i * 4) + 100);
   btStop();
   Serial.begin(115200);
 
@@ -292,7 +305,7 @@ void setup() {
       optenc = 0;
       tft.drawCentreString("encoder set to standard", 150, 70, 4);
     }
-    EEPROM.writeByte(55, optenc);
+    EEPROM.writeByte(42, optenc);
     EEPROM.commit();
     tft.drawCentreString("Please release button", 150, 100, 4);
     while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
@@ -539,9 +552,11 @@ void PWRButtonPress() {
       if (power == false) {
         ESP.restart();
       } else {
-        if (band == 0) band = 1; else band = 0;
-        StoreFrequency();
-        SelectBand();
+        if (tunemode != 2) {
+          if (band == 0) band = 1; else band = 0;
+          StoreFrequency();
+          SelectBand();
+        }
       }
     } else {
       if (power == false) {
@@ -571,7 +586,7 @@ void StoreFrequency() {
 void SelectBand() {
   if (band == 1) {
     seek = false;
-    tunemode = false;
+    if (tunemode == 1) tunemode = 0;
     BWreset = true;
     BWset = 2;
     radio.SetFreqAM(frequency_AM);
@@ -696,7 +711,7 @@ void ModeButtonPress() {
     EEPROM.writeInt(28, StereoLevel);
     EEPROM.writeInt(32, HighCutLevel);
     EEPROM.writeInt(36, HighCutOffset);
-    EEPROM.writeByte(43, LowLevelSet);
+    EEPROM.writeInt(55, LowLevelSet);
     EEPROM.commit();
   }
   while (digitalRead(MODEBUTTON) == LOW) delay(50);
@@ -745,59 +760,74 @@ void RoundStep() {
 
 void ButtonPress() {
   if (menu == false) {
-    seek = false;
-    unsigned long counterold = millis();
-    unsigned long counter = millis();
-    while (digitalRead(ROTARY_BUTTON) == LOW && counter - counterold <= 1000) counter = millis();
-
-    if (counter - counterold < 1000) {
-      if (tunemode == false) {
-        stepsize++;
-        if (stepsize > 4) stepsize = 0;
-
-        if (screenmute == false) ShowStepSize();
-
-        EEPROM.writeByte(42, stepsize);
+    if (tunemode == 2) {
+      if (memorystore == false) {
+        memorystore = true;
+        ShowTuneMode();
+      } else {
+        memorystore = false;
+        EEPROM.writeByte(memorypos + 60, band);
+        if (band == 0) EEPROM.writeUInt((memorypos * 4) + 100, frequency); else EEPROM.writeUInt((memorypos * 4) + 100, frequency_AM);
         EEPROM.commit();
-        if (stepsize == 0) {
-          RoundStep();
-          ShowFreq(0);
-        }
+        memoryband[memorypos] = band;
+        if (band == 0) memory[memorypos] = frequency; else memory[memorypos] = frequency_AM;
+        ShowTuneMode();
       }
     } else {
-      if (iMSEQ == 0) iMSEQ = 1;
+      seek = false;
+      unsigned long counterold = millis();
+      unsigned long counter = millis();
+      while (digitalRead(ROTARY_BUTTON) == LOW && counter - counterold <= 1000) counter = millis();
 
-      if (iMSEQ == 4) {
-        iMSset = 0;
-        EQset = 0;
-        updateiMS();
-        updateEQ();
-        iMSEQ = 0;
+      if (counter - counterold < 1000) {
+        if (tunemode == 0) {
+          stepsize++;
+          if (stepsize > 4) stepsize = 0;
+
+          if (screenmute == false) ShowStepSize();
+
+          EEPROM.writeByte(40, stepsize);
+          EEPROM.commit();
+          if (stepsize == 0) {
+            RoundStep();
+            ShowFreq(0);
+          }
+        }
+      } else {
+        if (iMSEQ == 0) iMSEQ = 1;
+
+        if (iMSEQ == 4) {
+          iMSset = 0;
+          EQset = 0;
+          updateiMS();
+          updateEQ();
+          iMSEQ = 0;
+        }
+        if (iMSEQ == 3) {
+          iMSset = 1;
+          EQset = 0;
+          updateiMS();
+          updateEQ();
+          iMSEQ = 4;
+        }
+        if (iMSEQ == 2) {
+          iMSset = 0;
+          EQset = 1;
+          updateiMS();
+          updateEQ();
+          iMSEQ = 3;
+        }
+        if (iMSEQ == 1) {
+          iMSset = 1;
+          EQset = 1;
+          updateiMS();
+          updateEQ();
+          iMSEQ = 2;
+        }
+        EEPROM.writeByte(44, iMSset);
+        EEPROM.writeByte(45, EQset);
+        EEPROM.commit();
       }
-      if (iMSEQ == 3) {
-        iMSset = 1;
-        EQset = 0;
-        updateiMS();
-        updateEQ();
-        iMSEQ = 4;
-      }
-      if (iMSEQ == 2) {
-        iMSset = 0;
-        EQset = 1;
-        updateiMS();
-        updateEQ();
-        iMSEQ = 3;
-      }
-      if (iMSEQ == 1) {
-        iMSset = 1;
-        EQset = 1;
-        updateiMS();
-        updateEQ();
-        iMSEQ = 2;
-      }
-      EEPROM.writeByte(44, iMSset);
-      EEPROM.writeByte(45, EQset);
-      EEPROM.commit();
     }
   } else {
     if (menuopen == false) {
@@ -901,12 +931,25 @@ void ButtonPress() {
 void KeyUp() {
   rotary = 0;
   if (menu == false) {
-    if (tunemode == true) {
-      direction = true;
-      seek = true;
-      Seek(direction);
-    } else {
-      TuneUp();
+    switch (tunemode) {
+      case 0:
+        TuneUp();
+        break;
+
+      case 1:
+        direction = true;
+        seek = true;
+        Seek(direction);
+        break;
+
+      case 2:
+        memorypos++;
+        if (memorypos > 29) memorypos = 0;
+        ShowMemoryPos();
+        if (memorystore == false) DoMemoryPosTune();
+        EEPROM.writeByte(51, memorypos);
+        EEPROM.commit();
+        break;
     }
       if (USBstatus == true) if (band == 0) Serial.println("T" + String(frequency * 10)); else Serial.println("T" + String(frequency_AM));
     radio.clearRDS(fullsearchrds);
@@ -1018,7 +1061,7 @@ void KeyUp() {
           tft.setTextColor(TFT_BLACK);
           tft.drawRightString(String(LowLevelSet, DEC), 145, 110, 4);
           LowLevelSet++;
-          if (LowLevelSet > 40 || LowLevelSet <= 0) LowLevelSet = 0;
+          if (LowLevelSet > 40) LowLevelSet = -10;
           tft.setTextColor(TFT_YELLOW);
           tft.drawRightString(String(LowLevelSet, DEC), 145, 110, 4);
           break;
@@ -1040,12 +1083,25 @@ void KeyUp() {
 void KeyDown() {
   rotary = 0;
   if (menu == false) {
-    if (tunemode == true) {
-      direction = false;
-      seek = true;
-      Seek(direction);
-    } else {
-      TuneDown();
+    switch (tunemode) {
+      case 0:
+        TuneDown();
+        break;
+
+      case 1:
+        direction = false;
+        seek = true;
+        Seek(direction);
+        break;
+
+      case 2:
+        memorypos--;
+        if (memorypos > 29) memorypos = 29;
+        ShowMemoryPos();
+        if (memorystore == false) DoMemoryPosTune();
+        EEPROM.writeByte(51, memorypos);
+        EEPROM.commit();
+        break;
     }
       if (USBstatus == true) if (band == 0) Serial.println("T" + String(frequency * 10)); else Serial.println("T" + String(frequency_AM));
     radio.clearRDS(fullsearchrds);
@@ -1160,7 +1216,7 @@ void KeyDown() {
           tft.setTextColor(TFT_BLACK);
           tft.drawRightString(String(LowLevelSet, DEC), 145, 110, 4);
           LowLevelSet--;
-          if (LowLevelSet > 40) LowLevelSet = 40;
+          if (LowLevelSet < -10) LowLevelSet = 40;
           tft.setTextColor(TFT_YELLOW);
           tft.drawRightString(String(LowLevelSet, DEC), 145, 110, 4);
           break;
@@ -1178,6 +1234,32 @@ void KeyDown() {
       }
     }
   }
+}
+
+void ShowMemoryPos() {
+  tft.setTextColor(TFT_BLACK);
+  tft.drawString(String(memoryposold + 1), 80, 30, 2);
+  tft.setTextColor(TFT_SKYBLUE);
+  tft.drawString(String(memorypos + 1), 80, 30, 2);
+  memoryposold = memorypos;
+}
+
+void DoMemoryPosTune() {
+  if (band != memoryband[memorypos]) {
+    band = memoryband[memorypos];
+    SelectBand();
+  } else {
+    band = memoryband[memorypos];
+  }
+
+  if (band == 0) {
+    frequency = memory[memorypos];
+    radio.SetFreq(frequency);
+  } else {
+    frequency_AM = memory[memorypos];
+    radio.SetFreqAM(frequency_AM);
+  }
+  ShowFreq(0);
 }
 
 void readRds() {
@@ -1423,10 +1505,11 @@ void BuildDisplay() {
   RDSstatusold = false;
   Stereostatusold = false;
   ShowFreq(0);
-  updateTuneMode();
+  ShowTuneMode();
   updateBW();
   ShowUSBstatus();
   ShowStepSize();
+  ShowMemoryPos();
   updateiMS();
   updateEQ();
   Squelchold = -2;
@@ -1847,23 +1930,7 @@ void doSquelch() {
       }
     }
   }
-  ShowSquelch();
 }
-
-void ShowSquelch() {
-  if (menu == false) {
-    if (SQ == false) {
-      tft.drawRoundRect(3, 79, 40, 20, 5, TFT_GREYOUT);
-      tft.setTextColor(TFT_GREYOUT);
-      tft.drawCentreString("MUTE", 24, 81, 2);
-    } else {
-      tft.drawRoundRect(3, 79, 40, 20, 5, TFT_WHITE);
-      tft.setTextColor(TFT_WHITE);
-      tft.drawCentreString("MUTE", 24, 81, 2);
-    }
-  }
-}
-
 
 void updateBW() {
   if (BWset == 0) {
@@ -2017,37 +2084,85 @@ void doBW() {
 }
 
 void doTuneMode() {
-  if (band == 0) {
-    if (tunemode == true) tunemode = false; else tunemode = true;
-    updateTuneMode();
-    if (stepsize != 0) {
-      stepsize = 0;
-      RoundStep();
-      ShowStepSize();
-      ShowFreq(0);
-    }
+  switch (tunemode) {
+    case 0:
+      if (band == 0) {
+        tunemode = 1;
+        if (stepsize != 0) {
+          stepsize = 0;
+          RoundStep();
+          ShowStepSize();
+        }
+      } else {
+        tunemode = 2;
+      }
+      break;
+
+    case 1:
+      tunemode = 2;
+      break;
+
+    case 2:
+      tunemode = 0;
+      break;
+  }
+  ShowTuneMode();
+  ShowFreq(0);
+  EEPROM.writeByte(41, tunemode);
+  EEPROM.commit();
+}
+
+void ShowTuneMode() {
+  switch (tunemode) {
+    case 0:
+      tft.drawRoundRect(3, 57, 40, 20, 5, TFT_GREYOUT);
+      tft.setTextColor(TFT_GREYOUT);
+      tft.drawCentreString("AUTO", 24, 59, 2);
+
+      tft.drawRoundRect(3, 35, 40, 20, 5, TFT_WHITE);
+      tft.setTextColor(TFT_WHITE);
+      tft.drawCentreString("MAN", 24, 37, 2);
+
+      tft.drawRoundRect(3, 79, 40, 20, 5, TFT_GREYOUT);
+      tft.setTextColor(TFT_GREYOUT);
+      tft.drawCentreString("MEM", 24, 81, 2);
+      break;
+
+    case 1:
+      tft.drawRoundRect(3, 57, 40, 20, 5, TFT_WHITE);
+      tft.setTextColor(TFT_WHITE);
+      tft.drawCentreString("AUTO", 24, 59, 2);
+
+      tft.drawRoundRect(3, 35, 40, 20, 5, TFT_GREYOUT);
+      tft.setTextColor(TFT_GREYOUT);
+      tft.drawCentreString("MAN", 24, 37, 2);
+
+      tft.drawRoundRect(3, 79, 40, 20, 5, TFT_GREYOUT);
+      tft.setTextColor(TFT_GREYOUT);
+      tft.drawCentreString("MEM", 24, 81, 2);
+      break;
+
+    case 2:
+      tft.drawRoundRect(3, 57, 40, 20, 5, TFT_GREYOUT);
+      tft.setTextColor(TFT_GREYOUT);
+      tft.drawCentreString("AUTO", 24, 59, 2);
+
+      tft.drawRoundRect(3, 35, 40, 20, 5, TFT_GREYOUT);
+      tft.setTextColor(TFT_GREYOUT);
+      tft.drawCentreString("MAN", 24, 37, 2);
+
+      if (memorystore == true) {
+        tft.drawRoundRect(3, 79, 40, 20, 5, TFT_RED);
+        tft.setTextColor(TFT_RED);
+      } else {
+        tft.drawRoundRect(3, 79, 40, 20, 5, TFT_WHITE);
+        tft.setTextColor(TFT_WHITE);
+      }
+      tft.drawCentreString("MEM", 24, 81, 2);
+      break;
   }
 }
 
-void updateTuneMode() {
-  if (tunemode == true) {
-    tft.drawRoundRect(3, 57, 40, 20, 5, TFT_WHITE);
-    tft.setTextColor(TFT_WHITE);
-    tft.drawCentreString("AUTO", 24, 59, 2);
-
-    tft.drawRoundRect(3, 35, 40, 20, 5, TFT_GREYOUT);
-    tft.setTextColor(TFT_GREYOUT);
-    tft.drawCentreString("MAN", 24, 37, 2);
-  } else {
-    tft.drawRoundRect(3, 57, 40, 20, 5, TFT_GREYOUT);
-    tft.setTextColor(TFT_GREYOUT);
-    tft.drawCentreString("AUTO", 24, 59, 2);
-
-    tft.drawRoundRect(3, 35, 40, 20, 5, TFT_WHITE);
-    tft.setTextColor(TFT_WHITE);
-    tft.drawCentreString("MAN", 24, 37, 2);
-  }
-}
 void ShowUSBstatus() {
   if (USBstatus == true) tft.drawBitmap(272, 6, USBLogo, 43, 21, TFT_SKYBLUE); else tft.drawBitmap(272, 6, USBLogo, 43, 21, TFT_GREYOUT);
 }
@@ -2136,14 +2251,12 @@ void XDRGTKRoutine() {
           LevelOffset =  atol(buff + 1);
           if (LevelOffset == 0) {
             MuteScreen(0);
-            LowLevelSet = EEPROM.readByte(43);
-            EEPROM.commit();
+            LowLevelSet = EEPROM.readInt(55);
             Serial.print("G00\n");
           }
           if (LevelOffset == 10) {
             MuteScreen(1);
-            LowLevelSet = EEPROM.readByte(43);
-            EEPROM.commit();
+            LowLevelSet = EEPROM.readInt(55);
             Serial.print("G10\n");
           }
           if (LevelOffset == 1) {
