@@ -95,6 +95,7 @@ class TEF6686 {
     void setUnMute();
     void setVolume(int8_t volume);
     uint8_t af_counter;
+	bool mute;
     void tone(uint16_t time, int16_t amplitude, uint16_t frequency);
 
   private:

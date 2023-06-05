@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-const char myLanguage[3][45][50] = {
+const char myLanguage[4][46][60] = {
   { "English",
     "Rotary direction changed",
     "Please release button",
@@ -45,7 +45,8 @@ const char myLanguage[3][45][50] = {
     "PRESS MODE TO EXIT AND STORE",
 	"On",
 	"Softmute FM",
-	"Softmute AM"
+	"Softmute AM",
+	"Beep at bandedge"
   },
   
   { "Nederlands",
@@ -92,7 +93,8 @@ const char myLanguage[3][45][50] = {
     "DRUK OP MODE OM AF TE SLUITEN",
 	"Aan",
 	"Ruisonderdrukking FM",
-	"Ruisonderdrukking AM"
+	"Ruisonderdrukking AM",
+	"Piep op bandeinde"
   },
   { "Polski", 
    "Kierunek obrotu zmieniony", 
@@ -138,8 +140,55 @@ const char myLanguage[3][45][50] = {
    "WCISNIJ MODE ABY ZAMKNAC I ZAPISAC",
    "On", 										// Needs translation!
    "Softmute FM",								// Needs translation!
-   "Softmute AM" 								// Needs translation!
+   "Softmute AM", 								// Needs translation!
+   "Beep at bandedge"							// Needs translation!
+   },
+   
+   {"Hrvatski",
+  "Smjer rotacijskog enkodera promijenjen",
+  "Molim pustite gumb",
+  "Zaslon je okrenut",
+  "Kalibracija analognog mjerača",
+  "Pustite gumb",
+  "Optički enkoder postavljen",
+  "Standardni enkoder postavljen",
+  "FM/AM prijemnik",
+  "Prijemnik: !Nije pronađen!",
+  "Glasnoća:",
+  "Konverter:",
+  "Donja granica opsega:",
+  "Gornja granica opsega:",
+  "Pomak RF razine:",
+  "Prag za stereo:",
+  "Visoki rez (corner):",
+  "Prag za visoki rez (threshold):",
+  "Niski prag razine:",
+  "Kontrast:",
+  "Postavite glasnoću",
+  "Postavite pomak konvertera",
+  "Postavite donju granicu opsega",
+  "Postavite gornju granicu opsega",
+  "Postavite pomak signala",
+  "Postavite prag stereo razdvajanja",
+  "Postavite frekvenciju visokog reza",
+  "Postavite prag za visoki rez",
+  "Postavite donju granicu signala",
+  "Postavite svjetlinu zaslona",
+  "Isključeno",
+  "Zaslon je isključen!",
+  "Da biste uključili zaslon, poništite kvadratić RF+",
+  "ISKLJ.",
+  "SKENIRANJE...",
+  "Prijemnik nije pronađen",
+  "Postavljena verzija prijemnika: v",
+  "Molim, ponovno pokrenite prijemnik",
+  "Prikaži RDS pogreške",
+  "Jezik",
+  "Odaberite jezik",
+  "PRITISNITE MODE ZA IZLAZ I SPREMANJE",
+  "Uklj.",
+  "Softmute FM",
+  "Softmute AM",
+  "Beep at bandedge"
    }
-
-
 };

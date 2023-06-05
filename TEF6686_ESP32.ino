@@ -28,6 +28,7 @@ TFT_eSPI tft = TFT_eSPI(320, 240);
 TFT_eSPI tft = TFT_eSPI(240, 320);
 #endif
 
+bool edgebeep;
 bool BWreset;
 bool change2;
 bool cleanup;
@@ -187,6 +188,7 @@ void setup() {
     EEPROM.writeByte(91, 0);
     EEPROM.writeByte(92, 0);
     EEPROM.writeByte(93, 0);
+    EEPROM.writeByte(94, 0);
     for (int i = 0; i < 30; i++) EEPROM.writeByte(i + 60, 0);
     for (int i = 0; i < 30; i++) EEPROM.writeUInt((i * 4) + 100, 8750);
     EEPROM.commit();
@@ -218,6 +220,7 @@ void setup() {
   language = EEPROM.readByte(91);
   softmutefm = EEPROM.readByte(92);
   softmuteam = EEPROM.readByte(93);
+  edgebeep = EEPROM.readByte(94);
   for (int i = 0; i < 30; i++) memoryband[i] = EEPROM.readByte(i + 60);
   for (int i = 0; i < 30; i++) memory[i] = EEPROM.readUInt((i * 4) + 100);
   btStop();
@@ -730,6 +733,7 @@ void ModeButtonPress() {
     EEPROM.writeByte(91, language);
     EEPROM.writeByte(92, softmutefm);
     EEPROM.writeByte(93, softmuteam);
+    EEPROM.writeByte(94, edgebeep);
     EEPROM.commit();
   }
   while (digitalRead(MODEBUTTON) == LOW) delay(50);
@@ -970,6 +974,13 @@ void ButtonPress() {
               tft.setTextColor(TFT_YELLOW);
               if (softmuteam) tft.drawCentreString(myLanguage[language][42], 155, 110, 4); else tft.drawCentreString(myLanguage[language][30], 155, 110, 4);
               break;
+
+            case 110:
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][45], 155, 70, 4);
+              tft.setTextColor(TFT_YELLOW);
+              if (edgebeep) tft.drawCentreString(myLanguage[language][42], 155, 110, 4); else tft.drawCentreString(myLanguage[language][30], 155, 110, 4);
+              break;
           }
       }
     } else {
@@ -1172,6 +1183,14 @@ void KeyUp() {
               if (softmuteam) tft.drawCentreString(myLanguage[language][42], 155, 110, 4); else tft.drawCentreString(myLanguage[language][30], 155, 110, 4);
               radio.setSoftmuteAM(softmuteam);
               break;
+
+            case 110:
+              tft.setTextColor(TFT_BLACK);
+              if (edgebeep) tft.drawCentreString(myLanguage[language][42], 155, 110, 4); else tft.drawCentreString(myLanguage[language][30], 155, 110, 4);
+              if (edgebeep) edgebeep = false; else edgebeep = true;
+              tft.setTextColor(TFT_YELLOW);
+              if (edgebeep) tft.drawCentreString(myLanguage[language][42], 155, 110, 4); else tft.drawCentreString(myLanguage[language][30], 155, 110, 4);
+              break;
           }
       }
     }
@@ -1372,6 +1391,14 @@ void KeyDown() {
               tft.setTextColor(TFT_YELLOW);
               if (softmuteam) tft.drawCentreString(myLanguage[language][42], 155, 110, 4); else tft.drawCentreString(myLanguage[language][30], 155, 110, 4);
               radio.setSoftmuteAM(softmuteam);
+              break;
+
+            case 110:
+              tft.setTextColor(TFT_BLACK);
+              if (edgebeep) tft.drawCentreString(myLanguage[language][42], 155, 110, 4); else tft.drawCentreString(myLanguage[language][30], 155, 110, 4);
+              if (edgebeep) edgebeep = false; else edgebeep = true;
+              tft.setTextColor(TFT_YELLOW);
+              if (edgebeep) tft.drawCentreString(myLanguage[language][42], 155, 110, 4); else tft.drawCentreString(myLanguage[language][30], 155, 110, 4);
               break;
           }
       }
@@ -1577,11 +1604,13 @@ void BuildMenu() {
       tft.drawString(myLanguage[language][38], 20, 50, 2);
       tft.drawString(myLanguage[language][43], 20, 70, 2);
       tft.drawString(myLanguage[language][44], 20, 90, 2);
+      tft.drawString(myLanguage[language][45], 20, 110, 2);
       tft.setTextColor(TFT_YELLOW);
       tft.drawRightString(myLanguage[language][0], 305, 30, 2);
       if (showrdserrors) tft.drawRightString(myLanguage[language][42], 305, 50, 2); else tft.drawRightString(myLanguage[language][30], 305, 50, 2);
       if (softmutefm) tft.drawRightString(myLanguage[language][42], 305, 70, 2); else tft.drawRightString(myLanguage[language][30], 305, 70, 2);
       if (softmuteam) tft.drawRightString(myLanguage[language][42], 305, 90, 2); else tft.drawRightString(myLanguage[language][30], 305, 90, 2);
+      if (edgebeep) tft.drawRightString(myLanguage[language][42], 305, 110, 2); else tft.drawRightString(myLanguage[language][30], 305, 110, 2);
       break;
   }
   analogWrite(SMETERPIN, 0);
@@ -2643,6 +2672,7 @@ void TuneUp() {
     frequency += temp;
     if (frequency >= (HighEdgeSet * 100) + 1) {
       frequency = LowEdgeSet * 100;
+      if (edgebeep) EdgeBeeper();
     }
     radio.SetFreq(frequency);
   }
@@ -2651,6 +2681,7 @@ void TuneUp() {
     frequency_AM += temp;
     if (frequency_AM > 27000) {
       frequency_AM = 144;
+      if (edgebeep) EdgeBeeper();
     }
     radio.SetFreqAM(frequency_AM);
   }
@@ -2684,7 +2715,10 @@ void TuneDown() {
 
   if (band == 0) {
     frequency -= temp;
-    if (frequency < LowEdgeSet * 100) frequency = HighEdgeSet * 100;
+    if (frequency < LowEdgeSet * 100) {
+      frequency = HighEdgeSet * 100;
+      if (edgebeep) EdgeBeeper();
+    }
     radio.SetFreq(frequency);
   }
 
@@ -2694,13 +2728,21 @@ void TuneDown() {
       frequency_AM = 27000;
     } else {
       frequency_AM -= temp;
-      if (frequency_AM < 144) frequency_AM = 27000;
+      if (frequency_AM < 144) {
+        frequency_AM = 27000;
+        if (edgebeep) EdgeBeeper();
+      }
     }
     radio.SetFreqAM(frequency_AM);
   }
   radio.clearRDS(fullsearchrds);
 }
 
+void EdgeBeeper() {
+  bool x = radio.mute;
+  radio.tone(50, -5, 2000);
+  if (x) radio.setMute(); else radio.setUnMute();
+}
 
 void Seek(bool mode) {
   if (band == 0) {

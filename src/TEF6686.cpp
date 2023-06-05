@@ -130,10 +130,12 @@ void TEF6686::setVolume(int8_t volume) {
 }
 
 void TEF6686::setMute() {
+	mute = true;
   devTEF_Audio_Set_Mute(1);
 }
 
 void TEF6686::setUnMute() {
+	mute = false;
   devTEF_Audio_Set_Mute(0);
 }
 
