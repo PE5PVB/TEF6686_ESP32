@@ -41,8 +41,8 @@ const char myLanguage[3][42][50] = {
     "Please restart tuner",
     "Show RDS errors",
     "Language",
-	"Choose your language",
-	"PRESS MODE TO EXIT AND STORE"
+    "Choose your language",
+    "PRESS MODE TO EXIT AND STORE"
   },
   
   { "Nederlands",
@@ -85,8 +85,8 @@ const char myLanguage[3][42][50] = {
     "Herstart de tuner",
     "RDS fouten weergeven",
     "Taal",
-	"Kies uw taal",
-	"DRUK OP MODE OM AF TE SLUITEN"
+    "Kies uw taal",
+    "DRUK OP MODE OM AF TE SLUITEN"
   },
   { "Polski", 
    "Kierunek obrotu zmieniony", 
