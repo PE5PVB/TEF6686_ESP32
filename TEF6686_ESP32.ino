@@ -1391,7 +1391,7 @@ void BuildMenu() {
   tft.drawRect(0, 0, 320, 240, TFT_BLUE);
   tft.drawLine(0, 23, 320, 23, TFT_BLUE);
   tft.setTextColor(TFT_SKYBLUE);
-  tft.drawString("PRESS MODE TO EXIT AND STORE", 20, 4, 2);
+  tft.drawString(myLanguage[language][41], 20, 4, 2);
   tft.setTextColor(TFT_WHITE);
   tft.drawRightString(VERSION, 305, 4, 2);
   tft.drawRoundRect(10, menuoption, 300, 18, 5, TFT_WHITE);

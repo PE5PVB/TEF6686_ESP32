@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-const char myLanguage[3][41][50] = {
+const char myLanguage[3][42][50] = {
   { "English",
     "Rotary direction changed",
     "Please release button",
@@ -41,7 +41,8 @@ const char myLanguage[3][41][50] = {
     "Please restart tuner",
     "Show RDS errors",
     "Language",
-	"Choose your language"
+	"Choose your language",
+	"PRESS MODE TO EXIT AND STORE"
   },
   
   { "Nederlands",
@@ -84,7 +85,8 @@ const char myLanguage[3][41][50] = {
     "Herstart de tuner",
     "RDS fouten weergeven",
     "Taal",
-	"Kies uw taal"
+	"Kies uw taal",
+	"DRUK OP MODE OM AF TE SLUITEN"
   },
   { "Polski", 
    "Kierunek obrotu zmieniony", 
@@ -125,7 +127,8 @@ const char myLanguage[3][41][50] = {
    "Prosze uruchomic pon. tuner", 
    "Pokaz bledy RDS", 
    "Jezyk", 
-   "Wybierz swoj jezyk" 
+   "Wybierz swoj jezyk",
+   "NACISNIJ MODE ABY ZAMKNAC I ZAMKNAC"
    }
 
 
