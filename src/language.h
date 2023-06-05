@@ -13,8 +13,8 @@ const char myLanguage[4][46][60] = {
     "Tuner: !None!",
     "Volume:",
     "Converter:",
-    "Low bandedge:",
-    "High bandedge:",
+    "Low band edge:",
+    "High band edge:",
     "RF Level offset:",
     "Stereo threshold:",
     "High Cut corner:",
@@ -23,8 +23,8 @@ const char myLanguage[4][46][60] = {
     "Contrast:",
     "Set volume",
     "Set converter offset",
-    "Set low bandedge",
-    "Set high bandedge",
+    "Set low band edge",
+    "Set high band edge",
     "Set level offset",
     "Set Stereo sep. threshold",
     "Set high cut corner frequency",
@@ -46,7 +46,7 @@ const char myLanguage[4][46][60] = {
 	"On",
 	"Softmute FM",
 	"Softmute AM",
-	"Beep at bandedge"
+	"Beep at band edge"
   },
   
   { "Nederlands",
@@ -141,7 +141,7 @@ const char myLanguage[4][46][60] = {
    "On", 										// Needs translation!
    "Softmute FM",								// Needs translation!
    "Softmute AM", 								// Needs translation!
-   "Beep at bandedge"							// Needs translation!
+   "Beep at band edge"							// Needs translation!
    },
    
    {"Hrvatski",
@@ -189,6 +189,6 @@ const char myLanguage[4][46][60] = {
   "Uklj.",
   "Softmute FM",
   "Softmute AM",
-  "Beep at bandedge"
+  "Beep at band edge"
    }
 };
