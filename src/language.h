@@ -114,7 +114,7 @@ const char myLanguage[3][42][50] = {
    "Ustaw gorna granice pasma", 
    "Ustaw odchylenie sygnalu", 
    "Ustaw prog separacji Stereo", 
-   "Ustaw czest. gran. f. dolnoprzep.", 
+   "Czest. gran. filtra dolnoprzep.", 
    "Ustaw prog dolnoprzep.", 
    "Ustaw dolna granice sygnalu", 
    "Ustaw jasnosc wyswietlacza", 
@@ -129,7 +129,7 @@ const char myLanguage[3][42][50] = {
    "Pokaz bledy RDS", 
    "Jezyk", 
    "Wybierz swoj jezyk",
-   "NACISNIJ MODE ABY ZAMKNAC I ZAMKNAC"
+   "WCISNIJ MODE ABY ZAMKNAC I ZAPISAC"
    }
 
 
