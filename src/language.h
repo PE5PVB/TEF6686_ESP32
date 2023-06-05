@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-const char myLanguage[3][42][50] = {
+const char myLanguage[3][43][50] = {
   { "English",
     "Rotary direction changed",
     "Please release button",
@@ -41,8 +41,9 @@ const char myLanguage[3][42][50] = {
     "Please restart tuner",
     "Show RDS errors",
     "Language",
-    "Choose your language",
-    "PRESS MODE TO EXIT AND STORE"
+    "Choose language",
+    "PRESS MODE TO EXIT AND STORE",
+	"On"
   },
   
   { "Nederlands",
@@ -60,9 +61,9 @@ const char myLanguage[3][42][50] = {
     "Lage bandgrens:",
     "Hoge bandgrens:",
     "RF niveau afwijking:",
-    "Stereo signaalgrens:",
+    "Stereo grens:",
     "Hoge tonen afval:",
-    "Hoge tonen afval grens:",
+    "Hoog afval grens:",
     "Laag signaal grens:",
     "Helderheid:",
     "Stel volume in",
@@ -83,10 +84,11 @@ const char myLanguage[3][42][50] = {
     "Tuner niet herkend!",
     "Tuner versie ingesteld: v",
     "Herstart de tuner",
-    "RDS fouten weergeven",
+    "Toon RDS fouten",
     "Taal",
-    "Kies uw taal",
-    "DRUK OP MODE OM AF TE SLUITEN"
+    "Kies taal",
+    "DRUK OP MODE OM AF TE SLUITEN",
+	"Aan"
   },
   { "Polski", 
    "Kierunek obrotu zmieniony", 
@@ -129,7 +131,8 @@ const char myLanguage[3][42][50] = {
    "Pokaz bledy RDS", 
    "Jezyk", 
    "Wybierz swoj jezyk",
-   "WCISNIJ MODE ABY ZAMKNAC I ZAPISAC"
+   "WCISNIJ MODE ABY ZAMKNAC I ZAPISAC",
+   "On" 										// Needs translation!
    }
 
 

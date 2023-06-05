@@ -49,10 +49,12 @@ bool Stereostatusold;
 bool StereoToggle = true;
 bool store;
 bool tuned;
-byte language = 0;
+byte language;
 byte tunemode;
 byte memorypos;
 byte memoryposold;
+byte menupage = 2;
+byte menupagestotal = 2;
 bool USBstatus;
 bool XDRMute;
 byte band;
@@ -155,8 +157,8 @@ TFT_eSprite sprite = TFT_eSprite(&tft);
 void setup() {
   setupmode = true;
   EEPROM.begin(221);
-  if (EEPROM.readByte(43) != 16) {
-    EEPROM.writeByte(43, 16);
+  if (EEPROM.readByte(43) != 17) {
+    EEPROM.writeByte(43, 17);
     EEPROM.writeUInt(0, 10000);
     EEPROM.writeInt(4, 0);
     EEPROM.writeInt(8, 0);
@@ -180,6 +182,7 @@ void setup() {
     EEPROM.writeByte(54, 0);
     EEPROM.writeInt(55, 20);
     EEPROM.writeByte(59, 1);
+    EEPROM.writeByte(91, 0);
     for (int i = 0; i < 30; i++) EEPROM.writeByte(i + 60, 0);
     for (int i = 0; i < 30; i++) EEPROM.writeUInt((i * 4) + 100, 8750);
     EEPROM.commit();
@@ -208,6 +211,7 @@ void setup() {
   TEF = EEPROM.readByte(54);
   LowLevelSet = EEPROM.readInt(55);
   showrdserrors = EEPROM.readByte(59);
+  language = EEPROM.readByte(91);
   for (int i = 0; i < 30; i++) memoryband[i] = EEPROM.readByte(i + 60);
   for (int i = 0; i < 30; i++) memory[i] = EEPROM.readUInt((i * 4) + 100);
   btStop();
@@ -714,6 +718,8 @@ void ModeButtonPress() {
     EEPROM.writeInt(32, HighCutLevel);
     EEPROM.writeInt(36, HighCutOffset);
     EEPROM.writeInt(55, LowLevelSet);
+    EEPROM.writeByte(59, showrdserrors);
+    EEPROM.writeByte(91, language);
     EEPROM.commit();
   }
   while (digitalRead(MODEBUTTON) == LOW) delay(50);
@@ -836,91 +842,111 @@ void ButtonPress() {
       menuopen = true;
       tft.drawRoundRect(30, 40, 240, 160, 5, TFT_WHITE);
       tft.fillRoundRect(32, 42, 236, 156, 5, TFT_BLACK);
-      switch (menuoption) {
-        case 30:
-          tft.setTextColor(TFT_WHITE);
-          tft.drawCentreString(myLanguage[language][10], 150, 70, 4);
-          tft.drawString("dB", 170, 110, 4);
+      switch (menupage) {
+        case 1:
+          switch (menuoption) {
+            case 30:
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][10], 150, 70, 4);
+              tft.drawString("dB", 170, 110, 4);
 
-          tft.setTextColor(TFT_YELLOW);
-          if (VolSet > 0) tft.drawRightString("+" + String(VolSet, DEC), 165, 110, 4); else tft.drawRightString(String(VolSet, DEC), 165, 110, 4);
+              tft.setTextColor(TFT_YELLOW);
+              if (VolSet > 0) tft.drawRightString("+" + String(VolSet, DEC), 165, 110, 4); else tft.drawRightString(String(VolSet, DEC), 165, 110, 4);
+              break;
+
+            case 50:
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][11], 150, 70, 4);
+              tft.drawString("MHz", 170, 110, 4);
+              tft.setTextColor(TFT_YELLOW);
+
+              tft.drawRightString(String(ConverterSet, DEC), 165, 110, 4);
+              break;
+
+            case 70:
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][12], 150, 70, 4);
+              tft.drawString("MHz", 170, 110, 4);
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawRightString(String(LowEdgeSet + ConverterSet, DEC), 165, 110, 4);
+              break;
+
+            case 90:
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][13], 150, 70, 4);
+              tft.drawString("MHz", 170, 110, 4);
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawRightString(String(HighEdgeSet + ConverterSet, DEC), 165, 110, 4);
+              break;
+
+            case 110:
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][14], 150, 70, 4);
+              tft.drawString("dB", 170, 110, 4);
+              tft.drawString("dBuV", 190, 157, 4);
+              tft.setTextColor(TFT_YELLOW);
+              if (LevelOffset > 0) tft.drawRightString("+" + String(LevelOffset, DEC), 165, 110, 4); else tft.drawRightString(String(LevelOffset, DEC), 165, 110, 4);
+              SStatusold = 2000;
+              change2 = true;
+              break;
+
+            case 130:
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][15], 150, 70, 4);
+              if (StereoLevel != 0) tft.drawString("dBuV", 170, 110, 4);
+              tft.setTextColor(TFT_YELLOW);
+              if (StereoLevel != 0) tft.drawRightString(String(StereoLevel, DEC), 165, 110, 4); else tft.drawRightString("Off", 165, 110, 4);
+              break;
+
+            case 150:
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][16], 150, 70, 4);
+              if (HighCutLevel != 0) tft.drawString("Hz", 170, 110, 4);
+              tft.setTextColor(TFT_YELLOW);
+              if (HighCutLevel != 0) tft.drawRightString(String(HighCutLevel * 100, DEC), 165, 110, 4); else tft.drawRightString("Off", 165, 110, 4);
+              break;
+
+            case 170:
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][17], 150, 70, 4);
+              if (HighCutOffset != 0) tft.drawString("dBuV", 170, 110, 4);
+              tft.setTextColor(TFT_YELLOW);
+              if (HighCutOffset != 0) tft.drawRightString(String(HighCutOffset, DEC), 165, 110, 4); else tft.drawRightString("Off", 165, 110, 4);
+              break;
+
+            case 190:
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][18], 150, 70, 4);
+              tft.drawString("dBuV", 150, 110, 4);
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawRightString(String(LowLevelSet, DEC), 145, 110, 4);
+              break;
+
+            case 210:
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][19], 150, 70, 4);
+              tft.drawString("%", 170, 110, 4);
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawRightString(String(ContrastSet, DEC), 165, 110, 4);
+              break;
+          }
           break;
+        case 2:
+          switch (menuoption) {
+            case 30:
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][40], 150, 70, 4);
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawCentreString(myLanguage[language][0], 150, 110, 4);
+              break;
 
-        case 50:
-          tft.setTextColor(TFT_WHITE);
-          tft.drawCentreString(myLanguage[language][11], 150, 70, 4);
-          tft.drawString("MHz", 170, 110, 4);
-          tft.setTextColor(TFT_YELLOW);
-
-          tft.drawRightString(String(ConverterSet, DEC), 165, 110, 4);
-          break;
-
-        case 70:
-          tft.setTextColor(TFT_WHITE);
-          tft.drawCentreString(myLanguage[language][12], 150, 70, 4);
-          tft.drawString("MHz", 170, 110, 4);
-          tft.setTextColor(TFT_YELLOW);
-          tft.drawRightString(String(LowEdgeSet + ConverterSet, DEC), 165, 110, 4);
-          break;
-
-        case 90:
-          tft.setTextColor(TFT_WHITE);
-          tft.drawCentreString(myLanguage[language][13], 150, 70, 4);
-          tft.drawString("MHz", 170, 110, 4);
-          tft.setTextColor(TFT_YELLOW);
-          tft.drawRightString(String(HighEdgeSet + ConverterSet, DEC), 165, 110, 4);
-          break;
-
-        case 110:
-          tft.setTextColor(TFT_WHITE);
-          tft.drawCentreString(myLanguage[language][14], 150, 70, 4);
-          tft.drawString("dB", 170, 110, 4);
-          tft.drawString("dBuV", 190, 157, 4);
-          tft.setTextColor(TFT_YELLOW);
-          if (LevelOffset > 0) tft.drawRightString("+" + String(LevelOffset, DEC), 165, 110, 4); else tft.drawRightString(String(LevelOffset, DEC), 165, 110, 4);
-          SStatusold = 2000;
-          change2 = true;
-          break;
-
-        case 130:
-          tft.setTextColor(TFT_WHITE);
-          tft.drawCentreString(myLanguage[language][15], 150, 70, 4);
-          if (StereoLevel != 0) tft.drawString("dBuV", 170, 110, 4);
-          tft.setTextColor(TFT_YELLOW);
-          if (StereoLevel != 0) tft.drawRightString(String(StereoLevel, DEC), 165, 110, 4); else tft.drawRightString("Off", 165, 110, 4);
-          break;
-
-        case 150:
-          tft.setTextColor(TFT_WHITE);
-          tft.drawCentreString(myLanguage[language][16], 150, 70, 4);
-          if (HighCutLevel != 0) tft.drawString("Hz", 170, 110, 4);
-          tft.setTextColor(TFT_YELLOW);
-          if (HighCutLevel != 0) tft.drawRightString(String(HighCutLevel * 100, DEC), 165, 110, 4); else tft.drawRightString("Off", 165, 110, 4);
-          break;
-
-        case 170:
-          tft.setTextColor(TFT_WHITE);
-          tft.drawCentreString(myLanguage[language][17], 150, 70, 4);
-          if (HighCutOffset != 0) tft.drawString("dBuV", 170, 110, 4);
-          tft.setTextColor(TFT_YELLOW);
-          if (HighCutOffset != 0) tft.drawRightString(String(HighCutOffset, DEC), 165, 110, 4); else tft.drawRightString("Off", 165, 110, 4);
-          break;
-
-        case 190:
-          tft.setTextColor(TFT_WHITE);
-          tft.drawCentreString(myLanguage[language][18], 150, 70, 4);
-          tft.drawString("dBuV", 150, 110, 4);
-          tft.setTextColor(TFT_YELLOW);
-          tft.drawRightString(String(LowLevelSet, DEC), 145, 110, 4);
-          break;
-
-        case 210:
-          tft.setTextColor(TFT_WHITE);
-          tft.drawCentreString(myLanguage[language][19], 150, 70, 4);
-          tft.drawString("%", 170, 110, 4);
-          tft.setTextColor(TFT_YELLOW);
-          tft.drawRightString(String(ContrastSet, DEC), 165, 110, 4);
-          break;
+            case 50:
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][38], 150, 70, 4);
+              tft.setTextColor(TFT_YELLOW);
+              if (showrdserrors) tft.drawCentreString(myLanguage[language][42], 150, 110, 4); else tft.drawCentreString(myLanguage[language][30], 150, 110, 4);
+              break;
+          }
       }
     } else {
       menuopen = false;
@@ -962,121 +988,149 @@ void KeyUp() {
     if (menuopen == false) {
       tft.drawRoundRect(10, menuoption, 300, 18, 5, TFT_BLACK);
       menuoption += 20;
-      if (menuoption > 210) menuoption = 30;
+      if (menuoption > 210) {
+        menupage++;
+        if (menupage > menupagestotal) menupage = 1;
+        menuoption = 30;
+        BuildMenu();
+      }
       tft.drawRoundRect(10, menuoption, 300, 18, 5, TFT_WHITE);
     } else {
-      switch (menuoption) {
-        case 30:
-          tft.setTextColor(TFT_BLACK);
-          if (VolSet > 0) tft.drawRightString("+" + String(VolSet, DEC), 165, 110, 4); else tft.drawRightString(String(VolSet, DEC), 165, 110, 4);
-          VolSet++;
-          if (VolSet > 10) VolSet = 10;
-          tft.setTextColor(TFT_YELLOW);
-          if (VolSet > 0) tft.drawRightString("+" + String(VolSet, DEC), 165, 110, 4); else tft.drawRightString(String(VolSet, DEC), 165, 110, 4);
-          radio.setVolume(VolSet);
-          break;
+      switch (menupage) {
+        case 1:
+          switch (menuoption) {
+            case 30:
+              tft.setTextColor(TFT_BLACK);
+              if (VolSet > 0) tft.drawRightString("+" + String(VolSet, DEC), 165, 110, 4); else tft.drawRightString(String(VolSet, DEC), 165, 110, 4);
+              VolSet++;
+              if (VolSet > 10) VolSet = 10;
+              tft.setTextColor(TFT_YELLOW);
+              if (VolSet > 0) tft.drawRightString("+" + String(VolSet, DEC), 165, 110, 4); else tft.drawRightString(String(VolSet, DEC), 165, 110, 4);
+              radio.setVolume(VolSet);
+              break;
 
-        case 50:
-          tft.setTextColor(TFT_BLACK);
-          tft.drawRightString(String(ConverterSet, DEC), 165, 110, 4);
-          ConverterSet++;
-            if (ConverterSet > 2400 || ConverterSet <= 200) if (ConverterSet == 1) ConverterSet = 200; else ConverterSet = 0;
-          if (ConverterSet >= 200) {
-            Wire.beginTransmission(0x12);
-            Wire.write(ConverterSet >> 8);
-            Wire.write(ConverterSet & (0xFF));
-            Wire.endTransmission();
+            case 50:
+              tft.setTextColor(TFT_BLACK);
+              tft.drawRightString(String(ConverterSet, DEC), 165, 110, 4);
+              ConverterSet++;
+                if (ConverterSet > 2400 || ConverterSet <= 200) if (ConverterSet == 1) ConverterSet = 200; else ConverterSet = 0;
+              if (ConverterSet >= 200) {
+                Wire.beginTransmission(0x12);
+                Wire.write(ConverterSet >> 8);
+                Wire.write(ConverterSet & (0xFF));
+                Wire.endTransmission();
+              }
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawRightString(String(ConverterSet, DEC), 165, 110, 4);
+              break;
+
+            case 70:
+              tft.setTextColor(TFT_BLACK);
+              tft.drawRightString(String(LowEdgeSet + ConverterSet, DEC), 165, 110, 4);
+              LowEdgeSet ++;
+              if (LowEdgeSet > 107) LowEdgeSet = 65;
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawRightString(String(LowEdgeSet + ConverterSet, DEC), 165, 110, 4);
+              break;
+
+            case 90:
+              tft.setTextColor(TFT_BLACK);
+              tft.drawRightString(String(HighEdgeSet + ConverterSet, DEC), 165, 110, 4);
+              HighEdgeSet ++;
+              if (HighEdgeSet > 108) HighEdgeSet = 66;
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawRightString(String(HighEdgeSet + ConverterSet, DEC), 165, 110, 4);
+              break;
+
+            case 110:
+              tft.setTextColor(TFT_BLACK);
+              if (LevelOffset > 0) tft.drawRightString("+" + String(LevelOffset, DEC), 165, 110, 4); else tft.drawRightString(String(LevelOffset, DEC), 165, 110, 4);
+              LevelOffset++;
+              if (LevelOffset > 15) LevelOffset = -25;
+              tft.setTextColor(TFT_YELLOW);
+              if (LevelOffset > 0) tft.drawRightString("+" + String(LevelOffset, DEC), 165, 110, 4); else tft.drawRightString(String(LevelOffset, DEC), 165, 110, 4);          radio.setOffset(LevelOffset);
+              change2 = true;
+              break;
+
+            case 130:
+              tft.setTextColor(TFT_BLACK);
+              tft.drawRightString(String(StereoLevel, DEC), 165, 110, 4);
+              StereoLevel ++;
+                if (StereoLevel > 60 || StereoLevel <= 30) if (StereoLevel == 1) StereoLevel = 30; else StereoLevel = 0;
+              tft.setTextColor(TFT_BLACK);
+              tft.drawRightString("Off", 165, 110, 4);
+              tft.drawString("dBuV", 170, 110, 4);
+              tft.setTextColor(TFT_WHITE);
+              if (StereoLevel != 0) tft.drawString("dBuV", 170, 110, 4);
+              tft.setTextColor(TFT_YELLOW);
+              if (StereoLevel != 0) tft.drawRightString(String(StereoLevel, DEC), 165, 110, 4); else tft.drawRightString("Off", 165, 110, 4);
+              radio.setStereoLevel(StereoLevel);
+              break;
+
+            case 150:
+              tft.setTextColor(TFT_BLACK);
+              tft.drawRightString(String(HighCutLevel * 100, DEC), 165, 110, 4);
+              HighCutLevel ++;
+              if (HighCutLevel > 70) HighCutLevel = 15;
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawRightString(String(HighCutLevel * 100, DEC), 165, 110, 4);
+              radio.setHighCutLevel(HighCutLevel);
+              break;
+
+            case 170:
+              tft.setTextColor(TFT_BLACK);
+              tft.drawRightString(String(HighCutOffset, DEC), 165, 110, 4);
+              HighCutOffset ++;
+                if (HighCutOffset > 60 || HighCutOffset <= 20) if (HighCutOffset == 1) HighCutOffset = 20; else HighCutOffset = 0;
+              tft.setTextColor(TFT_BLACK);
+              tft.drawRightString("Off", 165, 110, 4);
+              tft.drawString("dBuV", 170, 110, 4);
+              tft.setTextColor(TFT_WHITE);
+              if (HighCutOffset != 0) tft.drawString("dBuV", 170, 110, 4);
+              tft.setTextColor(TFT_YELLOW);
+              if (HighCutOffset != 0) tft.drawRightString(String(HighCutOffset, DEC), 165, 110, 4); else tft.drawRightString("Off", 165, 110, 4);
+              radio.setHighCutOffset(HighCutOffset);
+              break;
+
+            case 190:
+              tft.setTextColor(TFT_BLACK);
+              tft.drawRightString(String(LowLevelSet, DEC), 145, 110, 4);
+              LowLevelSet++;
+              if (LowLevelSet > 40) LowLevelSet = -10;
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawRightString(String(LowLevelSet, DEC), 145, 110, 4);
+              break;
+
+            case 210:
+              tft.setTextColor(TFT_BLACK);
+              tft.drawRightString(String(ContrastSet, DEC), 165, 110, 4);
+              ContrastSet ++;
+              if (ContrastSet > 100) ContrastSet = 1;
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawRightString(String(ContrastSet, DEC), 165, 110, 4);
+              analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+              break;
           }
-          tft.setTextColor(TFT_YELLOW);
-          tft.drawRightString(String(ConverterSet, DEC), 165, 110, 4);
           break;
+        case 2:
+          switch (menuoption) {
+            case 30:
+              tft.setTextColor(TFT_BLACK);
+              tft.drawCentreString(myLanguage[language][0], 150, 110, 4);
+              language ++;
+              if (language == (sizeof (myLanguage) / sizeof (myLanguage[0]))) language = 0;
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawCentreString(myLanguage[language][0], 150, 110, 4);
+              break;
 
-        case 70:
-          tft.setTextColor(TFT_BLACK);
-          tft.drawRightString(String(LowEdgeSet + ConverterSet, DEC), 165, 110, 4);
-          LowEdgeSet ++;
-          if (LowEdgeSet > 107) LowEdgeSet = 65;
-          tft.setTextColor(TFT_YELLOW);
-          tft.drawRightString(String(LowEdgeSet + ConverterSet, DEC), 165, 110, 4);
-          break;
-
-        case 90:
-          tft.setTextColor(TFT_BLACK);
-          tft.drawRightString(String(HighEdgeSet + ConverterSet, DEC), 165, 110, 4);
-          HighEdgeSet ++;
-          if (HighEdgeSet > 108) HighEdgeSet = 66;
-          tft.setTextColor(TFT_YELLOW);
-          tft.drawRightString(String(HighEdgeSet + ConverterSet, DEC), 165, 110, 4);
-          break;
-
-        case 110:
-          tft.setTextColor(TFT_BLACK);
-          if (LevelOffset > 0) tft.drawRightString("+" + String(LevelOffset, DEC), 165, 110, 4); else tft.drawRightString(String(LevelOffset, DEC), 165, 110, 4);
-          LevelOffset++;
-          if (LevelOffset > 15) LevelOffset = -25;
-          tft.setTextColor(TFT_YELLOW);
-          if (LevelOffset > 0) tft.drawRightString("+" + String(LevelOffset, DEC), 165, 110, 4); else tft.drawRightString(String(LevelOffset, DEC), 165, 110, 4);          radio.setOffset(LevelOffset);
-          change2 = true;
-          break;
-
-        case 130:
-          tft.setTextColor(TFT_BLACK);
-          tft.drawRightString(String(StereoLevel, DEC), 165, 110, 4);
-          StereoLevel ++;
-            if (StereoLevel > 60 || StereoLevel <= 30) if (StereoLevel == 1) StereoLevel = 30; else StereoLevel = 0;
-          tft.setTextColor(TFT_BLACK);
-          tft.drawRightString("Off", 165, 110, 4);
-          tft.drawString("dBuV", 170, 110, 4);
-          tft.setTextColor(TFT_WHITE);
-          if (StereoLevel != 0) tft.drawString("dBuV", 170, 110, 4);
-          tft.setTextColor(TFT_YELLOW);
-          if (StereoLevel != 0) tft.drawRightString(String(StereoLevel, DEC), 165, 110, 4); else tft.drawRightString("Off", 165, 110, 4);
-          radio.setStereoLevel(StereoLevel);
-          break;
-
-        case 150:
-          tft.setTextColor(TFT_BLACK);
-          tft.drawRightString(String(HighCutLevel * 100, DEC), 165, 110, 4);
-          HighCutLevel ++;
-          if (HighCutLevel > 70) HighCutLevel = 15;
-          tft.setTextColor(TFT_YELLOW);
-          tft.drawRightString(String(HighCutLevel * 100, DEC), 165, 110, 4);
-          radio.setHighCutLevel(HighCutLevel);
-          break;
-
-        case 170:
-          tft.setTextColor(TFT_BLACK);
-          tft.drawRightString(String(HighCutOffset, DEC), 165, 110, 4);
-          HighCutOffset ++;
-            if (HighCutOffset > 60 || HighCutOffset <= 20) if (HighCutOffset == 1) HighCutOffset = 20; else HighCutOffset = 0;
-          tft.setTextColor(TFT_BLACK);
-          tft.drawRightString("Off", 165, 110, 4);
-          tft.drawString("dBuV", 170, 110, 4);
-          tft.setTextColor(TFT_WHITE);
-          if (HighCutOffset != 0) tft.drawString("dBuV", 170, 110, 4);
-          tft.setTextColor(TFT_YELLOW);
-          if (HighCutOffset != 0) tft.drawRightString(String(HighCutOffset, DEC), 165, 110, 4); else tft.drawRightString("Off", 165, 110, 4);
-          radio.setHighCutOffset(HighCutOffset);
-          break;
-
-        case 190:
-          tft.setTextColor(TFT_BLACK);
-          tft.drawRightString(String(LowLevelSet, DEC), 145, 110, 4);
-          LowLevelSet++;
-          if (LowLevelSet > 40) LowLevelSet = -10;
-          tft.setTextColor(TFT_YELLOW);
-          tft.drawRightString(String(LowLevelSet, DEC), 145, 110, 4);
-          break;
-
-        case 210:
-          tft.setTextColor(TFT_BLACK);
-          tft.drawRightString(String(ContrastSet, DEC), 165, 110, 4);
-          ContrastSet ++;
-          if (ContrastSet > 100) ContrastSet = 1;
-          tft.setTextColor(TFT_YELLOW);
-          tft.drawRightString(String(ContrastSet, DEC), 165, 110, 4);
-          analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
-          break;
+            case 50:
+              tft.setTextColor(TFT_BLACK);
+              if (showrdserrors) tft.drawCentreString(myLanguage[language][42], 150, 110, 4); else tft.drawCentreString(myLanguage[language][30], 150, 110, 4);
+              if (showrdserrors) showrdserrors = false; else showrdserrors = true;
+              tft.setTextColor(TFT_YELLOW);
+              if (showrdserrors) tft.drawCentreString(myLanguage[language][42], 150, 110, 4); else tft.drawCentreString(myLanguage[language][30], 150, 110, 4);
+              break;
+          }
       }
     }
   }
@@ -1115,124 +1169,151 @@ void KeyDown() {
       tft.drawRoundRect(10, menuoption, 300, 18, 5, TFT_BLACK);
       menuoption -= 20;
       if (menuoption < 30) {
+        menupage--;
+        if (menupage == 0) menupage = menupagestotal;
         menuoption = 210;
+        BuildMenu();
       }
       tft.drawRoundRect(10, menuoption, 300, 18, 5, TFT_WHITE);
     } else {
-      switch (menuoption) {
-        case 30:
-          tft.setTextColor(TFT_BLACK);
-          if (VolSet > 0) tft.drawRightString("+" + String(VolSet, DEC), 165, 110, 4); else tft.drawRightString(String(VolSet, DEC), 165, 110, 4);
-          VolSet--;
-          if (VolSet < -10) VolSet = -10;
-          tft.setTextColor(TFT_YELLOW);
-          if (VolSet > 0) tft.drawRightString("+" + String(VolSet, DEC), 165, 110, 4); else tft.drawRightString(String(VolSet, DEC), 165, 110, 4);          radio.setVolume(VolSet);
-          break;
+      switch (menupage) {
+        case 1:
+          switch (menuoption) {
+            case 30:
+              tft.setTextColor(TFT_BLACK);
+              if (VolSet > 0) tft.drawRightString("+" + String(VolSet, DEC), 165, 110, 4); else tft.drawRightString(String(VolSet, DEC), 165, 110, 4);
+              VolSet--;
+              if (VolSet < -10) VolSet = -10;
+              tft.setTextColor(TFT_YELLOW);
+              if (VolSet > 0) tft.drawRightString("+" + String(VolSet, DEC), 165, 110, 4); else tft.drawRightString(String(VolSet, DEC), 165, 110, 4);          radio.setVolume(VolSet);
+              break;
 
-        case 50:
-          tft.setTextColor(TFT_BLACK);
-          tft.drawRightString(String(ConverterSet, DEC), 165, 110, 4);
-          ConverterSet--;
-            if (ConverterSet < 200) if (ConverterSet < 0) ConverterSet = 2400; else ConverterSet = 0;
-          if (ConverterSet >= 200) {
-            Wire.beginTransmission(0x12);
-            Wire.write(ConverterSet >> 8);
-            Wire.write(ConverterSet & (0xFF));
-            Wire.endTransmission();
+            case 50:
+              tft.setTextColor(TFT_BLACK);
+              tft.drawRightString(String(ConverterSet, DEC), 165, 110, 4);
+              ConverterSet--;
+                if (ConverterSet < 200) if (ConverterSet < 0) ConverterSet = 2400; else ConverterSet = 0;
+              if (ConverterSet >= 200) {
+                Wire.beginTransmission(0x12);
+                Wire.write(ConverterSet >> 8);
+                Wire.write(ConverterSet & (0xFF));
+                Wire.endTransmission();
+              }
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawRightString(String(ConverterSet, DEC), 165, 110, 4);
+              break;
+
+            case 70:
+              tft.setTextColor(TFT_BLACK);
+              tft.drawRightString(String(LowEdgeSet + ConverterSet, DEC), 165, 110, 4);
+              LowEdgeSet --;
+              if (LowEdgeSet < 65) LowEdgeSet = 107;
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawRightString(String(LowEdgeSet + ConverterSet, DEC), 165, 110, 4);
+              break;
+
+            case 90:
+              tft.setTextColor(TFT_BLACK);
+              tft.drawRightString(String(HighEdgeSet + ConverterSet, DEC), 165, 110, 4);
+              HighEdgeSet --;
+              if (HighEdgeSet < 66) HighEdgeSet = 108;
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawRightString(String(HighEdgeSet + ConverterSet, DEC), 165, 110, 4);
+              break;
+
+            case 110:
+              tft.setTextColor(TFT_BLACK);
+              if (LevelOffset > 0) tft.drawRightString("+" + String(LevelOffset, DEC), 165, 110, 4); else tft.drawRightString(String(LevelOffset, DEC), 165, 110, 4);
+              LevelOffset--;
+              if (LevelOffset < -25) LevelOffset = 15;
+              tft.setTextColor(TFT_YELLOW);
+              if (LevelOffset > 0) tft.drawRightString("+" + String(LevelOffset, DEC), 165, 110, 4); else tft.drawRightString(String(LevelOffset, DEC), 165, 110, 4);          radio.setOffset(LevelOffset);
+              change2 = true;
+              break;
+
+            case 130:
+              tft.setTextColor(TFT_BLACK);
+              tft.drawRightString(String(StereoLevel, DEC), 165, 110, 4);
+              StereoLevel --;
+                if (StereoLevel < 30) if (StereoLevel < 0) StereoLevel = 60; else StereoLevel = 0;
+              tft.setTextColor(TFT_BLACK);
+              tft.drawRightString("Off", 165, 110, 4);
+              tft.drawString("dBuV", 170, 110, 4);
+              tft.setTextColor(TFT_WHITE);
+              if (StereoLevel != 0) {
+                tft.drawString("dBuV", 170, 110, 4);
+              }
+              tft.setTextColor(TFT_YELLOW);
+              if (StereoLevel != 0) tft.drawRightString(String(StereoLevel, DEC), 165, 110, 4); else tft.drawRightString("Off", 165, 110, 4);
+              radio.setStereoLevel(StereoLevel);
+              break;
+
+            case 150:
+              tft.setTextColor(TFT_BLACK);
+              tft.drawRightString(String(HighCutLevel * 100, DEC), 165, 110, 4);
+              HighCutLevel --;
+              if (HighCutLevel < 15) HighCutLevel = 70;
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawRightString(String(HighCutLevel * 100, DEC), 165, 110, 4);
+              radio.setHighCutLevel(HighCutLevel);
+              break;
+
+            case 170:
+              tft.setTextColor(TFT_BLACK);
+              tft.drawRightString(String(HighCutOffset, DEC), 165, 110, 4);
+              HighCutOffset --;
+                if (HighCutOffset < 20) if (HighCutOffset < 0) HighCutOffset = 60; else HighCutOffset = 0;
+              tft.setTextColor(TFT_BLACK);
+              tft.drawRightString("Off", 165, 110, 4);
+              tft.drawString("dBuV", 170, 110, 4);
+              tft.setTextColor(TFT_WHITE);
+              if (HighCutOffset != 0) tft.drawString("dBuV", 170, 110, 4);
+              tft.setTextColor(TFT_YELLOW);
+              if (HighCutOffset != 0) tft.drawRightString(String(HighCutOffset, DEC), 165, 110, 4); else tft.drawRightString("Off", 165, 110, 4);
+              radio.setHighCutOffset(HighCutOffset);
+              break;
+
+            case 190:
+              tft.setTextColor(TFT_BLACK);
+              tft.drawRightString(String(LowLevelSet, DEC), 145, 110, 4);
+              LowLevelSet--;
+              if (LowLevelSet < -10) LowLevelSet = 40;
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawRightString(String(LowLevelSet, DEC), 145, 110, 4);
+              break;
+
+
+            case 210:
+              tft.setTextColor(TFT_BLACK);
+              tft.drawRightString(String(ContrastSet, DEC), 165, 110, 4);
+              ContrastSet --;
+              if (ContrastSet < 1) ContrastSet = 100;
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawRightString(String(ContrastSet, DEC), 165, 110, 4);
+              analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+              break;
           }
-          tft.setTextColor(TFT_YELLOW);
-          tft.drawRightString(String(ConverterSet, DEC), 165, 110, 4);
           break;
 
-        case 70:
-          tft.setTextColor(TFT_BLACK);
-          tft.drawRightString(String(LowEdgeSet + ConverterSet, DEC), 165, 110, 4);
-          LowEdgeSet --;
-          if (LowEdgeSet < 65) LowEdgeSet = 107;
-          tft.setTextColor(TFT_YELLOW);
-          tft.drawRightString(String(LowEdgeSet + ConverterSet, DEC), 165, 110, 4);
-          break;
+        case 2:
+          switch (menuoption) {
+            case 30:
+              tft.setTextColor(TFT_BLACK);
+              tft.drawCentreString(myLanguage[language][0], 150, 110, 4);
+              language --;
+              if (language > (sizeof (myLanguage) / sizeof (myLanguage[0]))) language = (sizeof (myLanguage) / sizeof (myLanguage[0])) - 1;
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawCentreString(myLanguage[language][0], 150, 110, 4);
+              break;
 
-        case 90:
-          tft.setTextColor(TFT_BLACK);
-          tft.drawRightString(String(HighEdgeSet + ConverterSet, DEC), 165, 110, 4);
-          HighEdgeSet --;
-          if (HighEdgeSet < 66) HighEdgeSet = 108;
-          tft.setTextColor(TFT_YELLOW);
-          tft.drawRightString(String(HighEdgeSet + ConverterSet, DEC), 165, 110, 4);
-          break;
-
-        case 110:
-          tft.setTextColor(TFT_BLACK);
-          if (LevelOffset > 0) tft.drawRightString("+" + String(LevelOffset, DEC), 165, 110, 4); else tft.drawRightString(String(LevelOffset, DEC), 165, 110, 4);
-          LevelOffset--;
-          if (LevelOffset < -25) LevelOffset = 15;
-          tft.setTextColor(TFT_YELLOW);
-          if (LevelOffset > 0) tft.drawRightString("+" + String(LevelOffset, DEC), 165, 110, 4); else tft.drawRightString(String(LevelOffset, DEC), 165, 110, 4);          radio.setOffset(LevelOffset);
-          change2 = true;
-          break;
-
-        case 130:
-          tft.setTextColor(TFT_BLACK);
-          tft.drawRightString(String(StereoLevel, DEC), 165, 110, 4);
-          StereoLevel --;
-            if (StereoLevel < 30) if (StereoLevel < 0) StereoLevel = 60; else StereoLevel = 0;
-          tft.setTextColor(TFT_BLACK);
-          tft.drawRightString("Off", 165, 110, 4);
-          tft.drawString("dBuV", 170, 110, 4);
-          tft.setTextColor(TFT_WHITE);
-          if (StereoLevel != 0) {
-            tft.drawString("dBuV", 170, 110, 4);
+            case 50:
+              tft.setTextColor(TFT_BLACK);
+              if (showrdserrors) tft.drawCentreString(myLanguage[language][42], 150, 110, 4); else tft.drawCentreString(myLanguage[language][30], 150, 110, 4);
+              if (showrdserrors) showrdserrors = false; else showrdserrors = true;
+              tft.setTextColor(TFT_YELLOW);
+              if (showrdserrors) tft.drawCentreString(myLanguage[language][42], 150, 110, 4); else tft.drawCentreString(myLanguage[language][30], 150, 110, 4);
+              break;
           }
-          tft.setTextColor(TFT_YELLOW);
-          if (StereoLevel != 0) tft.drawRightString(String(StereoLevel, DEC), 165, 110, 4); else tft.drawRightString("Off", 165, 110, 4);
-          radio.setStereoLevel(StereoLevel);
-          break;
-
-        case 150:
-          tft.setTextColor(TFT_BLACK);
-          tft.drawRightString(String(HighCutLevel * 100, DEC), 165, 110, 4);
-          HighCutLevel --;
-          if (HighCutLevel < 15) HighCutLevel = 70;
-          tft.setTextColor(TFT_YELLOW);
-          tft.drawRightString(String(HighCutLevel * 100, DEC), 165, 110, 4);
-          radio.setHighCutLevel(HighCutLevel);
-          break;
-
-        case 170:
-          tft.setTextColor(TFT_BLACK);
-          tft.drawRightString(String(HighCutOffset, DEC), 165, 110, 4);
-          HighCutOffset --;
-            if (HighCutOffset < 20) if (HighCutOffset < 0) HighCutOffset = 60; else HighCutOffset = 0;
-          tft.setTextColor(TFT_BLACK);
-          tft.drawRightString("Off", 165, 110, 4);
-          tft.drawString("dBuV", 170, 110, 4);
-          tft.setTextColor(TFT_WHITE);
-          if (HighCutOffset != 0) tft.drawString("dBuV", 170, 110, 4);
-          tft.setTextColor(TFT_YELLOW);
-          if (HighCutOffset != 0) tft.drawRightString(String(HighCutOffset, DEC), 165, 110, 4); else tft.drawRightString("Off", 165, 110, 4);
-          radio.setHighCutOffset(HighCutOffset);
-          break;
-
-        case 190:
-          tft.setTextColor(TFT_BLACK);
-          tft.drawRightString(String(LowLevelSet, DEC), 145, 110, 4);
-          LowLevelSet--;
-          if (LowLevelSet < -10) LowLevelSet = 40;
-          tft.setTextColor(TFT_YELLOW);
-          tft.drawRightString(String(LowLevelSet, DEC), 145, 110, 4);
-          break;
-
-
-        case 210:
-          tft.setTextColor(TFT_BLACK);
-          tft.drawRightString(String(ContrastSet, DEC), 165, 110, 4);
-          ContrastSet --;
-          if (ContrastSet < 1) ContrastSet = 100;
-          tft.setTextColor(TFT_YELLOW);
-          tft.drawRightString(String(ContrastSet, DEC), 165, 110, 4);
-          analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
-          break;
       }
     }
   }
@@ -1393,40 +1474,52 @@ void BuildMenu() {
   tft.setTextColor(TFT_SKYBLUE);
   tft.drawString(myLanguage[language][41], 10, 4, 2);
   tft.setTextColor(TFT_WHITE);
-  tft.drawRightString(VERSION, 305, 4, 2);
+  tft.drawRightString(String(menupage) + "/" + String(menupagestotal), 305, 4, 2);
   tft.drawRoundRect(10, menuoption, 300, 18, 5, TFT_WHITE);
   tft.setTextColor(TFT_WHITE);
-  tft.drawRightString("dB", 305, 30, 2);
-  tft.drawRightString("MHz", 305, 50, 2);
-  tft.drawRightString("MHz", 305, 70, 2);
-  tft.drawRightString("MHz", 305, 90, 2);
-  tft.drawRightString("dB", 305, 110, 2);
-  if (StereoLevel != 0) tft.drawRightString("dBuV", 305, 130, 2);
-  if (HighCutLevel != 0) tft.drawRightString("Hz", 305, 150, 2);
-  if (HighCutOffset != 0) tft.drawRightString("dBuV", 305, 170, 2);
-  tft.drawRightString("dBuV", 305, 190, 2);
-  tft.drawRightString("%", 305, 210, 2);
-  tft.drawString(myLanguage[language][20], 20, 30, 2);
-  tft.drawString(myLanguage[language][21], 20, 50, 2);
-  tft.drawString(myLanguage[language][22], 20, 70, 2);
-  tft.drawString(myLanguage[language][23], 20, 90, 2);
-  tft.drawString(myLanguage[language][24], 20, 110, 2);
-  tft.drawString(myLanguage[language][25], 20, 130, 2);
-  tft.drawString(myLanguage[language][26], 20, 150, 2);
-  tft.drawString(myLanguage[language][27], 20, 170, 2);
-  tft.drawString(myLanguage[language][28], 20, 190, 2);
-  tft.drawString(myLanguage[language][29], 20, 210, 2);
-  tft.setTextColor(TFT_YELLOW);
-  if (VolSet > 0) tft.drawRightString("+" + String(VolSet, DEC), 270, 30, 2); else tft.drawRightString(String(VolSet, DEC), 270, 30, 2);
-  tft.drawRightString(String(ConverterSet, DEC), 270, 50, 2);
-  tft.drawRightString(String(LowEdgeSet + ConverterSet, DEC), 270, 70, 2);
-  tft.drawRightString(String(HighEdgeSet + ConverterSet, DEC), 270, 90, 2);
-  if (LevelOffset > 0) tft.drawRightString("+" + String(LevelOffset, DEC), 270, 110, 2); else tft.drawRightString(String(LevelOffset, DEC), 270, 110, 2);
-  if (StereoLevel != 0) tft.drawRightString(String(StereoLevel, DEC), 270, 130, 2); else tft.drawRightString(myLanguage[language][30], 270, 130, 2);
-  if (HighCutLevel != 0) tft.drawRightString(String(HighCutLevel * 100, DEC), 270, 150, 2); else tft.drawRightString(myLanguage[language][30], 270, 150, 2);
-  if (HighCutOffset != 0) tft.drawRightString(String(HighCutOffset, DEC), 270, 170, 2); else tft.drawRightString(myLanguage[language][30], 270, 170, 2);
-  tft.drawRightString(String(LowLevelSet, DEC), 270, 190, 2);
-  tft.drawRightString(String(ContrastSet, DEC), 270, 210, 2);
+  switch (menupage) {
+    case 1:
+      tft.drawRightString("dB", 305, 30, 2);
+      tft.drawRightString("MHz", 305, 50, 2);
+      tft.drawRightString("MHz", 305, 70, 2);
+      tft.drawRightString("MHz", 305, 90, 2);
+      tft.drawRightString("dB", 305, 110, 2);
+      if (StereoLevel != 0) tft.drawRightString("dBuV", 305, 130, 2);
+      if (HighCutLevel != 0) tft.drawRightString("Hz", 305, 150, 2);
+      if (HighCutOffset != 0) tft.drawRightString("dBuV", 305, 170, 2);
+      tft.drawRightString("dBuV", 305, 190, 2);
+      tft.drawRightString("%", 305, 210, 2);
+      tft.drawString(myLanguage[language][20], 20, 30, 2);
+      tft.drawString(myLanguage[language][21], 20, 50, 2);
+      tft.drawString(myLanguage[language][22], 20, 70, 2);
+      tft.drawString(myLanguage[language][23], 20, 90, 2);
+      tft.drawString(myLanguage[language][24], 20, 110, 2);
+      tft.drawString(myLanguage[language][25], 20, 130, 2);
+      tft.drawString(myLanguage[language][26], 20, 150, 2);
+      tft.drawString(myLanguage[language][27], 20, 170, 2);
+      tft.drawString(myLanguage[language][28], 20, 190, 2);
+      tft.drawString(myLanguage[language][29], 20, 210, 2);
+      tft.setTextColor(TFT_YELLOW);
+      if (VolSet > 0) tft.drawRightString("+" + String(VolSet, DEC), 270, 30, 2); else tft.drawRightString(String(VolSet, DEC), 270, 30, 2);
+      tft.drawRightString(String(ConverterSet, DEC), 270, 50, 2);
+      tft.drawRightString(String(LowEdgeSet + ConverterSet, DEC), 270, 70, 2);
+      tft.drawRightString(String(HighEdgeSet + ConverterSet, DEC), 270, 90, 2);
+      if (LevelOffset > 0) tft.drawRightString("+" + String(LevelOffset, DEC), 270, 110, 2); else tft.drawRightString(String(LevelOffset, DEC), 270, 110, 2);
+      if (StereoLevel != 0) tft.drawRightString(String(StereoLevel, DEC), 270, 130, 2); else tft.drawRightString(myLanguage[language][30], 270, 130, 2);
+      if (HighCutLevel != 0) tft.drawRightString(String(HighCutLevel * 100, DEC), 270, 150, 2); else tft.drawRightString(myLanguage[language][30], 270, 150, 2);
+      if (HighCutOffset != 0) tft.drawRightString(String(HighCutOffset, DEC), 270, 170, 2); else tft.drawRightString(myLanguage[language][30], 270, 170, 2);
+      tft.drawRightString(String(LowLevelSet, DEC), 270, 190, 2);
+      tft.drawRightString(String(ContrastSet, DEC), 270, 210, 2);
+      break;
+
+    case 2:
+      tft.drawString(myLanguage[language][39], 20, 30, 2);
+      tft.drawString(myLanguage[language][38], 20, 50, 2);
+      tft.setTextColor(TFT_YELLOW);
+      tft.drawRightString(myLanguage[language][0], 305, 30, 2);
+      if (showrdserrors) tft.drawRightString(myLanguage[language][42], 305, 50, 2); else tft.drawRightString(myLanguage[language][30], 305, 50, 2);
+      break;
+  }
   analogWrite(SMETERPIN, 0);
 }
 
