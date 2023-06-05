@@ -138,10 +138,17 @@ const char myLanguage[4][46][60] = {
    "Jezyk", 
    "Wybierz swoj jezyk",
    "WCISNIJ MODE ABY ZAMKNAC I ZAPISAC",
+<<<<<<< HEAD
    "On", 										// Needs translation!
    "Softmute FM",								// Needs translation!
    "Softmute AM", 								// Needs translation!
    "Beep at band edge"							// Needs translation!
+=======
+   "Wlacz.", 										
+   "Lagodne wycisz. FM",								
+   "Lagodne wycisz. AM", 								
+   "Beep na krawedzi pasma"						
+>>>>>>> a5e3a5b69cca79f6c9501e3dc68b562d6c603b82
    },
    
    {"Hrvatski",
