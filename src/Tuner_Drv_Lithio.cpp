@@ -177,7 +177,7 @@ bool devTEF_Radio_Set_Softmute_Max_FM(uint8_t mode) {
 }
 
 bool devTEF_Radio_Set_Softmute_Max_AM(uint8_t mode) {
-  return devTEF_Set_Cmd(TEF_AM, Cmd_Set_Softmute_Max, 7, uint16_t(mode), uint16_t(300));
+  return devTEF_Set_Cmd(TEF_AM, Cmd_Set_Softmute_Max, 7, uint16_t(mode), uint16_t(250));
 }
 
 bool devTEF_APPL_Get_Operation_Status (uint8_t *bootstatus) {

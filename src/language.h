@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-const char myLanguage[3][43][50] = {
+const char myLanguage[3][45][50] = {
   { "English",
     "Rotary direction changed",
     "Please release button",
@@ -43,7 +43,9 @@ const char myLanguage[3][43][50] = {
     "Language",
     "Choose language",
     "PRESS MODE TO EXIT AND STORE",
-	"On"
+	"On",
+	"Softmute FM",
+	"Softmute AM"
   },
   
   { "Nederlands",
@@ -88,7 +90,9 @@ const char myLanguage[3][43][50] = {
     "Taal",
     "Kies taal",
     "DRUK OP MODE OM AF TE SLUITEN",
-	"Aan"
+	"Aan",
+	"Ruisonderdrukking FM",
+	"Ruisonderdrukking AM"
   },
   { "Polski", 
    "Kierunek obrotu zmieniony", 
@@ -132,7 +136,9 @@ const char myLanguage[3][43][50] = {
    "Jezyk", 
    "Wybierz swoj jezyk",
    "WCISNIJ MODE ABY ZAMKNAC I ZAPISAC",
-   "On" 										// Needs translation!
+   "On", 										// Needs translation!
+   "Softmute FM",								// Needs translation!
+   "Softmute AM" 								// Needs translation!
    }
 
 
