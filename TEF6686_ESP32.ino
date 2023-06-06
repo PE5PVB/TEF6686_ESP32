@@ -8,8 +8,8 @@
 #include "src/language.h"
 
 #define GFXFF 1
-#define EXO14 &Exo2_Regular14pt8b
-#define EXO8  &Exo2_Regular8pt8b
+#define EXO14 &exo2_Regular14pt8b
+#define EXO8  &exo2_Regular8pt8b
 #define TFT_GREYOUT     0x38E7
 #define ROTARY_PIN_A    34
 #define ROTARY_PIN_B    36
