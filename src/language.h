@@ -138,10 +138,6 @@ const char myLanguage[4][46][60] = {
    "Jezyk", 
    "Wybierz swoj jezyk",
    "WCISNIJ MODE ABY ZAMKNAC I ZAPISAC",
-   "On", 										// Needs translation!
-   "Softmute FM",								// Needs translation!
-   "Softmute AM", 								// Needs translation!
-   "Beep at band edge"							// Needs translation!
    "Wlacz.", 										
    "Lagodne wycisz. FM",								
    "Lagodne wycisz. AM", 								
