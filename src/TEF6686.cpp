@@ -296,8 +296,8 @@ bool TEF6686::readRDS(bool showrdserrors)
           if ((offset == 0) && (ps_process == 0)) ps_process = 1;
 
           if (ps_process == 1) {
-            ps_buffer[(offset * 2)  + 0] = rds.rdsD >> 8;
-            ps_buffer[(offset * 2)  + 1] = rds.rdsD & 0xFF;
+            ps_buffer[(offset * 2)  + 0] = ascii_converter(rds.rdsD >> 8);
+            ps_buffer[(offset * 2)  + 1] = ascii_converter(rds.rdsD & 0xFF);
             ps_buffer[(offset * 2)  + 2] = 0;
             ps_process = strlen(ps_buffer) == 8 ? 2 : 1;
           }
@@ -384,10 +384,10 @@ bool TEF6686::readRDS(bool showrdserrors)
           if (rt_process == 1)
           {
             rds.stationTextOffset = offset;
-            rt_buffer[offset + 0] = rds.rdsC >> 8;
-            rt_buffer[offset + 1] = rds.rdsC & 0xff;
-            rt_buffer[offset + 2] = rds.rdsD >> 8;
-            rt_buffer[offset + 3] = rds.rdsD & 0xff;
+            rt_buffer[offset + 0] = ascii_converter(rds.rdsC >> 8);
+            rt_buffer[offset + 1] = ascii_converter(rds.rdsC & 0xff);
+            rt_buffer[offset + 2] = ascii_converter(rds.rdsD >> 8);
+            rt_buffer[offset + 3] = ascii_converter(rds.rdsD & 0xff);
 
             if (offset > offsetold) offsetold = offset;
 
@@ -517,6 +517,23 @@ bool TEF6686::readRDS(bool showrdserrors)
     }
   }
   return rdsDataReady;
+}
+
+uint8_t TEF6686::ascii_converter (uint8_t src)
+{
+  char dest = src;
+  switch (src)
+  {
+    case 0x91: dest = 225; break; //ä
+    case 0x97: dest = 239; break; //ö
+    case 0x99: dest = 245; break; //ü
+    case 0xD1: dest = 225; break; //Ä
+    case 0xD7: dest = 239; break; //Ö
+    case 0xD9: dest = 245; break; //Ü
+    case 0x8D: dest = 226; break; //ß
+    case 0xBB: dest = 223; break; //°
+  }
+  return (dest);
 }
 
 bool TEF6686::checkDouble (uint16_t value)

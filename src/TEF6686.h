@@ -99,6 +99,7 @@ class TEF6686 {
     void tone(uint16_t time, int16_t amplitude, uint16_t frequency);
 
   private:
+	uint8_t ascii_converter   (uint8_t src);
     uint16_t rdsTimeOut = 32768;
     uint8_t ps_process;
     uint8_t rt_process;
