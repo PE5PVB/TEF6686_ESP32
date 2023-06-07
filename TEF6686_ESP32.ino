@@ -88,15 +88,15 @@ char radioTextPrevious[65];
 int AGC;
 int BWOld;
 int charWidth = tft.textWidth("AA");
-int ConverterSet;
+unsigned int ConverterSet;
 int DeEmphasis;
 int ForceMono;
 int freqold;
-int HighCutLevel;
-int HighCutOffset;
-int HighEdgeSet;
+byte HighCutLevel;
+byte HighCutOffset;
+unsigned int HighEdgeSet;
 int LevelOffset;
-int LowEdgeSet;
+unsigned int LowEdgeSet;
 int LowLevelSet;
 int lowsignaltimer;
 int menuoption = 30;
@@ -110,7 +110,7 @@ int Sqstatusold;
 int Squelch;
 int Squelchold;
 int SStatusold;
-int StereoLevel;
+byte StereoLevel;
 int Stereostatus;
 int VolSet;
 int volume;
@@ -122,22 +122,12 @@ int16_t OStatus;
 int16_t SAvg;
 int16_t SAvg2;
 int16_t SStatus;
-String ContrastString;
-String ConverterString;
-String HighCutLevelString;
-String HighCutOffsetString;
-String HighEdgeString;
-String LevelOffsetString;
-String LowEdgeString;
-String LowLevelString;
 String PIold;
 String PSold;
 String PTYold;
 String rds_clock;
 String rds_clockold;
 String RTold;
-String StereoLevelString;
-String VolString;
 String XDRGTKRDS;
 String XDRGTKRDSold;
 uint16_t BW;
@@ -164,35 +154,35 @@ TFT_eSprite sprite = TFT_eSprite(&tft);
 void setup() {
   setupmode = true;
   EEPROM.begin(221);
-  if (EEPROM.readByte(43) != 17) {
-    EEPROM.writeByte(43, 17);
+  if (EEPROM.readByte(43) != 20) {
+    EEPROM.writeByte(43, 20);
     EEPROM.writeUInt(0, 10000);
     EEPROM.writeInt(4, 0);
-    EEPROM.writeInt(8, 0);
-    EEPROM.writeInt(12, 87);
-    EEPROM.writeInt(16, 108);
-    EEPROM.writeInt(20, 50);
+    EEPROM.writeUInt(8, 0);
+    EEPROM.writeUInt(12, 875);
+    EEPROM.writeUInt(16, 1080);
+    EEPROM.writeByte(20, 50);
+    EEPROM.writeByte(21, 0);
+    EEPROM.writeByte(22, 70);
+    EEPROM.writeByte(23, 0);
     EEPROM.writeInt(24, 0);
-    EEPROM.writeInt(28, 0);
-    EEPROM.writeInt(32, 70);
-    EEPROM.writeInt(36, 0);
+    EEPROM.writeByte(28, 0);
+    EEPROM.writeByte(29, 0);
+    EEPROM.writeByte(30, 0);
+    EEPROM.writeUInt(31, 828);
+    EEPROM.writeByte(35, 0);
+    EEPROM.writeByte(36, 1);
+    EEPROM.writeByte(37, 0);
+    EEPROM.writeByte(38, 0);
+    EEPROM.writeByte(39, 0);
     EEPROM.writeByte(40, 0);
     EEPROM.writeByte(41, 0);
     EEPROM.writeByte(42, 0);
     EEPROM.writeByte(44, 1);
     EEPROM.writeByte(45, 1);
     EEPROM.writeByte(46, 0);
-    EEPROM.writeUInt(47, 828);
     EEPROM.writeByte(51, 0);
-    EEPROM.writeByte(52, 0);
-    EEPROM.writeByte(53, 0);
-    EEPROM.writeByte(54, 0);
     EEPROM.writeInt(55, 20);
-    EEPROM.writeByte(59, 1);
-    EEPROM.writeByte(91, 0);
-    EEPROM.writeByte(92, 0);
-    EEPROM.writeByte(93, 0);
-    EEPROM.writeByte(94, 0);
     for (int i = 0; i < 30; i++) EEPROM.writeByte(i + 60, 0);
     for (int i = 0; i < 30; i++) EEPROM.writeUInt((i * 4) + 100, 8750);
     EEPROM.commit();
@@ -200,31 +190,32 @@ void setup() {
 
   frequency = EEPROM.readUInt(0);
   VolSet = EEPROM.readInt(4);
-  ConverterSet = EEPROM.readInt(8);
-  LowEdgeSet = EEPROM.readInt(12);
-  HighEdgeSet = EEPROM.readInt(16);
-  ContrastSet = EEPROM.readInt(20);
+  ConverterSet = EEPROM.readUInt(8);
+  LowEdgeSet = EEPROM.readUInt(12);
+  HighEdgeSet = EEPROM.readUInt(16);
+  ContrastSet = EEPROM.readByte(20);
+  StereoLevel = EEPROM.readByte(21);
+  HighCutLevel = EEPROM.readByte(22);
+  HighCutOffset = EEPROM.readByte(23);
   LevelOffset = EEPROM.readInt(24);
-  StereoLevel = EEPROM.readInt(28);
-  HighCutLevel = EEPROM.readInt(32);
-  HighCutOffset = EEPROM.readInt(36);
+  edgebeep = EEPROM.readByte(28);
+  softmuteam = EEPROM.readByte(29);
+  softmutefm = EEPROM.readByte(30);
+  frequency_AM = EEPROM.readUInt(31);
+  language = EEPROM.readByte(35);
+  showrdserrors = EEPROM.readByte(36);
+  TEF = EEPROM.readByte(37);
+  displayflip = EEPROM.readByte(38);
+  rotarymode = EEPROM.readByte(39);
   stepsize = EEPROM.readByte(40);
   tunemode = EEPROM.readByte(41);
   optenc = EEPROM.readByte(42);
   iMSset = EEPROM.readByte(44);
   EQset = EEPROM.readByte(45);
   band = EEPROM.readByte(46);
-  frequency_AM = EEPROM.readUInt(47);
   memorypos = EEPROM.readByte(51);
-  rotarymode = EEPROM.readByte(52);
-  displayflip = EEPROM.readByte(53);
-  TEF = EEPROM.readByte(54);
   LowLevelSet = EEPROM.readInt(55);
-  showrdserrors = EEPROM.readByte(59);
-  language = EEPROM.readByte(91);
-  softmutefm = EEPROM.readByte(92);
-  softmuteam = EEPROM.readByte(93);
-  edgebeep = EEPROM.readByte(94);
+
   for (int i = 0; i < 30; i++) memoryband[i] = EEPROM.readByte(i + 60);
   for (int i = 0; i < 30; i++) memory[i] = EEPROM.readUInt((i * 4) + 100);
   btStop();
@@ -278,7 +269,7 @@ void setup() {
 
   if (digitalRead(BWBUTTON) == LOW) {
     if (rotarymode == 0) rotarymode = 1; else rotarymode = 0;
-    EEPROM.writeByte(52, rotarymode);
+    EEPROM.writeByte(39, rotarymode);
     EEPROM.commit();
     tft.setFreeFont(FONT14);
     tft.fillScreen(TFT_BLACK);
@@ -296,7 +287,7 @@ void setup() {
       displayflip = 0;
       tft.setRotation(3);
     }
-    EEPROM.writeByte(53, displayflip);
+    EEPROM.writeByte(38, displayflip);
     EEPROM.commit();
     tft.setFreeFont(FONT14);
     tft.fillScreen(TFT_BLACK);
@@ -519,7 +510,7 @@ void loop() {
       detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A));
       detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B));
       EEPROM.writeUInt(0, frequency);
-      EEPROM.writeUInt(47, frequency_AM);
+      EEPROM.writeUInt(31, frequency_AM);
       EEPROM.writeByte(46, band);
       EEPROM.commit();
       store = false;
@@ -582,7 +573,7 @@ void PWRButtonPress() {
 
 void StoreFrequency() {
   EEPROM.writeUInt(0, frequency);
-  EEPROM.writeUInt(47, frequency_AM);
+  EEPROM.writeUInt(31, frequency_AM);
   EEPROM.writeByte(46, band);
   EEPROM.commit();
 }
@@ -709,19 +700,19 @@ void ModeButtonPress() {
     LowLevelInit = true;
     EEPROM.writeInt(4, VolSet);
     EEPROM.writeInt(8, ConverterSet);
-    EEPROM.writeInt(12, LowEdgeSet);
-    EEPROM.writeInt(16, HighEdgeSet);
-    EEPROM.writeInt(20, ContrastSet);
+    EEPROM.writeUInt(12, LowEdgeSet);
+    EEPROM.writeUInt(16, HighEdgeSet);
+    EEPROM.writeByte(20, ContrastSet);
+    EEPROM.writeByte(21, StereoLevel);
+    EEPROM.writeByte(22, HighCutLevel);
+    EEPROM.writeByte(23, HighCutOffset);
     EEPROM.writeInt(24, LevelOffset);
-    EEPROM.writeInt(28, StereoLevel);
-    EEPROM.writeInt(32, HighCutLevel);
-    EEPROM.writeInt(36, HighCutOffset);
+    EEPROM.writeByte(28, edgebeep);
+    EEPROM.writeByte(29, softmuteam);
+    EEPROM.writeByte(30, softmutefm);
+    EEPROM.writeByte(35, language);
+    EEPROM.writeByte(36, showrdserrors);
     EEPROM.writeInt(55, LowLevelSet);
-    EEPROM.writeByte(59, showrdserrors);
-    EEPROM.writeByte(91, language);
-    EEPROM.writeByte(92, softmutefm);
-    EEPROM.writeByte(93, softmuteam);
-    EEPROM.writeByte(94, edgebeep);
     EEPROM.commit();
   }
   while (digitalRead(MODEBUTTON) == LOW) delay(50);
@@ -764,7 +755,7 @@ void RoundStep() {
   }
   while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
 
-  if (band == 0) EEPROM.writeUInt(0, frequency); else EEPROM.writeUInt(47, frequency_AM);
+  if (band == 0) EEPROM.writeUInt(0, frequency); else EEPROM.writeUInt(31, frequency_AM);
   EEPROM.commit();
 }
 
@@ -870,7 +861,7 @@ void ButtonPress() {
               tft.drawCentreString(myLanguage[language][12], 155, 70, GFXFF);
               tft.drawString("MHz", 170, 110, GFXFF);
               tft.setTextColor(TFT_YELLOW);
-              tft.drawRightString(String(LowEdgeSet + ConverterSet, DEC), 155, 110, GFXFF);
+              tft.drawRightString(String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               break;
 
             case 90:
@@ -878,7 +869,7 @@ void ButtonPress() {
               tft.drawCentreString(myLanguage[language][13], 155, 70, GFXFF);
               tft.drawString("MHz", 170, 110, GFXFF);
               tft.setTextColor(TFT_YELLOW);
-              tft.drawRightString(String(HighEdgeSet + ConverterSet, DEC), 155, 110, GFXFF);
+              tft.drawRightString(String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               break;
 
             case 110:
@@ -1049,20 +1040,20 @@ void KeyUp() {
 
             case 70:
               tft.setTextColor(TFT_BLACK);
-              tft.drawRightString(String(LowEdgeSet + ConverterSet, DEC), 155, 110, GFXFF);
+              tft.drawRightString(String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               LowEdgeSet ++;
-              if (LowEdgeSet > 107) LowEdgeSet = 65;
+              if (LowEdgeSet > 1070) LowEdgeSet = 650;
               tft.setTextColor(TFT_YELLOW);
-              tft.drawRightString(String(LowEdgeSet + ConverterSet, DEC), 155, 110, GFXFF);
+              tft.drawRightString(String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               break;
 
             case 90:
               tft.setTextColor(TFT_BLACK);
-              tft.drawRightString(String(HighEdgeSet + ConverterSet, DEC), 155, 110, GFXFF);
+              tft.drawRightString(String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               HighEdgeSet ++;
-              if (HighEdgeSet > 108) HighEdgeSet = 66;
+              if (HighEdgeSet > 1080) HighEdgeSet = 660;
               tft.setTextColor(TFT_YELLOW);
-              tft.drawRightString(String(HighEdgeSet + ConverterSet, DEC), 155, 110, GFXFF);
+              tft.drawRightString(String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               break;
 
             case 110:
@@ -1243,7 +1234,7 @@ void KeyDown() {
               tft.setTextColor(TFT_BLACK);
               tft.drawRightString(String(ConverterSet, DEC), 155, 110, GFXFF);
               ConverterSet--;
-                if (ConverterSet < 200) if (ConverterSet < 0) ConverterSet = 2400; else ConverterSet = 0;
+                if (ConverterSet < 200 || ConverterSet > 2400) if (ConverterSet > 2400) ConverterSet = 2400; else ConverterSet = 0;
               if (ConverterSet >= 200) {
                 Wire.beginTransmission(0x12);
                 Wire.write(ConverterSet >> 8);
@@ -1256,20 +1247,20 @@ void KeyDown() {
 
             case 70:
               tft.setTextColor(TFT_BLACK);
-              tft.drawRightString(String(LowEdgeSet + ConverterSet, DEC), 155, 110, GFXFF);
-              LowEdgeSet --;
-              if (LowEdgeSet < 65) LowEdgeSet = 107;
+              tft.drawRightString(String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
+              LowEdgeSet -= 10;
+              if (LowEdgeSet < 650) LowEdgeSet = 1079;
               tft.setTextColor(TFT_YELLOW);
-              tft.drawRightString(String(LowEdgeSet + ConverterSet, DEC), 155, 110, GFXFF);
+              tft.drawRightString(String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               break;
 
             case 90:
               tft.setTextColor(TFT_BLACK);
-              tft.drawRightString(String(HighEdgeSet + ConverterSet, DEC), 155, 110, GFXFF);
-              HighEdgeSet --;
-              if (HighEdgeSet < 66) HighEdgeSet = 108;
+              tft.drawRightString(String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
+              HighEdgeSet -= 10;
+              if (HighEdgeSet < 660) HighEdgeSet = 1080;
               tft.setTextColor(TFT_YELLOW);
-              tft.drawRightString(String(HighEdgeSet + ConverterSet, DEC), 155, 110, GFXFF);
+              tft.drawRightString(String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               break;
 
             case 110:
@@ -1288,7 +1279,7 @@ void KeyDown() {
               tft.setTextColor(TFT_BLACK);
               tft.drawRightString(String(StereoLevel, DEC), 155, 110, GFXFF);
               StereoLevel --;
-                if (StereoLevel < 30) if (StereoLevel < 0) StereoLevel = 60; else StereoLevel = 0;
+                if (StereoLevel < 30 || StereoLevel > 60) if (StereoLevel > 60) StereoLevel = 60; else StereoLevel = 0;
               tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               tft.drawString("dBuV", 170, 110, GFXFF);
               tft.setTextColor(TFT_WHITE);
@@ -1302,7 +1293,7 @@ void KeyDown() {
               tft.setTextColor(TFT_BLACK);
               tft.drawRightString(String(HighCutLevel * 100, DEC), 155, 110, GFXFF);
               HighCutLevel --;
-              if (HighCutLevel < 15) HighCutLevel = 70;
+              if (HighCutLevel < 15 || HighCutLevel > 70) HighCutLevel = 70;
               tft.setTextColor(TFT_YELLOW);
               tft.drawRightString(String(HighCutLevel * 100, DEC), 155, 110, GFXFF);
               radio.setHighCutLevel(HighCutLevel);
@@ -1312,7 +1303,7 @@ void KeyDown() {
               tft.setTextColor(TFT_BLACK);
               tft.drawRightString(String(HighCutOffset, DEC), 155, 110, GFXFF);
               HighCutOffset --;
-                if (HighCutOffset < 20) if (HighCutOffset < 0) HighCutOffset = 60; else HighCutOffset = 0;
+                if (HighCutOffset < 20 || HighCutOffset > 60) if (HighCutOffset > 60) HighCutOffset = 60; else HighCutOffset = 0;
               tft.setTextColor(TFT_BLACK);
               tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               tft.drawString("dBuV", 170, 110, GFXFF);
@@ -1589,8 +1580,8 @@ void BuildMenu() {
       tft.setTextColor(TFT_YELLOW);
       if (VolSet > 0) tft.drawRightString("+" + String(VolSet, DEC), 265, 30, GFXFF); else tft.drawRightString(String(VolSet, DEC), 265, 30, GFXFF);
       tft.drawRightString(String(ConverterSet, DEC), 265, 50, GFXFF);
-      tft.drawRightString(String(LowEdgeSet + ConverterSet, DEC), 265, 70, GFXFF);
-      tft.drawRightString(String(HighEdgeSet + ConverterSet, DEC), 265, 90, GFXFF);
+      tft.drawRightString(String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 265, 70, GFXFF);
+      tft.drawRightString(String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 265, 90, GFXFF);
       if (LevelOffset > 0) tft.drawRightString("+" + String(LevelOffset, DEC), 265, 110, GFXFF); else tft.drawRightString(String(LevelOffset, DEC), 265, 110, GFXFF);
       if (StereoLevel != 0) tft.drawRightString(String(StereoLevel, DEC), 265, 130, GFXFF); else tft.drawRightString(myLanguage[language][30], 265, 130, GFXFF);
       if (HighCutLevel != 0) tft.drawRightString(String(HighCutLevel * 100, DEC), 265, 150, GFXFF); else tft.drawRightString(myLanguage[language][30], 265, 150, GFXFF);
@@ -2659,8 +2650,8 @@ void TuneUp() {
 
   if (band == 0) {
     frequency += temp;
-    if (frequency >= (HighEdgeSet * 100) + 1) {
-      frequency = LowEdgeSet * 100;
+    if (frequency >= (HighEdgeSet * 10) + 1) {
+      frequency = LowEdgeSet * 10;
       if (edgebeep) EdgeBeeper();
     }
     radio.SetFreq(frequency);
@@ -2704,8 +2695,8 @@ void TuneDown() {
 
   if (band == 0) {
     frequency -= temp;
-    if (frequency < LowEdgeSet * 100) {
-      frequency = HighEdgeSet * 100;
+    if (frequency < LowEdgeSet * 10) {
+      frequency = HighEdgeSet * 10;
       if (edgebeep) EdgeBeeper();
     }
     radio.SetFreq(frequency);
@@ -2767,7 +2758,7 @@ void SetTunerPatch() {
 
     if (TEF == 0) tft.drawCentreString(myLanguage[language][35], 150, 70, GFXFF); else tft.drawCentreString(String(myLanguage[language][36]) + String(TEF), 150, 70, GFXFF);
     tft.drawCentreString(myLanguage[language][37], 150, 100, GFXFF);
-    EEPROM.writeByte(54, TEF);
+    EEPROM.writeByte(37, TEF);
     EEPROM.commit();
     while (true);
     for (;;);
