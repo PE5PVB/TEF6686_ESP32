@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-const char myLanguage[4][46][60] = {
+const char myLanguage[5][46][100] = {
   { "English",
     "Rotary direction changed",
     "Please release button",
@@ -96,6 +96,7 @@ const char myLanguage[4][46][60] = {
 	"Softmute AM",
 	"Piep op bandeinde"
   },
+  
   { "Polski", 
    "Kierunek obrotu zmieniony", 
    "Zwolnij przycisk", 
@@ -190,7 +191,7 @@ const char myLanguage[4][46][60] = {
   "Softmute FM",
   "Softmute AM",
   "Beep na rubu frekv. opsega"
-   },
+  },
    
    {"Ελληνικά",
     "Η διεύθυνση του ρότορα άλλαξε",
@@ -238,5 +239,5 @@ const char myLanguage[4][46][60] = {
 	"Softmute FM",
 	"Softmute AM",
 	"Ηχητικό σήμα στο όριο μπάντας"
-  },
+  }
 };
