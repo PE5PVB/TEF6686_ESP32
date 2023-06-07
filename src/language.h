@@ -1,7 +1,7 @@
 // [number of languages][number of texts][max. length of text]
 
-const char myLanguage[5][46][100] = {
-  { "English",
+const char myLanguage[6][46][100] = {
+  { "English",												// English
     "Rotary direction changed",
     "Please release button",
     "Screen flipped",
@@ -49,7 +49,7 @@ const char myLanguage[5][46][100] = {
 	"Beep at band edge"
   },
   
-  { "Nederlands",
+  { "Nederlands",											// Dutch
     "Rotary richting aangepast",
     "Laat aub de knop los",
     "Scherm gedraaid",
@@ -97,7 +97,7 @@ const char myLanguage[5][46][100] = {
 	"Piep op bandeinde"
   },
   
-  { "Polski", 
+  { "Polski", 												// Polish
    "Kierunek obrotu zmieniony", 
    "Zwolnij przycisk", 
    "Obrocono ekran", 
@@ -145,7 +145,7 @@ const char myLanguage[5][46][100] = {
    "Beep na krawedzi pasma"						
    },
    
-   {"Hrvatski",
+  {"Hrvatski",												// Croatian
   "Smjer enkodera promij.", 
   "Otpustite gumb",
   "Zaslon je okrenut",
@@ -193,7 +193,7 @@ const char myLanguage[5][46][100] = {
   "Beep na rubu frekv. opsega"
   },
    
-   {"Ελληνικά",
+  {"Ελληνικά",												// Greek
     "Η διεύθυνση του ρότορα άλλαξε",
     "Παρακαλώ ελευθερώστε το πλήκτρο",
     "Η οθόνη αναποδογύρισε",
@@ -239,5 +239,53 @@ const char myLanguage[5][46][100] = {
 	"Softmute FM",
 	"Softmute AM",
 	"Ηχητικό σήμα στο όριο μπάντας"
+  },
+  
+  { "Romana",												// Roman
+    "Sens rotire schimbat",
+    "Eliberati butonul",
+    "Ecran inversat",
+    "Calibrati S-metrul analog",
+    "Eliberati butonul cand terminati",
+    "Encoderul setat pe Optic",
+    "Encoderul setat pe Standard",
+    "Receptor FM/AM ",
+    "Nu exista Tuner !",
+    "Volum:",
+    "Convertor:",
+    "Limita inferioara a benzii:",
+    "Limita superioara a benzii:",
+    "offset ptr. nivel RF:",
+    "Prag ptr. Stereo :",
+    "Limita taiere inalte:",
+    "Prag taiere inalte:",
+    "Prag taiere joase:",
+    "Contrast:",
+    "Seteaza volum",
+    "Seteaza offset ptr convertor ",
+    "Seteaza marginea de jos a benzii",
+    "Seteaza marginea de sus a benzii",
+    "Seteaza nivel offset",
+    "Seteaza prag separare Stereo",
+    "Seteaza limita de sus inalte",
+    "Seteaza prag taiere inalte",
+    "Seteaza pragul nivelului de jos",
+    "Seteaza luminozitatea ptr. Display ",
+    "Oprit",
+    "Ecran oprit",
+    "Ptr a porni debifati RF+ box",
+    "Oprit",
+    "Scanare...",
+    "Tunerul nu este detectat",
+    "Versiune Tuner: v",
+    "Va rog restartati tuner",
+    "Arata erorile RDS",
+    "Limba",
+    "Alege Limba",
+    "Apasa MODE pentru a salva si iesi",
+    "Pornit",
+    "FM fara sonor",
+    "A fara sonorM",
+    "Sunet la marginea Benzii"
   }
 };
