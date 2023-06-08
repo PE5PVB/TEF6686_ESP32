@@ -1570,11 +1570,7 @@ void showPS() {
     if (underscore) {
       char PS_[9];
       strcpy (PS_, radio.rds.stationName);
-      for (int i = 0; i < 8; i++)
-      {
-        if (PS_[i] < 0x10) PS_[i] = '0';
-        if (PS_[i] == 0x20) PS_[i] =  '_';
-      }
+      for (int i = 0; i < 8; i++) if (PS_[i] == 0x20) PS_[i] =  '_';
       tft.drawString(PS_, 38, 182, GFXFF);
       PSold = PS_;
     } else {
