@@ -261,7 +261,7 @@ const char myLanguage[6][50][100] = {
 	"Show underscore in PS"
 	},
   
-	{ "Romana",												// Roman
+	{ "Romana",												// Romana
     "Sens rotire schimbat",
     "Eliberati butonul",
     "Ecran inversat",
@@ -305,11 +305,11 @@ const char myLanguage[6][50][100] = {
     "Apasa MODE pentru a salva si iesi",
     "Pornit",
     "FM fara sonor",
-    "A fara sonorM",
+    "AM fara sonor",
     "Sunet la marginea Benzii",
-	"Region",
-	"Europe",
-	"USA",
-	"Show underscore in PS"
+    "Regiune",
+    "Europa",
+    "SUA",
+    "Arata evidentiat in PS"
   }
 };
