@@ -1,42 +1,5 @@
 #include "TEF6686.h"
 
-const char* const PTY[]
-{
-  "None",
-  "News",
-  "Current Affairs",
-  "Information",
-  "Sport",
-  "Education",
-  "Drama",
-  "Cultures",
-  "Science",
-  "Varied Speech",
-  "Pop Music",
-  "Rock Music",
-  "Easy Listening",
-  "Light Classics",
-  "Serious Classics",
-  "Other Music",
-  "Weather",
-  "Finance",
-  "Children's Progs",
-  "Social Affair",
-  "Religion",
-  "Phone In",
-  "Travel & Touring",
-  "Leisure & Hobby",
-  "Jazz Music",
-  "Country Music",
-  "National Music",
-  "Oldies Music",
-  "Folk Music",
-  "Documentary",
-  "Alarm Test",
-  "Alarm!!!",
-  "                "
-};
-
 void TEF6686::init(byte TEF) {
   uint8_t bootstatus;
   Tuner_I2C_Init();
@@ -280,12 +243,41 @@ bool TEF6686::readRDS(bool showrdserrors)
   {
     //PI
     if (rds.stationID == 0) rds.stationID = rds.rdsA;
-    char Hex[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
-    rds.picode[0] = Hex[(rds.rdsA & 0xF000U) >> 12];
-    rds.picode[1] = Hex[(rds.rdsA & 0x0F00U) >> 8];
-    rds.picode[2] = Hex[(rds.rdsA & 0x00F0U) >> 4];
-    rds.picode[3] = Hex[(rds.rdsA & 0x000FU)];
-    rds.picode[4] = '\0';
+	if (rds.region == 0) {
+		char Hex[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+		rds.picode[0] = Hex[(rds.rdsA & 0xF000U) >> 12];
+		rds.picode[1] = Hex[(rds.rdsA & 0x0F00U) >> 8];
+		rds.picode[2] = Hex[(rds.rdsA & 0x00F0U) >> 4];
+		rds.picode[3] = Hex[(rds.rdsA & 0x000FU)];
+		rds.picode[4] = '\0';
+	}
+	if (rds.region == 1) {
+		if (rds.stationID > 4096) {
+			if (rds.stationID > 21671 &&(rds.stationID & 0xF00U) >> 8 == 0) rds.stationID = ((uint16_t)uint8_t(0xA0 + ((rds.stationID & 0xF000U) >> 12)) << 8) + lowByte(rds.stationID); // C0DE -> ACDE
+			if (rds.stationID > 21671 && lowByte(rds.stationID) == 0) rds.stationID = 0xAF00 + uint8_t(highByte(rds.stationID)); // CD00 -> AFCD
+			if (rds.stationID < 39247) {
+				if (rds.stationID > 21671) {
+					rds.picode[0] = 'W';
+					rds.stationID -= 21672;
+				} else {
+					rds.picode[0] = 'K';
+					rds.stationID -= 4096;
+				}	
+				rds.picode[1] = char(rds.stationID / 676 + 65);
+				rds.picode[2] = char((rds.stationID - 676 * int(rds.stationID / 676)) / 26 + 65);
+				rds.picode[3] = char(((rds.stationID - 676 * int(rds.stationID / 676)) % 26) + 65);
+				rds.picode[4] = '\0';
+			} else {
+				rds.stationID -= 4835;
+				rds.picode[0] = 'K';
+				rds.picode[1] = char(rds.stationID / 676 + 65);
+				rds.picode[2] = char((rds.stationID - 676 * int(rds.stationID / 676)) / 26 + 65);
+				rds.picode[3] = char(((rds.stationID - 676 * int(rds.stationID / 676)) % 26) + 65);
+				rds.picode[4] = '\0';
+			}	
+		}
+	}
+		
     rds_group  = (rds.rdsB >> 11);
     if (rds.correctPI == false && rds.correct == true) rds.correctPI = true;
     switch (rds_group) {
@@ -313,7 +305,8 @@ bool TEF6686::readRDS(bool showrdserrors)
             //PTY
             rds.stationTypeCode = (rds.rdsB >> 5) & 0x1F;
             rds.hasPTY = true;
-            strcpy(rds.stationType, PTY[rds.stationTypeCode]);
+            if (rds.region == 0) strcpy(rds.stationType, PTY_EU[rds.stationTypeCode]);
+			if (rds.region == 1) strcpy(rds.stationType, PTY_USA[rds.stationTypeCode]);
 
             //TP-TA-EON-MS
             if ((bitRead(rds.rdsB, 4)) == 1 && ((bitRead(rds.rdsB, 10)) == 0)) rds.hasEON = true; else rds.hasEON = false;

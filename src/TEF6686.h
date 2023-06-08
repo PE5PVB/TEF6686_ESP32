@@ -11,7 +11,80 @@ enum RDS_GROUPS {
   RDS_GROUP_12A, RDS_GROUP_12B, RDS_GROUP_13A, RDS_GROUP_13B, RDS_GROUP_14A, RDS_GROUP_14B, RDS_GROUP_15A, RDS_GROUP_15B
 };
 
+const char* const PTY_EU[] {
+  "None",
+  "News",
+  "Current Affairs",
+  "Information",
+  "Sport",
+  "Education",
+  "Drama",
+  "Cultures",
+  "Science",
+  "Varied Speech",
+  "Pop Music",
+  "Rock Music",
+  "Easy Listening",
+  "Light Classics",
+  "Serious Classics",
+  "Other Music",
+  "Weather",
+  "Finance",
+  "Children's Progs",
+  "Social Affair",
+  "Religion",
+  "Phone In",
+  "Travel & Touring",
+  "Leisure & Hobby",
+  "Jazz Music",
+  "Country Music",
+  "National Music",
+  "Oldies Music",
+  "Folk Music",
+  "Documentary",
+  "Alarm Test",
+  "Alarm!!!",
+  "                "
+};
+
+const char* const PTY_USA[] {
+  "None",
+  "News",
+  "Information",
+  "Sports",
+  "Talk",
+  "Rock",
+  "Classic Rock",
+  "Adult Hits",
+  "Soft Rock",
+  "Top 40",
+  "Country",
+  "Oldies",
+  "Soft",
+  "Nostalgia",
+  "Jazz",
+  "Classical",
+  "Rhythm and Blues ",
+  "Soft R & B",
+  "Foreign_Language",
+  "Religious Music",
+  "Religious Talk",
+  "Personality",
+  "Public",
+  "College",
+  "Hablar Espanol",
+  "Musica Espanol",
+  "Hip Hop",
+  " ",
+  " ",
+  "Weather",
+  "Emergency Test",
+  "ALERT! ALERT!",
+  "                "
+};
+
 typedef struct _rds_ {
+  byte region;
   byte stationTypeCode;
   char stationName[9];
   char stationText[65];
@@ -94,9 +167,9 @@ class TEF6686 {
     void setStereoLevel(uint8_t start);
     void setUnMute();
     void setVolume(int8_t volume);
-    uint8_t af_counter;
-	bool mute;
     void tone(uint16_t time, int16_t amplitude, uint16_t frequency);
+	uint8_t af_counter;
+	bool mute;
 
   private:
 	uint8_t ascii_converter   (uint8_t src);
