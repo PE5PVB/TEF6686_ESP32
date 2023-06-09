@@ -288,8 +288,8 @@ bool TEF6686::readRDS(bool showrdserrors)
           if ((offset == 0) && (ps_process == 0)) ps_process = 1;
 
           if (ps_process == 1) {
-            ps_buffer[(offset * 2)  + 0] = ascii_converter(rds.rdsD >> 8);
-            ps_buffer[(offset * 2)  + 1] = ascii_converter(rds.rdsD & 0xFF);
+            ps_buffer[(offset * 2)  + 0] = EBU_converter(rds.rdsD >> 8);
+            ps_buffer[(offset * 2)  + 1] = EBU_converter(rds.rdsD & 0xFF);
             ps_buffer[(offset * 2)  + 2] = 0;
             ps_process = strlen(ps_buffer) == 8 ? 2 : 1;
           }
@@ -377,10 +377,10 @@ bool TEF6686::readRDS(bool showrdserrors)
           if (rt_process == 1)
           {
             rds.stationTextOffset = offset;
-            rt_buffer[offset + 0] = ascii_converter(rds.rdsC >> 8);
-            rt_buffer[offset + 1] = ascii_converter(rds.rdsC & 0xff);
-            rt_buffer[offset + 2] = ascii_converter(rds.rdsD >> 8);
-            rt_buffer[offset + 3] = ascii_converter(rds.rdsD & 0xff);
+            rt_buffer[offset + 0] = EBU_converter(rds.rdsC >> 8);
+            rt_buffer[offset + 1] = EBU_converter(rds.rdsC & 0xff);
+            rt_buffer[offset + 2] = EBU_converter(rds.rdsD >> 8);
+            rt_buffer[offset + 3] = EBU_converter(rds.rdsD & 0xff);
 
             if (offset > offsetold) offsetold = offset;
 
@@ -512,21 +512,114 @@ bool TEF6686::readRDS(bool showrdserrors)
   return rdsDataReady;
 }
 
-uint8_t TEF6686::ascii_converter (uint8_t src)
+uint16_t TEF6686::EBU_converter (uint8_t src)
 {
-  char dest = src;
   switch (src)
   {
-    case 0x91: dest = 225; break; //ä
-    case 0x97: dest = 239; break; //ö
-    case 0x99: dest = 245; break; //ü
-    case 0xD1: dest = 225; break; //Ä
-    case 0xD7: dest = 239; break; //Ö
-    case 0xD9: dest = 245; break; //Ü
-    case 0x8D: dest = 226; break; //ß
-    case 0xBB: dest = 223; break; //°
+    case 0x20: return 0x20; break;
+    case 0x21: return 0x21; break;
+    case 0x22: return 0x22; break;
+    case 0x23: return 0x23; break;
+    case 0x24: return 0xa4; break;
+    case 0x25 ... 0x5d: return src;
+    case 0x5e: return 0x2d; break;
+    case 0x5f: return 0x5f; break;
+    case 0x60: return 0x7c; break;
+    case 0x61 ... 0x7d: return src; break;
+    case 0x7e: return 0xaf; break;
+    case 0x80: return 0xe1; break;
+    case 0x81: return 0xe0; break;
+    case 0x82: return 0xe9; break;
+    case 0x83: return 0xe8; break;
+    case 0x84: return 0xed; break;
+    case 0x85: return 0xec; break;
+    case 0x86: return 0xf3; break;
+    case 0x87: return 0xf2; break;
+    case 0x88: return 0xfa; break;
+    case 0x89: return 0xf9; break;
+    case 0x8a: return 0xd1; break;
+    case 0x8b: return 0xc7; break;
+    case 0x8c: return 0x53; break;
+    case 0x8d: return 0xdf; break;
+    case 0x8e: return 0xa1; break;
+    case 0x8f: return 0x59; break;
+    case 0x90: return 0xe2; break;
+    case 0x91: return 0xe4; break;
+    case 0x92: return 0xea; break;
+    case 0x93: return 0xeb; break;
+    case 0x94: return 0xee; break;
+    case 0x95: return 0xef; break;
+    case 0x96: return 0xf4; break;
+    case 0x97: return 0xf6; break;
+    case 0x98: return 0xfb; break;
+    case 0x99: return 0xfc; break;
+    case 0x9a: return 0xf1; break;
+    case 0x9b: return 0xe7; break;
+    case 0x9c: return 0x73; break;
+    case 0x9d: return 0x67; break;
+    case 0x9e: return 0x7c; break;
+    case 0x9f: return 0x79; break;
+    case 0xa0: return 0xaa; break;
+    case 0xa1: return 0x61; break;
+    case 0xa2: return 0xa9; break;
+    case 0xa3: return 0x25; break;
+    case 0xa4: return 0x47; break;
+    case 0xa5: return 0x65; break;
+    case 0xa6: return 0x6e; break;
+    case 0xa7: return 0xf6; break;
+    case 0xa8: return 0x6e; break;
+    case 0xa9: return 0x45; break;
+    case 0xaa: return 0xa3; break;
+    case 0xab: return 0x24; break;
+    case 0xc0: return 0xc1; break;
+    case 0xc1: return 0xc0; break;
+    case 0xc2: return 0xc9; break;
+    case 0xc3: return 0xc8; break;
+    case 0xc4: return 0xcd; break;
+    case 0xc5: return 0xcc; break;
+    case 0xc6: return 0xd3; break;
+    case 0xc7: return 0xd2; break;
+    case 0xc8: return 0xda; break;
+    case 0xc9: return 0xd9; break;
+    case 0xca: return 0x52; break;
+    case 0xcb: return 0x43; break;
+    case 0xcc: return 0x53; break;
+    case 0xcd: return 0x5a; break;
+    case 0xce: return 0xd0; break;
+    case 0xcf: return 0x4c; break;
+    case 0xd0: return 0xc2; break;
+    case 0xd1: return 0xc4; break;
+    case 0xd2: return 0xca; break;
+    case 0xd3: return 0xcb; break;
+    case 0xd4: return 0xce; break;
+    case 0xd5: return 0xcf; break;
+    case 0xd6: return 0xd4; break;
+    case 0xd7: return 0xd6; break;
+    case 0xd8: return 0xdb; break;
+    case 0xd9: return 0xdc; break;
+    case 0xda: return 0x72; break;
+    case 0xdb: return 0x63; break;
+    case 0xdc: return 0x73; break;
+    case 0xdd: return 0x7a; break;
+    case 0xde: return 0x64; break;
+    case 0xdf: return 0x7c; break;
+    case 0xf0: return 0xe3; break;
+    case 0xf1: return 0xe5; break;
+    case 0xf2: return 0xe6; break;
+    case 0xf3: return 0xf6; break;
+    case 0xf4: return 0x77; break;
+    case 0xf5: return 0xfd; break;
+    case 0xf6: return 0xf5; break;
+    case 0xf7: return 0xf8; break;
+    case 0xf8: return 0xfe; break;
+    case 0xf9: return 0x6e; break;
+    case 0xfa: return 0x72; break;
+    case 0xfb: return 0x63; break;
+    case 0xfc: return 0x73; break;
+    case 0xfd: return 0x7a; break;
+    case 0xfe: return 0x74; break;
+    default: return 0x20; break;
   }
-  return (dest);
 }
 
 bool TEF6686::checkDouble (uint16_t value)

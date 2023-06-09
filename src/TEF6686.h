@@ -172,7 +172,7 @@ class TEF6686 {
 	bool mute;
 
   private:
-	uint8_t ascii_converter   (uint8_t src);
+	uint16_t EBU_converter (uint8_t src);
     uint16_t rdsTimeOut = 32768;
     uint8_t ps_process;
     uint8_t rt_process;
