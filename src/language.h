@@ -255,10 +255,10 @@ const char myLanguage[6][50][100] = {
 	"Softmute FM",
 	"Softmute AM",
 	"Ηχητικό σήμα στο όριο μπάντας",
-	"Region",
-	"Europe",
-	"USA",
-	"Show underscore in PS"
+	"Περιοχή",
+	"Ευρώπη",
+	"Η.Π.Α.",
+	"Εμφάνιση κάτω παύλας στο PS"
 	},
   
 	{ "Romana",												// Romana
