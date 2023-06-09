@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-const char myLanguage[6][50][100] = {
+const char myLanguage[7][50][100] = {
   { "English",												// English
     "Rotary direction changed",
     "Please release button",
@@ -311,5 +311,57 @@ const char myLanguage[6][50][100] = {
     "Europa",
     "SUA",
     "Arata evidentiat in PS"
+  },
+    
+    { "Deutsch",												// German
+    "Drehrichtung geändert",
+    "Bitte Taste loslassen",
+    "Bildschirm gedreht",
+    "Analogmeter kalibrieren",
+    "Taste loslassen wenn bereit",
+    "Enkoder auf optisch setzen",
+    "Enkoder auf standard setzen",
+    "FM/AM Empfänger",
+    "!Kein! Tuner",
+    "Lautstärke:",
+    "Konverter:",
+    "Unteres Bandende:",
+    "Oberes Bandende:",
+    "RF Level Offset:",
+    "Stereoschwelle:",
+    "High Cut corner:",
+    "Highcut Schwelle:",
+    "Low level Schwelle:",
+    "Kontrast:",
+    "Lautstärke setzen",
+    "Konverteroffset setzen",
+    "Unteres Bandende setzen",
+    "Oberes Bandende setzen",
+    "Level offset setzen",
+    "Stereo sep. Schwelle setzen",
+    "High cut Eckfrequenz setzen",
+    "High cut Schwelle setzen",
+    "Low-level-Schwelle setzen",
+    "Displayhelligkeit setzen",
+    "Aus",
+    "Bildschirm abgeschaltet!",
+    "Um einzuschalten RF+ deaktivieren",
+    "AUS",
+    "SCANNE...",
+    "Tuner nicht erkannt",
+    "Tuner version set: v",
+    "Bitte Tuner neustarten",
+    "Zeige RDS Fehler",
+    "Sprache",
+    "Sprache wählen",
+	"MODE DRÜCKEN ZUM BEENDEN UND SICHERN",
+	"Ein",
+	"Softmute FM",
+	"Softmute AM",
+	"Piepston bei Bandende",
+	"Region",
+	"Europa",
+	"USA",
+	"Zeige Unterstrich im PS"
   }
 };
