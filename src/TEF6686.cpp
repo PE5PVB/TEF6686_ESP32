@@ -381,11 +381,11 @@ bool TEF6686::readRDS(bool showrdserrors)
             rt_buffer[offset + 1] = EBU_converter(rds.rdsC & 0xff);
             rt_buffer[offset + 2] = EBU_converter(rds.rdsD >> 8);
             rt_buffer[offset + 3] = EBU_converter(rds.rdsD & 0xff);
-
             if (offset > offsetold) offsetold = offset;
 
             if (offset == offsetold) {
               strcpy(stationTextBuffer, rt_buffer);
+			  for (int i = 0; i < 64; i++)  stationTextBuffer[i] = EBU_converter(stationTextBuffer[i]);
               if (rt_timer < 64) {
                 strcpy(rds.stationText, stationTextBuffer);
                 rt_timer++;
@@ -512,21 +512,23 @@ bool TEF6686::readRDS(bool showrdserrors)
   return rdsDataReady;
 }
 
-uint16_t TEF6686::EBU_converter (uint8_t src)
+char TEF6686::EBU_converter (uint8_t src)
 {
   switch (src)
   {
-    case 0xe4: return 0x61; break;
-	case 0xc4: return 0x41; break;
-	case 0xeb: return 0x65; break;
-	case 0xcb: return 0x45; break;
-	case 0xfc: return 0x75; break;
-	case 0xdc: return 0x55; break;
-	case 0xef: return 0x69; break;
-	case 0xcf: return 0x49; break;
-	case 0xf6: return 0x6f; break;
-	case 0xd6: return 0x4f; break;
-    default: return src; break;
+	case 0x91: return 0x69; break; // ï
+    case 0x93: return 0x65; break; // ë
+	case 0x95: return 0x69; break; // ï
+	case 0x97: return 0x6f; break; // ö
+	case 0x99: return 0x75; break; // ü
+	case 0xd1: return 0x41; break; // Ï
+	case 0xd3: return 0x45; break; // Ë
+	case 0xd5: return 0x49; break; // Ï
+	case 0xd7: return 0x4f; break; // Ö
+	case 0xd9: return 0x55; break; // Ü
+	case 0x20: return 0x20; break; // SPACE
+	case 0x30 ... 0x7d: return src; break;
+    default: return 0x20; break;
   }
 }
 

@@ -11,6 +11,7 @@
 #define FONT24 &Aura2CondensedPro_Regular24pt7b
 #define FONT14 &Aura2CondensedPro_Regular14pt8b
 #define FONT7  &Aura2CondensedPro_Light7pt8b
+
 #define TFT_GREYOUT     0x38E7
 #define ROTARY_PIN_A    34
 #define ROTARY_PIN_B    36
@@ -479,7 +480,7 @@ void loop() {
 
     XDRGTKRoutine();
 
-    if (menu == true && menuopen == true && menuoption == 110) {
+    if (menu == true && menuopen == true && menupage == 1 && menuoption == 110) {
       if (band == 0) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus);
       if (millis() >= lowsignaltimer + 500 || change2 == true) {
         lowsignaltimer = millis();
@@ -1206,7 +1207,6 @@ void KeyUp() {
               if (region == 0) region = 1; else region = 0;
               if (regionold == 0) tft.drawCentreString(myLanguage[language][47], 155, 110, GFXFF);
               if (regionold == 1) tft.drawCentreString(myLanguage[language][48], 155, 110, GFXFF);
-              if (edgebeep) edgebeep = false; else edgebeep = true;
               tft.setTextColor(TFT_YELLOW);
               if (region == 0) tft.drawCentreString(myLanguage[language][47], 155, 110, GFXFF);
               if (region == 1) tft.drawCentreString(myLanguage[language][48], 155, 110, GFXFF);
@@ -1437,7 +1437,6 @@ void KeyDown() {
               if (region == 0) region = 1; else region = 0;
               if (regionold == 0) tft.drawCentreString(myLanguage[language][47], 155, 110, GFXFF);
               if (regionold == 1) tft.drawCentreString(myLanguage[language][48], 155, 110, GFXFF);
-              if (edgebeep) edgebeep = false; else edgebeep = true;
               tft.setTextColor(TFT_YELLOW);
               if (region == 0) tft.drawCentreString(myLanguage[language][47], 155, 110, GFXFF);
               if (region == 1) tft.drawCentreString(myLanguage[language][48], 155, 110, GFXFF);
