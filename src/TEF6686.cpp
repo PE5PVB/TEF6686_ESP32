@@ -288,8 +288,8 @@ bool TEF6686::readRDS(bool showrdserrors)
           if ((offset == 0) && (ps_process == 0)) ps_process = 1;
 
           if (ps_process == 1) {
-            ps_buffer[(offset * 2)  + 0] = EBU_converter(rds.rdsD >> 8);
-            ps_buffer[(offset * 2)  + 1] = EBU_converter(rds.rdsD & 0xFF);
+            ps_buffer[(offset * 2)  + 0] = rds.rdsD >> 8;
+            ps_buffer[(offset * 2)  + 1] = rds.rdsD & 0xFF;
             ps_buffer[(offset * 2)  + 2] = 0;
             ps_process = strlen(ps_buffer) == 8 ? 2 : 1;
           }
@@ -312,7 +312,7 @@ bool TEF6686::readRDS(bool showrdserrors)
             if ((bitRead(rds.rdsB, 4)) == 1 && ((bitRead(rds.rdsB, 10)) == 0)) rds.hasEON = true; else rds.hasEON = false;
             if ((bitRead(rds.rdsB, 4)) == 0 && ((bitRead(rds.rdsB, 10)) == 1)) rds.hasTP = true; else rds.hasTP = false;
             rds.hasTA = (bitRead(rds.rdsB, 4)) && (bitRead(rds.rdsB, 10)) & 0x1F;
-            rds.MS = (bitRead(rds.rdsB, 3)) & 0x1F;
+            if (((bitRead(rds.rdsB, 3)) & 0x1F) == 1) rds.MS = 1; else rds.MS = 2;
 
             //AF
             uint8_t  af_controlCode = rds.rdsC >> 8;
@@ -377,15 +377,15 @@ bool TEF6686::readRDS(bool showrdserrors)
           if (rt_process == 1)
           {
             rds.stationTextOffset = offset;
-            rt_buffer[offset + 0] = EBU_converter(rds.rdsC >> 8);
-            rt_buffer[offset + 1] = EBU_converter(rds.rdsC & 0xff);
-            rt_buffer[offset + 2] = EBU_converter(rds.rdsD >> 8);
-            rt_buffer[offset + 3] = EBU_converter(rds.rdsD & 0xff);
+            rt_buffer[offset + 0] = rds.rdsC >> 8;
+            rt_buffer[offset + 1] = rds.rdsC & 0xff;
+            rt_buffer[offset + 2] = rds.rdsD >> 8;
+            rt_buffer[offset + 3] = rds.rdsD & 0xff;
             if (offset > offsetold) offsetold = offset;
 
             if (offset == offsetold) {
               strcpy(stationTextBuffer, rt_buffer);
-			  for (int i = 0; i < 64; i++)  stationTextBuffer[i] = EBU_converter(stationTextBuffer[i]);
+			  for (int i = 0; i < 64; i++)  stationTextBuffer[i] = stationTextBuffer[i];
               if (rt_timer < 64) {
                 strcpy(rds.stationText, stationTextBuffer);
                 rt_timer++;
@@ -512,26 +512,6 @@ bool TEF6686::readRDS(bool showrdserrors)
   return rdsDataReady;
 }
 
-char TEF6686::EBU_converter (uint8_t src)
-{
-  switch (src)
-  {
-	case 0x91: return 0x69; break; // ï
-    case 0x93: return 0x65; break; // ë
-	case 0x95: return 0x69; break; // ï
-	case 0x97: return 0x6f; break; // ö
-	case 0x99: return 0x75; break; // ü
-	case 0xd1: return 0x41; break; // Ï
-	case 0xd3: return 0x45; break; // Ë
-	case 0xd5: return 0x49; break; // Ï
-	case 0xd7: return 0x4f; break; // Ö
-	case 0xd9: return 0x55; break; // Ü
-	case 0x20: return 0x20; break; // SPACE
-	case 0x30 ... 0x7d: return src; break;
-    default: return 0x20; break;
-  }
-}
-
 bool TEF6686::checkDouble (uint16_t value)
 {
   for (int i = 0; i < 50; i++) if (af[i].frequency == value)return (true);
@@ -580,7 +560,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.hasTP = false;
   rds.hasTA = false;
   rds.hasEON = false;
-  rds.MS = false;
+  rds.MS = 0;
   rds.hasPTY = false;
   rds.hasCT = false;
   rds.hasMusicTitle = false;

@@ -86,6 +86,7 @@ const char* const PTY_USA[] {
 typedef struct _rds_ {
   byte region;
   byte stationTypeCode;
+  byte MS;
   char stationName[9];
   char stationText[65];
   char stationType[17];
@@ -110,7 +111,6 @@ typedef struct _rds_ {
   bool hasTA;
   bool hasEON;
   bool hasAF;
-  bool MS;
   bool hasPTY;
   bool hasCT;
   bool afclear;
@@ -172,7 +172,6 @@ class TEF6686 {
 	bool mute;
 
   private:
-	char EBU_converter (uint8_t src);
     uint16_t rdsTimeOut = 32768;
     uint8_t ps_process;
     uint8_t rt_process;
