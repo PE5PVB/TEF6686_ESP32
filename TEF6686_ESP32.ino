@@ -8,6 +8,7 @@
 #include "src/constants.h"
 #include "src/language.h"
 
+
 #define GFXFF 1
 #define FONT24 &Aura2CondensedPro_Regular24pt7b
 #define FONT14 &Aura2CondensedPro_Regular14pt8b

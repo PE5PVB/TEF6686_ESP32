@@ -88,6 +88,8 @@ typedef struct _rds_ {
   byte stationTypeCode;
   byte MS;
   char stationName[9];
+  wchar_t PStext[9] = L"";
+  String RDSPS;
   char stationText[65];
   char stationType[17];
   char musicTitle[48];
@@ -172,6 +174,8 @@ class TEF6686 {
 	bool mute;
 
   private:
+	void RDScharConverter(const char* input, wchar_t* output, size_t size);
+	String convertToUTF8(const wchar_t* input);
     uint16_t rdsTimeOut = 32768;
     uint8_t ps_process;
     uint8_t rt_process;

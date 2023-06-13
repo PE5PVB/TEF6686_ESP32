@@ -1,4 +1,7 @@
 #include "TEF6686.h"
+#include <map>
+#include <Arduino.h>
+
 
 void TEF6686::init(byte TEF) {
   uint8_t bootstatus;
@@ -296,6 +299,10 @@ bool TEF6686::readRDS(bool showrdserrors)
 
           if (ps_process == 2) {
             strcpy(rds.stationName, ps_buffer);
+
+			RDScharConverter(ps_buffer, rds.PStext, sizeof(rds.PStext) / sizeof(wchar_t));
+			rds.RDSPS = convertToUTF8(rds.PStext);
+		
             for (int i = 0; i < 9; i++) ps_buffer[i]  = '\0';
             ps_process = 0;
             rds.hasPS = true;
@@ -582,4 +589,39 @@ void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {
   devTEF_Radio_Set_Wavegen(1, amplitude, frequency);
   delay (time);
   devTEF_Radio_Set_Wavegen(0, 0, 0);
+}
+
+String TEF6686::convertToUTF8(const wchar_t* input) {
+  String output;
+  while (*input) {
+    uint16_t unicode = *input;
+    if (unicode < 0x80) {
+      output += (char)unicode;
+    } else if (unicode < 0x800) {
+      output += (char)(0xC0 | (unicode >> 6));
+      output += (char)(0x80 | (unicode & 0x3F));
+    } else if (unicode < 0x10000) {
+      output += (char)(0xE0 | (unicode >> 12));
+      output += (char)(0x80 | ((unicode >> 6) & 0x3F));
+      output += (char)(0x80 | (unicode & 0x3F));
+    } else {
+      output += (char)(0xF0 | (unicode >> 18));
+      output += (char)(0x80 | ((unicode >> 12) & 0x3F));
+      output += (char)(0x80 | ((unicode >> 6) & 0x3F));
+      output += (char)(0x80 | (unicode & 0x3F));
+    }
+    input++;
+  }
+  return output;
+}
+
+void TEF6686::RDScharConverter(const char* input, wchar_t* output, size_t size) {
+  for (size_t i = 0; i < size - 1; i++) {
+    char currentChar = input[i];
+    switch (currentChar) {
+      case 0x45: output[i] = L'ë'; break; // Test convert E to ë
+      default: output[i] = static_cast<wchar_t>(currentChar); break;
+    }
+  }
+  output[size - 1] = L'\0';
 }
