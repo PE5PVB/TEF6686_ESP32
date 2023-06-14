@@ -168,7 +168,7 @@ TFT_eSprite sprite = TFT_eSprite(&tft);
 
 void setup() {
   setupmode = true;
-  EEPROM.begin(221);
+  EEPROM.begin(234);
   if (EEPROM.readByte(43) != 21) {
     EEPROM.writeByte(43, 21);
     EEPROM.writeUInt(0, 10000);
@@ -202,6 +202,9 @@ void setup() {
     EEPROM.writeByte(53, 0);
     for (int i = 0; i < 30; i++) EEPROM.writeByte(i + 60, 0);
     for (int i = 0; i < 30; i++) EEPROM.writeUInt((i * 4) + 100, 8750);
+    EEPROM.writeUInt(221, 180);
+    EEPROM.writeUInt(225, 540);
+    EEPROM.writeUInt(229, 1800);
     EEPROM.commit();
   }
 
@@ -234,6 +237,9 @@ void setup() {
   memorypos = EEPROM.readByte(51);
   region = EEPROM.readByte(52);
   radio.rds.underscore = EEPROM.readByte(53);
+  frequency_LW = EEPROM.readUInt(221);
+  frequency_MW = EEPROM.readUInt(225);
+  frequency_SW = EEPROM.readUInt(229);
 
   for (int i = 0; i < 30; i++) memoryband[i] = EEPROM.readByte(i + 60);
   for (int i = 0; i < 30; i++) memory[i] = EEPROM.readUInt((i * 4) + 100);
@@ -409,7 +415,7 @@ void setup() {
   ShowSignalLevel();
   ShowBW();
   setupmode = false;
-  sprite.createSprite(318, 14);
+  sprite.createSprite(317, 14);
   radio.tone(50, -5, 2000);
 }
 
@@ -542,6 +548,9 @@ void loop() {
       EEPROM.writeUInt(0, frequency);
       EEPROM.writeUInt(31, frequency_AM);
       EEPROM.writeByte(46, band);
+      EEPROM.writeUInt(221, frequency_LW);
+      EEPROM.writeUInt(225, frequency_MW);
+      EEPROM.writeUInt(229, frequency_SW);
       EEPROM.commit();
       store = false;
       attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
@@ -616,6 +625,9 @@ void StoreFrequency() {
 }
 
 void LimitAMFrequency() {
+  Serial.println(frequency_LW);
+  Serial.println(frequency_MW);
+  Serial.println(frequency_SW);
   switch (band) {
     case BAND_LW:
       frequency_AM = frequency_LW;
@@ -634,8 +646,6 @@ void LimitAMFrequency() {
       if (frequency_AM > FREQ_SW_END || frequency_AM < FREQ_SW_START) {
         frequency_AM = FREQ_SW_START;
       }
-      break;
-    default:
       break;
   }
 }
@@ -850,8 +860,12 @@ void ButtonPress() {
       if (counter - counterold < 1000) {
         if (tunemode == 0) {
           stepsize++;
-          if (band == BAND_SW || band == BAND_FM) { if (stepsize > 4) stepsize = 0; }
-          else { if (stepsize > 3) stepsize = 0; }                   
+          if (band == BAND_SW || band == BAND_FM) {
+            if (stepsize > 4) stepsize = 0;
+          }
+          else {
+            if (stepsize > 3) stepsize = 0;
+          }
 
           if (screenmute == false) ShowStepSize();
 
