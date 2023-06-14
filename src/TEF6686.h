@@ -138,10 +138,10 @@ typedef struct _rds_ {
   byte region;
   byte stationTypeCode;
   byte MS;
-  char stationName[9];
   wchar_t PStext[9] = L"";
-  String RDSPS;
-  char stationText[65];
+  wchar_t RTtext[65] = L"";
+  String stationName;
+  String stationText;
   char stationType[17];
   char musicTitle[48];
   char musicArtist[48];
@@ -170,6 +170,7 @@ typedef struct _rds_ {
   bool rtAB;
   bool correct;
   bool correctPI;
+  bool underscore;
 } rds_;
 
 typedef struct _af_ {

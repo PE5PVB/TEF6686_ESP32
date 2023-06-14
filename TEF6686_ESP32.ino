@@ -10,11 +10,9 @@
 
 
 #define GFXFF 1
-#define FONT24 &Aura2CondensedPro_Regular24pt7b
-#define FONT14 &Aura2CondensedPro_Regular14pt8b
-#define FONT7  &Aura2CondensedPro_Light7pt8b
-#define FONTRDS7 &Aura2RDS_Regular7pt8b
-#define FONTRDS14 &Aura2RDS_Regular14pt8b
+#define FONT24 &Aura2Regular24pt7b
+#define FONT14 &Aura2Regular14pt8b
+#define FONT7  &Aura2Pro_Light7pt8b
 #define FONTDEC &Digital7num36pt7b
 
 #define GUI2_FONT8 &Aura2Regular8pt8b
@@ -69,7 +67,6 @@ bool store;
 bool TPold;
 bool TAold;
 bool tuned;
-bool underscore;
 bool USBstatus;
 bool XDRMute;
 byte region;
@@ -98,10 +95,10 @@ byte SNRold;
 byte stepsize;
 byte TEF;
 char buff[16];
-char programServicePrevious[9];
+String programServicePrevious;
 char programTypePrevious[17];
 char radioIdPrevious[5];
-char radioTextPrevious[65];
+String radioTextPrevious;
 int AGC;
 int BWOld;
 int charWidth = tft.textWidth("AA");
@@ -238,7 +235,7 @@ void setup() {
   LowLevelSet = EEPROM.readInt(47);
   memorypos = EEPROM.readByte(51);
   region = EEPROM.readByte(52);
-  underscore = EEPROM.readByte(53);
+  radio.rds.underscore = EEPROM.readByte(53);
 
   for (int i = 0; i < 30; i++) memoryband[i] = EEPROM.readByte(i + 60);
   for (int i = 0; i < 30; i++) memory[i] = EEPROM.readUInt((i * 4) + 100);
@@ -250,13 +247,13 @@ void setup() {
   if (iMSset == 1 && EQset == 0) iMSEQ = 4;
   if (iMSset == 0 && EQset == 0) iMSEQ = 1;
 
-  switch(band) {
+  switch (band) {
     case BAND_LW: frequency_LW = frequency_AM; break;
     case BAND_MW: frequency_MW = frequency_AM; break;
     case BAND_SW: frequency_SW = frequency_AM; break;
     default: break;
   }
-  
+
   tft.init();
 
   if (displayflip == 0) {
@@ -588,9 +585,9 @@ void PWRButtonPress() {
       } else {
         if (tunemode != 2) {
           if (band == BAND_FM) band = BAND_LW;
-          else if(band == BAND_LW) band = BAND_MW;
-          else if(band == BAND_MW) band = BAND_SW;
-          else if(band == BAND_SW) band = BAND_FM;
+          else if (band == BAND_LW) band = BAND_MW;
+          else if (band == BAND_MW) band = BAND_SW;
+          else if (band == BAND_SW) band = BAND_FM;
           StoreFrequency();
           SelectBand();
         }
@@ -621,27 +618,27 @@ void StoreFrequency() {
 }
 
 void LimitAMFrequency() {
-  switch(band){
+  switch (band) {
     case BAND_LW:
       frequency_AM = frequency_LW;
-      if(frequency_AM > FREQ_LW_END || frequency_AM < FREQ_LW_START) {
+      if (frequency_AM > FREQ_LW_END || frequency_AM < FREQ_LW_START) {
         frequency_AM = FREQ_LW_START;
       }
-    break;
+      break;
     case BAND_MW:
       frequency_AM = frequency_MW;
-      if(frequency_AM > (region == 0 ? FREQ_MW_END_EU : FREQ_MW_END_US) || frequency_AM < (region == 0 ? FREQ_MW_START_EU : FREQ_MW_START_US)) {
+      if (frequency_AM > (region == 0 ? FREQ_MW_END_EU : FREQ_MW_END_US) || frequency_AM < (region == 0 ? FREQ_MW_START_EU : FREQ_MW_START_US)) {
         frequency_AM = region == 0 ? FREQ_MW_START_EU : FREQ_MW_START_US;
       }
-    break;
+      break;
     case BAND_SW:
       frequency_AM = frequency_SW;
-      if(frequency_AM > FREQ_SW_END || frequency_AM < FREQ_SW_START) {
+      if (frequency_AM > FREQ_SW_END || frequency_AM < FREQ_SW_START) {
         frequency_AM = FREQ_SW_START;
       }
-    break;
+      break;
     default:
-    break;
+      break;
   }
 }
 
@@ -783,7 +780,7 @@ void ModeButtonPress() {
     EEPROM.writeByte(36, showrdserrors);
     EEPROM.writeInt(47, LowLevelSet);
     EEPROM.writeByte(52, region);
-    EEPROM.writeByte(53, underscore);
+    EEPROM.writeByte(53, radio.rds.underscore);
     EEPROM.commit();
   }
   while (digitalRead(MODEBUTTON) == LOW) delay(50);
@@ -1044,7 +1041,7 @@ void ButtonPress() {
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][49], 155, 70, GFXFF);
               tft.setTextColor(TFT_YELLOW);
-              if (underscore) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              if (radio.rds.underscore) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
           }
       }
@@ -1274,10 +1271,10 @@ void KeyUp() {
 
             case 150:
               tft.setTextColor(TFT_BLACK);
-              if (underscore) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
-              if (underscore) underscore = false; else underscore = true;
+              if (radio.rds.underscore) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              if (radio.rds.underscore) radio.rds.underscore = false; else radio.rds.underscore = true;
               tft.setTextColor(TFT_YELLOW);
-              if (underscore) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              if (radio.rds.underscore) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
           }
       }
     }
@@ -1504,10 +1501,10 @@ void KeyDown() {
 
             case 150:
               tft.setTextColor(TFT_BLACK);
-              if (underscore) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
-              if (underscore) underscore = false; else underscore = true;
+              if (radio.rds.underscore) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              if (radio.rds.underscore) radio.rds.underscore = false; else radio.rds.underscore = true;
               tft.setTextColor(TFT_YELLOW);
-              if (underscore) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              if (radio.rds.underscore) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
           }
       }
     }
@@ -1549,12 +1546,12 @@ void readRds() {
       tft.setTextColor(TFT_SKYBLUE);
       tft.setFreeFont(FONT14);
       tft.drawString(PIold, 244, 183, GFXFF);
-      tft.setFreeFont(FONTRDS14);
+      tft.setFreeFont(FONT14);
       tft.drawString(PSold, 38, 183, GFXFF);
       tft.setFreeFont(FONT7);
       tft.drawString(PTYold, 38, 164, GFXFF);
       tft.setTextColor(TFT_BLACK);
-      tft.setFreeFont(FONTRDS7);
+      tft.setFreeFont(FONT7);
       tft.drawString(RTold, 1, 223, GFXFF);
       dropout = true;
     } else {
@@ -1562,7 +1559,7 @@ void readRds() {
         tft.setTextColor(TFT_YELLOW);
         tft.setFreeFont(FONT14);
         tft.drawString(PIold, 244, 183, GFXFF);
-        tft.setFreeFont(FONTRDS14);
+        tft.setFreeFont(FONT14);
         tft.drawString(PSold, 38, 183, GFXFF);
         tft.setFreeFont(FONT7);
         tft.drawString(PTYold, 38, 164, GFXFF);
@@ -1620,22 +1617,14 @@ void showPTY() {
 }
 
 void showPS() {
-  if (strcmp(radio.rds.stationName, programServicePrevious)) {
-    tft.setFreeFont(FONTRDS14);
+  if (radio.rds.stationName != programServicePrevious) {
+    tft.setFreeFont(FONT14);
     tft.setTextColor(TFT_BLACK);
     tft.drawString(PSold, 38, 183, GFXFF);
     tft.setTextColor(TFT_YELLOW);
-    if (underscore) {
-      char PS_[9];
-      strcpy (PS_, radio.rds.stationName);
-      for (int i = 0; i < 8; i++) if (PS_[i] == 0x20) PS_[i] =  '_';
-      tft.drawString(PS_, 38, 183, GFXFF);
-      PSold = PS_;
-    } else {
-      tft.drawString(radio.rds.stationName, 38, 183, GFXFF);
-      PSold = radio.rds.stationName;
-    }
-    strcpy(programServicePrevious, radio.rds.stationName);
+    tft.drawString(radio.rds.stationName, 38, 183, GFXFF);
+    PSold = radio.rds.stationName;
+    programServicePrevious = radio.rds.stationName;
   }
 }
 
@@ -1644,7 +1633,7 @@ void showRadioText() {
     if (millis() - rtticker >= 350) {
       xPos -= charWidth;
       if (xPos < -tft.textWidth(radio.rds.stationText) + (charWidth * 24)) xPos = 6;
-      sprite.setFreeFont(FONTRDS7);
+      sprite.setFreeFont(FONT7);
       sprite.setTextDatum(ML_DATUM);
       sprite.fillSprite(TFT_BLACK);
       sprite.setTextColor(TFT_YELLOW);
@@ -1652,7 +1641,7 @@ void showRadioText() {
       sprite.pushSprite(1, 223);
       rtticker = millis();
       RTold = radio.rds.stationText;
-      strcpy(radioTextPrevious, radio.rds.stationText);
+      radioTextPrevious = radio.rds.stationText;
       cleanup = true;
     }
   } else if (cleanup == true) {
@@ -1800,7 +1789,7 @@ void BuildMenu() {
       if (edgebeep) tft.drawRightString(myLanguage[language][42], 305, 110, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 110, GFXFF);
       if (region == 0) tft.drawRightString(myLanguage[language][47], 305, 130, GFXFF);
       if (region == 1) tft.drawRightString(myLanguage[language][48], 305, 130, GFXFF);
-      if (underscore) tft.drawRightString(myLanguage[language][42], 305, 150, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 150, GFXFF);
+      if (radio.rds.underscore) tft.drawRightString(myLanguage[language][42], 305, 150, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 150, GFXFF);
       break;
   }
   analogWrite(SMETERPIN, 0);
@@ -1890,10 +1879,10 @@ void BuildDisplay() {
     }
     tft.setTextColor(TFT_SKYBLUE);
     tft.setFreeFont(FONT7);
-    if (band == BAND_LW) tft.drawString("LW", 50, 26, GFXFF); 
-      else if(band == BAND_MW) tft.drawString("MW", 50, 26, GFXFF);
-      else if(band == BAND_SW) tft.drawString("SW", 50, 26, GFXFF);
-      else tft.drawString("FM", 50, 26, GFXFF);
+    if (band == BAND_LW) tft.drawString("LW", 50, 26, GFXFF);
+    else if (band == BAND_MW) tft.drawString("MW", 50, 26, GFXFF);
+    else if (band == BAND_SW) tft.drawString("SW", 50, 26, GFXFF);
+    else tft.drawString("FM", 50, 26, GFXFF);
     tft.setTextColor(TFT_GREYOUT);
     tft.drawString("S", 162, 184, GFXFF);
     tft.drawRightString("M", 185, 184, GFXFF);
@@ -2023,8 +2012,8 @@ void BuildDisplay() {
   rds_clockold = "";
   strcpy(programTypePrevious, "");
   strcpy(radioIdPrevious, "");
-  strcpy(programServicePrevious, "");
-  strcpy(radioTextPrevious, "");
+  programServicePrevious = "";
+  radioTextPrevious = "";
 }
 
 void ShowFreq(int mode) {
@@ -2451,6 +2440,8 @@ void updateiMS() {
       }
       radio.setiMS(0);
     }
+  } else {
+    tft.setTextColor(TFT_GREYOUT);
   }
   tft.drawCentreString("iMS", 264, 54, GFXFF);
 }
@@ -2471,6 +2462,8 @@ void updateEQ() {
       }
       radio.setEQ(0);
     }
+  } else {
+    tft.setTextColor(TFT_GREYOUT);
   }
   tft.drawCentreString("EQ", 302, 54, GFXFF);
 }
@@ -2764,15 +2757,15 @@ void XDRGTKRoutine() {
             band = BAND_FM;
             SelectBand();
             Serial.print("M0\nT" + String(frequency * 10) + "\n");
-          } else if (XDRband == BAND_LW){
+          } else if (XDRband == BAND_LW) {
             band = BAND_LW;
             SelectBand();
             Serial.print("M1\nT" + String(frequency_AM) + "\n");
-          } else if (XDRband == BAND_MW){
+          } else if (XDRband == BAND_MW) {
             band = BAND_MW;
             SelectBand();
             Serial.print("M2\nT" + String(frequency_AM) + "\n");
-          } else if (XDRband == BAND_SW){
+          } else if (XDRband == BAND_SW) {
             band = BAND_SW;
             SelectBand();
             Serial.print("M3\nT" + String(frequency_AM) + "\n");
@@ -2792,7 +2785,7 @@ void XDRGTKRoutine() {
               radio.SetFreqAM(frequency_AM);
             }
             Serial.print("M1\n");
-          } else if(freqtemp >= (region == 0 ? FREQ_MW_START_EU : FREQ_MW_START_US) && freqtemp <= (region == 0 ? FREQ_MW_END_EU : FREQ_MW_END_US)) {
+          } else if (freqtemp >= (region == 0 ? FREQ_MW_START_EU : FREQ_MW_START_US) && freqtemp <= (region == 0 ? FREQ_MW_END_EU : FREQ_MW_END_US)) {
             frequency_AM = freqtemp;
             if (band != BAND_MW) {
               band = BAND_MW;
@@ -2801,7 +2794,7 @@ void XDRGTKRoutine() {
               radio.SetFreqAM(frequency_AM);
             }
             Serial.print("M2\n");
-          } else if(freqtemp >= FREQ_SW_START && freqtemp <= FREQ_SW_END) {
+          } else if (freqtemp >= FREQ_SW_START && freqtemp <= FREQ_SW_END) {
             frequency_AM = freqtemp;
             if (band != BAND_SW) {
               band = BAND_SW;
@@ -2979,7 +2972,7 @@ void TuneUp() {
         if (region == 0) {
           temp = FREQ_MW_STEP_9K;
           frequency_AM = (frequency_AM / FREQ_MW_STEP_9K) * FREQ_MW_STEP_9K;
-        }else if(region == 1) {
+        } else if (region == 1) {
           temp = FREQ_MW_STEP_10K;
           frequency_AM = (frequency_AM / FREQ_MW_STEP_10K) * FREQ_MW_STEP_10K;
         }
@@ -3036,7 +3029,7 @@ void TuneUp() {
 void TuneDown() {
   unsigned int temp;
   if (stepsize == 0) {
-    if (band != BAND_FM) { 
+    if (band != BAND_FM) {
       if (frequency_AM <= FREQ_SW_START) {
         if (frequency_AM == 2000) { // Fix Me :take care of 9K/10K Step
           frequency_AM = 1998;
@@ -3083,7 +3076,7 @@ void TuneDown() {
     }
     radio.SetFreqAM(frequency_AM);
     frequency_MW = frequency_AM;
-  }else if (band == BAND_SW) {
+  } else if (band == BAND_SW) {
     frequency_AM -= temp;
     if (frequency_AM < FREQ_SW_START) {
       frequency_AM = FREQ_SW_END;

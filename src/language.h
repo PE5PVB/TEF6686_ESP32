@@ -50,7 +50,7 @@ const char myLanguage[9][50][100] = {
 	"Region",
 	"Europe",
 	"USA",
-	"Show underscore in PS"
+	"Show underscore in RDS"
   },
   
   { "Nederlands",											// Dutch
@@ -102,7 +102,7 @@ const char myLanguage[9][50][100] = {
 	"Regio",
 	"Europa",
 	"USA",
-	"Toon underscore in PS"
+	"Toon underscore in RDS"
   },
   
   { "Polski", 												// Polish
@@ -154,7 +154,7 @@ const char myLanguage[9][50][100] = {
 	"Region",
 	"Europe",
 	"USA",
-	"Show underscore in PS"
+	"Show underscore in RDS"
    },
    
    {"Hrvatski",												// Croatian
@@ -206,7 +206,7 @@ const char myLanguage[9][50][100] = {
 	"Region",
 	"Europe",
 	"USA",
-	"Show underscore in PS"
+	"Show underscore in RDS"
 	},
    
 	{"Ελληνικά",												// Greek
@@ -258,7 +258,7 @@ const char myLanguage[9][50][100] = {
 	"Περιοχή",
 	"Ευρώπη",
 	"Η.Π.Α.",
-	"Εμφάνιση κάτω παύλας στο PS"
+	"Εμφάνιση κάτω παύλας στο RDS"
 	},
   
 	{ "Romana",												// Romana
@@ -310,7 +310,7 @@ const char myLanguage[9][50][100] = {
     "Regiune",
     "Europa",
     "SUA",
-    "Arata evidentiat in PS"
+    "Arata evidentiat in RDS"
   },
     
     { "Deutsch",												// German
@@ -362,7 +362,7 @@ const char myLanguage[9][50][100] = {
 	"Region",
 	"Europa",
 	"USA",
-	"Zeige Unterstrich im PS"
+	"Zeige Unterstrich im RDS"
   },
 	{ "Czech",												// English
     "Směr enkóderu byl změněn",
@@ -413,7 +413,7 @@ const char myLanguage[9][50][100] = {
 	"Region",
 	"Evropa",
 	"USA",
-	"Zobrazit podtržítka v PS"
+	"Zobrazit podtržítka v RDS"
   },
 	{ "Slovak",												// English
     "Smer enkóderu bol zmenený",
@@ -464,6 +464,6 @@ const char myLanguage[9][50][100] = {
 	"Region",
 	"Európa",
 	"USA",
-	"Zobraziť podtržítka v PS"
+	"Zobraziť podtržítka v RDS"
   },
 };

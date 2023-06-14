@@ -298,10 +298,10 @@ bool TEF6686::readRDS(bool showrdserrors)
           }
 
           if (ps_process == 2) {
-            strcpy(rds.stationName, ps_buffer);
+//            strcpy(rds.stationName, ps_buffer);
 
 			RDScharConverter(ps_buffer, rds.PStext, sizeof(rds.PStext) / sizeof(wchar_t));
-			rds.RDSPS = convertToUTF8(rds.PStext);
+			rds.stationName = convertToUTF8(rds.PStext);
 		
             for (int i = 0; i < 9; i++) ps_buffer[i]  = '\0';
             ps_process = 0;
@@ -364,8 +364,13 @@ bool TEF6686::readRDS(bool showrdserrors)
 
           if (rds.rtAB != ABold) {
             offsetold = 0;
-            for (int i = 0; i < 65; i++) rds.stationText[i] = 0;
-            if (rt_timer == 64) strcpy(rds.stationText, stationTextBuffer);
+			rds.stationText = "";
+            //for (int i = 0; i < 65; i++) rds.stationText[i] = 0;
+            if (rt_timer == 64) {
+//				strcpy(rds.stationText, stationTextBuffer);
+				RDScharConverter(stationTextBuffer, rds.RTtext, sizeof(rds.RTtext) / sizeof(wchar_t));
+				rds.stationText = convertToUTF8(rds.RTtext);
+			}
 
             for (int i = 0; i < 65; i++) {
               rt_buffer[i]  = 0;
@@ -394,7 +399,9 @@ bool TEF6686::readRDS(bool showrdserrors)
               strcpy(stationTextBuffer, rt_buffer);
 			  for (int i = 0; i < 64; i++)  stationTextBuffer[i] = stationTextBuffer[i];
               if (rt_timer < 64) {
-                strcpy(rds.stationText, stationTextBuffer);
+//                strcpy(rds.stationText, stationTextBuffer);
+				RDScharConverter(stationTextBuffer, rds.RTtext, sizeof(rds.RTtext) / sizeof(wchar_t));
+				rds.stationText = convertToUTF8(rds.RTtext);
                 rt_timer++;
               } else {
                 rt_timer = 64;
@@ -529,12 +536,13 @@ void TEF6686::clearRDS (bool fullsearchrds)
 {
   devTEF_Radio_Set_RDS(fullsearchrds);
   uint8_t i;
+  rds.stationName = "";
+  rds.stationText = "";
   for (i = 0; i < 9; i++) {
-    rds.stationName[i] = 0;
+//    rds.stationName[i] = 0;
     ps_buffer[i] = 0;
   }
   for (i = 0; i < 65; i++) {
-    rds.stationText[i] = 0;
     stationTextBuffer[i] = 0;
     rt_buffer[i] = 0;
     rt_buffer2[i] = 0;
@@ -619,8 +627,142 @@ void TEF6686::RDScharConverter(const char* input, wchar_t* output, size_t size) 
   for (size_t i = 0; i < size - 1; i++) {
     char currentChar = input[i];
     switch (currentChar) {
-      case 0x45: output[i] = L'ë'; break; // Test convert E to ë
-      default: output[i] = static_cast<wchar_t>(currentChar); break;
+	  case 0x20: if(rds.underscore) output[i] = L'_'; else output[i] = L' '; break;
+	  case 0x21 ... 0x5D: output[i] = static_cast<wchar_t>(currentChar); break;
+	  case 0x5E: output[i] = L'―'; break;
+	  case 0x5F: output[i] = L'_'; break;
+	  case 0x60: output[i] = L'‖'; break;
+	  case 0x61 ... 0x7d: output[i] = static_cast<wchar_t>(currentChar); break;
+	  case 0x7E: output[i] = L'¯'; break;
+	  case 0x7F: output[i] = L' '; break;
+	  case 0x80: output[i] = L'á'; break;
+	  case 0x81: output[i] = L'à'; break;
+	  case 0x82: output[i] = L'é'; break;
+	  case 0x83: output[i] = L'è'; break;
+	  case 0x84: output[i] = L'í'; break;
+	  case 0x85: output[i] = L'ì'; break;
+	  case 0x86: output[i] = L'ó'; break;
+	  case 0x87: output[i] = L'ò'; break;
+	  case 0x88: output[i] = L'ú'; break;
+	  case 0x89: output[i] = L'ù'; break;
+	  case 0x8A: output[i] = L'Ñ'; break;
+	  case 0x8B: output[i] = L'Ç'; break;
+	  case 0x8C: output[i] = L'Ş'; break;
+	  case 0x8D: output[i] = L'β'; break;
+	  case 0x8E: output[i] = L'¡'; break;
+	  case 0x8F: output[i] = L'Ĳ'; break;
+	  case 0x90: output[i] = L'â'; break;
+	  case 0x91: output[i] = L'ä'; break;
+	  case 0x92: output[i] = L'ê'; break;
+	  case 0x93: output[i] = L'ë'; break;
+	  case 0x94: output[i] = L'î'; break;
+	  case 0x95: output[i] = L'ï'; break;
+	  case 0x96: output[i] = L'ô'; break;
+	  case 0x97: output[i] = L'ö'; break;
+	  case 0x98: output[i] = L'û'; break;
+	  case 0x99: output[i] = L'ü'; break;
+	  case 0x9A: output[i] = L'ñ'; break;
+	  case 0x9B: output[i] = L'ç'; break;
+	  case 0x9C: output[i] = L'ş'; break;
+	  case 0x9D: output[i] = L'ǧ'; break;
+	  case 0x9E: output[i] = L'ı'; break;
+	  case 0x9F: output[i] = L'ĳ'; break;
+	  case 0xA0: output[i] = L'ª'; break;
+	  case 0xA1: output[i] = L'α'; break;
+	  case 0xA2: output[i] = L'©'; break;
+	  case 0xA3: output[i] = L'‰'; break;
+	  case 0xA4: output[i] = L'Ǧ'; break;
+	  case 0xA5: output[i] = L'ě'; break;
+	  case 0xA6: output[i] = L'ň'; break;
+	  case 0xA7: output[i] = L'ő'; break;
+	  case 0xA8: output[i] = L'π'; break;
+	  case 0xA9: output[i] = L'€'; break;
+	  case 0xAA: output[i] = L'£'; break;
+	  case 0xAB: output[i] = L'$'; break;
+	  case 0xAC: output[i] = L'←'; break;
+	  case 0xAD: output[i] = L'↑'; break;
+	  case 0xAE: output[i] = L'→'; break;
+	  case 0xAF: output[i] = L'↓'; break;
+	  case 0xB0: output[i] = L'º'; break;
+	  case 0xB1: output[i] = L'¹'; break;
+	  case 0xB2: output[i] = L'²'; break;
+	  case 0xB3: output[i] = L'³'; break;
+	  case 0xB4: output[i] = L'±'; break;
+	  case 0xB5: output[i] = L'İ'; break;
+	  case 0xB6: output[i] = L'ń'; break;
+	  case 0xB7: output[i] = L'ű'; break;
+	  case 0xB8: output[i] = L'µ'; break;
+	  case 0xB9: output[i] = L'¿'; break;
+	  case 0xBA: output[i] = L'÷'; break;
+	  case 0xBB: output[i] = L'°'; break;
+	  case 0xBC: output[i] = L'¼'; break;
+	  case 0xBD: output[i] = L'½'; break;
+	  case 0xBE: output[i] = L'¾'; break;
+	  case 0xBF: output[i] = L'§'; break;
+	  case 0xC0: output[i] = L'Á'; break;
+	  case 0xC1: output[i] = L'À'; break;
+	  case 0xC2: output[i] = L'É'; break;
+	  case 0xC3: output[i] = L'È'; break;
+	  case 0xC4: output[i] = L'Í'; break;
+	  case 0xC5: output[i] = L'Ì'; break;
+	  case 0xC6: output[i] = L'Ó'; break;
+	  case 0xC7: output[i] = L'Ò'; break;
+	  case 0xC8: output[i] = L'Ú'; break;
+	  case 0xC9: output[i] = L'Ù'; break;
+	  case 0xCA: output[i] = L'Ř'; break;
+	  case 0xCB: output[i] = L'Č'; break;
+	  case 0xCC: output[i] = L'Š'; break;
+	  case 0xCD: output[i] = L'Ž'; break;
+	  case 0xCE: output[i] = L'Ð'; break;
+	  case 0xCF: output[i] = L'Ŀ'; break;
+	  case 0xD0: output[i] = L'Â'; break;
+	  case 0xD1: output[i] = L'Ä'; break;
+	  case 0xD2: output[i] = L'Ê'; break;
+	  case 0xD3: output[i] = L'Ë'; break;
+	  case 0xD4: output[i] = L'Î'; break;
+	  case 0xD5: output[i] = L'Ï'; break;
+	  case 0xD6: output[i] = L'Ô'; break;
+	  case 0xD7: output[i] = L'Ö'; break;
+	  case 0xD8: output[i] = L'Û'; break;
+	  case 0xD9: output[i] = L'Ü'; break;
+	  case 0xDA: output[i] = L'ř'; break;
+	  case 0xDB: output[i] = L'č'; break;
+	  case 0xDC: output[i] = L'š'; break;
+	  case 0xDD: output[i] = L'ž'; break;
+	  case 0xDE: output[i] = L'đ'; break;
+	  case 0xDF: output[i] = L'ŀ'; break;
+	  case 0xE0: output[i] = L'Ã'; break;
+	  case 0xE1: output[i] = L'Å'; break;
+	  case 0xE2: output[i] = L'Æ'; break;
+	  case 0xE3: output[i] = L'Œ'; break;
+	  case 0xE4: output[i] = L'ŷ'; break;
+	  case 0xE5: output[i] = L'Ý'; break;
+	  case 0xE6: output[i] = L'Õ'; break;
+	  case 0xE7: output[i] = L'Ø'; break;
+	  case 0xE8: output[i] = L'Þ'; break;
+	  case 0xE9: output[i] = L'Ŋ'; break;
+	  case 0xEA: output[i] = L'Ŕ'; break;
+	  case 0xEB: output[i] = L'Ć'; break;
+	  case 0xEC: output[i] = L'Ś'; break;
+	  case 0xED: output[i] = L'Ź'; break;
+	  case 0xEE: output[i] = L'Ŧ'; break;
+	  case 0xEF: output[i] = L'ð'; break;
+	  case 0xF0: output[i] = L'ã'; break;
+	  case 0xF1: output[i] = L'å'; break;
+	  case 0xF2: output[i] = L'æ'; break;
+	  case 0xF3: output[i] = L'œ'; break;
+	  case 0xF4: output[i] = L'ŵ'; break;
+	  case 0xF5: output[i] = L'ý'; break;
+	  case 0xF6: output[i] = L'õ'; break;
+	  case 0xF7: output[i] = L'ø'; break;
+	  case 0xF8: output[i] = L'þ'; break;
+	  case 0xF9: output[i] = L'ŋ'; break;
+	  case 0xFA: output[i] = L'ŕ'; break;
+	  case 0xFB: output[i] = L'ć'; break;
+	  case 0xFC: output[i] = L'ś'; break;
+	  case 0xFD: output[i] = L'ź'; break;
+	  case 0xFE: output[i] = L'ŧ'; break;
+	  case 0xFF: output[i] = L' '; break;
     }
   }
   output[size - 1] = L'\0';
