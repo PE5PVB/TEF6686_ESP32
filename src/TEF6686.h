@@ -171,6 +171,7 @@ typedef struct _rds_ {
   bool correct;
   bool correctPI;
   bool underscore;
+  bool rdsreset;
 } rds_;
 
 typedef struct _af_ {
@@ -222,12 +223,12 @@ class TEF6686 {
     void setUnMute();
     void setVolume(int8_t volume);
     void tone(uint16_t time, int16_t amplitude, uint16_t frequency);
-	uint8_t af_counter;
-	bool mute;
+    uint8_t af_counter;
+    bool mute;
 
   private:
-	void RDScharConverter(const char* input, wchar_t* output, size_t size);
-	String convertToUTF8(const wchar_t* input);
+    void RDScharConverter(const char* input, wchar_t* output, size_t size);
+    String convertToUTF8(const wchar_t* input);
     uint16_t rdsTimeOut = 32768;
     uint8_t ps_process;
     uint8_t rt_process;
