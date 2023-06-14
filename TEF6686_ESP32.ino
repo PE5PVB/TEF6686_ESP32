@@ -2,12 +2,10 @@
 #include <Wire.h>
 #include <TFT_eSPI.h>         // https://github.com/Bodmer/TFT_eSPI
 #include <TimeLib.h>          // https://github.com/PaulStoffregen/Time
-#include <FS.h>
 #include "src/font.h"
 #include "src/TEF6686.h"
 #include "src/constants.h"
 #include "src/language.h"
-
 
 #define GFXFF 1
 #define FONT24 &Aura2Regular24pt7b

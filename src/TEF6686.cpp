@@ -298,8 +298,6 @@ bool TEF6686::readRDS(bool showrdserrors)
           }
 
           if (ps_process == 2) {
-//            strcpy(rds.stationName, ps_buffer);
-
 			RDScharConverter(ps_buffer, rds.PStext, sizeof(rds.PStext) / sizeof(wchar_t));
 			rds.stationName = convertToUTF8(rds.PStext);
 		
@@ -365,9 +363,7 @@ bool TEF6686::readRDS(bool showrdserrors)
           if (rds.rtAB != ABold) {
             offsetold = 0;
 			rds.stationText = "";
-            //for (int i = 0; i < 65; i++) rds.stationText[i] = 0;
             if (rt_timer == 64) {
-//				strcpy(rds.stationText, stationTextBuffer);
 				RDScharConverter(stationTextBuffer, rds.RTtext, sizeof(rds.RTtext) / sizeof(wchar_t));
 				rds.stationText = convertToUTF8(rds.RTtext);
 			}
@@ -399,7 +395,6 @@ bool TEF6686::readRDS(bool showrdserrors)
               strcpy(stationTextBuffer, rt_buffer);
 			  for (int i = 0; i < 64; i++)  stationTextBuffer[i] = stationTextBuffer[i];
               if (rt_timer < 64) {
-//                strcpy(rds.stationText, stationTextBuffer);
 				RDScharConverter(stationTextBuffer, rds.RTtext, sizeof(rds.RTtext) / sizeof(wchar_t));
 				rds.stationText = convertToUTF8(rds.RTtext);
                 rt_timer++;
