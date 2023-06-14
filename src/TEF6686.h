@@ -11,6 +11,57 @@ enum RDS_GROUPS {
   RDS_GROUP_12A, RDS_GROUP_12B, RDS_GROUP_13A, RDS_GROUP_13B, RDS_GROUP_14A, RDS_GROUP_14B, RDS_GROUP_15A, RDS_GROUP_15B
 };
 
+enum RADIO_BAND {
+  BAND_FM,  BAND_LW,  BAND_MW,  BAND_SW
+};
+
+#define FREQ_MW_STEP_9K     9
+#define FREQ_MW_STEP_10K    10
+#define FREQ_SW_STEP_5K     5
+
+#define FREQ_LW_START       144 // you can adjust here
+#define FREQ_LW_END         513 // you can adjust here
+#define FREQ_MW_START_EU    522
+#define FREQ_MW_END_EU      1620
+#define FREQ_MW_START_US    520
+#define FREQ_MW_END_US      1710
+#define FREQ_FM_START       65000
+#define FREQ_FM_END         108000
+
+// according to https://www.short-wave.info/index.php?feature=frequencies
+#define FREQ_SW_START       1800
+#define FREQ_SW_END         27000
+#define FREQ_SW_160M_START  1800
+#define FREQ_SW_160M_END    2000
+#define FREQ_SW_120M_START  2300
+#define FREQ_SW_120M_END    2495
+#define FREQ_SW_90M_START   3200
+#define FREQ_SW_90M_END     3400
+#define FREQ_SW_75M_START   3900
+#define FREQ_SW_75M_END     4000
+#define FREQ_SW_60M_START   4750
+#define FREQ_SW_60M_END     4995
+#define FREQ_SW_49M_START   5900
+#define FREQ_SW_49M_END     6200
+#define FREQ_SW_41M_START   7200
+#define FREQ_SW_41M_END     7450
+#define FREQ_SW_31M_START   9400
+#define FREQ_SW_31M_END     9900
+#define FREQ_SW_25M_START   11600
+#define FREQ_SW_25M_END     12100
+#define FREQ_SW_22M_START   13570
+#define FREQ_SW_22M_END     13870
+#define FREQ_SW_19M_START   15100
+#define FREQ_SW_19M_END     15800
+#define FREQ_SW_16M_START   17480
+#define FREQ_SW_16M_END     17900
+#define FREQ_SW_15M_START   18900
+#define FREQ_SW_15M_END     19020
+#define FREQ_SW_13M_START   21450
+#define FREQ_SW_13M_END     21850
+#define FREQ_SW_11M_START   25670
+#define FREQ_SW_11M_END     26100
+
 const char* const PTY_EU[] {
   "None",
   "News",
