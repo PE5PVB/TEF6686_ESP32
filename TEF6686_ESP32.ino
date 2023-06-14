@@ -852,7 +852,9 @@ void ButtonPress() {
       if (counter - counterold < 1000) {
         if (tunemode == 0) {
           stepsize++;
-          if (stepsize > 4) stepsize = 0;
+          if (band == BAND_SW || band == BAND_FM) { if (stepsize > 4) stepsize = 0; }
+          else { if (stepsize > 3) stepsize = 0; }                   
+
           if (screenmute == false) ShowStepSize();
 
           EEPROM.writeByte(40, stepsize);
