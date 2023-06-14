@@ -1843,6 +1843,7 @@ void BuildDisplay() {
       }
     }
     tft.setTextColor(TFT_WHITE);
+    tft.setFreeFont(FONT7);
     tft.drawString("SQ:", 216, 152, GFXFF);
     tft.drawString("S/N", 250, 167, GFXFF);
     tft.drawString("dB",  300, 167, GFXFF);
