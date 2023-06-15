@@ -19,14 +19,18 @@ enum RADIO_BAND {
 #define FREQ_MW_STEP_10K    10
 #define FREQ_SW_STEP_5K     5
 
-#define FREQ_LW_START       144 // you can adjust here
-#define FREQ_LW_END         513 // you can adjust here
-#define FREQ_MW_START_EU    522
-#define FREQ_MW_END_EU      1620
-#define FREQ_MW_START_US    520
-#define FREQ_MW_END_US      1710
-#define FREQ_FM_START       65000
-#define FREQ_FM_END         108000
+#define FREQ_LW_LOW_EDGE_MIN       100
+#define FREQ_LW_HIGH_EDGE_MAX      519
+#define FREQ_MW_LOW_EDGE_MIN_9K    522
+#define FREQ_MW_LOW_EDGE_MIN_10K   520
+#define FREQ_MW_HIGH_EDGE_MAX_9K   1791
+#define FREQ_MW_HIGH_EDGE_MAX_10K  1700
+#define FREQ_SW_LOW_EDGE_MIN       1700
+#define FREQ_SW_LOW_EDGE_MAX       (FREQ_SW_160M_START)
+#define FREQ_SW_HIGH_EDGE_MIN      (FREQ_SW_11M_END)
+#define FREQ_SW_HIGH_EDGE_MAX      (FREQ_SW_END)
+#define FREQ_FM_START              65000
+#define FREQ_FM_END                108000
 
 // according to https://www.short-wave.info/index.php?feature=frequencies
 #define FREQ_SW_START       1800
@@ -60,7 +64,7 @@ enum RADIO_BAND {
 #define FREQ_SW_13M_START   21450
 #define FREQ_SW_13M_END     21850
 #define FREQ_SW_11M_START   25670
-#define FREQ_SW_11M_END     26100
+#define FREQ_SW_11M_END     26100 
 
 const char* const PTY_EU[] {
   "None",
