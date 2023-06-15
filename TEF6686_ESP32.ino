@@ -591,7 +591,10 @@ void PWRButtonPress() {
         ESP.restart();
       } else {
         if (tunemode != 2) {
-          if (band == BAND_FM) band = BAND_LW;
+          if (band == BAND_FM) {
+            band = BAND_LW;
+            if (stepsize > 3) stepsize = 3;
+          }
           else if (band == BAND_LW) band = BAND_MW;
           else if (band == BAND_MW) band = BAND_SW;
           else if (band == BAND_SW) band = BAND_FM;
