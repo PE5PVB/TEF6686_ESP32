@@ -1078,7 +1078,7 @@ void ButtonPress() {
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][50], 155, 70, GFXFF);
               tft.setTextColor(TFT_YELLOW);
-              if (USBmode) tft.drawCentreString("RDS Spy", 155, 110, GFXFF); else tft.drawCentreString("XDRGTK", 155, 110, GFXFF);
+              if (USBmode) tft.drawCentreString("RDS Spy", 155, 110, GFXFF); else tft.drawCentreString("XDR-GTK", 155, 110, GFXFF);
               break;
           }
       }
@@ -1316,10 +1316,10 @@ void KeyUp() {
 
             case 170:
               tft.setTextColor(TFT_BLACK);
-              if (USBmode) tft.drawCentreString("RDS Spy", 155, 110, GFXFF); else tft.drawCentreString("XDRGTK", 155, 110, GFXFF);
+              if (USBmode) tft.drawCentreString("RDS Spy", 155, 110, GFXFF); else tft.drawCentreString("XDR-GTK", 155, 110, GFXFF);
               if (USBmode) USBmode = false; else USBmode = true;
               tft.setTextColor(TFT_YELLOW);
-              if (USBmode) tft.drawCentreString("RDS Spy", 155, 110, GFXFF); else tft.drawCentreString("XDRGTK", 155, 110, GFXFF);
+              if (USBmode) tft.drawCentreString("RDS Spy", 155, 110, GFXFF); else tft.drawCentreString("XDR-GTK", 155, 110, GFXFF);
               break;
 
           }
@@ -1556,10 +1556,10 @@ void KeyDown() {
 
             case 170:
               tft.setTextColor(TFT_BLACK);
-              if (USBmode) tft.drawCentreString("RDS Spy", 155, 110, GFXFF); else tft.drawCentreString("XDRGTK", 155, 110, GFXFF);
+              if (USBmode) tft.drawCentreString("RDS Spy", 155, 110, GFXFF); else tft.drawCentreString("XDR-GTK", 155, 110, GFXFF);
               if (USBmode) USBmode = false; else USBmode = true;
               tft.setTextColor(TFT_YELLOW);
-              if (USBmode) tft.drawCentreString("RDS Spy", 155, 110, GFXFF); else tft.drawCentreString("XDRGTK", 155, 110, GFXFF);
+              if (USBmode) tft.drawCentreString("RDS Spy", 155, 110, GFXFF); else tft.drawCentreString("XDR-GTK", 155, 110, GFXFF);
               break;
           }
       }
@@ -1865,7 +1865,7 @@ void BuildMenu() {
       if (region == 0) tft.drawRightString(myLanguage[language][47], 305, 130, GFXFF);
       if (region == 1) tft.drawRightString(myLanguage[language][48], 305, 130, GFXFF);
       if (radio.rds.underscore) tft.drawRightString(myLanguage[language][42], 305, 150, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 150, GFXFF);
-      if (USBmode) tft.drawRightString("RDS Spy", 305, 170, GFXFF); else tft.drawRightString("XDRGTK", 305, 170, GFXFF);
+      if (USBmode) tft.drawRightString("RDS Spy", 305, 170, GFXFF); else tft.drawRightString("XDR-GTK", 305, 170, GFXFF);
       break;
   }
   analogWrite(SMETERPIN, 0);
