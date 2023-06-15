@@ -24,7 +24,11 @@ During boot hold:
 ## Instalation
 **Recommended method:** You can download already compiled software and upload it using prepared script from [release page](https://github.com/PE5PVB/TEF6686_ESP32/releases).
 
-**Alternative method:** You can download source code from [release page](https://github.com/PE5PVB/TEF6686_ESP32/releases) or using git. Then compile and upload it using for example Arduino IDE. **Important** you need to fill your User_Setup.h file (located in Arduino/libraries/TFT_eSPI folder) with these values:
+**Alternative method:** You can download source code from [release page](https://github.com/PE5PVB/TEF6686_ESP32/releases) or using git.\
+`git clone https://github.com/PE5PVB/TEF6686_ESP32`
+
+Then compile and upload it using for example Arduino IDE (remember to select ESP's serial port).\
+**Important** you need to fill your User_Setup.h file (located in Arduino/libraries/TFT_eSPI folder) with these values:
 ```
 #define ILI9341_DRIVER
 #define TFT_CS          5
@@ -53,6 +57,16 @@ In case you experience QRM from the screen on 90MHz, try to lower the SPI_FREQUE
   IO27 -------=====-----=====---|
                1 k     5 k POT
 ```
+## Contributing
+We are open for a new ideas in our project. Feel free to share your thoughts in [Discussions](https://github.com/PE5PVB/TEF6686_ESP32/discussions).\
+You can also contribute your own code using [Pull Requests](https://github.com/PE5PVB/TEF6686_ESP32/pulls). We will review it and merge into main branch.
+
+You are using our software and you found a difficulty? Please create new [issue](https://github.com/PE5PVB/TEF6686_ESP32/issues) and describe your problem.
+
+We also would like to invite you to join our Discord community where we share our ideas and help each other with some issues.\
+[<img alt="Join the TEF6686 Discord community!" src="https://i.imgur.com/BYqhuLI.png">](https://discord.gg/ZAVNdS74mC)  
+
+Special thanks to all [contributors](https://github.com/PE5PVB/TEF6686_ESP32/graphs/contributors). You are awesome! ❤️
 ## License
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
 
