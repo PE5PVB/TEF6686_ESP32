@@ -2727,7 +2727,10 @@ void RDSSpyRoutine() {
   if (Serial.available()) {
     String data_str = Serial.readStringUntil('\n');
     int data = data_str.toInt();
-    if (data_str.length() > 1 && data_str == ("*D*R?F")) USBstatus = true;
+    if (data_str.length() > 1 && data_str == ("*D*R?F")) {
+      USBstatus = true;
+      ShowUSBstatus();
+    }
     int symPos = data_str.indexOf("*F");
     if (symPos >= 5) {
       String freq = data_str.substring(0, symPos);
