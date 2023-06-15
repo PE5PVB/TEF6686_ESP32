@@ -150,14 +150,14 @@ const char myLanguage[9][51][100] = {
     "Wybierz swoj jezyk",
     "WCISNIJ MODE ABY ZAMKNAC I ZAPISAC",
     "Wlacz.",
-    "Lagodne wycisz. FM",
-    "Lagodne wycisz. AM",
+    "Lagodne wyciszanie FM",
+    "Lagodne wyciszanie AM",
     "Beep na krawedzi pasma",
     "Region",
-    "Europe",
+    "Europa",
     "USA",
-    "Show underscore in RDS",
-    "USB mode"
+    "Pokaz podkreslenia w RDS",
+    "Tryb USB"
   },
 
   { "Hrvatski",                       // Croatian
