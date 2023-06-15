@@ -1,7 +1,11 @@
+#include <WiFiClient.h>
 #include <EEPROM.h>
 #include <Wire.h>
-#include <TFT_eSPI.h>         // https://github.com/Bodmer/TFT_eSPI
-#include <TimeLib.h>          // https://github.com/PaulStoffregen/Time
+#include <TFT_eSPI.h>               // https://github.com/Bodmer/TFT_eSPI
+#include <TimeLib.h>                // https://github.com/PaulStoffregen/Time
+#include <Hash.h>                   // https://github.com/bbx10/Hash_tng
+#include "src/WiFiConnect.h"
+#include "src/WiFiConnectParam.h"
 #include "src/font.h"
 #include "src/TEF6686.h"
 #include "src/constants.h"
@@ -13,8 +17,8 @@
 #define FONT7  &Aura2Pro_Light7pt8b
 #define FONTDEC &Digital7num36pt7b
 
-#define GUI2_FONT8 &Aura2Regular8pt8b
-#define GUI2_FONT12 &Aura2Regular12pt8b
+//#define GUI2_FONT8 &Aura2Regular8pt8b
+//#define GUI2_FONT12 &Aura2Regular12pt8b
 
 #define TFT_GREYOUT     0x38E7
 #define ROTARY_PIN_A    34
@@ -39,6 +43,7 @@ TFT_eSPI tft = TFT_eSPI(240, 320);
 #endif
 
 bool edgebeep;
+bool RDSSpy;
 bool BWreset;
 bool change2;
 bool cleanup;
@@ -68,12 +73,18 @@ bool tuned;
 bool USBstatus;
 bool USBmode = 1;
 bool XDRMute;
+bool XDRGTKdata;
+bool wifi;
+bool wificonnected;
+bool XDRGTKTCP;
 byte region;
 byte regionold;
 byte language;
 byte theme;
 byte tunemode;
 byte memorypos;
+String salt;
+String saltkey = "                ";
 byte memoryposold;
 byte menupage = 1;
 byte menupagestotal = 2;
@@ -146,9 +157,11 @@ String PSold;
 String PTYold;
 String rds_clock;
 String rds_clockold;
+String cryptedpassword;
 String RDSSPYRDS;
 String RDSSPYRDSold;
 String RTold;
+String XDRGTK_key;
 String XDRGTKRDS;
 String XDRGTKRDSold;
 uint16_t BW;
@@ -174,12 +187,15 @@ unsigned long rtticker;
 
 TEF6686 radio;
 TFT_eSprite sprite = TFT_eSprite(&tft);
+WiFiConnect wc;
+WiFiServer Server(7373);
+WiFiClient RemoteClient;
 
 void setup() {
   setupmode = true;
-  EEPROM.begin(234);
-  if (EEPROM.readByte(43) != 22) {
-    EEPROM.writeByte(43, 22);
+  EEPROM.begin(244);
+  if (EEPROM.readByte(43) != 23) {
+    EEPROM.writeByte(43, 23);
     EEPROM.writeUInt(0, 10000);
     EEPROM.writeInt(4, 0);
     EEPROM.writeUInt(8, 0);
@@ -210,11 +226,14 @@ void setup() {
     EEPROM.writeByte(52, 0);
     EEPROM.writeByte(53, 0);
     EEPROM.writeByte(54, 0);
+    EEPROM.writeByte(55, 0);
     for (int i = 0; i < 30; i++) EEPROM.writeByte(i + 60, 0);
     for (int i = 0; i < 30; i++) EEPROM.writeUInt((i * 4) + 100, 8750);
     EEPROM.writeUInt(221, 180);
     EEPROM.writeUInt(225, 540);
     EEPROM.writeUInt(229, 1800);
+    EEPROM.writeString(233, "password");
+
     EEPROM.commit();
   }
 
@@ -248,9 +267,11 @@ void setup() {
   region = EEPROM.readByte(52);
   radio.rds.underscore = EEPROM.readByte(53);
   USBmode = EEPROM.readByte(54);
+  wifi = EEPROM.readByte(55);
   frequency_LW = EEPROM.readUInt(221);
   frequency_MW = EEPROM.readUInt(225);
   frequency_SW = EEPROM.readUInt(229);
+  XDRGTK_key = EEPROM.readString(233);
 
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;   // later will read from flash
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX; // later will read from flash
@@ -436,6 +457,11 @@ void setup() {
     Wire.endTransmission();
   }
 
+  if (wifi == true) {
+    tryWiFi();
+    delay(2000);
+  }
+
   SelectBand();
   ShowSignalLevel();
   ShowBW();
@@ -528,6 +554,7 @@ void loop() {
     }
 
     if (USBmode) RDSSpyRoutine(); else XDRGTKRoutine();
+    if (wifi) WiFihandler();
 
     if (menu == true && menuopen == true && menupage == 1 && menuoption == 110) {
       if (band == BAND_FM) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus);
@@ -816,6 +843,7 @@ void ModeButtonPress() {
     EEPROM.writeByte(52, region);
     EEPROM.writeByte(53, radio.rds.underscore);
     EEPROM.writeByte(54, USBmode);
+    EEPROM.writeByte(55, wifi);
     EEPROM.commit();
     Serial.end();
     if (USBmode) Serial.begin(19200); else Serial.begin(115200);
@@ -1093,9 +1121,42 @@ void ButtonPress() {
               tft.setTextColor(TFT_YELLOW);
               if (USBmode) tft.drawCentreString("RDS Spy", 155, 110, GFXFF); else tft.drawCentreString("XDR-GTK", 155, 110, GFXFF);
               break;
+
+            case 190:
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][51], 155, 70, GFXFF);
+              tft.setTextColor(TFT_YELLOW);
+              if (wifi) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              break;
+
+            case 210:
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][53], 155, 50, GFXFF);
+              tft.drawCentreString("ESP_" + String(ESP_getChipId()), 155, 90, GFXFF);
+              tft.drawCentreString(myLanguage[language][54], 155, 130, GFXFF);
+              char key [9];
+              XDRGTK_key.toCharArray(key, 9);
+              WiFiConnectParam XDRGTK_key_text("Set XDRGTK Password: (max 8 characters)");
+              WiFiConnectParam XDRGTK_key_input("XDRGTK_key", "Password", key, 9);
+              wc.addParameter(&XDRGTK_key_text);
+              wc.addParameter(&XDRGTK_key_input);
+              wc.startConfigurationPortal(AP_WAIT);
+              XDRGTK_key = XDRGTK_key_input.getValue();
+              EEPROM.writeString(233, XDRGTK_key);
+              EEPROM.commit();
+              tryWiFi();
+              delay(2000);
+              BuildMenu();
+              break;
           }
       }
     } else {
+      Serial.println(menupage);
+      Serial.println(menuoption);
+      if (menupage == 2 && menuoption == 190 && wifi == true) {
+        tryWiFi();
+        delay(2000);
+      }
       menuopen = false;
       BuildMenu();
     }
@@ -1335,6 +1396,13 @@ void KeyUp() {
               if (USBmode) tft.drawCentreString("RDS Spy", 155, 110, GFXFF); else tft.drawCentreString("XDR-GTK", 155, 110, GFXFF);
               break;
 
+            case 190:
+              tft.setTextColor(TFT_BLACK);
+              if (wifi) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              if (wifi) wifi = false; else wifi = true;
+              tft.setTextColor(TFT_YELLOW);
+              if (wifi) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              break;
           }
       }
     }
@@ -1573,6 +1641,14 @@ void KeyDown() {
               if (USBmode) USBmode = false; else USBmode = true;
               tft.setTextColor(TFT_YELLOW);
               if (USBmode) tft.drawCentreString("RDS Spy", 155, 110, GFXFF); else tft.drawCentreString("XDR-GTK", 155, 110, GFXFF);
+              break;
+
+            case 190:
+              tft.setTextColor(TFT_BLACK);
+              if (wifi) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              if (wifi) wifi = false; else wifi = true;
+              tft.setTextColor(TFT_YELLOW);
+              if (wifi) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
           }
       }
@@ -1869,6 +1945,8 @@ void BuildMenu() {
       tft.drawString(myLanguage[language][46], 14, 130, GFXFF);
       tft.drawString(myLanguage[language][49], 14, 150, GFXFF);
       tft.drawString(myLanguage[language][50], 14, 170, GFXFF);
+      if (wifi) tft.drawString(String(myLanguage[language][51]) + " IP: " + String(WiFi.localIP().toString()), 14, 190, GFXFF); else tft.drawString(myLanguage[language][51], 14, 190, GFXFF);
+      tft.drawString(myLanguage[language][52], 14, 210, GFXFF);
       tft.setTextColor(TFT_YELLOW);
       tft.drawRightString(myLanguage[language][0], 305, 30, GFXFF);
       if (showrdserrors) tft.drawRightString(myLanguage[language][42], 305, 50, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 50, GFXFF);
@@ -1879,6 +1957,8 @@ void BuildMenu() {
       if (region == 1) tft.drawRightString(myLanguage[language][48], 305, 130, GFXFF);
       if (radio.rds.underscore) tft.drawRightString(myLanguage[language][42], 305, 150, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 150, GFXFF);
       if (USBmode) tft.drawRightString("RDS Spy", 305, 170, GFXFF); else tft.drawRightString("XDR-GTK", 305, 170, GFXFF);
+      if (wifi) tft.drawRightString(myLanguage[language][42], 305, 190, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 190, GFXFF);
+      tft.drawRightString("→", 305, 210, GFXFF);
       break;
   }
   analogWrite(SMETERPIN, 0);
@@ -1982,7 +2062,8 @@ void BuildDisplay() {
 
 
   // WORKING ON THIS!
-  if (theme == 1) {
+  /*
+    if (theme == 1) {
     tft.setFreeFont(FONT7);
     tft.fillScreen(TFT_BLACK);
     tft.fillRect(12, 105, 2, 50, TFT_RED);
@@ -2083,8 +2164,8 @@ void BuildDisplay() {
     tft.drawString("20 50 70 100 120", 204, 220, GFXFF);
 
     for (;;);
-  }
-
+    }
+  */
   RDSstatusold = false;
   Stereostatusold = false;
   ShowFreq(0);
@@ -2771,320 +2852,346 @@ void RDSSpyRoutine() {
   }
 }
 
-void XDRGTKRoutine() {
-  if (Serial.available()) {
-    buff[buff_pos] = Serial.read();
-    if (buff[buff_pos] != '\n' && buff_pos != 16 - 1) {
-      buff_pos++;
-    } else {
-      buff[buff_pos] = 0;
-      buff_pos = 0;
+void XDRGTKprint(String string) {
+  if (USBmode == 0 && USBstatus == true) Serial.print(string);
+  if (XDRGTKTCP) RemoteClient.print(string);
+}
 
-      switch (buff[0]) {
-        case 'x':
-          Serial.println("OK");
+void XDRGTKRoutine() {
+  if (!USBmode) {
+    if (Serial.available())
+    {
+      buff[buff_pos] = Serial.read();
+      if (buff[buff_pos] != '\n' && buff_pos != 16 - 1)
+      {
+        buff_pos++;
+      } else {
+        buff[buff_pos] = 0;
+        buff_pos = 0;
+        XDRGTKdata = true;
+      }
+    }
+  }
+
+  if (XDRGTKTCP) {
+    if (RemoteClient.available() > 0) {
+      buff[buff_pos] = RemoteClient.read();
+      if (buff[buff_pos] != '\n' && buff_pos != 16 - 1)
+      {
+        buff_pos++;
+      } else {
+        buff[buff_pos] = 0;
+        buff_pos = 0;
+        XDRGTKdata = true;
+      }
+    }
+  }
+
+  if (XDRGTKdata) {
+    switch (buff[0]) {
+      case 'x':
+        XDRGTKprint("OK\n");
+        if (band != BAND_FM) {
+          band = BAND_FM;
+          SelectBand();
+        }
+        XDRGTKprint("T" + String(frequency * 10) + "A0\nD0\nG00\n");
+        USBstatus = true;
+        ShowUSBstatus();
+        if (menu == true) ModeButtonPress();
+        if (Squelch != Squelchold) {
+          if (screenmute == false) {
+            tft.setFreeFont(FONT7);
+            tft.setTextColor(TFT_BLACK);
+            if (Squelchold == -100) tft.drawCentreString(myLanguage[language][33], 224, 167, GFXFF); else if (Squelchold > 920) tft.drawCentreString("ST", 224, 167, GFXFF); else tft.drawCentreString(String(Squelchold / 10), 224, 167, GFXFF);
+          }
+        }
+        break;
+
+      case 'A':
+        AGC = atol(buff + 1);
+        XDRGTKprint("A" + String(AGC) + "\n");
+        radio.setAGC(AGC);
+        break;
+
+      case 'C':
+        byte scanmethod;
+        scanmethod = atol(buff + 1);
+        if (seek == false) {
+          if (scanmethod == 1) {
+            XDRGTKprint("C1\n");
+            direction = true;
+            seek = true;
+            Seek(direction);
+          }
+          if (scanmethod == 2) {
+            XDRGTKprint("C2\n");
+            direction = false;
+            seek = true;
+            Seek(direction);
+          }
+        } else {
+          seek = false;
+        }
+        XDRGTKprint("C0\n");
+        break;
+
+      case 'N':
+        doStereoToggle();
+        break;
+
+      case 'D':
+        DeEmphasis = atol(buff + 1);
+        XDRGTKprint("D" + String(DeEmphasis) + "\n");
+        radio.setDeemphasis(DeEmphasis);
+        break;
+
+      case 'F':
+        XDRBWset = atol(buff + 1);
+        if (XDRBWset < 16) {
+          XDRBWsetold = XDRBWset;
+          BWset = XDRBWset + 1;
+        } else {
+          XDRBWset = XDRBWsetold;
+        }
+        doBW();
+        XDRGTKprint("F" + String(XDRBWset) + "\n");
+        break;
+
+      case 'G':
+        LevelOffset =  atol(buff + 1);
+        if (LevelOffset == 0) {
+          MuteScreen(0);
+          LowLevelSet = EEPROM.readInt(47);
+          XDRGTKprint("G00\n");
+        }
+        if (LevelOffset == 10) {
+          MuteScreen(1);
+          LowLevelSet = EEPROM.readInt(47);
+          XDRGTKprint("G10\n");
+        }
+        if (LevelOffset == 1) {
+          MuteScreen(0);
+          LowLevelSet = 120;
+          XDRGTKprint("G01\n");
+        }
+        if (LevelOffset == 11) {
+          LowLevelSet = 120;
+          MuteScreen(1);
+          XDRGTKprint("G11\n");
+        }
+        break;
+
+      case 'M':
+        byte XDRband;
+        XDRband = atol(buff + 1);
+        if (XDRband == BAND_FM) { // here XDRGTK need add four bands switch too
+          band = BAND_FM;
+          SelectBand();
+          XDRGTKprint("M0\nT" + String(frequency * 10) + "\n");
+        } else if (XDRband == BAND_LW) {
+          band = BAND_LW;
+          SelectBand();
+          XDRGTKprint("M1\nT" + String(frequency_AM) + "\n");
+        } else if (XDRband == BAND_MW) {
+          band = BAND_MW;
+          SelectBand();
+          XDRGTKprint("M2\nT" + String(frequency_AM) + "\n");
+        } else if (XDRband == BAND_SW) {
+          band = BAND_SW;
+          SelectBand();
+          XDRGTKprint("M3\nT" + String(frequency_AM) + "\n");
+        }
+        break;
+
+      case 'T':
+        unsigned int freqtemp;
+        freqtemp = atoi(buff + 1);
+        if (seek == true) seek = false;
+        if (freqtemp >= LWLowEdgeSet && freqtemp <= LWHighEdgeSet) {
+          frequency_AM = freqtemp;
+          if (band != BAND_LW) {
+            band = BAND_LW;
+            SelectBand();
+          } else {
+            radio.SetFreqAM(frequency_AM);
+          }
+          XDRGTKprint("M1\n");
+        } else if (freqtemp >= MWLowEdgeSet && freqtemp <= MWHighEdgeSet) {
+          frequency_AM = freqtemp;
+          if (band != BAND_MW) {
+            band = BAND_MW;
+            SelectBand();
+          } else {
+            radio.SetFreqAM(frequency_AM);
+          }
+          XDRGTKprint("M2\n");
+        } else if (freqtemp >= SWLowEdgeSet && freqtemp <= SWHighEdgeSet) {
+          frequency_AM = freqtemp;
+          if (band != BAND_SW) {
+            band = BAND_SW;
+            SelectBand();
+          } else {
+            radio.SetFreqAM(frequency_AM);
+          }
+          XDRGTKprint("M3\n");
+        } else if (freqtemp >= FREQ_FM_START && freqtemp < FREQ_FM_END) {
+          frequency = freqtemp / 10;
           if (band != BAND_FM) {
             band = BAND_FM;
             SelectBand();
-          }
-          Serial.print("T" + String(frequency * 10) + "A0\nD0\nG00\n");
-          USBstatus = true;
-          ShowUSBstatus();
-          if (menu == true) ModeButtonPress();
-          if (Squelch != Squelchold) {
-            if (screenmute == false) {
-              tft.setFreeFont(FONT7);
-              tft.setTextColor(TFT_BLACK);
-              if (Squelchold == -100) tft.drawCentreString(myLanguage[language][33], 224, 167, GFXFF); else if (Squelchold > 920) tft.drawCentreString("ST", 224, 167, GFXFF); else tft.drawCentreString(String(Squelchold / 10), 224, 167, GFXFF);
-            }
-          }
-          break;
-
-        case 'A':
-          AGC = atol(buff + 1);
-          Serial.print("A" + String(AGC) + "\n");
-          radio.setAGC(AGC);
-          break;
-
-        case 'C':
-          byte scanmethod;
-          scanmethod = atol(buff + 1);
-          if (seek == false) {
-            if (scanmethod == 1) {
-              Serial.print("C1\n");
-              direction = true;
-              seek = true;
-              Seek(direction);
-            }
-            if (scanmethod == 2) {
-              Serial.print("C2\n");
-              direction = false;
-              seek = true;
-              Seek(direction);
-            }
+            XDRGTKprint("M0\n");
           } else {
-            seek = false;
+            radio.SetFreq(frequency);
           }
-          Serial.print("C0\n");
-          break;
+        }
+        if (band == BAND_FM) XDRGTKprint("T" + String(frequency * 10) + "\n"); else XDRGTKprint("T" + String(frequency_AM) + "\n");
+        radio.clearRDS(fullsearchrds);
+        RDSstatus = 0;
+        ShowFreq(0);
+        break;
 
-        case 'N':
-          doStereoToggle();
-          break;
-
-        case 'D':
-          DeEmphasis = atol(buff + 1);
-          Serial.print("D" + String(DeEmphasis) + "\n");
-          radio.setDeemphasis(DeEmphasis);
-          break;
-
-        case 'F':
-          XDRBWset = atol(buff + 1);
-          if (XDRBWset < 16) {
-            XDRBWsetold = XDRBWset;
-            BWset = XDRBWset + 1;
-          } else {
-            XDRBWset = XDRBWsetold;
+      case 'S':
+        if (buff[1] == 'a') {
+          scanner_start = (atol(buff + 2) + 5) / 10;
+        } else if (buff[1] == 'b') {
+          scanner_end = (atol(buff + 2) + 5) / 10;
+        } else if (buff[1] == 'c') {
+          scanner_step = (atol(buff + 2) + 5) / 10;
+        } else if (buff[1] == 'f') {
+          scanner_filter = atol(buff + 2);
+        } else if (scanner_start > 0 && scanner_end > 0 && scanner_step > 0 && scanner_filter >= 0) {
+          frequencyold = frequency;
+          radio.SetFreq(scanner_start);
+          XDRGTKprint("U");
+          if (scanner_filter < 0) {
+            BWset = 0;
+          } else if (scanner_filter == 0) {
+            BWset = 1;
+          } else if (scanner_filter == 26) {
+            BWset = 2;
+          } else if (scanner_filter == 1) {
+            BWset = 3;
+          } else if (scanner_filter == 28) {
+            BWset = 4;
+          } else if (scanner_filter == 29) {
+            BWset = 5;
+          } else if (scanner_filter == 3) {
+            BWset = 6;
+          } else if (scanner_filter == 4) {
+            BWset = 7;
+          } else if (scanner_filter == 5) {
+            BWset = 8;
+          } else if (scanner_filter == 7) {
+            BWset = 9;
+          } else if (scanner_filter == 8) {
+            BWset = 10;
+          } else if (scanner_filter == 9) {
+            BWset = 11;
+          } else if (scanner_filter == 10) {
+            BWset = 12;
+          } else if (scanner_filter == 11) {
+            BWset = 13;
+          } else if (scanner_filter == 12) {
+            BWset = 14;
+          } else if (scanner_filter == 13) {
+            BWset = 15;
+          } else if (scanner_filter == 15) {
+            BWset = 16;
           }
           doBW();
-          Serial.print("F" + String(XDRBWset) + "\n");
-          break;
+          if (screenmute == false) {
+            ShowFreq(1);
+            tft.setTextColor(TFT_WHITE, TFT_BLACK);
+            tft.setCursor (90, 60);
+            tft.setFreeFont(FONT14);
+            tft.drawCentreString(myLanguage[language][34], 140, 60, GFXFF);
+          }
+          frequencyold = frequency / 10;
+          for (freq_scan = scanner_start; freq_scan <= scanner_end; freq_scan += scanner_step) {
+            radio.SetFreq(freq_scan);
+            XDRGTKprint(String(freq_scan * 10, DEC));
+            XDRGTKprint("=");
+            delay(10);
+            if (band == BAND_FM) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus); else  radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus);
+            XDRGTKprint(String((SStatus / 10) + 10, DEC));
+            XDRGTKprint(",");
+          }
+          XDRGTKprint("\n");
+          if (screenmute == false) {
+            tft.setTextColor(TFT_BLACK);
+            tft.drawCentreString(myLanguage[language][34], 140, 60, GFXFF);
+          }
+          radio.SetFreq(frequencyold);
+          if (screenmute == false) ShowFreq(0);
+          radio.setFMABandw();
+          BWset = 0;
+        }
+        break;
 
-        case 'G':
-          LevelOffset =  atol(buff + 1);
-          if (LevelOffset == 0) {
-            MuteScreen(0);
-            LowLevelSet = EEPROM.readInt(47);
-            Serial.print("G00\n");
-          }
-          if (LevelOffset == 10) {
-            MuteScreen(1);
-            LowLevelSet = EEPROM.readInt(47);
-            Serial.print("G10\n");
-          }
-          if (LevelOffset == 1) {
-            MuteScreen(0);
-            LowLevelSet = 120;
-            Serial.print("G01\n");
-          }
-          if (LevelOffset == 11) {
-            LowLevelSet = 120;
-            MuteScreen(1);
-            Serial.print("G11\n");
-          }
-          break;
+      case 'Y':
+        VolSet = atoi(buff + 1);
+        if (VolSet == 0) {
+          radio.setMute();
+          XDRMute = true;
+          SQ = true;
+        } else {
+          radio.setVolume((VolSet - 70) / 10);
+          XDRMute = false;
+        }
+        XDRGTKprint("Y" + String(VolSet) + "\n");
+        break;
 
-        case 'M':
-          byte XDRband;
-          XDRband = atol(buff + 1);
-          if (XDRband == BAND_FM) { // here XDRGTK need add four bands switch too
-            band = BAND_FM;
-            SelectBand();
-            Serial.print("M0\nT" + String(frequency * 10) + "\n");
-          } else if (XDRband == BAND_LW) {
-            band = BAND_LW;
-            SelectBand();
-            Serial.print("M1\nT" + String(frequency_AM) + "\n");
-          } else if (XDRband == BAND_MW) {
-            band = BAND_MW;
-            SelectBand();
-            Serial.print("M2\nT" + String(frequency_AM) + "\n");
-          } else if (XDRband == BAND_SW) {
-            band = BAND_SW;
-            SelectBand();
-            Serial.print("M3\nT" + String(frequency_AM) + "\n");
-          }
-          break;
+      case 'X':
+        XDRGTKprint("X\n");
+        ESP.restart();
+        break;
 
-        case 'T':
-          unsigned int freqtemp;
-          freqtemp = atoi(buff + 1);
-          if (seek == true) seek = false;
-          if (freqtemp >= LWLowEdgeSet && freqtemp <= LWHighEdgeSet) {
-            frequency_AM = freqtemp;
-            if (band != BAND_LW) {
-              band = BAND_LW;
-              SelectBand();
-            } else {
-              radio.SetFreqAM(frequency_AM);
-            }
-            Serial.print("M1\n");
-          } else if (freqtemp >= MWLowEdgeSet && freqtemp <= MWHighEdgeSet) {
-            frequency_AM = freqtemp;
-            if (band != BAND_MW) {
-              band = BAND_MW;
-              SelectBand();
-            } else {
-              radio.SetFreqAM(frequency_AM);
-            }
-            Serial.print("M2\n");
-          } else if (freqtemp >= SWLowEdgeSet && freqtemp <= SWHighEdgeSet) {
-            frequency_AM = freqtemp;
-            if (band != BAND_SW) {
-              band = BAND_SW;
-              SelectBand();
-            } else {
-              radio.SetFreqAM(frequency_AM);
-            }
-            Serial.print("M3\n");
-          } else if (freqtemp >= FREQ_FM_START && freqtemp < FREQ_FM_END) {
-            frequency = freqtemp / 10;
-            if (band != BAND_FM) {
-              band = BAND_FM;
-              SelectBand();
-              Serial.print("M0\n");
-            } else {
-              radio.SetFreq(frequency);
-            }
-          }
-          if (band == BAND_FM) Serial.print("T" + String(frequency * 10) + "\n"); else Serial.print("T" + String(frequency_AM) + "\n");
-          radio.clearRDS(fullsearchrds);
-          RDSstatus = 0;
-          ShowFreq(0);
-          break;
-
-        case 'S':
-          if (buff[1] == 'a') {
-            scanner_start = (atol(buff + 2) + 5) / 10;
-          } else if (buff[1] == 'b') {
-            scanner_end = (atol(buff + 2) + 5) / 10;
-          } else if (buff[1] == 'c') {
-            scanner_step = (atol(buff + 2) + 5) / 10;
-          } else if (buff[1] == 'f') {
-            scanner_filter = atol(buff + 2);
-          } else if (scanner_start > 0 && scanner_end > 0 && scanner_step > 0 && scanner_filter >= 0) {
-            frequencyold = frequency;
-            radio.SetFreq(scanner_start);
-            Serial.print('U');
-            if (scanner_filter < 0) {
-              BWset = 0;
-            } else if (scanner_filter == 0) {
-              BWset = 1;
-            } else if (scanner_filter == 26) {
-              BWset = 2;
-            } else if (scanner_filter == 1) {
-              BWset = 3;
-            } else if (scanner_filter == 28) {
-              BWset = 4;
-            } else if (scanner_filter == 29) {
-              BWset = 5;
-            } else if (scanner_filter == 3) {
-              BWset = 6;
-            } else if (scanner_filter == 4) {
-              BWset = 7;
-            } else if (scanner_filter == 5) {
-              BWset = 8;
-            } else if (scanner_filter == 7) {
-              BWset = 9;
-            } else if (scanner_filter == 8) {
-              BWset = 10;
-            } else if (scanner_filter == 9) {
-              BWset = 11;
-            } else if (scanner_filter == 10) {
-              BWset = 12;
-            } else if (scanner_filter == 11) {
-              BWset = 13;
-            } else if (scanner_filter == 12) {
-              BWset = 14;
-            } else if (scanner_filter == 13) {
-              BWset = 15;
-            } else if (scanner_filter == 15) {
-              BWset = 16;
-            }
-            doBW();
-            if (screenmute == false) {
-              ShowFreq(1);
-              tft.setTextColor(TFT_WHITE, TFT_BLACK);
-              tft.setCursor (90, 60);
-              tft.setFreeFont(FONT14);
-              tft.drawCentreString(myLanguage[language][34], 140, 60, GFXFF);
-            }
-            frequencyold = frequency / 10;
-            for (freq_scan = scanner_start; freq_scan <= scanner_end; freq_scan += scanner_step) {
-              radio.SetFreq(freq_scan);
-              Serial.print(freq_scan * 10, DEC);
-              Serial.print('=');
-              delay(10);
-              if (band == BAND_FM) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus); else  radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus);
-              Serial.print((SStatus / 10) + 10, DEC);
-              Serial.print(',');
-            }
-            Serial.print('\n');
-            if (screenmute == false) {
-              tft.setTextColor(TFT_BLACK);
-              tft.drawCentreString(myLanguage[language][34], 140, 60, GFXFF);
-            }
-            radio.SetFreq(frequencyold);
-            if (screenmute == false) ShowFreq(0);
-            radio.setFMABandw();
-            BWset = 0;
-          }
-          break;
-
-        case 'Y':
-          VolSet = atoi(buff + 1);
-          if (VolSet == 0) {
-            radio.setMute();
-            XDRMute = true;
-            SQ = true;
-          } else {
-            radio.setVolume((VolSet - 70) / 10);
-            XDRMute = false;
-          }
-          Serial.print("Y" + String(VolSet) + "\n");
-          break;
-
-        case 'X':
-          Serial.print("X\n");
-          ESP.restart();
-          break;
-
-        case 'Z':
-          byte iMSEQX;
-          iMSEQX = atol(buff + 1);
-          if (iMSEQX == 0) {
-            iMSset = 1;
-            EQset = 1;
-            iMSEQ = 2;
-          }
-          if (iMSEQX == 1) {
-            iMSset = 0;
-            EQset = 1;
-            iMSEQ = 3;
-          }
-          if (iMSEQX == 2) {
-            iMSset = 1;
-            EQset = 0;
-            iMSEQ = 4;
-          }
-          if (iMSEQX == 3) {
-            iMSset = 0;
-            EQset = 0;
-            iMSEQ = 1;
-          }
-          updateiMS();
-          updateEQ();
-          Serial.print("Z" + String(iMSEQX) + "\n");
-          break;
-      }
+      case 'Z':
+        byte iMSEQX;
+        iMSEQX = atol(buff + 1);
+        if (iMSEQX == 0) {
+          iMSset = 1;
+          EQset = 1;
+          iMSEQ = 2;
+        }
+        if (iMSEQX == 1) {
+          iMSset = 0;
+          EQset = 1;
+          iMSEQ = 3;
+        }
+        if (iMSEQX == 2) {
+          iMSset = 1;
+          EQset = 0;
+          iMSEQ = 4;
+        }
+        if (iMSEQX == 3) {
+          iMSset = 0;
+          EQset = 0;
+          iMSEQ = 1;
+        }
+        updateiMS();
+        updateEQ();
+        XDRGTKprint("Z" + String(iMSEQX) + "\n");
+        break;
     }
   }
 
   if (USBstatus == true) {
     Stereostatus = radio.getStereoStatus();
     if (StereoToggle == false) {
-      Serial.print("SS");
+      XDRGTKprint("SS");
     } else if (Stereostatus == true && band == BAND_FM) {
-      Serial.print("Ss");
+      XDRGTKprint("Ss");
     } else {
-      Serial.print("Sm");
+      XDRGTKprint("Sm");
     }
     if (SStatus > (SStatusold + 10) || SStatus < (SStatusold - 10)) {
-      Serial.print(String(((SStatus * 100) + 10875) / 1000) + "." + String(((SStatus * 100) + 10875) / 100 % 10));
+      XDRGTKprint(String(((SStatus * 100) + 10875) / 1000) + "." + String(((SStatus * 100) + 10875) / 100 % 10));
     } else {
-      Serial.print(String(((SStatusold * 100) + 10875) / 1000) + "." + String(((SStatus * 100) + 10875) / 100 % 10));
+      XDRGTKprint(String(((SStatusold * 100) + 10875) / 1000) + "." + String(((SStatus * 100) + 10875) / 100 % 10));
     }
-    Serial.print("," + String(WAM / 10, DEC) + "," + String(SNR, DEC) + "\n");
+    XDRGTKprint("," + String(WAM / 10, DEC) + "," + String(SNR, DEC) + "\n");
   }
 }
 
@@ -3289,4 +3396,90 @@ void read_encoder() {
       encval = 0;
     }
   }
+}
+
+void tryWiFi() {
+  tft.drawRoundRect(1, 60, 319, 140, 5, TFT_WHITE);
+  tft.fillRoundRect(3, 62, 315, 136, 5, TFT_BLACK);
+  tft.setFreeFont(FONT14);
+  tft.setTextColor(TFT_WHITE);
+  tft.drawCentreString(myLanguage[language][55], 155, 80, GFXFF);
+  if (wc.autoConnect()) {
+    Server.begin();
+    tft.setTextColor(TFT_GREEN);
+    tft.drawCentreString(myLanguage[language][57], 155, 120, GFXFF);
+    wifi = true;
+  } else {
+    tft.setTextColor(TFT_RED);
+    tft.drawCentreString(myLanguage[language][56], 155, 120, GFXFF);
+    wifi = false;
+  }
+}
+
+void WiFihandler() {
+  if (Server.hasClient())
+  {
+    if (!RemoteClient.connected())
+    {
+      //      Server.available().stop();
+      //    } else {
+      wificonnected = true;
+      RemoteClient = Server.available();
+      passwordcrypt();
+      RemoteClient.print(saltkey + "\n");
+    }
+  } else {
+    if (Server.hasClient()) Server.available().stop();
+  }
+
+  if (wificonnected == true && !RemoteClient.connected()) {
+    wificonnected = false;
+    XDRGTKTCP = false;
+  }
+
+  if (XDRGTKTCP == false && wificonnected == true && RemoteClient.available()) {
+    String data_str = RemoteClient.readStringUntil('\n');
+    int data = data_str.toInt();
+    if (data_str.length() > 30 && data_str.equals(cryptedpassword))
+    {
+      if (band != BAND_FM) {
+        band = BAND_FM;
+        SelectBand();
+      }
+      XDRGTKTCP = true;
+      RemoteClient.print("o1,0\n");
+    } else if (RDSSpy == false && XDRGTKTCP == false && data_str.length() < 5 && data_str == ("*R?F"))
+    {
+      RDSSpy = true;
+    } else if (RDSSpy == true) {
+      int symPos = data_str.indexOf("*F");
+      if (symPos >= 5) {
+        String freq = data_str.substring(0, symPos);
+        freq = freq.substring(0, freq.length() - 1);
+        frequency = freq.toInt();
+        radio.SetFreq(frequency);
+        radio.clearRDS(fullsearchrds);
+        if (band != BAND_FM) {
+          band = BAND_FM;
+          SelectBand();
+        }
+      }
+    } else {
+      RemoteClient.print("a0\n");
+    }
+  }
+}
+
+void passwordcrypt() {
+  int generated = 0;
+  while (generated < 16)
+  {
+    byte randomValue = random(0, 26);
+    char letter = randomValue + 'a';
+    if (randomValue > 26) letter = (randomValue - 26);
+    saltkey.setCharAt(generated, letter);
+    generated ++;
+  }
+  salt = saltkey + XDRGTK_key;
+  cryptedpassword = String(sha1(salt));
 }

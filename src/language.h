@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-const char myLanguage[9][51][100] = {
+static const char myLanguage[9][58][78] = {
   { "English",                        // English
     "Rotary direction changed",
     "Please release button",
@@ -51,7 +51,14 @@ const char myLanguage[9][51][100] = {
     "Europe",
     "USA",
     "Show underscore in RDS",
-    "USB mode"
+    "USB mode",
+    "Wi-Fi active",
+    "Configure Wi-Fi",
+    "Connect to: ",
+    "to configure Wi-Fi",
+    "Trying to connect with Wi-Fi",
+    "FAILED.. WiFi disabled",
+    "CONNECTED!"
   },
 
   { "Nederlands",                     // Dutch
@@ -104,7 +111,14 @@ const char myLanguage[9][51][100] = {
     "Europa",
     "USA",
     "Toon underscore in RDS",
-    "USB mode"
+    "USB mode",
+    "Wi-Fi aktief",
+    "Configureer Wi-Fi",
+    "Verbind met: ",
+    "om Wi-Fi in te stellen",
+    "Verbinden met Wi-Fi...",
+    "MISLUKT.. WiFi uitgeschakeld",
+    "VERBONDEN!"
   },
 
   { "Polski",                         // Polish
@@ -157,7 +171,14 @@ const char myLanguage[9][51][100] = {
     "Europa",
     "USA",
     "Pokaz podkreslenia w RDS",
-    "Tryb USB"
+    "Tryb USB",
+    "Wi-Fi active",
+    "Configure Wi-Fi",
+    "Connect to: ",
+    "to configure Wi-Fi",
+    "Trying to connect with Wi-Fi",
+    "FAILED.. WiFi disabled",
+    "CONNECTED!"
   },
 
   { "Hrvatski",                       // Croatian
@@ -210,7 +231,14 @@ const char myLanguage[9][51][100] = {
     "Europa",
     "SAD",
     "Prikaži donju crtu u RDS-u",
-    "Način rada USB-a"
+    "Način rada USB-a",
+    "Wi-Fi active",
+    "Configure Wi-Fi",
+    "Connect to: ",
+    "to configure Wi-Fi",
+    "Trying to connect with Wi-Fi",
+    "FAILED.. WiFi disabled",
+    "CONNECTED!"
   },
 
   { "Ελληνικά",                        // Greek
@@ -263,7 +291,14 @@ const char myLanguage[9][51][100] = {
     "Ευρώπη",
     "Η.Π.Α.",
     "Εμφάνιση κάτω παύλας στο RDS",
-    "USB mode"
+    "USB mode",
+    "Wi-Fi active",
+    "Configure Wi-Fi",
+    "Connect to: ",
+    "to configure Wi-Fi",
+    "Trying to connect with Wi-Fi",
+    "FAILED.. WiFi disabled",
+    "CONNECTED!"
   },
 
   { "Romana",                       // Romana
@@ -316,7 +351,14 @@ const char myLanguage[9][51][100] = {
     "Europa",
     "SUA",
     "Arata evidentiat in RDS",
-    "USB mode"
+    "USB mode",
+    "Wi-Fi active",
+    "Configure Wi-Fi",
+    "Connect to: ",
+    "to configure Wi-Fi",
+    "Trying to connect with Wi-Fi",
+    "FAILED.. WiFi disabled",
+    "CONNECTED!"
   },
 
   { "Deutsch",                        // German
@@ -369,7 +411,14 @@ const char myLanguage[9][51][100] = {
     "Europa",
     "USA",
     "Zeige Unterstrich im RDS",
-    "USB mode"
+    "USB mode",
+    "Wi-Fi active",
+    "Configure Wi-Fi",
+    "Connect to: ",
+    "to configure Wi-Fi",
+    "Trying to connect with Wi-Fi",
+    "FAILED.. WiFi disabled",
+    "CONNECTED!"
   },
   { "Czech",                        // English
     "Směr enkóderu byl změněn",
@@ -421,7 +470,14 @@ const char myLanguage[9][51][100] = {
     "Evropa",
     "USA",
     "Zobrazit podtržítka v RDS",
-    "USB mode"
+    "USB mode",
+    "Wi-Fi active",
+    "Configure Wi-Fi",
+    "Connect to: ",
+    "to configure Wi-Fi",
+    "Trying to connect with Wi-Fi",
+    "FAILED.. WiFi disabled",
+    "CONNECTED!"
   },
   { "Slovak",                       // English
     "Smer enkóderu bol zmenený",
@@ -473,6 +529,13 @@ const char myLanguage[9][51][100] = {
     "Európa",
     "USA",
     "Zobraziť podtržítka v RDS",
-    "USB mode"
+    "USB mode",
+    "Wi-Fi active",
+    "Configure Wi-Fi",
+    "Connect to: ",
+    "to configure Wi-Fi",
+    "Trying to connect with Wi-Fi",
+    "FAILED.. WiFi disabled",
+    "CONNECTED!"
   },
 };
