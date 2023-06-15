@@ -252,8 +252,14 @@ void setup() {
   if (iMSset == 0 && EQset == 0) iMSEQ = 1;
 
   switch (band) {
-    case BAND_LW: frequency_LW = frequency_AM; break;
-    case BAND_MW: frequency_MW = frequency_AM; break;
+    case BAND_LW: 
+      frequency_LW = frequency_AM;
+      if (stepsize > 3) stepsize = 3;
+      break;
+    case BAND_MW: 
+      frequency_MW = frequency_AM; 
+      if (stepsize > 3) stepsize = 3;
+      break;
     case BAND_SW: frequency_SW = frequency_AM; break;
     default: break;
   }
