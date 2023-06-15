@@ -111,6 +111,12 @@ unsigned int HighEdgeSet;
 int LevelOffset;
 unsigned int LowEdgeSet;
 int LowLevelSet;
+unsigned int LWHighEdgeSet;
+unsigned int LWLowEdgeSet;
+unsigned int MWHighEdgeSet;
+unsigned int MWLowEdgeSet;
+unsigned int SWHighEdgeSet;
+unsigned int SWLowEdgeSet;
 int lowsignaltimer;
 int menuoption = 30;
 int MStatusold;
@@ -245,6 +251,13 @@ void setup() {
   frequency_LW = EEPROM.readUInt(221);
   frequency_MW = EEPROM.readUInt(225);
   frequency_SW = EEPROM.readUInt(229);
+
+  LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;   // later will read from flash
+  LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX; // later will read from flash
+  MWLowEdgeSet = region == 0 ? FREQ_MW_LOW_EDGE_MIN_9K : FREQ_MW_LOW_EDGE_MIN_10K;      // later will read from flash
+  MWHighEdgeSet = region == 0 ? FREQ_MW_HIGH_EDGE_MAX_9K : FREQ_MW_HIGH_EDGE_MAX_10K;   // later will read from flash
+  SWLowEdgeSet = FREQ_SW_LOW_EDGE_MIN;
+  SWHighEdgeSet = FREQ_SW_HIGH_EDGE_MAX;
 
   for (int i = 0; i < 30; i++) memoryband[i] = EEPROM.readByte(i + 60);
   for (int i = 0; i < 30; i++) memory[i] = EEPROM.readUInt((i * 4) + 100);
@@ -646,20 +659,20 @@ void LimitAMFrequency() {
   switch (band) {
     case BAND_LW:
       frequency_AM = frequency_LW;
-      if (frequency_AM > FREQ_LW_END || frequency_AM < FREQ_LW_START) {
-        frequency_AM = FREQ_LW_START;
+      if (frequency_AM > LWHighEdgeSet || frequency_AM < LWLowEdgeSet) {
+        frequency_AM = LWLowEdgeSet;
       }
       break;
     case BAND_MW:
       frequency_AM = frequency_MW;
-      if (frequency_AM > (region == 0 ? FREQ_MW_END_EU : FREQ_MW_END_US) || frequency_AM < (region == 0 ? FREQ_MW_START_EU : FREQ_MW_START_US)) {
-        frequency_AM = region == 0 ? FREQ_MW_START_EU : FREQ_MW_START_US;
+      if (frequency_AM > MWHighEdgeSet || frequency_AM < MWLowEdgeSet) {
+        frequency_AM = MWLowEdgeSet; // take care of 9K/10K step
       }
       break;
     case BAND_SW:
       frequency_AM = frequency_SW;
-      if (frequency_AM > FREQ_SW_END || frequency_AM < FREQ_SW_START) {
-        frequency_AM = FREQ_SW_START;
+      if (frequency_AM > SWHighEdgeSet || frequency_AM < SWLowEdgeSet) {
+        frequency_AM = SWLowEdgeSet;
       }
       break;
   }
@@ -2887,7 +2900,7 @@ void XDRGTKRoutine() {
           unsigned int freqtemp;
           freqtemp = atoi(buff + 1);
           if (seek == true) seek = false;
-          if (freqtemp >= FREQ_LW_START && freqtemp <= FREQ_LW_END) {
+          if (freqtemp >= LWLowEdgeSet && freqtemp <= LWHighEdgeSet) {
             frequency_AM = freqtemp;
             if (band != BAND_LW) {
               band = BAND_LW;
@@ -2896,7 +2909,7 @@ void XDRGTKRoutine() {
               radio.SetFreqAM(frequency_AM);
             }
             Serial.print("M1\n");
-          } else if (freqtemp >= (region == 0 ? FREQ_MW_START_EU : FREQ_MW_START_US) && freqtemp <= (region == 0 ? FREQ_MW_END_EU : FREQ_MW_END_US)) {
+          } else if (freqtemp >= MWLowEdgeSet && freqtemp <= MWHighEdgeSet) {
             frequency_AM = freqtemp;
             if (band != BAND_MW) {
               band = BAND_MW;
@@ -2905,7 +2918,7 @@ void XDRGTKRoutine() {
               radio.SetFreqAM(frequency_AM);
             }
             Serial.print("M2\n");
-          } else if (freqtemp >= FREQ_SW_START && freqtemp <= FREQ_SW_END) {
+          } else if (freqtemp >= SWLowEdgeSet && freqtemp <= SWHighEdgeSet) {
             frequency_AM = freqtemp;
             if (band != BAND_SW) {
               band = BAND_SW;
@@ -3079,7 +3092,7 @@ void TuneUp() {
   unsigned int temp;
   if (stepsize == 0) {
     if (band != BAND_FM) {
-      if (frequency_AM < FREQ_SW_START) {
+      if (frequency_AM < MWHighEdgeSet) {
         if (region == 0) {
           temp = FREQ_MW_STEP_9K;
           frequency_AM = (frequency_AM / FREQ_MW_STEP_9K) * FREQ_MW_STEP_9K;
@@ -3111,24 +3124,24 @@ void TuneUp() {
 
   if (band == BAND_LW) {
     frequency_AM += temp;
-    if (frequency_AM > FREQ_LW_END) {
-      frequency_AM = FREQ_LW_START;
+    if (frequency_AM > LWHighEdgeSet) {
+      frequency_AM = LWLowEdgeSet;
       if (edgebeep) EdgeBeeper();
     }
     radio.SetFreqAM(frequency_AM);
     frequency_LW = frequency_AM;
   } else if (band == BAND_MW) {
     frequency_AM += temp;
-    if (frequency_AM > (region == 0 ? FREQ_MW_END_EU : FREQ_MW_END_US)) {
-      frequency_AM = (region == 0 ? FREQ_MW_START_EU : FREQ_MW_START_US);
+    if (frequency_AM > MWHighEdgeSet) {
+      frequency_AM = MWLowEdgeSet;
       if (edgebeep) EdgeBeeper();
     }
     radio.SetFreqAM(frequency_AM);
     frequency_MW = frequency_AM;
   } else if (band == BAND_SW) {
     frequency_AM += temp;
-    if (frequency_AM > FREQ_SW_END) {
-      frequency_AM = FREQ_SW_START;
+    if (frequency_AM > SWHighEdgeSet) {
+      frequency_AM = SWLowEdgeSet;
       if (edgebeep) EdgeBeeper();
     }
     radio.SetFreqAM(frequency_AM);
@@ -3142,7 +3155,7 @@ void TuneDown() {
   unsigned int temp;
   if (stepsize == 0) {
     if (band != BAND_FM) {
-      if (frequency_AM <= FREQ_SW_START) {
+      if (frequency_AM <= MWHighEdgeSet) {
         if (frequency_AM == 2000) { // Fix Me :take care of 9K/10K Step
           frequency_AM = 1998;
           temp = 0;
@@ -3174,24 +3187,24 @@ void TuneDown() {
 
   if (band == BAND_LW) {
     frequency_AM -= temp;
-    if (frequency_AM < FREQ_LW_START) {
-      frequency_AM = FREQ_LW_END;
+    if (frequency_AM < LWLowEdgeSet) {
+      frequency_AM = LWHighEdgeSet;
       if (edgebeep) EdgeBeeper();
     }
     radio.SetFreqAM(frequency_AM);
     frequency_LW = frequency_AM;
   } else if (band == BAND_MW) {
     frequency_AM -= temp;
-    if (frequency_AM < (region == 0 ? FREQ_MW_START_EU : FREQ_MW_START_US)) {
-      frequency_AM = region == 0 ? FREQ_MW_END_EU : FREQ_MW_END_US;
+    if (frequency_AM < MWLowEdgeSet) {
+      frequency_AM = MWHighEdgeSet;
       if (edgebeep) EdgeBeeper();
     }
     radio.SetFreqAM(frequency_AM);
     frequency_MW = frequency_AM;
   } else if (band == BAND_SW) {
     frequency_AM -= temp;
-    if (frequency_AM < FREQ_SW_START) {
-      frequency_AM = FREQ_SW_END;
+    if (frequency_AM < SWLowEdgeSet) {
+      frequency_AM = SWHighEdgeSet;
       if (edgebeep) EdgeBeeper();
     }
     radio.SetFreqAM(frequency_AM);
