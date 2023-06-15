@@ -206,11 +206,11 @@ const char myLanguage[9][51][100] = {
     "Softmute FM",
     "Softmute AM",
     "Beep na rubu frekv. opsega",
-    "Region",
-    "Europe",
-    "USA",
-    "Show underscore in RDS",
-    "USB mode"
+    "Regija",
+    "Europa",
+    "SAD",
+    "Prikaži donju crtu u RDS-u",
+    "Način rada USB-a"
   },
 
   { "Ελληνικά",                        // Greek
