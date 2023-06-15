@@ -252,8 +252,14 @@ void setup() {
   if (iMSset == 0 && EQset == 0) iMSEQ = 1;
 
   switch (band) {
-    case BAND_LW: frequency_LW = frequency_AM; break;
-    case BAND_MW: frequency_MW = frequency_AM; break;
+    case BAND_LW: 
+      frequency_LW = frequency_AM;
+      if (stepsize > 3) stepsize = 3;
+      break;
+    case BAND_MW: 
+      frequency_MW = frequency_AM; 
+      if (stepsize > 3) stepsize = 3;
+      break;
     case BAND_SW: frequency_SW = frequency_AM; break;
     default: break;
   }
@@ -591,7 +597,10 @@ void PWRButtonPress() {
         ESP.restart();
       } else {
         if (tunemode != 2) {
-          if (band == BAND_FM) band = BAND_LW;
+          if (band == BAND_FM) {
+            band = BAND_LW;
+            if (stepsize > 3) stepsize = 3;
+          }
           else if (band == BAND_LW) band = BAND_MW;
           else if (band == BAND_MW) band = BAND_SW;
           else if (band == BAND_SW) band = BAND_FM;
@@ -670,10 +679,10 @@ void SelectBand() {
     tft.drawBitmap(110, 5, RDSLogo, 67, 22, TFT_GREYOUT);
     tft.drawRoundRect(249, 56, 30, 20, 5, TFT_GREYOUT);
     tft.setTextColor(TFT_GREYOUT);
-    tft.drawCentreString("iMS", 265, 58, GFXFF);
+    tft.drawCentreString("iMS", 265, 54, GFXFF);
     tft.drawRoundRect(287, 56, 30, 20, 5, TFT_GREYOUT);
     tft.setTextColor(TFT_GREYOUT);
-    tft.drawCentreString("EQ", 303, 58, GFXFF);
+    tft.drawCentreString("EQ", 303, 54, GFXFF);
   } else {
     LowLevelInit == false;
     BWreset = true;
