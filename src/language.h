@@ -411,14 +411,14 @@ static const char myLanguage[9][58][78] = {
     "Europa",
     "USA",
     "Zeige Unterstrich im RDS",
-    "USB mode",
-    "Wi-Fi active",
-    "Configure Wi-Fi",
-    "Connect to: ",
-    "to configure Wi-Fi",
-    "Trying to connect with Wi-Fi",
-    "FAILED.. WiFi disabled",
-    "CONNECTED!"
+    "USB Modus",
+    "WLAN aktiv",
+    "WLAN konfigurieren",
+    "Verbinde mit:",
+    "um WLAN zu konfigurieren",
+    "Versuche, mit WLAN zu verbinden",
+    "FEHLGESCHLAGEN.. WLAN deaktiviert",
+    "VERBUNDEN!"
   },
   { "Czech",                        // Czech
     "Směr enkóderu byl změněn",
