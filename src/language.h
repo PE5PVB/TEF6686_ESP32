@@ -232,13 +232,13 @@ static const char myLanguage[9][58][78] = {
     "SAD",
     "Prikaži donju crtu u RDS-u",
     "Način rada USB-a",
-    "Wi-Fi active",
-    "Configure Wi-Fi",
-    "Connect to: ",
-    "to configure Wi-Fi",
-    "Trying to connect with Wi-Fi",
-    "FAILED.. WiFi disabled",
-    "CONNECTED!"
+    "Wi-Fi uključen",
+    "Wi-Fi postavke",
+    "Spojiti s: ",
+    "da biste konfigurirali Wi-Fi",
+    "Spajanje s Wi-Fi mrežom..",
+    "NEUSPJEŠNO.. Wi-Fi onemogućen",
+    "SPOJENO!"
   },
 
   { "Ελληνικά",                        // Greek
