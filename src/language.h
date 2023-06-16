@@ -172,13 +172,13 @@ static const char myLanguage[9][58][78] = {
     "USA",
     "Pokaz podkreslenia w RDS",
     "Tryb USB",
-    "Wi-Fi active",
-    "Configure Wi-Fi",
-    "Connect to: ",
-    "to configure Wi-Fi",
-    "Trying to connect with Wi-Fi",
-    "FAILED.. WiFi disabled",
-    "CONNECTED!"
+    "Wi-Fi aktywne",
+    "Konfiguracja Wi-Fi",
+    "Polacz z: ",
+    "aby skonfigurowac Wi-Fi",
+    "Proba polaczenia z Wi-Fi",
+    "BLAD.. WiFi wylaczone",
+    "POLACZONO!"
   },
 
   { "Hrvatski",                       // Croatian
