@@ -1,6 +1,6 @@
-``diff
-- The version in the repository is an ongoing development. It could and will contain bugs. To make sure you use the latest fully tested firmware, check the releases!
-  ```
+# Note:
+The version in the repository is an ongoing development. It could and will contain bugs. To make sure you use the latest fully tested firmware, check the releases!
+
 
 # TEF6686_ESP32
 Advanced Tuner software for NXP TEF668x tuners with ESP32 board\
