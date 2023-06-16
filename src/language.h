@@ -243,10 +243,10 @@ static const char myLanguage[9][58][78] = {
 
   { "Ελληνικά",                        // Greek
     "Η διεύθυνση του ρότορα άλλαξε",
-    "Παρακαλώ ελευθερώστε το πλήκτρο",
+    "Ελευθερώστε το πλήκτρο",
     "Η οθόνη αναποδογύρισε",
     "Βαθμονόμηση αναλογικού μετρητή",
-    "Ελευθερώστε το πλήκτρο όταν είστε έτοιμοι",
+    "Αφήστε το πλήκτρο όταν είστε έτοιμοι",
     "ο κωδικοποιητής ρυθμίστηκε σε οπτικός",
     "ο κωδικοποιητής ρυθμίστηκε σε στάνταρ",
     "FM/AM δέκτης",
@@ -274,7 +274,7 @@ static const char myLanguage[9][58][78] = {
     "Ανενεργό",
     "Οθόνη σε σίγαση!",
     "Για επαναφορά ήχου τσεκάρετε το RF+",
-    "ΑΝΕΝΕΡΓΟ",
+    "ΑΝΕΝ.",
     "ΑΝΙΧΝΕΥΣΗ...",
     "Το tuner δεν εντοπίστηκε",
     "Η έκδοση tuner ορίστηκε σε: v",
@@ -284,24 +284,24 @@ static const char myLanguage[9][58][78] = {
     "Επιλογή γλώσσας",
     "ΠΙΕΣΤΕ ΤΟ MODE ΓΙΑ ΕΞΟΔΟ & ΑΠΟΘΗΚΕΥΣΗ",
     "Ενεργό",
-    "Softmute FM",
-    "Softmute AM",
+    "Ήπια σίγαση FM",
+    "Ήπια σίγαση AM",
     "Ηχητικό σήμα στο όριο μπάντας",
     "Περιοχή",
     "Ευρώπη",
     "Η.Π.Α.",
     "Εμφάνιση κάτω παύλας στο RDS",
-    "USB mode",
-    "Wi-Fi active",
-    "Configure Wi-Fi",
-    "Connect to: ",
-    "to configure Wi-Fi",
-    "Trying to connect with Wi-Fi",
-    "FAILED.. WiFi disabled",
-    "CONNECTED!"
+    "USB λειτουργία",
+    "Wi-Fi ενεργό",
+    "Ρύθμιση Wi-Fi",
+    "Συνδεθείτε στο: ",
+    "για ρύθμιση του Wi-Fi",
+    "Προσπάθεια σύνδεσης με το Wi-Fi",
+    "ΑΠΟΤΥΧΙΑ.. WiFi ανενεργό",
+    "ΣΕ ΣΥΝΔΕΣΗ!"
   },
 
-  { "Romana",                       // Romana
+  { "Romana",                       // Romanian
     "Sens rotire schimbat",
     "Eliberati butonul",
     "Ecran inversat",
@@ -420,7 +420,7 @@ static const char myLanguage[9][58][78] = {
     "FAILED.. WiFi disabled",
     "CONNECTED!"
   },
-  { "Czech",                        // English
+  { "Czech",                        // Czech
     "Směr enkóderu byl změněn",
     "Prosím, pusťte tlačítko",
     "Obrazovka otočena",
@@ -479,7 +479,7 @@ static const char myLanguage[9][58][78] = {
     "FAILED.. WiFi disabled",
     "CONNECTED!"
   },
-  { "Slovak",                       // English
+  { "Slovak",                       // Slovak
     "Smer enkóderu bol zmenený",
     "Prosím, pusťte tlačidlo",
     "Obrazovka otočená",
