@@ -15,6 +15,10 @@ enum RADIO_BAND {
   BAND_FM,  BAND_LW,  BAND_MW,  BAND_SW
 };
 
+enum RADIO_TUNE_MODE {
+  TUNE_MAN,  TUNE_AUTO,  TUNE_MEM
+};
+
 #define FREQ_MW_STEP_9K     9
 #define FREQ_MW_STEP_10K    10
 #define FREQ_SW_STEP_5K     5

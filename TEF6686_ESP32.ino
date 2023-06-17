@@ -639,7 +639,7 @@ void PWRButtonPress() {
       if (power == false) {
         ESP.restart();
       } else {
-        if (tunemode != 2) {
+        if (tunemode != TUNE_MEM) {
           if (band == BAND_FM) {
             band = BAND_LW;
             if (stepsize > 3) stepsize = 3;
@@ -705,7 +705,7 @@ void LimitAMFrequency() {
 void SelectBand() {
   if (band != BAND_FM) {
     seek = false;
-    if (tunemode == 1) tunemode = 0;
+    if (tunemode == TUNE_AUTO) tunemode = TUNE_MAN;
     BWreset = true;
     BWset = 2;
     freqold = frequency_AM;
@@ -892,7 +892,7 @@ void RoundStep() {
 
 void ButtonPress() {
   if (menu == false) {
-    if (tunemode == 2) {
+    if (tunemode == TUNE_MEM) {
       if (memorystore == false) {
         memorystore = true;
         ShowTuneMode();
@@ -912,7 +912,7 @@ void ButtonPress() {
       while (digitalRead(ROTARY_BUTTON) == LOW && counter - counterold <= 1000) counter = millis();
 
       if (counter - counterold < 1000) {
-        if (tunemode == 0) {
+        if (tunemode == TUNE_MAN) {
           stepsize++;
           if (band == BAND_SW || band == BAND_FM) {
             if (stepsize > 4) stepsize = 0;
@@ -1163,17 +1163,17 @@ void KeyUp() {
   rotary = 0;
   if (menu == false) {
     switch (tunemode) {
-      case 0:
+      case TUNE_MAN:
         TuneUp();
         break;
 
-      case 1:
+      case TUNE_AUTO:
         direction = true;
         seek = true;
         Seek(direction);
         break;
 
-      case 2:
+      case TUNE_MEM:
         memorypos++;
         if (memorypos > 29) memorypos = 0;
         ShowMemoryPos();
@@ -1408,17 +1408,17 @@ void KeyDown() {
   rotary = 0;
   if (menu == false) {
     switch (tunemode) {
-      case 0:
+      case TUNE_MAN:
         TuneDown();
         break;
 
-      case 1:
+      case TUNE_AUTO:
         direction = false;
         seek = true;
         Seek(direction);
         break;
 
-      case 2:
+      case TUNE_MEM:
         memorypos--;
         if (memorypos > 29) memorypos = 29;
         ShowMemoryPos();
@@ -2730,25 +2730,25 @@ void doBW() {
 
 void doTuneMode() {
   switch (tunemode) {
-    case 0:
+    case TUNE_MAN:
       if (band == BAND_FM) {
-        tunemode = 1;
+        tunemode = TUNE_AUTO;
         if (stepsize != 0) {
           stepsize = 0;
           RoundStep();
           ShowStepSize();
         }
       } else {
-        tunemode = 2;
+        tunemode = TUNE_MEM;
       }
       break;
 
-    case 1:
-      tunemode = 2;
+    case TUNE_AUTO:
+      tunemode = TUNE_MEM;
       break;
 
-    case 2:
-      tunemode = 0;
+    case TUNE_MEM:
+      tunemode = TUNE_MAN;
       break;
   }
   ShowTuneMode();
@@ -2760,7 +2760,7 @@ void doTuneMode() {
 void ShowTuneMode() {
   tft.setFreeFont(FONT7);
   switch (tunemode) {
-    case 0:
+    case TUNE_MAN:
       tft.drawRoundRect(3, 57, 40, 20, 5, TFT_GREYOUT);
       tft.setTextColor(TFT_GREYOUT);
       tft.drawCentreString("AUTO", 22, 55, GFXFF);
@@ -2774,7 +2774,7 @@ void ShowTuneMode() {
       tft.drawCentreString("MEM", 22, 77, GFXFF);
       break;
 
-    case 1:
+    case TUNE_AUTO:
       tft.drawRoundRect(3, 57, 40, 20, 5, TFT_WHITE);
       tft.setTextColor(TFT_WHITE);
       tft.drawCentreString("AUTO", 22, 55, GFXFF);
@@ -2788,7 +2788,7 @@ void ShowTuneMode() {
       tft.drawCentreString("MEM", 22, 77, GFXFF);
       break;
 
-    case 2:
+    case TUNE_MEM:
       tft.drawRoundRect(3, 57, 40, 20, 5, TFT_GREYOUT);
       tft.setTextColor(TFT_GREYOUT);
       tft.drawCentreString("AUTO", 22, 55, GFXFF);
