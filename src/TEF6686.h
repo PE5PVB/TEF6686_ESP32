@@ -160,6 +160,10 @@ typedef struct _rds_ {
   int8_t offset;
   uint8_t stationTextOffset = 0;
   int ECC;
+  bool rdsAerror;
+  bool rdsBerror;
+  bool rdsCerror;
+  bool rdsDerror;
   bool hasMusicTitle;
   bool hasMusicArtist;
   bool hasStationHost;
@@ -249,4 +253,5 @@ class TEF6686 {
     byte rt_timer;
     byte offsetold;
     char stationTextBuffer[65];
+	uint64_t doublecheck;
 };

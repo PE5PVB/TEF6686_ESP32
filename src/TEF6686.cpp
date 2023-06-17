@@ -221,16 +221,16 @@ bool TEF6686::getStatusAM(int16_t &level, uint16_t &noise, uint16_t &cochannel, 
 bool TEF6686::readRDS(bool showrdserrors)
 {
   char  status;
-  uint16_t rdsStat = 0, rdsErr = 65535, rdsErrA = 65535, rdsErrB = 65535, rdsErrC = 65535, rdsErrD = 65535;
+  uint16_t rdsStat = 0, rdsErr = 65535;
   uint16_t result = devTEF_Radio_Get_RDS_Data(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rdsErr);
   uint8_t rds_group;
   uint8_t offset;
   bool rdsErrCheck = false, rdsDataReady = false;
 
-  rdsErrA = ((rdsErr >> 14) & 0x02);
-  rdsErrB = ((rdsErr >> 12) & 0x02);
-  rdsErrC = ((rdsErr >> 10) & 0x02);
-  rdsErrD = ((rdsErr >>  8) & 0x02);
+  if (((rdsErr >> 14) & 0x02) > 1) rds.rdsAerror = true; else rds.rdsAerror = false;
+  if (((rdsErr >> 12) & 0x02) > 1) rds.rdsBerror = true; else rds.rdsBerror = false;
+  if (((rdsErr >> 10) & 0x02) > 1) rds.rdsCerror = true; else rds.rdsCerror = false;
+  if (((rdsErr >> 8) & 0x02) > 1) rds.rdsDerror = true; else rds.rdsDerror = false;
 
   rdsTimeOut += rdsErr == 0 && rds.rdsA != 0 ? -rdsTimeOut : rdsTimeOut < 32768  ? 1 : 0;
   rds.hasRDS  = rdsTimeOut < 32768 ? true : false;
@@ -315,8 +315,7 @@ bool TEF6686::readRDS(bool showrdserrors)
             if (rds.region == 0) strcpy(rds.stationType, PTY_EU[rds.stationTypeCode]);
             if (rds.region == 1) strcpy(rds.stationType, PTY_USA[rds.stationTypeCode]);
 
-            //TP-TA-EON-MS
-            if ((bitRead(rds.rdsB, 4)) == 1 && ((bitRead(rds.rdsB, 10)) == 0)) rds.hasEON = true; else rds.hasEON = false;
+            //TP-TA-MS
             if ((bitRead(rds.rdsB, 4)) == 0 && ((bitRead(rds.rdsB, 10)) == 1)) rds.hasTP = true; else rds.hasTP = false;
             rds.hasTA = (bitRead(rds.rdsB, 4)) && (bitRead(rds.rdsB, 10)) & 0x1F;
             if (((bitRead(rds.rdsB, 3)) & 0x1F) == 1) rds.MS = 1; else rds.MS = 2;
@@ -521,6 +520,9 @@ bool TEF6686::readRDS(bool showrdserrors)
             }
           }
         } break;
+      case RDS_GROUP_14A:
+        rds.hasEON = true;
+        break;
     }
   }
   return rdsDataReady;

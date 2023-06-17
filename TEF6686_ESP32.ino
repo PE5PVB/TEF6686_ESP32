@@ -1708,14 +1708,10 @@ void readRds() {
 
     if ((RDSstatus == 1 && RDSSPYUSB == true) || (RDSstatus == 1 && RDSSPYTCP == true)) {
       RDSSPYRDS = "G:\r\n";
-      RDSSPYRDS += String(((radio.rds.rdsA >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsA >> 8) & 0xF, HEX);
-      RDSSPYRDS += String(((radio.rds.rdsA) >> 4) & 0xF, HEX) + String((radio.rds.rdsA) & 0xF, HEX);
-      RDSSPYRDS += String(((radio.rds.rdsB >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsB >> 8) & 0xF, HEX);
-      RDSSPYRDS += String(((radio.rds.rdsB) >> 4) & 0xF, HEX) + String((radio.rds.rdsB) & 0xF, HEX);
-      RDSSPYRDS += String(((radio.rds.rdsC >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsC >> 8) & 0xF, HEX);
-      RDSSPYRDS += String(((radio.rds.rdsC) >> 4) & 0xF, HEX) + String((radio.rds.rdsC) & 0xF, HEX);
-      RDSSPYRDS += String(((radio.rds.rdsD >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsD >> 8) & 0xF, HEX);
-      RDSSPYRDS += String(((radio.rds.rdsD) >> 4) & 0xF, HEX) + String((radio.rds.rdsD) & 0xF, HEX);
+      if (radio.rds.rdsAerror) RDSSPYRDS += "----"; else RDSSPYRDS += String(((radio.rds.rdsA >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsA >> 8) & 0xF, HEX) + String(((radio.rds.rdsA) >> 4) & 0xF, HEX) + String((radio.rds.rdsA) & 0xF, HEX);
+      if (radio.rds.rdsBerror) RDSSPYRDS += "----"; else RDSSPYRDS += String(((radio.rds.rdsB >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsB >> 8) & 0xF, HEX) + String(((radio.rds.rdsB) >> 4) & 0xF, HEX) + String((radio.rds.rdsB) & 0xF, HEX);
+      if (radio.rds.rdsCerror) RDSSPYRDS += "----"; else RDSSPYRDS += String(((radio.rds.rdsC >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsC >> 8) & 0xF, HEX) + String(((radio.rds.rdsC) >> 4) & 0xF, HEX) + String((radio.rds.rdsC) & 0xF, HEX);
+      if (radio.rds.rdsDerror) RDSSPYRDS += "----"; else RDSSPYRDS += String(((radio.rds.rdsD >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsD >> 8) & 0xF, HEX) + String(((radio.rds.rdsD) >> 4) & 0xF, HEX) + String((radio.rds.rdsD) & 0xF, HEX);
       RDSSPYRDS += "\r\n\r\n";
 
       if (RDSSPYRDS != RDSSPYRDSold) {
@@ -3356,7 +3352,8 @@ void TuneUp() {
     frequency_SW = frequency_AM;
   }
   radio.clearRDS(fullsearchrds);
-  if (RDSSPYUSB == true || RDSSPYTCP == true) DataPrint("G:\r\nRESET-------\r\n\r\n");
+  if (RDSSPYUSB == true) Serial.print("G:\r\nRESET-------\r\n\r\n");
+  if (RDSSPYTCP == true) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
 }
 
 void TuneDown() {
@@ -3419,7 +3416,8 @@ void TuneDown() {
     frequency_SW = frequency_AM;
   }
   radio.clearRDS(fullsearchrds);
-  if (RDSSPYUSB == true || RDSSPYTCP == true) DataPrint("G:\r\nRESET-------\r\n\r\n");
+  if (RDSSPYUSB == true) Serial.print("G:\r\nRESET-------\r\n\r\n");
+  if (RDSSPYTCP == true) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
 }
 
 void EdgeBeeper() {
@@ -3443,7 +3441,8 @@ void Seek(bool mode) {
       store = true;
     } else {
       seek = true;
-      if (RDSSPYUSB == true || RDSSPYTCP == true) DataPrint("G:\r\nRESET-------\r\n\r\n");
+      if (RDSSPYUSB == true) Serial.print("G:\r\nRESET-------\r\n\r\n");
+      if (RDSSPYTCP == true) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
     }
   }
 }
