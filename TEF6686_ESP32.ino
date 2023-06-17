@@ -620,7 +620,6 @@ void GetData() {
       showMS();
       showEON();
       showRadioText();
-      showPS();
       ShowStereoStatus();
     }
     ShowOffset();
@@ -1682,7 +1681,7 @@ void readRds() {
   if (band == BAND_FM) {
     RDSstatus = radio.readRDS(showrdserrors);
     ShowRDSLogo(RDSstatus);
-    if (RDSstatus == 0) {
+    if (RDSstatus == 0 && screenmute == false) {
       tft.setTextColor(TFT_SKYBLUE);
       tft.setFreeFont(FONT14);
       tft.drawString(PIold, 244, 183, GFXFF);
@@ -1961,14 +1960,14 @@ void BuildMenu() {
 
 void MuteScreen(int setting) {
   if (setting == 0 && screenmute == 1) {
-    screenmute = 0;
+    screenmute = false;
     setupmode = true;
     BuildDisplay();
     setupmode = false;
   }
 
   if (setting == 1 && screenmute == 0) {
-    screenmute = 1;
+    screenmute = true;
     tft.setFreeFont(FONT14);
     tft.fillScreen(TFT_BLACK);
     tft.drawRect(0, 0, 320, 240, TFT_BLUE);
@@ -3119,12 +3118,12 @@ void XDRGTKRoutine() {
             SelectBand();
           }
           radio.SetFreq(frequency);
-          radio.clearRDS(fullsearchrds);
-          RDSstatus = 0;
           DataPrint("M0\n");
         }
         if (band == BAND_FM) DataPrint("T" + String(frequency * 10) + "\n"); else DataPrint("T" + String(frequency_AM) + "\n");
         ShowFreq(0);
+        radio.clearRDS(fullsearchrds);
+        RDSstatus = 0;
         break;
 
       case 'Q':
@@ -3223,10 +3222,12 @@ void XDRGTKRoutine() {
           XDRMute = true;
           SQ = true;
         } else {
-          radio.setVolume((VolSet - 70) / 10);
+          radio.setUnMute();
+          radio.setVolume((VolSet - 40) / 10);
           XDRMute = false;
         }
         DataPrint("Y" + String(VolSet) + "\n");
+        VolSet /= 10;
         break;
 
       case 'x':
@@ -3236,8 +3237,13 @@ void XDRGTKRoutine() {
 
       case 'X':
         XDRGTKTCP = false;
+        XDRGTKUSB = false;
         store = true;
         XDRMute = false;
+        radio.setUnMute();
+        VolSet = EEPROM.readInt(4);
+        radio.setVolume(VolSet);
+        if (screenmute) MuteScreen(0);
         break;
 
       case 'Z':
