@@ -21,6 +21,7 @@
 #define ROTARY_PIN_B    36
 #define ROTARY_BUTTON   39
 #define PIN_POT         35
+#define BATTERY_PIN     13
 #define PWRBUTTON       4
 #define BWBUTTON        25
 #define MODEBUTTON      26
@@ -38,6 +39,10 @@ TFT_eSPI tft = TFT_eSPI(320, 240);
 TFT_eSPI tft = TFT_eSPI(240, 320);
 #endif
 
+byte battery;
+byte batteryold;
+int rssi;
+int rssiold = 200;
 bool edgebeep;
 bool RDSSPYUSB;
 bool RDSSPYTCP;
@@ -67,7 +72,6 @@ bool store;
 bool TPold;
 bool TAold;
 bool tuned;
-bool USBstatus;
 bool USBmode = 1;
 bool XDRMute;
 bool XDRGTKdata;
@@ -614,12 +618,14 @@ void GetData() {
       showRadioText();
       ShowStereoStatus();
     }
+    ShowRSSI();
+    ShowBattery();
     ShowOffset();
     ShowSignalLevel();
     ShowBW();
   }
-
 }
+
 void PWRButtonPress() {
   if (menu == false) {
     unsigned long counterold = millis();
@@ -783,7 +789,7 @@ void ModeButtonPress() {
     if (counter - counterold <= 1000) {
       doTuneMode();
     } else {
-      if (USBstatus == true && (XDRGTKUSB == true || XDRGTKTCP == true)) {
+      if (XDRGTKUSB == true || XDRGTKTCP == true) {
         ShowFreq(1);
         tft.setFreeFont(FONT14);
         tft.setTextColor(TFT_WHITE, TFT_BLACK);
@@ -1122,6 +1128,8 @@ void ButtonPress() {
               tft.drawCentreString(myLanguage[language][53], 155, 50, GFXFF);
               tft.drawCentreString("ESP_" + String(ESP_getChipId()), 155, 90, GFXFF);
               tft.drawCentreString(myLanguage[language][54], 155, 130, GFXFF);
+              tft.setFreeFont(FONT7);
+              tft.drawCentreString("http://192.168.4.1", 155, 170, GFXFF);
               char key [9];
               XDRGTK_key.toCharArray(key, 9);
               WiFiConnectParam XDRGTK_key_text("Set XDRGTK Password: (max 8 characters)");
@@ -2154,7 +2162,6 @@ void BuildDisplay() {
   ShowFreq(0);
   ShowTuneMode();
   updateBW();
-  ShowUSBstatus();
   ShowStepSize();
   ShowMemoryPos();
   updateiMS();
@@ -2162,6 +2169,8 @@ void BuildDisplay() {
   Squelchold = -2;
   SStatusold = 2000;
   SStatus = 100;
+  rssiold = 2000;
+  batteryold = 6;
   rds_clockold = "";
   strcpy(programTypePrevious, "0");
   strcpy(radioIdPrevious, "0");
@@ -2791,8 +2800,36 @@ void ShowTuneMode() {
   }
 }
 
-void ShowUSBstatus() {
-  if (USBstatus == true) tft.drawBitmap(272, 6, USBLogo, 43, 21, TFT_SKYBLUE); else tft.drawBitmap(272, 6, USBLogo, 43, 21, TFT_GREYOUT);
+void ShowRSSI() {
+  if (wifi) rssi = WiFi.RSSI(); else rssi = 0;
+  if (rssiold != rssi) {
+    rssiold = rssi;
+    if (rssi == 0) {
+      tft.drawBitmap(272, 4, WiFi4, 25, 25, TFT_GREYOUT);
+    } else if (rssi > -50 && rssi < 0) {
+      tft.drawBitmap(272, 4, WiFi4, 25, 25, TFT_SKYBLUE);
+    } else if (rssi > -60) {
+      tft.drawBitmap(272, 4, WiFi4, 25, 25, TFT_GREYOUT);
+      tft.drawBitmap(272, 4, WiFi3, 25, 25, TFT_SKYBLUE);
+    } else if (rssi > -70) {
+      tft.drawBitmap(272, 4, WiFi4, 25, 25, TFT_GREYOUT);
+      tft.drawBitmap(272, 4, WiFi2, 25, 25, TFT_SKYBLUE);
+    } else if (rssi < -70) {
+      tft.drawBitmap(272, 4, WiFi4, 25, 25, TFT_GREYOUT);
+      tft.drawBitmap(272, 4, WiFi1, 25, 25, TFT_SKYBLUE);
+    }
+  }
+}
+
+void ShowBattery() {
+  battery = map(constrain(analogRead(BATTERY_PIN), 1965, 2300), 1965, 2300, 0, 4);
+  if (batteryold != battery) {
+    tft.drawRect(300, 8, 12, 20, TFT_WHITE);
+    tft.fillRect(303, 4, 6, 4, TFT_WHITE);
+    tft.fillRect(302, 10, 8, 16, TFT_BLACK);
+    tft.fillRect(302, 26 - (battery * 4), 8, battery * 4, TFT_GREEN);
+    batteryold = battery;
+  }
 }
 
 void Communication() {
@@ -2859,12 +2896,7 @@ void Communication() {
     {
       String data_str = Serial.readStringUntil('\n');
       int data = data_str.toInt();
-      if (data_str.length() > 1 && data_str == ("*D*R?F"))
-      {
-        USBstatus = true;
-        RDSSPYUSB = true;
-        ShowUSBstatus();
-      }
+      if (data_str.length() > 1 && data_str == ("*D*R?F")) RDSSPYUSB = true;
       int symPos = data_str.indexOf("*F");
       if (symPos >= 5) {
         String freq = data_str.substring(0, symPos);
@@ -2894,9 +2926,7 @@ void Communication() {
           SelectBand();
         }
         Serial.print("OK\nT" + String(frequency * 10) + "\n");
-        USBstatus = true;
         XDRGTKUSB = true;
-        ShowUSBstatus();
         if (menu == true) ModeButtonPress();
         if (Squelch != Squelchold) {
           if (screenmute == false) {
