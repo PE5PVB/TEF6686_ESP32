@@ -31,19 +31,24 @@
 //#define ARS       // uncomment for BGR type display (ARS version)
 
 #ifdef ARS
-#define VERSION         "v1.16ARS"
+#define VERSION         "v2.00ARS"
 #include "TFT_Colors.h"
 TFT_eSPI tft = TFT_eSPI(320, 240);
 #else
-#define VERSION         "v1.16"
+#define VERSION         "v2.00"
 TFT_eSPI tft = TFT_eSPI(240, 320);
 #endif
 
+IPAddress remoteip;
+bool nobattery;
+byte af_counterold;
 byte battery;
 byte batteryold;
+byte subnetclient;
 int rssi;
 int rssiold = 200;
 bool edgebeep;
+byte ECCold;
 bool RDSSPYUSB;
 bool RDSSPYTCP;
 bool BWreset;
@@ -89,7 +94,7 @@ String salt;
 String saltkey = "                ";
 byte memoryposold;
 byte menupage = 1;
-byte menupagestotal = 2;
+byte menupagestotal = 3;
 byte MSold;
 byte band;
 byte BWset;
@@ -192,12 +197,13 @@ TFT_eSprite sprite = TFT_eSprite(&tft);
 WiFiConnect wc;
 WiFiServer Server(7373);
 WiFiClient RemoteClient;
+WiFiUDP Udp;
 
 void setup() {
   setupmode = true;
   EEPROM.begin(244);
-  if (EEPROM.readByte(43) != 23) {
-    EEPROM.writeByte(43, 23);
+  if (EEPROM.readByte(43) != 24) {
+    EEPROM.writeByte(43, 24);
     EEPROM.writeUInt(0, 10000);
     EEPROM.writeInt(4, 0);
     EEPROM.writeUInt(8, 0);
@@ -223,12 +229,13 @@ void setup() {
     EEPROM.writeByte(44, 1);
     EEPROM.writeByte(45, 1);
     EEPROM.writeByte(46, 0);
-    EEPROM.writeInt(47, 20);
+    EEPROM.writeInt(47, -10);
     EEPROM.writeByte(51, 0);
     EEPROM.writeByte(52, 0);
     EEPROM.writeByte(53, 0);
     EEPROM.writeByte(54, 0);
     EEPROM.writeByte(55, 0);
+    EEPROM.writeByte(56, 1);
     for (int i = 0; i < 30; i++) EEPROM.writeByte(i + 60, 0);
     for (int i = 0; i < 30; i++) EEPROM.writeUInt((i * 4) + 100, 8750);
     EEPROM.writeUInt(221, 180);
@@ -270,6 +277,7 @@ void setup() {
   radio.rds.underscore = EEPROM.readByte(53);
   USBmode = EEPROM.readByte(54);
   wifi = EEPROM.readByte(55);
+  subnetclient = EEPROM.readByte(56);
   frequency_LW = EEPROM.readUInt(221);
   frequency_MW = EEPROM.readUInt(225);
   frequency_SW = EEPROM.readUInt(229);
@@ -462,6 +470,9 @@ void setup() {
   if (wifi == true) {
     tryWiFi();
     delay(2000);
+  } else {
+    Server.end();
+    Udp.stop();
   }
 
   SelectBand();
@@ -615,6 +626,8 @@ void GetData() {
       showTA();
       showMS();
       showEON();
+      showAF();
+      showECC();
       showRadioText();
       ShowStereoStatus();
     }
@@ -838,8 +851,10 @@ void ModeButtonPress() {
     EEPROM.writeByte(53, radio.rds.underscore);
     EEPROM.writeByte(54, USBmode);
     EEPROM.writeByte(55, wifi);
+    EEPROM.writeByte(56, subnetclient);
     EEPROM.commit();
     Serial.end();
+    if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
     if (USBmode) Serial.begin(19200); else Serial.begin(115200);
   }
   while (digitalRead(MODEBUTTON) == LOW) delay(50);
@@ -1145,6 +1160,15 @@ void ButtonPress() {
               BuildMenu();
               break;
           }
+        case 3:
+          switch (menuoption) {
+            case 30:
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][58], 155, 70, GFXFF);
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawCentreString(String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 110, GFXFF);
+              break;
+          }
       }
     } else {
       if (menupage == 2 && menuoption == 190 && wifi == true) {
@@ -1398,6 +1422,17 @@ void KeyUp() {
               if (wifi) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
           }
+        case 3:
+          switch (menuoption) {
+            case 30:
+              tft.setTextColor(TFT_BLACK);
+              tft.drawCentreString(String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 110, GFXFF);
+              subnetclient ++;
+              if (subnetclient > 254) subnetclient = 1;
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawCentreString(String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 110, GFXFF);
+              break;
+          }
       }
     }
   }
@@ -1645,6 +1680,17 @@ void KeyDown() {
               if (wifi) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
           }
+        case 3:
+          switch (menuoption) {
+            case 30:
+              tft.setTextColor(TFT_BLACK);
+              tft.drawCentreString(String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 110, GFXFF);
+              subnetclient --;
+              if (subnetclient < 1) subnetclient = 254;
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawCentreString(String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 110, GFXFF);
+              break;
+          }
       }
     }
   }
@@ -1745,6 +1791,42 @@ void readRds() {
   }
 }
 
+void showAF() {
+  if (radio.af_counter != af_counterold && radio.rds.hasAF == true) {
+    if (wifi) {
+      Udp.beginPacket(remoteip, 9030);
+      Udp.print("AF=");
+    }
+    for (byte af_scan = 0; af_scan < radio.af_counter; af_scan++) {
+      if (wifi) {
+        if ((radio.af[af_scan].frequency - 8750) / 10 < 0x10) {
+          Udp.print("0");
+        }
+        Udp.print((radio.af[af_scan].frequency - 8750) / 10, HEX);
+      }
+    }
+    af_counterold = radio.af_counter;
+
+    if (wifi) {
+      for (int i = 0; i < 25 - radio.af_counter; i++) Udp.print("00");
+      Udp.endPacket();
+    }
+  }
+}
+
+void showECC() {
+  if (ECCold != radio.rds.ECC) {
+    if (wifi) {
+      Udp.beginPacket(remoteip, 9030);
+      Udp.print("ECC=");
+      if (radio.rds.ECC < 0x10) Udp.print("0");
+      Udp.print(radio.rds.ECC, HEX);
+      Udp.endPacket();
+    }
+    ECCold = radio.rds.ECC;
+  }
+}
+
 void showPI() {
   if (strcmp(radio.rds.picode, radioIdPrevious)) {
     tft.setFreeFont(FONT14);
@@ -1753,6 +1835,11 @@ void showPI() {
     tft.setTextColor(TFT_YELLOW);
     tft.drawString(radio.rds.picode, 244, 183, GFXFF);
     PIold = radio.rds.picode;
+    if (wifi) {
+      Udp.beginPacket(remoteip, 9030);
+      Udp.print("from=TEF tuner;PI=" + String(radio.rds.picode));
+      Udp.endPacket();
+    }
     strcpy(radioIdPrevious, radio.rds.picode);
   }
 }
@@ -1765,6 +1852,12 @@ void showPTY() {
     tft.setTextColor(TFT_YELLOW);
     tft.drawString(radio.rds.stationType, 38, 164, GFXFF);
     PTYold = radio.rds.stationType;
+    if (wifi) {
+      Udp.beginPacket(remoteip, 9030);
+      Udp.print("from=TEF tuner;PTY=");
+      Udp.print(radio.rds.stationTypeCode, HEX);
+      Udp.endPacket();
+    }
     strcpy(programTypePrevious, radio.rds.stationType);
   }
 }
@@ -1777,6 +1870,19 @@ void showPS() {
     tft.setTextColor(TFT_YELLOW);
     tft.drawString(radio.rds.stationName, 38, 183, GFXFF);
     PSold = radio.rds.stationName;
+    if (wifi) {
+      Udp.beginPacket(remoteip, 9030);
+      Udp.print("from=TEF tuner;PS=");
+      char PShex[9];
+      radio.rds.stationName.toCharArray(PShex, 9);
+      for (int i = 0; i < 8; i++)
+      {
+        if (PShex[i] < 0x10) Udp.print("0");
+        if (PShex[i] == 0x20) PShex[i] =  '_';
+        Udp.print(PShex[i], HEX);
+      }
+      Udp.endPacket();
+    }
     programServicePrevious = radio.rds.stationName;
   }
 }
@@ -1801,6 +1907,19 @@ void showRadioText() {
     sprite.fillSprite(TFT_BLACK);
     sprite.pushSprite(1, 223);
     cleanup = false;
+  }
+  if (wifi) {
+    Udp.beginPacket(remoteip, 9030);
+    Udp.print("from=TEF tuner;RT1=");
+    char RThex[65];
+    radio.rds.stationText.toCharArray(RThex, 65);
+    for (int i = 0; i < 64; i++)
+    {
+      if (RThex[i] < 0x10) Udp.print("0");
+      if (RThex[i] == ' ') RThex[i] =  '_';
+      Udp.print(RThex[i], HEX);
+    }
+    Udp.endPacket();
   }
 }
 
@@ -1950,6 +2069,10 @@ void BuildMenu() {
       if (wifi) tft.drawRightString(myLanguage[language][42], 305, 190, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 190, GFXFF);
       tft.drawRightString("→", 305, 210, GFXFF);
       break;
+
+    case 3:
+      tft.drawString(myLanguage[language][58], 14, 30, GFXFF);
+      tft.drawRightString(String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 305, 30, GFXFF);
   }
   analogWrite(SMETERPIN, 0);
 }
@@ -2179,140 +2302,156 @@ void BuildDisplay() {
 }
 
 void ShowFreq(int mode) {
-  if (setupmode == false) {
-    if (band == 1) { // Fix Me :take care of 9K/10K Step
-      if (freqold < 2000 && frequency_AM >= 2000 && stepsize == 0) if (frequency_AM != 27000 && freqold != 144) radio.SetFreqAM(2000);
-      if (freqold >= 2000 && frequency_AM < 2000 && stepsize == 0) if (frequency_AM != 144 && freqold != 27000) radio.SetFreqAM(1998);
-    }
-  }
-
   if (screenmute == false) {
-    detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A));
-    detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B));
-    if (band != BAND_FM ) {
-      unsigned int freq = frequency_AM;
-      String count = String(freq, DEC);
-      if (setupmode == false && count.length() != freqoldcount || mode != 0) {
-        tft.setTextColor(TFT_BLACK);
-        tft.drawRightString(String(freqold), 248, 45, 7);
+    if (setupmode == false) {
+      if (band == 1) { // Fix Me :take care of 9K/10K Step
+        if (freqold < 2000 && frequency_AM >= 2000 && stepsize == 0) if (frequency_AM != 27000 && freqold != 144) radio.SetFreqAM(2000);
+        if (freqold >= 2000 && frequency_AM < 2000 && stepsize == 0) if (frequency_AM != 144 && freqold != 27000) radio.SetFreqAM(1998);
       }
-      tft.setTextColor(TFT_YELLOW, TFT_BLACK);
-      tft.drawRightString(String(freq), 248, 45, 7);
-      freqold = freq;
-      freqoldcount = count.length();
-    } else {
-      unsigned int freq = frequency + ConverterSet * 100;
-      String count = String(freq / 100, DEC);
-      if (setupmode == false && count.length() != freqoldcount || mode != 0) {
-        tft.setTextColor(TFT_BLACK);
-        if (freqoldcount <= 2) tft.setCursor (108, 45);
-        if (freqoldcount == 3) tft.setCursor (76, 45);
-        if (freqoldcount >= 4) tft.setCursor (44, 45);
-        tft.setTextFont(7);
-        tft.print(freqold / 100);
-        if (band == BAND_FM) {
+    }
+
+    if (screenmute == false) {
+      detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A));
+      detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B));
+      if (band != BAND_FM ) {
+        unsigned int freq = frequency_AM;
+        String count = String(freq, DEC);
+        if (setupmode == false && count.length() != freqoldcount || mode != 0) {
+          tft.setTextColor(TFT_BLACK);
+          tft.drawRightString(String(freqold), 248, 45, 7);
+        }
+        tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+        tft.drawRightString(String(freq), 248, 45, 7);
+        freqold = freq;
+        freqoldcount = count.length();
+      } else {
+        unsigned int freq = frequency + ConverterSet * 100;
+        String count = String(freq / 100, DEC);
+        if (setupmode == false && count.length() != freqoldcount || mode != 0) {
+          tft.setTextColor(TFT_BLACK);
+          if (freqoldcount <= 2) tft.setCursor (108, 45);
+          if (freqoldcount == 3) tft.setCursor (76, 45);
+          if (freqoldcount >= 4) tft.setCursor (44, 45);
+          tft.setTextFont(7);
+          tft.print(freqold / 100);
+          if (band == BAND_FM) {
+            tft.print(".");
+            if (freqold % 100 < 10) tft.print("0");
+            tft.print(freqold % 100);
+          }
+        }
+
+        tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+        if (mode == 0) {
+          if (count.length() <= 2) tft.setCursor (108, 45);
+          if (count.length() == 3) tft.setCursor (76, 45);
+          if (count.length() >= 4) tft.setCursor (44, 45);
+          tft.setTextFont(7);
+          tft.print(freq / 100);
+          tft.print(".");
+          if (freq % 100 < 10) tft.print("0");
+          tft.print(freq % 100);
+          freqold = freq;
+          freqoldcount = count.length();
+        } else if (mode == 1) {
+          tft.setTextColor(TFT_BLACK);
+          if (freqoldcount <= 2) tft.setCursor (98, 45);
+          if (freqoldcount == 3) tft.setCursor (71, 45);
+          if (freqoldcount == 4) tft.setCursor (44, 45);
+          tft.setTextFont(1);
+          tft.print(freqold / 100);
           tft.print(".");
           if (freqold % 100 < 10) tft.print("0");
           tft.print(freqold % 100);
         }
       }
-
-      tft.setTextColor(TFT_YELLOW, TFT_BLACK);
-      if (mode == 0) {
-        if (count.length() <= 2) tft.setCursor (108, 45);
-        if (count.length() == 3) tft.setCursor (76, 45);
-        if (count.length() >= 4) tft.setCursor (44, 45);
-        tft.setTextFont(7);
-        tft.print(freq / 100);
-        tft.print(".");
-        if (freq % 100 < 10) tft.print("0");
-        tft.print(freq % 100);
-        freqold = freq;
-        freqoldcount = count.length();
-      } else if (mode == 1) {
-        tft.setTextColor(TFT_BLACK);
-        if (freqoldcount <= 2) tft.setCursor (98, 45);
-        if (freqoldcount == 3) tft.setCursor (71, 45);
-        if (freqoldcount == 4) tft.setCursor (44, 45);
-        tft.setTextFont(1);
-        tft.print(freqold / 100);
-        tft.print(".");
-        if (freqold % 100 < 10) tft.print("0");
-        tft.print(freqold % 100);
-      }
+      attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
+      attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
     }
-    attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
-    attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
+    strcpy(programTypePrevious, "0");
+    strcpy(radioIdPrevious, "0");
+    programServicePrevious = "0";
+    radioTextPrevious = "0";
+    if (wifi) {
+      Udp.beginPacket(remoteip, 9030);
+      Udp.print("from=TEF tuner;freq=");
+      if (band == 5) Udp.print(String(frequency_AM) + "000;ClearRDS=1"); else Udp.print(String(frequency) + "0000;ClearRDS=1");
+      Udp.endPacket();
+    }
   }
-  strcpy(programTypePrevious, "0");
-  strcpy(radioIdPrevious, "0");
-  programServicePrevious = "0";
-  radioTextPrevious = "0";
 }
 
 void ShowSignalLevel() {
-  if (band == BAND_FM) SNR = int(0.46222375 * (float)(SStatus / 10) - 0.082495118 * (float)(USN / 10)) + 10; else SNR = -((int8_t)(USN / 10));
+  if (screenmute == false) {
+    if (band == BAND_FM) SNR = int(0.46222375 * (float)(SStatus / 10) - 0.082495118 * (float)(USN / 10)) + 10; else SNR = -((int8_t)(USN / 10));
 
-  if (SNR > (SNRold + 1) || SNR < (SNRold - 1)) {
-    tft.setFreeFont(FONT7);
-    tft.setTextColor(TFT_BLACK);
-    if (SNRold == 99) tft.drawRightString("--", 294, 166, GFXFF); else  tft.drawRightString(String(SNRold), 294, 166, GFXFF);
-    tft.setTextColor(TFT_YELLOW, TFT_BLACK);
-    if (tuned == true) {
-      tft.drawRightString(String(SNR), 294, 166, GFXFF);
-      SNRold = SNR;
-    } else {
-      tft.drawRightString("--", 294, 166, GFXFF);
-      SNRold = 99;
+    if (SNR > (SNRold + 1) || SNR < (SNRold - 1)) {
+      tft.setFreeFont(FONT7);
+      tft.setTextColor(TFT_BLACK);
+      if (SNRold == 99) tft.drawRightString("--", 294, 166, GFXFF); else  tft.drawRightString(String(SNRold), 294, 166, GFXFF);
+      tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+      if (tuned == true) {
+        tft.drawRightString(String(SNR), 294, 166, GFXFF);
+        SNRold = SNR;
+      } else {
+        tft.drawRightString("--", 294, 166, GFXFF);
+        SNRold = 99;
+      }
     }
-  }
 
-  SAvg = (((SAvg * 9) + 5) / 10) + SStatus;
-  SAvg2 = (((SAvg2 * 9) + 5) / 10) + SNR;
+    SAvg = (((SAvg * 9) + 5) / 10) + SStatus;
+    SAvg2 = (((SAvg2 * 9) + 5) / 10) + SNR;
 
-  float sval = 0;
-  int16_t smeter = 0;
-  int16_t segments;
+    float sval = 0;
+    int16_t smeter = 0;
+    int16_t segments;
 
-  if (SStatus > 0) {
-    if (SStatus < 1000) {
-      sval = 51 * ((pow(10, (((float)SStatus) / 1000))) - 1);
-      smeter = int16_t(sval);
-    } else {
-      smeter = 511;
+    if (SStatus > 0) {
+      if (SStatus < 1000) {
+        sval = 51 * ((pow(10, (((float)SStatus) / 1000))) - 1);
+        smeter = int16_t(sval);
+      } else {
+        smeter = 511;
+      }
     }
-  }
 
-  smeter = int16_t(sval);
-  SStatus = SAvg / 10;
-  SNR = SAvg2 / 10;
+    smeter = int16_t(sval);
+    SStatus = SAvg / 10;
+    SNR = SAvg2 / 10;
 
-  if (menu == false) analogWrite(SMETERPIN, smeter);
+    if (menu == false) analogWrite(SMETERPIN, smeter);
 
-  if (SStatus > (SStatusold + 3) || SStatus < (SStatusold - 3)) {
-    if (SStatus > 1200) SStatus = 1200;
-    if (SStatus < -400) SStatus = -400;
-    tft.setFreeFont(FONT24);
-    tft.setTextColor(TFT_BLACK);
-    if (SStatusold / 10 != SStatus / 10) tft.drawRightString(String(SStatusold / 10), 290, 106, GFXFF);
-    tft.setFreeFont(FONT14);
-    tft.drawString("." + String(abs(SStatusold % 10)), 296, 97, GFXFF);
-    tft.setFreeFont(FONT24);
-    tft.setTextColor(TFT_YELLOW);
-    tft.drawRightString(String(SStatus / 10), 290, 106, GFXFF);
-    tft.setFreeFont(FONT14);
-    tft.drawString("." + String(abs(SStatus % 10)), 296, 97, GFXFF);
+    if (SStatus > (SStatusold + 3) || SStatus < (SStatusold - 3)) {
+      if (SStatus > 1200) SStatus = 1200;
+      if (SStatus < -400) SStatus = -400;
+      tft.setFreeFont(FONT24);
+      tft.setTextColor(TFT_BLACK);
+      if (SStatusold / 10 != SStatus / 10) tft.drawRightString(String(SStatusold / 10), 290, 106, GFXFF);
+      tft.setFreeFont(FONT14);
+      tft.drawString("." + String(abs(SStatusold % 10)), 296, 97, GFXFF);
+      tft.setFreeFont(FONT24);
+      tft.setTextColor(TFT_YELLOW);
+      tft.drawRightString(String(SStatus / 10), 290, 106, GFXFF);
+      tft.setFreeFont(FONT14);
+      tft.drawString("." + String(abs(SStatus % 10)), 296, 97, GFXFF);
 
-    if (band == BAND_FM) segments = (SStatus + 200) / 10; else segments = (SStatus + 200) / 10;
+      if (band == BAND_FM) segments = (SStatus + 200) / 10; else segments = (SStatus + 200) / 10;
 
-    tft.fillRect(16, 109, 2 * constrain(segments, 0, 54), 8, TFT_GREEN);
-    tft.fillRect(16 + 2 * 54, 109, 2 * (constrain(segments, 54, 94) - 54), 8, TFT_RED);
-    tft.fillRect(16 + 2 * constrain(segments, 0, 94), 109, 2 * (94 - constrain(segments, 0, 94)), 8, TFT_GREYOUT);
+      tft.fillRect(16, 109, 2 * constrain(segments, 0, 54), 8, TFT_GREEN);
+      tft.fillRect(16 + 2 * 54, 109, 2 * (constrain(segments, 54, 94) - 54), 8, TFT_RED);
+      tft.fillRect(16 + 2 * constrain(segments, 0, 94), 109, 2 * (94 - constrain(segments, 0, 94)), 8, TFT_GREYOUT);
 
-    SStatusold = SStatus;
-    tft.setTextColor(TFT_WHITE);
-    tft.setFreeFont(FONT7);
-    tft.drawString("dBμV", 282, 144, GFXFF);
+      SStatusold = SStatus;
+      tft.setTextColor(TFT_WHITE);
+      tft.setFreeFont(FONT7);
+      tft.drawString("dBμV", 282, 144, GFXFF);
+      if (wifi) {
+        Udp.beginPacket(remoteip, 9030);
+        Udp.print("from=TEF tuner;RcvLevel=");
+        Udp.print(SStatus / 10);
+        Udp.endPacket();
+      }
+    }
   }
 }
 
@@ -2451,6 +2590,12 @@ void ShowBW() {
     tft.drawRightString(String (BW, DEC), 218, -4, GFXFF);
     BWOld = BW;
     BWreset = false;
+    if (wifi) {
+      Udp.beginPacket(remoteip, 9030);
+      Udp.print("from=TEF tuner;Bandwidth=");
+      Udp.print(BW * 1000);
+      Udp.endPacket();
+    }
   }
 }
 
@@ -2834,6 +2979,47 @@ void ShowBattery() {
 
 void Communication() {
   if (menu == false) {
+    if (wifi) {
+      int packetSize = Udp.parsePacket();
+      if (packetSize) {
+        char packetBuffer[packetSize];
+        Udp.read(packetBuffer, packetSize);
+        Udp.endPacket();
+        String packet = String(packetBuffer);
+        if (packetBuffer == "from=StationList;freq=?;bandwidth=?") {
+          ShowFreq(0);
+          Udp.beginPacket(remoteip, 9030);
+          Udp.print("from=TEF tuner;Bandwidth=");
+          Udp.print(BW * 1000);
+          Udp.endPacket();
+        } else {
+          int symPos = packet.indexOf("freq=");
+          String stlfreq = packet.substring(symPos + 5, packetSize);
+          if ((stlfreq.toInt()) / 10000 > 6500 && (stlfreq.toInt()) / 10000 < 10800) {
+            if (band != BAND_FM) {
+              band = BAND_FM;
+              SelectBand();
+            }
+            frequency = (stlfreq.toInt()) / 10000;
+            radio.SetFreq(frequency);
+          }
+
+          // To Do: AM
+          //          if ((stlfreq.toInt()) / 1000 > 144 && (stlfreq.toInt()) / 1000 < 27000) {
+          //            if (band != 5) {
+          //              band = 5;
+          //            SelectBand();
+          //            }
+          //            frequency5 = (stlfreq.toInt()) / 1000;
+          //            radio.SetFreqAM(frequency5);
+          //          }
+          radio.clearRDS(fullsearchrds);
+          ShowFreq(0);
+          store = true;
+        }
+      }
+    }
+
     if (Server.hasClient())
     {
       if (RemoteClient.connected())
@@ -3035,21 +3221,31 @@ void XDRGTKRoutine() {
         if (LevelOffset == 0) {
           MuteScreen(0);
           LowLevelSet = EEPROM.readInt(47);
+          softmuteam = EEPROM.readByte(29);
+          softmutefm = EEPROM.readByte(30);
+          radio.setSoftmuteFM(softmutefm);
+          radio.setSoftmuteAM(softmuteam);
           DataPrint("G00\n");
         }
         if (LevelOffset == 10) {
           MuteScreen(1);
           LowLevelSet = EEPROM.readInt(47);
+          softmuteam = EEPROM.readByte(29);
+          softmutefm = EEPROM.readByte(30);
+          radio.setSoftmuteFM(softmutefm);
+          radio.setSoftmuteAM(softmuteam);
           DataPrint("G10\n");
         }
         if (LevelOffset == 1) {
           MuteScreen(0);
-          LowLevelSet = 120;
+          radio.setSoftmuteFM(1);
+          radio.setSoftmuteAM(1);
           DataPrint("G01\n");
         }
         if (LevelOffset == 11) {
-          LowLevelSet = 120;
           MuteScreen(1);
+          radio.setSoftmuteFM(1);
+          radio.setSoftmuteAM(1);
           DataPrint("G11\n");
         }
         break;
@@ -3224,7 +3420,7 @@ void XDRGTKRoutine() {
             tft.drawCentreString(myLanguage[language][34], 140, 60, GFXFF);
           }
           radio.SetFreq(frequencyold);
-          if (screenmute == false) ShowFreq(0);
+          ShowFreq(0);
           radio.setFMABandw();
           BWset = 0;
         }
@@ -3247,7 +3443,6 @@ void XDRGTKRoutine() {
 
       case 'x':
         DataPrint("OK\nT" + String(frequency * 10) + "\n");
-        store = true;
         break;
 
       case 'X':
@@ -3257,7 +3452,12 @@ void XDRGTKRoutine() {
         XDRMute = false;
         radio.setUnMute();
         VolSet = EEPROM.readInt(4);
+        LowLevelSet = EEPROM.readInt(47);
+        softmuteam = EEPROM.readByte(29);
+        softmutefm = EEPROM.readByte(30);
         radio.setVolume(VolSet);
+        radio.setSoftmuteFM(softmutefm);
+        radio.setSoftmuteAM(softmuteam);
         if (screenmute) MuteScreen(0);
         break;
 
@@ -3526,13 +3726,19 @@ void tryWiFi() {
   tft.drawCentreString(myLanguage[language][55], 155, 80, GFXFF);
   if (wc.autoConnect()) {
     Server.begin();
+    Udp.begin(9031);
+    remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
     tft.setTextColor(TFT_GREEN);
     tft.drawCentreString(myLanguage[language][57], 155, 120, GFXFF);
     wifi = true;
   } else {
+    Server.end();
+    Udp.stop();
     tft.setTextColor(TFT_RED);
     tft.drawCentreString(myLanguage[language][56], 155, 120, GFXFF);
     wifi = false;
+    XDRGTKTCP = false;
+    RDSSPYTCP = false;
   }
 }
 
