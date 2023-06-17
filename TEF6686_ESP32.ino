@@ -561,22 +561,14 @@ void loop() {
         if (SStatus > SStatusold || SStatus < SStatusold) {
           tft.setFreeFont(FONT24);
           tft.setTextColor(TFT_BLACK);
-          tft.drawRightString(String(abs(SStatusold / 10)), 150, 146, GFXFF);
+          if (SStatus / 10 != SStatusold / 10) tft.drawRightString(String(SStatusold / 10), 150, 146, GFXFF);
           tft.setFreeFont(FONT14);
-          if (SStatusold < 0) {
-            if (SStatusold % 10 == 0) tft.drawString(".0", 156, 137, GFXFF); else tft.drawString("." + String(String (SStatusold % 10, DEC)[1]), 156, 137, GFXFF);
-          } else {
-            tft.drawString("." + String(SStatusold % 10), 156, 137, GFXFF);
-          }
+          tft.drawString("." + String(abs(SStatusold % 10)), 156, 137, GFXFF);
           tft.setFreeFont(FONT24);
           tft.setTextColor(TFT_SKYBLUE);
-          tft.drawRightString(String(abs(SStatus / 10)), 150, 146, GFXFF);
+          tft.drawRightString(String(SStatus / 10), 150, 146, GFXFF);
           tft.setFreeFont(FONT14);
-          if (SStatus < 0) {
-            if (SStatus % 10 == 0) tft.drawString(".0", 156, 137, GFXFF); else tft.drawString("." + String(String (SStatus % 10, DEC)[1]), 156, 137, GFXFF);
-          } else {
-            tft.drawString("." + String(SStatus % 10), 156, 137, GFXFF);
-          }
+          tft.drawString("." + String(abs(SStatus % 10)), 156, 137, GFXFF);
           SStatusold = SStatus;
         }
       }
@@ -2171,10 +2163,10 @@ void BuildDisplay() {
   SStatusold = 2000;
   SStatus = 100;
   rds_clockold = "";
-  strcpy(programTypePrevious, "");
-  strcpy(radioIdPrevious, "");
-  programServicePrevious = "";
-  radioTextPrevious = "";
+  strcpy(programTypePrevious, "0");
+  strcpy(radioIdPrevious, "0");
+  programServicePrevious = "0";
+  radioTextPrevious = "0";
 }
 
 void ShowFreq(int mode) {
@@ -2191,9 +2183,8 @@ void ShowFreq(int mode) {
     if (band != BAND_FM ) {
       unsigned int freq = frequency_AM;
       String count = String(freq, DEC);
-      if (count.length() != freqoldcount || mode != 0) {
+      if (setupmode == false && count.length() != freqoldcount || mode != 0) {
         tft.setTextColor(TFT_BLACK);
-
         tft.drawRightString(String(freqold), 248, 45, 7);
       }
       tft.setTextColor(TFT_YELLOW, TFT_BLACK);
@@ -2203,7 +2194,7 @@ void ShowFreq(int mode) {
     } else {
       unsigned int freq = frequency + ConverterSet * 100;
       String count = String(freq / 100, DEC);
-      if (count.length() != freqoldcount || mode != 0) {
+      if (setupmode == false && count.length() != freqoldcount || mode != 0) {
         tft.setTextColor(TFT_BLACK);
         if (freqoldcount <= 2) tft.setCursor (108, 45);
         if (freqoldcount == 3) tft.setCursor (76, 45);
@@ -2244,6 +2235,10 @@ void ShowFreq(int mode) {
     attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
     attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
   }
+  strcpy(programTypePrevious, "0");
+  strcpy(radioIdPrevious, "0");
+  programServicePrevious = "0";
+  radioTextPrevious = "0";
 }
 
 void ShowSignalLevel() {
@@ -2290,22 +2285,14 @@ void ShowSignalLevel() {
     if (SStatus < -400) SStatus = -400;
     tft.setFreeFont(FONT24);
     tft.setTextColor(TFT_BLACK);
-    tft.drawRightString(String(abs(SStatusold / 10)), 290, 106, GFXFF);
+    if (SStatusold / 10 != SStatus / 10) tft.drawRightString(String(SStatusold / 10), 290, 106, GFXFF);
     tft.setFreeFont(FONT14);
-    if (SStatusold < 0) {
-      if (SStatusold % 10 == 0) tft.drawString(".0", 296, 97, GFXFF); else tft.drawString("." + String(String (SStatusold % 10, DEC)[1]), 296, 97, GFXFF);
-    } else {
-      tft.drawString("." + String(SStatusold % 10), 296, 97, GFXFF);
-    }
+    tft.drawString("." + String(abs(SStatusold % 10)), 296, 97, GFXFF);
     tft.setFreeFont(FONT24);
     tft.setTextColor(TFT_YELLOW);
-    tft.drawRightString(String(abs(SStatus / 10)), 290, 106, GFXFF);
+    tft.drawRightString(String(SStatus / 10), 290, 106, GFXFF);
     tft.setFreeFont(FONT14);
-    if (SStatus < 0) {
-      if (SStatus % 10 == 0) tft.drawString(".0", 296, 97, GFXFF); else tft.drawString("." + String(String (SStatus % 10, DEC)[1]), 296, 97, GFXFF);
-    } else {
-      tft.drawString("." + String(SStatus % 10), 296, 97, GFXFF);
-    }
+    tft.drawString("." + String(abs(SStatus % 10)), 296, 97, GFXFF);
 
     if (band == BAND_FM) segments = (SStatus + 200) / 10; else segments = (SStatus + 200) / 10;
 
@@ -3074,6 +3061,7 @@ void XDRGTKRoutine() {
           radio.clearRDS(fullsearchrds);
           RDSstatus = 0;
         }
+        store == true;
         break;
 
       case 'T':
@@ -3120,6 +3108,7 @@ void XDRGTKRoutine() {
         ShowFreq(0);
         radio.clearRDS(fullsearchrds);
         RDSstatus = 0;
+        store == true;
         break;
 
       case 'Q':
