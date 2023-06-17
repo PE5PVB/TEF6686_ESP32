@@ -42,6 +42,7 @@ Then compile and upload it using for example Arduino IDE (remember to select ESP
 
 #define LOAD_FONT7
 #define LOAD_GFXFF
+#define SMOOTH_FONT
 ```
 **ALL OTHER SETTINGS SHOULD BE REMARKED!**
 
