@@ -141,6 +141,8 @@ uint16_t SWMIBandPosold;  // Fix Me: Should store this parameter into flash, for
 String SWMIBandstring = String();
 String SWMIBandstringold = String();
 int lowsignaltimer;
+int bwupdatetimer;
+int snrupdatetimer;
 int menuoption = 30;
 int MStatusold;
 int OStatusold;
@@ -2810,17 +2812,21 @@ void ShowSignalLevel() {
   if (screenmute == false) {
     if (band == BAND_FM) SNR = int(0.46222375 * (float)(SStatus / 10) - 0.082495118 * (float)(USN / 10)) + 10; else SNR = -((int8_t)(USN / 10));
 
-    if (SNR > (SNRold + 1) || SNR < (SNRold - 1)) {
-      tft.setFreeFont(FONT7);
-      tft.setTextColor(TFT_BLACK);
-      if (SNRold == 99) tft.drawRightString("--", 294, 166, GFXFF); else  tft.drawRightString(String(SNRold), 294, 166, GFXFF);
-      tft.setTextColor(TFT_YELLOW, TFT_BLACK);
-      if (tuned == true) {
-        tft.drawRightString(String(SNR), 294, 166, GFXFF);
-        SNRold = SNR;
-      } else {
-        tft.drawRightString("--", 294, 166, GFXFF);
-        SNRold = 99;
+    if (millis() >= snrupdatetimer + TIMER_500_TICK) {
+      snrupdatetimer = millis();
+
+      if (SNR > (SNRold + 1) || SNR < (SNRold - 1)) {
+        tft.setFreeFont(FONT7);
+        tft.setTextColor(TFT_BLACK);
+        if (SNRold == 99) tft.drawRightString("--", 294, 166, GFXFF); else  tft.drawRightString(String(SNRold), 294, 166, GFXFF);
+          tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+        if (tuned == true) {
+          tft.drawRightString(String(SNR), 294, 166, GFXFF);
+          SNRold = SNR;
+        } else {
+          tft.drawRightString("--", 294, 166, GFXFF);
+          SNRold = 99;
+        }
       }
     }
 
@@ -3135,20 +3141,24 @@ void doSquelch() {
 }
 
 void updateBW() {
-  tft.setFreeFont(FONT7);
-  if (BWset == 0) {
-    if (screenmute == false) {
-      tft.drawRoundRect(249, 35, 68, 20, 5, TFT_WHITE);
-      tft.setTextColor(TFT_WHITE);
+  if (millis() >= bwupdatetimer + TIMER_500_TICK) {
+    bwupdatetimer = millis();
+
+    tft.setFreeFont(FONT7);
+    if (BWset == 0) {
+      if (screenmute == false) {
+        tft.drawRoundRect(249, 35, 68, 20, 5, TFT_WHITE);
+        tft.setTextColor(TFT_WHITE);
+      }
+      radio.setFMABandw();
+    } else {
+      if (screenmute == false) {
+        tft.drawRoundRect(249, 35, 68, 20, 5, TFT_GREYOUT);
+        tft.setTextColor(TFT_GREYOUT);
+      }
     }
-    radio.setFMABandw();
-  } else {
-    if (screenmute == false) {
-      tft.drawRoundRect(249, 35, 68, 20, 5, TFT_GREYOUT);
-      tft.setTextColor(TFT_GREYOUT);
-    }
+    tft.drawCentreString("AUTO BW", 282, 33, GFXFF);
   }
-  tft.drawCentreString("AUTO BW", 282, 33, GFXFF);
 }
 
 void updateiMS() {
