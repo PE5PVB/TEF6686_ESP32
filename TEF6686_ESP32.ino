@@ -2519,6 +2519,7 @@ void BuildMenu() {
       tft.drawString(myLanguage[language][58], 14, 30, GFXFF);
       tft.drawString(myLanguage[language][59], 14, 50, GFXFF);
       tft.drawString(myLanguage[language][60], 14, 70, GFXFF);
+      tft.setTextColor(TFT_YELLOW);
       tft.drawRightString(String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 305, 30, GFXFF);
       if (showSWMIBand) tft.drawRightString(myLanguage[language][42], 305, 50, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 50, GFXFF);
       if (radio.rds.filter) tft.drawRightString(myLanguage[language][42], 305, 70, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 70, GFXFF);
