@@ -12,11 +12,11 @@ enum RDS_GROUPS {
 };
 
 enum RADIO_BAND {
-  BAND_FM,  BAND_LW,  BAND_MW,  BAND_SW
+  BAND_FM, BAND_LW, BAND_MW, BAND_SW
 };
 
 enum RADIO_TUNE_MODE {
-  TUNE_MAN,  TUNE_AUTO,  TUNE_MEM
+  TUNE_MAN, TUNE_AUTO, TUNE_MEM, TUNE_MI_BAND
 };
 
 #define FREQ_MW_STEP_9K     9
@@ -69,6 +69,23 @@ enum RADIO_TUNE_MODE {
 #define FREQ_SW_13M_END     21850
 #define FREQ_SW_11M_START   25670
 #define FREQ_SW_11M_END     26100 
+
+#define SW_MI_BAND_GAP      0
+#define SW_MI_BAND_11M      11
+#define SW_MI_BAND_13M      13
+#define SW_MI_BAND_15M      15
+#define SW_MI_BAND_16M      16
+#define SW_MI_BAND_19M      19
+#define SW_MI_BAND_22M      22
+#define SW_MI_BAND_25M      25
+#define SW_MI_BAND_31M      31
+#define SW_MI_BAND_41M      41
+#define SW_MI_BAND_49M      49
+#define SW_MI_BAND_60M      60
+#define SW_MI_BAND_75M      75
+#define SW_MI_BAND_90M      90
+#define SW_MI_BAND_120M     120
+#define SW_MI_BAND_160M     160
 
 const char* const PTY_EU[] {
   "None",
