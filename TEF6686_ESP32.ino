@@ -135,6 +135,11 @@ unsigned int MWHighEdgeSet;
 unsigned int MWLowEdgeSet;
 unsigned int SWHighEdgeSet;
 unsigned int SWLowEdgeSet;
+byte showSWMIBand = 1;    // Fix Me: Menu options: 0: don't show  1: show up
+uint16_t SWMIBandPos;  
+uint16_t SWMIBandPosold;  // Fix Me: Should store this parameter into flash, for use of restart.
+String SWMIBandstring = String();
+String SWMIBandstringold = String();
 int lowsignaltimer;
 int menuoption = 30;
 int MStatusold;
@@ -185,6 +190,21 @@ unsigned int frequency_LW;
 unsigned int frequency_MW;
 unsigned int frequency_SW;
 unsigned int frequencyold;
+unsigned int frequency_MIBand_11M; // Surive before tuner restart
+unsigned int frequency_MIBand_13M;
+unsigned int frequency_MIBand_15M;
+unsigned int frequency_MIBand_16M;
+unsigned int frequency_MIBand_19M;
+unsigned int frequency_MIBand_22M;
+unsigned int frequency_MIBand_25M;
+unsigned int frequency_MIBand_31M;
+unsigned int frequency_MIBand_41M;
+unsigned int frequency_MIBand_49M;
+unsigned int frequency_MIBand_60M;
+unsigned int frequency_MIBand_75M;
+unsigned int frequency_MIBand_90M;
+unsigned int frequency_MIBand_120M;
+unsigned int frequency_MIBand_160M;
 unsigned int memory[30];
 unsigned int scanner_end;
 unsigned int scanner_start;
@@ -712,6 +732,349 @@ void LimitAMFrequency() {
   }
 }
 
+void DivdeSWMIBand() {
+  if(frequency_AM >= FREQ_SW_160M_START && frequency_AM <= FREQ_SW_160M_END) { 
+    SWMIBandPos = SW_MI_BAND_160M;
+    frequency_MIBand_160M = frequency_AM;
+    SWMIBandstring = (String) "" + SWMIBandPos + " m";
+  } else if(frequency_AM >= FREQ_SW_120M_START && frequency_AM <= FREQ_SW_120M_END) { 
+    SWMIBandPos = SW_MI_BAND_120M; 
+    frequency_MIBand_120M = frequency_AM;
+    SWMIBandstring = (String) "" + SWMIBandPos + " m";
+  } else if(frequency_AM >= FREQ_SW_90M_START && frequency_AM <= FREQ_SW_90M_END) {
+    SWMIBandPos = SW_MI_BAND_90M; 
+    frequency_MIBand_90M = frequency_AM;
+    SWMIBandstring = (String) "" + SWMIBandPos + " m";
+  } else if(frequency_AM >= FREQ_SW_75M_START && frequency_AM <= FREQ_SW_75M_END) {
+    SWMIBandPos = SW_MI_BAND_75M; 
+    frequency_MIBand_75M = frequency_AM;
+    SWMIBandstring = (String) "" + SWMIBandPos + " m";
+  }else if(frequency_AM >= FREQ_SW_60M_START && frequency_AM <= FREQ_SW_60M_END) {
+    SWMIBandPos = SW_MI_BAND_60M; 
+    frequency_MIBand_60M = frequency_AM;
+    SWMIBandstring = (String) "" + SWMIBandPos + " m";
+  } else if(frequency_AM >= FREQ_SW_49M_START && frequency_AM <= FREQ_SW_49M_END) {
+    SWMIBandPos = SW_MI_BAND_49M; 
+    frequency_MIBand_49M = frequency_AM;
+    SWMIBandstring = (String) "" + SWMIBandPos + " m";
+  } else if(frequency_AM >= FREQ_SW_41M_START && frequency_AM <= FREQ_SW_41M_END) {
+    SWMIBandPos = SW_MI_BAND_41M; 
+    frequency_MIBand_41M = frequency_AM;
+    SWMIBandstring = (String) "" + SWMIBandPos + " m";
+  } else if(frequency_AM >= FREQ_SW_31M_START && frequency_AM <= FREQ_SW_31M_END) {
+    SWMIBandPos = SW_MI_BAND_31M; 
+    frequency_MIBand_31M = frequency_AM;
+    SWMIBandstring = (String) "" + SWMIBandPos + " m";
+  } else if(frequency_AM >= FREQ_SW_25M_START && frequency_AM <= FREQ_SW_25M_END) {
+    SWMIBandPos = SW_MI_BAND_25M; 
+    frequency_MIBand_25M = frequency_AM;
+    SWMIBandstring = (String) "" + SWMIBandPos + " m";
+  } else if(frequency_AM >= FREQ_SW_22M_START && frequency_AM <= FREQ_SW_22M_END) {
+    SWMIBandPos = SW_MI_BAND_22M; 
+    frequency_MIBand_22M = frequency_AM;
+    SWMIBandstring = (String) "" + SWMIBandPos + " m";
+  } else if(frequency_AM >= FREQ_SW_19M_START && frequency_AM <= FREQ_SW_19M_END) {
+    SWMIBandPos = SW_MI_BAND_19M; 
+    frequency_MIBand_19M = frequency_AM;
+    SWMIBandstring = (String) "" + SWMIBandPos + " m";
+  } else if(frequency_AM >= FREQ_SW_16M_START && frequency_AM <= FREQ_SW_16M_END) {
+    SWMIBandPos = SW_MI_BAND_16M; 
+    frequency_MIBand_16M = frequency_AM;
+    SWMIBandstring = (String) "" + SWMIBandPos + " m";
+  } else if(frequency_AM >= FREQ_SW_15M_START && frequency_AM <= FREQ_SW_15M_END) {
+    SWMIBandPos = SW_MI_BAND_15M; 
+    frequency_MIBand_15M = frequency_AM;
+    SWMIBandstring = (String) "" + SWMIBandPos + " m";
+  } else if(frequency_AM >= FREQ_SW_13M_START && frequency_AM <= FREQ_SW_13M_END) {
+    SWMIBandPos = SW_MI_BAND_13M; 
+    frequency_MIBand_13M = frequency_AM;
+    SWMIBandstring = (String) "" + SWMIBandPos + " m";
+  } else if(frequency_AM >= FREQ_SW_11M_START && frequency_AM <= FREQ_SW_11M_END) {
+    SWMIBandPos = SW_MI_BAND_11M; 
+    frequency_MIBand_11M = frequency_AM;
+    SWMIBandstring = (String) "" + SWMIBandPos + " m";
+  } else {
+      if (SWMIBandPos > SW_MI_BAND_GAP) {
+      SWMIBandPosold = SWMIBandPos;
+      SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+    }
+    SWMIBandPos = SW_MI_BAND_GAP;
+  }
+} 
+
+void ToggleSWMIBand(bool plus) {
+  switch(SWMIBandPosold) {
+    case SW_MI_BAND_GAP:
+      if(plus) {
+        SWMIBandPos = SW_MI_BAND_160M;
+        SWMIBandPosold = SWMIBandPos;
+        frequency_AM = FREQ_SW_160M_START;
+      }else {
+        SWMIBandPos = SW_MI_BAND_11M;
+        SWMIBandPosold = SWMIBandPos;
+        frequency_AM = FREQ_SW_11M_END;
+      }
+      radio.SetFreqAM(frequency_AM);
+      frequency_SW = frequency_AM;
+      break;
+    case SW_MI_BAND_11M:
+      if(plus) {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_160M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_160M == 0 ? FREQ_SW_160M_START : frequency_MIBand_160M;
+      }else {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_13M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_13M == 0 ? FREQ_SW_13M_END : frequency_MIBand_13M;
+      }
+      radio.SetFreqAM(frequency_AM);
+      frequency_SW = frequency_AM;
+      break;
+    case SW_MI_BAND_13M:
+      if(plus) {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_11M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_11M == 0 ? FREQ_SW_11M_START : frequency_MIBand_11M;
+      }else {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_15M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_15M == 0 ? FREQ_SW_15M_END : frequency_MIBand_15M;
+      }
+      radio.SetFreqAM(frequency_AM);
+      frequency_SW = frequency_AM;
+      break;
+    case SW_MI_BAND_15M:
+      if(plus) {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_13M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_13M == 0 ? FREQ_SW_13M_START : frequency_MIBand_13M;
+      }else {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_16M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_16M == 0 ? FREQ_SW_16M_END : frequency_MIBand_16M;
+      }
+      radio.SetFreqAM(frequency_AM);
+      frequency_SW = frequency_AM;
+      break;
+    case SW_MI_BAND_16M:
+      if(plus) {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_15M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_15M == 0 ? FREQ_SW_15M_START : frequency_MIBand_15M;
+      }else {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_19M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_19M == 0 ? FREQ_SW_19M_END : frequency_MIBand_19M;
+      }
+      radio.SetFreqAM(frequency_AM);
+      frequency_SW = frequency_AM;
+      break;
+    case SW_MI_BAND_19M:
+      if(plus) {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_16M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_16M == 0 ? FREQ_SW_16M_START : frequency_MIBand_16M;
+      }else {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_22M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_22M == 0 ? FREQ_SW_22M_END : frequency_MIBand_22M;
+      }
+      radio.SetFreqAM(frequency_AM);
+      frequency_SW = frequency_AM;
+      break;
+    case SW_MI_BAND_22M:
+      if(plus) {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_19M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_19M == 0 ? FREQ_SW_19M_START : frequency_MIBand_19M;
+      }else {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_25M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_25M == 0 ? FREQ_SW_25M_END : frequency_MIBand_25M;
+      }
+      radio.SetFreqAM(frequency_AM);
+      frequency_SW = frequency_AM;
+      break;
+    case SW_MI_BAND_25M:
+      if(plus) {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_22M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_22M == 0 ? FREQ_SW_22M_START : frequency_MIBand_22M;
+      }else {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_31M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_31M == 0 ? FREQ_SW_31M_END : frequency_MIBand_31M;
+      }
+      radio.SetFreqAM(frequency_AM);
+      frequency_SW = frequency_AM;
+      break;
+    case SW_MI_BAND_31M:
+      if(plus) {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_25M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_25M == 0 ? FREQ_SW_25M_START : frequency_MIBand_25M;
+      }else {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_41M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_41M == 0 ? FREQ_SW_41M_END : frequency_MIBand_41M;
+      }
+      radio.SetFreqAM(frequency_AM);
+      frequency_SW = frequency_AM;
+      break;
+    case SW_MI_BAND_41M:
+      if(plus) {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_31M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_31M == 0 ? FREQ_SW_31M_START : frequency_MIBand_31M;
+      }else {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_49M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_49M == 0 ? FREQ_SW_49M_END : frequency_MIBand_49M;
+      }
+      radio.SetFreqAM(frequency_AM);
+      frequency_SW = frequency_AM;
+      break;
+    case SW_MI_BAND_49M:
+      if(plus) {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_41M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_41M == 0 ? FREQ_SW_41M_START : frequency_MIBand_41M;
+      }else {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_60M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_60M == 0 ? FREQ_SW_60M_END : frequency_MIBand_60M;
+      }
+      radio.SetFreqAM(frequency_AM);
+      frequency_SW = frequency_AM;
+      break;
+    case SW_MI_BAND_60M:
+      if(plus) {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_49M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_49M == 0 ? FREQ_SW_49M_START : frequency_MIBand_49M;
+      }else {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_75M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_75M == 0 ? FREQ_SW_75M_END : frequency_MIBand_75M;
+      }
+      radio.SetFreqAM(frequency_AM);
+      frequency_SW = frequency_AM;
+      break;
+    case SW_MI_BAND_75M:
+      if(plus) {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_60M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_60M == 0 ? FREQ_SW_60M_START : frequency_MIBand_60M;
+      }else {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_90M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_90M == 0 ? FREQ_SW_90M_END : frequency_MIBand_90M;
+      }
+      radio.SetFreqAM(frequency_AM);
+      frequency_SW = frequency_AM;
+      break;
+    case SW_MI_BAND_90M:
+      if(plus) {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_75M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_75M == 0 ? FREQ_SW_75M_START : frequency_MIBand_75M;
+      }else {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_120M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_120M == 0 ? FREQ_SW_120M_END : frequency_MIBand_120M;
+      }
+      radio.SetFreqAM(frequency_AM);
+      frequency_SW = frequency_AM;
+      break;
+    case SW_MI_BAND_120M:
+      if(plus) {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_90M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_90M == 0 ? FREQ_SW_90M_START : frequency_MIBand_90M;
+      }else {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_160M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_160M == 0 ? FREQ_SW_160M_END : frequency_MIBand_160M;
+      }
+      radio.SetFreqAM(frequency_AM);
+      frequency_SW = frequency_AM;
+      break;
+    case SW_MI_BAND_160M:
+      if(plus) {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_120M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_120M == 0 ? FREQ_SW_120M_START : frequency_MIBand_120M;
+      }else {
+        SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
+        SWMIBandPos = SW_MI_BAND_11M;
+        SWMIBandPosold = SWMIBandPos;
+        SWMIBandstring = (String) "" + SWMIBandPos + " m";
+        frequency_AM = frequency_MIBand_11M == 0 ? FREQ_SW_49M_END : frequency_MIBand_11M;
+      }
+      radio.SetFreqAM(frequency_AM);
+      frequency_SW = frequency_AM;
+      break;
+  }
+}
+
 void SelectBand() {
   if (band != BAND_FM) {
     seek = false;
@@ -740,6 +1103,7 @@ void SelectBand() {
     LowLevelInit == false;
     BWreset = true;
     BWset = 0;
+    if (tunemode == TUNE_MI_BAND) tunemode = TUNE_MAN;
     radio.power(0);
     delay(50);
     radio.SetFreq(frequency);
@@ -1204,6 +1568,15 @@ void KeyUp() {
         EEPROM.writeByte(51, memorypos);
         EEPROM.commit();
         break;
+      case TUNE_MI_BAND:
+        if (showSWMIBand) {
+          if (displayflip) {
+            ToggleSWMIBand(false);
+          }else {
+            ToggleSWMIBand(true);
+          }
+        }
+        break;
     }
       if (XDRGTKUSB == true || XDRGTKTCP == true) if (band == BAND_FM) DataPrint("T" + String(frequency * 10)); else DataPrint("T" + String(frequency_AM));
     radio.clearRDS(fullsearchrds);
@@ -1459,6 +1832,15 @@ void KeyDown() {
         if (memorystore == false) DoMemoryPosTune();
         EEPROM.writeByte(51, memorypos);
         EEPROM.commit();
+        break;
+      case TUNE_MI_BAND:
+        if (showSWMIBand) {
+          if (displayflip) {
+            ToggleSWMIBand(true);
+          }else {
+            ToggleSWMIBand(false);
+          }
+        }
         break;
     }
       if (XDRGTKUSB == true || XDRGTKTCP == true) if (band == BAND_FM) DataPrint("T" + String(frequency * 10)); else DataPrint("T" + String(frequency_AM));
@@ -2324,6 +2706,12 @@ void ShowFreq(int mode) {
         tft.drawRightString(String(freq), 248, 45, 7);
         freqold = freq;
         freqoldcount = count.length();
+
+        if(band == BAND_SW && showSWMIBand) {
+          DivdeSWMIBand();
+          updateSWMIBand();
+        }
+
       } else {
         unsigned int freq = frequency + ConverterSet * 100;
         String count = String(freq / 100, DEC);
@@ -2770,6 +3158,38 @@ void updateEQ() {
   tft.drawCentreString("EQ", 302, 54, GFXFF);
 }
 
+void updateSWMIBand() {
+  switch(SWMIBandPos) {
+    case SW_MI_BAND_11M:
+    case SW_MI_BAND_13M:
+    case SW_MI_BAND_15M:
+    case SW_MI_BAND_16M:
+    case SW_MI_BAND_19M:
+    case SW_MI_BAND_22M:
+    case SW_MI_BAND_25M:
+    case SW_MI_BAND_31M:
+    case SW_MI_BAND_41M:
+    case SW_MI_BAND_49M:
+    case SW_MI_BAND_60M:
+    case SW_MI_BAND_75M:
+    case SW_MI_BAND_90M:
+    case SW_MI_BAND_120M:
+    case SW_MI_BAND_160M:
+      tft.setTextColor(TFT_BLACK);
+      tft.drawString(SWMIBandstringold, 50, 45, GFXFF);
+
+      tft.setTextColor(TFT_SKYBLUE, TFT_BLACK);
+      tft.drawString(SWMIBandstring, 50, 45, GFXFF);
+      break;
+    case SW_MI_BAND_GAP:
+
+      tft.setTextColor(TFT_BLACK);
+      tft.drawString(SWMIBandstringold, 50, 45, GFXFF);
+
+      break;
+  }
+}
+
 void doBW() {
   if (band == BAND_FM) {
     if (BWset > 16) BWset = 0;
@@ -2874,11 +3294,13 @@ void doTuneMode() {
           RoundStep();
           ShowStepSize();
         }
+      }else if(band == BAND_SW && showSWMIBand) {
+        tunemode = TUNE_MI_BAND;
       } else {
         tunemode = TUNE_MEM;
       }
       break;
-
+    case TUNE_MI_BAND:
     case TUNE_AUTO:
       tunemode = TUNE_MEM;
       break;
@@ -2897,10 +3319,16 @@ void ShowTuneMode() {
   tft.setFreeFont(FONT7);
   switch (tunemode) {
     case TUNE_MAN:
-      tft.drawRoundRect(3, 57, 40, 20, 5, TFT_GREYOUT);
-      tft.setTextColor(TFT_GREYOUT);
-      tft.drawCentreString("AUTO", 22, 55, GFXFF);
-
+      if(band == BAND_SW) {
+        tft.drawRoundRect(3, 57, 40, 20, 5, TFT_GREYOUT);
+        tft.setTextColor(TFT_GREYOUT);
+        tft.drawCentreString("BAND", 22, 55, GFXFF);
+      } else {
+        tft.drawRoundRect(3, 57, 40, 20, 5, TFT_GREYOUT);
+        tft.setTextColor(TFT_GREYOUT);
+        tft.drawCentreString("AUTO", 22, 55, GFXFF);
+      }
+       
       tft.drawRoundRect(3, 35, 40, 20, 5, TFT_WHITE);
       tft.setTextColor(TFT_WHITE);
       tft.drawCentreString("MAN", 22, 33, GFXFF);
@@ -2925,9 +3353,15 @@ void ShowTuneMode() {
       break;
 
     case TUNE_MEM:
-      tft.drawRoundRect(3, 57, 40, 20, 5, TFT_GREYOUT);
-      tft.setTextColor(TFT_GREYOUT);
-      tft.drawCentreString("AUTO", 22, 55, GFXFF);
+      if(band == BAND_SW) {
+        tft.drawRoundRect(3, 57, 40, 20, 5, TFT_GREYOUT);
+        tft.setTextColor(TFT_GREYOUT);
+        tft.drawCentreString("BAND", 22, 55, GFXFF);
+      } else {
+        tft.drawRoundRect(3, 57, 40, 20, 5, TFT_GREYOUT);
+        tft.setTextColor(TFT_GREYOUT);
+        tft.drawCentreString("AUTO", 22, 55, GFXFF);
+      }
 
       tft.drawRoundRect(3, 35, 40, 20, 5, TFT_GREYOUT);
       tft.setTextColor(TFT_GREYOUT);
@@ -2940,6 +3374,19 @@ void ShowTuneMode() {
         tft.drawRoundRect(3, 79, 40, 20, 5, TFT_WHITE);
         tft.setTextColor(TFT_WHITE);
       }
+      tft.drawCentreString("MEM", 22, 77, GFXFF);
+      break;
+    case TUNE_MI_BAND:
+      tft.drawRoundRect(3, 57, 40, 20, 5, TFT_WHITE);
+      tft.setTextColor(TFT_WHITE);
+      tft.drawCentreString("BAND", 22, 55, GFXFF);
+
+      tft.drawRoundRect(3, 35, 40, 20, 5, TFT_GREYOUT);
+      tft.setTextColor(TFT_GREYOUT);
+      tft.drawCentreString("MAN", 22, 33, GFXFF);
+
+      tft.drawRoundRect(3, 79, 40, 20, 5, TFT_GREYOUT);
+      tft.setTextColor(TFT_GREYOUT);
       tft.drawCentreString("MEM", 22, 77, GFXFF);
       break;
   }
