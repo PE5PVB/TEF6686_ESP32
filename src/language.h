@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char myLanguage[9][59][78] = {
+static const char myLanguage[9][60][78] = {
   { "English",                        // English
     "Rotary direction changed",
     "Please release button",
@@ -59,7 +59,8 @@ static const char myLanguage[9][59][78] = {
     "Trying to connect with Wi-Fi",
     "FAILED.. WiFi disabled",
     "CONNECTED!",
-	"Stationlist client IP"
+	"Stationlist client IP",
+	"Show SW wavelength"
   },
 
   { "Nederlands",                     // Dutch
@@ -120,7 +121,8 @@ static const char myLanguage[9][59][78] = {
     "Verbinden met Wi-Fi...",
     "MISLUKT.. WiFi uitgeschakeld",
     "VERBONDEN!",
-	"Stationlist client IP"
+	"Stationlist client IP",
+	"Toon SW golflengte"
   },
 
   { "Polski",                         // Polish
@@ -181,7 +183,8 @@ static const char myLanguage[9][59][78] = {
     "Proba polaczenia z Wi-Fi",
     "BLAD.. WiFi wylaczone",
     "POLACZONO!",
-	"Stationlist client IP"
+	"Stationlist client IP",
+	"Show SW wavelength"
   },
 
   { "Hrvatski",                       // Croatian
@@ -242,7 +245,8 @@ static const char myLanguage[9][59][78] = {
     "Spajanje s Wi-Fi mrežom..",
     "NEUSPJEŠNO.. Wi-Fi onemogućen",
     "SPOJENO!",
-	"Stationlist client IP"
+	"Stationlist client IP",
+	"Show SW wavelength"
   },
 
   { "Ελληνικά",                        // Greek
@@ -303,7 +307,8 @@ static const char myLanguage[9][59][78] = {
     "Προσπάθεια σύνδεσης με το Wi-Fi",
     "ΑΠΟΤΥΧΙΑ.. WiFi ανενεργό",
     "ΣΕ ΣΥΝΔΕΣΗ!",
-	"Stationlist client IP"
+	"Stationlist client IP",
+	"Show SW wavelength"
   },
 
   { "Romana",                       // Romanian
@@ -364,7 +369,8 @@ static const char myLanguage[9][59][78] = {
     "Trying to connect with Wi-Fi",
     "FAILED.. WiFi disabled",
     "CONNECTED!",
-	"Stationlist client IP"
+	"Stationlist client IP",
+	"Show SW wavelength"
   },
 
   { "Deutsch",                        // German
@@ -425,7 +431,8 @@ static const char myLanguage[9][59][78] = {
     "Versuche WLAN zu verbinden",
     "FEHLER.. WLAN deaktiviert",
     "VERBUNDEN!",
-	"Stationlist client IP"
+	"Stationlist client IP",
+	"Show SW wavelength"
   },
   { "Czech",                        // Czech
     "Směr enkóderu byl změněn",
@@ -485,7 +492,8 @@ static const char myLanguage[9][59][78] = {
     "Trying to connect with Wi-Fi",
     "FAILED.. WiFi disabled",
     "CONNECTED!",
-	"Stationlist client IP"
+	"Stationlist client IP",
+	"Show SW wavelength"
   },
   { "Slovak",                       // Slovak
     "Smer enkóderu bol zmenený",
@@ -545,6 +553,7 @@ static const char myLanguage[9][59][78] = {
     "Trying to connect with Wi-Fi",
     "FAILED.. WiFi disabled",
     "CONNECTED!",
-	"Stationlist client IP"
+	"Stationlist client IP",
+	"Show SW wavelength"
   },
 };
