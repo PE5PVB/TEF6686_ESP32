@@ -114,7 +114,7 @@ byte TEF;
 char buff[16];
 String programServicePrevious;
 char programTypePrevious[17];
-char radioIdPrevious[5];
+char radioIdPrevious[6];
 String radioTextPrevious;
 int AGC;
 int BWOld;
@@ -2140,8 +2140,9 @@ void DoMemoryPosTune() {
 }
 
 void readRds() {
+  radio.readRDS(showrdserrors);
   if (band == BAND_FM) {
-    RDSstatus = radio.readRDS(showrdserrors);
+    RDSstatus = radio.rds.hasRDS;
     ShowRDSLogo(RDSstatus);
     if (RDSstatus == 0 && screenmute == false) {
       tft.setTextColor(TFT_SKYBLUE);
@@ -2196,7 +2197,7 @@ void readRds() {
       XDRGTKRDS += String(((radio.rds.rdsC) >> 4) & 0xF, HEX) + String((radio.rds.rdsC) & 0xF, HEX);
       XDRGTKRDS += String(((radio.rds.rdsD >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsD >> 8) & 0xF, HEX);
       XDRGTKRDS += String(((radio.rds.rdsD) >> 4) & 0xF, HEX) + String((radio.rds.rdsD) & 0xF, HEX);
-      XDRGTKRDS += String(((radio.rds.errors >> 8) >> 4) & 0xF, HEX) + String((radio.rds.errors >> 8) & 0xF, HEX);
+      XDRGTKRDS += String(((radio.rds.rdsErr >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsErr >> 8) & 0xF, HEX);
       XDRGTKRDS += "\n";
 
       if (XDRGTKRDS != XDRGTKRDSold) {

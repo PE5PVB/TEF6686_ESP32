@@ -218,117 +218,119 @@ bool TEF6686::getStatusAM(int16_t &level, uint16_t &noise, uint16_t &cochannel, 
   return modulation;
 }
 
-bool TEF6686::readRDS(bool showrdserrors)
+void TEF6686::readRDS(bool showrdserrors)
 {
-  char  status;
-  uint16_t rdsStat = 0, rdsErr = 65535;
-  uint16_t result = devTEF_Radio_Get_RDS_Data(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rdsErr);
-  uint8_t rds_group;
+  uint16_t rdsStat;
+  uint16_t result = devTEF_Radio_Get_RDS_Data(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
   uint8_t offset;
-  bool rdsErrCheck = false, rdsDataReady = false;
+  
+  if (rds.rdsB != rdsBprevious && rds.rdsC != rdsCprevious && rds.rdsD != rdsDprevious) {
+    rds.correct = false;
+    rds.hasRDS = false;
 
-  if (((rdsErr >> 14) & 0x02) > 1) rds.rdsAerror = true; else rds.rdsAerror = false;
-  if (((rdsErr >> 12) & 0x02) > 1) rds.rdsBerror = true; else rds.rdsBerror = false;
-  if (((rdsErr >> 10) & 0x02) > 1) rds.rdsCerror = true; else rds.rdsCerror = false;
-  if (((rdsErr >> 8) & 0x02) > 1) rds.rdsDerror = true; else rds.rdsDerror = false;
+    if (((rds.rdsErr >> 14) & 0x02) > 1) rds.rdsAerror = true; else rds.rdsAerror = false;            // Any errors in Block A?
+    if (((rds.rdsErr >> 12) & 0x02) > 1) rds.rdsBerror = true; else rds.rdsBerror = false;            // Any errors in Block B?
+    if (((rds.rdsErr >> 10) & 0x02) > 1) rds.rdsCerror = true; else rds.rdsCerror = false;            // Any errors in Block C?
+    if (((rds.rdsErr >> 8) & 0x02) > 1) rds.rdsDerror = true; else rds.rdsDerror = false;             // Any errors in Block D?
+    if (!rds.rdsAerror && !rds.rdsBerror && !rds.rdsCerror && !rds.rdsDerror) rds.correct = true; // Any errors in all blocks?
+    if ((rdsStat & (1 << 15)) && (rdsStat & (1 << 9))) rds.hasRDS = true;                         // RDS decoder synchronized and data available
 
-  rdsTimeOut += rdsErr == 0 && rds.rdsA != 0 ? -rdsTimeOut : rdsTimeOut < 32768  ? 1 : 0;
-  rds.hasRDS  = rdsTimeOut < 32768 ? true : false;
+    if (rds.hasRDS) {                                                                             // We have all data to decode... let's go...
 
-  rdsErrCheck = rdsErr == 0;
-  rdsDataReady = ((rdsStat & (1 << 15)) && (rdsStat & (1 << 9)));
-  rds.errors = rdsErr;
-  bool x;
-  if (showrdserrors == false) x = rdsErrCheck; else x = true;
-  if (rdsErrCheck) rds.correct = true; else rds.correct = false;
-
-  if (rdsDataReady && x)
-  {
-    //PI
-    if (rds.stationID == 0) rds.stationID = rds.rdsA;
-    if (rds.region == 0) {
-      char Hex[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
-      rds.picode[0] = Hex[(rds.rdsA & 0xF000U) >> 12];
-      rds.picode[1] = Hex[(rds.rdsA & 0x0F00U) >> 8];
-      rds.picode[2] = Hex[(rds.rdsA & 0x00F0U) >> 4];
-      rds.picode[3] = Hex[(rds.rdsA & 0x000FU)];
-      rds.picode[4] = '\0';
-    }
-    if (rds.region == 1) {
-      if (rds.stationID > 4096) {
-        if (rds.stationID > 21671 && (rds.stationID & 0xF00U) >> 8 == 0) rds.stationID = ((uint16_t)uint8_t(0xA0 + ((rds.stationID & 0xF000U) >> 12)) << 8) + lowByte(rds.stationID); // C0DE -> ACDE
-        if (rds.stationID > 21671 && lowByte(rds.stationID) == 0) rds.stationID = 0xAF00 + uint8_t(highByte(rds.stationID)); // CD00 -> AFCD
-        if (rds.stationID < 39247) {
-          if (rds.stationID > 21671) {
-            rds.picode[0] = 'W';
-            rds.stationID -= 21672;
+      //PI decoder
+      if (rds.region == 0 && !correctpi) {
+        rds.picode[0] = (rds.rdsA >> 12) & 0xF;
+        rds.picode[1] = (rds.rdsA >> 8) & 0xF;
+        rds.picode[2] = (rds.rdsA >> 4) & 0xF;
+        rds.picode[3] = rds.rdsA & 0xF;
+        for (int i = 0; i < 4; i++) {
+          if (rds.picode[i] < 10) {
+            rds.picode[i] += '0';                                                                 // Add ASCII offset for decimal digits
           } else {
-            rds.picode[0] = 'K';
-            rds.stationID -= 4096;
+            rds.picode[i] += 'A' - 10;                                                            // Add ASCII offset for hexadecimal letters A-F
           }
-          rds.picode[1] = char(rds.stationID / 676 + 65);
-          rds.picode[2] = char((rds.stationID - 676 * int(rds.stationID / 676)) / 26 + 65);
-          rds.picode[3] = char(((rds.stationID - 676 * int(rds.stationID / 676)) % 26) + 65);
-          rds.picode[4] = '\0';
-        } else {
-          rds.stationID -= 4835;
-          rds.picode[0] = 'K';
-          rds.picode[1] = char(rds.stationID / 676 + 65);
-          rds.picode[2] = char((rds.stationID - 676 * int(rds.stationID / 676)) / 26 + 65);
-          rds.picode[3] = char(((rds.stationID - 676 * int(rds.stationID / 676)) % 26) + 65);
-          rds.picode[4] = '\0';
         }
+        if (!rds.correct) rds.picode[4] = '?'; else rds.picode[4] = ' ';    // Not sure, add a ?
+        rds.picode[5] = '\0';
+        correctpi = rds.correct;
       }
-    }
 
-    rds_group  = (rds.rdsB >> 11);
-    if (rds.correctPI == false && rds.correct == true) rds.correctPI = true;
-    switch (rds_group) {
-      case RDS_GROUP_0A:
-      case RDS_GROUP_0B: {
-          //RDS Programm-Service
-          offset = rds.rdsB & 0x03;
-          if ((offset == 0) && (ps_process == 0)) ps_process = 1;
-
-          if (ps_process == 1) {
-            ps_buffer[(offset * 2)  + 0] = rds.rdsD >> 8;
-            ps_buffer[(offset * 2)  + 1] = rds.rdsD & 0xFF;
-            ps_buffer[(offset * 2)  + 2] = 0;
-            ps_process = strlen(ps_buffer) == 8 ? 2 : 1;
+      // USA Station callsign decoder
+      if (rds.region == 1) {                                                                      // When ID was decoded correctly before, no need to decode again.
+        uint16_t stationID = rds.rdsA;
+        if (stationID > 4096) {
+          if (stationID > 21671 && (stationID & 0xF00U) >> 8 == 0) stationID = ((uint16_t)uint8_t(0xA0 + ((stationID & 0xF000U) >> 12)) << 8) + lowByte(stationID); // C0DE -> ACDE
+          if (stationID > 21671 && lowByte(stationID) == 0) stationID = 0xAF00 + uint8_t(highByte(stationID)); // CD00 -> AFCD
+          if (stationID < 39247) {
+            if (stationID > 21671) {
+              rds.picode[0] = 'W';
+              stationID -= 21672;
+            } else {
+              rds.picode[0] = 'K';
+              stationID -= 4096;
+            }
+            rds.picode[1] = char(stationID / 676 + 65);
+            rds.picode[2] = char((stationID - 676 * int(stationID / 676)) / 26 + 65);
+            rds.picode[3] = char(((stationID - 676 * int(stationID / 676)) % 26) + 65);
+            rds.picode[5] = '\0';
+          } else {
+            stationID -= 4835;
+            rds.picode[0] = 'K';
+            rds.picode[1] = char(stationID / 676 + 65);
+            rds.picode[2] = char((stationID - 676 * int(stationID / 676)) / 26 + 65);
+            rds.picode[3] = char(((stationID - 676 * int(stationID / 676)) % 26) + 65);
+            rds.picode[5] = '\0';
           }
+        }
+        if (rds.rdsAerror) rds.picode[4] = '?'; else rds.picode[4] = ' ';                       // Not sure, add a ?
+      }
 
-          if (ps_process == 2) {
-            for (int i = 0; i < 9; i++) rds.PStext[i] = 0;
-            rds.stationName = "";
-            RDScharConverter(ps_buffer, rds.PStext, sizeof(rds.PStext) / sizeof(wchar_t));
-            rds.stationName = convertToUTF8(rds.PStext);
+      // TP Indicator
+      rds.hasTP = (bitRead(rds.rdsB, 10));
 
-            for (int i = 0; i < 9; i++) ps_buffer[i]  = '\0';
-            ps_process = 0;
-            rds.hasPS = true;
-          }
+      switch (rds.rdsB >> 11) {
+        case RDS_GROUP_0A:
+        case RDS_GROUP_0B: {
 
-          if (rds.correct) {
-            //PTY
-            rds.stationTypeCode = (rds.rdsB >> 5) & 0x1F;
-            rds.hasPTY = true;
-            if (rds.region == 0) strcpy(rds.stationType, PTY_EU[rds.stationTypeCode]);
-            if (rds.region == 1) strcpy(rds.stationType, PTY_USA[rds.stationTypeCode]);
+            if (showrdserrors || rds.correct) {
+              //PS decoder
+              offset = rds.rdsB & 0x03;                                                         // Get PI character segment
+              ps_buffer[(offset * 2)  + 0] = rds.rdsD >> 8;                                     // First character of segment
+              ps_buffer[(offset * 2)  + 1] = rds.rdsD & 0xFF;                                   // Second character of segment
+              ps_buffer[(offset * 2)  + 2] = '\0';                                              // Endmarker of segment
 
-            //TP-TA-MS
-            if ((bitRead(rds.rdsB, 4)) == 0 && ((bitRead(rds.rdsB, 10)) == 1)) rds.hasTP = true; else rds.hasTP = false;
+              wchar_t PStext[9] = L"";                                                          // Create 16 bit char buffer for Extended ASCII
+              if (!ps_process) {                                                                // After new tune just fill the characters received
+                RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t));          // Convert 8 bit ASCII to 16 bit ASCII
+                rds.stationName = convertToUTF8(PStext);                                        // Convert RDS characterset to ASCII
+              }
+              if (strlen(ps_buffer) == 8) {                                                     // Becomes active after a full PS has been decoded
+                RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t));          // Convert 8 bit ASCII to 16 bit ASCII
+                rds.stationName = convertToUTF8(PStext);                                        // Convert RDS characterset to ASCII
+                ps_process = true;
+              }
+            }
+
+            // PTY decoder
+            if (!rds.rdsBerror) {
+              rds.stationTypeCode = (rds.rdsB >> 5) & 0x1F;                                     // Get 5 PTY bits from Block B
+              if (rds.region == 0) strcpy(rds.stationType, PTY_EU[rds.stationTypeCode]);
+              if (rds.region == 1) strcpy(rds.stationType, PTY_USA[rds.stationTypeCode]);
+            }
+
+            //TA decoder
             rds.hasTA = (bitRead(rds.rdsB, 4)) && (bitRead(rds.rdsB, 10)) & 0x1F;
+
+            //MS decoder
             if (((bitRead(rds.rdsB, 3)) & 0x1F) == 1) rds.MS = 1; else rds.MS = 2;
 
-            //AF
+            //AF decoder
             uint8_t  af_controlCode = rds.rdsC >> 8;
-            if ((af_controlCode < 224) && (af_counter < 50))
-            {
+            if ((af_controlCode < 224) && (af_counter < 50)) {
               uint16_t buffer0 = (rds.rdsC >> 8);
               uint16_t buffer1 = (rds.rdsC & 0xFF);
               rds.hasAF = true;
-              if (buffer0 != 0 && buffer1 != 0)
-              {
+              if (buffer0 != 0 && buffer1 != 0) {
                 buffer0 = buffer0 * 10 + 8750;
                 buffer1 = buffer1 * 10 + 8750;
                 bool isDouble = false;
@@ -337,7 +339,6 @@ bool TEF6686::readRDS(bool showrdserrors)
                   af[af_counter].frequency = buffer0;
                   af_counter++;
                 }
-
                 isDouble = checkDouble(buffer1);
                 if (!isDouble && buffer1 != 0) {
                   af[af_counter].frequency = buffer1;
@@ -345,187 +346,85 @@ bool TEF6686::readRDS(bool showrdserrors)
                 }
               }
             }
-          }
-        } break;
+          } break;
 
-      case RDS_GROUP_1A:
-        if (rds.correct) if (rds.rdsC < 255) rds.ECC = rds.rdsC;
-        break;
-
-      case RDS_GROUP_2A:
-      case RDS_GROUP_2B: {
-          boolean limit_reached = false;
-          rds.hasRT = true;
-          offset = (rds.rdsB & 0xf) * 4;
-          rds.rtAB = (bitRead(rds.rdsB, 4));
-          limit_reached = (offset == 60 || (rds.rdsC >> 8) == '\r' || (rds.rdsC & 0xFF) == '\r' || (rds.rdsD >> 8) == '\r' || (rds.rdsD & 0xFF) == '\r')  ? true : false;
-          rt_process = (rt_process == 0) && (offset == 0) ? 1 : rt_process;
-
-          if (rds.rtAB != ABold) {
-            offsetold = 0;
-            rds.stationText = "";
-            if (rt_timer == 64) {
-              for (int i = 0; i < 65; i++) rds.RTtext[i] = 0;
-              RDScharConverter(stationTextBuffer, rds.RTtext, sizeof(rds.RTtext) / sizeof(wchar_t));
-              rds.stationText = convertToUTF8(rds.RTtext);
-            }
-
-            for (int i = 0; i < 65; i++) {
-              rt_buffer[i]  = 0;
-              stationTextBuffer[i] = 0;
-            }
-            if (rds.hasRDSplus == false) rt_process = 0;
-          }
-          ABold = rds.rtAB;
-
-          if ((!limit_reached) && (offset - rds.stationTextOffset > 4) && (rt_process == 1))
-          {
-            rds.stationTextOffset = 0;
-            rt_process = 0;
-          }
-
-          if (rt_process == 1)
-          {
-            rds.stationTextOffset = offset;
-            rt_buffer[offset + 0] = rds.rdsC >> 8;
-            rt_buffer[offset + 1] = rds.rdsC & 0xff;
-            rt_buffer[offset + 2] = rds.rdsD >> 8;
-            rt_buffer[offset + 3] = rds.rdsD & 0xff;
-            if (offset > offsetold) offsetold = offset;
-
-            if (offset == offsetold) {
-              strcpy(stationTextBuffer, rt_buffer);
-              for (int i = 0; i < 64; i++)  stationTextBuffer[i] = stationTextBuffer[i];
-              if (rt_timer < 64) {
-                rds.stationText = "";
-                for (int i = 0; i < 65; i++) rds.RTtext[i] = 0;
-                RDScharConverter(stationTextBuffer, rds.RTtext, sizeof(rds.RTtext) / sizeof(wchar_t));
-                rds.stationText = convertToUTF8(rds.RTtext);
-                rt_timer++;
-              } else {
-                rt_timer = 64;
+        case RDS_GROUP_1A: {
+            if (rds.correct) {
+              if (rds.rdsC < 255) {                                                               // ECC code readout
+                rds.ECC = rds.rdsC;
+                rds.hasECC = true;
               }
             }
-          }
+          } break;
 
-          rt_process = (rt_process == 1) && (strlen(rt_buffer)) && (limit_reached) ? 2 : rt_process;
-          if ((rt_process == 2) && (strlen(rt_buffer) != 0))
-          {
-            for (int i = 0; i < 64; i++)
-            {
-              rt_buffer2[i]   = rt_buffer[i];
-              rt_buffer[i]  = 0;
+        case RDS_GROUP_2A:
+        case RDS_GROUP_2B: {
+            if (showrdserrors || rds.correct) {
+              // RT decoder
+              rds.rtAB = (bitRead(rds.rdsB, 4));                                                  // Get AB flag
+
+              if (rds.rtAB != rtABold) {                                                          // Erase old RT, because of AB change
+                for (byte i = 0; i < 64; i++) {
+                  rt_buffer[i] = 0x20;
+                }
+                rt_buffer[64] = '\0';
+                rtABold = rds.rtAB;
+              }
+
+              offset = (rds.rdsB & 0xf) * 4;                                                      // Get RT character segment
+              rt_buffer[offset + 0] = rds.rdsC >> 8;                                              // First character of segment
+              rt_buffer[offset + 1] = rds.rdsC & 0xff;                                            // Second character of segment
+              rt_buffer[offset + 2] = rds.rdsD >> 8;                                              // Thirth character of segment
+              rt_buffer[offset + 3] = rds.rdsD & 0xff;                                            // Fourth character of segment
+
+              wchar_t RTtext[65] = L"";                                                           // Create 16 bit char buffer for Extended ASCII
+              RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t));              // Convert 8 bit ASCII to 16 bit ASCII
+              rds.stationText = convertToUTF8(RTtext);                                            // Convert RDS characterset to ASCII
+              rds.stationText += "   ";                                                           // Add extra spaces
             }
-          }
-        } break;
+          } break;
 
-      case RDS_GROUP_4A:
-      case RDS_GROUP_4B: {
-          if (rds.correct) {
-            uint32_t mjd;
-            rds.hasCT = true;
-            mjd = (rds.rdsB & 0x03);
-            mjd <<= 15;
-            mjd += ((rds.rdsC >> 1) & 0x7FFF);
+        case RDS_GROUP_4A:
+        case RDS_GROUP_4B: {
+            if (rds.correct) {
+              uint32_t mjd;
+              rds.hasCT = true;
+              mjd = (rds.rdsB & 0x03);
+              mjd <<= 15;
+              mjd += ((rds.rdsC >> 1) & 0x7FFF);
 
-            long J, C, Y, M;
-            uint8_t LocalOffset;
-            J = mjd + 2400001 +  68569;
-            C = 4 * J / 146097;
-            J = J - (146097 * C + 3) / 4;
-            Y = 4000 * (J + 1) / 1461001;
-            J = J - 1461 * Y / 4 + 31;
-            M = 80 * (J + 0) / 2447;
+              long J, C, Y, M;
+              uint8_t LocalOffset;
+              J = mjd + 2400001 +  68569;
+              C = 4 * J / 146097;
+              J = J - (146097 * C + 3) / 4;
+              Y = 4000 * (J + 1) / 1461001;
+              J = J - 1461 * Y / 4 + 31;
+              M = 80 * (J + 0) / 2447;
 
-            rds.days = J - 2447 * M / 80;
-            J = M / 11;
+              rds.days = J - 2447 * M / 80;
+              J = M / 11;
 
-            rds.months = M +  2 - (12 * J);
-            rds.years = 100 * (C - 49) + Y + J;
-            rds.hours = ((rds.rdsD >> 12) & 0x0f);
-            rds.hours += ((rds.rdsC <<  4) & 0x0010);
-            rds.minutes = ((rds.rdsD >>  6) & 0x3f);
-            rds.offsetplusmin = ((bitRead(rds.rdsD, 5)) & 0x3f);
-            rds.offset = (rds.rdsD & 0x3f);
-            rds.hasCT = true;
-          }
-        } break;
-
-      case RDS_GROUP_10A:
-      case RDS_GROUP_10B:
-      case RDS_GROUP_11A:
-      case RDS_GROUP_11B:
-      case RDS_GROUP_12A:
-      case RDS_GROUP_12B: {
-          if (useRTPlus)
-          {
-            uint16_t  content_byte_1 = (rds.rdsB & 0x07);
-            content_byte_1 = (content_byte_1  << 0x03);
-            content_byte_1 += (rds.rdsC >> 0x0D);
-            uint16_t  content_byte_2 = (rds.rdsC & 0x01);
-            content_byte_2 = (content_byte_2 << 0x05);
-            content_byte_2 += (rds.rdsD >> 0x0B);
-            uint16_t  start_marker_1 = (rds.rdsC >> 0x07);
-            start_marker_1 = (start_marker_1 & 0x3F);
-            uint16_t length_marker_1 = (rds.rdsC >> 0x01);
-            length_marker_1 = (length_marker_1  & 0x3F);
-            uint16_t start_marker_2 = (rds.rdsD >> 0x05);
-            start_marker_2 = (start_marker_2 & 0x3F);
-            uint16_t length_marker_2 = (rds.rdsD & 0x1F);
-            rds.hasRDSplus   = true;
-
-            if (rt_process == 2)
-            {
-              if (content_byte_1 == 0x04) { //ArtistID
-                rds.hasMusicArtist = true;
-                for (int i = 0; i <= length_marker_1; i++)rds.musicArtist[i] = rt_buffer2[i + start_marker_1];
-                rds.musicArtist[length_marker_1 + 1] = 0;
-              }
-              else if (content_byte_1 == 0x01) {//TitleID
-                rds.hasMusicTitle = true;
-                for (int i = 0; i <= length_marker_1; i++)rds.musicTitle[i] = rt_buffer2[i + start_marker_1];
-                rds.musicTitle[length_marker_1 + 1] = 0;
-              }
-              if (content_byte_2 == 0x04) {//ArtistID
-                rds.hasMusicArtist = true;
-                for (int i = 0; i <= length_marker_2; i++)rds.musicArtist[i] = rt_buffer2[i + start_marker_2];
-                rds.musicArtist[length_marker_2 + 1] = 0;
-              }
-              else if (content_byte_2 == 0x01) {//TitleID
-                rds.hasMusicTitle = true;
-                for (int i = 0; i <= length_marker_2; i++)rds.musicTitle[i] = rt_buffer2[i + start_marker_2];
-                rds.musicTitle[length_marker_2 + 1] = 0;
-              }
-              if (content_byte_1 == 0x24) {//HostID
-                rds.hasStationHost = true;
-                for (int i = 0; i <= length_marker_1; i++)rds.stationHost[i] = rt_buffer2[i + start_marker_1];
-                rds.stationHost[length_marker_1 + 1] = 0;
-              }
-              else if (content_byte_2 == 0x24) {
-                rds.hasStationHost = true;
-                for (int i = 0; i <= length_marker_2; i++)rds.stationHost[i] = rt_buffer2[i + start_marker_2];
-                rds.stationHost[length_marker_2 + 1] = 0;
-              }
-              if (content_byte_1 == 0x21) {//EventID
-                rds.hasStationEvent = true;
-                for (int i = 0; i <= length_marker_1; i++)rds.stationEvent[i] = rt_buffer2[i + start_marker_1];
-                rds.stationEvent[length_marker_1 + 1] = 0;
-              }
-              else if (content_byte_2 == 0x21) {
-                rds.hasStationEvent = true;
-                for (int i = 0; i <= length_marker_2; i++)rds.stationEvent[i] = rt_buffer2[i + start_marker_2];
-                rds.stationEvent[length_marker_2 + 1] = 0;
-              }
-              rt_process = 0;
+              rds.months = M +  2 - (12 * J);
+              rds.years = 100 * (C - 49) + Y + J;
+              rds.hours = (rds.rdsD >> 12) & 0x0f;
+              rds.hours += (rds.rdsC << 4) & 0x0010;
+              rds.minutes = (rds.rdsD >> 6) & 0x3f;
+              rds.offsetplusmin = bitRead(rds.rdsD, 5);
+              rds.offset = (rds.rdsD & 0x3f);
+              rds.hasCT = true;
             }
-          }
-        } break;
-      case RDS_GROUP_14A:
-        rds.hasEON = true;
-        break;
+          } break;
+
+        case RDS_GROUP_14A:
+          rds.hasEON = true;                                // Group is there, so we have EON
+          break;
+      }
     }
+    rdsBprevious = rds.rdsB;
+    rdsCprevious = rds.rdsC;
+    rdsDprevious = rds.rdsD;
   }
-  return rdsDataReady;
 }
 
 bool TEF6686::checkDouble (uint16_t value)
@@ -540,60 +439,27 @@ void TEF6686::clearRDS (bool fullsearchrds)
   uint8_t i;
   rds.stationName = "";
   rds.stationText = "";
-  for (i = 0; i < 9; i++) {
-    rds.PStext[i] = 0;
-    ps_buffer[i] = 0;
-  }
-  for (i = 0; i < 65; i++) {
-    stationTextBuffer[i] = 0;
-    rds.RTtext[i] = 0;
-    rt_buffer[i] = 0;
-    rt_buffer2[i] = 0;
-  }
-  for (i = 0; i < 17; i++) {
-    rds.stationType[i] = 0;
-  }
-
-  for (i = 0; i < 32; i++) {
-    rds.musicArtist[i] = 0;
-    rds.musicTitle[i] = 0;
-    rds.stationEvent[i] = 0;
-    rds.stationHost[i] = 0;
-  }
-  for (i = 0; i < 5; i++) rds.picode[i] = 0;
-
+  for (i = 0; i < 9; i++) ps_buffer[i] = 0;
+  for (i = 0; i < 65; i++) rt_buffer[i] = 0;
+  for (i = 0; i < 17; i++) rds.stationType[i] = 0;
+  for (i = 0; i < 6; i++) rds.picode[i] = 0;
   for (i = 0; i < 50; i++) af[i].frequency = 0;
-
-  rds.stationType[i] = '\0';
-  rds.stationID = 0;
   rds.ECC = 0;
-  offsetold = 0;
   rds.stationTypeCode = 32;
-  rdsTimeOut = 32768;
-  rds.hasRDSplus = false;
-  rds.afclear = false;
+  rds.hasECC = false;
   rds.hasRT = false;
   rds.hasRDS = false;
-  rds.hasPS = false;
   rds.hasTP = false;
   rds.hasTA = false;
   rds.hasEON = false;
   rds.MS = 0;
-  rds.hasPTY = false;
   rds.hasCT = false;
-  rds.hasMusicTitle = false;
-  rds.hasMusicArtist = false;
-  rds.hasStationEvent = false;
-  rds.hasStationHost = false;
-  rds.stationTextOffset  = 0;
-  rds.errors = 0;
-  rds.correct = 0;
-  rds.correctPI = 0;
-  rt_process = 0;
-  ps_process = 1;
+  rds.correct = false;
+  rt_process = false;
+  ps_process = false;
   af_counter = 0;
-  rt_timer = 0;
   rds.rdsreset = true;
+  correctpi = false;
 }
 
 void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {

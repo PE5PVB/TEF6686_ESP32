@@ -68,7 +68,7 @@ enum RADIO_TUNE_MODE {
 #define FREQ_SW_13M_START   21450
 #define FREQ_SW_13M_END     21850
 #define FREQ_SW_11M_START   25670
-#define FREQ_SW_11M_END     26100 
+#define FREQ_SW_11M_END     26100
 
 #define SW_MI_BAND_GAP      0
 #define SW_MI_BAND_11M      11
@@ -163,42 +163,27 @@ typedef struct _rds_ {
   byte region;
   byte stationTypeCode;
   byte MS;
-  wchar_t PStext[9] = L"";
-  wchar_t RTtext[65] = L"";
   String stationName;
   String stationText;
   char stationType[17];
-  char musicTitle[48];
-  char musicArtist[48];
-  char stationHost[48];
-  char stationEvent[48];
-  char picode[5];
-  uint16_t hours, minutes, days, months, years, offsetplusmin, stationID = 0, rdsA, rdsB, rdsC, rdsD, rdsError, errors = 0;
+  char picode[6];
+  uint16_t hours, minutes, days, months, years, offsetplusmin, rdsA, rdsB, rdsC, rdsD, rdsErr;
   int8_t offset;
-  uint8_t stationTextOffset = 0;
   int ECC;
   bool rdsAerror;
   bool rdsBerror;
   bool rdsCerror;
   bool rdsDerror;
-  bool hasMusicTitle;
-  bool hasMusicArtist;
-  bool hasStationHost;
-  bool hasStationEvent;
-  bool hasRDSplus;
   bool hasRDS;
-  bool hasPS;
+  bool hasECC;
   bool hasRT;
   bool hasTP;
   bool hasTA;
   bool hasEON;
   bool hasAF;
-  bool hasPTY;
   bool hasCT;
-  bool afclear;
   bool rtAB;
   bool correct;
-  bool correctPI;
   bool underscore;
   bool rdsreset;
 } rds_;
@@ -212,7 +197,7 @@ class TEF6686 {
   public:
     af_  af[50];
     rds_ rds;
-    bool readRDS(bool showrdserrors);
+    void readRDS(bool showrdserrors);
     void SetFreq(uint16_t frequency);
     void SetFreqAM(uint16_t frequency);
     bool getProcessing(uint16_t &highcut, uint16_t &stereo, uint16_t &sthiblend, uint8_t &stband_1, uint8_t &stband_2, uint8_t &stband_3, uint8_t &stband_4);
@@ -258,17 +243,18 @@ class TEF6686 {
   private:
     void RDScharConverter(const char* input, wchar_t* output, size_t size);
     String convertToUTF8(const wchar_t* input);
-    uint16_t rdsTimeOut = 32768;
-    uint8_t ps_process;
-    uint8_t rt_process;
     char ps_buffer[9];
+    bool ps_process;
+    bool rt_process;
     char rt_buffer[65];
-    char rt_buffer2[65];
     bool useRTPlus = true;
     bool checkDouble (uint16_t value);
     bool ABold;
-    byte rt_timer;
-    byte offsetold;
     char stationTextBuffer[65];
-	uint64_t doublecheck;
+    uint64_t doublecheck;
+    uint16_t rdsBprevious;
+    uint16_t rdsCprevious;
+    uint16_t rdsDprevious;
+    bool correctpi;
+    bool rtABold;
 };
