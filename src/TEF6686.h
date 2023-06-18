@@ -19,6 +19,10 @@ enum RADIO_TUNE_MODE {
   TUNE_MAN, TUNE_AUTO, TUNE_MEM, TUNE_MI_BAND
 };
 
+#define TIMER_BW_TIMER             (TIMER_500_TICK)
+#define TIMER_SNR_TIMER            (TIMER_500_TICK)
+#define TIMER_500_TICK             500
+
 #define BAT_LEVEL_EMPTY            1600
 #define BAT_LEVEL_WARN             1700
 #define BAT_LEVEL_FULL             2270
