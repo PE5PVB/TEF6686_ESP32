@@ -229,9 +229,21 @@ bool devTEF_Radio_Get_Quality_Status_AM (int16_t *level, uint16_t *noise, uint16
 }
 
 
-bool devTEF_Radio_Get_RDS_Data (uint16_t *status, uint16_t *A_block, uint16_t *B_block, uint16_t *C_block, uint16_t *D_block, uint16_t *dec_error) {
+bool devTEF_Radio_Get_RDS_Status (uint16_t *status, uint16_t *A_block, uint16_t *B_block, uint16_t *C_block, uint16_t *D_block, uint16_t *dec_error) {
   uint8_t buf[12];
   uint8_t r = devTEF_Get_Cmd(TEF_FM, Cmd_Get_RDS_Status, buf, sizeof(buf));
+  *status = Convert8bto16b(buf);
+  *A_block = Convert8bto16b(buf + 2);
+  *B_block = Convert8bto16b(buf + 4);
+  *C_block = Convert8bto16b(buf + 6);
+  *D_block = Convert8bto16b(buf + 8);
+  *dec_error = Convert8bto16b(buf + 10);
+  return r;
+}
+
+bool devTEF_Radio_Get_RDS_Data (uint16_t *status, uint16_t *A_block, uint16_t *B_block, uint16_t *C_block, uint16_t *D_block, uint16_t *dec_error) {
+  uint8_t buf[12];
+  uint8_t r = devTEF_Get_Cmd(TEF_FM, Cmd_Get_RDS_Data, buf, sizeof(buf));
   *status = Convert8bto16b(buf);
   *A_block = Convert8bto16b(buf + 2);
   *B_block = Convert8bto16b(buf + 4);

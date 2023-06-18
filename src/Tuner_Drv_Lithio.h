@@ -39,6 +39,7 @@ typedef enum {
   Cmd_Get_Quality_Status      = 128,
   Cmd_Get_Quality_Data        = 129,
   Cmd_Get_RDS_Status          = 130,
+  Cmd_Get_RDS_Data            = 131,
   Cmd_Get_Signal_Status       = 133,
   Cmd_Get_Processing_Status   = 134
 } TEF_RADIO_COMMAND;
@@ -71,6 +72,7 @@ bool devTEF_Audio_Set_Mute(uint8_t mode);
 bool devTEF_Audio_Set_Volume(int16_t volume);
 bool devTEF_Radio_Get_Stereo_Status(uint16_t *status);
 bool devTEF_APPL_Set_OperationMode(bool mode);
+bool devTEF_Radio_Get_RDS_Status(uint16_t *status, uint16_t *A_block, uint16_t *B_block, uint16_t *C_block, uint16_t *D_block, uint16_t *dec_error);
 bool devTEF_Radio_Get_RDS_Data(uint16_t *status, uint16_t *A_block, uint16_t *B_block, uint16_t *C_block, uint16_t *D_block, uint16_t *dec_error);
 bool devTEF_Radio_Set_Bandwidth(uint8_t mode, uint16_t bandwidth, uint16_t control_sensitivity, uint16_t low_level_sensitivity);
 bool devTEF_Radio_Set_BandwidthAM(uint8_t mode, uint16_t bandwidth, uint16_t control_sensitivity, uint16_t low_level_sensitivity);

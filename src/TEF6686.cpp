@@ -2,6 +2,7 @@
 #include <map>
 #include <Arduino.h>
 
+unsigned long rdstimer = 0;
 
 void TEF6686::init(byte TEF) {
   uint8_t bootstatus;
@@ -221,9 +222,21 @@ bool TEF6686::getStatusAM(int16_t &level, uint16_t &noise, uint16_t &cochannel, 
 void TEF6686::readRDS(bool showrdserrors)
 {
   uint16_t rdsStat;
-  uint16_t result = devTEF_Radio_Get_RDS_Data(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
   uint8_t offset;
-  
+  bool rdsReady;
+  if (rds.filter) {
+    devTEF_Radio_Get_RDS_Status(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
+  } else {
+    if (millis() >= rdstimer + 87) {
+      rdstimer += 87;
+      devTEF_Radio_Get_RDS_Data(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
+
+      if ((rdsStat & (1 << 14))) {
+        for (int i = 0; i < 22; i++) devTEF_Radio_Get_RDS_Data(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
+      }
+    }
+  }
+
   if (rds.rdsB != rdsBprevious && rds.rdsC != rdsCprevious && rds.rdsD != rdsDprevious) {
     rds.correct = false;
     rds.hasRDS = false;
@@ -233,9 +246,10 @@ void TEF6686::readRDS(bool showrdserrors)
     if (((rds.rdsErr >> 10) & 0x02) > 1) rds.rdsCerror = true; else rds.rdsCerror = false;            // Any errors in Block C?
     if (((rds.rdsErr >> 8) & 0x02) > 1) rds.rdsDerror = true; else rds.rdsDerror = false;             // Any errors in Block D?
     if (!rds.rdsAerror && !rds.rdsBerror && !rds.rdsCerror && !rds.rdsDerror) rds.correct = true; // Any errors in all blocks?
-    if ((rdsStat & (1 << 15)) && (rdsStat & (1 << 9))) rds.hasRDS = true;                         // RDS decoder synchronized and data available
+    if ((rdsStat & (1 << 9))) rds.hasRDS = true;                         // RDS decoder synchronized and data available
+    if ((rdsStat & (1 << 15))) rdsReady = true;
 
-    if (rds.hasRDS) {                                                                             // We have all data to decode... let's go...
+    if (rdsReady) {                                                                             // We have all data to decode... let's go...
 
       //PI decoder
       if (rds.region == 0 && !correctpi) {

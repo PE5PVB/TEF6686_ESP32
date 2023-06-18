@@ -193,6 +193,7 @@ typedef struct _rds_ {
   bool hasCT;
   bool rtAB;
   bool correct;
+  bool filter;
   bool underscore;
   bool rdsreset;
 } rds_;

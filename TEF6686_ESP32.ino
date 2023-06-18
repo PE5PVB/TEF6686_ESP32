@@ -224,8 +224,8 @@ WiFiUDP Udp;
 void setup() {
   setupmode = true;
   EEPROM.begin(244);
-  if (EEPROM.readByte(43) != 25) {
-    EEPROM.writeByte(43, 25);
+  if (EEPROM.readByte(43) != 26) {
+    EEPROM.writeByte(43, 26);
     EEPROM.writeUInt(0, 10000);
     EEPROM.writeInt(4, 0);
     EEPROM.writeUInt(8, 0);
@@ -259,6 +259,7 @@ void setup() {
     EEPROM.writeByte(55, 0);
     EEPROM.writeByte(56, 1);
     EEPROM.writeByte(57, 1);
+    EEPROM.writeByte(58, 1);
     for (int i = 0; i < 30; i++) EEPROM.writeByte(i + 60, 0);
     for (int i = 0; i < 30; i++) EEPROM.writeUInt((i * 4) + 100, 8750);
     EEPROM.writeUInt(221, 180);
@@ -302,6 +303,7 @@ void setup() {
   wifi = EEPROM.readByte(55);
   subnetclient = EEPROM.readByte(56);
   showSWMIBand = EEPROM.readByte(57);
+  radio.rds.filter = EEPROM.readByte(58);
   frequency_LW = EEPROM.readUInt(221);
   frequency_MW = EEPROM.readUInt(225);
   frequency_SW = EEPROM.readUInt(229);
@@ -1221,6 +1223,7 @@ void ModeButtonPress() {
     EEPROM.writeByte(55, wifi);
     EEPROM.writeByte(56, subnetclient);
     EEPROM.writeByte(57, showSWMIBand);
+    EEPROM.writeByte(58, radio.rds.filter);
     EEPROM.commit();
     Serial.end();
     if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
@@ -1547,6 +1550,13 @@ void ButtonPress() {
               tft.setTextColor(TFT_YELLOW);
               if (showSWMIBand) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
+
+            case 70:
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][60], 155, 70, GFXFF);
+              tft.setTextColor(TFT_YELLOW);
+              if (radio.rds.filter) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              break;
           }
       }
     } else {
@@ -1831,6 +1841,14 @@ void KeyUp() {
               tft.setTextColor(TFT_YELLOW);
               if (showSWMIBand) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
+
+            case 70:
+              tft.setTextColor(TFT_BLACK);
+              if (radio.rds.filter) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              if (radio.rds.filter) radio.rds.filter = false; else radio.rds.filter = true;
+              tft.setTextColor(TFT_YELLOW);
+              if (radio.rds.filter) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              break;
           }
       }
     }
@@ -2107,6 +2125,14 @@ void KeyDown() {
               if (showSWMIBand) showSWMIBand = false; else showSWMIBand = true;
               tft.setTextColor(TFT_YELLOW);
               if (showSWMIBand) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              break;
+
+            case 70:
+              tft.setTextColor(TFT_BLACK);
+              if (radio.rds.filter) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              if (radio.rds.filter) radio.rds.filter = false; else radio.rds.filter = true;
+              tft.setTextColor(TFT_YELLOW);
+              if (radio.rds.filter) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
           }
       }
@@ -2492,8 +2518,10 @@ void BuildMenu() {
     case 3:
       tft.drawString(myLanguage[language][58], 14, 30, GFXFF);
       tft.drawString(myLanguage[language][59], 14, 50, GFXFF);
+      tft.drawString(myLanguage[language][60], 14, 70, GFXFF);
       tft.drawRightString(String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 305, 30, GFXFF);
       if (showSWMIBand) tft.drawRightString(myLanguage[language][42], 305, 50, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 50, GFXFF);
+      if (radio.rds.filter) tft.drawRightString(myLanguage[language][42], 305, 70, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 70, GFXFF);
   }
   analogWrite(SMETERPIN, 0);
 }
@@ -2819,7 +2847,7 @@ void ShowSignalLevel() {
         tft.setFreeFont(FONT7);
         tft.setTextColor(TFT_BLACK);
         if (SNRold == 99) tft.drawRightString("--", 294, 166, GFXFF); else  tft.drawRightString(String(SNRold), 294, 166, GFXFF);
-          tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+        tft.setTextColor(TFT_YELLOW, TFT_BLACK);
         if (tuned == true) {
           tft.drawRightString(String(SNR), 294, 166, GFXFF);
           SNRold = SNR;
