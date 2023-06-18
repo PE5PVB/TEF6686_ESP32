@@ -19,9 +19,14 @@ enum RADIO_TUNE_MODE {
   TUNE_MAN, TUNE_AUTO, TUNE_MEM, TUNE_MI_BAND
 };
 
-#define FREQ_MW_STEP_9K     9
-#define FREQ_MW_STEP_10K    10
-#define FREQ_SW_STEP_5K     5
+#define BAT_LEVEL_EMPTY            1600
+#define BAT_LEVEL_WARN             1700
+#define BAT_LEVEL_FULL             2270
+#define BAT_LEVEL_STAGE            4
+
+#define FREQ_MW_STEP_9K            9
+#define FREQ_MW_STEP_10K           10
+#define FREQ_SW_STEP_5K            5
 
 #define FREQ_LW_LOW_EDGE_MIN       100
 #define FREQ_LW_HIGH_EDGE_MAX      519

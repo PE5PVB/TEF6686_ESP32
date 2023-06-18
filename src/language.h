@@ -183,8 +183,8 @@ static const char myLanguage[9][60][78] = {
     "Proba polaczenia z Wi-Fi",
     "BLAD.. WiFi wylaczone",
     "POLACZONO!",
-	"Stationlist client IP",
-	"Show SW wavelength"
+	"IP klienta Stationlist",
+	"Pokaz dlugosci fal SW"
   },
 
   { "Hrvatski",                       // Croatian

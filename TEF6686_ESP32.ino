@@ -135,7 +135,7 @@ unsigned int MWHighEdgeSet;
 unsigned int MWLowEdgeSet;
 unsigned int SWHighEdgeSet;
 unsigned int SWLowEdgeSet;
-byte showSWMIBand = 1;    // Fix Me: Menu options: 0: don't show  1: show up
+byte showSWMIBand = 1;
 uint16_t SWMIBandPos;
 uint16_t SWMIBandPosold;  // Fix Me: Should store this parameter into flash, for use of restart.
 String SWMIBandstring = String();
@@ -3451,7 +3451,7 @@ void ShowRSSI() {
 }
 
 void ShowBattery() {
-  battery = map(constrain(analogRead(BATTERY_PIN), 1965, 2300), 1965, 2300, 0, 4);
+  battery = map(constrain(analogRead(BATTERY_PIN), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, BAT_LEVEL_STAGE);
   if (batteryold != battery) {
     tft.drawRect(300, 8, 12, 20, TFT_WHITE);
     tft.fillRect(303, 4, 6, 4, TFT_WHITE);
