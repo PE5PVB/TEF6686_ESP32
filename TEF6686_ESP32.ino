@@ -2308,7 +2308,7 @@ void showPI() {
     PIold = radio.rds.picode;
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
-      Udp.print("from=TEF tuner;PI=" + String(radio.rds.picode));
+      Udp.print("from=TEF tuner;PI=" + String(radio.rds.picode,4));
       Udp.endPacket();
     }
     strcpy(radioIdPrevious, radio.rds.picode);
