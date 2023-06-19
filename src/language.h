@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char myLanguage[9][61][78] = {
+static const char myLanguage[9][62][78] = {
   { "English",                        // English
     "Rotary direction changed",
     "Please release button",
@@ -61,7 +61,8 @@ static const char myLanguage[9][61][78] = {
     "CONNECTED!",
     "Stationlist client IP",
     "Show SW wavelength",
-    "RDS filter"
+    "RDS filter",
+    "Dynamic PI"
   },
 
   { "Nederlands",                     // Dutch
@@ -124,7 +125,8 @@ static const char myLanguage[9][61][78] = {
     "VERBONDEN!",
     "Stationlist client IP",
     "Toon SW golflengte",
-    "RDS filter"
+    "RDS filter",
+    "Dynamische PI"
   },
 
   { "Polski",                         // Polish
@@ -187,7 +189,8 @@ static const char myLanguage[9][61][78] = {
     "POLACZONO!",
     "IP klienta Stationlist",
     "Pokaz dlugosci fal SW",
-    "RDS filter"
+    "RDS filter",
+    "Dynamic PI"
   },
 
   { "Hrvatski",                       // Croatian
@@ -250,7 +253,8 @@ static const char myLanguage[9][61][78] = {
     "SPOJENO!",
     "IP klijenta StationList",
     "Prikaži valnu duljinu KV-a",
-    "RDS filter"
+    "RDS filter",
+    "Dynamic PI"
   },
 
   { "Ελληνικά",                        // Greek
@@ -313,7 +317,8 @@ static const char myLanguage[9][61][78] = {
     "ΣΕ ΣΥΝΔΕΣΗ!",
     "Stationlist client IP",
     "Show SW wavelength",
-    "RDS filter"
+    "RDS filter",
+    "Dynamic PI"
   },
 
   { "Romana",                       // Romanian
@@ -376,7 +381,8 @@ static const char myLanguage[9][61][78] = {
     "CONNECTED!",
     "Stationlist client IP",
     "Show SW wavelength",
-    "RDS filter"
+    "RDS filter",
+    "Dynamic PI"
   },
 
   { "Deutsch",                        // German
@@ -439,7 +445,8 @@ static const char myLanguage[9][61][78] = {
     "VERBUNDEN!",
     "Stationlist client IP",
     "Show SW wavelength",
-    "RDS filter"
+    "RDS filter",
+    "Dynamic PI"
   },
   { "Czech",                        // Czech
     "Směr enkóderu byl změněn",
@@ -501,7 +508,8 @@ static const char myLanguage[9][61][78] = {
     "CONNECTED!",
     "Stationlist client IP",
     "Show SW wavelength",
-    "RDS filter"
+    "RDS filter",
+    "Dynamic PI"
   },
   { "Slovak",                       // Slovak
     "Smer enkóderu bol zmenený",
@@ -563,6 +571,7 @@ static const char myLanguage[9][61][78] = {
     "CONNECTED!",
     "Stationlist client IP",
     "Show SW wavelength",
-    "RDS filter"
+    "RDS filter",
+    "Dynamic PI"
   },
 };

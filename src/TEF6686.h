@@ -196,6 +196,7 @@ typedef struct _rds_ {
   bool filter;
   bool underscore;
   bool rdsreset;
+  bool dynamicpi;
 } rds_;
 
 typedef struct _af_ {
@@ -267,4 +268,5 @@ class TEF6686 {
     uint16_t rdsDprevious;
     bool correctpi;
     bool rtABold;
+    wchar_t PStext[9] = L"";           
 };
