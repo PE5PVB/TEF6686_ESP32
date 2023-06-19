@@ -2841,7 +2841,7 @@ void ShowSignalLevel() {
   if (screenmute == false) {
     if (band == BAND_FM) SNR = int(0.46222375 * (float)(SStatus / 10) - 0.082495118 * (float)(USN / 10)) + 10; else SNR = -((int8_t)(USN / 10));
 
-    if (millis() >= snrupdatetimer + TIMER_500_TICK) {
+    if (millis() >= snrupdatetimer + TIMER_SNR_TIMER) {
       snrupdatetimer = millis();
 
       if (SNR > (SNRold + 1) || SNR < (SNRold - 1)) {
@@ -3170,7 +3170,7 @@ void doSquelch() {
 }
 
 void updateBW() {
-  if (millis() >= bwupdatetimer + TIMER_500_TICK) {
+  if (millis() >= bwupdatetimer + TIMER_BW_TIMER) {
     bwupdatetimer = millis();
 
     tft.setFreeFont(FONT7);
