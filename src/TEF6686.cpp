@@ -264,10 +264,14 @@ void TEF6686::readRDS(bool showrdserrors)
             rds.picode[i] += 'A' - 10;                                                                // Add ASCII offset for hexadecimal letters A-F
           }
         }
-		
-        if (!rds.correct) rds.picode[4] = '?'; else rds.picode[4] = ' ';             				  // Not sure, add a ?
+
+        if (!rds.correct) rds.picode[4] = '?'; else rds.picode[4] = ' ';                      // Not sure, add a ?
         rds.picode[5] = '\0';
         correctpi = rds.correct;
+		if (strcmp(rds.picode, "0000?") == 0) {
+			memset(rds.picode, 0, sizeof(rds.picode));
+			correctpi = rds.correct;	
+		}
       }
 
       // USA Station callsign decoder
@@ -316,12 +320,14 @@ void TEF6686::readRDS(bool showrdserrors)
 
               if (!ps_process) {                                                                // After new tune just fill the characters received
                 RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t));          // Convert 8 bit ASCII to 16 bit ASCII
-                rds.stationName = convertToUTF8(PStext);                                        // Convert RDS characterset to ASCII
+                String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
+                rds.stationName = utf8String.substring(0, 8);                                   // Make sure PS does not exceed 8 characters
               }
               if (strlen(ps_buffer) == 8) {                                                     // Becomes active after a full 8 character PS has been decoded
                 for (byte i = 0; i < 9; i++) PStext[i] = L'\0';                                 // First erase buffer
                 RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t));          // Convert 8 bit ASCII to 16 bit ASCII
-                rds.stationName = convertToUTF8(PStext);                                        // Convert RDS characterset to ASCII
+                String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
+                rds.stationName = utf8String.substring(0, 8);                                   // Make sure PS does not exceed 8 characters
                 ps_process = true;
               }
             }
