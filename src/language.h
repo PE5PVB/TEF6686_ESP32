@@ -241,15 +241,15 @@ static const char myLanguage[9][61][78] = {
     "SAD",
     "Prikaži donju crtu u RDS-u",
     "Način rada USB-a",
-    "Wi-Fi uključen",
+    "Wi-Fi",
     "Wi-Fi postavke",
     "Spojiti s: ",
     "da biste konfigurirali Wi-Fi",
     "Spajanje s Wi-Fi mrežom..",
     "NEUSPJEŠNO.. Wi-Fi onemogućen",
     "SPOJENO!",
-    "Stationlist client IP",
-    "Show SW wavelength",
+    "IP klijenta StationList",
+    "Prikaži valnu duljinu KV-a",
     "RDS filter"
   },
 
