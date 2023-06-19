@@ -264,7 +264,7 @@ void TEF6686::readRDS(bool showrdserrors)
             rds.picode[i] += 'A' - 10;                                                            // Add ASCII offset for hexadecimal letters A-F
           }
         }
-        if (!rds.correct) rds.picode[4] = '?'; else rds.picode[4] = ' ';    // Not sure, add a ?
+        if (!rds.correct) rds.picode[4] = '?'; else rds.picode[4] = ' ';    					 // Not sure, add a ?
         rds.picode[5] = '\0';
         correctpi = rds.correct;
       }
