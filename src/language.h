@@ -331,14 +331,14 @@ static const char myLanguage[9][66][78] = {
     "Προσπάθεια σύνδεσης με το Wi-Fi",
     "ΑΠΟΤΥΧΙΑ.. WiFi ανενεργό",
     "ΣΕ ΣΥΝΔΕΣΗ!",
-    "Stationlist client IP",
-    "Show SW wavelength",
-    "RDS filter",
-    "Dynamic PI",
-	"Show squelch",
-	"Modulation meter",
-	"AM Noise blanker",
-	"FM Noise blanker"
+    "IP πελάτης λίστας σταθμών",
+    "Εμφάνιση μήκους κύματος SW",
+    "Φίλτρο RDS",
+    "Δυναμικό PI",
+	"Εμφάνιση squelch",
+	"Μετρητής διαμόρφωσης",
+	"Απαλοιφή θορύβου AM",
+	"Απαλοιφή θορύβου FM"
   },
 
   { "Romana",                       // Romanian
