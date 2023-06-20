@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char myLanguage[9][67][78] = {
+static const char myLanguage[9][68][78] = {
   { "English",                        // English
     "Rotary direction changed",
     "Please release button",
@@ -67,7 +67,8 @@ static const char myLanguage[9][67][78] = {
     "Modulation meter",
     "AM Noise blanker",
     "FM Noise blanker",
-    "Defaults loaded"
+    "Defaults loaded",
+    "Audio output"
   },
 
   { "Nederlands",                     // Dutch
@@ -136,7 +137,8 @@ static const char myLanguage[9][67][78] = {
     "Modulatie meter",
     "AM ruis filter",
     "FM ruis filter",
-    "Opnieuw geconfigureerd"
+    "Opnieuw geconfigureerd",
+    "Audio uitgang"
   },
 
   { "Polski",                         // Polish
@@ -205,7 +207,8 @@ static const char myLanguage[9][67][78] = {
     "Modulation meter",
     "AM Noise blanker",
     "FM Noise blanker",
-    "Defaults loaded"
+    "Defaults loaded",
+    "Audio output"
   },
 
   { "Hrvatski",                       // Croatian
@@ -274,7 +277,8 @@ static const char myLanguage[9][67][78] = {
     "Mjerač modulacije",
     "AM prigušivač šuma",
     "FM prigušivač šuma",
-    "Defaults loaded"
+    "Defaults loaded",
+    "Audio output"
   },
 
   { "Ελληνικά",                        // Greek
@@ -339,11 +343,12 @@ static const char myLanguage[9][67][78] = {
     "Εμφάνιση μήκους κύματος SW",
     "Φίλτρο RDS",
     "Δυναμικό PI",
-	"Εμφάνιση squelch",
-	"Μετρητής διαμόρφωσης",
-	"Απαλοιφή θορύβου AM",
-	"Απαλοιφή θορύβου FM"
-    "Defaults loaded"
+    "Εμφάνιση squelch",
+    "Μετρητής διαμόρφωσης",
+    "Απαλοιφή θορύβου AM",
+    "Απαλοιφή θορύβου FM"
+    "Defaults loaded",
+    "Audio output"
   },
 
   { "Romana",                       // Romanian
@@ -412,7 +417,8 @@ static const char myLanguage[9][67][78] = {
     "Modulation meter",
     "AM Noise blanker",
     "FM Noise blanker",
-    "Defaults loaded"
+    "Defaults loaded",
+    "Audio output"
   },
 
   { "Deutsch",                        // German
@@ -481,7 +487,8 @@ static const char myLanguage[9][67][78] = {
     "Modulation meter",
     "AM Noise blanker",
     "FM Noise blanker",
-    "Defaults loaded"
+    "Defaults loaded",
+    "Audio output"
   },
   { "Czech",                        // Czech
     "Směr enkóderu byl změněn",
@@ -549,7 +556,9 @@ static const char myLanguage[9][67][78] = {
     "Modulation meter",
     "AM Noise blanker",
     "FM Noise blanker",
-    "Defaults loaded"
+    "Defaults loaded",
+    "Audio output"
+
   },
   { "Slovak",                       // Slovak
     "Smer enkóderu bol zmenený",
@@ -617,6 +626,7 @@ static const char myLanguage[9][67][78] = {
     "Modulation meter",
     "AM Noise blanker",
     "FM Noise blanker",
-    "Defaults loaded"
+    "Defaults loaded",
+    "Audio output"
   },
 };

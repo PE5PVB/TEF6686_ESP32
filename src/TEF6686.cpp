@@ -120,8 +120,7 @@ void TEF6686::setDeemphasis(uint8_t timeconstant) {
 }
 
 void TEF6686::setAudio(uint8_t audio) {
-  if (audio == 1) devTEF_Radio_Specials(0);
-  if (audio == 2) devTEF_Radio_Specials(1);
+  devTEF_Radio_Specials(audio);
 }
 
 void TEF6686::setFMSI(uint8_t mode) {
