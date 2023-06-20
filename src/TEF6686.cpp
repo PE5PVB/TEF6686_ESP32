@@ -62,7 +62,7 @@ void TEF6686::setSoftmuteFM(uint8_t mode) {
 }
 
 void TEF6686::setAMNoiseBlanker(uint16_t start) {
-  if (start == 0) devTEF_Radio_Set_Noiseblanker_AM(0, 1000); else devTEF_Radio_Set_Noiseblanker_AM(1, (start * 10) + 500);
+  if (start == 0) devTEF_Radio_Set_Noiseblanker_AM(0, 1000); else devTEF_Radio_Set_Noiseblanker_AM(1, start * 10);
 }
 
 void TEF6686::setAMAttenuation(uint16_t start) {
@@ -142,8 +142,8 @@ void TEF6686::setFMSI_Bias(int16_t band1, int16_t band2, int16_t band3, int16_t 
 }
 
 
-void TEF6686::setNoiseBlanker(uint16_t start) {
-  if (start == 0) devTEF_Radio_Set_NoisBlanker(0, 1000); else devTEF_Radio_Set_NoisBlanker(1, (start * 10) + 500);
+void TEF6686::setFMNoiseBlanker(uint16_t start) {
+  if (start == 0) devTEF_Radio_Set_NoisBlanker(0, 1000); else devTEF_Radio_Set_NoisBlanker(1, start * 10);
 }
 
 void TEF6686::setStereoLevel(uint8_t start) {

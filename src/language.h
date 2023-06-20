@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char myLanguage[9][62][78] = {
+static const char myLanguage[9][66][78] = {
   { "English",                        // English
     "Rotary direction changed",
     "Please release button",
@@ -62,7 +62,11 @@ static const char myLanguage[9][62][78] = {
     "Stationlist client IP",
     "Show SW wavelength",
     "RDS filter",
-    "Dynamic PI"
+    "Dynamic PI",
+	"Show squelch",
+	"Modulation meter",
+	"AM Noise blanker",
+	"FM Noise blanker"
   },
 
   { "Nederlands",                     // Dutch
@@ -121,12 +125,16 @@ static const char myLanguage[9][62][78] = {
     "Verbind met: ",
     "om Wi-Fi in te stellen",
     "Verbinden met Wi-Fi...",
-    "MISLUKT.. WiFi uitgeschakeld",
+    "MISLUKT! WiFi uitgeschakeld",
     "VERBONDEN!",
     "Stationlist client IP",
     "Toon SW golflengte",
     "RDS filter",
-    "Dynamische PI"
+    "Dynamische PI",
+	"Toon squelch",
+	"Modulatie meter",
+	"AM ruis filter",
+	"FM ruis filter"	
   },
 
   { "Polski",                         // Polish
@@ -190,7 +198,11 @@ static const char myLanguage[9][62][78] = {
     "IP klienta Stationlist",
     "Pokaz dlugosci fal SW",
     "RDS filter",
-    "Dynamic PI"
+    "Dynamic PI",
+	"Show squelch",
+	"Modulation meter",
+	"AM Noise blanker",
+	"FM Noise blanker"	
   },
 
   { "Hrvatski",                       // Croatian
@@ -254,7 +266,11 @@ static const char myLanguage[9][62][78] = {
     "IP klijenta StationList",
     "Prikaži valnu duljinu KV-a",
     "RDS filter",
-    "Dynamic PI"
+    "Dynamic PI",
+	"Show squelch",
+	"Modulation meter",
+	"AM Noise blanker",
+	"FM Noise blanker"
   },
 
   { "Ελληνικά",                        // Greek
@@ -318,7 +334,11 @@ static const char myLanguage[9][62][78] = {
     "Stationlist client IP",
     "Show SW wavelength",
     "RDS filter",
-    "Dynamic PI"
+    "Dynamic PI",
+	"Show squelch",
+	"Modulation meter",
+	"AM Noise blanker",
+	"FM Noise blanker"
   },
 
   { "Romana",                       // Romanian
@@ -382,7 +402,11 @@ static const char myLanguage[9][62][78] = {
     "Stationlist client IP",
     "Show SW wavelength",
     "RDS filter",
-    "Dynamic PI"
+    "Dynamic PI",
+	"Show squelch",
+	"Modulation meter",
+	"AM Noise blanker",
+	"FM Noise blanker"
   },
 
   { "Deutsch",                        // German
@@ -446,7 +470,11 @@ static const char myLanguage[9][62][78] = {
     "Stationlist client IP",
     "Show SW wavelength",
     "RDS filter",
-    "Dynamic PI"
+    "Dynamic PI",
+	"Show squelch",
+	"Modulation meter",
+	"AM Noise blanker",
+	"FM Noise blanker"	
   },
   { "Czech",                        // Czech
     "Směr enkóderu byl změněn",
@@ -509,7 +537,11 @@ static const char myLanguage[9][62][78] = {
     "Stationlist client IP",
     "Show SW wavelength",
     "RDS filter",
-    "Dynamic PI"
+    "Dynamic PI",
+	"Show squelch",
+	"Modulation meter",
+	"AM Noise blanker",
+	"FM Noise blanker"
   },
   { "Slovak",                       // Slovak
     "Smer enkóderu bol zmenený",
@@ -572,6 +604,10 @@ static const char myLanguage[9][62][78] = {
     "Stationlist client IP",
     "Show SW wavelength",
     "RDS filter",
-    "Dynamic PI"
+    "Dynamic PI",
+	"Show squelch",
+	"Modulation meter",
+	"AM Noise blanker",
+	"FM Noise blanker"
   },
 };

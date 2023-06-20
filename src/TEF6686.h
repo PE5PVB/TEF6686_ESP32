@@ -32,7 +32,7 @@ enum RADIO_TUNE_MODE {
 #define FREQ_MW_STEP_10K           10
 #define FREQ_SW_STEP_5K            5
 
-#define FREQ_LW_LOW_EDGE_MIN       100
+#define FREQ_LW_LOW_EDGE_MIN       144
 #define FREQ_LW_HIGH_EDGE_MAX      519
 #define FREQ_MW_LOW_EDGE_MIN_9K    522
 #define FREQ_MW_LOW_EDGE_MIN_10K   520
@@ -234,7 +234,7 @@ class TEF6686 {
     void setHighCutOffset(uint8_t start);
     void setStHiBlendLevel(uint16_t limit);
     void setStHiBlendOffset(uint8_t start);
-    void setNoiseBlanker(uint16_t start);
+    void setFMNoiseBlanker(uint16_t start);
     void setAMCoChannel(uint16_t start);
     void setAMNoiseBlanker(uint16_t start);
     void setAMAttenuation(uint16_t start);
