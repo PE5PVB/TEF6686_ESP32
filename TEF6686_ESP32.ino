@@ -448,7 +448,7 @@ void setup() {
     }
     EEPROM.writeByte(42, optenc);
     EEPROM.commit();
-    tft.drawString(myLanguage[language][2], 150, 107, GFXFF);
+    tft.drawCentreString(myLanguage[language][2], 150, 107, GFXFF);
     while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
   }
 
