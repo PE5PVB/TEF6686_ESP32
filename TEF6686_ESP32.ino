@@ -3075,6 +3075,9 @@ void ShowOffset() {
 }
 
 void ShowBW() {
+  if (millis() >= bwupdatetimer + TIMER_BW_TIMER) { bwupdatetimer = millis(); } 
+  else { return; }
+
   if (BW != BWOld || BWreset == true) {
     tft.setFreeFont(FONT14);
     tft.setTextColor(TFT_BLACK);
@@ -3203,24 +3206,20 @@ void doSquelch() {
 }
 
 void updateBW() {
-  if (millis() >= bwupdatetimer + TIMER_BW_TIMER) {
-    bwupdatetimer = millis();
-
-    tft.setFreeFont(FONT7);
-    if (BWset == 0) {
-      if (screenmute == false) {
-        tft.drawRoundRect(249, 35, 68, 20, 5, TFT_WHITE);
-        tft.setTextColor(TFT_WHITE);
-      }
-      radio.setFMABandw();
-    } else {
-      if (screenmute == false) {
-        tft.drawRoundRect(249, 35, 68, 20, 5, TFT_GREYOUT);
-        tft.setTextColor(TFT_GREYOUT);
-      }
+  tft.setFreeFont(FONT7);
+  if (BWset == 0) {
+    if (screenmute == false) {
+      tft.drawRoundRect(249, 35, 68, 20, 5, TFT_WHITE);
+      tft.setTextColor(TFT_WHITE);
     }
-    tft.drawCentreString("AUTO BW", 282, 33, GFXFF);
+    radio.setFMABandw();
+  } else {
+    if (screenmute == false) {
+      tft.drawRoundRect(249, 35, 68, 20, 5, TFT_GREYOUT);
+      tft.setTextColor(TFT_GREYOUT);
+    }
   }
+  tft.drawCentreString("AUTO BW", 282, 33, GFXFF);
 }
 
 void updateiMS() {
