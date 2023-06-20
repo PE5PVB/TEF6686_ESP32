@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char myLanguage[9][66][78] = {
+static const char myLanguage[9][67][78] = {
   { "English",                        // English
     "Rotary direction changed",
     "Please release button",
@@ -63,10 +63,11 @@ static const char myLanguage[9][66][78] = {
     "Show SW wavelength",
     "RDS filter",
     "Dynamic PI",
-	"Show squelch",
-	"Modulation meter",
-	"AM Noise blanker",
-	"FM Noise blanker"
+    "Show squelch",
+    "Modulation meter",
+    "AM Noise blanker",
+    "FM Noise blanker",
+    "Defaults loaded"
   },
 
   { "Nederlands",                     // Dutch
@@ -131,10 +132,11 @@ static const char myLanguage[9][66][78] = {
     "Toon SW golflengte",
     "RDS filter",
     "Dynamische PI",
-	"Toon squelch",
-	"Modulatie meter",
-	"AM ruis filter",
-	"FM ruis filter"	
+    "Toon squelch",
+    "Modulatie meter",
+    "AM ruis filter",
+    "FM ruis filter",
+    "Opnieuw geconfigureerd"
   },
 
   { "Polski",                         // Polish
@@ -199,10 +201,11 @@ static const char myLanguage[9][66][78] = {
     "Pokaz dlugosci fal SW",
     "RDS filter",
     "Dynamic PI",
-	"Show squelch",
-	"Modulation meter",
-	"AM Noise blanker",
-	"FM Noise blanker"	
+    "Show squelch",
+    "Modulation meter",
+    "AM Noise blanker",
+    "FM Noise blanker",
+    "Defaults loaded"
   },
 
   { "Hrvatski",                       // Croatian
@@ -270,7 +273,8 @@ static const char myLanguage[9][66][78] = {
     "Prikaži squelch",
     "Mjerač modulacije",
     "AM prigušivač šuma",
-    "FM prigušivač šuma"
+    "FM prigušivač šuma",
+    "Defaults loaded"
   },
 
   { "Ελληνικά",                        // Greek
@@ -335,10 +339,11 @@ static const char myLanguage[9][66][78] = {
     "Show SW wavelength",
     "RDS filter",
     "Dynamic PI",
-	"Show squelch",
-	"Modulation meter",
-	"AM Noise blanker",
-	"FM Noise blanker"
+    "Show squelch",
+    "Modulation meter",
+    "AM Noise blanker",
+    "FM Noise blanker",
+    "Defaults loaded"
   },
 
   { "Romana",                       // Romanian
@@ -403,10 +408,11 @@ static const char myLanguage[9][66][78] = {
     "Show SW wavelength",
     "RDS filter",
     "Dynamic PI",
-	"Show squelch",
-	"Modulation meter",
-	"AM Noise blanker",
-	"FM Noise blanker"
+    "Show squelch",
+    "Modulation meter",
+    "AM Noise blanker",
+    "FM Noise blanker",
+    "Defaults loaded"
   },
 
   { "Deutsch",                        // German
@@ -471,10 +477,11 @@ static const char myLanguage[9][66][78] = {
     "Show SW wavelength",
     "RDS filter",
     "Dynamic PI",
-	"Show squelch",
-	"Modulation meter",
-	"AM Noise blanker",
-	"FM Noise blanker"	
+    "Show squelch",
+    "Modulation meter",
+    "AM Noise blanker",
+    "FM Noise blanker",
+    "Defaults loaded"
   },
   { "Czech",                        // Czech
     "Směr enkóderu byl změněn",
@@ -538,10 +545,11 @@ static const char myLanguage[9][66][78] = {
     "Show SW wavelength",
     "RDS filter",
     "Dynamic PI",
-	"Show squelch",
-	"Modulation meter",
-	"AM Noise blanker",
-	"FM Noise blanker"
+    "Show squelch",
+    "Modulation meter",
+    "AM Noise blanker",
+    "FM Noise blanker",
+    "Defaults loaded"
   },
   { "Slovak",                       // Slovak
     "Smer enkóderu bol zmenený",
@@ -605,9 +613,10 @@ static const char myLanguage[9][66][78] = {
     "Show SW wavelength",
     "RDS filter",
     "Dynamic PI",
-	"Show squelch",
-	"Modulation meter",
-	"AM Noise blanker",
-	"FM Noise blanker"
+    "Show squelch",
+    "Modulation meter",
+    "AM Noise blanker",
+    "FM Noise blanker",
+    "Defaults loaded"
   },
 };

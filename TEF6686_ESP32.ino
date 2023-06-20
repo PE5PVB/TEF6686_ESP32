@@ -228,55 +228,7 @@ WiFiUDP Udp;
 void setup() {
   setupmode = true;
   EEPROM.begin(248);
-  if (EEPROM.readByte(43) != 27) {
-    EEPROM.writeByte(43, 27);
-    EEPROM.writeUInt(0, 10000);
-    EEPROM.writeInt(4, 0);
-    EEPROM.writeUInt(8, 0);
-    EEPROM.writeUInt(12, 875);
-    EEPROM.writeUInt(16, 1080);
-    EEPROM.writeByte(20, 50);
-    EEPROM.writeByte(21, 0);
-    EEPROM.writeByte(22, 70);
-    EEPROM.writeByte(23, 0);
-    EEPROM.writeInt(24, 0);
-    EEPROM.writeByte(28, 0);
-    EEPROM.writeByte(29, 0);
-    EEPROM.writeByte(30, 0);
-    EEPROM.writeUInt(31, 828);
-    EEPROM.writeByte(35, 0);
-    EEPROM.writeByte(36, 1);
-    EEPROM.writeByte(37, 0);
-    EEPROM.writeByte(38, 0);
-    EEPROM.writeByte(39, 0);
-    EEPROM.writeByte(40, 0);
-    EEPROM.writeByte(41, 0);
-    EEPROM.writeByte(42, 0);
-    EEPROM.writeByte(44, 1);
-    EEPROM.writeByte(45, 1);
-    EEPROM.writeByte(46, 0);
-    EEPROM.writeInt(47, -10);
-    EEPROM.writeByte(51, 0);
-    EEPROM.writeByte(52, 0);
-    EEPROM.writeByte(53, 0);
-    EEPROM.writeByte(54, 0);
-    EEPROM.writeByte(55, 0);
-    EEPROM.writeByte(56, 1);
-    EEPROM.writeByte(57, 1);
-    EEPROM.writeByte(58, 1);
-    EEPROM.writeByte(59, 0);
-    for (int i = 0; i < 30; i++) EEPROM.writeByte(i + 60, 0);
-    for (int i = 0; i < 30; i++) EEPROM.writeUInt((i * 4) + 100, 8750);
-    EEPROM.writeUInt(221, 180);
-    EEPROM.writeUInt(225, 540);
-    EEPROM.writeUInt(229, 1800);
-    EEPROM.writeString(233, "password");
-    EEPROM.writeByte(244, 1);
-    EEPROM.writeByte(245, 1);
-    EEPROM.writeByte(246, 0);
-    EEPROM.writeByte(247, 0);
-    EEPROM.commit();
-  }
+  if (EEPROM.readByte(43) != 27) DefaultSettings();
 
   frequency = EEPROM.readUInt(0);
   VolSet = EEPROM.readInt(4);
@@ -394,7 +346,7 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
 
-  if (digitalRead(BWBUTTON) == LOW) {
+  if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH) {
     if (rotarymode == 0) rotarymode = 1; else rotarymode = 0;
     EEPROM.writeByte(39, rotarymode);
     EEPROM.commit();
@@ -435,7 +387,7 @@ void setup() {
     analogWrite(SMETERPIN, 0);
   }
 
-  if (digitalRead(ROTARY_BUTTON) == LOW) {
+  if (digitalRead(ROTARY_BUTTON) == LOW && digitalRead(BWBUTTON) == HIGH) {
     tft.setFreeFont(FONT14);
     tft.fillScreen(TFT_BLACK);
     tft.setTextColor(TFT_WHITE);
@@ -450,6 +402,17 @@ void setup() {
     EEPROM.commit();
     tft.drawCentreString(myLanguage[language][2], 150, 107, GFXFF);
     while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
+  }
+
+  if (digitalRead(ROTARY_BUTTON) == LOW && digitalRead(BWBUTTON) == LOW) {
+    tft.setFreeFont(FONT14);
+    tft.fillScreen(TFT_BLACK);
+    tft.setTextColor(TFT_WHITE);
+    DefaultSettings();
+    tft.drawCentreString(myLanguage[language][66], 155, 77, GFXFF);
+    tft.drawCentreString(myLanguage[language][2], 150, 107, GFXFF);
+    while (digitalRead(ROTARY_BUTTON) == LOW && digitalRead(BWBUTTON) == LOW) delay(50);
+    ESP.restart();
   }
 
   tft.setSwapBytes(true);
@@ -4476,4 +4439,54 @@ void passwordcrypt() {
   }
   salt = saltkey + XDRGTK_key;
   cryptedpassword = String(sha1(salt));
+}
+
+void DefaultSettings() {
+  EEPROM.writeByte(43, 27);
+  EEPROM.writeUInt(0, 10000);
+  EEPROM.writeInt(4, 0);
+  EEPROM.writeUInt(8, 0);
+  EEPROM.writeUInt(12, 875);
+  EEPROM.writeUInt(16, 1080);
+  EEPROM.writeByte(20, 50);
+  EEPROM.writeByte(21, 0);
+  EEPROM.writeByte(22, 70);
+  EEPROM.writeByte(23, 0);
+  EEPROM.writeInt(24, 0);
+  EEPROM.writeByte(28, 0);
+  EEPROM.writeByte(29, 0);
+  EEPROM.writeByte(30, 0);
+  EEPROM.writeUInt(31, 828);
+  EEPROM.writeByte(35, 0);
+  EEPROM.writeByte(36, 1);
+  EEPROM.writeByte(37, 0);
+  EEPROM.writeByte(38, 0);
+  EEPROM.writeByte(39, 0);
+  EEPROM.writeByte(40, 0);
+  EEPROM.writeByte(41, 0);
+  EEPROM.writeByte(42, 0);
+  EEPROM.writeByte(44, 1);
+  EEPROM.writeByte(45, 1);
+  EEPROM.writeByte(46, 0);
+  EEPROM.writeInt(47, -10);
+  EEPROM.writeByte(51, 0);
+  EEPROM.writeByte(52, 0);
+  EEPROM.writeByte(53, 0);
+  EEPROM.writeByte(54, 0);
+  EEPROM.writeByte(55, 0);
+  EEPROM.writeByte(56, 1);
+  EEPROM.writeByte(57, 1);
+  EEPROM.writeByte(58, 1);
+  EEPROM.writeByte(59, 0);
+  for (int i = 0; i < 30; i++) EEPROM.writeByte(i + 60, 0);
+  for (int i = 0; i < 30; i++) EEPROM.writeUInt((i * 4) + 100, 8750);
+  EEPROM.writeUInt(221, 180);
+  EEPROM.writeUInt(225, 540);
+  EEPROM.writeUInt(229, 1800);
+  EEPROM.writeString(233, "password");
+  EEPROM.writeByte(244, 1);
+  EEPROM.writeByte(245, 1);
+  EEPROM.writeByte(246, 0);
+  EEPROM.writeByte(247, 0);
+  EEPROM.commit();
 }

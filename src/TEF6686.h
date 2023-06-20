@@ -268,5 +268,6 @@ class TEF6686 {
     uint16_t rdsDprevious;
     bool correctpi;
     bool rtABold;
-    wchar_t PStext[9] = L"";           
+    wchar_t PStext[9] = L"";
+    byte ps_counter;
 };

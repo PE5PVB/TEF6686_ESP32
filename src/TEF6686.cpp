@@ -265,13 +265,13 @@ void TEF6686::readRDS(bool showrdserrors)
           }
         }
 
-        if (!rds.correct) rds.picode[4] = '?'; else rds.picode[4] = ' ';                      // Not sure, add a ?
+        if (!rds.correct) rds.picode[4] = '?'; else rds.picode[4] = ' ';                              // Not sure, add a ?
         rds.picode[5] = '\0';
         correctpi = rds.correct;
-		if (strcmp(rds.picode, "0000?") == 0) {
-			memset(rds.picode, 0, sizeof(rds.picode));
-			correctpi = rds.correct;	
-		}
+        if (strcmp(rds.picode, "0000?") == 0) {
+          memset(rds.picode, 0, sizeof(rds.picode));
+          correctpi = rds.correct;
+        }
       }
 
       // USA Station callsign decoder
@@ -311,24 +311,27 @@ void TEF6686::readRDS(bool showrdserrors)
         case RDS_GROUP_0A:
         case RDS_GROUP_0B: {
 
+            //PS decoder
             if (showrdserrors || rds.correct) {
-              //PS decoder
-              offset = rds.rdsB & 0x03;                                                         // Get PI character segment
-              ps_buffer[(offset * 2)  + 0] = rds.rdsD >> 8;                                     // First character of segment
-              ps_buffer[(offset * 2)  + 1] = rds.rdsD & 0xFF;                                   // Second character of segment
-              ps_buffer[(offset * 2)  + 2] = '\0';                                              // Endmarker of segment
+              offset = rds.rdsB & 0x03;                                                         // Let's get the character offset for PS
 
-              if (!ps_process) {                                                                // After new tune just fill the characters received
-                RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t));          // Convert 8 bit ASCII to 16 bit ASCII
-                String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
-                rds.stationName = utf8String.substring(0, 8);                                   // Make sure PS does not exceed 8 characters
-              }
-              if (strlen(ps_buffer) == 8) {                                                     // Becomes active after a full 8 character PS has been decoded
+              if (ps_process == true && offset == 0) {                                          // Activates every time character offset is at 0, so whole message is received
                 for (byte i = 0; i < 9; i++) PStext[i] = L'\0';                                 // First erase buffer
                 RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t));          // Convert 8 bit ASCII to 16 bit ASCII
                 String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
                 rds.stationName = utf8String.substring(0, 8);                                   // Make sure PS does not exceed 8 characters
-                ps_process = true;
+              }
+
+              ps_buffer[(offset * 2)  + 0] = rds.rdsD >> 8;                                     // First character of segment
+              ps_buffer[(offset * 2)  + 1] = rds.rdsD & 0xFF;                                   // Second character of segment
+              ps_buffer[(offset * 2)  + 2] = '\0';                                              // Endmarker of segment
+
+              if (ps_process == false) {                                                        // Let's get 2 runs of 8 PS characters fast and without refresh
+                ps_counter ++;                                                                  // Let's count each run
+                RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t));          // Convert 8 bit ASCII to 16 bit ASCII
+                String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
+                rds.stationName = utf8String.substring(0, 8);                                   // Make sure PS does not exceed 8 characters
+                if (ps_counter == 8) ps_process = true;                                         // OK, we had 8 runs, now let's go the idle PS writing
               }
             }
 
@@ -340,10 +343,10 @@ void TEF6686::readRDS(bool showrdserrors)
             }
 
             //TA decoder
-            rds.hasTA = (bitRead(rds.rdsB, 4)) && (bitRead(rds.rdsB, 10)) & 0x1F;
+            rds.hasTA = (bitRead(rds.rdsB, 4)) && (bitRead(rds.rdsB, 10)) & 0x1F;               // Read TA flag
 
             //MS decoder
-            if (((bitRead(rds.rdsB, 3)) & 0x1F) == 1) rds.MS = 1; else rds.MS = 2;
+            if (((bitRead(rds.rdsB, 3)) & 0x1F) == 1) rds.MS = 1; else rds.MS = 2;              // Read MS flag
 
             //AF decoder
             uint8_t  af_controlCode = rds.rdsC >> 8;
@@ -476,14 +479,15 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.hasTP = false;
   rds.hasTA = false;
   rds.hasEON = false;
-  rds.MS = 0;
   rds.hasCT = false;
   rds.correct = false;
   rt_process = false;
   ps_process = false;
-  af_counter = 0;
   rds.rdsreset = true;
   correctpi = false;
+  ps_counter = 0;
+  af_counter = 0;
+  rds.MS = 0;
 }
 
 void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {
