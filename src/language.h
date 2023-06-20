@@ -258,19 +258,19 @@ static const char myLanguage[9][66][78] = {
     "Način rada USB-a",
     "Wi-Fi",
     "Wi-Fi postavke",
-    "Spojiti s: ",
-    "da biste konfigurirali Wi-Fi",
-    "Spajanje s Wi-Fi mrežom..",
+    "Spojite se na: ",
+    "kako biste konfigurirali Wi-Fi",
+    "Spajanje na Wi-Fi mrežu..",
     "NEUSPJEŠNO.. Wi-Fi onemogućen",
     "SPOJENO!",
     "IP klijenta StationList",
     "Prikaži valnu duljinu KV-a",
     "RDS filter",
-    "Dynamic PI",
-	"Show squelch",
-	"Modulation meter",
-	"AM Noise blanker",
-	"FM Noise blanker"
+    "Dinamičan PI",
+    "Prikaži squelch",
+    "Mjerač modulacije",
+    "AM prigušivač šuma",
+    "FM prigušivač šuma"
   },
 
   { "Ελληνικά",                        // Greek
