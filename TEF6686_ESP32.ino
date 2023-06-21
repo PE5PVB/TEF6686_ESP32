@@ -167,7 +167,7 @@ int volume;
 int XDRBWset;
 int XDRBWsetold;
 int xPos = 6;
-int yPos = 2;
+int yPos = 4;
 int16_t OStatus;
 int16_t SAvg;
 int16_t SAvg2;
