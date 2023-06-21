@@ -281,7 +281,7 @@ static const char myLanguage[9][68][78] = {
     "Audio izlaz"
   },
 
-  { "Ελληνικά",                        // Greek
+  { "Ελληνικά",                       // Greek
     "Η διεύθυνση του ρότορα άλλαξε",
     "Ελευθερώστε το πλήκτρο",
     "Η οθόνη αναποδογύρισε",
@@ -346,12 +346,12 @@ static const char myLanguage[9][68][78] = {
     "Εμφάνιση squelch",
     "Μετρητής διαμόρφωσης",
     "Απαλοιφή θορύβου AM",
-    "Απαλοιφή θορύβου FM"
+    "Απαλοιφή θορύβου FM",
     "Οι προεπιλογές φορτώθηκαν",
     "Έξοδος ήχου"
   },
 
-  { "Romana",                       // Romanian
+  { "Romana",                         // Romanian
     "Sens rotire schimbat",
     "Eliberati butonul",
     "Ecran inversat",
@@ -479,18 +479,19 @@ static const char myLanguage[9][68][78] = {
     "Versuche WLAN zu verbinden",
     "FEHLER.. WLAN deaktiviert",
     "VERBUNDEN!",
-    "Stationlist client IP",
-    "Show SW wavelength",
-    "RDS filter",
-    "Dynamic PI",
-    "Show squelch",
-    "Modulation meter",
-    "AM Noise blanker",
-    "FM Noise blanker",
-    "Defaults loaded",
-    "Audio output"
+    "Stationlist Client IP",
+    "Zeige KW-Wellenlänge",
+    "RDS-Filter",
+    "Dynamisches PI",
+    "Zeige Rauschsperre",
+    "Modulationspegel",
+    "AM Rauschunterdrücker",
+    "UKW Rauschunterdrücker",
+    "Werkseinstellung geladen",
+    "Audioausgabe"
   },
-  { "Czech",                        // Czech
+
+  { "Czech",                          // Czech
     "Směr enkóderu byl změněn",
     "Prosím, pusťte tlačítko",
     "Obrazovka otočena",
@@ -558,9 +559,9 @@ static const char myLanguage[9][68][78] = {
     "FM Noise blanker",
     "Defaults loaded",
     "Audio output"
-
   },
-  { "Slovak",                       // Slovak
+
+  { "Slovak",                         // Slovak
     "Smer enkóderu bol zmenený",
     "Prosím, pusťte tlačidlo",
     "Obrazovka otočená",
