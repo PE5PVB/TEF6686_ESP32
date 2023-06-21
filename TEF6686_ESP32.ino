@@ -146,6 +146,7 @@ String SWMIBandstring = String();
 String SWMIBandstringold = String();
 int lowsignaltimer;
 int bwupdatetimer;
+int offsetupdatetimer;
 int snrupdatetimer;
 int menuoption = 30;
 int MStatusold;
@@ -3125,6 +3126,13 @@ void ShowStereoStatus() {
 
 void ShowOffset() {
   if (OStatus != OStatusold) {
+    if (millis() >= offsetupdatetimer + TIMER_BW_TIMER) {
+      offsetupdatetimer = millis();
+    }
+    else {
+      return;
+    }
+
     if (band == BAND_FM) {
       if (OStatus < -500) {
         tft.fillTriangle(6, 8, 6, 22, 14, 14, TFT_GREYOUT);
