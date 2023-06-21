@@ -277,8 +277,8 @@ static const char myLanguage[9][68][78] = {
     "Mjerač modulacije",
     "AM prigušivač šuma",
     "FM prigušivač šuma",
-    "Defaults loaded",
-    "Audio output"
+    "Zadane postavke učitane",
+    "Audio izlaz"
   },
 
   { "Ελληνικά",                        // Greek
