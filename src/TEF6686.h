@@ -19,6 +19,7 @@ enum RADIO_TUNE_MODE {
   TUNE_MAN, TUNE_AUTO, TUNE_MEM, TUNE_MI_BAND
 };
 
+#define TIMER_OFFSET_TIMER         (TIMER_500_TICK)
 #define TIMER_BW_TIMER             (TIMER_500_TICK)
 #define TIMER_SNR_TIMER            (TIMER_500_TICK)
 #define TIMER_500_TICK             500
