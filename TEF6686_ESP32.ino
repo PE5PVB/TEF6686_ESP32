@@ -1071,6 +1071,7 @@ void SelectBand() {
   if (band != BAND_FM) {
     seek = false;
     if (tunemode == TUNE_AUTO) tunemode = TUNE_MAN;
+    if (tunemode == TUNE_MI_BAND && band != BAND_SW) tunemode = TUNE_MAN;
     BWreset = true;
     BWset = 2;
     freqold = frequency_AM;
