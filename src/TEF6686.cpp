@@ -314,15 +314,11 @@ void TEF6686::readRDS(bool showrdserrors)
             if (showrdserrors || rds.correct) {
               offset = rds.rdsB & 0x03;                                                         // Let's get the character offset for PS
 
-              if (ps_process == true && offset == 0) {                                          // Activates every time character offset is at 0, so whole message is received
-                ps_counter++;
-				if (ps_counter > 2) {
-					for (byte i = 0; i < 9; i++) PStext[i] = L'\0';                                 // First erase buffer
-					RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t));          // Convert 8 bit ASCII to 16 bit ASCII
-					String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
-					rds.stationName = utf8String.substring(0, 8);                                   // Make sure PS does not exceed 8 characters
-					ps_counter = 0;
-				}
+              if (ps_process == true && offset == 8) {                                          // Activates every time character offset is at 0, so whole message is received
+					for (byte i = 0; i < 9; i++) PStext[i] = L'\0';                             // First erase buffer
+					RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t));      // Convert 8 bit ASCII to 16 bit ASCII
+					String utf8String = convertToUTF8(PStext);                                  // Convert RDS characterset to ASCII
+					rds.stationName = utf8String.substring(0, 8);                               // Make sure PS does not exceed 8 characters
 			  }
 
               ps_buffer[(offset * 2)  + 0] = rds.rdsD >> 8;                                     // First character of segment
@@ -334,10 +330,7 @@ void TEF6686::readRDS(bool showrdserrors)
                 RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t));          // Convert 8 bit ASCII to 16 bit ASCII
                 String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
                 rds.stationName = utf8String.substring(0, 8);                                   // Make sure PS does not exceed 8 characters
-                if (ps_counter == 8) { 
-					ps_process = true;     					                                    // OK, we had 8 runs, now let's go the idle PS writing
-					ps_counter=0;
-				}
+                if (ps_counter == 8) ps_process = true;     					                // OK, we had 8 runs, now let's go the idle PS writing
 			  }
             }
 
