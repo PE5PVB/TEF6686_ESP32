@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char myLanguage[9][68][78] = {
+static const char myLanguage[9][69][85] = {
   { "English",                        // English
     "Rotary direction changed",
     "Please release button",
@@ -68,7 +68,8 @@ static const char myLanguage[9][68][78] = {
     "AM Noise blanker",
     "FM Noise blanker",
     "Defaults loaded",
-    "Audio output"
+    "Audio output",
+    "FM OIRT 30K Step"
   },
 
   { "Nederlands",                     // Dutch
@@ -138,7 +139,8 @@ static const char myLanguage[9][68][78] = {
     "AM ruis filter",
     "FM ruis filter",
     "Opnieuw geconfigureerd",
-    "Audio uitgang"
+    "Audio uitgang",
+    "FM OIRT 30K Step"
   },
 
   { "Polski",                         // Polish
@@ -208,7 +210,8 @@ static const char myLanguage[9][68][78] = {
     "AM Noise blanker",
     "FM Noise blanker",
     "Defaults loaded",
-    "Audio output"
+    "Audio output",
+    "FM OIRT 30K Step"
   },
 
   { "Hrvatski",                       // Croatian
@@ -278,7 +281,8 @@ static const char myLanguage[9][68][78] = {
     "AM prigušivač šuma",
     "FM prigušivač šuma",
     "Zadane postavke učitane",
-    "Audio izlaz"
+    "Audio izlaz",
+    "FM OIRT 30K Step"
   },
 
   { "Ελληνικά",                       // Greek
@@ -348,7 +352,8 @@ static const char myLanguage[9][68][78] = {
     "Απαλοιφή θορύβου AM",
     "Απαλοιφή θορύβου FM",
     "Οι προεπιλογές φορτώθηκαν",
-    "Έξοδος ήχου"
+    "Έξοδος ήχου",
+    "FM OIRT 30K Step"
   },
 
   { "Romana",                         // Romanian
@@ -418,7 +423,8 @@ static const char myLanguage[9][68][78] = {
     "AM Noise blanker",
     "FM Noise blanker",
     "Defaults loaded",
-    "Audio output"
+    "Audio output",
+    "FM OIRT 30K Step"
   },
 
   { "Deutsch",                        // German
@@ -488,7 +494,8 @@ static const char myLanguage[9][68][78] = {
     "AM Rauschunterdrücker",
     "UKW Rauschunterdrücker",
     "Werkseinstellung geladen",
-    "Audioausgabe"
+    "Audioausgabe",
+    "FM OIRT 30K Step"
   },
 
   { "Czech",                          // Czech
@@ -558,7 +565,8 @@ static const char myLanguage[9][68][78] = {
     "AM Noise blanker",
     "FM Noise blanker",
     "Defaults loaded",
-    "Audio output"
+    "Audio output",
+    "FM OIRT 30K Step"
   },
 
   { "Slovak",                         // Slovak
@@ -628,6 +636,7 @@ static const char myLanguage[9][68][78] = {
     "AM Noise blanker",
     "FM Noise blanker",
     "Defaults loaded",
-    "Audio output"
+    "Audio output",
+    "FM OIRT 30K Step"
   },
 };
