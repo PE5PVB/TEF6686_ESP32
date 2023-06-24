@@ -32,6 +32,8 @@ enum RADIO_TUNE_MODE {
 #define FREQ_MW_STEP_9K            9
 #define FREQ_MW_STEP_10K           10
 #define FREQ_SW_STEP_5K            5
+#define FREQ_FM_STEP_50K           5
+#define FREQ_FM_STEP_30K           3
 
 #define FREQ_LW_LOW_EDGE_MIN       144
 #define FREQ_LW_HIGH_EDGE_MAX      519
@@ -45,6 +47,8 @@ enum RADIO_TUNE_MODE {
 #define FREQ_SW_HIGH_EDGE_MAX      (FREQ_SW_END)
 #define FREQ_FM_START              65000
 #define FREQ_FM_END                108000
+#define FREQ_FM_OIRT_START         6540
+#define FREQ_FM_OIRT_END           7800
 
 // according to https://www.short-wave.info/index.php?feature=frequencies
 #define FREQ_SW_START       1800

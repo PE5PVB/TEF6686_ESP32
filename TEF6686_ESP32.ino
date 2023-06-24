@@ -133,6 +133,9 @@ unsigned int HighEdgeSet;
 int LevelOffset;
 unsigned int LowEdgeSet;
 int LowLevelSet;
+byte specialstepOIRT;
+unsigned int LowEdgeOIRTSet;
+unsigned int HighEdgeOIRTSet;
 unsigned int LWHighEdgeSet;
 unsigned int LWLowEdgeSet;
 unsigned int MWHighEdgeSet;
@@ -229,7 +232,7 @@ WiFiUDP Udp;
 
 void setup() {
   setupmode = true;
-  EEPROM.begin(249);
+  EEPROM.begin(258);
   if (EEPROM.readByte(43) != 27) DefaultSettings();
 
   frequency = EEPROM.readUInt(0);
@@ -276,6 +279,9 @@ void setup() {
   amnb = EEPROM.readByte(246);
   fmnb = EEPROM.readByte(247);
   audiomode = EEPROM.readByte(248);
+  specialstepOIRT = EEPROM.readByte(249);
+  LowEdgeOIRTSet = EEPROM.readUInt(250);
+  HighEdgeOIRTSet = EEPROM.readUInt(254);
 
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;   // later will read from flash
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX; // later will read from flash
@@ -305,6 +311,15 @@ void setup() {
       if (stepsize > 3) stepsize = 3;
       break;
     case BAND_SW: frequency_SW = frequency_AM; break;
+    case BAND_FM:
+      if (specialstepOIRT) {
+        if (frequency >= (FREQ_FM_OIRT_START) && frequency <= (FREQ_FM_OIRT_END)) {
+          if (frequency % 3 != 0) { Round30K(frequency); }
+        }
+      }else {
+        if (frequency % 10 != 0) { Round50K(frequency); }
+      }
+      break;
     default: break;
   }
 
@@ -1182,6 +1197,13 @@ void ModeButtonPress() {
     BWOld = 0;
     radio.clearRDS(fullsearchrds);
     RDSstatus = 0;
+    if (specialstepOIRT) {
+      if (frequency >= (FREQ_FM_OIRT_START) && frequency <= (FREQ_FM_OIRT_END)) {
+        if (frequency % 3 != 0) { Round30K(frequency); }
+      }
+    }else {
+      if (frequency % 10 != 0) { Round50K(frequency); }
+    }
     BuildDisplay();
     ShowSignalLevel();
     ShowBW();
@@ -1216,6 +1238,9 @@ void ModeButtonPress() {
     EEPROM.writeByte(246, amnb);
     EEPROM.writeByte(247, fmnb);
     EEPROM.writeByte(248, audiomode);
+    EEPROM.writeByte(249, specialstepOIRT);
+    EEPROM.writeUInt(250, LowEdgeOIRTSet);
+    EEPROM.writeUInt(254, HighEdgeOIRTSet);
     EEPROM.commit();
     Serial.end();
     if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
@@ -1240,17 +1265,51 @@ void ShowStepSize() {
   }
 }
 
+void FindhighStopOIRT() {
+  if (HighEdgeSet >= (FREQ_FM_OIRT_START / 10) && HighEdgeSet <= (FREQ_FM_OIRT_END / 10)) {
+    HighEdgeOIRTSet = (HighEdgeSet * 10 - (HighEdgeSet * 10) % 3);
+  }else {
+    HighEdgeOIRTSet = 0;
+  }
+}
+
+void FindlowStopOIRT() {
+  if (LowEdgeSet >= (FREQ_FM_OIRT_START / 10) && LowEdgeSet <= (FREQ_FM_OIRT_END / 10)) {
+    LowEdgeOIRTSet = (LowEdgeSet * 10 - (LowEdgeSet * 10) % 3);
+  }else {
+    LowEdgeOIRTSet = 0;
+  }
+}
+
+void Round30K(unsigned int freq) {
+  if (freq % 3 < 3) {
+    frequency = (freq - freq % 3);
+  }
+}
+
+void Round50K(unsigned int freq) {
+  if (freq % 10 < 3) {
+    frequency = (freq - freq % 10);
+  }
+  else if (freq % 10 > 2 && freq % 10 < 8) {
+    frequency = (freq - (freq % 10 - 5));
+  }
+  else if (freq % 10 > 7) {
+    frequency = (freq - (freq % 10) + 10);
+  }
+}
+
 void RoundStep() {
   if (band == BAND_FM) {
     unsigned int freq = frequency;
-    if (freq % 10 < 3) {
-      frequency = (freq - freq % 10);
-    }
-    else if (freq % 10 > 2 && freq % 10 < 8) {
-      frequency = (freq - (freq % 10 - 5));
-    }
-    else if (freq % 10 > 7) {
-      frequency = (freq - (freq % 10) + 10);
+    if (specialstepOIRT) {
+      if (frequency >= FREQ_FM_OIRT_START && frequency <= FREQ_FM_OIRT_END) {
+        Round30K(freq);
+      }else {
+        Round50K(freq);
+      }    
+    }else {
+      Round50K(freq);
     }
     radio.SetFreq(frequency);
   }
@@ -1593,6 +1652,13 @@ void ButtonPress() {
               tft.setTextColor(TFT_YELLOW);
               if (audiomode) tft.drawCentreString("MPX", 155, 110, GFXFF); else tft.drawCentreString("Stereo", 155, 110, GFXFF);
               break;
+            
+            case 210:
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][68], 155, 70, GFXFF);
+              tft.setTextColor(TFT_YELLOW);
+              if (specialstepOIRT) tft.drawCentreString("ON", 155, 110, GFXFF); else tft.drawCentreString("OFF", 155, 110, GFXFF);
+              break;
           }
       }
     } else {
@@ -1689,6 +1755,10 @@ void KeyUp() {
               tft.drawRightString(String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               LowEdgeSet ++;
               if (LowEdgeSet > 1070) LowEdgeSet = 650;
+              if (specialstepOIRT) {
+                FindlowStopOIRT();
+                FindhighStopOIRT();
+              }
               tft.setTextColor(TFT_YELLOW);
               tft.drawRightString(String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               break;
@@ -1698,6 +1768,10 @@ void KeyUp() {
               tft.drawRightString(String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               HighEdgeSet ++;
               if (HighEdgeSet > 1080) HighEdgeSet = 660;
+              if (specialstepOIRT) {
+                FindlowStopOIRT();
+                FindhighStopOIRT();
+              }
               tft.setTextColor(TFT_YELLOW);
               tft.drawRightString(String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               break;
@@ -1946,6 +2020,19 @@ void KeyUp() {
               if (audiomode) tft.drawCentreString("MPX", 155, 110, GFXFF); else tft.drawCentreString("Stereo", 155, 110, GFXFF);
               radio.setAudio(audiomode);
               break;
+            case 210:
+              tft.setTextColor(TFT_BLACK);
+              if (specialstepOIRT) tft.drawCentreString("ON", 155, 110, GFXFF); else tft.drawCentreString("OFF", 155, 110, GFXFF);
+              if (specialstepOIRT) {
+                specialstepOIRT = 0;
+              } else {
+                specialstepOIRT = 1;
+                FindlowStopOIRT();
+                FindhighStopOIRT();
+              }
+              tft.setTextColor(TFT_YELLOW);
+              if (specialstepOIRT) tft.drawCentreString("ON", 155, 110, GFXFF); else tft.drawCentreString("OFF", 155, 110, GFXFF);
+              break;
           }
       }
     }
@@ -2034,6 +2121,10 @@ void KeyDown() {
               tft.drawRightString(String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               LowEdgeSet -= 10;
               if (LowEdgeSet < 650) LowEdgeSet = 1079;
+              if (specialstepOIRT) {
+                FindlowStopOIRT();
+                FindhighStopOIRT();
+              }
               tft.setTextColor(TFT_YELLOW);
               tft.drawRightString(String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               break;
@@ -2043,6 +2134,10 @@ void KeyDown() {
               tft.drawRightString(String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               HighEdgeSet -= 10;
               if (HighEdgeSet < 660) HighEdgeSet = 1080;
+              if (specialstepOIRT) {
+                FindlowStopOIRT();
+                FindhighStopOIRT();
+              }
               tft.setTextColor(TFT_YELLOW);
               tft.drawRightString(String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               break;
@@ -2291,6 +2386,19 @@ void KeyDown() {
               tft.setTextColor(TFT_YELLOW);
               if (audiomode) tft.drawCentreString("MPX", 155, 110, GFXFF); else tft.drawCentreString("Stereo", 155, 110, GFXFF);
               radio.setAudio(audiomode);
+              break;
+            case 210:
+              tft.setTextColor(TFT_BLACK);
+              if (specialstepOIRT) tft.drawCentreString("ON", 155, 110, GFXFF); else tft.drawCentreString("OFF", 155, 110, GFXFF);
+              if (specialstepOIRT) {
+                specialstepOIRT = 0;
+              } else {
+                specialstepOIRT = 1;
+                FindlowStopOIRT();
+                FindhighStopOIRT();
+              }
+              tft.setTextColor(TFT_YELLOW);
+              if (specialstepOIRT) tft.drawCentreString("ON", 155, 110, GFXFF); else tft.drawCentreString("OFF", 155, 110, GFXFF);
               break;
           }
       }
@@ -2687,6 +2795,7 @@ void BuildMenu() {
       tft.drawString(myLanguage[language][64], 14, 150, GFXFF);
       tft.drawString(myLanguage[language][65], 14, 170, GFXFF);
       tft.drawString(myLanguage[language][67], 14, 190, GFXFF);
+      tft.drawString(myLanguage[language][68], 14, 210, GFXFF);
       if (amnb != 0) tft.drawRightString("%", 305, 150, GFXFF); else tft.drawRightString(myLanguage[language][30], 265, 150, GFXFF);
       if (fmnb != 0) tft.drawRightString("%", 305, 170, GFXFF); else tft.drawRightString(myLanguage[language][30], 265, 170, GFXFF);
       tft.setTextColor(TFT_YELLOW);
@@ -2699,6 +2808,7 @@ void BuildMenu() {
       if (amnb != 0) tft.drawRightString(String(amnb, DEC), 265, 150, GFXFF); else tft.drawRightString(myLanguage[language][30], 265, 150, GFXFF);
       if (fmnb != 0) tft.drawRightString(String(fmnb, DEC), 265, 170, GFXFF); else tft.drawRightString(myLanguage[language][30], 265, 170, GFXFF);
       if (audiomode) tft.drawRightString("MPX", 305, 190, GFXFF); else tft.drawRightString("Stereo", 305, 190, GFXFF);
+      if (specialstepOIRT) tft.drawRightString("ON", 305, 210, GFXFF); else tft.drawRightString("OFF", 305, 210, GFXFF);
   }
   analogWrite(SMETERPIN, 0);
 }
@@ -4252,7 +4362,15 @@ void TuneUp() {
         frequency_AM = (frequency_AM / FREQ_SW_STEP_5K) * FREQ_SW_STEP_5K;
       }
     } else {
-      temp = 5;
+      if (frequency >= (FREQ_FM_OIRT_START) && frequency <= (FREQ_FM_OIRT_END - FREQ_FM_STEP_30K)) {
+        if (specialstepOIRT) {
+          temp = FREQ_FM_STEP_30K;
+        }else {
+          temp = FREQ_FM_STEP_50K;
+        }
+      }else {
+        temp = FREQ_FM_STEP_50K;
+      }
     }
   }
   if (stepsize == 1) temp = 1;
@@ -4262,9 +4380,16 @@ void TuneUp() {
 
   if (band == BAND_FM) {
     frequency += temp;
-    if (frequency >= (HighEdgeSet * 10) + 1) {
-      frequency = LowEdgeSet * 10;
-      if (edgebeep) EdgeBeeper();
+    if (specialstepOIRT) {
+      if (frequency >= (HighEdgeOIRTSet == 0 ? ((HighEdgeSet * 10) + 1) : (HighEdgeOIRTSet + 1))){
+        frequency = (LowEdgeOIRTSet == 0 ? (LowEdgeSet * 10) : LowEdgeOIRTSet);
+        if (edgebeep) EdgeBeeper();
+      }
+    } else {
+      if (frequency >= (HighEdgeSet * 10) + 1) {
+        frequency = LowEdgeSet * 10;
+        if (edgebeep) EdgeBeeper();
+      }
     }
     radio.SetFreq(frequency);
   }
@@ -4316,7 +4441,15 @@ void TuneDown() {
         frequency_AM = (frequency_AM / temp) * temp;
       }
     } else {
-      temp = 5;
+      if (frequency >= (FREQ_FM_OIRT_START + FREQ_FM_STEP_30K) && frequency <= (FREQ_FM_OIRT_END)) {
+        if (specialstepOIRT) {
+          temp = FREQ_FM_STEP_30K;
+        }else {
+          temp = FREQ_FM_STEP_50K;
+        }
+      }else {
+        temp = FREQ_FM_STEP_50K;
+      }
     }
   }
   if (stepsize == 1) temp = 1;
@@ -4326,11 +4459,17 @@ void TuneDown() {
 
   if (band == BAND_FM) {
     frequency -= temp;
-    if (frequency < LowEdgeSet * 10) {
-      frequency = HighEdgeSet * 10;
-      if (edgebeep) EdgeBeeper();
+    if (specialstepOIRT) {
+      if (frequency < (LowEdgeOIRTSet == 0 ? (LowEdgeSet * 10) : LowEdgeOIRTSet) ){
+        frequency = (HighEdgeOIRTSet == 0 ? (HighEdgeSet * 10) : HighEdgeOIRTSet);
+        if (edgebeep) EdgeBeeper();
+      }
+    } else {
+      if (frequency < LowEdgeSet * 10) {
+        frequency = HighEdgeSet * 10;
+        if (edgebeep) EdgeBeeper();
+      }
     }
-    radio.SetFreq(frequency);
   }
 
   if (band == BAND_LW) {
@@ -4528,5 +4667,9 @@ void DefaultSettings() {
   EEPROM.writeByte(246, 0);
   EEPROM.writeByte(247, 0);
   EEPROM.writeByte(248, 0);
+  EEPROM.writeByte(249,0);
+  EEPROM.writeUInt(250,0);
+  EEPROM.writeUInt(254,0);
+
   EEPROM.commit();
 }
