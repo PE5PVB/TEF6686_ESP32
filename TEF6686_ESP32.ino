@@ -3237,10 +3237,9 @@ void ShowStereoStatus() {
 
 void ShowOffset() {
   if (OStatus != OStatusold) {
-    if (millis() >= offsetupdatetimer + TIMER_BW_TIMER) {
+    if (millis() >= offsetupdatetimer + TIMER_OFFSET_TIMER) {
       offsetupdatetimer = millis();
-    }
-    else {
+    } else {
       return;
     }
 
@@ -3340,8 +3339,7 @@ void ShowOffset() {
 void ShowBW() {
   if (millis() >= bwupdatetimer + TIMER_BW_TIMER) {
     bwupdatetimer = millis();
-  }
-  else {
+  } else {
     return;
   }
 
