@@ -1199,10 +1199,16 @@ void ModeButtonPress() {
     RDSstatus = 0;
     if (specialstepOIRT) {
       if (frequency >= (FREQ_FM_OIRT_START) && frequency <= (FREQ_FM_OIRT_END)) {
-        if (frequency % 3 != 0) { Round30K(frequency); }
+        if (frequency % 3 != 0) { 
+          Round30K(frequency); 
+          EEPROM.writeUInt(0,frequency);
+        }
       }
     }else {
-      if (frequency % 10 != 0) { Round50K(frequency); }
+      if (frequency % 10 != 0) { 
+        Round50K(frequency);
+        EEPROM.writeUInt(0,frequency);
+      }
     }
     BuildDisplay();
     ShowSignalLevel();
