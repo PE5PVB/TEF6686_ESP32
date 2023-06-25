@@ -314,10 +314,14 @@ void setup() {
     case BAND_FM:
       if (specialstepOIRT) {
         if (frequency >= (FREQ_FM_OIRT_START) && frequency <= (FREQ_FM_OIRT_END)) {
-          if (frequency % 3 != 0) { Round30K(frequency); }
+          if (frequency % 3 != 0) {
+            Round30K(frequency);
+          }
         }
-      }else {
-        if (frequency % 10 != 0) { Round50K(frequency); }
+      } else {
+        if (frequency % 10 != 0) {
+          Round50K(frequency);
+        }
       }
       break;
     default: break;
@@ -1200,15 +1204,15 @@ void ModeButtonPress() {
     RDSstatus = 0;
     if (specialstepOIRT) {
       if (frequency >= (FREQ_FM_OIRT_START) && frequency <= (FREQ_FM_OIRT_END)) {
-        if (frequency % 3 != 0) { 
-          Round30K(frequency); 
-          EEPROM.writeUInt(0,frequency);
+        if (frequency % 3 != 0) {
+          Round30K(frequency);
+          EEPROM.writeUInt(0, frequency);
         }
       }
-    }else {
-      if (frequency % 10 != 0) { 
+    } else {
+      if (frequency % 10 != 0) {
         Round50K(frequency);
-        EEPROM.writeUInt(0,frequency);
+        EEPROM.writeUInt(0, frequency);
       }
     }
     BuildDisplay();
@@ -1275,7 +1279,7 @@ void ShowStepSize() {
 void FindhighStopOIRT() {
   if (HighEdgeSet >= (FREQ_FM_OIRT_START / 10) && HighEdgeSet <= (FREQ_FM_OIRT_END / 10)) {
     HighEdgeOIRTSet = (HighEdgeSet * 10 - (HighEdgeSet * 10) % 3);
-  }else {
+  } else {
     HighEdgeOIRTSet = 0;
   }
 }
@@ -1283,7 +1287,7 @@ void FindhighStopOIRT() {
 void FindlowStopOIRT() {
   if (LowEdgeSet >= (FREQ_FM_OIRT_START / 10) && LowEdgeSet <= (FREQ_FM_OIRT_END / 10)) {
     LowEdgeOIRTSet = (LowEdgeSet * 10 - (LowEdgeSet * 10) % 3);
-  }else {
+  } else {
     LowEdgeOIRTSet = 0;
   }
 }
@@ -1312,10 +1316,10 @@ void RoundStep() {
     if (specialstepOIRT) {
       if (frequency >= FREQ_FM_OIRT_START && frequency <= FREQ_FM_OIRT_END) {
         Round30K(freq);
-      }else {
+      } else {
         Round50K(freq);
-      }    
-    }else {
+      }
+    } else {
       Round50K(freq);
     }
     radio.SetFreq(frequency);
@@ -1659,7 +1663,7 @@ void ButtonPress() {
               tft.setTextColor(TFT_YELLOW);
               if (audiomode) tft.drawCentreString("MPX", 155, 110, GFXFF); else tft.drawCentreString("Stereo", 155, 110, GFXFF);
               break;
-            
+
             case 210:
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][68], 155, 70, GFXFF);
@@ -4370,10 +4374,10 @@ void TuneUp() {
       if (frequency >= (FREQ_FM_OIRT_START) && frequency <= (FREQ_FM_OIRT_END - FREQ_FM_STEP_30K)) {
         if (specialstepOIRT) {
           temp = FREQ_FM_STEP_30K;
-        }else {
+        } else {
           temp = FREQ_FM_STEP_50K;
         }
-      }else {
+      } else {
         temp = FREQ_FM_STEP_50K;
       }
     }
@@ -4386,7 +4390,7 @@ void TuneUp() {
   if (band == BAND_FM) {
     frequency += temp;
     if (specialstepOIRT) {
-      if (frequency >= (HighEdgeOIRTSet == 0 ? ((HighEdgeSet * 10) + 1) : (HighEdgeOIRTSet + 1))){
+      if (frequency >= (HighEdgeOIRTSet == 0 ? ((HighEdgeSet * 10) + 1) : (HighEdgeOIRTSet + 1))) {
         frequency = (LowEdgeOIRTSet == 0 ? (LowEdgeSet * 10) : LowEdgeOIRTSet);
         if (edgebeep) EdgeBeeper();
       }
@@ -4449,10 +4453,10 @@ void TuneDown() {
       if (frequency >= (FREQ_FM_OIRT_START + FREQ_FM_STEP_30K) && frequency <= (FREQ_FM_OIRT_END)) {
         if (specialstepOIRT) {
           temp = FREQ_FM_STEP_30K;
-        }else {
+        } else {
           temp = FREQ_FM_STEP_50K;
         }
-      }else {
+      } else {
         temp = FREQ_FM_STEP_50K;
       }
     }
@@ -4465,7 +4469,7 @@ void TuneDown() {
   if (band == BAND_FM) {
     frequency -= temp;
     if (specialstepOIRT) {
-      if (frequency < (LowEdgeOIRTSet == 0 ? (LowEdgeSet * 10) : LowEdgeOIRTSet) ){
+      if (frequency < (LowEdgeOIRTSet == 0 ? (LowEdgeSet * 10) : LowEdgeOIRTSet) ) {
         frequency = (HighEdgeOIRTSet == 0 ? (HighEdgeSet * 10) : HighEdgeOIRTSet);
         if (edgebeep) EdgeBeeper();
       }
@@ -4475,6 +4479,7 @@ void TuneDown() {
         if (edgebeep) EdgeBeeper();
       }
     }
+    radio.SetFreq(frequency);
   }
 
   if (band == BAND_LW) {
@@ -4672,9 +4677,9 @@ void DefaultSettings() {
   EEPROM.writeByte(246, 0);
   EEPROM.writeByte(247, 0);
   EEPROM.writeByte(248, 0);
-  EEPROM.writeByte(249,0);
-  EEPROM.writeUInt(250,0);
-  EEPROM.writeUInt(254,0);
+  EEPROM.writeByte(249, 0);
+  EEPROM.writeUInt(250, 0);
+  EEPROM.writeUInt(254, 0);
 
   EEPROM.commit();
 }
