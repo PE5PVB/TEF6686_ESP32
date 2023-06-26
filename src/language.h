@@ -69,7 +69,7 @@ static const char myLanguage[9][69][85] = {
     "FM Noise blanker",
     "Defaults loaded",
     "Audio output",
-    "FM OIRT 30K Step"
+    "FM OIRT 30 kHz steps"
   },
 
   { "Nederlands",                     // Dutch
@@ -140,7 +140,7 @@ static const char myLanguage[9][69][85] = {
     "FM ruis filter",
     "Opnieuw geconfigureerd",
     "Audio uitgang",
-    "FM OIRT 30K Step"
+    "FM OIRT 30 kHz steps"
   },
 
   { "Polski",                         // Polish
@@ -211,7 +211,7 @@ static const char myLanguage[9][69][85] = {
     "FM Noise blanker",
     "Defaults loaded",
     "Audio output",
-    "FM OIRT 30K Step"
+    "FM OIRT 30 kHz steps"
   },
 
   { "Hrvatski",                       // Croatian
@@ -282,7 +282,7 @@ static const char myLanguage[9][69][85] = {
     "FM prigušivač šuma",
     "Zadane postavke učitane",
     "Audio izlaz",
-    "FM OIRT 30K Step"
+    "FM OIRT 30 kHz steps"
   },
 
   { "Ελληνικά",                       // Greek
@@ -353,7 +353,7 @@ static const char myLanguage[9][69][85] = {
     "Απαλοιφή θορύβου FM",
     "Οι προεπιλογές φορτώθηκαν",
     "Έξοδος ήχου",
-    "FM OIRT 30K Step"
+    "FM OIRT 30 kHz steps"
   },
 
   { "Romana",                         // Romanian
@@ -424,7 +424,7 @@ static const char myLanguage[9][69][85] = {
     "FM Noise blanker",
     "Defaults loaded",
     "Audio output",
-    "FM OIRT 30K Step"
+    "FM OIRT 30 kHz steps"
   },
 
   { "Deutsch",                        // German
@@ -495,7 +495,7 @@ static const char myLanguage[9][69][85] = {
     "UKW Rauschunterdrücker",
     "Werkseinstellung geladen",
     "Audioausgabe",
-    "FM OIRT 30K Step"
+    "UKW OIRT 30 kHz Schritte"
   },
 
   { "Czech",                          // Czech
@@ -566,7 +566,7 @@ static const char myLanguage[9][69][85] = {
     "FM Noise blanker",
     "Defaults loaded",
     "Audio output",
-    "FM OIRT 30K Step"
+    "FM OIRT 30 kHz steps"
   },
 
   { "Slovak",                         // Slovak
@@ -637,6 +637,6 @@ static const char myLanguage[9][69][85] = {
     "FM Noise blanker",
     "Defaults loaded",
     "Audio output",
-    "FM OIRT 30K Step"
+    "FM OIRT 30 kHz steps"
   },
 };
