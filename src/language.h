@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char myLanguage[9][69][85] = {
+static const char myLanguage[9][70][85] = {
   { "English",                        // English
     "Rotary direction changed",
     "Please release button",
@@ -69,7 +69,8 @@ static const char myLanguage[9][69][85] = {
     "FM Noise blanker",
     "Defaults loaded",
     "Audio output",
-    "FM OIRT 30 kHz steps"
+    "FM OIRT 30 kHz steps",
+    "Display color invert"
   },
 
   { "Nederlands",                     // Dutch
@@ -140,7 +141,8 @@ static const char myLanguage[9][69][85] = {
     "FM ruis filter",
     "Opnieuw geconfigureerd",
     "Audio uitgang",
-    "FM OIRT 30 kHz steps"
+    "FM OIRT 30 kHz steps",
+    "Display color invert"
   },
 
   { "Polski",                         // Polish
@@ -211,7 +213,8 @@ static const char myLanguage[9][69][85] = {
     "Reduktor szumow FM",
     "Zaladowano domyslne",
     "Wyjscie dzwieku",
-    "Kroki co 30 kHz na FM OIRT"
+    "Kroki co 30 kHz na FM OIRT",
+    "Display color invert"
   },
 
   { "Hrvatski",                       // Croatian
@@ -282,7 +285,8 @@ static const char myLanguage[9][69][85] = {
     "FM prigušivač šuma",
     "Zadane postavke učitane",
     "Audio izlaz",
-    "FM OIRT 30 kHz steps"
+    "FM OIRT 30 kHz steps",
+    "Display color invert"
   },
 
   { "Ελληνικά",                       // Greek
@@ -353,7 +357,8 @@ static const char myLanguage[9][69][85] = {
     "Απαλοιφή θορύβου FM",
     "Οι προεπιλογές φορτώθηκαν",
     "Έξοδος ήχου",
-    "FM OIRT 30 kHz steps"
+    "FM OIRT 30 kHz steps",
+    "Display color invert"
   },
 
   { "Romana",                         // Romanian
@@ -424,7 +429,8 @@ static const char myLanguage[9][69][85] = {
     "FM Noise blanker",
     "Defaults loaded",
     "Audio output",
-    "FM OIRT 30 kHz steps"
+    "FM OIRT 30 kHz steps",
+    "Display color invert"
   },
 
   { "Deutsch",                        // German
@@ -495,7 +501,8 @@ static const char myLanguage[9][69][85] = {
     "UKW Rauschunterdrücker",
     "Werkseinstellung geladen",
     "Audioausgabe",
-    "UKW OIRT 30 kHz Schritte"
+    "UKW OIRT 30 kHz Schritte",
+    "Display color invert"
   },
 
   { "Czech",                          // Czech
@@ -566,7 +573,8 @@ static const char myLanguage[9][69][85] = {
     "FM Noise blanker",
     "Defaults loaded",
     "Audio output",
-    "FM OIRT 30 kHz steps"
+    "FM OIRT 30 kHz steps",
+    "Display color invert"
   },
 
   { "Slovak",                         // Slovak
@@ -637,6 +645,7 @@ static const char myLanguage[9][69][85] = {
     "FM Noise blanker",
     "Defaults loaded",
     "Audio output",
-    "FM OIRT 30 kHz steps"
+    "FM OIRT 30 kHz steps",
+    "Display color invert"
   },
 };
