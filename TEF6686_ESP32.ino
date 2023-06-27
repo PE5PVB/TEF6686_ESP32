@@ -98,7 +98,7 @@ String salt;
 String saltkey = "                ";
 byte memoryposold;
 byte menupage = 1;
-byte menupagestotal = 3;
+byte menupagestotal = 4;
 byte MSold;
 byte band;
 byte BWset;
@@ -111,6 +111,7 @@ byte iMSset;
 byte memoryband[30];
 byte optenc;
 byte rotarymode;
+byte colorinvert;
 byte SNR;
 byte SNRold;
 byte stepsize;
@@ -232,7 +233,7 @@ WiFiUDP Udp;
 
 void setup() {
   setupmode = true;
-  EEPROM.begin(258);
+  EEPROM.begin(259);
   if (EEPROM.readByte(43) != 27) DefaultSettings();
 
   frequency = EEPROM.readUInt(0);
@@ -282,6 +283,7 @@ void setup() {
   specialstepOIRT = EEPROM.readByte(249);
   LowEdgeOIRTSet = EEPROM.readUInt(250);
   HighEdgeOIRTSet = EEPROM.readUInt(254);
+  colorinvert = EEPROM.readByte(258);
 
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;   // later will read from flash
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX; // later will read from flash
@@ -328,6 +330,7 @@ void setup() {
   }
 
   tft.init();
+  tft.invertDisplay(colorinvert);
 
   if (displayflip == 0) {
 #ifdef ARS
@@ -1252,6 +1255,7 @@ void ModeButtonPress() {
     EEPROM.writeByte(249, specialstepOIRT);
     EEPROM.writeUInt(250, LowEdgeOIRTSet);
     EEPROM.writeUInt(254, HighEdgeOIRTSet);
+    EEPROM.writeByte(258, colorinvert);
     EEPROM.commit();
     Serial.end();
     if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
@@ -1671,6 +1675,15 @@ void ButtonPress() {
               if (specialstepOIRT) tft.drawCentreString("ON", 155, 110, GFXFF); else tft.drawCentreString("OFF", 155, 110, GFXFF);
               break;
           }
+        case 4:
+          switch (menuoption) {
+            case 30:
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][69], 155, 70, GFXFF);
+              tft.setTextColor(TFT_YELLOW);
+              if (colorinvert) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              break;
+          }
       }
     } else {
       if (menupage == 2 && menuoption == 190 && wifi == true) {
@@ -2045,6 +2058,18 @@ void KeyUp() {
               if (specialstepOIRT) tft.drawCentreString("ON", 155, 110, GFXFF); else tft.drawCentreString("OFF", 155, 110, GFXFF);
               break;
           }
+          break;
+        case 4:
+          switch (menuoption) {
+            case 30:
+              tft.setTextColor(TFT_BLACK);
+              if (colorinvert) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              if (colorinvert) colorinvert = 0; else colorinvert = 1;
+              tft.setTextColor(TFT_YELLOW);
+              if (colorinvert) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              break;
+          }
+          break;
       }
     }
   }
@@ -2412,6 +2437,18 @@ void KeyDown() {
               if (specialstepOIRT) tft.drawCentreString("ON", 155, 110, GFXFF); else tft.drawCentreString("OFF", 155, 110, GFXFF);
               break;
           }
+          break;
+        case 4:
+          switch (menuoption) {
+            case 30:
+              tft.setTextColor(TFT_BLACK);
+              if (colorinvert) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              if (colorinvert) colorinvert = 0; else colorinvert = 1;
+              tft.setTextColor(TFT_YELLOW);
+              if (colorinvert) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              break;
+          }
+          break;
       }
     }
   }
@@ -2820,6 +2857,10 @@ void BuildMenu() {
       if (fmnb != 0) tft.drawRightString(String(fmnb, DEC), 265, 170, GFXFF); else tft.drawRightString(myLanguage[language][30], 265, 170, GFXFF);
       if (audiomode) tft.drawRightString("MPX", 305, 190, GFXFF); else tft.drawRightString("Stereo", 305, 190, GFXFF);
       if (specialstepOIRT) tft.drawRightString("ON", 305, 210, GFXFF); else tft.drawRightString("OFF", 305, 210, GFXFF);
+      break;
+    case 4:
+      tft.drawString(myLanguage[language][69], 14, 30, GFXFF);
+      break;
   }
   analogWrite(SMETERPIN, 0);
 }
@@ -2845,6 +2886,7 @@ void MuteScreen(int setting) {
 
 void BuildDisplay() {
   if (theme == 0) {
+    tft.invertDisplay(colorinvert);
     tft.fillScreen(TFT_BLACK);
     tft.drawRect(0, 0, 320, 240, TFT_BLUE);
     tft.drawLine(0, 30, 320, 30, TFT_BLUE);
@@ -4680,6 +4722,7 @@ void DefaultSettings() {
   EEPROM.writeByte(249, 0);
   EEPROM.writeUInt(250, 0);
   EEPROM.writeUInt(254, 0);
+  EEPROM.writeByte(258,1);
 
   EEPROM.commit();
 }
