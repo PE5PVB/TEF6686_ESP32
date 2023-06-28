@@ -315,11 +315,11 @@ void TEF6686::readRDS(bool showrdserrors)
               offset = rds.rdsB & 0x03;                                                         // Let's get the character offset for PS
 
               if (ps_process == true && offset == 8) {                                          // Activates every time character offset is at 0, so whole message is received
-					for (byte i = 0; i < 9; i++) PStext[i] = L'\0';                             // First erase buffer
-					RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t));      // Convert 8 bit ASCII to 16 bit ASCII
-					String utf8String = convertToUTF8(PStext);                                  // Convert RDS characterset to ASCII
-					rds.stationName = utf8String.substring(0, 8);                               // Make sure PS does not exceed 8 characters
-			  }
+                for (byte i = 0; i < 9; i++) PStext[i] = L'\0';                                 // First erase buffer
+                RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t));          // Convert 8 bit ASCII to 16 bit ASCII
+                String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
+                rds.stationName = extractUTF8Substring(utf8String, 0, 8);                       // Make sure PS does not exceed 8 characters
+              }
 
               ps_buffer[(offset * 2)  + 0] = rds.rdsD >> 8;                                     // First character of segment
               ps_buffer[(offset * 2)  + 1] = rds.rdsD & 0xFF;                                   // Second character of segment
@@ -329,9 +329,9 @@ void TEF6686::readRDS(bool showrdserrors)
                 ps_counter ++;                                                                  // Let's count each run
                 RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t));          // Convert 8 bit ASCII to 16 bit ASCII
                 String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
-                rds.stationName = utf8String.substring(0, 8);                                   // Make sure PS does not exceed 8 characters
-                if (ps_counter == 8) ps_process = true;     					                // OK, we had 8 runs, now let's go the idle PS writing
-			  }
+                rds.stationName = extractUTF8Substring(utf8String, 0, 8);
+                if (ps_counter == 8) ps_process = true;                                         // OK, we had 8 runs, now let's go the idle PS writing
+              }
             }
 
             // PTY decoder
@@ -403,6 +403,7 @@ void TEF6686::readRDS(bool showrdserrors)
               wchar_t RTtext[65] = L"";                                                           // Create 16 bit char buffer for Extended ASCII
               RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t));              // Convert 8 bit ASCII to 16 bit ASCII
               rds.stationText = convertToUTF8(RTtext);                                            // Convert RDS characterset to ASCII
+              rds.stationText = extractUTF8Substring(rds.stationText, 0, 64);                     // Make sure PS does not exceed 64 characters
               rds.stationText += " ";                                                             // Add extra space
             }
           } break;
@@ -519,6 +520,44 @@ String TEF6686::convertToUTF8(const wchar_t* input) {
   }
   return output;
 }
+
+String TEF6686::extractUTF8Substring(const String& utf8String, size_t start, size_t length) {
+  String substring;
+  size_t utf8Length = utf8String.length();
+  size_t utf8Index = 0;
+  size_t charIndex = 0;
+
+  while (utf8Index < utf8Length && charIndex < start + length) {
+    uint8_t currentByte = utf8String.charAt(utf8Index);
+    uint8_t numBytes = 0;
+
+    if (currentByte < 0x80) {
+      numBytes = 1;
+    } else if ((currentByte >> 5) == 0x6) {
+      numBytes = 2;
+    } else if ((currentByte >> 4) == 0xE) {
+      numBytes = 3;
+    } else if ((currentByte >> 3) == 0x1E) {
+      numBytes = 4;
+    }
+
+    if (charIndex >= start) {
+      substring += utf8String.substring(utf8Index, utf8Index + numBytes);
+    }
+
+    utf8Index += numBytes;
+    charIndex++;
+  }
+
+  if (rds.underscore) {
+    while (substring.length() < length) {
+      substring += '_';
+    }
+  }
+
+  return substring;
+}
+
 
 void TEF6686::RDScharConverter(const char* input, wchar_t* output, size_t size) {
   for (size_t i = 0; i < size - 1; i++) {

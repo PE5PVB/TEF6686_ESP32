@@ -259,6 +259,7 @@ class TEF6686 {
   private:
     void RDScharConverter(const char* input, wchar_t* output, size_t size);
     String convertToUTF8(const wchar_t* input);
+    String extractUTF8Substring(const String& utf8String, size_t start, size_t length);
     char ps_buffer[9];
     bool ps_process;
     bool rt_process;

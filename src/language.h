@@ -70,7 +70,7 @@ static const char myLanguage[9][70][85] = {
     "Defaults loaded",
     "Audio output",
     "FM OIRT 30 kHz steps",
-    "Display color invert"
+    "Invert display"
   },
 
   { "Nederlands",                     // Dutch
@@ -142,7 +142,7 @@ static const char myLanguage[9][70][85] = {
     "Opnieuw geconfigureerd",
     "Audio uitgang",
     "FM OIRT 30 kHz steps",
-    "Display color invert"
+    "Inverteer scherm"
   },
 
   { "Polski",                         // Polish
