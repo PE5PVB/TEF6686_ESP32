@@ -2457,12 +2457,18 @@ void KeyDown() {
 }
 
 void ShowMemoryPos() {
-  tft.setFreeFont(FONT7);
-  tft.setTextColor(TFT_BLACK);
-  tft.drawString(String(memoryposold + 1), 80, 26, GFXFF);
-  tft.setTextColor(TFT_SKYBLUE);
-  tft.drawString(String(memorypos + 1), 80, 26, GFXFF);
-  memoryposold = memorypos;
+  if (tunemode == TUNE_MEM) {
+    tft.setFreeFont(FONT7);
+    tft.setTextColor(TFT_BLACK);
+    tft.drawString(String(memoryposold + 1), 80, 26, GFXFF);
+    tft.setTextColor(TFT_SKYBLUE);
+    tft.drawString(String(memorypos + 1), 80, 26, GFXFF);
+    memoryposold = memorypos;
+  } else {
+    tft.setFreeFont(FONT7);
+    tft.setTextColor(TFT_BLACK);
+    tft.drawString(String(memorypos + 1), 80, 26, GFXFF);
+  }
 }
 
 void DoMemoryPosTune() {
@@ -3740,6 +3746,7 @@ void doTuneMode() {
       break;
   }
   ShowTuneMode();
+  ShowMemoryPos();
   ShowFreq(0);
   EEPROM.writeByte(41, tunemode);
   EEPROM.commit();
