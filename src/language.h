@@ -285,8 +285,8 @@ static const char myLanguage[9][70][85] = {
     "FM prigušivač šuma",
     "Zadane postavke učitane",
     "Audio izlaz",
-    "FM OIRT 30 kHz steps",
-    "Display color invert"
+    "FM OIRT 30 kHz koraci",
+    "Invertiraj boju zaslona"
   },
 
   { "Ελληνικά",                       // Greek
