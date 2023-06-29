@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char myLanguage[9][70][85] = {
+static const char myLanguage[9][73][85] = {
   { "English",                        // English
     "Rotary direction changed",
     "Please release button",
@@ -70,7 +70,10 @@ static const char myLanguage[9][70][85] = {
     "Defaults loaded",
     "Audio output",
     "FM OIRT 30 kHz steps",
-    "Invert display"
+    "Invert display",
+    "About software",
+    "Main code:",
+    "Contributors:"
   },
 
   { "Nederlands",                     // Dutch
@@ -142,7 +145,10 @@ static const char myLanguage[9][70][85] = {
     "Opnieuw geconfigureerd",
     "Audio uitgang",
     "FM OIRT 30 kHz steps",
-    "Inverteer scherm"
+    "Inverteer scherm",
+    "Over deze software",
+    "Basis code:",
+    "Bijgedragen:"
   },
 
   { "Polski",                         // Polish
@@ -214,7 +220,10 @@ static const char myLanguage[9][70][85] = {
     "Zaladowano domyslne",
     "Wyjscie dzwieku",
     "Kroki co 30 kHz na FM OIRT",
-    "Display color invert"
+    "Display color invert",
+    "About software",
+    "Main code:",
+    "Contributors:"
   },
 
   { "Hrvatski",                       // Croatian
@@ -286,7 +295,10 @@ static const char myLanguage[9][70][85] = {
     "Zadane postavke učitane",
     "Audio izlaz",
     "FM OIRT 30 kHz steps",
-    "Display color invert"
+    "Display color invert",
+    "About software",
+    "Main code:",
+    "Contributors:"
   },
 
   { "Ελληνικά",                       // Greek
@@ -358,7 +370,10 @@ static const char myLanguage[9][70][85] = {
     "Οι προεπιλογές φορτώθηκαν",
     "Έξοδος ήχου",
     "FM OIRT βήματα 30 kHz",
-    "Αναστροφή χρωμάτων οθόνης"
+    "Αναστροφή χρωμάτων οθόνης",
+    "About software",
+    "Main code:",
+    "Contributors:"
   },
 
   { "Romana",                         // Romanian
@@ -430,7 +445,10 @@ static const char myLanguage[9][70][85] = {
     "Defaults loaded",
     "Audio output",
     "FM OIRT 30 kHz steps",
-    "Display color invert"
+    "Display color invert",
+    "About software",
+    "Main code:",
+    "Contributors:"
   },
 
   { "Deutsch",                        // German
@@ -502,7 +520,10 @@ static const char myLanguage[9][70][85] = {
     "Werkseinstellung geladen",
     "Audioausgabe",
     "UKW OIRT 30 kHz Schritte",
-    "Display color invert"
+    "Display color invert",
+    "About software",
+    "Main code:",
+    "Contributors:"
   },
 
   { "Czech",                          // Czech
@@ -574,7 +595,10 @@ static const char myLanguage[9][70][85] = {
     "Defaults loaded",
     "Audio output",
     "FM OIRT 30 kHz steps",
-    "Display color invert"
+    "Display color invert",
+    "About software",
+    "Main code:",
+    "Contributors:"
   },
 
   { "Slovak",                         // Slovak
@@ -646,6 +670,9 @@ static const char myLanguage[9][70][85] = {
     "Defaults loaded",
     "Audio output",
     "FM OIRT 30 kHz steps",
-    "Display color invert"
+    "Display color invert",
+    "About software",
+    "Main code:",
+    "Contributors:"
   },
 };

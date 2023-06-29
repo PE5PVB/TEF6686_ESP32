@@ -39,6 +39,7 @@ TFT_eSPI tft = TFT_eSPI(320, 240);
 TFT_eSPI tft = TFT_eSPI(240, 320);
 #endif
 
+bool batterydetect;
 bool BWreset;
 bool change2;
 bool cleanup;
@@ -346,23 +347,6 @@ void setup() {
 #endif
   }
 
-  TEF = EEPROM.readByte(37);
-
-  if (TEF != 101 && TEF != 102 && TEF != 205) SetTunerPatch();
-
-  radio.init(TEF);
-  uint16_t device;
-  uint16_t hw;
-  uint16_t sw;
-  radio.getIdentification(device, hw, sw);
-  if (TEF != (highByte(hw) * 100 + highByte(sw))) SetTunerPatch();
-
-  analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
-  analogWrite(SMETERPIN, 0);
-
-  radio.getIdentification(device, hw, sw);
-  uint8_t version = highByte(hw) * 100 + highByte(sw);
-
   pinMode(MODEBUTTON, INPUT);
   pinMode(BWBUTTON, INPUT);
   pinMode(ROTARY_BUTTON, INPUT);
@@ -440,38 +424,78 @@ void setup() {
     ESP.restart();
   }
 
+  analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+  analogWrite(SMETERPIN, 0);
+
   tft.setSwapBytes(true);
   tft.fillScreen(TFT_BLACK);
-  tft.pushImage (0, 99, 211, 140, pe5pvblogo);
-  tft.pushImage (239, 200, 80, 30, nxplogo);
-  tft.setFreeFont(FONT14);
   tft.setTextColor(TFT_SKYBLUE);
-  tft.drawCentreString(myLanguage[language][8], 160, 17, GFXFF);
+  tft.setFreeFont(FONT14);
+  tft.drawCentreString(myLanguage[language][8], 160, -5, GFXFF);
   tft.setFreeFont(FONT7);
   tft.setTextColor(TFT_YELLOW);
-  tft.drawCentreString("Software " + String(VERSION), 160, 48, GFXFF);
+  tft.drawCentreString("Software " + String(VERSION), 160, 148, GFXFF);
+
+  tft.fillCircle(160, 90, 60, TFT_RED);
+  tft.fillCircle(160, 90, 52, TFT_BLACK);
+  tft.drawBitmap(130, 80, TEFLogo, 59, 23, TFT_YELLOW);
+
+  tft.fillRect(120, 230, 16, 6, TFT_GREYOUT);
+  tft.fillRect(152, 230, 16, 6, TFT_GREYOUT);
+  tft.fillRect(184, 230, 16, 6, TFT_GREYOUT);
+
+  TEF = EEPROM.readByte(37);
+
+  if (TEF != 101 && TEF != 102 && TEF != 205) SetTunerPatch();
+
+  radio.init(TEF);
+  uint16_t device;
+  uint16_t hw;
+  uint16_t sw;
+  radio.getIdentification(device, hw, sw);
+  if (TEF != (highByte(hw) * 100 + highByte(sw))) SetTunerPatch();
+  tft.fillRect(120, 230, 16, 6, TFT_YELLOW);
+
+  radio.getIdentification(device, hw, sw);
+  uint8_t version = highByte(hw) * 100 + highByte(sw);
+
+  tft.setFreeFont(FONT14);
   tft.setTextColor(TFT_WHITE);
-  tft.drawString("Lithio", 260, 191, GFXFF);
 
   if (lowByte(device) == 14) {
     fullsearchrds = false;
-    tft.drawString("Tuner: TEF6686 Lithio (" + String(version) + ")", 80, 64, GFXFF);
+    tft.fillRect(152, 230, 16, 6, TFT_YELLOW);
+    tft.drawCentreString("TEF6686 Lithio", 160, 160, GFXFF);
   } else if (lowByte(device) == 1) {
     fullsearchrds = true;
-    tft.drawString("Tuner: TEF6687 Lithio FMSI (" + String(version) + ")", 80, 64, GFXFF);
+    tft.fillRect(152, 230, 16, 6, TFT_YELLOW);
+    tft.drawCentreString("TEF6687 Lithio FMSI", 160, 160, GFXFF);
   } else if (lowByte(device) == 9) {
     fullsearchrds = false;
-    tft.drawString("Tuner: TEF6688 Lithio DR (" + String(version) + ")", 80, 64, GFXFF);
+    tft.fillRect(152, 230, 16, 6, TFT_YELLOW);
+    tft.drawCentreString("TEF6688 Lithio DR", 160, 160, GFXFF);
   } else if (lowByte(device) == 3) {
     fullsearchrds = true;
-    tft.drawString("Tuner: TEF6689 Lithio FMSI DR (" + String(version) + ")", 80, 64, GFXFF);
+    tft.fillRect(152, 230, 16, 6, TFT_YELLOW);
+    tft.drawCentreString("TEF6689 Lithio FMSI DR", 160, 160, GFXFF);
   } else {
     tft.setTextColor(TFT_RED);
-    tft.drawString(myLanguage[language][9], 80, 64, GFXFF);
+    tft.drawCentreString(myLanguage[language][9], 160, 160, GFXFF);
+    tft.fillRect(152, 230, 16, 6, TFT_RED);
     while (true);
     for (;;);
   }
-  tft.drawString("Patch: v" + String(TEF), 80, 79, GFXFF);
+  tft.drawCentreString("Patch: v" + String(TEF), 160, 190, GFXFF);
+
+  if (wifi == true) {
+    tryWiFi();
+    tft.fillRect(184, 230, 16, 6, TFT_YELLOW);
+    delay(2000);
+  } else {
+    Server.end();
+    Udp.stop();
+    tft.fillRect(184, 230, 16, 6, TFT_RED);
+  }
   delay(1500);
 
   radio.setVolume(VolSet);
@@ -497,14 +521,7 @@ void setup() {
     Wire.endTransmission();
   }
 
-  if (wifi == true) {
-    tryWiFi();
-    delay(2000);
-  } else {
-    Server.end();
-    Udp.stop();
-  }
-
+  if (analogRead(BATTERY_PIN) < 200) batterydetect = false;
   SelectBand();
   ShowSignalLevel();
   ShowBW();
@@ -1682,6 +1699,24 @@ void ButtonPress() {
               tft.drawCentreString(myLanguage[language][69], 155, 70, GFXFF);
               tft.setTextColor(TFT_YELLOW);
               if (colorinvert) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              break;
+
+            case 50:
+              tft.setTextColor(TFT_YELLOW);
+              tft.drawCentreString(myLanguage[language][71], 155, 30, GFXFF);
+              tft.drawCentreString(myLanguage[language][72], 155, 80, GFXFF);
+              tft.setFreeFont(FONT7);
+              tft.setTextColor(TFT_SKYBLUE);
+              tft.drawCentreString("PE5PVB", 155, 60, GFXFF);
+              tft.drawRightString("ohmytime", 145, 110, GFXFF);
+              tft.drawRightString("HyperDX", 145, 125, GFXFF);
+              tft.drawString("MCelliotG", 155, 110, GFXFF);
+              tft.drawString("andimik", 155, 125, GFXFF);
+              tft.drawRightString("DXHR05", 145, 140, GFXFF);
+              tft.drawRightString("NoobishSVK", 145, 155, GFXFF);
+              tft.drawString("yo2ldk", 155, 140, GFXFF);
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString("https://github.com/PE5PVB/TEF6686_ESP32", 155, 175, GFXFF);
               break;
           }
       }
@@ -2868,6 +2903,9 @@ void BuildMenu() {
       break;
     case 4:
       tft.drawString(myLanguage[language][69], 14, 30, GFXFF);
+      tft.drawString(myLanguage[language][70], 14, 50, GFXFF);
+      tft.setTextColor(TFT_YELLOW);
+      if (colorinvert) tft.drawRightString(myLanguage[language][42], 305, 30, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 30, GFXFF);
       break;
   }
   analogWrite(SMETERPIN, 0);
@@ -3851,23 +3889,19 @@ void ShowRSSI() {
 }
 
 void ShowBattery() {
-  if (analogRead(BATTERY_PIN) < 200) {
-    if (batteryold != battery) {
-      tft.drawRect(300, 8, 12, 20, TFT_GREYOUT);
-      tft.fillRect(303, 4, 6, 4, TFT_GREYOUT);
-      tft.fillRect(302, 10, 8, 16, TFT_BLACK);
-      battery = 0;
-      batteryold = battery;
-    }
-  } else {
-    battery = map(constrain(analogRead(BATTERY_PIN), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, BAT_LEVEL_STAGE);
-    if (batteryold != battery) {
+  battery = map(constrain(analogRead(BATTERY_PIN), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, BAT_LEVEL_STAGE);
+  if (batteryold != battery) {
+    if (batterydetect) {
       tft.drawRect(300, 8, 12, 20, TFT_WHITE);
       tft.fillRect(303, 4, 6, 4, TFT_WHITE);
       tft.fillRect(302, 10, 8, 16, TFT_BLACK);
       tft.fillRect(302, 26 - (battery * 4), 8, battery * 4, TFT_GREEN);
-      batteryold = battery;
+    } else {
+      tft.drawRect(300, 8, 12, 20, TFT_GREYOUT);
+      tft.fillRect(303, 4, 6, 4, TFT_GREYOUT);
+      tft.fillRect(302, 10, 8, 16, TFT_BLACK);
     }
+    batteryold = battery;
   }
 }
 

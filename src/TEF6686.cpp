@@ -236,7 +236,7 @@ void TEF6686::readRDS(bool showrdserrors)
     }
   }
 
-  if (rds.rdsB != rdsBprevious && rds.rdsC != rdsCprevious && rds.rdsD != rdsDprevious) {
+  if (rds.rdsB != rdsBprevious) {
     rds.correct = false;
     rds.hasRDS = false;
 
@@ -314,23 +314,27 @@ void TEF6686::readRDS(bool showrdserrors)
             if (showrdserrors || rds.correct) {
               offset = rds.rdsB & 0x03;                                                         // Let's get the character offset for PS
 
-              if (ps_process == true && offset == 8) {                                          // Activates every time character offset is at 0, so whole message is received
-                for (byte i = 0; i < 9; i++) PStext[i] = L'\0';                                 // First erase buffer
-                RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t));          // Convert 8 bit ASCII to 16 bit ASCII
-                String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
-                rds.stationName = extractUTF8Substring(utf8String, 0, 8);                       // Make sure PS does not exceed 8 characters
-              }
+              ps_buffer2[(offset * 2) + 0] = ps_buffer[(offset * 2) + 0];                       // Make a copy of the PS buffer
+              ps_buffer2[(offset * 2) + 1] = ps_buffer[(offset * 2) + 1];
 
               ps_buffer[(offset * 2)  + 0] = rds.rdsD >> 8;                                     // First character of segment
               ps_buffer[(offset * 2)  + 1] = rds.rdsD & 0xFF;                                   // Second character of segment
               ps_buffer[(offset * 2)  + 2] = '\0';                                              // Endmarker of segment
+
+              if (offset == 3 && ps_process == true) {                                          // Last chars are received
+                if (ps_buffer != ps_buffer2) {                                                  // When difference between old and new, let's go...
+                  RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t));        // Convert 8 bit ASCII to 16 bit ASCII
+                  String utf8String = convertToUTF8(PStext);                                    // Convert RDS characterset to ASCII
+                  rds.stationName = extractUTF8Substring(utf8String, 0, 8);                     // Make sure PS does not exceed 8 characters
+                }
+              }
 
               if (ps_process == false) {                                                        // Let's get 2 runs of 8 PS characters fast and without refresh
                 ps_counter ++;                                                                  // Let's count each run
                 RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t));          // Convert 8 bit ASCII to 16 bit ASCII
                 String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
                 rds.stationName = extractUTF8Substring(utf8String, 0, 8);
-                if (ps_counter == 8) ps_process = true;                                         // OK, we had 8 runs, now let's go the idle PS writing
+                if (ps_counter == 6) ps_process = true;                                         // OK, we had 2 runs, now let's go the idle PS writing
               }
             }
 
