@@ -444,9 +444,71 @@ void TEF6686::readRDS(bool showrdserrors)
             }
           } break;
 
-        case RDS_GROUP_14A:
-          rds.hasEON = true;                                // Group is there, so we have EON
-          break;
+        case RDS_GROUP_10A:
+        case RDS_GROUP_10B:
+        case RDS_GROUP_11A:
+        case RDS_GROUP_11B:
+        case RDS_GROUP_12A:
+        case RDS_GROUP_12B: {
+            uint16_t  content_byte_1 = (rds.rdsB & 0x07);
+            content_byte_1 = (content_byte_1  << 0x03);
+            content_byte_1 += (rds.rdsC >> 0x0D);
+            uint16_t  content_byte_2 = (rds.rdsC & 0x01);
+            content_byte_2 = (content_byte_2 << 0x05);
+            content_byte_2 += (rds.rdsD >> 0x0B);
+            uint16_t  start_marker_1 = (rds.rdsC >> 0x07);
+            start_marker_1 = (start_marker_1 & 0x3F);
+            uint16_t length_marker_1 = (rds.rdsC >> 0x01);
+            length_marker_1 = (length_marker_1  & 0x3F);
+            uint16_t start_marker_2 = (rds.rdsD >> 0x05);
+            start_marker_2 = (start_marker_2 & 0x3F);
+            uint16_t length_marker_2 = (rds.rdsD & 0x1F);
+            rds.hasRDSplus   = true;
+
+            if (content_byte_1 == 0x04) {                                                                   // Artist
+              rds.hasMusicArtist = true;
+              for (int i = 0; i <= length_marker_1; i++)rds.musicArtist[i] = rt_buffer2[i + start_marker_1];
+              rds.musicArtist[length_marker_1 + 1] = 0;
+            } else if (content_byte_1 == 0x01) {                                                            // Title
+              rds.hasMusicTitle = true;
+              for (int i = 0; i <= length_marker_1; i++)rds.musicTitle[i] = rt_buffer2[i + start_marker_1];
+              rds.musicTitle[length_marker_1 + 1] = 0;
+            }
+
+            if (content_byte_2 == 0x04) {                                                                   // Artist
+              rds.hasMusicArtist = true;
+              for (int i = 0; i <= length_marker_2; i++)rds.musicArtist[i] = rt_buffer2[i + start_marker_2];
+              rds.musicArtist[length_marker_2 + 1] = 0;
+            } else if (content_byte_2 == 0x01) {                                                            // Title
+              rds.hasMusicTitle = true;
+              for (int i = 0; i <= length_marker_2; i++)rds.musicTitle[i] = rt_buffer2[i + start_marker_2];
+              rds.musicTitle[length_marker_2 + 1] = 0;
+            }
+
+            if (content_byte_1 == 0x24) {                                                                   // Host
+              rds.hasStationHost = true;
+              for (int i = 0; i <= length_marker_1; i++)rds.stationHost[i] = rt_buffer2[i + start_marker_1];
+              rds.stationHost[length_marker_1 + 1] = 0;
+            } else if (content_byte_2 == 0x24) {                                                            // Host
+              rds.hasStationHost = true;
+              for (int i = 0; i <= length_marker_2; i++)rds.stationHost[i] = rt_buffer2[i + start_marker_2];
+              rds.stationHost[length_marker_2 + 1] = 0;
+            }
+
+            if (content_byte_1 == 0x21) {                                                                   // Event
+              rds.hasStationEvent = true;
+              for (int i = 0; i <= length_marker_1; i++)rds.stationEvent[i] = rt_buffer2[i + start_marker_1];
+              rds.stationEvent[length_marker_1 + 1] = 0;
+            } else if (content_byte_2 == 0x21) {                                                            // Event
+              rds.hasStationEvent = true;
+              for (int i = 0; i <= length_marker_2; i++)rds.stationEvent[i] = rt_buffer2[i + start_marker_2];
+              rds.stationEvent[length_marker_2 + 1] = 0;
+            }
+          } break;
+
+        case RDS_GROUP_14A: {
+            rds.hasEON = true;                                                                              // Group is there, so we have EON
+          } break;
       }
     }
     rdsBprevious = rds.rdsB;
@@ -475,6 +537,14 @@ void TEF6686::clearRDS (bool fullsearchrds)
   for (i = 0; i < 17; i++) rds.stationType[i] = 0;
   for (i = 0; i < 6; i++) rds.picode[i] = 0;
   for (i = 0; i < 50; i++) af[i].frequency = 0;
+
+  for (i = 0; i < 32; i++) {
+    rds.musicArtist[i] = 0;
+    rds.musicTitle[i] = 0;
+    rds.stationEvent[i] = 0;
+    rds.stationHost[i] = 0;
+  }
+
   rds.ECC = 0;
   rds.stationTypeCode = 32;
   rds.hasECC = false;
@@ -488,6 +558,10 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rt_process = false;
   ps_process = false;
   rds.rdsreset = true;
+  rds.hasMusicTitle = false;
+  rds.hasMusicArtist = false;
+  rds.hasStationEvent = false;
+  rds.hasStationHost = false;
   correctpi = false;
   ps_counter = 0;
   af_counter = 0;

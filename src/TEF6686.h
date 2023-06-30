@@ -99,6 +99,10 @@ typedef struct _rds_ {
   String stationText;
   char stationType[17];
   char picode[6];
+  char musicTitle[48];
+    char musicArtist[48];
+  char stationHost[48];
+  char stationEvent[48];
   uint16_t hours, minutes, days, months, years, offsetplusmin, rdsA, rdsB, rdsC, rdsD, rdsErr;
   int8_t offset;
   int ECC;
@@ -115,6 +119,11 @@ typedef struct _rds_ {
   bool hasAF;
   bool hasCT;
   bool rtAB;
+  bool hasRDSplus;
+  bool hasMusicTitle;
+  bool hasMusicArtist;
+  bool hasStationHost;
+  bool hasStationEvent;
   bool correct;
   bool filter;
   bool underscore;
@@ -183,6 +192,7 @@ class TEF6686 {
     bool ps_process;
     bool rt_process;
     char rt_buffer[65];
+	char rt_buffer2[65];
     bool useRTPlus = true;
     bool checkDouble (uint16_t value);
     bool ABold;

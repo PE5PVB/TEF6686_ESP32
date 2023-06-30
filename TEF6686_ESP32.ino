@@ -4677,23 +4677,23 @@ void read_encoder() {
 }
 
 void tryWiFi() {
-  tft.drawRoundRect(1, 60, 319, 140, 5, TFT_WHITE);
-  tft.fillRoundRect(3, 62, 315, 136, 5, TFT_BLACK);
-  tft.setFreeFont(FONT14);
-  tft.setTextColor(TFT_WHITE);
-  tft.drawCentreString(myLanguage[language][55], 155, 80, GFXFF);
+  if (!setupmode) tft.drawRoundRect(1, 60, 319, 140, 5, TFT_WHITE);
+  if (!setupmode) tft.fillRoundRect(3, 62, 315, 136, 5, TFT_BLACK);
+  if (!setupmode) tft.setFreeFont(FONT14);
+  if (!setupmode) tft.setTextColor(TFT_WHITE);
+  if (!setupmode) tft.drawCentreString(myLanguage[language][55], 155, 80, GFXFF);
   if (wc.autoConnect()) {
     Server.begin();
     Udp.begin(9031);
     remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
-    tft.setTextColor(TFT_GREEN);
-    tft.drawCentreString(myLanguage[language][57], 155, 120, GFXFF);
+    if (!setupmode) tft.setTextColor(TFT_GREEN);
+    if (!setupmode) tft.drawCentreString(myLanguage[language][57], 155, 120, GFXFF);
     wifi = true;
   } else {
     Server.end();
     Udp.stop();
-    tft.setTextColor(TFT_RED);
-    tft.drawCentreString(myLanguage[language][56], 155, 120, GFXFF);
+    if (!setupmode) tft.setTextColor(TFT_RED);
+    if (!setupmode) tft.drawCentreString(myLanguage[language][56], 155, 120, GFXFF);
     wifi = false;
     XDRGTKTCP = false;
     RDSSPYTCP = false;
