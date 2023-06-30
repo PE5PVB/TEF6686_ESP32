@@ -371,9 +371,9 @@ static const char myLanguage[9][73][85] = {
     "Έξοδος ήχου",
     "FM OIRT βήματα 30 kHz",
     "Αναστροφή χρωμάτων οθόνης",
-    "About software",
-    "Main code:",
-    "Contributors:"
+    "Πληροφορίες λογισμικού",
+    "Κύριος κώδικας:",
+    "Συνεργάτες:"
   },
 
   { "Romana",                         // Romanian
