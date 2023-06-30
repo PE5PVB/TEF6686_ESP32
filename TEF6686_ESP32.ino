@@ -39,7 +39,7 @@ TFT_eSPI tft = TFT_eSPI(320, 240);
 TFT_eSPI tft = TFT_eSPI(240, 320);
 #endif
 
-bool batterydetect;
+bool batterydetect = true;
 bool BWreset;
 bool change2;
 bool cleanup;
@@ -355,6 +355,9 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
 
+  analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+  analogWrite(SMETERPIN, 0);
+
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH) {
     if (rotarymode == 0) rotarymode = 1; else rotarymode = 0;
     EEPROM.writeByte(39, rotarymode);
@@ -423,9 +426,6 @@ void setup() {
     while (digitalRead(ROTARY_BUTTON) == LOW && digitalRead(BWBUTTON) == LOW) delay(50);
     ESP.restart();
   }
-
-  analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
-  analogWrite(SMETERPIN, 0);
 
   tft.setSwapBytes(true);
   tft.fillScreen(TFT_BLACK);
@@ -521,7 +521,7 @@ void setup() {
     Wire.endTransmission();
   }
 
-  if (analogRead(BATTERY_PIN) < 200) batterydetect = false;
+  if (analogRead(BATTERY_PIN) < 200) batterydetect = false; 
   SelectBand();
   ShowSignalLevel();
   ShowBW();
