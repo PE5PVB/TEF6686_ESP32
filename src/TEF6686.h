@@ -97,12 +97,12 @@ typedef struct _rds_ {
   byte MS;
   String stationName;
   String stationText;
+  String RTArtist;
+  String RTTitle;
+  String RTHost;
+  String RTEvent;
   char stationType[17];
   char picode[6];
-  char musicTitle[48];
-    char musicArtist[48];
-  char stationHost[48];
-  char stationEvent[48];
   uint16_t hours, minutes, days, months, years, offsetplusmin, rdsA, rdsB, rdsC, rdsD, rdsErr;
   int8_t offset;
   int ECC;
@@ -120,10 +120,10 @@ typedef struct _rds_ {
   bool hasCT;
   bool rtAB;
   bool hasRDSplus;
-  bool hasMusicTitle;
-  bool hasMusicArtist;
-  bool hasStationHost;
-  bool hasStationEvent;
+  bool hasTitle;
+  bool hasArtist;
+  bool hasHost;
+  bool hasEvent;
   bool correct;
   bool filter;
   bool underscore;
@@ -184,15 +184,15 @@ class TEF6686 {
     bool mute;
 
   private:
-    void RDScharConverter(const char* input, wchar_t* output, size_t size);
+    void RDScharConverter(const char* input, wchar_t* output, size_t size, bool under);
     String convertToUTF8(const wchar_t* input);
-    String extractUTF8Substring(const String& utf8String, size_t start, size_t length);
+    String extractUTF8Substring(const String& utf8String, size_t start, size_t length, bool under);
     char ps_buffer[9];
-	char ps_buffer2[9];
+    char ps_buffer2[9];
     bool ps_process;
     bool rt_process;
     char rt_buffer[65];
-	char rt_buffer2[65];
+    char rt_buffer2[65];
     bool useRTPlus = true;
     bool checkDouble (uint16_t value);
     bool ABold;
@@ -205,4 +205,8 @@ class TEF6686 {
     bool rtABold;
     wchar_t PStext[9] = L"";
     byte ps_counter;
+    char musicArtist[45];
+    char musicTitle[45];
+    char stationHost[45];
+    char stationEvent[45];
 };

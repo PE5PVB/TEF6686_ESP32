@@ -323,17 +323,17 @@ void TEF6686::readRDS(bool showrdserrors)
 
               if (offset == 3 && ps_process == true) {                                          // Last chars are received
                 if (ps_buffer != ps_buffer2) {                                                  // When difference between old and new, let's go...
-                  RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t));        // Convert 8 bit ASCII to 16 bit ASCII
+                  RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), true);        // Convert 8 bit ASCII to 16 bit ASCII
                   String utf8String = convertToUTF8(PStext);                                    // Convert RDS characterset to ASCII
-                  rds.stationName = extractUTF8Substring(utf8String, 0, 8);                     // Make sure PS does not exceed 8 characters
+                  rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);                     // Make sure PS does not exceed 8 characters
                 }
               }
 
               if (ps_process == false) {                                                        // Let's get 2 runs of 8 PS characters fast and without refresh
                 ps_counter ++;                                                                  // Let's count each run
-                RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t));          // Convert 8 bit ASCII to 16 bit ASCII
+                RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), true);          // Convert 8 bit ASCII to 16 bit ASCII
                 String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
-                rds.stationName = extractUTF8Substring(utf8String, 0, 8);
+                rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);
                 if (ps_counter == 6) ps_process = true;                                         // OK, we had 2 runs, now let's go the idle PS writing
               }
             }
@@ -345,31 +345,33 @@ void TEF6686::readRDS(bool showrdserrors)
               if (rds.region == 1) strcpy(rds.stationType, PTY_USA[rds.stationTypeCode]);
             }
 
-            //TA decoder
-            rds.hasTA = (bitRead(rds.rdsB, 4)) && (bitRead(rds.rdsB, 10)) & 0x1F;               // Read TA flag
+            if (rds.correct) {
+              //TA decoder
+              rds.hasTA = (bitRead(rds.rdsB, 4)) && (bitRead(rds.rdsB, 10)) & 0x1F;               // Read TA flag
 
-            //MS decoder
-            if (((bitRead(rds.rdsB, 3)) & 0x1F) == 1) rds.MS = 1; else rds.MS = 2;              // Read MS flag
+              //MS decoder
+              if (((bitRead(rds.rdsB, 3)) & 0x1F) == 1) rds.MS = 1; else rds.MS = 2;              // Read MS flag
 
-            //AF decoder
-            uint8_t  af_controlCode = rds.rdsC >> 8;
-            if ((af_controlCode < 224) && (af_counter < 50)) {
-              uint16_t buffer0 = (rds.rdsC >> 8);
-              uint16_t buffer1 = (rds.rdsC & 0xFF);
-              rds.hasAF = true;
-              if (buffer0 != 0 && buffer1 != 0) {
-                buffer0 = buffer0 * 10 + 8750;
-                buffer1 = buffer1 * 10 + 8750;
-                bool isDouble = false;
-                isDouble = checkDouble(buffer0);
-                if (!isDouble && buffer0 != 0) {
-                  af[af_counter].frequency = buffer0;
-                  af_counter++;
-                }
-                isDouble = checkDouble(buffer1);
-                if (!isDouble && buffer1 != 0) {
-                  af[af_counter].frequency = buffer1;
-                  af_counter++;
+              //AF decoder
+              uint8_t  af_controlCode = rds.rdsC >> 8;
+              if ((af_controlCode < 224) && (af_counter < 50)) {
+                uint16_t buffer0 = (rds.rdsC >> 8);
+                uint16_t buffer1 = (rds.rdsC & 0xFF);
+                rds.hasAF = true;
+                if (buffer0 != 0 && buffer1 != 0) {
+                  buffer0 = buffer0 * 10 + 8750;
+                  buffer1 = buffer1 * 10 + 8750;
+                  bool isDouble = false;
+                  isDouble = checkDouble(buffer0);
+                  if (!isDouble && buffer0 != 0) {
+                    af[af_counter].frequency = buffer0;
+                    af_counter++;
+                  }
+                  isDouble = checkDouble(buffer1);
+                  if (!isDouble && buffer1 != 0) {
+                    af[af_counter].frequency = buffer1;
+                    af_counter++;
+                  }
                 }
               }
             }
@@ -405,10 +407,12 @@ void TEF6686::readRDS(bool showrdserrors)
               rt_buffer[offset + 3] = rds.rdsD & 0xff;                                            // Fourth character of segment
 
               wchar_t RTtext[65] = L"";                                                           // Create 16 bit char buffer for Extended ASCII
-              RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t));              // Convert 8 bit ASCII to 16 bit ASCII
+              RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);              // Convert 8 bit ASCII to 16 bit ASCII
               rds.stationText = convertToUTF8(RTtext);                                            // Convert RDS characterset to ASCII
-              rds.stationText = extractUTF8Substring(rds.stationText, 0, 64);                     // Make sure PS does not exceed 64 characters
+              rds.stationText = extractUTF8Substring(rds.stationText, 0, 64, true);                     // Make sure RT does not exceed 64 characters
               rds.stationText += " ";                                                             // Add extra space
+
+              for (int i = 0; i < 64; i++) rt_buffer2[i]   = rt_buffer[i];
             }
           } break;
 
@@ -450,64 +454,95 @@ void TEF6686::readRDS(bool showrdserrors)
         case RDS_GROUP_11B:
         case RDS_GROUP_12A:
         case RDS_GROUP_12B: {
-            uint16_t  content_byte_1 = (rds.rdsB & 0x07);
-            content_byte_1 = (content_byte_1  << 0x03);
-            content_byte_1 += (rds.rdsC >> 0x0D);
-            uint16_t  content_byte_2 = (rds.rdsC & 0x01);
-            content_byte_2 = (content_byte_2 << 0x05);
-            content_byte_2 += (rds.rdsD >> 0x0B);
-            uint16_t  start_marker_1 = (rds.rdsC >> 0x07);
-            start_marker_1 = (start_marker_1 & 0x3F);
-            uint16_t length_marker_1 = (rds.rdsC >> 0x01);
-            length_marker_1 = (length_marker_1  & 0x3F);
-            uint16_t start_marker_2 = (rds.rdsD >> 0x05);
-            start_marker_2 = (start_marker_2 & 0x3F);
-            uint16_t length_marker_2 = (rds.rdsD & 0x1F);
-            rds.hasRDSplus   = true;
+            if (rds.correct) {
+              uint16_t  content_byte_1 = (rds.rdsB & 0x07);
+              content_byte_1 = (content_byte_1  << 0x03);
+              content_byte_1 += (rds.rdsC >> 0x0D);
+              uint16_t  content_byte_2 = (rds.rdsC & 0x01);
+              content_byte_2 = (content_byte_2 << 0x05);
+              content_byte_2 += (rds.rdsD >> 0x0B);
+              uint16_t  start_marker_1 = (rds.rdsC >> 0x07);
+              start_marker_1 = (start_marker_1 & 0x3F);
+              uint16_t length_marker_1 = (rds.rdsC >> 0x01);
+              length_marker_1 = (length_marker_1  & 0x3F);
+              uint16_t start_marker_2 = (rds.rdsD >> 0x05);
+              start_marker_2 = (start_marker_2 & 0x3F);
+              uint16_t length_marker_2 = (rds.rdsD & 0x1F);
+              rds.hasRDSplus   = true;
 
-            if (content_byte_1 == 0x04) {                                                                   // Artist
-              rds.hasMusicArtist = true;
-              for (int i = 0; i <= length_marker_1; i++)rds.musicArtist[i] = rt_buffer2[i + start_marker_1];
-              rds.musicArtist[length_marker_1 + 1] = 0;
-            } else if (content_byte_1 == 0x01) {                                                            // Title
-              rds.hasMusicTitle = true;
-              for (int i = 0; i <= length_marker_1; i++)rds.musicTitle[i] = rt_buffer2[i + start_marker_1];
-              rds.musicTitle[length_marker_1 + 1] = 0;
+              if (content_byte_1 == 0x04) {                                                                   // Artist
+                rds.hasArtist = true;
+                for (int i = 0; i <= length_marker_1; i++)musicArtist[i] = rt_buffer2[i + start_marker_1];
+                musicArtist[length_marker_1 + 1] = 0;
+              } else if (content_byte_1 == 0x01) {                                                            // Title
+                rds.hasTitle = true;
+                for (int i = 0; i <= length_marker_1; i++)musicTitle[i] = rt_buffer2[i + start_marker_1];
+                musicTitle[length_marker_1 + 1] = 0;
+              }
+
+              if (content_byte_2 == 0x04) {                                                                   // Artist
+                rds.hasArtist = true;
+                for (int i = 0; i <= length_marker_2; i++)musicArtist[i] = rt_buffer2[i + start_marker_2];
+                musicArtist[length_marker_2 + 1] = 0;
+              } else if (content_byte_2 == 0x01) {                                                            // Title
+                rds.hasTitle = true;
+                for (int i = 0; i <= length_marker_2; i++)musicTitle[i] = rt_buffer2[i + start_marker_2];
+                musicTitle[length_marker_2 + 1] = 0;
+              }
+
+              if (content_byte_1 == 0x24) {                                                                   // Host
+                rds.hasHost = true;
+                for (int i = 0; i <= length_marker_1; i++)stationHost[i] = rt_buffer2[i + start_marker_1];
+                stationHost[length_marker_1 + 1] = 0;
+              } else if (content_byte_2 == 0x24) {                                                            // Host
+                rds.hasHost = true;
+                for (int i = 0; i <= length_marker_2; i++)stationHost[i] = rt_buffer2[i + start_marker_2];
+                stationHost[length_marker_2 + 1] = 0;
+              }
+
+              if (content_byte_1 == 0x21) {                                                                   // Event
+                rds.hasEvent = true;
+                for (int i = 0; i <= length_marker_1; i++)stationEvent[i] = rt_buffer2[i + start_marker_1];
+                stationEvent[length_marker_1 + 1] = 0;
+              } else if (content_byte_2 == 0x21) {                                                            // Event
+                rds.hasEvent = true;
+                for (int i = 0; i <= length_marker_2; i++)stationEvent[i] = rt_buffer2[i + start_marker_2];
+                stationEvent[length_marker_2 + 1] = 0;
+              }
             }
 
-            if (content_byte_2 == 0x04) {                                                                   // Artist
-              rds.hasMusicArtist = true;
-              for (int i = 0; i <= length_marker_2; i++)rds.musicArtist[i] = rt_buffer2[i + start_marker_2];
-              rds.musicArtist[length_marker_2 + 1] = 0;
-            } else if (content_byte_2 == 0x01) {                                                            // Title
-              rds.hasMusicTitle = true;
-              for (int i = 0; i <= length_marker_2; i++)rds.musicTitle[i] = rt_buffer2[i + start_marker_2];
-              rds.musicTitle[length_marker_2 + 1] = 0;
+            if (rds.hasArtist) {
+              wchar_t RTtext[33] = L"";                                                                     // Create 16 bit char buffer for Extended ASCII
+              RDScharConverter(musicArtist, RTtext, sizeof(RTtext) / sizeof(wchar_t), false);               // Convert 8 bit ASCII to 16 bit ASCII
+              rds.RTArtist = convertToUTF8(RTtext);                                                         // Convert RDS characterset to ASCII
+              rds.RTArtist = extractUTF8Substring(rds.RTArtist, 0, 33, false);                              // Make sure RT does not exceed 32 characters
             }
 
-            if (content_byte_1 == 0x24) {                                                                   // Host
-              rds.hasStationHost = true;
-              for (int i = 0; i <= length_marker_1; i++)rds.stationHost[i] = rt_buffer2[i + start_marker_1];
-              rds.stationHost[length_marker_1 + 1] = 0;
-            } else if (content_byte_2 == 0x24) {                                                            // Host
-              rds.hasStationHost = true;
-              for (int i = 0; i <= length_marker_2; i++)rds.stationHost[i] = rt_buffer2[i + start_marker_2];
-              rds.stationHost[length_marker_2 + 1] = 0;
+            if (rds.hasTitle) {
+              wchar_t RTtext[45] = L"";                                                                     // Create 16 bit char buffer for Extended ASCII
+              RDScharConverter(musicTitle, RTtext, sizeof(RTtext) / sizeof(wchar_t), false);                // Convert 8 bit ASCII to 16 bit ASCII
+              rds.RTTitle = convertToUTF8(RTtext);                                                          // Convert RDS characterset to ASCII
+              rds.RTTitle = extractUTF8Substring(rds.RTTitle, 0, 44, false);                                // Make sure RT does not exceed 32 characters
             }
 
-            if (content_byte_1 == 0x21) {                                                                   // Event
-              rds.hasStationEvent = true;
-              for (int i = 0; i <= length_marker_1; i++)rds.stationEvent[i] = rt_buffer2[i + start_marker_1];
-              rds.stationEvent[length_marker_1 + 1] = 0;
-            } else if (content_byte_2 == 0x21) {                                                            // Event
-              rds.hasStationEvent = true;
-              for (int i = 0; i <= length_marker_2; i++)rds.stationEvent[i] = rt_buffer2[i + start_marker_2];
-              rds.stationEvent[length_marker_2 + 1] = 0;
+            if (rds.hasEvent) {
+              wchar_t RTtext[45] = L"";                                                                     // Create 16 bit char buffer for Extended ASCII
+              RDScharConverter(stationEvent, RTtext, sizeof(RTtext) / sizeof(wchar_t), false);              // Convert 8 bit ASCII to 16 bit ASCII
+              rds.RTEvent = convertToUTF8(RTtext);                                                          // Convert RDS characterset to ASCII
+              rds.RTEvent = extractUTF8Substring(rds.RTEvent, 0, 44, false);                                // Make sure RT does not exceed 32 characters
             }
-          } break;
+
+            if (rds.hasHost) {
+              wchar_t RTtext[45] = L"";                                                                     // Create 16 bit char buffer for Extended ASCII
+              RDScharConverter(stationHost, RTtext, sizeof(RTtext) / sizeof(wchar_t), false);               // Convert 8 bit ASCII to 16 bit ASCII
+              rds.RTHost = convertToUTF8(RTtext);                                                           // Convert RDS characterset to ASCII
+              rds.RTHost = extractUTF8Substring(rds.RTHost, 0, 44, false);                                  // Make sure RT does not exceed 32 characters
+            }
+          }
+          break;
 
         case RDS_GROUP_14A: {
-            rds.hasEON = true;                                                                              // Group is there, so we have EON
+            if (rds.correct) rds.hasEON = true;                                                             // Group is there, so we have EON
           } break;
       }
     }
@@ -529,6 +564,10 @@ void TEF6686::clearRDS (bool fullsearchrds)
   uint8_t i;
   rds.stationName = "";
   rds.stationText = "";
+  rds.RTArtist = "";
+  rds.RTTitle = "";
+  rds.RTHost = "";
+  rds.RTEvent = "";
   for (i = 0; i < 9; i++) {
     ps_buffer[i] = 0;
     PStext[i] = L'\0';
@@ -538,11 +577,11 @@ void TEF6686::clearRDS (bool fullsearchrds)
   for (i = 0; i < 6; i++) rds.picode[i] = 0;
   for (i = 0; i < 50; i++) af[i].frequency = 0;
 
-  for (i = 0; i < 32; i++) {
-    rds.musicArtist[i] = 0;
-    rds.musicTitle[i] = 0;
-    rds.stationEvent[i] = 0;
-    rds.stationHost[i] = 0;
+  for (i = 0; i < 45; i++) {
+    musicArtist[i] = 0;
+    musicTitle[i] = 0;
+    stationEvent[i] = 0;
+    stationHost[i] = 0;
   }
 
   rds.ECC = 0;
@@ -558,10 +597,10 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rt_process = false;
   ps_process = false;
   rds.rdsreset = true;
-  rds.hasMusicTitle = false;
-  rds.hasMusicArtist = false;
-  rds.hasStationEvent = false;
-  rds.hasStationHost = false;
+  rds.hasTitle = false;
+  rds.hasArtist = false;
+  rds.hasEvent = false;
+  rds.hasHost = false;
   correctpi = false;
   ps_counter = 0;
   af_counter = 0;
@@ -599,7 +638,7 @@ String TEF6686::convertToUTF8(const wchar_t* input) {
   return output;
 }
 
-String TEF6686::extractUTF8Substring(const String& utf8String, size_t start, size_t length) {
+String TEF6686::extractUTF8Substring(const String& utf8String, size_t start, size_t length, bool under) {
   String substring;
   size_t utf8Length = utf8String.length();
   size_t utf8Index = 0;
@@ -627,7 +666,7 @@ String TEF6686::extractUTF8Substring(const String& utf8String, size_t start, siz
     charIndex++;
   }
 
-  if (rds.underscore) {
+  if (under && rds.underscore) {
     while (substring.length() < length) {
       substring += '_';
     }
@@ -637,11 +676,11 @@ String TEF6686::extractUTF8Substring(const String& utf8String, size_t start, siz
 }
 
 
-void TEF6686::RDScharConverter(const char* input, wchar_t* output, size_t size) {
+void TEF6686::RDScharConverter(const char* input, wchar_t* output, size_t size, bool under) {
   for (size_t i = 0; i < size - 1; i++) {
     char currentChar = input[i];
     switch (currentChar) {
-      case 0x20: if (rds.underscore) output[i] = L'_'; else output[i] = L' '; break;
+      case 0x20: if (under && rds.underscore) output[i] = L'_'; else output[i] = L' '; break;
       case 0x21 ... 0x5D: output[i] = static_cast<wchar_t>(currentChar); break;
       case 0x5E: output[i] = L'―'; break;
       case 0x5F: output[i] = L'_'; break;
