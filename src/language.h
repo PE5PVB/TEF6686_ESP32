@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char myLanguage[9][73][85] = {
+static const char myLanguage[9][74][85] = {
   { "English",                        // English
     "Rotary direction changed",
     "Please release button",
@@ -73,7 +73,8 @@ static const char myLanguage[9][73][85] = {
     "Invert display",
     "About software",
     "Main code:",
-    "Contributors:"
+    "Contributors:",
+	"Unknown"
   },
 
   { "Nederlands",                     // Dutch
@@ -148,7 +149,8 @@ static const char myLanguage[9][73][85] = {
     "Inverteer scherm",
     "Over deze software",
     "Basis code:",
-    "Bijgedragen:"
+    "Bijgedragen:",
+	"Onbekend"
   },
 
   { "Polski",                         // Polish
@@ -223,7 +225,8 @@ static const char myLanguage[9][73][85] = {
     "Display color invert",
     "About software",
     "Main code:",
-    "Contributors:"
+    "Contributors:",
+	"Unknown"
   },
 
   { "Hrvatski",                       // Croatian
@@ -298,7 +301,8 @@ static const char myLanguage[9][73][85] = {
     "Invertiraj boju zaslona",
     "About software",
     "Main code:",
-    "Contributors:"
+    "Contributors:",
+	"Unknown"
   },
 
   { "Ελληνικά",                       // Greek
@@ -373,7 +377,8 @@ static const char myLanguage[9][73][85] = {
     "Αναστροφή χρωμάτων οθόνης",
     "Πληροφορίες λογισμικού",
     "Κύριος κώδικας:",
-    "Συνεργάτες:"
+    "Συνεργάτες:",
+	"Unknown"
   },
 
   { "Romana",                         // Romanian
@@ -448,7 +453,8 @@ static const char myLanguage[9][73][85] = {
     "Display color invert",
     "About software",
     "Main code:",
-    "Contributors:"
+    "Contributors:",
+	"Unknown"
   },
 
   { "Deutsch",                        // German
@@ -523,7 +529,8 @@ static const char myLanguage[9][73][85] = {
     "Anzeigefarben umkehren",
     "Über diese Software",
     "Hauptcode:",
-    "Mitwirkende:"
+    "Mitwirkende:",
+	"Unknown"
   },
 
   { "Czech",                          // Czech
@@ -598,7 +605,8 @@ static const char myLanguage[9][73][85] = {
     "Display color invert",
     "About software",
     "Main code:",
-    "Contributors:"
+    "Contributors:",
+	"Unknown"
   },
 
   { "Slovak",                         // Slovak
@@ -673,6 +681,7 @@ static const char myLanguage[9][73][85] = {
     "Display color invert",
     "About software",
     "Main code:",
-    "Contributors:"
+    "Contributors:",
+	"Unknown"
   },
 };

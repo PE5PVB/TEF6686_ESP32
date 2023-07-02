@@ -521,7 +521,7 @@ void setup() {
     Wire.endTransmission();
   }
 
-  if (analogRead(BATTERY_PIN) < 200) batterydetect = false; 
+  if (analogRead(BATTERY_PIN) < 200) batterydetect = false;
   SelectBand();
   ShowSignalLevel();
   ShowBW();
@@ -2598,18 +2598,17 @@ void showAF() {
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
       Udp.print("AF=");
-    }
-    for (byte af_scan = 0; af_scan < radio.af_counter; af_scan++) {
-      if (wifi) {
-        if ((radio.af[af_scan].frequency - 8750) / 10 < 0x10) {
-          Udp.print("0");
-        }
-        Udp.print((radio.af[af_scan].frequency - 8750) / 10, HEX);
-      }
-    }
-    af_counterold = radio.af_counter;
 
-    if (wifi) {
+      for (byte af_scan = 0; af_scan < radio.af_counter; af_scan++) {
+        if (wifi) {
+          if ((radio.af[af_scan].frequency - 8750) / 10 < 0x10) {
+            Udp.print("0");
+          }
+          Udp.print((radio.af[af_scan].frequency - 8750) / 10, HEX);
+        }
+      }
+      af_counterold = radio.af_counter;
+
       for (int i = 0; i < 25 - radio.af_counter; i++) Udp.print("00");
       Udp.endPacket();
     }
@@ -2618,6 +2617,86 @@ void showAF() {
 
 void showECC() {
   if (ECCold != radio.rds.ECC) {
+    String ECC;
+    if (radio.rds.picode[0] == '1') {
+      if (radio.rds.ECC == 224) ECC = "GER";
+      if (radio.rds.ECC == 225) ECC = "GR";
+      if (radio.rds.ECC == 226) ECC = "MA";
+      if (radio.rds.ECC == 228) ECC = "MD";
+    } else if (radio.rds.picode[0] == '2') {
+      if (radio.rds.ECC == 224) ECC = "ALG";
+      if (radio.rds.ECC == 225) ECC = "CYP";
+      if (radio.rds.ECC == 226) ECC = "CZE";
+      if (radio.rds.ECC == 227) ECC = "IE";
+      if (radio.rds.ECC == 228) ECC = "EE";
+    } else if (radio.rds.picode[0] == '3') {
+      if (radio.rds.ECC == 224) ECC = "AND";
+      if (radio.rds.ECC == 225) ECC = "SM";
+      if (radio.rds.ECC == 226) ECC = "PL";
+      if (radio.rds.ECC == 227) ECC = "TR";
+    } else if (radio.rds.picode[0] == '4') {
+      if (radio.rds.ECC == 224) ECC = "IL";
+      if (radio.rds.ECC == 225) ECC = "CH";
+      if (radio.rds.ECC == 226) ECC = "VA";
+      if (radio.rds.ECC == 227) ECC = "MK";
+    } else if (radio.rds.picode[0] == '5') {
+      if (radio.rds.ECC == 224) ECC = "IT";
+      if (radio.rds.ECC == 225) ECC = "JO";
+      if (radio.rds.ECC == 226) ECC = "SK";
+    } else if (radio.rds.picode[0] == '6') {
+      if (radio.rds.ECC == 224) ECC = "BEL";
+      if (radio.rds.ECC == 225) ECC = "FI";
+      if (radio.rds.ECC == 226) ECC = "SY";
+      if (radio.rds.ECC == 227) ECC = "YU";
+      if (radio.rds.ECC == 228) ECC = "UA";
+    } else if (radio.rds.picode[0] == '7') {
+      if (radio.rds.ECC == 224) ECC = "RU";
+      if (radio.rds.ECC == 225) ECC = "LU";
+      if (radio.rds.ECC == 226) ECC = "TN";
+    } else if (radio.rds.picode[0] == '8') {
+      if (radio.rds.ECC == 224) ECC = "AZR";
+      if (radio.rds.ECC == 225) ECC = "BUL";
+      if (radio.rds.ECC == 226) ECC = "PT";
+      if (radio.rds.ECC == 227) ECC = "NL";
+      if (radio.rds.ECC == 228) ECC = "PT";
+    } else if (radio.rds.picode[0] == '9') {
+      if (radio.rds.ECC == 224) ECC = "ALB";
+      if (radio.rds.ECC == 225) ECC = "DNK";
+      if (radio.rds.ECC == 226) ECC = "LI";
+      if (radio.rds.ECC == 227) ECC = "LV";
+      if (radio.rds.ECC == 228) ECC = "SI";
+    } else if (radio.rds.picode[0] == 'A') {
+      if (radio.rds.ECC == 224) ECC = "AUT";
+      if (radio.rds.ECC == 225) ECC = "GI";
+      if (radio.rds.ECC == 226) ECC = "IS";
+      if (radio.rds.ECC == 227) ECC = "LB";
+    } else if (radio.rds.picode[0] == 'B') {
+      if (radio.rds.ECC == 224) ECC = "HU";
+      if (radio.rds.ECC == 225) ECC = "IQ";
+      if (radio.rds.ECC == 226) ECC = "MC";
+    } else if (radio.rds.picode[0] == 'C') {
+      if (radio.rds.ECC == 224) ECC = "MT";
+      if (radio.rds.ECC == 225) ECC = "GB";
+      if (radio.rds.ECC == 226) ECC = "LT";
+      if (radio.rds.ECC == 227) ECC = "HRV";
+    } else if (radio.rds.picode[0] == 'D') {
+      if (radio.rds.ECC == 224) ECC = "DE";
+      if (radio.rds.ECC == 225) ECC = "LY";
+    } else if (radio.rds.picode[0] == 'E') {
+      if (radio.rds.ECC == 224) ECC = "CNR";
+      if (radio.rds.ECC == 225) ECC = "RO";
+      if (radio.rds.ECC == 226) ECC = "ES";
+      if (radio.rds.ECC == 227) ECC = "SE";
+    } else if (radio.rds.picode[0] == 'F') {
+      if (radio.rds.ECC == 224) ECC = "EG";
+      if (radio.rds.ECC == 225) ECC = "FR";
+      if (radio.rds.ECC == 226) ECC = "NO";
+      if (radio.rds.ECC == 227) ECC = "BLR";
+      if (radio.rds.ECC == 228) ECC = "BIH";
+    } else {
+      ECC = myLanguage[language][73];
+    }
+
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
       Udp.print("ECC=");
