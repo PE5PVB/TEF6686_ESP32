@@ -1692,6 +1692,8 @@ void ButtonPress() {
               if (specialstepOIRT) tft.drawCentreString("ON", 155, 110, GFXFF); else tft.drawCentreString("OFF", 155, 110, GFXFF);
               break;
           }
+          break;
+
         case 4:
           switch (menuoption) {
             case 30:
@@ -1720,6 +1722,7 @@ void ButtonPress() {
               tft.drawCentreString("https://github.com/PE5PVB/TEF6686_ESP32", 155, 175, GFXFF);
               break;
           }
+          break;
       }
     } else {
       if (menupage == 2 && menuoption == 190 && wifi == true) {
