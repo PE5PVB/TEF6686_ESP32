@@ -299,10 +299,10 @@ static const char myLanguage[9][74][85] = {
     "Audio izlaz",
     "FM OIRT 30 kHz koraci",
     "Invertiraj boju zaslona",
-    "About software",
-    "Main code:",
-    "Contributors:",
-	"Unknown"
+    "O softveru",
+    "Glavni izvorni kod:",
+    "Suradnici:",
+	"Nepoznato"
   },
 
   { "Ελληνικά",                       // Greek
