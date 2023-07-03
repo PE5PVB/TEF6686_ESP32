@@ -1715,6 +1715,7 @@ void ButtonPress() {
               tft.drawRightString("DXHR05", 145, 140, GFXFF);
               tft.drawRightString("NoobishSVK", 145, 155, GFXFF);
               tft.drawString("yo2ldk", 155, 140, GFXFF);
+              tft.drawString("Justin_Peng(Portable)", 155, 155, GFXFF);
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString("https://github.com/PE5PVB/TEF6686_ESP32", 155, 175, GFXFF);
               break;
