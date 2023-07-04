@@ -1690,7 +1690,7 @@ void ButtonPress() {
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][68], 155, 70, GFXFF);
               tft.setTextColor(TFT_YELLOW);
-              if (specialstepOIRT) tft.drawCentreString("ON", 155, 110, GFXFF); else tft.drawCentreString("OFF", 155, 110, GFXFF);
+              if (specialstepOIRT) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
           }
           break;

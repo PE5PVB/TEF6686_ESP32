@@ -101,6 +101,7 @@ typedef struct _rds_ {
   String RTTitle;
   String RTHost;
   String RTEvent;
+  String PTYN;
   char stationType[18];
   char picode[6];
   uint16_t hours, minutes, days, months, years, offsetplusmin, rdsA, rdsB, rdsC, rdsD, rdsErr;
@@ -189,6 +190,7 @@ class TEF6686 {
     String extractUTF8Substring(const String& utf8String, size_t start, size_t length, bool under);
     char ps_buffer[9];
     char ps_buffer2[9];
+	char ptyn_buffer[9];
     bool ps_process;
     bool rt_process;
     char rt_buffer[65];
@@ -203,6 +205,7 @@ class TEF6686 {
     uint16_t rdsDprevious;
     bool rtABold;
     wchar_t PStext[9] = L"";
+	wchar_t PTYNtext[9] = L"";
     byte ps_counter;
     char musicArtist[45];
     char musicTitle[45];

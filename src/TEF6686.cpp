@@ -306,7 +306,7 @@ void TEF6686::readRDS(bool showrdserrors)
 
       switch (rds.rdsB >> 11) {
         case RDS_GROUP_0A:
-        case RDS_GROUP_0B: {
+          {
 
             //PS decoder
             if (showrdserrors || rds.correct) {
@@ -417,6 +417,7 @@ void TEF6686::readRDS(bool showrdserrors)
         case RDS_GROUP_4A:
         case RDS_GROUP_4B: {
             if (rds.correct) {
+              // CT
               uint32_t mjd;
               rds.hasCT = true;
               mjd = (rds.rdsB & 0x03);
@@ -446,7 +447,21 @@ void TEF6686::readRDS(bool showrdserrors)
             }
           } break;
 
-        case RDS_GROUP_10A:
+        case RDS_GROUP_10A: {
+            if (rds.correct) {
+              // PTYN
+              offset = bitRead(rds.rdsB, 0);                                                                // Get char offset
+
+              ptyn_buffer[(offset * 4) + 0] = rds.rdsC >> 8;                                                // Get position 1 and 5
+              ptyn_buffer[(offset * 4) + 1] = rds.rdsC & 0xFF;                                              // Get position 2 and 6
+              ptyn_buffer[(offset * 4) + 2] = rds.rdsD >> 8;                                                // Get position 3 and 7
+              ptyn_buffer[(offset * 4) + 3] = rds.rdsD & 0xFF;                                              // Get position 4 and 8
+              RDScharConverter(ptyn_buffer, PTYNtext, sizeof(PTYNtext) / sizeof(wchar_t), false);           // Convert 8 bit ASCII to 16 bit ASCII
+              String utf8String = convertToUTF8(PTYNtext);                                                  // Convert RDS characterset to ASCII
+              rds.PTYN = extractUTF8Substring(utf8String, 0, 8, false);                                     // Make sure text is not longer than 8 chars
+            }
+          } break;
+
         case RDS_GROUP_10B:
         case RDS_GROUP_11A:
         case RDS_GROUP_11B:
@@ -541,7 +556,8 @@ void TEF6686::readRDS(bool showrdserrors)
 
         case RDS_GROUP_14A: {
             if (rds.correct) rds.hasEON = true;                                                             // Group is there, so we have EON
-          } break;
+          }
+          break;
       }
     }
     rdsBprevious = rds.rdsB;
@@ -569,6 +585,8 @@ void TEF6686::clearRDS (bool fullsearchrds)
   for (i = 0; i < 9; i++) {
     ps_buffer[i] = 0;
     PStext[i] = L'\0';
+    ptyn_buffer[i] = 0;
+    PTYNtext[i] = L'\0';
   }
   for (i = 0; i < 65; i++) rt_buffer[i] = 0;
   for (i = 0; i < 18; i++) rds.stationType[i] = 0;
@@ -635,7 +653,7 @@ String TEF6686::convertToUTF8(const wchar_t* input) {
   return output;
 }
 
-String TEF6686::extractUTF8Substring(const String& utf8String, size_t start, size_t length, bool under) {
+String TEF6686::extractUTF8Substring(const String & utf8String, size_t start, size_t length, bool under) {
   String substring;
   size_t utf8Length = utf8String.length();
   size_t utf8Index = 0;
