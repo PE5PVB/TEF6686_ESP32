@@ -111,6 +111,10 @@ typedef struct _rds_ {
   bool rdsBerror;
   bool rdsCerror;
   bool rdsDerror;
+  bool hasArtificialhead;
+  bool hasCompressed;
+  bool hasDynamicPTY;
+  bool hasStereo;
   bool hasRDS;
   bool hasECC;
   bool hasRT;

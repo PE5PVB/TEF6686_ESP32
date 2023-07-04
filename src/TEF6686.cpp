@@ -307,7 +307,7 @@ void TEF6686::readRDS(bool showrdserrors)
       switch (rds.rdsB >> 11) {
         case RDS_GROUP_0A:
           {
-
+            //      Serial.println(rds.rdsB,BIN);
             //PS decoder
             if (showrdserrors || rds.correct) {
               offset = rds.rdsB & 0x03;                                                         // Let's get the character offset for PS
@@ -321,19 +321,24 @@ void TEF6686::readRDS(bool showrdserrors)
 
               if (offset == 3 && ps_process == true) {                                          // Last chars are received
                 if (ps_buffer != ps_buffer2) {                                                  // When difference between old and new, let's go...
-                  RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), true);        // Convert 8 bit ASCII to 16 bit ASCII
+                  RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), true);  // Convert 8 bit ASCII to 16 bit ASCII
                   String utf8String = convertToUTF8(PStext);                                    // Convert RDS characterset to ASCII
-                  rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);                     // Make sure PS does not exceed 8 characters
+                  rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);               // Make sure PS does not exceed 8 characters
                 }
               }
 
               if (ps_process == false) {                                                        // Let's get 2 runs of 8 PS characters fast and without refresh
                 ps_counter ++;                                                                  // Let's count each run
-                RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), true);          // Convert 8 bit ASCII to 16 bit ASCII
+                RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), true);    // Convert 8 bit ASCII to 16 bit ASCII
                 String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
                 rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);
                 if (ps_counter == 6) ps_process = true;                                         // OK, we had 2 runs, now let's go the idle PS writing
               }
+
+              if (offset == 0) rds.hasDynamicPTY = bitRead(rds.rdsB, 2) & 0x1F;                 // Dynamic PTY flag
+              if (offset == 1) rds.hasCompressed = bitRead(rds.rdsB, 2) & 0x1F;                 // Compressed flag
+              if (offset == 2) rds.hasArtificialhead = bitRead(rds.rdsB, 2) & 0x1F;             // Artificial head flag
+              if (offset == 3) rds.hasStereo = bitRead(rds.rdsB, 2) & 0x1F;                     // Stereo flag
             }
 
             // PTY decoder
@@ -617,6 +622,10 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.hasArtist = false;
   rds.hasEvent = false;
   rds.hasHost = false;
+  rds.hasArtificialhead = false;
+  rds.hasCompressed = false;
+  rds.hasDynamicPTY = false;
+  rds.hasStereo = false;
   ps_counter = 0;
   af_counter = 0;
   rds.MS = 0;
