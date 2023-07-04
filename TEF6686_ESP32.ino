@@ -84,6 +84,7 @@ byte audiomode;
 byte band;
 byte battery;
 byte batteryold;
+int batupdatetimer;
 byte BWset;
 byte colorinvert;
 byte ContrastSet;
@@ -3972,13 +3973,27 @@ void ShowRSSI() {
 }
 
 void ShowBattery() {
-  battery = map(constrain(analogRead(BATTERY_PIN), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, BAT_LEVEL_STAGE);
+  if (millis() >= batupdatetimer + TIMER_BAT_TIMER) {
+    batupdatetimer = millis();
+  } else {
+    return;
+  }
+
+  int16_t batteryadc = analogRead(BATTERY_PIN);
+  battery = map(constrain(batteryadc, BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, BAT_LEVEL_STAGE);
   if (batteryold != battery) {
     if (batterydetect) {
-      tft.drawRect(300, 8, 12, 20, TFT_WHITE);
-      tft.fillRect(303, 4, 6, 4, TFT_WHITE);
-      tft.fillRect(302, 10, 8, 16, TFT_BLACK);
-      tft.fillRect(302, 26 - (battery * 4), 8, battery * 4, TFT_GREEN);
+      if (batteryadc < BAT_LEVEL_WARN) {
+        tft.drawRect(300, 8, 12, 20, TFT_RED);
+        tft.fillRect(303, 4, 6, 4, TFT_RED);
+        tft.fillRect(302, 10, 8, 16, TFT_BLACK);
+        tft.fillRect(302, 26 - (battery * 4), 8, battery * 4, TFT_GREEN);
+      } else {
+        tft.drawRect(300, 8, 12, 20, TFT_WHITE);
+        tft.fillRect(303, 4, 6, 4, TFT_WHITE);
+        tft.fillRect(302, 10, 8, 16, TFT_BLACK);
+        tft.fillRect(302, 26 - (battery * 4), 8, battery * 4, TFT_GREEN);
+      }
     } else {
       tft.drawRect(300, 8, 12, 20, TFT_GREYOUT);
       tft.fillRect(303, 4, 6, 4, TFT_GREYOUT);
