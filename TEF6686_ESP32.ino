@@ -120,7 +120,7 @@ byte TEF;
 byte theme;
 byte tunemode;
 char buff[16];
-char programTypePrevious[17];
+char programTypePrevious[18];
 char radioIdPrevious[6];
 int AGC;
 int BWOld;
@@ -272,7 +272,7 @@ void setup() {
   subnetclient = EEPROM.readByte(56);
   showSWMIBand = EEPROM.readByte(57);
   radio.rds.filter = EEPROM.readByte(58);
-  radio.rds.dynamicpi = EEPROM.readByte(59);
+  radio.rds.pierrors = EEPROM.readByte(59);
   frequency_LW = EEPROM.readUInt(221);
   frequency_MW = EEPROM.readUInt(225);
   frequency_SW = EEPROM.readUInt(229);
@@ -1264,7 +1264,7 @@ void ModeButtonPress() {
     EEPROM.writeByte(56, subnetclient);
     EEPROM.writeByte(57, showSWMIBand);
     EEPROM.writeByte(58, radio.rds.filter);
-    EEPROM.writeByte(59, radio.rds.dynamicpi);
+    EEPROM.writeByte(59, radio.rds.pierrors);
     EEPROM.writeByte(244, showsquelch);
     EEPROM.writeByte(245, showmodulation);
     EEPROM.writeByte(246, amnb);
@@ -1646,7 +1646,7 @@ void ButtonPress() {
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][61], 155, 70, GFXFF);
               tft.setTextColor(TFT_YELLOW);
-              if (radio.rds.dynamicpi) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              if (radio.rds.pierrors) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
             case 110:
@@ -2026,10 +2026,10 @@ void KeyUp() {
 
             case 90:
               tft.setTextColor(TFT_BLACK);
-              if (radio.rds.dynamicpi) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
-              if (radio.rds.dynamicpi) radio.rds.dynamicpi = false; else radio.rds.dynamicpi = true;
+              if (radio.rds.pierrors) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              if (radio.rds.pierrors) radio.rds.pierrors = false; else radio.rds.pierrors = true;
               tft.setTextColor(TFT_YELLOW);
-              if (radio.rds.dynamicpi) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              if (radio.rds.pierrors) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
             case 110:
@@ -2406,10 +2406,10 @@ void KeyDown() {
 
             case 90:
               tft.setTextColor(TFT_BLACK);
-              if (radio.rds.dynamicpi) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
-              if (radio.rds.dynamicpi) radio.rds.dynamicpi = false; else radio.rds.dynamicpi = true;
+              if (radio.rds.pierrors) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              if (radio.rds.pierrors) radio.rds.pierrors = false; else radio.rds.pierrors = true;
               tft.setTextColor(TFT_YELLOW);
-              if (radio.rds.dynamicpi) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              if (radio.rds.pierrors) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
             case 110:
@@ -2977,7 +2977,7 @@ void BuildMenu() {
       tft.drawRightString(String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 305, 30, GFXFF);
       if (showSWMIBand) tft.drawRightString(myLanguage[language][42], 305, 50, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 50, GFXFF);
       if (radio.rds.filter) tft.drawRightString(myLanguage[language][42], 305, 70, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 70, GFXFF);
-      if (radio.rds.dynamicpi) tft.drawRightString(myLanguage[language][42], 305, 90, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 90, GFXFF);
+      if (radio.rds.pierrors) tft.drawRightString(myLanguage[language][42], 305, 90, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 90, GFXFF);
       if (showsquelch) tft.drawRightString(myLanguage[language][42], 305, 110, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 110, GFXFF);
       if (showmodulation) tft.drawRightString(myLanguage[language][42], 305, 130, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 130, GFXFF);
       if (amnb != 0) tft.drawRightString(String(amnb, DEC), 265, 150, GFXFF); else tft.drawRightString(myLanguage[language][30], 265, 150, GFXFF);

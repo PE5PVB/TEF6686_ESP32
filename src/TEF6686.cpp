@@ -251,7 +251,7 @@ void TEF6686::readRDS(bool showrdserrors)
     if (rdsReady) {                                                                                   // We have all data to decode... let's go...
 
       //PI decoder
-      if (rds.region != 1 && (!correctpi || rds.dynamicpi)) {
+      if (rds.region != 1 && (rds.correct || rds.pierrors)) {
         rds.picode[0] = (rds.rdsA >> 12) & 0xF;
         rds.picode[1] = (rds.rdsA >> 8) & 0xF;
         rds.picode[2] = (rds.rdsA >> 4) & 0xF;
@@ -266,10 +266,8 @@ void TEF6686::readRDS(bool showrdserrors)
 
         if (!rds.correct) rds.picode[4] = '?'; else rds.picode[4] = ' ';                              // Not sure, add a ?
         rds.picode[5] = '\0';
-        correctpi = rds.correct;
         if (strcmp(rds.picode, "0000?") == 0) {
           memset(rds.picode, 0, sizeof(rds.picode));
-          correctpi = rds.correct;
         }
       }
 
@@ -573,7 +571,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
     PStext[i] = L'\0';
   }
   for (i = 0; i < 65; i++) rt_buffer[i] = 0;
-  for (i = 0; i < 17; i++) rds.stationType[i] = 0;
+  for (i = 0; i < 18; i++) rds.stationType[i] = 0;
   for (i = 0; i < 6; i++) rds.picode[i] = 0;
   for (i = 0; i < 50; i++) af[i].frequency = 0;
 
@@ -601,7 +599,6 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.hasArtist = false;
   rds.hasEvent = false;
   rds.hasHost = false;
-  correctpi = false;
   ps_counter = 0;
   af_counter = 0;
   rds.MS = 0;

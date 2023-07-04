@@ -19,7 +19,7 @@ enum RADIO_TUNE_MODE {
   TUNE_MAN, TUNE_AUTO, TUNE_MEM, TUNE_MI_BAND
 };
 
-const char* const PTY_EU[] {
+static const char* const PTY_EU[] {
   "None",
   "News",
   "Current Affairs",
@@ -52,10 +52,10 @@ const char* const PTY_EU[] {
   "Documentary",
   "Alarm Test",
   "Alarm!!!",
-  "                "
+  " "
 };
 
-const char* const PTY_USA[] {
+static const char* const PTY_USA[] {
   "None",
   "News",
   "Information",
@@ -88,7 +88,7 @@ const char* const PTY_USA[] {
   "Weather",
   "Emergency Test",
   "EMERGENCY!",
-  "                "
+  " "
 };
 
 typedef struct _rds_ {
@@ -101,7 +101,7 @@ typedef struct _rds_ {
   String RTTitle;
   String RTHost;
   String RTEvent;
-  char stationType[17];
+  char stationType[18];
   char picode[6];
   uint16_t hours, minutes, days, months, years, offsetplusmin, rdsA, rdsB, rdsC, rdsD, rdsErr;
   int8_t offset;
@@ -128,7 +128,7 @@ typedef struct _rds_ {
   bool filter;
   bool underscore;
   bool rdsreset;
-  bool dynamicpi;
+  bool pierrors;
 } rds_;
 
 typedef struct _af_ {
@@ -201,7 +201,6 @@ class TEF6686 {
     uint16_t rdsBprevious;
     uint16_t rdsCprevious;
     uint16_t rdsDprevious;
-    bool correctpi;
     bool rtABold;
     wchar_t PStext[9] = L"";
     byte ps_counter;
