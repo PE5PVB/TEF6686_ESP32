@@ -195,6 +195,7 @@ class TEF6686 {
     char ps_buffer[9];
     char ps_buffer2[9];
 	char ptyn_buffer[9];
+	char eon_buffer[9];
     bool ps_process;
     bool rt_process;
     char rt_buffer[65];

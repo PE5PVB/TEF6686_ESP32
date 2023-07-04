@@ -562,7 +562,41 @@ void TEF6686::readRDS(bool showrdserrors)
         case RDS_GROUP_14A: {
             if (rds.correct) rds.hasEON = true;                                                             // Group is there, so we have EON
           }
-          break;
+/*		                offset = rds.rdsB & 0x0F;                                                         // Let's get the character offset for PS
+			if (offset < 4 && rds.rdsD == 0x8202) {
+              eon_buffer[(offset * 2)  + 0] = rds.rdsC >> 8;                                     // First character of segment
+              eon_buffer[(offset * 2)  + 1] = rds.rdsC & 0xFF;                                   // Second character of segment
+              eon_buffer[(offset * 2)  + 2] = '\0';                                              // Endmarker of segment
+//			  Serial.println(eon_buffer);
+			}
+			
+			if (offset == 4 && rds.rdsD == 0x8202) {
+			uint8_t  af_controlCode = rds.rdsC >> 8;
+              if ((af_controlCode < 224) && (af_counter < 50)) {
+                uint16_t buffer0 = (rds.rdsC >> 8);
+                uint16_t buffer1 = (rds.rdsC & 0xFF);
+                rds.hasAF = true;
+                if (buffer0 != 0 && buffer1 != 0) {
+                  buffer0 = buffer0 * 10 + 8750;
+                  buffer1 = buffer1 * 10 + 8750;
+                  bool isDouble = false;
+                  isDouble = checkDouble(buffer0);
+                  if (!isDouble && buffer0 != 0) {
+                    af[af_counter].frequency = buffer0;
+                    af_counter++;
+                  }
+                  isDouble = checkDouble(buffer1);
+                  if (!isDouble && buffer1 != 0) {
+                    af[af_counter].frequency = buffer1;
+                    af_counter++;
+                  }
+                }
+              }
+			  Serial.println(String(af[0].frequency));
+			  Serial.println(String(af[1].frequency));
+			  Serial.println(String(af[2].frequency));
+			}
+*/          break;
       }
     }
     rdsBprevious = rds.rdsB;
