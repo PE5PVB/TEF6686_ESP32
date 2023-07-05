@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char myLanguage[9][77][85] = {
+static const char myLanguage[9][78][85] = {
   { "English",                        // English
     "Rotary direction changed",
     "Please release button",
@@ -77,7 +77,8 @@ static const char myLanguage[9][77][85] = {
     "Unknown",
     "Power options",
     "Deep sleep",
-    "Screen off"
+    "Screen off",
+    "Theme"
   },
 
   { "Nederlands",                     // Dutch
