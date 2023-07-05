@@ -31,6 +31,7 @@ void TEF6686::power(bool mode) {
 
 void TEF6686::SetFreq(uint16_t frequency) {
   devTEF_Radio_Tune_To(frequency);
+  currentfreq = frequency;
 }
 
 void TEF6686::SetFreqAM(uint16_t frequency) {
@@ -561,42 +562,47 @@ void TEF6686::readRDS(bool showrdserrors)
 
         case RDS_GROUP_14A: {
             if (rds.correct) rds.hasEON = true;                                                             // Group is there, so we have EON
-          }
-/*		                offset = rds.rdsB & 0x0F;                                                         // Let's get the character offset for PS
-			if (offset < 4 && rds.rdsD == 0x8202) {
-              eon_buffer[(offset * 2)  + 0] = rds.rdsC >> 8;                                     // First character of segment
-              eon_buffer[(offset * 2)  + 1] = rds.rdsC & 0xFF;                                   // Second character of segment
-              eon_buffer[(offset * 2)  + 2] = '\0';                                              // Endmarker of segment
-//			  Serial.println(eon_buffer);
+
+			bool isValuePresent = false;
+			for (int i = 0; i < 5; i++) {
+				if (eon[i].pi == rds.rdsD) {
+					isValuePresent = true;
+					break;
+				}
 			}
+
+			if (!isValuePresent) {
+				eon[eon_counter].pi = rds.rdsD;
+				eon_counter++;
+			}		
 			
-			if (offset == 4 && rds.rdsD == 0x8202) {
-			uint8_t  af_controlCode = rds.rdsC >> 8;
-              if ((af_controlCode < 224) && (af_counter < 50)) {
-                uint16_t buffer0 = (rds.rdsC >> 8);
-                uint16_t buffer1 = (rds.rdsC & 0xFF);
-                rds.hasAF = true;
-                if (buffer0 != 0 && buffer1 != 0) {
-                  buffer0 = buffer0 * 10 + 8750;
-                  buffer1 = buffer1 * 10 + 8750;
-                  bool isDouble = false;
-                  isDouble = checkDouble(buffer0);
-                  if (!isDouble && buffer0 != 0) {
-                    af[af_counter].frequency = buffer0;
-                    af_counter++;
-                  }
-                  isDouble = checkDouble(buffer1);
-                  if (!isDouble && buffer1 != 0) {
-                    af[af_counter].frequency = buffer1;
-                    af_counter++;
-                  }
-                }
-              }
-			  Serial.println(String(af[0].frequency));
-			  Serial.println(String(af[1].frequency));
-			  Serial.println(String(af[2].frequency));
+			offset = rds.rdsB & 0x0F;
+			if (offset < 4) {
+				byte position;
+				for (position = 0; position < 5; position++) {
+					if (eon[position].pi == rds.rdsD) {
+						break;
+					}
+				}
+				eon[position].ps[(offset * 2)  + 0] = rds.rdsC >> 8;                                     // First character of segment
+				eon[position].ps[(offset * 2)  + 1] = rds.rdsC & 0xFF;                                   // Second character of segment
+				eon[position].ps[(offset * 2)  + 2] = '\0';                                              // Endmarker of segment
 			}
-*/          break;
+
+//			if (offset == 5 && rds.rdsD == 0xF202) {
+//				if (((rds.rdsC >> 8) * 10 +8750) == currentfreq) {
+ //               uint16_t mapped = ((rds.rdsC & 0xFF) * 10 + 8750);
+//				  Serial.print(currentfreq);
+//				  Serial.print("\t");
+//				  Serial.println(mapped);
+//				}
+//              }
+
+//			for (int i = 0; i < 5; i++) Serial.println(String(i) + "\t" + String(eon[i].pi,HEX) + "\t" + String(eon[i].ps));
+//			Serial.println("----");
+			
+			}
+          break;
       }
     }
     rdsBprevious = rds.rdsB;
@@ -608,6 +614,12 @@ void TEF6686::readRDS(bool showrdserrors)
 bool TEF6686::checkDouble (uint16_t value)
 {
   for (int i = 0; i < 50; i++) if (af[i].frequency == value)return (true);
+  return (false);
+}
+
+bool TEF6686::checkDoubleEON (uint16_t value)
+{
+  for (int i = 0; i < 5; i++) if (eon[i].pi == value)return (true);
   return (false);
 }
 
@@ -631,6 +643,11 @@ void TEF6686::clearRDS (bool fullsearchrds)
   for (i = 0; i < 18; i++) rds.stationType[i] = 0;
   for (i = 0; i < 6; i++) rds.picode[i] = 0;
   for (i = 0; i < 50; i++) af[i].frequency = 0;
+  
+  for (i = 0; i < 5; i++) {
+	  eon[i].pi = 0;
+	  for (int y = 0; y < 9; y++) eon[i].ps[y] = 0;
+  }
 
   for (i = 0; i < 45; i++) {
     musicArtist[i] = 0;
@@ -662,6 +679,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.hasStereo = false;
   ps_counter = 0;
   af_counter = 0;
+  eon_counter = 0;
   rds.MS = 0;
 }
 

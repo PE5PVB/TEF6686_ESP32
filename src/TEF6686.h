@@ -140,10 +140,17 @@ typedef struct _af_ {
   uint16_t  frequency;
 } af_;
 
+typedef struct _eon_ {
+  uint16_t	mappedfreq;
+  uint16_t	pi;
+  char ps[9];
+} eon_;
+
 
 class TEF6686 {
   public:
     af_  af[50];
+	eon_ eon[5];
     rds_ rds;
     void readRDS(bool showrdserrors);
     void SetFreq(uint16_t frequency);
@@ -202,6 +209,8 @@ class TEF6686 {
     char rt_buffer2[65];
     bool useRTPlus = true;
     bool checkDouble (uint16_t value);
+	bool checkDoubleEON (uint16_t value);
+	byte eon_counter;
     bool ABold;
     char stationTextBuffer[65];
     uint64_t doublecheck;
@@ -216,4 +225,5 @@ class TEF6686 {
     char musicTitle[45];
     char stationHost[45];
     char stationEvent[45];
+	  uint16_t  currentfreq;
 };
