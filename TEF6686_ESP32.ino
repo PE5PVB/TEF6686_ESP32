@@ -3020,7 +3020,7 @@ void BuildMenu() {
       if (amnb != 0) tft.drawRightString(String(amnb, DEC), 265, 150, GFXFF); else tft.drawRightString(myLanguage[language][30], 265, 150, GFXFF);
       if (fmnb != 0) tft.drawRightString(String(fmnb, DEC), 265, 170, GFXFF); else tft.drawRightString(myLanguage[language][30], 265, 170, GFXFF);
       if (audiomode) tft.drawRightString("MPX", 305, 190, GFXFF); else tft.drawRightString("Stereo", 305, 190, GFXFF);
-      if (specialstepOIRT) tft.drawRightString("ON", 305, 210, GFXFF); else tft.drawRightString("OFF", 305, 210, GFXFF);
+      if (specialstepOIRT) tft.drawRightString(myLanguage[language][42], 305, 210, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 210, GFXFF);
       break;
     case 4:
       tft.drawString(myLanguage[language][69], 14, 30, GFXFF);
