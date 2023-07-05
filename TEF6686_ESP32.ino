@@ -2109,7 +2109,7 @@ void KeyUp() {
               break;
             case 210:
               tft.setTextColor(TFT_BLACK);
-              if (specialstepOIRT) tft.drawCentreString("ON", 155, 110, GFXFF); else tft.drawCentreString("OFF", 155, 110, GFXFF);
+              if (specialstepOIRT) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (specialstepOIRT) {
                 specialstepOIRT = 0;
               } else {
@@ -2118,7 +2118,7 @@ void KeyUp() {
                 FindhighStopOIRT();
               }
               tft.setTextColor(TFT_YELLOW);
-              if (specialstepOIRT) tft.drawCentreString("ON", 155, 110, GFXFF); else tft.drawCentreString("OFF", 155, 110, GFXFF);
+              if (specialstepOIRT) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
           }
           break;
@@ -2496,7 +2496,7 @@ void KeyDown() {
               break;
             case 210:
               tft.setTextColor(TFT_BLACK);
-              if (specialstepOIRT) tft.drawCentreString("ON", 155, 110, GFXFF); else tft.drawCentreString("OFF", 155, 110, GFXFF);
+              if (specialstepOIRT) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (specialstepOIRT) {
                 specialstepOIRT = 0;
               } else {
@@ -2505,7 +2505,7 @@ void KeyDown() {
                 FindhighStopOIRT();
               }
               tft.setTextColor(TFT_YELLOW);
-              if (specialstepOIRT) tft.drawCentreString("ON", 155, 110, GFXFF); else tft.drawCentreString("OFF", 155, 110, GFXFF);
+              if (specialstepOIRT) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
           }
           break;
