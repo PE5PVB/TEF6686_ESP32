@@ -114,6 +114,7 @@ byte SNR;
 byte SNRold;
 byte specialstepOIRT;
 byte stepsize;
+byte deepsleep;
 byte StereoLevel;
 byte subnetclient;
 byte TEF;
@@ -235,7 +236,7 @@ WiFiUDP Udp;
 
 void setup() {
   setupmode = true;
-  EEPROM.begin(259);
+  EEPROM.begin(260);
   if (EEPROM.readByte(43) != 28) DefaultSettings();
 
   frequency = EEPROM.readUInt(0);
@@ -286,6 +287,7 @@ void setup() {
   LowEdgeOIRTSet = EEPROM.readUInt(250);
   HighEdgeOIRTSet = EEPROM.readUInt(254);
   colorinvert = EEPROM.readByte(258);
+  deepsleep = EEPROM.readByte(259);
 
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;   // later will read from flash
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX; // later will read from flash
@@ -691,6 +693,26 @@ void GetData() {
   }
 }
 
+void SleepWake(bool isSleep) {
+  if (isSleep) {
+    power = false;
+    analogWrite(SMETERPIN, 0);
+    analogWrite(CONTRASTPIN, 0);
+    StoreFrequency();
+    if (deepsleep) radio.power(1);
+  }else {
+    if (deepsleep) {
+      ESP.restart();
+    }
+    else {
+      power = true;
+      pinMode (STANDBYLED, OUTPUT);
+      digitalWrite(STANDBYLED, LOW);
+      analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+    }
+  }
+}
+
 void PWRButtonPress() {
   if (menu == false) {
     unsigned long counterold = millis();
@@ -699,7 +721,7 @@ void PWRButtonPress() {
 
     if (counter - counterold < 1000) {
       if (power == false) {
-        ESP.restart();
+        SleepWake(false); // Wake up
       } else {
         if (tunemode != TUNE_MEM) {
           if (band == BAND_FM) {
@@ -715,15 +737,9 @@ void PWRButtonPress() {
       }
     } else {
       if (power == false) {
-        ESP.restart();
+        SleepWake(false); // Wake up
       } else {
-        power = false;
-        analogWrite(SMETERPIN, 0);
-        analogWrite(CONTRASTPIN, 0);
-        pinMode (STANDBYLED, OUTPUT);
-        digitalWrite(STANDBYLED, LOW);
-        StoreFrequency();
-        radio.power(1);
+        SleepWake(true); // Sleep
       }
     }
     while (digitalRead(PWRBUTTON) == LOW) delay(50);
@@ -1274,6 +1290,7 @@ void ModeButtonPress() {
     EEPROM.writeUInt(250, LowEdgeOIRTSet);
     EEPROM.writeUInt(254, HighEdgeOIRTSet);
     EEPROM.writeByte(258, colorinvert);
+    EEPROM.writeByte(259, deepsleep);
     EEPROM.commit();
     Serial.end();
     if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
@@ -1722,6 +1739,12 @@ void ButtonPress() {
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString("https://github.com/PE5PVB/TEF6686_ESP32", 155, 175, GFXFF);
               break;
+            case 70:
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][74], 155, 70, GFXFF);
+              tft.setTextColor(TFT_YELLOW);
+              if (deepsleep) tft.drawCentreString(myLanguage[language][75], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][76], 155, 110, GFXFF);
+              break;
           }
           break;
       }
@@ -2109,6 +2132,13 @@ void KeyUp() {
               if (colorinvert) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               tft.invertDisplay(colorinvert);
               break;
+            case 70:
+              tft.setTextColor(TFT_BLACK);
+              if (deepsleep) tft.drawCentreString(myLanguage[language][75], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][76], 155, 110, GFXFF);
+              if (deepsleep) deepsleep = 0; else deepsleep = 1;
+              tft.setTextColor(TFT_YELLOW);
+              if (deepsleep) tft.drawCentreString(myLanguage[language][75], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][76], 155, 110, GFXFF);
+              break;
           }
           break;
       }
@@ -2488,6 +2518,13 @@ void KeyDown() {
               tft.setTextColor(TFT_YELLOW);
               if (colorinvert) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               tft.invertDisplay(colorinvert);
+              break;
+            case 70:
+              tft.setTextColor(TFT_BLACK);
+              if (deepsleep) tft.drawCentreString(myLanguage[language][75], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][76], 155, 110, GFXFF);
+              if (deepsleep) deepsleep = 0; else deepsleep = 1;
+              tft.setTextColor(TFT_YELLOW);
+              if (deepsleep) tft.drawCentreString(myLanguage[language][75], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][76], 155, 110, GFXFF);
               break;
           }
           break;
@@ -2988,8 +3025,10 @@ void BuildMenu() {
     case 4:
       tft.drawString(myLanguage[language][69], 14, 30, GFXFF);
       tft.drawString(myLanguage[language][70], 14, 50, GFXFF);
+      tft.drawString(myLanguage[language][74], 14, 70, GFXFF);
       tft.setTextColor(TFT_YELLOW);
       if (colorinvert) tft.drawRightString(myLanguage[language][42], 305, 30, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 30, GFXFF);
+      if (deepsleep) tft.drawRightString(myLanguage[language][75], 305, 70, GFXFF); else tft.drawRightString(myLanguage[language][76], 305, 70, GFXFF);
       break;
   }
   analogWrite(SMETERPIN, 0);
@@ -4863,5 +4902,6 @@ void DefaultSettings() {
   EEPROM.writeUInt(250, 0);
   EEPROM.writeUInt(254, 0);
   EEPROM.writeByte(258, 0);
+  EEPROM.writeByte(259, 0);
   EEPROM.commit();
 }
