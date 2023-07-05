@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char myLanguage[9][74][85] = {
+static const char myLanguage[9][77][85] = {
   { "English",                        // English
     "Rotary direction changed",
     "Please release button",
@@ -74,7 +74,10 @@ static const char myLanguage[9][74][85] = {
     "About software",
     "Main code:",
     "Contributors:",
-	"Unknown"
+    "Unknown",
+    "Power options",
+    "Deep sleep",
+    "Screen off"
   },
 
   { "Nederlands",                     // Dutch
@@ -150,7 +153,10 @@ static const char myLanguage[9][74][85] = {
     "Over deze software",
     "Basis code:",
     "Bijgedragen:",
-	"Onbekend"
+    "Onbekend",
+    "Power options",
+    "Deep sleep",
+    "Screen off"
   },
 
   { "Polski",                         // Polish
@@ -226,7 +232,10 @@ static const char myLanguage[9][74][85] = {
     "About software",
     "Main code:",
     "Contributors:",
-	"Unknown"
+    "Unknown",
+    "Power options",
+    "Deep sleep",
+    "Screen off"
   },
 
   { "Hrvatski",                       // Croatian
@@ -302,7 +311,10 @@ static const char myLanguage[9][74][85] = {
     "O softveru",
     "Glavni izvorni kod:",
     "Suradnici:",
-	"Nepoznato"
+    "Nepoznato",
+    "Power options",
+    "Deep sleep",
+    "Screen off"
   },
 
   { "Ελληνικά",                       // Greek
@@ -378,7 +390,10 @@ static const char myLanguage[9][74][85] = {
     "Πληροφορίες λογισμικού",
     "Κύριος κώδικας:",
     "Συνεργάτες:",
-	"Unknown"
+    "Unknown",
+    "Power options",
+    "Deep sleep",
+    "Screen off"
   },
 
   { "Romana",                         // Romanian
@@ -454,7 +469,10 @@ static const char myLanguage[9][74][85] = {
     "About software",
     "Main code:",
     "Contributors:",
-	"Unknown"
+    "Unknown",
+    "Power options",
+    "Deep sleep",
+    "Screen off"
   },
 
   { "Deutsch",                        // German
@@ -530,7 +548,10 @@ static const char myLanguage[9][74][85] = {
     "Über diese Software",
     "Hauptcode:",
     "Mitwirkende:",
-	"Unknown"
+    "Unknown",
+    "Power options",
+    "Deep sleep",
+    "Screen off"
   },
 
   { "Czech",                          // Czech
@@ -606,7 +627,10 @@ static const char myLanguage[9][74][85] = {
     "About software",
     "Main code:",
     "Contributors:",
-	"Unknown"
+    "Unknown",
+    "Power options",
+    "Deep sleep",
+    "Screen off"
   },
 
   { "Slovak",                         // Slovak
@@ -682,6 +706,9 @@ static const char myLanguage[9][74][85] = {
     "About software",
     "Main code:",
     "Contributors:",
-	"Unknown"
+    "Unknown",
+    "Power options",
+    "Deep sleep",
+    "Screen off"
   },
 };
