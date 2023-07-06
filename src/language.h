@@ -222,7 +222,7 @@ static const char myLanguage[9][78][85] = {
     "IP klienta Stationlist", // 58
     "Pokaz dlugosci fal SW", // 59
     "Filtr RDS", // 60
-    "Show PI errors", // 61
+    "Pokaz bledy PI", // 61
     "Pokaz blokade szumow", // 62
     "Wskaznik modulacji", // 63
     "Reduktor szumow AM", // 64
@@ -230,14 +230,6 @@ static const char myLanguage[9][78][85] = {
     "Zaladowano domyslne", // 66
     "Wyjscie dzwieku", // 67
     "Kroki co 30 kHz na FM OIRT", // 68
-    "Display color invert", // 69
-    "About software", // 70
-    "Main code:", // 71
-    "Contributors:", // 72
-    "Unknown", // 73
-    "Power options", // 74
-    "Deep sleep", // 75
-    "Screen off", // 76
     "Theme" // 77
   },
 
