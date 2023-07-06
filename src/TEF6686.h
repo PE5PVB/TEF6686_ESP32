@@ -108,6 +108,9 @@ typedef struct _rds_ {
   int8_t offset;
   unsigned int ECC;
   unsigned int LIC;
+  byte pinMin;
+  byte pinHour;
+  byte pinDay;
   bool rdsAerror;
   bool rdsBerror;
   bool rdsCerror;
@@ -117,6 +120,7 @@ typedef struct _rds_ {
   bool hasDynamicPTY;
   bool hasStereo;
   bool hasRDS;
+  bool hasPIN;
   bool hasECC;
   bool hasLIC;
   bool hasRT;
@@ -153,7 +157,7 @@ typedef struct _eon_ {
 class TEF6686 {
   public:
     af_  af[50];
-    eon_ eon[5];
+    eon_ eon[20];
     rds_ rds;
     void readRDS(bool showrdserrors);
     void SetFreq(uint16_t frequency);
@@ -196,6 +200,7 @@ class TEF6686 {
     void setVolume(int8_t volume);
     void tone(uint16_t time, int16_t amplitude, uint16_t frequency);
     uint8_t af_counter;
+    uint8_t eon_counter;
     bool mute;
 
   private:
@@ -212,7 +217,6 @@ class TEF6686 {
     char rt_buffer[65];
     char rt_buffer2[65];
     bool useRTPlus = true;
-    byte eon_counter;
     bool ABold;
     char stationTextBuffer[65];
     uint64_t doublecheck;

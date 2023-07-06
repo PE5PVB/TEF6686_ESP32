@@ -394,11 +394,9 @@ void TEF6686::readRDS(bool showrdserrors)
 
                 for (int i = 0; i < 50; i++) {
                   for (int j = 0; j < 50 - i; j++) {
-                    // Ignore elements with value 0
                     if (af[j].frequency == 0) continue;
 
                     if (af[j].frequency > af[j + 1].frequency && af[j + 1].frequency != 0) {
-                      // Swap the elements
                       uint16_t temp = af[j].frequency;
                       bool temp2 = af[j].filler;
                       af[j].frequency = af[j + 1].frequency;
@@ -414,14 +412,21 @@ void TEF6686::readRDS(bool showrdserrors)
 
         case RDS_GROUP_1A: {
             if (rds.correct) {
-              if (rds.rdsC >> 12 == 0) {                                                               // ECC code readout
+              if (rds.rdsC >> 12 == 0) {                                                          // ECC code readout
                 rds.ECC = rds.rdsC & 0xff;
                 rds.hasECC = true;
               }
 
-              if (rds.rdsC >> 12 == 3) {                                                               // ECC code readout
+              if (rds.rdsC >> 12 == 3) {                                                          // ECC code readout
                 rds.LIC = rds.rdsC & 0xff;
                 rds.hasLIC = true;
+              }
+
+              if (rds.rdsD != 0) {                                                                // PIN decoder
+                rds.hasPIN = true;
+                rds.pinMin = rds.rdsD & 0x3f;
+                rds.pinHour = rds.rdsD >> 6 & 0x1f;
+                rds.pinDay = rds.rdsD >> 11 & 0x1f;
               }
             }
           } break;
@@ -601,7 +606,7 @@ void TEF6686::readRDS(bool showrdserrors)
               rds.hasEON = true;                                                                                    // Group is there, so we have EON
 
               bool isValuePresent = false;
-              for (int i = 0; i < 5; i++) {
+              for (int i = 0; i < 20; i++) {
                 if (eon[i].pi == rds.rdsD) {                                                                        // Check if EON is already in array
                   isValuePresent = true;
                   break;
@@ -610,14 +615,14 @@ void TEF6686::readRDS(bool showrdserrors)
 
               if (!isValuePresent) {
                 eon[eon_counter].pi = rds.rdsD;                                                                     // Store PI on next array
-                if (eon_counter < 5) eon_counter++;
+                if (eon_counter < 20) eon_counter++;
               }
 
               offset = rds.rdsB & 0x0F;                                                                             // Read offset
 
               if (offset < 4) {
                 byte position;
-                for (position = 0; position < 5; position++) {
+                for (position = 0; position < 20; position++) {
                   if (eon[position].pi == rds.rdsD) {                                                               // Find position in array
                     break;
                   }
@@ -643,7 +648,6 @@ void TEF6686::readRDS(bool showrdserrors)
                     eon[position].mappedfreq = ((rds.rdsC & 0xFF) * 10 + 8750);                                     // Add mapped frequency to array
                   }
                 }
-
               }
             }
           }
@@ -699,7 +703,11 @@ void TEF6686::clearRDS (bool fullsearchrds)
 
   rds.ECC = 0;
   rds.LIC = 0;
+  rds.pinHour = 0;
+  rds.pinMin = 0;
+  rds.pinDay = 0;
   rds.stationTypeCode = 32;
+  rds.hasPIN = false;
   rds.hasECC = false;
   rds.hasLIC = false;
   rds.hasRT = false;
