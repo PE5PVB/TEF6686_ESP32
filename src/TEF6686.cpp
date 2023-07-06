@@ -389,11 +389,11 @@ void TEF6686::readRDS(bool showrdserrors)
 
                 if (!isValuePresent) {
                   af[af_counter].frequency = buffer1;
-                  af_counter++;
+                  if (af_counter < 50) af_counter++;
                 }
 
-                for (int i = 0; i < 51 - 1; i++) {
-                  for (int j = 0; j < 51 - i - 1; j++) {
+                for (int i = 0; i < 50; i++) {
+                  for (int j = 0; j < 50 - i; j++) {
                     // Ignore elements with value 0
                     if (af[j].frequency == 0) continue;
 
@@ -610,7 +610,7 @@ void TEF6686::readRDS(bool showrdserrors)
 
               if (!isValuePresent) {
                 eon[eon_counter].pi = rds.rdsD;                                                                     // Store PI on next array
-                eon_counter++;
+                if (eon_counter < 5) eon_counter++;
               }
 
               offset = rds.rdsB & 0x0F;                                                                             // Read offset
