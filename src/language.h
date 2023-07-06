@@ -230,7 +230,15 @@ static const char myLanguage[9][78][85] = {
     "Zaladowano domyslne", // 66
     "Wyjscie dzwieku", // 67
     "Kroki co 30 kHz na FM OIRT", // 68
-    "Theme" // 77
+    "Odwroc kolory wyswietlacza", // 69
+    "O oprogramowaniu", // 70
+    "Glowny kod:", // 71
+    "Wspoltworcy:", // 72
+    "Nieznany", // 73
+    "Opcje zasilania", // 74
+    "Glebokie uspienie", // 75
+    "Wylacz ekran", // 76
+    "Motyw" // 77
   },
 
   { "Hrvatski",                       // Croatian
