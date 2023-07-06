@@ -141,16 +141,16 @@ typedef struct _af_ {
 } af_;
 
 typedef struct _eon_ {
-  uint16_t	mappedfreq;
-  uint16_t	pi;
-  char ps[9];
+  uint16_t  mappedfreq;
+  uint16_t  pi;
+  String ps;
 } eon_;
 
 
 class TEF6686 {
   public:
     af_  af[50];
-	eon_ eon[5];
+    eon_ eon[5];
     rds_ rds;
     void readRDS(bool showrdserrors);
     void SetFreq(uint16_t frequency);
@@ -201,16 +201,17 @@ class TEF6686 {
     String extractUTF8Substring(const String& utf8String, size_t start, size_t length, bool under);
     char ps_buffer[9];
     char ps_buffer2[9];
-	char ptyn_buffer[9];
-	char eon_buffer[9];
+    char ptyn_buffer[9];
+    char eon_buffer[9][5];
+    char eon_buffer2[9][5];
     bool ps_process;
     bool rt_process;
     char rt_buffer[65];
     char rt_buffer2[65];
     bool useRTPlus = true;
     bool checkDouble (uint16_t value);
-	bool checkDoubleEON (uint16_t value);
-	byte eon_counter;
+    bool checkDoubleEON (uint16_t value);
+    byte eon_counter;
     bool ABold;
     char stationTextBuffer[65];
     uint64_t doublecheck;
@@ -219,11 +220,12 @@ class TEF6686 {
     uint16_t rdsDprevious;
     bool rtABold;
     wchar_t PStext[9] = L"";
-	wchar_t PTYNtext[9] = L"";
+    wchar_t EONPStext[9] = L"";
+    wchar_t PTYNtext[9] = L"";
     byte ps_counter;
     char musicArtist[45];
     char musicTitle[45];
     char stationHost[45];
     char stationEvent[45];
-	  uint16_t  currentfreq;
+    uint16_t  currentfreq;
 };

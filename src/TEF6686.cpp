@@ -420,8 +420,7 @@ void TEF6686::readRDS(bool showrdserrors)
             }
           } break;
 
-        case RDS_GROUP_4A:
-        case RDS_GROUP_4B: {
+        case RDS_GROUP_4A: {
             if (rds.correct) {
               // CT
               uint32_t mjd;
@@ -561,47 +560,57 @@ void TEF6686::readRDS(bool showrdserrors)
           break;
 
         case RDS_GROUP_14A: {
-            if (rds.correct) rds.hasEON = true;                                                             // Group is there, so we have EON
+            // EON
+            if (rds.correct) {
+              rds.hasEON = true;                                                                                    // Group is there, so we have EON
 
-			bool isValuePresent = false;
-			for (int i = 0; i < 5; i++) {
-				if (eon[i].pi == rds.rdsD) {
-					isValuePresent = true;
-					break;
-				}
-			}
+              bool isValuePresent = false;
+              for (int i = 0; i < 5; i++) {
+                if (eon[i].pi == rds.rdsD) {                                                                        // Check if EON is already in array
+                  isValuePresent = true;
+                  break;
+                }
+              }
 
-			if (!isValuePresent) {
-				eon[eon_counter].pi = rds.rdsD;
-				eon_counter++;
-			}		
-			
-			offset = rds.rdsB & 0x0F;
-			if (offset < 4) {
-				byte position;
-				for (position = 0; position < 5; position++) {
-					if (eon[position].pi == rds.rdsD) {
-						break;
-					}
-				}
-				eon[position].ps[(offset * 2)  + 0] = rds.rdsC >> 8;                                     // First character of segment
-				eon[position].ps[(offset * 2)  + 1] = rds.rdsC & 0xFF;                                   // Second character of segment
-				eon[position].ps[(offset * 2)  + 2] = '\0';                                              // Endmarker of segment
-			}
+              if (!isValuePresent) {
+                eon[eon_counter].pi = rds.rdsD;                                                                     // Store PI on next array
+                eon_counter++;
+              }
 
-//			if (offset == 5 && rds.rdsD == 0xF202) {
-//				if (((rds.rdsC >> 8) * 10 +8750) == currentfreq) {
- //               uint16_t mapped = ((rds.rdsC & 0xFF) * 10 + 8750);
-//				  Serial.print(currentfreq);
-//				  Serial.print("\t");
-//				  Serial.println(mapped);
-//				}
-//              }
+              offset = rds.rdsB & 0x0F;                                                                             // Read offset
 
-//			for (int i = 0; i < 5; i++) Serial.println(String(i) + "\t" + String(eon[i].pi,HEX) + "\t" + String(eon[i].ps));
-//			Serial.println("----");
-			
-			}
+              if (offset < 4) {
+                byte position;
+                for (position = 0; position < 5; position++) {
+                  if (eon[position].pi == rds.rdsD) {                                                               // Find position in array
+                    break;
+                  }
+                }
+
+                eon_buffer2[position][(offset * 2) + 0] = eon_buffer[position][(offset * 2) + 0];                   // Make a copy of the PS buffer
+                eon_buffer2[position][(offset * 2) + 1] = eon_buffer[position][(offset * 2) + 1];
+
+                eon_buffer[position][(offset * 2)  + 0] = rds.rdsC >> 8;                                            // First character of segment
+                eon_buffer[position][(offset * 2)  + 1] = rds.rdsC & 0xFF;                                          // Second character of segment
+                eon_buffer[position][(offset * 2)  + 2] = '\0';                                                     // Endmarker of segment
+
+                if (offset > 2) {                                                                                   // Last chars are received
+                  if (eon_buffer[position] != eon_buffer2[position]) {                                              // When difference between old and new, let's go...
+                    RDScharConverter(eon_buffer[position], EONPStext, sizeof(EONPStext) / sizeof(wchar_t), true);   // Convert 8 bit ASCII to 16 bit ASCII
+                    String utf8String = convertToUTF8(EONPStext);                                                   // Convert RDS characterset to ASCII
+                    eon[position].ps = extractUTF8Substring(utf8String, 0, 8, true);                                // Make sure PS does not exceed 8 characters
+                  }
+                }
+
+                if (offset > 4 && offset < 9) {
+                  if (((rds.rdsC >> 8) * 10 + 8750) == currentfreq) {                                               // Check if mapped frequency belongs to current frequency
+                    eon[position].mappedfreq = ((rds.rdsC & 0xFF) * 10 + 8750);                                     // Add mapped frequency to array
+                  }
+                }
+                
+              }
+            }
+          }
           break;
       }
     }
@@ -643,10 +652,14 @@ void TEF6686::clearRDS (bool fullsearchrds)
   for (i = 0; i < 18; i++) rds.stationType[i] = 0;
   for (i = 0; i < 6; i++) rds.picode[i] = 0;
   for (i = 0; i < 50; i++) af[i].frequency = 0;
-  
+
   for (i = 0; i < 5; i++) {
-	  eon[i].pi = 0;
-	  for (int y = 0; y < 9; y++) eon[i].ps[y] = 0;
+    eon[i].pi = 0;
+    for (int y = 0; y < 9; y++) {
+      eon_buffer[i][y] = 0;
+      eon_buffer2[i][y] = 0;
+    }
+    eon[i].ps = "";
   }
 
   for (i = 0; i < 45; i++) {

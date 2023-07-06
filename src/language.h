@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char myLanguage[9][78][85] = {
+static const char myLanguage[9][87][85] = {
   { "English",                        // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -78,7 +78,16 @@ static const char myLanguage[9][78][85] = {
     "Power options", // 74
     "Deep sleep", // 75
     "Screen off", // 76
-    "Theme" // 77
+    "Theme", // 77
+    "Default", // 78
+    "Cyan", // 79
+    "Crimson", // 80
+    "Monochrome", // 81
+    "Volcano", // 82
+    "Dendro", // 83
+    "Sakura", // 84
+    "Whiteout", // 85
+    "NOT POSSIBLE" // 86
   },
 
   { "Nederlands",                     // Dutch
@@ -158,8 +167,17 @@ static const char myLanguage[9][78][85] = {
     "Power options", // 74
     "Deep sleep", // 75
     "Screen off", // 76
-    "Theme" // 77
-  }, // 
+    "Theme", // 77
+    "Default", // 78
+    "Cyan", // 79
+    "Crimson", // 80
+    "Monochrome", // 81
+    "Volcano", // 82
+    "Dendro", // 83
+    "Sakura", // 84
+    "Whiteout", // 85
+    "NIET MOGELIJK" // 86
+  }, //
 
   { "Polski",                         // Polish
     "Kierunek obrotu zmieniony", // 1
@@ -238,7 +256,16 @@ static const char myLanguage[9][78][85] = {
     "Opcje zasilania", // 74
     "Glebokie uspienie", // 75
     "Wylacz ekran", // 76
-    "Motyw" // 77
+    "Motyw", // 77
+    "Default", // 78
+    "Cyan", // 79
+    "Crimson", // 80
+    "Monochrome", // 81
+    "Volcano", // 82
+    "Dendro", // 83
+    "Sakura", // 84
+    "Whiteout", // 85
+    "NOT POSSIBLE" // 86
   },
 
   { "Hrvatski",                       // Croatian
@@ -318,7 +345,16 @@ static const char myLanguage[9][78][85] = {
     "Power options", // 74
     "Deep sleep", // 75
     "Screen off", // 76
-    "Theme" // 77
+    "Theme", // 77
+    "Default", // 78
+    "Cyan", // 79
+    "Crimson", // 80
+    "Monochrome", // 81
+    "Volcano", // 82
+    "Dendro", // 83
+    "Sakura", // 84
+    "Whiteout", // 85
+    "NOT POSSIBLE" // 86
   },
 
   { "Ελληνικά",                       // Greek
@@ -398,7 +434,16 @@ static const char myLanguage[9][78][85] = {
     "Επιλογές ενέργειας", // 74
     "Βαθιά αναμονή", // 75
     "Οθόνη κλειστή", // 76
-    "Theme" // 77
+    "Theme", // 77
+    "Default", // 78
+    "Cyan", // 79
+    "Crimson", // 80
+    "Monochrome", // 81
+    "Volcano", // 82
+    "Dendro", // 83
+    "Sakura", // 84
+    "Whiteout", // 85
+    "NOT POSSIBLE" // 86
   },
 
   { "Romana",                         // Romanian
@@ -478,7 +523,16 @@ static const char myLanguage[9][78][85] = {
     "Power options", // 74
     "Deep sleep", // 75
     "Screen off", // 76
-    "Theme" // 77
+    "Theme", // 77
+    "Default", // 78
+    "Cyan", // 79
+    "Crimson", // 80
+    "Monochrome", // 81
+    "Volcano", // 82
+    "Dendro", // 83
+    "Sakura", // 84
+    "Whiteout", // 85
+    "NOT POSSIBLE" // 86
   },
 
   { "Deutsch",                        // German
@@ -558,7 +612,16 @@ static const char myLanguage[9][78][85] = {
     "Energieeinstellungen", // 74
     "Komplett aus", // 75
     "Bildschirm aus", // 76
-    "Theme" // 77
+    "Theme", // 77
+    "Default", // 78
+    "Cyan", // 79
+    "Crimson", // 80
+    "Monochrome", // 81
+    "Volcano", // 82
+    "Dendro", // 83
+    "Sakura", // 84
+    "Whiteout", // 85
+    "NOT POSSIBLE" // 86
   },
 
   { "Czech",                          // Czech
@@ -638,7 +701,16 @@ static const char myLanguage[9][78][85] = {
     "Power options", // 74
     "Deep sleep", // 75
     "Screen off", // 76
-    "Theme" // 77
+    "Theme", // 77
+    "Default", // 78
+    "Cyan", // 79
+    "Crimson", // 80
+    "Monochrome", // 81
+    "Volcano", // 82
+    "Dendro", // 83
+    "Sakura", // 84
+    "Whiteout", // 85
+    "NOT POSSIBLE" // 86
   },
 
   { "Slovak",                         // Slovak
@@ -718,6 +790,15 @@ static const char myLanguage[9][78][85] = {
     "Power options", // 74
     "Deep sleep", // 75
     "Screen off", // 76
-    "Theme" // 77
+    "Theme", // 77
+    "Default", // 78
+    "Cyan", // 79
+    "Crimson", // 80
+    "Monochrome", // 81
+    "Volcano", // 82
+    "Dendro", // 83
+    "Sakura", // 84
+    "Whiteout", // 85
+    "NOT POSSIBLE" // 86
   },
 };

@@ -88,6 +88,7 @@ int batupdatetimer;
 byte BWset;
 byte colorinvert;
 byte ContrastSet;
+byte CurrentTheme;
 byte displayflip;
 byte ECCold;
 byte EQset;
@@ -166,8 +167,6 @@ int ActiveColor;
 int OptimizerColor;
 int RDSColor;
 int StereoColor;
-int CurrentTheme;
-
 int16_t OStatus;
 int16_t SAvg;
 int16_t SAvg2;
@@ -250,8 +249,8 @@ WiFiUDP Udp;
 
 void setup() {
   setupmode = true;
-  EEPROM.begin(265);
-  if (EEPROM.readByte(43) != 28) DefaultSettings();
+  EEPROM.begin(261);
+  if (EEPROM.readByte(43) != 29) DefaultSettings();
 
   frequency = EEPROM.readUInt(0);
   VolSet = EEPROM.readInt(4);
@@ -302,7 +301,7 @@ void setup() {
   HighEdgeOIRTSet = EEPROM.readUInt(254);
   colorinvert = EEPROM.readByte(258);
   deepsleep = EEPROM.readByte(259);
-  CurrentTheme = EEPROM.readInt(260);
+  CurrentTheme = EEPROM.readByte(260);
 
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;   // later will read from flash
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX; // later will read from flash
@@ -350,7 +349,7 @@ void setup() {
 
   tft.init();
   tft.invertDisplay(colorinvert);
-
+  doTheme();
   if (displayflip == 0) {
 #ifdef ARS
     tft.setRotation(0);
@@ -471,7 +470,7 @@ void setup() {
   uint16_t device;
   uint16_t hw;
   uint16_t sw;
-  doTheme();
+
   radio.getIdentification(device, hw, sw);
   if (TEF != (highByte(hw) * 100 + highByte(sw))) SetTunerPatch();
   tft.fillRect(120, 230, 16, 6, PrimaryColor);
@@ -717,7 +716,7 @@ void SleepWake(bool isSleep) {
     analogWrite(CONTRASTPIN, 0);
     StoreFrequency();
     if (deepsleep) radio.power(1);
-  }else {
+  } else {
     if (deepsleep) {
       ESP.restart();
     }
@@ -1237,10 +1236,10 @@ void ModeButtonPress() {
         tft.setFreeFont(FONT14);
         tft.setTextColor(ActiveColor, BackgroundColor);
         tft.setCursor (70, 60);
-        tft.drawString("NOT POSSIBLE", 70, 60, GFXFF);
+        tft.drawString(myLanguage[language][86], 70, 60, GFXFF);
         delay(1000);
         tft.setTextColor(BackgroundColor);
-        tft.drawString("NOT POSSIBLE", 70, 60, GFXFF);
+        tft.drawString(myLanguage[language][86], 70, 60, GFXFF);
         ShowFreq(0);
       } else {
         if (menu == false) {
@@ -1308,7 +1307,7 @@ void ModeButtonPress() {
     EEPROM.writeUInt(254, HighEdgeOIRTSet);
     EEPROM.writeByte(258, colorinvert);
     EEPROM.writeByte(259, deepsleep);
-    EEPROM.writeInt(260, CurrentTheme);
+    EEPROM.writeByte(260, CurrentTheme);
     EEPROM.commit();
     Serial.end();
     if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
@@ -1734,10 +1733,9 @@ void ButtonPress() {
           switch (menuoption) {
             case 30:
               tft.setTextColor(TFT_WHITE);
-              tft.drawCentreString(myLanguage[language][77], 150, 70, 4);
-              doTheme();
+              tft.drawCentreString(myLanguage[language][77], 155, 70, GFXFF);
               tft.setTextColor(TFT_WHITE);
-              tft.drawCentreString(CurrentThemeString, 150, 110, 4);            
+              tft.drawCentreString(CurrentThemeString, 155, 110, GFXFF);
               break;
 
             case 50:
@@ -2145,15 +2143,12 @@ void KeyUp() {
           switch (menuoption) {
             case 30:
               tft.setTextColor(TFT_BLACK);
-              tft.drawCentreString(CurrentThemeString, 150, 110, 4);
-              CurrentTheme += 1;
-              if (CurrentTheme > 7) {
-                CurrentTheme = 0;
-              }
-
+              tft.drawCentreString(CurrentThemeString, 155, 110, GFXFF);
+              CurrentTheme ++;
+              if (CurrentTheme > 7) CurrentTheme = 0;
               doTheme();
-              tft.setTextColor(ActiveColor);
-              tft.drawCentreString(CurrentThemeString, 150, 110, 4);
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(CurrentThemeString, 155, 110, GFXFF);
               break;
             case 70:
               tft.setTextColor(TFT_BLACK);
@@ -2536,16 +2531,14 @@ void KeyDown() {
           switch (menuoption) {
             case 30:
               tft.setTextColor(TFT_BLACK);
-              tft.drawCentreString(CurrentThemeString, 150, 110, 4);
-              CurrentTheme -= 1;
-              if (CurrentTheme < 0) {
-                CurrentTheme = 7;
-              }
-
+              tft.drawCentreString(CurrentThemeString, 155, 110, GFXFF);
+              CurrentTheme --;
+              if (CurrentTheme > 7) CurrentTheme = 7;
               doTheme();
-              tft.setTextColor(ActiveColor);
-              tft.drawCentreString(CurrentThemeString, 150, 110, 4);
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(CurrentThemeString, 155, 110, GFXFF);
               break;
+              
             case 70:
               tft.setTextColor(TFT_BLACK);
               if (deepsleep) tft.drawCentreString(myLanguage[language][75], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][76], 155, 110, GFXFF);
@@ -4822,7 +4815,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       OptimizerColor = 1;
       StereoColor = TFT_RED;
       RDSColor = PrimaryColor;
-      CurrentThemeString = "Default";
+      CurrentThemeString = myLanguage[language][78];
       break;
     case 1:  // Cyan theme
       PrimaryColor = 0x0F3F;
@@ -4835,7 +4828,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       OptimizerColor = 1;
       StereoColor = 0xF3F;
       RDSColor = 0xFFFF;
-      CurrentThemeString = "Cyan";
+      CurrentThemeString = myLanguage[language][79];
       break;
     case 2:  // Crimson theme
       PrimaryColor = 0xF8C3;
@@ -4848,7 +4841,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       OptimizerColor = 1;
       StereoColor = 0xF8C3;
       RDSColor = 0xFFFF;
-      CurrentThemeString = "Crimson";
+      CurrentThemeString = myLanguage[language][80];
       break;
     case 3:  // Monochrome theme
       PrimaryColor = 0xFFFF;
@@ -4861,7 +4854,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       OptimizerColor = 1;
       StereoColor = 0xFFFF;
       RDSColor = 0xFFFF;
-      CurrentThemeString = "Monochrome";
+      CurrentThemeString = myLanguage[language][81];
       break;
     case 4:  // Volcano theme
       PrimaryColor = 0xFC00;
@@ -4874,7 +4867,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       OptimizerColor = 1;
       StereoColor = 0xFC00;
       RDSColor = 0xFFFF;
-      CurrentThemeString = "Volcano";
+      CurrentThemeString = myLanguage[language][82];
       break;
     case 5:  // Dendro theme
       PrimaryColor = TFT_GREEN;
@@ -4887,7 +4880,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       OptimizerColor = 1;
       StereoColor = TFT_GREEN;
       RDSColor = PrimaryColor;
-      CurrentThemeString = "Dendro";
+      CurrentThemeString = myLanguage[language][83];
       break;
     case 6:  // Sakura theme
       PrimaryColor = 0xF3D5;
@@ -4900,7 +4893,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       OptimizerColor = 1;
       StereoColor = 0xF3D5;
       RDSColor = ActiveColor;
-      CurrentThemeString = "Sakura";
+      CurrentThemeString = myLanguage[language][84];
       break;
     case 7:  // Whiteout theme
       PrimaryColor = 0x0000;
@@ -4913,20 +4906,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       OptimizerColor = 0xFFDF;
       StereoColor = 0x0000;
       RDSColor = 0x0000;
-      CurrentThemeString = "Whiteout";
-      break;
-    default:
-      PrimaryColor = 0xFFE0;
-      SecondaryColor = 0xFFFF;
-      FrequencyColor = 0xFFE0;
-      FrameColor = 0x001F;
-      GreyoutColor = 0x38E7;
-      BackgroundColor = 0x0000;
-      ActiveColor = 0xFFFF;
-      OptimizerColor = 1;
-      StereoColor = TFT_RED;
-      RDSColor = PrimaryColor;
-      CurrentThemeString = "Default";
+      CurrentThemeString = myLanguage[language][85];
       break;
   }
 }
@@ -5000,7 +4980,7 @@ void passwordcrypt() {
 }
 
 void DefaultSettings() {
-  EEPROM.writeByte(43, 28);
+  EEPROM.writeByte(43, 29);
   EEPROM.writeUInt(0, 10000);
   EEPROM.writeInt(4, 0);
   EEPROM.writeUInt(8, 0);
@@ -5052,6 +5032,6 @@ void DefaultSettings() {
   EEPROM.writeUInt(254, 0);
   EEPROM.writeByte(258, 0);
   EEPROM.writeByte(259, 0);
-  EEPROM.writeInt(260, 0);
+  EEPROM.writeByte(260, 0);
   EEPROM.commit();
 }
