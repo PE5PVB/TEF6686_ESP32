@@ -10,13 +10,13 @@
 #include "src/TEF6686.h"
 #include "src/constants.h"
 #include "src/language.h"
+//#include "src/colors.h"
 
 #define GFXFF 1
 #define FONT24 &Aura2ProRegular24pt7b
 #define FONT14 &Aura2ProRegular14pt8b
 #define FONT7  &Aura2ProRegular7pt8b
 
-#define TFT_GREYOUT     0x38E7
 #define ROTARY_PIN_A    34
 #define ROTARY_PIN_B    36
 #define ROTARY_BUTTON   39
@@ -155,12 +155,26 @@ int XDRBWset;
 int XDRBWsetold;
 int xPos = 6;
 int yPos = 4;
+// Theme Engine Colors
+int PrimaryColor;
+int SecondaryColor;
+int FrameColor;
+int FrequencyColor;
+int GreyoutColor;
+int BackgroundColor;
+int ActiveColor;
+int OptimizerColor;
+int RDSColor;
+int StereoColor;
+int CurrentTheme;
+
 int16_t OStatus;
 int16_t SAvg;
 int16_t SAvg2;
 int16_t SStatus;
 IPAddress remoteip;
 String cryptedpassword;
+String CurrentThemeString;
 String PIold;
 String programServicePrevious;
 String PSold;
@@ -236,7 +250,7 @@ WiFiUDP Udp;
 
 void setup() {
   setupmode = true;
-  EEPROM.begin(260);
+  EEPROM.begin(265);
   if (EEPROM.readByte(43) != 28) DefaultSettings();
 
   frequency = EEPROM.readUInt(0);
@@ -288,6 +302,7 @@ void setup() {
   HighEdgeOIRTSet = EEPROM.readUInt(254);
   colorinvert = EEPROM.readByte(258);
   deepsleep = EEPROM.readByte(259);
+  CurrentTheme = EEPROM.readInt(260);
 
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;   // later will read from flash
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX; // later will read from flash
@@ -366,8 +381,8 @@ void setup() {
     EEPROM.writeByte(39, rotarymode);
     EEPROM.commit();
     tft.setFreeFont(FONT14);
-    tft.fillScreen(TFT_BLACK);
-    tft.setTextColor(TFT_WHITE);
+    tft.fillScreen(BackgroundColor);
+    tft.setTextColor(ActiveColor);
     tft.drawCentreString(myLanguage[language][1], 155, 77, GFXFF);
     tft.drawCentreString(myLanguage[language][2], 150, 107, GFXFF);
     while (digitalRead(BWBUTTON) == LOW) delay(50);
@@ -384,8 +399,8 @@ void setup() {
     EEPROM.writeByte(38, displayflip);
     EEPROM.commit();
     tft.setFreeFont(FONT14);
-    tft.fillScreen(TFT_BLACK);
-    tft.setTextColor(TFT_WHITE);
+    tft.fillScreen(BackgroundColor);
+    tft.setTextColor(ActiveColor);
     tft.drawCentreString(myLanguage[language][3], 155, 77, GFXFF);
     tft.drawCentreString(myLanguage[language][2], 150, 107, GFXFF);
     while (digitalRead(MODEBUTTON) == LOW) delay(50);
@@ -394,8 +409,8 @@ void setup() {
   if (digitalRead(PWRBUTTON) == LOW) {
     analogWrite(SMETERPIN, 511);
     tft.setFreeFont(FONT14);
-    tft.fillScreen(TFT_BLACK);
-    tft.setTextColor(TFT_WHITE);
+    tft.fillScreen(BackgroundColor);
+    tft.setTextColor(ActiveColor);
     tft.drawCentreString(myLanguage[language][4], 155, 77, GFXFF);
     tft.drawCentreString(myLanguage[language][5], 150, 107, GFXFF);
     while (digitalRead(PWRBUTTON) == LOW) delay(50);
@@ -404,8 +419,8 @@ void setup() {
 
   if (digitalRead(ROTARY_BUTTON) == LOW && digitalRead(BWBUTTON) == HIGH) {
     tft.setFreeFont(FONT14);
-    tft.fillScreen(TFT_BLACK);
-    tft.setTextColor(TFT_WHITE);
+    tft.fillScreen(BackgroundColor);
+    tft.setTextColor(ActiveColor);
     if (optenc == 0) {
       optenc = 1;
       tft.drawCentreString(myLanguage[language][6], 155, 77, GFXFF);
@@ -421,8 +436,8 @@ void setup() {
 
   if (digitalRead(ROTARY_BUTTON) == LOW && digitalRead(BWBUTTON) == LOW) {
     tft.setFreeFont(FONT14);
-    tft.fillScreen(TFT_BLACK);
-    tft.setTextColor(TFT_WHITE);
+    tft.fillScreen(BackgroundColor);
+    tft.setTextColor(ActiveColor);
     DefaultSettings();
     tft.drawCentreString(myLanguage[language][66], 155, 77, GFXFF);
     tft.drawCentreString(myLanguage[language][2], 150, 107, GFXFF);
@@ -431,21 +446,22 @@ void setup() {
   }
 
   tft.setSwapBytes(true);
-  tft.fillScreen(TFT_BLACK);
-  tft.setTextColor(TFT_SKYBLUE);
+  tft.fillScreen(BackgroundColor);
+  tft.setTextColor(PrimaryColor);
   tft.setFreeFont(FONT14);
   tft.drawCentreString(myLanguage[language][8], 160, -5, GFXFF);
   tft.setFreeFont(FONT7);
-  tft.setTextColor(TFT_YELLOW);
+  tft.setTextColor(PrimaryColor);
   tft.drawCentreString("Software " + String(VERSION), 160, 148, GFXFF);
 
   tft.fillCircle(160, 90, 60, TFT_RED);
-  tft.fillCircle(160, 90, 52, TFT_BLACK);
-  tft.drawBitmap(130, 80, TEFLogo, 59, 23, TFT_YELLOW);
+  tft.fillCircle(160, 90, 52, BackgroundColor);
 
-  tft.fillRect(120, 230, 16, 6, TFT_GREYOUT);
-  tft.fillRect(152, 230, 16, 6, TFT_GREYOUT);
-  tft.fillRect(184, 230, 16, 6, TFT_GREYOUT);
+  tft.fillRect(120, 230, 16, 6, GreyoutColor);
+  tft.fillRect(152, 230, 16, 6, GreyoutColor);
+  tft.fillRect(184, 230, 16, 6, GreyoutColor);
+
+  tft.drawBitmap(130, 80, TEFLogo, 59, 23, PrimaryColor);
 
   TEF = EEPROM.readByte(37);
 
@@ -455,31 +471,32 @@ void setup() {
   uint16_t device;
   uint16_t hw;
   uint16_t sw;
+  doTheme();
   radio.getIdentification(device, hw, sw);
   if (TEF != (highByte(hw) * 100 + highByte(sw))) SetTunerPatch();
-  tft.fillRect(120, 230, 16, 6, TFT_YELLOW);
+  tft.fillRect(120, 230, 16, 6, PrimaryColor);
 
   radio.getIdentification(device, hw, sw);
   uint8_t version = highByte(hw) * 100 + highByte(sw);
 
   tft.setFreeFont(FONT14);
-  tft.setTextColor(TFT_WHITE);
+  tft.setTextColor(ActiveColor);
 
   if (lowByte(device) == 14) {
     fullsearchrds = false;
-    tft.fillRect(152, 230, 16, 6, TFT_YELLOW);
+    tft.fillRect(152, 230, 16, 6, PrimaryColor);
     tft.drawCentreString("TEF6686 Lithio", 160, 160, GFXFF);
   } else if (lowByte(device) == 1) {
     fullsearchrds = true;
-    tft.fillRect(152, 230, 16, 6, TFT_YELLOW);
+    tft.fillRect(152, 230, 16, 6, PrimaryColor);
     tft.drawCentreString("TEF6687 Lithio FMSI", 160, 160, GFXFF);
   } else if (lowByte(device) == 9) {
     fullsearchrds = false;
-    tft.fillRect(152, 230, 16, 6, TFT_YELLOW);
+    tft.fillRect(152, 230, 16, 6, PrimaryColor);
     tft.drawCentreString("TEF6688 Lithio DR", 160, 160, GFXFF);
   } else if (lowByte(device) == 3) {
     fullsearchrds = true;
-    tft.fillRect(152, 230, 16, 6, TFT_YELLOW);
+    tft.fillRect(152, 230, 16, 6, PrimaryColor);
     tft.drawCentreString("TEF6689 Lithio FMSI DR", 160, 160, GFXFF);
   } else {
     tft.setTextColor(TFT_RED);
@@ -492,7 +509,7 @@ void setup() {
 
   if (wifi == true) {
     tryWiFi();
-    tft.fillRect(184, 230, 16, 6, TFT_YELLOW);
+    tft.fillRect(184, 230, 16, 6, PrimaryColor);
     delay(2000);
   } else {
     Server.end();
@@ -544,7 +561,7 @@ void loop() {
     if ((SStatus / 10 > LowLevelSet) && LowLevelInit == false && menu == false && band == BAND_FM) {
       if (screenmute == false) {
         tft.setFreeFont(FONT7);
-        tft.setTextColor(TFT_WHITE);
+        tft.setTextColor(ActiveColor);
         if (showmodulation) {
           tft.drawString("20", 20, 146, GFXFF);
           tft.drawString("40", 50, 146, GFXFF);
@@ -559,7 +576,7 @@ void loop() {
         if (region == 1) tft.drawString("ID:", 216, 191, GFXFF);
         tft.drawString("PS:", 6, 191, GFXFF);
         tft.drawString("PTY:", 6, 164, GFXFF);
-        if (!showmodulation) tft.drawLine(20, 150, 200, 150, TFT_GREYOUT); else tft.drawLine(20, 150, 200, 150, TFT_DARKGREY);
+        if (!showmodulation) tft.drawLine(20, 150, 200, 150, GreyoutColor); else tft.drawLine(20, 150, 200, 150, TFT_DARKGREY);
       }
       LowLevelInit = true;
     }
@@ -568,20 +585,20 @@ void loop() {
       if (LowLevelInit == true && menu == false) {
         if (screenmute == false) {
           tft.setFreeFont(FONT7);
-          tft.fillRect(20, 139, 12, 8, TFT_GREYOUT);
-          tft.fillRect(34, 139, 12, 8, TFT_GREYOUT);
-          tft.fillRect(48, 139, 12, 8, TFT_GREYOUT);
-          tft.fillRect(62, 139, 12, 8, TFT_GREYOUT);
-          tft.fillRect(76, 139, 12, 8, TFT_GREYOUT);
-          tft.fillRect(90, 139, 12, 8, TFT_GREYOUT);
-          tft.fillRect(104, 139, 12, 8, TFT_GREYOUT);
-          tft.fillRect(118, 139, 12, 8, TFT_GREYOUT);
-          tft.fillRect(132, 139, 12, 8, TFT_GREYOUT);
-          tft.fillRect(146, 139, 12, 8, TFT_GREYOUT);
-          tft.fillRect(160, 139, 12, 8, TFT_GREYOUT);
-          tft.fillRect(174, 139, 12, 8, TFT_GREYOUT);
-          tft.fillRect(188, 139, 12, 8, TFT_GREYOUT);
-          tft.setTextColor(TFT_GREYOUT);
+          tft.fillRect(20, 139, 12, 8, GreyoutColor);
+          tft.fillRect(34, 139, 12, 8, GreyoutColor);
+          tft.fillRect(48, 139, 12, 8, GreyoutColor);
+          tft.fillRect(62, 139, 12, 8, GreyoutColor);
+          tft.fillRect(76, 139, 12, 8, GreyoutColor);
+          tft.fillRect(90, 139, 12, 8, GreyoutColor);
+          tft.fillRect(104, 139, 12, 8, GreyoutColor);
+          tft.fillRect(118, 139, 12, 8, GreyoutColor);
+          tft.fillRect(132, 139, 12, 8, GreyoutColor);
+          tft.fillRect(146, 139, 12, 8, GreyoutColor);
+          tft.fillRect(160, 139, 12, 8, GreyoutColor);
+          tft.fillRect(174, 139, 12, 8, GreyoutColor);
+          tft.fillRect(188, 139, 12, 8, GreyoutColor);
+          tft.setTextColor(GreyoutColor);
           if (showmodulation) {
             tft.drawString("20", 20, 146, GFXFF);
             tft.drawString("40", 50, 146, GFXFF);
@@ -596,8 +613,8 @@ void loop() {
           if (region == 1) tft.drawString("ID:", 216, 191, GFXFF);
           tft.drawString("PS:", 6, 191, GFXFF);
           tft.drawString("PTY:", 6, 164, GFXFF);
-          tft.drawLine(20, 150, 200, 150, TFT_GREYOUT);
-          tft.drawBitmap(110, 5, RDSLogo, 67, 22, TFT_GREYOUT);
+          tft.drawLine(20, 150, 200, 150, GreyoutColor);
+          tft.drawBitmap(110, 5, RDSLogo, 67, 22, GreyoutColor);
         }
         LowLevelInit = false;
       }
@@ -629,12 +646,12 @@ void loop() {
         change2 = false;
         if (SStatus > SStatusold || SStatus < SStatusold) {
           tft.setFreeFont(FONT24);
-          tft.setTextColor(TFT_BLACK);
+          tft.setTextColor(BackgroundColor);
           if (SStatus / 10 != SStatusold / 10) tft.drawRightString(String(SStatusold / 10), 150, 146, GFXFF);
           tft.setFreeFont(FONT14);
           tft.drawString("." + String(abs(SStatusold % 10)), 156, 137, GFXFF);
           tft.setFreeFont(FONT24);
-          tft.setTextColor(TFT_SKYBLUE);
+          tft.setTextColor(PrimaryColor);
           tft.drawRightString(String(SStatus / 10), 150, 146, GFXFF);
           tft.setFreeFont(FONT14);
           tft.drawString("." + String(abs(SStatus % 10)), 156, 137, GFXFF);
@@ -1141,12 +1158,12 @@ void SelectBand() {
     if (region == 1) tft.drawString("ID:", 216, 191, GFXFF);
     tft.drawString("PS:", 6, 191, GFXFF);
     tft.drawString("PTY:", 6, 164, GFXFF);
-    tft.drawBitmap(110, 5, RDSLogo, 67, 22, TFT_GREYOUT);
-    tft.drawRoundRect(249, 56, 30, 20, 5, TFT_GREYOUT);
-    tft.setTextColor(TFT_GREYOUT);
+    tft.drawBitmap(110, 5, RDSLogo, 67, 22, GreyoutColor);
+    tft.drawRoundRect(249, 56, 30, 20, 5, GreyoutColor);
+    tft.setTextColor(GreyoutColor);
     tft.drawCentreString("iMS", 265, 54, GFXFF);
-    tft.drawRoundRect(287, 56, 30, 20, 5, TFT_GREYOUT);
-    tft.setTextColor(TFT_GREYOUT);
+    tft.drawRoundRect(287, 56, 30, 20, 5, GreyoutColor);
+    tft.setTextColor(GreyoutColor);
     tft.drawCentreString("EQ", 303, 54, GFXFF);
   } else {
     LowLevelInit == false;
@@ -1185,19 +1202,19 @@ void BWButtonPress() {
 void doStereoToggle() {
   if (StereoToggle == true) {
     if (screenmute == false) {
-      tft.drawCircle(81, 15, 10, TFT_BLACK);
-      tft.drawCircle(81, 15, 9, TFT_BLACK);
-      tft.drawCircle(91, 15, 10, TFT_BLACK);
-      tft.drawCircle(91, 15, 9, TFT_BLACK);
-      tft.drawCircle(86, 15, 10, TFT_SKYBLUE);
-      tft.drawCircle(86, 15, 9, TFT_SKYBLUE);
+      tft.drawCircle(81, 15, 10, BackgroundColor);
+      tft.drawCircle(81, 15, 9, BackgroundColor);
+      tft.drawCircle(91, 15, 10, BackgroundColor);
+      tft.drawCircle(91, 15, 9, BackgroundColor);
+      tft.drawCircle(86, 15, 10, PrimaryColor);
+      tft.drawCircle(86, 15, 9, PrimaryColor);
     }
     radio.setMono(2);
     StereoToggle = false;
   } else {
     if (screenmute == false) {
-      tft.drawCircle(86, 15, 10, TFT_BLACK);
-      tft.drawCircle(86, 15, 9, TFT_BLACK);
+      tft.drawCircle(86, 15, 10, BackgroundColor);
+      tft.drawCircle(86, 15, 9, BackgroundColor);
     }
     radio.setMono(0);
     Stereostatusold = false;
@@ -1218,11 +1235,11 @@ void ModeButtonPress() {
       if (XDRGTKUSB == true || XDRGTKTCP == true) {
         ShowFreq(1);
         tft.setFreeFont(FONT14);
-        tft.setTextColor(TFT_WHITE, TFT_BLACK);
+        tft.setTextColor(ActiveColor, BackgroundColor);
         tft.setCursor (70, 60);
         tft.drawString("NOT POSSIBLE", 70, 60, GFXFF);
         delay(1000);
-        tft.setTextColor(TFT_BLACK);
+        tft.setTextColor(BackgroundColor);
         tft.drawString("NOT POSSIBLE", 70, 60, GFXFF);
         ShowFreq(0);
       } else {
@@ -1291,6 +1308,7 @@ void ModeButtonPress() {
     EEPROM.writeUInt(254, HighEdgeOIRTSet);
     EEPROM.writeByte(258, colorinvert);
     EEPROM.writeByte(259, deepsleep);
+    EEPROM.writeInt(260, CurrentTheme);
     EEPROM.commit();
     Serial.end();
     if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
@@ -1301,10 +1319,10 @@ void ModeButtonPress() {
 }
 
 void ShowStepSize() {
-  tft.fillRect(224, 38, 15, 4, TFT_GREYOUT);
-  tft.fillRect(193, 38, 15, 4, TFT_GREYOUT);
-  if (band == BAND_FM) tft.fillRect(148, 38, 15, 4, TFT_GREYOUT); else tft.fillRect(162, 38, 15, 4, TFT_GREYOUT);
-  if (band == BAND_FM) tft.fillRect(116, 38, 15, 4, TFT_GREYOUT); else tft.fillRect(128, 38, 15, 4, TFT_GREYOUT);
+  tft.fillRect(224, 38, 15, 4, GreyoutColor);
+  tft.fillRect(193, 38, 15, 4, GreyoutColor);
+  if (band == BAND_FM) tft.fillRect(148, 38, 15, 4, GreyoutColor); else tft.fillRect(162, 38, 15, 4, GreyoutColor);
+  if (band == BAND_FM) tft.fillRect(116, 38, 15, 4, GreyoutColor); else tft.fillRect(128, 38, 15, 4, GreyoutColor);
   if (stepsize == 1) tft.fillRect(224, 38, 15, 4, TFT_GREEN);
   if (stepsize == 2) tft.fillRect(193, 38, 15, 4, TFT_GREEN);
   if (stepsize == 3) {
@@ -1464,7 +1482,7 @@ void ButtonPress() {
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][10], 155, 70, GFXFF);
               tft.drawString("dB", 170, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (VolSet > 0) tft.drawRightString("+" + String(VolSet, DEC), 155, 110, GFXFF); else tft.drawRightString(String(VolSet, DEC), 155, 110, GFXFF);
               break;
 
@@ -1472,7 +1490,7 @@ void ButtonPress() {
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][11], 155, 70, GFXFF);
               tft.drawString("MHz", 170, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
 
               tft.drawRightString(String(ConverterSet, DEC), 155, 110, GFXFF);
               break;
@@ -1481,7 +1499,7 @@ void ButtonPress() {
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][12], 155, 70, GFXFF);
               tft.drawString("MHz", 170, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawRightString(String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               break;
 
@@ -1489,7 +1507,7 @@ void ButtonPress() {
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][13], 155, 70, GFXFF);
               tft.drawString("MHz", 170, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawRightString(String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               break;
 
@@ -1498,7 +1516,7 @@ void ButtonPress() {
               tft.drawCentreString(myLanguage[language][14], 155, 70, GFXFF);
               tft.drawString("dB", 170, 110, GFXFF);
               tft.drawString("dBμV", 190, 157, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (LevelOffset > 0) tft.drawRightString("+" + String(LevelOffset, DEC), 155, 110, GFXFF); else tft.drawRightString(String(LevelOffset, DEC), 155, 110, GFXFF);
               SStatusold = 2000;
               change2 = true;
@@ -1508,7 +1526,7 @@ void ButtonPress() {
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][15], 155, 70, GFXFF);
               if (StereoLevel != 0) tft.drawString("dBμV", 170, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (StereoLevel != 0) tft.drawRightString(String(StereoLevel, DEC), 155, 110, GFXFF); else tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -1516,7 +1534,7 @@ void ButtonPress() {
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][16], 155, 70, GFXFF);
               if (HighCutLevel != 0) tft.drawString("Hz", 170, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (HighCutLevel != 0) tft.drawRightString(String(HighCutLevel * 100, DEC), 155, 110, GFXFF); else tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -1524,7 +1542,7 @@ void ButtonPress() {
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][17], 155, 70, GFXFF);
               if (HighCutOffset != 0) tft.drawString("dBμV", 170, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (HighCutOffset != 0) tft.drawRightString(String(HighCutOffset, DEC), 155, 110, GFXFF); else tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -1532,7 +1550,7 @@ void ButtonPress() {
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][18], 155, 70, GFXFF);
               tft.drawString("dBμV", 155, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawRightString(String(LowLevelSet, DEC), 145, 110, GFXFF);
               break;
 
@@ -1540,7 +1558,7 @@ void ButtonPress() {
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][19], 155, 70, GFXFF);
               tft.drawString("%", 170, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawRightString(String(ContrastSet, DEC), 155, 110, GFXFF);
               break;
           }
@@ -1551,42 +1569,42 @@ void ButtonPress() {
             case 30:
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][40], 155, 70, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][0], 155, 110, GFXFF);
               break;
 
             case 50:
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][38], 155, 70, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (showrdserrors) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
             case 70:
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][43], 155, 70, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (softmutefm) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
             case 90:
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][44], 155, 70, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (softmuteam) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
             case 110:
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][45], 155, 70, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (edgebeep) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
             case 130:
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][46], 155, 70, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (region == 0) tft.drawCentreString(myLanguage[language][47], 155, 110, GFXFF);
               if (region == 1) tft.drawCentreString(myLanguage[language][48], 155, 110, GFXFF);
               break;
@@ -1594,21 +1612,21 @@ void ButtonPress() {
             case 150:
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][49], 155, 70, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (radio.rds.underscore) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
             case 170:
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][50], 155, 70, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (USBmode) tft.drawCentreString("RDS Spy", 155, 110, GFXFF); else tft.drawCentreString("XDR-GTK", 155, 110, GFXFF);
               break;
 
             case 190:
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][51], 155, 70, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (wifi) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -1641,42 +1659,42 @@ void ButtonPress() {
             case 30:
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][58], 155, 70, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 110, GFXFF);
               break;
 
             case 50:
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][59], 155, 70, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (showSWMIBand) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
             case 70:
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][60], 155, 70, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (radio.rds.filter) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
             case 90:
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][61], 155, 70, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (radio.rds.pierrors) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
             case 110:
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][62], 155, 70, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (showsquelch) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
             case 130:
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][63], 155, 70, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (showmodulation) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -1684,7 +1702,7 @@ void ButtonPress() {
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][64], 155, 70, GFXFF);
               if (amnb != 0) tft.drawString("%", 170, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (amnb != 0) tft.drawRightString(String(amnb, DEC), 155, 110, GFXFF); else tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -1692,21 +1710,21 @@ void ButtonPress() {
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][65], 155, 70, GFXFF);
               if (fmnb != 0) tft.drawString("%", 170, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (fmnb != 0) tft.drawRightString(String(fmnb, DEC), 155, 110, GFXFF); else tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
             case 190:
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][67], 155, 70, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (audiomode) tft.drawCentreString("MPX", 155, 110, GFXFF); else tft.drawCentreString("Stereo", 155, 110, GFXFF);
               break;
 
             case 210:
               tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][68], 155, 70, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (specialstepOIRT) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
           }
@@ -1716,13 +1734,14 @@ void ButtonPress() {
           switch (menuoption) {
             case 30:
               tft.setTextColor(TFT_WHITE);
-              tft.drawCentreString(myLanguage[language][69], 155, 70, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
-              if (colorinvert) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
+              tft.drawCentreString(myLanguage[language][77], 150, 70, 4);
+              doTheme();
+              tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(CurrentThemeString, 150, 110, 4);            
               break;
 
             case 50:
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][71], 155, 30, GFXFF);
               tft.drawCentreString(myLanguage[language][72], 155, 80, GFXFF);
               tft.setFreeFont(FONT7);
@@ -1736,13 +1755,13 @@ void ButtonPress() {
               tft.drawRightString("NoobishSVK", 145, 155, GFXFF);
               tft.drawString("yo2ldk", 155, 140, GFXFF);
               tft.drawString("Justin_Peng(Portable)", 155, 155, GFXFF);
-              tft.setTextColor(TFT_WHITE);
+              tft.setTextColor(ActiveColor);
               tft.drawCentreString("https://github.com/PE5PVB/TEF6686_ESP32", 155, 175, GFXFF);
               break;
             case 70:
-              tft.setTextColor(TFT_WHITE);
+              tft.setTextColor(ActiveColor);
               tft.drawCentreString(myLanguage[language][74], 155, 70, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (deepsleep) tft.drawCentreString(myLanguage[language][75], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][76], 155, 110, GFXFF);
               break;
           }
@@ -1799,7 +1818,7 @@ void KeyUp() {
     store = true;
   } else {
     if (menuopen == false) {
-      tft.drawRoundRect(8, menuoption + 3, 302, 19, 5, TFT_BLACK);
+      tft.drawRoundRect(8, menuoption + 3, 302, 19, 5, BackgroundColor);
       menuoption += 20;
       if (menuoption > 210) {
         menupage++;
@@ -1807,7 +1826,7 @@ void KeyUp() {
         menuoption = 30;
         BuildMenu();
       }
-      tft.drawRoundRect(8, menuoption + 3, 302, 19, 5, TFT_WHITE);
+      tft.drawRoundRect(8, menuoption + 3, 302, 19, 5, ActiveColor);
     } else {
       switch (menupage) {
         case 1:
@@ -1817,7 +1836,7 @@ void KeyUp() {
               if (VolSet > 0) tft.drawRightString("+" + String(VolSet, DEC), 155, 110, GFXFF); else tft.drawRightString(String(VolSet, DEC), 155, 110, GFXFF);
               VolSet++;
               if (VolSet > 10) VolSet = 10;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (VolSet > 0) tft.drawRightString("+" + String(VolSet, DEC), 155, 110, GFXFF); else tft.drawRightString(String(VolSet, DEC), 155, 110, GFXFF);
               radio.setVolume(VolSet);
               break;
@@ -1833,7 +1852,7 @@ void KeyUp() {
                 Wire.write(ConverterSet & (0xFF));
                 Wire.endTransmission();
               }
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawRightString(String(ConverterSet, DEC), 155, 110, GFXFF);
               break;
 
@@ -1846,7 +1865,7 @@ void KeyUp() {
                 FindlowStopOIRT();
                 FindhighStopOIRT();
               }
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawRightString(String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               break;
 
@@ -1859,7 +1878,7 @@ void KeyUp() {
                 FindlowStopOIRT();
                 FindhighStopOIRT();
               }
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawRightString(String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               break;
 
@@ -1869,7 +1888,7 @@ void KeyUp() {
               if (LevelOffset > 0) tft.drawRightString("+" + String(LevelOffset, DEC), 155, 110, GFXFF); else tft.drawRightString(String(LevelOffset, DEC), 155, 110, GFXFF);
               LevelOffset++;
               if (LevelOffset > 15) LevelOffset = -25;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (LevelOffset > 0) tft.drawRightString("+" + String(LevelOffset, DEC), 155, 110, GFXFF); else tft.drawRightString(String(LevelOffset, DEC), 155, 110, GFXFF);
               radio.setOffset(LevelOffset);
               change2 = true;
@@ -1882,9 +1901,9 @@ void KeyUp() {
                 if (StereoLevel > 60 || StereoLevel <= 30) if (StereoLevel == 1) StereoLevel = 30; else StereoLevel = 0;
               tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               tft.drawString("dBμV", 170, 110, GFXFF);
-              tft.setTextColor(TFT_WHITE);
+              tft.setTextColor(ActiveColor);
               if (StereoLevel != 0) tft.drawString("dBμV", 170, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (StereoLevel != 0) tft.drawRightString(String(StereoLevel, DEC), 155, 110, GFXFF); else tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               radio.setStereoLevel(StereoLevel);
               break;
@@ -1894,7 +1913,7 @@ void KeyUp() {
               tft.drawRightString(String(HighCutLevel * 100, DEC), 155, 110, GFXFF);
               HighCutLevel ++;
               if (HighCutLevel > 70) HighCutLevel = 15;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawRightString(String(HighCutLevel * 100, DEC), 155, 110, GFXFF);
               radio.setHighCutLevel(HighCutLevel);
               break;
@@ -1907,9 +1926,9 @@ void KeyUp() {
               tft.setTextColor(TFT_BLACK);
               tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               tft.drawString("dBμV", 170, 110, GFXFF);
-              tft.setTextColor(TFT_WHITE);
+              tft.setTextColor(ActiveColor);
               if (HighCutOffset != 0) tft.drawString("dBμV", 170, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (HighCutOffset != 0) tft.drawRightString(String(HighCutOffset, DEC), 155, 110, GFXFF); else tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               radio.setHighCutOffset(HighCutOffset);
               break;
@@ -1919,7 +1938,7 @@ void KeyUp() {
               tft.drawRightString(String(LowLevelSet, DEC), 145, 110, GFXFF);
               LowLevelSet++;
               if (LowLevelSet > 40) LowLevelSet = -10;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawRightString(String(LowLevelSet, DEC), 145, 110, GFXFF);
               break;
 
@@ -1928,7 +1947,7 @@ void KeyUp() {
               tft.drawRightString(String(ContrastSet, DEC), 155, 110, GFXFF);
               ContrastSet ++;
               if (ContrastSet > 100) ContrastSet = 1;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawRightString(String(ContrastSet, DEC), 155, 110, GFXFF);
               analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
               break;
@@ -1942,7 +1961,7 @@ void KeyUp() {
               tft.drawCentreString(myLanguage[language][0], 155, 110, GFXFF);
               language ++;
               if (language == (sizeof (myLanguage) / sizeof (myLanguage[0]))) language = 0;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][0], 155, 110, GFXFF);
               break;
 
@@ -1950,7 +1969,7 @@ void KeyUp() {
               tft.setTextColor(TFT_BLACK);
               if (showrdserrors) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (showrdserrors) showrdserrors = false; else showrdserrors = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (showrdserrors) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -1958,7 +1977,7 @@ void KeyUp() {
               tft.setTextColor(TFT_BLACK);
               if (softmutefm) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (softmutefm) softmutefm = false; else softmutefm = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (softmutefm) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               radio.setSoftmuteFM(softmutefm);
               break;
@@ -1967,7 +1986,7 @@ void KeyUp() {
               tft.setTextColor(TFT_BLACK);
               if (softmuteam) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (softmuteam) softmuteam = false; else softmuteam = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (softmuteam) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               radio.setSoftmuteAM(softmuteam);
               break;
@@ -1976,7 +1995,7 @@ void KeyUp() {
               tft.setTextColor(TFT_BLACK);
               if (edgebeep) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (edgebeep) edgebeep = false; else edgebeep = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (edgebeep) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -1985,7 +2004,7 @@ void KeyUp() {
               if (region == 0) region = 1; else region = 0;
               if (regionold == 0) tft.drawCentreString(myLanguage[language][47], 155, 110, GFXFF);
               if (regionold == 1) tft.drawCentreString(myLanguage[language][48], 155, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (region == 0) tft.drawCentreString(myLanguage[language][47], 155, 110, GFXFF);
               if (region == 1) tft.drawCentreString(myLanguage[language][48], 155, 110, GFXFF);
               regionold = region;
@@ -1998,7 +2017,7 @@ void KeyUp() {
               tft.setTextColor(TFT_BLACK);
               if (radio.rds.underscore) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (radio.rds.underscore) radio.rds.underscore = false; else radio.rds.underscore = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (radio.rds.underscore) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -2006,7 +2025,7 @@ void KeyUp() {
               tft.setTextColor(TFT_BLACK);
               if (USBmode) tft.drawCentreString("RDS Spy", 155, 110, GFXFF); else tft.drawCentreString("XDR-GTK", 155, 110, GFXFF);
               if (USBmode) USBmode = false; else USBmode = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (USBmode) tft.drawCentreString("RDS Spy", 155, 110, GFXFF); else tft.drawCentreString("XDR-GTK", 155, 110, GFXFF);
               break;
 
@@ -2014,7 +2033,7 @@ void KeyUp() {
               tft.setTextColor(TFT_BLACK);
               if (wifi) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (wifi) wifi = false; else wifi = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (wifi) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
           }
@@ -2027,7 +2046,7 @@ void KeyUp() {
               tft.drawCentreString(String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 110, GFXFF);
               subnetclient ++;
               if (subnetclient > 254) subnetclient = 1;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 110, GFXFF);
               break;
 
@@ -2035,7 +2054,7 @@ void KeyUp() {
               tft.setTextColor(TFT_BLACK);
               if (showSWMIBand) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (showSWMIBand) showSWMIBand = false; else showSWMIBand = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (showSWMIBand) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -2043,7 +2062,7 @@ void KeyUp() {
               tft.setTextColor(TFT_BLACK);
               if (radio.rds.filter) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (radio.rds.filter) radio.rds.filter = false; else radio.rds.filter = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (radio.rds.filter) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -2051,7 +2070,7 @@ void KeyUp() {
               tft.setTextColor(TFT_BLACK);
               if (radio.rds.pierrors) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (radio.rds.pierrors) radio.rds.pierrors = false; else radio.rds.pierrors = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (radio.rds.pierrors) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -2059,7 +2078,7 @@ void KeyUp() {
               tft.setTextColor(TFT_BLACK);
               if (showsquelch) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (showsquelch) showsquelch = false; else showsquelch = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (showsquelch) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -2067,7 +2086,7 @@ void KeyUp() {
               tft.setTextColor(TFT_BLACK);
               if (showmodulation) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (showmodulation) showmodulation = false; else showmodulation = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (showmodulation) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -2078,9 +2097,9 @@ void KeyUp() {
                 if (amnb > 150 || amnb <= 50) if (amnb == 1) amnb = 50; else amnb = 0;
               tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               tft.drawString("%", 170, 110, GFXFF);
-              tft.setTextColor(TFT_WHITE);
+              tft.setTextColor(ActiveColor);
               if (amnb != 0) tft.drawString("%", 170, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (amnb != 0) tft.drawRightString(String(amnb, DEC), 155, 110, GFXFF); else tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               radio.setAMNoiseBlanker(amnb);
               break;
@@ -2092,9 +2111,9 @@ void KeyUp() {
                 if (fmnb > 150 || fmnb <= 50) if (fmnb == 1) fmnb = 50; else fmnb = 0;
               tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               tft.drawString("%", 170, 110, GFXFF);
-              tft.setTextColor(TFT_WHITE);
+              tft.setTextColor(ActiveColor);
               if (fmnb != 0) tft.drawString("%", 170, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (fmnb != 0) tft.drawRightString(String(fmnb, DEC), 155, 110, GFXFF); else tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               radio.setFMNoiseBlanker(fmnb);
               break;
@@ -2103,7 +2122,7 @@ void KeyUp() {
               tft.setTextColor(TFT_BLACK);
               if (audiomode) tft.drawCentreString("MPX", 155, 110, GFXFF); else tft.drawCentreString("Stereo", 155, 110, GFXFF);
               if (audiomode) audiomode = false; else audiomode = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (audiomode) tft.drawCentreString("MPX", 155, 110, GFXFF); else tft.drawCentreString("Stereo", 155, 110, GFXFF);
               radio.setAudio(audiomode);
               break;
@@ -2126,17 +2145,21 @@ void KeyUp() {
           switch (menuoption) {
             case 30:
               tft.setTextColor(TFT_BLACK);
-              if (colorinvert) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
-              if (colorinvert) colorinvert = 0; else colorinvert = 1;
-              tft.setTextColor(TFT_YELLOW);
-              if (colorinvert) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
-              tft.invertDisplay(colorinvert);
+              tft.drawCentreString(CurrentThemeString, 150, 110, 4);
+              CurrentTheme += 1;
+              if (CurrentTheme > 7) {
+                CurrentTheme = 0;
+              }
+
+              doTheme();
+              tft.setTextColor(ActiveColor);
+              tft.drawCentreString(CurrentThemeString, 150, 110, 4);
               break;
             case 70:
               tft.setTextColor(TFT_BLACK);
               if (deepsleep) tft.drawCentreString(myLanguage[language][75], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][76], 155, 110, GFXFF);
               if (deepsleep) deepsleep = 0; else deepsleep = 1;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (deepsleep) tft.drawCentreString(myLanguage[language][75], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][76], 155, 110, GFXFF);
               break;
           }
@@ -2185,7 +2208,7 @@ void KeyDown() {
     store = true;
   } else {
     if (menuopen == false) {
-      tft.drawRoundRect(8, menuoption + 3, 302, 19, 5, TFT_BLACK);
+      tft.drawRoundRect(8, menuoption + 3, 302, 19, 5, BackgroundColor);
       menuoption -= 20;
       if (menuoption < 30) {
         menupage--;
@@ -2193,7 +2216,7 @@ void KeyDown() {
         menuoption = 210;
         BuildMenu();
       }
-      tft.drawRoundRect(8, menuoption + 3, 302, 19, 5, TFT_WHITE);
+      tft.drawRoundRect(8, menuoption + 3, 302, 19, 5, ActiveColor);
     } else {
       switch (menupage) {
         case 1:
@@ -2203,7 +2226,7 @@ void KeyDown() {
               if (VolSet > 0) tft.drawRightString("+" + String(VolSet, DEC), 155, 110, GFXFF); else tft.drawRightString(String(VolSet, DEC), 155, 110, GFXFF);
               VolSet--;
               if (VolSet < -10) VolSet = -10;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (VolSet > 0) tft.drawRightString("+" + String(VolSet, DEC), 155, 110, GFXFF); else tft.drawRightString(String(VolSet, DEC), 155, 110, GFXFF);
               radio.setVolume(VolSet);
               break;
@@ -2219,7 +2242,7 @@ void KeyDown() {
                 Wire.write(ConverterSet & (0xFF));
                 Wire.endTransmission();
               }
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawRightString(String(ConverterSet, DEC), 155, 110, GFXFF);
               break;
 
@@ -2232,7 +2255,7 @@ void KeyDown() {
                 FindlowStopOIRT();
                 FindhighStopOIRT();
               }
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawRightString(String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               break;
 
@@ -2245,7 +2268,7 @@ void KeyDown() {
                 FindlowStopOIRT();
                 FindhighStopOIRT();
               }
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawRightString(String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 155, 110, GFXFF);
               break;
 
@@ -2255,7 +2278,7 @@ void KeyDown() {
               if (LevelOffset > 0) tft.drawRightString("+" + String(LevelOffset, DEC), 155, 110, GFXFF); else tft.drawRightString(String(LevelOffset, DEC), 155, 110, GFXFF);
               LevelOffset--;
               if (LevelOffset < -25) LevelOffset = 15;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (LevelOffset > 0) tft.drawRightString("+" + String(LevelOffset, DEC), 155, 110, GFXFF); else tft.drawRightString(String(LevelOffset, DEC), 155, 110, GFXFF);
               radio.setOffset(LevelOffset);
               change2 = true;
@@ -2268,9 +2291,9 @@ void KeyDown() {
                 if (StereoLevel < 30 || StereoLevel > 60) if (StereoLevel > 60) StereoLevel = 60; else StereoLevel = 0;
               tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               tft.drawString("dBμV", 170, 110, GFXFF);
-              tft.setTextColor(TFT_WHITE);
+              tft.setTextColor(ActiveColor);
               if (StereoLevel != 0) tft.drawString("dBμV", 170, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (StereoLevel != 0) tft.drawRightString(String(StereoLevel, DEC), 155, 110, GFXFF); else tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               radio.setStereoLevel(StereoLevel);
               break;
@@ -2280,7 +2303,7 @@ void KeyDown() {
               tft.drawRightString(String(HighCutLevel * 100, DEC), 155, 110, GFXFF);
               HighCutLevel --;
               if (HighCutLevel < 15 || HighCutLevel > 70) HighCutLevel = 70;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawRightString(String(HighCutLevel * 100, DEC), 155, 110, GFXFF);
               radio.setHighCutLevel(HighCutLevel);
               break;
@@ -2293,9 +2316,9 @@ void KeyDown() {
               tft.setTextColor(TFT_BLACK);
               tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               tft.drawString("dBμV", 170, 110, GFXFF);
-              tft.setTextColor(TFT_WHITE);
+              tft.setTextColor(ActiveColor);
               if (HighCutOffset != 0) tft.drawString("dBμV", 170, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (HighCutOffset != 0) tft.drawRightString(String(HighCutOffset, DEC), 155, 110, GFXFF); else tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               radio.setHighCutOffset(HighCutOffset);
               break;
@@ -2305,7 +2328,7 @@ void KeyDown() {
               tft.drawRightString(String(LowLevelSet, DEC), 145, 110, GFXFF);
               LowLevelSet--;
               if (LowLevelSet < -10) LowLevelSet = 40;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawRightString(String(LowLevelSet, DEC), 145, 110, GFXFF);
               break;
 
@@ -2315,7 +2338,7 @@ void KeyDown() {
               tft.drawRightString(String(ContrastSet, DEC), 155, 110, GFXFF);
               ContrastSet --;
               if (ContrastSet < 1) ContrastSet = 100;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawRightString(String(ContrastSet, DEC), 155, 110, GFXFF);
               analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
               break;
@@ -2329,7 +2352,7 @@ void KeyDown() {
               tft.drawCentreString(myLanguage[language][0], 155, 110, GFXFF);
               language --;
               if (language > (sizeof (myLanguage) / sizeof (myLanguage[0]))) language = (sizeof (myLanguage) / sizeof (myLanguage[0])) - 1;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][0], 155, 110, GFXFF);
               break;
 
@@ -2337,7 +2360,7 @@ void KeyDown() {
               tft.setTextColor(TFT_BLACK);
               if (showrdserrors) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (showrdserrors) showrdserrors = false; else showrdserrors = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (showrdserrors) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -2345,7 +2368,7 @@ void KeyDown() {
               tft.setTextColor(TFT_BLACK);
               if (softmutefm) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (softmutefm) softmutefm = false; else softmutefm = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (softmutefm) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               radio.setSoftmuteFM(softmutefm);
               break;
@@ -2354,7 +2377,7 @@ void KeyDown() {
               tft.setTextColor(TFT_BLACK);
               if (softmuteam) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (softmuteam) softmuteam = false; else softmuteam = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (softmuteam) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               radio.setSoftmuteAM(softmuteam);
               break;
@@ -2363,7 +2386,7 @@ void KeyDown() {
               tft.setTextColor(TFT_BLACK);
               if (edgebeep) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (edgebeep) edgebeep = false; else edgebeep = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (edgebeep) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -2372,7 +2395,7 @@ void KeyDown() {
               if (region == 0) region = 1; else region = 0;
               if (regionold == 0) tft.drawCentreString(myLanguage[language][47], 155, 110, GFXFF);
               if (regionold == 1) tft.drawCentreString(myLanguage[language][48], 155, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (region == 0) tft.drawCentreString(myLanguage[language][47], 155, 110, GFXFF);
               if (region == 1) tft.drawCentreString(myLanguage[language][48], 155, 110, GFXFF);
               regionold = region;
@@ -2385,7 +2408,7 @@ void KeyDown() {
               tft.setTextColor(TFT_BLACK);
               if (radio.rds.underscore) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (radio.rds.underscore) radio.rds.underscore = false; else radio.rds.underscore = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (radio.rds.underscore) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -2393,7 +2416,7 @@ void KeyDown() {
               tft.setTextColor(TFT_BLACK);
               if (USBmode) tft.drawCentreString("RDS Spy", 155, 110, GFXFF); else tft.drawCentreString("XDR-GTK", 155, 110, GFXFF);
               if (USBmode) USBmode = false; else USBmode = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (USBmode) tft.drawCentreString("RDS Spy", 155, 110, GFXFF); else tft.drawCentreString("XDR-GTK", 155, 110, GFXFF);
               break;
 
@@ -2401,7 +2424,7 @@ void KeyDown() {
               tft.setTextColor(TFT_BLACK);
               if (wifi) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (wifi) wifi = false; else wifi = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (wifi) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
           }
@@ -2414,7 +2437,7 @@ void KeyDown() {
               tft.drawCentreString(String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 110, GFXFF);
               subnetclient --;
               if (subnetclient < 1) subnetclient = 254;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 110, GFXFF);
               break;
 
@@ -2422,7 +2445,7 @@ void KeyDown() {
               tft.setTextColor(TFT_BLACK);
               if (showSWMIBand) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (showSWMIBand) showSWMIBand = false; else showSWMIBand = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (showSWMIBand) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -2430,7 +2453,7 @@ void KeyDown() {
               tft.setTextColor(TFT_BLACK);
               if (radio.rds.filter) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (radio.rds.filter) radio.rds.filter = false; else radio.rds.filter = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (radio.rds.filter) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -2438,7 +2461,7 @@ void KeyDown() {
               tft.setTextColor(TFT_BLACK);
               if (radio.rds.pierrors) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (radio.rds.pierrors) radio.rds.pierrors = false; else radio.rds.pierrors = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (radio.rds.pierrors) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -2446,7 +2469,7 @@ void KeyDown() {
               tft.setTextColor(TFT_BLACK);
               if (showsquelch) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (showsquelch) showsquelch = false; else showsquelch = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (showsquelch) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -2454,7 +2477,7 @@ void KeyDown() {
               tft.setTextColor(TFT_BLACK);
               if (showmodulation) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (showmodulation) showmodulation = false; else showmodulation = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (showmodulation) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
 
@@ -2465,9 +2488,9 @@ void KeyDown() {
                 if (amnb > 150 || amnb <= 50) if (amnb > 150) amnb = 150; else amnb = 0;
               tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               tft.drawString("%", 170, 110, GFXFF);
-              tft.setTextColor(TFT_WHITE);
+              tft.setTextColor(ActiveColor);
               if (amnb != 0) tft.drawString("%", 170, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (amnb != 0) tft.drawRightString(String(amnb, DEC), 155, 110, GFXFF); else tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               radio.setAMNoiseBlanker(amnb);
               break;
@@ -2479,9 +2502,9 @@ void KeyDown() {
                 if (fmnb > 150 || fmnb <= 50) if (fmnb > 150) fmnb = 150; else fmnb = 0;
               tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               tft.drawString("%", 170, 110, GFXFF);
-              tft.setTextColor(TFT_WHITE);
+              tft.setTextColor(ActiveColor);
               if (fmnb != 0) tft.drawString("%", 170, 110, GFXFF);
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (fmnb != 0) tft.drawRightString(String(fmnb, DEC), 155, 110, GFXFF); else tft.drawRightString(myLanguage[language][30], 155, 110, GFXFF);
               radio.setFMNoiseBlanker(fmnb);
               break;
@@ -2490,7 +2513,7 @@ void KeyDown() {
               tft.setTextColor(TFT_BLACK);
               if (audiomode) tft.drawCentreString("MPX", 155, 110, GFXFF); else tft.drawCentreString("Stereo", 155, 110, GFXFF);
               if (audiomode) audiomode = false; else audiomode = true;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (audiomode) tft.drawCentreString("MPX", 155, 110, GFXFF); else tft.drawCentreString("Stereo", 155, 110, GFXFF);
               radio.setAudio(audiomode);
               break;
@@ -2513,17 +2536,21 @@ void KeyDown() {
           switch (menuoption) {
             case 30:
               tft.setTextColor(TFT_BLACK);
-              if (colorinvert) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
-              if (colorinvert) colorinvert = 0; else colorinvert = 1;
-              tft.setTextColor(TFT_YELLOW);
-              if (colorinvert) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
-              tft.invertDisplay(colorinvert);
+              tft.drawCentreString(CurrentThemeString, 150, 110, 4);
+              CurrentTheme -= 1;
+              if (CurrentTheme < 0) {
+                CurrentTheme = 7;
+              }
+
+              doTheme();
+              tft.setTextColor(ActiveColor);
+              tft.drawCentreString(CurrentThemeString, 150, 110, 4);
               break;
             case 70:
               tft.setTextColor(TFT_BLACK);
               if (deepsleep) tft.drawCentreString(myLanguage[language][75], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][76], 155, 110, GFXFF);
               if (deepsleep) deepsleep = 0; else deepsleep = 1;
-              tft.setTextColor(TFT_YELLOW);
+              tft.setTextColor(TFT_WHITE);
               if (deepsleep) tft.drawCentreString(myLanguage[language][75], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][76], 155, 110, GFXFF);
               break;
           }
@@ -2536,14 +2563,14 @@ void KeyDown() {
 void ShowMemoryPos() {
   if (tunemode == TUNE_MEM) {
     tft.setFreeFont(FONT7);
-    tft.setTextColor(TFT_BLACK);
+    tft.setTextColor(BackgroundColor);
     tft.drawString(String(memoryposold + 1), 80, 26, GFXFF);
-    tft.setTextColor(TFT_SKYBLUE);
+    tft.setTextColor(PrimaryColor);
     tft.drawString(String(memorypos + 1), 80, 26, GFXFF);
     memoryposold = memorypos;
   } else {
     tft.setFreeFont(FONT7);
-    tft.setTextColor(TFT_BLACK);
+    tft.setTextColor(BackgroundColor);
     tft.drawString(String(memorypos + 1), 80, 26, GFXFF);
   }
 }
@@ -2572,20 +2599,20 @@ void readRds() {
     RDSstatus = radio.rds.hasRDS;
     ShowRDSLogo(RDSstatus);
     if (RDSstatus == 0 && screenmute == false) {
-      tft.setTextColor(TFT_SKYBLUE);
+      tft.setTextColor(PrimaryColor);
       tft.setFreeFont(FONT14);
       tft.drawString(PIold, 244, 183, GFXFF);
       tft.setFreeFont(FONT14);
       tft.drawString(PSold, 38, 183, GFXFF);
       tft.setFreeFont(FONT7);
       tft.drawString(PTYold, 38, 164, GFXFF);
-      tft.setTextColor(TFT_BLACK);
+      tft.setTextColor(BackgroundColor);
       tft.setFreeFont(FONT7);
       tft.drawString(RTold, 1, 223, GFXFF);
       dropout = true;
     } else {
       if (dropout == true && PIold.length() != 0) {
-        tft.setTextColor(TFT_YELLOW);
+        tft.setTextColor(PrimaryColor);
         tft.setFreeFont(FONT14);
         tft.drawString(PIold, 244, 183, GFXFF);
         tft.setFreeFont(FONT14);
@@ -2753,9 +2780,9 @@ void showECC() {
 void showPI() {
   if (strcmp(radio.rds.picode, radioIdPrevious)) {
     tft.setFreeFont(FONT14);
-    tft.setTextColor(TFT_BLACK);
+    tft.setTextColor(BackgroundColor);
     tft.drawString(PIold, 244, 183, GFXFF);
-    tft.setTextColor(TFT_YELLOW);
+    tft.setTextColor(PrimaryColor);
     tft.drawString(radio.rds.picode, 244, 183, GFXFF);
     PIold = radio.rds.picode;
     if (wifi) {
@@ -2770,9 +2797,9 @@ void showPI() {
 void showPTY() {
   if (strcmp(radio.rds.stationType, programTypePrevious)) {
     tft.setFreeFont(FONT7);
-    tft.setTextColor(TFT_BLACK);
+    tft.setTextColor(BackgroundColor);
     tft.drawString(PTYold, 38, 164, GFXFF);
-    tft.setTextColor(TFT_YELLOW);
+    tft.setTextColor(PrimaryColor);
     tft.drawString(radio.rds.stationType, 38, 164, GFXFF);
     PTYold = radio.rds.stationType;
     if (wifi) {
@@ -2788,9 +2815,9 @@ void showPTY() {
 void showPS() {
   if (radio.rds.stationName != programServicePrevious) {
     tft.setFreeFont(FONT14);
-    tft.setTextColor(TFT_BLACK);
+    tft.setTextColor(BackgroundColor);
     tft.drawString(PSold, 38, 183, GFXFF);
-    tft.setTextColor(TFT_YELLOW);
+    tft.setTextColor(PrimaryColor);
     tft.drawString(radio.rds.stationName, 38, 183, GFXFF);
     PSold = radio.rds.stationName;
     if (wifi) {
@@ -2807,8 +2834,8 @@ void showPS() {
       Udp.endPacket();
     }
     programServicePrevious = radio.rds.stationName;
-    tft.drawLine(0, 187, 320, 187, TFT_BLUE);
-    tft.drawLine(0, 218, 320, 218, TFT_BLUE);
+    tft.drawLine(0, 187, 320, 187, FrameColor);
+    tft.drawLine(0, 218, 320, 218, FrameColor);
   }
 }
 
@@ -2819,8 +2846,8 @@ void showRadioText() {
       if (xPos < -tft.textWidth(radio.rds.stationText) + (charWidth * 24)) xPos = 6;
       sprite.setFreeFont(FONT7);
       sprite.setTextDatum(ML_DATUM);
-      sprite.fillSprite(TFT_BLACK);
-      sprite.setTextColor(TFT_YELLOW);
+      sprite.fillSprite(BackgroundColor);
+      sprite.setTextColor(PrimaryColor);
       sprite.drawString(radio.rds.stationText, xPos, yPos, GFXFF);
       sprite.pushSprite(1, 222);
       rtticker = millis();
@@ -2829,7 +2856,7 @@ void showRadioText() {
       cleanup = true;
     }
   } else if (cleanup == true) {
-    sprite.fillSprite(TFT_BLACK);
+    sprite.fillSprite(BackgroundColor);
     sprite.pushSprite(1, 222);
     cleanup = false;
   }
@@ -2847,13 +2874,13 @@ void showRadioText() {
     }
     Udp.endPacket();
   }
-  tft.drawLine(0, 239, 320, 239, TFT_BLUE);
+  tft.drawLine(0, 239, 320, 239, FrameColor);
 }
 
 void showTP() {
   if (TPold != radio.rds.hasTP) {
     tft.setFreeFont(FONT7);
-    if (radio.rds.hasTP == true) tft.setTextColor(TFT_SKYBLUE); else tft.setTextColor(TFT_GREYOUT);
+    if (radio.rds.hasTP == true) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor);
     tft.drawRightString("TP", 205, 184, GFXFF);
     TPold = radio.rds.hasTP;
   }
@@ -2862,7 +2889,7 @@ void showTP() {
 void showTA() {
   if (TAold != radio.rds.hasTA) {
     tft.setFreeFont(FONT7);
-    if (radio.rds.hasTA == true) tft.setTextColor(TFT_SKYBLUE); else tft.setTextColor(TFT_GREYOUT);
+    if (radio.rds.hasTA == true) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor);
     tft.drawRightString("TA", 205, 198, GFXFF);
     TAold = radio.rds.hasTA;
   }
@@ -2871,7 +2898,7 @@ void showTA() {
 void showEON() {
   if (EONold != radio.rds.hasEON) {
     tft.setFreeFont(FONT7);
-    if (radio.rds.hasEON == true) tft.setTextColor(TFT_SKYBLUE); else tft.setTextColor(TFT_GREYOUT);
+    if (radio.rds.hasEON == true) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor);
     tft.drawRightString("EON", 183, 198, GFXFF);
     EONold = radio.rds.hasEON;
   }
@@ -2882,22 +2909,22 @@ void showMS() {
     tft.setFreeFont(FONT7);
     switch (radio.rds.MS) {
       case 0:
-        tft.setTextColor(TFT_GREYOUT);
+        tft.setTextColor(GreyoutColor);
         tft.drawRightString("M", 183, 184, GFXFF);
         tft.drawString("S", 160, 184, GFXFF);
         break;
 
       case 1:
-        tft.setTextColor(TFT_SKYBLUE);
+        tft.setTextColor(PrimaryColor);
         tft.drawRightString("M", 183, 184, GFXFF);
-        tft.setTextColor(TFT_GREYOUT);
+        tft.setTextColor(GreyoutColor);
         tft.drawString("S", 160, 184, GFXFF);
         break;
 
       case 2:
-        tft.setTextColor(TFT_GREYOUT);
+        tft.setTextColor(GreyoutColor);
         tft.drawRightString("M", 183, 184, GFXFF);
-        tft.setTextColor(TFT_SKYBLUE);
+        tft.setTextColor(PrimaryColor);
         tft.drawString("S", 160, 184, GFXFF);
         break;
     }
@@ -2918,9 +2945,9 @@ void showCT() {
   }
   if (rds_clock != rds_clockold) {
     tft.setFreeFont(FONT7);
-    tft.setTextColor(TFT_BLACK);
+    tft.setTextColor(BackgroundColor);
     tft.drawRightString(rds_clockold, 205, 164, GFXFF);
-    tft.setTextColor(TFT_YELLOW);
+    tft.setTextColor(PrimaryColor);
     tft.drawRightString(rds_clock, 205, 164, GFXFF);
     rds_clockold = rds_clock;
   }
@@ -2928,15 +2955,15 @@ void showCT() {
 
 void BuildMenu() {
   tft.setFreeFont(FONT7);
-  tft.fillScreen(TFT_BLACK);
-  tft.drawRect(0, 0, 320, 240, TFT_BLUE);
-  tft.drawLine(0, 23, 320, 23, TFT_BLUE);
-  tft.setTextColor(TFT_SKYBLUE);
+  tft.fillScreen(BackgroundColor);
+  tft.drawRect(0, 0, 320, 240, FrameColor);
+  tft.drawLine(0, 23, 320, 23, FrameColor);
+  tft.setTextColor(PrimaryColor);
   tft.drawString(myLanguage[language][41], 10, 1, GFXFF);
-  tft.setTextColor(TFT_WHITE);
+  tft.setTextColor(ActiveColor);
   tft.drawRightString(String(menupage) + "/" + String(menupagestotal), 305, 1, GFXFF);
-  tft.drawRoundRect(8, menuoption + 3, 302, 19, 5, TFT_WHITE);
-  tft.setTextColor(TFT_WHITE);
+  tft.drawRoundRect(8, menuoption + 3, 302, 19, 5, ActiveColor);
+  tft.setTextColor(ActiveColor);
   switch (menupage) {
     case 1:
       tft.drawRightString("dB", 305, 30, GFXFF);
@@ -2959,7 +2986,7 @@ void BuildMenu() {
       tft.drawString(myLanguage[language][27], 14, 170, GFXFF);
       tft.drawString(myLanguage[language][28], 14, 190, GFXFF);
       tft.drawString(myLanguage[language][29], 14, 210, GFXFF);
-      tft.setTextColor(TFT_YELLOW);
+      tft.setTextColor(PrimaryColor);
       if (VolSet > 0) tft.drawRightString("+" + String(VolSet, DEC), 265, 30, GFXFF); else tft.drawRightString(String(VolSet, DEC), 265, 30, GFXFF);
       tft.drawRightString(String(ConverterSet, DEC), 265, 50, GFXFF);
       tft.drawRightString(String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 265, 70, GFXFF);
@@ -2983,7 +3010,7 @@ void BuildMenu() {
       tft.drawString(myLanguage[language][50], 14, 170, GFXFF);
       if (wifi) tft.drawString(String(myLanguage[language][51]) + " IP: " + String(WiFi.localIP().toString()), 14, 190, GFXFF); else tft.drawString(myLanguage[language][51], 14, 190, GFXFF);
       tft.drawString(myLanguage[language][52], 14, 210, GFXFF);
-      tft.setTextColor(TFT_YELLOW);
+      tft.setTextColor(PrimaryColor);
       tft.drawRightString(myLanguage[language][0], 305, 30, GFXFF);
       if (showrdserrors) tft.drawRightString(myLanguage[language][42], 305, 50, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 50, GFXFF);
       if (softmutefm) tft.drawRightString(myLanguage[language][42], 305, 70, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 70, GFXFF);
@@ -3010,7 +3037,7 @@ void BuildMenu() {
       tft.drawString(myLanguage[language][68], 14, 210, GFXFF);
       if (amnb != 0) tft.drawRightString("%", 305, 150, GFXFF); else tft.drawRightString(myLanguage[language][30], 265, 150, GFXFF);
       if (fmnb != 0) tft.drawRightString("%", 305, 170, GFXFF); else tft.drawRightString(myLanguage[language][30], 265, 170, GFXFF);
-      tft.setTextColor(TFT_YELLOW);
+      tft.setTextColor(PrimaryColor);
       tft.drawRightString(String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 305, 30, GFXFF);
       if (showSWMIBand) tft.drawRightString(myLanguage[language][42], 305, 50, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 50, GFXFF);
       if (radio.rds.filter) tft.drawRightString(myLanguage[language][42], 305, 70, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 70, GFXFF);
@@ -3023,11 +3050,11 @@ void BuildMenu() {
       if (specialstepOIRT) tft.drawRightString(myLanguage[language][42], 305, 210, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 210, GFXFF);
       break;
     case 4:
-      tft.drawString(myLanguage[language][69], 14, 30, GFXFF);
+      tft.drawString(myLanguage[language][77], 14, 30, GFXFF);
       tft.drawString(myLanguage[language][70], 14, 50, GFXFF);
       tft.drawString(myLanguage[language][74], 14, 70, GFXFF);
-      tft.setTextColor(TFT_YELLOW);
-      if (colorinvert) tft.drawRightString(myLanguage[language][42], 305, 30, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 30, GFXFF);
+      tft.setTextColor(PrimaryColor);
+      tft.drawRightString(CurrentThemeString, 305, 30, GFXFF);
       if (deepsleep) tft.drawRightString(myLanguage[language][75], 305, 70, GFXFF); else tft.drawRightString(myLanguage[language][76], 305, 70, GFXFF);
       break;
   }
@@ -3045,9 +3072,9 @@ void MuteScreen(int setting) {
   if (setting == 1 && screenmute == 0) {
     screenmute = true;
     tft.setFreeFont(FONT14);
-    tft.fillScreen(TFT_BLACK);
-    tft.drawRect(0, 0, 320, 240, TFT_BLUE);
-    tft.setTextColor(TFT_WHITE);
+    tft.fillScreen(BackgroundColor);
+    tft.drawRect(0, 0, 320, 240, FrameColor);
+    tft.setTextColor(ActiveColor);
     tft.drawCentreString(myLanguage[language][31], 160, 30, GFXFF);
     tft.drawCentreString(myLanguage[language][32], 160, 90, GFXFF);
   }
@@ -3056,20 +3083,20 @@ void MuteScreen(int setting) {
 void BuildDisplay() {
   if (theme == 0) {
     tft.invertDisplay(colorinvert);
-    tft.fillScreen(TFT_BLACK);
-    tft.drawRect(0, 0, 320, 240, TFT_BLUE);
-    tft.drawLine(0, 30, 320, 30, TFT_BLUE);
-    tft.drawLine(0, 100, 320, 100, TFT_BLUE);
-    tft.drawLine(64, 30, 64, 0, TFT_BLUE);
-    tft.drawLine(210, 100, 210, 218, TFT_BLUE);
-    tft.drawLine(268, 30, 268, 0, TFT_BLUE);
-    tft.drawLine(0, 165, 210, 165, TFT_BLUE);
-    tft.drawLine(0, 187, 320, 187, TFT_BLUE);
-    tft.drawLine(0, 218, 320, 218, TFT_BLUE);
-    tft.drawLine(108, 30, 108, 0, TFT_BLUE);
-    tft.drawLine(174, 30, 174, 0, TFT_BLUE);
+    tft.fillScreen(BackgroundColor);
+    tft.drawRect(0, 0, 320, 240, FrameColor);
+    tft.drawLine(0, 30, 320, 30, FrameColor);
+    tft.drawLine(0, 100, 320, 100, FrameColor);
+    tft.drawLine(64, 30, 64, 0, FrameColor);
+    tft.drawLine(210, 100, 210, 218, FrameColor);
+    tft.drawLine(268, 30, 268, 0, FrameColor);
+    tft.drawLine(0, 165, 210, 165, FrameColor);
+    tft.drawLine(0, 187, 320, 187, FrameColor);
+    tft.drawLine(0, 218, 320, 218, FrameColor);
+    tft.drawLine(108, 30, 108, 0, FrameColor);
+    tft.drawLine(174, 30, 174, 0, FrameColor);
     tft.drawLine(20, 120, 200, 120, TFT_DARKGREY);
-    if (!showmodulation) tft.drawLine(20, 150, 200, 150, TFT_GREYOUT); else tft.drawLine(20, 150, 200, 150, TFT_DARKGREY);
+    if (!showmodulation) tft.drawLine(20, 150, 200, 150, GreyoutColor); else tft.drawLine(20, 150, 200, 150, TFT_DARKGREY);
     for (uint16_t segments = 0; segments < 94; segments++) {
       if (segments > 54) {
         if (((segments - 53) % 10) == 0)
@@ -3079,7 +3106,7 @@ void BuildDisplay() {
           tft.fillRect(16 + (2 * segments), 117, 2, 3, TFT_GREEN);
       }
     }
-    tft.setTextColor(TFT_WHITE);
+    tft.setTextColor(ActiveColor);
     tft.setFreeFont(FONT7);
     if (showsquelch) tft.drawString("SQ:", 216, 150, GFXFF);
     tft.drawString("S/N", 250, 164, GFXFF);
@@ -3096,7 +3123,7 @@ void BuildDisplay() {
     tft.drawString("9", 120, 116, GFXFF);
     tft.drawString("+10", 134, 116, GFXFF);
     tft.drawString("+30", 174, 116, GFXFF);
-    if (!showmodulation) tft.setTextColor(TFT_GREYOUT);
+    if (!showmodulation) tft.setTextColor(GreyoutColor);
     tft.drawString("M", 6, 132, GFXFF);
     tft.drawString("20", 20, 146, GFXFF);
     tft.drawString("40", 50, 146, GFXFF);
@@ -3105,27 +3132,27 @@ void BuildDisplay() {
     tft.drawString("100", 134, 146, GFXFF);
     tft.drawString("120", 164, 146, GFXFF);
     tft.drawString("%", 196, 146, GFXFF);
-    tft.setTextColor(TFT_WHITE);
+    tft.setTextColor(ActiveColor);
     tft.setFreeFont(FONT14);
     tft.drawString("kHz", 225, -5, GFXFF);
-    tft.setTextColor(TFT_WHITE);
+    tft.setTextColor(ActiveColor);
     if (band == BAND_FM) tft.drawString("MHz", 258, 67, GFXFF); else tft.drawString("kHz", 258, 67, GFXFF);
-    tft.drawCircle(81, 15, 10, TFT_GREYOUT);
-    tft.drawCircle(81, 15, 9, TFT_GREYOUT);
-    tft.drawCircle(91, 15, 10, TFT_GREYOUT);
-    tft.drawCircle(91, 15, 9, TFT_GREYOUT);
-    tft.drawBitmap(110, 5, RDSLogo, 67, 22, TFT_GREYOUT);
+    tft.drawCircle(81, 15, 10, GreyoutColor);
+    tft.drawCircle(81, 15, 9, GreyoutColor);
+    tft.drawCircle(91, 15, 10, GreyoutColor);
+    tft.drawCircle(91, 15, 9, GreyoutColor);
+    tft.drawBitmap(110, 5, RDSLogo, 67, 22, GreyoutColor);
     if (StereoToggle == false) {
-      tft.drawCircle(86, 15, 10, TFT_SKYBLUE);
-      tft.drawCircle(86, 15, 9, TFT_SKYBLUE);
+      tft.drawCircle(86, 15, 10, PrimaryColor);
+      tft.drawCircle(86, 15, 9, PrimaryColor);
     }
-    tft.setTextColor(TFT_SKYBLUE);
+    tft.setTextColor(PrimaryColor);
     tft.setFreeFont(FONT7);
     if (band == BAND_LW) tft.drawString("LW", 50, 26, GFXFF);
     else if (band == BAND_MW) tft.drawString("MW", 50, 26, GFXFF);
     else if (band == BAND_SW) tft.drawString("SW", 50, 26, GFXFF);
     else tft.drawString("FM", 50, 26, GFXFF);
-    tft.setTextColor(TFT_GREYOUT);
+    tft.setTextColor(GreyoutColor);
     tft.drawString("S", 160, 184, GFXFF);
     tft.drawRightString("M", 183, 184, GFXFF);
     tft.drawRightString("EON", 183, 198, GFXFF);
@@ -3139,7 +3166,7 @@ void BuildDisplay() {
   /*
     if (theme == 1) {
     tft.setFreeFont(FONT7);
-    tft.fillScreen(TFT_BLACK);
+    tft.fillScreen(BackgroundColor);
     tft.fillRect(12, 105, 2, 50, TFT_RED);
     tft.fillRect(305, 105, 2, 50, TFT_RED);
     tft.fillRect(0, 208, 50, 2, TFT_RED);
@@ -3148,38 +3175,38 @@ void BuildDisplay() {
     tft.fillRect(30, 220, 98, 6, TFT_RED);
     tft.fillRect(204, 220, 98, 6, TFT_RED);
 
-    tft.fillRect(44, 138, 2, 14, TFT_WHITE);
-    tft.fillRect(70, 138, 2, 14, TFT_WHITE);
+    tft.fillRect(44, 138, 2, 14, ActiveColor);
+    tft.fillRect(70, 138, 2, 14, ActiveColor);
     tft.fillRect(96, 38, 20, 4, TFT_DARKGREY);
     tft.fillRect(129, 38, 20, 4, TFT_DARKGREY);
     tft.fillRect(173, 38, 20, 4, TFT_DARKGREY);
     tft.fillRect(207, 38, 20, 4, TFT_DARKGREY);
 
     tft.setFreeFont(GUI2_FONT12);
-    tft.setTextColor(TFT_WHITE);
+    tft.setTextColor(ActiveColor);
     tft.drawString("PI:", 26, 102, GFXFF);
 
     tft.setFreeFont(GUI2_FONT12);
-    tft.setTextColor(TFT_SKYBLUE);
+    tft.setTextColor(PrimaryColor);
     tft.drawString("232F", 56, 102, GFXFF);
 
     tft.setFreeFont(GUI2_FONT12);
-    tft.setTextColor(TFT_SKYBLUE);
+    tft.setTextColor(PrimaryColor);
     tft.drawRightString("36.2", 250, 102, GFXFF);
 
     tft.setFreeFont(GUI2_FONT12);
-    tft.setTextColor(TFT_WHITE);
+    tft.setTextColor(ActiveColor);
     tft.drawRightString("dBf", 294, 102, GFXFF);
 
-    tft.setTextColor(TFT_WHITE);
+    tft.setTextColor(ActiveColor);
     tft.setFreeFont(GUI2_FONT7);
     tft.drawRightString("dB S/N", 294, 132, GFXFF);
 
     tft.setFreeFont(GUI2_FONT7);
-    tft.setTextColor(TFT_SKYBLUE);
+    tft.setTextColor(PrimaryColor);
     tft.drawRightString("20", 244, 132, GFXFF);
 
-    tft.setTextColor(TFT_SKYBLUE);
+    tft.setTextColor(PrimaryColor);
     tft.setFreeFont(GUI2_FONT12);
     tft.drawCentreString("R-ZURNAL", 160, 156, GFXFF);
 
@@ -3191,7 +3218,7 @@ void BuildDisplay() {
     tft.setTextColor(TFT_DARKGREY);
     tft.drawCentreString("Information", 160, 140, GFXFF);
 
-    tft.setTextColor(TFT_SKYBLUE);
+    tft.setTextColor(PrimaryColor);
     tft.setFreeFont(GUI2_FONT7);
     tft.drawRightString("TP", 40, 132, GFXFF);
 
@@ -3203,15 +3230,15 @@ void BuildDisplay() {
     tft.setFreeFont(GUI2_FONT7);
     tft.drawString("AF", 76, 132, GFXFF);
 
-    tft.setTextColor(TFT_WHITE);
+    tft.setTextColor(ActiveColor);
     tft.setFreeFont(GUI2_FONT12);
     tft.drawString("kHz", 162, 92, GFXFF);
 
-    tft.setTextColor(TFT_SKYBLUE);
+    tft.setTextColor(PrimaryColor);
     tft.setFreeFont(GUI2_FONT12);
     tft.drawRightString("236", 158, 92, GFXFF);
 
-    tft.setTextColor(TFT_SKYBLUE);
+    tft.setTextColor(PrimaryColor);
     tft.setFreeFont(FONTDEC);
     tft.drawCentreString("88.50", 160, 49, GFXFF);
 
@@ -3220,15 +3247,15 @@ void BuildDisplay() {
     tft.drawCentreString("MANUAL", 160, 16, GFXFF);
 
     tft.setFreeFont(GUI2_FONT7);
-    tft.setTextColor(TFT_WHITE);
+    tft.setTextColor(ActiveColor);
     tft.drawCentreString("21:35", 160, -4, GFXFF);
 
     tft.setFreeFont(GUI2_FONT7);
-    tft.setTextColor(TFT_WHITE);
+    tft.setTextColor(ActiveColor);
     tft.drawString("89 %", 243, -4, GFXFF);
 
     tft.setFreeFont(GUI2_FONT12);
-    tft.setTextColor(TFT_SKYBLUE);
+    tft.setTextColor(PrimaryColor);
     tft.drawString("S", 14, 204, GFXFF);
     tft.drawString("M", 182, 204, GFXFF);
 
@@ -3277,10 +3304,10 @@ void ShowFreq(int mode) {
         unsigned int freq = frequency_AM;
         String count = String(freq, DEC);
         if (setupmode == false && count.length() != freqoldcount || mode != 0) {
-          tft.setTextColor(TFT_BLACK);
+          tft.setTextColor(BackgroundColor);
           tft.drawRightString(String(freqold), 248, 45, 7);
         }
-        tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+        tft.setTextColor(PrimaryColor, BackgroundColor);
         tft.drawRightString(String(freq), 248, 45, 7);
         freqold = freq;
         freqoldcount = count.length();
@@ -3294,7 +3321,7 @@ void ShowFreq(int mode) {
         unsigned int freq = frequency + ConverterSet * 100;
         String count = String(freq / 100, DEC);
         if (setupmode == false && count.length() != freqoldcount || mode != 0) {
-          tft.setTextColor(TFT_BLACK);
+          tft.setTextColor(BackgroundColor);
           if (freqoldcount <= 2) tft.setCursor (108, 45);
           if (freqoldcount == 3) tft.setCursor (76, 45);
           if (freqoldcount >= 4) tft.setCursor (44, 45);
@@ -3307,7 +3334,7 @@ void ShowFreq(int mode) {
           }
         }
 
-        tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+        tft.setTextColor(PrimaryColor, BackgroundColor);
         if (mode == 0) {
           if (count.length() <= 2) tft.setCursor (108, 45);
           if (count.length() == 3) tft.setCursor (76, 45);
@@ -3320,7 +3347,7 @@ void ShowFreq(int mode) {
           freqold = freq;
           freqoldcount = count.length();
         } else if (mode == 1) {
-          tft.setTextColor(TFT_BLACK);
+          tft.setTextColor(BackgroundColor);
           if (freqoldcount <= 2) tft.setCursor (98, 45);
           if (freqoldcount == 3) tft.setCursor (71, 45);
           if (freqoldcount == 4) tft.setCursor (44, 45);
@@ -3356,9 +3383,9 @@ void ShowSignalLevel() {
 
       if (SNR > (SNRold + 1) || SNR < (SNRold - 1)) {
         tft.setFreeFont(FONT7);
-        tft.setTextColor(TFT_BLACK);
+        tft.setTextColor(BackgroundColor);
         if (SNRold == 99) tft.drawRightString("--", 294, 164, GFXFF); else  tft.drawRightString(String(SNRold), 294, 164, GFXFF);
-        tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+        tft.setTextColor(PrimaryColor, BackgroundColor);
         if (tuned == true) {
           tft.drawRightString(String(SNR), 294, 164, GFXFF);
           SNRold = SNR;
@@ -3395,12 +3422,12 @@ void ShowSignalLevel() {
       if (SStatus > 1200) SStatus = 1200;
       if (SStatus < -400) SStatus = -400;
       tft.setFreeFont(FONT24);
-      tft.setTextColor(TFT_BLACK);
+      tft.setTextColor(BackgroundColor);
       if (SStatusold / 10 != SStatus / 10) tft.drawRightString(String(SStatusold / 10), 290, 106, GFXFF);
       tft.setFreeFont(FONT14);
       tft.drawString("." + String(abs(SStatusold % 10)), 296, 97, GFXFF);
       tft.setFreeFont(FONT24);
-      tft.setTextColor(TFT_YELLOW);
+      tft.setTextColor(PrimaryColor);
       tft.drawRightString(String(SStatus / 10), 290, 106, GFXFF);
       tft.setFreeFont(FONT14);
       tft.drawString("." + String(abs(SStatus % 10)), 296, 97, GFXFF);
@@ -3409,10 +3436,10 @@ void ShowSignalLevel() {
 
       tft.fillRect(16, 109, 2 * constrain(segments, 0, 54), 8, TFT_GREEN);
       tft.fillRect(16 + 2 * 54, 109, 2 * (constrain(segments, 54, 94) - 54), 8, TFT_RED);
-      tft.fillRect(16 + 2 * constrain(segments, 0, 94), 109, 2 * (94 - constrain(segments, 0, 94)), 8, TFT_GREYOUT);
+      tft.fillRect(16 + 2 * constrain(segments, 0, 94), 109, 2 * (94 - constrain(segments, 0, 94)), 8, GreyoutColor);
 
       SStatusold = SStatus;
-      tft.setTextColor(TFT_WHITE);
+      tft.setTextColor(ActiveColor);
       tft.setFreeFont(FONT7);
       tft.drawString("dBμV", 282, 144, GFXFF);
       if (wifi) {
@@ -3428,7 +3455,7 @@ void ShowSignalLevel() {
 void ShowRDSLogo(bool RDSstatus) {
   if (screenmute == false) {
     if (RDSstatus != RDSstatusold) {
-      if (RDSstatus == true) tft.drawBitmap(110, 5, RDSLogo, 67, 22, TFT_SKYBLUE); else tft.drawBitmap(110, 5, RDSLogo, 67, 22, TFT_GREYOUT);
+      if (RDSstatus == true) tft.drawBitmap(110, 5, RDSLogo, 67, 22, RDSColor); else tft.drawBitmap(110, 5, RDSLogo, 67, 22, GreyoutColor);
       RDSstatusold = RDSstatus;
     }
   }
@@ -3439,16 +3466,16 @@ void ShowStereoStatus() {
     if (band == BAND_FM) Stereostatus = radio.getStereoStatus(); else Stereostatus = 0;
     if (Stereostatus != Stereostatusold) {
       if (Stereostatus == true && screenmute == false) {
-        tft.drawCircle(81, 15, 10, TFT_RED);
-        tft.drawCircle(81, 15, 9, TFT_RED);
-        tft.drawCircle(91, 15, 10, TFT_RED);
-        tft.drawCircle(91, 15, 9, TFT_RED);
+        tft.drawCircle(81, 15, 10, StereoColor);
+        tft.drawCircle(81, 15, 9, StereoColor);
+        tft.drawCircle(91, 15, 10, StereoColor);
+        tft.drawCircle(91, 15, 9, StereoColor);
       } else {
         if (screenmute == false) {
-          tft.drawCircle(81, 15, 10, TFT_GREYOUT);
-          tft.drawCircle(81, 15, 9, TFT_GREYOUT);
-          tft.drawCircle(91, 15, 10, TFT_GREYOUT);
-          tft.drawCircle(91, 15, 9, TFT_GREYOUT);
+          tft.drawCircle(81, 15, 10, GreyoutColor);
+          tft.drawCircle(81, 15, 9, GreyoutColor);
+          tft.drawCircle(91, 15, 10, GreyoutColor);
+          tft.drawCircle(91, 15, 9, GreyoutColor);
         }
       }
       Stereostatusold = Stereostatus;
@@ -3466,90 +3493,90 @@ void ShowOffset() {
 
     if (band == BAND_FM) {
       if (OStatus < -500) {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, TFT_GREYOUT);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, TFT_GREYOUT);
-        tft.fillCircle(32, 15, 3, TFT_GREYOUT);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, TFT_GREYOUT);
+        tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
+        tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
+        tft.fillCircle(32, 15, 3, GreyoutColor);
+        tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
         tft.fillTriangle(50, 14, 58, 8, 58, 22, TFT_RED);
         tuned = false;
       } else if (OStatus < -250 && OStatus > -500) {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, TFT_GREYOUT);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, TFT_GREYOUT);
-        tft.fillCircle(32, 15, 3, TFT_GREYOUT);
+        tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
+        tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
+        tft.fillCircle(32, 15, 3, GreyoutColor);
         tft.fillTriangle(38, 14, 46, 8, 46, 22, TFT_RED);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, TFT_GREYOUT);
+        tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
         tuned = false;
       } else if (USN < 250 && WAM < 250 && OStatus > -250 && OStatus < 250 && SQ == false) {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, TFT_GREYOUT);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, TFT_GREYOUT);
+        tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
+        tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
         tft.fillCircle(32, 15, 3, TFT_GREEN);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, TFT_GREYOUT);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, TFT_GREYOUT);
+        tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
+        tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
         tuned = true;
       } else if (OStatus > 250 && OStatus < 500) {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, TFT_GREYOUT);
+        tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
         tft.fillTriangle(18, 8, 18, 22, 26, 14, TFT_RED);
-        tft.fillCircle(32, 15, 3, TFT_GREYOUT);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, TFT_GREYOUT);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, TFT_GREYOUT);
+        tft.fillCircle(32, 15, 3, GreyoutColor);
+        tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
+        tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
         tuned = false;
       } else if (OStatus > 500) {
         tft.fillTriangle(6, 8, 6, 22, 14, 14, TFT_RED);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, TFT_GREYOUT);
-        tft.fillCircle(32, 15, 3, TFT_GREYOUT);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, TFT_GREYOUT);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, TFT_GREYOUT);
+        tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
+        tft.fillCircle(32, 15, 3, GreyoutColor);
+        tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
+        tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
         tuned = false;
       } else {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, TFT_GREYOUT);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, TFT_GREYOUT);
-        tft.fillCircle(32, 15, 3, TFT_GREYOUT);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, TFT_GREYOUT);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, TFT_GREYOUT);
+        tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
+        tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
+        tft.fillCircle(32, 15, 3, GreyoutColor);
+        tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
+        tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
         tuned = false;
       }
     } else {
       if (OStatus <= -3) {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, TFT_GREYOUT);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, TFT_GREYOUT);
-        tft.fillCircle(32, 15, 3, TFT_GREYOUT);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, TFT_GREYOUT);
+        tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
+        tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
+        tft.fillCircle(32, 15, 3, GreyoutColor);
+        tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
         tft.fillTriangle(50, 14, 58, 8, 58, 22, TFT_RED);
         tuned = false;
       } else if (OStatus < -2 && OStatus > -3) {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, TFT_GREYOUT);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, TFT_GREYOUT);
-        tft.fillCircle(32, 15, 3, TFT_GREYOUT);
+        tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
+        tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
+        tft.fillCircle(32, 15, 3, GreyoutColor);
         tft.fillTriangle(38, 14, 46, 8, 46, 22, TFT_RED);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, TFT_GREYOUT);
+        tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
         tuned = false;
       } else if (OStatus > -2 && OStatus < 2 && SQ == false) {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, TFT_GREYOUT);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, TFT_GREYOUT);
+        tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
+        tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
         tft.fillCircle(32, 15, 3, TFT_GREEN);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, TFT_GREYOUT);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, TFT_GREYOUT);
+        tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
+        tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
         tuned = true;
       } else if (OStatus > 2 && OStatus < 3) {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, TFT_GREYOUT);
+        tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
         tft.fillTriangle(18, 8, 18, 22, 26, 14, TFT_RED);
-        tft.fillCircle(32, 15, 3, TFT_GREYOUT);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, TFT_GREYOUT);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, TFT_GREYOUT);
+        tft.fillCircle(32, 15, 3, GreyoutColor);
+        tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
+        tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
         tuned = false;
       } else if (OStatus >= 3) {
         tft.fillTriangle(6, 8, 6, 22, 14, 14, TFT_RED);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, TFT_GREYOUT);
-        tft.fillCircle(32, 15, 3, TFT_GREYOUT);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, TFT_GREYOUT);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, TFT_GREYOUT);
+        tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
+        tft.fillCircle(32, 15, 3, GreyoutColor);
+        tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
+        tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
         tuned = false;
       } else {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, TFT_GREYOUT);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, TFT_GREYOUT);
-        tft.fillCircle(32, 15, 3, TFT_GREYOUT);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, TFT_GREYOUT);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, TFT_GREYOUT);
+        tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
+        tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
+        tft.fillCircle(32, 15, 3, GreyoutColor);
+        tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
+        tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
         tuned = false;
       }
     }
@@ -3566,9 +3593,9 @@ void ShowBW() {
 
   if (BW != BWOld || BWreset == true) {
     tft.setFreeFont(FONT14);
-    tft.setTextColor(TFT_BLACK);
+    tft.setTextColor(BackgroundColor);
     tft.drawRightString(String (BWOld, DEC), 218, -4, GFXFF);
-    if (BWset == 0) tft.setTextColor(TFT_SKYBLUE); else tft.setTextColor(TFT_YELLOW);
+    if (BWset == 0) tft.setTextColor(PrimaryColor); else tft.setTextColor(PrimaryColor);
     tft.drawRightString(String (BW, DEC), 218, -4, GFXFF);
     BWOld = BW;
     BWreset = false;
@@ -3601,7 +3628,7 @@ void ShowModLevel() {
           hold = segments;
           tft.fillRect(20 + segments * 14, 139, 12, 8, color);
         } else {
-          if (segments != peakholdold) tft.fillRect(20 + segments * 14, 139, 12, 8, TFT_GREYOUT);
+          if (segments != peakholdold) tft.fillRect(20 + segments * 14, 139, 12, 8, GreyoutColor);
         }
       }
 
@@ -3624,7 +3651,7 @@ void doSquelch() {
     if (Squelch > 920) Squelch = 920;
     if (showsquelch) {
       if (seek == false && menu == false && Squelch != Squelchold) {
-        tft.setTextColor(TFT_BLACK);
+        tft.setTextColor(BackgroundColor);
         if (Squelchold == -100) {
           tft.drawCentreString(myLanguage[language][33], 224, 164, GFXFF);
         } else if (Squelchold == 920) {
@@ -3632,7 +3659,7 @@ void doSquelch() {
         } else {
           tft.drawCentreString(String(Squelchold / 10), 224, 164, GFXFF);
         }
-        tft.setTextColor(TFT_WHITE);
+        tft.setTextColor(ActiveColor);
         if (Squelch == -100) {
           tft.drawCentreString(myLanguage[language][33], 224, 164, GFXFF);
         } else if (Squelch == 920) {
@@ -3665,9 +3692,9 @@ void doSquelch() {
       }
       if (screenmute == false && showsquelch == true) {
         if (Squelch != Squelchold) {
-          tft.setTextColor(TFT_BLACK);
+          tft.setTextColor(BackgroundColor);
           if (Squelchold == -1) tft.drawCentreString("ST", 224, 164, GFXFF); else tft.drawCentreString(String(Squelchold / 10), 224, 164, GFXFF);
-          tft.setTextColor(TFT_WHITE);
+          tft.setTextColor(ActiveColor);
           if (Squelch == -1) tft.drawCentreString("ST", 224, 164, GFXFF); else tft.drawCentreString(String(Squelch / 10), 224, 164, GFXFF);
           Squelchold = Squelch;
         }
@@ -3698,14 +3725,14 @@ void updateBW() {
   tft.setFreeFont(FONT7);
   if (BWset == 0) {
     if (screenmute == false) {
-      tft.drawRoundRect(249, 35, 68, 20, 5, TFT_WHITE);
-      tft.setTextColor(TFT_WHITE);
+      tft.drawRoundRect(249, 35, 68, 20, 5, ActiveColor);
+      tft.setTextColor(ActiveColor);
     }
     radio.setFMABandw();
   } else {
     if (screenmute == false) {
-      tft.drawRoundRect(249, 35, 68, 20, 5, TFT_GREYOUT);
-      tft.setTextColor(TFT_GREYOUT);
+      tft.drawRoundRect(249, 35, 68, 20, 5, GreyoutColor);
+      tft.setTextColor(GreyoutColor);
     }
   }
   tft.drawCentreString("AUTO BW", 282, 33, GFXFF);
@@ -3716,19 +3743,19 @@ void updateiMS() {
   if (band == BAND_FM) {
     if (iMSset == 0) {
       if (screenmute == false) {
-        tft.drawRoundRect(249, 56, 30, 20, 5, TFT_WHITE);
-        tft.setTextColor(TFT_WHITE);
+        tft.drawRoundRect(249, 56, 30, 20, 5, ActiveColor);
+        tft.setTextColor(ActiveColor);
       }
       radio.setiMS(1);
     } else {
       if (screenmute == false) {
-        tft.drawRoundRect(249, 56, 30, 20, 5, TFT_GREYOUT);
-        tft.setTextColor(TFT_GREYOUT);
+        tft.drawRoundRect(249, 56, 30, 20, 5, GreyoutColor);
+        tft.setTextColor(GreyoutColor);
       }
       radio.setiMS(0);
     }
   } else {
-    tft.setTextColor(TFT_GREYOUT);
+    tft.setTextColor(GreyoutColor);
   }
   tft.drawCentreString("iMS", 264, 54, GFXFF);
 }
@@ -3738,19 +3765,19 @@ void updateEQ() {
   if (band == BAND_FM) {
     if (EQset == 0) {
       if (screenmute == false) {
-        tft.drawRoundRect(287, 56, 30, 20, 5, TFT_WHITE);
-        tft.setTextColor(TFT_WHITE);
+        tft.drawRoundRect(287, 56, 30, 20, 5, ActiveColor);
+        tft.setTextColor(ActiveColor);
       }
       radio.setEQ(1);
     } else {
       if (screenmute == false) {
-        tft.drawRoundRect(287, 56, 30, 20, 5, TFT_GREYOUT);
-        tft.setTextColor(TFT_GREYOUT);
+        tft.drawRoundRect(287, 56, 30, 20, 5, GreyoutColor);
+        tft.setTextColor(GreyoutColor);
       }
       radio.setEQ(0);
     }
   } else {
-    tft.setTextColor(TFT_GREYOUT);
+    tft.setTextColor(GreyoutColor);
   }
   tft.drawCentreString("EQ", 302, 54, GFXFF);
 }
@@ -3772,15 +3799,15 @@ void updateSWMIBand() {
     case SW_MI_BAND_90M:
     case SW_MI_BAND_120M:
     case SW_MI_BAND_160M:
-      tft.setTextColor(TFT_BLACK);
+      tft.setTextColor(BackgroundColor);
       tft.drawString(SWMIBandstringold, 50, 45, GFXFF);
 
-      tft.setTextColor(TFT_SKYBLUE, TFT_BLACK);
+      tft.setTextColor(PrimaryColor, BackgroundColor);
       tft.drawString(SWMIBandstring, 50, 45, GFXFF);
       break;
     case SW_MI_BAND_GAP:
 
-      tft.setTextColor(TFT_BLACK);
+      tft.setTextColor(BackgroundColor);
       tft.drawString(SWMIBandstringold, 50, 45, GFXFF);
 
       break;
@@ -3918,73 +3945,73 @@ void ShowTuneMode() {
   switch (tunemode) {
     case TUNE_MAN:
       if (band == BAND_SW) {
-        tft.drawRoundRect(3, 57, 40, 20, 5, TFT_GREYOUT);
-        tft.setTextColor(TFT_GREYOUT);
+        tft.drawRoundRect(3, 57, 40, 20, 5, GreyoutColor);
+        tft.setTextColor(GreyoutColor);
         tft.drawCentreString("BAND", 22, 55, GFXFF);
       } else {
-        tft.drawRoundRect(3, 57, 40, 20, 5, TFT_GREYOUT);
-        tft.setTextColor(TFT_GREYOUT);
+        tft.drawRoundRect(3, 57, 40, 20, 5, GreyoutColor);
+        tft.setTextColor(GreyoutColor);
         tft.drawCentreString("AUTO", 22, 55, GFXFF);
       }
 
-      tft.drawRoundRect(3, 35, 40, 20, 5, TFT_WHITE);
-      tft.setTextColor(TFT_WHITE);
+      tft.drawRoundRect(3, 35, 40, 20, 5, ActiveColor);
+      tft.setTextColor(ActiveColor);
       tft.drawCentreString("MAN", 22, 33, GFXFF);
 
-      tft.drawRoundRect(3, 79, 40, 20, 5, TFT_GREYOUT);
-      tft.setTextColor(TFT_GREYOUT);
+      tft.drawRoundRect(3, 79, 40, 20, 5, GreyoutColor);
+      tft.setTextColor(GreyoutColor);
       tft.drawCentreString("MEM", 22, 77, GFXFF);
       break;
 
     case TUNE_AUTO:
-      tft.drawRoundRect(3, 57, 40, 20, 5, TFT_WHITE);
-      tft.setTextColor(TFT_WHITE);
+      tft.drawRoundRect(3, 57, 40, 20, 5, ActiveColor);
+      tft.setTextColor(ActiveColor);
       tft.drawCentreString("AUTO", 22, 55, GFXFF);
 
-      tft.drawRoundRect(3, 35, 40, 20, 5, TFT_GREYOUT);
-      tft.setTextColor(TFT_GREYOUT);
+      tft.drawRoundRect(3, 35, 40, 20, 5, GreyoutColor);
+      tft.setTextColor(GreyoutColor);
       tft.drawCentreString("MAN", 22, 33, GFXFF);
 
-      tft.drawRoundRect(3, 79, 40, 20, 5, TFT_GREYOUT);
-      tft.setTextColor(TFT_GREYOUT);
+      tft.drawRoundRect(3, 79, 40, 20, 5, GreyoutColor);
+      tft.setTextColor(GreyoutColor);
       tft.drawCentreString("MEM", 22, 77, GFXFF);
       break;
 
     case TUNE_MEM:
       if (band == BAND_SW) {
-        tft.drawRoundRect(3, 57, 40, 20, 5, TFT_GREYOUT);
-        tft.setTextColor(TFT_GREYOUT);
+        tft.drawRoundRect(3, 57, 40, 20, 5, GreyoutColor);
+        tft.setTextColor(GreyoutColor);
         tft.drawCentreString("BAND", 22, 55, GFXFF);
       } else {
-        tft.drawRoundRect(3, 57, 40, 20, 5, TFT_GREYOUT);
-        tft.setTextColor(TFT_GREYOUT);
+        tft.drawRoundRect(3, 57, 40, 20, 5, GreyoutColor);
+        tft.setTextColor(GreyoutColor);
         tft.drawCentreString("AUTO", 22, 55, GFXFF);
       }
 
-      tft.drawRoundRect(3, 35, 40, 20, 5, TFT_GREYOUT);
-      tft.setTextColor(TFT_GREYOUT);
+      tft.drawRoundRect(3, 35, 40, 20, 5, GreyoutColor);
+      tft.setTextColor(GreyoutColor);
       tft.drawCentreString("MAN", 22, 33, GFXFF);
 
       if (memorystore == true) {
         tft.drawRoundRect(3, 79, 40, 20, 5, TFT_RED);
         tft.setTextColor(TFT_RED);
       } else {
-        tft.drawRoundRect(3, 79, 40, 20, 5, TFT_WHITE);
-        tft.setTextColor(TFT_WHITE);
+        tft.drawRoundRect(3, 79, 40, 20, 5, ActiveColor);
+        tft.setTextColor(ActiveColor);
       }
       tft.drawCentreString("MEM", 22, 77, GFXFF);
       break;
     case TUNE_MI_BAND:
-      tft.drawRoundRect(3, 57, 40, 20, 5, TFT_WHITE);
-      tft.setTextColor(TFT_WHITE);
+      tft.drawRoundRect(3, 57, 40, 20, 5, ActiveColor);
+      tft.setTextColor(ActiveColor);
       tft.drawCentreString("BAND", 22, 55, GFXFF);
 
-      tft.drawRoundRect(3, 35, 40, 20, 5, TFT_GREYOUT);
-      tft.setTextColor(TFT_GREYOUT);
+      tft.drawRoundRect(3, 35, 40, 20, 5, GreyoutColor);
+      tft.setTextColor(GreyoutColor);
       tft.drawCentreString("MAN", 22, 33, GFXFF);
 
-      tft.drawRoundRect(3, 79, 40, 20, 5, TFT_GREYOUT);
-      tft.setTextColor(TFT_GREYOUT);
+      tft.drawRoundRect(3, 79, 40, 20, 5, GreyoutColor);
+      tft.setTextColor(GreyoutColor);
       tft.drawCentreString("MEM", 22, 77, GFXFF);
       break;
   }
@@ -3995,18 +4022,18 @@ void ShowRSSI() {
   if (rssiold != rssi) {
     rssiold = rssi;
     if (rssi == 0) {
-      tft.drawBitmap(272, 4, WiFi4, 25, 25, TFT_GREYOUT);
+      tft.drawBitmap(272, 4, WiFi4, 25, 25, GreyoutColor);
     } else if (rssi > -50 && rssi < 0) {
-      tft.drawBitmap(272, 4, WiFi4, 25, 25, TFT_SKYBLUE);
+      tft.drawBitmap(272, 4, WiFi4, 25, 25, PrimaryColor);
     } else if (rssi > -60) {
-      tft.drawBitmap(272, 4, WiFi4, 25, 25, TFT_GREYOUT);
-      tft.drawBitmap(272, 4, WiFi3, 25, 25, TFT_SKYBLUE);
+      tft.drawBitmap(272, 4, WiFi4, 25, 25, GreyoutColor);
+      tft.drawBitmap(272, 4, WiFi3, 25, 25, PrimaryColor);
     } else if (rssi > -70) {
-      tft.drawBitmap(272, 4, WiFi4, 25, 25, TFT_GREYOUT);
-      tft.drawBitmap(272, 4, WiFi2, 25, 25, TFT_SKYBLUE);
+      tft.drawBitmap(272, 4, WiFi4, 25, 25, GreyoutColor);
+      tft.drawBitmap(272, 4, WiFi2, 25, 25, PrimaryColor);
     } else if (rssi < -70) {
-      tft.drawBitmap(272, 4, WiFi4, 25, 25, TFT_GREYOUT);
-      tft.drawBitmap(272, 4, WiFi1, 25, 25, TFT_SKYBLUE);
+      tft.drawBitmap(272, 4, WiFi4, 25, 25, GreyoutColor);
+      tft.drawBitmap(272, 4, WiFi1, 25, 25, PrimaryColor);
     }
   }
 }
@@ -4024,18 +4051,18 @@ void ShowBattery() {
       if (battery == 0) {
         tft.drawRect(300, 8, 12, 20, TFT_RED);
         tft.fillRect(303, 4, 6, 4, TFT_RED);
-        tft.fillRect(302, 10, 8, 16, TFT_BLACK);
+        tft.fillRect(302, 10, 8, 16, BackgroundColor);
         tft.fillRect(302, 26 - (battery * 4), 8, battery * 4, TFT_GREEN);
       } else {
-        tft.drawRect(300, 8, 12, 20, TFT_WHITE);
-        tft.fillRect(303, 4, 6, 4, TFT_WHITE);
-        tft.fillRect(302, 10, 8, 16, TFT_BLACK);
+        tft.drawRect(300, 8, 12, 20, ActiveColor);
+        tft.fillRect(303, 4, 6, 4, ActiveColor);
+        tft.fillRect(302, 10, 8, 16, BackgroundColor);
         tft.fillRect(302, 26 - (battery * 4), 8, battery * 4, TFT_GREEN);
       }
     } else {
-      tft.drawRect(300, 8, 12, 20, TFT_GREYOUT);
-      tft.fillRect(303, 4, 6, 4, TFT_GREYOUT);
-      tft.fillRect(302, 10, 8, 16, TFT_BLACK);
+      tft.drawRect(300, 8, 12, 20, GreyoutColor);
+      tft.fillRect(303, 4, 6, 4, GreyoutColor);
+      tft.fillRect(302, 10, 8, 16, BackgroundColor);
     }
     batteryold = battery;
   }
@@ -4181,7 +4208,7 @@ void Communication() {
         if (Squelch != Squelchold) {
           if (screenmute == false) {
             tft.setFreeFont(FONT7);
-            tft.setTextColor(TFT_BLACK);
+            tft.setTextColor(BackgroundColor);
             if (Squelchold == -100) tft.drawCentreString(myLanguage[language][33], 224, 164, GFXFF); else if (Squelchold > 920) tft.drawCentreString("ST", 224, 164, GFXFF); else tft.drawCentreString(String(Squelchold / 10), 224, 164, GFXFF);
           }
         }
@@ -4463,7 +4490,7 @@ void XDRGTKRoutine() {
           doBW();
           if (screenmute == false) {
             ShowFreq(1);
-            tft.setTextColor(TFT_WHITE, TFT_BLACK);
+            tft.setTextColor(ActiveColor, BackgroundColor);
             tft.setCursor (90, 60);
             tft.setFreeFont(FONT14);
             tft.drawCentreString(myLanguage[language][34], 140, 60, GFXFF);
@@ -4480,7 +4507,7 @@ void XDRGTKRoutine() {
           }
           DataPrint("\n");
           if (screenmute == false) {
-            tft.setTextColor(TFT_BLACK);
+            tft.setTextColor(BackgroundColor);
             tft.drawCentreString(myLanguage[language][34], 140, 60, GFXFF);
           }
           radio.SetFreq(frequencyold);
@@ -4768,8 +4795,8 @@ void SetTunerPatch() {
     uint16_t sw;
     radio.getIdentification(device, hw, sw);
     TEF = highByte(hw) * 100 + highByte(sw);
-    tft.fillScreen(TFT_BLACK);
-    tft.setTextColor(TFT_WHITE);
+    tft.fillScreen(BackgroundColor);
+    tft.setTextColor(ActiveColor);
     tft.setFreeFont(FONT14);
     analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
 
@@ -4779,6 +4806,128 @@ void SetTunerPatch() {
     EEPROM.commit();
     while (true);
     for (;;);
+  }
+}
+
+void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
+  switch (CurrentTheme) {
+    case 0:  // Default PE5PVB theme
+      PrimaryColor = 0xFFE0;
+      SecondaryColor = 0xFFFF;
+      FrequencyColor = 0xFFE0;
+      FrameColor = 0x001F;
+      GreyoutColor = 0x38E7;
+      BackgroundColor = 0x0000;
+      ActiveColor = 0xFFFF;
+      OptimizerColor = 1;
+      StereoColor = TFT_RED;
+      RDSColor = PrimaryColor;
+      CurrentThemeString = "Default";
+      break;
+    case 1:  // Cyan theme
+      PrimaryColor = 0x0F3F;
+      SecondaryColor = 0xFFFF;
+      FrequencyColor = 0x0F3F;
+      FrameColor = 0x0248;
+      GreyoutColor = 0x4A69;
+      BackgroundColor = 0x0000;
+      ActiveColor = 0xFFFF;
+      OptimizerColor = 1;
+      StereoColor = 0xF3F;
+      RDSColor = 0xFFFF;
+      CurrentThemeString = "Cyan";
+      break;
+    case 2:  // Crimson theme
+      PrimaryColor = 0xF8C3;
+      SecondaryColor = 0xFFFF;
+      FrequencyColor = 0xF8C3;
+      FrameColor = 0x3800;
+      GreyoutColor = 0x4A69;
+      BackgroundColor = 0x0000;
+      ActiveColor = 0xFFFF;
+      OptimizerColor = 1;
+      StereoColor = 0xF8C3;
+      RDSColor = 0xFFFF;
+      CurrentThemeString = "Crimson";
+      break;
+    case 3:  // Monochrome theme
+      PrimaryColor = 0xFFFF;
+      SecondaryColor = 0xFFFF;
+      FrequencyColor = 0xFFFF;
+      FrameColor = 0x2965;
+      GreyoutColor = 0x4A69;
+      BackgroundColor = 0x0000;
+      ActiveColor = 0xFFFF;
+      OptimizerColor = 1;
+      StereoColor = 0xFFFF;
+      RDSColor = 0xFFFF;
+      CurrentThemeString = "Monochrome";
+      break;
+    case 4:  // Volcano theme
+      PrimaryColor = 0xFC00;
+      SecondaryColor = 0xFFFF;
+      FrequencyColor = 0xFC00;
+      FrameColor = 0x2965;
+      GreyoutColor = 0x5140;
+      BackgroundColor = 0x0806;
+      ActiveColor = 0xFFFF;
+      OptimizerColor = 1;
+      StereoColor = 0xFC00;
+      RDSColor = 0xFFFF;
+      CurrentThemeString = "Volcano";
+      break;
+    case 5:  // Dendro theme
+      PrimaryColor = TFT_GREEN;
+      SecondaryColor = 0xFFFF;
+      FrequencyColor = TFT_GREEN;
+      FrameColor = 0x0200;
+      GreyoutColor = 0x4A69;
+      BackgroundColor = 0x0000;
+      ActiveColor = 0xFFFF;
+      OptimizerColor = 1;
+      StereoColor = TFT_GREEN;
+      RDSColor = PrimaryColor;
+      CurrentThemeString = "Dendro";
+      break;
+    case 6:  // Sakura theme
+      PrimaryColor = 0xF3D5;
+      SecondaryColor = 0xFFFF;
+      FrequencyColor = 0xF3D5;
+      FrameColor = 0x3845;
+      GreyoutColor = 0x4A69;
+      BackgroundColor = 0x0000;
+      ActiveColor = 0xFFFF;
+      OptimizerColor = 1;
+      StereoColor = 0xF3D5;
+      RDSColor = ActiveColor;
+      CurrentThemeString = "Sakura";
+      break;
+    case 7:  // Whiteout theme
+      PrimaryColor = 0x0000;
+      SecondaryColor = 0x0000;
+      FrequencyColor = 0x18C3;
+      FrameColor = 0x630C;
+      GreyoutColor = 0x9492;
+      BackgroundColor = 0xDFFC;
+      ActiveColor = 0x0000;
+      OptimizerColor = 0xFFDF;
+      StereoColor = 0x0000;
+      RDSColor = 0x0000;
+      CurrentThemeString = "Whiteout";
+      break;
+    default:
+      PrimaryColor = 0xFFE0;
+      SecondaryColor = 0xFFFF;
+      FrequencyColor = 0xFFE0;
+      FrameColor = 0x001F;
+      GreyoutColor = 0x38E7;
+      BackgroundColor = 0x0000;
+      ActiveColor = 0xFFFF;
+      OptimizerColor = 1;
+      StereoColor = TFT_RED;
+      RDSColor = PrimaryColor;
+      CurrentThemeString = "Default";
+      break;
   }
 }
 
@@ -4813,10 +4962,10 @@ void read_encoder() {
 }
 
 void tryWiFi() {
-  if (!setupmode) tft.drawRoundRect(1, 60, 319, 140, 5, TFT_WHITE);
-  if (!setupmode) tft.fillRoundRect(3, 62, 315, 136, 5, TFT_BLACK);
+  if (!setupmode) tft.drawRoundRect(1, 60, 319, 140, 5, ActiveColor);
+  if (!setupmode) tft.fillRoundRect(3, 62, 315, 136, 5, BackgroundColor);
   if (!setupmode) tft.setFreeFont(FONT14);
-  if (!setupmode) tft.setTextColor(TFT_WHITE);
+  if (!setupmode) tft.setTextColor(ActiveColor);
   if (!setupmode) tft.drawCentreString(myLanguage[language][55], 155, 80, GFXFF);
   if (wc.autoConnect()) {
     Server.begin();
@@ -4903,5 +5052,6 @@ void DefaultSettings() {
   EEPROM.writeUInt(254, 0);
   EEPROM.writeByte(258, 0);
   EEPROM.writeByte(259, 0);
+  EEPROM.writeInt(260, 0);
   EEPROM.commit();
 }
