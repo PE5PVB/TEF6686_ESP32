@@ -77,7 +77,8 @@ static const char myLanguage[9][78][85] = {
     "Unknown", // 73
     "Power options", // 74
     "Deep sleep", // 75
-    "Screen off" // 76
+    "Screen off", // 76
+    "Theme" // 77
   },
 
   { "Nederlands",                     // Dutch
@@ -156,7 +157,8 @@ static const char myLanguage[9][78][85] = {
     "Onbekend", // 73
     "Power options", // 74
     "Deep sleep", // 75
-    "Screen off" // 76
+    "Screen off", // 76
+    "Theme" // 77
   }, // 
 
   { "Polski",                         // Polish
@@ -235,7 +237,8 @@ static const char myLanguage[9][78][85] = {
     "Unknown", // 73
     "Power options", // 74
     "Deep sleep", // 75
-    "Screen off" // 76
+    "Screen off", // 76
+    "Theme" // 77
   },
 
   { "Hrvatski",                       // Croatian
@@ -314,7 +317,8 @@ static const char myLanguage[9][78][85] = {
     "Nepoznato", // 73
     "Power options", // 74
     "Deep sleep", // 75
-    "Screen off" // 76
+    "Screen off", // 76
+    "Theme" // 77
   },
 
   { "Ελληνικά",                       // Greek
@@ -393,7 +397,8 @@ static const char myLanguage[9][78][85] = {
     "Άγνωστο", // 73
     "Επιλογές ενέργειας", // 74
     "Βαθιά αναμονή", // 75
-    "Οθόνη κλειστή" // 76
+    "Οθόνη κλειστή", // 76
+    "Theme" // 77
   },
 
   { "Romana",                         // Romanian
@@ -472,7 +477,8 @@ static const char myLanguage[9][78][85] = {
     "Unknown", // 73
     "Power options", // 74
     "Deep sleep", // 75
-    "Screen off" // 76
+    "Screen off", // 76
+    "Theme" // 77
   },
 
   { "Deutsch",                        // German
@@ -551,7 +557,8 @@ static const char myLanguage[9][78][85] = {
     "Unbekannt", // 73
     "Energieeinstellungen", // 74
     "Komplett aus", // 75
-    "Bildschirm aus" // 76
+    "Bildschirm aus", // 76
+    "Theme" // 77
   },
 
   { "Czech",                          // Czech
@@ -630,7 +637,8 @@ static const char myLanguage[9][78][85] = {
     "Unknown", // 73
     "Power options", // 74
     "Deep sleep", // 75
-    "Screen off" // 76
+    "Screen off", // 76
+    "Theme" // 77
   },
 
   { "Slovak",                         // Slovak
@@ -709,6 +717,7 @@ static const char myLanguage[9][78][85] = {
     "Unknown", // 73
     "Power options", // 74
     "Deep sleep", // 75
-    "Screen off" // 76
+    "Screen off", // 76
+    "Theme" // 77
   },
 };
