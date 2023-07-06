@@ -357,24 +357,55 @@ void TEF6686::readRDS(bool showrdserrors)
               if (((bitRead(rds.rdsB, 3)) & 0x1F) == 1) rds.MS = 1; else rds.MS = 2;              // Read MS flag
 
               //AF decoder
-              uint8_t  af_controlCode = rds.rdsC >> 8;
-              if ((af_controlCode < 224) && (af_counter < 50)) {
-                uint16_t buffer0 = (rds.rdsC >> 8);
-                uint16_t buffer1 = (rds.rdsC & 0xFF);
-                rds.hasAF = true;
-                if (buffer0 != 0 && buffer1 != 0) {
-                  buffer0 = buffer0 * 10 + 8750;
-                  buffer1 = buffer1 * 10 + 8750;
-                  bool isDouble = false;
-                  isDouble = checkDouble(buffer0);
-                  if (!isDouble && buffer0 != 0) {
-                    af[af_counter].frequency = buffer0;
-                    af_counter++;
+              if ((rds.rdsB >> 11) == 0 && af_counter < 50) {
+                uint16_t buffer0;// = (rds.rdsC >> 8);
+                uint16_t buffer1;// = (rds.rdsC & 0xFF);
+
+                if ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) buffer0 = (rds.rdsC >> 8) * 10 + 8750; else buffer0 = 0;
+                if ((rds.rdsC & 0xFF) > 0 && (rds.rdsC & 0xFF) < 205) buffer1 = (rds.rdsC & 0xFF) * 10 + 8750; else buffer1 = 0;
+                if (buffer0 != 0 || buffer1 != 0) rds.hasAF = true;
+
+                bool isValuePresent = false;
+                for (int i = 0; i < 50; i++) {
+                  if (buffer0 == currentfreq || buffer0 == 0 || af[i].frequency == buffer0) {
+                    isValuePresent = true;
+                    break;
                   }
-                  isDouble = checkDouble(buffer1);
-                  if (!isDouble && buffer1 != 0) {
-                    af[af_counter].frequency = buffer1;
-                    af_counter++;
+                }
+
+                if (!isValuePresent) {
+                  af[af_counter].frequency = buffer0;
+                  if ((rds.rdsC & 0xFF) == 205) af[af_counter].filler = true;
+                  af_counter++;
+                }
+
+                isValuePresent = false;
+                for (int i = 0; i < 50; i++) {
+                  if (buffer1 == currentfreq || buffer1 == 0 || af[i].frequency == buffer1) {
+                    isValuePresent = true;
+                    break;
+                  }
+                }
+
+                if (!isValuePresent) {
+                  af[af_counter].frequency = buffer1;
+                  af_counter++;
+                }
+
+                for (int i = 0; i < 51 - 1; i++) {
+                  for (int j = 0; j < 51 - i - 1; j++) {
+                    // Ignore elements with value 0
+                    if (af[j].frequency == 0) continue;
+
+                    if (af[j].frequency > af[j + 1].frequency && af[j + 1].frequency != 0) {
+                      // Swap the elements
+                      uint16_t temp = af[j].frequency;
+                      bool temp2 = af[j].filler;
+                      af[j].frequency = af[j + 1].frequency;
+                      af[j].filler = af[j + 1].filler;
+                      af[j + 1].frequency = temp;
+                      af[j + 1].filler = temp2;
+                    }
                   }
                 }
               }
@@ -383,9 +414,14 @@ void TEF6686::readRDS(bool showrdserrors)
 
         case RDS_GROUP_1A: {
             if (rds.correct) {
-              if (rds.rdsC < 255) {                                                               // ECC code readout
-                rds.ECC = rds.rdsC;
+              if (rds.rdsC >> 12 == 0) {                                                               // ECC code readout
+                rds.ECC = rds.rdsC & 0xff;
                 rds.hasECC = true;
+              }
+
+              if (rds.rdsC >> 12 == 3) {                                                               // ECC code readout
+                rds.LIC = rds.rdsC & 0xff;
+                rds.hasLIC = true;
               }
             }
           } break;
@@ -607,7 +643,7 @@ void TEF6686::readRDS(bool showrdserrors)
                     eon[position].mappedfreq = ((rds.rdsC & 0xFF) * 10 + 8750);                                     // Add mapped frequency to array
                   }
                 }
-                
+
               }
             }
           }
@@ -618,18 +654,6 @@ void TEF6686::readRDS(bool showrdserrors)
     rdsCprevious = rds.rdsC;
     rdsDprevious = rds.rdsD;
   }
-}
-
-bool TEF6686::checkDouble (uint16_t value)
-{
-  for (int i = 0; i < 50; i++) if (af[i].frequency == value)return (true);
-  return (false);
-}
-
-bool TEF6686::checkDoubleEON (uint16_t value)
-{
-  for (int i = 0; i < 5; i++) if (eon[i].pi == value)return (true);
-  return (false);
 }
 
 void TEF6686::clearRDS (bool fullsearchrds)
@@ -651,7 +675,11 @@ void TEF6686::clearRDS (bool fullsearchrds)
   for (i = 0; i < 65; i++) rt_buffer[i] = 0;
   for (i = 0; i < 18; i++) rds.stationType[i] = 0;
   for (i = 0; i < 6; i++) rds.picode[i] = 0;
-  for (i = 0; i < 50; i++) af[i].frequency = 0;
+
+  for (i = 0; i < 50; i++) {
+    af[i].frequency = 0;
+    af[i].filler = false;
+  }
 
   for (i = 0; i < 5; i++) {
     eon[i].pi = 0;
@@ -670,8 +698,10 @@ void TEF6686::clearRDS (bool fullsearchrds)
   }
 
   rds.ECC = 0;
+  rds.LIC = 0;
   rds.stationTypeCode = 32;
   rds.hasECC = false;
+  rds.hasLIC = false;
   rds.hasRT = false;
   rds.hasRDS = false;
   rds.hasTP = false;

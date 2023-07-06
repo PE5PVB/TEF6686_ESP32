@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char myLanguage[9][87][85] = {
+static const char myLanguage[9][130][85] = {
   { "English",                        // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -87,7 +87,50 @@ static const char myLanguage[9][87][85] = {
     "Dendro", // 83
     "Sakura", // 84
     "Whiteout", // 85
-    "NOT POSSIBLE" // 86
+    "NOT POSSIBLE", // 86
+    "Albanian", // 87
+    "Breton", // 88
+    "Catalan", // 89
+    "Croatian", // 90
+    "Welsh", // 91
+    "Czech", // 92
+    "Danish", // 93
+    "German", // 94
+    "English", // 95
+    "Spanish", // 96
+    "Esperanto", // 97
+    "Estonian", // 98
+    "Basque", // 99
+    "Faroese", // 100
+    "French", // 101
+    "Frisian", // 102
+    "Irish", // 103
+    "Gaelic", // 104
+    "Galician", // 105
+    "Icelandic", // 106
+    "Italian", // 107
+    "Lappish", // 108
+    "Latin", // 109
+    "Latvian", // 110
+    "Luxembourgian", // 111
+    "Lithuanian", // 112
+    "Hungarian", // 113
+    "Maltese", // 114
+    "Dutch", // 115
+    "Norwegian", // 116
+    "Occitan", // 117
+    "Polish", // 118
+    "Portuguese", // 119
+    "Romanian", // 120
+    "Romansh", // 121
+    "Serbian", // 122
+    "Slovak", // 123
+    "Slovene", // 124
+    "Finnish", // 125
+    "Swedish", // 126
+    "Turkish", // 127
+    "Flemish", // 128
+    "Walloon" // 129
   },
 
   { "Nederlands",                     // Dutch
@@ -176,7 +219,50 @@ static const char myLanguage[9][87][85] = {
     "Dendro", // 83
     "Sakura", // 84
     "Whiteout", // 85
-    "NIET MOGELIJK" // 86
+    "NIET MOGELIJK", // 86
+    "Albanees", // 87
+    "Bretons", // 88
+    "Catalaans", // 89
+    "Kroatisch", // 90
+    "Welsh", // 91
+    "Tsjechisch", // 92
+    "Deens", // 93
+    "Duits", // 94
+    "Engels", // 95
+    "Spaans", // 96
+    "Esperanto", // 97
+    "Ests", // 98
+    "Baskisch", // 99
+    "Faroese", // 100
+    "Frans", // 101
+    "Fries", // 102
+    "Iers", // 103
+    "Gaelic", // 104
+    "Gallicisch", // 105
+    "IJslands", // 106
+    "Italiaans", // 107
+    "Laplands", // 108
+    "Latijn", // 109
+    "Lets", // 110
+    "Luxemburgs", // 111
+    "Litouws", // 112
+    "Hongaars", // 113
+    "Maltees", // 114
+    "Nederlands", // 115
+    "Noors", // 116
+    "Occitaans", // 117
+    "Pools", // 118
+    "Portugees", // 119
+    "Roemeens", // 120
+    "Reto-Romaans", // 121
+    "Servisch", // 122
+    "Slowaaks", // 123
+    "Sloveens", // 124
+    "Fins", // 125
+    "Zweeds", // 126
+    "Turks", // 127
+    "Vlaams", // 128
+    "Waals" // 129
   }, //
 
   { "Polski",                         // Polish
@@ -265,7 +351,50 @@ static const char myLanguage[9][87][85] = {
     "Dendro", // 83
     "Sakura", // 84
     "Whiteout", // 85
-    "NOT POSSIBLE" // 86
+    "NOT POSSIBLE", // 86
+    "Albanian", // 87
+    "Breton", // 88
+    "Catalan", // 89
+    "Croatian", // 90
+    "Welsh", // 91
+    "Czech", // 92
+    "Danish", // 93
+    "German", // 94
+    "English", // 95
+    "Spanish", // 96
+    "Esperanto", // 97
+    "Estonian", // 98
+    "Basque", // 99
+    "Faroese", // 100
+    "French", // 101
+    "Frisian", // 102
+    "Irish", // 103
+    "Gaelic", // 104
+    "Galician", // 105
+    "Icelandic", // 106
+    "Italian", // 107
+    "Lappish", // 108
+    "Latin", // 109
+    "Latvian", // 110
+    "Luxembourgian", // 111
+    "Lithuanian", // 112
+    "Hungarian", // 113
+    "Maltese", // 114
+    "Dutch", // 115
+    "Norwegian", // 116
+    "Occitan", // 117
+    "Polish", // 118
+    "Portuguese", // 119
+    "Romanian", // 120
+    "Romansh", // 121
+    "Serbian", // 122
+    "Slovak", // 123
+    "Slovene", // 124
+    "Finnish", // 125
+    "Swedish", // 126
+    "Turkish", // 127
+    "Flemish", // 128
+    "Walloon" // 129
   },
 
   { "Hrvatski",                       // Croatian
@@ -354,7 +483,50 @@ static const char myLanguage[9][87][85] = {
     "Dendro", // 83
     "Sakura", // 84
     "Whiteout", // 85
-    "NOT POSSIBLE" // 86
+    "NOT POSSIBLE", // 86
+    "Albanian", // 87
+    "Breton", // 88
+    "Catalan", // 89
+    "Croatian", // 90
+    "Welsh", // 91
+    "Czech", // 92
+    "Danish", // 93
+    "German", // 94
+    "English", // 95
+    "Spanish", // 96
+    "Esperanto", // 97
+    "Estonian", // 98
+    "Basque", // 99
+    "Faroese", // 100
+    "French", // 101
+    "Frisian", // 102
+    "Irish", // 103
+    "Gaelic", // 104
+    "Galician", // 105
+    "Icelandic", // 106
+    "Italian", // 107
+    "Lappish", // 108
+    "Latin", // 109
+    "Latvian", // 110
+    "Luxembourgian", // 111
+    "Lithuanian", // 112
+    "Hungarian", // 113
+    "Maltese", // 114
+    "Dutch", // 115
+    "Norwegian", // 116
+    "Occitan", // 117
+    "Polish", // 118
+    "Portuguese", // 119
+    "Romanian", // 120
+    "Romansh", // 121
+    "Serbian", // 122
+    "Slovak", // 123
+    "Slovene", // 124
+    "Finnish", // 125
+    "Swedish", // 126
+    "Turkish", // 127
+    "Flemish", // 128
+    "Walloon" // 129
   },
 
   { "Ελληνικά",                       // Greek
@@ -443,7 +615,50 @@ static const char myLanguage[9][87][85] = {
     "Dendro", // 83
     "Sakura", // 84
     "Whiteout", // 85
-    "NOT POSSIBLE" // 86
+    "NOT POSSIBLE", // 86
+    "Albanian", // 87
+    "Breton", // 88
+    "Catalan", // 89
+    "Croatian", // 90
+    "Welsh", // 91
+    "Czech", // 92
+    "Danish", // 93
+    "German", // 94
+    "English", // 95
+    "Spanish", // 96
+    "Esperanto", // 97
+    "Estonian", // 98
+    "Basque", // 99
+    "Faroese", // 100
+    "French", // 101
+    "Frisian", // 102
+    "Irish", // 103
+    "Gaelic", // 104
+    "Galician", // 105
+    "Icelandic", // 106
+    "Italian", // 107
+    "Lappish", // 108
+    "Latin", // 109
+    "Latvian", // 110
+    "Luxembourgian", // 111
+    "Lithuanian", // 112
+    "Hungarian", // 113
+    "Maltese", // 114
+    "Dutch", // 115
+    "Norwegian", // 116
+    "Occitan", // 117
+    "Polish", // 118
+    "Portuguese", // 119
+    "Romanian", // 120
+    "Romansh", // 121
+    "Serbian", // 122
+    "Slovak", // 123
+    "Slovene", // 124
+    "Finnish", // 125
+    "Swedish", // 126
+    "Turkish", // 127
+    "Flemish", // 128
+    "Walloon" // 129
   },
 
   { "Romana",                         // Romanian
@@ -532,7 +747,50 @@ static const char myLanguage[9][87][85] = {
     "Dendro", // 83
     "Sakura", // 84
     "Whiteout", // 85
-    "NOT POSSIBLE" // 86
+    "NOT POSSIBLE", // 86
+    "Albanian", // 87
+    "Breton", // 88
+    "Catalan", // 89
+    "Croatian", // 90
+    "Welsh", // 91
+    "Czech", // 92
+    "Danish", // 93
+    "German", // 94
+    "English", // 95
+    "Spanish", // 96
+    "Esperanto", // 97
+    "Estonian", // 98
+    "Basque", // 99
+    "Faroese", // 100
+    "French", // 101
+    "Frisian", // 102
+    "Irish", // 103
+    "Gaelic", // 104
+    "Galician", // 105
+    "Icelandic", // 106
+    "Italian", // 107
+    "Lappish", // 108
+    "Latin", // 109
+    "Latvian", // 110
+    "Luxembourgian", // 111
+    "Lithuanian", // 112
+    "Hungarian", // 113
+    "Maltese", // 114
+    "Dutch", // 115
+    "Norwegian", // 116
+    "Occitan", // 117
+    "Polish", // 118
+    "Portuguese", // 119
+    "Romanian", // 120
+    "Romansh", // 121
+    "Serbian", // 122
+    "Slovak", // 123
+    "Slovene", // 124
+    "Finnish", // 125
+    "Swedish", // 126
+    "Turkish", // 127
+    "Flemish", // 128
+    "Walloon" // 129
   },
 
   { "Deutsch",                        // German
@@ -621,7 +879,50 @@ static const char myLanguage[9][87][85] = {
     "Dendro", // 83
     "Sakura", // 84
     "Whiteout", // 85
-    "NOT POSSIBLE" // 86
+    "NOT POSSIBLE", // 86
+    "Albanian", // 87
+    "Breton", // 88
+    "Catalan", // 89
+    "Croatian", // 90
+    "Welsh", // 91
+    "Czech", // 92
+    "Danish", // 93
+    "German", // 94
+    "English", // 95
+    "Spanish", // 96
+    "Esperanto", // 97
+    "Estonian", // 98
+    "Basque", // 99
+    "Faroese", // 100
+    "French", // 101
+    "Frisian", // 102
+    "Irish", // 103
+    "Gaelic", // 104
+    "Galician", // 105
+    "Icelandic", // 106
+    "Italian", // 107
+    "Lappish", // 108
+    "Latin", // 109
+    "Latvian", // 110
+    "Luxembourgian", // 111
+    "Lithuanian", // 112
+    "Hungarian", // 113
+    "Maltese", // 114
+    "Dutch", // 115
+    "Norwegian", // 116
+    "Occitan", // 117
+    "Polish", // 118
+    "Portuguese", // 119
+    "Romanian", // 120
+    "Romansh", // 121
+    "Serbian", // 122
+    "Slovak", // 123
+    "Slovene", // 124
+    "Finnish", // 125
+    "Swedish", // 126
+    "Turkish", // 127
+    "Flemish", // 128
+    "Walloon" // 129
   },
 
   { "Czech",                          // Czech
@@ -710,7 +1011,50 @@ static const char myLanguage[9][87][85] = {
     "Dendro", // 83
     "Sakura", // 84
     "Whiteout", // 85
-    "NOT POSSIBLE" // 86
+    "NOT POSSIBLE", // 86
+    "Albanian", // 87
+    "Breton", // 88
+    "Catalan", // 89
+    "Croatian", // 90
+    "Welsh", // 91
+    "Czech", // 92
+    "Danish", // 93
+    "German", // 94
+    "English", // 95
+    "Spanish", // 96
+    "Esperanto", // 97
+    "Estonian", // 98
+    "Basque", // 99
+    "Faroese", // 100
+    "French", // 101
+    "Frisian", // 102
+    "Irish", // 103
+    "Gaelic", // 104
+    "Galician", // 105
+    "Icelandic", // 106
+    "Italian", // 107
+    "Lappish", // 108
+    "Latin", // 109
+    "Latvian", // 110
+    "Luxembourgian", // 111
+    "Lithuanian", // 112
+    "Hungarian", // 113
+    "Maltese", // 114
+    "Dutch", // 115
+    "Norwegian", // 116
+    "Occitan", // 117
+    "Polish", // 118
+    "Portuguese", // 119
+    "Romanian", // 120
+    "Romansh", // 121
+    "Serbian", // 122
+    "Slovak", // 123
+    "Slovene", // 124
+    "Finnish", // 125
+    "Swedish", // 126
+    "Turkish", // 127
+    "Flemish", // 128
+    "Walloon" // 129
   },
 
   { "Slovak",                         // Slovak
@@ -799,6 +1143,49 @@ static const char myLanguage[9][87][85] = {
     "Dendro", // 83
     "Sakura", // 84
     "Whiteout", // 85
-    "NOT POSSIBLE" // 86
+    "NOT POSSIBLE", // 86
+    "Albanian", // 87
+    "Breton", // 88
+    "Catalan", // 89
+    "Croatian", // 90
+    "Welsh", // 91
+    "Czech", // 92
+    "Danish", // 93
+    "German", // 94
+    "English", // 95
+    "Spanish", // 96
+    "Esperanto", // 97
+    "Estonian", // 98
+    "Basque", // 99
+    "Faroese", // 100
+    "French", // 101
+    "Frisian", // 102
+    "Irish", // 103
+    "Gaelic", // 104
+    "Galician", // 105
+    "Icelandic", // 106
+    "Italian", // 107
+    "Lappish", // 108
+    "Latin", // 109
+    "Latvian", // 110
+    "Luxembourgian", // 111
+    "Lithuanian", // 112
+    "Hungarian", // 113
+    "Maltese", // 114
+    "Dutch", // 115
+    "Norwegian", // 116
+    "Occitan", // 117
+    "Polish", // 118
+    "Portuguese", // 119
+    "Romanian", // 120
+    "Romansh", // 121
+    "Serbian", // 122
+    "Slovak", // 123
+    "Slovene", // 124
+    "Finnish", // 125
+    "Swedish", // 126
+    "Turkish", // 127
+    "Flemish", // 128
+    "Walloon" // 129
   },
 };

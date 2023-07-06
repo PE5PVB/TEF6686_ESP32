@@ -106,7 +106,8 @@ typedef struct _rds_ {
   char picode[6];
   uint16_t hours, minutes, days, months, years, offsetplusmin, rdsA, rdsB, rdsC, rdsD, rdsErr;
   int8_t offset;
-  int ECC;
+  unsigned int ECC;
+  unsigned int LIC;
   bool rdsAerror;
   bool rdsBerror;
   bool rdsCerror;
@@ -117,6 +118,7 @@ typedef struct _rds_ {
   bool hasStereo;
   bool hasRDS;
   bool hasECC;
+  bool hasLIC;
   bool hasRT;
   bool hasTP;
   bool hasTA;
@@ -138,6 +140,7 @@ typedef struct _rds_ {
 
 typedef struct _af_ {
   uint16_t  frequency;
+  bool filler;
 } af_;
 
 typedef struct _eon_ {
@@ -209,8 +212,6 @@ class TEF6686 {
     char rt_buffer[65];
     char rt_buffer2[65];
     bool useRTPlus = true;
-    bool checkDouble (uint16_t value);
-    bool checkDoubleEON (uint16_t value);
     byte eon_counter;
     bool ABold;
     char stationTextBuffer[65];
