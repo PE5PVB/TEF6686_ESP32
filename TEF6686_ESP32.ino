@@ -2128,7 +2128,7 @@ void KeyUp() {
               break;
             case 210:
               tft.setTextColor(TFT_BLACK);
-              if (specialstepOIRT) tft.drawCentreString("ON", 155, 110, GFXFF); else tft.drawCentreString("OFF", 155, 110, GFXFF);
+              if (specialstepOIRT) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (specialstepOIRT) {
                 specialstepOIRT = 0;
               } else {
@@ -2136,8 +2136,8 @@ void KeyUp() {
                 FindlowStopOIRT();
                 FindhighStopOIRT();
               }
-              tft.setTextColor(TFT_WHITE);
-              if (specialstepOIRT) tft.drawCentreString("ON", 155, 110, GFXFF); else tft.drawCentreString("OFF", 155, 110, GFXFF);
+              tft.setTextColor(TFT_YELLOW);
+              if (specialstepOIRT) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
           }
           break;
@@ -2519,7 +2519,7 @@ void KeyDown() {
               break;
             case 210:
               tft.setTextColor(TFT_BLACK);
-              if (specialstepOIRT) tft.drawCentreString("ON", 155, 110, GFXFF); else tft.drawCentreString("OFF", 155, 110, GFXFF);
+              if (specialstepOIRT) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               if (specialstepOIRT) {
                 specialstepOIRT = 0;
               } else {
@@ -2527,8 +2527,8 @@ void KeyDown() {
                 FindlowStopOIRT();
                 FindhighStopOIRT();
               }
-              tft.setTextColor(TFT_WHITE);
-              if (specialstepOIRT) tft.drawCentreString("ON", 155, 110, GFXFF); else tft.drawCentreString("OFF", 155, 110, GFXFF);
+              tft.setTextColor(TFT_YELLOW);
+              if (specialstepOIRT) tft.drawCentreString(myLanguage[language][42], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][30], 155, 110, GFXFF);
               break;
           }
           break;
@@ -3047,7 +3047,7 @@ void BuildMenu() {
       if (amnb != 0) tft.drawRightString(String(amnb, DEC), 265, 150, GFXFF); else tft.drawRightString(myLanguage[language][30], 265, 150, GFXFF);
       if (fmnb != 0) tft.drawRightString(String(fmnb, DEC), 265, 170, GFXFF); else tft.drawRightString(myLanguage[language][30], 265, 170, GFXFF);
       if (audiomode) tft.drawRightString("MPX", 305, 190, GFXFF); else tft.drawRightString("Stereo", 305, 190, GFXFF);
-      if (specialstepOIRT) tft.drawRightString("ON", 305, 210, GFXFF); else tft.drawRightString("OFF", 305, 210, GFXFF);
+      if (specialstepOIRT) tft.drawRightString(myLanguage[language][42], 305, 210, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 210, GFXFF);
       break;
     case 4:
       tft.drawString(myLanguage[language][77], 14, 30, GFXFF);

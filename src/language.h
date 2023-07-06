@@ -2,714 +2,713 @@
 
 static const char myLanguage[9][78][85] = {
   { "English",                        // English
-    "Rotary direction changed",
-    "Please release button",
-    "Screen flipped",
-    "Calibrate analog meter",
-    "Release button when ready",
-    "encoder set to optical",
-    "encoder set to standard",
-    "FM/AM receiver",
-    "Tuner: !None!",
-    "Volume:",
-    "Converter:",
-    "Low band edge:",
-    "High band edge:",
-    "RF Level offset:",
-    "Stereo threshold:",
-    "High Cut corner:",
-    "Highcut threshold:",
-    "Low level threshold:",
-    "Contrast:",
-    "Set volume",
-    "Set converter offset",
-    "Set low band edge",
-    "Set high band edge",
-    "Set level offset",
-    "Set Stereo sep. threshold",
-    "Set high cut corner frequency",
-    "Set High cut threshold",
-    "Set low level threshold",
-    "Set Display brightness",
-    "Off",
-    "Screen is muted!",
-    "To unmute uncheck RF+ box",
-    "OFF",
-    "SCANNING...",
-    "Tuner not detected",
-    "Tuner version set: v",
-    "Please restart tuner",
-    "Show RDS errors",
-    "Language",
-    "Choose language",
-    "PRESS MODE TO EXIT AND STORE",
-    "On",
-    "Softmute FM",
-    "Softmute AM",
-    "Beep at band edge",
-    "Region",
-    "Europe",
-    "USA",
-    "Show underscore in RDS",
-    "USB mode",
-    "Wi-Fi active",
-    "Configure Wi-Fi",
-    "Connect to: ",
-    "to configure Wi-Fi",
-    "Trying to connect with Wi-Fi",
-    "FAILED.. WiFi disabled",
-    "CONNECTED!",
-    "Stationlist client IP",
-    "Show SW wavelength",
-    "RDS filter",
-    "Show PI errors",
-    "Show squelch",
-    "Modulation meter",
-    "AM Noise blanker",
-    "FM Noise blanker",
-    "Defaults loaded",
-    "Audio output",
-    "FM OIRT 30 kHz steps",
-    "Invert display",
-    "About software",
-    "Main code:",
-    "Contributors:",
-    "Unknown",
-    "Power options",
-    "Deep sleep",
-    "Screen off",
-    "Theme"
+    "Rotary direction changed", // 1
+    "Please release button", // 2
+    "Screen flipped", // 3
+    "Calibrate analog meter", // 4
+    "Release button when ready", // 5
+    "encoder set to optical", // 6
+    "encoder set to standard", // 7
+    "FM/AM receiver", // 8
+    "Tuner: !None!", // 9
+    "Volume:", // 10
+    "Converter:", // 11
+    "Low band edge:", // 12
+    "High band edge:", // 13
+    "RF Level offset:", // 14
+    "Stereo threshold:", // 15
+    "High Cut corner:", // 16
+    "Highcut threshold:", // 17
+    "Low level threshold:", // 18
+    "Contrast:", // 19
+    "Set volume", // 20
+    "Set converter offset", // 21
+    "Set low band edge", // 22
+    "Set high band edge", // 23
+    "Set level offset", // 24
+    "Set Stereo sep. threshold", // 25
+    "Set high cut corner frequency", // 26
+    "Set High cut threshold", // 27
+    "Set low level threshold", // 28
+    "Set Display brightness", // 29
+    "Off", // 30
+    "Screen is muted!", // 31
+    "To unmute uncheck RF+ box", // 32
+    "OFF", // 33
+    "SCANNING...", // 34
+    "Tuner not detected", // 35
+    "Tuner version set: v", // 36
+    "Please restart tuner", // 37
+    "Show RDS errors", // 38
+    "Language", // 39
+    "Choose language", // 40
+    "PRESS MODE TO EXIT AND STORE", // 41
+    "On", // 42
+    "Softmute FM", // 43
+    "Softmute AM", // 44
+    "Beep at band edge", // 45
+    "Region", // 46
+    "Europe", // 47
+    "USA", // 48
+    "Show underscore in RDS", // 49
+    "USB mode", // 50
+    "Wi-Fi active", // 51
+    "Configure Wi-Fi", // 52
+    "Connect to: ", // 53
+    "to configure Wi-Fi", // 54
+    "Trying to connect with Wi-Fi", // 55
+    "FAILED.. WiFi disabled", // 56
+    "CONNECTED!", // 57
+    "Stationlist client IP", // 58
+    "Show SW wavelength", // 59
+    "RDS filter", // 60
+    "Show PI errors", // 61
+    "Show squelch", // 62
+    "Modulation meter", // 63
+    "AM Noise blanker", // 64
+    "FM Noise blanker", // 65
+    "Defaults loaded", // 66
+    "Audio output", // 67
+    "FM OIRT 30 kHz steps", // 68
+    "Invert display", // 69
+    "About software", // 70
+    "Main code:", // 71
+    "Contributors:", // 72
+    "Unknown", // 73
+    "Power options", // 74
+    "Deep sleep", // 75
+    "Screen off" // 76
   },
 
   { "Nederlands",                     // Dutch
-    "Rotary richting aangepast",
-    "Laat aub de knop los",
-    "Scherm gedraaid",
-    "Kalibratie analoge meter",
-    "Laat knop los indien gereed",
-    "encoder ingesteld als optisch",
-    "encoder ingesteld als standaard",
-    "FM/AM ontvanger",
-    "Tuner: !Geen!",
-    "Volume:",
-    "Converter:",
-    "Lage bandgrens:",
-    "Hoge bandgrens:",
-    "RF niveau afwijking:",
-    "Stereo grens:",
-    "Hoge tonen afval:",
-    "Hoog afval grens:",
-    "Laag signaal grens:",
-    "Helderheid:",
-    "Audio volume",
-    "Converter offset",
-    "Band ondergrens",
-    "Band bovengrens",
-    "Signaalafwijking",
-    "Stereo signaalgrens",
-    "Hoge tonen afval frequentie",
-    "Hoge tonen afval signaalniveau",
-    "Laag signaalgrens",
-    "Stel helderheid in",
-    "Uit",
-    "Scherm is bevroren!",
-    "Schakel RF+ uit om weer te activeren",
-    "UIT",
-    "ZOEKEN...",
-    "Tuner niet herkend!",
-    "Tuner ingesteld: v",
-    "Herstart de tuner",
-    "Toon RDS fouten",
-    "Taal",
-    "Kies taal",
-    "DRUK OP MODE OM AF TE SLUITEN",
-    "Aan",
-    "Softmute FM",
-    "Softmute AM",
-    "Piep op bandeinde",
-    "Regio",
-    "Europa",
-    "USA",
-    "Toon underscore in RDS",
-    "USB mode",
-    "Wi-Fi aktief",
-    "Configureer Wi-Fi",
-    "Verbind met: ",
-    "om Wi-Fi in te stellen",
-    "Verbinden met Wi-Fi...",
-    "MISLUKT! WiFi uitgeschakeld",
-    "VERBONDEN!",
-    "Stationlist client IP",
-    "Toon SW golflengte",
-    "RDS filter",
-    "Toon PI fouten",
-    "Toon squelch",
-    "Modulatie meter",
-    "AM ruis filter",
-    "FM ruis filter",
-    "Opnieuw geconfigureerd",
-    "Audio uitgang",
-    "FM OIRT 30 kHz steps",
-    "Inverteer scherm",
-    "Over deze software",
-    "Basis code:",
-    "Bijgedragen:",
-    "Onbekend",
-    "Power options",
-    "Deep sleep",
-    "Screen off"
-  },
+    "Rotary richting aangepast", // 1
+    "Laat aub de knop los", // 2
+    "Scherm gedraaid", // 3
+    "Kalibratie analoge meter", // 4
+    "Laat knop los indien gereed", // 5
+    "encoder ingesteld als optisch", // 6
+    "encoder ingesteld als standaard", // 7
+    "FM/AM ontvanger", // 8
+    "Tuner: !Geen!", // 9
+    "Volume:", // 10
+    "Converter:", // 11
+    "Lage bandgrens:", // 12
+    "Hoge bandgrens:", // 13
+    "RF niveau afwijking:", // 14
+    "Stereo grens:", // 15
+    "Hoge tonen afval:", // 16
+    "Hoog afval grens:", // 17
+    "Laag signaal grens:", // 18
+    "Helderheid:", // 19
+    "Audio volume", // 20
+    "Converter offset", // 21
+    "Band ondergrens", // 22
+    "Band bovengrens", // 23
+    "Signaalafwijking", // 24
+    "Stereo signaalgrens", // 25
+    "Hoge tonen afval frequentie", // 26
+    "Hoge tonen afval signaalniveau", // 27
+    "Laag signaalgrens", // 28
+    "Stel helderheid in", // 29
+    "Uit", // 30
+    "Scherm is bevroren!", // 31
+    "Schakel RF+ uit om weer te activeren", // 32
+    "UIT", // 33
+    "ZOEKEN...", // 34
+    "Tuner niet herkend!", // 35
+    "Tuner ingesteld: v", // 36
+    "Herstart de tuner", // 37
+    "Toon RDS fouten", // 38
+    "Taal", // 39
+    "Kies taal", // 40
+    "DRUK OP MODE OM AF TE SLUITEN", // 41
+    "Aan", // 42
+    "Softmute FM", // 43
+    "Softmute AM", // 44
+    "Piep op bandeinde", // 45
+    "Regio", // 46
+    "Europa", // 47
+    "USA", // 48
+    "Toon underscore in RDS", // 49
+    "USB mode", // 50
+    "Wi-Fi aktief", // 51
+    "Configureer Wi-Fi", // 52
+    "Verbind met: ", // 53
+    "om Wi-Fi in te stellen", // 54
+    "Verbinden met Wi-Fi...", // 55
+    "MISLUKT! WiFi uitgeschakeld", // 56
+    "VERBONDEN!", // 57
+    "Stationlist client IP", // 58
+    "Toon SW golflengte", // 59
+    "RDS filter", // 60
+    "Toon PI fouten", // 61
+    "Toon squelch", // 62
+    "Modulatie meter", // 63
+    "AM ruis filter", // 64
+    "FM ruis filter", // 65
+    "Opnieuw geconfigureerd", // 66
+    "Audio uitgang", // 67
+    "FM OIRT 30 kHz steps", // 68
+    "Inverteer scherm", // 69
+    "Over deze software", // 70
+    "Basis code:", // 71
+    "Bijgedragen:", // 72
+    "Onbekend", // 73
+    "Power options", // 74
+    "Deep sleep", // 75
+    "Screen off" // 76
+  }, // 
 
   { "Polski",                         // Polish
-    "Kierunek obrotu zmieniony",
-    "Zwolnij przycisk",
-    "Obrocono ekran",
-    "Kalibracja analogowego miernika",
-    "Zwolnij przycisk gdy gotowe",
-    "wybrano enkoder optyczny",
-    "wybrano standardowy enkoder",
-    "Odbiornik FM/AM",
-    "Tuner: !Brak!",
-    "Glosnosc:",
-    "Konwerter:",
-    "Dolna granica pasma:",
-    "Gorna granica pasma:",
-    "Odchylenie poziomu RF:",
-    "Prog Stereo:",
-    "Krawedz dolnoprzep..:",
-    "Prog dolnoprzepust.:",
-    "Prog niskiego sygnalu:",
-    "Kontrast:",
-    "Ustaw glosnosc",
-    "Ustaw odchylenie konwertera",
-    "Ustaw dolna granice pasma",
-    "Ustaw gorna granice pasma",
-    "Ustaw odchylenie sygnalu",
-    "Ustaw prog separacji Stereo",
-    "Czest. gran. filtra dolnoprzep.",
-    "Ustaw prog dolnoprzep.",
-    "Ustaw dolna granice sygnalu",
-    "Ustaw jasnosc wyswietlacza",
-    "Wyl.",
-    "Ekran jest wyciszony!",
-    "Aby wyl. wyciszenie odznacz RF+",
-    "WYL.",
-    "SKANOWANIE...",
-    "Nie wykryto tunera",
-    "Ustawiono wersje tunera: v",
-    "Prosze uruchomic pon. tuner",
-    "Pokaz bledy RDS",
-    "Jezyk",
-    "Wybierz swoj jezyk",
-    "WCISNIJ MODE ABY ZAMKNAC I ZAPISAC",
-    "Wlacz.",
-    "Lagodne wyciszanie FM",
-    "Lagodne wyciszanie AM",
-    "Beep na krawedzi pasma",
-    "Region",
-    "Europa",
-    "USA",
-    "Pokaz podkreslenia w RDS",
-    "Tryb USB",
-    "Wi-Fi aktywne",
-    "Konfiguracja Wi-Fi",
-    "Polacz z: ",
-    "aby skonfigurowac Wi-Fi",
-    "Proba polaczenia z Wi-Fi",
-    "BLAD.. WiFi wylaczone",
-    "POLACZONO!",
-    "IP klienta Stationlist",
-    "Pokaz dlugosci fal SW",
-    "Filtr RDS",
-    "Show PI errors",
-    "Pokaz blokade szumow",
-    "Wskaznik modulacji",
-    "Reduktor szumow AM",
-    "Reduktor szumow FM",
-    "Zaladowano domyslne",
-    "Wyjscie dzwieku",
-    "Kroki co 30 kHz na FM OIRT",
-    "Display color invert",
-    "About software",
-    "Main code:",
-    "Contributors:",
-    "Unknown",
-    "Power options",
-    "Deep sleep",
-    "Screen off"
+    "Kierunek obrotu zmieniony", // 1
+    "Zwolnij przycisk", // 2
+    "Obrocono ekran", // 3
+    "Kalibracja analogowego miernika", // 4
+    "Zwolnij przycisk gdy gotowe", // 5
+    "wybrano enkoder optyczny", // 6
+    "wybrano standardowy enkoder", // 7
+    "Odbiornik FM/AM", // 8
+    "Tuner: !Brak!", // 9
+    "Glosnosc:", // 10
+    "Konwerter:", // 11
+    "Dolna granica pasma:", // 12
+    "Gorna granica pasma:", // 13
+    "Odchylenie poziomu RF:", // 14
+    "Prog Stereo:", // 15
+    "Krawedz dolnoprzep..:", // 16
+    "Prog dolnoprzepust.:", // 17
+    "Prog niskiego sygnalu:", // 18
+    "Kontrast:", // 19
+    "Ustaw glosnosc", // 20
+    "Ustaw odchylenie konwertera", // 21
+    "Ustaw dolna granice pasma", // 22
+    "Ustaw gorna granice pasma", // 23
+    "Ustaw odchylenie sygnalu", // 24
+    "Ustaw prog separacji Stereo", // 25
+    "Czest. gran. filtra dolnoprzep.", // 26
+    "Ustaw prog dolnoprzep.", // 27
+    "Ustaw dolna granice sygnalu", // 28
+    "Ustaw jasnosc wyswietlacza", // 29
+    "Wyl.", // 30
+    "Ekran jest wyciszony!", // 31
+    "Aby wyl. wyciszenie odznacz RF+", // 32
+    "WYL.", // 33
+    "SKANOWANIE...", // 34
+    "Nie wykryto tunera", // 35
+    "Ustawiono wersje tunera: v", // 36
+    "Prosze uruchomic pon. tuner", // 37
+    "Pokaz bledy RDS", // 38
+    "Jezyk", // 39
+    "Wybierz swoj jezyk", // 40
+    "WCISNIJ MODE ABY ZAMKNAC I ZAPISAC", // 41
+    "Wlacz.", // 42
+    "Lagodne wyciszanie FM", // 43
+    "Lagodne wyciszanie AM", // 44
+    "Beep na krawedzi pasma", // 45
+    "Region", // 46
+    "Europa", // 47
+    "USA", // 48
+    "Pokaz podkreslenia w RDS", // 49
+    "Tryb USB", // 50
+    "Wi-Fi aktywne", // 51
+    "Konfiguracja Wi-Fi", // 52
+    "Polacz z: ", // 53
+    "aby skonfigurowac Wi-Fi", // 54
+    "Proba polaczenia z Wi-Fi", // 55
+    "BLAD.. WiFi wylaczone", // 56
+    "POLACZONO!", // 57
+    "IP klienta Stationlist", // 58
+    "Pokaz dlugosci fal SW", // 59
+    "Filtr RDS", // 60
+    "Show PI errors", // 61
+    "Pokaz blokade szumow", // 62
+    "Wskaznik modulacji", // 63
+    "Reduktor szumow AM", // 64
+    "Reduktor szumow FM", // 65
+    "Zaladowano domyslne", // 66
+    "Wyjscie dzwieku", // 67
+    "Kroki co 30 kHz na FM OIRT", // 68
+    "Display color invert", // 69
+    "About software", // 70
+    "Main code:", // 71
+    "Contributors:", // 72
+    "Unknown", // 73
+    "Power options", // 74
+    "Deep sleep", // 75
+    "Screen off" // 76
   },
 
   { "Hrvatski",                       // Croatian
-    "Smjer enkodera promij.",
-    "Otpustite gumb",
-    "Zaslon je okrenut",
-    "Kalibracija analog. mjerača",
-    "Otpustite gumb",
-    "Optički enkoder postav.",
-    "Standardni enkoder postav.",
-    "FM/AM prijemnik",
-    "Prijemnik: !Nije pronađen!",
-    "Pomak glasnoće:",
-    "Pomak konvertera:",
-    "Donja granica opsega:",
-    "Gornja granica opsega:",
-    "Pomak RF razine:",
-    "Razina stereo signala:",
-    "Granična frekvencija:",
-    "Razina granične frekv.:",
-    "Donja granica za signal:",
-    "Svjetlina:",
-    "Pomak glasnoće",
-    "Pomak konvertera",
-    "Donja granica frekv. opsega",
-    "Gornja granica frekv. opsega",
-    "Pomak signala",
-    "Razina stereo signala",
-    "Granična frekvencija",
-    "Razina granične frekv.",
-    "Donja granica za signal",
-    "Svjetlina zaslona",
-    "Isključeno",
-    "Zaslon je isključen!",
-    "Da biste uključili zaslon, poništite kvadratić RF+",
-    "ISK.",
-    "SKENIRANJE...",
-    "Prijemnik nije pronađen",
-    "Postavljena verzija prijemnika: v",
-    "Molim, ponovno pokrenite prijemnik",
-    "Prikaži RDS pogreške",
-    "Jezik",
-    "Odaberite jezik",
-    "PRITISNITE MODE ZA IZLAZ I SPREMANJE",
-    "Uključeno",
-    "Softmute FM",
-    "Softmute AM",
-    "Beep na rubu frekv. opsega",
-    "Regija",
-    "Europa",
-    "SAD",
-    "Prikaži donju crtu u RDS-u",
-    "Način rada USB-a",
-    "Wi-Fi",
-    "Wi-Fi postavke",
-    "Spojite se na: ",
-    "kako biste konfigurirali Wi-Fi",
-    "Spajanje na Wi-Fi mrežu..",
-    "NEUSPJEŠNO.. Wi-Fi onemogućen",
-    "SPOJENO!",
-    "IP klijenta StationList",
-    "Prikaži valnu duljinu KV-a",
-    "RDS filter",
-    "Show PI errors",
-    "Prikaži squelch",
-    "Mjerač modulacije",
-    "AM prigušivač šuma",
-    "FM prigušivač šuma",
-    "Zadane postavke učitane",
-    "Audio izlaz",
-    "FM OIRT 30 kHz koraci",
-    "Invertiraj boju zaslona",
-    "O softveru",
-    "Glavni izvorni kod:",
-    "Suradnici:",
-    "Nepoznato",
-    "Power options",
-    "Deep sleep",
-    "Screen off"
+    "Smjer enkodera promij.", // 1
+    "Otpustite gumb", // 2
+    "Zaslon je okrenut", // 3
+    "Kalibracija analog. mjerača", // 4
+    "Otpustite gumb", // 5
+    "Optički enkoder postav.", // 6
+    "Standardni enkoder postav.", // 7
+    "FM/AM prijemnik", // 8
+    "Prijemnik: !Nije pronađen!", // 9
+    "Pomak glasnoće:", // 10
+    "Pomak konvertera:", // 11
+    "Donja granica opsega:", // 12
+    "Gornja granica opsega:", // 13
+    "Pomak RF razine:", // 14
+    "Razina stereo signala:", // 15
+    "Granična frekvencija:", // 16
+    "Razina granične frekv.:", // 17
+    "Donja granica za signal:", // 18
+    "Svjetlina:", // 19
+    "Pomak glasnoće", // 20
+    "Pomak konvertera", // 21
+    "Donja granica frekv. opsega", // 22
+    "Gornja granica frekv. opsega", // 23
+    "Pomak signala", // 24
+    "Razina stereo signala", // 25
+    "Granična frekvencija", // 26
+    "Razina granične frekv.", // 27
+    "Donja granica za signal", // 28
+    "Svjetlina zaslona", // 29
+    "Isključeno", // 30
+    "Zaslon je isključen!", // 31
+    "Da biste uključili zaslon, poništite kvadratić RF+", // 32
+    "ISK.", // 33
+    "SKENIRANJE...", // 34
+    "Prijemnik nije pronađen", // 35
+    "Postavljena verzija prijemnika: v", // 36
+    "Molim, ponovno pokrenite prijemnik", // 37
+    "Prikaži RDS pogreške", // 38
+    "Jezik", // 39
+    "Odaberite jezik", // 40
+    "PRITISNITE MODE ZA IZLAZ I SPREMANJE", // 41
+    "Uključeno", // 42
+    "Softmute FM", // 43
+    "Softmute AM", // 44
+    "Beep na rubu frekv. opsega", // 45
+    "Regija", // 46
+    "Europa", // 47
+    "SAD", // 48
+    "Prikaži donju crtu u RDS-u", // 49
+    "Način rada USB-a", // 50
+    "Wi-Fi", // 51
+    "Wi-Fi postavke", // 52
+    "Spojite se na: ", // 53
+    "kako biste konfigurirali Wi-Fi", // 54
+    "Spajanje na Wi-Fi mrežu..", // 55
+    "NEUSPJEŠNO.. Wi-Fi onemogućen", // 56
+    "SPOJENO!", // 57
+    "IP klijenta StationList", // 58
+    "Prikaži valnu duljinu KV-a", // 59
+    "RDS filter", // 60
+    "Show PI errors", // 61
+    "Prikaži squelch", // 62
+    "Mjerač modulacije", // 63
+    "AM prigušivač šuma", // 64
+    "FM prigušivač šuma", // 65
+    "Zadane postavke učitane", // 66
+    "Audio izlaz", // 67
+    "FM OIRT 30 kHz koraci", // 68
+    "Invertiraj boju zaslona", // 69
+    "O softveru", // 70
+    "Glavni izvorni kod:", // 71
+    "Suradnici:", // 72
+    "Nepoznato", // 73
+    "Power options", // 74
+    "Deep sleep", // 75
+    "Screen off" // 76
   },
 
   { "Ελληνικά",                       // Greek
-    "Η διεύθυνση του ρότορα άλλαξε",
-    "Ελευθερώστε το πλήκτρο",
-    "Η οθόνη αναποδογύρισε",
-    "Βαθμονόμηση αναλογικού μετρητή",
-    "Αφήστε το πλήκτρο όταν είστε έτοιμοι",
-    "ο κωδικοποιητής ρυθμίστηκε σε οπτικός",
-    "ο κωδικοποιητής ρυθμίστηκε σε στάνταρ",
-    "FM/AM δέκτης",
-    "Tuner: !Κανένα!",
-    "Ένταση ήχου:",
-    "Μετατροπέας:",
-    "Κάτω όριο μπάντας:",
-    "Άνω όριο μπάντας:",
-    "Ολίσθηση επιπέδου RF:",
-    "Κατώφλι στέρεο:",
-    "Όριο υψηλής αποκοπής:",
-    "Κατώφλι υψηλής αποκοπής:",
-    "Κατώφλι χαμηλού επιπέδου:",
-    "Αντίθεση:",
-    "Ορισμός έντασης ήχου",
-    "Ολίσθηση (offset) κωδικοποιητή",
-    "Κάτω όριο μπάντας",
-    "Άνω όριο μπάντας",
-    "Επίπεδο ολίσθησης",
-    "Κατώφλι διαχωρισμού στέρεο",
-    "Συχνότητα ορίου υψηλής αποκοπής",
-    "Κατώφλι υψηλής αποκοπής",
-    "Κατώφλι χαμηλού επιπέδου",
-    "Φωτεινότητα οθόνης",
-    "Ανενεργό",
-    "Οθόνη σε σίγαση!",
-    "Για επαναφορά ήχου τσεκάρετε το RF+",
-    "ΑΝΕΝ.",
-    "ΑΝΙΧΝΕΥΣΗ...",
-    "Το tuner δεν εντοπίστηκε",
-    "Η έκδοση tuner ορίστηκε σε: v",
-    "Παρακαλώ επανεκκινήστε το tuner",
-    "Εμφάνιση σφαλμάτων RDS",
-    "Γλώσσα",
-    "Επιλογή γλώσσας",
-    "ΠΙΕΣΤΕ MODE ΓΙΑ ΕΞΟΔΟ & ΑΠΟΘΗΚΕΥΣΗ",
-    "Ενεργό",
-    "Ήπια σίγαση FM",
-    "Ήπια σίγαση AM",
-    "Ηχητικό σήμα στο όριο μπάντας",
-    "Περιοχή",
-    "Ευρώπη",
-    "Η.Π.Α.",
-    "Εμφάνιση κάτω παύλας στο RDS",
-    "USB λειτουργία",
-    "Wi-Fi ενεργό",
-    "Ρύθμιση Wi-Fi",
-    "Συνδεθείτε στο: ",
-    "για ρύθμιση του Wi-Fi",
-    "Προσπάθεια σύνδεσης με το Wi-Fi",
-    "ΑΠΟΤΥΧΙΑ.. WiFi ανενεργό",
-    "ΣΕ ΣΥΝΔΕΣΗ!",
-    "IP πελάτη λίστας σταθμών",
-    "Εμφάνιση μήκους κύματος SW",
-    "Φίλτρο RDS",
-    "Show PI errors",
-    "Εμφάνιση squelch",
-    "Μετρητής διαμόρφωσης",
-    "Απαλοιφή θορύβου AM",
-    "Απαλοιφή θορύβου FM",
-    "Οι προεπιλογές φορτώθηκαν",
-    "Έξοδος ήχου",
-    "FM OIRT βήματα 30 kHz",
-    "Αναστροφή χρωμάτων οθόνης",
-    "Πληροφορίες λογισμικού",
-    "Κύριος κώδικας:",
-    "Συνεργάτες:",
-    "Unknown",
-    "Power options",
-    "Deep sleep",
-    "Screen off"
+    "Η διεύθυνση του ρότορα άλλαξε", // 1
+    "Ελευθερώστε το πλήκτρο", // 2
+    "Η οθόνη αναποδογύρισε", // 3
+    "Βαθμονόμηση αναλογικού μετρητή", // 4
+    "Αφήστε το πλήκτρο όταν είστε έτοιμοι", // 5
+    "ο κωδικοποιητής ρυθμίστηκε σε οπτικός", // 6
+    "ο κωδικοποιητής ρυθμίστηκε σε στάνταρ", // 7
+    "FM/AM δέκτης", // 8
+    "Tuner: !Κανένα!", // 9
+    "Ένταση ήχου:", // 10
+    "Μετατροπέας:", // 11
+    "Κάτω όριο μπάντας:", // 12
+    "Άνω όριο μπάντας:", // 13
+    "Ολίσθηση επιπέδου RF:", // 14
+    "Κατώφλι στέρεο:", // 15
+    "Όριο υψηλής αποκοπής:", // 16
+    "Κατώφλι υψηλής αποκοπής:", // 17
+    "Κατώφλι χαμηλού επιπέδου:", // 18
+    "Αντίθεση:", // 19
+    "Ορισμός έντασης ήχου", // 20
+    "Ολίσθηση (offset) κωδικοποιητή", // 21
+    "Κάτω όριο μπάντας", // 22
+    "Άνω όριο μπάντας", // 23
+    "Επίπεδο ολίσθησης", // 24
+    "Κατώφλι διαχωρισμού στέρεο", // 25
+    "Συχνότητα ορίου υψηλής αποκοπής", // 26
+    "Κατώφλι υψηλής αποκοπής", // 27
+    "Κατώφλι χαμηλού επιπέδου", // 28
+    "Φωτεινότητα οθόνης", // 29
+    "Ανενεργό", // 30
+    "Οθόνη σε σίγαση!", // 31
+    "Για επαναφορά ήχου τσεκάρετε το RF+", // 32
+    "ΑΝΕΝ.", // 33
+    "ΑΝΙΧΝΕΥΣΗ...", // 34
+    "Το tuner δεν εντοπίστηκε", // 35
+    "Η έκδοση tuner ορίστηκε σε: v", // 36
+    "Παρακαλώ επανεκκινήστε το tuner", // 37
+    "Εμφάνιση σφαλμάτων RDS", // 38
+    "Γλώσσα", // 39
+    "Επιλογή γλώσσας", // 40
+    "ΠΙΕΣΤΕ MODE ΓΙΑ ΕΞΟΔΟ & ΑΠΟΘΗΚΕΥΣΗ", // 41
+    "Ενεργό", // 42
+    "Ήπια σίγαση FM", // 43
+    "Ήπια σίγαση AM", // 44
+    "Ηχητικό σήμα στο όριο μπάντας", // 45
+    "Περιοχή", // 46
+    "Ευρώπη", // 47
+    "Η.Π.Α.", // 48
+    "Εμφάνιση κάτω παύλας στο RDS", // 49
+    "USB λειτουργία", // 50
+    "Wi-Fi ενεργό", // 51
+    "Ρύθμιση Wi-Fi", // 52
+    "Συνδεθείτε στο: ", // 53
+    "για ρύθμιση του Wi-Fi", // 54
+    "Προσπάθεια σύνδεσης με το Wi-Fi", // 55
+    "ΑΠΟΤΥΧΙΑ.. WiFi ανενεργό", // 56
+    "ΣΕ ΣΥΝΔΕΣΗ!", // 57
+    "IP πελάτη λίστας σταθμών", // 58
+    "Εμφάνιση μήκους κύματος SW", // 59
+    "Φίλτρο RDS", // 60
+    "Show PI errors", // 61
+    "Εμφάνιση squelch", // 62
+    "Μετρητής διαμόρφωσης", // 63
+    "Απαλοιφή θορύβου AM", // 64
+    "Απαλοιφή θορύβου FM", // 65
+    "Οι προεπιλογές φορτώθηκαν", // 66
+    "Έξοδος ήχου", // 67
+    "FM OIRT βήματα 30 kHz", // 68
+    "Αναστροφή χρωμάτων οθόνης", // 69
+    "Πληροφορίες λογισμικού", // 70
+    "Κύριος κώδικας:", // 71
+    "Συνεργάτες:", // 72
+    "Unknown", // 73
+    "Power options", // 74
+    "Deep sleep", // 75
+    "Screen off" // 76
   },
 
   { "Romana",                         // Romanian
-    "Sens rotire schimbat",
-    "Eliberati butonul",
-    "Ecran inversat",
-    "Calibrati S-metrul analog",
-    "Eliberati butonul cand terminati",
-    "Encoderul setat pe Optic",
-    "Encoderul setat pe Standard",
-    "Receptor FM/AM ",
-    "Nu exista Tuner !",
-    "Volum:",
-    "Convertor:",
-    "Limita inferioara a benzii:",
-    "Limita superioara a benzii:",
-    "offset ptr. nivel RF:",
-    "Prag ptr. Stereo :",
-    "Limita taiere inalte:",
-    "Prag taiere inalte:",
-    "Prag taiere joase:",
-    "Contrast:",
-    "Seteaza volum",
-    "Seteaza offset ptr convertor ",
-    "Seteaza marginea de jos a benzii",
-    "Seteaza marginea de sus a benzii",
-    "Seteaza nivel offset",
-    "Seteaza prag separare Stereo",
-    "Seteaza limita de sus inalte",
-    "Seteaza prag taiere inalte",
-    "Seteaza pragul nivelului de jos",
-    "Seteaza luminozitatea ptr. Display ",
-    "Oprit",
-    "Ecran oprit",
-    "Ptr a porni debifati RF+ box",
-    "Oprit",
-    "Scanare...",
-    "Tunerul nu este detectat",
-    "Versiune Tuner: v",
-    "Va rog restartati tuner",
-    "Arata erorile RDS",
-    "Limba",
-    "Alege Limba",
-    "Apasa MODE pentru a salva si iesi",
-    "Pornit",
-    "FM fara sonor",
-    "AM fara sonor",
-    "Sunet la marginea Benzii",
-    "Regiune",
-    "Europa",
-    "SUA",
-    "Arata evidentiat in RDS",
-    "USB mode",
-    "Wi-Fi active",
-    "Configure Wi-Fi",
-    "Connect to: ",
-    "to configure Wi-Fi",
-    "Trying to connect with Wi-Fi",
-    "FAILED.. WiFi disabled",
-    "CONNECTED!",
-    "Stationlist client IP",
-    "Show SW wavelength",
-    "RDS filter",
-    "Show PI errors",
-    "Show squelch",
-    "Modulation meter",
-    "AM Noise blanker",
-    "FM Noise blanker",
-    "Defaults loaded",
-    "Audio output",
-    "FM OIRT 30 kHz steps",
-    "Display color invert",
-    "About software",
-    "Main code:",
-    "Contributors:",
-    "Unknown",
-    "Power options",
-    "Deep sleep",
-    "Screen off"
+    "Sens rotire schimbat", // 1
+    "Eliberati butonul", // 2
+    "Ecran inversat", // 3
+    "Calibrati S-metrul analog", // 4
+    "Eliberati butonul cand terminati", // 5
+    "Encoderul setat pe Optic", // 6
+    "Encoderul setat pe Standard", // 7
+    "Receptor FM/AM ", // 8
+    "Nu exista Tuner !", // 9
+    "Volum:", // 10
+    "Convertor:", // 11
+    "Limita inferioara a benzii:", // 12
+    "Limita superioara a benzii:", // 13
+    "offset ptr. nivel RF:", // 14
+    "Prag ptr. Stereo :", // 15
+    "Limita taiere inalte:", // 16
+    "Prag taiere inalte:", // 17
+    "Prag taiere joase:", // 18
+    "Contrast:", // 19
+    "Seteaza volum", // 20
+    "Seteaza offset ptr convertor ", // 21
+    "Seteaza marginea de jos a benzii", // 22
+    "Seteaza marginea de sus a benzii", // 23
+    "Seteaza nivel offset", // 24
+    "Seteaza prag separare Stereo", // 25
+    "Seteaza limita de sus inalte", // 26
+    "Seteaza prag taiere inalte", // 27
+    "Seteaza pragul nivelului de jos", // 28
+    "Seteaza luminozitatea ptr. Display ", // 29
+    "Oprit", // 30
+    "Ecran oprit", // 31
+    "Ptr a porni debifati RF+ box", // 32
+    "Oprit", // 33
+    "Scanare...", // 34
+    "Tunerul nu este detectat", // 35
+    "Versiune Tuner: v", // 36
+    "Va rog restartati tuner", // 37
+    "Arata erorile RDS", // 38
+    "Limba", // 39
+    "Alege Limba", // 40
+    "Apasa MODE pentru a salva si iesi", // 41
+    "Pornit", // 42
+    "FM fara sonor", // 43
+    "AM fara sonor", // 44
+    "Sunet la marginea Benzii", // 45
+    "Regiune", // 46
+    "Europa", // 47
+    "SUA", // 48
+    "Arata evidentiat in RDS", // 49
+    "USB mode", // 50
+    "Wi-Fi active", // 51
+    "Configure Wi-Fi", // 52
+    "Connect to: ", // 53
+    "to configure Wi-Fi", // 54
+    "Trying to connect with Wi-Fi", // 55
+    "FAILED.. WiFi disabled", // 56
+    "CONNECTED!", // 57
+    "Stationlist client IP", // 58
+    "Show SW wavelength", // 59
+    "RDS filter", // 60
+    "Show PI errors", // 61
+    "Show squelch", // 62
+    "Modulation meter", // 63
+    "AM Noise blanker", // 64
+    "FM Noise blanker", // 65
+    "Defaults loaded", // 66
+    "Audio output", // 67
+    "FM OIRT 30 kHz steps", // 68
+    "Display color invert", // 69
+    "About software", // 70
+    "Main code:", // 71
+    "Contributors:", // 72
+    "Unknown", // 73
+    "Power options", // 74
+    "Deep sleep", // 75
+    "Screen off" // 76
   },
 
   { "Deutsch",                        // German
-    "Drehrichtung geändert",
-    "Bitte Taste loslassen",
-    "Bildschirm gedreht",
-    "Analogmeter kalibrieren",
-    "Taste loslassen wenn bereit",
-    "Enkoder auf optisch",
-    "Enkoder auf Standard",
-    "UKW/AM Empfänger",
-    "!KEIN! Tuner",
-    "Lautstärke:",
-    "Konverter:",
-    "Unteres Bandende:",
-    "Oberes Bandende:",
-    "RF-Pegeloffset:",
-    "Stereoschwelle:",
-    "High-Cut-Ende:",
-    "High-Cut-Schwelle:",
-    "Low-Level-Schwelle:",
-    "Kontrast:",
-    "Lautstärke",
-    "Konverteroffset",
-    "Unteres Bandende",
-    "Oberes Bandende",
-    "Pegeloffset",
-    "Stereotrennerschwelle",
-    "High-Cut-Eckfrequenz",
-    "High-Cut-Schwelle",
-    "Low-Level-Schwelle",
-    "Anzeigehelligkeit",
-    "Aus",
-    "Bildschirm abgeschaltet!",
-    "RF+ abwählen, um einzuschalten",
-    "AUS",
-    "SCANNE...",
-    "Tuner nicht erkannt",
-    "Tunerversion: v",
-    "Bitte Tuner neustarten",
-    "Zeige RDS Fehler",
-    "Sprache",
-    "Sprache wählen",
-    "MODE DRÜCKEN ZUM BEENDEN UND SICHERN",
-    "Ein",
-    "Softmute UKW",
-    "Softmute AM",
-    "Piepston am Bandende",
-    "Region",
-    "Europa",
-    "USA",
-    "Zeige Unterstrich im RDS",
-    "USB-Modus",
-    "WLAN aktiv",
-    "WLAN konfigurieren",
-    "Verbinde mit:",
-    "um WLAN einzustellen",
-    "Versuche WLAN zu verbinden",
-    "FEHLER.. WLAN deaktiviert",
-    "VERBUNDEN!",
-    "Stationlist Client IP",
-    "Zeige KW-Wellenlänge",
-    "RDS-Filter",
-    "Show PI errors",
-    "Zeige Rauschsperre",
-    "Modulationspegel",
-    "AM Rauschunterdrückung",
-    "UKW Rauschunterdrückung",
-    "Werkseinstellung geladen",
-    "Audioausgabe",
-    "30 kHz Schritte auf OIRT",
-    "Anzeigefarben umkehren",
-    "Über diese Software",
-    "Hauptcode:",
-    "Mitwirkende:",
-    "Unknown",
-    "Power options",
-    "Deep sleep",
-    "Screen off"
+    "Drehrichtung geändert", // 1
+    "Bitte Taste loslassen", // 2
+    "Bildschirm gedreht", // 3
+    "Analogmeter kalibrieren", // 4
+    "Taste loslassen wenn bereit", // 5
+    "Enkoder auf optisch", // 6
+    "Enkoder auf Standard", // 7
+    "UKW/AM Empfänger", // 8
+    "!KEIN! Tuner", // 9
+    "Lautstärke:", // 10
+    "Konverter:", // 11
+    "Unteres Bandende:", // 12
+    "Oberes Bandende:", // 13
+    "RF-Pegeloffset:", // 14
+    "Stereoschwelle:", // 15
+    "High-Cut-Ende:", // 16
+    "High-Cut-Schwelle:", // 17
+    "Low-Level-Schwelle:", // 18
+    "Kontrast:", // 19
+    "Lautstärke", // 20
+    "Konverteroffset", // 21
+    "Unteres Bandende", // 22
+    "Oberes Bandende", // 23
+    "Pegeloffset", // 24
+    "Stereotrennerschwelle", // 25
+    "High-Cut-Eckfrequenz", // 26
+    "High-Cut-Schwelle", // 27
+    "Low-Level-Schwelle", // 28
+    "Anzeigehelligkeit", // 29
+    "Aus", // 30
+    "Bildschirm abgeschaltet!", // 31
+    "RF+ abwählen, um einzuschalten", // 32
+    "AUS", // 33
+    "SCANNE...", // 34
+    "Tuner nicht erkannt", // 35
+    "Tunerversion: v", // 36
+    "Bitte Tuner neustarten", // 37
+    "Zeige RDS Fehler", // 38
+    "Sprache", // 39
+    "Sprache wählen", // 40
+    "MODE DRÜCKEN ZUM BEENDEN UND SICHERN", // 41
+    "Ein", // 42
+    "Softmute UKW", // 43
+    "Softmute AM", // 44
+    "Piepston am Bandende", // 45
+    "Region", // 46
+    "Europa", // 47
+    "USA", // 48
+    "Zeige Unterstrich im RDS", // 49
+    "USB-Modus", // 50
+    "WLAN aktiv", // 51
+    "WLAN konfigurieren", // 52
+    "Verbinde mit:", // 53
+    "um WLAN einzustellen", // 54
+    "Versuche WLAN zu verbinden", // 55
+    "FEHLER.. WLAN deaktiviert", // 56
+    "VERBUNDEN!", // 57
+    "Stationlist Client IP", // 58
+    "Zeige KW-Wellenlänge", // 59
+    "RDS-Filter", // 60
+    "Zeige PI Fehler", // 61
+    "Zeige Rauschsperre", // 62
+    "Modulationspegel", // 63
+    "AM Rauschunterdrückung", // 64
+    "UKW Rauschunterdrückung", // 65
+    "Werkseinstellung geladen", // 66
+    "Audioausgabe", // 67
+    "30 kHz Schritte auf OIRT", // 68
+    "Anzeigefarben umkehren", // 69
+    "Über diese Software", // 70
+    "Hauptcode:", // 71
+    "Mitwirkende:", // 72
+    "Unbekannt", // 73
+    "Energieeinstellungen", // 74
+    "Komplett aus", // 75
+    "Bildschirm aus" // 76
   },
 
   { "Czech",                          // Czech
-    "Směr enkóderu byl změněn",
-    "Prosím, pusťte tlačítko",
-    "Obrazovka otočena",
-    "Kalibrace analog. měřiče",
-    "Po dokončení pusťte tlačítko",
-    "enkóder nastaven na optický",
-    "enkóder nastaven na standardní",
-    "FM/AM přijímač",
-    "Tuner: !ŽÁDNÝ!",
-    "Hlasitost:",
-    "Konvertor:",
-    "Spodek pásma:",
-    "Vrch pásma:",
-    "Offset frekvence:",
-    "Práh pro stereo:",
-    "Práh utlumeni:",
-    "Práh zvuku:",
-    "Práh nizkého signálu:",
-    "Kontrast:",
-    "Hlasitost",
-    "Offset frekvence",
-    "Spodek pásma",
-    "Vrch pásma",
-    "Offset signálu",
-    "Práh pro stereo",
-    "Práh utlumení",
-    "Práh signálu pro utlumení",
-    "Práh nízkého signálu",
-    "Jas",
-    "Vyp",
-    "Obrazovka je ztlumena!",
-    "Pro spuštění zrušte RF+",
-    "VYP",
-    "SKENUJI...",
-    "Tuner nedetekován",
-    "Verze tuneru nastavena: v",
-    "Prosím, restartujte tuner",
-    "Zobrazit chyby v RDS",
-    "Jazyk",
-    "Vyberte jazyk",
-    "ZMÁČKNĚTE MODE PRO VYPNUTÍ A ULOŽENÍ",
-    "Zap",
-    "Softmute FM",
-    "Softmute AM",
-    "Pípnutí na konci pásma",
-    "Region",
-    "Evropa",
-    "USA",
-    "Zobrazit podtržítka v RDS",
-    "USB mode",
-    "Wi-Fi active",
-    "Configure Wi-Fi",
-    "Connect to: ",
-    "to configure Wi-Fi",
-    "Trying to connect with Wi-Fi",
-    "FAILED.. WiFi disabled",
-    "CONNECTED!",
-    "Stationlist client IP",
-    "Show SW wavelength",
-    "RDS filter",
-    "Show PI errors",
-    "Show squelch",
-    "Modulation meter",
-    "AM Noise blanker",
-    "FM Noise blanker",
-    "Defaults loaded",
-    "Audio output",
-    "FM OIRT 30 kHz steps",
-    "Display color invert",
-    "About software",
-    "Main code:",
-    "Contributors:",
-    "Unknown",
-    "Power options",
-    "Deep sleep",
-    "Screen off"
+    "Směr enkóderu byl změněn", // 1
+    "Prosím, pusťte tlačítko", // 2
+    "Obrazovka otočena", // 3
+    "Kalibrace analog. měřiče", // 4
+    "Po dokončení pusťte tlačítko", // 5
+    "enkóder nastaven na optický", // 6
+    "enkóder nastaven na standardní", // 7
+    "FM/AM přijímač", // 8
+    "Tuner: !ŽÁDNÝ!", // 9
+    "Hlasitost:", // 10
+    "Konvertor:", // 11
+    "Spodek pásma:", // 12
+    "Vrch pásma:", // 13
+    "Offset frekvence:", // 14
+    "Práh pro stereo:", // 15
+    "Práh utlumeni:", // 16
+    "Práh zvuku:", // 17
+    "Práh nizkého signálu:", // 18
+    "Kontrast:", // 19
+    "Hlasitost", // 20
+    "Offset frekvence", // 21
+    "Spodek pásma", // 22
+    "Vrch pásma", // 23
+    "Offset signálu", // 24
+    "Práh pro stereo", // 25
+    "Práh utlumení", // 26
+    "Práh signálu pro utlumení", // 27
+    "Práh nízkého signálu", // 28
+    "Jas", // 29
+    "Vyp", // 30
+    "Obrazovka je ztlumena!", // 31
+    "Pro spuštění zrušte RF+", // 32
+    "VYP", // 33
+    "SKENUJI...", // 34
+    "Tuner nedetekován", // 35
+    "Verze tuneru nastavena: v", // 36
+    "Prosím, restartujte tuner", // 37
+    "Zobrazit chyby v RDS", // 38
+    "Jazyk", // 39
+    "Vyberte jazyk", // 40
+    "ZMÁČKNĚTE MODE PRO VYPNUTÍ A ULOŽENÍ", // 41
+    "Zap", // 42
+    "Softmute FM", // 43
+    "Softmute AM", // 44
+    "Pípnutí na konci pásma", // 45
+    "Region", // 46
+    "Evropa", // 47
+    "USA", // 48
+    "Zobrazit podtržítka v RDS", // 49
+    "USB mode", // 50
+    "Wi-Fi active", // 51
+    "Configure Wi-Fi", // 52
+    "Connect to: ", // 53
+    "to configure Wi-Fi", // 54
+    "Trying to connect with Wi-Fi", // 55
+    "FAILED.. WiFi disabled", // 56
+    "CONNECTED!", // 57
+    "Stationlist client IP", // 58
+    "Show SW wavelength", // 59
+    "RDS filter", // 60
+    "Show PI errors", // 61
+    "Show squelch", // 62
+    "Modulation meter", // 63
+    "AM Noise blanker", // 64
+    "FM Noise blanker", // 65
+    "Defaults loaded", // 66
+    "Audio output", // 67
+    "FM OIRT 30 kHz steps", // 68
+    "Display color invert", // 69
+    "About software", // 70
+    "Main code:", // 71
+    "Contributors:", // 72
+    "Unknown", // 73
+    "Power options", // 74
+    "Deep sleep", // 75
+    "Screen off" // 76
   },
 
   { "Slovak",                         // Slovak
-    "Smer enkóderu bol zmenený",
-    "Prosím, pusťte tlačidlo",
-    "Obrazovka otočená",
-    "Kalibrácia analog. merača",
-    "Po dokončení pusťte tlačidlo",
-    "enkóder nastavený na optický",
-    "enkóder nastavený na štandardný",
-    "FM/AM prijímač",
-    "Tuner: !ŽIADNY!",
-    "Hlasitosť:",
-    "Konvertor:",
-    "Spodok pásma:",
-    "Vrch pásma:",
-    "Offset frekvencie:",
-    "Prah pre stereo:",
-    "Prah utlmenia:",
-    "Prah zvuku:",
-    "Prah nizkeho signálu:",
-    "Kontrast:",
-    "Hlasitost",
-    "Offset frekvencie",
-    "Spodok pásma",
-    "Vrch pásma",
-    "Offset signálu",
-    "Prah pro stereo",
-    "Prah utlmenia",
-    "Prah signálu pre utlmenie",
-    "Prah nízkého signálu",
-    "Jas",
-    "Vyp",
-    "Obrazovka je stlmená!",
-    "Pre spustenie odčiarknite RF+",
-    "VYP",
-    "SKENUJEM...",
-    "Tuner nedetekovaný",
-    "Verzia tuneru nastavená: v",
-    "Prosím, reštartujte tuner",
-    "Zobraziť chyby v RDS",
-    "Jazyk",
-    "Vyberte jazyk",
-    "STLAČTE MODE PRE VYPNUTIE A ULOŽENIE",
-    "Zap",
-    "Softmute FM",
-    "Softmute AM",
-    "Pípnutie na konci pásma",
-    "Region",
-    "Európa",
-    "USA",
-    "Zobraziť podtržítka v RDS",
-    "USB mode",
-    "Wi-Fi active",
-    "Configure Wi-Fi",
-    "Connect to: ",
-    "to configure Wi-Fi",
-    "Trying to connect with Wi-Fi",
-    "FAILED.. WiFi disabled",
-    "CONNECTED!",
-    "Stationlist client IP",
-    "Show SW wavelength",
-    "RDS filter",
-    "Show PI errors",
-    "Show squelch",
-    "Modulation meter",
-    "AM Noise blanker",
-    "FM Noise blanker",
-    "Defaults loaded",
-    "Audio output",
-    "FM OIRT 30 kHz steps",
-    "Display color invert",
-    "About software",
-    "Main code:",
-    "Contributors:",
-    "Unknown",
-    "Power options",
-    "Deep sleep",
-    "Screen off"
+    "Smer enkóderu bol zmenený", // 1
+    "Prosím, pusťte tlačidlo", // 2
+    "Obrazovka otočená", // 3
+    "Kalibrácia analog. merača", // 4
+    "Po dokončení pusťte tlačidlo", // 5
+    "enkóder nastavený na optický", // 6
+    "enkóder nastavený na štandardný", // 7
+    "FM/AM prijímač", // 8
+    "Tuner: !ŽIADNY!", // 9
+    "Hlasitosť:", // 10
+    "Konvertor:", // 11
+    "Spodok pásma:", // 12
+    "Vrch pásma:", // 13
+    "Offset frekvencie:", // 14
+    "Prah pre stereo:", // 15
+    "Prah utlmenia:", // 16
+    "Prah zvuku:", // 17
+    "Prah nizkeho signálu:", // 18
+    "Kontrast:", // 19
+    "Hlasitost", // 20
+    "Offset frekvencie", // 21
+    "Spodok pásma", // 22
+    "Vrch pásma", // 23
+    "Offset signálu", // 24
+    "Prah pro stereo", // 25
+    "Prah utlmenia", // 26
+    "Prah signálu pre utlmenie", // 27
+    "Prah nízkého signálu", // 28
+    "Jas", // 29
+    "Vyp", // 30
+    "Obrazovka je stlmená!", // 31
+    "Pre spustenie odčiarknite RF+", // 32
+    "VYP", // 33
+    "SKENUJEM...", // 34
+    "Tuner nedetekovaný", // 35
+    "Verzia tuneru nastavená: v", // 36
+    "Prosím, reštartujte tuner", // 37
+    "Zobraziť chyby v RDS", // 38
+    "Jazyk", // 39
+    "Vyberte jazyk", // 40
+    "STLAČTE MODE PRE VYPNUTIE A ULOŽENIE", // 41
+    "Zap", // 42
+    "Softmute FM", // 43
+    "Softmute AM", // 44
+    "Pípnutie na konci pásma", // 45
+    "Region", // 46
+    "Európa", // 47
+    "USA", // 48
+    "Zobraziť podtržítka v RDS", // 49
+    "USB mode", // 50
+    "Wi-Fi active", // 51
+    "Configure Wi-Fi", // 52
+    "Connect to: ", // 53
+    "to configure Wi-Fi", // 54
+    "Trying to connect with Wi-Fi", // 55
+    "FAILED.. WiFi disabled", // 56
+    "CONNECTED!", // 57
+    "Stationlist client IP", // 58
+    "Show SW wavelength", // 59
+    "RDS filter", // 60
+    "Show PI errors", // 61
+    "Show squelch", // 62
+    "Modulation meter", // 63
+    "AM Noise blanker", // 64
+    "FM Noise blanker", // 65
+    "Defaults loaded", // 66
+    "Audio output", // 67
+    "FM OIRT 30 kHz steps", // 68
+    "Display color invert", // 69
+    "About software", // 70
+    "Main code:", // 71
+    "Contributors:", // 72
+    "Unknown", // 73
+    "Power options", // 74
+    "Deep sleep", // 75
+    "Screen off" // 76
   },
 };
