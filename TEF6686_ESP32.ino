@@ -1366,6 +1366,18 @@ void Round50K(unsigned int freq) {
   }
 }
 
+void Round5K(unsigned int freqAM) {
+  if (freqAM % 10 < 3) {
+    frequency_AM = (freqAM - freqAM % 10);
+  }
+  else if (freqAM % 10 > 2 && freqAM % 10 < 8) {
+    frequency_AM = (freqAM - (freqAM % 10 - 5));
+  }
+  else if (freqAM % 10 > 7) {
+    frequency_AM = (freqAM - (freqAM % 10) + 10);
+  }
+}
+
 void RoundStep() {
   if (band == BAND_FM) {
     unsigned int freq = frequency;
@@ -1379,13 +1391,17 @@ void RoundStep() {
       Round50K(freq);
     }
     radio.SetFreq(frequency);
+  } else {
+    if (band == BAND_MW) {
+      unsigned int freq = frequency_AM / (region == 0 ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K);
+      frequency_AM = freq * (region == 0 ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K);
+      radio.SetFreqAM(frequency_AM);
+    } else if (band == BAND_SW) {
+      Round5K(frequency_AM);
+      radio.SetFreqAM(frequency_AM);
+    }
   }
-  if (band == BAND_MW) {
-    unsigned int freq = frequency_AM / (region == 0 ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K);
-    frequency_AM = freq * (region == 0 ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K);
-    radio.SetFreqAM(frequency_AM);
-  }
-
+  
   while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
 
   if (band == BAND_FM) EEPROM.writeUInt(0, frequency); else EEPROM.writeUInt(31, frequency_AM);
