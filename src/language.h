@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char myLanguage[9][130][85] = {
+static const char myLanguage[9][140][85] = {
   { "English",                        // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -130,7 +130,17 @@ static const char myLanguage[9][130][85] = {
     "Swedish", // 126
     "Turkish", // 127
     "Flemish", // 128
-    "Walloon" // 129
+    "Walloon", // 129
+    "Ukranian", // 130
+    "Russian", // 131
+    "Moldovian", // 132
+    "Macedonian", // 133
+    "Hebrew", // 134
+    "Greek", // 135
+    "Georgian", // 136
+    "Bulgarian", // 137
+    "Armenian", // 138
+    "Arabic" // 139
   },
 
   { "Nederlands",                     // Dutch
@@ -262,7 +272,17 @@ static const char myLanguage[9][130][85] = {
     "Zweeds", // 126
     "Turks", // 127
     "Vlaams", // 128
-    "Waals" // 129
+    "Waals", // 129
+    "Oekraïens", // 130
+    "Russisch", // 131
+    "Moldavisch", // 132
+    "Macedonisch", // 133
+    "Hebreeuws", // 134
+    "Grieks", // 135
+    "Georgisch", // 136
+    "Bulgaars", // 137
+    "Armeens", // 138
+    "Arabisch" // 139
   }, //
 
   { "Polski",                         // Polish
@@ -394,7 +414,17 @@ static const char myLanguage[9][130][85] = {
     "Swedish", // 126
     "Turkish", // 127
     "Flemish", // 128
-    "Walloon" // 129
+    "Walloon", // 129
+    "Ukranian", // 130
+    "Russian", // 131
+    "Moldovian", // 132
+    "Macedonian", // 133
+    "Hebrew", // 134
+    "Greek", // 135
+    "Georgian", // 136
+    "Bulgarian", // 137
+    "Armenian", // 138
+    "Arabic" // 139
   },
 
   { "Hrvatski",                       // Croatian
@@ -526,7 +556,17 @@ static const char myLanguage[9][130][85] = {
     "Swedish", // 126
     "Turkish", // 127
     "Flemish", // 128
-    "Walloon" // 129
+    "Walloon", // 129
+    "Ukranian", // 130
+    "Russian", // 131
+    "Moldovian", // 132
+    "Macedonian", // 133
+    "Hebrew", // 134
+    "Greek", // 135
+    "Georgian", // 136
+    "Bulgarian", // 137
+    "Armenian", // 138
+    "Arabic" // 139
   },
 
   { "Ελληνικά",                       // Greek
@@ -658,7 +698,17 @@ static const char myLanguage[9][130][85] = {
     "Swedish", // 126
     "Turkish", // 127
     "Flemish", // 128
-    "Walloon" // 129
+    "Walloon", // 129
+    "Ukranian", // 130
+    "Russian", // 131
+    "Moldovian", // 132
+    "Macedonian", // 133
+    "Hebrew", // 134
+    "Greek", // 135
+    "Georgian", // 136
+    "Bulgarian", // 137
+    "Armenian", // 138
+    "Arabic" // 139
   },
 
   { "Romana",                         // Romanian
@@ -790,7 +840,17 @@ static const char myLanguage[9][130][85] = {
     "Swedish", // 126
     "Turkish", // 127
     "Flemish", // 128
-    "Walloon" // 129
+    "Walloon", // 129
+    "Ukranian", // 130
+    "Russian", // 131
+    "Moldovian", // 132
+    "Macedonian", // 133
+    "Hebrew", // 134
+    "Greek", // 135
+    "Georgian", // 136
+    "Bulgarian", // 137
+    "Armenian", // 138
+    "Arabic" // 139
   },
 
   { "Deutsch",                        // German
@@ -922,7 +982,17 @@ static const char myLanguage[9][130][85] = {
     "Swedish", // 126
     "Turkish", // 127
     "Flemish", // 128
-    "Walloon" // 129
+    "Walloon", // 129
+    "Ukranian", // 130
+    "Russian", // 131
+    "Moldovian", // 132
+    "Macedonian", // 133
+    "Hebrew", // 134
+    "Greek", // 135
+    "Georgian", // 136
+    "Bulgarian", // 137
+    "Armenian", // 138
+    "Arabic" // 139
   },
 
   { "Czech",                          // Czech
@@ -1054,7 +1124,17 @@ static const char myLanguage[9][130][85] = {
     "Swedish", // 126
     "Turkish", // 127
     "Flemish", // 128
-    "Walloon" // 129
+    "Walloon", // 129
+    "Ukranian", // 130
+    "Russian", // 131
+    "Moldovian", // 132
+    "Macedonian", // 133
+    "Hebrew", // 134
+    "Greek", // 135
+    "Georgian", // 136
+    "Bulgarian", // 137
+    "Armenian", // 138
+    "Arabic" // 139
   },
 
   { "Slovak",                         // Slovak
@@ -1186,6 +1266,16 @@ static const char myLanguage[9][130][85] = {
     "Swedish", // 126
     "Turkish", // 127
     "Flemish", // 128
-    "Walloon" // 129
+    "Walloon", // 129
+    "Ukranian", // 130
+    "Russian", // 131
+    "Moldovian", // 132
+    "Macedonian", // 133
+    "Hebrew", // 134
+    "Greek", // 135
+    "Georgian", // 136
+    "Bulgarian", // 137
+    "Armenian", // 138
+    "Arabic" // 139
   },
 };
