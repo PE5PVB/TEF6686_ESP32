@@ -1471,8 +1471,8 @@ void ButtonPress() {
   } else {
     if (menuopen == false) {
       menuopen = true;
-      tft.drawRoundRect(20, 30, 274, 170, 5, TFT_WHITE);
-      tft.fillRoundRect(22, 32, 270, 166, 5, TFT_BLACK);
+      tft.drawRoundRect(20, 30, 274, 170, 5, ActiveColor);
+      tft.fillRoundRect(22, 32, 270, 166, 5, BackgroundColor);
       tft.setFreeFont(FONT14);
       switch (menupage) {
         case 1:
@@ -1732,9 +1732,11 @@ void ButtonPress() {
         case 4:
           switch (menuoption) {
             case 30:
-              tft.setTextColor(TFT_WHITE);
+              if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK);
+              else tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(myLanguage[language][77], 155, 70, GFXFF);
-              tft.setTextColor(TFT_WHITE);
+              if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK);
+              else tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(CurrentThemeString, 155, 110, GFXFF);
               break;
 
@@ -2147,7 +2149,9 @@ void KeyUp() {
               CurrentTheme ++;
               if (CurrentTheme > 7) CurrentTheme = 0;
               doTheme();
-              tft.setTextColor(TFT_WHITE);
+              BuildMenu(); menu == false; menuopen = false; ButtonPress(); //Fast preview theme
+              if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK);
+              else tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(CurrentThemeString, 155, 110, GFXFF);
               break;
             case 70:
@@ -2530,12 +2534,14 @@ void KeyDown() {
         case 4:
           switch (menuoption) {
             case 30:
-              tft.setTextColor(TFT_BLACK);
+              tft.setTextColor(BackgroundColor);
               tft.drawCentreString(CurrentThemeString, 155, 110, GFXFF);
               CurrentTheme --;
               if (CurrentTheme > 7) CurrentTheme = 7;
               doTheme();
-              tft.setTextColor(TFT_WHITE);
+              BuildMenu(); menu == false; menuopen = false; ButtonPress(); //Fast preview theme
+              if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK);
+              else tft.setTextColor(TFT_WHITE);
               tft.drawCentreString(CurrentThemeString, 155, 110, GFXFF);
               break;
               
