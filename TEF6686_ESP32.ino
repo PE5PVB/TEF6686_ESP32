@@ -342,8 +342,8 @@ void setup() {
         }
       } else {
         if (frequency % 10 != 0) {
-          if (fmminstepsize == 1) Round100K(freq);
-          else Round50K(freq);
+          if (fmminstepsize == 1) Round100K(frequency);
+          else Round50K(frequency);
         }
       }
       break;
@@ -1267,8 +1267,8 @@ void ModeButtonPress() {
       }
     } else {
       if (frequency % 10 != 0) {
-        if (fmminstepsize == 1) Round100K(freq);
-        else Round50K(freq);
+        if (fmminstepsize == 1) Round100K(frequency);
+        else Round50K(frequency);
         EEPROM.writeUInt(0, frequency);
       }
     }
@@ -4677,7 +4677,8 @@ void TuneUp() {
         if (specialstepOIRT) {
           temp = FREQ_FM_STEP_30K;
         } else {
-          temp = FREQ_FM_STEP_50K;
+          if (fmminstepsize == 1) { temp = FREQ_FM_STEP_100K; }
+          else { temp = FREQ_FM_STEP_50K; }
         }
       } else {
         if (fmminstepsize == 1) { temp = FREQ_FM_STEP_100K; }
@@ -4757,7 +4758,8 @@ void TuneDown() {
         if (specialstepOIRT) {
           temp = FREQ_FM_STEP_30K;
         } else {
-          temp = FREQ_FM_STEP_50K;
+          if (fmminstepsize == 1) { temp = FREQ_FM_STEP_100K; }
+          else { temp = FREQ_FM_STEP_50K; }
         }
       } else {
         if (fmminstepsize == 1) { temp = FREQ_FM_STEP_100K; }
