@@ -939,7 +939,7 @@ static const char* const myLanguages[] {
   "Walloon", // 43
   "Ukranian", // 44
   "Russian", // 45
-  "Moldovian", // 46
+  "Moldavian", // 46
   "Macedonian", // 47
   "Hebrew", // 48
   "Greek", // 49
