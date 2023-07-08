@@ -187,7 +187,6 @@ int16_t SAvg;
 int16_t SAvg2;
 int16_t SStatus;
 IPAddress remoteip;
-String afstringold;
 String cryptedpassword;
 String CurrentThemeString;
 String ECColdtxt;
@@ -2605,14 +2604,14 @@ void ShowMemoryPos() {
   if (tunemode == TUNE_MEM) {
     tft.setFreeFont(FONT7);
     tft.setTextColor(BackgroundColor);
-    tft.drawString(String(memoryposold + 1), 80, 26, GFXFF);
+    if (advancedRDS) tft.drawString(String(memoryposold + 1), 215, 30, GFXFF); else tft.drawString(String(memoryposold + 1), 80, 26, GFXFF);
     tft.setTextColor(PrimaryColor);
-    tft.drawString(String(memorypos + 1), 80, 26, GFXFF);
+    if (advancedRDS)  tft.drawString(String(memorypos + 1), 215, 30, GFXFF); else tft.drawString(String(memorypos + 1), 80, 26, GFXFF);
     memoryposold = memorypos;
   } else {
     tft.setFreeFont(FONT7);
     tft.setTextColor(BackgroundColor);
-    tft.drawString(String(memorypos + 1), 80, 26, GFXFF);
+    if (advancedRDS) tft.drawString(String(memorypos + 1), 215, 30, GFXFF); else tft.drawString(String(memorypos + 1), 80, 26, GFXFF);
   }
 }
 
@@ -2783,8 +2782,6 @@ void ShowAdvancedRDS() {
       if (radio.rds.hasLIC) tft.drawString(myLanguages[lic], 245, 205, GFXFF); else tft.drawString("N/A", 245, 205, GFXFF);
       LIColdString = myLanguages[lic];
     }
-    if (radio.rds.hasLIC) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor);
-    tft.drawString("LIC",  170, 45, GFXFF);
     licold = radio.rds.LIC;
   }
 
@@ -2796,8 +2793,6 @@ void ShowAdvancedRDS() {
     tft.drawString(pinstringold, 245, 220, GFXFF);
     tft.setTextColor(PrimaryColor);
     if (radio.rds.hasPIN) tft.drawString(pinstring, 245, 220, GFXFF); else tft.drawString("N/A", 245, 220, GFXFF);
-    if (radio.rds.hasPIN) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor);
-    tft.drawString("PIN",  122, 45, GFXFF);
     pinstringold = pinstring;
   }
 
@@ -2805,7 +2800,7 @@ void ShowAdvancedRDS() {
   if (radio.rds.hasAF) for (byte i = 0; i < radio.af_counter; i++) afstring += String(radio.af[i].frequency / 100) + "." + (radio.af[i].frequency % 100 < 10 ? "0" : "") + String(radio.af[i].frequency % 100) + (radio.af[i].filler ? "(f)" : "") + (i == radio.af_counter - 1 ? "          " : " | "); else afstring = myLanguage[language][87];
   if (hasafold != radio.rds.hasAF) {
     if (radio.rds.hasAF) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor);
-    tft.drawString("AF",  40, 45, GFXFF);
+    tft.drawString("AF",  62, 45, GFXFF);
     hasafold = radio.rds.hasAF;
   }
   if (millis() - afticker >= 350) {
@@ -2821,10 +2816,10 @@ void ShowAdvancedRDS() {
   }
 
   String eonstring;
-  if (radio.rds.hasEON) for (byte i = 0; i < radio.eon_counter; i++) eonstring += String(radio.eon[i].picode) + (radio.eon[i].ps.length() > 0 ? String(": " + String(radio.eon[i].ps)) : "") + (radio.eon[i].mappedfreq > 0 ? String(" " + String(radio.eon[i].mappedfreq / 100) + "." + (radio.eon[i].mappedfreq % 100 < 100 ? "0" : "") + String(radio.eon[i].mappedfreq % 100))  : "") + (i == radio.eon_counter - 1 ? "      " : " | "); else eonstring = myLanguage[language][88];
+  if (radio.rds.hasEON) for (byte i = 0; i < radio.eon_counter; i++) eonstring += String(radio.eon[i].picode) + (radio.eon[i].ps.length() > 0 ? String(": " + String(radio.eon[i].ps)) : "") + (radio.eon[i].mappedfreq > 0 ? String(" " + String(radio.eon[i].mappedfreq / 100) + "." + (radio.eon[i].mappedfreq % 100 < 10 ? "0" : "") + String(radio.eon[i].mappedfreq % 100))  : "") + (i == radio.eon_counter - 1 ? "      " : " | "); else eonstring = myLanguage[language][88];
   if (haseonold != radio.rds.hasEON) {
     if (radio.rds.hasEON) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor);
-    tft.drawString("EON",  72, 45, GFXFF);
+    tft.drawString("EON",  148, 45, GFXFF);
     haseonold = radio.rds.hasEON;
   }
   if (millis() - eonticker >= 350) {
@@ -2843,7 +2838,7 @@ void ShowAdvancedRDS() {
   if (radio.rds.hasRDSplus) rtplusstring = "1\) " + String(radio.rds.RTContent1) + " - 2\) " + String(radio.rds.RTContent2) + "         "; else rtplusstring = myLanguage[language][89];
   if (hasrtplusold != radio.rds.hasRDSplus) {
     if (radio.rds.hasRDSplus) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor);
-    tft.drawString("RT+",  98, 45, GFXFF);
+    tft.drawString("RT+",  116, 45, GFXFF);
     hasrtplusold = radio.rds.hasRDSplus;
   }
   if (millis() - rtplusticker >= 350) {
@@ -2868,7 +2863,7 @@ void ShowAdvancedRDS() {
   if (TAold != radio.rds.hasTA) {
     tft.setFreeFont(FONT7);
     if (radio.rds.hasTA == true) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor);
-    tft.drawString("TA",  22, 45, GFXFF);
+    tft.drawString("TA",  34, 45, GFXFF);
     TAold = radio.rds.hasTA;
   }
 
@@ -2877,22 +2872,22 @@ void ShowAdvancedRDS() {
     switch (radio.rds.MS) {
       case 0:
         tft.setTextColor(GreyoutColor);
-        tft.drawString("M",  190, 45, GFXFF);
-        tft.drawString("S",  202, 45, GFXFF);
+        tft.drawString("M",  185, 45, GFXFF);
+        tft.drawString("S",  198, 45, GFXFF);
         break;
 
       case 1:
         tft.setTextColor(PrimaryColor);
-        tft.drawString("M",  190, 45, GFXFF);
+        tft.drawString("M",  185, 45, GFXFF);
         tft.setTextColor(GreyoutColor);
-        tft.drawString("S",  202, 45, GFXFF);
+        tft.drawString("S",  198, 45, GFXFF);
         break;
 
       case 2:
         tft.setTextColor(GreyoutColor);
-        tft.drawString("M",  190, 45, GFXFF);
+        tft.drawString("M",  185, 45, GFXFF);
         tft.setTextColor(PrimaryColor);
-        tft.drawString("S",  202, 45, GFXFF);
+        tft.drawString("S",  198, 45, GFXFF);
         break;
     }
     MSold = radio.rds.MS;
@@ -2908,12 +2903,12 @@ void ShowAdvancedRDS() {
   } else {
     rds_clock = "";
   }
+
   if (rds_clock != rds_clockold) {
     tft.setFreeFont(FONT7);
     tft.setTextColor(BackgroundColor);
     tft.drawRightString(rds_clockold, 205, 105, GFXFF);
-    tft.setTextColor(PrimaryColor);
-    tft.drawString("CT",  56, 45, GFXFF);
+    if (radio.rds.hasCT == true) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor); tft.drawString("CT",  88, 45, GFXFF);
     tft.drawRightString(rds_clock, 205, 105, GFXFF);
     rds_clockold = rds_clock;
   }
@@ -3035,8 +3030,6 @@ void showECC() {
       tft.drawString(ECColdtxt, 245, 190, GFXFF);
       tft.setTextColor(PrimaryColor);
       if (radio.rds.hasECC) tft.drawString(ECC, 245, 190, GFXFF); else tft.drawString("N/A", 245, 190, GFXFF);
-      if (radio.rds.hasECC) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor);
-      tft.drawString("ECC",  146, 45, GFXFF);
       ECColdtxt = ECC;
     }
 
@@ -3126,7 +3119,7 @@ void showPS() {
 }
 
 void showRadioText() {
-  if (RDSstatus == 1) {
+  if (radio.rds.hasRT && RDSstatus) {
     if (millis() - rtticker >= 350) {
       xPos -= charWidth;
       if (advancedRDS) {
@@ -3377,17 +3370,15 @@ void BuildAdvancedRDS() {
     tft.setTextColor(GreyoutColor);
     tft.setFreeFont(FONT7);
     tft.drawString("TP",  6, 45, GFXFF);
-    tft.drawString("TA",  22, 45, GFXFF);
-    tft.drawString("AF",  40, 45, GFXFF);
-    tft.drawString("CT",  56, 45, GFXFF);
-    tft.drawString("EON",  72, 45, GFXFF);
-    tft.drawString("RT+",  98, 45, GFXFF);
-    tft.drawString("PIN",  122, 45, GFXFF);
-    tft.drawString("ECC",  146, 45, GFXFF);
-    tft.drawString("LIC",  170, 45, GFXFF);
-    tft.drawString("M",  190, 45, GFXFF);
-    tft.drawString("S",  202, 45, GFXFF);
+    tft.drawString("TA",  34, 45, GFXFF);
+    tft.drawString("AF",  62, 45, GFXFF);
+    tft.drawString("CT",  88, 45, GFXFF);
+    tft.drawString("RT+",  116, 45, GFXFF);
+    tft.drawString("EON",  148, 45, GFXFF);
+    tft.drawString("M",  185, 45, GFXFF);
+    tft.drawString("S",  198, 45, GFXFF);
   }
+  
   RDSstatusold = false;
   ShowFreq(0);
   Stereostatusold = false;
@@ -3419,6 +3410,7 @@ void BuildAdvancedRDS() {
   haseonold = false;
   BWreset = true;
   pinstringold = "";
+  ShowMemoryPos();
 }
 
 void BuildDisplay() {
@@ -3710,6 +3702,7 @@ void ShowFreq(int mode) {
     strcpy(programTypePrevious, "0");
     strcpy(radioIdPrevious, "0");
     programServicePrevious = "0";
+
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
       Udp.print("from=TEF tuner;freq=");

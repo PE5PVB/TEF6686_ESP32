@@ -434,6 +434,7 @@ void TEF6686::readRDS(bool showrdserrors)
         case RDS_GROUP_2A: {
             if (showrdserrors || rds.correct) {
               // RT decoder
+			  rds.hasRT = true;
               rds.rtAB = (bitRead(rds.rdsB, 4));                                                  // Get AB flag
 
               if (rds.rtAB != rtABold) {                                                          // Erase old RT, because of AB change
@@ -632,6 +633,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.stationText = "";
   rds.RTContent1 = "";
   rds.RTContent2 = "";
+  rds.PTYN = "";
 
   for (i = 0; i < 9; i++) {
     ps_buffer[i] = 0;
@@ -675,9 +677,11 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.hasRT = false;
   rds.hasRDS = false;
   rds.hasTP = false;
+  rds.hasAF = false;
   rds.hasTA = false;
   rds.hasEON = false;
   rds.hasCT = false;
+  rds.hasRDSplus = false;
   rds.correct = false;
   rt_process = false;
   ps_process = false;
