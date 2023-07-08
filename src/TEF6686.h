@@ -97,10 +97,8 @@ typedef struct _rds_ {
   byte MS;
   String stationName;
   String stationText;
-  String RTArtist;
-  String RTTitle;
-  String RTHost;
-  String RTEvent;
+  String RTContent1;
+  String RTContent2;
   String PTYN;
   char stationType[18];
   char picode[6];
@@ -131,10 +129,6 @@ typedef struct _rds_ {
   bool hasCT;
   bool rtAB;
   bool hasRDSplus;
-  bool hasTitle;
-  bool hasArtist;
-  bool hasHost;
-  bool hasEvent;
   bool correct;
   bool filter;
   bool underscore;
@@ -150,6 +144,7 @@ typedef struct _af_ {
 typedef struct _eon_ {
   uint16_t  mappedfreq;
   uint16_t  pi;
+  char picode[6];
   String ps;
 } eon_;
 
@@ -201,6 +196,8 @@ class TEF6686 {
     void tone(uint16_t time, int16_t amplitude, uint16_t frequency);
     uint8_t af_counter;
     uint8_t eon_counter;
+    uint8_t rdsblock;
+    uint8_t rtplusblock;
     bool mute;
 
   private:
@@ -219,18 +216,15 @@ class TEF6686 {
     bool useRTPlus = true;
     bool ABold;
     char stationTextBuffer[65];
-    uint64_t doublecheck;
     uint16_t rdsBprevious;
     uint16_t rdsCprevious;
     uint16_t rdsDprevious;
     bool rtABold;
     wchar_t PStext[9] = L"";
-    wchar_t EONPStext[9] = L"";
+    wchar_t EONPStext[20][9];
     wchar_t PTYNtext[9] = L"";
     byte ps_counter;
-    char musicArtist[45];
-    char musicTitle[45];
-    char stationHost[45];
-    char stationEvent[45];
+    char RDSplus1[45];
+    char RDSplus2[45];
     uint16_t  currentfreq;
 };
