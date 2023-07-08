@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char myLanguage[9][140][85] = {
+static const char myLanguage[9][141][85] = {
   { "English",                        // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -140,7 +140,8 @@ static const char myLanguage[9][140][85] = {
     "Georgian", // 136
     "Bulgarian", // 137
     "Armenian", // 138
-    "Arabic" // 139
+    "Arabic", // 139
+    "FM min stepsize" // 140
   },
 
   { "Nederlands",                     // Dutch
@@ -282,7 +283,8 @@ static const char myLanguage[9][140][85] = {
     "Georgisch", // 136
     "Bulgaars", // 137
     "Armeens", // 138
-    "Arabisch" // 139
+    "Arabisch", // 139
+    "FM min stepsize" // 140
   }, //
 
   { "Polski",                         // Polish
@@ -424,7 +426,8 @@ static const char myLanguage[9][140][85] = {
     "Georgian", // 136
     "Bulgarian", // 137
     "Armenian", // 138
-    "Arabic" // 139
+    "Arabic", // 139
+    "FM min stepsize" // 140
   },
 
   { "Hrvatski",                       // Croatian
@@ -566,7 +569,8 @@ static const char myLanguage[9][140][85] = {
     "Georgian", // 136
     "Bulgarian", // 137
     "Armenian", // 138
-    "Arabic" // 139
+    "Arabic", // 139
+    "FM min stepsize" // 140
   },
 
   { "Ελληνικά",                       // Greek
@@ -708,7 +712,8 @@ static const char myLanguage[9][140][85] = {
     "Γεωργιανά", // 136
     "Βουλγαρικά", // 137
     "Αρμενικά", // 138
-    "Αραβικά" // 139
+    "Αραβικά", // 139
+    "FM min stepsize" // 140
   },
 
   { "Romana",                         // Romanian
@@ -850,7 +855,8 @@ static const char myLanguage[9][140][85] = {
     "Georgian", // 136
     "Bulgarian", // 137
     "Armenian", // 138
-    "Arabic" // 139
+    "Arabic", // 139
+    "FM min stepsize" // 140
   },
 
   { "Deutsch",                        // German
@@ -992,7 +998,8 @@ static const char myLanguage[9][140][85] = {
     "Georgian", // 136
     "Bulgarian", // 137
     "Armenian", // 138
-    "Arabic" // 139
+    "Arabic", // 139
+    "FM min stepsize" // 140
   },
 
   { "Czech",                          // Czech
@@ -1134,7 +1141,8 @@ static const char myLanguage[9][140][85] = {
     "Georgian", // 136
     "Bulgarian", // 137
     "Armenian", // 138
-    "Arabic" // 139
+    "Arabic", // 139
+    "FM min stepsize" // 140
   },
 
   { "Slovak",                         // Slovak
@@ -1276,6 +1284,7 @@ static const char myLanguage[9][140][85] = {
     "Georgian", // 136
     "Bulgarian", // 137
     "Armenian", // 138
-    "Arabic" // 139
+    "Arabic", // 139
+    "FM min stepsize" // 140
   },
 };
