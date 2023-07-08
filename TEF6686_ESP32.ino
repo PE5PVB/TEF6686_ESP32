@@ -3388,7 +3388,7 @@ void BuildAdvancedRDS() {
     tft.drawString("M",  190, 45, GFXFF);
     tft.drawString("S",  202, 45, GFXFF);
   }
-
+  RDSstatusold = false;
   ShowFreq(0);
   Stereostatusold = false;
   updateBW();
@@ -3494,7 +3494,6 @@ void BuildDisplay() {
     else if (band == BAND_MW) tft.drawString("MW", 50, 26, GFXFF);
     else if (band == BAND_SW) tft.drawString("SW", 50, 26, GFXFF);
     else tft.drawString("FM", 50, 26, GFXFF);
-    //    radio.clearRDS(fullsearchrds);
   }
 
 
@@ -3657,7 +3656,7 @@ void ShowFreq(int mode) {
       } else {
         unsigned int freq = frequency + ConverterSet * 100;
         if (advancedRDS) {
-          for (int i; i < 33; i++) tft.fillCircle((6 * i) + 6, 136, 2, GreyoutColor);
+          for (int i; i < 33; i++) tft.fillCircle((6 * i) + 10, 136, 2, GreyoutColor);
           tft.setFreeFont(FONT7);
           tft.setTextColor(BackgroundColor);
           tft.drawRightString(String(freqold / 100) + "." + (freqold % 100 < 10 ? "0" : "") + String(freqold % 100) + " MHz",  310, 30, GFXFF);
