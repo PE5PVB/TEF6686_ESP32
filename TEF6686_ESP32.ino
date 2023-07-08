@@ -2919,8 +2919,8 @@ void ShowAdvancedRDS() {
   }
 
   if (rdsblockold != radio.rdsblock) {
-    tft.fillCircle((6 * rdsblockold) + 6, 136, 2, TFT_RED);
-    tft.fillCircle((6 * radio.rdsblock) + 6, 136, 2, TFT_GREEN);
+    if (rdsblockold < 33) tft.fillCircle((6 * rdsblockold) + 10, 136, 2, TFT_RED);
+    if (radio.rdsblock < 33) tft.fillCircle((6 * radio.rdsblock) + 10, 136, 2, TFT_GREEN);
     rdsblockold = radio.rdsblock;
   }
 }
@@ -3357,7 +3357,7 @@ void BuildAdvancedRDS() {
     tft.fillCircle(310, 170, 5, TFT_RED);
     tft.fillCircle(310, 185, 5, TFT_RED);
 
-    for (int i; i < 33; i++) tft.fillCircle((6 * i) + 6, 136, 2, GreyoutColor);
+    for (int i; i < 33; i++) tft.fillCircle((6 * i) + 10, 136, 2, GreyoutColor);
 
     tft.setTextColor(ActiveColor);
     tft.setFreeFont(FONT14);
