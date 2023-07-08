@@ -23,8 +23,8 @@ static const char myLanguage[9][140][85] = {
     "Contrast:", // 19
     "Set volume", // 20
     "Set converter offset", // 21
-    "Set low band edge", // 22
-    "Set high band edge", // 23
+    "Set low FM band edge", // 22
+    "Set high FM band edge", // 23
     "Set level offset", // 24
     "Set Stereo sep. threshold", // 25
     "Set high cut corner frequency", // 26
@@ -133,7 +133,7 @@ static const char myLanguage[9][140][85] = {
     "Walloon", // 129
     "Ukranian", // 130
     "Russian", // 131
-    "Moldovian", // 132
+    "Moldavian", // 132
     "Macedonian", // 133
     "Hebrew", // 134
     "Greek", // 135
@@ -417,7 +417,7 @@ static const char myLanguage[9][140][85] = {
     "Walloon", // 129
     "Ukranian", // 130
     "Russian", // 131
-    "Moldovian", // 132
+    "Moldavian", // 132
     "Macedonian", // 133
     "Hebrew", // 134
     "Greek", // 135
@@ -559,7 +559,7 @@ static const char myLanguage[9][140][85] = {
     "Walloon", // 129
     "Ukranian", // 130
     "Russian", // 131
-    "Moldovian", // 132
+    "Moldavian", // 132
     "Macedonian", // 133
     "Hebrew", // 134
     "Greek", // 135
@@ -843,7 +843,7 @@ static const char myLanguage[9][140][85] = {
     "Walloon", // 129
     "Ukranian", // 130
     "Russian", // 131
-    "Moldovian", // 132
+    "Moldavian", // 132
     "Macedonian", // 133
     "Hebrew", // 134
     "Greek", // 135
@@ -865,8 +865,8 @@ static const char myLanguage[9][140][85] = {
     "!KEIN! Tuner", // 9
     "Lautstärke:", // 10
     "Konverter:", // 11
-    "Unteres Bandende:", // 12
-    "Oberes Bandende:", // 13
+    "Unteres UKW Bandende:", // 12
+    "Oberes UKW Bandende:", // 13
     "RF-Pegeloffset:", // 14
     "Stereoschwelle:", // 15
     "High-Cut-Ende:", // 16
@@ -930,7 +930,7 @@ static const char myLanguage[9][140][85] = {
     "Energieeinstellungen", // 74
     "Komplett aus", // 75
     "Bildschirm aus", // 76
-    "Theme", // 77
+    "Designs", // 77
     "Default", // 78
     "Cyan", // 79
     "Crimson", // 80
@@ -940,59 +940,59 @@ static const char myLanguage[9][140][85] = {
     "Sakura", // 84
     "Whiteout", // 85
     "NOT POSSIBLE", // 86
-    "Albanian", // 87
-    "Breton", // 88
-    "Catalan", // 89
-    "Croatian", // 90
-    "Welsh", // 91
-    "Czech", // 92
-    "Danish", // 93
-    "German", // 94
-    "English", // 95
-    "Spanish", // 96
+    "Albanisch", // 87
+    "Bretonisch", // 88
+    "Katalanisch", // 89
+    "Kroatisch", // 90
+    "Walisisch", // 91
+    "Tschechisch", // 92
+    "Dänisch", // 93
+    "Deutsch", // 94
+    "Englisch", // 95
+    "Spanisch", // 96
     "Esperanto", // 97
-    "Estonian", // 98
-    "Basque", // 99
-    "Faroese", // 100
-    "French", // 101
-    "Frisian", // 102
-    "Irish", // 103
-    "Gaelic", // 104
-    "Galician", // 105
-    "Icelandic", // 106
-    "Italian", // 107
-    "Lappish", // 108
-    "Latin", // 109
-    "Latvian", // 110
-    "Luxembourgian", // 111
-    "Lithuanian", // 112
-    "Hungarian", // 113
-    "Maltese", // 114
-    "Dutch", // 115
-    "Norwegian", // 116
-    "Occitan", // 117
-    "Polish", // 118
-    "Portuguese", // 119
-    "Romanian", // 120
-    "Romansh", // 121
-    "Serbian", // 122
-    "Slovak", // 123
-    "Slovene", // 124
-    "Finnish", // 125
-    "Swedish", // 126
-    "Turkish", // 127
-    "Flemish", // 128
-    "Walloon", // 129
-    "Ukranian", // 130
-    "Russian", // 131
-    "Moldovian", // 132
-    "Macedonian", // 133
-    "Hebrew", // 134
-    "Greek", // 135
-    "Georgian", // 136
-    "Bulgarian", // 137
-    "Armenian", // 138
-    "Arabic" // 139
+    "Estnisch", // 98
+    "Baskisch", // 99
+    "Faröesisch", // 100
+    "Französisch", // 101
+    "Friesisch", // 102
+    "Irisch", // 103
+    "Gälisch", // 104
+    "Galicisch", // 105
+    "Isländisch", // 106
+    "Italienisch", // 107
+    "Lappländisch", // 108
+    "Latein", // 109
+    "Lettisch", // 110
+    "Luxemburgisch", // 111
+    "Litauisch", // 112
+    "Ungarisch", // 113
+    "Maltesisch", // 114
+    "Niederländisch", // 115
+    "Norwegisch", // 116
+    "Okzitanisch", // 117
+    "Polnisch", // 118
+    "Portugiesisch", // 119
+    "Rumänisch", // 120
+    "Rumantsch", // 121
+    "Serbisch", // 122
+    "Slowakisch", // 123
+    "Slowenisch", // 124
+    "Finnisch", // 125
+    "Schwedisch", // 126
+    "Türkisch", // 127
+    "Flämisch", // 128
+    "Wallonisch", // 129
+    "Ukrainisch", // 130
+    "Russisch", // 131
+    "Moldawisch", // 132
+    "Mazedonisch", // 133
+    "Hebräisch", // 134
+    "Griechisch", // 135
+    "Georgisch", // 136
+    "Bulgarisch", // 137
+    "Armenisch", // 138
+    "Arabisch" // 139
   },
 
   { "Czech",                          // Czech
@@ -1127,7 +1127,7 @@ static const char myLanguage[9][140][85] = {
     "Walloon", // 129
     "Ukranian", // 130
     "Russian", // 131
-    "Moldovian", // 132
+    "Moldavian", // 132
     "Macedonian", // 133
     "Hebrew", // 134
     "Greek", // 135
@@ -1269,7 +1269,7 @@ static const char myLanguage[9][140][85] = {
     "Walloon", // 129
     "Ukranian", // 130
     "Russian", // 131
-    "Moldovian", // 132
+    "Moldavian", // 132
     "Macedonian", // 133
     "Hebrew", // 134
     "Greek", // 135
