@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char myLanguage[10][91][85] = {
+static const char* const myLanguage[11][91] = {
   { "English",                        // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -837,98 +837,191 @@ static const char myLanguage[10][91][85] = {
     "No RT+ available", // 89
     "FM min stepsize" // 90
   },
-  
+
   { "France",                        // French
-  "Sens de rotation modifié", // 1
-  "Veuillez relâcher le bouton", // 2
-  "Écran inversé", // 3
-  "Calibrer le compteur analogique", // 4
-  "Relâchez le bouton lorsque vous êtes prêt", // 5
-  "Codeur réglé sur \"Optical\"", // 6
-  "Codeur réglé sur \"Standard\"", // 7
-  "Récepteur FM/AM", // 8
-  "Récepteur: Aucun !", // 9
-  "Volume :", // 10
-  "Convertisseur :", // 11
-  "Limite de bande basse:", // 12
-  "Limite de bande haute:", // 13
-  "Décalage du niveau RF:", // 14
-  "Seuil minimum pour la Stéréo :", // 15
-  "Angle du filtre High Cut :", // 16
-  "Seuil minimum pour le filtre High Cut :", // 17
-  "Seuil minimum de niveau bas :", // 18
-  "Contraste:", // 19
-  "Réglage du volume", // 20
-  "Réglage du décalage du convertisseur", // 21
-  "Réglage de la limite de bande basse", // 22
-  "Réglage de la limite de bande haute", // 23
-  "Réglage du décalage du niveau", // 24
-  "Réglage du seuil minimum pour la séparation de la Stéréo", // 25
-  "Réglage de la fréquence pour l'angle du filtre High Cut", // 26
-  "Réglage du seuil minimum pour le filtre High Cut", // 27
-  "Réglage du seuil minimum de niveau bas", // 28
-  "Réglage de la luminosité de l'affichage", // 29
-  "Éteint", // 30
-  "L'écran est désactivé !", // 31
-  "Pour le réactiver, décochez la case RF+", // 32
-  "ÉTEINT", // 33
-  "RECHERCHE...", // 34
-  "Récepteur non détecté", // 35
-  "Version du récepteur : v", // 36
-  "Veuillez redémarrer le récepteur", // 37
-  "Montrer les erreurs de décodage RDS", // 38
-  "Langage", // 39
-  "Choix de la langue", // 40
-  "APPUYEZ SUR MODE POUR SORTIR ET SAUVEGARDER", // 41
-  "Allumé", // 42
-  "Sourdine douce FM", // 43
-  "Sourdine douce AM", // 44
-  "Émettre un bip lorsque la limite de bande est atteinte", // 45
-  "Région", // 46
-  "Europe", // 47
-  "États-Unis", // 48
-  "Remplacer les espaces du PS (RDS) par des tirets du bas", // 49
-  "Mode USB", // 50
-  "Wi-Fi actif", // 51
-  "Configuration du Wi-Fi", // 52
-  "Se connecter au réseau :", // 53
-  "pour configurer le Wi-Fi", // 54
-  "Tentative de connexion en mode Wi-Fi", // 55
-  "CONNEXION IMPOSSIBLE... Désactivation du Wi-Fi", // 56
-  "CONNECTÉ !", // 57
-  "Stationlist client IP", // 58
-  "Affihcer la longueur d'onde SW", // 59
-  "Filtre RDS", // 60
-  "Afficher les erreurs de décodage PI", // 61
-  "Afficher le squelch", // 62
-  "Compteur de modulation", // 63
-  "Réducteur de bruit AM", // 64
-  "Réducteur de bruit FM", // 65
-  "Paramètres par défaut chargés", // 66
-  "Sortie audio", // 67
-  "Pas de 30 kHz pour la bande OIRT", // 68
-  "Inverser l'affichage", // 69
-  "À propos du logiciel", // 70
-  "Code principal :", // 71
-  "Contributeurs :", // 72
-  "Inconnu", // 73
-  "Options d'énergie", // 74
-  "Veille profonde", // 75
-  "Affichage éteint", // 76
-  "Thème", // 77
-  "Défaut", // 78
-  "Cyan", // 79
-  "Cramoisi", // 80
-  "Monochrome", // 81
-  "Volcan", // 82
-  "Dendro", // 83
-  "Sakura", // 84
-  "Voile blanc", // 85
-  "IMPOSSIBLE", // 86
-  "AF indisponible", // 87
-  "EON indisponible", // 88
-  "RT+ indisponible", // 89
-  "Valeur du pas FM par défaut" // 90
+    "Sens de rotation modifié", // 1
+    "Veuillez relâcher le bouton", // 2
+    "Écran inversé", // 3
+    "Calibrer le compteur analogique", // 4
+    "Relâchez le bouton lorsque vous êtes prêt", // 5
+    "Codeur réglé sur \"Optical\"", // 6
+    "Codeur réglé sur \"Standard\"", // 7
+    "Récepteur FM/AM", // 8
+    "Récepteur: Aucun !", // 9
+    "Volume :", // 10
+    "Convertisseur :", // 11
+    "Limite de bande basse:", // 12
+    "Limite de bande haute:", // 13
+    "Décalage du niveau RF:", // 14
+    "Seuil minimum pour la Stéréo :", // 15
+    "Angle du filtre High Cut :", // 16
+    "Seuil minimum pour le filtre High Cut :", // 17
+    "Seuil minimum de niveau bas :", // 18
+    "Contraste:", // 19
+    "Réglage du volume", // 20
+    "Réglage du décalage du convertisseur", // 21
+    "Réglage de la limite de bande basse", // 22
+    "Réglage de la limite de bande haute", // 23
+    "Réglage du décalage du niveau", // 24
+    "Réglage du seuil minimum pour la séparation de la Stéréo", // 25
+    "Réglage de la fréquence pour l'angle du filtre High Cut", // 26
+    "Réglage du seuil minimum pour le filtre High Cut", // 27
+    "Réglage du seuil minimum de niveau bas", // 28
+    "Réglage de la luminosité de l'affichage", // 29
+    "Éteint", // 30
+    "L'écran est désactivé !", // 31
+    "Pour le réactiver, décochez la case RF+", // 32
+    "ÉTEINT", // 33
+    "RECHERCHE...", // 34
+    "Récepteur non détecté", // 35
+    "Version du récepteur : v", // 36
+    "Veuillez redémarrer le récepteur", // 37
+    "Montrer les erreurs de décodage RDS", // 38
+    "Langage", // 39
+    "Choix de la langue", // 40
+    "APPUYEZ SUR MODE POUR SORTIR ET SAUVEGARDER", // 41
+    "Allumé", // 42
+    "Sourdine douce FM", // 43
+    "Sourdine douce AM", // 44
+    "Émettre un bip lorsque la limite de bande est atteinte", // 45
+    "Région", // 46
+    "Europe", // 47
+    "États-Unis", // 48
+    "Remplacer les espaces du PS (RDS) par des tirets du bas", // 49
+    "Mode USB", // 50
+    "Wi-Fi actif", // 51
+    "Configuration du Wi-Fi", // 52
+    "Se connecter au réseau :", // 53
+    "pour configurer le Wi-Fi", // 54
+    "Tentative de connexion en mode Wi-Fi", // 55
+    "CONNEXION IMPOSSIBLE... Désactivation du Wi-Fi", // 56
+    "CONNECTÉ !", // 57
+    "Stationlist client IP", // 58
+    "Affihcer la longueur d'onde SW", // 59
+    "Filtre RDS", // 60
+    "Afficher les erreurs de décodage PI", // 61
+    "Afficher le squelch", // 62
+    "Compteur de modulation", // 63
+    "Réducteur de bruit AM", // 64
+    "Réducteur de bruit FM", // 65
+    "Paramètres par défaut chargés", // 66
+    "Sortie audio", // 67
+    "Pas de 30 kHz pour la bande OIRT", // 68
+    "Inverser l'affichage", // 69
+    "À propos du logiciel", // 70
+    "Code principal :", // 71
+    "Contributeurs :", // 72
+    "Inconnu", // 73
+    "Options d'énergie", // 74
+    "Veille profonde", // 75
+    "Affichage éteint", // 76
+    "Thème", // 77
+    "Défaut", // 78
+    "Cyan", // 79
+    "Cramoisi", // 80
+    "Monochrome", // 81
+    "Volcan", // 82
+    "Dendro", // 83
+    "Sakura", // 84
+    "Voile blanc", // 85
+    "IMPOSSIBLE", // 86
+    "AF indisponible", // 87
+    "EON indisponible", // 88
+    "RT+ indisponible", // 89
+    "Valeur du pas FM par défaut" // 90
+  },
+
+  { "Български",                        // Bulgarian
+    "Посоката на въртене е променена", // 1
+    "Моля, пуснете бутона", // 2
+    "Екранът бе обърнат", // 3
+    "Калибрация на аналоговото измерване", // 4
+    "Пуснете бутона, когато сте готови", // 5
+    "Енкодерът е настроен в оптичен режим", // 6
+    "Енкодерът е настроен в стандартен режим", // 7
+    "FM/AM приемник", // 8
+    "Не е открит тунер!", // 9
+    "Сила на звука:", // 10
+    "Отместване на конвертор:", // 11
+    "Нисък край на честотната лента:", // 12
+    "Висок край на честотната лента:", // 13
+    "Отместване на RF ниво:", // 14
+    "Stereo праг:", // 15
+    "Изрязване на високи честоти от звука:", // 16
+    "Праг на изрязване на високите честоти:", // 17
+    "Праг на слаб сигнал:", // 18
+    "Яркост:", // 19
+    "Сила на звука", // 20
+    "Задаване на отместването на конвертора", // 21
+    "Задаване на ниския край на честотната лента", // 22
+    "Задаване на високия край на честотната лента", // 23
+    "Задаване на отместването на RF ниво", // 24
+    "Задаване на прага за отделянето на Stereo", // 25
+    "Задаване на прага за високите честоти, които да бъдат изрязани", // 26
+    "Задаване на праговото ниво на сигнал за изрязване на високите честоти", // 27
+    "Задаване на прага за слаб сигнал", // 28
+    "Задаване на яркост на дисплея", // 29
+    "Изключено", // 30
+    "Дисплеят е деактивиран!", // 31
+    "За да го активирате, изключете RF+ опцията", // 32
+    "ИЗКЛЮЧЕНО", // 33
+    "СКАНИРАНЕ...", // 34
+    "Тунерът не е разпознат!", // 35
+    "Версията на тунера е зададена: v", // 36
+    "Моля рестартирайте приемника!", // 37
+    "Показване на RDS грешки", // 38
+    "Език", // 39
+    "Изберете език", // 40
+    "НАТИСНЕТЕ MODE ЗА ИЗХОД И ЗАПАЗВАНЕ", // 41
+    "Включено", // 42
+    "Затихване на звука при слаб сигнал FM", // 43
+    "Затихване на звука при слаб сигнал AM", // 44
+    "Звуков сигнал при достигане на края на честотната лента", // 45
+    "Регион", // 46
+    "Европа", // 47
+    "САЩ", // 48
+    "Показване на долни черти в RDS", // 49
+    "USB режим", // 50
+    "Активиране на Wi-Fi", // 51
+    "Конфигурация на Wi-Fi", // 52
+    "Свържете се към следната мрежа: ", // 53
+    "За да конфигурирате Wi-Fi", // 54
+    "Установява се връзка...", // 55
+    "Неуспешно установяване на връзка.. Wi-Fi е изключен", // 56
+    "Установена е връзка", // 57
+    "IP адрес на клиента за Stationlist", // 58
+    "Показване на дължината на вълната при къси вълни", // 59
+    "RDS филтър", // 60
+    "Показване на PI грешки", // 61
+    "Показване на squelch индикатора на главния екран", // 62
+    "Индикатор за модулация", // 63
+    "AM заглушител на шума", // 64
+    "FM заглушител на шума", // 65
+    "Фабричните настройки бяха зададени", // 66
+    "Аудио Изход", // 67
+    "FM OIRT 30 kHz стъпки", // 68
+    "Обръщане на дисплея", // 69
+    "Относно софтуера", // 70
+    "Главен код:", // 71
+    "Сътрудници:", // 72
+    "Неизвестно", // 73
+    "Опции при заспиване", // 74
+    "Режим дълбок сън", // 75
+    "Изключен дисплей", // 76
+    "Тема", // 77
+    "По подразбиране", // 78
+    "Cyan", // 79
+    "Crimson", // 80
+    "Monochrome", // 81
+    "Volcano", // 82
+    "Dendro", // 83
+    "Sakura", // 84
+    "Whiteout", // 85
+    "НЕ Е ВЪЗМОЖНО", // 86
+    "AF опцията не е налична", // 87
+    "EON опцията не е налична", // 88
+    "RT+ опцията не е налична", // 89
+    "Размер на стъпката по подразбиране на FM" // 90
   }
 };
 
