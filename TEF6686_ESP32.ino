@@ -10,7 +10,6 @@
 #include "src/TEF6686.h"
 #include "src/constants.h"
 #include "src/language.h"
-//#include "src/colors.h"
 
 #define GFXFF 1
 #define FONT24 &Aura2ProRegular24pt7b
@@ -32,7 +31,7 @@
 
 #ifdef ARS
 #define VERSION         "v2.00ARS"
-#include "TFT_Colors.h"
+#include "ARS_Colors.h"
 TFT_eSPI tft = TFT_eSPI(320, 240);
 #else
 #define VERSION         "v2.00"
@@ -5203,16 +5202,16 @@ void SetTunerPatch() {
 void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
   switch (CurrentTheme) {
     case 0:  // Default PE5PVB theme
-      PrimaryColor = 0xFFE0;
-      SecondaryColor = 0x867D;
-      FrequencyColor = 0xFFE0;
-      FrameColor = 0x001F;
+      PrimaryColor = TFT_YELLOW;
+      SecondaryColor = TFT_SKYBLUE;
+      FrequencyColor = TFT_YELLOW;
+      FrameColor = TFT_BLUE;
       GreyoutColor = 0x38E7;
-      BackgroundColor = 0x0000;
-      ActiveColor = 0xFFFF;
+      BackgroundColor = TFT_BLACK;
+      ActiveColor = TFT_WHITE;
       OptimizerColor = 1;
       StereoColor = TFT_RED;
-      RDSColor = 0x867D;
+      RDSColor = TFT_SKYBLUE;
       CurrentThemeString = myLanguage[language][78];
       break;
     case 1:  // Cyan theme

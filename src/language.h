@@ -91,7 +91,7 @@ static const char myLanguage[9][91][85] = {
     "No AF available", // 87
     "No EON available", // 88
     "No RT+ available", // 89
-    "FM min stepsize" // 90
+    "FM default stepsize" // 90
   },
 
   { "Nederlands",                     // Dutch
@@ -184,7 +184,7 @@ static const char myLanguage[9][91][85] = {
     "AF niet beschikbaar", // 87
     "EON niet beschikbaar", // 88
     "RT+ niet beschikbaar", // 89
-    "FM min stepsize" // 90
+    "FM stapgrootte" // 90
   }, //
 
   { "Polski",                         // Polish
