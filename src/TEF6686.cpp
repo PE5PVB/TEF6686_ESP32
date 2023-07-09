@@ -308,6 +308,7 @@ void TEF6686::readRDS(bool showrdserrors)
       if (rds.correct) rdsblock = rds.rdsB >> 11;
       switch (rdsblock) {
         case RDS_GROUP_0A:
+        case RDS_GROUP_0B:
           {
             //PS decoder
             if (showrdserrors || rds.correct) {
@@ -357,52 +358,54 @@ void TEF6686::readRDS(bool showrdserrors)
               if (((bitRead(rds.rdsB, 3)) & 0x1F) == 1) rds.MS = 1; else rds.MS = 2;            // Read MS flag
 
               //AF decoder
-              if ((rds.rdsB >> 11) == 0 && af_counter < 50) {
-                uint16_t buffer0;
-                uint16_t buffer1;
+              if (rdsblock == 0) {                                                              // Only when in GROUP 0A
+                if ((rds.rdsB >> 11) == 0 && af_counter < 50) {
+                  uint16_t buffer0;
+                  uint16_t buffer1;
 
-                if ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) buffer0 = (rds.rdsC >> 8) * 10 + 8750; else buffer0 = 0;
-                if ((rds.rdsC & 0xFF) > 0 && (rds.rdsC & 0xFF) < 205) buffer1 = (rds.rdsC & 0xFF) * 10 + 8750; else buffer1 = 0;
-                if (buffer0 != 0 || buffer1 != 0) rds.hasAF = true;
+                  if ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) buffer0 = (rds.rdsC >> 8) * 10 + 8750; else buffer0 = 0;
+                  if ((rds.rdsC & 0xFF) > 0 && (rds.rdsC & 0xFF) < 205) buffer1 = (rds.rdsC & 0xFF) * 10 + 8750; else buffer1 = 0;
+                  if (buffer0 != 0 || buffer1 != 0) rds.hasAF = true;
 
-                bool isValuePresent = false;
-                for (int i = 0; i < 50; i++) {
-                  if (buffer0 == currentfreq || buffer0 == 0 || af[i].frequency == buffer0) {
-                    isValuePresent = true;
-                    break;
+                  bool isValuePresent = false;
+                  for (int i = 0; i < 50; i++) {
+                    if (buffer0 == currentfreq || buffer0 == 0 || af[i].frequency == buffer0) {
+                      isValuePresent = true;
+                      break;
+                    }
                   }
-                }
 
-                if (!isValuePresent) {
-                  af[af_counter].frequency = buffer0;
-                  if ((rds.rdsC & 0xFF) == 205) af[af_counter].filler = true;
-                  af_counter++;
-                }
-
-                isValuePresent = false;
-                for (int i = 0; i < 50; i++) {
-                  if (buffer1 == currentfreq || buffer1 == 0 || af[i].frequency == buffer1) {
-                    isValuePresent = true;
-                    break;
+                  if (!isValuePresent) {
+                    af[af_counter].frequency = buffer0;
+                    if ((rds.rdsC & 0xFF) == 205) af[af_counter].filler = true;
+                    af_counter++;
                   }
-                }
 
-                if (!isValuePresent) {
-                  af[af_counter].frequency = buffer1;
-                  if (af_counter < 50) af_counter++;
-                }
+                  isValuePresent = false;
+                  for (int i = 0; i < 50; i++) {
+                    if (buffer1 == currentfreq || buffer1 == 0 || af[i].frequency == buffer1) {
+                      isValuePresent = true;
+                      break;
+                    }
+                  }
 
-                for (int i = 0; i < 50; i++) {
-                  for (int j = 0; j < 50 - i; j++) {
-                    if (af[j].frequency == 0) continue;
+                  if (!isValuePresent) {
+                    af[af_counter].frequency = buffer1;
+                    if (af_counter < 50) af_counter++;
+                  }
 
-                    if (af[j].frequency > af[j + 1].frequency && af[j + 1].frequency != 0) {
-                      uint16_t temp = af[j].frequency;
-                      bool temp2 = af[j].filler;
-                      af[j].frequency = af[j + 1].frequency;
-                      af[j].filler = af[j + 1].filler;
-                      af[j + 1].frequency = temp;
-                      af[j + 1].filler = temp2;
+                  for (int i = 0; i < 50; i++) {
+                    for (int j = 0; j < 50 - i; j++) {
+                      if (af[j].frequency == 0) continue;
+
+                      if (af[j].frequency > af[j + 1].frequency && af[j + 1].frequency != 0) {
+                        uint16_t temp = af[j].frequency;
+                        bool temp2 = af[j].filler;
+                        af[j].frequency = af[j + 1].frequency;
+                        af[j].filler = af[j + 1].filler;
+                        af[j + 1].frequency = temp;
+                        af[j + 1].filler = temp2;
+                      }
                     }
                   }
                 }
@@ -434,7 +437,7 @@ void TEF6686::readRDS(bool showrdserrors)
         case RDS_GROUP_2A: {
             if (showrdserrors || rds.correct) {
               // RT decoder
-			  rds.hasRT = true;
+              rds.hasRT = true;
               rds.rtAB = (bitRead(rds.rdsB, 4));                                                  // Get AB flag
 
               if (rds.rtAB != rtABold) {                                                          // Erase old RT, because of AB change
@@ -550,8 +553,8 @@ void TEF6686::readRDS(bool showrdserrors)
             RDScharConverter(RDSplus2, RTtext2, sizeof(RTtext2) / sizeof(wchar_t), false);                  // Convert 8 bit ASCII to 16 bit ASCII
             rds.RTContent2 = convertToUTF8(RTtext2);                                                        // Convert RDS characterset to ASCII
             rds.RTContent2 = extractUTF8Substring(rds.RTContent2, 0, 44, false);                            // Make sure RT does not exceed 32 characters
-			
-			if (rds.correct && rdsblock == 16 && (rds.rdsB & (1 << 4))) rds.hasTMC = true;					// TMC flag
+
+            if (rds.correct && rdsblock == 16 && (rds.rdsB & (1 << 4))) rds.hasTMC = true;          // TMC flag
           }
           break;
 
