@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char myLanguage[9][91][85] = {
+static const char myLanguage[10][91][85] = {
   { "English",                        // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -185,7 +185,7 @@ static const char myLanguage[9][91][85] = {
     "EON niet beschikbaar", // 88
     "RT+ niet beschikbaar", // 89
     "FM stapgrootte" // 90
-  }, //
+  },
 
   { "Polski",                         // Polish
     "Kierunek obrotu zmieniony", // 1
@@ -837,6 +837,99 @@ static const char myLanguage[9][91][85] = {
     "No RT+ available", // 89
     "FM min stepsize" // 90
   },
+  
+  { "France",                        // French
+  "Sens de rotation modifié", // 1
+  "Veuillez relâcher le bouton", // 2
+  "Écran inversé", // 3
+  "Calibrer le compteur analogique", // 4
+  "Relâchez le bouton lorsque vous êtes prêt", // 5
+  "Codeur réglé sur \"Optical\"", // 6
+  "Codeur réglé sur \"Standard\"", // 7
+  "Récepteur FM/AM", // 8
+  "Récepteur: Aucun !", // 9
+  "Volume :", // 10
+  "Convertisseur :", // 11
+  "Limite de bande basse:", // 12
+  "Limite de bande haute:", // 13
+  "Décalage du niveau RF:", // 14
+  "Seuil minimum pour la Stéréo :", // 15
+  "Angle du filtre High Cut :", // 16
+  "Seuil minimum pour le filtre High Cut :", // 17
+  "Seuil minimum de niveau bas :", // 18
+  "Contraste:", // 19
+  "Réglage du volume", // 20
+  "Réglage du décalage du convertisseur", // 21
+  "Réglage de la limite de bande basse", // 22
+  "Réglage de la limite de bande haute", // 23
+  "Réglage du décalage du niveau", // 24
+  "Réglage du seuil minimum pour la séparation de la Stéréo", // 25
+  "Réglage de la fréquence pour l'angle du filtre High Cut", // 26
+  "Réglage du seuil minimum pour le filtre High Cut", // 27
+  "Réglage du seuil minimum de niveau bas", // 28
+  "Réglage de la luminosité de l'affichage", // 29
+  "Éteint", // 30
+  "L'écran est désactivé !", // 31
+  "Pour le réactiver, décochez la case RF+", // 32
+  "ÉTEINT", // 33
+  "RECHERCHE...", // 34
+  "Récepteur non détecté", // 35
+  "Version du récepteur : v", // 36
+  "Veuillez redémarrer le récepteur", // 37
+  "Montrer les erreurs de décodage RDS", // 38
+  "Langage", // 39
+  "Choix de la langue", // 40
+  "APPUYEZ SUR MODE POUR SORTIR ET SAUVEGARDER", // 41
+  "Allumé", // 42
+  "Sourdine douce FM", // 43
+  "Sourdine douce AM", // 44
+  "Émettre un bip lorsque la limite de bande est atteinte", // 45
+  "Région", // 46
+  "Europe", // 47
+  "États-Unis", // 48
+  "Remplacer les espaces du PS (RDS) par des tirets du bas", // 49
+  "Mode USB", // 50
+  "Wi-Fi actif", // 51
+  "Configuration du Wi-Fi", // 52
+  "Se connecter au réseau :", // 53
+  "pour configurer le Wi-Fi", // 54
+  "Tentative de connexion en mode Wi-Fi", // 55
+  "CONNEXION IMPOSSIBLE... Désactivation du Wi-Fi", // 56
+  "CONNECTÉ !", // 57
+  "Stationlist client IP", // 58
+  "Affihcer la longueur d'onde SW", // 59
+  "Filtre RDS", // 60
+  "Afficher les erreurs de décodage PI", // 61
+  "Afficher le squelch", // 62
+  "Compteur de modulation", // 63
+  "Réducteur de bruit AM", // 64
+  "Réducteur de bruit FM", // 65
+  "Paramètres par défaut chargés", // 66
+  "Sortie audio", // 67
+  "Pas de 30 kHz pour la bande OIRT", // 68
+  "Inverser l'affichage", // 69
+  "À propos du logiciel", // 70
+  "Code principal :", // 71
+  "Contributeurs :", // 72
+  "Inconnu", // 73
+  "Options d'énergie", // 74
+  "Veille profonde", // 75
+  "Affichage éteint", // 76
+  "Thème", // 77
+  "Défaut", // 78
+  "Cyan", // 79
+  "Cramoisi", // 80
+  "Monochrome", // 81
+  "Volcan", // 82
+  "Dendro", // 83
+  "Sakura", // 84
+  "Voile blanc", // 85
+  "IMPOSSIBLE", // 86
+  "AF indisponible", // 87
+  "EON indisponible", // 88
+  "RT+ indisponible", // 89
+  "Valeur du pas FM par défaut" // 90
+  }
 };
 
 static const char* const myCountries[] {
