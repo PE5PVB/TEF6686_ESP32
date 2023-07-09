@@ -855,7 +855,7 @@ static const char* const myLanguage[11][91] = {
     "Décalage du niveau RF:", // 14
     "Seuil minimum pour la Stéréo :", // 15
     "Angle du filtre High Cut :", // 16
-    "Seuil minimum pour le filtre High Cut :", // 17
+    "Seuil minimum pour le filtre High Cut:", // 17
     "Seuil minimum de niveau bas :", // 18
     "Contraste:", // 19
     "Réglage du volume", // 20
@@ -863,10 +863,10 @@ static const char* const myLanguage[11][91] = {
     "Réglage de la limite de bande basse", // 22
     "Réglage de la limite de bande haute", // 23
     "Réglage du décalage du niveau", // 24
-    "Réglage du seuil minimum pour la séparation de la Stéréo", // 25
-    "Réglage de la fréquence pour l'angle du filtre High Cut", // 26
-    "Réglage du seuil minimum pour le filtre High Cut", // 27
-    "Réglage du seuil minimum de niveau bas", // 28
+    "Seuil minimum pour la sép. Stéréo", // 25
+    "Fréq. pour l'angle High Cut", // 26
+    "Seuil minimum pour le filtre High Cut", // 27
+    "Seuil minimum de niveau bas", // 28
     "Réglage de la luminosité de l'affichage", // 29
     "Éteint", // 30
     "L'écran est désactivé !", // 31
@@ -879,15 +879,15 @@ static const char* const myLanguage[11][91] = {
     "Montrer les erreurs de décodage RDS", // 38
     "Langage", // 39
     "Choix de la langue", // 40
-    "APPUYEZ SUR MODE POUR SORTIR ET SAUVEGARDER", // 41
+    "APP. SUR MODE POUR SAUVEGARDER", // 41
     "Allumé", // 42
     "Sourdine douce FM", // 43
     "Sourdine douce AM", // 44
-    "Émettre un bip lorsque la limite de bande est atteinte", // 45
+    "Bip à la limite de bande", // 45
     "Région", // 46
     "Europe", // 47
     "États-Unis", // 48
-    "Remplacer les espaces du PS (RDS) par des tirets du bas", // 49
+    "Tirets à la place des espaces sur le PS", // 49
     "Mode USB", // 50
     "Wi-Fi actif", // 51
     "Configuration du Wi-Fi", // 52
