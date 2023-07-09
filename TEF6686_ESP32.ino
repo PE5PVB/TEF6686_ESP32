@@ -571,7 +571,6 @@ void setup() {
   sprite.createSprite(317, 16);
   sprite2.createSprite(172, 16);
   radio.tone(50, -5, 2000);
-  BuildAdvancedRDS();
 }
 
 void loop() {
@@ -2603,7 +2602,7 @@ void ShowMemoryPos() {
     tft.setFreeFont(FONT7);
     tft.setTextColor(BackgroundColor);
     if (advancedRDS) tft.drawString(String(memoryposold + 1), 215, 30, GFXFF); else tft.drawString(String(memoryposold + 1), 80, 26, GFXFF);
-    tft.setTextColor(PrimaryColor);
+    tft.setTextColor(SecondaryColor);
     if (advancedRDS)  tft.drawString(String(memorypos + 1), 215, 30, GFXFF); else tft.drawString(String(memorypos + 1), 80, 26, GFXFF);
     memoryposold = memorypos;
   } else {
@@ -2797,7 +2796,7 @@ void ShowAdvancedRDS() {
   String afstring;
   if (radio.rds.hasAF) for (byte i = 0; i < radio.af_counter; i++) afstring += String(radio.af[i].frequency / 100) + "." + (radio.af[i].frequency % 100 < 10 ? "0" : "") + String(radio.af[i].frequency % 100) + (radio.af[i].filler ? "(f)" : "") + (i == radio.af_counter - 1 ? "          " : " | "); else afstring = myLanguage[language][87];
   if (hasafold != radio.rds.hasAF) {
-    if (radio.rds.hasAF) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor);
+    if (radio.rds.hasAF) tft.setTextColor(SecondaryColor); else tft.setTextColor(GreyoutColor);
     tft.drawString("AF",  42, 45, GFXFF);
     hasafold = radio.rds.hasAF;
   }
@@ -2816,7 +2815,7 @@ void ShowAdvancedRDS() {
   String eonstring;
   if (radio.rds.hasEON) for (byte i = 0; i < radio.eon_counter; i++) eonstring += String(radio.eon[i].picode) + (radio.eon[i].ps.length() > 0 ? String(": " + String(radio.eon[i].ps)) : "") + (radio.eon[i].mappedfreq > 0 ? String(" " + String(radio.eon[i].mappedfreq / 100) + "." + (radio.eon[i].mappedfreq % 100 < 10 ? "0" : "") + String(radio.eon[i].mappedfreq % 100))  : "") + (i == radio.eon_counter - 1 ? "      " : " | "); else eonstring = myLanguage[language][88];
   if (haseonold != radio.rds.hasEON) {
-    if (radio.rds.hasEON) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor);
+    if (radio.rds.hasEON) tft.setTextColor(SecondaryColor); else tft.setTextColor(GreyoutColor);
     tft.drawString("EON",  148, 45, GFXFF);
     haseonold = radio.rds.hasEON;
   }
@@ -2835,7 +2834,7 @@ void ShowAdvancedRDS() {
   String rtplusstring;
   if (radio.rds.hasRDSplus) rtplusstring = "1\) " + String(radio.rds.RTContent1) + " - 2\) " + String(radio.rds.RTContent2) + "         "; else rtplusstring = myLanguage[language][89];
   if (hasrtplusold != radio.rds.hasRDSplus) {
-    if (radio.rds.hasRDSplus) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor);
+    if (radio.rds.hasRDSplus) tft.setTextColor(SecondaryColor); else tft.setTextColor(GreyoutColor);
     tft.drawString("RT+",  116, 45, GFXFF);
     hasrtplusold = radio.rds.hasRDSplus;
   }
@@ -2853,14 +2852,14 @@ void ShowAdvancedRDS() {
 
   if (TPold != radio.rds.hasTP) {
     tft.setFreeFont(FONT7);
-    if (radio.rds.hasTP == true) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor);
+    if (radio.rds.hasTP == true) tft.setTextColor(SecondaryColor); else tft.setTextColor(GreyoutColor);
     tft.drawString("TP",  6, 45, GFXFF);
     TPold = radio.rds.hasTP;
   }
 
   if (TAold != radio.rds.hasTA) {
     tft.setFreeFont(FONT7);
-    if (radio.rds.hasTA == true) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor);
+    if (radio.rds.hasTA == true) tft.setTextColor(SecondaryColor); else tft.setTextColor(GreyoutColor);
     tft.drawString("TA",  24, 45, GFXFF);
     TAold = radio.rds.hasTA;
   }
@@ -2875,7 +2874,7 @@ void ShowAdvancedRDS() {
         break;
 
       case 1:
-        tft.setTextColor(PrimaryColor);
+        tft.setTextColor(SecondaryColor);
         tft.drawString("M",  185, 45, GFXFF);
         tft.setTextColor(GreyoutColor);
         tft.drawString("S",  198, 45, GFXFF);
@@ -2884,7 +2883,7 @@ void ShowAdvancedRDS() {
       case 2:
         tft.setTextColor(GreyoutColor);
         tft.drawString("M",  185, 45, GFXFF);
-        tft.setTextColor(PrimaryColor);
+        tft.setTextColor(SecondaryColor);
         tft.drawString("S",  198, 45, GFXFF);
         break;
     }
@@ -2906,7 +2905,7 @@ void ShowAdvancedRDS() {
     tft.setFreeFont(FONT7);
     tft.setTextColor(BackgroundColor);
     tft.drawRightString(rds_clockold, 205, 105, GFXFF);
-    if (radio.rds.hasCT == true) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor); tft.drawString("CT",  62, 45, GFXFF);
+    if (radio.rds.hasCT == true) tft.setTextColor(SecondaryColor); else tft.setTextColor(GreyoutColor); tft.drawString("CT",  62, 45, GFXFF);
     tft.drawRightString(rds_clock, 205, 105, GFXFF);
     rds_clockold = rds_clock;
   }
@@ -2918,7 +2917,7 @@ void ShowAdvancedRDS() {
   }
 
   if (hastmcold != radio.rds.hasTMC) {
-    if (radio.rds.hasTMC == true) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor);
+    if (radio.rds.hasTMC == true) tft.setTextColor(SecondaryColor); else tft.setTextColor(GreyoutColor);
       tft.drawString("TMC",  82, 45, GFXFF);
       hastmcold = radio.rds.hasTMC;
   }
@@ -3486,7 +3485,7 @@ void BuildDisplay() {
       tft.drawCircle(86, 15, 10, PrimaryColor);
       tft.drawCircle(86, 15, 9, PrimaryColor);
     }
-    tft.setTextColor(PrimaryColor);
+    tft.setTextColor(SecondaryColor);
     tft.setFreeFont(FONT7);
     if (band == BAND_LW) tft.drawString("LW", 50, 26, GFXFF);
     else if (band == BAND_MW) tft.drawString("MW", 50, 26, GFXFF);
@@ -3949,7 +3948,7 @@ void ShowBW() {
     tft.setFreeFont(FONT14);
     tft.setTextColor(BackgroundColor);
     tft.drawRightString(String (BWOld, DEC), 218, -4, GFXFF);
-    if (BWset == 0) tft.setTextColor(PrimaryColor); else tft.setTextColor(PrimaryColor);
+    if (BWset == 0) tft.setTextColor(SecondaryColor); else tft.setTextColor(PrimaryColor);
     tft.drawRightString(String (BW, DEC), 218, -4, GFXFF);
     BWOld = BW;
     BWreset = false;
@@ -5167,7 +5166,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
   switch (CurrentTheme) {
     case 0:  // Default PE5PVB theme
       PrimaryColor = 0xFFE0;
-      SecondaryColor = 0xFFFF;
+      SecondaryColor = 0x867D;
       FrequencyColor = 0xFFE0;
       FrameColor = 0x001F;
       GreyoutColor = 0x38E7;
@@ -5175,12 +5174,12 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       ActiveColor = 0xFFFF;
       OptimizerColor = 1;
       StereoColor = TFT_RED;
-      RDSColor = PrimaryColor;
+      RDSColor = 0x867D;
       CurrentThemeString = myLanguage[language][78];
       break;
     case 1:  // Cyan theme
       PrimaryColor = 0x0F3F;
-      SecondaryColor = 0xFFFF;
+      SecondaryColor = 0x0F3F;
       FrequencyColor = 0x0F3F;
       FrameColor = 0x0248;
       GreyoutColor = 0x4A69;
@@ -5193,7 +5192,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       break;
     case 2:  // Crimson theme
       PrimaryColor = 0xF8C3;
-      SecondaryColor = 0xFFFF;
+      SecondaryColor = 0xF8C3;
       FrequencyColor = 0xF8C3;
       FrameColor = 0x3800;
       GreyoutColor = 0x4A69;
@@ -5219,7 +5218,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       break;
     case 4:  // Volcano theme
       PrimaryColor = 0xFC00;
-      SecondaryColor = 0xFFFF;
+      SecondaryColor = 0xFC00;
       FrequencyColor = 0xFC00;
       FrameColor = 0x2965;
       GreyoutColor = 0x5140;
@@ -5232,7 +5231,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       break;
     case 5:  // Dendro theme
       PrimaryColor = TFT_GREEN;
-      SecondaryColor = 0xFFFF;
+      SecondaryColor = TFT_GREEN;
       FrequencyColor = TFT_GREEN;
       FrameColor = 0x0200;
       GreyoutColor = 0x4A69;
@@ -5245,7 +5244,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       break;
     case 6:  // Sakura theme
       PrimaryColor = 0xF3D5;
-      SecondaryColor = 0xFFFF;
+      SecondaryColor = 0xF3D5;
       FrequencyColor = 0xF3D5;
       FrameColor = 0x3845;
       GreyoutColor = 0x4A69;
