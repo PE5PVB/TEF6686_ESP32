@@ -53,6 +53,7 @@ bool dynamicPTYold;
 bool edgebeep;
 bool haseonold;
 bool hasrtplusold;
+bool hastmcold;
 bool fullsearchrds;
 bool hasafold;
 bool LowLevelInit;
@@ -570,6 +571,7 @@ void setup() {
   sprite.createSprite(317, 16);
   sprite2.createSprite(172, 16);
   radio.tone(50, -5, 2000);
+  BuildAdvancedRDS();
 }
 
 void loop() {
@@ -2796,7 +2798,7 @@ void ShowAdvancedRDS() {
   if (radio.rds.hasAF) for (byte i = 0; i < radio.af_counter; i++) afstring += String(radio.af[i].frequency / 100) + "." + (radio.af[i].frequency % 100 < 10 ? "0" : "") + String(radio.af[i].frequency % 100) + (radio.af[i].filler ? "(f)" : "") + (i == radio.af_counter - 1 ? "          " : " | "); else afstring = myLanguage[language][87];
   if (hasafold != radio.rds.hasAF) {
     if (radio.rds.hasAF) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor);
-    tft.drawString("AF",  62, 45, GFXFF);
+    tft.drawString("AF",  42, 45, GFXFF);
     hasafold = radio.rds.hasAF;
   }
   if (millis() - afticker >= 350) {
@@ -2859,7 +2861,7 @@ void ShowAdvancedRDS() {
   if (TAold != radio.rds.hasTA) {
     tft.setFreeFont(FONT7);
     if (radio.rds.hasTA == true) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor);
-    tft.drawString("TA",  34, 45, GFXFF);
+    tft.drawString("TA",  24, 45, GFXFF);
     TAold = radio.rds.hasTA;
   }
 
@@ -2904,7 +2906,7 @@ void ShowAdvancedRDS() {
     tft.setFreeFont(FONT7);
     tft.setTextColor(BackgroundColor);
     tft.drawRightString(rds_clockold, 205, 105, GFXFF);
-    if (radio.rds.hasCT == true) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor); tft.drawString("CT",  88, 45, GFXFF);
+    if (radio.rds.hasCT == true) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor); tft.drawString("CT",  62, 45, GFXFF);
     tft.drawRightString(rds_clock, 205, 105, GFXFF);
     rds_clockold = rds_clock;
   }
@@ -2913,6 +2915,12 @@ void ShowAdvancedRDS() {
     if (rdsblockold < 33) tft.fillCircle((6 * rdsblockold) + 10, 136, 2, TFT_RED);
     if (radio.rdsblock < 33) tft.fillCircle((6 * radio.rdsblock) + 10, 136, 2, TFT_GREEN);
     rdsblockold = radio.rdsblock;
+  }
+
+  if (hastmcold != radio.rds.hasTMC) {
+    if (radio.rds.hasTMC == true) tft.setTextColor(PrimaryColor); else tft.setTextColor(GreyoutColor);
+      tft.drawString("TMC",  82, 45, GFXFF);
+      hastmcold = radio.rds.hasTMC;
   }
 }
 
@@ -3366,15 +3374,16 @@ void BuildAdvancedRDS() {
     tft.setTextColor(GreyoutColor);
     tft.setFreeFont(FONT7);
     tft.drawString("TP",  6, 45, GFXFF);
-    tft.drawString("TA",  34, 45, GFXFF);
-    tft.drawString("AF",  62, 45, GFXFF);
-    tft.drawString("CT",  88, 45, GFXFF);
+    tft.drawString("TA",  24, 45, GFXFF);
+    tft.drawString("AF",  42, 45, GFXFF);
+    tft.drawString("CT",  62, 45, GFXFF);
+    tft.drawString("TMC",  82, 45, GFXFF);
     tft.drawString("RT+",  116, 45, GFXFF);
     tft.drawString("EON",  148, 45, GFXFF);
     tft.drawString("M",  185, 45, GFXFF);
     tft.drawString("S",  198, 45, GFXFF);
   }
-  
+
   RDSstatusold = false;
   ShowFreq(0);
   Stereostatusold = false;
@@ -3394,6 +3403,7 @@ void BuildAdvancedRDS() {
   licold = 254;
   TAold = false;
   TPold = false;
+  hastmcold = false;
   errorAold = true;
   errorBold = true;
   errorCold = true;

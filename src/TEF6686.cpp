@@ -306,7 +306,7 @@ void TEF6686::readRDS(bool showrdserrors)
       rds.hasTP = (bitRead(rds.rdsB, 10));
 
       if (rds.correct) rdsblock = rds.rdsB >> 11;
-      switch (rds.rdsB >> 11) {
+      switch (rdsblock) {
         case RDS_GROUP_0A:
           {
             //PS decoder
@@ -550,6 +550,8 @@ void TEF6686::readRDS(bool showrdserrors)
             RDScharConverter(RDSplus2, RTtext2, sizeof(RTtext2) / sizeof(wchar_t), false);                  // Convert 8 bit ASCII to 16 bit ASCII
             rds.RTContent2 = convertToUTF8(RTtext2);                                                        // Convert RDS characterset to ASCII
             rds.RTContent2 = extractUTF8Substring(rds.RTContent2, 0, 44, false);                            // Make sure RT does not exceed 32 characters
+			
+			if (rds.correct && rdsblock == 16 && (rds.rdsB & (1 << 4))) rds.hasTMC = true;					// TMC flag
           }
           break;
 
@@ -681,6 +683,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.hasTA = false;
   rds.hasEON = false;
   rds.hasCT = false;
+  rds.hasTMC = false;
   rds.hasRDSplus = false;
   rds.correct = false;
   rt_process = false;

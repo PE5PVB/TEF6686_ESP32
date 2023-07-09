@@ -125,6 +125,7 @@ typedef struct _rds_ {
   bool hasTP;
   bool hasTA;
   bool hasEON;
+  bool hasTMC;
   bool hasAF;
   bool hasCT;
   bool rtAB;
