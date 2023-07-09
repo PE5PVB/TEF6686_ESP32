@@ -2193,7 +2193,7 @@ void KeyUp() {
               tft.drawCentreString(CurrentThemeString, 155, 110, GFXFF);
               break;
             case 70:
-              if (CurrentTheme == 7) if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE); else tft.setTextColor(TFT_BLACK);
+              if (CurrentTheme == 7) tft.setTextColor(TFT_WHITE); else tft.setTextColor(TFT_BLACK);
               if (deepsleep) tft.drawCentreString(myLanguage[language][75], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][76], 155, 110, GFXFF);
               if (deepsleep) deepsleep = 0; else deepsleep = 1;
               if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
@@ -2583,7 +2583,7 @@ void KeyDown() {
               break;
 
             case 70:
-              if (CurrentTheme == 7) if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE); else tft.setTextColor(TFT_BLACK);
+              if (CurrentTheme == 7) tft.setTextColor(TFT_WHITE); else tft.setTextColor(TFT_BLACK);
               if (deepsleep) tft.drawCentreString(myLanguage[language][75], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][76], 155, 110, GFXFF);
               if (deepsleep) deepsleep = 0; else deepsleep = 1;
               if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
