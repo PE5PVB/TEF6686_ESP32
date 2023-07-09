@@ -252,7 +252,7 @@ void TEF6686::readRDS(bool showrdserrors)
     if (rdsReady) {                                                                                   // We have all data to decode... let's go...
 
       //PI decoder
-      if (rds.region != 1 && (rds.correct || rds.pierrors)) {
+      if (rds.region != 1 && (!rds.rdsAerror || rds.pierrors)) {
         rds.picode[0] = (rds.rdsA >> 12) & 0xF;
         rds.picode[1] = (rds.rdsA >> 8) & 0xF;
         rds.picode[2] = (rds.rdsA >> 4) & 0xF;
@@ -265,7 +265,7 @@ void TEF6686::readRDS(bool showrdserrors)
           }
         }
 
-        if (!rds.correct) rds.picode[4] = '?'; else rds.picode[4] = ' ';                              // Not sure, add a ?
+        if (rds.rdsAerror) rds.picode[4] = '?'; else rds.picode[4] = ' ';                              // Not sure, add a ?
         rds.picode[5] = '\0';
         if (strcmp(rds.picode, "0000?") == 0) {
           memset(rds.picode, 0, sizeof(rds.picode));
@@ -305,10 +305,10 @@ void TEF6686::readRDS(bool showrdserrors)
       // TP Indicator
       rds.hasTP = (bitRead(rds.rdsB, 10));
 
+      if (rds.correct) rdsblock = rds.rdsB >> 11;
       switch (rds.rdsB >> 11) {
         case RDS_GROUP_0A:
           {
-            //      Serial.println(rds.rdsB,BIN);
             //PS decoder
             if (showrdserrors || rds.correct) {
               offset = rds.rdsB & 0x03;                                                         // Let's get the character offset for PS
@@ -351,15 +351,15 @@ void TEF6686::readRDS(bool showrdserrors)
 
             if (rds.correct) {
               //TA decoder
-              rds.hasTA = (bitRead(rds.rdsB, 4)) && (bitRead(rds.rdsB, 10)) & 0x1F;               // Read TA flag
+              rds.hasTA = (bitRead(rds.rdsB, 4)) && (bitRead(rds.rdsB, 10)) & 0x1F;             // Read TA flag
 
               //MS decoder
-              if (((bitRead(rds.rdsB, 3)) & 0x1F) == 1) rds.MS = 1; else rds.MS = 2;              // Read MS flag
+              if (((bitRead(rds.rdsB, 3)) & 0x1F) == 1) rds.MS = 1; else rds.MS = 2;            // Read MS flag
 
               //AF decoder
               if ((rds.rdsB >> 11) == 0 && af_counter < 50) {
-                uint16_t buffer0;// = (rds.rdsC >> 8);
-                uint16_t buffer1;// = (rds.rdsC & 0xFF);
+                uint16_t buffer0;
+                uint16_t buffer1;
 
                 if ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) buffer0 = (rds.rdsC >> 8) * 10 + 8750; else buffer0 = 0;
                 if ((rds.rdsC & 0xFF) > 0 && (rds.rdsC & 0xFF) < 205) buffer1 = (rds.rdsC & 0xFF) * 10 + 8750; else buffer1 = 0;
@@ -431,10 +431,10 @@ void TEF6686::readRDS(bool showrdserrors)
             }
           } break;
 
-        case RDS_GROUP_2A:
-        case RDS_GROUP_2B: {
+        case RDS_GROUP_2A: {
             if (showrdserrors || rds.correct) {
               // RT decoder
+			  rds.hasRT = true;
               rds.rtAB = (bitRead(rds.rdsB, 4));                                                  // Get AB flag
 
               if (rds.rtAB != rtABold) {                                                          // Erase old RT, because of AB change
@@ -452,12 +452,20 @@ void TEF6686::readRDS(bool showrdserrors)
               rt_buffer[offset + 3] = rds.rdsD & 0xff;                                            // Fourth character of segment
 
               wchar_t RTtext[65] = L"";                                                           // Create 16 bit char buffer for Extended ASCII
-              RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);              // Convert 8 bit ASCII to 16 bit ASCII
+              RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);        // Convert 8 bit ASCII to 16 bit ASCII
               rds.stationText = convertToUTF8(RTtext);                                            // Convert RDS characterset to ASCII
-              rds.stationText = extractUTF8Substring(rds.stationText, 0, 64, true);                     // Make sure RT does not exceed 64 characters
-              rds.stationText += "    ";                                                             // Add extra spaces
+              rds.stationText = extractUTF8Substring(rds.stationText, 0, 64, true);               // Make sure RT does not exceed 64 characters
+              rds.stationText += "    ";                                                          // Add extra spaces
 
-              for (int i = 0; i < 64; i++) rt_buffer2[i]   = rt_buffer[i];
+              for (int i = 0; i < 64; i++) rt_buffer2[i] = rt_buffer[i];
+            }
+          } break;
+
+        case RDS_GROUP_3A: {
+            // RT+ init
+            if (rds.rdsD == 0x4BD7) {                                                             // Check for RT+ application
+              rds.hasRDSplus = true;                                                              // Set flag
+              rtplusblock = ((rds.rdsB & 0x1F) >> 1) * 2;                                         // Get RT+ Block
             }
           } break;
 
@@ -508,18 +516,16 @@ void TEF6686::readRDS(bool showrdserrors)
             }
           } break;
 
-        case RDS_GROUP_10B:
+        case RDS_GROUP_5A:
+        case RDS_GROUP_6A:
+        case RDS_GROUP_7A:
+        case RDS_GROUP_8A:
+        case RDS_GROUP_9A:
         case RDS_GROUP_11A:
-        case RDS_GROUP_11B:
         case RDS_GROUP_12A:
-        case RDS_GROUP_12B: {
-            if (rds.correct) {
-              uint16_t  content_byte_1 = (rds.rdsB & 0x07);
-              content_byte_1 = (content_byte_1  << 0x03);
-              content_byte_1 += (rds.rdsC >> 0x0D);
-              uint16_t  content_byte_2 = (rds.rdsC & 0x01);
-              content_byte_2 = (content_byte_2 << 0x05);
-              content_byte_2 += (rds.rdsD >> 0x0B);
+        case RDS_GROUP_13A:   {
+            // RT+ decoding
+            if (rds.correct && rtplusblock == rdsblock && rds.hasRDSplus) {                                 // Are we in the right RT+ block and is all ok to go?
               uint16_t  start_marker_1 = (rds.rdsC >> 0x07);
               start_marker_1 = (start_marker_1 & 0x3F);
               uint16_t length_marker_1 = (rds.rdsC >> 0x01);
@@ -527,125 +533,84 @@ void TEF6686::readRDS(bool showrdserrors)
               uint16_t start_marker_2 = (rds.rdsD >> 0x05);
               start_marker_2 = (start_marker_2 & 0x3F);
               uint16_t length_marker_2 = (rds.rdsD & 0x1F);
-              rds.hasRDSplus   = true;
 
-              if (content_byte_1 == 0x04) {                                                                   // Artist
-                rds.hasArtist = true;
-                for (int i = 0; i <= length_marker_1; i++)musicArtist[i] = rt_buffer2[i + start_marker_1];
-                musicArtist[length_marker_1 + 1] = 0;
-              } else if (content_byte_1 == 0x01) {                                                            // Title
-                rds.hasTitle = true;
-                for (int i = 0; i <= length_marker_1; i++)musicTitle[i] = rt_buffer2[i + start_marker_1];
-                musicTitle[length_marker_1 + 1] = 0;
-              }
+              for (int i = 0; i <= length_marker_1; i++)RDSplus1[i] = rt_buffer2[i + start_marker_1];
+              RDSplus1[length_marker_1 + 1] = 0;
 
-              if (content_byte_2 == 0x04) {                                                                   // Artist
-                rds.hasArtist = true;
-                for (int i = 0; i <= length_marker_2; i++)musicArtist[i] = rt_buffer2[i + start_marker_2];
-                musicArtist[length_marker_2 + 1] = 0;
-              } else if (content_byte_2 == 0x01) {                                                            // Title
-                rds.hasTitle = true;
-                for (int i = 0; i <= length_marker_2; i++)musicTitle[i] = rt_buffer2[i + start_marker_2];
-                musicTitle[length_marker_2 + 1] = 0;
-              }
-
-              if (content_byte_1 == 0x24) {                                                                   // Host
-                rds.hasHost = true;
-                for (int i = 0; i <= length_marker_1; i++)stationHost[i] = rt_buffer2[i + start_marker_1];
-                stationHost[length_marker_1 + 1] = 0;
-              } else if (content_byte_2 == 0x24) {                                                            // Host
-                rds.hasHost = true;
-                for (int i = 0; i <= length_marker_2; i++)stationHost[i] = rt_buffer2[i + start_marker_2];
-                stationHost[length_marker_2 + 1] = 0;
-              }
-
-              if (content_byte_1 == 0x21) {                                                                   // Event
-                rds.hasEvent = true;
-                for (int i = 0; i <= length_marker_1; i++)stationEvent[i] = rt_buffer2[i + start_marker_1];
-                stationEvent[length_marker_1 + 1] = 0;
-              } else if (content_byte_2 == 0x21) {                                                            // Event
-                rds.hasEvent = true;
-                for (int i = 0; i <= length_marker_2; i++)stationEvent[i] = rt_buffer2[i + start_marker_2];
-                stationEvent[length_marker_2 + 1] = 0;
-              }
+              for (int i = 0; i <= length_marker_2; i++)RDSplus2[i] = rt_buffer2[i + start_marker_2];
+              RDSplus2[length_marker_2 + 1] = 0;
             }
 
-            if (rds.hasArtist) {
-              wchar_t RTtext[33] = L"";                                                                     // Create 16 bit char buffer for Extended ASCII
-              RDScharConverter(musicArtist, RTtext, sizeof(RTtext) / sizeof(wchar_t), false);               // Convert 8 bit ASCII to 16 bit ASCII
-              rds.RTArtist = convertToUTF8(RTtext);                                                         // Convert RDS characterset to ASCII
-              rds.RTArtist = extractUTF8Substring(rds.RTArtist, 0, 33, false);                              // Make sure RT does not exceed 32 characters
-            }
+            wchar_t RTtext1[45] = L"";                                                                      // Create 16 bit char buffer for Extended ASCII
+            RDScharConverter(RDSplus1, RTtext1, sizeof(RTtext1) / sizeof(wchar_t), false);                  // Convert 8 bit ASCII to 16 bit ASCII
+            rds.RTContent1 = convertToUTF8(RTtext1);                                                        // Convert RDS characterset to ASCII
+            rds.RTContent1 = extractUTF8Substring(rds.RTContent1, 0, 44, false);                            // Make sure RT does not exceed 32 characters
 
-            if (rds.hasTitle) {
-              wchar_t RTtext[45] = L"";                                                                     // Create 16 bit char buffer for Extended ASCII
-              RDScharConverter(musicTitle, RTtext, sizeof(RTtext) / sizeof(wchar_t), false);                // Convert 8 bit ASCII to 16 bit ASCII
-              rds.RTTitle = convertToUTF8(RTtext);                                                          // Convert RDS characterset to ASCII
-              rds.RTTitle = extractUTF8Substring(rds.RTTitle, 0, 44, false);                                // Make sure RT does not exceed 32 characters
-            }
-
-            if (rds.hasEvent) {
-              wchar_t RTtext[45] = L"";                                                                     // Create 16 bit char buffer for Extended ASCII
-              RDScharConverter(stationEvent, RTtext, sizeof(RTtext) / sizeof(wchar_t), false);              // Convert 8 bit ASCII to 16 bit ASCII
-              rds.RTEvent = convertToUTF8(RTtext);                                                          // Convert RDS characterset to ASCII
-              rds.RTEvent = extractUTF8Substring(rds.RTEvent, 0, 44, false);                                // Make sure RT does not exceed 32 characters
-            }
-
-            if (rds.hasHost) {
-              wchar_t RTtext[45] = L"";                                                                     // Create 16 bit char buffer for Extended ASCII
-              RDScharConverter(stationHost, RTtext, sizeof(RTtext) / sizeof(wchar_t), false);               // Convert 8 bit ASCII to 16 bit ASCII
-              rds.RTHost = convertToUTF8(RTtext);                                                           // Convert RDS characterset to ASCII
-              rds.RTHost = extractUTF8Substring(rds.RTHost, 0, 44, false);                                  // Make sure RT does not exceed 32 characters
-            }
+            wchar_t RTtext2[45] = L"";                                                                      // Create 16 bit char buffer for Extended ASCII
+            RDScharConverter(RDSplus2, RTtext2, sizeof(RTtext2) / sizeof(wchar_t), false);                  // Convert 8 bit ASCII to 16 bit ASCII
+            rds.RTContent2 = convertToUTF8(RTtext2);                                                        // Convert RDS characterset to ASCII
+            rds.RTContent2 = extractUTF8Substring(rds.RTContent2, 0, 44, false);                            // Make sure RT does not exceed 32 characters
           }
           break;
 
         case RDS_GROUP_14A: {
             // EON
             if (rds.correct) {
-              rds.hasEON = true;                                                                                    // Group is there, so we have EON
+              rds.hasEON = true;                                                                                                        // Group is there, so we have EON
 
               bool isValuePresent = false;
               for (int i = 0; i < 20; i++) {
-                if (eon[i].pi == rds.rdsD) {                                                                        // Check if EON is already in array
+                if (eon[i].pi == rds.rdsD) {                                                                                            // Check if EON is already in array
                   isValuePresent = true;
                   break;
                 }
               }
 
               if (!isValuePresent) {
-                eon[eon_counter].pi = rds.rdsD;                                                                     // Store PI on next array
+                eon[eon_counter].picode[0] = (rds.rdsD >> 12) & 0xF;
+                eon[eon_counter].picode[1] = (rds.rdsD >> 8) & 0xF;
+                eon[eon_counter].picode[2] = (rds.rdsD >> 4) & 0xF;
+                eon[eon_counter].picode[3] = rds.rdsD & 0xF;
+                for (int i = 0; i < 4; i++) {
+                  if (eon[eon_counter].picode[i] < 10) {
+                    eon[eon_counter].picode[i] += '0';                                                                                  // Add ASCII offset for decimal digits
+                  } else {
+                    eon[eon_counter].picode[i] += 'A' - 10;                                                                             // Add ASCII offset for hexadecimal letters A-F
+                  }
+                }
+
+                eon[eon_counter].pi = rds.rdsD;                                                                                         // Store PI on next array
                 if (eon_counter < 20) eon_counter++;
               }
 
-              offset = rds.rdsB & 0x0F;                                                                             // Read offset
+              offset = rds.rdsB & 0x0F;                                                                                                 // Read offset
 
-              if (offset < 4) {
+              if (offset < 9) {
                 byte position;
                 for (position = 0; position < 20; position++) {
-                  if (eon[position].pi == rds.rdsD) {                                                               // Find position in array
+                  if (eon[position].pi == rds.rdsD) {                                                                                   // Find position in array
                     break;
                   }
                 }
 
-                eon_buffer2[position][(offset * 2) + 0] = eon_buffer[position][(offset * 2) + 0];                   // Make a copy of the PS buffer
+                eon_buffer2[position][(offset * 2) + 0] = eon_buffer[position][(offset * 2) + 0];                                       // Make a copy of the PS buffer
                 eon_buffer2[position][(offset * 2) + 1] = eon_buffer[position][(offset * 2) + 1];
 
-                eon_buffer[position][(offset * 2)  + 0] = rds.rdsC >> 8;                                            // First character of segment
-                eon_buffer[position][(offset * 2)  + 1] = rds.rdsC & 0xFF;                                          // Second character of segment
-                eon_buffer[position][(offset * 2)  + 2] = '\0';                                                     // Endmarker of segment
+                eon_buffer[position][(offset * 2)  + 0] = rds.rdsC >> 8;                                                                // First character of segment
+                eon_buffer[position][(offset * 2)  + 1] = rds.rdsC & 0xFF;                                                              // Second character of segment
+                eon_buffer[position][(offset * 2)  + 2] = '\0';                                                                         // Endmarker of segment
 
-                if (offset > 2) {                                                                                   // Last chars are received
-                  if (eon_buffer[position] != eon_buffer2[position]) {                                              // When difference between old and new, let's go...
-                    RDScharConverter(eon_buffer[position], EONPStext, sizeof(EONPStext) / sizeof(wchar_t), true);   // Convert 8 bit ASCII to 16 bit ASCII
-                    String utf8String = convertToUTF8(EONPStext);                                                   // Convert RDS characterset to ASCII
-                    eon[position].ps = extractUTF8Substring(utf8String, 0, 8, true);                                // Make sure PS does not exceed 8 characters
+                if (offset > 2) {                                                                                                       // Last chars are received
+                  if (eon_buffer[position] != eon_buffer2[position]) {                                                                  // When difference between old and new, let's go...
+                    RDScharConverter(eon_buffer[position], EONPStext[position], sizeof(EONPStext[position]) / sizeof(wchar_t), true);   // Convert 8 bit ASCII to 16 bit ASCII
+                    String utf8String = convertToUTF8(EONPStext[position]);                                                             // Convert RDS characterset to ASCII
+                    eon[position].ps = extractUTF8Substring(utf8String, 0, 8, true);                                                    // Make sure PS does not exceed 8 characters
                   }
                 }
 
-                if (offset > 4 && offset < 9) {
-                  if (((rds.rdsC >> 8) * 10 + 8750) == currentfreq) {                                               // Check if mapped frequency belongs to current frequency
-                    eon[position].mappedfreq = ((rds.rdsC & 0xFF) * 10 + 8750);                                     // Add mapped frequency to array
+                if (offset > 4) {
+                  if (((rds.rdsC >> 8) * 10 + 8750) == currentfreq) {                                                                   // Check if mapped frequency belongs to current frequency
+                    eon[position].mappedfreq = ((rds.rdsC & 0xFF) * 10 + 8750);                                                         // Add mapped frequency to array
                   }
                 }
               }
@@ -666,10 +631,10 @@ void TEF6686::clearRDS (bool fullsearchrds)
   uint8_t i;
   rds.stationName = "";
   rds.stationText = "";
-  rds.RTArtist = "";
-  rds.RTTitle = "";
-  rds.RTHost = "";
-  rds.RTEvent = "";
+  rds.RTContent1 = "";
+  rds.RTContent2 = "";
+  rds.PTYN = "";
+
   for (i = 0; i < 9; i++) {
     ps_buffer[i] = 0;
     PStext[i] = L'\0';
@@ -685,22 +650,21 @@ void TEF6686::clearRDS (bool fullsearchrds)
     af[i].filler = false;
   }
 
-  for (i = 0; i < 5; i++) {
+  for (i = 0; i < 20; i++) {
     eon[i].pi = 0;
     for (int y = 0; y < 9; y++) {
       eon_buffer[i][y] = 0;
       eon_buffer2[i][y] = 0;
+      EONPStext[i][y] = L'\0';
     }
     eon[i].ps = "";
   }
 
   for (i = 0; i < 45; i++) {
-    musicArtist[i] = 0;
-    musicTitle[i] = 0;
-    stationEvent[i] = 0;
-    stationHost[i] = 0;
+    RDSplus1[i] = 0;
+    RDSplus2[i] = 0;
   }
-
+  rdsblock = 0;
   rds.ECC = 0;
   rds.LIC = 0;
   rds.pinHour = 0;
@@ -713,17 +677,15 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.hasRT = false;
   rds.hasRDS = false;
   rds.hasTP = false;
+  rds.hasAF = false;
   rds.hasTA = false;
   rds.hasEON = false;
   rds.hasCT = false;
+  rds.hasRDSplus = false;
   rds.correct = false;
   rt_process = false;
   ps_process = false;
   rds.rdsreset = true;
-  rds.hasTitle = false;
-  rds.hasArtist = false;
-  rds.hasEvent = false;
-  rds.hasHost = false;
   rds.hasArtificialhead = false;
   rds.hasCompressed = false;
   rds.hasDynamicPTY = false;

@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char myLanguage[9][141][85] = {
+static const char myLanguage[9][91][85] = {
   { "English",                        // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -88,60 +88,10 @@ static const char myLanguage[9][141][85] = {
     "Sakura", // 84
     "Whiteout", // 85
     "NOT POSSIBLE", // 86
-    "Albanian", // 87
-    "Breton", // 88
-    "Catalan", // 89
-    "Croatian", // 90
-    "Welsh", // 91
-    "Czech", // 92
-    "Danish", // 93
-    "German", // 94
-    "English", // 95
-    "Spanish", // 96
-    "Esperanto", // 97
-    "Estonian", // 98
-    "Basque", // 99
-    "Faroese", // 100
-    "French", // 101
-    "Frisian", // 102
-    "Irish", // 103
-    "Gaelic", // 104
-    "Galician", // 105
-    "Icelandic", // 106
-    "Italian", // 107
-    "Lappish", // 108
-    "Latin", // 109
-    "Latvian", // 110
-    "Luxembourgian", // 111
-    "Lithuanian", // 112
-    "Hungarian", // 113
-    "Maltese", // 114
-    "Dutch", // 115
-    "Norwegian", // 116
-    "Occitan", // 117
-    "Polish", // 118
-    "Portuguese", // 119
-    "Romanian", // 120
-    "Romansh", // 121
-    "Serbian", // 122
-    "Slovak", // 123
-    "Slovene", // 124
-    "Finnish", // 125
-    "Swedish", // 126
-    "Turkish", // 127
-    "Flemish", // 128
-    "Walloon", // 129
-    "Ukranian", // 130
-    "Russian", // 131
-    "Moldovian", // 132
-    "Macedonian", // 133
-    "Hebrew", // 134
-    "Greek", // 135
-    "Georgian", // 136
-    "Bulgarian", // 137
-    "Armenian", // 138
-    "Arabic", // 139
-    "FM min stepsize" // 140
+    "No AF available", // 87
+    "No EON available", // 88
+    "No RT+ available", // 89
+    "FM min stepsize" // 90
   },
 
   { "Nederlands",                     // Dutch
@@ -231,60 +181,10 @@ static const char myLanguage[9][141][85] = {
     "Sakura", // 84
     "Whiteout", // 85
     "NIET MOGELIJK", // 86
-    "Albanees", // 87
-    "Bretons", // 88
-    "Catalaans", // 89
-    "Kroatisch", // 90
-    "Welsh", // 91
-    "Tsjechisch", // 92
-    "Deens", // 93
-    "Duits", // 94
-    "Engels", // 95
-    "Spaans", // 96
-    "Esperanto", // 97
-    "Ests", // 98
-    "Baskisch", // 99
-    "Faroese", // 100
-    "Frans", // 101
-    "Fries", // 102
-    "Iers", // 103
-    "Gaelic", // 104
-    "Gallicisch", // 105
-    "IJslands", // 106
-    "Italiaans", // 107
-    "Laplands", // 108
-    "Latijn", // 109
-    "Lets", // 110
-    "Luxemburgs", // 111
-    "Litouws", // 112
-    "Hongaars", // 113
-    "Maltees", // 114
-    "Nederlands", // 115
-    "Noors", // 116
-    "Occitaans", // 117
-    "Pools", // 118
-    "Portugees", // 119
-    "Roemeens", // 120
-    "Reto-Romaans", // 121
-    "Servisch", // 122
-    "Slowaaks", // 123
-    "Sloveens", // 124
-    "Fins", // 125
-    "Zweeds", // 126
-    "Turks", // 127
-    "Vlaams", // 128
-    "Waals", // 129
-    "Oekraïens", // 130
-    "Russisch", // 131
-    "Moldavisch", // 132
-    "Macedonisch", // 133
-    "Hebreeuws", // 134
-    "Grieks", // 135
-    "Georgisch", // 136
-    "Bulgaars", // 137
-    "Armeens", // 138
-    "Arabisch", // 139
-    "FM min stepsize" // 140
+    "AF niet beschikbaar", // 87
+    "EON niet beschikbaar", // 88
+    "RT+ niet beschikbaar", // 89
+    "FM min stepsize" // 90
   }, //
 
   { "Polski",                         // Polish
@@ -374,60 +274,10 @@ static const char myLanguage[9][141][85] = {
     "Sakura", // 84
     "Whiteout", // 85
     "NOT POSSIBLE", // 86
-    "Albanian", // 87
-    "Breton", // 88
-    "Catalan", // 89
-    "Croatian", // 90
-    "Welsh", // 91
-    "Czech", // 92
-    "Danish", // 93
-    "German", // 94
-    "English", // 95
-    "Spanish", // 96
-    "Esperanto", // 97
-    "Estonian", // 98
-    "Basque", // 99
-    "Faroese", // 100
-    "French", // 101
-    "Frisian", // 102
-    "Irish", // 103
-    "Gaelic", // 104
-    "Galician", // 105
-    "Icelandic", // 106
-    "Italian", // 107
-    "Lappish", // 108
-    "Latin", // 109
-    "Latvian", // 110
-    "Luxembourgian", // 111
-    "Lithuanian", // 112
-    "Hungarian", // 113
-    "Maltese", // 114
-    "Dutch", // 115
-    "Norwegian", // 116
-    "Occitan", // 117
-    "Polish", // 118
-    "Portuguese", // 119
-    "Romanian", // 120
-    "Romansh", // 121
-    "Serbian", // 122
-    "Slovak", // 123
-    "Slovene", // 124
-    "Finnish", // 125
-    "Swedish", // 126
-    "Turkish", // 127
-    "Flemish", // 128
-    "Walloon", // 129
-    "Ukranian", // 130
-    "Russian", // 131
-    "Moldovian", // 132
-    "Macedonian", // 133
-    "Hebrew", // 134
-    "Greek", // 135
-    "Georgian", // 136
-    "Bulgarian", // 137
-    "Armenian", // 138
-    "Arabic", // 139
-    "FM min stepsize" // 140
+    "No AF available", // 87
+    "No EON available", // 88
+    "No RT+ available", // 89
+    "FM min stepsize" // 90
   },
 
   { "Hrvatski",                       // Croatian
@@ -517,60 +367,10 @@ static const char myLanguage[9][141][85] = {
     "Sakura", // 84
     "Whiteout", // 85
     "NOT POSSIBLE", // 86
-    "Albanian", // 87
-    "Breton", // 88
-    "Catalan", // 89
-    "Croatian", // 90
-    "Welsh", // 91
-    "Czech", // 92
-    "Danish", // 93
-    "German", // 94
-    "English", // 95
-    "Spanish", // 96
-    "Esperanto", // 97
-    "Estonian", // 98
-    "Basque", // 99
-    "Faroese", // 100
-    "French", // 101
-    "Frisian", // 102
-    "Irish", // 103
-    "Gaelic", // 104
-    "Galician", // 105
-    "Icelandic", // 106
-    "Italian", // 107
-    "Lappish", // 108
-    "Latin", // 109
-    "Latvian", // 110
-    "Luxembourgian", // 111
-    "Lithuanian", // 112
-    "Hungarian", // 113
-    "Maltese", // 114
-    "Dutch", // 115
-    "Norwegian", // 116
-    "Occitan", // 117
-    "Polish", // 118
-    "Portuguese", // 119
-    "Romanian", // 120
-    "Romansh", // 121
-    "Serbian", // 122
-    "Slovak", // 123
-    "Slovene", // 124
-    "Finnish", // 125
-    "Swedish", // 126
-    "Turkish", // 127
-    "Flemish", // 128
-    "Walloon", // 129
-    "Ukranian", // 130
-    "Russian", // 131
-    "Moldovian", // 132
-    "Macedonian", // 133
-    "Hebrew", // 134
-    "Greek", // 135
-    "Georgian", // 136
-    "Bulgarian", // 137
-    "Armenian", // 138
-    "Arabic", // 139
-    "FM min stepsize" // 140
+    "No AF available", // 87
+    "No EON available", // 88
+    "No RT+ available", // 89
+    "FM min stepsize" // 90
   },
 
   { "Ελληνικά",                       // Greek
@@ -660,60 +460,10 @@ static const char myLanguage[9][141][85] = {
     "Σάκουρα", // 84
     "Λευκό", // 85
     "ΜΗ ΔΥΝΑΤΟ", // 86
-    "Αλβανικά", // 87
-    "Βρετόν", // 88
-    "Καταλανικά", // 89
-    "Κροατικά", // 90
-    "Ουαλλικά", // 91
-    "Τσεχικά", // 92
-    "Δανικά", // 93
-    "Γερμανικά", // 94
-    "Αγγλικά", // 95
-    "Ισπανικά", // 96
-    "Εσπεράντο", // 97
-    "Εσθονικά", // 98
-    "Βασκικά", // 99
-    "Φερόε", // 100
-    "Γαλλικά", // 101
-    "Φριζιακά", // 102
-    "Ιρλανδικά", // 103
-    "Κελτικά", // 104
-    "Γαλικιακά", // 105
-    "Ισλανδικά", // 106
-    "Ιταλικά", // 107
-    "Λαπωνικά", // 108
-    "Λατινικά", // 109
-    "Λετονικά", // 110
-    "Λουξεμβρουργιανά", // 111
-    "Λιθουανικά", // 112
-    "Ουγγρικά", // 113
-    "Μαλτέζικα", // 114
-    "Ολλανδικά", // 115
-    "Νορβηγικά", // 116
-    "Οξιτανικά", // 117
-    "Πολωνικά", // 118
-    "Πορτογαλικά", // 119
-    "Ρουμανικά", // 120
-    "Ρομανσικά", // 121
-    "Σερβικά", // 122
-    "Σλοβακικά", // 123
-    "Σλοβενικά", // 124
-    "Φινλανδικά", // 125
-    "Σουηδικά", // 126
-    "Τουρκικά", // 127
-    "Φλαμανδικά", // 128
-    "Βαλλωνικά" // 129
-    "Ουκρανικά", // 130
-    "Ρωσικά", // 131
-    "Μολδαβικά", // 132
-    "Σκοπιανικά", // 133
-    "Εβραϊκά", // 134
-    "Ελληνικά", // 135
-    "Γεωργιανά", // 136
-    "Βουλγαρικά", // 137
-    "Αρμενικά", // 138
-    "Αραβικά", // 139
-    "FM min stepsize" // 140
+    "No AF available", // 87
+    "No EON available", // 88
+    "No RT+ available", // 89
+    "FM min stepsize" // 90
   },
 
   { "Romana",                         // Romanian
@@ -803,60 +553,10 @@ static const char myLanguage[9][141][85] = {
     "Sakura", // 84
     "Whiteout", // 85
     "NOT POSSIBLE", // 86
-    "Albanian", // 87
-    "Breton", // 88
-    "Catalan", // 89
-    "Croatian", // 90
-    "Welsh", // 91
-    "Czech", // 92
-    "Danish", // 93
-    "German", // 94
-    "English", // 95
-    "Spanish", // 96
-    "Esperanto", // 97
-    "Estonian", // 98
-    "Basque", // 99
-    "Faroese", // 100
-    "French", // 101
-    "Frisian", // 102
-    "Irish", // 103
-    "Gaelic", // 104
-    "Galician", // 105
-    "Icelandic", // 106
-    "Italian", // 107
-    "Lappish", // 108
-    "Latin", // 109
-    "Latvian", // 110
-    "Luxembourgian", // 111
-    "Lithuanian", // 112
-    "Hungarian", // 113
-    "Maltese", // 114
-    "Dutch", // 115
-    "Norwegian", // 116
-    "Occitan", // 117
-    "Polish", // 118
-    "Portuguese", // 119
-    "Romanian", // 120
-    "Romansh", // 121
-    "Serbian", // 122
-    "Slovak", // 123
-    "Slovene", // 124
-    "Finnish", // 125
-    "Swedish", // 126
-    "Turkish", // 127
-    "Flemish", // 128
-    "Walloon", // 129
-    "Ukranian", // 130
-    "Russian", // 131
-    "Moldovian", // 132
-    "Macedonian", // 133
-    "Hebrew", // 134
-    "Greek", // 135
-    "Georgian", // 136
-    "Bulgarian", // 137
-    "Armenian", // 138
-    "Arabic", // 139
-    "FM min stepsize" // 140
+    "No AF available", // 87
+    "No EON available", // 88
+    "No RT+ available", // 89
+    "FM min stepsize" // 90
   },
 
   { "Deutsch",                        // German
@@ -946,60 +646,10 @@ static const char myLanguage[9][141][85] = {
     "Sakura", // 84
     "Whiteout", // 85
     "NOT POSSIBLE", // 86
-    "Albanian", // 87
-    "Breton", // 88
-    "Catalan", // 89
-    "Croatian", // 90
-    "Welsh", // 91
-    "Czech", // 92
-    "Danish", // 93
-    "German", // 94
-    "English", // 95
-    "Spanish", // 96
-    "Esperanto", // 97
-    "Estonian", // 98
-    "Basque", // 99
-    "Faroese", // 100
-    "French", // 101
-    "Frisian", // 102
-    "Irish", // 103
-    "Gaelic", // 104
-    "Galician", // 105
-    "Icelandic", // 106
-    "Italian", // 107
-    "Lappish", // 108
-    "Latin", // 109
-    "Latvian", // 110
-    "Luxembourgian", // 111
-    "Lithuanian", // 112
-    "Hungarian", // 113
-    "Maltese", // 114
-    "Dutch", // 115
-    "Norwegian", // 116
-    "Occitan", // 117
-    "Polish", // 118
-    "Portuguese", // 119
-    "Romanian", // 120
-    "Romansh", // 121
-    "Serbian", // 122
-    "Slovak", // 123
-    "Slovene", // 124
-    "Finnish", // 125
-    "Swedish", // 126
-    "Turkish", // 127
-    "Flemish", // 128
-    "Walloon", // 129
-    "Ukranian", // 130
-    "Russian", // 131
-    "Moldovian", // 132
-    "Macedonian", // 133
-    "Hebrew", // 134
-    "Greek", // 135
-    "Georgian", // 136
-    "Bulgarian", // 137
-    "Armenian", // 138
-    "Arabic", // 139
-    "FM min stepsize" // 140
+    "No AF available", // 87
+    "No EON available", // 88
+    "No RT+ available", // 89
+    "FM min stepsize" // 90
   },
 
   { "Czech",                          // Czech
@@ -1089,60 +739,10 @@ static const char myLanguage[9][141][85] = {
     "Sakura", // 84
     "Whiteout", // 85
     "NOT POSSIBLE", // 86
-    "Albanian", // 87
-    "Breton", // 88
-    "Catalan", // 89
-    "Croatian", // 90
-    "Welsh", // 91
-    "Czech", // 92
-    "Danish", // 93
-    "German", // 94
-    "English", // 95
-    "Spanish", // 96
-    "Esperanto", // 97
-    "Estonian", // 98
-    "Basque", // 99
-    "Faroese", // 100
-    "French", // 101
-    "Frisian", // 102
-    "Irish", // 103
-    "Gaelic", // 104
-    "Galician", // 105
-    "Icelandic", // 106
-    "Italian", // 107
-    "Lappish", // 108
-    "Latin", // 109
-    "Latvian", // 110
-    "Luxembourgian", // 111
-    "Lithuanian", // 112
-    "Hungarian", // 113
-    "Maltese", // 114
-    "Dutch", // 115
-    "Norwegian", // 116
-    "Occitan", // 117
-    "Polish", // 118
-    "Portuguese", // 119
-    "Romanian", // 120
-    "Romansh", // 121
-    "Serbian", // 122
-    "Slovak", // 123
-    "Slovene", // 124
-    "Finnish", // 125
-    "Swedish", // 126
-    "Turkish", // 127
-    "Flemish", // 128
-    "Walloon", // 129
-    "Ukranian", // 130
-    "Russian", // 131
-    "Moldovian", // 132
-    "Macedonian", // 133
-    "Hebrew", // 134
-    "Greek", // 135
-    "Georgian", // 136
-    "Bulgarian", // 137
-    "Armenian", // 138
-    "Arabic", // 139
-    "FM min stepsize" // 140
+    "No AF available", // 87
+    "No EON available", // 88
+    "No RT+ available", // 89
+    "FM min stepsize" // 90
   },
 
   { "Slovak",                         // Slovak
@@ -1232,59 +832,128 @@ static const char myLanguage[9][141][85] = {
     "Sakura", // 84
     "Whiteout", // 85
     "NOT POSSIBLE", // 86
-    "Albanian", // 87
-    "Breton", // 88
-    "Catalan", // 89
-    "Croatian", // 90
-    "Welsh", // 91
-    "Czech", // 92
-    "Danish", // 93
-    "German", // 94
-    "English", // 95
-    "Spanish", // 96
-    "Esperanto", // 97
-    "Estonian", // 98
-    "Basque", // 99
-    "Faroese", // 100
-    "French", // 101
-    "Frisian", // 102
-    "Irish", // 103
-    "Gaelic", // 104
-    "Galician", // 105
-    "Icelandic", // 106
-    "Italian", // 107
-    "Lappish", // 108
-    "Latin", // 109
-    "Latvian", // 110
-    "Luxembourgian", // 111
-    "Lithuanian", // 112
-    "Hungarian", // 113
-    "Maltese", // 114
-    "Dutch", // 115
-    "Norwegian", // 116
-    "Occitan", // 117
-    "Polish", // 118
-    "Portuguese", // 119
-    "Romanian", // 120
-    "Romansh", // 121
-    "Serbian", // 122
-    "Slovak", // 123
-    "Slovene", // 124
-    "Finnish", // 125
-    "Swedish", // 126
-    "Turkish", // 127
-    "Flemish", // 128
-    "Walloon", // 129
-    "Ukranian", // 130
-    "Russian", // 131
-    "Moldovian", // 132
-    "Macedonian", // 133
-    "Hebrew", // 134
-    "Greek", // 135
-    "Georgian", // 136
-    "Bulgarian", // 137
-    "Armenian", // 138
-    "Arabic", // 139
-    "FM min stepsize" // 140
+    "No AF available", // 87
+    "No EON available", // 88
+    "No RT+ available", // 89
+    "FM min stepsize" // 90
   },
+};
+
+static const char* const myCountries[] {
+  "Germany", // 0
+  "Greece", // 1
+  "Marocco", // 2
+  "Moldova", // 3
+  "Algeria", // 4
+  "Cyprus", // 5
+  "Czech R.", // 6
+  "Ireland", // 7
+  "Estonia", // 8
+  "Andorra", // 9
+  "San Marino", // 10
+  "Poland", // 11
+  "Turkey", // 12
+  "Israel", // 13
+  "Switzerland", // 14
+  "Vatican", // 15
+  "Macedonia", // 16
+  "Italy", // 17
+  "Jordan", // 18
+  "Slovakia", // 19
+  "Belgium", // 20
+  "Finland", // 21
+  "Syria", // 22
+  "Serbia", // 23
+  "Ukraine", // 24
+  "Russia", // 25
+  "Luxembourg", // 26
+  "Tunisia", // 27
+  "Azores", // 28
+  "Bulgaria", // 29
+  "Madeira", // 30
+  "Netherlands", // 31
+  "Portugal", // 32
+  "Albania", // 33
+  "Denmark", // 34
+  "Liechtenstein", // 35
+  "Latvia", // 36
+  "Slovenia", // 37
+  "Austria", // 38
+  "Gibraltar", // 39
+  "Iceland", // 40
+  "Lebanon", // 41
+  "Hungary", // 42
+  "Iraq", // 43
+  "Monaco", // 44
+  "Malta", // 45
+  "U.K.", // 46
+  "Lithunia", // 47
+  "Croatia", // 48
+  "Libya", // 49
+  "Canaries", // 50
+  "Romania", // 51
+  "Spain", // 52
+  "Sweden", // 53
+  "Egypt", // 54
+  "France", // 55
+  "Norway", // 56
+  "Belarus", // 57
+  "Bosnia" // 58
+};
+
+static const char* const myLanguages[] {
+  "Unknown", // 0
+  "Albanian", // 1
+  "Breton", // 2
+  "Catalan", // 3
+  "Croatian", // 4
+  "Welsh", // 5
+  "Czech", // 6
+  "Danish", // 7
+  "German", // 8
+  "English", // 9
+  "Spanish", // 10
+  "Esperanto", // 11
+  "Estonian", // 12
+  "Basque", // 13
+  "Faroese", // 14
+  "French", // 15
+  "Frisian", // 16
+  "Irish", // 17
+  "Gaelic", // 18
+  "Galician", // 19
+  "Icelandic", // 20
+  "Italian", // 21
+  "Lappish", // 22
+  "Latin", // 23
+  "Latvian", // 24
+  "Luxembourgian", // 25
+  "Lithuanian", // 26
+  "Hungarian", // 27
+  "Maltese", // 28
+  "Dutch", // 29
+  "Norwegian", // 30
+  "Occitan", // 31
+  "Polish", // 32
+  "Portuguese", // 33
+  "Romanian", // 34
+  "Romansh", // 35
+  "Serbian", // 36
+  "Slovak", // 37
+  "Slovene", // 38
+  "Finnish", // 39
+  "Swedish", // 40
+  "Turkish", // 41
+  "Flemish", // 42
+  "Walloon", // 43
+  "Ukranian", // 44
+  "Russian", // 45
+  "Moldavian", // 46
+  "Macedonian", // 47
+  "Hebrew", // 48
+  "Greek", // 49
+  "Georgian", // 50
+  "Bulgarian", // 51
+  "Armenian", // 52
+  "Arabic" // 53
 };
