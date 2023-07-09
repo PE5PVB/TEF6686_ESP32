@@ -436,7 +436,7 @@ void TEF6686::readRDS(bool showrdserrors)
 
         case RDS_GROUP_2A: {
             if (showrdserrors || rds.correct) {
-              // RT decoder
+              // RT decoder (64 characters)
               rds.hasRT = true;
               rds.rtAB = (bitRead(rds.rdsB, 4));                                                  // Get AB flag
 
@@ -461,6 +461,32 @@ void TEF6686::readRDS(bool showrdserrors)
               rds.stationText += "    ";                                                          // Add extra spaces
 
               for (int i = 0; i < 64; i++) rt_buffer2[i] = rt_buffer[i];
+            }
+          } break;
+
+        case RDS_GROUP_2B: {
+            if (showrdserrors || rds.correct) {
+              // RT decoder (32 characters)
+              rds.hasRT = true;
+              rds.rtAB = (bitRead(rds.rdsB, 4));                                                  // Get AB flag
+
+              if (rds.rtAB != rtABold) {                                                          // Erase old RT, because of AB change
+                for (byte i = 0; i < 33; i++) {
+                  rt_buffer32[i] = 0x20;
+                }
+                rt_buffer32[33] = '\0';
+                rtABold = rds.rtAB;
+              }
+
+              offset = (rds.rdsB & 0xf) * 2;                                                      // Get RT character segment
+              rt_buffer32[offset + 0] = rds.rdsD >> 8;                                            // First character of segment
+              rt_buffer32[offset + 1] = rds.rdsD & 0xff;                                          // Second character of segment
+
+              wchar_t RTtext[33] = L"";                                                           // Create 16 bit char buffer for Extended ASCII
+              RDScharConverter(rt_buffer32, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);      // Convert 8 bit ASCII to 16 bit ASCII
+              rds.stationText32 = convertToUTF8(RTtext);                                          // Convert RDS characterset to ASCII
+              rds.stationText32 = extractUTF8Substring(rds.stationText32, 0, 32, true);           // Make sure RT does not exceed 32 characters
+              rds.stationText32 += "    ";                                                        // Add extra spaces
             }
           } break;
 
@@ -554,7 +580,7 @@ void TEF6686::readRDS(bool showrdserrors)
             rds.RTContent2 = convertToUTF8(RTtext2);                                                        // Convert RDS characterset to ASCII
             rds.RTContent2 = extractUTF8Substring(rds.RTContent2, 0, 44, false);                            // Make sure RT does not exceed 32 characters
 
-            if (rds.correct && rdsblock == 16 && (rds.rdsB & (1 << 4))) rds.hasTMC = true;          // TMC flag
+            if (rds.correct && rdsblock == 16 && (rds.rdsB & (1 << 4))) rds.hasTMC = true;                  // TMC flag
           }
           break;
 
@@ -636,6 +662,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
   uint8_t i;
   rds.stationName = "";
   rds.stationText = "";
+  rds.stationText32 = "";
   rds.RTContent1 = "";
   rds.RTContent2 = "";
   rds.PTYN = "";
@@ -647,6 +674,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
     PTYNtext[i] = L'\0';
   }
   for (i = 0; i < 65; i++) rt_buffer[i] = 0;
+  for (i = 0; i < 33; i++) rt_buffer32[i] = 0;
   for (i = 0; i < 18; i++) rds.stationType[i] = 0;
   for (i = 0; i < 6; i++) rds.picode[i] = 0;
 

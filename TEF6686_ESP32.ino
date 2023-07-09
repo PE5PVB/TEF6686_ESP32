@@ -2670,7 +2670,7 @@ void readRds() {
     RDSstatus = radio.rds.hasRDS;
     ShowRDSLogo(RDSstatus);
     if (RDSstatus == 0 && screenmute == false) {
-      tft.setTextColor(PrimaryColor);
+      tft.setTextColor(SecondaryColor);
       tft.setFreeFont(FONT14);
       if (advancedRDS) tft.drawString(PIold, 244, 66, GFXFF); else tft.drawString(PIold, 244, 183, GFXFF);
       tft.setFreeFont(FONT14);
@@ -3160,24 +3160,24 @@ void showRadioText() {
     if (millis() - rtticker >= 350) {
       xPos -= charWidth;
       if (advancedRDS) {
-        if (xPos < -tft.textWidth(radio.rds.stationText) + (charWidth * 14)) xPos = 6;
+        if (xPos < -tft.textWidth(radio.rds.stationText + " " + radio.rds.stationText32) + (charWidth * 14)) xPos = 6;
         sprite2.setFreeFont(FONT7);
         sprite2.setTextDatum(ML_DATUM);
         sprite2.fillSprite(BackgroundColor);
         sprite2.setTextColor(PrimaryColor);
-        sprite2.drawString(radio.rds.stationText, xPos, 4, GFXFF);
+        sprite2.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 4, GFXFF);
         sprite2.pushSprite(35, 222);
       } else {
-        if (xPos < -tft.textWidth(radio.rds.stationText) + (charWidth * 24)) xPos = 6;
+        if (xPos < -tft.textWidth(radio.rds.stationText + " " + radio.rds.stationText32) + (charWidth * 24)) xPos = 6;
         sprite.setFreeFont(FONT7);
         sprite.setTextDatum(ML_DATUM);
         sprite.fillSprite(BackgroundColor);
         sprite.setTextColor(PrimaryColor);
-        sprite.drawString(radio.rds.stationText, xPos, 4, GFXFF);
+        sprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 4, GFXFF);
         sprite.pushSprite(1, 222);
       }
       rtticker = millis();
-      RTold = radio.rds.stationText;
+      RTold = radio.rds.stationText + " " + radio.rds.stationText32;
       cleanup = true;
     }
   } else if (cleanup == true) {
@@ -3202,6 +3202,7 @@ void showRadioText() {
   }
   tft.drawLine(0, 239, 320, 239, FrameColor);
 }
+
 
 void BuildMenu() {
   advancedRDS = false;

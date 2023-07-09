@@ -97,6 +97,7 @@ typedef struct _rds_ {
   byte MS;
   String stationName;
   String stationText;
+  String stationText32;
   String RTContent1;
   String RTContent2;
   String PTYN;
@@ -214,6 +215,7 @@ class TEF6686 {
     bool rt_process;
     char rt_buffer[65];
     char rt_buffer2[65];
+	char rt_buffer32[33];
     bool useRTPlus = true;
     bool ABold;
     char stationTextBuffer[65];
