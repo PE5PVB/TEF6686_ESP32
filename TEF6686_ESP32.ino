@@ -129,6 +129,7 @@ byte SNR;
 byte SNRold;
 byte specialstepOIRT;
 byte stepsize;
+byte fmminstepsize;
 byte deepsleep;
 byte StereoLevel;
 byte subnetclient;
@@ -272,7 +273,7 @@ WiFiUDP Udp;
 
 void setup() {
   setupmode = true;
-  EEPROM.begin(261);
+  EEPROM.begin(262);
   if (EEPROM.readByte(43) != 29) DefaultSettings();
 
   frequency = EEPROM.readUInt(0);
@@ -325,6 +326,7 @@ void setup() {
   colorinvert = EEPROM.readByte(258);
   deepsleep = EEPROM.readByte(259);
   CurrentTheme = EEPROM.readByte(260);
+  fmminstepsize = EEPROM.readByte(261);
 
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;   // later will read from flash
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX; // later will read from flash
@@ -363,7 +365,7 @@ void setup() {
         }
       } else {
         if (frequency % 10 != 0) {
-          Round50K(frequency);
+          if (fmminstepsize == 1) Round100K(frequency); else Round50K(frequency);
         }
       }
       break;
@@ -1282,10 +1284,12 @@ void ModeButtonPress() {
             Round30K(frequency);
             EEPROM.writeUInt(0, frequency);
           }
+        } else {
+          if (fmminstepsize == 1) Round100K(frequency); else Round50K(frequency);
         }
       } else {
         if (frequency % 10 != 0) {
-          Round50K(frequency);
+          if (fmminstepsize == 1) Round100K(frequency); else Round50K(frequency);
           EEPROM.writeUInt(0, frequency);
         }
       }
@@ -1330,6 +1334,7 @@ void ModeButtonPress() {
       EEPROM.writeByte(258, colorinvert);
       EEPROM.writeByte(259, deepsleep);
       EEPROM.writeByte(260, CurrentTheme);
+      EEPROM.writeByte(261, fmminstepsize);
       EEPROM.commit();
       Serial.end();
       if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
@@ -1391,6 +1396,14 @@ void Round50K(unsigned int freq) {
   }
 }
 
+void Round100K(unsigned int freq) {
+  if (freq % 10 < 5) {
+    frequency = (freq - freq % 10);
+  } else {
+    frequency = (freq - (freq % 10) + 10);
+  }
+}
+
 void Round5K(unsigned int freqAM) {
   if (freqAM % 10 < 3) {
     frequency_AM = (freqAM - freqAM % 10);
@@ -1410,10 +1423,10 @@ void RoundStep() {
       if (frequency >= FREQ_FM_OIRT_START && frequency <= FREQ_FM_OIRT_END) {
         Round30K(freq);
       } else {
-        Round50K(freq);
+        if (fmminstepsize == 1) Round100K(freq); else Round50K(freq);
       }
     } else {
-      Round50K(freq);
+      if (fmminstepsize == 1) Round100K(freq); else Round50K(freq);
     }
     radio.SetFreq(frequency);
   } else {
@@ -1803,6 +1816,13 @@ void ButtonPress() {
               tft.drawCentreString(myLanguage[language][74], 155, 70, GFXFF);
               if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
               if (deepsleep) tft.drawCentreString(myLanguage[language][75], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][76], 155, 110, GFXFF);
+              break;
+            case 90:
+              if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][90], 155, 70, GFXFF);
+              tft.drawString("KHz", 170, 110, GFXFF);
+              if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
+              if (fmminstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 155, 110, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 155, 110, GFXFF);
               break;
           }
           break;
@@ -2200,6 +2220,13 @@ void KeyUp() {
               if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
               if (deepsleep) tft.drawCentreString(myLanguage[language][75], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][76], 155, 110, GFXFF);
               break;
+            case 90:
+              if (CurrentTheme == 7) tft.setTextColor(TFT_WHITE); else tft.setTextColor(TFT_BLACK);
+              if (fmminstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 155, 110, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 155, 110, GFXFF);
+              if (fmminstepsize) fmminstepsize = 0; else fmminstepsize = 1;
+              if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
+              if (fmminstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 155, 110, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 155, 110, GFXFF);
+              break;
           }
           break;
       }
@@ -2589,6 +2616,13 @@ void KeyDown() {
               if (deepsleep) deepsleep = 0; else deepsleep = 1;
               if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
               if (deepsleep) tft.drawCentreString(myLanguage[language][75], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][76], 155, 110, GFXFF);
+              break;
+            case 90:
+              if (CurrentTheme == 7) tft.setTextColor(TFT_WHITE); else tft.setTextColor(TFT_BLACK);
+              if (fmminstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 155, 110, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 155, 110, GFXFF);
+              if (fmminstepsize) fmminstepsize = 0; else fmminstepsize = 1;
+              if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
+              if (fmminstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 155, 110, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 155, 110, GFXFF);
               break;
           }
           break;
@@ -3184,7 +3218,7 @@ void BuildMenu() {
   switch (menupage) {
     case 1:
       tft.drawRightString("dB", 305, 30, GFXFF);
-      tft.drawRightString("MHz", 305, 52, GFXFF);
+      tft.drawRightString("MHz", 305, 50, GFXFF);
       tft.drawRightString("MHz", 305, 70, GFXFF);
       tft.drawRightString("MHz", 305, 90, GFXFF);
       tft.drawRightString("dB", 305, 110, GFXFF);
@@ -3267,12 +3301,15 @@ void BuildMenu() {
       if (specialstepOIRT) tft.drawRightString(myLanguage[language][42], 305, 210, GFXFF); else tft.drawRightString(myLanguage[language][30], 305, 210, GFXFF);
       break;
     case 4:
+      tft.drawRightString("KHz", 305, 90, GFXFF);
       tft.drawString(myLanguage[language][77], 14, 30, GFXFF);
       tft.drawString(myLanguage[language][70], 14, 50, GFXFF);
       tft.drawString(myLanguage[language][74], 14, 70, GFXFF);
+      tft.drawString(myLanguage[language][90], 14, 90, GFXFF);
       tft.setTextColor(PrimaryColor);
       tft.drawRightString(CurrentThemeString, 305, 30, GFXFF);
       if (deepsleep) tft.drawRightString(myLanguage[language][75], 305, 70, GFXFF); else tft.drawRightString(myLanguage[language][76], 305, 70, GFXFF);
+      if (fmminstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 265, 90, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 265, 90, GFXFF);
       break;
   }
   analogWrite(SMETERPIN, 0);
@@ -4976,10 +5013,10 @@ void TuneUp() {
         if (specialstepOIRT) {
           temp = FREQ_FM_STEP_30K;
         } else {
-          temp = FREQ_FM_STEP_50K;
+          if (fmminstepsize == 1) temp = FREQ_FM_STEP_100K; else temp = FREQ_FM_STEP_50K;
         }
       } else {
-        temp = FREQ_FM_STEP_50K;
+        if (fmminstepsize == 1) temp = FREQ_FM_STEP_100K; else temp = FREQ_FM_STEP_50K;
       }
     }
   }
@@ -5055,10 +5092,10 @@ void TuneDown() {
         if (specialstepOIRT) {
           temp = FREQ_FM_STEP_30K;
         } else {
-          temp = FREQ_FM_STEP_50K;
+          if (fmminstepsize == 1) temp = FREQ_FM_STEP_100K; else temp = FREQ_FM_STEP_50K;
         }
       } else {
-        temp = FREQ_FM_STEP_50K;
+        if (fmminstepsize == 1) temp = FREQ_FM_STEP_100K; else temp = FREQ_FM_STEP_50K;
       }
     }
   }
@@ -5393,5 +5430,6 @@ void DefaultSettings() {
   EEPROM.writeByte(258, 0);
   EEPROM.writeByte(259, 0);
   EEPROM.writeByte(260, 0);
+  EEPROM.writeByte(261, 0);
   EEPROM.commit();
 }

@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char myLanguage[9][90][85] = {
+static const char myLanguage[9][91][85] = {
   { "English",                        // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -90,7 +90,8 @@ static const char myLanguage[9][90][85] = {
     "NOT POSSIBLE", // 86
     "No AF available", // 87
     "No EON available", // 88
-    "No RT+ available" // 89
+    "No RT+ available", // 89
+    "FM min stepsize" // 90
   },
 
   { "Nederlands",                     // Dutch
@@ -182,7 +183,8 @@ static const char myLanguage[9][90][85] = {
     "NIET MOGELIJK", // 86
     "AF niet beschikbaar", // 87
     "EON niet beschikbaar", // 88
-    "RT+ niet beschikbaar" // 89
+    "RT+ niet beschikbaar", // 89
+    "FM min stepsize" // 90
   }, //
 
   { "Polski",                         // Polish
@@ -274,7 +276,8 @@ static const char myLanguage[9][90][85] = {
     "NOT POSSIBLE", // 86
     "No AF available", // 87
     "No EON available", // 88
-    "No RT+ available" // 89
+    "No RT+ available", // 89
+    "FM min stepsize" // 90
   },
 
   { "Hrvatski",                       // Croatian
@@ -366,7 +369,8 @@ static const char myLanguage[9][90][85] = {
     "NOT POSSIBLE", // 86
     "No AF available", // 87
     "No EON available", // 88
-    "No RT+ available" // 89
+    "No RT+ available", // 89
+    "FM min stepsize" // 90
   },
 
   { "Ελληνικά",                       // Greek
@@ -458,7 +462,8 @@ static const char myLanguage[9][90][85] = {
     "ΜΗ ΔΥΝΑΤΟ", // 86
     "No AF available", // 87
     "No EON available", // 88
-    "No RT+ available" // 89
+    "No RT+ available", // 89
+    "FM min stepsize" // 90
   },
 
   { "Romana",                         // Romanian
@@ -550,7 +555,8 @@ static const char myLanguage[9][90][85] = {
     "NOT POSSIBLE", // 86
     "No AF available", // 87
     "No EON available", // 88
-    "No RT+ available" // 89
+    "No RT+ available", // 89
+    "FM min stepsize" // 90
   },
 
   { "Deutsch",                        // German
@@ -642,7 +648,8 @@ static const char myLanguage[9][90][85] = {
     "NOT POSSIBLE", // 86
     "No AF available", // 87
     "No EON available", // 88
-    "No RT+ available" // 89
+    "No RT+ available", // 89
+    "FM min stepsize" // 90
   },
 
   { "Czech",                          // Czech
@@ -734,7 +741,8 @@ static const char myLanguage[9][90][85] = {
     "NOT POSSIBLE", // 86
     "No AF available", // 87
     "No EON available", // 88
-    "No RT+ available" // 89
+    "No RT+ available", // 89
+    "FM min stepsize" // 90
   },
 
   { "Slovak",                         // Slovak
@@ -826,7 +834,8 @@ static const char myLanguage[9][90][85] = {
     "NOT POSSIBLE", // 86
     "No AF available", // 87
     "No EON available", // 88
-    "No RT+ available" // 89
+    "No RT+ available", // 89
+    "FM min stepsize" // 90
   },
 };
 
