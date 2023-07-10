@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char* const myLanguage[12][93] = {
+static const char* const myLanguage[12][94] = {
   { "English",                        // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -93,7 +93,8 @@ static const char* const myLanguage[12][93] = {
     "No RT+ available", // 89
     "FM default stepsize", // 90
     "Screensaver", // 91
-    "Sec" // 92
+    "Sec", // 92
+    "PRESS BAND TO CLOSE" // 93
   },
 
   { "Nederlands",                     // Dutch
@@ -188,7 +189,8 @@ static const char* const myLanguage[12][93] = {
     "RT+ niet beschikbaar", // 89
     "FM stapgrootte", // 90
     "Schermbeveiliging", // 91
-    "sec." // 92
+    "sec.", // 92
+    "DRUK OP BAND OM AF TE SLUITEN" // 93
   },
 
   { "Polski",                         // Polish
@@ -283,7 +285,8 @@ static const char* const myLanguage[12][93] = {
     "No RT+ available", // 89
     "FM min stepsize", // 90
     "Screensaver", // 91
-    "Sec" // 92
+    "Sec", // 92
+    "PRESS BAND TO CLOSE" // 93
   },
 
   { "Hrvatski",                       // Croatian
@@ -378,7 +381,8 @@ static const char* const myLanguage[12][93] = {
     "No RT+ available", // 89
     "FM min stepsize", // 90
     "Screensaver", // 91
-    "Sec" // 92
+    "Sec", // 92
+    "PRESS BAND TO CLOSE" // 93
   },
 
   { "Ελληνικά",                       // Greek
@@ -473,7 +477,8 @@ static const char* const myLanguage[12][93] = {
     "Μη διαθέσιμο RT+", // 89
     "Μέγεθος βήματος FM", // 90
     "Screensaver", // 91
-    "Sec" // 92
+    "Sec", // 92
+    "PRESS BAND TO CLOSE" // 93
   },
 
   { "Romana",                         // Romanian
@@ -568,7 +573,8 @@ static const char* const myLanguage[12][93] = {
     "No RT+ available", // 89
     "FM min stepsize", // 90
     "Screensaver", // 91
-    "Sec" // 92
+    "Sec", // 92
+    "PRESS BAND TO CLOSE" // 93
   },
 
   { "Deutsch",                        // German
@@ -663,7 +669,8 @@ static const char* const myLanguage[12][93] = {
     "No RT+ available", // 89
     "FM min stepsize", // 90
     "Screensaver", // 91
-    "Sec" // 92
+    "Sec", // 92
+    "PRESS BAND TO CLOSE" // 93
   },
 
   { "Czech",                          // Czech
@@ -758,7 +765,8 @@ static const char* const myLanguage[12][93] = {
     "No RT+ available", // 89
     "FM min stepsize", // 90
     "Screensaver", // 91
-    "Sec" // 92
+    "Sec", // 92
+    "PRESS BAND TO CLOSE" // 93
   },
 
   { "Slovak",                         // Slovak
@@ -853,7 +861,8 @@ static const char* const myLanguage[12][93] = {
     "No RT+ available", // 89
     "FM min stepsize", // 90
     "Screensaver", // 91
-    "Sec" // 92
+    "Sec", // 92
+    "PRESS BAND TO CLOSE" // 93
   },
 
   { "France",                        // French
@@ -948,7 +957,8 @@ static const char* const myLanguage[12][93] = {
     "RT+ indisponible", // 89
     "Valeur du pas FM par défaut", // 90
     "Screensaver", // 91
-    "Sec" // 92
+    "Sec", // 92
+    "PRESS BAND TO CLOSE" // 93
   },
 
   { "Български",                        // Bulgarian
@@ -1043,7 +1053,8 @@ static const char* const myLanguage[12][93] = {
     "RT+ опцията не е налична", // 89
     "Размер на стъпката по подразбиране на FM", // 90
     "Screensaver", // 91
-    "Sec" // 92
+    "Sec", // 92
+    "PRESS BAND TO CLOSE" // 93
   },
 
   { "Русский",                        // Russian
@@ -1138,7 +1149,8 @@ static const char* const myLanguage[12][93] = {
     "Нет доступного RT+", // 89
     "Шаг FM по умолчанию", // 90
     "Экран выкл. через", // 91
-    "сек" // 92
+    "сек", // 92
+    "PRESS BAND TO CLOSE" // 93
   }
 
 };
