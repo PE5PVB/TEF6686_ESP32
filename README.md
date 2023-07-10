@@ -24,7 +24,7 @@ During boot hold:
 #### Screensaver disabled
 
 - **BAND SHORT** PRESS: Switch band
-- **BAND LONG** PRESS: Open RDS page 
+- **BAND LONG** PRESS: Open advanced RDS viewer
 - **ROTARY SHORT** PRESS: Set stepsize or navigate
 - **ROTARY LONG** PRESS: Toggle iMS & EQ
 - **MODE SHORT** PRESS: Switch between auto/manual or exit menu
