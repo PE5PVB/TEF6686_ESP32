@@ -19,7 +19,7 @@ During boot hold:
 #### Screensaver triggered
 - **BAND SHORT** PRESS: Wakeup Screen
 - **BAND LONG** PRESS: Wakeup Screen
-- **ROTARY CHANGE** PRESS: Wakeup Screen
+- **ROTARY** CHANGE: Wakeup Screen
 
 #### Screensaver disabled
 
