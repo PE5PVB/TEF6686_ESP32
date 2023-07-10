@@ -751,6 +751,7 @@ void loop() {
 }
 
 void GetData() {
+  if (band == BAND_FM) ShowStereoStatus();
   if (screenmute == false) {
     if (band == BAND_FM) {
       if (advancedRDS && !afscreen) ShowAdvancedRDS();
@@ -764,7 +765,6 @@ void GetData() {
         showECC();
         showRadioText();
       }
-      ShowStereoStatus();
     }
     ShowRSSI();
     ShowBattery();
@@ -3484,6 +3484,8 @@ void MuteScreen(int setting) {
   if (setting == 0 && screenmute == 1) {
     screenmute = false;
     setupmode = true;
+    tft.writecommand(0x11);
+    analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
     radio.clearRDS(fullsearchrds);
     BuildDisplay();
     setupmode = false;
@@ -3491,12 +3493,8 @@ void MuteScreen(int setting) {
 
   if (setting == 1 && screenmute == 0) {
     screenmute = true;
-    tft.setFreeFont(FONT14);
-    tft.fillScreen(BackgroundColor);
-    tft.drawRect(0, 0, 320, 240, FrameColor);
-    tft.setTextColor(ActiveColor);
-    tft.drawCentreString(myLanguage[language][31], 160, 30, GFXFF);
-    tft.drawCentreString(myLanguage[language][32], 160, 90, GFXFF);
+    analogWrite(CONTRASTPIN, 0);
+    tft.writecommand(0x10);
   }
 }
 
@@ -3737,14 +3735,14 @@ void BuildDisplay() {
     }
     tft.setTextColor(ActiveColor);
     tft.setFreeFont(FONT7);
-    if (showsquelch) tft.drawString("SQ : ", 216, 150, GFXFF);
+    if (showsquelch) tft.drawString("SQ: ", 216, 150, GFXFF);
     tft.drawString("S / N", 250, 164, GFXFF);
     tft.drawString("dB",  300, 164, GFXFF);
     tft.drawString("S", 6, 100, GFXFF);
-    if (region == 0) tft.drawString("PI : ", 216, 191, GFXFF);
-    if (region == 1) tft.drawString("ID : ", 216, 191, GFXFF);
-    tft.drawString("PS : ", 6, 191, GFXFF);
-    tft.drawString("PTY : ", 6, 164, GFXFF);
+    if (region == 0) tft.drawString("PI: ", 216, 191, GFXFF);
+    if (region == 1) tft.drawString("ID: ", 216, 191, GFXFF);
+    tft.drawString("PS: ", 6, 191, GFXFF);
+    tft.drawString("PTY: ", 6, 164, GFXFF);
     tft.drawString("1", 24, 116, GFXFF);
     tft.drawString("3", 48, 116, GFXFF);
     tft.drawString("5", 72, 116, GFXFF);
@@ -4318,7 +4316,7 @@ void doSquelch() {
   if (seek == false && (XDRGTKUSB == true || XDRGTKTCP == true)) {
     if (XDRMute == false) {
       if (Squelch != -1) {
-        if (Squelch < SStatus || Squelch == -100) {
+        if (Squelch < SStatus || Squelch == -100 || Squelch == 0) {
           radio.setUnMute();
           SQ = false;
         } else {
@@ -4337,16 +4335,28 @@ void doSquelch() {
       if (screenmute == false && showsquelch == true && !advancedRDS && !afscreen) {
         if (Squelch != Squelchold) {
           tft.setTextColor(BackgroundColor);
-          if (Squelchold == -1) tft.drawCentreString("ST", 224, 164, GFXFF); else tft.drawCentreString(String(Squelchold / 10), 224, 164, GFXFF);
+          if (Squelchold == -1) {
+            tft.drawCentreString("ST", 224, 164, GFXFF);
+          } else if (Squelchold == 0) {
+            tft.drawCentreString(myLanguage[language][33], 224, 164, GFXFF);
+          } else {
+            tft.drawCentreString(String(Squelchold / 10), 224, 164, GFXFF);
+          }
           tft.setTextColor(ActiveColor);
-          if (Squelch == -1) tft.drawCentreString("ST", 224, 164, GFXFF); else tft.drawCentreString(String(Squelch / 10), 224, 164, GFXFF);
+          if (Squelch == -1) {
+            tft.drawCentreString("ST", 224, 164, GFXFF);
+          } else if (Squelch == 0) {
+            tft.drawCentreString(myLanguage[language][33], 224, 164, GFXFF);
+          } else {
+            tft.drawCentreString(String(Squelch / 10), 224, 164, GFXFF);
+          }
           Squelchold = Squelch;
         }
       }
     }
   } else {
     if (seek == false && Squelch != 920) {
-      if (Squelch < SStatus || Squelch == -100) {
+      if (Squelch < SStatus || Squelch == -100 || Squelch == 0) {
         radio.setUnMute();
         SQ = false;
       } else {
