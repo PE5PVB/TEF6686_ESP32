@@ -1,7 +1,11 @@
+#define ON                         1
+#define OFF                        0
+
 #define TIMER_OFFSET_TIMER         (TIMER_500_TICK)
 #define TIMER_BW_TIMER             (TIMER_500_TICK)
 #define TIMER_SNR_TIMER            (TIMER_500_TICK)
 #define TIMER_BAT_TIMER            (TIMER_500_TICK)
+#define TIMER_SCREENSAVER_BASE     1000000
 #define TIMER_500_TICK             500
 
 #define BAT_LEVEL_EMPTY            1600
