@@ -5149,7 +5149,7 @@ void XDRGTKRoutine() {
             tft.setFreeFont(FONT14);
             tft.drawCentreString(myLanguage[language][34], 140, 60, GFXFF);
           }
-          frequencyold = frequency / 10;
+          frequencyold = frequency;
           for (freq_scan = scanner_start; freq_scan <= scanner_end; freq_scan += scanner_step) {
             radio.SetFreq(freq_scan);
             DataPrint(String(freq_scan * 10, DEC));
