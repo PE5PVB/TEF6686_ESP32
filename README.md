@@ -12,12 +12,19 @@ More information: https://www.pe5pvb.nl/tef6686/
 During boot hold:
 - **BW** button to change rotary encoder direction
 - **Mode** button the flip screen
-- **Standby** button to calibrate analogue S-meter
+- **Band** button to calibrate analogue S-meter
 - **Rotary** button to switch between normal and optical rotary encoder
 
 ## Manual
-- **STANDBY SHORT** PRESS: Switch band
-- **STANDBY LONG** PRESS: Standby
+#### Screensaver triggered
+- **BAND SHORT** PRESS: Wakeup Screen
+- **BAND LONG** PRESS: Wakeup Screen
+- **ROTARY CHANGE** PRESS: Wakeup Screen
+
+#### Screensaver disabled
+
+- **BAND SHORT** PRESS: Switch band
+- **BAND LONG** PRESS: Open RDS page 
 - **ROTARY SHORT** PRESS: Set stepsize or navigate
 - **ROTARY LONG** PRESS: Toggle iMS & EQ
 - **MODE SHORT** PRESS: Switch between auto/manual or exit menu
