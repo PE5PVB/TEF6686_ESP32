@@ -89,6 +89,7 @@ bool XDRGTKdata;
 bool XDRGTKTCP;
 bool XDRGTKUSB;
 bool XDRMute;
+bool screensavertriggered = false;
 byte af_counterold;
 byte amnb;
 byte audiomode;
@@ -130,11 +131,13 @@ byte specialstepOIRT;
 byte stepsize;
 byte fmminstepsize;
 byte deepsleep;
+byte screensaverset;
 byte StereoLevel;
 byte subnetclient;
 byte TEF;
 byte theme;
 byte tunemode;
+byte screensaverOptions[5] = { 0, 5, 10, 30, 60 };
 char buff[16];
 char programTypePrevious[18];
 char radioIdPrevious[6];
@@ -269,10 +272,12 @@ WiFiConnect wc;
 WiFiServer Server(7373);
 WiFiClient RemoteClient;
 WiFiUDP Udp;
+hw_timer_t *timScreensaver = NULL;
+byte screensaver_IRQ = OFF;
 
 void setup() {
   setupmode = true;
-  EEPROM.begin(262);
+  EEPROM.begin(263);
   if (EEPROM.readByte(43) != 29) DefaultSettings();
 
   frequency = EEPROM.readUInt(0);
@@ -326,6 +331,7 @@ void setup() {
   deepsleep = EEPROM.readByte(259);
   CurrentTheme = EEPROM.readByte(260);
   fmminstepsize = EEPROM.readByte(261);
+  screensaverset = EEPROM.readByte(262);
 
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;   // later will read from flash
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX; // later will read from flash
@@ -572,6 +578,11 @@ void setup() {
   sprite.createSprite(317, 16);
   sprite2.createSprite(172, 16);
   radio.tone(50, -5, 2000);
+
+  if (screensaverset) {
+    ScreensaverTimerInit();
+    ScreensaverTimerSet(screensaverOptions[screensaverset]);
+  }
 }
 
 void loop() {
@@ -684,8 +695,14 @@ void loop() {
       }
     }
 
-    if (rotary == -1) KeyUp();
-    if (rotary == 1) KeyDown();
+    if (rotary == -1) {
+      KeyUp();
+      if (screensaverset && !menu) ScreensaverTimerRestart(); 
+    }
+    if (rotary == 1) {
+      KeyDown();
+      if (screensaverset && !menu) ScreensaverTimerRestart();
+    }
 
     if (digitalRead(ROTARY_BUTTON) == LOW) ButtonPress();
     if (digitalRead(MODEBUTTON) == LOW && screenmute == false) ModeButtonPress();
@@ -706,6 +723,27 @@ void loop() {
       store = false;
       attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
       attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
+    }
+
+    if (screensaverset) {
+      if (screensaver_IRQ)
+      {
+        screensaver_IRQ = OFF;
+        if (!screensavertriggered && !advancedRDS && !menu) {
+          screensavertriggered = true;
+          WakeToSleep(true);
+        }
+      }
+    }
+  } else {
+    if (rotary != 0) {
+      rotary = 0;
+      if (screensavertriggered) {
+        screensavertriggered = false;
+        screensaver_IRQ = OFF;
+        WakeToSleep(false);
+        ScreensaverTimerReopen();
+      }
     }
   }
 }
@@ -730,8 +768,8 @@ void GetData() {
   }
 }
 
-void SleepWake(bool isSleep) {
-  if (isSleep) {
+void WakeToSleep(bool yes) {
+  if (yes) {
     power = false;
     analogWrite(SMETERPIN, 0);
     analogWrite(CONTRASTPIN, 0);
@@ -750,15 +788,56 @@ void SleepWake(bool isSleep) {
   }
 }
 
+void ScreensaverTimerInit() {
+  timScreensaver = timerBegin(0, 80, true);
+  timerAttachInterrupt(timScreensaver, ScreensaverInterrupt, true);
+}
+
+void ScreensaverTimerSet(byte value) {
+  if (timScreensaver == NULL) {
+    ScreensaverTimerInit();
+    ScreensaverTimerSet(screensaverOptions[screensaverset]);
+  }
+
+  if (value == OFF) {
+    if (screensaverset) timerStop(timScreensaver);
+  } else {
+    timerStop(timScreensaver);
+    timerAlarmWrite(timScreensaver, value * TIMER_SCREENSAVER_BASE, true);
+    timerStart(timScreensaver);
+    timerAlarmEnable(timScreensaver);
+  }
+}
+
+void ScreensaverTimerRestart() {
+  if (timScreensaver == NULL) {
+    ScreensaverTimerInit();
+    ScreensaverTimerSet(screensaverOptions[screensaverset]);
+  }
+  timerRestart(timScreensaver);
+}
+
+void ScreensaverTimerReopen() {
+  ScreensaverTimerSet(OFF);
+  ScreensaverTimerSet(screensaverOptions[screensaverset]);
+  ScreensaverTimerRestart();
+}
+
+void ScreensaverInterrupt()
+{
+  screensaver_IRQ = ON;
+}
+
 void BANDBUTTONPress() {
-  if (menu == false) {
-    unsigned long counterold = millis();
-    unsigned long counter = millis();
+  unsigned long counterold = millis();
+  unsigned long counter = millis();
+  if (menu == false && power) {
     while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
 
     if (counter - counterold < 1000) {
       if (advancedRDS) {
         BuildDisplay();
+        ScreensaverTimerReopen();
       } else {
         if (tunemode != TUNE_MEM) {
           if (band == BAND_FM) {
@@ -771,6 +850,7 @@ void BANDBUTTONPress() {
           StoreFrequency();
           SelectBand();
         }
+        ScreensaverTimerRestart();
       }
     } else {
       if (band == BAND_FM) {
@@ -779,6 +859,25 @@ void BANDBUTTONPress() {
     }
     while (digitalRead(BANDBUTTON) == LOW) delay(50);
     delay(100);
+  }
+
+  // Wake after screensaver triggered here
+  if (power == false) {
+    while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
+
+    if (counter - counterold < 1000) {
+      if (screensavertriggered) {
+        screensavertriggered = !screensavertriggered;
+        WakeToSleep(false);
+        ScreensaverTimerReopen();
+      }
+    } else {
+      if (screensavertriggered) {
+        screensavertriggered = !screensavertriggered;
+        WakeToSleep(false);
+        ScreensaverTimerReopen();
+      }
+    }
   }
 }
 
@@ -1211,6 +1310,9 @@ void BWButtonPress() {
     } else {
       doStereoToggle();
     }
+    if (screensaverset) {
+      ScreensaverTimerRestart();
+    } 
   }
 
   while (digitalRead(BWBUTTON) == LOW) delay(50);
@@ -1252,6 +1354,9 @@ void ModeButtonPress() {
 
       if (counter - counterold <= 1000) {
         doTuneMode();
+        if (screensaverset) {
+          ScreensaverTimerRestart();
+        }
       } else {
         if (XDRGTKUSB == true || XDRGTKTCP == true) {
           ShowFreq(1);
@@ -1267,6 +1372,7 @@ void ModeButtonPress() {
           if (menu == false) {
             BuildMenu();
             menu = true;
+            ScreensaverTimerSet(OFF);
           }
         }
       }
@@ -1334,10 +1440,13 @@ void ModeButtonPress() {
       EEPROM.writeByte(259, deepsleep);
       EEPROM.writeByte(260, CurrentTheme);
       EEPROM.writeByte(261, fmminstepsize);
+      EEPROM.writeByte(262, screensaverset);
       EEPROM.commit();
       Serial.end();
       if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
       if (USBmode) Serial.begin(19200); else Serial.begin(115200);
+      ScreensaverTimerSet(screensaverOptions[screensaverset]);
+      if (screensaverset) ScreensaverTimerRestart();
     }
   }
   while (digitalRead(MODEBUTTON) == LOW) delay(50);
@@ -1521,6 +1630,9 @@ void ButtonPress() {
         EEPROM.writeByte(45, EQset);
         EEPROM.commit();
       }
+    }
+    if (screensaverset) {
+      ScreensaverTimerRestart();
     }
   } else {
     if (menuopen == false) {
@@ -1822,6 +1934,13 @@ void ButtonPress() {
               tft.drawString("KHz", 170, 110, GFXFF);
               if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
               if (fmminstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 155, 110, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 155, 110, GFXFF);
+              break;
+            case 110:
+              if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
+              tft.drawCentreString(myLanguage[language][91], 155, 70, GFXFF);
+              if (screensaverset) tft.drawString(myLanguage[language][92], 170, 110, GFXFF);
+              if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
+              if (!screensaverset) tft.drawRightString(myLanguage[language][33], 155, 110, GFXFF); else tft.drawRightString(String(screensaverOptions[screensaverset], DEC), 155, 110, GFXFF);
               break;
           }
           break;
@@ -2212,6 +2331,7 @@ void KeyUp() {
               tft.setTextColor(PrimaryColor);
               tft.drawCentreString(CurrentThemeString, 155, 110, GFXFF);
               break;
+
             case 70:
               if (CurrentTheme == 7) tft.setTextColor(TFT_WHITE); else tft.setTextColor(TFT_BLACK);
               if (deepsleep) tft.drawCentreString(myLanguage[language][75], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][76], 155, 110, GFXFF);
@@ -2219,6 +2339,7 @@ void KeyUp() {
               if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
               if (deepsleep) tft.drawCentreString(myLanguage[language][75], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][76], 155, 110, GFXFF);
               break;
+
             case 90:
               if (CurrentTheme == 7) tft.setTextColor(TFT_WHITE); else tft.setTextColor(TFT_BLACK);
               if (fmminstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 155, 110, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 155, 110, GFXFF);
@@ -2226,6 +2347,18 @@ void KeyUp() {
               if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
               if (fmminstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 155, 110, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 155, 110, GFXFF);
               break;
+
+            case 110:
+              if (CurrentTheme == 7) tft.setTextColor(TFT_WHITE); else tft.setTextColor(TFT_BLACK);
+              if (screensaverset) tft.drawString(myLanguage[language][92], 170, 110, GFXFF);
+              if (!screensaverset) tft.drawRightString(myLanguage[language][33], 155, 110, GFXFF); else tft.drawRightString(String(screensaverOptions[screensaverset], DEC), 155, 110, GFXFF);
+              screensaverset ++;
+              if (screensaverset > 4) screensaverset = 0;
+              if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
+              if (screensaverset) tft.drawString(myLanguage[language][92], 170, 110, GFXFF);
+              if (!screensaverset) tft.drawRightString(myLanguage[language][33], 155, 110, GFXFF); else tft.drawRightString(String(screensaverOptions[screensaverset], DEC), 155, 110, GFXFF);
+              break;
+
           }
           break;
       }
@@ -2616,6 +2749,7 @@ void KeyDown() {
               if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
               if (deepsleep) tft.drawCentreString(myLanguage[language][75], 155, 110, GFXFF); else tft.drawCentreString(myLanguage[language][76], 155, 110, GFXFF);
               break;
+
             case 90:
               if (CurrentTheme == 7) tft.setTextColor(TFT_WHITE); else tft.setTextColor(TFT_BLACK);
               if (fmminstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 155, 110, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 155, 110, GFXFF);
@@ -2623,6 +2757,18 @@ void KeyDown() {
               if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
               if (fmminstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 155, 110, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 155, 110, GFXFF);
               break;
+
+            case 110:
+              if (CurrentTheme == 7) tft.setTextColor(TFT_WHITE); else tft.setTextColor(TFT_BLACK);
+              if (screensaverset) tft.drawString(myLanguage[language][92], 170, 110, GFXFF);
+              if (!screensaverset) tft.drawRightString(myLanguage[language][33], 155, 110, GFXFF); else tft.drawRightString(String(screensaverOptions[screensaverset], DEC), 155, 110, GFXFF);
+              screensaverset --;
+              if (screensaverset > 4) screensaverset = 4;
+              if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
+              if (screensaverset) tft.drawString(myLanguage[language][92], 170, 110, GFXFF);
+              if (!screensaverset) tft.drawRightString(myLanguage[language][33], 155, 110, GFXFF); else tft.drawRightString(String(screensaverOptions[screensaverset], DEC), 155, 110, GFXFF);
+              break;
+
           }
           break;
       }
@@ -3302,14 +3448,17 @@ void BuildMenu() {
       break;
     case 4:
       tft.drawRightString("KHz", 305, 90, GFXFF);
+      if (screensaverset) tft.drawRightString(myLanguage[language][92], 305, 110, GFXFF);
       tft.drawString(myLanguage[language][77], 14, 30, GFXFF);
       tft.drawString(myLanguage[language][70], 14, 50, GFXFF);
       tft.drawString(myLanguage[language][74], 14, 70, GFXFF);
       tft.drawString(myLanguage[language][90], 14, 90, GFXFF);
+      tft.drawString(myLanguage[language][91], 14, 110, GFXFF);
       tft.setTextColor(PrimaryColor);
       tft.drawRightString(CurrentThemeString, 305, 30, GFXFF);
       if (deepsleep) tft.drawRightString(myLanguage[language][75], 305, 70, GFXFF); else tft.drawRightString(myLanguage[language][76], 305, 70, GFXFF);
       if (fmminstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 265, 90, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 265, 90, GFXFF);
+      if (!screensaverset) tft.drawRightString(myLanguage[language][33], 265, 110, GFXFF); else tft.drawRightString(String(screensaverOptions[screensaverset], DEC), 265, 110, GFXFF);
       break;
   }
   analogWrite(SMETERPIN, 0);
@@ -3337,6 +3486,7 @@ void MuteScreen(int setting) {
 
 void BuildAdvancedRDS() {
   advancedRDS = true;
+  ScreensaverTimerSet(OFF);
   if (theme == 0) {
     tft.invertDisplay(colorinvert);
     tft.fillScreen(BackgroundColor);
@@ -5431,5 +5581,6 @@ void DefaultSettings() {
   EEPROM.writeByte(259, 0);
   EEPROM.writeByte(260, 0);
   EEPROM.writeByte(261, 0);
+  EEPROM.writeByte(262, 0);
   EEPROM.commit();
 }

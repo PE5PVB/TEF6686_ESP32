@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char* const myLanguage[12][91] = {
+static const char* const myLanguage[12][93] = {
   { "English",                        // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -91,7 +91,9 @@ static const char* const myLanguage[12][91] = {
     "No AF available", // 87
     "No EON available", // 88
     "No RT+ available", // 89
-    "FM default stepsize" // 90
+    "FM default stepsize", // 90
+    "Screensaver", // 91
+    "Sec" // 92
   },
 
   { "Nederlands",                     // Dutch
@@ -184,7 +186,9 @@ static const char* const myLanguage[12][91] = {
     "AF niet beschikbaar", // 87
     "EON niet beschikbaar", // 88
     "RT+ niet beschikbaar", // 89
-    "FM stapgrootte" // 90
+    "FM stapgrootte", // 90
+    "Screensaver", // 91
+    "Sec" // 92
   },
 
   { "Polski",                         // Polish
@@ -277,7 +281,9 @@ static const char* const myLanguage[12][91] = {
     "No AF available", // 87
     "No EON available", // 88
     "No RT+ available", // 89
-    "FM min stepsize" // 90
+    "FM min stepsize", // 90
+    "Screensaver", // 91
+    "Sec" // 92
   },
 
   { "Hrvatski",                       // Croatian
@@ -370,7 +376,9 @@ static const char* const myLanguage[12][91] = {
     "No AF available", // 87
     "No EON available", // 88
     "No RT+ available", // 89
-    "FM min stepsize" // 90
+    "FM min stepsize", // 90
+    "Screensaver", // 91
+    "Sec" // 92
   },
 
   { "Ελληνικά",                       // Greek
@@ -463,7 +471,9 @@ static const char* const myLanguage[12][91] = {
     "Μη διαθέσιμο AF", // 87
     "Μη διαθέσιμο EON", // 88
     "Μη διαθέσιμο RT+", // 89
-    "Μέγεθος βήματος FM" // 90
+    "Μέγεθος βήματος FM", // 90
+    "Screensaver", // 91
+    "Sec" // 92
   },
 
   { "Romana",                         // Romanian
@@ -556,7 +566,9 @@ static const char* const myLanguage[12][91] = {
     "No AF available", // 87
     "No EON available", // 88
     "No RT+ available", // 89
-    "FM min stepsize" // 90
+    "FM min stepsize", // 90
+    "Screensaver", // 91
+    "Sec" // 92
   },
 
   { "Deutsch",                        // German
@@ -649,7 +661,9 @@ static const char* const myLanguage[12][91] = {
     "No AF available", // 87
     "No EON available", // 88
     "No RT+ available", // 89
-    "FM min stepsize" // 90
+    "FM min stepsize", // 90
+    "Screensaver", // 91
+    "Sec" // 92
   },
 
   { "Czech",                          // Czech
@@ -742,7 +756,9 @@ static const char* const myLanguage[12][91] = {
     "No AF available", // 87
     "No EON available", // 88
     "No RT+ available", // 89
-    "FM min stepsize" // 90
+    "FM min stepsize", // 90
+    "Screensaver", // 91
+    "Sec" // 92
   },
 
   { "Slovak",                         // Slovak
@@ -835,7 +851,9 @@ static const char* const myLanguage[12][91] = {
     "No AF available", // 87
     "No EON available", // 88
     "No RT+ available", // 89
-    "FM min stepsize" // 90
+    "FM min stepsize", // 90
+    "Screensaver", // 91
+    "Sec" // 92
   },
 
   { "France",                        // French
@@ -855,7 +873,7 @@ static const char* const myLanguage[12][91] = {
     "Décalage du niveau RF:", // 14
     "Seuil minimum pour la Stéréo :", // 15
     "Angle du filtre High Cut :", // 16
-    "Seuil minimum pour le filtre High Cut:", // 17
+    "Seuil minimum pour le filtre High Cut :", // 17
     "Seuil minimum de niveau bas :", // 18
     "Contraste:", // 19
     "Réglage du volume", // 20
@@ -863,10 +881,10 @@ static const char* const myLanguage[12][91] = {
     "Réglage de la limite de bande basse", // 22
     "Réglage de la limite de bande haute", // 23
     "Réglage du décalage du niveau", // 24
-    "Seuil minimum pour la sép. Stéréo", // 25
-    "Fréq. pour l'angle High Cut", // 26
-    "Seuil minimum pour le filtre High Cut", // 27
-    "Seuil minimum de niveau bas", // 28
+    "Réglage du seuil minimum pour la séparation de la Stéréo", // 25
+    "Réglage de la fréquence pour l'angle du filtre High Cut", // 26
+    "Réglage du seuil minimum pour le filtre High Cut", // 27
+    "Réglage du seuil minimum de niveau bas", // 28
     "Réglage de la luminosité de l'affichage", // 29
     "Éteint", // 30
     "L'écran est désactivé !", // 31
@@ -879,15 +897,15 @@ static const char* const myLanguage[12][91] = {
     "Montrer les erreurs de décodage RDS", // 38
     "Langage", // 39
     "Choix de la langue", // 40
-    "APP. SUR MODE POUR SAUVEGARDER", // 41
+    "APPUYEZ SUR MODE POUR SORTIR ET SAUVEGARDER", // 41
     "Allumé", // 42
     "Sourdine douce FM", // 43
     "Sourdine douce AM", // 44
-    "Bip à la limite de bande", // 45
+    "Émettre un bip lorsque la limite de bande est atteinte", // 45
     "Région", // 46
     "Europe", // 47
     "États-Unis", // 48
-    "Tirets à la place des espaces sur le PS", // 49
+    "Remplacer les espaces du PS (RDS) par des tirets du bas", // 49
     "Mode USB", // 50
     "Wi-Fi actif", // 51
     "Configuration du Wi-Fi", // 52
@@ -928,7 +946,9 @@ static const char* const myLanguage[12][91] = {
     "AF indisponible", // 87
     "EON indisponible", // 88
     "RT+ indisponible", // 89
-    "Valeur du pas FM par défaut" // 90
+    "Valeur du pas FM par défaut", // 90
+    "Screensaver", // 91
+    "Sec" // 92
   },
 
   { "Български",                        // Bulgarian
@@ -1021,7 +1041,9 @@ static const char* const myLanguage[12][91] = {
     "AF опцията не е налична", // 87
     "EON опцията не е налична", // 88
     "RT+ опцията не е налична", // 89
-    "Размер на стъпката по подразбиране на FM" // 90
+    "Размер на стъпката по подразбиране на FM", // 90
+    "Screensaver", // 91
+    "Sec" // 92
   },
 
   { "Русский",                        // Russian
@@ -1114,7 +1136,9 @@ static const char* const myLanguage[12][91] = {
     "Нет доступного AF", // 87
     "Нет доступного EON", // 88
     "Нет доступного RT+", // 89
-    "Шаг FM по умолчанию" // 90
+    "Шаг FM по умолчанию", // 90
+    "Screensaver", // 91
+    "Sec" // 92
   }
 
 };
