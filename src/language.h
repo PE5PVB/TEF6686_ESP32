@@ -187,8 +187,8 @@ static const char* const myLanguage[12][93] = {
     "EON niet beschikbaar", // 88
     "RT+ niet beschikbaar", // 89
     "FM stapgrootte", // 90
-    "Screensaver", // 91
-    "Sec" // 92
+    "Schermbeveiliging", // 91
+    "sec." // 92
   },
 
   { "Polski",                         // Polish
