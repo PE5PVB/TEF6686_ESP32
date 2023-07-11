@@ -39,6 +39,7 @@ TFT_eSPI tft = TFT_eSPI(240, 320);
 #endif
 
 bool advancedRDS;
+bool afpage;
 bool afscreen;
 bool artheadold;
 bool batterydetect = true;
@@ -92,6 +93,7 @@ bool XDRGTKUSB;
 bool XDRMute;
 bool screensavertriggered = false;
 byte af_counterold;
+byte afpagenr;
 byte amnb;
 byte audiomode;
 byte band;
@@ -1439,6 +1441,9 @@ void ModeButtonPress() {
   if (advancedRDS) {
     BuildDisplay();
     ScreensaverTimerReopen();
+  } else if (afpage == true) {
+    if (afpagenr == 1) afpagenr = 2; else afpagenr = 1;
+    BuildAFScreen();
   } else {
     if (menu == false) {
       seek = false;
@@ -3366,9 +3371,9 @@ void showPI() {
       tft.drawString(radio.rds.picode, 244, 66, GFXFF);
     } else if (afscreen) {
       tft.setFreeFont(FONT7);
-      tft.drawString(PIold, 43, 30, GFXFF);
+      tft.drawString(PIold, 38, 30, GFXFF);
       tft.setTextColor(SecondaryColor);
-      tft.drawString(radio.rds.picode, 43, 30, GFXFF);
+      tft.drawString(radio.rds.picode, 38, 30, GFXFF);
     } else {
       tft.drawString(PIold, 244, 183, GFXFF);
       tft.setTextColor(PrimaryColor);
@@ -3412,9 +3417,9 @@ void showPS() {
       tft.drawString(radio.rds.stationName, 38, 66, GFXFF);
     } else if (afscreen) {
       tft.setFreeFont(FONT7);
-      tft.drawString(PSold, 76, 30, GFXFF);
+      tft.drawString(PSold, 71, 30, GFXFF);
       tft.setTextColor(SecondaryColor);
-      tft.drawString(radio.rds.stationName, 76, 30, GFXFF);
+      tft.drawString(radio.rds.stationName, 71, 30, GFXFF);
     } else {
       tft.drawString(PSold, 38, 183, GFXFF);
       tft.setTextColor(PrimaryColor);
@@ -3634,14 +3639,18 @@ void ShowAFEON() {
       tft.setTextColor(PrimaryColor);
       hasafold = true;
     }
+    if (radio.af_counter > 32) afpage = true;
+
     if (af_counterold != radio.af_counter) {
       tft.fillRect(2, 53, 177, 165, BackgroundColor);
       for (byte i = 0; i < radio.af_counter; i++) {
-        tft.drawRightString((radio.af[i].filler ? "(f) " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10),  56 + (i > 10 ? 60 : 0) + (i > 21 ? 60 : 0), 48 + (15 * i) - (i > 10 ? 165 : 0) - (i > 21 ? 165 : 0), GFXFF);
+        tft.drawRightString((radio.af[i + (afpagenr == 2 ? 33 : 0)].filler ? "(f) " : "") + String(radio.af[i + (afpagenr == 2 ? 33 : 0)].frequency / 100) + "." + String((radio.af[i + (afpagenr == 2 ? 33 : 0)].frequency % 100) / 10),  56 + (i > 10 ? 60 : 0) + (i > 21 ? 60 : 0), 48 + (15 * i) - (i > 10 ? 165 : 0) - (i > 21 ? 165 : 0), GFXFF);
         if (i == 32) i = 254;
       }
-      if (radio.af_counter > 11 ) tft.drawLine(65, 54, 65, 210, SecondaryColor);
-      if (radio.af_counter > 22 ) tft.drawLine(125, 54, 125, 210, SecondaryColor);
+      if (radio.af_counter > 11) tft.drawLine(65, 54, 65, 210, SecondaryColor);
+      if (radio.af_counter > 22) tft.drawLine(125, 54, 125, 210, SecondaryColor);
+      tft.setTextColor(SecondaryColor);
+      if (afpage == true) tft.drawRightString(String(afpagenr) + "/2", 315, 218, GFXFF);
     }
     af_counterold = radio.af_counter;
   }
@@ -3695,13 +3704,12 @@ void BuildAFScreen() {
     tft.setFreeFont(FONT7);
     tft.drawString("AF : ", 4, 30, GFXFF);
     tft.drawString("PI : ", 184, 30, GFXFF);
-
-    tft.setTextColor(PrimaryColor);
     tft.drawCentreString(myLanguage[language][93], 160, 218, GFXFF);
+    tft.setTextColor(PrimaryColor);
     tft.drawString(myLanguage[language][88], 184, 48, GFXFF);
     tft.drawString(myLanguage[language][87], 6, 48, GFXFF);
 
-    tft.drawRoundRect(40, 32, 133, 20, 5, ActiveColor);
+    tft.drawRoundRect(35, 32, 138, 20, 5, ActiveColor);
 
     RDSstatusold = false;
     ShowFreq(0);
@@ -3721,6 +3729,8 @@ void BuildAFScreen() {
 
 void BuildAdvancedRDS() {
   afscreen = false;
+  afpage = false;
+  afpagenr = 1;
   advancedRDS = true;
   ScreensaverTimerSet(OFF);
   if (theme == 0) {
