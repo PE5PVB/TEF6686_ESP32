@@ -5068,7 +5068,7 @@ void XDRGTKRoutine() {
           radio.SetFreqAM(frequency_AM);
           DataPrint("M1\n");
         }
-        if (freqtemp >= FREQ_FM_START && freqtemp < FREQ_FM_END) {
+        if (freqtemp >= FREQ_FM_START && freqtemp <= FREQ_FM_END) {
           frequency = freqtemp / 10;
           if (band != BAND_FM) {
             band = BAND_FM;
