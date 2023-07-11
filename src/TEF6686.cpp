@@ -685,12 +685,13 @@ void TEF6686::clearRDS (bool fullsearchrds)
 
   for (i = 0; i < 20; i++) {
     eon[i].pi = 0;
+    eon[i].ps = "";
+    eon[i].mappedfreq = 0;
     for (int y = 0; y < 9; y++) {
       eon_buffer[i][y] = 0;
       eon_buffer2[i][y] = 0;
       EONPStext[i][y] = L'\0';
     }
-    eon[i].ps = "";
   }
 
   for (i = 0; i < 45; i++) {
