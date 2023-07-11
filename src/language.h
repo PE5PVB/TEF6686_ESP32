@@ -293,9 +293,9 @@ static const char* const myLanguage[13][97] = {
     "Wygaszacz ekranu", // 91
     "Sek", // 92
     "NACISNIJ BAND ABY ZAMKNAC", // 93
-    "1% brightness", // 94
-    "25% brightness", // 95
-    "50% brightness" // 96
+    "1% jasnosci", // 94
+    "25% jasnosci", // 95
+    "50% jasnosci" // 96
   },
 
   { "Hrvatski",                       // Croatian
