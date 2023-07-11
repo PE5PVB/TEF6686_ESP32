@@ -877,12 +877,14 @@ void BANDBUTTONPress() {
       if (counter - counterold < 1000) {
         if (screensavertriggered) {
           screensavertriggered = !screensavertriggered;
+          screensaver_IRQ = OFF;
           WakeToSleep(false);
           ScreensaverTimerReopen();
         }
       } else {
         if (screensavertriggered) {
           screensavertriggered = !screensavertriggered;
+          screensaver_IRQ = OFF;
           WakeToSleep(false);
           ScreensaverTimerReopen();
         }
