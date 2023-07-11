@@ -488,12 +488,12 @@ static const char* const myLanguage[13][97] = {
     "Μη διαθέσιμο EON", // 88
     "Μη διαθέσιμο RT+", // 89
     "Μέγεθος βήματος FM", // 90
-    "Screensaver", // 91
-    "Sec", // 92
-    "PRESS BAND TO CLOSE", // 93
-    "1% brightness", // 94
-    "25% brightness", // 95
-    "50% brightness" // 96
+    "Φύλαξη οθόνης", // 91
+    "Δευτ.", // 92
+    "ΠΙΕΣΤΕ BAND ΓΙΑ ΚΛΕΙΣΙΜΟ", // 93
+    "1% φωτεινότητα", // 94
+    "25% φωτεινότητα", // 95
+    "50% φωτεινότητα" // 96
   },
 
   { "Romana",                         // Romanian
@@ -892,7 +892,7 @@ static const char* const myLanguage[13][97] = {
     "50% brightness" // 96
   },
 
-  { "France",                        // French
+  { "Français",                        // French
     "Sens de rotation modifié", // 1
     "Veuillez relâcher le bouton", // 2
     "Écran inversé", // 3
