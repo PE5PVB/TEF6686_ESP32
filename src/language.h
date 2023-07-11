@@ -672,8 +672,8 @@ static const char* const myLanguage[13][97] = {
     "Energieeinstellungen", // 74
     "Komplett aus", // 75
     "Bildschirm aus", // 76
-    "Theme", // 77
-    "Default", // 78
+    "Thema", // 77
+    "Standard", // 78
     "Cyan", // 79
     "Crimson", // 80
     "Monochrome", // 81
@@ -681,17 +681,17 @@ static const char* const myLanguage[13][97] = {
     "Dendro", // 83
     "Sakura", // 84
     "Whiteout", // 85
-    "NOT POSSIBLE", // 86
-    "No AF available", // 87
-    "No EON available", // 88
-    "No RT+ available", // 89
-    "FM min stepsize", // 90
-    "Screensaver", // 91
-    "Sec", // 92
-    "PRESS BAND TO CLOSE", // 93
-    "1% brightness", // 94
-    "25% brightness", // 95
-    "50% brightness" // 96
+    "NICHT MÖGLICH", // 86
+    "Keine AF verfügbar", // 87
+    "Kein EON verfügbar", // 88
+    "Kein RT+ verfügbar", // 89
+    "UKW min. Schrittweite", // 90
+    "Bildschirmschoner", // 91
+    "Sek", // 92
+    "ZUM SCHLIEßEN BAND DRÜCKEN", // 93
+    "1% Helligkeit", // 94
+    "25% Helligkeit", // 95
+    "50% Helligkeit" // 96
   },
 
   { "Czech",                          // Czech
