@@ -42,6 +42,10 @@ void TEF6686::setOffset(int8_t offset) {
   devTEF_Radio_Set_LevelOffset(offset * 10);
 }
 
+void TEF6686::setAMOffset(int8_t offset) {
+  devTEF_Radio_Set_AMLevelOffset(offset * 10);
+}
+
 void TEF6686::setFMBandw(uint16_t bandwidth) {
   devTEF_Radio_Set_Bandwidth(0, bandwidth * 10, 1000, 1000);
 }

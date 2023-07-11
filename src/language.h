@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char* const myLanguage[13][97] = {
+static const char* const myLanguage[13][98] = {
   { "English",                        // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -15,7 +15,7 @@ static const char* const myLanguage[13][97] = {
     "Converter:", // 11
     "Low band edge:", // 12
     "High band edge:", // 13
-    "RF Level offset:", // 14
+    "FM RF Level offset:", // 14
     "Stereo threshold:", // 15
     "High Cut corner:", // 16
     "Highcut threshold:", // 17
@@ -97,7 +97,8 @@ static const char* const myLanguage[13][97] = {
     "PRESS BAND TO CLOSE", // 93
     "1% brightness", // 94
     "25% brightness", // 95
-    "50% brightness" // 96
+    "50% brightness", // 96
+	"AM RF Level offset:" // 97
   },
 
   { "Nederlands",                     // Dutch
@@ -114,7 +115,7 @@ static const char* const myLanguage[13][97] = {
     "Converter:", // 11
     "Lage bandgrens:", // 12
     "Hoge bandgrens:", // 13
-    "RF niveau afwijking:", // 14
+    "FM RF niveau afwijking:", // 14
     "Stereo grens:", // 15
     "Hoge tonen afval:", // 16
     "Hoog afval grens:", // 17
@@ -194,9 +195,10 @@ static const char* const myLanguage[13][97] = {
     "Schermbeveiliging", // 91
     "sec.", // 92
     "DRUK OP BAND OM AF TE SLUITEN", // 93
-    "1% brightness", // 94
-    "25% brightness", // 95
-    "50% brightness" // 96
+    "1% helderheid", // 94
+    "25% helderheid", // 95
+    "50% helderheid", // 96
+	"AM RF Level offset:" // 97
   },
 
   { "Polski",                         // Polish
@@ -213,7 +215,7 @@ static const char* const myLanguage[13][97] = {
     "Konwerter:", // 11
     "Dolna granica pasma:", // 12
     "Gorna granica pasma:", // 13
-    "Odchylenie poziomu RF:", // 14
+    "FM Odchylenie poziomu RF:", // 14
     "Prog Stereo:", // 15
     "Krawedz dolnoprzep..:", // 16
     "Prog dolnoprzepust.:", // 17
@@ -295,7 +297,8 @@ static const char* const myLanguage[13][97] = {
     "NACISNIJ BAND ABY ZAMKNAC", // 93
     "1% jasnosci", // 94
     "25% jasnosci", // 95
-    "50% jasnosci" // 96
+    "50% jasnosci", // 96
+	"AM RF Level offset:" // 97
   },
 
   { "Hrvatski",                       // Croatian
@@ -312,7 +315,7 @@ static const char* const myLanguage[13][97] = {
     "Pomak konvertera:", // 11
     "Donja granica opsega:", // 12
     "Gornja granica opsega:", // 13
-    "Pomak RF razine:", // 14
+    "FM Pomak RF razine:", // 14
     "Razina stereo signala:", // 15
     "Granična frekvencija:", // 16
     "Razina granične frekv.:", // 17
@@ -394,7 +397,8 @@ static const char* const myLanguage[13][97] = {
     "PRESS BAND TO CLOSE", // 93
     "1% brightness", // 94
     "25% brightness", // 95
-    "50% brightness" // 96
+    "50% brightness", // 96
+	"AM RF Level offset:" // 97	
   },
 
   { "Ελληνικά",                       // Greek
@@ -411,7 +415,7 @@ static const char* const myLanguage[13][97] = {
     "Μετατροπέας:", // 11
     "Κάτω όριο μπάντας:", // 12
     "Άνω όριο μπάντας:", // 13
-    "Ολίσθηση επιπέδου RF:", // 14
+    "FM Ολίσθηση επιπέδου RF:", // 14
     "Κατώφλι στέρεο:", // 15
     "Όριο υψηλής αποκοπής:", // 16
     "Κατώφλι υψηλής αποκοπής:", // 17
@@ -493,7 +497,8 @@ static const char* const myLanguage[13][97] = {
     "ΠΙΕΣΤΕ BAND ΓΙΑ ΚΛΕΙΣΙΜΟ", // 93
     "1% φωτεινότητα", // 94
     "25% φωτεινότητα", // 95
-    "50% φωτεινότητα" // 96
+    "50% φωτεινότητα", // 96
+	"AM RF Level offset:" // 97	
   },
 
   { "Romana",                         // Romanian
@@ -510,7 +515,7 @@ static const char* const myLanguage[13][97] = {
     "Convertor:", // 11
     "Limita inferioara a benzii:", // 12
     "Limita superioara a benzii:", // 13
-    "offset ptr. nivel RF:", // 14
+    "FM offset ptr. nivel RF:", // 14
     "Prag ptr. Stereo :", // 15
     "Limita taiere inalte:", // 16
     "Prag taiere inalte:", // 17
@@ -592,7 +597,8 @@ static const char* const myLanguage[13][97] = {
     "PRESS BAND TO CLOSE", // 93
     "1% brightness", // 94
     "25% brightness", // 95
-    "50% brightness" // 96
+    "50% brightness", // 96
+	"AM RF Level offset:" // 97	
   },
 
   { "Deutsch",                        // German
@@ -609,7 +615,7 @@ static const char* const myLanguage[13][97] = {
     "Konverter:", // 11
     "Unteres Bandende:", // 12
     "Oberes Bandende:", // 13
-    "RF-Pegeloffset:", // 14
+    "FM RF-Pegeloffset:", // 14
     "Stereoschwelle:", // 15
     "High-Cut-Ende:", // 16
     "High-Cut-Schwelle:", // 17
@@ -691,7 +697,8 @@ static const char* const myLanguage[13][97] = {
     "ZUM SCHLIEßEN BAND DRÜCKEN", // 93
     "1% Helligkeit", // 94
     "25% Helligkeit", // 95
-    "50% Helligkeit" // 96
+    "50% Helligkeit", // 96
+	"AM RF Level offset:" // 97	
   },
 
   { "Czech",                          // Czech
@@ -708,7 +715,7 @@ static const char* const myLanguage[13][97] = {
     "Konvertor:", // 11
     "Spodek pásma:", // 12
     "Vrch pásma:", // 13
-    "Offset frekvence:", // 14
+    "FM Offset frekvence:", // 14
     "Práh pro stereo:", // 15
     "Práh utlumeni:", // 16
     "Práh zvuku:", // 17
@@ -790,7 +797,8 @@ static const char* const myLanguage[13][97] = {
     "PRESS BAND TO CLOSE", // 93
     "1% brightness", // 94
     "25% brightness", // 95
-    "50% brightness" // 96
+    "50% brightness", // 96
+	"AM RF Level offset:" // 97	
   },
 
   { "Slovak",                         // Slovak
@@ -807,7 +815,7 @@ static const char* const myLanguage[13][97] = {
     "Konvertor:", // 11
     "Spodok pásma:", // 12
     "Vrch pásma:", // 13
-    "Offset frekvencie:", // 14
+    "FM Offset frekvencie:", // 14
     "Prah pre stereo:", // 15
     "Prah utlmenia:", // 16
     "Prah zvuku:", // 17
@@ -889,7 +897,8 @@ static const char* const myLanguage[13][97] = {
     "PRESS BAND TO CLOSE", // 93
     "1% brightness", // 94
     "25% brightness", // 95
-    "50% brightness" // 96
+    "50% brightness", // 96
+	"AM RF Level offset:" // 97	
   },
 
   { "Français",                        // French
@@ -906,7 +915,7 @@ static const char* const myLanguage[13][97] = {
     "Convertisseur :", // 11
     "Limite de bande basse:", // 12
     "Limite de bande haute:", // 13
-    "Décalage du niveau RF:", // 14
+    "FM Décalage du niveau RF:", // 14
     "Seuil minimum pour la Stéréo :", // 15
     "Angle du filtre High Cut :", // 16
     "Seuil minimum pour le filtre High Cut :", // 17
@@ -988,7 +997,8 @@ static const char* const myLanguage[13][97] = {
     "PRESS BAND TO CLOSE", // 93
     "1% brightness", // 94
     "25% brightness", // 95
-    "50% brightness" // 96
+    "50% brightness", // 96
+	"AM RF Level offset:" // 97	
   },
 
   { "Български",                        // Bulgarian
@@ -1005,7 +1015,7 @@ static const char* const myLanguage[13][97] = {
     "Отместване на конв.:", // 11
     "Нисък край:", // 12
     "Висок край:", // 13
-    "Отместване на RF:", // 14
+    "FM Отместване на RF:", // 14
     "Stereo праг:", // 15
     "Мин. честота на изряз.:", // 16
     "Мин. сигнал за изряз.:", // 17
@@ -1087,7 +1097,8 @@ static const char* const myLanguage[13][97] = {
     "НАТИСНЕТЕ BAND ЗА ИЗХОД", // 93
     "1% brightness", // 94
     "25% brightness", // 95
-    "50% brightness" // 96
+    "50% brightness", // 96
+	"AM RF Level offset:" // 97	
   },
 
   { "Русский",                        // Russian
@@ -1104,7 +1115,7 @@ static const char* const myLanguage[13][97] = {
     "Конвертер:", // 11
     "Нижняя граница диапазона:", // 12
     "Верхняя граница диапазона:", // 13
-    "Смещение уровня RF:", // 14
+    "FM Смещение уровня RF:", // 14
     "Порог стерео:", // 15
     "Угол среза высоких частот:", // 16
     "Порог высокого среза:", // 17
@@ -1186,7 +1197,8 @@ static const char* const myLanguage[13][97] = {
     "НАЖМИТЕ BAND ДЛЯ ЗАКРЫТИЯ", // 93
     "1% яркости", // 94
     "25% яркости", // 95
-    "50% яркости" // 96
+    "50% яркости", // 96
+	"AM RF Level offset:" // 97	
   },
 
   { "Українська", // Ukranian
@@ -1203,7 +1215,7 @@ static const char* const myLanguage[13][97] = {
     "Конвертер:", // 11
     "Нижня межа діапазону:", // 12
     "Верхня межа діапазону:", // 13
-    "Зміщення рівня RF:", // 14
+    "FM Зміщення рівня RF:", // 14
     "Поріг стерео:", // 15
     "Верхній край відсіку Високих частот:", // 16
     "Поріг відсіку Високих частот:", // 17
@@ -1285,7 +1297,8 @@ static const char* const myLanguage[13][97] = {
     "НАТИСНІТЬ BAND ДЛЯ ЗАКРИТТЯ", // 93
     "1% яскравості", // 94
     "25% яскравості", // 95
-    "50% яскравості" // 96
+    "50% яскравості", // 96
+	"AM RF Level offset:" // 97	
   }
 };
 

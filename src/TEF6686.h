@@ -192,6 +192,7 @@ class TEF6686 {
     void setAMAttenuation(uint16_t start);
     void setMute();
     void setOffset(int8_t offset);
+	void setAMOffset(int8_t offset);
     void setFMSI(uint8_t mode);
     void setFMSI_Time(uint16_t attack, uint16_t decay);
     void setFMSI_Gain(uint16_t band1, uint16_t band2, uint16_t band3, uint16_t band4);

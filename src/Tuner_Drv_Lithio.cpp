@@ -68,6 +68,10 @@ bool devTEF_Radio_Set_LevelOffset(int16_t offset) {
   return devTEF_Set_Cmd(TEF_FM, Cmd_Set_LevelOffset, 5, offset - 70);
 }
 
+bool devTEF_Radio_Set_AMLevelOffset(int16_t offset) {
+  return devTEF_Set_Cmd(TEF_AM, Cmd_Set_LevelOffset, 5, offset - 70);
+}
+
 bool devTEF_Radio_Set_RDS(bool fullsearchrds) {
   if (fullsearchrds == true) return devTEF_Set_Cmd(TEF_FM, Cmd_Set_RDS, 9, 3, 1, 0); else return devTEF_Set_Cmd(TEF_FM, Cmd_Set_RDS, 9, 1, 1, 0);
 }
