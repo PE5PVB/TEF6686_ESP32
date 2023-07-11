@@ -1,5 +1,12 @@
 #define ON                         1
 #define OFF                        0
+#define REVERSE                    false
+
+#define MAX(x, y) ((x) < (y) ? (y) : (x))
+#define MIN(X, Y) ({\
+  typeof (X) x_ = (X);\
+  typeof (Y) y_ = (Y);\
+  (x_ < y_) ? x_ : y_; })
 
 #define TIMER_OFFSET_TIMER         (TIMER_500_TICK)
 #define TIMER_BW_TIMER             (TIMER_500_TICK)

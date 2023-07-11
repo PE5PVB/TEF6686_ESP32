@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char* const myLanguage[13][94] = {
+static const char* const myLanguage[13][97] = {
   { "English",                        // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -94,7 +94,10 @@ static const char* const myLanguage[13][94] = {
     "FM default stepsize", // 90
     "Screensaver", // 91
     "Sec", // 92
-    "PRESS BAND TO CLOSE" // 93
+    "PRESS BAND TO CLOSE", // 93
+    "1% brightness", // 94
+    "25% brightness", // 95
+    "50% brightness" // 96
   },
 
   { "Nederlands",                     // Dutch
@@ -190,7 +193,10 @@ static const char* const myLanguage[13][94] = {
     "FM stapgrootte", // 90
     "Schermbeveiliging", // 91
     "sec.", // 92
-    "DRUK OP BAND OM AF TE SLUITEN" // 93
+    "DRUK OP BAND OM AF TE SLUITEN", // 93
+    "1% brightness", // 94
+    "25% brightness", // 95
+    "50% brightness" // 96
   },
 
   { "Polski",                         // Polish
@@ -286,7 +292,10 @@ static const char* const myLanguage[13][94] = {
     "FM min stepsize", // 90
     "Screensaver", // 91
     "Sec", // 92
-    "PRESS BAND TO CLOSE" // 93
+    "PRESS BAND TO CLOSE", // 93
+    "1% brightness", // 94
+    "25% brightness", // 95
+    "50% brightness" // 96
   },
 
   { "Hrvatski",                       // Croatian
@@ -382,7 +391,10 @@ static const char* const myLanguage[13][94] = {
     "FM min stepsize", // 90
     "Screensaver", // 91
     "Sec", // 92
-    "PRESS BAND TO CLOSE" // 93
+    "PRESS BAND TO CLOSE", // 93
+    "1% brightness", // 94
+    "25% brightness", // 95
+    "50% brightness" // 96
   },
 
   { "Ελληνικά",                       // Greek
@@ -478,7 +490,10 @@ static const char* const myLanguage[13][94] = {
     "Μέγεθος βήματος FM", // 90
     "Screensaver", // 91
     "Sec", // 92
-    "PRESS BAND TO CLOSE" // 93
+    "PRESS BAND TO CLOSE", // 93
+    "1% brightness", // 94
+    "25% brightness", // 95
+    "50% brightness" // 96
   },
 
   { "Romana",                         // Romanian
@@ -574,7 +589,10 @@ static const char* const myLanguage[13][94] = {
     "FM min stepsize", // 90
     "Screensaver", // 91
     "Sec", // 92
-    "PRESS BAND TO CLOSE" // 93
+    "PRESS BAND TO CLOSE", // 93
+    "1% brightness", // 94
+    "25% brightness", // 95
+    "50% brightness" // 96
   },
 
   { "Deutsch",                        // German
@@ -670,7 +688,10 @@ static const char* const myLanguage[13][94] = {
     "FM min stepsize", // 90
     "Screensaver", // 91
     "Sec", // 92
-    "PRESS BAND TO CLOSE" // 93
+    "PRESS BAND TO CLOSE", // 93
+    "1% brightness", // 94
+    "25% brightness", // 95
+    "50% brightness" // 96
   },
 
   { "Czech",                          // Czech
@@ -766,7 +787,10 @@ static const char* const myLanguage[13][94] = {
     "FM min stepsize", // 90
     "Screensaver", // 91
     "Sec", // 92
-    "PRESS BAND TO CLOSE" // 93
+    "PRESS BAND TO CLOSE", // 93
+    "1% brightness", // 94
+    "25% brightness", // 95
+    "50% brightness" // 96
   },
 
   { "Slovak",                         // Slovak
@@ -862,7 +886,10 @@ static const char* const myLanguage[13][94] = {
     "FM min stepsize", // 90
     "Screensaver", // 91
     "Sec", // 92
-    "PRESS BAND TO CLOSE" // 93
+    "PRESS BAND TO CLOSE", // 93
+    "1% brightness", // 94
+    "25% brightness", // 95
+    "50% brightness" // 96
   },
 
   { "France",                        // French
@@ -958,7 +985,10 @@ static const char* const myLanguage[13][94] = {
     "Valeur du pas FM par défaut", // 90
     "Screensaver", // 91
     "Sec", // 92
-    "PRESS BAND TO CLOSE" // 93
+    "PRESS BAND TO CLOSE", // 93
+    "1% brightness", // 94
+    "25% brightness", // 95
+    "50% brightness" // 96
   },
 
   { "Български",                        // Bulgarian
@@ -1054,7 +1084,10 @@ static const char* const myLanguage[13][94] = {
     "Размер на стъпката на FM", // 90
     "Авт. заспиване", // 91
     "сек.", // 92
-    "НАТИСНЕТЕ BAND ЗА ИЗХОД" // 93
+    "НАТИСНЕТЕ BAND ЗА ИЗХОД", // 93
+    "1% brightness", // 94
+    "25% brightness", // 95
+    "50% brightness" // 96
   },
 
   { "Русский",                        // Russian
@@ -1150,7 +1183,10 @@ static const char* const myLanguage[13][94] = {
     "Шаг FM по умолчанию", // 90
     "Экран выкл. через", // 91
     "сек", // 92
-    "НАЖМИТЕ BAND ДЛЯ ЗАКРЫТИЯ" // 93
+    "НАЖМИТЕ BAND ДЛЯ ЗАКРЫТИЯ", // 93
+    "1% brightness", // 94
+    "25% brightness", // 95
+    "50% brightness" // 96
   },
 
   { "Українська", // Ukranian
@@ -1246,7 +1282,10 @@ static const char* const myLanguage[13][94] = {
     "FM кроки за замовчуванням", // 90
     "Заставка", // 91
     "с", // 92
-    "НАТИСНІТЬ BAND ДЛЯ ЗАКРИТТЯ" // 93
+    "НАТИСНІТЬ BAND ДЛЯ ЗАКРИТТЯ", // 93
+    "1% brightness", // 94
+    "25% brightness", // 95
+    "50% brightness" // 96
   }
 };
 
