@@ -3736,7 +3736,7 @@ void BuildDisplay() {
     tft.setTextColor(ActiveColor);
     tft.setFreeFont(FONT7);
     if (showsquelch) tft.drawString("SQ: ", 216, 150, GFXFF);
-    tft.drawString("S / N", 250, 164, GFXFF);
+    tft.drawString("S/N", 250, 164, GFXFF);
     tft.drawString("dB",  300, 164, GFXFF);
     tft.drawString("S", 6, 100, GFXFF);
     if (region == 0) tft.drawString("PI: ", 216, 191, GFXFF);
