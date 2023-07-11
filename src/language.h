@@ -265,13 +265,13 @@ static const char* const myLanguage[13][94] = {
     "Odwroc kolory wyswietlacza", // 69
     "O oprogramowaniu", // 70
     "Glowny kod:", // 71
-    "Wspoltworcy:", // 72
+    "Wspolautorzy:", // 72
     "Nieznany", // 73
     "Opcje zasilania", // 74
     "Glebokie uspienie", // 75
     "Wylacz ekran", // 76
     "Motyw", // 77
-    "Default", // 78
+    "Domyslny", // 78
     "Cyan", // 79
     "Crimson", // 80
     "Monochrome", // 81
@@ -279,14 +279,14 @@ static const char* const myLanguage[13][94] = {
     "Dendro", // 83
     "Sakura", // 84
     "Whiteout", // 85
-    "NOT POSSIBLE", // 86
-    "No AF available", // 87
-    "No EON available", // 88
-    "No RT+ available", // 89
-    "FM min stepsize", // 90
-    "Screensaver", // 91
-    "Sec", // 92
-    "PRESS BAND TO CLOSE" // 93
+    "NIEMOZLIWE", // 86
+    "AF niedostepny", // 87
+    "EON niedostepny", // 88
+    "RT+ niedostepny", // 89
+    "Minimalny krok FM", // 90
+    "Wygaszacz ekranu", // 91
+    "Sek", // 92
+    "NACISNIJ BAND ABY ZAMKNAC" // 93
   },
 
   { "Hrvatski",                       // Croatian
