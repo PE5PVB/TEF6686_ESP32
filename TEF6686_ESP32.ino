@@ -722,7 +722,7 @@ void loop() {
     }
 
     if (digitalRead(ROTARY_BUTTON) == LOW) if (!afscreen) ButtonPress();
-    if (digitalRead(MODEBUTTON) == LOW && screenmute == false) if (!afscreen) ModeButtonPress();
+    if (digitalRead(MODEBUTTON) == LOW && screenmute == false) ModeButtonPress();
     if (digitalRead(BWBUTTON) == LOW && screenmute == false) if (!afscreen) BWButtonPress();
 
     if (store == true) change++;
@@ -1441,9 +1441,9 @@ void ModeButtonPress() {
   if (advancedRDS) {
     BuildDisplay();
     ScreensaverTimerReopen();
-  } else if (afpage == true) {
-    if (afpagenr == 1) afpagenr = 2; else afpagenr = 1;
-    BuildAFScreen();
+  } else if (afscreen == true) {
+    if (afpagenr == 1) afpagenr = 2; else if (afpagenr == 2) afpagenr = 1;
+    if (afpagenr != 0) BuildAFScreen();
   } else {
     if (menu == false) {
       seek = false;
@@ -3639,16 +3639,23 @@ void ShowAFEON() {
       tft.setTextColor(PrimaryColor);
       hasafold = true;
     }
-    if (radio.af_counter > 32) afpage = true;
+    if (radio.af_counter > 32) {
+      if (!afpage) {
+        afpage = true;
+        afpagenr = 1;
+      }
+    } else {
+      afpagenr = 0;
+    }
 
     if (af_counterold != radio.af_counter) {
       tft.fillRect(2, 53, 177, 165, BackgroundColor);
-      for (byte i = 0; i < radio.af_counter; i++) {
-        tft.drawRightString((radio.af[i + (afpagenr == 2 ? 33 : 0)].filler ? "(f) " : "") + String(radio.af[i + (afpagenr == 2 ? 33 : 0)].frequency / 100) + "." + String((radio.af[i + (afpagenr == 2 ? 33 : 0)].frequency % 100) / 10),  56 + (i > 10 ? 60 : 0) + (i > 21 ? 60 : 0), 48 + (15 * i) - (i > 10 ? 165 : 0) - (i > 21 ? 165 : 0), GFXFF);
-        if (i == 32) i = 254;
+      for (byte i = 0 + (afpagenr == 2 ? 33 : 0); i < radio.af_counter; i++) {
+        tft.drawRightString((radio.af[i].filler ? "(f) " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10),  56 + (i > 10 ? 60 : 0) + (i > 21 ? 60 : 0), 48 + (15 * i) - (i > 10 ? 165 : 0) - (i > 21 ? 165 : 0), GFXFF);
+        if (i == 32  + (afpagenr == 2 ? 33 : 0)) i = 254;
       }
-      if (radio.af_counter > 11) tft.drawLine(65, 54, 65, 210, SecondaryColor);
-      if (radio.af_counter > 22) tft.drawLine(125, 54, 125, 210, SecondaryColor);
+      if (radio.af_counter > 11 + (afpagenr == 2 ? 33 : 0)) tft.drawLine(65, 54, 65, 210, SecondaryColor);
+      if (radio.af_counter > 22 + (afpagenr == 2 ? 33 : 0)) tft.drawLine(125, 54, 125, 210, SecondaryColor);
       tft.setTextColor(SecondaryColor);
       if (afpage == true) tft.drawRightString(String(afpagenr) + "/2", 315, 218, GFXFF);
     }
@@ -3730,7 +3737,7 @@ void BuildAFScreen() {
 void BuildAdvancedRDS() {
   afscreen = false;
   afpage = false;
-  afpagenr = 1;
+  afpagenr = 0;
   advancedRDS = true;
   ScreensaverTimerSet(OFF);
   if (theme == 0) {
