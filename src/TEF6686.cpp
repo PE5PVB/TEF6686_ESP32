@@ -90,7 +90,7 @@ bool TEF6686::getStereoStatus() {
 }
 
 void TEF6686::setMono(bool mono) {
-  devTEF_Radio_Set_Stereo_Min(mono);
+	devTEF_Radio_Set_Stereo_Min(mono);
 }
 
 void TEF6686::setVolume(int8_t volume) {
@@ -241,10 +241,10 @@ void TEF6686::readRDS(bool showrdserrors)
     rds.correct = false;
     rds.hasRDS = false;
 
-    if (((rds.rdsErr >> 14) & 0x02) > 1) rds.rdsAerror = true; else rds.rdsAerror = false;            // Any errors in Block A?
-    if (((rds.rdsErr >> 12) & 0x02) > 1) rds.rdsBerror = true; else rds.rdsBerror = false;            // Any errors in Block B?
-    if (((rds.rdsErr >> 10) & 0x02) > 1) rds.rdsCerror = true; else rds.rdsCerror = false;            // Any errors in Block C?
-    if (((rds.rdsErr >> 8) & 0x02) > 1) rds.rdsDerror = true; else rds.rdsDerror = false;             // Any errors in Block D?
+    if (((rds.rdsErr >> 14) & 0x02) > 0) rds.rdsAerror = true; else rds.rdsAerror = false;            // Any errors in Block A?
+    if (((rds.rdsErr >> 12) & 0x02) > 0) rds.rdsBerror = true; else rds.rdsBerror = false;            // Any errors in Block B?
+    if (((rds.rdsErr >> 10) & 0x02) > 0) rds.rdsCerror = true; else rds.rdsCerror = false;            // Any errors in Block C?
+    if (((rds.rdsErr >> 8) & 0x02) > 0) rds.rdsDerror = true; else rds.rdsDerror = false;             // Any errors in Block D?
     if (!rds.rdsAerror && !rds.rdsBerror && !rds.rdsCerror && !rds.rdsDerror) rds.correct = true;     // Any errors in all blocks?
     if ((rdsStat & (1 << 9))) rds.hasRDS = true;                                                      // RDS decoder synchronized and data available
     if ((rdsStat & (1 << 15))) rdsReady = true;

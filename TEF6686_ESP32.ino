@@ -762,13 +762,13 @@ void GetData() {
       if (afscreen) ShowAFEON();
       if (!afscreen)
       {
-        showPI();
         showPTY();
-        showPS();
         doAF();
         showECC();
         showRadioText();
       }
+      showPI();
+      showPS();
     }
     ShowRSSI();
     ShowBattery();
@@ -951,7 +951,7 @@ void BANDBUTTONPress() {
         }
 
         if (band == BAND_FM) {
-          if (advancedRDS) BuildAFScreen(); else BuildAdvancedRDS();
+          if (advancedRDS && !seek) BuildAFScreen(); else BuildAdvancedRDS();
         }
       }
       while (digitalRead(BANDBUTTON) == LOW) delay(50);
@@ -1416,17 +1416,17 @@ void doStereoToggle() {
       tft.drawCircle(81, 15, 9, BackgroundColor);
       tft.drawCircle(91, 15, 10, BackgroundColor);
       tft.drawCircle(91, 15, 9, BackgroundColor);
-      tft.drawCircle(86, 15, 10, PrimaryColor);
-      tft.drawCircle(86, 15, 9, PrimaryColor);
+      tft.drawCircle(86, 15, 10, SecondaryColor);
+      tft.drawCircle(86, 15, 9, SecondaryColor);
     }
-    radio.setMono(2);
+    radio.setMono(true);
     StereoToggle = false;
   } else {
     if (screenmute == false) {
       tft.drawCircle(86, 15, 10, BackgroundColor);
       tft.drawCircle(86, 15, 9, BackgroundColor);
     }
-    radio.setMono(0);
+    radio.setMono(false);
     Stereostatusold = false;
     StereoToggle = true;
   }
@@ -3072,13 +3072,13 @@ void ShowAdvancedRDS() {
   }
 
   String afstring;
-  if (radio.rds.hasAF) for (byte i = 0; i < radio.af_counter; i++) afstring += String(radio.af[i].frequency / 100) + "." + (radio.af[i].frequency % 100 < 10 ? "0" : "") + String(radio.af[i].frequency % 100) + (radio.af[i].filler ? "(f)" : "") + (i == radio.af_counter - 1 ? "          " : " | "); else afstring = myLanguage[language][87];
+  if (radio.rds.hasAF) for (byte i = 0; i < radio.af_counter; i++) afstring += String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10) + (radio.af[i].filler ? "(f)" : "") + (i == radio.af_counter - 1 ? "          " : " | "); else afstring = myLanguage[language][87];
   if (hasafold != radio.rds.hasAF) {
     if (radio.rds.hasAF) tft.setTextColor(SecondaryColor); else tft.setTextColor(GreyoutColor);
     tft.drawString("AF",  42, 45, GFXFF);
     hasafold = radio.rds.hasAF;
   }
-  if (millis() - afticker >= 350) {
+  if (millis() - afticker >= 500) {
     xPos2 -= charWidth;
     if (xPos2 < -tft.textWidth(afstring) + (charWidth * 14)) xPos2 = 6;
     sprite2.setFreeFont(FONT7);
@@ -3091,13 +3091,13 @@ void ShowAdvancedRDS() {
   }
 
   String eonstring;
-  if (radio.rds.hasEON) for (byte i = 0; i < radio.eon_counter; i++) eonstring += String(radio.eon[i].picode) + (radio.eon[i].ps.length() > 0 ? String(": " + String(radio.eon[i].ps)) : "") + (radio.eon[i].mappedfreq > 0 ? String(" " + String(radio.eon[i].mappedfreq / 100) + "." + (radio.eon[i].mappedfreq % 100 < 10 ? "0" : "") + String(radio.eon[i].mappedfreq % 100))  : "") + (i == radio.eon_counter - 1 ? "      " : " | "); else eonstring = myLanguage[language][88];
+  if (radio.rds.hasEON) for (byte i = 0; i < radio.eon_counter; i++) eonstring += String(radio.eon[i].picode) + (radio.eon[i].ps.length() > 0 ? String(": " + String(radio.eon[i].ps)) : "") + (radio.eon[i].mappedfreq > 0 ? String(" " + String(radio.eon[i].mappedfreq / 100) + "." + String((radio.eon[i].mappedfreq % 100) / 10))  : "") + (i == radio.eon_counter - 1 ? "      " : " | "); else eonstring = myLanguage[language][88];
   if (haseonold != radio.rds.hasEON) {
     if (radio.rds.hasEON) tft.setTextColor(SecondaryColor); else tft.setTextColor(GreyoutColor);
     tft.drawString("EON",  148, 45, GFXFF);
     haseonold = radio.rds.hasEON;
   }
-  if (millis() - eonticker >= 350) {
+  if (millis() - eonticker >= 500) {
     xPos3 -= charWidth;
     if (xPos3 < -tft.textWidth(eonstring) + (charWidth * 14)) xPos3 = 6;
     sprite2.setFreeFont(FONT7);
@@ -3333,6 +3333,11 @@ void showPI() {
       tft.drawString(PIold, 244, 66, GFXFF);
       tft.setTextColor(PrimaryColor);
       tft.drawString(radio.rds.picode, 244, 66, GFXFF);
+    } else if (afscreen) {
+      tft.setFreeFont(FONT7);
+      tft.drawString(PIold, 43, 30, GFXFF);
+      tft.setTextColor(SecondaryColor);
+      tft.drawString(radio.rds.picode, 43, 30, GFXFF);
     } else {
       tft.drawString(PIold, 244, 183, GFXFF);
       tft.setTextColor(PrimaryColor);
@@ -3374,10 +3379,17 @@ void showPS() {
       tft.drawString(PSold, 38, 66, GFXFF);
       tft.setTextColor(PrimaryColor);
       tft.drawString(radio.rds.stationName, 38, 66, GFXFF);
+    } else if (afscreen) {
+      tft.setFreeFont(FONT7);
+      tft.drawString(PSold, 76, 30, GFXFF);
+      tft.setTextColor(SecondaryColor);
+      tft.drawString(radio.rds.stationName, 76, 30, GFXFF);
     } else {
       tft.drawString(PSold, 38, 183, GFXFF);
       tft.setTextColor(PrimaryColor);
       tft.drawString(radio.rds.stationName, 38, 183, GFXFF);
+      tft.drawLine(0, 187, 320, 187, FrameColor);
+      tft.drawLine(0, 218, 320, 218, FrameColor);
     }
     PSold = radio.rds.stationName;
     if (wifi) {
@@ -3394,8 +3406,6 @@ void showPS() {
       Udp.endPacket();
     }
     programServicePrevious = radio.rds.stationName;
-    if (!advancedRDS) tft.drawLine(0, 187, 320, 187, FrameColor);
-    if (!advancedRDS) tft.drawLine(0, 218, 320, 218, FrameColor);
   }
 }
 
@@ -3582,55 +3592,55 @@ void MuteScreen(int setting) {
 
 void ShowAFEON() {
   tft.setTextColor(PrimaryColor);
+
   if (radio.rds.hasAF) {
-    if (af_counterold != radio.af_counter) {
-      byte af_counter_show;
-      if (af_counter_show < 21) {
-        af_counter_show++;
-        tft.fillRect(2, 48, 150, 170, BackgroundColor);
-        for (byte i = 0; i < radio.af_counter; i++) tft.drawRightString((radio.af[i].filler ? "(f) " : "") + String(radio.af[i].frequency / 100) + "." + (radio.af[i].frequency % 100 < 10 ? "0" : "") + String(radio.af[i].frequency % 100),  (i > 10 ? 145 : 60), 48 + (15 * i) - (i > 10 ? 165 : 0), GFXFF);
-        if (radio.af_counter > 10) tft.drawLine(75, 48, 75, 218, FrameColor);
-      }
-      af_counterold = radio.af_counter;
+    if (hasafold == false) {
+      tft.setTextColor(BackgroundColor);
+      tft.drawString(myLanguage[language][87], 6, 48, GFXFF);
+      tft.setTextColor(PrimaryColor);
+      hasafold = true;
     }
-  } else {
-    tft.drawString(myLanguage[language][87], 6, 45, GFXFF);
+    if (af_counterold != radio.af_counter) {
+      tft.fillRect(2, 53, 177, 165, BackgroundColor);
+      for (byte i = 0; i < radio.af_counter; i++) {
+        tft.drawRightString((radio.af[i].filler ? "(f) " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10),  56 + (i > 10 ? 60 : 0) + (i > 21 ? 60 : 0), 48 + (15 * i) - (i > 10 ? 165 : 0) - (i > 21 ? 165 : 0), GFXFF);
+        if (i == 32) i = 254;
+      }
+      if (radio.af_counter > 11 ) tft.drawLine(65, 54, 65, 210, SecondaryColor);
+      if (radio.af_counter > 22 ) tft.drawLine(125, 54, 125, 210, SecondaryColor);
+    }
+    af_counterold = radio.af_counter;
   }
 
   if (radio.rds.hasEON) {
     if (haseonold == false) {
       tft.setTextColor(BackgroundColor);
-      tft.drawString(myLanguage[language][88], 164, 45, GFXFF);
+      tft.drawString(myLanguage[language][88], 184, 48, GFXFF);
       tft.setTextColor(PrimaryColor);
     }
     haseonold = true;
     for (byte i = 0; i < radio.eon_counter; i++) {
-      byte eon_counter_show;
-      if (eon_counter_show < 11) {
-        eon_counter_show++;
-        tft.drawRightString(String(radio.eon[i].picode), 200, 48 + (15 * i), GFXFF);
-        if (radio.eon[i].ps.length() > 0) {
-          tft.setTextColor(ActiveColor);
-          tft.drawString("PS :", 210, 30, GFXFF);
-          tft.setTextColor(PrimaryColor);
-          if (radio.eon[i].ps != eonpsold[i]) {
-            tft.setTextColor(BackgroundColor);
-            tft.drawString(String(eonpsold[i]), 210, 48 + (15 * i), GFXFF);
-            eonpsold[i] = radio.eon[i].ps;
-          }
-          tft.drawString(String(radio.eon[i].ps), 210, 48 + (15 * i), GFXFF);
+      tft.drawString(String(radio.eon[i].picode), 184, 48 + (15 * i), GFXFF);
+      if (radio.eon[i].ps.length() > 0) {
+        tft.setTextColor(ActiveColor);
+        tft.drawString("PS :", 218, 30, GFXFF);
+        tft.setTextColor(PrimaryColor);
+        if (radio.eon[i].ps != eonpsold[i]) {
+          tft.setTextColor(BackgroundColor);
+          tft.drawString(String(eonpsold[i]), 218, 48 + (15 * i), GFXFF);
+          eonpsold[i] = radio.eon[i].ps;
         }
-
-        if (radio.eon[i].mappedfreq > 0) {
-          tft.setTextColor(ActiveColor);
-          tft.drawRightString("FREQ:", 310, 30, GFXFF);
-          tft.setTextColor(PrimaryColor);
-          tft.drawRightString(String(radio.eon[i].mappedfreq / 100) + "." + (radio.eon[i].mappedfreq % 100 < 10 ? "0" : "") + String(radio.eon[i].mappedfreq % 100), 310, 48 + (15 * i), GFXFF);
-        }
+        tft.drawString(String(radio.eon[i].ps), 218, 48 + (15 * i), GFXFF);
       }
+
+      if (radio.eon[i].mappedfreq > 0) {
+        tft.setTextColor(ActiveColor);
+        tft.drawRightString("FREQ:", 316, 30, GFXFF);
+        tft.setTextColor(PrimaryColor);
+        tft.drawRightString(String(radio.eon[i].mappedfreq / 100) + "." + String((radio.eon[i].mappedfreq % 100) / 10), 316, 48 + (15 * i), GFXFF);
+      }
+      if (i == 10) i = 254;
     }
-  } else {
-    tft.drawString(myLanguage[language][88], 164, 45, GFXFF);
   }
 }
 
@@ -3643,23 +3653,34 @@ void BuildAFScreen() {
     tft.drawRect(0, 0, 320, 240, FrameColor);
     tft.drawLine(0, 30, 320, 30, FrameColor);
     tft.drawLine(0, 218, 320, 218, FrameColor);
-    tft.drawLine(160, 30, 160, 218, FrameColor);
+    tft.drawLine(180, 30, 180, 218, FrameColor);
     tft.setTextColor(ActiveColor);
     tft.setFreeFont(FONT14);
     tft.drawString("kHz", 225, -5, GFXFF);
     tft.setTextColor(ActiveColor);
     tft.setFreeFont(FONT7);
-    tft.drawRightString("AF : ", 60, 30, GFXFF);
-    tft.drawRightString("PI : ", 200, 30, GFXFF);
+    tft.drawString("AF : ", 4, 30, GFXFF);
+    tft.drawString("PI : ", 184, 30, GFXFF);
+
+    tft.setTextColor(PrimaryColor);
     tft.drawCentreString(myLanguage[language][93], 160, 218, GFXFF);
+    tft.drawString(myLanguage[language][88], 184, 48, GFXFF);
+    tft.drawString(myLanguage[language][87], 6, 48, GFXFF);
+
+    tft.drawRoundRect(40, 32, 133, 20, 5, ActiveColor);
+
     RDSstatusold = false;
+    ShowFreq(0);
     Stereostatusold = false;
     haseonold = false;
+    hasafold = false;
     BWreset = true;
     SStatusold = 2000;
     rssiold = 2000;
     batteryold = 6;
     af_counterold = 254;
+    strcpy(radioIdPrevious, "0");
+    programServicePrevious = "0";
     for (byte i = 0; i < 11; i++) eonpsold[i] = "";
   }
 }
@@ -4030,6 +4051,13 @@ void ShowFreq(int mode) {
           tft.drawRightString(String(freqold / 100) + "." + (freqold % 100 < 10 ? "0" : "") + String(freqold % 100) + " MHz",  310, 30, GFXFF);
           tft.setTextColor(PrimaryColor);
           tft.drawRightString(String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100) + " MHz",  310, 30, GFXFF);
+          freqold = freq;
+        } else if (afscreen) {
+          tft.setFreeFont(FONT7);
+          tft.setTextColor(BackgroundColor);
+          tft.drawRightString(String(freqold / 100) + "." + (freqold % 100 < 10 ? "0" : "") + String(freqold % 100),  170, 30, GFXFF);
+          tft.setTextColor(SecondaryColor);
+          tft.drawRightString(String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100),  170, 30, GFXFF);
           freqold = freq;
         } else {
           String count = String(freq / 100, DEC);

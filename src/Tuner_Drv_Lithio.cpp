@@ -129,7 +129,7 @@ bool devTEF_Radio_Set_ChannelEqualizer(bool eq) {
 }
 
 bool devTEF_Radio_Set_Stereo_Min(bool mode) {
-  return devTEF_Set_Cmd(TEF_FM, Cmd_Set_Stereo_Min, 7, mode);
+	if (mode) return devTEF_Set_Cmd(TEF_FM, Cmd_Set_Stereo_Min, 7, 2); else return devTEF_Set_Cmd(TEF_FM, Cmd_Set_Stereo_Min, 7, 0);
 }
 
 bool devTEF_Radio_Set_RFAGC(uint16_t agc) {
