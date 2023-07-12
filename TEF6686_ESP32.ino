@@ -256,6 +256,7 @@ unsigned int LowEdgeOIRTSet;
 unsigned int LowEdgeSet;
 unsigned int LWHighEdgeSet;
 unsigned int LWLowEdgeSet;
+unsigned int mappedfreqold[10];
 unsigned int memory[30];
 unsigned int MWHighEdgeSet;
 unsigned int MWLowEdgeSet;
@@ -3639,7 +3640,8 @@ void ShowAFEON() {
       tft.setTextColor(PrimaryColor);
       hasafold = true;
     }
-    if (radio.af_counter > 32) {
+
+    if (radio.af_counter > 33) {
       if (!afpage) {
         afpage = true;
         afpagenr = 1;
@@ -3649,11 +3651,14 @@ void ShowAFEON() {
     }
 
     if (af_counterold != radio.af_counter) {
+      Serial.println(radio.af_counter);
       tft.fillRect(2, 53, 177, 165, BackgroundColor);
-      for (byte i = 0 + (afpagenr == 2 ? 33 : 0); i < radio.af_counter; i++) {
-        tft.drawRightString((radio.af[i].filler ? "(f) " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10),  56 + (i > 10 ? 60 : 0) + (i > 21 ? 60 : 0), 48 + (15 * i) - (i > 10 ? 165 : 0) - (i > 21 ? 165 : 0), GFXFF);
+      for (byte i = 0; i < radio.af_counter; i++) {
+        byte x = i - (afpagenr == 2 ? 33 : 0);
+        tft.drawRightString((radio.af[i].filler ? "(f) " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10),  56 + (x > 10 ? 60 : 0) + (x > 21 ? 60 : 0), 48 + (15 * x) - (x > 10 ? 165 : 0) - (x > 21 ? 165 : 0), GFXFF);
         if (i == 32  + (afpagenr == 2 ? 33 : 0)) i = 254;
       }
+
       if (radio.af_counter > 11 + (afpagenr == 2 ? 33 : 0)) tft.drawLine(65, 54, 65, 210, SecondaryColor);
       if (radio.af_counter > 22 + (afpagenr == 2 ? 33 : 0)) tft.drawLine(125, 54, 125, 210, SecondaryColor);
       tft.setTextColor(SecondaryColor);
@@ -3687,7 +3692,13 @@ void ShowAFEON() {
         tft.setTextColor(ActiveColor);
         tft.drawRightString("FREQ:", 316, 30, GFXFF);
         tft.setTextColor(PrimaryColor);
+        if (radio.eon[i].mappedfreq != mappedfreqold[i]) {
+          tft.setTextColor(BackgroundColor);
+          tft.drawRightString(String(mappedfreqold[i] / 100) + "." + String((mappedfreqold[i] % 100) / 10), 316, 48 + (15 * i), GFXFF);
+          tft.setTextColor(PrimaryColor);
+        }
         tft.drawRightString(String(radio.eon[i].mappedfreq / 100) + "." + String((radio.eon[i].mappedfreq % 100) / 10), 316, 48 + (15 * i), GFXFF);
+        mappedfreqold[i] = radio.eon[i].mappedfreq;
       }
       if (i == 10) i = 254;
     }
@@ -3718,6 +3729,7 @@ void BuildAFScreen() {
 
     tft.drawRoundRect(35, 32, 138, 20, 5, ActiveColor);
 
+    for (byte i = 0; i < 11; i++) mappedfreqold[i] = 0;
     RDSstatusold = false;
     ShowFreq(0);
     Stereostatusold = false;
