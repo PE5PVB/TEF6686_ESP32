@@ -94,7 +94,7 @@ bool TEF6686::getStereoStatus() {
 }
 
 void TEF6686::setMono(bool mono) {
-	devTEF_Radio_Set_Stereo_Min(mono);
+  devTEF_Radio_Set_Stereo_Min(mono);
 }
 
 void TEF6686::setVolume(int8_t volume) {
@@ -269,9 +269,10 @@ void TEF6686::readRDS(bool showrdserrors)
           }
         }
 
-        if (rds.rdsAerror) rds.picode[4] = '?'; else rds.picode[4] = ' ';                              // Not sure, add a ?
-        rds.picode[5] = '\0';
-        if (strcmp(rds.picode, "0000?") == 0) {
+        if (((rds.rdsErr >> 14) & 0x02) > 2) rds.picode[5] = '?';
+        if (((rds.rdsErr >> 14) & 0x01) > 1) rds.picode[4] = '?'; else rds.picode[4] = ' ';                              // Not sure, add a ?
+        rds.picode[6] = '\0';
+        if (strncmp(rds.picode, "0000", 4) == 0) {
           memset(rds.picode, 0, sizeof(rds.picode));
         }
       }
@@ -303,7 +304,9 @@ void TEF6686::readRDS(bool showrdserrors)
             rds.picode[5] = '\0';
           }
         }
-        if (rds.rdsAerror) rds.picode[4] = '?'; else rds.picode[4] = ' ';                       // Not sure, add a ?
+        if (((rds.rdsErr >> 14) & 0x02) > 2) rds.picode[5] = '?';
+        if (((rds.rdsErr >> 14) & 0x01) > 1) rds.picode[4] = '?'; else rds.picode[4] = ' ';                              // Not sure, add a ?
+        rds.picode[6] = '\0';
       }
 
       // TP Indicator
@@ -680,7 +683,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
   for (i = 0; i < 65; i++) rt_buffer[i] = 0;
   for (i = 0; i < 33; i++) rt_buffer32[i] = 0;
   for (i = 0; i < 18; i++) rds.stationType[i] = 0;
-  for (i = 0; i < 6; i++) rds.picode[i] = 0;
+  for (i = 0; i < 7; i++) rds.picode[i] = 0;
 
   for (i = 0; i < 50; i++) {
     af[i].frequency = 0;

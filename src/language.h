@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char* const myLanguage[13][98] = {
+static const char* const myLanguage[13][99] = {
   { "English",                        // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -98,7 +98,8 @@ static const char* const myLanguage[13][98] = {
     "1% brightness", // 94
     "25% brightness", // 95
     "50% brightness", // 96
-	"AM RF Level offset:" // 97
+	"AM RF Level offset:", // 97
+	"Signalmeter unit:" // 98
   },
 
   { "Nederlands",                     // Dutch
@@ -198,7 +199,8 @@ static const char* const myLanguage[13][98] = {
     "1% helderheid", // 94
     "25% helderheid", // 95
     "50% helderheid", // 96
-	"AM RF Level offset:" // 97
+	"AM RF Level afwijking:", // 97
+	"Signaalmeter eenheid:" // 98
   },
 
   { "Polski",                         // Polish
@@ -298,7 +300,8 @@ static const char* const myLanguage[13][98] = {
     "1% jasnosci", // 94
     "25% jasnosci", // 95
     "50% jasnosci", // 96
-    "Odchylenie poziomu RF AM:" // 97
+    "Odchylenie poziomu RF AM:", // 97
+	"Signalmeter unit:" // 98	
   },
 
   { "Hrvatski",                       // Croatian
@@ -398,7 +401,8 @@ static const char* const myLanguage[13][98] = {
     "1% brightness", // 94
     "25% brightness", // 95
     "50% brightness", // 96
-	"AM RF Level offset:" // 97	
+	"AM RF Level offset:", // 97	
+	"Signalmeter unit:" // 98	
   },
 
   { "Ελληνικά",                       // Greek
@@ -498,7 +502,8 @@ static const char* const myLanguage[13][98] = {
     "1% φωτεινότητα", // 94
     "25% φωτεινότητα", // 95
     "50% φωτεινότητα", // 96
-	"AM RF Level offset:" // 97	
+	"AM RF Level offset:", // 97	
+	"Signalmeter unit:" // 98	
   },
 
   { "Romana",                         // Romanian
@@ -598,7 +603,8 @@ static const char* const myLanguage[13][98] = {
     "1% brightness", // 94
     "25% brightness", // 95
     "50% brightness", // 96
-	"AM RF Level offset:" // 97	
+	"AM RF Level offset:", // 97	
+	"Signalmeter unit:" // 98	
   },
 
   { "Deutsch",                        // German
@@ -698,7 +704,8 @@ static const char* const myLanguage[13][98] = {
     "1% Helligkeit", // 94
     "25% Helligkeit", // 95
     "50% Helligkeit", // 96
-	"AM RF Level offset:" // 97	
+	"AM RF Level offset:", // 97	
+	"Signalmeter unit:" // 98	
   },
 
   { "Czech",                          // Czech
@@ -798,7 +805,8 @@ static const char* const myLanguage[13][98] = {
     "1% brightness", // 94
     "25% brightness", // 95
     "50% brightness", // 96
-	"AM RF Level offset:" // 97	
+	"AM RF Level offset:", // 97	
+	"Signalmeter unit:" // 98	
   },
 
   { "Slovak",                         // Slovak
@@ -898,7 +906,8 @@ static const char* const myLanguage[13][98] = {
     "1% brightness", // 94
     "25% brightness", // 95
     "50% brightness", // 96
-	"AM RF Level offset:" // 97	
+	"AM RF Level offset:", // 97	
+	"Signalmeter unit:" // 98	
   },
 
   { "Français",                        // French
@@ -998,7 +1007,8 @@ static const char* const myLanguage[13][98] = {
     "1% brightness", // 94
     "25% brightness", // 95
     "50% brightness", // 96
-	"AM RF Level offset:" // 97	
+	"AM RF Level offset:", // 97	
+	"Signalmeter unit:" // 98	
   },
 
   { "Български",                        // Bulgarian
@@ -1098,7 +1108,8 @@ static const char* const myLanguage[13][98] = {
     "1% brightness", // 94
     "25% brightness", // 95
     "50% brightness", // 96
-	"AM RF Level offset:" // 97	
+	"AM RF Level offset:", // 97	
+	"Signalmeter unit:" // 98	
   },
 
   { "Русский",                        // Russian
@@ -1198,7 +1209,8 @@ static const char* const myLanguage[13][98] = {
     "1% яркости", // 94
     "25% яркости", // 95
     "50% яркости", // 96
-	"Смещение уровня AM RF:" // 97	
+	"Смещение уровня AM RF:", // 97	
+	"Signalmeter unit:" // 98	
   },
 
   { "Українська", // Ukranian
@@ -1298,7 +1310,8 @@ static const char* const myLanguage[13][98] = {
     "1% яскравості", // 94
     "25% яскравості", // 95
     "50% яскравості", // 96
-	"Зміщення рівня AM RF:" // 97	
+	"Зміщення рівня AM RF:", // 97	
+	"Signalmeter unit:" // 98	
   }
 };
 
