@@ -149,6 +149,8 @@ typedef struct _af_ {
 
 typedef struct _eon_ {
   uint16_t  mappedfreq;
+  uint16_t  mappedfreq2;
+  uint16_t  mappedfreq3;
   uint16_t  pi;
   char picode[6];
   String ps;
@@ -227,6 +229,7 @@ class TEF6686 {
     uint16_t rdsBprevious;
     uint16_t rdsCprevious;
     uint16_t rdsDprevious;
+	uint16_t piold;
     bool rtABold;
     wchar_t PStext[9] = L"";
     wchar_t EONPStext[20][9];

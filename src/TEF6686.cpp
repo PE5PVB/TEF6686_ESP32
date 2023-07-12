@@ -257,15 +257,18 @@ void TEF6686::readRDS(bool showrdserrors)
 
       //PI decoder
       if (rds.region != 1 && (!rds.rdsAerror || rds.pierrors)) {
-        rds.picode[0] = (rds.rdsA >> 12) & 0xF;
-        rds.picode[1] = (rds.rdsA >> 8) & 0xF;
-        rds.picode[2] = (rds.rdsA >> 4) & 0xF;
-        rds.picode[3] = rds.rdsA & 0xF;
-        for (int i = 0; i < 4; i++) {
-          if (rds.picode[i] < 10) {
-            rds.picode[i] += '0';                                                                     // Add ASCII offset for decimal digits
-          } else {
-            rds.picode[i] += 'A' - 10;                                                                // Add ASCII offset for hexadecimal letters A-F
+        if (rds.rdsA != piold) {
+          piold = rds.rdsA;
+          rds.picode[0] = (rds.rdsA >> 12) & 0xF;
+          rds.picode[1] = (rds.rdsA >> 8) & 0xF;
+          rds.picode[2] = (rds.rdsA >> 4) & 0xF;
+          rds.picode[3] = rds.rdsA & 0xF;
+          for (int i = 0; i < 4; i++) {
+            if (rds.picode[i] < 10) {
+              rds.picode[i] += '0';                                                                     // Add ASCII offset for decimal digits
+            } else {
+              rds.picode[i] += 'A' - 10;                                                                // Add ASCII offset for hexadecimal letters A-F
+            }
           }
         }
 
@@ -273,7 +276,21 @@ void TEF6686::readRDS(bool showrdserrors)
         if (((rds.rdsErr >> 14) & 0x01) > 1) rds.picode[4] = '?'; else rds.picode[4] = ' ';                              // Not sure, add a ?
         rds.picode[6] = '\0';
         if (strncmp(rds.picode, "0000", 4) == 0) {
-          memset(rds.picode, 0, sizeof(rds.picode));
+          if (piold != 0) {
+            rds.picode[0] = (piold >> 12) & 0xF;
+            rds.picode[1] = (piold >> 8) & 0xF;
+            rds.picode[2] = (piold >> 4) & 0xF;
+            rds.picode[3] = piold & 0xF;
+            for (int i = 0; i < 4; i++) {
+              if (rds.picode[i] < 10) {
+                rds.picode[i] += '0';                                                                     // Add ASCII offset for decimal digits
+              } else {
+                rds.picode[i] += 'A' - 10;                                                                // Add ASCII offset for hexadecimal letters A-F
+              }
+            }
+          } else {
+            memset(rds.picode, 0, sizeof(rds.picode));
+          }
         }
       }
 
@@ -648,7 +665,15 @@ void TEF6686::readRDS(bool showrdserrors)
 
                 if (offset > 4) {
                   if (((rds.rdsC >> 8) * 10 + 8750) == currentfreq) {                                                                   // Check if mapped frequency belongs to current frequency
-                    eon[position].mappedfreq = ((rds.rdsC & 0xFF) * 10 + 8750);                                                         // Add mapped frequency to array
+                    if (eon[position].mappedfreq = 0) {
+                      eon[position].mappedfreq = ((rds.rdsC & 0xFF) * 10 + 8750);                                                       // Add mapped frequency to array
+                    } else {
+                      if (eon[position].mappedfreq2 = 0) {
+                        eon[position].mappedfreq2 = ((rds.rdsC & 0xFF) * 10 + 8750);
+                      } else if (eon[position].mappedfreq3 = 0) {
+                        eon[position].mappedfreq3 = ((rds.rdsC & 0xFF) * 10 + 8750);
+                      }
+                    }
                   }
                 }
               }
@@ -694,6 +719,8 @@ void TEF6686::clearRDS (bool fullsearchrds)
     eon[i].pi = 0;
     eon[i].ps = "";
     eon[i].mappedfreq = 0;
+    eon[i].mappedfreq2 = 0;
+    eon[i].mappedfreq3 = 0;
     for (int y = 0; y < 9; y++) {
       eon_buffer[i][y] = 0;
       eon_buffer2[i][y] = 0;
@@ -706,6 +733,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
     RDSplus2[i] = 0;
   }
   rdsblock = 0;
+  piold = 0;
   rds.ECC = 0;
   rds.LIC = 0;
   rds.pinHour = 0;
