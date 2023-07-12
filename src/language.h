@@ -269,11 +269,11 @@ static const char* const myLanguage[13][98] = {
     "Reduktor szumow FM", // 65
     "Zaladowano domyslne", // 66
     "Wyjscie dzwieku", // 67
-    "Kroki co 30 kHz na FM OIRT", // 68
+    "Kroki co 30 kHz na OIRT", // 68
     "Odwroc kolory wyswietlacza", // 69
     "O oprogramowaniu", // 70
     "Glowny kod:", // 71
-    "Wspolautorzy:", // 72
+    "Wspoltworcy:", // 72
     "Nieznany", // 73
     "Opcje zasilania", // 74
     "Glebokie uspienie", // 75
@@ -298,7 +298,7 @@ static const char* const myLanguage[13][98] = {
     "1% jasnosci", // 94
     "25% jasnosci", // 95
     "50% jasnosci", // 96
-	"AM RF Level offset:" // 97
+    "Odchylenie poziomu RF AM:" // 97
   },
 
   { "Hrvatski",                       // Croatian
