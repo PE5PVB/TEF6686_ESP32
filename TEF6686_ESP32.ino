@@ -3612,8 +3612,8 @@ void BuildMenu() {
   analogWrite(SMETERPIN, 0);
 }
 
-void MuteScreen(int setting) {
-  if (setting == 0 && screenmute == 1) {
+void MuteScreen(bool setting) {
+  if (!setting && screenmute) {
     screenmute = false;
     setupmode = true;
     tft.writecommand(0x11);
@@ -3621,9 +3621,7 @@ void MuteScreen(int setting) {
     radio.clearRDS(fullsearchrds);
     BuildDisplay();
     setupmode = false;
-  }
-
-  if (setting == 1 && screenmute == 0) {
+  } else if (setting && !screenmute) {
     screenmute = true;
     analogWrite(CONTRASTPIN, 0);
     tft.writecommand(0x10);
