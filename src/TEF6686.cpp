@@ -526,7 +526,6 @@ void TEF6686::readRDS(bool showrdserrors)
             if (rds.correct) {
               // CT
               uint32_t mjd;
-              rds.hasCT = true;
               mjd = (rds.rdsB & 0x03);
               mjd <<= 15;
               mjd += ((rds.rdsC >> 1) & 0x7FFF);
@@ -545,8 +544,8 @@ void TEF6686::readRDS(bool showrdserrors)
 
               rds.months = M +  2 - (12 * J);
               rds.years = 100 * (C - 49) + Y + J;
-              rds.hours = (rds.rdsD >> 12) & 0x0f;
-              rds.hours += (rds.rdsC << 4) & 0x0010;
+              rds.hour = ((rds.rdsD >> 12) & 0x0f);
+              rds.hour += ((rds.rdsC <<  4) & 0x0010);
               rds.minutes = (rds.rdsD >> 6) & 0x3f;
               rds.offsetplusmin = bitRead(rds.rdsD, 5);
               rds.offset = (rds.rdsD & 0x3f);
@@ -668,9 +667,9 @@ void TEF6686::readRDS(bool showrdserrors)
                     if (eon[position].mappedfreq == 0) {
                       eon[position].mappedfreq = ((rds.rdsC & 0xFF) * 10 + 8750);                                                       // Add mapped frequency to array
                     } else {
-                      if (eon[position].mappedfreq2 == 0) {
+                      if (eon[position].mappedfreq2 == 0 && eon[position].mappedfreq != (rds.rdsC & 0xFF) * 10 + 8750) {
                         eon[position].mappedfreq2 = ((rds.rdsC & 0xFF) * 10 + 8750);
-                      } else if (eon[position].mappedfreq3 == 0) {
+                      } else if (eon[position].mappedfreq3 == 0 && eon[position].mappedfreq != (rds.rdsC & 0xFF) * 10 + 8750 && eon[position].mappedfreq2 != (rds.rdsC & 0xFF) * 10 + 8750) {
                         eon[position].mappedfreq3 = ((rds.rdsC & 0xFF) * 10 + 8750);
                       }
                     }

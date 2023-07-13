@@ -124,6 +124,7 @@ byte menupagestotal = 4;
 byte MSold;
 byte optenc;
 byte rdsblockold;
+byte rds_minuteold = 254;
 byte region;
 byte regionold;
 byte rotarymode;
@@ -269,8 +270,11 @@ unsigned int SWHighEdgeSet;
 unsigned int SWLowEdgeSet;
 unsigned long peakholdmillis;
 unsigned long afticker;
+unsigned long aftickerhold;
 unsigned long eonticker;
+unsigned long eontickerhold;
 unsigned long rtticker;
+unsigned long rttickerhold;
 unsigned long rtplusticker;
 
 TEF6686 radio;
@@ -418,7 +422,7 @@ void setup() {
     if (rotarymode == 0) rotarymode = 1; else rotarymode = 0;
     EEPROM.writeByte(39, rotarymode);
     EEPROM.commit();
-      analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+    analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
     tft.setFreeFont(FONT14);
     tft.fillScreen(BackgroundColor);
     tft.setTextColor(ActiveColor);
@@ -437,7 +441,7 @@ void setup() {
     }
     EEPROM.writeByte(38, displayflip);
     EEPROM.commit();
-      analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+    analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
     tft.setFreeFont(FONT14);
     tft.fillScreen(BackgroundColor);
     tft.setTextColor(ActiveColor);
@@ -448,7 +452,7 @@ void setup() {
 
   if (digitalRead(BANDBUTTON) == LOW) {
     analogWrite(SMETERPIN, 511);
-      analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+    analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
     tft.setFreeFont(FONT14);
     tft.fillScreen(BackgroundColor);
     tft.setTextColor(ActiveColor);
@@ -459,7 +463,7 @@ void setup() {
   }
 
   if (digitalRead(ROTARY_BUTTON) == LOW && digitalRead(BWBUTTON) == HIGH) {
-      analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+    analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
     tft.setFreeFont(FONT14);
     tft.fillScreen(BackgroundColor);
     tft.setTextColor(ActiveColor);
@@ -477,7 +481,7 @@ void setup() {
   }
 
   if (digitalRead(ROTARY_BUTTON) == LOW && digitalRead(BWBUTTON) == LOW) {
-      analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+    analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
     tft.setFreeFont(FONT14);
     tft.fillScreen(BackgroundColor);
     tft.setTextColor(ActiveColor);
@@ -3166,7 +3170,15 @@ void ShowAdvancedRDS() {
     hasafold = radio.rds.hasAF;
   }
   if (millis() - afticker >= 500) {
-    xPos2 -= charWidth;
+    if (xPos2 == 6) {
+      if (millis() - aftickerhold >= 2000) {
+        xPos2 -= charWidth;
+        aftickerhold = millis();
+      }
+    } else {
+      xPos2 -= charWidth;
+      aftickerhold = millis();
+    }
     if (xPos2 < -tft.textWidth(afstring) + (charWidth * 14)) xPos2 = 6;
     sprite2.setFreeFont(FONT7);
     sprite2.setTextDatum(ML_DATUM);
@@ -3178,14 +3190,22 @@ void ShowAdvancedRDS() {
   }
 
   String eonstring;
-  if (radio.rds.hasEON) for (byte i = 0; i < radio.eon_counter; i++) eonstring += String(radio.eon[i].picode) + (radio.eon[i].ps.length() > 0 ? String(": " + String(radio.eon[i].ps)) : "") + (radio.eon[i].mappedfreq > 0 ? String(" " + String(radio.eon[i].mappedfreq / 100) + "." + String((radio.eon[i].mappedfreq % 100) / 10))  : "")+ (radio.eon[i].mappedfreq2 > 0 ? String(" / " + String(radio.eon[i].mappedfreq2 / 100) + "." + String((radio.eon[i].mappedfreq2 % 100) / 10))  : "")+ (radio.eon[i].mappedfreq3 > 0 ? String(" /  " + String(radio.eon[i].mappedfreq3 / 100) + "." + String((radio.eon[i].mappedfreq3 % 100) / 10))  : "") + (i == radio.eon_counter - 1 ? "      " : " | "); else eonstring = myLanguage[language][88];
+  if (radio.rds.hasEON) for (byte i = 0; i < radio.eon_counter; i++) eonstring += String(radio.eon[i].picode) + (radio.eon[i].ps.length() > 0 ? String(": " + String(radio.eon[i].ps)) : "") + (radio.eon[i].mappedfreq > 0 ? String(" " + String(radio.eon[i].mappedfreq / 100) + "." + String((radio.eon[i].mappedfreq % 100) / 10))  : "") + (radio.eon[i].mappedfreq2 > 0 ? String(" / " + String(radio.eon[i].mappedfreq2 / 100) + "." + String((radio.eon[i].mappedfreq2 % 100) / 10))  : "") + (radio.eon[i].mappedfreq3 > 0 ? String(" /  " + String(radio.eon[i].mappedfreq3 / 100) + "." + String((radio.eon[i].mappedfreq3 % 100) / 10))  : "") + (i == radio.eon_counter - 1 ? "      " : " | "); else eonstring = myLanguage[language][88];
   if (haseonold != radio.rds.hasEON) {
     if (radio.rds.hasEON) tft.setTextColor(SecondaryColor); else tft.setTextColor(GreyoutColor);
     tft.drawString("EON",  148, 45, GFXFF);
     haseonold = radio.rds.hasEON;
   }
   if (millis() - eonticker >= 500) {
-    xPos3 -= charWidth;
+    if (xPos3 == 6) {
+      if (millis() - eontickerhold >= 2000) {
+        xPos3 -= charWidth;
+        eontickerhold = millis();
+      }
+    } else {
+      xPos3 -= charWidth;
+      eontickerhold = millis();
+    }
     if (xPos3 < -tft.textWidth(eonstring) + (charWidth * 14)) xPos3 = 6;
     sprite2.setFreeFont(FONT7);
     sprite2.setTextDatum(ML_DATUM);
@@ -3255,24 +3275,22 @@ void ShowAdvancedRDS() {
     MSold = radio.rds.MS;
   }
 
-  if (radio.rds.hasCT == true) {
+  if (radio.rds.hasCT == true && radio.rds.minutes != rds_minuteold) {
     int timeoffset;
     if (radio.rds.offsetplusmin == true) timeoffset = (-1 * radio.rds.offset) / 2; else timeoffset = radio.rds.offset / 2;
-    byte rdshour = radio.rds.hours + timeoffset;
+    uint16_t rdshour = radio.rds.hour + timeoffset;
     rdshour = (((int)rdshour + 24) % 24);
     setTime(rdshour, radio.rds.minutes, 0, 0, 0, 0);
     rds_clock = ((hour() < 10 ? "0" : "") + String(hour()) + ":" + (minute() < 10 ? "0" : "") + String(minute()));
-  } else {
-    rds_clock = "";
-  }
 
-  if (rds_clock != rds_clockold) {
+
     tft.setFreeFont(FONT7);
     tft.setTextColor(BackgroundColor);
     tft.drawRightString(rds_clockold, 205, 105, GFXFF);
     if (radio.rds.hasCT == true) tft.setTextColor(SecondaryColor); else tft.setTextColor(GreyoutColor); tft.drawString("CT",  62, 45, GFXFF);
     tft.drawRightString(rds_clock, 205, 105, GFXFF);
     rds_clockold = rds_clock;
+    rds_minuteold = radio.rds.minutes;
   }
 
   if (rdsblockold != radio.rdsblock) {
@@ -3499,7 +3517,16 @@ void showPS() {
 void showRadioText() {
   if (radio.rds.hasRT && RDSstatus) {
     if (millis() - rtticker >= 350) {
-      xPos -= charWidth;
+      if (xPos == 6) {
+        if (millis() - rttickerhold >= 2000) {
+          xPos -= charWidth;
+          rttickerhold = millis();
+        }
+      } else {
+        xPos -= charWidth;
+        rttickerhold = millis();
+      }
+
       if (advancedRDS) {
         if (xPos < -tft.textWidth(radio.rds.stationText + " " + radio.rds.stationText32) + (charWidth * 14)) xPos = 6;
         sprite2.setFreeFont(FONT7);
@@ -3873,8 +3900,10 @@ void BuildAdvancedRDS() {
       tft.drawCircle(86, 15, 9, PrimaryColor);
     }
 
-    tft.setTextColor(GreyoutColor);
     tft.setFreeFont(FONT7);
+    tft.setTextColor(SecondaryColor);
+    if (radio.rds.hasCT) tft.drawRightString(rds_clockold, 205, 105, GFXFF);
+    tft.setTextColor(GreyoutColor);
     tft.drawString("TP",  6, 45, GFXFF);
     tft.drawString("TA",  24, 45, GFXFF);
     tft.drawString("AF",  42, 45, GFXFF);
@@ -3894,7 +3923,7 @@ void BuildAdvancedRDS() {
   rssiold = 2000;
   rdsblockold = 33;
   batteryold = 6;
-  rds_clockold = "";
+
   strcpy(programTypePrevious, "0");
   strcpy(radioIdPrevious, "0");
   programServicePrevious = "0";
@@ -4119,7 +4148,6 @@ void BuildDisplay() {
   SNRold = 254;
   af_counterold = 254;
   batteryold = 6;
-  rds_clockold = "";
   strcpy(programTypePrevious, "0");
   strcpy(radioIdPrevious, "0");
   programServicePrevious = "0";
