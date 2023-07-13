@@ -318,7 +318,7 @@ static const char* const myLanguage[13][99] = {
     "Pomak konvertera:", // 11
     "Donja granica opsega:", // 12
     "Gornja granica opsega:", // 13
-    "FM Pomak RF razine:", // 14
+    "FM pomak RF razine:", // 14
     "Razina stereo signala:", // 15
     "Granična frekvencija:", // 16
     "Razina granične frekv.:", // 17
@@ -380,9 +380,9 @@ static const char* const myLanguage[13][99] = {
     "Nepoznato", // 73
     "Power options", // 74
     "Deep sleep", // 75
-    "Screen off", // 76
-    "Theme", // 77
-    "Default", // 78
+    "Zaslon isključiti", // 76
+    "Tema dizajna", // 77
+    "Zadano", // 78
     "Cyan", // 79
     "Crimson", // 80
     "Monochrome", // 81
@@ -390,19 +390,19 @@ static const char* const myLanguage[13][99] = {
     "Dendro", // 83
     "Sakura", // 84
     "Whiteout", // 85
-    "NOT POSSIBLE", // 86
-    "No AF available", // 87
-    "No EON available", // 88
-    "No RT+ available", // 89
-    "FM min stepsize", // 90
+    "NIJE MOGUĆE", // 86
+    "AF nedostupan", // 87
+    "EON nedostupan", // 88
+    "RT+ nedostupan", // 89
+    "FM min korak", // 90
     "Screensaver", // 91
-    "Sec", // 92
-    "PRESS BAND TO CLOSE", // 93
-    "1% brightness", // 94
-    "25% brightness", // 95
-    "50% brightness", // 96
-	"AM RF Level offset:", // 97	
-	"Signalmeter unit:" // 98	
+    "Sek", // 92
+    "PRITISNITE BAND ZA IZLAZ", // 93
+    "1% svjetlina", // 94
+    "25% svjetlina", // 95
+    "50% svjetlina", // 96
+	"AM pomak RF razine:", // 97	
+	"Jedinica mjerača signala:" // 98	
   },
 
   { "Ελληνικά",                       // Greek
