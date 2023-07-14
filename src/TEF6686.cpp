@@ -1,6 +1,7 @@
 #include "TEF6686.h"
 #include <map>
 #include <Arduino.h>
+#include <TimeLib.h>                // https://github.com/PaulStoffregen/Time
 
 unsigned long rdstimer = 0;
 
@@ -539,17 +540,19 @@ void TEF6686::readRDS(bool showrdserrors)
               J = J - 1461 * Y / 4 + 31;
               M = 80 * (J + 0) / 2447;
 
-              rds.days = J - 2447 * M / 80;
+              rds.day = J - 2447 * M / 80;
               J = M / 11;
 
-              rds.months = M +  2 - (12 * J);
-              rds.years = 100 * (C - 49) + Y + J;
+              rds.month = M +  2 - (12 * J);
+              rds.year = 100 * (C - 49) + Y + J;
               rds.hour = ((rds.rdsD >> 12) & 0x0f);
               rds.hour += ((rds.rdsC <<  4) & 0x0010);
-              rds.minutes = (rds.rdsD >> 6) & 0x3f;
+              rds.minute = (rds.rdsD >> 6) & 0x3f;
               rds.offsetplusmin = bitRead(rds.rdsD, 5);
               rds.offset = (rds.rdsD & 0x3f);
               rds.hasCT = true;
+              setTime(rds.hour, rds.minute, 0, rds.day, rds.month, rds.year);
+              adjustTime((((rds.offsetplusmin ? -rds.offset : rds.offset) / 2) * 3600));
             }
           } break;
 

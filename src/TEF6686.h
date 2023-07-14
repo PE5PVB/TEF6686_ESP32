@@ -107,7 +107,7 @@ typedef struct _rds_ {
   String PTYN;
   char stationType[18];
   char picode[6];
-  uint16_t hour, minutes, days, months, years, offsetplusmin, rdsA, rdsB, rdsC, rdsD, rdsErr;
+  uint16_t hour, minutes, day, month, year, offsetplusmin, rdsA, rdsB, rdsC, rdsD, rdsErr;
   int8_t offset;
   unsigned int ECC;
   unsigned int LIC;

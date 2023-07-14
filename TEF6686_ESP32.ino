@@ -124,7 +124,6 @@ byte menupagestotal = 4;
 byte MSold;
 byte optenc;
 byte rdsblockold;
-byte rds_minuteold = 254;
 byte region;
 byte regionold;
 byte rotarymode;
@@ -3275,22 +3274,14 @@ void ShowAdvancedRDS() {
     MSold = radio.rds.MS;
   }
 
-  if (radio.rds.hasCT == true && radio.rds.minutes != rds_minuteold) {
-    int timeoffset;
-    if (radio.rds.offsetplusmin == true) timeoffset = (-1 * radio.rds.offset) / 2; else timeoffset = radio.rds.offset / 2;
-    uint16_t rdshour = radio.rds.hour + timeoffset;
-    rdshour = (((int)rdshour + 24) % 24);
-    setTime(rdshour, radio.rds.minutes, 0, 0, 0, 0);
     rds_clock = ((hour() < 10 ? "0" : "") + String(hour()) + ":" + (minute() < 10 ? "0" : "") + String(minute()));
-
-
+  if (radio.rds.hasCT == true && rds_clock != rds_clockold) {
     tft.setFreeFont(FONT7);
     tft.setTextColor(BackgroundColor);
     tft.drawRightString(rds_clockold, 205, 105, GFXFF);
     if (radio.rds.hasCT == true) tft.setTextColor(SecondaryColor); else tft.setTextColor(GreyoutColor); tft.drawString("CT",  62, 45, GFXFF);
     tft.drawRightString(rds_clock, 205, 105, GFXFF);
     rds_clockold = rds_clock;
-    rds_minuteold = radio.rds.minutes;
   }
 
   if (rdsblockold != radio.rdsblock) {
