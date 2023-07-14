@@ -345,7 +345,7 @@ void setup() {
   fmminstepsize = EEPROM.readByte(261);
   screensaverset = EEPROM.readByte(262);
   AMLevelOffset = EEPROM.readInt(263);
-  unit = EEPROM.readByte(264);
+  unit = EEPROM.readByte(267);
 
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;   // later will read from flash
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX; // later will read from flash
@@ -1558,7 +1558,7 @@ void ModeButtonPress() {
       EEPROM.writeByte(261, fmminstepsize);
       EEPROM.writeByte(262, screensaverset);
       EEPROM.writeInt(263, AMLevelOffset);
-      EEPROM.writeByte(264, unit);
+      EEPROM.writeByte(267, unit);
       EEPROM.commit();
       Serial.end();
       if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
@@ -5953,6 +5953,6 @@ void DefaultSettings() {
   EEPROM.writeByte(261, 0);
   EEPROM.writeByte(262, 0);
   EEPROM.writeInt(263, 0);
-  EEPROM.writeByte(264, 0);
+  EEPROM.writeByte(267, 0);
   EEPROM.commit();
 }
