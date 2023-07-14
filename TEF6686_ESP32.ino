@@ -1390,10 +1390,10 @@ void SelectBand() {
     tft.drawBitmap(110, 5, RDSLogo, 67, 22, GreyoutColor);
     tft.drawRoundRect(249, 56, 30, 20, 5, GreyoutColor);
     tft.setTextColor(GreyoutColor);
-    tft.drawCentreString("iMS", 265, 54, GFXFF);
+    tft.drawCentreString("iMS", 264, 54, GFXFF);
     tft.drawRoundRect(287, 56, 30, 20, 5, GreyoutColor);
     tft.setTextColor(GreyoutColor);
-    tft.drawCentreString("EQ", 303, 54, GFXFF);
+    tft.drawCentreString("EQ", 302, 54, GFXFF);
   } else {
     LowLevelInit == false;
     BWreset = true;
