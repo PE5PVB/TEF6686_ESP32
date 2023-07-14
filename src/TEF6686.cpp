@@ -4,6 +4,9 @@
 #include <TimeLib.h>                // https://github.com/PaulStoffregen/Time
 
 unsigned long rdstimer = 0;
+unsigned long bitStartTime = 0;
+bool lastBitState = false;
+
 
 void TEF6686::init(byte TEF) {
   uint8_t bootstatus;
@@ -244,19 +247,26 @@ void TEF6686::readRDS(bool showrdserrors)
     }
   }
 
+  bool bitValue = (rdsStat & (1 << 9)) != 0;
+
+  if (bitValue) {
+    rds.hasRDS = true;                                                                                    // RDS decoder synchronized and data available
+    bitStartTime = 0;
+  } else {
+    if (bitStartTime == 0) bitStartTime = millis(); else if (millis() - bitStartTime >= 87) rds.hasRDS = false;
+  }
+
   if (rds.rdsB != rdsBprevious) {
     rds.correct = false;
-    rds.hasRDS = false;
 
-    if (((rds.rdsErr >> 14) & 0x02) > 0) rds.rdsAerror = true; else rds.rdsAerror = false;            // Any errors in Block A?
-    if (((rds.rdsErr >> 12) & 0x02) > 0) rds.rdsBerror = true; else rds.rdsBerror = false;            // Any errors in Block B?
-    if (((rds.rdsErr >> 10) & 0x02) > 0) rds.rdsCerror = true; else rds.rdsCerror = false;            // Any errors in Block C?
-    if (((rds.rdsErr >> 8) & 0x02) > 0) rds.rdsDerror = true; else rds.rdsDerror = false;             // Any errors in Block D?
-    if (!rds.rdsAerror && !rds.rdsBerror && !rds.rdsCerror && !rds.rdsDerror) rds.correct = true;     // Any errors in all blocks?
-    if ((rdsStat & (1 << 9))) rds.hasRDS = true;                                                      // RDS decoder synchronized and data available
+    if (((rds.rdsErr >> 14) & 0x02) > 0) rds.rdsAerror = true; else rds.rdsAerror = false;                // Any errors in Block A?
+    if (((rds.rdsErr >> 12) & 0x02) > 0) rds.rdsBerror = true; else rds.rdsBerror = false;                // Any errors in Block B?
+    if (((rds.rdsErr >> 10) & 0x02) > 0) rds.rdsCerror = true; else rds.rdsCerror = false;                // Any errors in Block C?
+    if (((rds.rdsErr >> 8) & 0x02) > 0) rds.rdsDerror = true; else rds.rdsDerror = false;                 // Any errors in Block D?
+    if (!rds.rdsAerror && !rds.rdsBerror && !rds.rdsCerror && !rds.rdsDerror) rds.correct = true;         // Any errors in all blocks?
     if ((rdsStat & (1 << 15))) rdsReady = true;
 
-    if (rdsReady) {                                                                                   // We have all data to decode... let's go...
+    if (rdsReady) {                                                                                       // We have all data to decode... let's go...
 
       //PI decoder
       if (rds.region != 1 && (!rds.rdsAerror || rds.pierrors)) {
@@ -268,15 +278,15 @@ void TEF6686::readRDS(bool showrdserrors)
           rds.picode[3] = rds.rdsA & 0xF;
           for (int i = 0; i < 4; i++) {
             if (rds.picode[i] < 10) {
-              rds.picode[i] += '0';                                                                     // Add ASCII offset for decimal digits
+              rds.picode[i] += '0';                                                                       // Add ASCII offset for decimal digits
             } else {
-              rds.picode[i] += 'A' - 10;                                                                // Add ASCII offset for hexadecimal letters A-F
+              rds.picode[i] += 'A' - 10;                                                                  // Add ASCII offset for hexadecimal letters A-F
             }
           }
         }
 
         if (((rds.rdsErr >> 14) & 0x02) > 2) rds.picode[5] = '?';
-        if (((rds.rdsErr >> 14) & 0x01) > 1) rds.picode[4] = '?'; else rds.picode[4] = ' ';                              // Not sure, add a ?
+        if (((rds.rdsErr >> 14) & 0x01) > 1) rds.picode[4] = '?'; else rds.picode[4] = ' ';               // Not sure, add a ?
         rds.picode[6] = '\0';
         if (strncmp(rds.picode, "0000", 4) == 0) {
           if (piold != 0) {
@@ -298,7 +308,7 @@ void TEF6686::readRDS(bool showrdserrors)
       }
 
       // USA Station callsign decoder
-      if (rds.region == 1) {                                                                          // When ID was decoded correctly before, no need to decode again.
+      if (rds.region == 1) {                                                                              // When ID was decoded correctly before, no need to decode again.
         uint16_t stationID = rds.rdsA;
         if (stationID > 4096) {
           if (stationID > 21671 && (stationID & 0xF00U) >> 8 == 0) stationID = ((uint16_t)uint8_t(0xA0 + ((stationID & 0xF000U) >> 12)) << 8) + lowByte(stationID); // C0DE -> ACDE
@@ -325,7 +335,7 @@ void TEF6686::readRDS(bool showrdserrors)
           }
         }
         if (((rds.rdsErr >> 14) & 0x02) > 2) rds.picode[5] = '?';
-        if (((rds.rdsErr >> 14) & 0x01) > 1) rds.picode[4] = '?'; else rds.picode[4] = ' ';                              // Not sure, add a ?
+        if (((rds.rdsErr >> 14) & 0x01) > 1) rds.picode[4] = '?'; else rds.picode[4] = ' ';     // Not sure, add a ?
         rds.picode[6] = '\0';
       }
 

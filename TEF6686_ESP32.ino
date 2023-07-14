@@ -275,6 +275,7 @@ unsigned long eontickerhold;
 unsigned long rtticker;
 unsigned long rttickerhold;
 unsigned long rtplusticker;
+unsigned long rtplustickerhold;
 
 TEF6686 radio;
 TFT_eSprite sprite = TFT_eSprite(&tft);
@@ -621,14 +622,19 @@ void loop() {
         tft.setFreeFont(FONT7);
         tft.setTextColor(ActiveColor);
         if (showmodulation) {
-          tft.drawString("20", 20, 146, GFXFF);
-          tft.drawString("40", 50, 146, GFXFF);
-          tft.drawString("60", 80, 146, GFXFF);
-          tft.drawString("80", 110, 146, GFXFF);
-          tft.drawString("100", 134, 146, GFXFF);
-          tft.drawString("120", 164, 146, GFXFF);
-          tft.drawString("%", 196, 146, GFXFF);
-          tft.drawString("M", 6, 132, GFXFF);
+          tft.drawString("10", 27, 146, GFXFF);
+          tft.drawString("30", 57, 146, GFXFF);
+          tft.drawString("50", 87, 146, GFXFF);
+          tft.drawString("70", 117, 146, GFXFF);
+          tft.drawString("100", 164, 146, GFXFF);
+          tft.drawCentreString("M", 7, 132, GFXFF);
+          for (byte segments = 0; segments < 94; segments++) {
+            if (segments > 54) {
+              if (((segments - 53) % 10) == 0) tft.fillRect(16 + (2 * segments), 147, 2, 3, TFT_RED);
+            } else {
+              if (((segments + 1) % 6) == 0) tft.fillRect(16 + (2 * segments), 147, 2, 3, TFT_GREEN);
+            }
+          }
         }
         if (region == 0) tft.drawString("PI:", 216, 191, GFXFF);
         if (region == 1) tft.drawString("ID:", 216, 191, GFXFF);
@@ -643,29 +649,22 @@ void loop() {
       if (LowLevelInit == true && menu == false) {
         if (screenmute == false && !afscreen && !advancedRDS) {
           tft.setFreeFont(FONT7);
-          tft.fillRect(20, 139, 12, 8, GreyoutColor);
-          tft.fillRect(34, 139, 12, 8, GreyoutColor);
-          tft.fillRect(48, 139, 12, 8, GreyoutColor);
-          tft.fillRect(62, 139, 12, 8, GreyoutColor);
-          tft.fillRect(76, 139, 12, 8, GreyoutColor);
-          tft.fillRect(90, 139, 12, 8, GreyoutColor);
-          tft.fillRect(104, 139, 12, 8, GreyoutColor);
-          tft.fillRect(118, 139, 12, 8, GreyoutColor);
-          tft.fillRect(132, 139, 12, 8, GreyoutColor);
-          tft.fillRect(146, 139, 12, 8, GreyoutColor);
-          tft.fillRect(160, 139, 12, 8, GreyoutColor);
-          tft.fillRect(174, 139, 12, 8, GreyoutColor);
-          tft.fillRect(188, 139, 12, 8, GreyoutColor);
+          for (byte segments = 0; segments < 94; segments++) {
+            if (segments > 54) {
+              if (((segments - 53) % 10) == 0) tft.fillRect(16 + (2 * segments), 147, 2, 3, GreyoutColor);
+            } else {
+              if (((segments + 1) % 6) == 0) tft.fillRect(16 + (2 * segments), 147, 2, 3, GreyoutColor);
+            }
+          }
           tft.setTextColor(GreyoutColor);
           if (showmodulation) {
-            tft.drawString("20", 20, 146, GFXFF);
-            tft.drawString("40", 50, 146, GFXFF);
-            tft.drawString("60", 80, 146, GFXFF);
-            tft.drawString("80", 110, 146, GFXFF);
-            tft.drawString("100", 134, 146, GFXFF);
-            tft.drawString("120", 164, 146, GFXFF);
-            tft.drawString("%", 196, 146, GFXFF);
-            tft.drawString("M", 6, 132, GFXFF);
+            tft.drawString("10", 27, 146, GFXFF);
+            tft.drawString("30", 57, 146, GFXFF);
+            tft.drawString("50", 87, 146, GFXFF);
+            tft.drawString("70", 117, 146, GFXFF);
+            tft.drawString("100", 164, 146, GFXFF);
+            tft.drawCentreString("M", 7, 132, GFXFF);
+            tft.fillRect(16, 139, 188, 8, GreyoutColor);
           }
           if (region == 0) tft.drawString("PI:", 216, 191, GFXFF);
           if (region == 1) tft.drawString("ID:", 216, 191, GFXFF);
@@ -840,14 +839,14 @@ void WakeToSleep(bool yes) {
       case DEEP_SLEEP:
         power = false;
         analogWrite(SMETERPIN, 0);
-        analogWrite(CONTRASTPIN, 0);
+        MuteScreen(1);
         StoreFrequency();
         radio.power(1);
         break;
       case LCD_OFF:
         power = false;
         analogWrite(SMETERPIN, 0);
-        analogWrite(CONTRASTPIN, 0);
+        MuteScreen(1);
         StoreFrequency();
         break;
       case LCD_BRIGHTNESS_1_PERCENT:
@@ -873,7 +872,7 @@ void WakeToSleep(bool yes) {
         pinMode (STANDBYLED, OUTPUT);
         digitalWrite(STANDBYLED, LOW);
         analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
-
+        MuteScreen(0);
         screensavertriggered = false;
         screensaver_IRQ = OFF;
         ScreensaverTimerReopen();
@@ -884,7 +883,7 @@ void WakeToSleep(bool yes) {
         pinMode (STANDBYLED, OUTPUT);
         digitalWrite(STANDBYLED, LOW);
         analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
-
+        MuteScreen(0);
         screensavertriggered = false;
         screensaver_IRQ = OFF;
         ScreensaverTimerReopen();
@@ -3223,7 +3222,15 @@ void ShowAdvancedRDS() {
     hasrtplusold = radio.rds.hasRDSplus;
   }
   if (millis() - rtplusticker >= 350) {
-    xPos4 -= charWidth;
+    if (xPos3 == 6) {
+      if (millis() - rtplustickerhold >= 2000) {
+        xPos4 -= charWidth;
+        rtplustickerhold = millis();
+      }
+    } else {
+      xPos4 -= charWidth;
+      rtplustickerhold = millis();
+    }
     if (xPos4 < -tft.textWidth(rtplusstring) + (charWidth * 14)) xPos4 = 6;
     sprite2.setFreeFont(FONT7);
     sprite2.setTextDatum(ML_DATUM);
@@ -3960,13 +3967,17 @@ void BuildDisplay() {
     tft.drawLine(174, 30, 174, 0, FrameColor);
     tft.drawLine(20, 120, 200, 120, TFT_DARKGREY);
     if (!showmodulation) tft.drawLine(20, 150, 200, 150, GreyoutColor); else tft.drawLine(20, 150, 200, 150, TFT_DARKGREY);
-    for (uint16_t segments = 0; segments < 94; segments++) {
+    for (byte segments = 0; segments < 94; segments++) {
       if (segments > 54) {
-        if (((segments - 53) % 10) == 0)
+        if (((segments - 53) % 10) == 0) {
           tft.fillRect(16 + (2 * segments), 117, 2, 3, TFT_RED);
+          if (!showmodulation) tft.fillRect(16 + (2 * segments), 147, 2, 3, GreyoutColor); else tft.fillRect(16 + (2 * segments), 147, 2, 3, TFT_RED);
+        }
       } else {
-        if (((segments + 1) % 6) == 0)
+        if (((segments + 1) % 6) == 0) {
           tft.fillRect(16 + (2 * segments), 117, 2, 3, TFT_GREEN);
+          if (!showmodulation) tft.fillRect(16 + (2 * segments), 147, 2, 3, GreyoutColor); else tft.fillRect(16 + (2 * segments), 147, 2, 3, TFT_GREEN);
+        }
       }
     }
     tft.setTextColor(ActiveColor);
@@ -3974,7 +3985,7 @@ void BuildDisplay() {
     if (showsquelch) tft.drawString("SQ: ", 216, 150, GFXFF);
     tft.drawString("S/N", 250, 164, GFXFF);
     tft.drawString("dB",  300, 164, GFXFF);
-    tft.drawString("S", 6, 100, GFXFF);
+    tft.drawCentreString("S", 7, 101, GFXFF);
     if (region == 0) tft.drawString("PI: ", 216, 191, GFXFF);
     if (region == 1) tft.drawString("ID: ", 216, 191, GFXFF);
     tft.drawString("PS: ", 6, 191, GFXFF);
@@ -3987,14 +3998,12 @@ void BuildDisplay() {
     tft.drawString(" + 10", 134, 116, GFXFF);
     tft.drawString(" + 30", 174, 116, GFXFF);
     if (!showmodulation) tft.setTextColor(GreyoutColor);
-    tft.drawString("M", 6, 132, GFXFF);
-    tft.drawString("20", 20, 146, GFXFF);
-    tft.drawString("40", 50, 146, GFXFF);
-    tft.drawString("60", 80, 146, GFXFF);
-    tft.drawString("80", 110, 146, GFXFF);
-    tft.drawString("100", 134, 146, GFXFF);
-    tft.drawString("120", 164, 146, GFXFF);
-    tft.drawString("%", 196, 146, GFXFF);
+    tft.drawCentreString("M", 7, 132, GFXFF);
+    tft.drawString("10", 27, 146, GFXFF);
+    tft.drawString("30", 57, 146, GFXFF);
+    tft.drawString("50", 87, 146, GFXFF);
+    tft.drawString("70", 117, 146, GFXFF);
+    tft.drawString("100", 164, 146, GFXFF);
     tft.setTextColor(ActiveColor);
     tft.setFreeFont(FONT14);
     tft.drawString("kHz", 225, -5, GFXFF);
@@ -4255,7 +4264,6 @@ void ShowSignalLevel() {
   if (screenmute == false) {
     if (millis() >= snrupdatetimer + TIMER_SNR_TIMER) {
       snrupdatetimer = millis();
-
       if (!advancedRDS) {
         if (SNR > (SNRold + 1) || SNR < (SNRold - 1)) {
           tft.setFreeFont(FONT7);
@@ -4506,29 +4514,52 @@ void ShowModLevel() {
       MStatus = 0;
       MStatusold = 1;
     }
+    segments = map(MStatus, 0, 120, 0, 94);
 
-    if (MStatus != MStatusold || MStatus < 10) {
-      for (segments = 0; segments < 13; segments++) {
-        color = TFT_GREEN;
-        if (segments > 8) color = TFT_ORANGE;
-        if (segments > 9) color = TFT_RED;
-        if (MStatus > (segments + 1) * 10) {
-          hold = segments;
-          tft.fillRect(20 + segments * 14, 139, 12, 8, color);
-        } else {
-          if (segments != peakholdold) tft.fillRect(20 + segments * 14, 139, 12, 8, GreyoutColor);
-        }
-      }
-
-      if (peakholdold < hold) peakholdold = hold;
-
-      if (peakholdmillis > peakholdtimer + 3000) {
-        peakholdtimer += 3000;
-        peakholdold = hold;
-      }
+    if (segments > peakholdold) {
+      peakholdold = segments;
       peakholdmillis = millis();
-      MStatusold = MStatus;
     }
+
+    tft.fillRect(16, 139, 2 * constrain(segments, 0, 54), 8, TFT_GREEN);
+    tft.fillRect(16 + 2 * 54, 139, 2 * (constrain(segments, 54, 94) - 54), 8, TFT_RED);
+    tft.fillRect(16 + 2 * constrain(segments, 0, 94), 139, 2 * (94 - constrain(segments, 0, 94)), 8, GreyoutColor);
+
+    int peakHoldPosition = 16 + 2 * constrain(peakholdold, 0, 94);
+    tft.fillRect(peakHoldPosition, 139, 2, 8, (MStatus > 80) ? TFT_RED : PrimaryColor);
+
+    if (millis() - peakholdmillis >= 1000) {
+      tft.fillRect(peakHoldPosition, 139, 2, 8, GreyoutColor);
+      peakholdold = segments;
+      peakholdmillis = millis();
+    }
+
+
+
+    /*
+        if (MStatus != MStatusold || MStatus < 10) {
+          for (segments = 0; segments < 13; segments++) {
+            color = TFT_GREEN;
+            if (segments > 8) color = TFT_ORANGE;
+            if (segments > 9) color = TFT_RED;
+            if (MStatus > (segments + 1) * 10) {
+              hold = segments;
+              tft.fillRect(20 + segments * 14, 139, 12, 8, color);
+            } else {
+              if (segments != peakholdold) tft.fillRect(20 + segments * 14, 139, 12, 8, GreyoutColor);
+            }
+          }
+
+          if (peakholdold < hold) peakholdold = hold;
+
+          if (peakholdmillis > peakholdtimer + 3000) {
+            peakholdtimer += 3000;
+            peakholdold = hold;
+          }
+          peakholdmillis = millis();
+          MStatusold = MStatus;
+        }
+    */
   }
 }
 
