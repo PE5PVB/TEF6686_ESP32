@@ -116,7 +116,7 @@ byte iMSEQ;
 byte iMSset;
 byte language;
 byte licold;
-byte memoryband[30];
+byte memoryband[EE_PRESETS_CNT];
 byte memorypos;
 byte memoryposold;
 byte menupage = 1;
@@ -134,7 +134,7 @@ byte SNR;
 byte SNRold;
 byte specialstepOIRT;
 byte stepsize;
-byte fmminstepsize;
+byte fmdefaultstepsize;
 byte poweroptions;
 byte screensaverset;
 byte StereoLevel;
@@ -260,7 +260,7 @@ unsigned int LowEdgeSet;
 unsigned int LWHighEdgeSet;
 unsigned int LWLowEdgeSet;
 unsigned int mappedfreqold[10];
-unsigned int memory[30];
+unsigned int memory[EE_PRESETS_CNT];
 unsigned int MWHighEdgeSet;
 unsigned int MWLowEdgeSet;
 unsigned int scanner_end;
@@ -289,63 +289,63 @@ byte screensaver_IRQ = OFF;
 
 void setup() {
   setupmode = true;
-  EEPROM.begin(268);
-  if (EEPROM.readByte(43) != 32) DefaultSettings();
+  EEPROM.begin(EE_TOTAL_CNT);
+  if (EEPROM.readByte(EE_BYTE_CHECKBYTE) != EE_CHECKBYTE_VALUE) DefaultSettings();
 
-  frequency = EEPROM.readUInt(0);
-  VolSet = EEPROM.readInt(4);
-  ConverterSet = EEPROM.readUInt(8);
-  LowEdgeSet = EEPROM.readUInt(12);
-  HighEdgeSet = EEPROM.readUInt(16);
-  ContrastSet = EEPROM.readByte(20);
-  StereoLevel = EEPROM.readByte(21);
-  HighCutLevel = EEPROM.readByte(22);
-  HighCutOffset = EEPROM.readByte(23);
-  LevelOffset = EEPROM.readInt(24);
-  edgebeep = EEPROM.readByte(28);
-  softmuteam = EEPROM.readByte(29);
-  softmutefm = EEPROM.readByte(30);
-  frequency_AM = EEPROM.readUInt(31);
-  language = EEPROM.readByte(35);
-  showrdserrors = EEPROM.readByte(36);
-  TEF = EEPROM.readByte(37);
-  displayflip = EEPROM.readByte(38);
-  rotarymode = EEPROM.readByte(39);
-  stepsize = EEPROM.readByte(40);
-  tunemode = EEPROM.readByte(41);
-  optenc = EEPROM.readByte(42);
-  iMSset = EEPROM.readByte(44);
-  EQset = EEPROM.readByte(45);
-  band = EEPROM.readByte(46);
-  LowLevelSet = EEPROM.readInt(47);
-  memorypos = EEPROM.readByte(51);
-  region = EEPROM.readByte(52);
-  radio.rds.underscore = EEPROM.readByte(53);
-  USBmode = EEPROM.readByte(54);
-  wifi = EEPROM.readByte(55);
-  subnetclient = EEPROM.readByte(56);
-  showSWMIBand = EEPROM.readByte(57);
-  radio.rds.filter = EEPROM.readByte(58);
-  radio.rds.pierrors = EEPROM.readByte(59);
-  frequency_LW = EEPROM.readUInt(221);
-  frequency_MW = EEPROM.readUInt(225);
-  frequency_SW = EEPROM.readUInt(229);
-  XDRGTK_key = EEPROM.readString(233);
-  showsquelch = EEPROM.readByte(244);
-  showmodulation = EEPROM.readByte(245);
-  amnb = EEPROM.readByte(246);
-  fmnb = EEPROM.readByte(247);
-  audiomode = EEPROM.readByte(248);
-  specialstepOIRT = EEPROM.readByte(249);
-  LowEdgeOIRTSet = EEPROM.readUInt(250);
-  HighEdgeOIRTSet = EEPROM.readUInt(254);
-  colorinvert = EEPROM.readByte(258);
-  poweroptions = EEPROM.readByte(259);
-  CurrentTheme = EEPROM.readByte(260);
-  fmminstepsize = EEPROM.readByte(261);
-  screensaverset = EEPROM.readByte(262);
-  AMLevelOffset = EEPROM.readInt(263);
-  unit = EEPROM.readByte(267);
+  frequency = EEPROM.readUInt(EE_UINT_FREQUENCY_FM);
+  VolSet = EEPROM.readInt(EE_INT_VOLSET);
+  ConverterSet = EEPROM.readUInt(EE_UINT_CONVERTERSET);
+  LowEdgeSet = EEPROM.readUInt(EE_UINT_FMLOWEDGESET);
+  HighEdgeSet = EEPROM.readUInt(EE_UINT_FMHIGHEDGESET);
+  ContrastSet = EEPROM.readByte(EE_BYTE_CONTRASTSET);
+  StereoLevel = EEPROM.readByte(EE_BYTE_STEREOLEVEL);
+  HighCutLevel = EEPROM.readByte(EE_BYTE_HIGHCUTLEVEL);
+  HighCutOffset = EEPROM.readByte(EE_BYTE_HIGHCUTOFFSET);
+  LevelOffset = EEPROM.readInt(EE_INT_LEVELOFFSET);
+  edgebeep = EEPROM.readByte(EE_BYTE_EDGEBEEP);
+  softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
+  softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
+  frequency_AM = EEPROM.readUInt(EE_UINT_FREQUENCY_AM);
+  language = EEPROM.readByte(EE_BYTE_LANGUAGE);
+  showrdserrors = EEPROM.readByte(EE_BYTE_SHOWRDSERRORS);
+  TEF = EEPROM.readByte(EE_BYTE_TEF);
+  displayflip = EEPROM.readByte(EE_BYTE_DISPLAYFLIP);
+  rotarymode = EEPROM.readByte(EE_BYTE_ROTARYMODE);
+  stepsize = EEPROM.readByte(EE_BYTE_STEPSIZE);
+  tunemode = EEPROM.readByte(EE_BYTE_TUNEMODE);
+  optenc = EEPROM.readByte(EE_BYTE_OPTENC);
+  iMSset = EEPROM.readByte(EE_BYTE_IMSSET);
+  EQset = EEPROM.readByte(EE_BYTE_EQSET);
+  band = EEPROM.readByte(EE_BYTE_BAND);
+  LowLevelSet = EEPROM.readInt(EE_INT_LOWLEVELSET);
+  memorypos = EEPROM.readByte(EE_BYTE_MEMORYPOS);
+  region = EEPROM.readByte(EE_BYTE_REGION);
+  radio.rds.underscore = EEPROM.readByte(EE_BYTE_RDS_UNDERSCORE);
+  USBmode = EEPROM.readByte(EE_BYTE_USBMODE);
+  wifi = EEPROM.readByte(EE_BYTE_WIFI);
+  subnetclient = EEPROM.readByte(EE_BYTE_SUBNETCLIENT);
+  showSWMIBand = EEPROM.readByte(EE_BYTE_SHOWSWMIBAND);
+  radio.rds.filter = EEPROM.readByte(EE_BYTE_RDS_FILTER);
+  radio.rds.pierrors = EEPROM.readByte(EE_BYTE_RDS_PIERRORS);
+  frequency_LW = EEPROM.readUInt(EE_UINT_FREQUENCY_LW);
+  frequency_MW = EEPROM.readUInt(EE_UINT_FREQUENCY_MW);
+  frequency_SW = EEPROM.readUInt(EE_UINT_FREQUENCY_SW);
+  XDRGTK_key = EEPROM.readString(EE_STRING_XDRGTK_KEY);
+  showsquelch = EEPROM.readByte(EE_BYTE_SHOWSQUELCH);
+  showmodulation = EEPROM.readByte(EE_BYTE_SHOWMODULATION);
+  amnb = EEPROM.readByte(EE_BYTE_AM_NB);
+  fmnb = EEPROM.readByte(EE_BYTE_FM_NB);
+  audiomode = EEPROM.readByte(EE_BYTE_AUDIOMODE);
+  specialstepOIRT = EEPROM.readByte(EE_BYTE_OIRT);
+  LowEdgeOIRTSet = EEPROM.readUInt(EE_UINT_LOWEDGEOIRTSET);
+  HighEdgeOIRTSet = EEPROM.readUInt(EE_UINT_HIGHEDGEOIRTSET);
+  colorinvert = EEPROM.readByte(EE_BYTE_COLORINVERT);
+  poweroptions = EEPROM.readByte(EE_BYTE_POWEROPTIONS);
+  CurrentTheme = EEPROM.readByte(EE_BYTE_CURRENTTHEME);
+  fmdefaultstepsize = EEPROM.readByte(EE_BYTE_FMDEFAULTSTEPSIZE);
+  screensaverset = EEPROM.readByte(EE_BYTE_SCREENSAVERSET);
+  AMLevelOffset = EEPROM.readInt(EE_INT_AMLEVELOFFSET);
+  unit = EEPROM.readByte(EE_BYTE_UINT);
 
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;   // later will read from flash
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX; // later will read from flash
@@ -354,8 +354,8 @@ void setup() {
   SWLowEdgeSet = FREQ_SW_LOW_EDGE_MIN;
   SWHighEdgeSet = FREQ_SW_HIGH_EDGE_MAX;
 
-  for (int i = 0; i < 30; i++) memoryband[i] = EEPROM.readByte(i + 60);
-  for (int i = 0; i < 30; i++) memory[i] = EEPROM.readUInt((i * 4) + 100);
+  for (int i = 0; i < EE_PRESETS_CNT; i++) memoryband[i] = EEPROM.readByte(i + EE_PRESETS_BAND_START);
+  for (int i = 0; i < EE_PRESETS_CNT; i++) memory[i] = EEPROM.readUInt((i * 4) + EE_PRESETS_START);
   btStop();
 
   if (USBmode) Serial.begin(19200); else Serial.begin(115200);
@@ -384,7 +384,7 @@ void setup() {
         }
       } else {
         if (frequency % 10 != 0) {
-          if (fmminstepsize == 1) Round100K(frequency); else Round50K(frequency);
+          if (fmdefaultstepsize == 1) Round100K(frequency); else Round50K(frequency);
         }
       }
       break;
@@ -420,7 +420,7 @@ void setup() {
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH) {
     if (rotarymode == 0) rotarymode = 1; else rotarymode = 0;
-    EEPROM.writeByte(39, rotarymode);
+    EEPROM.writeByte(EE_BYTE_ROTARYMODE, rotarymode);
     EEPROM.commit();
     analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
     tft.setFreeFont(FONT14);
@@ -439,7 +439,7 @@ void setup() {
       displayflip = 0;
       tft.setRotation(3);
     }
-    EEPROM.writeByte(38, displayflip);
+    EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, displayflip);
     EEPROM.commit();
     analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
     tft.setFreeFont(FONT14);
@@ -474,7 +474,7 @@ void setup() {
       optenc = 0;
       tft.drawCentreString(myLanguage[language][7], 155, 77, GFXFF);
     }
-    EEPROM.writeByte(42, optenc);
+    EEPROM.writeByte(EE_BYTE_OPTENC, optenc);
     EEPROM.commit();
     tft.drawCentreString(myLanguage[language][2], 150, 107, GFXFF);
     while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
@@ -515,7 +515,7 @@ void setup() {
     delay(30);
   }
 
-  TEF = EEPROM.readByte(37);
+  TEF = EEPROM.readByte(EE_BYTE_TEF);
 
   if (TEF != 101 && TEF != 102 && TEF != 205) SetTunerPatch();
 
@@ -747,12 +747,12 @@ void loop() {
     if (change > 200 && store == true) {
       detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A));
       detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B));
-      EEPROM.writeUInt(0, frequency);
-      EEPROM.writeUInt(31, frequency_AM);
-      EEPROM.writeByte(46, band);
-      EEPROM.writeUInt(221, frequency_LW);
-      EEPROM.writeUInt(225, frequency_MW);
-      EEPROM.writeUInt(229, frequency_SW);
+      EEPROM.writeUInt(EE_UINT_FREQUENCY_FM, frequency);
+      EEPROM.writeUInt(EE_UINT_FREQUENCY_AM, frequency_AM);
+      EEPROM.writeByte(EE_BYTE_BAND, band);
+      EEPROM.writeUInt(EE_UINT_FREQUENCY_LW, frequency_LW);
+      EEPROM.writeUInt(EE_UINT_FREQUENCY_MW, frequency_MW);
+      EEPROM.writeUInt(EE_UINT_FREQUENCY_SW, frequency_SW);
       EEPROM.commit();
       store = false;
       attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
@@ -994,12 +994,12 @@ void BANDBUTTONPress() {
 }
 
 void StoreFrequency() {
-  EEPROM.writeUInt(0, frequency);
-  EEPROM.writeUInt(31, frequency_AM);
-  EEPROM.writeByte(46, band);
-  EEPROM.writeUInt(221, frequency_LW);
-  EEPROM.writeUInt(225, frequency_MW);
-  EEPROM.writeUInt(229, frequency_SW);
+  EEPROM.writeUInt(EE_UINT_FREQUENCY_FM, frequency);
+  EEPROM.writeUInt(EE_UINT_FREQUENCY_AM, frequency_AM);
+  EEPROM.writeByte(EE_BYTE_BAND, band);
+  EEPROM.writeUInt(EE_UINT_FREQUENCY_LW, frequency_LW);
+  EEPROM.writeUInt(EE_UINT_FREQUENCY_MW, frequency_MW);
+  EEPROM.writeUInt(EE_UINT_FREQUENCY_SW, frequency_SW);
   EEPROM.commit();
 }
 
@@ -1503,15 +1503,15 @@ void ModeButtonPress() {
         if (frequency >= (FREQ_FM_OIRT_START) && frequency <= (FREQ_FM_OIRT_END)) {
           if (frequency % 3 != 0) {
             Round30K(frequency);
-            EEPROM.writeUInt(0, frequency);
+            EEPROM.writeUInt(EE_UINT_FREQUENCY_FM, frequency);
           }
         } else {
-          if (fmminstepsize == 1) Round100K(frequency); else Round50K(frequency);
+          if (fmdefaultstepsize == 1) Round100K(frequency); else Round50K(frequency);
         }
       } else {
         if (frequency % 10 != 0) {
-          if (fmminstepsize == 1) Round100K(frequency); else Round50K(frequency);
-          EEPROM.writeUInt(0, frequency);
+          if (fmdefaultstepsize == 1) Round100K(frequency); else Round50K(frequency);
+          EEPROM.writeUInt(EE_UINT_FREQUENCY_FM, frequency);
         }
       }
       radio.clearRDS(fullsearchrds);
@@ -1521,44 +1521,44 @@ void ModeButtonPress() {
       menu = false;
       menuopen = false;
       LowLevelInit = true;
-      EEPROM.writeInt(4, VolSet);
-      EEPROM.writeInt(8, ConverterSet);
-      EEPROM.writeUInt(12, LowEdgeSet);
-      EEPROM.writeUInt(16, HighEdgeSet);
-      EEPROM.writeByte(20, ContrastSet);
-      EEPROM.writeByte(21, StereoLevel);
-      EEPROM.writeByte(22, HighCutLevel);
-      EEPROM.writeByte(23, HighCutOffset);
-      EEPROM.writeInt(24, LevelOffset);
-      EEPROM.writeByte(28, edgebeep);
-      EEPROM.writeByte(29, softmuteam);
-      EEPROM.writeByte(30, softmutefm);
-      EEPROM.writeByte(35, language);
-      EEPROM.writeByte(36, showrdserrors);
-      EEPROM.writeInt(47, LowLevelSet);
-      EEPROM.writeByte(52, region);
-      EEPROM.writeByte(53, radio.rds.underscore);
-      EEPROM.writeByte(54, USBmode);
-      EEPROM.writeByte(55, wifi);
-      EEPROM.writeByte(56, subnetclient);
-      EEPROM.writeByte(57, showSWMIBand);
-      EEPROM.writeByte(58, radio.rds.filter);
-      EEPROM.writeByte(59, radio.rds.pierrors);
-      EEPROM.writeByte(244, showsquelch);
-      EEPROM.writeByte(245, showmodulation);
-      EEPROM.writeByte(246, amnb);
-      EEPROM.writeByte(247, fmnb);
-      EEPROM.writeByte(248, audiomode);
-      EEPROM.writeByte(249, specialstepOIRT);
-      EEPROM.writeUInt(250, LowEdgeOIRTSet);
-      EEPROM.writeUInt(254, HighEdgeOIRTSet);
-      EEPROM.writeByte(258, colorinvert);
-      EEPROM.writeByte(259, poweroptions);
-      EEPROM.writeByte(260, CurrentTheme);
-      EEPROM.writeByte(261, fmminstepsize);
-      EEPROM.writeByte(262, screensaverset);
-      EEPROM.writeInt(263, AMLevelOffset);
-      EEPROM.writeByte(267, unit);
+      EEPROM.writeInt(EE_INT_VOLSET, VolSet);
+      EEPROM.writeUInt(EE_UINT_CONVERTERSET, ConverterSet);
+      EEPROM.writeUInt(EE_UINT_FMLOWEDGESET, LowEdgeSet);
+      EEPROM.writeUInt(EE_UINT_FMHIGHEDGESET, HighEdgeSet);
+      EEPROM.writeByte(EE_BYTE_CONTRASTSET, ContrastSet);
+      EEPROM.writeByte(EE_BYTE_STEREOLEVEL, StereoLevel);
+      EEPROM.writeByte(EE_BYTE_HIGHCUTLEVEL, HighCutLevel);
+      EEPROM.writeByte(EE_BYTE_HIGHCUTOFFSET, HighCutOffset);
+      EEPROM.writeInt(EE_INT_LEVELOFFSET, LevelOffset);
+      EEPROM.writeByte(EE_BYTE_EDGEBEEP, edgebeep);
+      EEPROM.writeByte(EE_BYTE_SOFTMUTEAM, softmuteam);
+      EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, softmutefm);
+      EEPROM.writeByte(EE_BYTE_LANGUAGE, language);
+      EEPROM.writeByte(EE_BYTE_SHOWRDSERRORS, showrdserrors);
+      EEPROM.writeInt(EE_INT_LOWLEVELSET, LowLevelSet);
+      EEPROM.writeByte(EE_BYTE_REGION, region);
+      EEPROM.writeByte(EE_BYTE_RDS_UNDERSCORE, radio.rds.underscore);
+      EEPROM.writeByte(EE_BYTE_USBMODE, USBmode);
+      EEPROM.writeByte(EE_BYTE_WIFI, wifi);
+      EEPROM.writeByte(EE_BYTE_SUBNETCLIENT, subnetclient);
+      EEPROM.writeByte(EE_BYTE_SHOWSWMIBAND, showSWMIBand);
+      EEPROM.writeByte(EE_BYTE_RDS_FILTER, radio.rds.filter);
+      EEPROM.writeByte(EE_BYTE_RDS_PIERRORS, radio.rds.pierrors);
+      EEPROM.writeByte(EE_BYTE_SHOWSQUELCH, showsquelch);
+      EEPROM.writeByte(EE_BYTE_SHOWMODULATION, showmodulation);
+      EEPROM.writeByte(EE_BYTE_AM_NB, amnb);
+      EEPROM.writeByte(EE_BYTE_FM_NB, fmnb);
+      EEPROM.writeByte(EE_BYTE_AUDIOMODE, audiomode);
+      EEPROM.writeByte(EE_BYTE_OIRT, specialstepOIRT);
+      EEPROM.writeUInt(EE_UINT_LOWEDGEOIRTSET, LowEdgeOIRTSet);
+      EEPROM.writeUInt(EE_UINT_HIGHEDGEOIRTSET, HighEdgeOIRTSet);
+      EEPROM.writeByte(EE_BYTE_COLORINVERT, colorinvert);
+      EEPROM.writeByte(EE_BYTE_POWEROPTIONS, poweroptions);
+      EEPROM.writeByte(EE_BYTE_CURRENTTHEME, CurrentTheme);
+      EEPROM.writeByte(EE_BYTE_FMDEFAULTSTEPSIZE, fmdefaultstepsize);
+      EEPROM.writeByte(EE_BYTE_SCREENSAVERSET, screensaverset);
+      EEPROM.writeInt(EE_INT_AMLEVELOFFSET, AMLevelOffset);
+      EEPROM.writeByte(EE_BYTE_UINT, unit);
       EEPROM.commit();
       Serial.end();
       if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
@@ -1649,10 +1649,10 @@ void RoundStep() {
       if (frequency >= FREQ_FM_OIRT_START && frequency <= FREQ_FM_OIRT_END) {
         Round30K(freq);
       } else {
-        if (fmminstepsize == 1) Round100K(freq); else Round50K(freq);
+        if (fmdefaultstepsize == 1) Round100K(freq); else Round50K(freq);
       }
     } else {
-      if (fmminstepsize == 1) Round100K(freq); else Round50K(freq);
+      if (fmdefaultstepsize == 1) Round100K(freq); else Round50K(freq);
     }
     radio.SetFreq(frequency);
   } else {
@@ -1668,7 +1668,7 @@ void RoundStep() {
 
   while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
 
-  if (band == BAND_FM) EEPROM.writeUInt(0, frequency); else EEPROM.writeUInt(31, frequency_AM);
+  if (band == BAND_FM) EEPROM.writeUInt(EE_UINT_FREQUENCY_FM, frequency); else EEPROM.writeUInt(EE_UINT_FREQUENCY_AM, frequency_AM);
   EEPROM.commit();
 }
 
@@ -1681,8 +1681,8 @@ void ButtonPress() {
         ShowTuneMode();
       } else {
         memorystore = false;
-        EEPROM.writeByte(memorypos + 60, band);
-        if (band == BAND_FM) EEPROM.writeUInt((memorypos * 4) + 100, frequency); else EEPROM.writeUInt((memorypos * 4) + 100, frequency_AM);
+        EEPROM.writeByte(memorypos + EE_PRESETS_BAND_START, band);
+        if (band == BAND_FM) EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_START, frequency); else EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_START, frequency_AM);
         EEPROM.commit();
         memoryband[memorypos] = band;
         if (band == BAND_FM) memory[memorypos] = frequency; else memory[memorypos] = frequency_AM;
@@ -1706,7 +1706,7 @@ void ButtonPress() {
 
           if (screenmute == false) ShowStepSize();
 
-          EEPROM.writeByte(40, stepsize);
+          EEPROM.writeByte(EE_BYTE_STEPSIZE, stepsize);
           EEPROM.commit();
           if (stepsize == 0) {
             RoundStep();
@@ -1744,8 +1744,8 @@ void ButtonPress() {
           updateEQ();
           iMSEQ = 2;
         }
-        EEPROM.writeByte(44, iMSset);
-        EEPROM.writeByte(45, EQset);
+        EEPROM.writeByte(EE_BYTE_IMSSET, iMSset);
+        EEPROM.writeByte(EE_BYTE_EQSET, EQset);
         EEPROM.commit();
       }
     }
@@ -1928,7 +1928,7 @@ void ButtonPress() {
               wc.addParameter(&XDRGTK_key_input);
               wc.startConfigurationPortal(AP_WAIT);
               XDRGTK_key = XDRGTK_key_input.getValue();
-              EEPROM.writeString(233, XDRGTK_key);
+              EEPROM.writeString(EE_STRING_XDRGTK_KEY, XDRGTK_key);
               EEPROM.commit();
               tryWiFi();
               delay(2000);
@@ -2051,7 +2051,7 @@ void ButtonPress() {
               tft.drawCentreString(myLanguage[language][90], 155, 70, GFXFF);
               tft.drawString("KHz", 170, 110, GFXFF);
               if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
-              if (fmminstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 155, 110, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 155, 110, GFXFF);
+              if (fmdefaultstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 155, 110, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 155, 110, GFXFF);
               break;
             case 110:
               if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
@@ -2105,10 +2105,10 @@ void KeyUp() {
 
         case TUNE_MEM:
           memorypos++;
-          if (memorypos > 29) memorypos = 0;
+          if (memorypos > EE_PRESETS_CNT - 1) memorypos = 0;
           ShowMemoryPos();
           if (memorystore == false) DoMemoryPosTune();
-          EEPROM.writeByte(51, memorypos);
+          EEPROM.writeByte(EE_BYTE_MEMORYPOS, memorypos);
           EEPROM.commit();
           break;
         case TUNE_MI_BAND:
@@ -2475,10 +2475,10 @@ void KeyUp() {
 
               case 90:
                 if (CurrentTheme == 7) tft.setTextColor(TFT_WHITE); else tft.setTextColor(TFT_BLACK);
-                if (fmminstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 155, 110, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 155, 110, GFXFF);
-                if (fmminstepsize) fmminstepsize = 0; else fmminstepsize = 1;
+                if (fmdefaultstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 155, 110, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 155, 110, GFXFF);
+                if (fmdefaultstepsize) fmdefaultstepsize = 0; else fmdefaultstepsize = 1;
                 if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
-                if (fmminstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 155, 110, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 155, 110, GFXFF);
+                if (fmdefaultstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 155, 110, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 155, 110, GFXFF);
                 break;
 
               case 110:
@@ -2536,10 +2536,10 @@ void KeyDown() {
 
         case TUNE_MEM:
           memorypos--;
-          if (memorypos > 29) memorypos = 29;
+          if (memorypos > EE_PRESETS_CNT - 1) memorypos = EE_PRESETS_CNT - 1;
           ShowMemoryPos();
           if (memorystore == false) DoMemoryPosTune();
-          EEPROM.writeByte(51, memorypos);
+          EEPROM.writeByte(EE_BYTE_MEMORYPOS, memorypos);
           EEPROM.commit();
           break;
         case TUNE_MI_BAND:
@@ -2907,10 +2907,10 @@ void KeyDown() {
 
               case 90:
                 if (CurrentTheme == 7) tft.setTextColor(TFT_WHITE); else tft.setTextColor(TFT_BLACK);
-                if (fmminstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 155, 110, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 155, 110, GFXFF);
-                if (fmminstepsize) fmminstepsize = 0; else fmminstepsize = 1;
+                if (fmdefaultstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 155, 110, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 155, 110, GFXFF);
+                if (fmdefaultstepsize) fmdefaultstepsize = 0; else fmdefaultstepsize = 1;
                 if (CurrentTheme == 7) tft.setTextColor(TFT_BLACK); else tft.setTextColor(TFT_WHITE);
-                if (fmminstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 155, 110, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 155, 110, GFXFF);
+                if (fmdefaultstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 155, 110, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 155, 110, GFXFF);
                 break;
 
               case 110:
@@ -3682,7 +3682,7 @@ void BuildMenu() {
       tft.setTextColor(PrimaryColor);
       tft.drawRightString(CurrentThemeString, 305, 30, GFXFF);
       ShowPowerOptions(false);
-      if (fmminstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 265, 90, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 265, 90, GFXFF);
+      if (fmdefaultstepsize) tft.drawRightString(String(FREQ_FM_STEP_100K * 10, DEC), 265, 90, GFXFF); else tft.drawRightString(String(FREQ_FM_STEP_50K * 10, DEC), 265, 90, GFXFF);
       if (!screensaverset) tft.drawRightString(myLanguage[language][30], 305, 110, GFXFF); else tft.drawRightString(String(screensaverOptions[screensaverset], DEC), 265, 110, GFXFF);
       if (AMLevelOffset > 0) tft.drawRightString("+" + String(AMLevelOffset, DEC), 265, 130, GFXFF); else tft.drawRightString(String(AMLevelOffset, DEC), 265, 130, GFXFF);
       tft.drawRightString(unitString[unit], 305, 150, GFXFF);
@@ -4845,7 +4845,7 @@ void doTuneMode() {
   ShowTuneMode();
   ShowMemoryPos();
   ShowFreq(0);
-  EEPROM.writeByte(41, tunemode);
+  EEPROM.writeByte(EE_BYTE_TUNEMODE, tunemode);
   EEPROM.commit();
 }
 
@@ -5221,18 +5221,18 @@ void XDRGTKRoutine() {
         offsetg = atol(buff + 1);
         if (offsetg == 0) {
           MuteScreen(0);
-          LowLevelSet = EEPROM.readInt(47);
-          softmuteam = EEPROM.readByte(29);
-          softmutefm = EEPROM.readByte(30);
+          LowLevelSet = EEPROM.readInt(EE_INT_LOWLEVELSET);
+          softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
+          softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
           radio.setSoftmuteFM(softmutefm);
           radio.setSoftmuteAM(softmuteam);
           DataPrint("G00\n");
         }
         if (offsetg == 10) {
           MuteScreen(1);
-          LowLevelSet = EEPROM.readInt(47);
-          softmuteam = EEPROM.readByte(29);
-          softmutefm = EEPROM.readByte(30);
+          LowLevelSet = EEPROM.readInt(EE_INT_LOWLEVELSET);
+          softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
+          softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
           radio.setSoftmuteFM(softmutefm);
           radio.setSoftmuteAM(softmuteam);
           DataPrint("G10\n");
@@ -5452,10 +5452,10 @@ void XDRGTKRoutine() {
         store = true;
         XDRMute = false;
         radio.setUnMute();
-        VolSet = EEPROM.readInt(4);
-        LowLevelSet = EEPROM.readInt(47);
-        softmuteam = EEPROM.readByte(29);
-        softmutefm = EEPROM.readByte(30);
+        VolSet = EEPROM.readInt(EE_INT_VOLSET);
+        LowLevelSet = EEPROM.readInt(EE_INT_LOWLEVELSET);
+        softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
+        softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
         radio.setVolume(VolSet);
         radio.setSoftmuteFM(softmutefm);
         radio.setSoftmuteAM(softmuteam);
@@ -5533,10 +5533,10 @@ void TuneUp() {
         if (specialstepOIRT) {
           temp = FREQ_FM_STEP_30K;
         } else {
-          if (fmminstepsize == 1) temp = FREQ_FM_STEP_100K; else temp = FREQ_FM_STEP_50K;
+          if (fmdefaultstepsize == 1) temp = FREQ_FM_STEP_100K; else temp = FREQ_FM_STEP_50K;
         }
       } else {
-        if (fmminstepsize == 1) temp = FREQ_FM_STEP_100K; else temp = FREQ_FM_STEP_50K;
+        if (fmdefaultstepsize == 1) temp = FREQ_FM_STEP_100K; else temp = FREQ_FM_STEP_50K;
       }
     }
   }
@@ -5612,10 +5612,10 @@ void TuneDown() {
         if (specialstepOIRT) {
           temp = FREQ_FM_STEP_30K;
         } else {
-          if (fmminstepsize == 1) temp = FREQ_FM_STEP_100K; else temp = FREQ_FM_STEP_50K;
+          if (fmdefaultstepsize == 1) temp = FREQ_FM_STEP_100K; else temp = FREQ_FM_STEP_50K;
         }
       } else {
-        if (fmminstepsize == 1) temp = FREQ_FM_STEP_100K; else temp = FREQ_FM_STEP_50K;
+        if (fmdefaultstepsize == 1) temp = FREQ_FM_STEP_100K; else temp = FREQ_FM_STEP_50K;
       }
     }
   }
@@ -5712,7 +5712,7 @@ void SetTunerPatch() {
 
     if (TEF == 0) tft.drawCentreString(myLanguage[language][35], 150, 70, GFXFF); else tft.drawCentreString(String(myLanguage[language][36]) + String(TEF), 150, 70, GFXFF);
     tft.drawCentreString(myLanguage[language][37], 150, 100, GFXFF);
-    EEPROM.writeByte(37, TEF);
+    EEPROM.writeByte(EE_BYTE_TEF, TEF);
     EEPROM.commit();
     while (true);
     for (;;);
@@ -5897,62 +5897,62 @@ void passwordcrypt() {
 }
 
 void DefaultSettings() {
-  EEPROM.writeByte(43, 32);
-  EEPROM.writeUInt(0, 10000);
-  EEPROM.writeInt(4, 0);
-  EEPROM.writeUInt(8, 0);
-  EEPROM.writeUInt(12, 875);
-  EEPROM.writeUInt(16, 1080);
-  EEPROM.writeByte(20, 50);
-  EEPROM.writeByte(21, 0);
-  EEPROM.writeByte(22, 70);
-  EEPROM.writeByte(23, 0);
-  EEPROM.writeInt(24, 0);
-  EEPROM.writeByte(28, 0);
-  EEPROM.writeByte(29, 0);
-  EEPROM.writeByte(30, 0);
-  EEPROM.writeUInt(31, 828);
-  EEPROM.writeByte(35, 0);
-  EEPROM.writeByte(36, 1);
-  EEPROM.writeByte(37, 0);
-  EEPROM.writeByte(38, 0);
-  EEPROM.writeByte(39, 0);
-  EEPROM.writeByte(40, 0);
-  EEPROM.writeByte(41, 0);
-  EEPROM.writeByte(42, 0);
-  EEPROM.writeByte(44, 1);
-  EEPROM.writeByte(45, 1);
-  EEPROM.writeByte(46, 0);
-  EEPROM.writeInt(47, -10);
-  EEPROM.writeByte(51, 0);
-  EEPROM.writeByte(52, 0);
-  EEPROM.writeByte(53, 0);
-  EEPROM.writeByte(54, 0);
-  EEPROM.writeByte(55, 0);
-  EEPROM.writeByte(56, 1);
-  EEPROM.writeByte(57, 1);
-  EEPROM.writeByte(58, 1);
-  EEPROM.writeByte(59, 0);
-  for (int i = 0; i < 30; i++) EEPROM.writeByte(i + 60, 0);
-  for (int i = 0; i < 30; i++) EEPROM.writeUInt((i * 4) + 100, 8750);
-  EEPROM.writeUInt(221, 180);
-  EEPROM.writeUInt(225, 540);
-  EEPROM.writeUInt(229, 1800);
-  EEPROM.writeString(233, "password");
-  EEPROM.writeByte(244, 1);
-  EEPROM.writeByte(245, 1);
-  EEPROM.writeByte(246, 0);
-  EEPROM.writeByte(247, 0);
-  EEPROM.writeByte(248, 0);
-  EEPROM.writeByte(249, 0);
-  EEPROM.writeUInt(250, 0);
-  EEPROM.writeUInt(254, 0);
-  EEPROM.writeByte(258, 0);
-  EEPROM.writeByte(259, 0);
-  EEPROM.writeByte(260, 0);
-  EEPROM.writeByte(261, 0);
-  EEPROM.writeByte(262, 0);
-  EEPROM.writeInt(263, 0);
-  EEPROM.writeByte(267, 0);
+  EEPROM.writeByte(EE_BYTE_CHECKBYTE, EE_CHECKBYTE_VALUE);
+  EEPROM.writeUInt(EE_UINT_FREQUENCY_FM, 10000);
+  EEPROM.writeInt(EE_INT_VOLSET, 0);
+  EEPROM.writeUInt(EE_UINT_CONVERTERSET, 0);
+  EEPROM.writeUInt(EE_UINT_FMLOWEDGESET, 875);
+  EEPROM.writeUInt(EE_UINT_FMHIGHEDGESET, 1080);
+  EEPROM.writeByte(EE_BYTE_CONTRASTSET, 50);
+  EEPROM.writeByte(EE_BYTE_STEREOLEVEL, 0);
+  EEPROM.writeByte(EE_BYTE_HIGHCUTLEVEL, 70);
+  EEPROM.writeByte(EE_BYTE_HIGHCUTOFFSET, 0);
+  EEPROM.writeInt(EE_INT_LEVELOFFSET, 0);
+  EEPROM.writeByte(EE_BYTE_EDGEBEEP, 0);
+  EEPROM.writeByte(EE_BYTE_SOFTMUTEAM, 0);
+  EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, 0);
+  EEPROM.writeUInt(EE_UINT_FREQUENCY_AM, 828);
+  EEPROM.writeByte(EE_BYTE_LANGUAGE, 0);
+  EEPROM.writeByte(EE_BYTE_SHOWRDSERRORS, 1);
+  EEPROM.writeByte(EE_BYTE_TEF, 0);
+  EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 0);
+  EEPROM.writeByte(EE_BYTE_ROTARYMODE, 0);
+  EEPROM.writeByte(EE_BYTE_STEPSIZE, 0);
+  EEPROM.writeByte(EE_BYTE_TUNEMODE, 0);
+  EEPROM.writeByte(EE_BYTE_OPTENC, 0);
+  EEPROM.writeByte(EE_BYTE_IMSSET, 1);
+  EEPROM.writeByte(EE_BYTE_EQSET, 1);
+  EEPROM.writeByte(EE_BYTE_BAND, 0);
+  EEPROM.writeInt(EE_INT_LOWLEVELSET, -10);
+  EEPROM.writeByte(EE_BYTE_MEMORYPOS, 0);
+  EEPROM.writeByte(EE_BYTE_REGION, 0);
+  EEPROM.writeByte(EE_BYTE_RDS_UNDERSCORE, 0);
+  EEPROM.writeByte(EE_BYTE_USBMODE, 0);
+  EEPROM.writeByte(EE_BYTE_WIFI, 0);
+  EEPROM.writeByte(EE_BYTE_SUBNETCLIENT, 1);
+  EEPROM.writeByte(EE_BYTE_SHOWSWMIBAND, 1);
+  EEPROM.writeByte(EE_BYTE_RDS_FILTER, 1);
+  EEPROM.writeByte(EE_BYTE_RDS_PIERRORS, 0);
+  for (int i = 0; i < EE_PRESETS_CNT; i++) EEPROM.writeByte(i + EE_PRESETS_BAND_START, BAND_FM);
+  for (int i = 0; i < EE_PRESETS_CNT; i++) EEPROM.writeUInt((i * 4) + EE_PRESETS_START, EE_PRESETS_FREQUENCY);
+  EEPROM.writeUInt(EE_UINT_FREQUENCY_LW, 180);
+  EEPROM.writeUInt(EE_UINT_FREQUENCY_MW, 540);
+  EEPROM.writeUInt(EE_UINT_FREQUENCY_SW, 1800);
+  EEPROM.writeString(EE_STRING_XDRGTK_KEY, "password");
+  EEPROM.writeByte(EE_BYTE_SHOWSQUELCH, 1);
+  EEPROM.writeByte(EE_BYTE_SHOWMODULATION, 1);
+  EEPROM.writeByte(EE_BYTE_AM_NB, 0);
+  EEPROM.writeByte(EE_BYTE_FM_NB, 0);
+  EEPROM.writeByte(EE_BYTE_AUDIOMODE, 0);
+  EEPROM.writeByte(EE_BYTE_OIRT, 0);
+  EEPROM.writeUInt(EE_UINT_LOWEDGEOIRTSET, 0);
+  EEPROM.writeUInt(EE_UINT_HIGHEDGEOIRTSET, 0);
+  EEPROM.writeByte(EE_BYTE_COLORINVERT, 0);
+  EEPROM.writeByte(EE_BYTE_POWEROPTIONS, 0);
+  EEPROM.writeByte(EE_BYTE_CURRENTTHEME, 0);
+  EEPROM.writeByte(EE_BYTE_FMDEFAULTSTEPSIZE, 0);
+  EEPROM.writeByte(EE_BYTE_SCREENSAVERSET, 0);
+  EEPROM.writeInt(EE_INT_AMLEVELOFFSET, 0);
+  EEPROM.writeByte(EE_BYTE_UINT, 0);
   EEPROM.commit();
 }
