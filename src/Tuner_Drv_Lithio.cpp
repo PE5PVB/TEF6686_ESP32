@@ -206,7 +206,7 @@ bool devTEF_Radio_Get_Processing_Status (uint16_t *highcut, uint16_t *stereo, ui
   return r;
 }
 
-bool devTEF_Radio_Get_Quality_Status (int16_t *level, uint16_t *usn, uint16_t *wam, int16_t *offset, uint16_t *bandwidth, uint16_t *mod) {
+bool devTEF_Radio_Get_Quality_Status (int16_t *level, uint16_t *usn, uint16_t *wam, int16_t *offset, uint16_t *bandwidth, uint16_t *mod, uint8_t *snr) {
   uint8_t buf[14];
   uint16_t r = devTEF_Get_Cmd(TEF_FM, Cmd_Get_Quality_Data, buf, sizeof(buf));
 
@@ -216,10 +216,11 @@ bool devTEF_Radio_Get_Quality_Status (int16_t *level, uint16_t *usn, uint16_t *w
   *offset = Convert8bto16b(buf + 8);
   *bandwidth = Convert8bto16b(buf + 10) / 10;
   *mod = Convert8bto16b(buf + 12) / 10;
+  *snr = int(0.46222375 * (float)(*level) / 10 - 0.082495118 * (float)(*usn) / 10) + 10;
   return r;
 }
 
-bool devTEF_Radio_Get_Quality_Status_AM (int16_t *level, uint16_t *noise, uint16_t *cochannel, int16_t *offset, uint16_t *bandwidth, uint16_t *mod) {
+bool devTEF_Radio_Get_Quality_Status_AM (int16_t *level, uint16_t *noise, uint16_t *cochannel, int16_t *offset, uint16_t *bandwidth, uint16_t *mod, uint8_t *snr) {
   uint8_t buf[14];
   uint16_t r = devTEF_Get_Cmd(TEF_AM, Cmd_Get_Quality_Data, buf, sizeof(buf));
 
@@ -229,6 +230,7 @@ bool devTEF_Radio_Get_Quality_Status_AM (int16_t *level, uint16_t *noise, uint16
   *offset = Convert8bto16b(buf + 8);
   *bandwidth = Convert8bto16b(buf + 10) / 10;
   *mod = Convert8bto16b(buf + 12) / 10;
+  if (*noise / 10 > 40) *snr = 0; else *snr = -((int8_t)(*noise / 10));
   return r;
 }
 

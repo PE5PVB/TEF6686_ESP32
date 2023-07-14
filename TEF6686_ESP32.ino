@@ -129,7 +129,7 @@ byte regionold;
 byte rotarymode;
 byte showmodulation;
 byte showSWMIBand = 1;
-byte SNR;
+uint8_t SNR;
 byte SNRold;
 byte specialstepOIRT;
 byte stepsize;
@@ -679,7 +679,7 @@ void loop() {
 
       if (millis() >= lowsignaltimer + 300) {
         lowsignaltimer = millis();
-        if (band == BAND_FM) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus);
+        if (band == BAND_FM) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
         if (screenmute == true) readRds();
         if (menu == false) {
           doSquelch();
@@ -688,7 +688,7 @@ void loop() {
       }
 
     } else {
-      if (band == BAND_FM) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus);
+      if (band == BAND_FM) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
       if (menu == false) {
         doSquelch();
         readRds();
@@ -698,7 +698,7 @@ void loop() {
     }
 
     if (menu == true && menuopen == true && menupage == 1 && menuoption == 110) {
-      if (band == BAND_FM) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus);
+      if (band == BAND_FM) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
       if (millis() >= lowsignaltimer + 500 || change2 == true) {
         lowsignaltimer = millis();
         change2 = false;
@@ -1379,7 +1379,7 @@ void SelectBand() {
     LimitAMFrequency();
     radio.SetFreqAM(frequency_AM);
     doBW;
-    radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus);
+    radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
     if (screenmute == false) radio.clearRDS(fullsearchrds); BuildDisplay();
     tft.setFreeFont(FONT7);
     if (region == 0) tft.drawString("PI:", 216, 191, GFXFF);
@@ -1403,7 +1403,7 @@ void SelectBand() {
     radio.SetFreq(frequency);
     freqold = frequency_AM;
     doBW;
-    radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus);
+    radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
     if (screenmute == false) radio.clearRDS(fullsearchrds); BuildDisplay();
   }
 }
@@ -3274,7 +3274,7 @@ void ShowAdvancedRDS() {
     MSold = radio.rds.MS;
   }
 
-    rds_clock = ((hour() < 10 ? "0" : "") + String(hour()) + ":" + (minute() < 10 ? "0" : "") + String(minute()));
+  rds_clock = ((hour() < 10 ? "0" : "") + String(hour()) + ":" + (minute() < 10 ? "0" : "") + String(minute()));
   if (radio.rds.hasCT == true && rds_clock != rds_clockold) {
     tft.setFreeFont(FONT7);
     tft.setTextColor(BackgroundColor);
@@ -4253,9 +4253,6 @@ void ShowFreq(int mode) {
 
 void ShowSignalLevel() {
   if (screenmute == false) {
-    if (band == BAND_FM) SNR = int(0.46222375 * (float)(SStatus / 10) - 0.082495118 * (float)(USN / 10)) + 10; else SNR = -((int8_t)(USN / 10));
-    if (band != BAND_FM && SNR > 50) SNR = 0;
-
     if (millis() >= snrupdatetimer + TIMER_SNR_TIMER) {
       snrupdatetimer = millis();
 
@@ -4263,14 +4260,14 @@ void ShowSignalLevel() {
         if (SNR > (SNRold + 1) || SNR < (SNRold - 1)) {
           tft.setFreeFont(FONT7);
           tft.setTextColor(BackgroundColor);
-          if (SNRold == 99) tft.drawRightString("--", 294, 164, GFXFF); else  tft.drawRightString(String(SNRold), 294, 164, GFXFF);
+          if (SNRold == 0) tft.drawRightString("--", 294, 164, GFXFF); else tft.drawRightString(String(SNRold), 294, 164, GFXFF);
           tft.setTextColor(PrimaryColor, BackgroundColor);
           if (tuned == true) {
-            tft.drawRightString(String(SNR), 294, 164, GFXFF);
+            if (SNR == 0) tft.drawRightString("--", 294, 164, GFXFF); else tft.drawRightString(String(SNR), 294, 164, GFXFF);
             SNRold = SNR;
           } else {
             tft.drawRightString("--", 294, 164, GFXFF);
-            SNRold = 99;
+            SNRold = 0;
           }
         }
       }
@@ -5093,7 +5090,7 @@ void Communication() {
           radio.clearRDS(fullsearchrds);
           freqold = frequency_AM;
           doBW;
-          radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus);
+          radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
           if (screenmute == false) radio.clearRDS(fullsearchrds); BuildDisplay();
         }
         ShowFreq(0);
@@ -5405,7 +5402,7 @@ void XDRGTKRoutine() {
             DataPrint(String(freq_scan * 10, DEC));
             DataPrint(" = ");
             delay(10);
-            if (band == BAND_FM) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus); else  radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus);
+            if (band == BAND_FM) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR); else  radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
             DataPrint(String((SStatus / 10) + 10, DEC));
             DataPrint(", ");
           }
@@ -5677,7 +5674,7 @@ void Seek(bool mode) {
     delay(50);
     ShowFreq(0);
       if (XDRGTKUSB == true || XDRGTKTCP == true) if (band == BAND_FM) DataPrint("T" + String(frequency * 10) + "\n"); else DataPrint("T" + String(frequency_AM) + "\n");
-    radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus);
+    radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
 
     if ((USN < 200) && (WAM < 230) && (OStatus < 80 && OStatus > -80) && (Squelch < SStatus || Squelch == 920)) {
       seek = false;

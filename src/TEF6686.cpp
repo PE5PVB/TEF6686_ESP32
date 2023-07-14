@@ -206,22 +206,24 @@ bool TEF6686::getProcessing(uint16_t &highcut, uint16_t &stereo, uint16_t &sthib
   return stband_4;
 }
 
-bool TEF6686::getStatus(int16_t &level, uint16_t &USN, uint16_t &WAM, int16_t &offset, uint16_t &bandwidth, uint16_t &modulation) {
-  bool result = devTEF_Radio_Get_Quality_Status(&level, &USN, &WAM, &offset, &bandwidth, &modulation);
+bool TEF6686::getStatus(int16_t &level, uint16_t &USN, uint16_t &WAM, int16_t &offset, uint16_t &bandwidth, uint16_t &modulation, uint8_t &snr) {
+  bool result = devTEF_Radio_Get_Quality_Status(&level, &USN, &WAM, &offset, &bandwidth, &modulation, &snr);
   return level;
   return USN;
   return WAM;
   return bandwidth;
   return modulation;
+  return snr;
 }
 
-bool TEF6686::getStatusAM(int16_t &level, uint16_t &noise, uint16_t &cochannel, int16_t &offset, uint16_t &bandwidth, uint16_t &modulation) {
-  bool result = devTEF_Radio_Get_Quality_Status_AM(&level, &noise, &cochannel, &offset, &bandwidth, &modulation);
+bool TEF6686::getStatusAM(int16_t &level, uint16_t &noise, uint16_t &cochannel, int16_t &offset, uint16_t &bandwidth, uint16_t &modulation, uint8_t &snr) {
+  bool result = devTEF_Radio_Get_Quality_Status_AM(&level, &noise, &cochannel, &offset, &bandwidth, &modulation, &snr);
   return level;
   return noise;
   return cochannel;
   return bandwidth;
   return modulation;
+  return snr;
 }
 
 void TEF6686::readRDS(bool showrdserrors)
