@@ -1390,10 +1390,10 @@ void SelectBand() {
     tft.drawBitmap(110, 5, RDSLogo, 67, 22, GreyoutColor);
     tft.drawRoundRect(249, 56, 30, 20, 5, GreyoutColor);
     tft.setTextColor(GreyoutColor);
-    tft.drawCentreString("iMS", 265, 54, GFXFF);
+    tft.drawCentreString("iMS", 264, 54, GFXFF);
     tft.drawRoundRect(287, 56, 30, 20, 5, GreyoutColor);
     tft.setTextColor(GreyoutColor);
-    tft.drawCentreString("EQ", 303, 54, GFXFF);
+    tft.drawCentreString("EQ", 302, 54, GFXFF);
   } else {
     LowLevelInit == false;
     BWreset = true;
@@ -4009,6 +4009,9 @@ void BuildDisplay() {
     tft.drawString("kHz", 225, -5, GFXFF);
     tft.setTextColor(ActiveColor);
     if (band == BAND_FM) tft.drawString("MHz", 258, 67, GFXFF); else tft.drawString("kHz", 258, 67, GFXFF);
+
+    tft.drawRoundRect(249, 56, 30, 20, 5, GreyoutColor);
+    tft.drawRoundRect(287, 56, 30, 20, 5, GreyoutColor);
     tft.drawCircle(81, 15, 10, GreyoutColor);
     tft.drawCircle(81, 15, 9, GreyoutColor);
     tft.drawCircle(91, 15, 10, GreyoutColor);
