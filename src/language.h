@@ -301,7 +301,7 @@ static const char* const myLanguage[15][99] = {
     "25% jasnosci", // 95
     "50% jasnosci", // 96
     "Odchylenie poziomu RF AM:", // 97
-    "Signalmeter unit:" // 98
+    "Jednostka sygnalu:" // 98
   },
 
   { "Hrvatski",                       // Croatian
