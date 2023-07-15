@@ -933,60 +933,55 @@ void ScreensaverInterrupt()
 }
 
 void BANDBUTTONPress() {
-  if (afscreen) {
-    BuildAdvancedRDS();
+  if (!power) {
+    if (screensavertriggered) WakeToSleep(REVERSE);
   } else {
-    unsigned long counterold = millis();
-    unsigned long counter = millis();
-    if (menu == false && power) {
-      while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
+    if (afscreen) {
+      BuildAdvancedRDS();
+    } else {
+      unsigned long counterold = millis();
+      unsigned long counter = millis();
+      if (!menu && power) {
+        while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
 
-      if (counter - counterold < 1000) {
-        if (screensavertriggered) {
-          WakeToSleep(REVERSE);
-          return;
-        }
-
-        if (advancedRDS) {
-          BuildDisplay();
-          ScreensaverTimerReopen();
-        } else {
-          if (tunemode != TUNE_MEM) {
-            if (band == BAND_FM) {
-              band = BAND_LW;
-              if (stepsize > 3) stepsize = 3;
-            }
-            else if (band == BAND_LW) band = BAND_MW;
-            else if (band == BAND_MW) band = BAND_SW;
-            else if (band == BAND_SW) band = BAND_FM;
-            StoreFrequency();
-            SelectBand();
+        if (counter - counterold < 1000) {
+          if (screensavertriggered) {
+            WakeToSleep(REVERSE);
+            return;
           }
-          ScreensaverTimerRestart();
-        }
-      } else {
-        if (screensavertriggered) {
-          WakeToSleep(REVERSE);
-          return;
-        }
 
-        if (band == BAND_FM) {
-          if (advancedRDS && !seek) BuildAFScreen(); else BuildAdvancedRDS();
+          if (advancedRDS) {
+            BuildDisplay();
+            ScreensaverTimerReopen();
+          } else {
+            if (tunemode != TUNE_MEM) {
+              if (band == BAND_FM) {
+                band = BAND_LW;
+                if (stepsize > 3) stepsize = 3;
+              }
+              else if (band == BAND_LW) band = BAND_MW;
+              else if (band == BAND_MW) band = BAND_SW;
+              else if (band == BAND_SW) band = BAND_FM;
+              StoreFrequency();
+              SelectBand();
+            }
+            ScreensaverTimerRestart();
+          }
+        } else {
+          if (screensavertriggered) {
+            WakeToSleep(REVERSE);
+            return;
+          }
+
+          if (band == BAND_FM) {
+            if (advancedRDS && !seek) BuildAFScreen(); else BuildAdvancedRDS();
+          } else {
+            WakeToSleep(true);
+          }
         }
       }
       while (digitalRead(BANDBUTTON) == LOW) delay(50);
       delay(100);
-    }
-
-    // Wake after screensaver triggered here
-    if (power == false) {
-      while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
-
-      if (counter - counterold < 1000) {
-        if (screensavertriggered) WakeToSleep(REVERSE);
-      } else {
-        if (screensavertriggered) WakeToSleep(REVERSE);
-      }
     }
   }
 }
