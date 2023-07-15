@@ -97,7 +97,7 @@
 #define EE_PRESETS_CNT              30
 #define EE_CHECKBYTE_VALUE          34 // 0 ~ 255,add new entry, change for new value 
     
-#define EE_TOTAL_CNT                268
+#define EE_TOTAL_CNT                269
 #define EE_UINT_FREQUENCY_FM        0
 #define EE_INT_VOLSET               4
 #define EE_UINT_CONVERTERSET        8
@@ -156,7 +156,8 @@
 #define EE_BYTE_FMDEFAULTSTEPSIZE   261
 #define EE_BYTE_SCREENSAVERSET      262
 #define EE_INT_AMLEVELOFFSET        263
-#define EE_BYTE_UINT                267      
+#define EE_BYTE_UNIT                267
+#define EE_BYTE_AF                  268           
 // End of EEPROM index defines
 
 static const char* const unitString[] = {"dBμV", "dBf", "dBm"};

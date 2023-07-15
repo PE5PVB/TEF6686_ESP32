@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char* const myLanguage[15][99] = {
+static const char* const myLanguage[15][100] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -99,7 +99,8 @@ static const char* const myLanguage[15][99] = {
     "25% brightness", // 95
     "50% brightness", // 96
     "AM RF Level offset:", // 97
-    "Signalmeter unit:" // 98
+    "Signalmeter unit:", // 98
+	"Use AF:" // 99
   },
 
   { "Nederlands", // Dutch
@@ -200,7 +201,8 @@ static const char* const myLanguage[15][99] = {
     "25% helderheid", // 95
     "50% helderheid", // 96
     "AM RF Level afwijking:", // 97
-    "Signaalmeter eenheid:" // 98
+    "Signaalmeter eenheid:", // 98
+	"Gebruik AF:" // 99
   },
 
   { "Polski", // Polish
@@ -301,7 +303,8 @@ static const char* const myLanguage[15][99] = {
     "25% jasnosci", // 95
     "50% jasnosci", // 96
     "Odchylenie poziomu RF AM:", // 97
-    "Jednostka sygnalu:" // 98
+    "Jednostka sygnalu:", // 98
+	"Use AF:" // 99
   },
 
   { "Hrvatski", // Croatian
@@ -402,7 +405,8 @@ static const char* const myLanguage[15][99] = {
     "25% svjetlina", // 95
     "50% svjetlina", // 96
     "AM pomak RF razine:", // 97
-    "Jedinica mjerača signala:" // 98
+    "Jedinica mjerača signala:", // 98
+	"Use AF:" // 99
   },
 
   { "Ελληνικά", // Greek
@@ -503,7 +507,8 @@ static const char* const myLanguage[15][99] = {
     "25% φωτεινότητα", // 95
     "50% φωτεινότητα", // 96
     "AM Ολίσθηση επιπέδου RF:", // 97
-    "Μονάδα μέτρησης σήματος:" // 98
+    "Μονάδα μέτρησης σήματος:", // 98
+	"Use AF:" // 99
   },
 
   { "Romana", // Romanian
@@ -604,7 +609,8 @@ static const char* const myLanguage[15][99] = {
     "25% brightness", // 95
     "50% brightness", // 96
     "AM RF Level offset:", // 97
-    "Signalmeter unit:" // 98
+    "Signalmeter unit:", // 98
+	"Use AF:" // 99
   },
 
   { "Deutsch", // German
@@ -705,7 +711,8 @@ static const char* const myLanguage[15][99] = {
     "25% Helligkeit", // 95
     "50% Helligkeit", // 96
     "AM RF Level offset:", // 97
-    "Signalmeter unit:" // 98
+    "Signalmeter unit:", // 98
+	"Use AF:" // 99
   },
 
   { "Czech", // Czech
@@ -806,7 +813,8 @@ static const char* const myLanguage[15][99] = {
     "25% brightness", // 95
     "50% brightness", // 96
     "AM RF Level offset:", // 97
-    "Signalmeter unit:" // 98
+    "Signalmeter unit:", // 98
+	"Use AF:" // 99
   },
 
   { "Slovak", // Slovak
@@ -907,7 +915,8 @@ static const char* const myLanguage[15][99] = {
     "25% brightness", // 95
     "50% brightness", // 96
     "AM RF Level offset:", // 97
-    "Signalmeter unit:" // 98
+    "Signalmeter unit:", // 98
+	"Use AF:" // 99
   },
 
   { "Français", // French
@@ -1008,7 +1017,8 @@ static const char* const myLanguage[15][99] = {
     "25% brightness", // 95
     "50% brightness", // 96
     "AM RF Level offset:", // 97
-    "Signalmeter unit:" // 98
+    "Signalmeter unit:", // 98
+	"Use AF:" // 99
   },
 
   { "Български", // Bulgarian
@@ -1109,7 +1119,8 @@ static const char* const myLanguage[15][99] = {
     "25% brightness", // 95
     "50% brightness", // 96
     "AM RF Level offset:", // 97
-    "Signalmeter unit:" // 98
+    "Signalmeter unit:", // 98
+	"Use AF:" // 99
   },
 
   { "Русский", // Russian
@@ -1210,7 +1221,8 @@ static const char* const myLanguage[15][99] = {
     "25% яркости", // 95
     "50% яркости", // 96
     "Смещение уровня AM RF:", // 97
-    "Измеритель сигнала:" // 98
+    "Измеритель сигнала:", // 98
+	"Use AF:" // 99
   },
 
   { "Українська", // Ukranian
@@ -1311,7 +1323,8 @@ static const char* const myLanguage[15][99] = {
     "25% яскравості", // 95
     "50% яскравості", // 96
     "Зміщення рівня AM RF:", // 97
-    "Вимірник сигналу:" // 98
+    "Вимірник сигналу:", // 98
+	"Use AF:" // 99
   },
 
   { "Italiano", // Italian
@@ -1412,7 +1425,8 @@ static const char* const myLanguage[15][99] = {
     "25 % di luminosità", // 95
     "50 % di luminosità", // 96
     "Offset livello RF AM: ", // 97
-    "Unità S - meter: " // 98
+    "Unità S - meter: ", // 98
+	"Use AF:" // 99
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -1513,7 +1527,8 @@ static const char* const myLanguage[15][99] = {
     "屏幕25% 亮度", // 95
     "屏幕50% 亮度", // 96
     "AM 高频信号偏移:", // 97
-    "信号单位:" // 98
+    "信号单位:", // 98
+	"Use AF:" // 99
   }
 };
 

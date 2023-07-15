@@ -144,7 +144,9 @@ typedef struct _rds_ {
 
 typedef struct _af_ {
   uint16_t  frequency;
+  int16_t score;
   bool filler;
+  bool afvalid;
 } af_;
 
 typedef struct _eon_ {
@@ -162,6 +164,7 @@ class TEF6686 {
     af_  af[50];
     eon_ eon[20];
     rds_ rds;
+	uint16_t TestAF();
     void readRDS(bool showrdserrors);
     void SetFreq(uint16_t frequency);
     void SetFreqAM(uint16_t frequency);

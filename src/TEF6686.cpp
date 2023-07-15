@@ -7,6 +7,74 @@ unsigned long rdstimer = 0;
 unsigned long bitStartTime = 0;
 bool lastBitState = false;
 
+uint16_t TEF6686::TestAF() {
+
+  if (rds.hasRDS) {
+    uint16_t status;
+    uint16_t rdsStat;
+    uint16_t dummy1;
+    uint16_t dummy2;
+    uint8_t dummy3;
+
+    int16_t aflevel;
+    uint16_t afusn;
+    uint16_t afwam;
+    int16_t afoffset;
+
+    int16_t currentlevel;
+    uint16_t currentusn;
+    uint16_t currentwam;
+    int16_t currentoffset;
+    uint16_t currentpi;
+
+    byte timing;
+
+    devTEF_Radio_Get_Quality_Status(&status, &currentlevel, &currentusn, &currentwam, &currentoffset, &dummy1, &dummy2, &dummy3);
+    devTEF_Radio_Get_RDS_Status(&rdsStat, &currentpi, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
+
+    for (int x = 0; x < af_counter; x++) {
+      timing = 0;
+      devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 3, af[x].frequency);
+      while (timing == 0 && !bitRead(timing, 15)) {
+        devTEF_Radio_Get_Quality_Status(&status, &aflevel, &afusn, &afwam, &afoffset, &dummy1, &dummy2, &dummy3);
+        timing = lowByte(status);
+      }
+      af[x].score = aflevel - afusn - afwam;
+      if (afoffset < -125 || afoffset > 125) af[x].score = -32767;
+    }
+
+    int16_t highestValue = af[0].score;
+    int highestIndex = 0;
+
+    for (int i = 1; i < af_counter; i++) {
+      if (af[i].score > highestValue) {
+        highestValue = af[i].score;
+        highestIndex = i;
+      }
+    }
+
+    if (af_counter != 0 && af[highestIndex].afvalid && af[highestIndex].score > (currentlevel - currentusn - currentwam) && (af[highestIndex].score - (currentlevel - currentusn - currentwam)) >= 70) {
+      devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, af[highestIndex].frequency);
+      delay(200);
+      devTEF_Radio_Get_RDS_Status(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
+      if ((rdsStat & (1 << 9)) && rds.rdsA == currentpi) {
+        currentfreq = af[highestIndex].frequency;
+        for (byte y = 0; y < 50; y++) {
+          af[y].frequency = 0;
+          af[y].score = -32767;
+          af[y].afvalid = true;
+          af[y].filler = false;
+          af_counter = 0;
+        }
+      } else {
+        af[highestIndex].afvalid = false;
+        devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, currentfreq);
+      }
+    }
+  }
+  return currentfreq;
+}
+
 
 void TEF6686::init(byte TEF) {
   uint8_t bootstatus;
@@ -210,7 +278,8 @@ bool TEF6686::getProcessing(uint16_t &highcut, uint16_t &stereo, uint16_t &sthib
 }
 
 bool TEF6686::getStatus(int16_t &level, uint16_t &USN, uint16_t &WAM, int16_t &offset, uint16_t &bandwidth, uint16_t &modulation, uint8_t &snr) {
-  bool result = devTEF_Radio_Get_Quality_Status(&level, &USN, &WAM, &offset, &bandwidth, &modulation, &snr);
+  uint16_t status;
+  bool result = devTEF_Radio_Get_Quality_Status(&status, &level, &USN, &WAM, &offset, &bandwidth, &modulation, &snr);
   return level;
   return USN;
   return WAM;
@@ -438,10 +507,13 @@ void TEF6686::readRDS(bool showrdserrors)
                       if (af[j].frequency > af[j + 1].frequency && af[j + 1].frequency != 0) {
                         uint16_t temp = af[j].frequency;
                         bool temp2 = af[j].filler;
+                        bool temp3 = af[j].afvalid;
                         af[j].frequency = af[j + 1].frequency;
                         af[j].filler = af[j + 1].filler;
+                        af[j].afvalid = af[j + 1].afvalid;
                         af[j + 1].frequency = temp;
                         af[j + 1].filler = temp2;
+                        af[j + 1].afvalid = temp3;
                       }
                     }
                   }
@@ -726,7 +798,9 @@ void TEF6686::clearRDS (bool fullsearchrds)
 
   for (i = 0; i < 50; i++) {
     af[i].frequency = 0;
+    af[i].score = -32767;
     af[i].filler = false;
+    af[i].afvalid = true;
   }
 
   for (i = 0; i < 20; i++) {
