@@ -1,7 +1,7 @@
 // [number of languages][number of texts][max. length of text]
 
 static const char* const myLanguage[15][99] = {
-  { "English",                        // English
+  { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
     "Screen flipped", // 3
@@ -102,7 +102,7 @@ static const char* const myLanguage[15][99] = {
     "Signalmeter unit:" // 98
   },
 
-  { "Nederlands",                     // Dutch
+  { "Nederlands", // Dutch
     "Rotary richting aangepast", // 1
     "Laat aub de knop los", // 2
     "Scherm gedraaid", // 3
@@ -203,7 +203,7 @@ static const char* const myLanguage[15][99] = {
     "Signaalmeter eenheid:" // 98
   },
 
-  { "Polski",                         // Polish
+  { "Polski", // Polish
     "Kierunek obrotu zmieniony", // 1
     "Zwolnij przycisk", // 2
     "Obrocono ekran", // 3
@@ -304,7 +304,7 @@ static const char* const myLanguage[15][99] = {
     "Jednostka sygnalu:" // 98
   },
 
-  { "Hrvatski",                       // Croatian
+  { "Hrvatski", // Croatian
     "Smjer enkodera promij.", // 1
     "Otpustite gumb", // 2
     "Zaslon je okrenut", // 3
@@ -405,7 +405,7 @@ static const char* const myLanguage[15][99] = {
     "Jedinica mjerača signala:" // 98
   },
 
-  { "Ελληνικά",                       // Greek
+  { "Ελληνικά", // Greek
     "Η διεύθυνση του ρότορα άλλαξε", // 1
     "Ελευθερώστε το πλήκτρο", // 2
     "Η οθόνη αναποδογύρισε", // 3
@@ -502,11 +502,11 @@ static const char* const myLanguage[15][99] = {
     "1% φωτεινότητα", // 94
     "25% φωτεινότητα", // 95
     "50% φωτεινότητα", // 96
-    "AM RF Level offset:", // 97
-    "Signalmeter unit:" // 98
+    "AM Ολίσθηση επιπέδου RF:", // 97
+    "Μονάδα μέτρησης σήματος:" // 98
   },
 
-  { "Romana",                         // Romanian
+  { "Romana", // Romanian
     "Sens rotire schimbat", // 1
     "Eliberati butonul", // 2
     "Ecran inversat", // 3
@@ -607,7 +607,7 @@ static const char* const myLanguage[15][99] = {
     "Signalmeter unit:" // 98
   },
 
-  { "Deutsch",                        // German
+  { "Deutsch", // German
     "Drehrichtung geändert", // 1
     "Bitte Taste loslassen", // 2
     "Bildschirm gedreht", // 3
@@ -708,7 +708,7 @@ static const char* const myLanguage[15][99] = {
     "Signalmeter unit:" // 98
   },
 
-  { "Czech",                          // Czech
+  { "Czech", // Czech
     "Směr enkóderu byl změněn", // 1
     "Prosím, pusťte tlačítko", // 2
     "Obrazovka otočena", // 3
@@ -809,7 +809,7 @@ static const char* const myLanguage[15][99] = {
     "Signalmeter unit:" // 98
   },
 
-  { "Slovak",                         // Slovak
+  { "Slovak", // Slovak
     "Smer enkóderu bol zmenený", // 1
     "Prosím, pusťte tlačidlo", // 2
     "Obrazovka otočená", // 3
@@ -910,7 +910,7 @@ static const char* const myLanguage[15][99] = {
     "Signalmeter unit:" // 98
   },
 
-  { "Français",                        // French
+  { "Français", // French
     "Sens de rotation modifié", // 1
     "Veuillez relâcher le bouton", // 2
     "Écran inversé", // 3
@@ -1011,7 +1011,7 @@ static const char* const myLanguage[15][99] = {
     "Signalmeter unit:" // 98
   },
 
-  { "Български",                        // Bulgarian
+  { "Български", // Bulgarian
     "Посоката е променена", // 1
     "Моля, пуснете бутона", // 2
     "Екранът бе обърнат", // 3
@@ -1112,7 +1112,7 @@ static const char* const myLanguage[15][99] = {
     "Signalmeter unit:" // 98
   },
 
-  { "Русский",                        // Russian
+  { "Русский", // Russian
     "Изменено направление вращения", // 1
     "Пожалуйста, отпустите кнопку", // 2
     "Экран перевернут", // 3
@@ -1415,7 +1415,7 @@ static const char* const myLanguage[15][99] = {
     "Unità S - meter: " // 98
   },
 
-  { "Simplified Chinese",                   // Simplified Chinese
+  { "Simplified Chinese", // Simplified Chinese
     "飞梭方向改变了", // 1
     "请释放按钮", // 2
     "屏幕翻转了", // 3
