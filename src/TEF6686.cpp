@@ -9,7 +9,7 @@ bool lastBitState = false;
 
 uint16_t TEF6686::TestAF() {
 
-  if (rds.hasRDS) {
+  if (af_counter != 0) {
     uint16_t status;
     uint16_t rdsStat;
     uint16_t dummy1;
