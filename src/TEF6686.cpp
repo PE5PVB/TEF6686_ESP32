@@ -7,8 +7,50 @@ unsigned long rdstimer = 0;
 unsigned long bitStartTime = 0;
 bool lastBitState = false;
 
-uint16_t TEF6686::TestAF() {
+void TEF6686::TestAFEON() {
+  uint16_t status;
+  uint16_t rdsStat;
+  uint16_t dummy1;
+  uint16_t dummy2;
+  uint8_t dummy3;
+  int16_t aflevel;
+  uint16_t afusn;
+  uint16_t afwam;
+  int16_t afoffset;
+  byte timing;
 
+  if (af_counter != 0) {
+    devTEF_Audio_Set_Mute(1);
+    for (int x = 0; x < af_counter; x++) {
+      timing = 0;
+      devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 3, af[x].frequency);
+      while (timing == 0 && !bitRead(timing, 15)) {
+        devTEF_Radio_Get_Quality_Status(&status, &aflevel, &afusn, &afwam, &afoffset, &dummy1, &dummy2, &dummy3);
+        timing = lowByte(status);
+      }
+      if (afoffset > -125 || afoffset < 125) {
+        devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, af[x].frequency);
+        delay(200);
+        devTEF_Radio_Get_RDS_Status(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
+        if (rdsStat & (1 << 9)) {
+          if (rds.rdsA == rds.correctPI) {
+            af[x].checked = true;
+            af[x].afvalid = true;
+          } else {
+            af[x].checked = false;
+            af[x].afvalid = false;
+          }
+        } else {
+          af[x].checked = false;
+        }
+      }
+    }
+  }
+  devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, currentfreq);
+  if (!mute) devTEF_Audio_Set_Mute(0);
+}
+
+uint16_t TEF6686::TestAF() {
   if (af_counter != 0) {
     uint16_t status;
     uint16_t rdsStat;
@@ -56,17 +98,22 @@ uint16_t TEF6686::TestAF() {
       devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, af[highestIndex].frequency);
       delay(200);
       devTEF_Radio_Get_RDS_Status(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
-      if ((rdsStat & (1 << 9)) && rds.rdsA == rds.correctPI) {
-        currentfreq = af[highestIndex].frequency;
-        for (byte y = 0; y < 50; y++) {
-          af[y].frequency = 0;
-          af[y].score = -32767;
-          af[y].afvalid = true;
-          af[y].filler = false;
-          af_counter = 0;
+      if (rdsStat & (1 << 9)) {
+        if (rds.rdsA == rds.correctPI) {
+          currentfreq = af[highestIndex].frequency;
+          for (byte y = 0; y < 50; y++) {
+            af[y].frequency = 0;
+            af[y].score = -32767;
+            af[y].afvalid = true;
+            af[y].filler = false;
+            af[y].checked = false;
+          }
+          af_counter = 0; // Reset af_counter only once after the loop.
+        } else {
+          af[highestIndex].afvalid = false;
+          devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, currentfreq);
         }
       } else {
-        af[highestIndex].afvalid = false;
         devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, currentfreq);
       }
     }
@@ -337,8 +384,8 @@ void TEF6686::readRDS(bool showrdserrors)
     if (rdsReady) {                                                                                       // We have all data to decode... let's go...
 
       //PI decoder
-	  if (rds.correct) rds.correctPI = rds.rdsA;
-	  
+      if (rds.correct) rds.correctPI = rds.rdsA;
+
       if (rds.region != 1 && (!rds.rdsAerror || rds.pierrors)) {
         if (rds.rdsA != piold) {
           piold = rds.rdsA;
@@ -509,12 +556,15 @@ void TEF6686::readRDS(bool showrdserrors)
                         uint16_t temp = af[j].frequency;
                         bool temp2 = af[j].filler;
                         bool temp3 = af[j].afvalid;
+                        bool temp4 = af[j].checked;
                         af[j].frequency = af[j + 1].frequency;
                         af[j].filler = af[j + 1].filler;
                         af[j].afvalid = af[j + 1].afvalid;
+                        af[j].checked = af[j + 1].checked;
                         af[j + 1].frequency = temp;
                         af[j + 1].filler = temp2;
                         af[j + 1].afvalid = temp3;
+                        af[j + 1].checked = temp4;
                       }
                     }
                   }
@@ -802,6 +852,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
     af[i].score = -32767;
     af[i].filler = false;
     af[i].afvalid = true;
+    af[i].checked = false;
   }
 
   for (i = 0; i < 20; i++) {
@@ -810,6 +861,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
     eon[i].mappedfreq = 0;
     eon[i].mappedfreq2 = 0;
     eon[i].mappedfreq3 = 0;
+    eon[i].checked = false;
     for (int y = 0; y < 9; y++) {
       eon_buffer[i][y] = 0;
       eon_buffer2[i][y] = 0;

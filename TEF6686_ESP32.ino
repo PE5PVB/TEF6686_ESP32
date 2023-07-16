@@ -3218,14 +3218,14 @@ void ShowAdvancedRDS() {
     tft.drawString("AF",  42, 45, GFXFF);
     hasafold = radio.rds.hasAF;
   }
-  if (millis() - afticker >= 500) {
+  if (millis() - afticker >= 100) { //500
     if (xPos2 == 6) {
       if (millis() - aftickerhold >= 2000) {
-        xPos2 -= charWidth;
+        xPos2 -= 1;//charWidth;
         aftickerhold = millis();
       }
     } else {
-      xPos2 -= charWidth;
+      xPos2 -= 1;//charWidth;
       aftickerhold = millis();
     }
     if (xPos2 < -tft.textWidth(afstring) + (charWidth * 14)) xPos2 = 6;
@@ -3245,14 +3245,14 @@ void ShowAdvancedRDS() {
     tft.drawString("EON",  148, 45, GFXFF);
     haseonold = radio.rds.hasEON;
   }
-  if (millis() - eonticker >= 500) {
+  if (millis() - eonticker >= 100) { //500
     if (xPos3 == 6) {
       if (millis() - eontickerhold >= 2000) {
-        xPos3 -= charWidth;
+        xPos3 -= 1;//charWidth;
         eontickerhold = millis();
       }
     } else {
-      xPos3 -= charWidth;
+      xPos3 -= 1;//charWidth;
       eontickerhold = millis();
     }
     if (xPos3 < -tft.textWidth(eonstring) + (charWidth * 14)) xPos3 = 6;
@@ -3272,14 +3272,14 @@ void ShowAdvancedRDS() {
     tft.drawString("RT+",  116, 45, GFXFF);
     hasrtplusold = radio.rds.hasRDSplus;
   }
-  if (millis() - rtplusticker >= 350) {
+  if (millis() - rtplusticker >= 100) { //350
     if (xPos3 == 6) {
       if (millis() - rtplustickerhold >= 2000) {
-        xPos4 -= charWidth;
+        xPos4 -= 1;//charWidth;
         rtplustickerhold = millis();
       }
     } else {
-      xPos4 -= charWidth;
+      xPos4 -= 1;//charWidth;
       rtplustickerhold = millis();
     }
     if (xPos4 < -tft.textWidth(rtplusstring) + (charWidth * 14)) xPos4 = 6;
@@ -3565,14 +3565,14 @@ void showPS() {
 
 void showRadioText() {
   if (radio.rds.hasRT && RDSstatus) {
-    if (millis() - rtticker >= 350) {
+    if (millis() - rtticker >= 100) { // 350
       if (xPos == 6) {
         if (millis() - rttickerhold >= 2000) {
-          xPos -= charWidth;
+          xPos -= 1;//= charWidth;
           rttickerhold = millis();
         }
       } else {
-        xPos -= charWidth;
+        xPos -= 1;//= charWidth;
         rttickerhold = millis();
       }
 
@@ -3779,10 +3779,10 @@ void ShowAFEON() {
     }
 
     if (af_counterold != radio.af_counter) {
-      Serial.println(radio.af_counter);
       tft.fillRect(2, 53, 177, 165, BackgroundColor);
       for (byte i = 0; i < radio.af_counter; i++) {
         byte x = i - (afpagenr == 2 ? 33 : 0);
+        if (radio.af[i].checked) tft.setTextColor(TFT_GREEN); else if (!radio.af[i].afvalid) tft.setTextColor(TFT_RED); else tft.setTextColor(PrimaryColor);
         tft.drawRightString((radio.af[i].filler ? "(f) " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10),  56 + (x > 10 ? 60 : 0) + (x > 21 ? 60 : 0), 48 + (15 * x) - (x > 10 ? 165 : 0) - (x > 21 ? 165 : 0), GFXFF);
         if (i == 32  + (afpagenr == 2 ? 33 : 0)) i = 254;
       }
@@ -3834,6 +3834,14 @@ void ShowAFEON() {
 }
 
 void BuildAFScreen() {
+  if (!afscreen && RDSstatus) {
+    tft.drawRoundRect(20, 30, 274, 170, 5, ActiveColor);
+    tft.fillRoundRect(22, 32, 270, 166, 5, BackgroundColor);
+    tft.setFreeFont(FONT14);
+    tft.setTextColor(ActiveColor);
+    tft.drawCentreString(myLanguage[language][34], 155, 90, GFXFF);
+    radio.TestAFEON();
+  }
   afscreen = true;
   advancedRDS = false;
   if (theme == 0) {
@@ -4306,8 +4314,8 @@ void ShowFreq(int mode) {
 
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
-      Udp.print("from = TEF tuner; freq = ");
-      if (band != BAND_FM) Udp.print(String(frequency_AM) + "000; ClearRDS = 1"); else Udp.print(String(frequency) + "0000; ClearRDS = 1");
+      Udp.print("from=TEF tuner;freq=");
+      if (band != BAND_FM) Udp.print(String(frequency_AM) + "000;ClearRDS=1"); else Udp.print(String(frequency) + "0000;ClearRDS=1");
       Udp.endPacket();
     }
   }
@@ -4393,7 +4401,7 @@ void ShowSignalLevel() {
       }
       if (wifi) {
         Udp.beginPacket(remoteip, 9030);
-        Udp.print("from = TEF tuner; RcvLevel = ");
+        Udp.print("from=TEF tuner;RcvLevel=");
         Udp.print(SStatus / 10);
         Udp.endPacket();
       }
@@ -4550,7 +4558,7 @@ void ShowBW() {
     BWreset = false;
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
-      Udp.print("from = TEF tuner; Bandwidth = ");
+      Udp.print("from=TEF tuner;Bandwidth=");
       Udp.print(BW * 1000);
       Udp.endPacket();
     }
@@ -4767,6 +4775,7 @@ void updateEQ() {
 }
 
 void updateSWMIBand() {
+  tft.setFreeFont(FONT7);
   switch (SWMIBandPos) {
     case SW_MI_BAND_11M:
     case SW_MI_BAND_13M:
@@ -5061,14 +5070,14 @@ void Communication() {
         Udp.read(packetBuffer, packetSize);
         Udp.endPacket();
         String packet = String(packetBuffer);
-        if (packetBuffer == "from = StationList; freq = ?; bandwidth = ? ") {
+        if (packetBuffer == "from=StationList;freq=?;bandwidth=?") {
           ShowFreq(0);
           Udp.beginPacket(remoteip, 9030);
-          Udp.print("from = TEF tuner; Bandwidth = ");
+          Udp.print("from=TEF tuner;Bandwidth=");
           Udp.print(BW * 1000);
           Udp.endPacket();
         } else {
-          int symPos = packet.indexOf("freq = ");
+          int symPos = packet.indexOf("freq=");
           String stlfreq = packet.substring(symPos + 5, packetSize);
           if ((stlfreq.toInt()) / 10000 > 6500 && (stlfreq.toInt()) / 10000 < 10800) {
             if (band != BAND_FM) {
@@ -5128,9 +5137,9 @@ void Communication() {
           SelectBand();
         }
         XDRGTKTCP = true;
-        RemoteClient.print("o1, 0\n");
+        RemoteClient.print("o1,0\n");
         store = true;
-      } else if (RDSSPYTCP == false && XDRGTKTCP == false && data_str.length() < 5 && data_str == ("*R ? F"))
+      } else if (RDSSPYTCP == false && XDRGTKTCP == false && data_str.length() < 5 && data_str == ("*D*R?F"))
       {
         RDSSPYTCP = true;
       } else if (RDSSPYTCP == true) {
@@ -5157,7 +5166,7 @@ void Communication() {
     {
       String data_str = Serial.readStringUntil('\n');
       int data = data_str.toInt();
-      if (data_str.length() > 1 && data_str == ("*D * R ? F")) RDSSPYUSB = true;
+      if (data_str.length() > 1 && data_str == ("*D*R?F")) RDSSPYUSB = true;
       int symPos = data_str.indexOf("*F");
       if (symPos >= 5) {
         String freq = data_str.substring(0, symPos);
@@ -5664,8 +5673,8 @@ void TuneUp() {
     frequency_SW = frequency_AM;
   }
   radio.clearRDS(fullsearchrds);
-  if (RDSSPYUSB == true) Serial.print("G : \r\nRESET------ -\r\n\r\n");
-  if (RDSSPYTCP == true) RemoteClient.print("G : \r\nRESET------ -\r\n\r\n");
+  if (RDSSPYUSB == true) Serial.print("G:\r\nRESET-------\r\n\r\n");
+  if (RDSSPYTCP == true) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
 }
 
 void TuneDown() {
@@ -5745,8 +5754,8 @@ void TuneDown() {
     frequency_SW = frequency_AM;
   }
   radio.clearRDS(fullsearchrds);
-  if (RDSSPYUSB == true) Serial.print("G : \r\nRESET------ -\r\n\r\n");
-  if (RDSSPYTCP == true) RemoteClient.print("G : \r\nRESET------ -\r\n\r\n");
+  if (RDSSPYUSB == true) Serial.print("G:\r\nRESET-------\r\n\r\n");
+  if (RDSSPYTCP == true) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
 }
 
 void EdgeBeeper() {
@@ -5770,8 +5779,8 @@ void Seek(bool mode) {
       store = true;
     } else {
       seek = true;
-      if (RDSSPYUSB == true) Serial.print("G : \r\nRESET------ -\r\n\r\n");
-      if (RDSSPYTCP == true) RemoteClient.print("G : \r\nRESET------ -\r\n\r\n");
+      if (RDSSPYUSB == true) Serial.print("G:\r\nRESET-------\r\n\r\n");
+      if (RDSSPYTCP == true) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
     }
   }
 }

@@ -147,6 +147,7 @@ typedef struct _af_ {
   int16_t score;
   bool filler;
   bool afvalid;
+  bool checked;
 } af_;
 
 typedef struct _eon_ {
@@ -156,14 +157,16 @@ typedef struct _eon_ {
   uint16_t  pi;
   char picode[6];
   String ps;
+  bool eonvalid;
+  bool checked;
 } eon_;
 
 typedef struct _logbook_ {
-	char picode[6];
-	uint16_t frequency;
-	int16_t SignalLevel;
-	String stationName;
-	String DateTime;
+  char picode[6];
+  uint16_t frequency;
+  int16_t SignalLevel;
+  String stationName;
+  String DateTime;
 } logbook_;
 
 class TEF6686 {
@@ -171,8 +174,9 @@ class TEF6686 {
     af_  af[50];
     eon_ eon[20];
     rds_ rds;
-	logbook_ logbook[22];
-	uint16_t TestAF();
+    logbook_ logbook[22];
+    uint16_t TestAF();
+    void TestAFEON();
     void readRDS(bool showrdserrors);
     void SetFreq(uint16_t frequency);
     void SetFreqAM(uint16_t frequency);
@@ -205,7 +209,7 @@ class TEF6686 {
     void setAMAttenuation(uint16_t start);
     void setMute();
     void setOffset(int8_t offset);
-	void setAMOffset(int8_t offset);
+    void setAMOffset(int8_t offset);
     void setFMSI(uint8_t mode);
     void setFMSI_Time(uint16_t attack, uint16_t decay);
     void setFMSI_Gain(uint16_t band1, uint16_t band2, uint16_t band3, uint16_t band4);
@@ -216,7 +220,7 @@ class TEF6686 {
     void tone(uint16_t time, int16_t amplitude, uint16_t frequency);
     uint8_t af_counter;
     uint8_t eon_counter;
-	uint8_t logbook_counter;
+    uint8_t logbook_counter;
     uint8_t rdsblock;
     uint8_t rtplusblock;
     bool mute;
@@ -234,14 +238,14 @@ class TEF6686 {
     bool rt_process;
     char rt_buffer[65];
     char rt_buffer2[65];
-	char rt_buffer32[33];
+    char rt_buffer32[33];
     bool useRTPlus = true;
     bool ABold;
     char stationTextBuffer[65];
     uint16_t rdsBprevious;
     uint16_t rdsCprevious;
     uint16_t rdsDprevious;
-	uint16_t piold;
+    uint16_t piold;
     bool rtABold;
     wchar_t PStext[9] = L"";
     wchar_t EONPStext[20][9];
