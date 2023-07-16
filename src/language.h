@@ -235,7 +235,7 @@ static const char* const myLanguage[15][100] = {
     "Ustaw prog dolnoprzep.", // 27
     "Ustaw dolna granice sygnalu", // 28
     "Ustaw jasnosc wyswietlacza", // 29
-    "Wyl.", // 30
+    "Wylaczone", // 30
     "Ekran jest wyciszony!", // 31
     "Aby wyl. wyciszenie odznacz RF+", // 32
     "WYL.", // 33
@@ -247,7 +247,7 @@ static const char* const myLanguage[15][100] = {
     "Jezyk", // 39
     "Wybierz swoj jezyk", // 40
     "WCISNIJ MODE ABY ZAMKNAC I ZAPISAC", // 41
-    "Wlacz.", // 42
+    "Wlaczone", // 42
     "Lagodne wyciszanie FM", // 43
     "Lagodne wyciszanie AM", // 44
     "Beep na krawedzi pasma", // 45
@@ -304,7 +304,7 @@ static const char* const myLanguage[15][100] = {
     "50% jasnosci", // 96
     "Odchylenie poziomu RF AM:", // 97
     "Jednostka sygnalu:", // 98
-	"Use AF:" // 99
+    "Uzywaj AF:" // 99
   },
 
   { "Hrvatski", // Croatian
