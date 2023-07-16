@@ -95,23 +95,24 @@
 
 // EEPROM index defines
 #define EE_PRESETS_CNT              30
-#define EE_CHECKBYTE_VALUE          34 // 0 ~ 255,add new entry, change for new value 
+#define EE_CHECKBYTE_VALUE          36 // 0 ~ 255,add new entry, change for new value 
     
 #define EE_TOTAL_CNT                269
-#define EE_UINT_FREQUENCY_FM        0
-#define EE_INT_VOLSET               4
-#define EE_UINT_CONVERTERSET        8
-#define EE_UINT_FMLOWEDGESET        12
-#define EE_UINT_FMHIGHEDGESET       16
+#define EE_UINT16_FREQUENCY_FM      0
+#define EE_BYTE_VOLSET              4
+#define EE_BYTE_STEREO              5
+#define EE_UINT16_CONVERTERSET      8
+#define EE_UINT16_FMLOWEDGESET      12
+#define EE_UINT16_FMHIGHEDGESET     16
 #define EE_BYTE_CONTRASTSET         20
 #define EE_BYTE_STEREOLEVEL         21
 #define EE_BYTE_HIGHCUTLEVEL        22
 #define EE_BYTE_HIGHCUTOFFSET       23
-#define EE_INT_LEVELOFFSET          24
+#define EE_BYTE_LEVELOFFSET         24
 #define EE_BYTE_EDGEBEEP            28
 #define EE_BYTE_SOFTMUTEAM          29
 #define EE_BYTE_SOFTMUTEFM          30
-#define EE_UINT_FREQUENCY_AM        31
+#define EE_UINT16_FREQUENCY_AM      31
 #define EE_BYTE_LANGUAGE            35
 #define EE_BYTE_SHOWRDSERRORS       36
 #define EE_BYTE_TEF                 37
@@ -124,7 +125,7 @@
 #define EE_BYTE_IMSSET              44
 #define EE_BYTE_EQSET               45
 #define EE_BYTE_BAND                46
-#define EE_INT_LOWLEVELSET          47
+#define EE_BYTE_LOWLEVELSET         47
 #define EE_BYTE_MEMORYPOS           51
 #define EE_BYTE_REGION              52
 #define EE_BYTE_RDS_UNDERSCORE      53
@@ -138,9 +139,9 @@
 #define EE_PRESETS_START            100
 #define EE_PRESETS_FREQUENCY        8750
 
-#define EE_UINT_FREQUENCY_LW        221
-#define EE_UINT_FREQUENCY_MW        225
-#define EE_UINT_FREQUENCY_SW        229
+#define EE_UINT16_FREQUENCY_LW      221
+#define EE_UINT16_FREQUENCY_MW      225
+#define EE_UINT16_FREQUENCY_SW      229
 #define EE_STRING_XDRGTK_KEY        233  // 11 byte
 #define EE_BYTE_SHOWSQUELCH         244
 #define EE_BYTE_SHOWMODULATION      245
@@ -148,14 +149,14 @@
 #define EE_BYTE_FM_NB               247
 #define EE_BYTE_AUDIOMODE           248
 #define EE_BYTE_OIRT                249
-#define EE_UINT_LOWEDGEOIRTSET      250
-#define EE_UINT_HIGHEDGEOIRTSET     254
+#define EE_UINT16_LOWEDGEOIRTSET    250
+#define EE_UINT16_HIGHEDGEOIRTSET   254
 #define EE_BYTE_COLORINVERT         258
 #define EE_BYTE_POWEROPTIONS        259
 #define EE_BYTE_CURRENTTHEME        260
 #define EE_BYTE_FMDEFAULTSTEPSIZE   261
 #define EE_BYTE_SCREENSAVERSET      262
-#define EE_INT_AMLEVELOFFSET        263
+#define EE_INT16_AMLEVELOFFSET      263
 #define EE_BYTE_UNIT                267
 #define EE_BYTE_AF                  268           
 // End of EEPROM index defines
