@@ -25,12 +25,11 @@ uint16_t TEF6686::TestAF() {
     uint16_t currentusn;
     uint16_t currentwam;
     int16_t currentoffset;
-    uint16_t currentpi;
 
     byte timing;
 
     devTEF_Radio_Get_Quality_Status(&status, &currentlevel, &currentusn, &currentwam, &currentoffset, &dummy1, &dummy2, &dummy3);
-    devTEF_Radio_Get_RDS_Status(&rdsStat, &currentpi, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
+    devTEF_Radio_Get_RDS_Status(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
 
     for (int x = 0; x < af_counter; x++) {
       timing = 0;
@@ -57,7 +56,7 @@ uint16_t TEF6686::TestAF() {
       devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, af[highestIndex].frequency);
       delay(200);
       devTEF_Radio_Get_RDS_Status(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
-      if ((rdsStat & (1 << 9)) && rds.rdsA == currentpi) {
+      if ((rdsStat & (1 << 9)) && rds.rdsA == rds.correctPI) {
         currentfreq = af[highestIndex].frequency;
         for (byte y = 0; y < 50; y++) {
           af[y].frequency = 0;
@@ -338,6 +337,8 @@ void TEF6686::readRDS(bool showrdserrors)
     if (rdsReady) {                                                                                       // We have all data to decode... let's go...
 
       //PI decoder
+	  if (rds.correct) rds.correctPI = rds.rdsA;
+	  
       if (rds.region != 1 && (!rds.rdsAerror || rds.pierrors)) {
         if (rds.rdsA != piold) {
           piold = rds.rdsA;
@@ -822,6 +823,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
   }
   rdsblock = 0;
   piold = 0;
+  rds.correctPI = 0;
   rds.ECC = 0;
   rds.LIC = 0;
   rds.pinHour = 0;

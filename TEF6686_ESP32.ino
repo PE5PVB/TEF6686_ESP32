@@ -620,8 +620,8 @@ void loop() {
   if (power == true) {
     Communication();
 
-    if (af) {
-      if ((aftest && millis() >= aftimer + 3000) || (USN > 250 || WAM > 250)) {
+    if (af && radio.rds.correctPI != 0) {
+      if ((aftest && millis() >= aftimer + 3000) || ((USN > 250 || WAM > 250) && millis() >= aftimer + 1000)) {
         aftimer = millis();
         aftest = false;
         frequency = radio.TestAF();
@@ -1583,6 +1583,7 @@ void ModeButtonPress() {
       EEPROM.writeInt(EE_INT16_AMLEVELOFFSET, AMLevelOffset);
       EEPROM.writeByte(EE_BYTE_UNIT, unit);
       EEPROM.writeByte(EE_BYTE_AF, af);
+      EEPROM.writeByte(EE_BYTE_STEREO, StereoToggle);
       EEPROM.commit();
       Serial.end();
       if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
@@ -3050,6 +3051,7 @@ void readRds() {
         if (!advancedRDS) tft.drawString(RTold, 1, 223, GFXFF);
         dropout = true;
         aftest = true;
+        aftimer = millis();
       } else {
         if (dropout == true && PIold.length() != 0) {
           tft.setTextColor(PrimaryColor);

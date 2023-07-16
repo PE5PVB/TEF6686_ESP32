@@ -107,7 +107,7 @@ typedef struct _rds_ {
   String PTYN;
   char stationType[18];
   char picode[6];
-  uint16_t hour, minute, day, month, year, offsetplusmin, rdsA, rdsB, rdsC, rdsD, rdsErr;
+  uint16_t hour, minute, day, month, year, offsetplusmin, rdsA, rdsB, rdsC, rdsD, rdsErr, correctPI;
   int8_t offset;
   unsigned int ECC;
   unsigned int LIC;
@@ -158,12 +158,20 @@ typedef struct _eon_ {
   String ps;
 } eon_;
 
+typedef struct _logbook_ {
+	char picode[6];
+	uint16_t frequency;
+	int16_t SignalLevel;
+	String stationName;
+	String DateTime;
+} logbook_;
 
 class TEF6686 {
   public:
     af_  af[50];
     eon_ eon[20];
     rds_ rds;
+	logbook_ logbook[22];
 	uint16_t TestAF();
     void readRDS(bool showrdserrors);
     void SetFreq(uint16_t frequency);
@@ -208,6 +216,7 @@ class TEF6686 {
     void tone(uint16_t time, int16_t amplitude, uint16_t frequency);
     uint8_t af_counter;
     uint8_t eon_counter;
+	uint8_t logbook_counter;
     uint8_t rdsblock;
     uint8_t rtplusblock;
     bool mute;
