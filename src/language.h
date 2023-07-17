@@ -406,7 +406,7 @@ static const char* const myLanguage[15][100] = {
     "50% svjetlina", // 96
     "AM pomak RF razine:", // 97
     "Jedinica mjerača signala:", // 98
-	"Use AF:" // 99
+    "Koristi AF:" // 99
   },
 
   { "Ελληνικά", // Greek
