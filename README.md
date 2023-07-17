@@ -13,14 +13,6 @@ More information: https://www.pe5pvb.nl/tef6686/
 - [Getting started](https://github.com/PE5PVB/TEF6686_ESP32/wiki#getting-started)
 - [How to install the software](https://github.com/PE5PVB/TEF6686_ESP32/wiki/Installing-the-software)
 
-### Connecting analog signal meter
-```
-                      to meter
-                          |
-                R         V
-  IO27 -------=====-----=====---|
-               1 k     5 k POT
-```
 ## Contributing
 We are open for a new ideas in our project. Feel free to share your thoughts in [Discussions](https://github.com/PE5PVB/TEF6686_ESP32/discussions).\
 You can also contribute your own code using [Pull Requests](https://github.com/PE5PVB/TEF6686_ESP32/pulls). We will review it and merge into main branch.
