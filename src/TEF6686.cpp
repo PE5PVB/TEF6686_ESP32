@@ -136,7 +136,7 @@ void TEF6686::init(byte TEF) {
 }
 
 bool TEF6686::getIdentification(uint16_t &device, uint16_t &hw_version, uint16_t &sw_version) {
-  bool result = devTEF_Radio_Get_Identification(&device, &hw_version, &sw_version);
+  devTEF_Radio_Get_Identification(&device, &hw_version, &sw_version);
   return device;
   return hw_version;
   return sw_version;
@@ -313,7 +313,7 @@ void TEF6686::setStHiBlendOffset(uint8_t start) {
 }
 
 bool TEF6686::getProcessing(uint16_t &highcut, uint16_t &stereo, uint16_t &sthiblend, uint8_t &stband_1, uint8_t &stband_2, uint8_t &stband_3, uint8_t &stband_4) {
-  bool result = devTEF_Radio_Get_Processing_Status(&highcut, &stereo, &sthiblend, &stband_1, &stband_2, &stband_3, &stband_4);
+  devTEF_Radio_Get_Processing_Status(&highcut, &stereo, &sthiblend, &stband_1, &stband_2, &stband_3, &stband_4);
   return highcut;
   return stereo;
   return sthiblend;
@@ -325,7 +325,7 @@ bool TEF6686::getProcessing(uint16_t &highcut, uint16_t &stereo, uint16_t &sthib
 
 bool TEF6686::getStatus(int16_t &level, uint16_t &USN, uint16_t &WAM, int16_t &offset, uint16_t &bandwidth, uint16_t &modulation, uint8_t &snr) {
   uint16_t status;
-  bool result = devTEF_Radio_Get_Quality_Status(&status, &level, &USN, &WAM, &offset, &bandwidth, &modulation, &snr);
+  devTEF_Radio_Get_Quality_Status(&status, &level, &USN, &WAM, &offset, &bandwidth, &modulation, &snr);
   return level;
   return USN;
   return WAM;
@@ -335,7 +335,7 @@ bool TEF6686::getStatus(int16_t &level, uint16_t &USN, uint16_t &WAM, int16_t &o
 }
 
 bool TEF6686::getStatusAM(int16_t &level, uint16_t &noise, uint16_t &cochannel, int16_t &offset, uint16_t &bandwidth, uint16_t &modulation, uint8_t &snr) {
-  bool result = devTEF_Radio_Get_Quality_Status_AM(&level, &noise, &cochannel, &offset, &bandwidth, &modulation, &snr);
+  devTEF_Radio_Get_Quality_Status_AM(&level, &noise, &cochannel, &offset, &bandwidth, &modulation, &snr);
   return level;
   return noise;
   return cochannel;
@@ -634,7 +634,7 @@ void TEF6686::readRDS(bool showrdserrors)
                 for (byte i = 0; i < 33; i++) {
                   rt_buffer32[i] = 0x20;
                 }
-                rt_buffer32[33] = '\0';
+                rt_buffer32[32] = '\0';
                 rtABold = rds.rtAB;
               }
 
@@ -667,7 +667,6 @@ void TEF6686::readRDS(bool showrdserrors)
               mjd += ((rds.rdsC >> 1) & 0x7FFF);
 
               long J, C, Y, M;
-              uint8_t LocalOffset;
               J = mjd + 2400001 +  68569;
               C = 4 * J / 146097;
               J = J - (146097 * C + 3) / 4;
@@ -916,7 +915,7 @@ void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {
 String TEF6686::convertToUTF8(const wchar_t* input) {
   String output;
   while (*input) {
-    uint16_t unicode = *input;
+    uint32_t unicode = *input;
     if (unicode < 0x80) {
       output += (char)unicode;
     } else if (unicode < 0x800) {
