@@ -845,7 +845,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
   for (i = 0; i < 65; i++) rt_buffer[i] = 0;
   for (i = 0; i < 33; i++) rt_buffer32[i] = 0;
   for (i = 0; i < 18; i++) rds.stationType[i] = 0;
-  for (i = 0; i < 7; i++) rds.picode[i] = 0;
+  for (i = 0; i < 6; i++) rds.picode[i] = 0;
 
   for (i = 0; i < 50; i++) {
     af[i].frequency = 0;
@@ -862,10 +862,8 @@ void TEF6686::clearRDS (bool fullsearchrds)
     eon[i].mappedfreq2 = 0;
     eon[i].mappedfreq3 = 0;
     eon[i].checked = false;
-    for (int y = 0; y < 9; y++) {
-      eon_buffer[i][y] = 0;
-      eon_buffer2[i][y] = 0;
-      EONPStext[i][y] = L'\0';
+    for (int y = 0; y < 5; y++) {
+      eon[i].picode[y] = '\0';
     }
   }
 

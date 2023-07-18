@@ -258,7 +258,7 @@ unsigned int LowEdgeOIRTSet;
 unsigned int LowEdgeSet;
 unsigned int LWHighEdgeSet;
 unsigned int LWLowEdgeSet;
-unsigned int mappedfreqold[10];
+unsigned int mappedfreqold[20];
 unsigned int memory[EE_PRESETS_CNT];
 unsigned int MWHighEdgeSet;
 unsigned int MWLowEdgeSet;
@@ -3266,7 +3266,7 @@ void ShowAdvancedRDS() {
   }
 
   String rtplusstring;
-  if (radio.rds.hasRDSplus) rtplusstring = "1\) " + String(radio.rds.RTContent1) + " - 2\) " + String(radio.rds.RTContent2) + "         "; else rtplusstring = myLanguage[language][89];
+  if (radio.rds.hasRDSplus) rtplusstring = "1) " + String(radio.rds.RTContent1) + " - 2) " + String(radio.rds.RTContent2) + "         "; else rtplusstring = myLanguage[language][89];
   if (hasrtplusold != radio.rds.hasRDSplus) {
     if (radio.rds.hasRDSplus) tft.setTextColor(SecondaryColor); else tft.setTextColor(GreyoutColor);
     tft.drawString("RT+",  116, 45, GFXFF);
@@ -3865,7 +3865,7 @@ void BuildAFScreen() {
 
     tft.drawRoundRect(35, 32, 138, 20, 5, ActiveColor);
 
-    for (byte i = 0; i < 11; i++) mappedfreqold[i] = 0;
+    for (byte i = 0; i < 20; i++) mappedfreqold[i] = 0;
     RDSstatusold = false;
     ShowFreq(0);
     Stereostatusold = false;
