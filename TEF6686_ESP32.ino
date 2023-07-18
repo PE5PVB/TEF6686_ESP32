@@ -509,7 +509,8 @@ void setup() {
   tftPrint(0, myLanguage[language][8], 160, 3, PrimaryColor, PrimaryColorSmooth, FONT28);
   tft.setFreeFont(FONT7);
   tft.setTextColor(PrimaryColor);
-  tft.drawCentreString("Software " + String(VERSION), 160, 148, GFXFF);
+  tftPrint(0, "Software " + String(VERSION), 160, 152, PrimaryColor, PrimaryColorSmooth, FONT16);
+//  tft.drawCentreString("Software " + String(VERSION), 160, 148, GFXFF);
 
   tft.fillCircle(160, 90, 60, TFT_RED);
   tft.fillCircle(160, 90, 52, BackgroundColor);
@@ -6079,27 +6080,26 @@ void tftPrint(int8_t offset, const String& text, int16_t x, int16_t y, int color
   tft.loadFont(font);
   tft.setTextColor(color, smoothcolor, false);
   switch (offset) {
-    case -1: tft.drawString(text, x, y, GFXFF); break;
-    case 0: tft.drawCentreString(text, x, y, GFXFF); break;
-    case 1: tft.drawRightString(text, x, y, GFXFF); break;
+    case -1: tft.drawString(text, x, y, 1); break;
+    case 0: tft.drawCentreString(text, x, y, 1); break;
+    case 1: tft.drawRightString(text, x, y, 1); break;
   }
   tft.unloadFont();
 }
 
 void tftReplace(int8_t offset, const String& textold, const String& text, int16_t x, int16_t y, int color, int smoothcolor, const uint8_t* font) {
   tft.loadFont(font);
-  tft.loadFont(font);
   tft.setTextColor(BackgroundColor, BackgroundColor, false);
   switch (offset) {
-    case -1: tft.drawString(textold, x, y, GFXFF); break;
-    case 0: tft.drawCentreString(textold, x, y, GFXFF); break;
-    case 1: tft.drawRightString(textold, x, y, GFXFF); break;
+    case -1: tft.drawString(textold, x, y, 1); break;
+    case 0: tft.drawCentreString(textold, x, y, 1); break;
+    case 1: tft.drawRightString(textold, x, y, 1); break;
   }
   tft.setTextColor(color, smoothcolor, false);
   switch (offset) {
-    case -1: tft.drawString(text, x, y, GFXFF); break;
-    case 0: tft.drawCentreString(text, x, y, GFXFF); break;
-    case 1: tft.drawRightString(text, x, y, GFXFF); break;
+    case -1: tft.drawString(text, x, y, 1); break;
+    case 0: tft.drawCentreString(text, x, y, 1); break;
+    case 1: tft.drawRightString(text, x, y, 1); break;
   }
   tft.unloadFont();
 }
