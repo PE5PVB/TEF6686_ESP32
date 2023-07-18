@@ -758,7 +758,7 @@ void TEF6686::readRDS(bool showrdserrors)
                 }
               }
 
-              if (!isValuePresent && eon_counter < 20) {
+              if (!isValuePresent) {
                 eon[eon_counter].picode[0] = (rds.rdsD >> 12) & 0xF;
                 eon[eon_counter].picode[1] = (rds.rdsD >> 8) & 0xF;
                 eon[eon_counter].picode[2] = (rds.rdsD >> 4) & 0xF;
@@ -873,7 +873,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
     RDSplus1[i] = 0;
     RDSplus2[i] = 0;
   }
-  rdsblock = 254;
+  rdsblock = 0;
   piold = 0;
   rds.correctPI = 0;
   rds.ECC = 0;
