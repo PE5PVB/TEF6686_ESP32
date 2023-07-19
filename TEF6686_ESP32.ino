@@ -3508,7 +3508,7 @@ void ShowAFEON() {
       }
 
       if (radio.eon[i].mappedfreq > 0) {
-        tftPrint(-1, "FREQ:", 316, 32, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(1, "FREQ:", 316, 32, ActiveColor, ActiveColorSmooth, FONT16);
         if (radio.eon[i].mappedfreq != mappedfreqold[i]) {
           tftPrint(1, String(mappedfreqold[i] / 100) + "." + String((mappedfreqold[i] % 100) / 10), 316, 54 + (15 * i), BackgroundColor, BackgroundColor, FONT16);
         }
