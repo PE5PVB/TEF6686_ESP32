@@ -870,7 +870,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
     RDSplus1[i] = 0;
     RDSplus2[i] = 0;
   }
-  rdsblock = 0;
+  rdsblock = 254;
   piold = 0;
   rds.correctPI = 0;
   rds.ECC = 0;

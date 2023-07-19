@@ -595,7 +595,7 @@ void loop() {
   if (power == true) {
     Communication();
 
-    if ((af && radio.rds.correctPI != 0) || aftest) {
+    if (af && radio.rds.correctPI != 0) {
       if ((aftest && millis() >= aftimer + 3000) || ((USN > 250 || WAM > 250) && millis() >= aftimer + 1000)) {
         aftimer = millis();
         aftest = false;
@@ -2984,7 +2984,7 @@ void ShowAdvancedRDS() {
     sprite2.loadFont(FONT16);
     sprite2.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
     sprite2.drawString(eonstring, xPos3, 0);
-    sprite2.pushSprite(35, 174);
+    sprite2.pushSprite(35, 175);
     eonticker = millis();
   }
 
@@ -3010,7 +3010,7 @@ void ShowAdvancedRDS() {
     sprite2.loadFont(FONT16);
     sprite2.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
     sprite2.drawString(rtplusstring, xPos4, 0);
-    sprite2.pushSprite(35, 149);
+    sprite2.pushSprite(35, 150);
     rtplusticker = millis();
   }
 
@@ -3499,7 +3499,7 @@ void ShowAFEON() {
     for (byte i = 0; i < radio.eon_counter; i++) {
       tftPrint(-1, String(radio.eon[i].picode), 184, 54 + (15 * i), PrimaryColor, PrimaryColorSmooth, FONT16);
       if (radio.eon[i].ps.length() > 0) {
-        tftPrint(-1, "PS:", 218, 36, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, "PS:", 218, 32, ActiveColor, ActiveColorSmooth, FONT16);
         if (radio.eon[i].ps != eonpsold[i]) {
           tftPrint(-1, String(eonpsold[i]), 218, 54 + (15 * i), BackgroundColor, BackgroundColor, FONT16);
           eonpsold[i] = radio.eon[i].ps;
@@ -3508,7 +3508,7 @@ void ShowAFEON() {
       }
 
       if (radio.eon[i].mappedfreq > 0) {
-        tftPrint(-1, "FREQ:", 316, 36, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, "FREQ:", 316, 32, ActiveColor, ActiveColorSmooth, FONT16);
         if (radio.eon[i].mappedfreq != mappedfreqold[i]) {
           tftPrint(1, String(mappedfreqold[i] / 100) + "." + String((mappedfreqold[i] % 100) / 10), 316, 54 + (15 * i), BackgroundColor, BackgroundColor, FONT16);
         }
@@ -3539,7 +3539,7 @@ void BuildAFScreen() {
     tftPrint(-1, "kHz", 220, 4, ActiveColor, ActiveColorSmooth, FONT28);
     tftPrint(-1, "AF:", 4, 32, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(-1, "PI:", 184, 32, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(0, myLanguage[language][93], 160, 224, ActiveColor, ActiveColorSmooth, FONT16);
+    tftPrint(0, myLanguage[language][93], 160, 222, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(-1, myLanguage[language][88], 184, 54, PrimaryColor, PrimaryColorSmooth, FONT16);
     tftPrint(-1, myLanguage[language][87], 6, 54, PrimaryColor, PrimaryColorSmooth, FONT16);
 
@@ -3585,7 +3585,7 @@ void BuildAdvancedRDS() {
     tft.drawLine(0, 218, 210, 218, FrameColor);
     tft.drawRect(0, 0, 320, 240, FrameColor);
 
-    tftPrint(-1, "ERRORS", 6, 36, ActiveColor, ActiveColorSmooth, FONT16);
+    tftPrint(-1, "ERRORS", 6, 34, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(1, unitString[unit], 310, 51, ActiveColor, ActiveColorSmooth, FONT16);
     if (region == 0) tftPrint(-1, "PI", 216, 82, ActiveColor, ActiveColorSmooth, FONT16);
     if (region == 1) tftPrint(-1, "ID", 216, 82, ActiveColor, ActiveColorSmooth, FONT16);
@@ -3596,10 +3596,10 @@ void BuildAdvancedRDS() {
     tftPrint(-1, "EON", 6, 175, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(-1, "RT", 6, 222, ActiveColor, ActiveColorSmooth, FONT16);
 
-    tftPrint(-1, "A:", 66, 36, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "B:", 104, 36, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "C:", 142, 36, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "D:", 180, 36, ActiveColor, ActiveColorSmooth, FONT16);
+    tftPrint(-1, "A:", 66, 34, ActiveColor, ActiveColorSmooth, FONT16);
+    tftPrint(-1, "B:", 104, 34, ActiveColor, ActiveColorSmooth, FONT16);
+    tftPrint(-1, "C:", 142, 34, ActiveColor, ActiveColorSmooth, FONT16);
+    tftPrint(-1, "D:", 180, 34, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(-1, "ECC", 216, 196, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(-1, "LIC", 216, 211, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(-1, "PIN", 216, 226, ActiveColor, ActiveColorSmooth, FONT16);
