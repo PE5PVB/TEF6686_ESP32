@@ -595,7 +595,7 @@ void loop() {
   if (power == true) {
     Communication();
 
-    if (af && radio.rds.correctPI != 0) {
+    if ((af && radio.rds.correctPI != 0) || aftest) {
       if ((aftest && millis() >= aftimer + 3000) || ((USN > 250 || WAM > 250) && millis() >= aftimer + 1000)) {
         aftimer = millis();
         aftest = false;
