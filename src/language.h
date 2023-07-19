@@ -177,10 +177,10 @@ static const char* const myLanguage[15][100] = {
     "Basis code:", // 71
     "Bijgedragen:", // 72
     "Onbekend", // 73
-    "Power options", // 74
-    "Deep sleep", // 75
-    "Screen off", // 76
-    "Theme", // 77
+    "Bespaar opties", // 74
+    "Volledig uit", // 75
+    "Scherm uit", // 76
+    "Thema", // 77
     "Default", // 78
     "Cyan", // 79
     "Crimson", // 80
@@ -190,9 +190,9 @@ static const char* const myLanguage[15][100] = {
     "Sakura", // 84
     "Whiteout", // 85
     "NIET MOGELIJK", // 86
-    "AF niet beschikbaar", // 87
-    "EON niet beschikbaar", // 88
-    "RT+ niet beschikbaar", // 89
+    "Geen AF data", // 87
+    "Geen EON data", // 88
+    "Geen RT+ data", // 89
     "FM stapgrootte", // 90
     "Schermbeveiliging", // 91
     "sec.", // 92
@@ -1543,11 +1543,11 @@ static const char* const myCountries[] {
   "Ireland", // 7
   "Estonia", // 8
   "Andorra", // 9
-  "San Marino", // 10
+  "SanMarino", // 10
   "Poland", // 11
   "Turkey", // 12
   "Israel", // 13
-  "Switzerland", // 14
+  "Switzerl.", // 14
   "Vatican", // 15
   "Macedonia", // 16
   "Italy", // 17
@@ -1559,16 +1559,16 @@ static const char* const myCountries[] {
   "Serbia", // 23
   "Ukraine", // 24
   "Russia", // 25
-  "Luxembourg", // 26
+  "Luxemb.", // 26
   "Tunisia", // 27
   "Azores", // 28
   "Bulgaria", // 29
   "Madeira", // 30
-  "Netherlands", // 31
+  "Netherl.", // 31
   "Portugal", // 32
   "Albania", // 33
   "Denmark", // 34
-  "Liechtenstein", // 35
+  "Liechtst.", // 35
   "Latvia", // 36
   "Slovenia", // 37
   "Austria", // 38
@@ -1620,15 +1620,15 @@ static const char* const myLanguages[] {
   "Lappish", // 22
   "Latin", // 23
   "Latvian", // 24
-  "Luxembourgian", // 25
-  "Lithuanian", // 26
+  "Luxemb.", // 25
+  "Lithuan.", // 26
   "Hungarian", // 27
   "Maltese", // 28
   "Dutch", // 29
   "Norwegian", // 30
   "Occitan", // 31
   "Polish", // 32
-  "Portuguese", // 33
+  "Portug.", // 33
   "Romanian", // 34
   "Romansh", // 35
   "Serbian", // 36
@@ -1642,7 +1642,7 @@ static const char* const myLanguages[] {
   "Ukranian", // 44
   "Russian", // 45
   "Moldavian", // 46
-  "Macedonian", // 47
+  "Macedon.", // 47
   "Hebrew", // 48
   "Greek", // 49
   "Georgian", // 50
