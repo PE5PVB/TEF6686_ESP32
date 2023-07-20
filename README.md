@@ -1,5 +1,9 @@
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/PE5PVB/TEF6686_ESP32/issues)
+[![HitCount](https://hits.dwyl.com/PE5PVB/TEF6686_ESP32.svg)](https://hits.dwyl.com/PE5PVB/TEF6686_ESP32)
+
 # Note:
 The version in the repository is an ongoing development. It could and will contain bugs. To make sure you use the latest fully tested firmware, check the releases!
+
 
 
 # TEF6686_ESP32
