@@ -2,6 +2,7 @@
 #include <EEPROM.h>
 #include <Wire.h>
 #include <math.h>
+#include <FS.h>
 #include <TFT_eSPI.h>               // https://github.com/Bodmer/TFT_eSPI
 #include <TimeLib.h>                // https://github.com/PaulStoffregen/Time
 #include <Hash.h>                   // https://github.com/bbx10/Hash_tng
@@ -187,10 +188,10 @@ int Stereostatus;
 int volume;
 int XDRBWset;
 int XDRBWsetold;
-int xPos = 6;
-int xPos2 = 6;
-int xPos3 = 6;
-int xPos4 = 6;
+int xPos;
+int xPos2;
+int xPos3;
+int xPos4;
 int16_t OStatus;
 int16_t SAvg;
 int16_t SAvg2;
@@ -199,10 +200,12 @@ int8_t LevelOffset;
 int8_t LowLevelSet;
 int8_t VolSet;
 IPAddress remoteip;
+String afstringold;
 String cryptedpassword;
 String CurrentThemeString;
 String ECColdtxt;
 String eonpsold[11];
+String eonstringold;
 String LIColdString;
 String pinstringold;
 String PIold;
@@ -215,6 +218,7 @@ String rds_clockold;
 String RDSSPYRDS;
 String RDSSPYRDSold;
 String RTold;
+String rtplusstringold;
 String salt;
 String saltkey = "                ";
 String SWMIBandstring = String();
@@ -579,8 +583,10 @@ void setup() {
   SelectBand();
 
   setupmode = false;
-  sprite.createSprite(317, 16);
+  sprite.createSprite(280, 16);
   sprite2.createSprite(172, 16);
+  sprite.setTextDatum(TL_DATUM);
+  sprite2.setTextDatum(TL_DATUM);
   radio.tone(50, -5, 2000);
 
   if (screensaverset) {
@@ -595,7 +601,7 @@ void loop() {
   if (power == true) {
     Communication();
 
-    if (af && radio.rds.correctPI != 0) {
+    if (band == BAND_FM && af && radio.rds.correctPI != 0) {
       if ((aftest && millis() >= aftimer + 3000) || ((USN > 250 || WAM > 250) && millis() >= aftimer + 1000)) {
         aftimer = millis();
         aftest = false;
@@ -607,7 +613,7 @@ void loop() {
         }
       }
 
-      if (millis() >= aftimer + 10000) {
+      if (band == BAND_FM && millis() >= aftimer + 10000) {
         aftimer = millis();
         if (USN > 150 || WAM > 150) {
           frequency = radio.TestAF();
@@ -642,6 +648,7 @@ void loop() {
         if (region == 0) tftPrint(-1, "PI:", 216, 197, ActiveColor, ActiveColorSmooth, FONT16);
         if (region == 1) tftPrint(-1, "ID:", 216, 197, ActiveColor, ActiveColorSmooth, FONT16);
         tftPrint(-1, "PS:", 6, 197, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, "RT:", 6, 222, ActiveColor, ActiveColorSmooth, FONT16);
         tftPrint(-1, "PTY:", 6, 170, ActiveColor, ActiveColorSmooth, FONT16);
         if (!showmodulation) tft.drawLine(20, 150, 204, 150, GreyoutColor); else tft.drawLine(20, 150, 204, 150, TFT_DARKGREY);
       }
@@ -670,9 +677,10 @@ void loop() {
           if (region == 0) tftPrint(-1, "PI:", 216, 197, GreyoutColor, BackgroundColor, FONT16);
           if (region == 1) tftPrint(-1, "ID:", 216, 197, GreyoutColor, BackgroundColor, FONT16);
           tftPrint(-1, "PS:", 6, 197, GreyoutColor, BackgroundColor, FONT16);
+          tftPrint(-1, "RT:", 6, 222, GreyoutColor, BackgroundColor, FONT16);
           tftPrint(-1, "PTY:", 6, 170, GreyoutColor, BackgroundColor, FONT16);
           tft.drawLine(20, 150, 204, 150, GreyoutColor);
-          tft.drawBitmap(110, 5, RDSLogo, 67, 22, GreyoutColor);
+          tft.drawBitmap(139, 5, RDSLogo, 35, 22, GreyoutColor);
         }
         LowLevelInit = false;
       }
@@ -1334,11 +1342,12 @@ void SelectBand() {
     doBW();
     radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
     if (screenmute == false) radio.clearRDS(fullsearchrds); BuildDisplay();
-    if (region == 0) tftPrint(-1, "PI:", 216, 197, PrimaryColor, PrimaryColorSmooth, FONT16);
-    if (region == 1) tftPrint(-1, "ID:", 216, 195, PrimaryColor, PrimaryColorSmooth, FONT16);
-    tftPrint(-1, "PS:", 6, 197, PrimaryColor, PrimaryColorSmooth, FONT16);
-    tftPrint(-1, "PTY:", 6, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
-    tft.drawBitmap(110, 5, RDSLogo, 67, 22, GreyoutColor);
+    if (region == 0) tftPrint(-1, "PI:", 216, 197, GreyoutColor, BackgroundColor, FONT16);
+    if (region == 1) tftPrint(-1, "ID:", 216, 195, GreyoutColor, BackgroundColor, FONT16);
+    tftPrint(-1, "PS:", 6, 197, GreyoutColor, BackgroundColor, FONT16);
+    tftPrint(-1, "RT:", 6, 222, GreyoutColor, BackgroundColor, FONT16);
+    tftPrint(-1, "PTY:", 6, 170, GreyoutColor, BackgroundColor, FONT16);
+    tft.drawBitmap(139, 5, RDSLogo, 35, 22, GreyoutColor);
     tft.drawRoundRect(248, 56, 32, 20, 5, GreyoutColor);
     tftPrint(0, "iMS", 265, 59, GreyoutColor, BackgroundColor, FONT16);
     tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
@@ -2783,7 +2792,7 @@ void readRds() {
         if (advancedRDS) tftPrint(-1, PIold, 244, 76, SecondaryColor, SecondaryColorSmooth, FONT28); else tftPrint(-1, PIold, 244, 191, SecondaryColor, SecondaryColorSmooth, FONT28);
         if (advancedRDS) tftPrint(-1, PSold, 38, 76, SecondaryColor, SecondaryColorSmooth, FONT28); else tftPrint(-1, PSold, 38, 191, SecondaryColor, SecondaryColorSmooth, FONT28);
         if (advancedRDS) tftPrint(-1, PTYold, 38, 109, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, PTYold, 38, 170, SecondaryColor, SecondaryColorSmooth, FONT16);
-        if (advancedRDS) tftPrint(-1, String(ptynold), 255, 109, SecondaryColor, SecondaryColorSmooth, FONT16);
+        if (advancedRDS) tftPrint(-1, String(ptynold), 216, 109, SecondaryColor, SecondaryColorSmooth, FONT16);
         if (!advancedRDS) tftPrint(-1, RTold, 1, 229, BackgroundColor, BackgroundColor, FONT16);
         dropout = true;
         aftest = true;
@@ -2793,7 +2802,7 @@ void readRds() {
           if (advancedRDS) tftPrint(-1, PIold, 244, 76, PrimaryColor, PrimaryColorSmooth, FONT28); else tftPrint(-1, PIold, 244, 191, PrimaryColor, PrimaryColorSmooth, FONT28);
           if (advancedRDS) tftPrint(-1, PSold, 38, 76, PrimaryColor, PrimaryColorSmooth, FONT28); else tftPrint(-1, PSold, 38, 191, PrimaryColor, PrimaryColorSmooth, FONT28);
           if (advancedRDS) tftPrint(-1, PTYold, 38, 109, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, PTYold, 38, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
-          if (advancedRDS) tftPrint(-1, String(ptynold), 255, 109, PrimaryColor, PrimaryColorSmooth, FONT16);
+          if (advancedRDS) tftPrint(-1, String(ptynold), 216, 109, PrimaryColor, PrimaryColorSmooth, FONT16);
           dropout = false;
         }
       }
@@ -2937,56 +2946,79 @@ void ShowAdvancedRDS() {
   }
 
   String afstring;
-  if (radio.rds.hasAF) for (byte i = 0; i < radio.af_counter; i++) afstring += String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10) + (radio.af[i].filler ? "(f)" : "") + (i == radio.af_counter - 1 ? "          " : " | "); else afstring = myLanguage[language][87];
+  if (radio.rds.hasAF) for (byte i = 0; i < radio.af_counter; i++) afstring += String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10) + (radio.af[i].filler ? "(f)" : "") + (i == radio.af_counter - 1 ? " " : " | "); else afstring = myLanguage[language][87];
   if (hasafold != radio.rds.hasAF) {
     if (radio.rds.hasAF) tftPrint(-1, "AF", 50, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "AF", 50, 51, GreyoutColor, BackgroundColor, FONT16);
     hasafold = radio.rds.hasAF;
   }
-  if (millis() - afticker >= 100) { //500
-    if (xPos2 == 6) {
-      if (millis() - aftickerhold >= 2000) {
-        xPos2 -= 1;//charWidth;
+
+  if (afstring.length() < 20) {
+    if (afstringold != afstring) {
+      xPos2 = 0;
+      sprite2.fillSprite(BackgroundColor);
+      sprite2.loadFont(FONT16);
+      sprite2.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+      sprite2.drawString(afstring, xPos2, 0, 1);
+      sprite2.pushSprite(35, 200);
+    }
+  } else {
+    if (millis() - afticker >= 50) {
+      if (xPos2 == 0) {
+        if (millis() - aftickerhold >= 2000) {
+          xPos2 --;
+          aftickerhold = millis();
+        }
+      } else {
+        xPos2 --;
         aftickerhold = millis();
       }
-    } else {
-      xPos2 -= 1;//charWidth;
-      aftickerhold = millis();
+      if (xPos2 < -tft.textWidth(afstring) + (charWidth * 16)) xPos2 = 0;
+      sprite2.fillSprite(BackgroundColor);
+      sprite2.loadFont(FONT16);
+      sprite2.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+      sprite2.drawString(afstring, xPos2, 0, 1);
+      sprite2.pushSprite(35, 200);
+      afticker = millis();
     }
-    if (xPos2 < -tft.textWidth(afstring) + (charWidth * 21)) xPos2 = 6;
-    sprite2.setTextDatum(TL_DATUM);
-    sprite2.fillSprite(BackgroundColor);
-    sprite2.loadFont(FONT16);
-    sprite2.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-    sprite2.drawString(afstring, xPos2, 0, 1);
-    sprite2.pushSprite(35, 200);
-    afticker = millis();
   }
+  afstringold = afstring;
 
   String eonstring;
-  if (radio.rds.hasEON) for (byte i = 0; i < radio.eon_counter; i++) eonstring += String(radio.eon[i].picode) + (radio.eon[i].ps.length() > 0 ? String(": " + String(radio.eon[i].ps)) : "") + (radio.eon[i].mappedfreq > 0 ? String(" " + String(radio.eon[i].mappedfreq / 100) + "." + String((radio.eon[i].mappedfreq % 100) / 10))  : "") + (radio.eon[i].mappedfreq2 > 0 ? String(" / " + String(radio.eon[i].mappedfreq2 / 100) + "." + String((radio.eon[i].mappedfreq2 % 100) / 10))  : "") + (radio.eon[i].mappedfreq3 > 0 ? String(" /  " + String(radio.eon[i].mappedfreq3 / 100) + "." + String((radio.eon[i].mappedfreq3 % 100) / 10))  : "") + (i == radio.eon_counter - 1 ? "      " : " | "); else eonstring = myLanguage[language][88];
+  if (radio.rds.hasEON) for (byte i = 0; i < radio.eon_counter; i++) eonstring += String(radio.eon[i].picode) + (radio.eon[i].ps.length() > 0 ? String(": " + String(radio.eon[i].ps)) : "") + (radio.eon[i].mappedfreq > 0 ? String(" " + String(radio.eon[i].mappedfreq / 100) + "." + String((radio.eon[i].mappedfreq % 100) / 10))  : "") + (radio.eon[i].mappedfreq2 > 0 ? String(" / " + String(radio.eon[i].mappedfreq2 / 100) + "." + String((radio.eon[i].mappedfreq2 % 100) / 10))  : "") + (radio.eon[i].mappedfreq3 > 0 ? String(" /  " + String(radio.eon[i].mappedfreq3 / 100) + "." + String((radio.eon[i].mappedfreq3 % 100) / 10))  : "") + (i == radio.eon_counter - 1 ? " " : " | "); else eonstring = myLanguage[language][88];
   if (haseonold != radio.rds.hasEON) {
     if (radio.rds.hasEON) tftPrint(-1, "EON", 153, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "EON", 153, 51, GreyoutColor, BackgroundColor, FONT16);
     haseonold = radio.rds.hasEON;
   }
-  if (millis() - eonticker >= 100) { //500
-    if (xPos3 == 6) {
-      if (millis() - eontickerhold >= 2000) {
-        xPos3 -= 1;//charWidth;
+  if (eonstring.length() < 20) {
+    if (eonstringold != eonstring) {
+      xPos3 = 0;
+      sprite2.fillSprite(BackgroundColor);
+      sprite2.loadFont(FONT16);
+      sprite2.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+      sprite2.drawString(eonstring, xPos3, 0);
+      sprite2.pushSprite(35, 175);
+    }
+  } else {
+    if (millis() - eonticker >= 50) {
+      if (xPos3 == 0) {
+        if (millis() - eontickerhold >= 2000) {
+          xPos3 --;
+          eontickerhold = millis();
+        }
+      } else {
+        xPos3 --;
         eontickerhold = millis();
       }
-    } else {
-      xPos3 -= 1;//charWidth;
-      eontickerhold = millis();
+      if (xPos3 < -tft.textWidth(eonstring) + (charWidth * 16)) xPos3 = 0;
+      sprite2.fillSprite(BackgroundColor);
+      sprite2.loadFont(FONT16);
+      sprite2.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+      sprite2.drawString(eonstring, xPos3, 0);
+      sprite2.pushSprite(35, 175);
+      eonticker = millis();
     }
-    if (xPos3 < -tft.textWidth(eonstring) + (charWidth * 21)) xPos3 = 6;
-    sprite2.setTextDatum(TL_DATUM);
-    sprite2.fillSprite(BackgroundColor);
-    sprite2.loadFont(FONT16);
-    sprite2.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-    sprite2.drawString(eonstring, xPos3, 0);
-    sprite2.pushSprite(35, 175);
-    eonticker = millis();
   }
+  eonstringold = eonstring;
 
   String rtplusstring;
   if (radio.rds.hasRDSplus) rtplusstring = "1) " + String(radio.rds.RTContent1) + " - 2) " + String(radio.rds.RTContent2) + "         "; else rtplusstring = myLanguage[language][89];
@@ -2994,2593 +3026,2635 @@ void ShowAdvancedRDS() {
     if (radio.rds.hasRDSplus) tftPrint(-1, "RT+", 124, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "RT+", 124, 51, GreyoutColor, BackgroundColor, FONT16);
     hasrtplusold = radio.rds.hasRDSplus;
   }
-  if (millis() - rtplusticker >= 100) { //350
-    if (xPos3 == 6) {
-      if (millis() - rtplustickerhold >= 2000) {
-        xPos4 -= 1;//charWidth;
+  if (eonstring.length() < 20) {
+    if (rtplusstringold != rtplusstring) {
+      xPos4 = 0;
+      sprite2.fillSprite(BackgroundColor);
+      sprite2.loadFont(FONT16);
+      sprite2.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+      sprite2.drawString(rtplusstring, xPos4, 0);
+      sprite2.pushSprite(35, 150);
+    }
+  } else {
+    if (millis() - rtplusticker >= 50)
+      if (xPos4 == 0) {
+        if (millis() - rtplustickerhold >= 2000) {
+          xPos4 --;
+          rtplustickerhold = millis();
+        }
+      } else {
+        xPos4 --;
         rtplustickerhold = millis();
       }
-    } else {
-      xPos4 -= 1;//charWidth;
-      rtplustickerhold = millis();
+      if (xPos4 < -tft.textWidth(rtplusstring) + (charWidth * 16)) xPos4 = 0;
+      sprite2.fillSprite(BackgroundColor);
+      sprite2.loadFont(FONT16);
+      sprite2.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+      sprite2.drawString(rtplusstring, xPos4, 0);
+      sprite2.pushSprite(35, 150);
+      rtplusticker = millis();
     }
-    if (xPos4 < -tft.textWidth(rtplusstring) + (charWidth * 21)) xPos4 = 6;
-    sprite2.setTextDatum(TL_DATUM);
-    sprite2.fillSprite(BackgroundColor);
-    sprite2.loadFont(FONT16);
-    sprite2.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-    sprite2.drawString(rtplusstring, xPos4, 0);
-    sprite2.pushSprite(35, 150);
-    rtplusticker = millis();
+    rtplusstringold = rtplusstring;
+
+    if (TPold != radio.rds.hasTP) {
+      if (radio.rds.hasTP == true) tftPrint(-1, "TP", 6, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "TP", 6, 51, GreyoutColor, BackgroundColor, FONT16);
+      TPold = radio.rds.hasTP;
+    }
+
+    if (TAold != radio.rds.hasTA) {
+      if (radio.rds.hasTA == true) tftPrint(-1, "TA", 28, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "TA", 28, 51, GreyoutColor, BackgroundColor, FONT16);
+      TAold = radio.rds.hasTA;
+    }
+
+    if (MSold != radio.rds.MS) {
+      switch (radio.rds.MS) {
+        case 0:
+          tftPrint(-1, "M", 185, 51, GreyoutColor, BackgroundColor, FONT16);
+          tftPrint(-1, "S", 198, 51, GreyoutColor, BackgroundColor, FONT16);
+          break;
+
+        case 1:
+          tftPrint(-1, "M", 185, 51, SecondaryColor, SecondaryColorSmooth, FONT16);
+          tftPrint(-1, "S", 198, 51, GreyoutColor, BackgroundColor, FONT16);
+          break;
+
+        case 2:
+          tftPrint(-1, "M", 185, 51, GreyoutColor, BackgroundColor, FONT16);
+          tftPrint(-1, "S", 198, 51, SecondaryColor, SecondaryColorSmooth, FONT16);
+          break;
+      }
+      MSold = radio.rds.MS;
+    }
+
+    rds_clock = ((hour() < 10 ? "0" : "") + String(hour()) + ":" + (minute() < 10 ? "0" : "") + String(minute()));
+    if (radio.rds.hasCT == true && rds_clock != rds_clockold) {
+      tftReplace(1, rds_clockold, rds_clock, 205, 109, SecondaryColor, SecondaryColorSmooth, FONT16);
+      if (radio.rds.hasCT == true) {
+        tftReplace(1, rds_clockold, rds_clock, 205, 109, SecondaryColor, SecondaryColorSmooth, FONT16);
+        tftPrint(-1, "CT", 72, 51, SecondaryColor, SecondaryColorSmooth, FONT16);
+      } else {
+        tftPrint(-1, "CT", 72, 51, GreyoutColor, BackgroundColor, FONT16);
+        tftPrint(1, rds_clockold, 205, 109, GreyoutColor, BackgroundColor, FONT16);
+      }
+      rds_clockold = rds_clock;
+    }
+
+    if (rdsblockold != radio.rdsblock) {
+      if (rdsblockold < 33) tft.fillCircle((6 * rdsblockold) + 10, 136, 2, TFT_RED);
+      if (radio.rdsblock < 33) tft.fillCircle((6 * radio.rdsblock) + 10, 136, 2, TFT_GREEN);
+      rdsblockold = radio.rdsblock;
+    }
+
+    if (hastmcold != radio.rds.hasTMC) {
+      if (radio.rds.hasTMC == true) tftPrint(-1, "TMC", 90, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "TMC", 90, 51, GreyoutColor, BackgroundColor, FONT16);
+      hastmcold = radio.rds.hasTMC;
+    }
   }
 
-  if (TPold != radio.rds.hasTP) {
-    if (radio.rds.hasTP == true) tftPrint(-1, "TP", 6, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "TP", 6, 51, GreyoutColor, BackgroundColor, FONT16);
-    TPold = radio.rds.hasTP;
+  void doAF() {
+    if (radio.af_counter != af_counterold && radio.rds.hasAF == true) {
+      if (wifi) {
+        Udp.beginPacket(remoteip, 9030);
+        Udp.print("AF=");
+
+        for (byte af_scan = 0; af_scan < radio.af_counter; af_scan++) {
+          if (wifi) {
+            if ((radio.af[af_scan].frequency - 8750) / 10 < 0x10) {
+              Udp.print("0");
+            }
+            Udp.print((radio.af[af_scan].frequency - 8750) / 10, HEX);
+          }
+        }
+        af_counterold = radio.af_counter;
+
+        for (int i = 0; i < 25 - radio.af_counter; i++) Udp.print("00");
+        Udp.endPacket();
+      }
+    }
   }
 
-  if (TAold != radio.rds.hasTA) {
-    if (radio.rds.hasTA == true) tftPrint(-1, "TA", 28, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "TA", 28, 51, GreyoutColor, BackgroundColor, FONT16);
-    TAold = radio.rds.hasTA;
+  void showECC() {
+    if (ECCold != radio.rds.ECC) {
+      String ECC;
+      if (radio.rds.picode[0] == '1') {
+        if (radio.rds.ECC == 224) ECC = myCountries[0];
+        if (radio.rds.ECC == 225) ECC = myCountries[1];
+        if (radio.rds.ECC == 226) ECC = myCountries[2];
+        if (radio.rds.ECC == 228) ECC = myCountries[3];
+      } else if (radio.rds.picode[0] == '2') {
+        if (radio.rds.ECC == 224) ECC = myCountries[4];
+        if (radio.rds.ECC == 225) ECC = myCountries[5];
+        if (radio.rds.ECC == 226) ECC = myCountries[6];
+        if (radio.rds.ECC == 227) ECC = myCountries[7];
+        if (radio.rds.ECC == 228) ECC = myCountries[8];
+      } else if (radio.rds.picode[0] == '3') {
+        if (radio.rds.ECC == 224) ECC = myCountries[9];
+        if (radio.rds.ECC == 225) ECC = myCountries[10];
+        if (radio.rds.ECC == 226) ECC = myCountries[11];
+        if (radio.rds.ECC == 227) ECC = myCountries[12];
+      } else if (radio.rds.picode[0] == '4') {
+        if (radio.rds.ECC == 224) ECC = myCountries[13];
+        if (radio.rds.ECC == 225) ECC = myCountries[14];
+        if (radio.rds.ECC == 226) ECC = myCountries[15];
+        if (radio.rds.ECC == 227) ECC = myCountries[16];
+      } else if (radio.rds.picode[0] == '5') {
+        if (radio.rds.ECC == 224) ECC = myCountries[17];
+        if (radio.rds.ECC == 225) ECC = myCountries[18];
+        if (radio.rds.ECC == 226) ECC = myCountries[19];
+      } else if (radio.rds.picode[0] == '6') {
+        if (radio.rds.ECC == 224) ECC = myCountries[20];
+        if (radio.rds.ECC == 225) ECC = myCountries[21];
+        if (radio.rds.ECC == 226) ECC = myCountries[22];
+        if (radio.rds.ECC == 227) ECC = myCountries[23];
+        if (radio.rds.ECC == 228) ECC = myCountries[24];
+      } else if (radio.rds.picode[0] == '7') {
+        if (radio.rds.ECC == 224) ECC = myCountries[25];
+        if (radio.rds.ECC == 225) ECC = myCountries[26];
+        if (radio.rds.ECC == 226) ECC = myCountries[27];
+      } else if (radio.rds.picode[0] == '8') {
+        if (radio.rds.ECC == 224) ECC = myCountries[28];
+        if (radio.rds.ECC == 225) ECC = myCountries[29];
+        if (radio.rds.ECC == 226) ECC = myCountries[30];
+        if (radio.rds.ECC == 227) ECC = myCountries[31];
+        if (radio.rds.ECC == 228) ECC = myCountries[32];
+      } else if (radio.rds.picode[0] == '9') {
+        if (radio.rds.ECC == 224) ECC = myCountries[33];
+        if (radio.rds.ECC == 225) ECC = myCountries[34];
+        if (radio.rds.ECC == 226) ECC = myCountries[35];
+        if (radio.rds.ECC == 227) ECC = myCountries[36];
+        if (radio.rds.ECC == 228) ECC = myCountries[37];
+      } else if (radio.rds.picode[0] == 'A') {
+        if (radio.rds.ECC == 224) ECC = myCountries[38];
+        if (radio.rds.ECC == 225) ECC = myCountries[39];
+        if (radio.rds.ECC == 226) ECC = myCountries[40];
+        if (radio.rds.ECC == 227) ECC = myCountries[41];
+      } else if (radio.rds.picode[0] == 'B') {
+        if (radio.rds.ECC == 224) ECC = myCountries[42];
+        if (radio.rds.ECC == 225) ECC = myCountries[43];
+        if (radio.rds.ECC == 226) ECC = myCountries[44];
+      } else if (radio.rds.picode[0] == 'C') {
+        if (radio.rds.ECC == 224) ECC = myCountries[45];
+        if (radio.rds.ECC == 225) ECC = myCountries[46];
+        if (radio.rds.ECC == 226) ECC = myCountries[47];
+        if (radio.rds.ECC == 227) ECC = myCountries[48];
+      } else if (radio.rds.picode[0] == 'D') {
+        if (radio.rds.ECC == 224) ECC = myCountries[0];
+        if (radio.rds.ECC == 225) ECC = myCountries[49];
+      } else if (radio.rds.picode[0] == 'E') {
+        if (radio.rds.ECC == 224) ECC = myCountries[50];
+        if (radio.rds.ECC == 225) ECC = myCountries[51];
+        if (radio.rds.ECC == 226) ECC = myCountries[52];
+        if (radio.rds.ECC == 227) ECC = myCountries[53];
+      } else if (radio.rds.picode[0] == 'F') {
+        if (radio.rds.ECC == 224) ECC = myCountries[54];
+        if (radio.rds.ECC == 225) ECC = myCountries[55];
+        if (radio.rds.ECC == 226) ECC = myCountries[56];
+        if (radio.rds.ECC == 227) ECC = myCountries[57];
+        if (radio.rds.ECC == 228) ECC = myCountries[58];
+      } else {
+        ECC = myLanguage[language][73];
+      }
+      if (advancedRDS) {
+        tftPrint(-1, "N/A", 242, 196, BackgroundColor, BackgroundColor, FONT16);
+        tftPrint(-1, "ECColdtxt", 242, 196, BackgroundColor, BackgroundColor, FONT16);
+        if (radio.rds.hasECC) tftPrint(-1, ECC, 242, 196, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "N/A", 242, 196, PrimaryColor, PrimaryColorSmooth, FONT16);
+        ECColdtxt = ECC;
+      }
+
+      if (wifi) {
+        Udp.beginPacket(remoteip, 9030);
+        Udp.print("ECC=");
+        if (radio.rds.ECC < 0x10) Udp.print("0");
+        Udp.print(radio.rds.ECC, HEX);
+        Udp.endPacket();
+      }
+      ECCold = radio.rds.ECC;
+    }
   }
 
-  if (MSold != radio.rds.MS) {
-    switch (radio.rds.MS) {
-      case 0:
-        tftPrint(-1, "M", 185, 51, GreyoutColor, BackgroundColor, FONT16);
-        tftPrint(-1, "S", 198, 51, GreyoutColor, BackgroundColor, FONT16);
-        break;
+  void showPI() {
+    if (strcmp(radio.rds.picode, radioIdPrevious)) {
+      if (advancedRDS) {
+        tftReplace(-1, PIold, radio.rds.picode, 244, 76, PrimaryColor, PrimaryColorSmooth, FONT28);
+      } else if (afscreen) {
+        tftReplace(-1, PIold, radio.rds.picode, 30, 32, SecondaryColor, SecondaryColorSmooth, FONT16);
+      } else {
+        tftReplace(-1, PIold, radio.rds.picode, 244, 191, PrimaryColor, PrimaryColorSmooth, FONT28);
+      }
+      PIold = radio.rds.picode;
+      if (wifi) {
+        Udp.beginPacket(remoteip, 9030);
+        Udp.print("from=TEF tuner;PI=" + String(radio.rds.picode, 4));
+        Udp.endPacket();
+      }
+      strcpy(radioIdPrevious, radio.rds.picode);
+    }
+  }
 
+  void showPTY() {
+    if (strcmp(radio.rds.stationType, programTypePrevious)) {
+      if (advancedRDS) tftReplace(-1, PTYold, radio.rds.stationType, 38, 109, PrimaryColor, PrimaryColorSmooth, FONT16); else tftReplace(-1, PTYold, radio.rds.stationType, 38, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
+      PTYold = radio.rds.stationType;
+      if (wifi) {
+        Udp.beginPacket(remoteip, 9030);
+        Udp.print("from=TEF tuner;PTY=");
+        Udp.print(radio.rds.stationTypeCode, HEX);
+        Udp.endPacket();
+      }
+      strcpy(programTypePrevious, radio.rds.stationType);
+    }
+  }
+
+  void showPS() {
+    if (radio.rds.stationName != programServicePrevious) {
+      if (advancedRDS) {
+        tftReplace(-1, PSold, radio.rds.stationName, 38, 76, PrimaryColor, PrimaryColorSmooth, FONT28);
+      } else if (afscreen) {
+        tftReplace(-1, PSold, radio.rds.stationName, 65, 32, SecondaryColor, SecondaryColorSmooth, FONT16);
+      } else {
+        tftReplace(-1, PSold, radio.rds.stationName, 38, 191, PrimaryColor, PrimaryColorSmooth, FONT28);
+        tft.drawLine(0, 187, 320, 187, FrameColor);
+        tft.drawLine(0, 218, 320, 218, FrameColor);
+      }
+      PSold = radio.rds.stationName;
+      if (wifi) {
+        Udp.beginPacket(remoteip, 9030);
+        Udp.print("from=TEF tuner;PS=");
+        char PShex[9];
+        radio.rds.stationName.toCharArray(PShex, 9);
+        for (int i = 0; i < 8; i++)
+        {
+          if (PShex[i] < 0x10) Udp.print("0");
+          if (PShex[i] == 0x20) PShex[i] =  '_';
+          Udp.print(PShex[i], HEX);
+        }
+        Udp.endPacket();
+      }
+      programServicePrevious = radio.rds.stationName;
+    }
+  }
+
+  void showRadioText() {
+    if (radio.rds.hasRT && RDSstatus) {
+      if (advancedRDS && radio.rds.stationText.length() < 20) {
+        xPos = 0;
+        sprite2.fillSprite(BackgroundColor);
+        sprite2.loadFont(FONT16);
+        sprite2.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+        sprite2.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 0, 1);
+        sprite2.pushSprite(35, 222);
+      } else if (!advancedRDS && radio.rds.stationText.length() < 29) {
+        if (RTold != radio.rds.stationText + " " + radio.rds.stationText32) {
+          xPos = 0;
+          sprite.fillSprite(BackgroundColor);
+          sprite.loadFont(FONT16);
+          sprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          sprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 0, 1);
+          sprite.pushSprite(38, 222);
+        }
+      } else {
+        if (millis() - rtticker >= 50) {
+          if (xPos == 0) {
+            if (millis() - rttickerhold >= 2000) {
+              xPos --;
+              rttickerhold = millis();
+            }
+          } else {
+            xPos --;
+            rttickerhold = millis();
+          }
+          if (advancedRDS) {
+            if (xPos < -tft.textWidth(radio.rds.stationText + " " + radio.rds.stationText32) + (charWidth * 16)) xPos = 0;
+            sprite2.fillSprite(BackgroundColor);
+            sprite2.loadFont(FONT16);
+            sprite2.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            sprite2.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 0, 1);
+            sprite2.pushSprite(35, 222);
+          } else {
+            if (xPos < -tft.textWidth(radio.rds.stationText + " " + radio.rds.stationText32) + (charWidth * 26)) xPos = 0;
+            sprite.fillSprite(BackgroundColor);
+            sprite.loadFont(FONT16);
+            sprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            sprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 0, 1);
+            sprite.pushSprite(38, 222);
+          }
+          rtticker = millis();
+          cleanup = true;
+        }
+      }
+    } else if (cleanup == true) {
+      sprite.fillSprite(BackgroundColor);
+      sprite2.fillSprite(BackgroundColor);
+      if (advancedRDS) sprite2.pushSprite(35, 222); else sprite.pushSprite(38, 222);
+      cleanup = false;
+    }
+
+    if (wifi) {
+      Udp.beginPacket(remoteip, 9030);
+      Udp.print("from=TEF tuner;RT1=");
+      char RThex[65];
+      radio.rds.stationText.toCharArray(RThex, 65);
+      for (int i = 0; i < 64; i++)
+      {
+        if (RThex[i] < 0x10) Udp.print("0");
+        if (RThex[i] == ' ') RThex[i] =  '_';
+        Udp.print(RThex[i], HEX);
+      }
+      Udp.endPacket();
+    }
+    tft.drawLine(0, 239, 320, 239, FrameColor);
+    RTold = radio.rds.stationText + " " + radio.rds.stationText32;
+  }
+
+  void BuildMenu() {
+    advancedRDS = false;
+    tft.fillScreen(BackgroundColor);
+    tft.drawRect(0, 0, 320, 240, FrameColor);
+    tft.drawLine(0, 23, 320, 23, FrameColor);
+    tftPrint(-1, myLanguage[language][41], 10, 7, PrimaryColor, PrimaryColorSmooth, FONT16);
+    tftPrint(1, String(menupage) + "/" + String(menupagestotal), 305, 7, ActiveColor, ActiveColorSmooth, FONT16);
+    tft.drawRoundRect(8, menuoption + 3, 302, 21, 5, ActiveColor);
+    switch (menupage) {
       case 1:
-        tftPrint(-1, "M", 185, 51, SecondaryColor, SecondaryColorSmooth, FONT16);
-        tftPrint(-1, "S", 198, 51, GreyoutColor, BackgroundColor, FONT16);
+        tftPrint(1, "dB", 305, 36, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(1, "MHz", 305, 56, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(1, "MHz", 305, 76, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(1, "MHz", 305, 96, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(1, "dB", 305, 116, ActiveColor, ActiveColorSmooth, FONT16);
+        if (StereoLevel != 0) tftPrint(1, "dBμV", 305, 136, ActiveColor, ActiveColorSmooth, FONT16);
+        if (HighCutLevel != 0) tftPrint(1, "Hz", 305, 156, ActiveColor, ActiveColorSmooth, FONT16);
+        if (HighCutOffset != 0) tftPrint(1, "dBμV", 305, 176, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(1, "dBμV", 305, 196, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(1, "%", 305, 216, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][20], 14, 36, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][21], 14, 56, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][22], 14, 76, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][23], 14, 96, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][24], 14, 116, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][25], 14, 136, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][26], 14, 156, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][27], 14, 176, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][28], 14, 196, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][29], 14, 216, ActiveColor, ActiveColorSmooth, FONT16);
+
+        if (VolSet > 0) tftPrint(1, "+" + String(VolSet, DEC), 265, 36, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, String(VolSet, DEC), 265, 36, PrimaryColor, PrimaryColorSmooth, FONT16);
+        tftPrint(1, String(ConverterSet, DEC), 265, 56, PrimaryColor, PrimaryColorSmooth, FONT16);
+        tftPrint(1, String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 265, 76, PrimaryColor, PrimaryColorSmooth, FONT16);
+        tftPrint(1, String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 265, 96, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (LevelOffset > 0) tftPrint(1, "+" + String(LevelOffset, DEC), 265, 116, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, String(LevelOffset, DEC), 265, 116, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (StereoLevel != 0) tftPrint(1, String(StereoLevel, DEC), 265, 136, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 265, 136, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (HighCutLevel != 0) tftPrint(1, String(HighCutLevel * 100, DEC), 265, 156, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 265, 156, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (HighCutOffset != 0) tftPrint(1, String(HighCutOffset, DEC), 265, 176, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 265, 176, PrimaryColor, PrimaryColorSmooth, FONT16);
+        tftPrint(1, String(LowLevelSet, DEC), 265, 196, PrimaryColor, PrimaryColorSmooth, FONT16);
+        tftPrint(1, String(ContrastSet, DEC), 265, 216, PrimaryColor, PrimaryColorSmooth, FONT16);
         break;
 
       case 2:
-        tftPrint(-1, "M", 185, 51, GreyoutColor, BackgroundColor, FONT16);
-        tftPrint(-1, "S", 198, 51, SecondaryColor, SecondaryColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][39], 14, 36, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][38], 14, 56, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][43], 14, 76, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][44], 14, 96, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][45], 14, 116, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][46], 14, 136, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][49], 14, 156, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][50], 14, 176, ActiveColor, ActiveColorSmooth, FONT16);
+        if (wifi) tftPrint(-1, String(myLanguage[language][51]) + " IP: " + String(WiFi.localIP().toString()), 14, 196, ActiveColor, ActiveColorSmooth, FONT16); else tftPrint(-1, myLanguage[language][51], 14, 196, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][52], 14, 216, ActiveColor, ActiveColorSmooth, FONT16);
+
+        tftPrint(1, myLanguage[language][0], 305, 36, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (showrdserrors) tftPrint(1, myLanguage[language][42], 305, 56, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 56, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (softmutefm) tftPrint(1, myLanguage[language][42], 305, 76, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 76, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (softmuteam) tftPrint(1, myLanguage[language][42], 305, 96, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 96, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (edgebeep) tftPrint(1, myLanguage[language][42], 305, 116, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 116, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (region == 0) tftPrint(1, myLanguage[language][47], 305, 136, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (region == 1) tftPrint(1, myLanguage[language][48], 305, 136, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (radio.rds.underscore) tftPrint(1, myLanguage[language][42], 305, 156, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 156, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (USBmode) tftPrint(1, "RDS Spy", 305, 176, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, "XDRGTK", 305, 176, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (wifi) tftPrint(1, myLanguage[language][42], 305, 196, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 196, PrimaryColor, PrimaryColorSmooth, FONT16);
+        tftPrint(1, ">", 305, 216, PrimaryColor, PrimaryColorSmooth, FONT16);
+        break;
+
+      case 3:
+        tftPrint(-1, myLanguage[language][58], 14, 36, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][59], 14, 56, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][60], 14, 76, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][61], 14, 96, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][62], 14, 116, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][63], 14, 136, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][64], 14, 156, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][65], 14, 176, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][67], 14, 196, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][68], 14, 216, ActiveColor, ActiveColorSmooth, FONT16);
+
+        if (amnb != 0) tftPrint(1, "%", 305, 156, ActiveColor, ActiveColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 156, ActiveColor, ActiveColorSmooth, FONT16);
+        if (fmnb != 0) tftPrint(1, "%", 305, 176, ActiveColor, ActiveColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 176, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(1, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 305, 36, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (showSWMIBand) tftPrint(1, myLanguage[language][42], 305, 56, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 56, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (radio.rds.filter) tftPrint(1, myLanguage[language][42], 305, 76, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 76, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (radio.rds.pierrors) tftPrint(1, myLanguage[language][42], 305, 96, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 96, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (showsquelch) tftPrint(1, myLanguage[language][42], 305, 116, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 116, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (showmodulation) tftPrint(1, myLanguage[language][42], 305, 136, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 136, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (amnb != 0) tftPrint(1, String(amnb, DEC), 265, 156, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 156, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (fmnb != 0) tftPrint(1, String(fmnb, DEC), 265, 176, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 176, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (audiomode) tftPrint(1, "MPX", 305, 196, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, "Stereo", 305, 196, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (specialstepOIRT) tftPrint(1, myLanguage[language][42], 305, 216, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 216, PrimaryColor, PrimaryColorSmooth, FONT16);
+        break;
+
+      case 4:
+        tftPrint(-1, myLanguage[language][77], 14, 36, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][70], 14, 56, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][74], 14, 76, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][90], 14, 96, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][91], 14, 116, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][97], 14, 136, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][98], 14, 156, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, myLanguage[language][99], 14, 176, ActiveColor, ActiveColorSmooth, FONT16);
+
+        tftPrint(1, "KHz", 305, 96, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(1, "dB", 305, 136, ActiveColor, ActiveColorSmooth, FONT16);
+        if (screensaverset) tftPrint(1, myLanguage[language][92], 305, 116, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(1, CurrentThemeString, 305, 36, PrimaryColor, PrimaryColorSmooth, FONT16);
+
+        switch (poweroptions) {
+          case DEEP_SLEEP: tftPrint(1, myLanguage[language][75], 305, 76, PrimaryColor, PrimaryColorSmooth, FONT16); break;
+          case LCD_OFF: tftPrint(1, myLanguage[language][76], 305, 76, PrimaryColor, PrimaryColorSmooth, FONT16); break;
+          case LCD_BRIGHTNESS_1_PERCENT: tftPrint(1, myLanguage[language][94], 305, 76, PrimaryColor, PrimaryColorSmooth, FONT16); break;
+          case LCD_BRIGHTNESS_A_QUARTER: tftPrint(1, myLanguage[language][95], 305, 76, PrimaryColor, PrimaryColorSmooth, FONT16); break;
+          case LCD_BRIGHTNESS_HALF: tftPrint(1, myLanguage[language][96], 305, 76, PrimaryColor, PrimaryColorSmooth, FONT16); break;
+        }
+
+        if (fmdefaultstepsize) tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 265, 96, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 265, 96, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (screensaverset) tftPrint(1, myLanguage[language][42], 305, 116, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 116, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (AMLevelOffset > 0) tftPrint(1, "+" + String(AMLevelOffset, DEC), 265, 136, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, String(AMLevelOffset, DEC), 265, 136, PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (af) tftPrint(1, myLanguage[language][42], 305, 176, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 176, PrimaryColor, PrimaryColorSmooth, FONT16);
+        tftPrint(1, unitString[unit], 305, 156, PrimaryColor, PrimaryColorSmooth, FONT16);
         break;
     }
-    MSold = radio.rds.MS;
+    analogWrite(SMETERPIN, 0);
   }
 
-  rds_clock = ((hour() < 10 ? "0" : "") + String(hour()) + ":" + (minute() < 10 ? "0" : "") + String(minute()));
-  if (radio.rds.hasCT == true && rds_clock != rds_clockold) {
-    tftReplace(1, rds_clockold, rds_clock, 205, 109, SecondaryColor, SecondaryColorSmooth, FONT16);
-    if (radio.rds.hasCT == true) {
-      tftReplace(1, rds_clockold, rds_clock, 205, 109, SecondaryColor, SecondaryColorSmooth, FONT16);
-      tftPrint(-1, "CT", 72, 51, SecondaryColor, SecondaryColorSmooth, FONT16);
-    } else {
-      tftPrint(-1, "CT", 72, 51, GreyoutColor, BackgroundColor, FONT16);
-      tftPrint(1, rds_clockold, 205, 109, GreyoutColor, BackgroundColor, FONT16);
+  void MuteScreen(bool setting) {
+    if (!setting && screenmute) {
+      screenmute = false;
+      setupmode = true;
+      tft.writecommand(0x11);
+      analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+      radio.clearRDS(fullsearchrds);
+      BuildDisplay();
+      setupmode = false;
+    } else if (setting && !screenmute) {
+      screenmute = true;
+      analogWrite(CONTRASTPIN, 0);
+      tft.writecommand(0x10);
     }
-    rds_clockold = rds_clock;
   }
 
-  if (rdsblockold != radio.rdsblock) {
-    if (rdsblockold < 33) tft.fillCircle((6 * rdsblockold) + 10, 136, 2, TFT_RED);
-    if (radio.rdsblock < 33) tft.fillCircle((6 * radio.rdsblock) + 10, 136, 2, TFT_GREEN);
-    rdsblockold = radio.rdsblock;
-  }
+  void ShowAFEON() {
+    if (radio.rds.hasAF) {
+      if (hasafold == false) {
+        tftPrint(-1, myLanguage[language][87], 6, 54, BackgroundColor, BackgroundColor, FONT16);
+        hasafold = true;
+      }
 
-  if (hastmcold != radio.rds.hasTMC) {
-    if (radio.rds.hasTMC == true) tftPrint(-1, "TMC", 90, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "TMC", 90, 51, GreyoutColor, BackgroundColor, FONT16);
-    hastmcold = radio.rds.hasTMC;
-  }
-}
-
-void doAF() {
-  if (radio.af_counter != af_counterold && radio.rds.hasAF == true) {
-    if (wifi) {
-      Udp.beginPacket(remoteip, 9030);
-      Udp.print("AF=");
-
-      for (byte af_scan = 0; af_scan < radio.af_counter; af_scan++) {
-        if (wifi) {
-          if ((radio.af[af_scan].frequency - 8750) / 10 < 0x10) {
-            Udp.print("0");
-          }
-          Udp.print((radio.af[af_scan].frequency - 8750) / 10, HEX);
+      if (radio.af_counter > 33) {
+        if (!afpage) {
+          afpage = true;
+          afpagenr = 1;
         }
+      } else {
+        afpagenr = 0;
+      }
+
+      if (af_counterold != radio.af_counter) {
+        tft.fillRect(2, 53, 177, 165, BackgroundColor);
+        for (byte i = 0; i < radio.af_counter; i++) {
+          byte x = i - (afpagenr == 2 ? 33 : 0);
+          if (radio.af[i].checked) {
+            tftPrint(1, (radio.af[i].filler ? "(f) " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 56 + (x > 10 ? 60 : 0) + (x > 21 ? 60 : 0), 48 + (15 * x) - (x > 10 ? 165 : 0) - (x > 21 ? 165 : 0), InsignificantColor, InsignificantColorSmooth, FONT16);
+          } else if (!radio.af[i].afvalid) {
+            tftPrint(1, (radio.af[i].filler ? "(f) " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 56 + (x > 10 ? 60 : 0) + (x > 21 ? 60 : 0), 48 + (15 * x) - (x > 10 ? 165 : 0) - (x > 21 ? 165 : 0), SignificantColor, SignificantColorSmooth, FONT16);
+          } else {
+            tftPrint(1, (radio.af[i].filler ? "(f) " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 56 + (x > 10 ? 60 : 0) + (x > 21 ? 60 : 0), 48 + (15 * x) - (x > 10 ? 165 : 0) - (x > 21 ? 165 : 0), PrimaryColor, PrimaryColorSmooth, FONT16);
+          }
+          if (i == 32  + (afpagenr == 2 ? 33 : 0)) i = 254;
+        }
+
+        if (radio.af_counter > 11 + (afpagenr == 2 ? 33 : 0)) tft.drawLine(65, 54, 65, 210, SecondaryColor);
+        if (radio.af_counter > 22 + (afpagenr == 2 ? 33 : 0)) tft.drawLine(125, 54, 125, 210, SecondaryColor);
+        if (afpage == true) tftPrint(1, String(afpagenr) + "/2", 315, 224, SecondaryColor, SecondaryColorSmooth, FONT16);
       }
       af_counterold = radio.af_counter;
+    }
 
-      for (int i = 0; i < 25 - radio.af_counter; i++) Udp.print("00");
-      Udp.endPacket();
+    if (radio.rds.hasEON) {
+      if (haseonold == false) {
+        tftPrint(-1, myLanguage[language][88], 184, 54, BackgroundColor, BackgroundColor, FONT16);
+      }
+      haseonold = true;
+      for (byte i = 0; i < radio.eon_counter; i++) {
+        tftPrint(-1, String(radio.eon[i].picode), 184, 54 + (15 * i), PrimaryColor, PrimaryColorSmooth, FONT16);
+        if (radio.eon[i].ps.length() > 0) {
+          tftPrint(-1, "PS:", 218, 32, ActiveColor, ActiveColorSmooth, FONT16);
+          if (radio.eon[i].ps != eonpsold[i]) {
+            tftPrint(-1, String(eonpsold[i]), 218, 54 + (15 * i), BackgroundColor, BackgroundColor, FONT16);
+            eonpsold[i] = radio.eon[i].ps;
+          }
+          tftPrint(-1, String(radio.eon[i].ps), 218, 54 + (15 * i), SecondaryColor, SecondaryColorSmooth, FONT16);
+        }
+
+        if (radio.eon[i].mappedfreq > 0) {
+          tftPrint(1, "FREQ:", 316, 32, ActiveColor, ActiveColorSmooth, FONT16);
+          if (radio.eon[i].mappedfreq != mappedfreqold[i]) {
+            tftPrint(1, String(mappedfreqold[i] / 100) + "." + String((mappedfreqold[i] % 100) / 10), 316, 54 + (15 * i), BackgroundColor, BackgroundColor, FONT16);
+          }
+          tftPrint(1, String(radio.eon[i].mappedfreq / 100) + "." + String((radio.eon[i].mappedfreq % 100) / 10), 316, 54 + (15 * i), PrimaryColor, PrimaryColorSmooth, FONT16);
+          mappedfreqold[i] = radio.eon[i].mappedfreq;
+        }
+        if (i == 10) i = 254;
+      }
     }
   }
-}
 
-void showECC() {
-  if (ECCold != radio.rds.ECC) {
-    String ECC;
-    if (radio.rds.picode[0] == '1') {
-      if (radio.rds.ECC == 224) ECC = myCountries[0];
-      if (radio.rds.ECC == 225) ECC = myCountries[1];
-      if (radio.rds.ECC == 226) ECC = myCountries[2];
-      if (radio.rds.ECC == 228) ECC = myCountries[3];
-    } else if (radio.rds.picode[0] == '2') {
-      if (radio.rds.ECC == 224) ECC = myCountries[4];
-      if (radio.rds.ECC == 225) ECC = myCountries[5];
-      if (radio.rds.ECC == 226) ECC = myCountries[6];
-      if (radio.rds.ECC == 227) ECC = myCountries[7];
-      if (radio.rds.ECC == 228) ECC = myCountries[8];
-    } else if (radio.rds.picode[0] == '3') {
-      if (radio.rds.ECC == 224) ECC = myCountries[9];
-      if (radio.rds.ECC == 225) ECC = myCountries[10];
-      if (radio.rds.ECC == 226) ECC = myCountries[11];
-      if (radio.rds.ECC == 227) ECC = myCountries[12];
-    } else if (radio.rds.picode[0] == '4') {
-      if (radio.rds.ECC == 224) ECC = myCountries[13];
-      if (radio.rds.ECC == 225) ECC = myCountries[14];
-      if (radio.rds.ECC == 226) ECC = myCountries[15];
-      if (radio.rds.ECC == 227) ECC = myCountries[16];
-    } else if (radio.rds.picode[0] == '5') {
-      if (radio.rds.ECC == 224) ECC = myCountries[17];
-      if (radio.rds.ECC == 225) ECC = myCountries[18];
-      if (radio.rds.ECC == 226) ECC = myCountries[19];
-    } else if (radio.rds.picode[0] == '6') {
-      if (radio.rds.ECC == 224) ECC = myCountries[20];
-      if (radio.rds.ECC == 225) ECC = myCountries[21];
-      if (radio.rds.ECC == 226) ECC = myCountries[22];
-      if (radio.rds.ECC == 227) ECC = myCountries[23];
-      if (radio.rds.ECC == 228) ECC = myCountries[24];
-    } else if (radio.rds.picode[0] == '7') {
-      if (radio.rds.ECC == 224) ECC = myCountries[25];
-      if (radio.rds.ECC == 225) ECC = myCountries[26];
-      if (radio.rds.ECC == 226) ECC = myCountries[27];
-    } else if (radio.rds.picode[0] == '8') {
-      if (radio.rds.ECC == 224) ECC = myCountries[28];
-      if (radio.rds.ECC == 225) ECC = myCountries[29];
-      if (radio.rds.ECC == 226) ECC = myCountries[30];
-      if (radio.rds.ECC == 227) ECC = myCountries[31];
-      if (radio.rds.ECC == 228) ECC = myCountries[32];
-    } else if (radio.rds.picode[0] == '9') {
-      if (radio.rds.ECC == 224) ECC = myCountries[33];
-      if (radio.rds.ECC == 225) ECC = myCountries[34];
-      if (radio.rds.ECC == 226) ECC = myCountries[35];
-      if (radio.rds.ECC == 227) ECC = myCountries[36];
-      if (radio.rds.ECC == 228) ECC = myCountries[37];
-    } else if (radio.rds.picode[0] == 'A') {
-      if (radio.rds.ECC == 224) ECC = myCountries[38];
-      if (radio.rds.ECC == 225) ECC = myCountries[39];
-      if (radio.rds.ECC == 226) ECC = myCountries[40];
-      if (radio.rds.ECC == 227) ECC = myCountries[41];
-    } else if (radio.rds.picode[0] == 'B') {
-      if (radio.rds.ECC == 224) ECC = myCountries[42];
-      if (radio.rds.ECC == 225) ECC = myCountries[43];
-      if (radio.rds.ECC == 226) ECC = myCountries[44];
-    } else if (radio.rds.picode[0] == 'C') {
-      if (radio.rds.ECC == 224) ECC = myCountries[45];
-      if (radio.rds.ECC == 225) ECC = myCountries[46];
-      if (radio.rds.ECC == 226) ECC = myCountries[47];
-      if (radio.rds.ECC == 227) ECC = myCountries[48];
-    } else if (radio.rds.picode[0] == 'D') {
-      if (radio.rds.ECC == 224) ECC = myCountries[0];
-      if (radio.rds.ECC == 225) ECC = myCountries[49];
-    } else if (radio.rds.picode[0] == 'E') {
-      if (radio.rds.ECC == 224) ECC = myCountries[50];
-      if (radio.rds.ECC == 225) ECC = myCountries[51];
-      if (radio.rds.ECC == 226) ECC = myCountries[52];
-      if (radio.rds.ECC == 227) ECC = myCountries[53];
-    } else if (radio.rds.picode[0] == 'F') {
-      if (radio.rds.ECC == 224) ECC = myCountries[54];
-      if (radio.rds.ECC == 225) ECC = myCountries[55];
-      if (radio.rds.ECC == 226) ECC = myCountries[56];
-      if (radio.rds.ECC == 227) ECC = myCountries[57];
-      if (radio.rds.ECC == 228) ECC = myCountries[58];
-    } else {
-      ECC = myLanguage[language][73];
+  void BuildAFScreen() {
+    if (!afscreen && RDSstatus) {
+      tft.drawRoundRect(20, 30, 274, 170, 5, ActiveColor);
+      tft.fillRoundRect(22, 32, 270, 166, 5, BackgroundColor);
+      tftPrint(0, myLanguage[language][34], 155, 98, ActiveColor, ActiveColorSmooth, FONT28);
+      radio.TestAFEON();
     }
-    if (advancedRDS) {
-      tftPrint(-1, "N/A", 242, 196, BackgroundColor, BackgroundColor, FONT16);
-      tftPrint(-1, "ECColdtxt", 242, 196, BackgroundColor, BackgroundColor, FONT16);
-      if (radio.rds.hasECC) tftPrint(-1, ECC, 242, 196, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "N/A", 242, 196, PrimaryColor, PrimaryColorSmooth, FONT16);
-      ECColdtxt = ECC;
-    }
-
-    if (wifi) {
-      Udp.beginPacket(remoteip, 9030);
-      Udp.print("ECC=");
-      if (radio.rds.ECC < 0x10) Udp.print("0");
-      Udp.print(radio.rds.ECC, HEX);
-      Udp.endPacket();
-    }
-    ECCold = radio.rds.ECC;
-  }
-}
-
-void showPI() {
-  if (strcmp(radio.rds.picode, radioIdPrevious)) {
-    if (advancedRDS) {
-      tftReplace(-1, PIold, radio.rds.picode, 244, 76, PrimaryColor, PrimaryColorSmooth, FONT28);
-    } else if (afscreen) {
-      tftReplace(-1, PIold, radio.rds.picode, 30, 32, SecondaryColor, SecondaryColorSmooth, FONT16);
-    } else {
-      tftReplace(-1, PIold, radio.rds.picode, 244, 191, PrimaryColor, PrimaryColorSmooth, FONT28);
-    }
-    PIold = radio.rds.picode;
-    if (wifi) {
-      Udp.beginPacket(remoteip, 9030);
-      Udp.print("from=TEF tuner;PI=" + String(radio.rds.picode, 4));
-      Udp.endPacket();
-    }
-    strcpy(radioIdPrevious, radio.rds.picode);
-  }
-}
-
-void showPTY() {
-  if (strcmp(radio.rds.stationType, programTypePrevious)) {
-    if (advancedRDS) tftReplace(-1, PTYold, radio.rds.stationType, 38, 109, PrimaryColor, PrimaryColorSmooth, FONT16); else tftReplace(-1, PTYold, radio.rds.stationType, 38, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
-    PTYold = radio.rds.stationType;
-    if (wifi) {
-      Udp.beginPacket(remoteip, 9030);
-      Udp.print("from=TEF tuner;PTY=");
-      Udp.print(radio.rds.stationTypeCode, HEX);
-      Udp.endPacket();
-    }
-    strcpy(programTypePrevious, radio.rds.stationType);
-  }
-}
-
-void showPS() {
-  if (radio.rds.stationName != programServicePrevious) {
-    if (advancedRDS) {
-      tftReplace(-1, PSold, radio.rds.stationName, 38, 76, PrimaryColor, PrimaryColorSmooth, FONT28);
-    } else if (afscreen) {
-      tftReplace(-1, PSold, radio.rds.stationName, 65, 32, SecondaryColor, SecondaryColorSmooth, FONT16);
-    } else {
-      tftReplace(-1, PSold, radio.rds.stationName, 38, 191, PrimaryColor, PrimaryColorSmooth, FONT28);
-      tft.drawLine(0, 187, 320, 187, FrameColor);
+    afscreen = true;
+    advancedRDS = false;
+    if (theme == 0) {
+      tft.invertDisplay(colorinvert);
+      tft.fillScreen(BackgroundColor);
+      tft.drawRect(0, 0, 320, 240, FrameColor);
+      tft.drawLine(0, 30, 320, 30, FrameColor);
       tft.drawLine(0, 218, 320, 218, FrameColor);
-    }
-    PSold = radio.rds.stationName;
-    if (wifi) {
-      Udp.beginPacket(remoteip, 9030);
-      Udp.print("from=TEF tuner;PS=");
-      char PShex[9];
-      radio.rds.stationName.toCharArray(PShex, 9);
-      for (int i = 0; i < 8; i++)
-      {
-        if (PShex[i] < 0x10) Udp.print("0");
-        if (PShex[i] == 0x20) PShex[i] =  '_';
-        Udp.print(PShex[i], HEX);
-      }
-      Udp.endPacket();
-    }
-    programServicePrevious = radio.rds.stationName;
-  }
-}
+      tft.drawLine(180, 30, 180, 218, FrameColor);
+      tftPrint(-1, "kHz", 220, 4, ActiveColor, ActiveColorSmooth, FONT28);
+      tftPrint(-1, "AF:", 4, 32, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "PI:", 184, 32, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(0, myLanguage[language][93], 160, 222, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, myLanguage[language][88], 184, 54, PrimaryColor, PrimaryColorSmooth, FONT16);
+      tftPrint(-1, myLanguage[language][87], 6, 54, PrimaryColor, PrimaryColorSmooth, FONT16);
 
-void showRadioText() {
-  if (radio.rds.hasRT && RDSstatus) {
-    if (millis() - rtticker >= 100) { // 350
-      if (xPos == 6) {
-        if (millis() - rttickerhold >= 2000) {
-          xPos -= 1;//= charWidth;
-          rttickerhold = millis();
-        }
-      } else {
-        xPos -= 1;//= charWidth;
-        rttickerhold = millis();
-      }
-
-      if (advancedRDS) {
-        if (xPos < -tft.textWidth(radio.rds.stationText + " " + radio.rds.stationText32) + (charWidth * 21)) xPos = 6;
-        sprite2.fillSprite(BackgroundColor);
-        sprite2.setTextDatum(TL_DATUM);
-        sprite2.loadFont(FONT16);
-        sprite2.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-        sprite2.fillSprite(BackgroundColor);
-        sprite2.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 0, 1);
-        sprite2.pushSprite(35, 222);
-      } else {
-        if (xPos < -tft.textWidth(radio.rds.stationText + " " + radio.rds.stationText32) + (charWidth * 24)) xPos = 6;
-        sprite.fillSprite(BackgroundColor);
-        sprite.setTextDatum(TL_DATUM);
-        sprite.fillSprite(BackgroundColor);
-        sprite.loadFont(FONT16);
-        sprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-        sprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 0, 1);
-        sprite.pushSprite(1, 222);
-      }
-      rtticker = millis();
-      RTold = radio.rds.stationText + " " + radio.rds.stationText32;
-      cleanup = true;
-    }
-  } else if (cleanup == true) {
-    sprite.fillSprite(BackgroundColor);
-    sprite2.fillSprite(BackgroundColor);
-    if (advancedRDS) sprite2.pushSprite(35, 222); else sprite.pushSprite(1, 222);
-    cleanup = false;
-  }
-
-  if (wifi) {
-    Udp.beginPacket(remoteip, 9030);
-    Udp.print("from=TEF tuner;RT1=");
-    char RThex[65];
-    radio.rds.stationText.toCharArray(RThex, 65);
-    for (int i = 0; i < 64; i++)
-    {
-      if (RThex[i] < 0x10) Udp.print("0");
-      if (RThex[i] == ' ') RThex[i] =  '_';
-      Udp.print(RThex[i], HEX);
-    }
-    Udp.endPacket();
-  }
-  tft.drawLine(0, 239, 320, 239, FrameColor);
-}
-
-void BuildMenu() {
-  advancedRDS = false;
-  tft.fillScreen(BackgroundColor);
-  tft.drawRect(0, 0, 320, 240, FrameColor);
-  tft.drawLine(0, 23, 320, 23, FrameColor);
-  tftPrint(-1, myLanguage[language][41], 10, 7, PrimaryColor, PrimaryColorSmooth, FONT16);
-  tftPrint(1, String(menupage) + "/" + String(menupagestotal), 305, 7, ActiveColor, ActiveColorSmooth, FONT16);
-  tft.drawRoundRect(8, menuoption + 3, 302, 21, 5, ActiveColor);
-  switch (menupage) {
-    case 1:
-      tftPrint(1, "dB", 305, 36, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(1, "MHz", 305, 56, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(1, "MHz", 305, 76, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(1, "MHz", 305, 96, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(1, "dB", 305, 116, ActiveColor, ActiveColorSmooth, FONT16);
-      if (StereoLevel != 0) tftPrint(1, "dBμV", 305, 136, ActiveColor, ActiveColorSmooth, FONT16);
-      if (HighCutLevel != 0) tftPrint(1, "Hz", 305, 156, ActiveColor, ActiveColorSmooth, FONT16);
-      if (HighCutOffset != 0) tftPrint(1, "dBμV", 305, 176, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(1, "dBμV", 305, 196, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(1, "%", 305, 216, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][20], 14, 36, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][21], 14, 56, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][22], 14, 76, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][23], 14, 96, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][24], 14, 116, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][25], 14, 136, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][26], 14, 156, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][27], 14, 176, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][28], 14, 196, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][29], 14, 216, ActiveColor, ActiveColorSmooth, FONT16);
-
-      if (VolSet > 0) tftPrint(1, "+" + String(VolSet, DEC), 265, 36, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, String(VolSet, DEC), 265, 36, PrimaryColor, PrimaryColorSmooth, FONT16);
-      tftPrint(1, String(ConverterSet, DEC), 265, 56, PrimaryColor, PrimaryColorSmooth, FONT16);
-      tftPrint(1, String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 265, 76, PrimaryColor, PrimaryColorSmooth, FONT16);
-      tftPrint(1, String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 265, 96, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (LevelOffset > 0) tftPrint(1, "+" + String(LevelOffset, DEC), 265, 116, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, String(LevelOffset, DEC), 265, 116, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (StereoLevel != 0) tftPrint(1, String(StereoLevel, DEC), 265, 136, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 265, 136, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (HighCutLevel != 0) tftPrint(1, String(HighCutLevel * 100, DEC), 265, 156, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 265, 156, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (HighCutOffset != 0) tftPrint(1, String(HighCutOffset, DEC), 265, 176, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 265, 176, PrimaryColor, PrimaryColorSmooth, FONT16);
-      tftPrint(1, String(LowLevelSet, DEC), 265, 196, PrimaryColor, PrimaryColorSmooth, FONT16);
-      tftPrint(1, String(ContrastSet, DEC), 265, 216, PrimaryColor, PrimaryColorSmooth, FONT16);
-      break;
-
-    case 2:
-      tftPrint(-1, myLanguage[language][39], 14, 36, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][38], 14, 56, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][43], 14, 76, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][44], 14, 96, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][45], 14, 116, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][46], 14, 136, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][49], 14, 156, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][49], 14, 176, ActiveColor, ActiveColorSmooth, FONT16);
-      if (wifi) tftPrint(-1, String(myLanguage[language][51]) + " IP: " + String(WiFi.localIP().toString()), 14, 196, ActiveColor, ActiveColorSmooth, FONT16); else tftPrint(-1, myLanguage[language][51], 14, 196, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][52], 14, 216, ActiveColor, ActiveColorSmooth, FONT16);
-
-      tftPrint(1, myLanguage[language][0], 305, 36, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (showrdserrors) tftPrint(1, myLanguage[language][42], 305, 56, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 56, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (softmutefm) tftPrint(1, myLanguage[language][42], 305, 76, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 76, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (softmuteam) tftPrint(1, myLanguage[language][42], 305, 96, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 96, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (edgebeep) tftPrint(1, myLanguage[language][42], 305, 116, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 116, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (region == 0) tftPrint(1, myLanguage[language][47], 305, 136, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (region == 1) tftPrint(1, myLanguage[language][48], 305, 136, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (radio.rds.underscore) tftPrint(1, myLanguage[language][42], 305, 156, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 156, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (USBmode) tftPrint(1, "RDS Spy", 305, 176, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, "XDRGTK", 305, 176, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (wifi) tftPrint(1, myLanguage[language][42], 305, 196, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 196, PrimaryColor, PrimaryColorSmooth, FONT16);
-      tftPrint(1, "->", 305, 196, PrimaryColor, PrimaryColorSmooth, FONT16);
-      break;
-
-    case 3:
-      tftPrint(-1, myLanguage[language][58], 14, 36, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][59], 14, 56, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][60], 14, 76, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][61], 14, 96, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][62], 14, 116, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][63], 14, 136, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][64], 14, 156, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][65], 14, 176, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][67], 14, 196, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][68], 14, 216, ActiveColor, ActiveColorSmooth, FONT16);
-
-      if (amnb != 0) tftPrint(1, "%", 305, 156, ActiveColor, ActiveColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 156, ActiveColor, ActiveColorSmooth, FONT16);
-      if (fmnb != 0) tftPrint(1, "%", 305, 176, ActiveColor, ActiveColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 176, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(1, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 305, 36, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (showSWMIBand) tftPrint(1, myLanguage[language][42], 305, 56, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 56, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (radio.rds.filter) tftPrint(1, myLanguage[language][42], 305, 76, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 76, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (radio.rds.pierrors) tftPrint(1, myLanguage[language][42], 305, 96, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 96, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (showsquelch) tftPrint(1, myLanguage[language][42], 305, 116, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 116, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (showmodulation) tftPrint(1, myLanguage[language][42], 305, 136, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 136, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (amnb != 0) tftPrint(1, String(amnb, DEC), 265, 156, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 156, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (fmnb != 0) tftPrint(1, String(fmnb, DEC), 265, 176, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 176, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (audiomode) tftPrint(1, "MPX", 305, 196, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, "Stereo", 305, 196, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (specialstepOIRT) tftPrint(1, myLanguage[language][42], 305, 216, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 216, PrimaryColor, PrimaryColorSmooth, FONT16);
-      break;
-
-    case 4:
-      tftPrint(-1, myLanguage[language][77], 14, 36, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][70], 14, 56, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][74], 14, 76, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][90], 14, 96, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][91], 14, 116, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][97], 14, 136, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][98], 14, 156, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, myLanguage[language][99], 14, 176, ActiveColor, ActiveColorSmooth, FONT16);
-
-      tftPrint(1, "KHz", 305, 96, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(1, "dB", 305, 136, ActiveColor, ActiveColorSmooth, FONT16);
-      if (screensaverset) tftPrint(1, myLanguage[language][92], 305, 116, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(1, CurrentThemeString, 305, 36, PrimaryColor, PrimaryColorSmooth, FONT16);
-
-      switch (poweroptions) {
-        case DEEP_SLEEP: tftPrint(1, myLanguage[language][75], 305, 76, PrimaryColor, PrimaryColorSmooth, FONT16); break;
-        case LCD_OFF: tftPrint(1, myLanguage[language][76], 305, 76, PrimaryColor, PrimaryColorSmooth, FONT16); break;
-        case LCD_BRIGHTNESS_1_PERCENT: tftPrint(1, myLanguage[language][94], 305, 76, PrimaryColor, PrimaryColorSmooth, FONT16); break;
-        case LCD_BRIGHTNESS_A_QUARTER: tftPrint(1, myLanguage[language][95], 305, 76, PrimaryColor, PrimaryColorSmooth, FONT16); break;
-        case LCD_BRIGHTNESS_HALF: tftPrint(1, myLanguage[language][96], 305, 76, PrimaryColor, PrimaryColorSmooth, FONT16); break;
-      }
-
-      if (fmdefaultstepsize) tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 265, 96, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 265, 96, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (screensaverset) tftPrint(1, myLanguage[language][42], 305, 116, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 116, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (AMLevelOffset > 0) tftPrint(1, "+" + String(AMLevelOffset, DEC), 265, 136, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, String(AMLevelOffset, DEC), 265, 136, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (af) tftPrint(1, myLanguage[language][42], 305, 176, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 176, PrimaryColor, PrimaryColorSmooth, FONT16);
-      tftPrint(1, unitString[unit], 305, 156, PrimaryColor, PrimaryColorSmooth, FONT16);
-      break;
-  }
-  analogWrite(SMETERPIN, 0);
-}
-
-void MuteScreen(bool setting) {
-  if (!setting && screenmute) {
-    screenmute = false;
-    setupmode = true;
-    tft.writecommand(0x11);
-    analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
-    radio.clearRDS(fullsearchrds);
-    BuildDisplay();
-    setupmode = false;
-  } else if (setting && !screenmute) {
-    screenmute = true;
-    analogWrite(CONTRASTPIN, 0);
-    tft.writecommand(0x10);
-  }
-}
-
-void ShowAFEON() {
-  if (radio.rds.hasAF) {
-    if (hasafold == false) {
-      tftPrint(-1, myLanguage[language][87], 6, 54, BackgroundColor, BackgroundColor, FONT16);
-      hasafold = true;
-    }
-
-    if (radio.af_counter > 33) {
-      if (!afpage) {
-        afpage = true;
-        afpagenr = 1;
-      }
-    } else {
-      afpagenr = 0;
-    }
-
-    if (af_counterold != radio.af_counter) {
-      tft.fillRect(2, 53, 177, 165, BackgroundColor);
-      for (byte i = 0; i < radio.af_counter; i++) {
-        byte x = i - (afpagenr == 2 ? 33 : 0);
-        if (radio.af[i].checked) {
-          tftPrint(1, (radio.af[i].filler ? "(f) " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 56 + (x > 10 ? 60 : 0) + (x > 21 ? 60 : 0), 48 + (15 * x) - (x > 10 ? 165 : 0) - (x > 21 ? 165 : 0), InsignificantColor, InsignificantColorSmooth, FONT16);
-        } else if (!radio.af[i].afvalid) {
-          tftPrint(1, (radio.af[i].filler ? "(f) " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 56 + (x > 10 ? 60 : 0) + (x > 21 ? 60 : 0), 48 + (15 * x) - (x > 10 ? 165 : 0) - (x > 21 ? 165 : 0), SignificantColor, SignificantColorSmooth, FONT16);
-        } else {
-          tftPrint(1, (radio.af[i].filler ? "(f) " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 56 + (x > 10 ? 60 : 0) + (x > 21 ? 60 : 0), 48 + (15 * x) - (x > 10 ? 165 : 0) - (x > 21 ? 165 : 0), PrimaryColor, PrimaryColorSmooth, FONT16);
-        }
-        if (i == 32  + (afpagenr == 2 ? 33 : 0)) i = 254;
-      }
-
-      if (radio.af_counter > 11 + (afpagenr == 2 ? 33 : 0)) tft.drawLine(65, 54, 65, 210, SecondaryColor);
-      if (radio.af_counter > 22 + (afpagenr == 2 ? 33 : 0)) tft.drawLine(125, 54, 125, 210, SecondaryColor);
-      if (afpage == true) tftPrint(1, String(afpagenr) + "/2", 315, 224, SecondaryColor, SecondaryColorSmooth, FONT16);
-    }
-    af_counterold = radio.af_counter;
-  }
-
-  if (radio.rds.hasEON) {
-    if (haseonold == false) {
-      tftPrint(-1, myLanguage[language][88], 184, 54, BackgroundColor, BackgroundColor, FONT16);
-    }
-    haseonold = true;
-    for (byte i = 0; i < radio.eon_counter; i++) {
-      tftPrint(-1, String(radio.eon[i].picode), 184, 54 + (15 * i), PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (radio.eon[i].ps.length() > 0) {
-        tftPrint(-1, "PS:", 218, 32, ActiveColor, ActiveColorSmooth, FONT16);
-        if (radio.eon[i].ps != eonpsold[i]) {
-          tftPrint(-1, String(eonpsold[i]), 218, 54 + (15 * i), BackgroundColor, BackgroundColor, FONT16);
-          eonpsold[i] = radio.eon[i].ps;
-        }
-        tftPrint(-1, String(radio.eon[i].ps), 218, 54 + (15 * i), PrimaryColor, PrimaryColorSmooth, FONT16);
-      }
-
-      if (radio.eon[i].mappedfreq > 0) {
-        tftPrint(1, "FREQ:", 316, 32, ActiveColor, ActiveColorSmooth, FONT16);
-        if (radio.eon[i].mappedfreq != mappedfreqold[i]) {
-          tftPrint(1, String(mappedfreqold[i] / 100) + "." + String((mappedfreqold[i] % 100) / 10), 316, 54 + (15 * i), BackgroundColor, BackgroundColor, FONT16);
-        }
-        tftPrint(1, String(radio.eon[i].mappedfreq / 100) + "." + String((radio.eon[i].mappedfreq % 100) / 10), 316, 54 + (15 * i), PrimaryColor, PrimaryColorSmooth, FONT16);
-        mappedfreqold[i] = radio.eon[i].mappedfreq;
-      }
-      if (i == 10) i = 254;
+      for (byte i = 0; i < 20; i++) mappedfreqold[i] = 0;
+      RDSstatusold = false;
+      ShowFreq(0);
+      Stereostatusold = false;
+      haseonold = false;
+      hasafold = false;
+      BWreset = true;
+      SStatusold = 2000;
+      rssiold = 2000;
+      batteryold = 6;
+      af_counterold = 254;
+      strcpy(radioIdPrevious, "0");
+      programServicePrevious = "0";
+      for (byte i = 0; i < 11; i++) eonpsold[i] = "";
     }
   }
-}
 
-void BuildAFScreen() {
-  if (!afscreen && RDSstatus) {
-    tft.drawRoundRect(20, 30, 274, 170, 5, ActiveColor);
-    tft.fillRoundRect(22, 32, 270, 166, 5, BackgroundColor);
-    tftPrint(0, myLanguage[language][34], 155, 98, ActiveColor, ActiveColorSmooth, FONT28);
-    radio.TestAFEON();
-  }
-  afscreen = true;
-  advancedRDS = false;
-  if (theme == 0) {
-    tft.invertDisplay(colorinvert);
-    tft.fillScreen(BackgroundColor);
-    tft.drawRect(0, 0, 320, 240, FrameColor);
-    tft.drawLine(0, 30, 320, 30, FrameColor);
-    tft.drawLine(0, 218, 320, 218, FrameColor);
-    tft.drawLine(180, 30, 180, 218, FrameColor);
-    tftPrint(-1, "kHz", 220, 4, ActiveColor, ActiveColorSmooth, FONT28);
-    tftPrint(-1, "AF:", 4, 32, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "PI:", 184, 32, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(0, myLanguage[language][93], 160, 222, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, myLanguage[language][88], 184, 54, PrimaryColor, PrimaryColorSmooth, FONT16);
-    tftPrint(-1, myLanguage[language][87], 6, 54, PrimaryColor, PrimaryColorSmooth, FONT16);
+  void BuildAdvancedRDS() {
+    afscreen = false;
+    afpage = false;
+    afpagenr = 0;
+    advancedRDS = true;
+    ScreensaverTimerSet(OFF);
+    if (theme == 0) {
+      tft.invertDisplay(colorinvert);
+      tft.fillScreen(BackgroundColor);
+      tft.drawRect(0, 0, 320, 240, FrameColor);
+      tft.drawLine(0, 30, 320, 30, FrameColor);
+      tft.drawLine(0, 70, 320, 70, FrameColor);
+      tft.drawLine(0, 103, 320, 103, FrameColor);
+      tft.drawLine(0, 128, 320, 128, FrameColor);
+      tft.drawLine(64, 30, 64, 0, FrameColor);
+      tft.drawLine(210, 30, 210, 240, FrameColor);
+      tft.drawLine(268, 30, 268, 0, FrameColor);
+      tft.drawLine(108, 30, 108, 0, FrameColor);
+      tft.drawLine(174, 30, 174, 0, FrameColor);
+      tft.drawLine(0, 143, 210, 143, FrameColor);
+      tft.drawLine(0, 168, 210, 168, FrameColor);
+      tft.drawLine(0, 193, 320, 193, FrameColor);
+      tft.drawLine(0, 218, 210, 218, FrameColor);
+      tft.drawRect(0, 0, 320, 240, FrameColor);
 
-    for (byte i = 0; i < 20; i++) mappedfreqold[i] = 0;
+      tftPrint(-1, "ERRORS", 6, 34, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(1, unitString[unit], 310, 51, ActiveColor, ActiveColorSmooth, FONT16);
+      if (region == 0) tftPrint(-1, "PI", 216, 82, ActiveColor, ActiveColorSmooth, FONT16);
+      if (region == 1) tftPrint(-1, "ID", 216, 82, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "PS", 6, 82, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "PTY", 6, 109, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "RT+", 6, 150, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "AF", 6, 200, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "EON", 6, 175, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "RT", 6, 222, ActiveColor, ActiveColorSmooth, FONT16);
+
+      tftPrint(-1, "A:", 66, 34, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "B:", 104, 34, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "C:", 142, 34, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "D:", 180, 34, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "ECC", 216, 196, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "LIC", 216, 211, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "PIN", 216, 226, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(1, "Dyn. PTY", 300, 132, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(1, "Art. head", 300, 147, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(1, "Compressed", 300, 162, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(1, "Has stereo", 300, 177, ActiveColor, ActiveColorSmooth, FONT16);
+
+      tft.fillCircle(86, 41, 5, TFT_RED);
+      tft.fillCircle(124, 41, 5, TFT_RED);
+      tft.fillCircle(162, 41, 5, TFT_RED);
+      tft.fillCircle(200, 41, 5, TFT_RED);
+
+      tft.fillCircle(310, 139, 5, TFT_RED);
+      tft.fillCircle(310, 155, 5, TFT_RED);
+      tft.fillCircle(310, 170, 5, TFT_RED);
+      tft.fillCircle(310, 185, 5, TFT_RED);
+
+      for (int i = 0; i < 33; i++) tft.fillCircle((6 * i) + 10, 136, 2, GreyoutColor);
+
+      tftPrint(-1, "kHz", 220, 4, ActiveColor, ActiveColorSmooth, FONT28);
+
+      tft.drawCircle(81, 15, 10, GreyoutColor);
+      tft.drawCircle(81, 15, 9, GreyoutColor);
+      tft.drawCircle(91, 15, 10, GreyoutColor);
+      tft.drawCircle(91, 15, 9, GreyoutColor);
+      tft.drawBitmap(139, 5, RDSLogo, 35, 22, GreyoutColor);
+
+      if (StereoToggle == false) {
+        tft.drawCircle(86, 15, 10, SecondaryColor);
+        tft.drawCircle(86, 15, 9, SecondaryColor);
+      }
+
+      if (radio.rds.hasCT) tftPrint(1, rds_clockold, 205, 111, SecondaryColor, SecondaryColorSmooth, FONT16);
+      tftPrint(-1, "TP", 6, 51, GreyoutColor, BackgroundColor, FONT16);
+      tftPrint(-1, "TA", 28, 51, GreyoutColor, BackgroundColor, FONT16);
+      tftPrint(-1, "AF", 50, 51, GreyoutColor, BackgroundColor, FONT16);
+      tftPrint(-1, "CT", 72, 51, GreyoutColor, BackgroundColor, FONT16);
+      tftPrint(-1, "TMC", 90, 51, GreyoutColor, BackgroundColor, FONT16);
+      tftPrint(-1, "RT+", 124, 51, GreyoutColor, BackgroundColor, FONT16);
+      tftPrint(-1, "EON", 153, 51, GreyoutColor, BackgroundColor, FONT16);
+      tftPrint(-1, "M", 185, 51, GreyoutColor, BackgroundColor, FONT16);
+      tftPrint(-1, "S", 198, 51, GreyoutColor, BackgroundColor, FONT16);
+    }
+
     RDSstatusold = false;
     ShowFreq(0);
     Stereostatusold = false;
-    haseonold = false;
-    hasafold = false;
-    BWreset = true;
     SStatusold = 2000;
+    SStatus = 100;
     rssiold = 2000;
+    rdsblockold = 33;
     batteryold = 6;
-    af_counterold = 254;
+
+    strcpy(programTypePrevious, "0");
     strcpy(radioIdPrevious, "0");
     programServicePrevious = "0";
-    for (byte i = 0; i < 11; i++) eonpsold[i] = "";
-  }
-}
-
-void BuildAdvancedRDS() {
-  afscreen = false;
-  afpage = false;
-  afpagenr = 0;
-  advancedRDS = true;
-  ScreensaverTimerSet(OFF);
-  if (theme == 0) {
-    tft.invertDisplay(colorinvert);
-    tft.fillScreen(BackgroundColor);
-    tft.drawRect(0, 0, 320, 240, FrameColor);
-    tft.drawLine(0, 30, 320, 30, FrameColor);
-    tft.drawLine(0, 70, 320, 70, FrameColor);
-    tft.drawLine(0, 103, 320, 103, FrameColor);
-    tft.drawLine(0, 128, 320, 128, FrameColor);
-    tft.drawLine(64, 30, 64, 0, FrameColor);
-    tft.drawLine(210, 30, 210, 240, FrameColor);
-    tft.drawLine(268, 30, 268, 0, FrameColor);
-    tft.drawLine(108, 30, 108, 0, FrameColor);
-    tft.drawLine(174, 30, 174, 0, FrameColor);
-    tft.drawLine(0, 143, 210, 143, FrameColor);
-    tft.drawLine(0, 168, 210, 168, FrameColor);
-    tft.drawLine(0, 193, 320, 193, FrameColor);
-    tft.drawLine(0, 218, 210, 218, FrameColor);
-    tft.drawRect(0, 0, 320, 240, FrameColor);
-
-    tftPrint(-1, "ERRORS", 6, 34, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(1, unitString[unit], 310, 51, ActiveColor, ActiveColorSmooth, FONT16);
-    if (region == 0) tftPrint(-1, "PI", 216, 82, ActiveColor, ActiveColorSmooth, FONT16);
-    if (region == 1) tftPrint(-1, "ID", 216, 82, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "PS", 6, 82, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "PTY", 6, 109, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "RT+", 6, 150, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "AF", 6, 200, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "EON", 6, 175, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "RT", 6, 222, ActiveColor, ActiveColorSmooth, FONT16);
-
-    tftPrint(-1, "A:", 66, 34, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "B:", 104, 34, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "C:", 142, 34, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "D:", 180, 34, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "ECC", 216, 196, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "LIC", 216, 211, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "PIN", 216, 226, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(1, "Dyn. PTY", 300, 132, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(1, "Art. head", 300, 147, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(1, "Compressed", 300, 162, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(1, "Has stereo", 300, 177, ActiveColor, ActiveColorSmooth, FONT16);
-
-    tft.fillCircle(86, 41, 5, TFT_RED);
-    tft.fillCircle(124, 41, 5, TFT_RED);
-    tft.fillCircle(162, 41, 5, TFT_RED);
-    tft.fillCircle(200, 41, 5, TFT_RED);
-
-    tft.fillCircle(310, 139, 5, TFT_RED);
-    tft.fillCircle(310, 155, 5, TFT_RED);
-    tft.fillCircle(310, 170, 5, TFT_RED);
-    tft.fillCircle(310, 185, 5, TFT_RED);
-
-    for (int i = 0; i < 33; i++) tft.fillCircle((6 * i) + 10, 136, 2, GreyoutColor);
-
-    tftPrint(-1, "kHz", 220, 4, ActiveColor, ActiveColorSmooth, FONT28);
-
-    tft.drawCircle(81, 15, 10, GreyoutColor);
-    tft.drawCircle(81, 15, 9, GreyoutColor);
-    tft.drawCircle(91, 15, 10, GreyoutColor);
-    tft.drawCircle(91, 15, 9, GreyoutColor);
-    tft.drawBitmap(110, 5, RDSLogo, 67, 22, GreyoutColor);
-
-    if (StereoToggle == false) {
-      tft.drawCircle(86, 15, 10, SecondaryColor);
-      tft.drawCircle(86, 15, 9, SecondaryColor);
-    }
-
-    if (radio.rds.hasCT) tftPrint(1, rds_clockold, 205, 111, SecondaryColor, SecondaryColorSmooth, FONT16);
-    tftPrint(-1, "TP", 6, 51, GreyoutColor, BackgroundColor, FONT16);
-    tftPrint(-1, "TA", 28, 51, GreyoutColor, BackgroundColor, FONT16);
-    tftPrint(-1, "AF", 50, 51, GreyoutColor, BackgroundColor, FONT16);
-    tftPrint(-1, "CT", 72, 51, GreyoutColor, BackgroundColor, FONT16);
-    tftPrint(-1, "TMC", 90, 51, GreyoutColor, BackgroundColor, FONT16);
-    tftPrint(-1, "RT+", 124, 51, GreyoutColor, BackgroundColor, FONT16);
-    tftPrint(-1, "EON", 153, 51, GreyoutColor, BackgroundColor, FONT16);
-    tftPrint(-1, "M", 185, 51, GreyoutColor, BackgroundColor, FONT16);
-    tftPrint(-1, "S", 198, 51, GreyoutColor, BackgroundColor, FONT16);
+    ptynold = " ";
+    MSold = 0;
+    ECCold = 254;
+    licold = 254;
+    af_counterold = 254;
+    TAold = false;
+    TPold = false;
+    hastmcold = false;
+    errorAold = true;
+    errorBold = true;
+    errorCold = true;
+    errorDold = true;
+    dynamicPTYold = false;
+    artheadold = false;
+    compressedold = false;
+    rdsstereoold = false;
+    hasafold = false;
+    haseonold = false;
+    BWreset = true;
+    pinstringold = "";
+    ShowMemoryPos();
   }
 
-  RDSstatusold = false;
-  ShowFreq(0);
-  Stereostatusold = false;
-  SStatusold = 2000;
-  SStatus = 100;
-  rssiold = 2000;
-  rdsblockold = 33;
-  batteryold = 6;
-
-  strcpy(programTypePrevious, "0");
-  strcpy(radioIdPrevious, "0");
-  programServicePrevious = "0";
-  ptynold = " ";
-  MSold = 0;
-  ECCold = 254;
-  licold = 254;
-  af_counterold = 254;
-  TAold = false;
-  TPold = false;
-  hastmcold = false;
-  errorAold = true;
-  errorBold = true;
-  errorCold = true;
-  errorDold = true;
-  dynamicPTYold = false;
-  artheadold = false;
-  compressedold = false;
-  rdsstereoold = false;
-  hasafold = false;
-  haseonold = false;
-  BWreset = true;
-  pinstringold = "";
-  ShowMemoryPos();
-}
-
-void BuildDisplay() {
-  afscreen = false;
-  advancedRDS = false;
-  if (theme == 0) {
-    tft.invertDisplay(colorinvert);
-    tft.fillScreen(BackgroundColor);
-    tft.drawRect(0, 0, 320, 240, FrameColor);
-    tft.drawLine(0, 30, 320, 30, FrameColor);
-    tft.drawLine(0, 100, 320, 100, FrameColor);
-    tft.drawLine(64, 30, 64, 0, FrameColor);
-    tft.drawLine(210, 100, 210, 218, FrameColor);
-    tft.drawLine(268, 30, 268, 0, FrameColor);
-    tft.drawLine(0, 165, 210, 165, FrameColor);
-    tft.drawLine(0, 187, 320, 187, FrameColor);
-    tft.drawLine(0, 218, 320, 218, FrameColor);
-    tft.drawLine(108, 30, 108, 0, FrameColor);
-    tft.drawLine(174, 30, 174, 0, FrameColor);
-    tft.drawLine(20, 120, 204, 120, TFT_DARKGREY);
-    if (!showmodulation) tft.drawLine(20, 150, 204, 150, GreyoutColor); else tft.drawLine(20, 150, 204, 150, TFT_DARKGREY);
-    for (byte segments = 0; segments < 94; segments++) {
-      if (segments > 54) {
-        if (((segments - 53) % 10) == 0) {
-          tft.fillRect(16 + (2 * segments), 117, 2, 3, TFT_RED);
-          if (!showmodulation) tft.fillRect(16 + (2 * segments), 147, 2, 3, GreyoutColor); else tft.fillRect(16 + (2 * segments), 147, 2, 3, TFT_RED);
-        }
-      } else {
-        if (((segments + 1) % 6) == 0) {
-          tft.fillRect(16 + (2 * segments), 117, 2, 3, TFT_GREEN);
-          if (!showmodulation) tft.fillRect(16 + (2 * segments), 147, 2, 3, GreyoutColor); else tft.fillRect(16 + (2 * segments), 147, 2, 3, TFT_GREEN);
-        }
-      }
-    }
-    if (showsquelch) tftPrint(0, "SQ:", 224, 150, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "S/N", 246, 170, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "dB", 300, 170, ActiveColor, ActiveColorSmooth, FONT16);
-    if (region == 0) tftPrint(-1, "PI:", 216, 197, ActiveColor, ActiveColorSmooth, FONT16);
-    if (region == 1) tftPrint(-1, "ID:", 216, 197, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "PS:", 6, 197, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "PTY:", 6, 170, ActiveColor, ActiveColorSmooth, FONT16);
-
-    tftPrint(0, "S", 7, 107, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "1", 24, 122, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "3", 48, 122, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "5", 72, 122, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "7", 96, 122, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "9", 120, 122, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "+10", 134, 122, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "+30", 174, 122, ActiveColor, ActiveColorSmooth, FONT16);
-
-    if (!showmodulation) {
-      tftPrint(0, "M", 7, 138, GreyoutColor, BackgroundColor, FONT16);
-      tftPrint(-1, "10", 27, 152, GreyoutColor, BackgroundColor, FONT16);
-      tftPrint(-1, "30", 57, 152, GreyoutColor, BackgroundColor, FONT16);
-      tftPrint(-1, "50", 87, 152, GreyoutColor, BackgroundColor, FONT16);
-      tftPrint(-1, "70", 117, 152, GreyoutColor, BackgroundColor, FONT16);
-      tftPrint(-1, "100", 164, 152, GreyoutColor, BackgroundColor, FONT16);
-    } else {
-      tftPrint(0, "M", 7, 138, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, "10", 27, 152, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, "30", 57, 152, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, "50", 87, 152, ActiveColor, ActiveColorSmooth, FONT16);
-      tftPrint(-1, "70", 117, 152, ActiveColor, BackgroundColor, FONT16);
-      tftPrint(-1, "100", 164, 152, ActiveColor, ActiveColorSmooth, FONT16);
-    }
-
-    tftPrint(-1, "kHz", 220, 4, ActiveColor, ActiveColorSmooth, FONT28);
-    tftPrint(-1, unitString[unit], 282, 150, ActiveColor, ActiveColorSmooth, FONT16);
-
-    if (band == BAND_FM) tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, FONT28); else tftPrint(-1, "kHz", 258, 76, ActiveColor, ActiveColorSmooth, FONT28);
-
-    tft.drawRoundRect(249, 56, 30, 20, 5, GreyoutColor);
-    tft.drawRoundRect(287, 56, 30, 20, 5, GreyoutColor);
-    tft.drawCircle(81, 15, 10, GreyoutColor);
-    tft.drawCircle(81, 15, 9, GreyoutColor);
-    tft.drawCircle(91, 15, 10, GreyoutColor);
-    tft.drawCircle(91, 15, 9, GreyoutColor);
-    tft.drawBitmap(110, 5, RDSLogo, 67, 22, GreyoutColor);
-    if (StereoToggle == false) {
-      tft.drawCircle(86, 15, 10, SecondaryColor);
-      tft.drawCircle(86, 15, 9, SecondaryColor);
-    }
-
-    switch (band) {
-      case BAND_LW: tftPrint(-1, "LW", 50, 32, SecondaryColor, SecondaryColorSmooth, FONT16); break;
-      case BAND_MW: tftPrint(-1, "MW", 50, 32, SecondaryColor, SecondaryColorSmooth, FONT16); break;
-      case BAND_SW: tftPrint(-1, "SW", 50, 32, SecondaryColor, SecondaryColorSmooth, FONT16); break;
-      case BAND_FM: tftPrint(-1, "FM", 50, 32, SecondaryColor, SecondaryColorSmooth, FONT16); break;
-    }
-  }
-  RDSstatusold = false;
-  Stereostatusold = false;
-  ShowFreq(0);
-  ShowTuneMode();
-  updateBW();
-  ShowStepSize();
-  ShowMemoryPos();
-  updateiMS();
-  updateEQ();
-  Squelchold = -2;
-  SStatusold = 2000;
-  SStatus = 100;
-  rssiold = 2000;
-  SNRold = 254;
-  af_counterold = 254;
-  batteryold = 6;
-  strcpy(programTypePrevious, "0");
-  strcpy(radioIdPrevious, "0");
-  programServicePrevious = "0";
-  BWreset = true;
-}
-
-void ShowFreq(int mode) {
-  if (screenmute == false) {
-    if (setupmode == false) {
-      if (band == 1) { // Fix Me :take care of 9K/10K Step
-        if (freqold < 2000 && frequency_AM >= 2000 && stepsize == 0) if (frequency_AM != 27000 && freqold != 144) radio.SetFreqAM(2000);
-        if (freqold >= 2000 && frequency_AM < 2000 && stepsize == 0) if (frequency_AM != 144 && freqold != 27000) radio.SetFreqAM(1998);
-      }
-    }
-
-    if (screenmute == false) {
-      detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A));
-      detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B));
-      if (band != BAND_FM ) {
-        unsigned int freq = frequency_AM;
-        String count = String(freq, DEC);
-        if ((setupmode == false && count.length() != freqoldcount) || mode != 0) {
-          tft.setTextColor(BackgroundColor);
-          tft.drawRightString(String(freqold), 248, 45, 7);
-        }
-        tft.setTextColor(PrimaryColor, BackgroundColor);
-        tft.drawRightString(String(freq), 248, 45, 7);
-        freqold = freq;
-        freqoldcount = count.length();
-
-        if (band == BAND_SW && showSWMIBand) {
-          DivdeSWMIBand();
-          updateSWMIBand();
-        }
-
-      } else {
-        unsigned int freq = frequency + ConverterSet * 100;
-        if (advancedRDS) {
-          for (int i = 0; i < 33; i++) tft.fillCircle((6 * i) + 10, 136, 2, GreyoutColor);
-          tftReplace(1, String(freqold / 100) + "." + (freqold % 100 < 10 ? "0" : "") + String(freqold % 100) + " MHz", String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100) + " MHz", 310, 36, PrimaryColor, PrimaryColorSmooth, FONT16);
-          freqold = freq;
-        } else if (afscreen) {
-          tftReplace(1, String(freqold / 100) + "." + (freqold % 100 < 10 ? "0" : "") + String(freqold % 100) + " MHz", String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100), 170, 32, SecondaryColor, SecondaryColorSmooth, FONT16);
-          freqold = freq;
+  void BuildDisplay() {
+    afscreen = false;
+    advancedRDS = false;
+    if (theme == 0) {
+      tft.invertDisplay(colorinvert);
+      tft.fillScreen(BackgroundColor);
+      tft.drawRect(0, 0, 320, 240, FrameColor);
+      tft.drawLine(0, 30, 320, 30, FrameColor);
+      tft.drawLine(0, 100, 320, 100, FrameColor);
+      tft.drawLine(64, 30, 64, 0, FrameColor);
+      tft.drawLine(210, 100, 210, 218, FrameColor);
+      tft.drawLine(268, 30, 268, 0, FrameColor);
+      tft.drawLine(0, 165, 210, 165, FrameColor);
+      tft.drawLine(0, 187, 320, 187, FrameColor);
+      tft.drawLine(0, 218, 320, 218, FrameColor);
+      tft.drawLine(108, 30, 108, 0, FrameColor);
+      tft.drawLine(137, 30, 137, 0, FrameColor);
+      tft.drawLine(174, 30, 174, 0, FrameColor);
+      tft.drawLine(20, 120, 204, 120, TFT_DARKGREY);
+      if (!showmodulation) tft.drawLine(20, 150, 204, 150, GreyoutColor); else tft.drawLine(20, 150, 204, 150, TFT_DARKGREY);
+      for (byte segments = 0; segments < 94; segments++) {
+        if (segments > 54) {
+          if (((segments - 53) % 10) == 0) {
+            tft.fillRect(16 + (2 * segments), 117, 2, 3, TFT_RED);
+            if (!showmodulation) tft.fillRect(16 + (2 * segments), 147, 2, 3, GreyoutColor); else tft.fillRect(16 + (2 * segments), 147, 2, 3, TFT_RED);
+          }
         } else {
-          String count = String(freq / 100, DEC);
+          if (((segments + 1) % 6) == 0) {
+            tft.fillRect(16 + (2 * segments), 117, 2, 3, TFT_GREEN);
+            if (!showmodulation) tft.fillRect(16 + (2 * segments), 147, 2, 3, GreyoutColor); else tft.fillRect(16 + (2 * segments), 147, 2, 3, TFT_GREEN);
+          }
+        }
+      }
+      if (showsquelch) tftPrint(0, "SQ:", 224, 150, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "S/N", 246, 170, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "dB", 300, 170, ActiveColor, ActiveColorSmooth, FONT16);
+      if (region == 0) tftPrint(-1, "PI:", 216, 197, ActiveColor, ActiveColorSmooth, FONT16);
+      if (region == 1) tftPrint(-1, "ID:", 216, 197, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "PS:", 6, 197, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "RT:", 6, 222, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "PTY:", 6, 170, ActiveColor, ActiveColorSmooth, FONT16);
+
+      tftPrint(0, "S", 7, 107, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "1", 24, 122, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "3", 48, 122, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "5", 72, 122, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "7", 96, 122, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "9", 120, 122, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "+10", 134, 122, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, "+30", 174, 122, ActiveColor, ActiveColorSmooth, FONT16);
+
+      if (!showmodulation) {
+        tftPrint(0, "M", 7, 138, GreyoutColor, BackgroundColor, FONT16);
+        tftPrint(-1, "10", 27, 152, GreyoutColor, BackgroundColor, FONT16);
+        tftPrint(-1, "30", 57, 152, GreyoutColor, BackgroundColor, FONT16);
+        tftPrint(-1, "50", 87, 152, GreyoutColor, BackgroundColor, FONT16);
+        tftPrint(-1, "70", 117, 152, GreyoutColor, BackgroundColor, FONT16);
+        tftPrint(-1, "100", 164, 152, GreyoutColor, BackgroundColor, FONT16);
+      } else {
+        tftPrint(0, "M", 7, 138, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, "10", 27, 152, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, "30", 57, 152, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, "50", 87, 152, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, "70", 117, 152, ActiveColor, BackgroundColor, FONT16);
+        tftPrint(-1, "100", 164, 152, ActiveColor, ActiveColorSmooth, FONT16);
+      }
+
+      tftPrint(-1, "kHz", 220, 4, ActiveColor, ActiveColorSmooth, FONT28);
+      tftPrint(-1, unitString[unit], 282, 150, ActiveColor, ActiveColorSmooth, FONT16);
+
+      if (band == BAND_FM) tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, FONT28); else tftPrint(-1, "kHz", 258, 76, ActiveColor, ActiveColorSmooth, FONT28);
+
+      tft.drawRoundRect(249, 56, 30, 20, 5, GreyoutColor);
+      tft.drawRoundRect(287, 56, 30, 20, 5, GreyoutColor);
+      tft.drawCircle(81, 15, 10, GreyoutColor);
+      tft.drawCircle(81, 15, 9, GreyoutColor);
+      tft.drawCircle(91, 15, 10, GreyoutColor);
+      tft.drawCircle(91, 15, 9, GreyoutColor);
+      tft.drawBitmap(139, 5, RDSLogo, 35, 22, GreyoutColor);
+      if (StereoToggle == false) {
+        tft.drawCircle(86, 15, 10, SecondaryColor);
+        tft.drawCircle(86, 15, 9, SecondaryColor);
+      }
+
+      switch (band) {
+        case BAND_LW: tftPrint(-1, "LW", 50, 32, SecondaryColor, SecondaryColorSmooth, FONT16); break;
+        case BAND_MW: tftPrint(-1, "MW", 50, 32, SecondaryColor, SecondaryColorSmooth, FONT16); break;
+        case BAND_SW: tftPrint(-1, "SW", 50, 32, SecondaryColor, SecondaryColorSmooth, FONT16); break;
+        case BAND_FM: tftPrint(-1, "FM", 50, 32, SecondaryColor, SecondaryColorSmooth, FONT16); break;
+      }
+    }
+    RDSstatusold = false;
+    Stereostatusold = false;
+    ShowFreq(0);
+    ShowTuneMode();
+    updateBW();
+    ShowStepSize();
+    ShowMemoryPos();
+    updateiMS();
+    updateEQ();
+    Squelchold = -2;
+    SStatusold = 2000;
+    SStatus = 100;
+    rssiold = 2000;
+    SNRold = 254;
+    af_counterold = 254;
+    batteryold = 6;
+    strcpy(programTypePrevious, "0");
+    strcpy(radioIdPrevious, "0");
+    programServicePrevious = "0";
+    BWreset = true;
+  }
+
+  void ShowFreq(int mode) {
+    if (screenmute == false) {
+      if (setupmode == false) {
+        if (band == 1) { // Fix Me :take care of 9K/10K Step
+          if (freqold < 2000 && frequency_AM >= 2000 && stepsize == 0) if (frequency_AM != 27000 && freqold != 144) radio.SetFreqAM(2000);
+          if (freqold >= 2000 && frequency_AM < 2000 && stepsize == 0) if (frequency_AM != 144 && freqold != 27000) radio.SetFreqAM(1998);
+        }
+      }
+
+      if (screenmute == false) {
+        detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A));
+        detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B));
+        if (band != BAND_FM ) {
+          unsigned int freq = frequency_AM;
+          String count = String(freq, DEC);
           if ((setupmode == false && count.length() != freqoldcount) || mode != 0) {
             tft.setTextColor(BackgroundColor);
-            if (freqoldcount <= 2) tft.setCursor (108, 45);
-            if (freqoldcount == 3) tft.setCursor (76, 45);
-            if (freqoldcount >= 4) tft.setCursor (44, 45);
-            tft.setTextFont(7);
-            tft.print(freqold / 100);
-            if (band == BAND_FM) {
+            tft.drawRightString(String(freqold), 248, 45, 7);
+          }
+          tft.setTextColor(PrimaryColor, BackgroundColor);
+          tft.drawRightString(String(freq), 248, 45, 7);
+          freqold = freq;
+          freqoldcount = count.length();
+
+          if (band == BAND_SW && showSWMIBand) {
+            DivdeSWMIBand();
+            updateSWMIBand();
+          }
+
+        } else {
+          unsigned int freq = frequency + ConverterSet * 100;
+          if (advancedRDS) {
+            for (int i = 0; i < 33; i++) tft.fillCircle((6 * i) + 10, 136, 2, GreyoutColor);
+            tftReplace(1, String(freqold / 100) + "." + (freqold % 100 < 10 ? "0" : "") + String(freqold % 100) + " MHz", String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100) + " MHz", 310, 36, PrimaryColor, PrimaryColorSmooth, FONT16);
+            freqold = freq;
+          } else if (afscreen) {
+            tftReplace(1, String(freqold / 100) + "." + (freqold % 100 < 10 ? "0" : "") + String(freqold % 100) + " MHz", String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100), 170, 32, SecondaryColor, SecondaryColorSmooth, FONT16);
+            freqold = freq;
+          } else {
+            String count = String(freq / 100, DEC);
+            if ((setupmode == false && count.length() != freqoldcount) || mode != 0) {
+              tft.setTextColor(BackgroundColor);
+              if (freqoldcount <= 2) tft.setCursor (108, 45);
+              if (freqoldcount == 3) tft.setCursor (76, 45);
+              if (freqoldcount >= 4) tft.setCursor (44, 45);
+              tft.setTextFont(7);
+              tft.print(freqold / 100);
+              if (band == BAND_FM) {
+                tft.print(".");
+                if (freqold % 100 < 10) tft.print("0");
+                tft.print(freqold % 100);
+              }
+            }
+
+            tft.setTextColor(PrimaryColor, BackgroundColor);
+            if (mode == 0) {
+              if (count.length() <= 2) tft.setCursor (108, 45);
+              if (count.length() == 3) tft.setCursor (76, 45);
+              if (count.length() >= 4) tft.setCursor (44, 45);
+              tft.setTextFont(7);
+              tft.print(freq / 100);
+              tft.print(".");
+              if (freq % 100 < 10) tft.print("0");
+              tft.print(freq % 100);
+              freqold = freq;
+              freqoldcount = count.length();
+            } else if (mode == 1) {
+              tft.setTextColor(BackgroundColor);
+              if (freqoldcount <= 2) tft.setCursor (98, 45);
+              if (freqoldcount == 3) tft.setCursor (71, 45);
+              if (freqoldcount == 4) tft.setCursor (44, 45);
+              tft.setTextFont(1);
+              tft.print(freqold / 100);
               tft.print(".");
               if (freqold % 100 < 10) tft.print("0");
               tft.print(freqold % 100);
             }
           }
-
-          tft.setTextColor(PrimaryColor, BackgroundColor);
-          if (mode == 0) {
-            if (count.length() <= 2) tft.setCursor (108, 45);
-            if (count.length() == 3) tft.setCursor (76, 45);
-            if (count.length() >= 4) tft.setCursor (44, 45);
-            tft.setTextFont(7);
-            tft.print(freq / 100);
-            tft.print(".");
-            if (freq % 100 < 10) tft.print("0");
-            tft.print(freq % 100);
-            freqold = freq;
-            freqoldcount = count.length();
-          } else if (mode == 1) {
-            tft.setTextColor(BackgroundColor);
-            if (freqoldcount <= 2) tft.setCursor (98, 45);
-            if (freqoldcount == 3) tft.setCursor (71, 45);
-            if (freqoldcount == 4) tft.setCursor (44, 45);
-            tft.setTextFont(1);
-            tft.print(freqold / 100);
-            tft.print(".");
-            if (freqold % 100 < 10) tft.print("0");
-            tft.print(freqold % 100);
-          }
         }
+        attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
+        attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
       }
-      attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
-      attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
-    }
-    strcpy(programTypePrevious, "0");
-    strcpy(radioIdPrevious, "0");
-    programServicePrevious = "0";
-
-    if (wifi) {
-      Udp.beginPacket(remoteip, 9030);
-      Udp.print("from=TEF tuner;freq=");
-      if (band != BAND_FM) Udp.print(String(frequency_AM) + "000;ClearRDS=1"); else Udp.print(String(frequency) + "0000;ClearRDS=1");
-      Udp.endPacket();
-    }
-  }
-}
-
-void ShowSignalLevel() {
-  if (screenmute == false) {
-    if (millis() >= snrupdatetimer + TIMER_SNR_TIMER) {
-      snrupdatetimer = millis();
-      if (!advancedRDS) {
-        if (SNR > (SNRold + 1) || SNR < (SNRold - 1)) {
-          if (SNRold == 0) tftPrint(1, "--", 294, 170, BackgroundColor, BackgroundColor, FONT16); else tftPrint(1, String(SNRold), 294, 170, BackgroundColor, BackgroundColor, FONT16);
-          if (tuned == true) {
-            if (SNR == 0) tftPrint(1, "--", 294, 170, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, String(SNR), 294, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
-            SNRold = SNR;
-          } else {
-            tftPrint(1, "--", 294, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
-            SNRold = 0;
-          }
-        }
-      }
-    }
-    SAvg = (((SAvg * 9) + 5) / 10) + SStatus;
-    SAvg2 = (((SAvg2 * 9) + 5) / 10) + SNR;
-
-    float sval = 0;
-    int16_t smeter = 0;
-    int16_t segments;
-
-    if (SStatus > 0) {
-      if (SStatus < 1000) {
-        sval = 51 * ((pow(10, (((float)SStatus) / 1000))) - 1);
-        smeter = int16_t(sval);
-      } else {
-        smeter = 511;
-      }
-    }
-
-    smeter = int16_t(sval);
-    SStatus = SAvg / 10;
-    SNR = SAvg2 / 10;
-
-    if (menu == false) analogWrite(SMETERPIN, smeter);
-
-    int SStatusprint = 0;
-    if (unit == 0) SStatusprint = SStatus;
-    if (unit == 1) SStatusprint = ((SStatus * 100) + 10875) / 100;
-    if (unit == 2) SStatusprint = ((float(SStatus / 10) - 10 * log10(75) - 90) * 10);
-
-    if (SStatusprint > (SStatusold + 3) || SStatusprint < (SStatusold - 3)) {
-      if (advancedRDS) {
-        tftReplace(1, String(SStatusold / 10) + "." + String(abs(SStatusold % 10)), String(SStatusprint / 10) + "." + String(abs(SStatusprint % 10)), 274, 51, PrimaryColor, PrimaryColorSmooth, FONT16);
-      } else {
-        if (SStatusold / 10 != SStatusprint / 10) tftReplace(1, String(SStatusold / 10), String(SStatusprint / 10), 288, 110, PrimaryColor, PrimaryColorSmooth, FONT48);
-        tftReplace(1, "." + String(abs(SStatusold % 10)), "." + String(abs(SStatusprint % 10)), 310, 105, PrimaryColor, PrimaryColorSmooth, FONT28);
-
-        if (band == BAND_FM) segments = (SStatus + 200) / 10; else segments = (SStatus + 200) / 10;
-
-        tft.fillRect(16, 109, 2 * constrain(segments, 0, 54), 8, TFT_GREEN);
-        tft.fillRect(16 + 2 * 54, 109, 2 * (constrain(segments, 54, 94) - 54), 8, TFT_RED);
-        tft.fillRect(16 + 2 * constrain(segments, 0, 94), 109, 2 * (94 - constrain(segments, 0, 94)), 8, GreyoutColor);
-      }
-      SStatusold = SStatusprint;
+      strcpy(programTypePrevious, "0");
+      strcpy(radioIdPrevious, "0");
+      programServicePrevious = "0";
 
       if (wifi) {
         Udp.beginPacket(remoteip, 9030);
-        Udp.print("from=TEF tuner;RcvLevel=");
-        Udp.print(SStatus / 10);
+        Udp.print("from=TEF tuner;freq=");
+        if (band != BAND_FM) Udp.print(String(frequency_AM) + "000;ClearRDS=1"); else Udp.print(String(frequency) + "0000;ClearRDS=1");
         Udp.endPacket();
       }
     }
   }
-}
 
-void ShowRDSLogo(bool RDSstatus) {
-  if (screenmute == false) {
-    if (RDSstatus != RDSstatusold) {
-      if (RDSstatus) tft.drawBitmap(110, 5, RDSLogo, 67, 22, SecondaryColor); else tft.drawBitmap(110, 5, RDSLogo, 67, 22, GreyoutColor);
-      RDSstatusold = RDSstatus;
-    }
-  }
-}
-
-void ShowStereoStatus() {
-  if (StereoToggle == true) {
-    if (band == BAND_FM) Stereostatus = radio.getStereoStatus(); else Stereostatus = 0;
-    if (Stereostatus != Stereostatusold) {
-      if (Stereostatus == true && screenmute == false) {
-        tft.drawSmoothCircle(81, 15, 10, SignificantColor, SignificantColorSmooth);
-        tft.drawSmoothCircle(81, 15, 9, SignificantColor, SignificantColorSmooth);
-        tft.drawSmoothCircle(91, 15, 10, SignificantColor, SignificantColorSmooth);
-        tft.drawSmoothCircle(91, 15, 9, SignificantColor, SignificantColorSmooth);
-      } else {
-        if (screenmute == false) {
-          tft.drawSmoothCircle(81, 15, 10, GreyoutColor, BackgroundColor);
-          tft.drawSmoothCircle(81, 15, 9, GreyoutColor, BackgroundColor);
-          tft.drawSmoothCircle(91, 15, 10, GreyoutColor, BackgroundColor);
-          tft.drawSmoothCircle(91, 15, 9, GreyoutColor, BackgroundColor);
+  void ShowSignalLevel() {
+    if (screenmute == false) {
+      if (millis() >= snrupdatetimer + TIMER_SNR_TIMER) {
+        snrupdatetimer = millis();
+        if (!advancedRDS) {
+          if (SNR > (SNRold + 1) || SNR < (SNRold - 1)) {
+            if (SNRold == 0) tftPrint(1, "--", 294, 170, BackgroundColor, BackgroundColor, FONT16); else tftPrint(1, String(SNRold), 294, 170, BackgroundColor, BackgroundColor, FONT16);
+            if (tuned == true) {
+              if (SNR == 0) tftPrint(1, "--", 294, 170, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, String(SNR), 294, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
+              SNRold = SNR;
+            } else {
+              tftPrint(1, "--", 294, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
+              SNRold = 0;
+            }
+          }
         }
       }
-      Stereostatusold = Stereostatus;
+      SAvg = (((SAvg * 9) + 5) / 10) + SStatus;
+      SAvg2 = (((SAvg2 * 9) + 5) / 10) + SNR;
+
+      float sval = 0;
+      int16_t smeter = 0;
+      int16_t segments;
+
+      if (SStatus > 0) {
+        if (SStatus < 1000) {
+          sval = 51 * ((pow(10, (((float)SStatus) / 1000))) - 1);
+          smeter = int16_t(sval);
+        } else {
+          smeter = 511;
+        }
+      }
+
+      smeter = int16_t(sval);
+      SStatus = SAvg / 10;
+      SNR = SAvg2 / 10;
+
+      if (menu == false) analogWrite(SMETERPIN, smeter);
+
+      int SStatusprint = 0;
+      if (unit == 0) SStatusprint = SStatus;
+      if (unit == 1) SStatusprint = ((SStatus * 100) + 10875) / 100;
+      if (unit == 2) SStatusprint = ((float(SStatus / 10) - 10 * log10(75) - 90) * 10);
+
+      if (SStatusprint > (SStatusold + 3) || SStatusprint < (SStatusold - 3)) {
+        if (advancedRDS) {
+          tftReplace(1, String(SStatusold / 10) + "." + String(abs(SStatusold % 10)), String(SStatusprint / 10) + "." + String(abs(SStatusprint % 10)), 274, 51, PrimaryColor, PrimaryColorSmooth, FONT16);
+        } else {
+          if (SStatusold / 10 != SStatusprint / 10) tftReplace(1, String(SStatusold / 10), String(SStatusprint / 10), 288, 110, PrimaryColor, PrimaryColorSmooth, FONT48);
+          tftReplace(1, "." + String(abs(SStatusold % 10)), "." + String(abs(SStatusprint % 10)), 310, 105, PrimaryColor, PrimaryColorSmooth, FONT28);
+
+          if (band == BAND_FM) segments = (SStatus + 200) / 10; else segments = (SStatus + 200) / 10;
+
+          tft.fillRect(16, 109, 2 * constrain(segments, 0, 54), 8, TFT_GREEN);
+          tft.fillRect(16 + 2 * 54, 109, 2 * (constrain(segments, 54, 94) - 54), 8, TFT_RED);
+          tft.fillRect(16 + 2 * constrain(segments, 0, 94), 109, 2 * (94 - constrain(segments, 0, 94)), 8, GreyoutColor);
+        }
+        SStatusold = SStatusprint;
+
+        if (wifi) {
+          Udp.beginPacket(remoteip, 9030);
+          Udp.print("from=TEF tuner;RcvLevel=");
+          Udp.print(SStatus / 10);
+          Udp.endPacket();
+        }
+      }
     }
   }
-}
 
-void ShowOffset() {
-  if (OStatus != OStatusold) {
-    if (millis() >= offsetupdatetimer + TIMER_OFFSET_TIMER) {
-      offsetupdatetimer = millis();
+  void ShowRDSLogo(bool RDSstatus) {
+    if (screenmute == false) {
+      if (RDSstatus != RDSstatusold) {
+        if (RDSstatus) tft.drawBitmap(139, 5, RDSLogo, 35, 22, InsignificantColor); else tft.drawBitmap(139, 5, RDSLogo, 35, 22, GreyoutColor);
+        RDSstatusold = RDSstatus;
+      }
+    }
+  }
+
+  void ShowStereoStatus() {
+    if (StereoToggle == true) {
+      if (band == BAND_FM) Stereostatus = radio.getStereoStatus(); else Stereostatus = 0;
+      if (Stereostatus != Stereostatusold) {
+        if (Stereostatus == true && screenmute == false) {
+          tft.drawSmoothCircle(81, 15, 10, SignificantColor, SignificantColorSmooth);
+          tft.drawSmoothCircle(81, 15, 9, SignificantColor, SignificantColorSmooth);
+          tft.drawSmoothCircle(91, 15, 10, SignificantColor, SignificantColorSmooth);
+          tft.drawSmoothCircle(91, 15, 9, SignificantColor, SignificantColorSmooth);
+        } else {
+          if (screenmute == false) {
+            tft.drawSmoothCircle(81, 15, 10, GreyoutColor, BackgroundColor);
+            tft.drawSmoothCircle(81, 15, 9, GreyoutColor, BackgroundColor);
+            tft.drawSmoothCircle(91, 15, 10, GreyoutColor, BackgroundColor);
+            tft.drawSmoothCircle(91, 15, 9, GreyoutColor, BackgroundColor);
+          }
+        }
+        Stereostatusold = Stereostatus;
+      }
+    }
+  }
+
+  void ShowOffset() {
+    if (OStatus != OStatusold) {
+      if (millis() >= offsetupdatetimer + TIMER_OFFSET_TIMER) {
+        offsetupdatetimer = millis();
+      } else {
+        return;
+      }
+
+      if (band == BAND_FM) {
+        if (OStatus < -500) {
+          tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
+          tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
+          tft.fillCircle(32, 15, 3, GreyoutColor);
+          tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
+          tft.fillTriangle(50, 14, 58, 8, 58, 22, TFT_RED);
+          tuned = false;
+        } else if (OStatus < -250 && OStatus > -500) {
+          tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
+          tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
+          tft.fillCircle(32, 15, 3, GreyoutColor);
+          tft.fillTriangle(38, 14, 46, 8, 46, 22, TFT_RED);
+          tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
+          tuned = false;
+        } else if (USN < 250 && WAM < 250 && OStatus > -250 && OStatus < 250 && SQ == false) {
+          tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
+          tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
+          tft.fillCircle(32, 15, 3, TFT_GREEN);
+          tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
+          tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
+          tuned = true;
+        } else if (OStatus > 250 && OStatus < 500) {
+          tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
+          tft.fillTriangle(18, 8, 18, 22, 26, 14, TFT_RED);
+          tft.fillCircle(32, 15, 3, GreyoutColor);
+          tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
+          tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
+          tuned = false;
+        } else if (OStatus > 500) {
+          tft.fillTriangle(6, 8, 6, 22, 14, 14, TFT_RED);
+          tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
+          tft.fillCircle(32, 15, 3, GreyoutColor);
+          tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
+          tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
+          tuned = false;
+        } else {
+          tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
+          tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
+          tft.fillCircle(32, 15, 3, GreyoutColor);
+          tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
+          tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
+          tuned = false;
+        }
+      } else {
+        if (OStatus <= -3) {
+          tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
+          tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
+          tft.fillCircle(32, 15, 3, GreyoutColor);
+          tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
+          tft.fillTriangle(50, 14, 58, 8, 58, 22, TFT_RED);
+          tuned = false;
+        } else if (OStatus < -2 && OStatus > -3) {
+          tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
+          tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
+          tft.fillCircle(32, 15, 3, GreyoutColor);
+          tft.fillTriangle(38, 14, 46, 8, 46, 22, TFT_RED);
+          tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
+          tuned = false;
+        } else if (OStatus > -2 && OStatus < 2 && SQ == false) {
+          tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
+          tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
+          tft.fillCircle(32, 15, 3, TFT_GREEN);
+          tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
+          tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
+          tuned = true;
+        } else if (OStatus > 2 && OStatus < 3) {
+          tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
+          tft.fillTriangle(18, 8, 18, 22, 26, 14, TFT_RED);
+          tft.fillCircle(32, 15, 3, GreyoutColor);
+          tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
+          tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
+          tuned = false;
+        } else if (OStatus >= 3) {
+          tft.fillTriangle(6, 8, 6, 22, 14, 14, TFT_RED);
+          tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
+          tft.fillCircle(32, 15, 3, GreyoutColor);
+          tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
+          tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
+          tuned = false;
+        } else {
+          tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
+          tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
+          tft.fillCircle(32, 15, 3, GreyoutColor);
+          tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
+          tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
+          tuned = false;
+        }
+      }
+      OStatusold = OStatus;
+    }
+  }
+
+  void ShowBW() {
+    if (millis() >= bwupdatetimer + TIMER_BW_TIMER) {
+      bwupdatetimer = millis();
     } else {
       return;
     }
 
-    if (band == BAND_FM) {
-      if (OStatus < -500) {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
-        tft.fillCircle(32, 15, 3, GreyoutColor);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, TFT_RED);
-        tuned = false;
-      } else if (OStatus < -250 && OStatus > -500) {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
-        tft.fillCircle(32, 15, 3, GreyoutColor);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, TFT_RED);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
-        tuned = false;
-      } else if (USN < 250 && WAM < 250 && OStatus > -250 && OStatus < 250 && SQ == false) {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
-        tft.fillCircle(32, 15, 3, TFT_GREEN);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
-        tuned = true;
-      } else if (OStatus > 250 && OStatus < 500) {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, TFT_RED);
-        tft.fillCircle(32, 15, 3, GreyoutColor);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
-        tuned = false;
-      } else if (OStatus > 500) {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, TFT_RED);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
-        tft.fillCircle(32, 15, 3, GreyoutColor);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
-        tuned = false;
-      } else {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
-        tft.fillCircle(32, 15, 3, GreyoutColor);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
-        tuned = false;
-      }
-    } else {
-      if (OStatus <= -3) {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
-        tft.fillCircle(32, 15, 3, GreyoutColor);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, TFT_RED);
-        tuned = false;
-      } else if (OStatus < -2 && OStatus > -3) {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
-        tft.fillCircle(32, 15, 3, GreyoutColor);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, TFT_RED);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
-        tuned = false;
-      } else if (OStatus > -2 && OStatus < 2 && SQ == false) {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
-        tft.fillCircle(32, 15, 3, TFT_GREEN);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
-        tuned = true;
-      } else if (OStatus > 2 && OStatus < 3) {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, TFT_RED);
-        tft.fillCircle(32, 15, 3, GreyoutColor);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
-        tuned = false;
-      } else if (OStatus >= 3) {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, TFT_RED);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
-        tft.fillCircle(32, 15, 3, GreyoutColor);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
-        tuned = false;
-      } else {
-        tft.fillTriangle(6, 8, 6, 22, 14, 14, GreyoutColor);
-        tft.fillTriangle(18, 8, 18, 22, 26, 14, GreyoutColor);
-        tft.fillCircle(32, 15, 3, GreyoutColor);
-        tft.fillTriangle(38, 14, 46, 8, 46, 22, GreyoutColor);
-        tft.fillTriangle(50, 14, 58, 8, 58, 22, GreyoutColor);
-        tuned = false;
+    if (BW != BWOld || BWreset == true) {
+      if (BWset == 0) tftReplace(1, String (BWOld, DEC), String (BW, DEC), 218, 4, SecondaryColor, SecondaryColorSmooth, FONT28); else tftReplace(1, String (BWOld, DEC), String (BW, DEC), 218, 4, PrimaryColor, PrimaryColorSmooth, FONT28);
+      BWOld = BW;
+      BWreset = false;
+      if (wifi) {
+        Udp.beginPacket(remoteip, 9030);
+        Udp.print("from=TEF tuner;Bandwidth=");
+        Udp.print(BW * 1000);
+        Udp.endPacket();
       }
     }
-    OStatusold = OStatus;
-  }
-}
-
-void ShowBW() {
-  if (millis() >= bwupdatetimer + TIMER_BW_TIMER) {
-    bwupdatetimer = millis();
-  } else {
-    return;
   }
 
-  if (BW != BWOld || BWreset == true) {
-    if (BWset == 0) tftReplace(1, String (BWOld, DEC), String (BW, DEC), 218, 4, SecondaryColor, SecondaryColorSmooth, FONT28); else tftReplace(1, String (BWOld, DEC), String (BW, DEC), 218, 4, PrimaryColor, PrimaryColorSmooth, FONT28);
-    BWOld = BW;
-    BWreset = false;
-    if (wifi) {
-      Udp.beginPacket(remoteip, 9030);
-      Udp.print("from=TEF tuner;Bandwidth=");
-      Udp.print(BW * 1000);
-      Udp.endPacket();
-    }
-  }
-}
+  void ShowModLevel() {
+    if (showmodulation) {
+      int segments;
 
-void ShowModLevel() {
-  if (showmodulation) {
-    int segments;
-
-    if (SQ != false) {
-      MStatus = 0;
-      MStatusold = 1;
-    }
-    segments = map(MStatus, 0, 120, 0, 94);
-
-    if (segments > peakholdold) {
-      peakholdold = segments;
-      peakholdmillis = millis();
-    }
-
-    tft.fillRect(16, 139, 2 * constrain(segments, 0, 54), 8, TFT_GREEN);
-    tft.fillRect(16 + 2 * 54, 139, 2 * (constrain(segments, 54, 94) - 54), 8, TFT_RED);
-    tft.fillRect(16 + 2 * constrain(segments, 0, 94), 139, 2 * (94 - constrain(segments, 0, 94)), 8, GreyoutColor);
-
-    int peakHoldPosition = 16 + 2 * constrain(peakholdold, 0, 94);
-    tft.fillRect(peakHoldPosition, 139, 2, 8, (MStatus > 80) ? TFT_RED : PrimaryColor);
-
-    if (millis() - peakholdmillis >= 1000) {
-      tft.fillRect(peakHoldPosition, 139, 2, 8, GreyoutColor);
-      peakholdold = segments;
-      peakholdmillis = millis();
-    }
-  }
-}
-
-void doSquelch() {
-  if (XDRGTKUSB == false && XDRGTKTCP == false) {
-    Squelch = analogRead(PIN_POT) / 4 - 100;
-    if (Squelch > 920) Squelch = 920;
-    if (showsquelch && !advancedRDS && !afscreen) {
-      if (seek == false && menu == false && Squelch != Squelchold) {
-        if (Squelchold == -100) {
-          tftPrint(0, myLanguage[language][33], 224, 170, BackgroundColor, BackgroundColor, FONT16);
-        } else if (Squelchold == 920) {
-          tftPrint(0, "ST", 224, 170, BackgroundColor, BackgroundColor, FONT16);
-        } else {
-          tftPrint(0, String(Squelchold / 10), 224, 170, BackgroundColor, BackgroundColor, FONT16);
-        }
-        if (Squelch == -100) {
-          tftPrint(0, myLanguage[language][33], 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
-        } else if (Squelch == 920) {
-          tftPrint(0, "ST", 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
-        } else {
-          tftPrint(0, String(Squelch / 10), 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
-        }
+      if (SQ != false) {
+        MStatus = 0;
+        MStatusold = 1;
       }
-      Squelchold = Squelch;
+      segments = map(MStatus, 0, 120, 0, 94);
+
+      if (segments > peakholdold) {
+        peakholdold = segments;
+        peakholdmillis = millis();
+      }
+
+      tft.fillRect(16, 139, 2 * constrain(segments, 0, 54), 8, TFT_GREEN);
+      tft.fillRect(16 + 2 * 54, 139, 2 * (constrain(segments, 54, 94) - 54), 8, TFT_RED);
+      tft.fillRect(16 + 2 * constrain(segments, 0, 94), 139, 2 * (94 - constrain(segments, 0, 94)), 8, GreyoutColor);
+
+      int peakHoldPosition = 16 + 2 * constrain(peakholdold, 0, 94);
+      tft.fillRect(peakHoldPosition, 139, 2, 8, (MStatus > 80) ? TFT_RED : PrimaryColor);
+
+      if (millis() - peakholdmillis >= 1000) {
+        tft.fillRect(peakHoldPosition, 139, 2, 8, GreyoutColor);
+        peakholdold = segments;
+        peakholdmillis = millis();
+      }
     }
   }
-  if (seek == false && (XDRGTKUSB == true || XDRGTKTCP == true)) {
-    if (XDRMute == false) {
-      if (Squelch != -1) {
-        if (Squelch < SStatus || Squelch == -100 || Squelch == 0) {
-          radio.setUnMute();
-          SQ = false;
-        } else {
-          radio.setMute();
-          SQ = true;
-        }
-      } else {
-        if (Stereostatus == true) {
-          radio.setUnMute();
-          SQ = false;
-        } else {
-          radio.setMute();
-          SQ = true;
-        }
-      }
-      if (screenmute == false && showsquelch == true && !advancedRDS && !afscreen) {
-        if (Squelch != Squelchold) {
-          if (Squelchold == -1) {
-            tftPrint(0, "ST", 224, 170, BackgroundColor, BackgroundColor, FONT16);
-          } else if (Squelchold == 0) {
+
+  void doSquelch() {
+    if (XDRGTKUSB == false && XDRGTKTCP == false) {
+      Squelch = analogRead(PIN_POT) / 4 - 100;
+      if (Squelch > 920) Squelch = 920;
+      if (showsquelch && !advancedRDS && !afscreen) {
+        if (seek == false && menu == false && Squelch != Squelchold) {
+          if (Squelchold == -100) {
             tftPrint(0, myLanguage[language][33], 224, 170, BackgroundColor, BackgroundColor, FONT16);
+          } else if (Squelchold == 920) {
+            tftPrint(0, "ST", 224, 170, BackgroundColor, BackgroundColor, FONT16);
           } else {
             tftPrint(0, String(Squelchold / 10), 224, 170, BackgroundColor, BackgroundColor, FONT16);
           }
-          if (Squelch == -1) {
-            tftPrint(0, "ST", 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
-          } else if (Squelch == 0) {
+          if (Squelch == -100) {
             tftPrint(0, myLanguage[language][33], 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
+          } else if (Squelch == 920) {
+            tftPrint(0, "ST", 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
           } else {
             tftPrint(0, String(Squelch / 10), 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
           }
-          Squelchold = Squelch;
         }
+        Squelchold = Squelch;
       }
     }
-  } else {
-    if (seek == false && Squelch != 920) {
-      if (Squelch < SStatus || Squelch == -100 || Squelch == 0) {
-        radio.setUnMute();
-        SQ = false;
-      } else {
-        radio.setMute();
-        SQ = true;
-      }
-    } else {
-      if (seek == false && Stereostatus == true) {
-        radio.setUnMute();
-        SQ = false;
-      } else {
-        radio.setMute();
-        SQ = true;
-      }
-    }
-  }
-}
-
-void updateBW() {
-  if (BWset == 0) {
-    if (screenmute == false && advancedRDS == false && afscreen == false) {
-      tft.drawRoundRect(248, 35, 70, 20, 5, ActiveColor);
-      tftPrint(0, "AUTO BW", 283, 38, ActiveColor, ActiveColorSmooth, FONT16);
-    }
-    radio.setFMABandw();
-  } else {
-    if (screenmute == false && advancedRDS == false && afscreen == false) {
-      tft.drawRoundRect(247, 35, 70, 20, 5, GreyoutColor);
-      tftPrint(0, "AUTO BW", 282, 38, GreyoutColor, BackgroundColor, FONT16);
-    }
-  }
-}
-
-void updateiMS() {
-  if (band == BAND_FM) {
-    if (iMSset == 0) {
-      if (screenmute == false) {
-        tft.drawRoundRect(248, 56, 32, 20, 5, ActiveColor);
-        tftPrint(0, "iMS", 265, 59, ActiveColor, ActiveColorSmooth, FONT16);
-      }
-      radio.setiMS(1);
-    } else {
-      if (screenmute == false) {
-        tft.drawRoundRect(248, 56, 32, 20, 5, GreyoutColor);
-        tftPrint(0, "iMS", 265, 59, GreyoutColor, BackgroundColor, FONT16);
-      }
-      radio.setiMS(0);
-    }
-  }
-}
-
-void updateEQ() {
-  if (band == BAND_FM) {
-    if (EQset == 0) {
-      if (screenmute == false) {
-        tft.drawRoundRect(286, 56, 32, 20, 5, ActiveColor);
-        tftPrint(0, "EQ", 303, 59, ActiveColor, ActiveColorSmooth, FONT16);
-      }
-      radio.setEQ(1);
-    } else {
-      if (screenmute == false) {
-        tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
-        tftPrint(0, "EQ", 303, 59, GreyoutColor, BackgroundColor, FONT16);
-      }
-      radio.setEQ(0);
-    }
-  }
-}
-
-void updateSWMIBand() {
-  switch (SWMIBandPos) {
-    case SW_MI_BAND_11M:
-    case SW_MI_BAND_13M:
-    case SW_MI_BAND_15M:
-    case SW_MI_BAND_16M:
-    case SW_MI_BAND_19M:
-    case SW_MI_BAND_22M:
-    case SW_MI_BAND_25M:
-    case SW_MI_BAND_31M:
-    case SW_MI_BAND_41M:
-    case SW_MI_BAND_49M:
-    case SW_MI_BAND_60M:
-    case SW_MI_BAND_75M:
-    case SW_MI_BAND_90M:
-    case SW_MI_BAND_120M:
-    case SW_MI_BAND_160M:
-      tftReplace(-1, SWMIBandstringold, SWMIBandstring, 50, 51, PrimaryColor, PrimaryColorSmooth, FONT16);
-      break;
-
-    case SW_MI_BAND_GAP:
-      tftPrint(-1, SWMIBandstringold, 50, 51, BackgroundColor, BackgroundColor, FONT16);
-      break;
-  }
-}
-
-void doBW() {
-  if (band == BAND_FM) {
-    if (BWset > 16) BWset = 0;
-
-    switch (BWset) {
-      case 1:
-        radio.setFMBandw(56);
-        break;
-
-      case 2:
-        radio.setFMBandw(64);
-        break;
-
-      case 3:
-        radio.setFMBandw(72);
-        break;
-
-      case 4:
-        radio.setFMBandw(84);
-        break;
-
-      case 5:
-        radio.setFMBandw(97);
-        break;
-
-      case 6:
-        radio.setFMBandw(114);
-        break;
-
-      case 7:
-        radio.setFMBandw(133);
-        break;
-
-      case 8:
-        radio.setFMBandw(151);
-        break;
-
-      case 9:
-        radio.setFMBandw(168);
-        break;
-
-      case 10:
-        radio.setFMBandw(184);
-        break;
-
-      case 11:
-        radio.setFMBandw(200);
-        break;
-
-      case 12:
-        radio.setFMBandw(217);
-        break;
-
-      case 13:
-        radio.setFMBandw(236);
-        break;
-
-      case 14:
-        radio.setFMBandw(254);
-        break;
-
-      case 15:
-        radio.setFMBandw(287);
-        break;
-
-      case 16:
-        radio.setFMBandw(311);
-        break;
-    }
-  } else {
-    if (BWset > 4) BWset = 1;
-
-    switch (BWset) {
-      case 1:
-        radio.setAMBandw(3);
-        break;
-
-      case 2:
-        radio.setAMBandw(4);
-        break;
-
-      case 3:
-        radio.setAMBandw(6);
-        break;
-
-      case 4:
-        radio.setAMBandw(8);
-        break;
-    }
-  }
-  updateBW();
-  BWreset = true;
-}
-
-void doTuneMode() {
-  switch (tunemode) {
-    case TUNE_MAN:
-      if (band == BAND_FM) {
-        tunemode = TUNE_AUTO;
-        if (stepsize != 0) {
-          stepsize = 0;
-          RoundStep();
-          ShowStepSize();
-        }
-      } else if (band == BAND_SW && showSWMIBand) {
-        tunemode = TUNE_MI_BAND;
-      } else {
-        tunemode = TUNE_MEM;
-      }
-      break;
-    case TUNE_MI_BAND:
-    case TUNE_AUTO:
-      tunemode = TUNE_MEM;
-      break;
-
-    case TUNE_MEM:
-      tunemode = TUNE_MAN;
-      break;
-  }
-  ShowTuneMode();
-  ShowMemoryPos();
-  ShowFreq(0);
-  EEPROM.writeByte(EE_BYTE_TUNEMODE, tunemode);
-  EEPROM.commit();
-}
-
-void ShowTuneMode() {
-  switch (tunemode) {
-    case TUNE_MAN:
-      if (band == BAND_SW) {
-        tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
-        tftPrint(0, "BAND", 22, 60, GreyoutColor, BackgroundColor, FONT16);
-      } else {
-        tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
-        tftPrint(0, "AUTO", 22, 60, GreyoutColor, BackgroundColor, FONT16);
-      }
-
-      tft.drawRoundRect(1, 35, 42, 20, 5, ActiveColor);
-      tftPrint(0, "MAN", 22, 38, ActiveColor, ActiveColorSmooth, FONT16);
-
-      tft.drawRoundRect(1, 79, 42, 20, 5, GreyoutColor);
-      tftPrint(0, "MEM", 22, 82, GreyoutColor, BackgroundColor, FONT16);
-      break;
-
-    case TUNE_AUTO:
-      tft.drawRoundRect(1, 57, 42, 20, 5, ActiveColor);
-      tftPrint(0, "AUTO", 22, 60, ActiveColor, ActiveColorSmooth, FONT16);
-
-      tft.drawRoundRect(1, 35, 42, 20, 5, GreyoutColor);
-      tftPrint(0, "MAN", 22, 38, GreyoutColor, BackgroundColor, FONT16);
-
-      tft.drawRoundRect(1, 79, 42, 20, 5, GreyoutColor);
-      tftPrint(0, "MEM", 22, 82, GreyoutColor, BackgroundColor, FONT16);
-      break;
-
-    case TUNE_MEM:
-      if (band == BAND_SW) {
-        tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
-        tftPrint(0, "BAND", 22, 60, GreyoutColor, BackgroundColor, FONT16);
-      } else {
-        tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
-        tftPrint(0, "AUTO", 22, 60, GreyoutColor, BackgroundColor, FONT16);
-      }
-
-      tft.drawRoundRect(1, 35, 42, 20, 5, GreyoutColor);
-      tftPrint(0, "MAN", 22, 39, GreyoutColor, BackgroundColor, FONT16);
-
-      if (memorystore == true) {
-        tft.drawRoundRect(1, 79, 42, 20, 5, TFT_RED);
-        tftPrint(0, "MEM", 22, 82, SignificantColor, SignificantColorSmooth, FONT16);
-      } else {
-        tft.drawRoundRect(1, 79, 42, 20, 5, ActiveColor);
-        tftPrint(0, "MEM", 22, 82, ActiveColor, ActiveColorSmooth, FONT16);
-      }
-      break;
-
-    case TUNE_MI_BAND:
-      tft.drawRoundRect(1, 57, 42, 20, 5, ActiveColor);
-      tft.setTextColor(ActiveColor);
-      tftPrint(0, "BAND", 22, 60, ActiveColor, ActiveColorSmooth, FONT16);
-
-      tft.drawRoundRect(1, 35, 42, 20, 5, GreyoutColor);
-      tftPrint(0, "MAN", 22, 38, GreyoutColor, BackgroundColor, FONT16);
-
-      tft.drawRoundRect(1, 79, 42, 20, 5, GreyoutColor);
-      tftPrint(0, "MEM", 22, 82, GreyoutColor, BackgroundColor, FONT16);
-      break;
-  }
-}
-
-void ShowRSSI() {
-  if (wifi) rssi = WiFi.RSSI(); else rssi = 0;
-  if (rssiold != rssi) {
-    rssiold = rssi;
-    if (rssi == 0) {
-      tft.drawBitmap(272, 4, WiFi4, 25, 25, GreyoutColor);
-    } else if (rssi > -50 && rssi < 0) {
-      tft.drawBitmap(272, 4, WiFi4, 25, 25, PrimaryColor);
-    } else if (rssi > -60) {
-      tft.drawBitmap(272, 4, WiFi4, 25, 25, GreyoutColor);
-      tft.drawBitmap(272, 4, WiFi3, 25, 25, PrimaryColor);
-    } else if (rssi > -70) {
-      tft.drawBitmap(272, 4, WiFi4, 25, 25, GreyoutColor);
-      tft.drawBitmap(272, 4, WiFi2, 25, 25, PrimaryColor);
-    } else if (rssi < -70) {
-      tft.drawBitmap(272, 4, WiFi4, 25, 25, GreyoutColor);
-      tft.drawBitmap(272, 4, WiFi1, 25, 25, PrimaryColor);
-    }
-  }
-}
-
-void ShowBattery() {
-  if (millis() >= batupdatetimer + TIMER_BAT_TIMER) {
-    batupdatetimer = millis();
-  } else {
-    return;
-  }
-
-  battery = map(constrain(analogRead(BATTERY_PIN), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, BAT_LEVEL_STAGE);
-  if (batteryold != battery) {
-    if (batterydetect) {
-      if (battery == 0) {
-        tft.drawRect(300, 8, 12, 20, TFT_RED);
-        tft.fillRect(303, 4, 6, 4, TFT_RED);
-        tft.fillRect(302, 10, 8, 16, BackgroundColor);
-        tft.fillRect(302, 26 - (battery * 4), 8, battery * 4, TFT_GREEN);
-      } else {
-        tft.drawRect(300, 8, 12, 20, ActiveColor);
-        tft.fillRect(303, 4, 6, 4, ActiveColor);
-        tft.fillRect(302, 10, 8, 16, BackgroundColor);
-        tft.fillRect(302, 26 - (battery * 4), 8, battery * 4, TFT_GREEN);
-      }
-    } else {
-      tft.drawRect(300, 8, 12, 20, GreyoutColor);
-      tft.fillRect(303, 4, 6, 4, GreyoutColor);
-      tft.fillRect(302, 10, 8, 16, BackgroundColor);
-    }
-    batteryold = battery;
-  }
-}
-
-void Communication() {
-  if (menu == false) {
-    if (wifi) {
-      int packetSize = Udp.parsePacket();
-      if (packetSize) {
-        char packetBuffer[packetSize];
-        Udp.read(packetBuffer, packetSize);
-        Udp.endPacket();
-        String packet = String(packetBuffer);
-        if (strcmp(packetBuffer, "from=StationList;freq=?;bandwidth=?") == 0) {
-          ShowFreq(0);
-          Udp.beginPacket(remoteip, 9030);
-          Udp.print("from=TEF tuner;Bandwidth=");
-          Udp.print(BW * 1000);
-          Udp.endPacket();
+    if (seek == false && (XDRGTKUSB == true || XDRGTKTCP == true)) {
+      if (XDRMute == false) {
+        if (Squelch != -1) {
+          if (Squelch < SStatus || Squelch == -100 || Squelch == 0) {
+            radio.setUnMute();
+            if (screenmute == false) tft.drawBitmap(110, 5, Speaker, 26, 22, GreyoutColor); 
+            SQ = false;
+          } else {
+            radio.setMute();
+            if (screenmute == false) tft.drawBitmap(110, 5, Speaker, 26, 22, PrimaryColor); 
+            SQ = true;
+          }
         } else {
-          int symPos = packet.indexOf("freq=");
-          String stlfreq = packet.substring(symPos + 5, packetSize);
-          if ((stlfreq.toInt()) / 10000 > 6500 && (stlfreq.toInt()) / 10000 < 10800) {
+          if (Stereostatus == true) {
+            radio.setUnMute();
+            if (screenmute == false) tft.drawBitmap(110, 5, Speaker, 26, 22, GreyoutColor); 
+            SQ = false;
+          } else {
+            radio.setMute();
+            if (screenmute == false) tft.drawBitmap(110, 5, Speaker, 26, 22, PrimaryColor); 
+            SQ = true;
+          }
+        }
+        if (screenmute == false && showsquelch == true && !advancedRDS && !afscreen) {
+          if (Squelch != Squelchold) {
+            if (Squelchold == -1) {
+              tftPrint(0, "ST", 224, 170, BackgroundColor, BackgroundColor, FONT16);
+            } else if (Squelchold == 0) {
+              tftPrint(0, myLanguage[language][33], 224, 170, BackgroundColor, BackgroundColor, FONT16);
+            } else {
+              tftPrint(0, String(Squelchold / 10), 224, 170, BackgroundColor, BackgroundColor, FONT16);
+            }
+            if (Squelch == -1) {
+              tftPrint(0, "ST", 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
+            } else if (Squelch == 0) {
+              tftPrint(0, myLanguage[language][33], 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
+            } else {
+              tftPrint(0, String(Squelch / 10), 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
+            }
+            Squelchold = Squelch;
+          }
+        }
+      }
+    } else {
+      if (seek == false && Squelch != 920) {
+        if (Squelch < SStatus || Squelch == -100 || Squelch == 0) {
+          radio.setUnMute();
+          if (screenmute == false) tft.drawBitmap(110, 5, Speaker, 26, 22, GreyoutColor); 
+          SQ = false;
+        } else {
+          radio.setMute();
+          if (screenmute == false) tft.drawBitmap(110, 5, Speaker, 26, 22, PrimaryColor); 
+          SQ = true;
+        }
+      } else {
+        if (seek == false && Stereostatus == true) {
+          radio.setUnMute();
+          if (screenmute == false) tft.drawBitmap(110, 5, Speaker, 26, 22, GreyoutColor); 
+          SQ = false;
+        } else {
+          radio.setMute();
+          if (screenmute == false) tft.drawBitmap(110, 5, Speaker, 26, 22, PrimaryColor); 
+          SQ = true;
+        }
+      }
+    }
+  }
+
+  void updateBW() {
+    if (BWset == 0) {
+      if (screenmute == false && advancedRDS == false && afscreen == false) {
+        tft.drawRoundRect(248, 35, 70, 20, 5, ActiveColor);
+        tftPrint(0, "AUTO BW", 283, 38, ActiveColor, ActiveColorSmooth, FONT16);
+      }
+      radio.setFMABandw();
+    } else {
+      if (screenmute == false && advancedRDS == false && afscreen == false) {
+        tft.drawRoundRect(247, 35, 70, 20, 5, GreyoutColor);
+        tftPrint(0, "AUTO BW", 282, 38, GreyoutColor, BackgroundColor, FONT16);
+      }
+    }
+  }
+
+  void updateiMS() {
+    if (band == BAND_FM) {
+      if (iMSset == 0) {
+        if (screenmute == false) {
+          tft.drawRoundRect(248, 56, 32, 20, 5, ActiveColor);
+          tftPrint(0, "iMS", 265, 59, ActiveColor, ActiveColorSmooth, FONT16);
+        }
+        radio.setiMS(1);
+      } else {
+        if (screenmute == false) {
+          tft.drawRoundRect(248, 56, 32, 20, 5, GreyoutColor);
+          tftPrint(0, "iMS", 265, 59, GreyoutColor, BackgroundColor, FONT16);
+        }
+        radio.setiMS(0);
+      }
+    }
+  }
+
+  void updateEQ() {
+    if (band == BAND_FM) {
+      if (EQset == 0) {
+        if (screenmute == false) {
+          tft.drawRoundRect(286, 56, 32, 20, 5, ActiveColor);
+          tftPrint(0, "EQ", 303, 59, ActiveColor, ActiveColorSmooth, FONT16);
+        }
+        radio.setEQ(1);
+      } else {
+        if (screenmute == false) {
+          tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
+          tftPrint(0, "EQ", 303, 59, GreyoutColor, BackgroundColor, FONT16);
+        }
+        radio.setEQ(0);
+      }
+    }
+  }
+
+  void updateSWMIBand() {
+    switch (SWMIBandPos) {
+      case SW_MI_BAND_11M:
+      case SW_MI_BAND_13M:
+      case SW_MI_BAND_15M:
+      case SW_MI_BAND_16M:
+      case SW_MI_BAND_19M:
+      case SW_MI_BAND_22M:
+      case SW_MI_BAND_25M:
+      case SW_MI_BAND_31M:
+      case SW_MI_BAND_41M:
+      case SW_MI_BAND_49M:
+      case SW_MI_BAND_60M:
+      case SW_MI_BAND_75M:
+      case SW_MI_BAND_90M:
+      case SW_MI_BAND_120M:
+      case SW_MI_BAND_160M:
+        tftReplace(-1, SWMIBandstringold, SWMIBandstring, 50, 51, PrimaryColor, PrimaryColorSmooth, FONT16);
+        break;
+
+      case SW_MI_BAND_GAP:
+        tftPrint(-1, SWMIBandstringold, 50, 51, BackgroundColor, BackgroundColor, FONT16);
+        break;
+    }
+  }
+
+  void doBW() {
+    if (band == BAND_FM) {
+      if (BWset > 16) BWset = 0;
+
+      switch (BWset) {
+        case 1:
+          radio.setFMBandw(56);
+          break;
+
+        case 2:
+          radio.setFMBandw(64);
+          break;
+
+        case 3:
+          radio.setFMBandw(72);
+          break;
+
+        case 4:
+          radio.setFMBandw(84);
+          break;
+
+        case 5:
+          radio.setFMBandw(97);
+          break;
+
+        case 6:
+          radio.setFMBandw(114);
+          break;
+
+        case 7:
+          radio.setFMBandw(133);
+          break;
+
+        case 8:
+          radio.setFMBandw(151);
+          break;
+
+        case 9:
+          radio.setFMBandw(168);
+          break;
+
+        case 10:
+          radio.setFMBandw(184);
+          break;
+
+        case 11:
+          radio.setFMBandw(200);
+          break;
+
+        case 12:
+          radio.setFMBandw(217);
+          break;
+
+        case 13:
+          radio.setFMBandw(236);
+          break;
+
+        case 14:
+          radio.setFMBandw(254);
+          break;
+
+        case 15:
+          radio.setFMBandw(287);
+          break;
+
+        case 16:
+          radio.setFMBandw(311);
+          break;
+      }
+    } else {
+      if (BWset > 4) BWset = 1;
+
+      switch (BWset) {
+        case 1:
+          radio.setAMBandw(3);
+          break;
+
+        case 2:
+          radio.setAMBandw(4);
+          break;
+
+        case 3:
+          radio.setAMBandw(6);
+          break;
+
+        case 4:
+          radio.setAMBandw(8);
+          break;
+      }
+    }
+    updateBW();
+    BWreset = true;
+  }
+
+  void doTuneMode() {
+    switch (tunemode) {
+      case TUNE_MAN:
+        if (band == BAND_FM) {
+          tunemode = TUNE_AUTO;
+          if (stepsize != 0) {
+            stepsize = 0;
+            RoundStep();
+            ShowStepSize();
+          }
+        } else if (band == BAND_SW && showSWMIBand) {
+          tunemode = TUNE_MI_BAND;
+        } else {
+          tunemode = TUNE_MEM;
+        }
+        break;
+      case TUNE_MI_BAND:
+      case TUNE_AUTO:
+        tunemode = TUNE_MEM;
+        break;
+
+      case TUNE_MEM:
+        tunemode = TUNE_MAN;
+        break;
+    }
+    ShowTuneMode();
+    ShowMemoryPos();
+    ShowFreq(0);
+    EEPROM.writeByte(EE_BYTE_TUNEMODE, tunemode);
+    EEPROM.commit();
+  }
+
+  void ShowTuneMode() {
+    switch (tunemode) {
+      case TUNE_MAN:
+        if (band == BAND_SW) {
+          tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
+          tftPrint(0, "BAND", 22, 60, GreyoutColor, BackgroundColor, FONT16);
+        } else {
+          tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
+          tftPrint(0, "AUTO", 22, 60, GreyoutColor, BackgroundColor, FONT16);
+        }
+
+        tft.drawRoundRect(1, 35, 42, 20, 5, ActiveColor);
+        tftPrint(0, "MAN", 22, 38, ActiveColor, ActiveColorSmooth, FONT16);
+
+        tft.drawRoundRect(1, 79, 42, 20, 5, GreyoutColor);
+        tftPrint(0, "MEM", 22, 82, GreyoutColor, BackgroundColor, FONT16);
+        break;
+
+      case TUNE_AUTO:
+        tft.drawRoundRect(1, 57, 42, 20, 5, ActiveColor);
+        tftPrint(0, "AUTO", 22, 60, ActiveColor, ActiveColorSmooth, FONT16);
+
+        tft.drawRoundRect(1, 35, 42, 20, 5, GreyoutColor);
+        tftPrint(0, "MAN", 22, 38, GreyoutColor, BackgroundColor, FONT16);
+
+        tft.drawRoundRect(1, 79, 42, 20, 5, GreyoutColor);
+        tftPrint(0, "MEM", 22, 82, GreyoutColor, BackgroundColor, FONT16);
+        break;
+
+      case TUNE_MEM:
+        if (band == BAND_SW) {
+          tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
+          tftPrint(0, "BAND", 22, 60, GreyoutColor, BackgroundColor, FONT16);
+        } else {
+          tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
+          tftPrint(0, "AUTO", 22, 60, GreyoutColor, BackgroundColor, FONT16);
+        }
+
+        tft.drawRoundRect(1, 35, 42, 20, 5, GreyoutColor);
+        tftPrint(0, "MAN", 22, 39, GreyoutColor, BackgroundColor, FONT16);
+
+        if (memorystore == true) {
+          tft.drawRoundRect(1, 79, 42, 20, 5, TFT_RED);
+          tftPrint(0, "MEM", 22, 82, SignificantColor, SignificantColorSmooth, FONT16);
+        } else {
+          tft.drawRoundRect(1, 79, 42, 20, 5, ActiveColor);
+          tftPrint(0, "MEM", 22, 82, ActiveColor, ActiveColorSmooth, FONT16);
+        }
+        break;
+
+      case TUNE_MI_BAND:
+        tft.drawRoundRect(1, 57, 42, 20, 5, ActiveColor);
+        tft.setTextColor(ActiveColor);
+        tftPrint(0, "BAND", 22, 60, ActiveColor, ActiveColorSmooth, FONT16);
+
+        tft.drawRoundRect(1, 35, 42, 20, 5, GreyoutColor);
+        tftPrint(0, "MAN", 22, 38, GreyoutColor, BackgroundColor, FONT16);
+
+        tft.drawRoundRect(1, 79, 42, 20, 5, GreyoutColor);
+        tftPrint(0, "MEM", 22, 82, GreyoutColor, BackgroundColor, FONT16);
+        break;
+    }
+  }
+
+  void ShowRSSI() {
+    if (wifi) rssi = WiFi.RSSI(); else rssi = 0;
+    if (rssiold != rssi) {
+      rssiold = rssi;
+      if (rssi == 0) {
+        tft.drawBitmap(272, 4, WiFi4, 25, 25, GreyoutColor);
+      } else if (rssi > -50 && rssi < 0) {
+        tft.drawBitmap(272, 4, WiFi4, 25, 25, PrimaryColor);
+      } else if (rssi > -60) {
+        tft.drawBitmap(272, 4, WiFi4, 25, 25, GreyoutColor);
+        tft.drawBitmap(272, 4, WiFi3, 25, 25, PrimaryColor);
+      } else if (rssi > -70) {
+        tft.drawBitmap(272, 4, WiFi4, 25, 25, GreyoutColor);
+        tft.drawBitmap(272, 4, WiFi2, 25, 25, PrimaryColor);
+      } else if (rssi < -70) {
+        tft.drawBitmap(272, 4, WiFi4, 25, 25, GreyoutColor);
+        tft.drawBitmap(272, 4, WiFi1, 25, 25, PrimaryColor);
+      }
+    }
+  }
+
+  void ShowBattery() {
+    if (millis() >= batupdatetimer + TIMER_BAT_TIMER) {
+      batupdatetimer = millis();
+    } else {
+      return;
+    }
+
+    battery = map(constrain(analogRead(BATTERY_PIN), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, BAT_LEVEL_STAGE);
+    if (batteryold != battery) {
+      if (batterydetect) {
+        if (battery == 0) {
+          tft.drawRect(300, 8, 12, 20, TFT_RED);
+          tft.fillRect(303, 4, 6, 4, TFT_RED);
+          tft.fillRect(302, 10, 8, 16, BackgroundColor);
+          tft.fillRect(302, 26 - (battery * 4), 8, battery * 4, TFT_GREEN);
+        } else {
+          tft.drawRect(300, 8, 12, 20, ActiveColor);
+          tft.fillRect(303, 4, 6, 4, ActiveColor);
+          tft.fillRect(302, 10, 8, 16, BackgroundColor);
+          tft.fillRect(302, 26 - (battery * 4), 8, battery * 4, TFT_GREEN);
+        }
+      } else {
+        tft.drawRect(300, 8, 12, 20, GreyoutColor);
+        tft.fillRect(303, 4, 6, 4, GreyoutColor);
+        tft.fillRect(302, 10, 8, 16, BackgroundColor);
+      }
+      batteryold = battery;
+    }
+  }
+
+  void Communication() {
+    if (menu == false) {
+      if (wifi) {
+        int packetSize = Udp.parsePacket();
+        if (packetSize) {
+          char packetBuffer[packetSize];
+          Udp.read(packetBuffer, packetSize);
+          Udp.endPacket();
+          String packet = String(packetBuffer);
+          if (strcmp(packetBuffer, "from=StationList;freq=?;bandwidth=?") == 0) {
+            ShowFreq(0);
+            Udp.beginPacket(remoteip, 9030);
+            Udp.print("from=TEF tuner;Bandwidth=");
+            Udp.print(BW * 1000);
+            Udp.endPacket();
+          } else {
+            int symPos = packet.indexOf("freq=");
+            String stlfreq = packet.substring(symPos + 5, packetSize);
+            if ((stlfreq.toInt()) / 10000 > 6500 && (stlfreq.toInt()) / 10000 < 10800) {
+              if (band != BAND_FM) {
+                band = BAND_FM;
+                SelectBand();
+              }
+              frequency = (stlfreq.toInt()) / 10000;
+              radio.SetFreq(frequency);
+            }
+
+            // To Do: AM
+            //          if ((stlfreq.toInt()) / 1000 > 144 && (stlfreq.toInt()) / 1000 < 27000) {
+            //            if (band != 5) {
+            //              band = 5;
+            //            SelectBand();
+            //            }
+            //            frequency5 = (stlfreq.toInt()) / 1000;
+            //            radio.SetFreqAM(frequency5);
+            //          }
+            radio.clearRDS(fullsearchrds);
+            ShowFreq(0);
+            store = true;
+          }
+        }
+      }
+
+      if (Server.hasClient())
+      {
+        if (RemoteClient.connected())
+        {
+          Server.available().stop();
+        } else {
+          wificonnected = true;
+          RemoteClient = Server.available();
+          passwordcrypt();
+          RemoteClient.print(saltkey + "\n");
+        }
+      } else {
+        if (Server.hasClient()) Server.available().stop();
+      }
+
+      if (wificonnected == true && !RemoteClient.connected()) {
+        wificonnected = false;
+        RDSSPYTCP = false;
+        XDRGTKTCP = false;
+      }
+
+
+      if (XDRGTKTCP == false && wificonnected == true && RemoteClient.available()) {
+        String data_str = RemoteClient.readStringUntil('\n');
+        if (data_str.length() > 30 && data_str.equals(cryptedpassword))
+        {
+          radio.setFMABandw();
+          if (band != BAND_FM) {
+            band = BAND_FM;
+            SelectBand();
+          }
+          XDRGTKTCP = true;
+          RemoteClient.print("o1,0\n");
+          store = true;
+        } else if (RDSSPYTCP == false && XDRGTKTCP == false && data_str.length() < 5 && data_str == ("*D*R?F"))
+        {
+          RDSSPYTCP = true;
+        } else if (RDSSPYTCP == true) {
+          int symPos = data_str.indexOf("*F");
+          if (symPos >= 5) {
+            String freq = data_str.substring(0, symPos);
+            freq = freq.substring(0, freq.length() - 1);
+            frequency = freq.toInt();
+            radio.SetFreq(frequency);
+            radio.clearRDS(fullsearchrds);
             if (band != BAND_FM) {
               band = BAND_FM;
               SelectBand();
             }
-            frequency = (stlfreq.toInt()) / 10000;
-            radio.SetFreq(frequency);
+            ShowFreq(0);
+            store = true;
           }
-
-          // To Do: AM
-          //          if ((stlfreq.toInt()) / 1000 > 144 && (stlfreq.toInt()) / 1000 < 27000) {
-          //            if (band != 5) {
-          //              band = 5;
-          //            SelectBand();
-          //            }
-          //            frequency5 = (stlfreq.toInt()) / 1000;
-          //            radio.SetFreqAM(frequency5);
-          //          }
-          radio.clearRDS(fullsearchrds);
-          ShowFreq(0);
-          store = true;
+        } else {
+          RemoteClient.print("a0\n");
         }
       }
-    }
 
-    if (Server.hasClient())
-    {
-      if (RemoteClient.connected())
+      if (XDRGTKUSB == false && Serial.available())
       {
-        Server.available().stop();
-      } else {
-        wificonnected = true;
-        RemoteClient = Server.available();
-        passwordcrypt();
-        RemoteClient.print(saltkey + "\n");
-      }
-    } else {
-      if (Server.hasClient()) Server.available().stop();
-    }
-
-    if (wificonnected == true && !RemoteClient.connected()) {
-      wificonnected = false;
-      RDSSPYTCP = false;
-      XDRGTKTCP = false;
-    }
-
-
-    if (XDRGTKTCP == false && wificonnected == true && RemoteClient.available()) {
-      String data_str = RemoteClient.readStringUntil('\n');
-      if (data_str.length() > 30 && data_str.equals(cryptedpassword))
-      {
-        radio.setFMABandw();
-        if (band != BAND_FM) {
-          band = BAND_FM;
-          SelectBand();
-        }
-        XDRGTKTCP = true;
-        RemoteClient.print("o1,0\n");
-        store = true;
-      } else if (RDSSPYTCP == false && XDRGTKTCP == false && data_str.length() < 5 && data_str == ("*D*R?F"))
-      {
-        RDSSPYTCP = true;
-      } else if (RDSSPYTCP == true) {
+        String data_str = Serial.readStringUntil('\n');
+        if (data_str.length() > 1 && data_str == ("*D*R?F")) RDSSPYUSB = true;
         int symPos = data_str.indexOf("*F");
         if (symPos >= 5) {
           String freq = data_str.substring(0, symPos);
           freq = freq.substring(0, freq.length() - 1);
           frequency = freq.toInt();
           radio.SetFreq(frequency);
-          radio.clearRDS(fullsearchrds);
           if (band != BAND_FM) {
             band = BAND_FM;
-            SelectBand();
+            BWreset = true;
+            BWset = 0;
+            radio.power(0);
+            delay(50);
+            radio.SetFreq(frequency);
+            radio.clearRDS(fullsearchrds);
+            freqold = frequency_AM;
+            doBW();
+            radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
+            if (screenmute == false) radio.clearRDS(fullsearchrds); BuildDisplay();
           }
           ShowFreq(0);
           store = true;
         }
-      } else {
-        RemoteClient.print("a0\n");
-      }
-    }
-
-    if (XDRGTKUSB == false && Serial.available())
-    {
-      String data_str = Serial.readStringUntil('\n');
-      if (data_str.length() > 1 && data_str == ("*D*R?F")) RDSSPYUSB = true;
-      int symPos = data_str.indexOf("*F");
-      if (symPos >= 5) {
-        String freq = data_str.substring(0, symPos);
-        freq = freq.substring(0, freq.length() - 1);
-        frequency = freq.toInt();
-        radio.SetFreq(frequency);
-        if (band != BAND_FM) {
-          band = BAND_FM;
-          BWreset = true;
-          BWset = 0;
-          radio.power(0);
-          delay(50);
-          radio.SetFreq(frequency);
-          radio.clearRDS(fullsearchrds);
-          freqold = frequency_AM;
-          doBW();
-          radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
-          if (screenmute == false) radio.clearRDS(fullsearchrds); BuildDisplay();
-        }
-        ShowFreq(0);
-        store = true;
-      }
-      if (data_str.charAt(0) == 'x') {
-        radio.setFMABandw();
-        if (band != BAND_FM) {
-          band = BAND_FM;
-          SelectBand();
-        }
-        Serial.print("OK\nT" + String(frequency * 10) + "\n");
-        XDRGTKUSB = true;
-        if (menu == true) ModeButtonPress();
-        if (Squelch != Squelchold) {
-          if (screenmute == false) {
-            if (Squelchold == -100) {
-              tftPrint(0, myLanguage[language][33], 224, 170, BackgroundColor, BackgroundColor, FONT16);
-            } else if (Squelchold > 920) {
-              tftPrint(0, "ST", 224, 170, BackgroundColor, BackgroundColor, FONT16);
-            } else {
-              tftPrint(0, String(Squelchold / 10), 224, 170, BackgroundColor, BackgroundColor, FONT16);
+        if (data_str.charAt(0) == 'x') {
+          radio.setFMABandw();
+          if (band != BAND_FM) {
+            band = BAND_FM;
+            SelectBand();
+          }
+          Serial.print("OK\nT" + String(frequency * 10) + "\n");
+          XDRGTKUSB = true;
+          if (menu == true) ModeButtonPress();
+          if (Squelch != Squelchold) {
+            if (screenmute == false) {
+              if (Squelchold == -100) {
+                tftPrint(0, myLanguage[language][33], 224, 170, BackgroundColor, BackgroundColor, FONT16);
+              } else if (Squelchold > 920) {
+                tftPrint(0, "ST", 224, 170, BackgroundColor, BackgroundColor, FONT16);
+              } else {
+                tftPrint(0, String(Squelchold / 10), 224, 170, BackgroundColor, BackgroundColor, FONT16);
+              }
             }
           }
         }
       }
+      if (XDRGTKUSB || XDRGTKTCP) XDRGTKRoutine();
     }
-    if (XDRGTKUSB || XDRGTKTCP) XDRGTKRoutine();
   }
-}
 
 
-void DataPrint(String string) {
-  if (XDRGTKUSB) Serial.print(string);
-  if (XDRGTKTCP) RemoteClient.print(string);
-}
+  void DataPrint(String string) {
+    if (XDRGTKUSB) Serial.print(string);
+    if (XDRGTKTCP) RemoteClient.print(string);
+  }
 
-void XDRGTKRoutine() {
-  if (XDRGTKUSB) {
-    if (Serial.available())
-    {
-      buff[buff_pos] = Serial.read();
-      if (buff[buff_pos] != '\n' && buff_pos != 16 - 1)
+  void XDRGTKRoutine() {
+    if (XDRGTKUSB) {
+      if (Serial.available())
       {
-        buff_pos++;
-      } else {
-        buff[buff_pos] = 0;
-        buff_pos = 0;
-        XDRGTKdata = true;
-      }
-    }
-  }
-
-  if (XDRGTKTCP) {
-    if (RemoteClient.available() > 0) {
-      buff[buff_pos] = RemoteClient.read();
-      if (buff[buff_pos] != '\n' && buff_pos != 16 - 1)
-      {
-        buff_pos++;
-      } else {
-        buff[buff_pos] = 0;
-        buff_pos = 0;
-        XDRGTKdata = true;
-      }
-    }
-  }
-
-  if (XDRGTKdata) {
-    switch (buff[0])
-    {
-      case 'A':
-        int AGC;
-        AGC = atol(buff + 1);
-        DataPrint("A" + String(AGC) + "\n");
-        radio.setAGC(AGC);
-        break;
-
-      case 'C':
-        byte scanmethod;
-        scanmethod = atol(buff + 1);
-        if (scanmethod == 1) {
-          DataPrint("C1\n");
-          direction = false;
-          Seek(direction);
-          ShowFreq(0);
-        }
-        if (scanmethod == 2) {
-          DataPrint("C2\n");
-          direction = true;
-          Seek(direction);
-          ShowFreq(0);
-        }
-        DataPrint("C0\n");
-        break;
-
-      case 'N':
-        doStereoToggle();
-        break;
-
-      case 'D':
-        DeEmphasis = atol(buff + 1);
-        DataPrint("D" + String(DeEmphasis) + "\n");
-        radio.setDeemphasis(DeEmphasis);
-        break;
-
-      case 'F':
-        XDRBWset = atol(buff + 1);
-        DataPrint("F" + String(XDRBWset) + "\n");
-        if (XDRBWset < 0) {
-          XDRBWsetold = XDRBWset;
-          BWset = 0;
-        } else if (XDRBWset < 16) {
-          BWset = XDRBWset + 1;
-          XDRBWsetold = XDRBWset;
+        buff[buff_pos] = Serial.read();
+        if (buff[buff_pos] != '\n' && buff_pos != 16 - 1)
+        {
+          buff_pos++;
         } else {
-          XDRBWset = XDRBWsetold;
+          buff[buff_pos] = 0;
+          buff_pos = 0;
+          XDRGTKdata = true;
         }
-        doBW();
-        break;
+      }
+    }
 
-      case 'G':
-        byte offsetg;
-        offsetg = atol(buff + 1);
-        if (offsetg == 0) {
-          MuteScreen(0);
-          LowLevelSet = EEPROM.readInt(EE_BYTE_LOWLEVELSET);
-          softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
-          softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
-          radio.setSoftmuteFM(softmutefm);
-          radio.setSoftmuteAM(softmuteam);
-          DataPrint("G00\n");
+    if (XDRGTKTCP) {
+      if (RemoteClient.available() > 0) {
+        buff[buff_pos] = RemoteClient.read();
+        if (buff[buff_pos] != '\n' && buff_pos != 16 - 1)
+        {
+          buff_pos++;
+        } else {
+          buff[buff_pos] = 0;
+          buff_pos = 0;
+          XDRGTKdata = true;
         }
-        if (offsetg == 10) {
-          MuteScreen(1);
-          LowLevelSet = EEPROM.readInt(EE_BYTE_LOWLEVELSET);
-          softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
-          softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
-          radio.setSoftmuteFM(softmutefm);
-          radio.setSoftmuteAM(softmuteam);
-          DataPrint("G10\n");
-        }
-        if (offsetg == 1) {
-          MuteScreen(0);
-          radio.setSoftmuteFM(1);
-          radio.setSoftmuteAM(1);
-          DataPrint("G01\n");
-        }
-        if (offsetg == 11) {
-          MuteScreen(1);
-          radio.setSoftmuteFM(1);
-          radio.setSoftmuteAM(1);
-          DataPrint("G11\n");
-        }
-        break;
+      }
+    }
 
-      case 'M':
-        byte XDRband;
-        XDRband = atol(buff + 1);
-        if (XDRband == 0) DataPrint("M0\n"); else DataPrint("M1\n");
-        if (XDRband == 1) {
-          if (frequency_AM >= LWLowEdgeSet && frequency_AM <= LWHighEdgeSet) {
+    if (XDRGTKdata) {
+      switch (buff[0])
+      {
+        case 'A':
+          int AGC;
+          AGC = atol(buff + 1);
+          DataPrint("A" + String(AGC) + "\n");
+          radio.setAGC(AGC);
+          break;
+
+        case 'C':
+          byte scanmethod;
+          scanmethod = atol(buff + 1);
+          if (scanmethod == 1) {
+            DataPrint("C1\n");
+            direction = false;
+            Seek(direction);
+            ShowFreq(0);
+          }
+          if (scanmethod == 2) {
+            DataPrint("C2\n");
+            direction = true;
+            Seek(direction);
+            ShowFreq(0);
+          }
+          DataPrint("C0\n");
+          break;
+
+        case 'N':
+          doStereoToggle();
+          break;
+
+        case 'D':
+          DeEmphasis = atol(buff + 1);
+          DataPrint("D" + String(DeEmphasis) + "\n");
+          radio.setDeemphasis(DeEmphasis);
+          break;
+
+        case 'F':
+          XDRBWset = atol(buff + 1);
+          DataPrint("F" + String(XDRBWset) + "\n");
+          if (XDRBWset < 0) {
+            XDRBWsetold = XDRBWset;
+            BWset = 0;
+          } else if (XDRBWset < 16) {
+            BWset = XDRBWset + 1;
+            XDRBWsetold = XDRBWset;
+          } else {
+            XDRBWset = XDRBWsetold;
+          }
+          doBW();
+          break;
+
+        case 'G':
+          byte offsetg;
+          offsetg = atol(buff + 1);
+          if (offsetg == 0) {
+            MuteScreen(0);
+            LowLevelSet = EEPROM.readInt(EE_BYTE_LOWLEVELSET);
+            softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
+            softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
+            radio.setSoftmuteFM(softmutefm);
+            radio.setSoftmuteAM(softmuteam);
+            DataPrint("G00\n");
+          }
+          if (offsetg == 10) {
+            MuteScreen(1);
+            LowLevelSet = EEPROM.readInt(EE_BYTE_LOWLEVELSET);
+            softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
+            softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
+            radio.setSoftmuteFM(softmutefm);
+            radio.setSoftmuteAM(softmuteam);
+            DataPrint("G10\n");
+          }
+          if (offsetg == 1) {
+            MuteScreen(0);
+            radio.setSoftmuteFM(1);
+            radio.setSoftmuteAM(1);
+            DataPrint("G01\n");
+          }
+          if (offsetg == 11) {
+            MuteScreen(1);
+            radio.setSoftmuteFM(1);
+            radio.setSoftmuteAM(1);
+            DataPrint("G11\n");
+          }
+          break;
+
+        case 'M':
+          byte XDRband;
+          XDRband = atol(buff + 1);
+          if (XDRband == 0) DataPrint("M0\n"); else DataPrint("M1\n");
+          if (XDRband == 1) {
+            if (frequency_AM >= LWLowEdgeSet && frequency_AM <= LWHighEdgeSet) {
+              if (band != BAND_LW) {
+                band = BAND_LW;
+                SelectBand();
+              }
+            }
+            if (frequency_AM >= MWLowEdgeSet && frequency_AM <= MWHighEdgeSet) {
+              if (band != BAND_MW) {
+                band = BAND_MW;
+                SelectBand();
+              }
+            }
+            if (frequency_AM >= SWLowEdgeSet && frequency_AM <= SWHighEdgeSet) {
+              if (band != BAND_SW) {
+                band = BAND_SW;
+                SelectBand();
+              }
+            }
+            radio.SetFreqAM(frequency_AM);
+            DataPrint("M1\n");
+            DataPrint("T" + String(frequency_AM) + "\n");
+          } else {
+            if (band != BAND_FM) {
+              band = BAND_FM;
+              SelectBand();
+            }
+            DataPrint("M0\n");
+            DataPrint("T" + String(frequency * 10) + "\n");
+            radio.SetFreq(frequency);
+            radio.clearRDS(fullsearchrds);
+            RDSstatus = false;
+          }
+          store = true;
+          break;
+
+        case 'T':
+          unsigned int freqtemp;
+          freqtemp = atoi(buff + 1);
+          if (seek == true) seek = false;
+          if (freqtemp >= LWLowEdgeSet && freqtemp <= LWHighEdgeSet) {
+            frequency_AM = freqtemp;
             if (band != BAND_LW) {
               band = BAND_LW;
               SelectBand();
             }
+            radio.SetFreqAM(frequency_AM);
+            DataPrint("M1\n");
           }
-          if (frequency_AM >= MWLowEdgeSet && frequency_AM <= MWHighEdgeSet) {
+          if (freqtemp >= MWLowEdgeSet && freqtemp <= MWHighEdgeSet) {
+            frequency_AM = freqtemp;
             if (band != BAND_MW) {
               band = BAND_MW;
               SelectBand();
             }
+            radio.SetFreqAM(frequency_AM);
+            DataPrint("M1\n");
           }
-          if (frequency_AM >= SWLowEdgeSet && frequency_AM <= SWHighEdgeSet) {
+          if (freqtemp >= SWLowEdgeSet && freqtemp <= SWHighEdgeSet) {
+            frequency_AM = freqtemp;
             if (band != BAND_SW) {
               band = BAND_SW;
               SelectBand();
             }
+            radio.SetFreqAM(frequency_AM);
+            DataPrint("M1\n");
           }
-          radio.SetFreqAM(frequency_AM);
-          DataPrint("M1\n");
-          DataPrint("T" + String(frequency_AM) + "\n");
-        } else {
-          if (band != BAND_FM) {
-            band = BAND_FM;
-            SelectBand();
+          if (freqtemp >= FREQ_FM_START && freqtemp <= FREQ_FM_END) {
+            frequency = freqtemp / 10;
+            if (band != BAND_FM) {
+              band = BAND_FM;
+              SelectBand();
+            }
+            radio.SetFreq(frequency);
+            DataPrint("M0\n");
           }
-          DataPrint("M0\n");
-          DataPrint("T" + String(frequency * 10) + "\n");
-          radio.SetFreq(frequency);
+          if (band == BAND_FM) DataPrint("T" + String(frequency * 10) + "\n"); else DataPrint("T" + String(frequency_AM) + "\n");
+          ShowFreq(0);
           radio.clearRDS(fullsearchrds);
           RDSstatus = false;
-        }
-        store = true;
-        break;
+          store = true;
+          break;
 
-      case 'T':
-        unsigned int freqtemp;
-        freqtemp = atoi(buff + 1);
-        if (seek == true) seek = false;
-        if (freqtemp >= LWLowEdgeSet && freqtemp <= LWHighEdgeSet) {
-          frequency_AM = freqtemp;
-          if (band != BAND_LW) {
-            band = BAND_LW;
-            SelectBand();
+        case 'Q':
+          Squelch = atoi(buff + 1);
+          if (Squelch == -1) {
+            DataPrint("Q - 1\n");
+          } else {
+            Squelch *= 10;
+            DataPrint("Q\n");
+            DataPrint(String(Squelch / 10));
           }
-          radio.SetFreqAM(frequency_AM);
-          DataPrint("M1\n");
-        }
-        if (freqtemp >= MWLowEdgeSet && freqtemp <= MWHighEdgeSet) {
-          frequency_AM = freqtemp;
-          if (band != BAND_MW) {
-            band = BAND_MW;
-            SelectBand();
-          }
-          radio.SetFreqAM(frequency_AM);
-          DataPrint("M1\n");
-        }
-        if (freqtemp >= SWLowEdgeSet && freqtemp <= SWHighEdgeSet) {
-          frequency_AM = freqtemp;
-          if (band != BAND_SW) {
-            band = BAND_SW;
-            SelectBand();
-          }
-          radio.SetFreqAM(frequency_AM);
-          DataPrint("M1\n");
-        }
-        if (freqtemp >= FREQ_FM_START && freqtemp <= FREQ_FM_END) {
-          frequency = freqtemp / 10;
-          if (band != BAND_FM) {
-            band = BAND_FM;
-            SelectBand();
-          }
-          radio.SetFreq(frequency);
-          DataPrint("M0\n");
-        }
-        if (band == BAND_FM) DataPrint("T" + String(frequency * 10) + "\n"); else DataPrint("T" + String(frequency_AM) + "\n");
-        ShowFreq(0);
-        radio.clearRDS(fullsearchrds);
-        RDSstatus = false;
-        store = true;
-        break;
+          break;
 
-      case 'Q':
-        Squelch = atoi(buff + 1);
-        if (Squelch == -1) {
-          DataPrint("Q - 1\n");
-        } else {
-          Squelch *= 10;
-          DataPrint("Q\n");
-          DataPrint(String(Squelch / 10));
-        }
-        break;
-
-      case 'S':
-        if (buff[1] == 'a') {
-          scanner_start = (atol(buff + 2) + 5) / 10;
-        } else if (buff[1] == 'b') {
-          scanner_end = (atol(buff + 2) + 5) / 10;
-        } else if (buff[1] == 'c') {
-          scanner_step = (atol(buff + 2) + 5) / 10;
-        } else if (buff[1] == 'f') {
-          scanner_filter = atol(buff + 2);
-        } else if (scanner_start > 0 && scanner_end > 0 && scanner_step > 0 && scanner_filter >= 0) {
-          frequencyold = frequency;
-          radio.SetFreq(scanner_start);
-          DataPrint("U");
-          if (scanner_filter < 0) {
+        case 'S':
+          if (buff[1] == 'a') {
+            scanner_start = (atol(buff + 2) + 5) / 10;
+          } else if (buff[1] == 'b') {
+            scanner_end = (atol(buff + 2) + 5) / 10;
+          } else if (buff[1] == 'c') {
+            scanner_step = (atol(buff + 2) + 5) / 10;
+          } else if (buff[1] == 'f') {
+            scanner_filter = atol(buff + 2);
+          } else if (scanner_start > 0 && scanner_end > 0 && scanner_step > 0 && scanner_filter >= 0) {
+            frequencyold = frequency;
+            radio.SetFreq(scanner_start);
+            DataPrint("U");
+            if (scanner_filter < 0) {
+              BWset = 0;
+            } else if (scanner_filter == 0) {
+              BWset = 1;
+            } else if (scanner_filter == 26) {
+              BWset = 2;
+            } else if (scanner_filter == 1) {
+              BWset = 3;
+            } else if (scanner_filter == 28) {
+              BWset = 4;
+            } else if (scanner_filter == 29) {
+              BWset = 5;
+            } else if (scanner_filter == 3) {
+              BWset = 6;
+            } else if (scanner_filter == 4) {
+              BWset = 7;
+            } else if (scanner_filter == 5) {
+              BWset = 8;
+            } else if (scanner_filter == 7) {
+              BWset = 9;
+            } else if (scanner_filter == 8) {
+              BWset = 10;
+            } else if (scanner_filter == 9) {
+              BWset = 11;
+            } else if (scanner_filter == 10) {
+              BWset = 12;
+            } else if (scanner_filter == 11) {
+              BWset = 13;
+            } else if (scanner_filter == 12) {
+              BWset = 14;
+            } else if (scanner_filter == 13) {
+              BWset = 15;
+            } else if (scanner_filter == 15) {
+              BWset = 16;
+            }
+            doBW();
+            if (screenmute == false) {
+              ShowFreq(1);
+              tftPrint(0, myLanguage[language][34], 140, 68, ActiveColor, ActiveColorSmooth, FONT28);
+            }
+            frequencyold = frequency;
+            for (freq_scan = scanner_start; freq_scan <= scanner_end; freq_scan += scanner_step) {
+              radio.SetFreq(freq_scan);
+              DataPrint(String(freq_scan * 10, DEC));
+              DataPrint(" = ");
+              delay(10);
+              if (band == BAND_FM) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR); else  radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
+              DataPrint(String((SStatus / 10) + 10, DEC));
+              DataPrint(", ");
+            }
+            DataPrint("\n");
+            if (screenmute == false) {
+              tft.setTextColor(BackgroundColor);
+              tftPrint(0, myLanguage[language][34], 140, 68, InsignificantColor, InsignificantColorSmooth, FONT28);
+            }
+            radio.SetFreq(frequencyold);
+            ShowFreq(0);
+            radio.setFMABandw();
             BWset = 0;
-          } else if (scanner_filter == 0) {
-            BWset = 1;
-          } else if (scanner_filter == 26) {
-            BWset = 2;
-          } else if (scanner_filter == 1) {
-            BWset = 3;
-          } else if (scanner_filter == 28) {
-            BWset = 4;
-          } else if (scanner_filter == 29) {
-            BWset = 5;
-          } else if (scanner_filter == 3) {
-            BWset = 6;
-          } else if (scanner_filter == 4) {
-            BWset = 7;
-          } else if (scanner_filter == 5) {
-            BWset = 8;
-          } else if (scanner_filter == 7) {
-            BWset = 9;
-          } else if (scanner_filter == 8) {
-            BWset = 10;
-          } else if (scanner_filter == 9) {
-            BWset = 11;
-          } else if (scanner_filter == 10) {
-            BWset = 12;
-          } else if (scanner_filter == 11) {
-            BWset = 13;
-          } else if (scanner_filter == 12) {
-            BWset = 14;
-          } else if (scanner_filter == 13) {
-            BWset = 15;
-          } else if (scanner_filter == 15) {
-            BWset = 16;
           }
-          doBW();
-          if (screenmute == false) {
-            ShowFreq(1);
-            tftPrint(0, myLanguage[language][34], 140, 68, ActiveColor, ActiveColorSmooth, FONT28);
-          }
-          frequencyold = frequency;
-          for (freq_scan = scanner_start; freq_scan <= scanner_end; freq_scan += scanner_step) {
-            radio.SetFreq(freq_scan);
-            DataPrint(String(freq_scan * 10, DEC));
-            DataPrint(" = ");
-            delay(10);
-            if (band == BAND_FM) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR); else  radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
-            DataPrint(String((SStatus / 10) + 10, DEC));
-            DataPrint(", ");
-          }
-          DataPrint("\n");
-          if (screenmute == false) {
-            tft.setTextColor(BackgroundColor);
-            tftPrint(0, myLanguage[language][34], 140, 68, InsignificantColor, InsignificantColorSmooth, FONT28);
-          }
-          radio.SetFreq(frequencyold);
-          ShowFreq(0);
-          radio.setFMABandw();
-          BWset = 0;
-        }
-        break;
+          break;
 
-      case 'Y':
-        VolSet = atoi(buff + 1);
-        if (VolSet == 0) {
-          radio.setMute();
-          XDRMute = true;
-          SQ = true;
-        } else {
-          radio.setUnMute();
-          radio.setVolume((VolSet - 40) / 10);
+        case 'Y':
+          VolSet = atoi(buff + 1);
+          if (VolSet == 0) {
+            radio.setMute();
+            if (screenmute == false) tft.drawBitmap(110, 5, Speaker, 26, 22, PrimaryColor); 
+            XDRMute = true;
+            SQ = true;
+          } else {
+            radio.setUnMute();
+            if (screenmute == false) tft.drawBitmap(110, 5, Speaker, 26, 22, GreyoutColor); 
+            radio.setVolume((VolSet - 40) / 10);
+            XDRMute = false;
+          }
+          DataPrint("Y" + String(VolSet) + "\n");
+          VolSet /= 10;
+          break;
+
+        case 'x':
+          DataPrint("OK\nT" + String(frequency * 10) + "\n");
+          break;
+
+        case 'X':
+          XDRGTKTCP = false;
+          XDRGTKUSB = false;
+          store = true;
           XDRMute = false;
-        }
-        DataPrint("Y" + String(VolSet) + "\n");
-        VolSet /= 10;
-        break;
+          radio.setUnMute();
+          if (screenmute == false) tft.drawBitmap(110, 5, Speaker, 26, 22, GreyoutColor); 
+          VolSet = EEPROM.readInt(EE_BYTE_VOLSET);
+          LowLevelSet = EEPROM.readInt(EE_BYTE_LOWLEVELSET);
+          softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
+          softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
+          radio.setVolume(VolSet);
+          radio.setSoftmuteFM(softmutefm);
+          radio.setSoftmuteAM(softmuteam);
+          if (screenmute) MuteScreen(0);
+          break;
 
-      case 'x':
-        DataPrint("OK\nT" + String(frequency * 10) + "\n");
-        break;
+        case 'Z':
+          byte iMSEQX;
+          iMSEQX = atol(buff + 1);
+          switch (iMSEQX) {
+            case 0:
+              iMSset = 1;
+              EQset = 1;
+              iMSEQ = 2;
+              break;
 
-      case 'X':
-        XDRGTKTCP = false;
-        XDRGTKUSB = false;
-        store = true;
-        XDRMute = false;
-        radio.setUnMute();
-        VolSet = EEPROM.readInt(EE_BYTE_VOLSET);
-        LowLevelSet = EEPROM.readInt(EE_BYTE_LOWLEVELSET);
-        softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
-        softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
-        radio.setVolume(VolSet);
-        radio.setSoftmuteFM(softmutefm);
-        radio.setSoftmuteAM(softmuteam);
-        if (screenmute) MuteScreen(0);
-        break;
+            case 1:
+              iMSset = 0;
+              EQset = 1;
+              iMSEQ = 3;
+              break;
 
-      case 'Z':
-        byte iMSEQX;
-        iMSEQX = atol(buff + 1);
-        switch (iMSEQX) {
-          case 0:
-            iMSset = 1;
-            EQset = 1;
-            iMSEQ = 2;
-            break;
+            case 2:
+              iMSset = 1;
+              EQset = 0;
+              iMSEQ = 4;
+              break;
 
-          case 1:
-            iMSset = 0;
-            EQset = 1;
-            iMSEQ = 3;
-            break;
-
-          case 2:
-            iMSset = 1;
-            EQset = 0;
-            iMSEQ = 4;
-            break;
-
-          case 3:
-            iMSset = 0;
-            EQset = 0;
-            iMSEQ = 1;
-            break;
-        }
-        updateiMS();
-        updateEQ();
-        DataPrint("Z" + String(iMSEQX) + "\n");
-        break;
+            case 3:
+              iMSset = 0;
+              EQset = 0;
+              iMSEQ = 1;
+              break;
+          }
+          updateiMS();
+          updateEQ();
+          DataPrint("Z" + String(iMSEQX) + "\n");
+          break;
+      }
+      XDRGTKdata = false;
     }
-    XDRGTKdata = false;
-  }
 
-  if (band != BAND_FM) {
-    DataPrint("Sm");
-  } else {
-    if (StereoToggle == false) {
-      DataPrint("SS");
-    } else if (Stereostatus == true) {
-      DataPrint("Ss");
-    } else {
-      DataPrint("Sm");
-    }
-  }
-  DataPrint(String(((SStatus * 100) + 10875) / 1000) + "." + String(((SStatus * 100) + 10875) / 100 % 10) + ", " + String(WAM / 10) + ", " + String(SNR) + "\n");
-}
-
-void TuneUp() {
-  aftest = true;
-  aftimer = millis();
-  unsigned int temp = 0;
-  if (stepsize == 0) {
     if (band != BAND_FM) {
-      if (frequency_AM < MWHighEdgeSet) {
-        if (region == 0) {
-          temp = FREQ_MW_STEP_9K;
-          frequency_AM = (frequency_AM / FREQ_MW_STEP_9K) * FREQ_MW_STEP_9K;
-        } else if (region == 1) {
-          temp = FREQ_MW_STEP_10K;
-          frequency_AM = (frequency_AM / FREQ_MW_STEP_10K) * FREQ_MW_STEP_10K;
+      DataPrint("Sm");
+    } else {
+      if (StereoToggle == false) {
+        DataPrint("SS");
+      } else if (Stereostatus == true) {
+        DataPrint("Ss");
+      } else {
+        DataPrint("Sm");
+      }
+    }
+    DataPrint(String(((SStatus * 100) + 10875) / 1000) + "." + String(((SStatus * 100) + 10875) / 100 % 10) + ", " + String(WAM / 10) + ", " + String(SNR) + "\n");
+  }
+
+  void TuneUp() {
+    aftest = true;
+    aftimer = millis();
+    unsigned int temp = 0;
+    if (stepsize == 0) {
+      if (band != BAND_FM) {
+        if (frequency_AM < MWHighEdgeSet) {
+          if (region == 0) {
+            temp = FREQ_MW_STEP_9K;
+            frequency_AM = (frequency_AM / FREQ_MW_STEP_9K) * FREQ_MW_STEP_9K;
+          } else if (region == 1) {
+            temp = FREQ_MW_STEP_10K;
+            frequency_AM = (frequency_AM / FREQ_MW_STEP_10K) * FREQ_MW_STEP_10K;
+          }
+        } else {
+          temp = FREQ_SW_STEP_5K;
+          frequency_AM = (frequency_AM / FREQ_SW_STEP_5K) * FREQ_SW_STEP_5K;
         }
       } else {
-        temp = FREQ_SW_STEP_5K;
-        frequency_AM = (frequency_AM / FREQ_SW_STEP_5K) * FREQ_SW_STEP_5K;
-      }
-    } else {
-      if (frequency >= (FREQ_FM_OIRT_START) && frequency <= (FREQ_FM_OIRT_END - FREQ_FM_STEP_30K)) {
-        if (specialstepOIRT) {
-          temp = FREQ_FM_STEP_30K;
+        if (frequency >= (FREQ_FM_OIRT_START) && frequency <= (FREQ_FM_OIRT_END - FREQ_FM_STEP_30K)) {
+          if (specialstepOIRT) {
+            temp = FREQ_FM_STEP_30K;
+          } else {
+            if (fmdefaultstepsize == 1) temp = FREQ_FM_STEP_100K; else temp = FREQ_FM_STEP_50K;
+          }
         } else {
           if (fmdefaultstepsize == 1) temp = FREQ_FM_STEP_100K; else temp = FREQ_FM_STEP_50K;
         }
+      }
+    }
+    if (stepsize == 1) temp = 1;
+    if (stepsize == 2) temp = 10;
+    if (stepsize == 3) temp = 100;
+    if (stepsize == 4) temp = 1000;
+
+    if (band == BAND_FM) {
+      frequency += temp;
+      if (specialstepOIRT) {
+        if (frequency >= (HighEdgeOIRTSet == 0 ? ((HighEdgeSet * 10) + 1) : (HighEdgeOIRTSet + 1))) {
+          frequency = (LowEdgeOIRTSet == 0 ? (LowEdgeSet * 10) : LowEdgeOIRTSet);
+          if (edgebeep) EdgeBeeper();
+        }
       } else {
-        if (fmdefaultstepsize == 1) temp = FREQ_FM_STEP_100K; else temp = FREQ_FM_STEP_50K;
+        if (frequency >= (HighEdgeSet * 10) + 1) {
+          frequency = LowEdgeSet * 10;
+          if (edgebeep) EdgeBeeper();
+        }
       }
+      radio.SetFreq(frequency);
     }
-  }
-  if (stepsize == 1) temp = 1;
-  if (stepsize == 2) temp = 10;
-  if (stepsize == 3) temp = 100;
-  if (stepsize == 4) temp = 1000;
 
-  if (band == BAND_FM) {
-    frequency += temp;
-    if (specialstepOIRT) {
-      if (frequency >= (HighEdgeOIRTSet == 0 ? ((HighEdgeSet * 10) + 1) : (HighEdgeOIRTSet + 1))) {
-        frequency = (LowEdgeOIRTSet == 0 ? (LowEdgeSet * 10) : LowEdgeOIRTSet);
+    if (band == BAND_LW) {
+      frequency_AM += temp;
+      if (frequency_AM > LWHighEdgeSet) {
+        frequency_AM = LWLowEdgeSet;
         if (edgebeep) EdgeBeeper();
       }
-    } else {
-      if (frequency >= (HighEdgeSet * 10) + 1) {
-        frequency = LowEdgeSet * 10;
+      radio.SetFreqAM(frequency_AM);
+      frequency_LW = frequency_AM;
+    } else if (band == BAND_MW) {
+      frequency_AM += temp;
+      if (frequency_AM > MWHighEdgeSet) {
+        frequency_AM = MWLowEdgeSet;
         if (edgebeep) EdgeBeeper();
       }
+      radio.SetFreqAM(frequency_AM);
+      frequency_MW = frequency_AM;
+    } else if (band == BAND_SW) {
+      frequency_AM += temp;
+      if (frequency_AM > SWHighEdgeSet) {
+        frequency_AM = SWLowEdgeSet;
+        if (edgebeep) EdgeBeeper();
+      }
+      radio.SetFreqAM(frequency_AM);
+      frequency_SW = frequency_AM;
     }
-    radio.SetFreq(frequency);
+    radio.clearRDS(fullsearchrds);
+    if (RDSSPYUSB == true) Serial.print("G:\r\nRESET-------\r\n\r\n");
+    if (RDSSPYTCP == true) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
   }
 
-  if (band == BAND_LW) {
-    frequency_AM += temp;
-    if (frequency_AM > LWHighEdgeSet) {
-      frequency_AM = LWLowEdgeSet;
-      if (edgebeep) EdgeBeeper();
-    }
-    radio.SetFreqAM(frequency_AM);
-    frequency_LW = frequency_AM;
-  } else if (band == BAND_MW) {
-    frequency_AM += temp;
-    if (frequency_AM > MWHighEdgeSet) {
-      frequency_AM = MWLowEdgeSet;
-      if (edgebeep) EdgeBeeper();
-    }
-    radio.SetFreqAM(frequency_AM);
-    frequency_MW = frequency_AM;
-  } else if (band == BAND_SW) {
-    frequency_AM += temp;
-    if (frequency_AM > SWHighEdgeSet) {
-      frequency_AM = SWLowEdgeSet;
-      if (edgebeep) EdgeBeeper();
-    }
-    radio.SetFreqAM(frequency_AM);
-    frequency_SW = frequency_AM;
-  }
-  radio.clearRDS(fullsearchrds);
-  if (RDSSPYUSB == true) Serial.print("G:\r\nRESET-------\r\n\r\n");
-  if (RDSSPYTCP == true) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
-}
-
-void TuneDown() {
-  aftest = true;
-  aftimer = millis();
-  unsigned int temp = 0;
-  if (stepsize == 0) {
-    if (band != BAND_FM) {
-      if (frequency_AM <= MWHighEdgeSet) {
-        if (frequency_AM == 2000) { // Fix Me :take care of 9K/10K Step
-          frequency_AM = 1998;
-          temp = 0;
+  void TuneDown() {
+    aftest = true;
+    aftimer = millis();
+    unsigned int temp = 0;
+    if (stepsize == 0) {
+      if (band != BAND_FM) {
+        if (frequency_AM <= MWHighEdgeSet) {
+          if (frequency_AM == 2000) { // Fix Me :take care of 9K/10K Step
+            frequency_AM = 1998;
+            temp = 0;
+          } else {
+            temp = region == 0 ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K;
+            frequency_AM = (frequency_AM / temp) * temp;
+          }
         } else {
-          temp = region == 0 ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K;
+          temp = FREQ_SW_STEP_5K;
           frequency_AM = (frequency_AM / temp) * temp;
         }
       } else {
-        temp = FREQ_SW_STEP_5K;
-        frequency_AM = (frequency_AM / temp) * temp;
-      }
-    } else {
-      if (frequency >= (FREQ_FM_OIRT_START + FREQ_FM_STEP_30K) && frequency <= (FREQ_FM_OIRT_END)) {
-        if (specialstepOIRT) {
-          temp = FREQ_FM_STEP_30K;
+        if (frequency >= (FREQ_FM_OIRT_START + FREQ_FM_STEP_30K) && frequency <= (FREQ_FM_OIRT_END)) {
+          if (specialstepOIRT) {
+            temp = FREQ_FM_STEP_30K;
+          } else {
+            if (fmdefaultstepsize == 1) temp = FREQ_FM_STEP_100K; else temp = FREQ_FM_STEP_50K;
+          }
         } else {
           if (fmdefaultstepsize == 1) temp = FREQ_FM_STEP_100K; else temp = FREQ_FM_STEP_50K;
         }
+      }
+    }
+    if (stepsize == 1) temp = 1;
+    if (stepsize == 2) temp = 10;
+    if (stepsize == 3) temp = 100;
+    if (stepsize == 4) temp = 1000;
+
+    if (band == BAND_FM) {
+      frequency -= temp;
+      if (specialstepOIRT) {
+        if (frequency < (LowEdgeOIRTSet == 0 ? (LowEdgeSet * 10) : LowEdgeOIRTSet) ) {
+          frequency = (HighEdgeOIRTSet == 0 ? (HighEdgeSet * 10) : HighEdgeOIRTSet);
+          if (edgebeep) EdgeBeeper();
+        }
       } else {
-        if (fmdefaultstepsize == 1) temp = FREQ_FM_STEP_100K; else temp = FREQ_FM_STEP_50K;
+        if (frequency < LowEdgeSet * 10) {
+          frequency = HighEdgeSet * 10;
+          if (edgebeep) EdgeBeeper();
+        }
       }
+      radio.SetFreq(frequency);
     }
-  }
-  if (stepsize == 1) temp = 1;
-  if (stepsize == 2) temp = 10;
-  if (stepsize == 3) temp = 100;
-  if (stepsize == 4) temp = 1000;
 
-  if (band == BAND_FM) {
-    frequency -= temp;
-    if (specialstepOIRT) {
-      if (frequency < (LowEdgeOIRTSet == 0 ? (LowEdgeSet * 10) : LowEdgeOIRTSet) ) {
-        frequency = (HighEdgeOIRTSet == 0 ? (HighEdgeSet * 10) : HighEdgeOIRTSet);
+    if (band == BAND_LW) {
+      frequency_AM -= temp;
+      if (frequency_AM < LWLowEdgeSet) {
+        frequency_AM = LWHighEdgeSet;
         if (edgebeep) EdgeBeeper();
       }
+      radio.SetFreqAM(frequency_AM);
+      frequency_LW = frequency_AM;
+    } else if (band == BAND_MW) {
+      frequency_AM -= temp;
+      if (frequency_AM < MWLowEdgeSet) {
+        frequency_AM = MWHighEdgeSet;
+        if (edgebeep) EdgeBeeper();
+      }
+      radio.SetFreqAM(frequency_AM);
+      frequency_MW = frequency_AM;
+    } else if (band == BAND_SW) {
+      frequency_AM -= temp;
+      if (frequency_AM < SWLowEdgeSet) {
+        frequency_AM = SWHighEdgeSet;
+        if (edgebeep) EdgeBeeper();
+      }
+      radio.SetFreqAM(frequency_AM);
+      frequency_SW = frequency_AM;
+    }
+    radio.clearRDS(fullsearchrds);
+    if (RDSSPYUSB == true) Serial.print("G:\r\nRESET-------\r\n\r\n");
+    if (RDSSPYTCP == true) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
+  }
+
+  void EdgeBeeper() {
+    bool x = radio.mute;
+    radio.tone(50, -5, 2000);
+    if (x) {
+      radio.setMute(); 
+      if (screenmute == false) tft.drawBitmap(110, 5, Speaker, 26, 22, PrimaryColor); 
     } else {
-      if (frequency < LowEdgeSet * 10) {
-        frequency = HighEdgeSet * 10;
-        if (edgebeep) EdgeBeeper();
-      }
-    }
-    radio.SetFreq(frequency);
-  }
-
-  if (band == BAND_LW) {
-    frequency_AM -= temp;
-    if (frequency_AM < LWLowEdgeSet) {
-      frequency_AM = LWHighEdgeSet;
-      if (edgebeep) EdgeBeeper();
-    }
-    radio.SetFreqAM(frequency_AM);
-    frequency_LW = frequency_AM;
-  } else if (band == BAND_MW) {
-    frequency_AM -= temp;
-    if (frequency_AM < MWLowEdgeSet) {
-      frequency_AM = MWHighEdgeSet;
-      if (edgebeep) EdgeBeeper();
-    }
-    radio.SetFreqAM(frequency_AM);
-    frequency_MW = frequency_AM;
-  } else if (band == BAND_SW) {
-    frequency_AM -= temp;
-    if (frequency_AM < SWLowEdgeSet) {
-      frequency_AM = SWHighEdgeSet;
-      if (edgebeep) EdgeBeeper();
-    }
-    radio.SetFreqAM(frequency_AM);
-    frequency_SW = frequency_AM;
-  }
-  radio.clearRDS(fullsearchrds);
-  if (RDSSPYUSB == true) Serial.print("G:\r\nRESET-------\r\n\r\n");
-  if (RDSSPYTCP == true) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
-}
-
-void EdgeBeeper() {
-  bool x = radio.mute;
-  radio.tone(50, -5, 2000);
-  if (x) radio.setMute(); else radio.setUnMute();
-}
-
-void Seek(bool mode) {
-  if (band == BAND_FM) {
-    radio.setMute();
-    if (mode == false) TuneDown(); else TuneUp();
-    delay(50);
-    ShowFreq(0);
-    if (XDRGTKUSB == true || XDRGTKTCP == true) {
-      if (band == BAND_FM) DataPrint("T" + String(frequency * 10) + "\n"); else DataPrint("T" + String(frequency_AM) + "\n");
-    }
-    radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
-
-    if ((USN < 200) && (WAM < 230) && (OStatus < 80 && OStatus > -80) && (Squelch < SStatus || Squelch == 920)) {
-      seek = false;
       radio.setUnMute();
-      store = true;
+      if (screenmute == false) tft.drawBitmap(110, 5, Speaker, 26, 22, GreyoutColor); 
+    }
+  }
+
+  void Seek(bool mode) {
+    if (band == BAND_FM) {
+      radio.setMute();
+      if (screenmute == false) tft.drawBitmap(110, 5, Speaker, 26, 22, PrimaryColor); 
+      if (mode == false) TuneDown(); else TuneUp();
+      delay(50);
+      ShowFreq(0);
+      if (XDRGTKUSB == true || XDRGTKTCP == true) {
+        if (band == BAND_FM) DataPrint("T" + String(frequency * 10) + "\n"); else DataPrint("T" + String(frequency_AM) + "\n");
+      }
+      radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
+
+      if ((USN < 200) && (WAM < 230) && (OStatus < 80 && OStatus > -80) && (Squelch < SStatus || Squelch == 920)) {
+        seek = false;
+        radio.setUnMute();
+        if (screenmute == false) tft.drawBitmap(110, 5, Speaker, 26, 22, GreyoutColor); 
+        store = true;
+      } else {
+        seek = true;
+        if (RDSSPYUSB == true) Serial.print("G:\r\nRESET-------\r\n\r\n");
+        if (RDSSPYTCP == true) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
+      }
+    }
+  }
+
+  void SetTunerPatch() {
+    if (TEF != 101 && TEF != 102 && TEF != 205) {
+      radio.init(102);
+      uint16_t device;
+      uint16_t hw;
+      uint16_t sw;
+      radio.getIdentification(device, hw, sw);
+      TEF = highByte(hw) * 100 + highByte(sw);
+      tft.fillScreen(BackgroundColor);
+      analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+
+      if (TEF == 0) tftPrint(0, myLanguage[language][35], 150, 78, ActiveColor, ActiveColorSmooth, FONT28); else tftPrint(0, myLanguage[language][36] + String(TEF), 150, 78, ActiveColor, ActiveColorSmooth, FONT28);
+      tftPrint(0, myLanguage[language][37], 150, 108, ActiveColor, ActiveColorSmooth, FONT28);
+      EEPROM.writeByte(EE_BYTE_TEF, TEF);
+      EEPROM.commit();
+      while (true);
+      for (;;);
+    }
+  }
+
+  void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
+    switch (CurrentTheme) {
+      case 0:  // Default PE5PVB theme
+        PrimaryColor = 0xFFE0;
+        PrimaryColorSmooth = 0x10A0;
+        SecondaryColor = 0x867D;
+        SecondaryColorSmooth = 0x53F1;
+        FrequencyColor = TFT_YELLOW;
+        FrameColor = TFT_BLUE;
+        GreyoutColor = 0x38E7;
+        BackgroundColor = TFT_BLACK;
+        ActiveColor = 0xFFFF;
+        ActiveColorSmooth = 0x39E7;
+        SignificantColor = 0xF800;
+        SignificantColorSmooth = 0x7C00;
+        InsignificantColor = 0x07E0;
+        InsignificantColorSmooth = 0x0140;
+        CurrentThemeString = myLanguage[language][78];
+        break;
+      case 1:  // Cyan theme
+        PrimaryColor = 0x0F3F;
+        PrimaryColorSmooth = 0x0000;
+        SecondaryColor = 0xFFFF;
+        SecondaryColorSmooth = 0x0000;
+        FrequencyColor = 0x0F3F;
+        FrameColor = 0x0248;
+        GreyoutColor = 0x4A69;
+        BackgroundColor = 0x0000;
+        ActiveColor = 0xFFFF;
+        ActiveColorSmooth = 0x0000;
+        SignificantColor = 0xF800;
+        SignificantColorSmooth = 0x0000;
+        InsignificantColor = 0x07E0;
+        InsignificantColorSmooth = 0x0140;
+        CurrentThemeString = myLanguage[language][79];
+        break;
+      case 2:  // Crimson theme
+        PrimaryColor = 0xF8C3;
+        PrimaryColorSmooth = 0x0000;
+        SecondaryColor = 0xFFFF;
+        SecondaryColorSmooth = 0x0000;
+        FrequencyColor = 0xF8C3;
+        FrameColor = 0x3800;
+        GreyoutColor = 0x4A69;
+        BackgroundColor = 0x0000;
+        ActiveColor = 0xFFFF;
+        ActiveColorSmooth = 0x0000;
+        SignificantColor = 0xF8C3;
+        SignificantColorSmooth = 0x0000;
+        InsignificantColor = 0x07E0;
+        InsignificantColorSmooth = 0x0140;
+        CurrentThemeString = myLanguage[language][80];
+        break;
+      case 3:  // Monochrome theme
+        PrimaryColor = 0xFFFF;
+        PrimaryColorSmooth = 0x0000;
+        SecondaryColor = 0xFFFF;
+        SecondaryColorSmooth = 0x0000;
+        FrequencyColor = 0xFFFF;
+        FrameColor = 0x2965;
+        GreyoutColor = 0x4A69;
+        BackgroundColor = 0x0000;
+        ActiveColor = 0xFFFF;
+        ActiveColorSmooth = 0x0000;
+        SignificantColor = 0xFFFF;
+        SignificantColorSmooth = 0xFFFF;
+        InsignificantColor = 0xFFFF;
+        InsignificantColorSmooth = 0xFFFF;
+        CurrentThemeString = myLanguage[language][81];
+        break;
+      case 4:  // Volcano theme
+        PrimaryColor = 0xFC00;
+        PrimaryColorSmooth = 0xFFFF;
+        SecondaryColor = 0xFFFF;
+        SecondaryColorSmooth = 0xFFFF;
+        FrequencyColor = 0xFC00;
+        FrameColor = 0x2965;
+        GreyoutColor = 0x5140;
+        BackgroundColor = 0x0806;
+        ActiveColor = 0xFFFF;
+        ActiveColorSmooth = 0x0000;
+        SignificantColor = 0xFFFF;
+        SignificantColorSmooth = 0x0806;
+        InsignificantColor = 0x07E0;
+        InsignificantColorSmooth = 0x0140;
+        CurrentThemeString = myLanguage[language][82];
+        break;
+      case 5:  // Dendro theme
+        PrimaryColor = TFT_GREEN;
+        PrimaryColorSmooth = 0x0000;
+        SecondaryColor = TFT_GREEN;
+        SecondaryColorSmooth = 0x0000;
+        FrequencyColor = TFT_GREEN;
+        FrameColor = 0x0200;
+        GreyoutColor = 0x4A69;
+        BackgroundColor = 0x0000;
+        ActiveColor = 0xFFFF;
+        ActiveColorSmooth = 0x0000;
+        SignificantColor = PrimaryColor;
+        SignificantColorSmooth = 0x0000;
+        InsignificantColor = 0x07E0;
+        InsignificantColorSmooth = 0x0140;
+        CurrentThemeString = myLanguage[language][83];
+        break;
+      case 6:  // Sakura theme
+        PrimaryColor = 0xF3D5;
+        PrimaryColorSmooth = 0x0000;
+        SecondaryColor = 0xF3D5;
+        SecondaryColorSmooth = 0x0000;
+        FrequencyColor = 0xF3D5;
+        FrameColor = 0x3845;
+        GreyoutColor = 0x4A69;
+        BackgroundColor = 0x0000;
+        ActiveColor = 0xFFFF;
+        ActiveColorSmooth = 0x0000;
+        SignificantColor = 0xFFFF;
+        SignificantColorSmooth = 0x0000;
+        InsignificantColor = 0x07E0;
+        InsignificantColorSmooth = 0x0140;
+        CurrentThemeString = myLanguage[language][84];
+        break;
+      case 7:  // Whiteout theme
+        PrimaryColor = 0x0000;
+        PrimaryColorSmooth = 0xDFFC;
+        SecondaryColor = 0x0000;
+        SecondaryColorSmooth = 0xDFFC;
+        FrequencyColor = 0x18C3;
+        FrameColor = 0x630C;
+        GreyoutColor = 0x9492;
+        BackgroundColor = 0xDFFC;
+        ActiveColor = 0x0000;
+        ActiveColorSmooth = 0xDFFC;
+        SignificantColor = 0x0000;
+        SignificantColorSmooth = 0xDFFC;
+        InsignificantColor = 0x07E0;
+        InsignificantColorSmooth = 0x0140;
+        CurrentThemeString = myLanguage[language][85];
+        break;
+    }
+  }
+
+  void read_encoder() {
+    static uint8_t old_AB = 3;
+    static int8_t encval = 0;
+    static const int8_t enc_states[]  = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
+
+    old_AB <<= 2;
+
+    if (digitalRead(ROTARY_PIN_A)) old_AB |= 0x02;
+    if (digitalRead(ROTARY_PIN_B)) old_AB |= 0x01;
+    encval += enc_states[( old_AB & 0x0f )];
+
+    if (optenc == 1) {
+      if (encval > 2) {
+        if (rotarymode == true) rotary = -1; else rotary = 1;
+        encval = 0;
+      } else if (encval < -2) {
+        if (rotarymode == true) rotary = 1; else rotary = -1;
+        encval = 0;
+      }
     } else {
-      seek = true;
-      if (RDSSPYUSB == true) Serial.print("G:\r\nRESET-------\r\n\r\n");
-      if (RDSSPYTCP == true) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
+      if (encval > 3) {
+        if (rotarymode == true) rotary = -1; else rotary = 1;
+        encval = 0;
+      } else if (encval < -3) {
+        if (rotarymode == true) rotary = 1; else rotary = -1;
+        encval = 0;
+      }
     }
   }
-}
 
-void SetTunerPatch() {
-  if (TEF != 101 && TEF != 102 && TEF != 205) {
-    radio.init(102);
-    uint16_t device;
-    uint16_t hw;
-    uint16_t sw;
-    radio.getIdentification(device, hw, sw);
-    TEF = highByte(hw) * 100 + highByte(sw);
-    tft.fillScreen(BackgroundColor);
-    analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+  void tryWiFi() {
+    if (!setupmode) {
+      tft.drawRoundRect(1, 60, 319, 140, 5, ActiveColor);
+      tft.fillRoundRect(3, 62, 315, 136, 5, BackgroundColor);
+      tftPrint(0, myLanguage[language][55], 155, 88, ActiveColor, ActiveColorSmooth, FONT28);
+    }
+    if (wc.autoConnect()) {
+      Server.begin();
+      Udp.begin(9031);
+      remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
+      if (!setupmode) tftPrint(0, myLanguage[language][57], 155, 128, InsignificantColor, InsignificantColorSmooth, FONT28);
+      wifi = true;
+    } else {
+      if (!setupmode) tftPrint(0, myLanguage[language][56], 155, 128, SignificantColor, SignificantColorSmooth, FONT28);
+      wifi = false;
+      XDRGTKTCP = false;
+      RDSSPYTCP = false;
+    }
+  }
 
-    if (TEF == 0) tftPrint(0, myLanguage[language][35], 150, 78, ActiveColor, ActiveColorSmooth, FONT28); else tftPrint(0, myLanguage[language][36], 150, 78, ActiveColor, ActiveColorSmooth, FONT28);
-    tftPrint(0, myLanguage[language][37], 150, 108, ActiveColor, ActiveColorSmooth, FONT28);
-    EEPROM.writeByte(EE_BYTE_TEF, TEF);
+  void passwordcrypt() {
+    int generated = 0;
+    while (generated < 16)
+    {
+      byte randomValue = random(0, 26);
+      char letter = randomValue + 'a';
+      if (randomValue > 26) letter = (randomValue - 26);
+      saltkey.setCharAt(generated, letter);
+      generated ++;
+    }
+    salt = saltkey + XDRGTK_key;
+    cryptedpassword = String(sha1(salt));
+  }
+
+  void DefaultSettings() {
+    EEPROM.writeByte(EE_BYTE_CHECKBYTE, EE_CHECKBYTE_VALUE);
+    EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, 10000);
+    EEPROM.writeInt(EE_BYTE_VOLSET, 0);
+    EEPROM.writeUInt(EE_UINT16_CONVERTERSET, 0);
+    EEPROM.writeUInt(EE_UINT16_FMLOWEDGESET, 875);
+    EEPROM.writeUInt(EE_UINT16_FMHIGHEDGESET, 1080);
+    EEPROM.writeByte(EE_BYTE_CONTRASTSET, 50);
+    EEPROM.writeByte(EE_BYTE_STEREOLEVEL, 0);
+    EEPROM.writeByte(EE_BYTE_HIGHCUTLEVEL, 70);
+    EEPROM.writeByte(EE_BYTE_HIGHCUTOFFSET, 0);
+    EEPROM.writeInt(EE_BYTE_LEVELOFFSET, 0);
+    EEPROM.writeByte(EE_BYTE_EDGEBEEP, 0);
+    EEPROM.writeByte(EE_BYTE_SOFTMUTEAM, 0);
+    EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, 0);
+    EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, 828);
+    EEPROM.writeByte(EE_BYTE_LANGUAGE, 0);
+    EEPROM.writeByte(EE_BYTE_SHOWRDSERRORS, 1);
+    EEPROM.writeByte(EE_BYTE_TEF, 0);
+    EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 0);
+    EEPROM.writeByte(EE_BYTE_ROTARYMODE, 0);
+    EEPROM.writeByte(EE_BYTE_STEPSIZE, 0);
+    EEPROM.writeByte(EE_BYTE_TUNEMODE, 0);
+    EEPROM.writeByte(EE_BYTE_OPTENC, 0);
+    EEPROM.writeByte(EE_BYTE_IMSSET, 1);
+    EEPROM.writeByte(EE_BYTE_EQSET, 1);
+    EEPROM.writeByte(EE_BYTE_BAND, 0);
+    EEPROM.writeInt(EE_BYTE_LOWLEVELSET, -10);
+    EEPROM.writeByte(EE_BYTE_MEMORYPOS, 0);
+    EEPROM.writeByte(EE_BYTE_REGION, 0);
+    EEPROM.writeByte(EE_BYTE_RDS_UNDERSCORE, 0);
+    EEPROM.writeByte(EE_BYTE_USBMODE, 0);
+    EEPROM.writeByte(EE_BYTE_WIFI, 0);
+    EEPROM.writeByte(EE_BYTE_SUBNETCLIENT, 1);
+    EEPROM.writeByte(EE_BYTE_SHOWSWMIBAND, 1);
+    EEPROM.writeByte(EE_BYTE_RDS_FILTER, 1);
+    EEPROM.writeByte(EE_BYTE_RDS_PIERRORS, 0);
+    for (int i = 0; i < EE_PRESETS_CNT; i++) EEPROM.writeByte(i + EE_PRESETS_BAND_START, BAND_FM);
+    for (int i = 0; i < EE_PRESETS_CNT; i++) EEPROM.writeUInt((i * 4) + EE_PRESETS_START, EE_PRESETS_FREQUENCY);
+    EEPROM.writeUInt(EE_UINT16_FREQUENCY_LW, 180);
+    EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, 540);
+    EEPROM.writeUInt(EE_UINT16_FREQUENCY_SW, 1800);
+    EEPROM.writeString(EE_STRING_XDRGTK_KEY, "password");
+    EEPROM.writeByte(EE_BYTE_SHOWSQUELCH, 1);
+    EEPROM.writeByte(EE_BYTE_SHOWMODULATION, 1);
+    EEPROM.writeByte(EE_BYTE_AM_NB, 0);
+    EEPROM.writeByte(EE_BYTE_FM_NB, 0);
+    EEPROM.writeByte(EE_BYTE_AUDIOMODE, 0);
+    EEPROM.writeByte(EE_BYTE_OIRT, 0);
+    EEPROM.writeUInt(EE_UINT16_LOWEDGEOIRTSET, 0);
+    EEPROM.writeUInt(EE_UINT16_HIGHEDGEOIRTSET, 0);
+    EEPROM.writeByte(EE_BYTE_COLORINVERT, 0);
+    EEPROM.writeByte(EE_BYTE_POWEROPTIONS, 0);
+    EEPROM.writeByte(EE_BYTE_CURRENTTHEME, 0);
+    EEPROM.writeByte(EE_BYTE_FMDEFAULTSTEPSIZE, 0);
+    EEPROM.writeByte(EE_BYTE_SCREENSAVERSET, 0);
+    EEPROM.writeInt(EE_INT16_AMLEVELOFFSET, 0);
+    EEPROM.writeByte(EE_BYTE_UNIT, 0);
+    EEPROM.writeByte(EE_BYTE_AF, 0);
+    EEPROM.writeByte(EE_BYTE_STEREO, 1);
     EEPROM.commit();
-    while (true);
-    for (;;);
   }
-}
 
-void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
-  switch (CurrentTheme) {
-    case 0:  // Default PE5PVB theme
-      PrimaryColor = 0xFFE0;
-      PrimaryColorSmooth = 0x10A0;
-      SecondaryColor = 0x867D;
-      SecondaryColorSmooth = 0x53F1;
-      FrequencyColor = TFT_YELLOW;
-      FrameColor = TFT_BLUE;
-      GreyoutColor = 0x38E7;
-      BackgroundColor = TFT_BLACK;
-      ActiveColor = 0xFFFF;
-      ActiveColorSmooth = 0x4208;
-      SignificantColor = 0xF800;
-      SignificantColorSmooth = 0x7C00;
-      InsignificantColor = 0x07E0;
-      InsignificantColorSmooth = 0x0140;
-      CurrentThemeString = myLanguage[language][78];
-      break;
-    case 1:  // Cyan theme
-      PrimaryColor = 0x0F3F;
-      PrimaryColorSmooth = 0x0000;
-      SecondaryColor = 0xFFFF;
-      SecondaryColorSmooth = 0x0000;
-      FrequencyColor = 0x0F3F;
-      FrameColor = 0x0248;
-      GreyoutColor = 0x4A69;
-      BackgroundColor = 0x0000;
-      ActiveColor = 0xFFFF;
-      ActiveColorSmooth = 0x0000;
-      SignificantColor = 0xF800;
-      SignificantColorSmooth = 0x0000;
-      InsignificantColor = 0x07E0;
-      InsignificantColorSmooth = 0x0140;
-      CurrentThemeString = myLanguage[language][79];
-      break;
-    case 2:  // Crimson theme
-      PrimaryColor = 0xF8C3;
-      PrimaryColorSmooth = 0x0000;
-      SecondaryColor = 0xFFFF;
-      SecondaryColorSmooth = 0x0000;
-      FrequencyColor = 0xF8C3;
-      FrameColor = 0x3800;
-      GreyoutColor = 0x4A69;
-      BackgroundColor = 0x0000;
-      ActiveColor = 0xFFFF;
-      ActiveColorSmooth = 0x0000;
-      SignificantColor = 0xF8C3;
-      SignificantColorSmooth = 0x0000;
-      InsignificantColor = 0x07E0;
-      InsignificantColorSmooth = 0x0140;
-      CurrentThemeString = myLanguage[language][80];
-      break;
-    case 3:  // Monochrome theme
-      PrimaryColor = 0xFFFF;
-      PrimaryColorSmooth = 0x0000;
-      SecondaryColor = 0xFFFF;
-      SecondaryColorSmooth = 0x0000;
-      FrequencyColor = 0xFFFF;
-      FrameColor = 0x2965;
-      GreyoutColor = 0x4A69;
-      BackgroundColor = 0x0000;
-      ActiveColor = 0xFFFF;
-      ActiveColorSmooth = 0x0000;
-      SignificantColor = 0xFFFF;
-      SignificantColorSmooth = 0xFFFF;
-      InsignificantColor = 0xFFFF;
-      InsignificantColorSmooth = 0xFFFF;
-      CurrentThemeString = myLanguage[language][81];
-      break;
-    case 4:  // Volcano theme
-      PrimaryColor = 0xFC00;
-      PrimaryColorSmooth = 0xFFFF;
-      SecondaryColor = 0xFFFF;
-      SecondaryColorSmooth = 0xFFFF;
-      FrequencyColor = 0xFC00;
-      FrameColor = 0x2965;
-      GreyoutColor = 0x5140;
-      BackgroundColor = 0x0806;
-      ActiveColor = 0xFFFF;
-      ActiveColorSmooth = 0x0000;
-      SignificantColor = 0xFFFF;
-      SignificantColorSmooth = 0x0806;
-      InsignificantColor = 0x07E0;
-      InsignificantColorSmooth = 0x0140;
-      CurrentThemeString = myLanguage[language][82];
-      break;
-    case 5:  // Dendro theme
-      PrimaryColor = TFT_GREEN;
-      PrimaryColorSmooth = 0x0000;
-      SecondaryColor = TFT_GREEN;
-      SecondaryColorSmooth = 0x0000;
-      FrequencyColor = TFT_GREEN;
-      FrameColor = 0x0200;
-      GreyoutColor = 0x4A69;
-      BackgroundColor = 0x0000;
-      ActiveColor = 0xFFFF;
-      ActiveColorSmooth = 0x0000;
-      SignificantColor = PrimaryColor;
-      SignificantColorSmooth = 0x0000;
-      InsignificantColor = 0x07E0;
-      InsignificantColorSmooth = 0x0140;
-      CurrentThemeString = myLanguage[language][83];
-      break;
-    case 6:  // Sakura theme
-      PrimaryColor = 0xF3D5;
-      PrimaryColorSmooth = 0x0000;
-      SecondaryColor = 0xF3D5;
-      SecondaryColorSmooth = 0x0000;
-      FrequencyColor = 0xF3D5;
-      FrameColor = 0x3845;
-      GreyoutColor = 0x4A69;
-      BackgroundColor = 0x0000;
-      ActiveColor = 0xFFFF;
-      ActiveColorSmooth = 0x0000;
-      SignificantColor = 0xFFFF;
-      SignificantColorSmooth = 0x0000;
-      InsignificantColor = 0x07E0;
-      InsignificantColorSmooth = 0x0140;
-      CurrentThemeString = myLanguage[language][84];
-      break;
-    case 7:  // Whiteout theme
-      PrimaryColor = 0x0000;
-      PrimaryColorSmooth = 0xDFFC;
-      SecondaryColor = 0x0000;
-      SecondaryColorSmooth = 0xDFFC;
-      FrequencyColor = 0x18C3;
-      FrameColor = 0x630C;
-      GreyoutColor = 0x9492;
-      BackgroundColor = 0xDFFC;
-      ActiveColor = 0x0000;
-      ActiveColorSmooth = 0xDFFC;
-      SignificantColor = 0x0000;
-      SignificantColorSmooth = 0xDFFC;
-      InsignificantColor = 0x07E0;
-      InsignificantColorSmooth = 0x0140;
-      CurrentThemeString = myLanguage[language][85];
-      break;
-  }
-}
-
-void read_encoder() {
-  static uint8_t old_AB = 3;
-  static int8_t encval = 0;
-  static const int8_t enc_states[]  = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
-
-  old_AB <<= 2;
-
-  if (digitalRead(ROTARY_PIN_A)) old_AB |= 0x02;
-  if (digitalRead(ROTARY_PIN_B)) old_AB |= 0x01;
-  encval += enc_states[( old_AB & 0x0f )];
-
-  if (optenc == 1) {
-    if (encval > 2) {
-      if (rotarymode == true) rotary = -1; else rotary = 1;
-      encval = 0;
-    } else if (encval < -2) {
-      if (rotarymode == true) rotary = 1; else rotary = -1;
-      encval = 0;
+  void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, const uint8_t* font) {
+    tft.loadFont(font);
+    tft.setTextColor(color, smoothcolor, false);
+    switch (offset) {
+      case -1: tft.setTextDatum(TL_DATUM); break;
+      case 0: tft.setTextDatum(TC_DATUM); break;
+      case 1: tft.setTextDatum(TR_DATUM); break;
     }
-  } else {
-    if (encval > 3) {
-      if (rotarymode == true) rotary = -1; else rotary = 1;
-      encval = 0;
-    } else if (encval < -3) {
-      if (rotarymode == true) rotary = 1; else rotary = -1;
-      encval = 0;
+    tft.drawString(text, x, y, 1);
+    tft.unloadFont();
+  }
+
+  void tftReplace(int8_t offset, const String & textold, const String & text, int16_t x, int16_t y, int color, int smoothcolor, const uint8_t* font) {
+    tft.loadFont(font);
+    tft.setTextColor(BackgroundColor, BackgroundColor, false);
+    switch (offset) {
+      case -1: tft.setTextDatum(TL_DATUM); break;
+      case 0: tft.setTextDatum(TC_DATUM); break;
+      case 1: tft.setTextDatum(TR_DATUM); break;
     }
+    tft.drawString(textold, x, y);
+    tft.setTextColor(color, smoothcolor, false);
+    switch (offset) {
+      case -1: tft.setTextDatum(TL_DATUM); break;
+      case 0: tft.setTextDatum(TC_DATUM); break;
+      case 1: tft.setTextDatum(TR_DATUM); break;
+    }
+    tft.drawString(text, x, y);
+    tft.unloadFont();
   }
-}
-
-void tryWiFi() {
-  if (!setupmode) {
-    tft.drawRoundRect(1, 60, 319, 140, 5, ActiveColor);
-    tft.fillRoundRect(3, 62, 315, 136, 5, BackgroundColor);
-    tftPrint(0, myLanguage[language][55], 155, 88, ActiveColor, ActiveColorSmooth, FONT28);
-  }
-  if (wc.autoConnect()) {
-    Server.begin();
-    Udp.begin(9031);
-    remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
-    if (!setupmode) tftPrint(0, myLanguage[language][57], 155, 128, InsignificantColor, InsignificantColorSmooth, FONT28);
-    wifi = true;
-  } else {
-    Server.end();
-    Udp.stop();
-    if (!setupmode) tftPrint(0, myLanguage[language][56], 155, 128, SignificantColor, SignificantColorSmooth, FONT28);
-    wifi = false;
-    XDRGTKTCP = false;
-    RDSSPYTCP = false;
-  }
-}
-
-void passwordcrypt() {
-  int generated = 0;
-  while (generated < 16)
-  {
-    byte randomValue = random(0, 26);
-    char letter = randomValue + 'a';
-    if (randomValue > 26) letter = (randomValue - 26);
-    saltkey.setCharAt(generated, letter);
-    generated ++;
-  }
-  salt = saltkey + XDRGTK_key;
-  cryptedpassword = String(sha1(salt));
-}
-
-void DefaultSettings() {
-  EEPROM.writeByte(EE_BYTE_CHECKBYTE, EE_CHECKBYTE_VALUE);
-  EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, 10000);
-  EEPROM.writeInt(EE_BYTE_VOLSET, 0);
-  EEPROM.writeUInt(EE_UINT16_CONVERTERSET, 0);
-  EEPROM.writeUInt(EE_UINT16_FMLOWEDGESET, 875);
-  EEPROM.writeUInt(EE_UINT16_FMHIGHEDGESET, 1080);
-  EEPROM.writeByte(EE_BYTE_CONTRASTSET, 50);
-  EEPROM.writeByte(EE_BYTE_STEREOLEVEL, 0);
-  EEPROM.writeByte(EE_BYTE_HIGHCUTLEVEL, 70);
-  EEPROM.writeByte(EE_BYTE_HIGHCUTOFFSET, 0);
-  EEPROM.writeInt(EE_BYTE_LEVELOFFSET, 0);
-  EEPROM.writeByte(EE_BYTE_EDGEBEEP, 0);
-  EEPROM.writeByte(EE_BYTE_SOFTMUTEAM, 0);
-  EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, 0);
-  EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, 828);
-  EEPROM.writeByte(EE_BYTE_LANGUAGE, 0);
-  EEPROM.writeByte(EE_BYTE_SHOWRDSERRORS, 1);
-  EEPROM.writeByte(EE_BYTE_TEF, 0);
-  EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 0);
-  EEPROM.writeByte(EE_BYTE_ROTARYMODE, 0);
-  EEPROM.writeByte(EE_BYTE_STEPSIZE, 0);
-  EEPROM.writeByte(EE_BYTE_TUNEMODE, 0);
-  EEPROM.writeByte(EE_BYTE_OPTENC, 0);
-  EEPROM.writeByte(EE_BYTE_IMSSET, 1);
-  EEPROM.writeByte(EE_BYTE_EQSET, 1);
-  EEPROM.writeByte(EE_BYTE_BAND, 0);
-  EEPROM.writeInt(EE_BYTE_LOWLEVELSET, -10);
-  EEPROM.writeByte(EE_BYTE_MEMORYPOS, 0);
-  EEPROM.writeByte(EE_BYTE_REGION, 0);
-  EEPROM.writeByte(EE_BYTE_RDS_UNDERSCORE, 0);
-  EEPROM.writeByte(EE_BYTE_USBMODE, 0);
-  EEPROM.writeByte(EE_BYTE_WIFI, 0);
-  EEPROM.writeByte(EE_BYTE_SUBNETCLIENT, 1);
-  EEPROM.writeByte(EE_BYTE_SHOWSWMIBAND, 1);
-  EEPROM.writeByte(EE_BYTE_RDS_FILTER, 1);
-  EEPROM.writeByte(EE_BYTE_RDS_PIERRORS, 0);
-  for (int i = 0; i < EE_PRESETS_CNT; i++) EEPROM.writeByte(i + EE_PRESETS_BAND_START, BAND_FM);
-  for (int i = 0; i < EE_PRESETS_CNT; i++) EEPROM.writeUInt((i * 4) + EE_PRESETS_START, EE_PRESETS_FREQUENCY);
-  EEPROM.writeUInt(EE_UINT16_FREQUENCY_LW, 180);
-  EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, 540);
-  EEPROM.writeUInt(EE_UINT16_FREQUENCY_SW, 1800);
-  EEPROM.writeString(EE_STRING_XDRGTK_KEY, "password");
-  EEPROM.writeByte(EE_BYTE_SHOWSQUELCH, 1);
-  EEPROM.writeByte(EE_BYTE_SHOWMODULATION, 1);
-  EEPROM.writeByte(EE_BYTE_AM_NB, 0);
-  EEPROM.writeByte(EE_BYTE_FM_NB, 0);
-  EEPROM.writeByte(EE_BYTE_AUDIOMODE, 0);
-  EEPROM.writeByte(EE_BYTE_OIRT, 0);
-  EEPROM.writeUInt(EE_UINT16_LOWEDGEOIRTSET, 0);
-  EEPROM.writeUInt(EE_UINT16_HIGHEDGEOIRTSET, 0);
-  EEPROM.writeByte(EE_BYTE_COLORINVERT, 0);
-  EEPROM.writeByte(EE_BYTE_POWEROPTIONS, 0);
-  EEPROM.writeByte(EE_BYTE_CURRENTTHEME, 0);
-  EEPROM.writeByte(EE_BYTE_FMDEFAULTSTEPSIZE, 0);
-  EEPROM.writeByte(EE_BYTE_SCREENSAVERSET, 0);
-  EEPROM.writeInt(EE_INT16_AMLEVELOFFSET, 0);
-  EEPROM.writeByte(EE_BYTE_UNIT, 0);
-  EEPROM.writeByte(EE_BYTE_AF, 0);
-  EEPROM.writeByte(EE_BYTE_STEREO, 1);
-  EEPROM.commit();
-}
-
-void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, const uint8_t* font) {
-  tft.loadFont(font);
-  tft.setTextColor(color, smoothcolor, false);
-  switch (offset) {
-    case -1: tft.setTextDatum(TL_DATUM); break;
-    case 0: tft.setTextDatum(TC_DATUM); break;
-    case 1: tft.setTextDatum(TR_DATUM); break;
-  }
-  tft.drawString(text, x, y, 1);
-  tft.unloadFont();
-}
-
-void tftReplace(int8_t offset, const String & textold, const String & text, int16_t x, int16_t y, int color, int smoothcolor, const uint8_t* font) {
-  tft.loadFont(font);
-  tft.setTextColor(BackgroundColor, BackgroundColor, false);
-  switch (offset) {
-    case -1: tft.setTextDatum(TL_DATUM); break;
-    case 0: tft.setTextDatum(TC_DATUM); break;
-    case 1: tft.setTextDatum(TR_DATUM); break;
-  }
-  tft.drawString(textold, x, y);
-  tft.setTextColor(color, smoothcolor, false);
-  switch (offset) {
-    case -1: tft.setTextDatum(TL_DATUM); break;
-    case 0: tft.setTextDatum(TC_DATUM); break;
-    case 1: tft.setTextDatum(TR_DATUM); break;
-  }
-  tft.drawString(text, x, y);
-  tft.unloadFont();
-}
