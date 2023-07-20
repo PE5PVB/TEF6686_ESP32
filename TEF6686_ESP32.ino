@@ -3593,6 +3593,10 @@ void BuildAFScreen() {
     tft.drawLine(0, 30, 320, 30, FrameColor);
     tft.drawLine(0, 218, 320, 218, FrameColor);
     tft.drawLine(180, 30, 180, 218, FrameColor);
+    tft.drawLine(108, 30, 108, 0, FrameColor);
+    tft.drawLine(137, 30, 137, 0, FrameColor);
+    tft.drawLine(174, 30, 174, 0, FrameColor);
+    tft.drawLine(268, 30, 268, 0, FrameColor);
     tftPrint(-1, "kHz", 220, 4, ActiveColor, ActiveColorSmooth, FONT28);
     tftPrint(-1, "AF:", 4, 32, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(-1, "PI:", 184, 32, ActiveColor, ActiveColorSmooth, FONT16);
@@ -3633,9 +3637,10 @@ void BuildAdvancedRDS() {
     tft.drawLine(0, 128, 320, 128, FrameColor);
     tft.drawLine(64, 30, 64, 0, FrameColor);
     tft.drawLine(210, 30, 210, 240, FrameColor);
-    tft.drawLine(268, 30, 268, 0, FrameColor);
     tft.drawLine(108, 30, 108, 0, FrameColor);
+    tft.drawLine(137, 30, 137, 0, FrameColor);
     tft.drawLine(174, 30, 174, 0, FrameColor);
+    tft.drawLine(268, 30, 268, 0, FrameColor);
     tft.drawLine(0, 143, 210, 143, FrameColor);
     tft.drawLine(0, 168, 210, 168, FrameColor);
     tft.drawLine(0, 193, 320, 193, FrameColor);
@@ -4203,18 +4208,18 @@ void doSquelch() {
     if (showsquelch && !advancedRDS && !afscreen) {
       if (seek == false && menu == false && Squelch != Squelchold) {
         if (Squelchold == -100) {
-          tftPrint(0, myLanguage[language][33], 224, 170, BackgroundColor, BackgroundColor, FONT16);
+          if (Squelch != Squelchold) tftPrint(0, myLanguage[language][33], 224, 170, BackgroundColor, BackgroundColor, FONT16);
         } else if (Squelchold == 920) {
-          tftPrint(0, "ST", 224, 170, BackgroundColor, BackgroundColor, FONT16);
+          if (Squelch != Squelchold) tftPrint(0, "ST", 224, 170, BackgroundColor, BackgroundColor, FONT16);
         } else {
-          tftPrint(0, String(Squelchold / 10), 224, 170, BackgroundColor, BackgroundColor, FONT16);
+          if (Squelch != Squelchold) tftPrint(0, String(Squelchold / 10), 224, 170, BackgroundColor, BackgroundColor, FONT16);
         }
         if (Squelch == -100) {
-          tftPrint(0, myLanguage[language][33], 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
+          if (Squelch != Squelchold) tftPrint(0, myLanguage[language][33], 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
         } else if (Squelch == 920) {
           tftPrint(0, "ST", 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
         } else {
-          tftPrint(0, String(Squelch / 10), 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
+          if (Squelch != Squelchold) tftPrint(0, String(Squelch / 10), 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
         }
       }
       Squelchold = Squelch;
@@ -4246,18 +4251,18 @@ void doSquelch() {
       if (screenmute == false && showsquelch == true && !advancedRDS && !afscreen) {
         if (Squelch != Squelchold) {
           if (Squelchold == -1) {
-            tftPrint(0, "ST", 224, 170, BackgroundColor, BackgroundColor, FONT16);
+            if (Squelch != Squelchold) tftPrint(0, "ST", 224, 170, BackgroundColor, BackgroundColor, FONT16);
           } else if (Squelchold == 0) {
-            tftPrint(0, myLanguage[language][33], 224, 170, BackgroundColor, BackgroundColor, FONT16);
+            if (Squelch != Squelchold) tftPrint(0, myLanguage[language][33], 224, 170, BackgroundColor, BackgroundColor, FONT16);
           } else {
-            tftPrint(0, String(Squelchold / 10), 224, 170, BackgroundColor, BackgroundColor, FONT16);
+            if (Squelch != Squelchold) tftPrint(0, String(Squelchold / 10), 224, 170, BackgroundColor, BackgroundColor, FONT16);
           }
           if (Squelch == -1) {
-            tftPrint(0, "ST", 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
+            if (Squelch != Squelchold) tftPrint(0, "ST", 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
           } else if (Squelch == 0) {
-            tftPrint(0, myLanguage[language][33], 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
+            if (Squelch != Squelchold) tftPrint(0, myLanguage[language][33], 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
           } else {
-            tftPrint(0, String(Squelch / 10), 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
+            if (Squelch != Squelchold) tftPrint(0, String(Squelch / 10), 224, 170, PrimaryColor, PrimaryColorSmooth, FONT16);
           }
           Squelchold = Squelch;
         }
@@ -4286,7 +4291,6 @@ void doSquelch() {
       }
     }
   }
-  Squelchold = Squelch;
 }
 
 void updateBW() {
