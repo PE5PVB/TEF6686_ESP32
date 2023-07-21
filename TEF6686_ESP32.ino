@@ -609,7 +609,7 @@ void setup() {
 }
 
 void loop() {
-  if (digitalRead(BANDBUTTON) == LOW && XDRGTKUSB == false && XDRGTKTCP == false) BANDBUTTONPress();
+  if (digitalRead(BANDBUTTON) == LOW ) BANDBUTTONPress();
 
   if (power == true) {
     Communication();
@@ -1409,7 +1409,7 @@ void doStereoToggle() {
       tft.drawSmoothCircle(81, 15, 9, BackgroundColor, BackgroundColor);
       tft.drawSmoothCircle(91, 15, 10, BackgroundColor, BackgroundColor);
       tft.drawSmoothCircle(91, 15, 9, BackgroundColor, BackgroundColor);
-      tft.drawSmoothCircle(86, 15, 10, SecondaryColor,SecondaryColorSmooth);
+      tft.drawSmoothCircle(86, 15, 10, SecondaryColor, SecondaryColorSmooth);
       tft.drawSmoothCircle(86, 15, 9, SecondaryColor, SecondaryColorSmooth);
     }
     radio.setMono(true);
@@ -4996,6 +4996,8 @@ void XDRGTKRoutine() {
         radio.clearRDS(fullsearchrds);
         RDSstatus = false;
         store = true;
+        aftest = true;
+        aftimer = millis();
         break;
 
       case 'Q':
@@ -5020,7 +5022,6 @@ void XDRGTKRoutine() {
           scanner_filter = atol(buff + 2);
         } else if (scanner_start > 0 && scanner_end > 0 && scanner_step > 0 && scanner_filter >= 0) {
           frequencyold = frequency;
-          radio.SetFreq(scanner_start);
           DataPrint("U");
           if (scanner_filter < 0) {
             BWset = 0;
@@ -5059,26 +5060,21 @@ void XDRGTKRoutine() {
           }
           doBW();
           if (screenmute == false) {
-            ShowFreq(1);
-            tftPrint(0, myLanguage[language][34], 140, 68, ActiveColor, ActiveColorSmooth, FONT28);
+            tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
+            tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
+            tftPrint(0, myLanguage[language][34], 160, 100, ActiveColor, ActiveColorSmooth, FONT28);
           }
           frequencyold = frequency;
           for (freq_scan = scanner_start; freq_scan <= scanner_end; freq_scan += scanner_step) {
-            radio.SetFreq(freq_scan);
             DataPrint(String(freq_scan * 10, DEC));
             DataPrint(" = ");
-            delay(10);
             if (band == BAND_FM) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR); else  radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
-            DataPrint(String((SStatus / 10) + 10, DEC));
+            DataPrint(String((radio.CheckSignal(freq_scan) / 10) + 10, DEC));
             DataPrint(", ");
           }
           DataPrint("\n");
-          if (screenmute == false) {
-            tft.setTextColor(BackgroundColor);
-            tftPrint(0, myLanguage[language][34], 140, 68, InsignificantColor, InsignificantColorSmooth, FONT28);
-          }
           radio.SetFreq(frequencyold);
-          ShowFreq(0);
+          BuildDisplay();
           radio.setFMABandw();
           BWset = 0;
         }

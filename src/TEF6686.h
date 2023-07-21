@@ -175,6 +175,7 @@ class TEF6686 {
     eon_ eon[20];
     rds_ rds;
     logbook_ logbook[22];
+	uint16_t CheckSignal(uint16_t frequency);
     uint16_t TestAF();
     void TestAFEON();
     void readRDS(bool showrdserrors);
