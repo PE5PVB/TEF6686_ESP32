@@ -3474,9 +3474,8 @@ void BuildMenu() {
 
       tftPrint(1, "KHz", 305, 96, ActiveColor, ActiveColorSmooth, FONT16);
       tftPrint(1, "dB", 305, 136, ActiveColor, ActiveColorSmooth, FONT16);
-      if (screensaverset) tftPrint(1, myLanguage[language][92], 305, 116, ActiveColor, ActiveColorSmooth, FONT16);
+      if (screensaverset) tftPrint(1, myLanguage[language][92], 305, 116, ActiveColor, ActiveColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 116, PrimaryColor, PrimaryColorSmooth, FONT16);
       tftPrint(1, CurrentThemeString, 305, 36, PrimaryColor, PrimaryColorSmooth, FONT16);
-
       switch (poweroptions) {
         case DEEP_SLEEP: tftPrint(1, myLanguage[language][75], 305, 76, PrimaryColor, PrimaryColorSmooth, FONT16); break;
         case LCD_OFF: tftPrint(1, myLanguage[language][76], 305, 76, PrimaryColor, PrimaryColorSmooth, FONT16); break;
@@ -3486,7 +3485,7 @@ void BuildMenu() {
       }
 
       if (fmdefaultstepsize) tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 265, 96, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 265, 96, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (screensaverset) tftPrint(1, myLanguage[language][42], 305, 116, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 116, PrimaryColor, PrimaryColorSmooth, FONT16);
+      if (screensaverset) tftPrint(1, String(screensaverOptions[screensaverset], DEC), 265, 116, PrimaryColor, PrimaryColorSmooth, FONT16);
       if (AMLevelOffset > 0) tftPrint(1, "+" + String(AMLevelOffset, DEC), 265, 136, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, String(AMLevelOffset, DEC), 265, 136, PrimaryColor, PrimaryColorSmooth, FONT16);
       if (af) tftPrint(1, myLanguage[language][42], 305, 176, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 176, PrimaryColor, PrimaryColorSmooth, FONT16);
       tftPrint(1, unitString[unit], 305, 156, PrimaryColor, PrimaryColorSmooth, FONT16);
