@@ -1069,10 +1069,10 @@ void DivdeSWMIBand() {
   }
 }
 
-void ToggleSWMIBand(bool plus) {
+void ToggleSWMIBand(bool frequencyup) {
   switch (SWMIBandPosold) {
     case SW_MI_BAND_GAP:
-      if (plus) {
+      if (frequencyup) {
         SWMIBandPos = SW_MI_BAND_160M;
         SWMIBandPosold = SWMIBandPos;
         frequency_AM = FREQ_SW_160M_START;
@@ -1085,7 +1085,7 @@ void ToggleSWMIBand(bool plus) {
       frequency_SW = frequency_AM;
       break;
     case SW_MI_BAND_11M:
-      if (plus) {
+      if (frequencyup) {
         SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
         SWMIBandPos = SW_MI_BAND_160M;
         SWMIBandPosold = SWMIBandPos;
@@ -1102,7 +1102,7 @@ void ToggleSWMIBand(bool plus) {
       frequency_SW = frequency_AM;
       break;
     case SW_MI_BAND_13M:
-      if (plus) {
+      if (frequencyup) {
         SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
         SWMIBandPos = SW_MI_BAND_11M;
         SWMIBandPosold = SWMIBandPos;
@@ -1119,7 +1119,7 @@ void ToggleSWMIBand(bool plus) {
       frequency_SW = frequency_AM;
       break;
     case SW_MI_BAND_15M:
-      if (plus) {
+      if (frequencyup) {
         SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
         SWMIBandPos = SW_MI_BAND_13M;
         SWMIBandPosold = SWMIBandPos;
@@ -1136,7 +1136,7 @@ void ToggleSWMIBand(bool plus) {
       frequency_SW = frequency_AM;
       break;
     case SW_MI_BAND_16M:
-      if (plus) {
+      if (frequencyup) {
         SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
         SWMIBandPos = SW_MI_BAND_15M;
         SWMIBandPosold = SWMIBandPos;
@@ -1153,7 +1153,7 @@ void ToggleSWMIBand(bool plus) {
       frequency_SW = frequency_AM;
       break;
     case SW_MI_BAND_19M:
-      if (plus) {
+      if (frequencyup) {
         SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
         SWMIBandPos = SW_MI_BAND_16M;
         SWMIBandPosold = SWMIBandPos;
@@ -1170,7 +1170,7 @@ void ToggleSWMIBand(bool plus) {
       frequency_SW = frequency_AM;
       break;
     case SW_MI_BAND_22M:
-      if (plus) {
+      if (frequencyup) {
         SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
         SWMIBandPos = SW_MI_BAND_19M;
         SWMIBandPosold = SWMIBandPos;
@@ -1187,7 +1187,7 @@ void ToggleSWMIBand(bool plus) {
       frequency_SW = frequency_AM;
       break;
     case SW_MI_BAND_25M:
-      if (plus) {
+      if (frequencyup) {
         SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
         SWMIBandPos = SW_MI_BAND_22M;
         SWMIBandPosold = SWMIBandPos;
@@ -1204,7 +1204,7 @@ void ToggleSWMIBand(bool plus) {
       frequency_SW = frequency_AM;
       break;
     case SW_MI_BAND_31M:
-      if (plus) {
+      if (frequencyup) {
         SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
         SWMIBandPos = SW_MI_BAND_25M;
         SWMIBandPosold = SWMIBandPos;
@@ -1221,7 +1221,7 @@ void ToggleSWMIBand(bool plus) {
       frequency_SW = frequency_AM;
       break;
     case SW_MI_BAND_41M:
-      if (plus) {
+      if (frequencyup) {
         SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
         SWMIBandPos = SW_MI_BAND_31M;
         SWMIBandPosold = SWMIBandPos;
@@ -1238,7 +1238,7 @@ void ToggleSWMIBand(bool plus) {
       frequency_SW = frequency_AM;
       break;
     case SW_MI_BAND_49M:
-      if (plus) {
+      if (frequencyup) {
         SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
         SWMIBandPos = SW_MI_BAND_41M;
         SWMIBandPosold = SWMIBandPos;
@@ -1255,7 +1255,7 @@ void ToggleSWMIBand(bool plus) {
       frequency_SW = frequency_AM;
       break;
     case SW_MI_BAND_60M:
-      if (plus) {
+      if (frequencyup) {
         SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
         SWMIBandPos = SW_MI_BAND_49M;
         SWMIBandPosold = SWMIBandPos;
@@ -1272,7 +1272,7 @@ void ToggleSWMIBand(bool plus) {
       frequency_SW = frequency_AM;
       break;
     case SW_MI_BAND_75M:
-      if (plus) {
+      if (frequencyup) {
         SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
         SWMIBandPos = SW_MI_BAND_60M;
         SWMIBandPosold = SWMIBandPos;
@@ -1289,7 +1289,7 @@ void ToggleSWMIBand(bool plus) {
       frequency_SW = frequency_AM;
       break;
     case SW_MI_BAND_90M:
-      if (plus) {
+      if (frequencyup) {
         SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
         SWMIBandPos = SW_MI_BAND_75M;
         SWMIBandPosold = SWMIBandPos;
@@ -1306,7 +1306,7 @@ void ToggleSWMIBand(bool plus) {
       frequency_SW = frequency_AM;
       break;
     case SW_MI_BAND_120M:
-      if (plus) {
+      if (frequencyup) {
         SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
         SWMIBandPos = SW_MI_BAND_90M;
         SWMIBandPosold = SWMIBandPos;
@@ -1323,7 +1323,7 @@ void ToggleSWMIBand(bool plus) {
       frequency_SW = frequency_AM;
       break;
     case SW_MI_BAND_160M:
-      if (plus) {
+      if (frequencyup) {
         SWMIBandstringold = (String) "" + SWMIBandPosold + " m";
         SWMIBandPos = SW_MI_BAND_120M;
         SWMIBandPosold = SWMIBandPos;
@@ -2024,9 +2024,9 @@ void KeyUp() {
         case TUNE_MI_BAND:
           if (showSWMIBand) {
             if (displayflip) {
-              ToggleSWMIBand(false);
-            } else {
               ToggleSWMIBand(true);
+            } else {
+              ToggleSWMIBand(REVERSE);
             }
           }
           break;
@@ -2410,9 +2410,9 @@ void KeyDown() {
         case TUNE_MI_BAND:
           if (showSWMIBand) {
             if (displayflip) {
-              ToggleSWMIBand(true);
+              ToggleSWMIBand(REVERSE);
             } else {
-              ToggleSWMIBand(false);
+              ToggleSWMIBand(true);
             }
           }
           break;
@@ -4386,6 +4386,7 @@ void updateSWMIBand() {
     case SW_MI_BAND_120M:
     case SW_MI_BAND_160M:
       tftReplace(-1, SWMIBandstringold, SWMIBandstring, 50, 51, PrimaryColor, PrimaryColorSmooth, FONT16);
+      if (!SWMIBandstring.equals(SWMIBandstringold)) SWMIBandstringold = SWMIBandstring;
       break;
 
     case SW_MI_BAND_GAP:
