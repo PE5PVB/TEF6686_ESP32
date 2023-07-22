@@ -756,7 +756,7 @@ static const char* const myLanguage[15][100] = {
     "Zobrazit chyby v RDS", // 38
     "Jazyk", // 39
     "Vyberte jazyk", // 40
-    "ZMÁČKNĚTE MODE PRO VYPNUTÍ A ULOŽENÍ", // 41
+    "ZMÁČKNĚTE MODE PRO ULOŽENÍ", // 41
     "Zap", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
@@ -858,7 +858,7 @@ static const char* const myLanguage[15][100] = {
     "Zobraziť chyby v RDS", // 38
     "Jazyk", // 39
     "Vyberte jazyk", // 40
-    "STLAČTE MODE PRE VYPNUTIE A ULOŽENIE", // 41
+    "STLAČTE MODE PRE ULOŽENIE", // 41
     "Zap", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
