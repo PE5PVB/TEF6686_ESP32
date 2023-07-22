@@ -51,22 +51,21 @@ void TEF6686::TestAFEON() {
 }
 
 uint16_t TEF6686::CheckSignal(uint16_t frequency) {
-	uint16_t status;
-	uint16_t rdsStat;
-	uint16_t dummy1;
-	uint16_t dummy2;
-	uint8_t dummy3;
-	int16_t level;
-	uint16_t usn;
-	uint16_t wam;
-	int16_t offset;
-	byte timing = 0;
-	devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 3, frequency);
-    while (timing == 0 && !bitRead(timing, 15)) {
-		devTEF_Radio_Get_Quality_Status(&status, &level, &usn, &wam, &offset, &dummy1, &dummy2, &dummy3);
-		timing = lowByte(status);
-	}
-	return level;
+  uint16_t status;
+  uint16_t dummy1;
+  uint16_t dummy2;
+  uint8_t dummy3;
+  int16_t level;
+  uint16_t usn;
+  uint16_t wam;
+  int16_t offset;
+  byte timing = 0;
+  devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 3, frequency);
+  while (timing == 0 && !bitRead(timing, 15)) {
+    devTEF_Radio_Get_Quality_Status(&status, &level, &usn, &wam, &offset, &dummy1, &dummy2, &dummy3);
+    timing = lowByte(status);
+  }
+  return level;
 }
 
 uint16_t TEF6686::TestAF() {
@@ -880,6 +879,16 @@ void TEF6686::clearRDS (bool fullsearchrds)
     eon[i].checked = false;
     for (int y = 0; y < 5; y++) {
       eon[i].picode[y] = '\0';
+    }
+    for (int j = 0; j < 9; j++) {
+      EONPStext[i][j] = L'\0';
+    }
+  }
+
+  for (i = 0; i < 9; i++) {
+    for (int y = 0; y < 5; y++) {
+      eon_buffer[i][y] = '\0';
+      eon_buffer2[i][y] = '\0';
     }
   }
 
