@@ -56,8 +56,8 @@ static const char* const myLanguage[15][100] = {
     "Configure Wi-Fi", // 52
     "Connect to: ", // 53
     "to configure Wi-Fi", // 54
-    "Trying to connect with Wi-Fi", // 55
-    "FAILED.. WiFi disabled", // 56
+    "Trying to connect Wi-Fi", // 55
+    "FAILED!", // 56
     "CONNECTED!", // 57
     "Stationlist client IP", // 58
     "Show SW wavelength", // 59
@@ -159,7 +159,7 @@ static const char* const myLanguage[15][100] = {
     "Verbind met: ", // 53
     "om Wi-Fi in te stellen", // 54
     "Verbinden met Wi-Fi...", // 55
-    "MISLUKT! WiFi uitgeschakeld", // 56
+    "MISLUKT!", // 56
     "VERBONDEN!", // 57
     "Stationlist client IP", // 58
     "Toon SW golflengte", // 59
@@ -566,8 +566,8 @@ static const char* const myLanguage[15][100] = {
     "Configure Wi-Fi", // 52
     "Connect to: ", // 53
     "to configure Wi-Fi", // 54
-    "Trying to connect with Wi-Fi", // 55
-    "FAILED.. WiFi disabled", // 56
+    "Trying to connect Wi-Fi", // 55
+    "FAILED!", // 56
     "CONNECTED!", // 57
     "Stationlist client IP", // 58
     "Show SW wavelength", // 59
@@ -770,8 +770,8 @@ static const char* const myLanguage[15][100] = {
     "Configure Wi-Fi", // 52
     "Connect to: ", // 53
     "to configure Wi-Fi", // 54
-    "Trying to connect with Wi-Fi", // 55
-    "FAILED.. WiFi disabled", // 56
+    "Trying to connect Wi-Fi", // 55
+    "FAILED!", // 56
     "CONNECTED!", // 57
     "Stationlist client IP", // 58
     "Show SW wavelength", // 59
@@ -872,8 +872,8 @@ static const char* const myLanguage[15][100] = {
     "Configure Wi-Fi", // 52
     "Connect to: ", // 53
     "to configure Wi-Fi", // 54
-    "Trying to connect with Wi-Fi", // 55
-    "FAILED.. WiFi disabled", // 56
+    "Trying to connect Wi-Fi", // 55
+    "FAILED!", // 56
     "CONNECTED!", // 57
     "Stationlist client IP", // 58
     "Show SW wavelength", // 59
