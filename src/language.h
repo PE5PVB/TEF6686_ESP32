@@ -252,7 +252,7 @@ static const char* const myLanguage[15][107] = {
     "Wyl.", // 30
     "Ekran jest wyciszony!", // 31
     "Aby wyl. wyciszenie odznacz RF+", // 32
-    "WYL", // 33
+    "Wyl.", // 33
     "SKANOWANIE...", // 34
     "Nie wykryto tunera", // 35
     "Ustawiono wersje tunera: v", // 36
@@ -316,11 +316,11 @@ static const char* const myLanguage[15][107] = {
     "1% jasnosci", // 94
     "25% jasnosci", // 95
     "50% jasnosci", // 96
-    "Odchylenie poziomu RF AM:", // 97
-    "Jednostka sygnalu:", // 98
-    "Uzywaj AF:", // 99
-    "Select FM Band:", // 100
-    "Select AM Band:", // 101
+    "Odchylenie poziomu RF AM", // 97
+    "Jednostka sygnalu", // 98
+    "Uzywaj AF", // 99
+    "Wybierz pasmo FM", // 100
+    "Wybierz pasmo AM", // 101
     "LW", // 102
     "MW", // 103
     "SW", // 104
