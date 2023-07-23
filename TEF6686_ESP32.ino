@@ -411,7 +411,7 @@ void setup() {
       break;
     case BAND_OIRT:
       if (frequency % FREQ_OIRT_STEP_30K != 0) {
-         Round30K(frequency_OIRT);
+        Round30K(frequency_OIRT);
       }
       break;
     default: break;
@@ -623,26 +623,28 @@ void loop() {
   if (power == true) {
     Communication();
 
-    if (band == BAND_FM && af && radio.rds.correctPI != 0) {
-      if ((aftest && millis() >= aftimer + 3000) || ((USN > 250 || WAM > 250) && millis() >= aftimer + 1000)) {
-        aftimer = millis();
-        aftest = false;
-        frequency = radio.TestAF();
-        if (freqold != frequency) {
-          ShowFreq(0);
-          if (XDRGTKUSB == true || XDRGTKTCP == true) DataPrint("T" + String(frequency * 10));
-          store = true;
-        }
-      }
-
-      if (band == BAND_FM && millis() >= aftimer + 10000) {
-        aftimer = millis();
-        if (USN > 150 || WAM > 150) {
+    if (!menu && !afpage) {
+      if (band == BAND_FM && af && radio.rds.correctPI != 0) {
+        if ((aftest && millis() >= aftimer + 3000) || ((USN > 250 || WAM > 250) && millis() >= aftimer + 1000)) {
+          aftimer = millis();
+          aftest = false;
           frequency = radio.TestAF();
           if (freqold != frequency) {
             ShowFreq(0);
             if (XDRGTKUSB == true || XDRGTKTCP == true) DataPrint("T" + String(frequency * 10));
             store = true;
+          }
+        }
+
+        if (band == BAND_FM && millis() >= aftimer + 10000) {
+          aftimer = millis();
+          if (USN > 150 || WAM > 150) {
+            frequency = radio.TestAF();
+            if (freqold != frequency) {
+              ShowFreq(0);
+              if (XDRGTKUSB == true || XDRGTKTCP == true) DataPrint("T" + String(frequency * 10));
+              store = true;
+            }
           }
         }
       }
@@ -985,10 +987,10 @@ void ShowBandSelectionFM(bool notglanceview, bool normaldisplay) {
   }
 
   if (normaldisplay) {
-    color = PrimaryColor; 
+    color = PrimaryColor;
     colorSmooth = PrimaryColorSmooth;
   } else {
-    color = BackgroundColor; 
+    color = BackgroundColor;
     colorSmooth = BackgroundColor;
   }
 
@@ -1084,10 +1086,10 @@ void ShowBandSelectionAM(bool notglanceview, bool normaldisplay) {
   }
 
   if (normaldisplay) {
-    color = PrimaryColor; 
+    color = PrimaryColor;
     colorSmooth = PrimaryColorSmooth;
   } else {
-    color = BackgroundColor; 
+    color = BackgroundColor;
     colorSmooth = BackgroundColor;
   }
 
@@ -1630,7 +1632,7 @@ void SelectBand() {
     if (tunemode == TUNE_MI_BAND) tunemode = TUNE_MAN;
     radio.power(0);
     delay(50);
-    if (band == BAND_FM) radio.SetFreq(frequency); 
+    if (band == BAND_FM) radio.SetFreq(frequency);
     else if (band == BAND_OIRT) radio.SetFreq(frequency_OIRT);
     freqold = frequency_AM;
     CheckBandForbiddenFM();
@@ -1889,7 +1891,7 @@ void RoundStep() {
 
   while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
 
-  if (band == BAND_FM) EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, frequency); 
+  if (band == BAND_FM) EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, frequency);
   else if (band == BAND_OIRT) EEPROM.writeUInt(EE_UINT16_FREQUENCY_OIRT, frequency_OIRT);
   else EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, frequency_AM);
   EEPROM.commit();
@@ -3027,7 +3029,7 @@ void KeyDown() {
                 if (af) af = false; else af = true;
                 if (af) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28);
                 break;
-              
+
               case 190:
                 ShowBandSelectionFM(true, REVERSE);
                 bandFM--;
@@ -4198,7 +4200,7 @@ void ShowFreq(int mode) {
         unsigned int freq;
         if (band == BAND_FM) freq = frequency + ConverterSet * 100;
         else if (band == BAND_OIRT) freq = frequency_OIRT + ConverterSet * 100;
-        
+
         if (advancedRDS) {
           for (int i = 0; i < 33; i++) tft.fillCircle((6 * i) + 10, 133, 2, GreyoutColor);
           tftReplace(1, String(freqold / 100) + "." + (freqold % 100 < 10 ? "0" : "") + String(freqold % 100) + " MHz", String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100) + " MHz", 310, 35, PrimaryColor, PrimaryColorSmooth, FONT16);
@@ -4261,8 +4263,8 @@ void ShowFreq(int mode) {
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
       Udp.print("from=TEF tuner;freq=");
-      if (band > BAND_GAP) Udp.print(String(frequency_AM) + "000;ClearRDS=1"); 
-      else Udp.print(String(band == BAND_FM ? frequency: frequency_OIRT) + "0000;ClearRDS=1");
+      if (band > BAND_GAP) Udp.print(String(frequency_AM) + "000;ClearRDS=1");
+      else Udp.print(String(band == BAND_FM ? frequency : frequency_OIRT) + "0000;ClearRDS=1");
       Udp.endPacket();
     }
   }
