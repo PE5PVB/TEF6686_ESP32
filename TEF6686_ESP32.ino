@@ -1733,6 +1733,8 @@ void ModeButtonPress() {
         EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, frequency);
       }
       radio.clearRDS(fullsearchrds);
+      CheckBandForbiddenFM();
+      CheckBandForbiddenAM();
       BuildDisplay();
       ShowSignalLevel();
       ShowBW();
