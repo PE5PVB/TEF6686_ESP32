@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char* const myLanguage[15][100] = {
+static const char* const myLanguage[15][107] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -100,7 +100,14 @@ static const char* const myLanguage[15][100] = {
     "50% brightness", // 96
     "AM RF Level offset:", // 97
     "Signalmeter unit:", // 98
-	"Use AF:" // 99
+	  "Use AF:", // 99
+    "Select FM Band:", // 100
+    "Select AM Band:", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT" // 106
   },
 
   { "Nederlands", // Dutch
@@ -202,7 +209,14 @@ static const char* const myLanguage[15][100] = {
     "50% helderheid", // 96
     "AM RF Level afwijking:", // 97
     "Signaalmeter eenheid:", // 98
-	"Gebruik AF:" // 99
+	  "Gebruik AF:", // 99
+    "Select FM Band:", // 100
+    "Select AM Band:", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT" // 106
   },
 
   { "Polski", // Polish
@@ -304,7 +318,14 @@ static const char* const myLanguage[15][100] = {
     "50% jasnosci", // 96
     "Odchylenie poziomu RF AM:", // 97
     "Jednostka sygnalu:", // 98
-    "Uzywaj AF:" // 99
+    "Uzywaj AF:", // 99
+    "Select FM Band:", // 100
+    "Select AM Band:", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT" // 106
   },
 
   { "Hrvatski", // Croatian
@@ -406,7 +427,14 @@ static const char* const myLanguage[15][100] = {
     "50% svjetlina", // 96
     "AM pomak RF razine:", // 97
     "Jedinica mjerača signala:", // 98
-	"Use AF:" // 99
+	  "Use AF:", // 99
+    "Select FM Band:", // 100
+    "Select AM Band:", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT" // 106
   },
 
   { "Ελληνικά", // Greek
@@ -508,7 +536,14 @@ static const char* const myLanguage[15][100] = {
     "50% φωτεινότητα", // 96
     "AM Ολίσθηση επιπέδου RF:", // 97
     "Μονάδα μέτρησης σήματος:", // 98
-	"Χρήση AF:" // 99
+	  "Χρήση AF:", // 99
+    "Select FM Band:", // 100
+    "Select AM Band:", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT" // 106
   },
 
   { "Romana", // Romanian
@@ -610,7 +645,14 @@ static const char* const myLanguage[15][100] = {
     "50% brightness", // 96
     "AM RF Level offset:", // 97
     "Signalmeter unit:", // 98
-	"Use AF:" // 99
+	  "Use AF:", // 99
+    "Select FM Band:", // 100
+    "Select AM Band:", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT" // 106
   },
 
   { "Deutsch", // German
@@ -712,7 +754,14 @@ static const char* const myLanguage[15][100] = {
     "50% Helligkeit", // 96
     "AM RF Level offset:", // 97
     "Signalmeter unit:", // 98
-	"Use AF:" // 99
+	  "Use AF:", // 99
+    "Select FM Band:", // 100
+    "Select AM Band:", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT" // 106
   },
 
   { "Czech", // Czech
@@ -814,7 +863,14 @@ static const char* const myLanguage[15][100] = {
     "50% brightness", // 96
     "AM RF Level offset:", // 97
     "Signalmeter unit:", // 98
-	"Use AF:" // 99
+	  "Use AF:", // 99
+    "Select FM Band:", // 100
+    "Select AM Band:", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT" // 106
   },
 
   { "Slovak", // Slovak
@@ -916,7 +972,14 @@ static const char* const myLanguage[15][100] = {
     "50% brightness", // 96
     "AM RF Level offset:", // 97
     "Signalmeter unit:", // 98
-	"Use AF:" // 99
+	  "Use AF:", // 99
+    "Select FM Band:", // 100
+    "Select AM Band:", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT" // 106
   },
 
   { "Français", // French
@@ -1018,7 +1081,14 @@ static const char* const myLanguage[15][100] = {
     "50% brightness", // 96
     "AM RF Level offset:", // 97
     "Signalmeter unit:", // 98
-	"Use AF:" // 99
+	  "Use AF:", // 99
+    "Select FM Band:", // 100
+    "Select AM Band:", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT" // 106
   },
 
   { "Български", // Bulgarian
@@ -1120,7 +1190,14 @@ static const char* const myLanguage[15][100] = {
     "50% brightness", // 96
     "AM RF Level offset:", // 97
     "Signalmeter unit:", // 98
-	"Use AF:" // 99
+	  "Use AF:", // 99
+    "Select FM Band:", // 100
+    "Select AM Band:", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT" // 106
   },
 
   { "Русский", // Russian
@@ -1222,7 +1299,14 @@ static const char* const myLanguage[15][100] = {
     "50% яркости", // 96
     "Смещение уровня AM RF:", // 97
     "Измеритель сигнала:", // 98
-	"Режим AF:" // 99
+	  "Режим AF:", // 99
+    "Select FM Band:", // 100
+    "Select AM Band:", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT" // 106
   },
 
   { "Українська", // Ukranian
@@ -1324,7 +1408,14 @@ static const char* const myLanguage[15][100] = {
     "50% яскравості", // 96
     "Зміщення рівня AM RF:", // 97
     "Вимірник сигналу:", // 98
-	"Режим AF:" // 99
+	  "Режим AF:", // 99
+    "Select FM Band:", // 100
+    "Select AM Band:", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT" // 106
   },
 
   { "Italiano", // Italian
@@ -1426,7 +1517,14 @@ static const char* const myLanguage[15][100] = {
     "50 % di luminosità", // 96
     "Offset livello RF AM: ", // 97
     "Unità S - meter: ", // 98
-	"Use AF:" // 99
+	  "Use AF:", // 99
+    "Select FM Band:", // 100
+    "Select AM Band:", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT" // 106
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -1528,7 +1626,14 @@ static const char* const myLanguage[15][100] = {
     "屏幕50% 亮度", // 96
     "AM 高频信号偏移:", // 97
     "信号单位:", // 98
-	"Use AF:" // 99
+	  "使用 AF:", // 99
+    "选择FM波段:", // 100
+    "选择FM波段:", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT" // 106
   }
 };
 

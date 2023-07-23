@@ -23,7 +23,7 @@
 #define FREQ_MW_STEP_9K            9
 #define FREQ_MW_STEP_10K           10
 #define FREQ_SW_STEP_5K            5
-#define FREQ_FM_STEP_30K           3
+#define FREQ_OIRT_STEP_30K         3
 #define FREQ_FM_STEP_50K           5
 #define FREQ_FM_STEP_100K          10
 
@@ -39,8 +39,8 @@
 #define FREQ_SW_HIGH_EDGE_MAX      (FREQ_SW_END)
 #define FREQ_FM_START              65000
 #define FREQ_FM_END                108000
-#define FREQ_FM_OIRT_START         6575   // use values of 1/10 * kHz
-#define FREQ_FM_OIRT_END           7400   // use values of 1/10 * kHz
+#define FREQ_FM_OIRT_START         6402   // use values of 1/10 * kHz
+#define FREQ_FM_OIRT_END           7398   // use values of 1/10 * kHz
 
 // according to https://www.short-wave.info/index.php?feature=frequencies
 #define FREQ_SW_START       1800
@@ -95,12 +95,14 @@
 
 // EEPROM index defines
 #define EE_PRESETS_CNT              30
-#define EE_CHECKBYTE_VALUE          36 // 0 ~ 255,add new entry, change for new value 
+#define EE_CHECKBYTE_VALUE          32 // 0 ~ 255,add new entry, change for new value 
 
-#define EE_TOTAL_CNT                269
+#define EE_TOTAL_CNT                273
 #define EE_UINT16_FREQUENCY_FM      0
 #define EE_BYTE_VOLSET              4
 #define EE_BYTE_STEREO              5
+#define EE_BYTE_BANDFM              6
+#define EE_BYTE_BANDAM              7
 #define EE_UINT16_CONVERTERSET      8
 #define EE_UINT16_FMLOWEDGESET      12
 #define EE_UINT16_FMHIGHEDGESET     16
@@ -158,7 +160,8 @@
 #define EE_BYTE_SCREENSAVERSET      262
 #define EE_INT16_AMLEVELOFFSET      263
 #define EE_BYTE_UNIT                267
-#define EE_BYTE_AF                  268
+#define EE_BYTE_AF                  268   
+#define EE_UINT16_FREQUENCY_OIRT    269         
 // End of EEPROM index defines
 
 static const char* const unitString[] = {"dBμV", "dBf", "dBm"};
