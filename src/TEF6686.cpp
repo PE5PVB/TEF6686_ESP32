@@ -800,22 +800,22 @@ void TEF6686::readRDS(bool showrdserrors)
                   }
                 }
 
-                eon_buffer2[position][(offset * 2) + 0] = eon_buffer[position][(offset * 2) + 0];                                       // Make a copy of the PS buffer
-                eon_buffer2[position][(offset * 2) + 1] = eon_buffer[position][(offset * 2) + 1];
 
-                eon_buffer[position][(offset * 2)  + 0] = rds.rdsC >> 8;                                                                // First character of segment
-                eon_buffer[position][(offset * 2)  + 1] = rds.rdsC & 0xFF;                                                              // Second character of segment
-                eon_buffer[position][(offset * 2)  + 2] = '\0';                                                                         // Endmarker of segment
-
-                if (offset > 2) {                                                                                                       // Last chars are received
-                  if (eon_buffer[position] != eon_buffer2[position]) {                                                                  // When difference between old and new, let's go...
-                    RDScharConverter(eon_buffer[position], EONPStext[position], sizeof(EONPStext[position]) / sizeof(wchar_t), true);   // Convert 8 bit ASCII to 16 bit ASCII
-                    String utf8String = convertToUTF8(EONPStext[position]);                                                             // Convert RDS characterset to ASCII
-                    eon[position].ps = extractUTF8Substring(utf8String, 0, 8, true);                                                    // Make sure PS does not exceed 8 characters
-                  }
+                if (offset < 4 && eon[position].pi == rds.rdsD) {
+				  for (int j = 0; j < 9; j++) EONPStext[position][j] = '\0';                                                           // Clear buffer	
+                  eon_buffer[position][(offset * 2)  + 0] = rds.rdsC >> 8;                                                              // First character of segment
+                  eon_buffer[position][(offset * 2)  + 1] = rds.rdsC & 0xFF;                                                            // Second character of segment
+                  eon_buffer[position][(offset * 2)  + 2] = '\0';                                                                       // Endmarker of segment
                 }
 
-                if (offset > 4) {
+                if (offset > 3 && eon[position].pi == rds.rdsD) {                                                                       // Last chars are received
+                  RDScharConverter(eon_buffer[position], EONPStext[position], sizeof(EONPStext[position]) / sizeof(wchar_t), true);     // Convert 8 bit ASCII to 16 bit ASCII
+                  String utf8String = convertToUTF8(EONPStext[position]);                                                               // Convert RDS characterset to ASCII
+                  eon[position].ps = extractUTF8Substring(utf8String, 0, 8, true);                                                      // Make sure PS does not exceed 8 characters
+                  for (int j = 0; j < 9; j++) eon_buffer[position][j] = '\0';                                                           // Clear buffer
+                }
+
+                if (offset > 4 && eon[position].pi == rds.rdsD) {
                   if (((rds.rdsC >> 8) * 10 + 8750) == currentfreq) {                                                                   // Check if mapped frequency belongs to current frequency
                     if (eon[position].mappedfreq == 0) {
                       eon[position].mappedfreq = ((rds.rdsC & 0xFF) * 10 + 8750);                                                       // Add mapped frequency to array
@@ -882,13 +882,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
     }
     for (int j = 0; j < 9; j++) {
       EONPStext[i][j] = L'\0';
-    }
-  }
-
-  for (i = 0; i < 9; i++) {
-    for (int y = 0; y < 5; y++) {
-      eon_buffer[i][y] = '\0';
-      eon_buffer2[i][y] = '\0';
+      eon_buffer[i][j] = '\0';
     }
   }
 
@@ -896,6 +890,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
     RDSplus1[i] = 0;
     RDSplus2[i] = 0;
   }
+  
   rdsblock = 254;
   piold = 0;
   rds.correctPI = 0;

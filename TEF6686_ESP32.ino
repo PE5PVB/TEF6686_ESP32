@@ -3858,12 +3858,12 @@ void ShowAFEON() {
     for (byte i = 0; i < radio.eon_counter; i++) {
       tftPrint(-1, String(radio.eon[i].picode), 170, 48 + (15 * i), PrimaryColor, PrimaryColorSmooth, FONT16);
       if (radio.eon[i].ps.length() > 0) {
-        tftPrint(-1, "PS:", 208, 32, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, "PS:", 206, 32, ActiveColor, ActiveColorSmooth, FONT16);
         if (radio.eon[i].ps != eonpsold[i]) {
-          tftPrint(-1, String(eonpsold[i]), 208, 48 + (15 * i), BackgroundColor, BackgroundColor, FONT16);
+          tftPrint(-1, String(eonpsold[i]), 206, 48 + (15 * i), BackgroundColor, BackgroundColor, FONT16);
           eonpsold[i] = radio.eon[i].ps;
         }
-        tftPrint(-1, String(radio.eon[i].ps), 208, 48 + (15 * i), SecondaryColor, SecondaryColorSmooth, FONT16);
+        tftPrint(-1, String(radio.eon[i].ps), 206, 48 + (15 * i), SecondaryColor, SecondaryColorSmooth, FONT16);
       }
 
       if (radio.eon[i].mappedfreq > 0) {
