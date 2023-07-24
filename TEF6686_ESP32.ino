@@ -1816,22 +1816,6 @@ void ShowStepSize() {
   }
 }
 
-void FindhighStopOIRT() {
-  if (HighEdgeSet >= (FREQ_FM_OIRT_START / 10) && HighEdgeSet <= (FREQ_FM_OIRT_END / 10)) {
-    HighEdgeOIRTSet = (HighEdgeSet * 10 - (HighEdgeSet * 10) % FREQ_OIRT_STEP_30K);
-  } else {
-    HighEdgeOIRTSet = 0;
-  }
-}
-
-void FindlowStopOIRT() {
-  if (LowEdgeSet >= (FREQ_FM_OIRT_START / 10) && LowEdgeSet <= (FREQ_FM_OIRT_END / 10)) {
-    LowEdgeOIRTSet = (LowEdgeSet * 10 - (LowEdgeSet * 10) % FREQ_OIRT_STEP_30K);
-  } else {
-    LowEdgeOIRTSet = 0;
-  }
-}
-
 void Round30K(unsigned int freq) {
   if (freq % FREQ_OIRT_STEP_30K < FREQ_OIRT_STEP_30K) {
     frequency_OIRT = (freq - freq % FREQ_OIRT_STEP_30K);
@@ -2343,8 +2327,8 @@ void KeyUp() {
                 LowEdgeSet ++;
                 if (LowEdgeSet > 1070) LowEdgeSet = 650;
                 if (specialstepOIRT) {
-                  FindlowStopOIRT();
-                  FindhighStopOIRT();
+                  // FindlowStopOIRT();
+                  // FindhighStopOIRT();
                 }
                 tftPrint(1, String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28);
                 break;
@@ -2354,8 +2338,8 @@ void KeyUp() {
                 HighEdgeSet ++;
                 if (HighEdgeSet > 1080) HighEdgeSet = 660;
                 if (specialstepOIRT) {
-                  FindlowStopOIRT();
-                  FindhighStopOIRT();
+                  // FindlowStopOIRT();
+                  // FindhighStopOIRT();
                 }
                 tftPrint(1, String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28);
                 break;
@@ -2561,8 +2545,8 @@ void KeyUp() {
                   specialstepOIRT = 0;
                 } else {
                   specialstepOIRT = 1;
-                  FindlowStopOIRT();
-                  FindhighStopOIRT();
+                  // FindlowStopOIRT();
+                  // FindhighStopOIRT();
                 }
                 if (specialstepOIRT) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28);
                 break;
@@ -2953,8 +2937,8 @@ void KeyDown() {
                   specialstepOIRT = 0;
                 } else {
                   specialstepOIRT = 1;
-                  FindlowStopOIRT();
-                  FindhighStopOIRT();
+                  // FindlowStopOIRT();
+                  // FindhighStopOIRT();
                 }
                 if (specialstepOIRT) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28);
                 break;
