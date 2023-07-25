@@ -1610,7 +1610,9 @@ void SelectBand() {
     if (tunemode == TUNE_MI_BAND && band != BAND_SW) tunemode = TUNE_MAN;
     BWreset = true;
     BWset = 2;
-    freqold = frequency_AM;
+    if (band == BAND_LW) freqold = frequency_LW;
+    else if (band == BAND_MW) freqold = frequency_MW;
+    else if (band == BAND_SW) freqold = frequency_SW;
     LimitAMFrequency();
     CheckBandForbiddenAM();
     radio.SetFreqAM(frequency_AM);
