@@ -680,7 +680,7 @@ static const char* const myLanguage[15][107] = {
     "Unteres Bandende", // 22
     "Oberes Bandende", // 23
     "Pegeloffset", // 24
-    "Stereotrennerschwelle", // 25
+    "Stereotrennschwelle", // 25
     "High-Cut-Eckfrequenz", // 26
     "High-Cut-Schwelle", // 27
     "Low-Level-Schwelle", // 28
@@ -696,7 +696,7 @@ static const char* const myLanguage[15][107] = {
     "Zeige RDS Fehler", // 38
     "Sprache", // 39
     "Sprache wählen", // 40
-    "MODE DRÜCKEN ZUM BEENDEN UND SICHERN", // 41
+    "MODE drücken zum Beenden+Sichern", // 41
     "Ein", // 42
     "Softmute UKW", // 43
     "Softmute AM", // 44
@@ -710,8 +710,8 @@ static const char* const myLanguage[15][107] = {
     "WLAN konfigurieren", // 52
     "Verbinde mit:", // 53
     "um WLAN einzustellen", // 54
-    "Versuche WLAN zu verbinden", // 55
-    "FEHLER.. WLAN deaktiviert", // 56
+    "Verb.versuch zu WLAN", // 55
+    "FEHLER! WLAN deaktiviert", // 56
     "VERBUNDEN!", // 57
     "Stationlist Client IP", // 58
     "Zeige KW-Wellenlänge", // 59
@@ -752,15 +752,15 @@ static const char* const myLanguage[15][107] = {
     "1% Helligkeit", // 94
     "25% Helligkeit", // 95
     "50% Helligkeit", // 96
-    "AM RF Level offset:", // 97
-    "Signalmeter unit:", // 98
-	  "Use AF:", // 99
-    "Select FM Band:", // 100
-    "Select AM Band:", // 101
+    "AM RF Pegeloffset:", // 97
+    "Einheit Signalpegel:", // 98
+    "Verwende AF:", // 99
+    "Wähle UKW Band:", // 100
+    "Wähle AM Band:", // 101
     "LW", // 102
     "MW", // 103
-    "SW", // 104
-    "FM", // 105
+    "KW", // 104
+    "UKW", // 105
     "OIRT" // 106
   },
 
