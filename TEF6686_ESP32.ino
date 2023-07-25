@@ -444,7 +444,8 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
 
-  analogWrite(SMETERPIN, 0);
+  tft.setSwapBytes(true);
+  tft.fillScreen(BackgroundColor);
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH) {
     if (rotarymode == 0) rotarymode = 1; else rotarymode = 0;
@@ -505,7 +506,6 @@ void setup() {
     ESP.restart();
   }
 
-  tft.setSwapBytes(true);
   tft.fillScreen(BackgroundColor);
   tftPrint(0, myLanguage[language][8], 160, 3, PrimaryColor, PrimaryColorSmooth, FONT28);
   tftPrint(0, "Software " + String(VERSION), 160, 152, PrimaryColor, PrimaryColorSmooth, FONT16);
@@ -5884,7 +5884,7 @@ void DefaultSettings() {
   EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, 0);
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, 828);
   EEPROM.writeByte(EE_BYTE_LANGUAGE, 0);
-  EEPROM.writeByte(EE_BYTE_SHOWRDSERRORS, 1);
+  EEPROM.writeByte(EE_BYTE_SHOWRDSERRORS, 0);
   EEPROM.writeByte(EE_BYTE_TEF, 0);
   EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 0);
   EEPROM.writeByte(EE_BYTE_ROTARYMODE, 0);
@@ -5902,7 +5902,7 @@ void DefaultSettings() {
   EEPROM.writeByte(EE_BYTE_WIFI, 0);
   EEPROM.writeByte(EE_BYTE_SUBNETCLIENT, 1);
   EEPROM.writeByte(EE_BYTE_SHOWSWMIBAND, 1);
-  EEPROM.writeByte(EE_BYTE_RDS_FILTER, 1);
+  EEPROM.writeByte(EE_BYTE_RDS_FILTER, 0);
   EEPROM.writeByte(EE_BYTE_RDS_PIERRORS, 0);
   for (int i = 0; i < EE_PRESETS_CNT; i++) EEPROM.writeByte(i + EE_PRESETS_BAND_START, BAND_FM);
   for (int i = 0; i < EE_PRESETS_CNT; i++) EEPROM.writeUInt((i * 4) + EE_PRESETS_START, EE_PRESETS_FREQUENCY);
@@ -5919,9 +5919,9 @@ void DefaultSettings() {
   EEPROM.writeUInt(EE_UINT16_LOWEDGEOIRTSET, 0);
   EEPROM.writeUInt(EE_UINT16_HIGHEDGEOIRTSET, 0);
   EEPROM.writeByte(EE_BYTE_COLORINVERT, 0);
-  EEPROM.writeByte(EE_BYTE_POWEROPTIONS, 0);
+  EEPROM.writeByte(EE_BYTE_POWEROPTIONS, 1);
   EEPROM.writeByte(EE_BYTE_CURRENTTHEME, 0);
-  EEPROM.writeByte(EE_BYTE_FMDEFAULTSTEPSIZE, 0);
+  EEPROM.writeByte(EE_BYTE_FMDEFAULTSTEPSIZE, 1);
   EEPROM.writeByte(EE_BYTE_SCREENSAVERSET, 0);
   EEPROM.writeInt(EE_INT16_AMLEVELOFFSET, 0);
   EEPROM.writeByte(EE_BYTE_UNIT, 0);
@@ -5957,7 +5957,7 @@ void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int colo
 void tftReplace(int8_t offset, const String & textold, const String & text, int16_t x, int16_t y, int color, int smoothcolor, const uint8_t* font) {
   if (language == LANGUAGE_CHS) {
     if (font == FONT16) font = FONT16_CHS;
-    else if (font == FONT28) font = FONT28_CHS;
+    if (font == FONT28) font = FONT28_CHS;
   }
 
   if (currentFont != font || resetFontOnNextCall) {
