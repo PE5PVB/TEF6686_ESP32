@@ -10,7 +10,9 @@
 #include "src/WiFiConnect.h"
 #include "src/WiFiConnectParam.h"
 #include "src/FONT16.h"
+#include "src/FONT16_CHS.h"
 #include "src/FONT28.h"
+#include "src/FONT28_CHS.h"
 #include "src/FONT48DEC.h"
 #include "src/TEF6686.h"
 #include "src/constants.h"
@@ -5927,6 +5929,11 @@ void DefaultSettings() {
 }
 
 void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, const uint8_t* font) {
+  if (language == LANGUAGE_CHS) {
+    if (font == FONT16) font = FONT16_CHS;
+    else if (font == FONT28) font = FONT28_CHS;
+  }
+
   if (currentFont != font || resetFontOnNextCall) {
     if (currentFont != nullptr) tft.unloadFont();
     tft.loadFont(font);
@@ -5946,6 +5953,11 @@ void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int colo
 }
 
 void tftReplace(int8_t offset, const String & textold, const String & text, int16_t x, int16_t y, int color, int smoothcolor, const uint8_t* font) {
+  if (language == LANGUAGE_CHS) {
+    if (font == FONT16) font = FONT16_CHS;
+    else if (font == FONT28) font = FONT28_CHS;
+  }
+
   if (currentFont != font || resetFontOnNextCall) {
     if (currentFont != nullptr) tft.unloadFont();
 

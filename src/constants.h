@@ -20,6 +20,8 @@
 #define BAT_LEVEL_FULL             2270
 #define BAT_LEVEL_STAGE            4
 
+#define LANGUAGE_CHS               14
+
 #define FREQ_MW_STEP_9K            9
 #define FREQ_MW_STEP_10K           10
 #define FREQ_SW_STEP_5K            5
