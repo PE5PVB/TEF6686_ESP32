@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char* const myLanguage[15][107] = {
+static const char* const myLanguage[15][108] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -69,7 +69,7 @@ static const char* const myLanguage[15][107] = {
     "FM Noise blanker", // 65
     "Defaults loaded", // 66
     "Audio output", // 67
-    "FM OIRT 30 kHz steps", // 68
+    "Touch rotating", // 68 for translation reference to commputer Touch Typing
     "Invert display", // 69
     "About software", // 70
     "Main code:", // 71
@@ -107,7 +107,8 @@ static const char* const myLanguage[15][107] = {
     "MW", // 103
     "SW", // 104
     "FM", // 105
-    "OIRT" // 106
+    "OIRT", // 106
+    "Rotating while screen off" // 107
   },
 
   { "Nederlands", // Dutch
@@ -178,7 +179,7 @@ static const char* const myLanguage[15][107] = {
     "FM ruis filter", // 65
     "Opnieuw geconfigureerd", // 66
     "Audio uitgang", // 67
-    "FM OIRT 30 kHz steps", // 68
+    "Touch rotating", // 68 for translation reference to commputer Touch Typing
     "Inverteer scherm", // 69
     "Over deze software", // 70
     "Basis code:", // 71
@@ -216,7 +217,8 @@ static const char* const myLanguage[15][107] = {
     "MW", // 103
     "SW", // 104
     "FM", // 105
-    "OIRT" // 106
+    "OIRT", // 106
+    "Rotating while screen off" // 107
   },
 
   { "Polski", // Polish
@@ -287,7 +289,7 @@ static const char* const myLanguage[15][107] = {
     "Reduktor szumow FM", // 65
     "Zaladowano domyslne", // 66
     "Wyjscie dzwieku", // 67
-    "Kroki co 30 kHz na OIRT", // 68
+    "Touch rotating", // 68 for translation reference to commputer Touch Typing
     "Odwroc kolory wyswietlacza", // 69
     "O oprogramowaniu", // 70
     "Glowny kod:", // 71
@@ -325,7 +327,8 @@ static const char* const myLanguage[15][107] = {
     "MW", // 103
     "SW", // 104
     "FM", // 105
-    "OIRT" // 106
+    "OIRT", // 106
+    "Rotating while screen off" // 107
   },
 
   { "Hrvatski", // Croatian
@@ -396,7 +399,7 @@ static const char* const myLanguage[15][107] = {
     "FM prigušivač šuma", // 65
     "Zadane postavke učitane", // 66
     "Audio izlaz", // 67
-    "FM OIRT 30 kHz koraci", // 68
+    "Touch rotating", // 68 for translation reference to commputer Touch Typing
     "Invertiraj boju zaslona", // 69
     "O softveru", // 70
     "Glavni izvorni kod:", // 71
@@ -434,7 +437,8 @@ static const char* const myLanguage[15][107] = {
     "MW", // 103
     "SW", // 104
     "FM", // 105
-    "OIRT" // 106
+    "OIRT", // 106
+    "Rotating while screen off" // 107
   },
 
   { "Ελληνικά", // Greek
@@ -505,7 +509,7 @@ static const char* const myLanguage[15][107] = {
     "Απαλοιφή θορύβου FM", // 65
     "Οι προεπιλογές φορτώθηκαν", // 66
     "Έξοδος ήχου", // 67
-    "FM OIRT βήματα 30 kHz", // 68
+    "Touch rotating", // 68 for translation reference to commputer Touch Typing
     "Αναστροφή χρωμάτων οθόνης", // 69
     "Πληροφορίες λογισμικού", // 70
     "Κύριος κώδικας:", // 71
@@ -543,7 +547,8 @@ static const char* const myLanguage[15][107] = {
     "MW", // 103
     "SW", // 104
     "FM", // 105
-    "OIRT" // 106
+    "OIRT", // 106
+    "Rotating while screen off" // 107
   },
 
   { "Romana", // Romanian
@@ -614,7 +619,7 @@ static const char* const myLanguage[15][107] = {
     "FM Noise blanker", // 65
     "Defaults loaded", // 66
     "Audio output", // 67
-    "FM OIRT 30 kHz steps", // 68
+    "Touch rotating", // 68 for translation reference to commputer Touch Typing
     "Display color invert", // 69
     "About software", // 70
     "Main code:", // 71
@@ -652,7 +657,8 @@ static const char* const myLanguage[15][107] = {
     "MW", // 103
     "SW", // 104
     "FM", // 105
-    "OIRT" // 106
+    "OIRT", // 106
+    "Rotating while screen off" // 107
   },
 
   { "Deutsch", // German
@@ -723,7 +729,7 @@ static const char* const myLanguage[15][107] = {
     "UKW Rauschunterdrückung", // 65
     "Werkseinstellung geladen", // 66
     "Audioausgabe", // 67
-    "30 kHz Schritte auf OIRT", // 68
+    "Touch rotating", // 68 for translation reference to commputer Touch Typing
     "Anzeigefarben umkehren", // 69
     "Über diese Software", // 70
     "Hauptcode:", // 71
@@ -761,7 +767,8 @@ static const char* const myLanguage[15][107] = {
     "MW", // 103
     "KW", // 104
     "UKW", // 105
-    "OIRT" // 106
+    "OIRT", // 106
+    "Rotating while screen off" // 107
   },
 
   { "Czech", // Czech
@@ -832,7 +839,7 @@ static const char* const myLanguage[15][107] = {
     "FM Noise blanker", // 65
     "Defaults loaded", // 66
     "Audio output", // 67
-    "FM OIRT 30 kHz steps", // 68
+    "Touch rotating", // 68 for translation reference to commputer Touch Typing
     "Display color invert", // 69
     "About software", // 70
     "Main code:", // 71
@@ -870,7 +877,8 @@ static const char* const myLanguage[15][107] = {
     "MW", // 103
     "SW", // 104
     "FM", // 105
-    "OIRT" // 106
+    "OIRT", // 106
+    "Rotating while screen off" // 107
   },
 
   { "Slovak", // Slovak
@@ -941,7 +949,7 @@ static const char* const myLanguage[15][107] = {
     "FM Noise blanker", // 65
     "Defaults loaded", // 66
     "Audio output", // 67
-    "FM OIRT 30 kHz steps", // 68
+    "Touch rotating", // 68 for translation reference to commputer Touch Typing
     "Display color invert", // 69
     "About software", // 70
     "Main code:", // 71
@@ -979,7 +987,8 @@ static const char* const myLanguage[15][107] = {
     "MW", // 103
     "SW", // 104
     "FM", // 105
-    "OIRT" // 106
+    "OIRT", // 106
+    "Rotating while screen off" // 107
   },
 
   { "Français", // French
@@ -1050,7 +1059,7 @@ static const char* const myLanguage[15][107] = {
     "Réducteur de bruit FM", // 65
     "Paramètres par défaut chargés", // 66
     "Sortie audio", // 67
-    "Pas de 30 kHz pour la bande OIRT", // 68
+    "Touch rotating", // 68 for translation reference to commputer Touch Typing
     "Inverser l'affichage", // 69
     "À propos du logiciel", // 70
     "Code principal :", // 71
@@ -1088,7 +1097,8 @@ static const char* const myLanguage[15][107] = {
     "MW", // 103
     "SW", // 104
     "FM", // 105
-    "OIRT" // 106
+    "OIRT", // 106
+    "Rotating while screen off" // 107
   },
 
   { "Български", // Bulgarian
@@ -1159,7 +1169,7 @@ static const char* const myLanguage[15][107] = {
     "FM заглушител на шума", // 65
     "Фабр. настройки бяха зададени", // 66
     "Аудио Изход", // 67
-    "FM OIRT 30 kHz стъпки", // 68
+    "Touch rotating", // 68 for translation reference to commputer Touch Typing
     "Обръщане на дисплея", // 69
     "Относно софтуера", // 70
     "Главен код:", // 71
@@ -1197,7 +1207,8 @@ static const char* const myLanguage[15][107] = {
     "MW", // 103
     "SW", // 104
     "FM", // 105
-    "OIRT" // 106
+    "OIRT", // 106
+    "Rotating while screen off" // 107
   },
 
   { "Русский", // Russian
@@ -1268,7 +1279,7 @@ static const char* const myLanguage[15][107] = {
     "Шумоподавитель FM", // 65
     "Загрузка настроек по умолчанию", // 66
     "Аудиовыход", // 67
-    "FM OIRT с шагом 30 кГц", // 68
+    "Touch rotating", // 68 for translation reference to commputer Touch Typing
     "Инвертировать дисплей", // 69
     "О программе", // 70
     "Основной код:", // 71
@@ -1306,7 +1317,8 @@ static const char* const myLanguage[15][107] = {
     "MW", // 103
     "SW", // 104
     "FM", // 105
-    "OIRT" // 106
+    "OIRT", // 106
+    "Rotating while screen off" // 107
   },
 
   { "Українська", // Ukranian
@@ -1377,7 +1389,7 @@ static const char* const myLanguage[15][107] = {
     "Помпи засліплення шуму FM", // 65
     "Завантажено параметри за замовчуванням", // 66
     "Аудіо вихід", // 67
-    "FM OIRT 30 кГц кроки", // 68
+    "Touch rotating", // 68 for translation reference to commputer Touch Typing
     "Перевернути дисплей", // 69
     "Про програмне забезпечення", // 70
     "Основний код:", // 71
@@ -1415,7 +1427,8 @@ static const char* const myLanguage[15][107] = {
     "MW", // 103
     "SW", // 104
     "FM", // 105
-    "OIRT" // 106
+    "OIRT", // 106
+    "Rotating while screen off" // 107
   },
 
   { "Italiano", // Italian
@@ -1486,7 +1499,7 @@ static const char* const myLanguage[15][107] = {
     "Soppressione rumore FM", // 65
     "Predefiniti caricati", // 66
     "Uscita audio", // 67
-    "Passo 30 kHz per FM OIRT", // 68
+    "Touch rotating", // 68 for translation reference to commputer Touch Typing
     "Inversione schermo", // 69
     "Info sul software", // 70
     "Codice principale:", // 71
@@ -1524,7 +1537,8 @@ static const char* const myLanguage[15][107] = {
     "MW", // 103
     "SW", // 104
     "FM", // 105
-    "OIRT" // 106
+    "OIRT", // 106
+    "Rotating while screen off" // 107
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -1595,7 +1609,7 @@ static const char* const myLanguage[15][107] = {
     "FM 噪声消除", // 65
     "恢复出厂设置", // 66
     "音频输出选择", // 67
-    "FM OIRT 30 kHz steps", // 68
+    "盲操", // 68
     "LCD颜色反转", // 69
     "关于(About)", // 70
     "主程序:", // 71
@@ -1633,7 +1647,8 @@ static const char* const myLanguage[15][107] = {
     "MW", // 103
     "SW", // 104
     "FM", // 105
-    "OIRT" // 106
+    "OIRT", // 106
+    "熄屏操作飞梭" // 107
   }
 };
 

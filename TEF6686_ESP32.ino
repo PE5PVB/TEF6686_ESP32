@@ -137,12 +137,12 @@ byte rdsblockold;
 byte region;
 byte regionold;
 byte rotarymode;
+byte touchrotating;
 byte screensaverOptions[5] = {0, 3, 10, 30, 60};
 byte screensaverset;
 byte showmodulation;
-byte showSWMIBand = 1;
+byte showSWMIBand;
 byte SNRold;
-byte specialstepOIRT;
 byte stepsize;
 byte StereoLevel;
 byte subnetclient;
@@ -360,7 +360,7 @@ void setup() {
   amnb = EEPROM.readByte(EE_BYTE_AM_NB);
   fmnb = EEPROM.readByte(EE_BYTE_FM_NB);
   audiomode = EEPROM.readByte(EE_BYTE_AUDIOMODE);
-  specialstepOIRT = EEPROM.readByte(EE_BYTE_OIRT);
+  touchrotating = EEPROM.readByte(EE_BYTE_TOUCH_ROTATING);
   // LowEdgeOIRTSet = EEPROM.readUInt(EE_UINT16_LOWEDGEOIRTSET);
   // HighEdgeOIRTSet = EEPROM.readUInt(EE_UINT16_HIGHEDGEOIRTSET);
   colorinvert = EEPROM.readByte(EE_BYTE_COLORINVERT);
@@ -746,8 +746,10 @@ void loop() {
 
     if (rotary == -1) {
       if (screensavertriggered) {
-        rotary = 0;
-        WakeToSleep(REVERSE);
+        if (!touchrotating) {
+          rotary = 0;
+          WakeToSleep(REVERSE);
+        }
       } else {
         KeyUp();
         if (screensaverset && !menu && !screensavertriggered) ScreensaverTimerRestart();
@@ -755,8 +757,10 @@ void loop() {
     }
     if (rotary == 1) {
       if (screensavertriggered) {
-        rotary = 0;
-        WakeToSleep(REVERSE);
+        if (!touchrotating) {
+          rotary = 0;
+          WakeToSleep(REVERSE);
+        }
       } else {
         KeyDown();
         if (screensaverset && !menu && !screensavertriggered) ScreensaverTimerRestart();
@@ -795,9 +799,22 @@ void loop() {
       }
     }
   } else {
-    if (rotary != 0) {
-      rotary = 0;
-      if (screensavertriggered) WakeToSleep(REVERSE);
+    if (rotary == -1) {
+      if (!touchrotating) {
+        rotary = 0;
+        WakeToSleep(REVERSE);
+      } else {
+        KeyUp();
+      }
+    }
+
+    if (rotary == 1) {
+      if (!touchrotating) {
+        rotary = 0;
+        WakeToSleep(REVERSE);
+      } else {
+        KeyDown();
+      }
     }
   }
 }
@@ -1777,7 +1794,7 @@ void ModeButtonPress() {
       EEPROM.writeByte(EE_BYTE_AM_NB, amnb);
       EEPROM.writeByte(EE_BYTE_FM_NB, fmnb);
       EEPROM.writeByte(EE_BYTE_AUDIOMODE, audiomode);
-      EEPROM.writeByte(EE_BYTE_OIRT, specialstepOIRT);
+      EEPROM.writeByte(EE_BYTE_TOUCH_ROTATING, touchrotating);
       EEPROM.writeUInt(EE_UINT16_LOWEDGEOIRTSET, LowEdgeOIRTSet);
       EEPROM.writeUInt(EE_UINT16_HIGHEDGEOIRTSET, HighEdgeOIRTSet);
       EEPROM.writeByte(EE_BYTE_COLORINVERT, colorinvert);
@@ -2158,8 +2175,8 @@ void ButtonPress() {
               break;
 
             case 210:
-              tftPrint(0, myLanguage[language][68], 155, 78, ActiveColor, ActiveColorSmooth, FONT28);
-              if (specialstepOIRT) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28);
+              tftPrint(0, myLanguage[language][107], 155, 78, ActiveColor, ActiveColorSmooth, FONT28);
+              if (touchrotating) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28);
               break;
           }
           break;
@@ -2330,10 +2347,6 @@ void KeyUp() {
                 tftPrint(1, String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 155, 118, BackgroundColor, BackgroundColor, FONT28);
                 LowEdgeSet ++;
                 if (LowEdgeSet > 1070) LowEdgeSet = 650;
-                if (specialstepOIRT) {
-                  // FindlowStopOIRT();
-                  // FindhighStopOIRT();
-                }
                 tftPrint(1, String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28);
                 break;
 
@@ -2341,10 +2354,6 @@ void KeyUp() {
                 tftPrint(1, String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 155, 118, BackgroundColor, BackgroundColor, FONT28);
                 HighEdgeSet ++;
                 if (HighEdgeSet > 1080) HighEdgeSet = 660;
-                if (specialstepOIRT) {
-                  // FindlowStopOIRT();
-                  // FindhighStopOIRT();
-                }
                 tftPrint(1, String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28);
                 break;
 
@@ -2544,15 +2553,9 @@ void KeyUp() {
                 break;
 
               case 210:
-                if (specialstepOIRT) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, FONT28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, FONT28);
-                if (specialstepOIRT) {
-                  specialstepOIRT = 0;
-                } else {
-                  specialstepOIRT = 1;
-                  // FindlowStopOIRT();
-                  // FindhighStopOIRT();
-                }
-                if (specialstepOIRT) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28);
+                if (touchrotating) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, FONT28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, FONT28);
+                if (touchrotating) touchrotating = 0; else touchrotating = 1;
+                if (touchrotating) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28);
                 break;
             }
             break;
@@ -2936,15 +2939,9 @@ void KeyDown() {
                 radio.setAudio(audiomode);
                 break;
               case 210:
-                if (specialstepOIRT) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, FONT28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, FONT28);
-                if (specialstepOIRT) {
-                  specialstepOIRT = 0;
-                } else {
-                  specialstepOIRT = 1;
-                  // FindlowStopOIRT();
-                  // FindhighStopOIRT();
-                }
-                if (specialstepOIRT) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28);
+                if (touchrotating) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, FONT28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, FONT28);
+                if (touchrotating) touchrotating = 0; else touchrotating = 1;
+                if (touchrotating) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28);
                 break;
             }
             break;
@@ -3747,7 +3744,7 @@ void BuildMenu() {
       if (amnb != 0) tftPrint(1, String(amnb, DEC), 265, 156, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 156, PrimaryColor, PrimaryColorSmooth, FONT16);
       if (fmnb != 0) tftPrint(1, String(fmnb, DEC), 265, 176, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 176, PrimaryColor, PrimaryColorSmooth, FONT16);
       if (audiomode) tftPrint(1, "MPX", 305, 196, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, "Stereo", 305, 196, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (specialstepOIRT) tftPrint(1, myLanguage[language][42], 305, 216, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 216, PrimaryColor, PrimaryColorSmooth, FONT16);
+      if (touchrotating) tftPrint(1, myLanguage[language][42], 305, 216, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 216, PrimaryColor, PrimaryColorSmooth, FONT16);
       break;
 
     case 4:
@@ -5915,7 +5912,7 @@ void DefaultSettings() {
   EEPROM.writeByte(EE_BYTE_AM_NB, 0);
   EEPROM.writeByte(EE_BYTE_FM_NB, 0);
   EEPROM.writeByte(EE_BYTE_AUDIOMODE, 0);
-  EEPROM.writeByte(EE_BYTE_OIRT, 0);
+  EEPROM.writeByte( EE_BYTE_TOUCH_ROTATING, 0);
   EEPROM.writeUInt(EE_UINT16_LOWEDGEOIRTSET, 0);
   EEPROM.writeUInt(EE_UINT16_HIGHEDGEOIRTSET, 0);
   EEPROM.writeByte(EE_BYTE_COLORINVERT, 0);
