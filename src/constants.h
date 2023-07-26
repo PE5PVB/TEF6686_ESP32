@@ -152,7 +152,7 @@
 #define EE_BYTE_AM_NB               246
 #define EE_BYTE_FM_NB               247
 #define EE_BYTE_AUDIOMODE           248
-#define EE_BYTE_OIRT                249
+#define EE_BYTE_TOUCH_ROTATING      249
 #define EE_UINT16_LOWEDGEOIRTSET    250
 #define EE_UINT16_HIGHEDGEOIRTSET   254
 #define EE_BYTE_COLORINVERT         258
