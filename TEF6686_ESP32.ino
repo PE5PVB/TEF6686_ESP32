@@ -3316,7 +3316,7 @@ void ShowAdvancedRDS() {
   String rtplusstring;
   if (radio.rds.hasRDSplus) rtplusstring = "1) " + String(radio.rds.RTContent1) + " - 2) " + String(radio.rds.RTContent2) + "         "; else rtplusstring = myLanguage[language][89];
   if (hasrtplusold != radio.rds.hasRDSplus) {
-    if (radio.rds.hasRDSplus) tftPrint(-1, "RT+", 121, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "RT+", 121, 51, GreyoutColor, BackgroundColor, FONT16);
+    if (radio.rds.hasRDSplus) tftPrint(-1, "RT+", 124, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "RT+", 124, 51, GreyoutColor, BackgroundColor, FONT16);
     hasrtplusold = radio.rds.hasRDSplus;
   }
   if (rtplusstring.length() < 20) {
