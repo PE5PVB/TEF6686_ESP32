@@ -1649,6 +1649,116 @@ static const char* const myLanguage[15][108] = {
     "FM", // 105
     "OIRT", // 106
     "熄屏操作飞梭" // 107
+  },
+
+  { "Norsk", // Norwegian
+    "Rotasjonsretning endret", // 1
+    "Vennligst slipp knappen", // 2
+    "Skjermen ble snudd", // 3
+    "Kalibrer analog meter", // 4
+    "Slipp knappen når du er klar", // 5
+    "encoder satt til optisk", // 6
+    "encoder satt til standard", // 7
+    "FM/AM Radio", // 8
+    "Tuner: !Ingen!", // 9
+    "Lydstyrke:", // 10
+    "Omformer:", // 11
+    "Lav bånd grense:", // 12
+    "Høy bånd grense:", // 13
+    "FM RF-nivåforskyvning:", // 14
+    "Stereo terskel:", // 15
+    "High Cut corner:", // 16
+    "Highcut grense:", // 17
+    "Low level grense:", // 18
+    "Kontrast:", // 19
+    "Sett lyd", // 20
+    "Sett omformeroffset", // 21
+    "Sett lav bånd grense", // 22
+    "Sett høy bånd grense", // 23
+    "Sett nivåoffset", // 24
+    "Sett Stereo sep. terskel", // 25
+    "Sett høy grense frekvens", // 26
+    "Still inn høy grense terskel", // 27
+    "sett lav grense terskel", // 28
+    "Sett displayets lysstyrke", // 29
+    "Av", // 30
+    "Skjermen er dempet!", // 31
+    "Oppheve demping, fjern merket RF+-boksen", // 32
+    "Av", // 33
+    "SKANNER...", // 34
+    "Tuner ikke oppdaget", // 35
+    "Tuner versjon sett: v", // 36
+    "Start tuneren på nytt", // 37
+    "Vis RDS-feil", // 38
+    "Språk", // 39
+    "Velg språk", // 40
+    "TRYKK MODUS FOR Å AVSLUTE OG LAGRE", // 41
+    "På", // 42
+    "Softmute FM", // 43
+    "Softmute AM", // 44
+    "Pip ved båndkant", // 45
+    "Region", // 46
+    "Europe", // 47
+    "USA", // 48
+    "Vis understrek i RDS", // 49
+    "USB modus", // 50
+    "Wi-Fi aktiv", // 51
+    "Sett opp Wi-Fi", // 52
+    "Koblet til: ", // 53
+    "for å sette opp Wi-Fi", // 54
+    "Prøver å koble til Wi-Fi", // 55
+    "MISLYKKET!", // 56
+    "TILKOBLET!", // 57
+    "Stationlist klient IP", // 58
+    "Vis SW-bølgelengde", // 59
+    "RDS filter", // 60
+    "Vis PI feil", // 61
+    "Vis squelch", // 62
+    "Modulasjonsmåler", // 63
+    "AM Noise blanker", // 64
+    "FM Noise blanker", // 65
+    "Standarder lastet", // 66
+    "Audio utgang", // 67
+    "FM OIRT 30 kHz steps", // 68
+    "Invert display", // 69
+    "Om programvare", // 70
+    "Hovedkode:", // 71
+    "Bidragsytere:", // 72
+    "Ukjent", // 73
+    "Strømalternativer", // 74
+    "Deep sleep", // 75
+    "Skjerm av", // 76
+    "Tema", // 77
+    "Standard", // 78
+    "Cyan", // 79
+    "Crimson", // 80
+    "Monochrome", // 81
+    "Volcano", // 82
+    "Dendro", // 83
+    "Sakura", // 84
+    "Whiteout", // 85
+    "IKKE MULIG", // 86
+    "Ingen AF tilgjengelig", // 87
+    "Ingen EON tilgjengelig", // 88
+    "Ingen RT+ tilgjengelig", // 89
+    "FM default stepsize", // 90
+    "Skjermsparer", // 91
+    "sek", // 92
+    "TRYKK BAND FOR Å LUKKE", // 93
+    "1% lysstyrke", // 94
+    "25% lysstyrke", // 95
+    "50% lysstyrke", // 96
+    "AM RF Nivå offset:", // 97
+    "Signalmeter unit:", // 98
+	  "Bruk AF:", // 99
+    "Velg FM Bånd:", // 100
+    "Velg AM Bånd:", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT" // 106
+    "Roterer når skjerm av" // 107
   }
 };
 
