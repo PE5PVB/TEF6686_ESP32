@@ -112,7 +112,7 @@ byte batteryold;
 byte BWset;
 #ifdef CHINA_PORTABLE
 byte hardwaremodel = PORTABLE_ILI9341;
-#else 
+#else
 byte hardwaremodel = BASE_ILI9341;
 #endif
 byte hardwaremodelold;
@@ -2255,7 +2255,7 @@ void ButtonPress() {
               break;
           }
           break;
-        
+
         case 5:
           switch (menuoption) {
             case 30:
@@ -2673,7 +2673,7 @@ void KeyUp() {
 
             }
             break;
-          
+
           case 5:
             switch (menuoption) {
               case 30:
@@ -3870,10 +3870,10 @@ void BuildMenu() {
       ShowBandSelectionFM(false, true);
       ShowBandSelectionAM(false, true);
       break;
-    
+
     case 5:
       tftPrint(-1, myLanguage[language][108], 14, 36, ActiveColor, ActiveColorSmooth, FONT16);
-      
+
       switch (hardwaremodel) {
         case BASE_ILI9341: tftPrint(1, myLanguage[language][109], 305, 36, PrimaryColor, PrimaryColorSmooth, FONT16); break;
         case PORTABLE_ILI9341: tftPrint(1, myLanguage[language][110 ], 305, 36, PrimaryColor, PrimaryColorSmooth, FONT16); break;
@@ -4202,8 +4202,6 @@ void BuildDisplay() {
     tftPrint(-1, "kHz", 222, 4, ActiveColor, ActiveColorSmooth, FONT28);
     tftPrint(-1, unitString[unit], 282, 145, ActiveColor, ActiveColorSmooth, FONT16);
 
-    if (band < BAND_GAP) tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, FONT28); else tftPrint(-1, "kHz", 258, 76, ActiveColor, ActiveColorSmooth, FONT28);
-
     tft.drawRoundRect(249, 56, 30, 20, 5, GreyoutColor);
     tft.drawRoundRect(287, 56, 30, 20, 5, GreyoutColor);
     tft.drawCircle(81, 15, 10, GreyoutColor);
@@ -4246,6 +4244,7 @@ void BuildDisplay() {
   strcpy(radioIdPrevious, "0");
   programServicePrevious = "0";
   BWreset = true;
+  if (band < BAND_GAP) tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, FONT28); else tftPrint(-1, "kHz", 258, 76, ActiveColor, ActiveColorSmooth, FONT28);
 }
 
 void ShowFreq(int mode) {
@@ -6010,7 +6009,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_AM_NB, 0);
   EEPROM.writeByte(EE_BYTE_FM_NB, 0);
   EEPROM.writeByte(EE_BYTE_AUDIOMODE, 0);
-  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_TOUCH_ROTATING, 0); else EEPROM.writeByte(EE_BYTE_TOUCH_ROTATING, 1); 
+  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_TOUCH_ROTATING, 0); else EEPROM.writeByte(EE_BYTE_TOUCH_ROTATING, 1);
   EEPROM.writeUInt(EE_UINT16_LOWEDGEOIRTSET, 0);
   EEPROM.writeUInt(EE_UINT16_HIGHEDGEOIRTSET, 0);
   EEPROM.writeByte(EE_BYTE_HARDWARE_MODEL, userhardwaremodel);
