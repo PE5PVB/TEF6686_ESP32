@@ -112,7 +112,7 @@ byte batteryold;
 byte BWset;
 #ifdef CHINA_PORTABLE
 byte hardwaremodel = PORTABLE_ILI9341;
-#else 
+#else
 byte hardwaremodel = BASE_ILI9341;
 #endif
 byte hardwaremodelold;
@@ -2255,7 +2255,7 @@ void ButtonPress() {
               break;
           }
           break;
-        
+
         case 5:
           switch (menuoption) {
             case 30:
@@ -2676,7 +2676,7 @@ void KeyUp() {
 
             }
             break;
-          
+
           case 5:
             switch (menuoption) {
               case 30:
@@ -3873,10 +3873,10 @@ void BuildMenu() {
       ShowBandSelectionFM(false, true);
       ShowBandSelectionAM(false, true);
       break;
-    
+
     case 5:
       tftPrint(-1, myLanguage[language][108], 14, 36, ActiveColor, ActiveColorSmooth, FONT16);
-      
+
       switch (hardwaremodel) {
         case BASE_ILI9341: tftPrint(1, myLanguage[language][109], 305, 36, PrimaryColor, PrimaryColorSmooth, FONT16); break;
         case PORTABLE_ILI9341: tftPrint(1, myLanguage[language][110 ], 305, 36, PrimaryColor, PrimaryColorSmooth, FONT16); break;
@@ -4168,7 +4168,7 @@ void BuildDisplay() {
         }
       }
     }
-    if (showsquelch) tftPrint(0, "SQ:", 224, 145, ActiveColor, ActiveColorSmooth, FONT16);
+    if (showsquelch) tftPrint(-1, "SQ:", 212, 145, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(-1, "S/N", 246, 163, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(-1, "dB", 300, 163, ActiveColor, ActiveColorSmooth, FONT16);
     if (region == 0) tftPrint(-1, "PI:", 216, 193, ActiveColor, ActiveColorSmooth, FONT16);
@@ -4252,6 +4252,7 @@ void BuildDisplay() {
   strcpy(radioIdPrevious, "0");
   programServicePrevious = "0";
   BWreset = true;
+  if (band < BAND_GAP) tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, FONT28); else tftPrint(-1, "kHz", 258, 76, ActiveColor, ActiveColorSmooth, FONT28);
 }
 
 void ShowFreq(int mode) {
@@ -4617,18 +4618,18 @@ void doSquelch() {
     if (showsquelch && !advancedRDS && !afscreen) {
       if (seek == false && menu == false && Squelch != Squelchold) {
         if (Squelchold == -100) {
-          if (Squelch != Squelchold) tftPrint(0, myLanguage[language][33], 224, 163, BackgroundColor, BackgroundColor, FONT16);
+          if (Squelch != Squelchold) tftPrint(-1, myLanguage[language][33], 212, 163, BackgroundColor, BackgroundColor, FONT16);
         } else if (Squelchold == 920) {
-          if (Squelch != Squelchold) tftPrint(0, "ST", 224, 163, BackgroundColor, BackgroundColor, FONT16);
+          if (Squelch != Squelchold) tftPrint(-1, "ST", 212, 163, BackgroundColor, BackgroundColor, FONT16);
         } else {
-          if (Squelch != Squelchold) tftPrint(0, String(Squelchold / 10), 224, 163, BackgroundColor, BackgroundColor, FONT16);
+          if (Squelch != Squelchold) tftPrint(-1, String(Squelchold / 10), 212, 163, BackgroundColor, BackgroundColor, FONT16);
         }
         if (Squelch == -100) {
-          if (Squelch != Squelchold) tftPrint(0, myLanguage[language][33], 224, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+          if (Squelch != Squelchold) tftPrint(-1, myLanguage[language][33], 212, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
         } else if (Squelch == 920) {
-          tftPrint(0, "ST", 224, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+          tftPrint(-1, "ST", 212, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
         } else {
-          if (Squelch != Squelchold) tftPrint(0, String(Squelch / 10), 224, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+          if (Squelch != Squelchold) tftPrint(-1, String(Squelch / 10), 212, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
         }
       }
       Squelchold = Squelch;
@@ -4660,18 +4661,18 @@ void doSquelch() {
       if (screenmute == false && showsquelch == true && !advancedRDS && !afscreen) {
         if (Squelch != Squelchold) {
           if (Squelchold == -1) {
-            if (Squelch != Squelchold) tftPrint(0, "ST", 224, 163, BackgroundColor, BackgroundColor, FONT16);
+            if (Squelch != Squelchold) tftPrint(-1, "ST", 212, 163, BackgroundColor, BackgroundColor, FONT16);
           } else if (Squelchold == 0) {
-            if (Squelch != Squelchold) tftPrint(0, myLanguage[language][33], 224, 163, BackgroundColor, BackgroundColor, FONT16);
+            if (Squelch != Squelchold) tftPrint(-1, myLanguage[language][33], 212, 163, BackgroundColor, BackgroundColor, FONT16);
           } else {
-            if (Squelch != Squelchold) tftPrint(0, String(Squelchold / 10), 224, 163, BackgroundColor, BackgroundColor, FONT16);
+            if (Squelch != Squelchold) tftPrint(-1, String(Squelchold / 10), 212, 163, BackgroundColor, BackgroundColor, FONT16);
           }
           if (Squelch == -1) {
-            if (Squelch != Squelchold) tftPrint(0, "ST", 224, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+            if (Squelch != Squelchold) tftPrint(-1, "ST", 212, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
           } else if (Squelch == 0) {
-            if (Squelch != Squelchold) tftPrint(0, myLanguage[language][33], 224, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+            if (Squelch != Squelchold) tftPrint(-1, myLanguage[language][33], 212, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
           } else {
-            if (Squelch != Squelchold) tftPrint(0, String(Squelch / 10), 224, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+            if (Squelch != Squelchold) tftPrint(-1, String(Squelch / 10), 212, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
           }
           Squelchold = Squelch;
         }
@@ -5159,11 +5160,11 @@ void Communication() {
         if (Squelch != Squelchold) {
           if (screenmute == false) {
             if (Squelchold == -100) {
-              tftPrint(0, myLanguage[language][33], 224, 163, BackgroundColor, BackgroundColor, FONT16);
+              tftPrint(-1, myLanguage[language][33], 212, 163, BackgroundColor, BackgroundColor, FONT16);
             } else if (Squelchold > 920) {
-              tftPrint(0, "ST", 224, 163, BackgroundColor, BackgroundColor, FONT16);
+              tftPrint(-1, "ST", 212, 163, BackgroundColor, BackgroundColor, FONT16);
             } else {
-              tftPrint(0, String(Squelchold / 10), 224, 163, BackgroundColor, BackgroundColor, FONT16);
+              tftPrint(-1, String(Squelchold / 10), 212, 163, BackgroundColor, BackgroundColor, FONT16);
             }
           }
         }
@@ -6016,7 +6017,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_AM_NB, 0);
   EEPROM.writeByte(EE_BYTE_FM_NB, 0);
   EEPROM.writeByte(EE_BYTE_AUDIOMODE, 0);
-  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_TOUCH_ROTATING, 0); else EEPROM.writeByte(EE_BYTE_TOUCH_ROTATING, 1); 
+  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_TOUCH_ROTATING, 0); else EEPROM.writeByte(EE_BYTE_TOUCH_ROTATING, 1);
   EEPROM.writeUInt(EE_UINT16_LOWEDGEOIRTSET, 0);
   EEPROM.writeUInt(EE_UINT16_HIGHEDGEOIRTSET, 0);
   EEPROM.writeByte(EE_BYTE_HARDWARE_MODEL, userhardwaremodel);
