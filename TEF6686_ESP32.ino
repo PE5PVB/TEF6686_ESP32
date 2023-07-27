@@ -3696,9 +3696,9 @@ void BuildMenu() {
       tftPrint(1, String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 265, 76, PrimaryColor, PrimaryColorSmooth, FONT16);
       tftPrint(1, String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 265, 96, PrimaryColor, PrimaryColorSmooth, FONT16);
       if (LevelOffset > 0) tftPrint(1, "+" + String(LevelOffset, DEC), 265, 116, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, String(LevelOffset, DEC), 265, 116, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (StereoLevel != 0) tftPrint(1, String(StereoLevel, DEC), 265, 136, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 265, 136, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (HighCutLevel != 0) tftPrint(1, String(HighCutLevel * 100, DEC), 265, 156, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 265, 156, PrimaryColor, PrimaryColorSmooth, FONT16);
-      if (HighCutOffset != 0) tftPrint(1, String(HighCutOffset, DEC), 265, 176, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 265, 176, PrimaryColor, PrimaryColorSmooth, FONT16);
+      if (StereoLevel != 0) tftPrint(1, String(StereoLevel, DEC), 265, 136, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 136, PrimaryColor, PrimaryColorSmooth, FONT16);
+      if (HighCutLevel != 0) tftPrint(1, String(HighCutLevel * 100, DEC), 265, 156, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 156, PrimaryColor, PrimaryColorSmooth, FONT16);
+      if (HighCutOffset != 0) tftPrint(1, String(HighCutOffset, DEC), 265, 176, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, myLanguage[language][30], 305, 176, PrimaryColor, PrimaryColorSmooth, FONT16);
       tftPrint(1, String(LowLevelSet, DEC), 265, 196, PrimaryColor, PrimaryColorSmooth, FONT16);
       tftPrint(1, String(ContrastSet, DEC), 265, 216, PrimaryColor, PrimaryColorSmooth, FONT16);
       break;
