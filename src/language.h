@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char* const myLanguage[16][108] = {
+static const char* const myLanguage[16][112] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -108,7 +108,11 @@ static const char* const myLanguage[16][108] = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotating while screen off" // 107
+    "Rotating while screen off", // 107
+    "Model selector", // 108
+    "Base (ILI9341)", // 109
+    "Portable (ILI9341)", // 110
+    "Portable touch (ILI9341)" // 111
   },
 
   { "Nederlands", // Dutch
@@ -218,7 +222,11 @@ static const char* const myLanguage[16][108] = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotating while screen off" // 107
+    "Rotating while screen off", // 107
+    "Model selector", // 108
+    "Base (ILI9341)", // 109
+    "Portable (ILI9341)", // 110
+    "Portable touch (ILI9341)" // 111
   },
 
   { "Polski", // Polish
@@ -328,7 +336,11 @@ static const char* const myLanguage[16][108] = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotating while screen off" // 107
+    "Rotating while screen off", // 107
+    "Model selector", // 108
+    "Base (ILI9341)", // 109
+    "Portable (ILI9341)", // 110
+    "Portable touch (ILI9341)" // 111
   },
 
   { "Hrvatski", // Croatian
@@ -438,7 +450,11 @@ static const char* const myLanguage[16][108] = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotating while screen off" // 107
+    "Rotating while screen off", // 107
+    "Model selector", // 108
+    "Base (ILI9341)", // 109
+    "Portable (ILI9341)", // 110
+    "Portable touch (ILI9341)" // 111
   },
 
   { "Ελληνικά", // Greek
@@ -548,7 +564,11 @@ static const char* const myLanguage[16][108] = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Περιστροφή με οθόνη σβηστή" // 107
+    "Περιστροφή με οθόνη σβηστή", // 107
+    "Model selector", // 108
+    "Base (ILI9341)", // 109
+    "Portable (ILI9341)", // 110
+    "Portable touch (ILI9341)" // 111
   },
 
   { "Romana", // Romanian
@@ -658,7 +678,11 @@ static const char* const myLanguage[16][108] = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotating while screen off" // 107
+    "Rotating while screen off", // 107
+    "Model selector", // 108
+    "Base (ILI9341)", // 109
+    "Portable (ILI9341)", // 110
+    "Portable touch (ILI9341)" // 111
   },
 
   { "Deutsch", // German
@@ -768,7 +792,11 @@ static const char* const myLanguage[16][108] = {
     "KW", // 104
     "UKW", // 105
     "OIRT", // 106
-    "Rotating while screen off" // 107
+    "Rotating while screen off", // 107
+    "Model selector", // 108
+    "Base (ILI9341)", // 109
+    "Portable (ILI9341)", // 110
+    "Portable touch (ILI9341)" // 111
   },
 
   { "Czech", // Czech
@@ -878,7 +906,11 @@ static const char* const myLanguage[16][108] = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotating while screen off" // 107
+    "Rotating while screen off", // 107
+    "Model selector", // 108
+    "Base (ILI9341)", // 109
+    "Portable (ILI9341)", // 110
+    "Portable touch (ILI9341)" // 111
   },
 
   { "Slovak", // Slovak
@@ -988,7 +1020,11 @@ static const char* const myLanguage[16][108] = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotating while screen off" // 107
+    "Rotating while screen off", // 107
+    "Model selector", // 108
+    "Base (ILI9341)", // 109
+    "Portable (ILI9341)", // 110
+    "Portable touch (ILI9341)" // 111
   },
 
   { "Français", // French
@@ -1098,7 +1134,11 @@ static const char* const myLanguage[16][108] = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotating while screen off" // 107
+    "Rotating while screen off", // 107
+    "Model selector", // 108
+    "Base (ILI9341)", // 109
+    "Portable (ILI9341)", // 110
+    "Portable touch (ILI9341)" // 111
   },
 
   { "Български", // Bulgarian
@@ -1208,7 +1248,11 @@ static const char* const myLanguage[16][108] = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotating while screen off" // 107
+    "Rotating while screen off", // 107
+    "Model selector", // 108
+    "Base (ILI9341)", // 109
+    "Portable (ILI9341)", // 110
+    "Portable touch (ILI9341)" // 111
   },
 
   { "Русский", // Russian
@@ -1318,7 +1362,11 @@ static const char* const myLanguage[16][108] = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotating while screen off" // 107
+    "Rotating while screen off", // 107
+    "Model selector", // 108
+    "Base (ILI9341)", // 109
+    "Portable (ILI9341)", // 110
+    "Portable touch (ILI9341)" // 111
   },
 
   { "Українська", // Ukranian
@@ -1428,7 +1476,11 @@ static const char* const myLanguage[16][108] = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotating while screen off" // 107
+    "Rotating while screen off", // 107
+    "Model selector", // 108
+    "Base (ILI9341)", // 109
+    "Portable (ILI9341)", // 110
+    "Portable touch (ILI9341)" // 111
   },
 
   { "Italiano", // Italian
@@ -1538,7 +1590,11 @@ static const char* const myLanguage[16][108] = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotating while screen off" // 107
+    "Rotating while screen off", // 107
+    "Model selector", // 108
+    "Base (ILI9341)", // 109
+    "Portable (ILI9341)", // 110
+    "Portable touch (ILI9341)" // 111
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -1648,7 +1704,11 @@ static const char* const myLanguage[16][108] = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "熄屏操作飞梭" // 107
+    "熄屏操作飞梭", // 107
+    "硬件型号选择", // 108
+    "原版(ILI9341)", // 109
+    "便携版(ILI9341)", // 110
+    "便携电阻触摸版(ILI9341)" // 111
   },
 
   { "Norsk", // Norwegian
@@ -1758,7 +1818,11 @@ static const char* const myLanguage[16][108] = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Roterer når skjerm av" // 107
+    "Roterer når skjerm av", // 107
+    "Model selector", // 108
+    "Base (ILI9341)", // 109
+    "Portable (ILI9341)", // 110
+    "Portable touch (ILI9341)" // 111
   }
 };
 
