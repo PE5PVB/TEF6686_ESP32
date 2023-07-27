@@ -3989,8 +3989,8 @@ void BuildAFScreen() {
     tft.drawLine(268, 30, 268, 0, FrameColor);
     tftPrint(-1, "kHz", 222, 4, ActiveColor, ActiveColorSmooth, FONT28);
     tftPrint(0, myLanguage[language][93], 160, 222, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, myLanguage[language][88], 184, 54, PrimaryColor, PrimaryColorSmooth, FONT16);
-    tftPrint(-1, myLanguage[language][87], 6, 54, PrimaryColor, PrimaryColorSmooth, FONT16);
+    tftPrint(-1, myLanguage[language][88], 184, 48, PrimaryColor, PrimaryColorSmooth, FONT16);
+    tftPrint(-1, myLanguage[language][87], 6, 48, PrimaryColor, PrimaryColorSmooth, FONT16);
 
     for (byte i = 0; i < 20; i++) mappedfreqold[i] = 0;
     RDSstatusold = false;
@@ -4580,7 +4580,7 @@ void ShowModLevel() {
   if (showmodulation) {
     int segments;
 
-    if (SQ != false) {
+    if (seek || SQ) {
       MStatus = 0;
       MStatusold = 1;
     }
@@ -4611,7 +4611,7 @@ void doSquelch() {
     Squelch = analogRead(PIN_POT) / 4 - 100;
     if (Squelch > 920) Squelch = 920;
     if (showsquelch && !advancedRDS && !afscreen) {
-      if (seek == false && menu == false && Squelch != Squelchold) {
+      if (menu == false && Squelch != Squelchold) {
         if (Squelchold == -100) {
           if (Squelch != Squelchold) tftPrint(-1, myLanguage[language][33], 212, 163, BackgroundColor, BackgroundColor, FONT16);
         } else if (Squelchold == 920) {
@@ -4630,11 +4630,11 @@ void doSquelch() {
       Squelchold = Squelch;
     }
   }
-  if (seek == false && (XDRGTKUSB == true || XDRGTKTCP == true)) {
+  if ((XDRGTKUSB == true || XDRGTKTCP == true)) {
     if (XDRMute == false) {
       if (Squelch != -1) {
         if (Squelch < SStatus || Squelch == -100 || Squelch == 0) {
-          radio.setUnMute();
+          if (!seek) radio.setUnMute();
           if (screenmute == false) tft.drawBitmap(110, 5, Speaker, 26, 22, GreyoutColor);
           SQ = false;
         } else {
@@ -4674,9 +4674,9 @@ void doSquelch() {
       }
     }
   } else {
-    if (seek == false && Squelch != 920) {
+    if (Squelch != 920) {
       if (Squelch < SStatus || Squelch == -100 || Squelch == 0) {
-        radio.setUnMute();
+        if (!seek) radio.setUnMute();
         if (screenmute == false) tft.drawBitmap(110, 5, Speaker, 26, 22, GreyoutColor);
         SQ = false;
       } else {
@@ -4685,8 +4685,8 @@ void doSquelch() {
         SQ = true;
       }
     } else {
-      if (seek == false && Stereostatus == true) {
-        radio.setUnMute();
+      if (Stereostatus == true) {
+        if (!seek) radio.setUnMute();
         if (screenmute == false) tft.drawBitmap(110, 5, Speaker, 26, 22, GreyoutColor);
         SQ = false;
       } else {
