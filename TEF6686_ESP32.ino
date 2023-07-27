@@ -2275,6 +2275,9 @@ void ButtonPress() {
         tryWiFi();
         delay(2000);
       }
+      if (menupage == 2 && menuoption == 30){
+        doTheme();
+      }
       menuopen = false;
       BuildMenu();
     }
@@ -4202,8 +4205,13 @@ void BuildDisplay() {
     tftPrint(-1, "kHz", 222, 4, ActiveColor, ActiveColorSmooth, FONT28);
     tftPrint(-1, unitString[unit], 282, 145, ActiveColor, ActiveColorSmooth, FONT16);
 
-    tft.drawRoundRect(249, 56, 30, 20, 5, GreyoutColor);
-    tft.drawRoundRect(287, 56, 30, 20, 5, GreyoutColor);
+    if (band < BAND_GAP) tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, FONT28); else tftPrint(-1, "kHz", 258, 76, ActiveColor, ActiveColorSmooth, FONT28);
+
+    tft.drawRoundRect(248, 56, 32, 20, 5, GreyoutColor);
+    if (band > BAND_GAP) tftPrint(0, "iMS", 265, 59, GreyoutColor, BackgroundColor, FONT16);
+    tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
+    if (band > BAND_GAP) tftPrint(0, "EQ", 303, 59, GreyoutColor, BackgroundColor, FONT16);
+
     tft.drawCircle(81, 15, 10, GreyoutColor);
     tft.drawCircle(81, 15, 9, GreyoutColor);
     tft.drawCircle(91, 15, 10, GreyoutColor);
