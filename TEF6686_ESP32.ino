@@ -2275,6 +2275,9 @@ void ButtonPress() {
         tryWiFi();
         delay(2000);
       }
+      if (menupage == 2 && menuoption == 30){
+        doTheme();
+      }
       menuopen = false;
       BuildMenu();
     }
