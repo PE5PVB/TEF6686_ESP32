@@ -41,7 +41,7 @@
 #define FREQ_SW_HIGH_EDGE_MAX      (FREQ_SW_END)
 #define FREQ_FM_START              65000
 #define FREQ_FM_END                108000
-#define FREQ_FM_OIRT_START         6590   // use values of 1/10 * kHz
+#define FREQ_FM_OIRT_START         6402   // use values of 1/10 * kHz
 #define FREQ_FM_OIRT_END           7400   // use values of 1/10 * kHz
 
 // according to https://www.short-wave.info/index.php?feature=frequencies
