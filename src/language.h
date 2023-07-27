@@ -1757,7 +1757,7 @@ static const char* const myLanguage[16][108] = {
     "MW", // 103
     "SW", // 104
     "FM", // 105
-    "OIRT" // 106
+    "OIRT", // 106
     "Roterer når skjerm av" // 107
   }
 };
