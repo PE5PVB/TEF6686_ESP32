@@ -3151,6 +3151,9 @@ void readRds() {
 }
 
 void ShowAdvancedRDS() {
+  const uint8_t* font = FONT16;
+  if (language == LANGUAGE_CHS) font = FONT16_CHS;
+
   if (radio.rds.rdsAerror != errorAold) {
     if (radio.rds.rdsAerror) tft.fillCircle(86, 41, 5, SignificantColor); else tft.fillCircle(86, 41, 5, InsignificantColor);
     errorAold = radio.rds.rdsAerror;
@@ -3246,7 +3249,7 @@ void ShowAdvancedRDS() {
     if (afstringold != afstring) {
       xPos2 = 0;
       sprite5.fillSprite(BackgroundColor);
-      sprite5.loadFont(FONT16);
+      sprite5.loadFont(font);
       sprite5.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
       sprite5.drawString(afstring, xPos2, 2);
       sprite5.pushSprite(35, 197);
@@ -3264,7 +3267,7 @@ void ShowAdvancedRDS() {
       }
       if (xPos2 < -tft.textWidth(afstring) + (charWidth * 16)) xPos2 = 0;
       sprite5.fillSprite(BackgroundColor);
-      sprite5.loadFont(FONT16);
+      sprite5.loadFont(font);
       sprite5.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
       sprite5.drawString(afstring, xPos2, 2);
       sprite5.pushSprite(35, 197);
@@ -3283,7 +3286,7 @@ void ShowAdvancedRDS() {
     if (eonstringold != eonstring) {
       xPos3 = 0;
       sprite3.fillSprite(BackgroundColor);
-      sprite3.loadFont(FONT16);
+      sprite3.loadFont(font);
       sprite3.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
       sprite3.drawString(eonstring, xPos3, 2);
       sprite3.pushSprite(35, 172);
@@ -3301,7 +3304,7 @@ void ShowAdvancedRDS() {
       }
       if (xPos3 < -tft.textWidth(eonstring) + (charWidth * 16)) xPos3 = 0;
       sprite3.fillSprite(BackgroundColor);
-      sprite3.loadFont(FONT16);
+      sprite3.loadFont(font);
       sprite3.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
       sprite3.drawString(eonstring, xPos3, 2);
       sprite3.pushSprite(35, 172);
@@ -3320,7 +3323,7 @@ void ShowAdvancedRDS() {
     if (rtplusstringold != rtplusstring) {
       xPos4 = 0;
       sprite4.fillSprite(BackgroundColor);
-      sprite4.loadFont(FONT16);
+      sprite4.loadFont(font);
       sprite4.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
       sprite4.drawString(rtplusstring, xPos4, 2);
       sprite4.pushSprite(35, 146);
@@ -3338,7 +3341,7 @@ void ShowAdvancedRDS() {
       }
       if (xPos4 < -tft.textWidth(rtplusstring) + (charWidth * 16)) xPos4 = 0;
       sprite4.fillSprite(BackgroundColor);
-      sprite4.loadFont(FONT16);
+      sprite4.loadFont(font);
       sprite4.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
       sprite4.drawString(rtplusstring, xPos4, 2);
       sprite4.pushSprite(35, 146);
