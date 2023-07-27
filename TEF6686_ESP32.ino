@@ -3080,6 +3080,10 @@ void readRds() {
         } else {
           tftPrint(-1, "PTYN N/A", 216, 109, BackgroundColor, BackgroundColor, FONT16);
           tftPrint(-1, String(ptynold), 216, 109, BackgroundColor, BackgroundColor, FONT16);
+          tft.fillCircle(86, 41, 5, SignificantColor);
+          tft.fillCircle(124, 41, 5, SignificantColor);
+          tft.fillCircle(162, 41, 5, SignificantColor);
+          tft.fillCircle(200, 41, 5, SignificantColor);
         }
         dropout = true;
         aftest = true;
@@ -4300,7 +4304,7 @@ void ShowSignalLevel() {
     int SStatusprint = 0;
     if (unit == 0) SStatusprint = SStatus;
     if (unit == 1) SStatusprint = ((SStatus * 100) + 10875) / 100;
-    if (unit == 2) SStatusprint = ((float(SStatus / 10) - 10 * log10(75) - 90) * 10);
+    if (unit == 2) SStatusprint = round((float(SStatus) / 10.0 - 10.0 * log10(75) - 90.0) * 10.0);
 
     if (SStatusprint > (SStatusold + 3) || SStatusprint < (SStatusold - 3)) {
       if (advancedRDS) {
