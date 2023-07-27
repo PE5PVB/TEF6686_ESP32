@@ -2275,7 +2275,7 @@ void ButtonPress() {
         tryWiFi();
         delay(2000);
       }
-      if (menupage == 2 && menuoption == 30){
+      if (menupage == 2 && menuoption == 30) {
         doTheme();
       }
       menuopen = false;
@@ -3164,8 +3164,6 @@ void readRds() {
           sprite.fillSprite(BackgroundColor);
           sprite.pushSprite(38, 220);
         } else {
-          tftPrint(-1, "PTYN N/A", 216, 109, BackgroundColor, BackgroundColor, FONT16);
-          tftPrint(-1, String(ptynold), 216, 109, BackgroundColor, BackgroundColor, FONT16);
           tft.fillCircle(86, 41, 5, SignificantColor);
           tft.fillCircle(124, 41, 5, SignificantColor);
           tft.fillCircle(162, 41, 5, SignificantColor);
@@ -3179,10 +3177,6 @@ void readRds() {
           if (advancedRDS) tftPrint(-1, PIold, 244, 75, PrimaryColor, PrimaryColorSmooth, FONT28); else tftPrint(-1, PIold, 244, 187, PrimaryColor, PrimaryColorSmooth, FONT28);
           if (advancedRDS) tftPrint(-1, PSold, 38, 75, PrimaryColor, PrimaryColorSmooth, FONT28); else tftPrint(-1, PSold, 38, 187, PrimaryColor, PrimaryColorSmooth, FONT28);
           if (advancedRDS) tftPrint(-1, PTYold, 38, 109, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, PTYold, 38, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
-          if (advancedRDS) {
-            tftPrint(-1, "PTYN N/A", 216, 109, BackgroundColor, BackgroundColor, FONT16);
-            tftPrint(-1, String(ptynold), 216, 109, BackgroundColor, BackgroundColor, FONT16);
-          }
           dropout = false;
         }
       }
@@ -3286,8 +3280,9 @@ void ShowAdvancedRDS() {
 
   if (ptynold != radio.rds.PTYN) {
     tftPrint(-1, "PTYN N/A", 216, 109, BackgroundColor, BackgroundColor, FONT16);
-    tftPrint(-1, String(ptynold), 216, 109, BackgroundColor, BackgroundColor, FONT16);
-    if (radio.rds.PTYN.length() > 0) tftPrint(-1, String(ptynold), 216, 109, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "PTYN N/A", 216, 109, PrimaryColor, PrimaryColorSmooth, FONT16);
+    tftPrint(-1, ptynold, 216, 109, BackgroundColor, BackgroundColor, FONT16);
+    if (radio.rds.PTYN.length() == 0) radio.rds.PTYN = "PTYN N/A";
+    tftPrint(-1, String(radio.rds.PTYN), 216, 109, PrimaryColor, PrimaryColorSmooth, FONT16);
     ptynold = radio.rds.PTYN;
   }
 
@@ -4112,7 +4107,7 @@ void BuildAdvancedRDS() {
   strcpy(programTypePrevious, "0");
   strcpy(radioIdPrevious, "0");
   programServicePrevious = "0";
-  ptynold = " ";
+  ptynold = "";
   MSold = 0;
   ECCold = 254;
   licold = 254;
