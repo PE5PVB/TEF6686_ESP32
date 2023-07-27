@@ -133,7 +133,7 @@ bool devTEF_Radio_Set_ChannelEqualizer(bool eq) {
 }
 
 bool devTEF_Radio_Set_Stereo_Min(bool mode) {
-	if (mode) return devTEF_Set_Cmd(TEF_FM, Cmd_Set_Stereo_Min, 7, 2); else return devTEF_Set_Cmd(TEF_FM, Cmd_Set_Stereo_Min, 7, 0);
+  if (mode) return devTEF_Set_Cmd(TEF_FM, Cmd_Set_Stereo_Min, 7, 2); else return devTEF_Set_Cmd(TEF_FM, Cmd_Set_Stereo_Min, 7, 0);
 }
 
 bool devTEF_Radio_Set_RFAGC(uint16_t agc) {
@@ -216,6 +216,8 @@ bool devTEF_Radio_Get_Quality_Status (uint16_t *status, int16_t *level, uint16_t
   *offset = Convert8bto16b(buf + 8);
   *bandwidth = Convert8bto16b(buf + 10) / 10;
   *mod = Convert8bto16b(buf + 12) / 10;
+  if (*level < -200) *level = -200;
+  if (*level > 1200) *level = 1200;
   *snr = int(0.46222375 * (float)(*level) / 10 - 0.082495118 * (float)(*usn) / 10) + 10;
   return r;
 }
@@ -230,6 +232,8 @@ bool devTEF_Radio_Get_Quality_Status_AM (int16_t *level, uint16_t *noise, uint16
   *offset = Convert8bto16b(buf + 8);
   *bandwidth = Convert8bto16b(buf + 10) / 10;
   *mod = Convert8bto16b(buf + 12) / 10;
+  if (*level < -200) *level = -200;
+  if (*level > 1200) *level = 1200;
   if (*noise / 10 > 40) *snr = 0; else *snr = -((int8_t)(*noise / 10));
   return r;
 }

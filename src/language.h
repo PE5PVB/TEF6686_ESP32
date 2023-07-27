@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char* const myLanguage[15][108] = {
+static const char* const myLanguage[16][108] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
