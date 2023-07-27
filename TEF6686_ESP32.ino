@@ -29,7 +29,8 @@
 #define CONTRASTPIN     2
 #define STANDBYLED      19
 #define SMETERPIN       27
-//#define ARS       // uncomment for BGR type display (ARS version)
+// #define ARS                 // uncomment for BGR type display (ARS version)
+// #define CHINA_PORTABLE      // uncomment for China Portable build (Simplified Chinese)
 
 #ifdef ARS
 #define VERSION         "v2.00ARS"
@@ -109,7 +110,12 @@ byte bandforbidden;
 byte battery;
 byte batteryold;
 byte BWset;
-byte colorinvert;
+#ifdef CHINA_PORTABLE
+byte hardwaremodel = PORTABLE_ILI9341;
+#else 
+byte hardwaremodel = BASE_ILI9341;
+#endif
+byte hardwaremodelold;
 byte ContrastSet;
 byte CurrentTheme;
 byte displayflip;
@@ -128,7 +134,7 @@ byte memoryband[EE_PRESETS_CNT];
 byte memorypos;
 byte memoryposold;
 byte menupage = 1;
-byte menupagestotal = 4;
+byte menupagestotal = 5;
 byte MSold;
 byte optenc;
 byte poweroptions;
@@ -311,7 +317,7 @@ void setup() {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
   setupmode = true;
   EEPROM.begin(EE_TOTAL_CNT);
-  if (EEPROM.readByte(EE_BYTE_CHECKBYTE) != EE_CHECKBYTE_VALUE) DefaultSettings();
+  if (EEPROM.readByte(EE_BYTE_CHECKBYTE) != EE_CHECKBYTE_VALUE) DefaultSettings(hardwaremodel);
 
   frequency = EEPROM.readUInt(EE_UINT16_FREQUENCY_FM);
   frequency_OIRT = EEPROM.readUInt(EE_UINT16_FREQUENCY_OIRT);
@@ -361,9 +367,7 @@ void setup() {
   fmnb = EEPROM.readByte(EE_BYTE_FM_NB);
   audiomode = EEPROM.readByte(EE_BYTE_AUDIOMODE);
   touchrotating = EEPROM.readByte(EE_BYTE_TOUCH_ROTATING);
-  // LowEdgeOIRTSet = EEPROM.readUInt(EE_UINT16_LOWEDGEOIRTSET);
-  // HighEdgeOIRTSet = EEPROM.readUInt(EE_UINT16_HIGHEDGEOIRTSET);
-  colorinvert = EEPROM.readByte(EE_BYTE_COLORINVERT);
+  hardwaremodel = EEPROM.readByte(EE_BYTE_HARDWARE_MODEL);
   poweroptions = EEPROM.readByte(EE_BYTE_POWEROPTIONS);
   CurrentTheme = EEPROM.readByte(EE_BYTE_CURRENTTHEME);
   fmdefaultstepsize = EEPROM.readByte(EE_BYTE_FMDEFAULTSTEPSIZE);
@@ -420,7 +424,6 @@ void setup() {
   }
 
   tft.init();
-  tft.invertDisplay(colorinvert);
   doTheme();
   if (displayflip == 0) {
 #ifdef ARS
@@ -499,7 +502,7 @@ void setup() {
 
   if (digitalRead(ROTARY_BUTTON) == LOW && digitalRead(BWBUTTON) == LOW) {
     analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
-    DefaultSettings();
+    DefaultSettings(hardwaremodel);
     tftPrint(0, myLanguage[language][66], 155, 85, ActiveColor, ActiveColorSmooth, FONT28);
     tftPrint(0, myLanguage[language][2], 155, 115, ActiveColor, ActiveColorSmooth, FONT28);
     while (digitalRead(ROTARY_BUTTON) == LOW && digitalRead(BWBUTTON) == LOW) delay(50);
@@ -1797,7 +1800,7 @@ void ModeButtonPress() {
       EEPROM.writeByte(EE_BYTE_TOUCH_ROTATING, touchrotating);
       EEPROM.writeUInt(EE_UINT16_LOWEDGEOIRTSET, LowEdgeOIRTSet);
       EEPROM.writeUInt(EE_UINT16_HIGHEDGEOIRTSET, HighEdgeOIRTSet);
-      EEPROM.writeByte(EE_BYTE_COLORINVERT, colorinvert);
+      EEPROM.writeByte(EE_BYTE_HARDWARE_MODEL, hardwaremodel);
       EEPROM.writeByte(EE_BYTE_POWEROPTIONS, poweroptions);
       EEPROM.writeByte(EE_BYTE_CURRENTTHEME, CurrentTheme);
       EEPROM.writeByte(EE_BYTE_FMDEFAULTSTEPSIZE, fmdefaultstepsize);
@@ -2252,6 +2255,20 @@ void ButtonPress() {
               break;
           }
           break;
+        
+        case 5:
+          switch (menuoption) {
+            case 30:
+              tftPrint(0, myLanguage[language][108], 155, 78, ActiveColor, ActiveColorSmooth, FONT28);
+              switch (hardwaremodel) {
+                case BASE_ILI9341: tftPrint(0, myLanguage[language][109], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); break;
+                case PORTABLE_ILI9341: tftPrint(0, myLanguage[language][110], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); break;
+                case PORTABLE_TOUCH_ILI9341: tftPrint(0, myLanguage[language][111], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); break;
+              }
+              hardwaremodelold = hardwaremodel;
+              break;
+          }
+          break;
       }
     } else {
       if (menupage == 2 && menuoption == 190 && wifi == true) {
@@ -2308,12 +2325,22 @@ void KeyUp() {
     } else {
       if (menuopen == false) {
         tft.drawRoundRect(8, menuoption + 3, 302, 21, 5, BackgroundColor);
-        menuoption += 20;
-        if (menuoption > 210) {
-          menupage++;
-          if (menupage > menupagestotal) menupage = 1;
-          menuoption = 30;
-          BuildMenu();
+        if (hardwaremodel == BASE_ILI9341) {
+          menuoption += 20;
+          if (menuoption > 210) {
+            menupage++;
+            if (menupage > menupagestotal) menupage = 1;
+            menuoption = 30;
+            BuildMenu();
+          }
+        } else {
+          menuoption -= 20;
+          if (menuoption < 30) {
+            menupage--;
+            if (menupage == 0) menupage = menupagestotal;
+            menuoption = 210;
+            BuildMenu();
+          }
         }
         tft.drawRoundRect(8, menuoption + 3, 302, 21, 5, ActiveColor);
       } else {
@@ -2646,6 +2673,29 @@ void KeyUp() {
 
             }
             break;
+          
+          case 5:
+            switch (menuoption) {
+              case 30:
+                switch (hardwaremodelold) {
+                  case BASE_ILI9341: tftPrint(0, myLanguage[language][109], 155, 118, BackgroundColor, BackgroundColor, FONT28); break;
+                  case PORTABLE_ILI9341: tftPrint(0, myLanguage[language][110], 155, 118, BackgroundColor, BackgroundColor, FONT28); break;
+                  case PORTABLE_TOUCH_ILI9341: tftPrint(0, myLanguage[language][111], 155, 118, BackgroundColor, BackgroundColor, FONT28); break;
+                }
+
+                hardwaremodel++;
+                if (hardwaremodel > RADIO_HARDWARE_CNT - 1) hardwaremodel = 0;
+
+                switch (hardwaremodel) {
+                  case BASE_ILI9341: tftPrint(0, myLanguage[language][109], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); break;
+                  case PORTABLE_ILI9341: tftPrint(0, myLanguage[language][110], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); break;
+                  case PORTABLE_TOUCH_ILI9341: tftPrint(0, myLanguage[language][111], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); break;
+                }
+                hardwaremodelold = hardwaremodel;
+                break;
+            }
+            break;
+
         }
       }
     }
@@ -2695,12 +2745,22 @@ void KeyDown() {
     } else {
       if (menuopen == false) {
         tft.drawRoundRect(8, menuoption + 3, 302, 21, 5, BackgroundColor);
-        menuoption -= 20;
-        if (menuoption < 30) {
-          menupage--;
-          if (menupage == 0) menupage = menupagestotal;
-          menuoption = 210;
-          BuildMenu();
+        if (hardwaremodel == BASE_ILI9341) {
+          menuoption -= 20;
+          if (menuoption < 30) {
+            menupage--;
+            if (menupage == 0) menupage = menupagestotal;
+            menuoption = 210;
+            BuildMenu();
+          }
+        } else {
+          menuoption += 20;
+          if (menuoption > 210) {
+            menupage++;
+            if (menupage > menupagestotal) menupage = 1;
+            menuoption = 30;
+            BuildMenu();
+          }
         }
         tft.drawRoundRect(8, menuoption + 3, 302, 21, 5, ActiveColor);
       } else {
@@ -3031,6 +3091,29 @@ void KeyDown() {
 
             }
             break;
+
+          case 5:
+            switch (menuoption) {
+              case 30:
+                switch (hardwaremodelold) {
+                  case BASE_ILI9341: tftPrint(0, myLanguage[language][109], 155, 118, BackgroundColor, BackgroundColor, FONT28); break;
+                  case PORTABLE_ILI9341: tftPrint(0, myLanguage[language][110], 155, 118, BackgroundColor, BackgroundColor, FONT28); break;
+                  case PORTABLE_TOUCH_ILI9341: tftPrint(0, myLanguage[language][111], 155, 118, BackgroundColor, BackgroundColor, FONT28); break;
+                }
+
+                hardwaremodel--;
+                if (hardwaremodel > RADIO_HARDWARE_CNT - 1) hardwaremodel = RADIO_HARDWARE_CNT - 1;
+
+                switch (hardwaremodel) {
+                  case BASE_ILI9341: tftPrint(0, myLanguage[language][109], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); break;
+                  case PORTABLE_ILI9341: tftPrint(0, myLanguage[language][110], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); break;
+                  case PORTABLE_TOUCH_ILI9341: tftPrint(0, myLanguage[language][111], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); break;
+                }
+                hardwaremodelold = hardwaremodel;
+                break;
+            }
+            break;
+
         }
       }
     }
@@ -3787,6 +3870,17 @@ void BuildMenu() {
       ShowBandSelectionFM(false, true);
       ShowBandSelectionAM(false, true);
       break;
+    
+    case 5:
+      tftPrint(-1, myLanguage[language][108], 14, 36, ActiveColor, ActiveColorSmooth, FONT16);
+      
+      switch (hardwaremodel) {
+        case BASE_ILI9341: tftPrint(1, myLanguage[language][109], 305, 36, PrimaryColor, PrimaryColorSmooth, FONT16); break;
+        case PORTABLE_ILI9341: tftPrint(1, myLanguage[language][110 ], 305, 36, PrimaryColor, PrimaryColorSmooth, FONT16); break;
+        case PORTABLE_TOUCH_ILI9341: tftPrint(1, myLanguage[language][111], 305, 36, PrimaryColor, PrimaryColorSmooth, FONT16); break;
+      }
+      break;
+
   }
   analogWrite(SMETERPIN, 0);
 }
@@ -3885,7 +3979,6 @@ void BuildAFScreen() {
   afscreen = true;
   advancedRDS = false;
   if (theme == 0) {
-    tft.invertDisplay(colorinvert);
     tft.fillScreen(BackgroundColor);
     tft.drawRect(0, 0, 320, 240, FrameColor);
     tft.drawLine(0, 30, 320, 30, FrameColor);
@@ -3925,7 +4018,6 @@ void BuildAdvancedRDS() {
   advancedRDS = true;
   ScreensaverTimerSet(OFF);
   if (theme == 0) {
-    tft.invertDisplay(colorinvert);
     tft.fillScreen(BackgroundColor);
     tft.drawRect(0, 0, 320, 240, FrameColor);
     tft.drawLine(0, 30, 320, 30, FrameColor);
@@ -4045,7 +4137,6 @@ void BuildDisplay() {
   advancedRDS = false;
   int bandColor;
   if (theme == 0) {
-    tft.invertDisplay(colorinvert);
     tft.fillScreen(BackgroundColor);
     tft.drawRect(0, 0, 320, 240, FrameColor);
     tft.drawLine(0, 30, 320, 30, FrameColor);
@@ -5868,9 +5959,9 @@ void passwordcrypt() {
   cryptedpassword = String(sha1(salt));
 }
 
-void DefaultSettings() {
+void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_CHECKBYTE, EE_CHECKBYTE_VALUE);
-  EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, 10000);
+  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, 10000); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, 8900);
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_OIRT, FREQ_FM_OIRT_START);
   EEPROM.writeInt(EE_BYTE_VOLSET, 0);
   EEPROM.writeUInt(EE_UINT16_CONVERTERSET, 0);
@@ -5878,7 +5969,7 @@ void DefaultSettings() {
   EEPROM.writeUInt(EE_UINT16_FMHIGHEDGESET, 1080);
   EEPROM.writeByte(EE_BYTE_CONTRASTSET, 50);
   EEPROM.writeByte(EE_BYTE_STEREOLEVEL, 0);
-  EEPROM.writeByte(EE_BYTE_BANDFM, FM_BAND_ALL);
+  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_BANDFM, FM_BAND_ALL); else EEPROM.writeByte(EE_BYTE_BANDFM, FM_BAND_FM);
   EEPROM.writeByte(EE_BYTE_BANDAM, AM_BAND_ALL);
   EEPROM.writeByte(EE_BYTE_HIGHCUTLEVEL, 70);
   EEPROM.writeByte(EE_BYTE_HIGHCUTOFFSET, 0);
@@ -5887,10 +5978,10 @@ void DefaultSettings() {
   EEPROM.writeByte(EE_BYTE_SOFTMUTEAM, 0);
   EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, 0);
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, 828);
-  EEPROM.writeByte(EE_BYTE_LANGUAGE, 0);
+  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_LANGUAGE, 0); else EEPROM.writeByte(EE_BYTE_LANGUAGE, LANGUAGE_CHS);
   EEPROM.writeByte(EE_BYTE_SHOWRDSERRORS, 0);
   EEPROM.writeByte(EE_BYTE_TEF, 0);
-  EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 0);
+  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 0); else EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 1);
   EEPROM.writeByte(EE_BYTE_ROTARYMODE, 0);
   EEPROM.writeByte(EE_BYTE_STEPSIZE, 0);
   EEPROM.writeByte(EE_BYTE_TUNEMODE, 0);
@@ -5910,19 +6001,19 @@ void DefaultSettings() {
   EEPROM.writeByte(EE_BYTE_RDS_PIERRORS, 0);
   for (int i = 0; i < EE_PRESETS_CNT; i++) EEPROM.writeByte(i + EE_PRESETS_BAND_START, BAND_FM);
   for (int i = 0; i < EE_PRESETS_CNT; i++) EEPROM.writeUInt((i * 4) + EE_PRESETS_START, EE_PRESETS_FREQUENCY);
-  EEPROM.writeUInt(EE_UINT16_FREQUENCY_LW, 180);
-  EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, 540);
-  EEPROM.writeUInt(EE_UINT16_FREQUENCY_SW, 1800);
+  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_LW, 180); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_LW, 164);
+  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, 540); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, 639);
+  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_SW, 1800); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_SW, 5000);
   EEPROM.writeString(EE_STRING_XDRGTK_KEY, "password");
-  EEPROM.writeByte(EE_BYTE_SHOWSQUELCH, 1);
+  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_SHOWSQUELCH, 1); else EEPROM.writeByte(EE_BYTE_SHOWSQUELCH, 0);
   EEPROM.writeByte(EE_BYTE_SHOWMODULATION, 1);
   EEPROM.writeByte(EE_BYTE_AM_NB, 0);
   EEPROM.writeByte(EE_BYTE_FM_NB, 0);
   EEPROM.writeByte(EE_BYTE_AUDIOMODE, 0);
-  EEPROM.writeByte( EE_BYTE_TOUCH_ROTATING, 0);
+  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_TOUCH_ROTATING, 0); else EEPROM.writeByte(EE_BYTE_TOUCH_ROTATING, 1); 
   EEPROM.writeUInt(EE_UINT16_LOWEDGEOIRTSET, 0);
   EEPROM.writeUInt(EE_UINT16_HIGHEDGEOIRTSET, 0);
-  EEPROM.writeByte(EE_BYTE_COLORINVERT, 0);
+  EEPROM.writeByte(EE_BYTE_HARDWARE_MODEL, userhardwaremodel);
   EEPROM.writeByte(EE_BYTE_POWEROPTIONS, 1);
   EEPROM.writeByte(EE_BYTE_CURRENTTHEME, 0);
   EEPROM.writeByte(EE_BYTE_FMDEFAULTSTEPSIZE, 1);
