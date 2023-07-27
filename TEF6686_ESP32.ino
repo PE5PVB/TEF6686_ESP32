@@ -3039,10 +3039,10 @@ void KeyDown() {
 
 void ShowMemoryPos() {
   if (tunemode == TUNE_MEM) {
-    if (advancedRDS) tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 215, 36, SecondaryColor, SecondaryColorSmooth, FONT16); else tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 80, 32, SecondaryColor, SecondaryColorSmooth, FONT16);
+    if (advancedRDS) tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 215, 36, SecondaryColor, SecondaryColorSmooth, FONT16); else tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 50, 32, SecondaryColor, SecondaryColorSmooth, FONT16);
     memoryposold = memorypos;
   } else {
-    if (advancedRDS) tftPrint(-1, String(memorypos + 1), 215, 36, BackgroundColor, BackgroundColor, FONT16); else tftPrint(-1, String(memorypos + 1), 80, 32, BackgroundColor, BackgroundColor, FONT16);
+    if (advancedRDS) tftPrint(-1, String(memorypos + 1), 215, 36, BackgroundColor, BackgroundColor, FONT16); else tftPrint(-1, String(memorypos + 1), 50, 32, BackgroundColor, BackgroundColor, FONT16);
   }
 }
 
@@ -4127,11 +4127,11 @@ void BuildDisplay() {
 
     if (bandforbidden) bandColor = GreyoutColor; else bandColor = SecondaryColor;
     switch (band) {
-      case BAND_LW: tftPrint(-1, myLanguage[language][102], 50, 32, bandColor, SecondaryColorSmooth, FONT16); break;
-      case BAND_MW: tftPrint(-1, myLanguage[language][103], 50, 32, bandColor, SecondaryColorSmooth, FONT16); break;
-      case BAND_SW: tftPrint(-1, myLanguage[language][104], 50, 32, bandColor, SecondaryColorSmooth, FONT16); break;
-      case BAND_FM: tftPrint(-1, myLanguage[language][105], 50, 32, bandColor, SecondaryColorSmooth, FONT16); break;
-      case BAND_OIRT: tftPrint(-1, myLanguage[language][106], 50, 32, bandColor, SecondaryColorSmooth, FONT16); break;
+      case BAND_LW: tftPrint(-1, myLanguage[language][102], 70, 32, bandColor, SecondaryColorSmooth, FONT16); break;
+      case BAND_MW: tftPrint(-1, myLanguage[language][103], 70, 32, bandColor, SecondaryColorSmooth, FONT16); break;
+      case BAND_SW: tftPrint(-1, myLanguage[language][104], 70, 32, bandColor, SecondaryColorSmooth, FONT16); break;
+      case BAND_FM: tftPrint(-1, myLanguage[language][105], 70, 32, bandColor, SecondaryColorSmooth, FONT16); break;
+      case BAND_OIRT: tftPrint(-1, myLanguage[language][106], 70, 32, bandColor, SecondaryColorSmooth, FONT16); break;
     }
   }
   RDSstatusold = false;
