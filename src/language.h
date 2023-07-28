@@ -565,10 +565,10 @@ static const char* const myLanguage[16][112] = {
     "FM", // 105
     "OIRT", // 106
     "Περιστροφή με οθόνη σβηστή", // 107
-    "Model selector", // 108
-    "Base (ILI9341)", // 109
-    "Portable (ILI9341)", // 110
-    "Portable touch (ILI9341)" // 111
+    "Επιλογή μοντέλου", // 108
+    "Βασικό (ILI9341)", // 109
+    "Φορητό (ILI9341)", // 110
+    "Φορητό αφής (ILI9341)" // 111
   },
 
   { "Romana", // Romanian
