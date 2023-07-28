@@ -3140,7 +3140,7 @@ void DoMemoryPosTune() {
     band = memoryband[memorypos];
   }
 
-  if (band == BAND_FM) {
+  if (band == BAND_FM || band == BAND_OIRT) {
     frequency = memory[memorypos];
     radio.SetFreq(frequency);
   } else {
