@@ -260,6 +260,7 @@ class TEF6686 {
     char rt_buffer32[33];
     bool useRTPlus = true;
     bool ABold;
+	bool afreset;
     char stationTextBuffer[65];
     uint16_t rdsBprevious;
     uint16_t rdsCprevious;

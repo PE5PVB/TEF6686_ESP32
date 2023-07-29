@@ -402,9 +402,12 @@ void TEF6686::readRDS(bool showrdserrors)
     if (rdsReady) {                                                                                       // We have all data to decode... let's go...
 
       //PI decoder
-      if (rds.correct) rds.correctPI = rds.rdsA;
+      if (rds.correct && afreset) {
+		  rds.correctPI = rds.rdsA;
+		  afreset = false;
+	  }
 
-      if (rds.region != 1 && (!rds.rdsAerror || rds.pierrors)) {
+      if (rds.region != 1 && (rds.correct || rds.pierrors)) {
         if (rds.rdsA != piold) {
           piold = rds.rdsA;
           rds.picode[0] = (rds.rdsA >> 12) & 0xF;
@@ -923,6 +926,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
   ps_counter = 0;
   af_counter = 0;
   eon_counter = 0;
+  afreset = true;
   rds.MS = 0;
 }
 

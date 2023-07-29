@@ -50,7 +50,6 @@ bool artheadold;
 bool batterydetect = true;
 bool BWreset;
 bool change2;
-bool cleanup;
 bool compressedold;
 bool direction;
 bool dropout;
@@ -3160,10 +3159,7 @@ void readRds() {
         if (advancedRDS) tftPrint(-1, PIold, 244, 75, SecondaryColor, SecondaryColorSmooth, FONT28); else tftPrint(-1, PIold, 244, 187, SecondaryColor, SecondaryColorSmooth, FONT28);
         if (advancedRDS) tftPrint(-1, PSold, 38, 75, SecondaryColor, SecondaryColorSmooth, FONT28); else tftPrint(-1, PSold, 38, 187, SecondaryColor, SecondaryColorSmooth, FONT28);
         if (advancedRDS) tftPrint(-1, PTYold, 38, 109, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, PTYold, 38, 163, SecondaryColor, SecondaryColorSmooth, FONT16);
-        if (!advancedRDS) {
-          sprite.fillSprite(BackgroundColor);
-          sprite.pushSprite(38, 220);
-        } else {
+        if (advancedRDS) {
           tft.fillCircle(86, 41, 5, SignificantColor);
           tft.fillCircle(124, 41, 5, SignificantColor);
           tft.fillCircle(162, 41, 5, SignificantColor);
@@ -3324,7 +3320,7 @@ void ShowAdvancedRDS() {
   }
 
   String afstring;
-  if (radio.rds.hasAF) for (byte i = 0; i < radio.af_counter; i++) afstring += String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10) + (radio.af[i].filler ? "(f)" : "") + (i == radio.af_counter - 1 ? "     " : " | "); else afstring = myLanguage[language][87];
+  if (radio.rds.hasAF) for (byte i = 0; i < radio.af_counter; i++) afstring += String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10) + (radio.af[i].filler ? "(f)" : "") + (i == radio.af_counter - 1 ? "          " : " | "); else afstring = myLanguage[language][87];
   if (hasafold != radio.rds.hasAF) {
     if (radio.rds.hasAF) tftPrint(-1, "AF", 50, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "AF", 50, 51, GreyoutColor, BackgroundColor, FONT16);
     hasafold = radio.rds.hasAF;
@@ -3362,7 +3358,7 @@ void ShowAdvancedRDS() {
   afstringold = afstring;
 
   String eonstring;
-  if (radio.rds.hasEON) for (byte i = 0; i < radio.eon_counter; i++) eonstring += String(radio.eon[i].picode) + (radio.eon[i].ps.length() > 0 ? String(": " + String(radio.eon[i].ps)) : "") + (radio.eon[i].mappedfreq > 0 ? String(" " + String(radio.eon[i].mappedfreq / 100) + "." + String((radio.eon[i].mappedfreq % 100) / 10))  : "") + (radio.eon[i].mappedfreq2 > 0 ? String(" / " + String(radio.eon[i].mappedfreq2 / 100) + "." + String((radio.eon[i].mappedfreq2 % 100) / 10))  : "") + (radio.eon[i].mappedfreq3 > 0 ? String(" /  " + String(radio.eon[i].mappedfreq3 / 100) + "." + String((radio.eon[i].mappedfreq3 % 100) / 10))  : "") + (i == radio.eon_counter - 1 ? "     " : " | "); else eonstring = myLanguage[language][88];
+  if (radio.rds.hasEON) for (byte i = 0; i < radio.eon_counter; i++) eonstring += String(radio.eon[i].picode) + (radio.eon[i].ps.length() > 0 ? String(": " + String(radio.eon[i].ps)) : "") + (radio.eon[i].mappedfreq > 0 ? String(" " + String(radio.eon[i].mappedfreq / 100) + "." + String((radio.eon[i].mappedfreq % 100) / 10))  : "") + (radio.eon[i].mappedfreq2 > 0 ? String(" / " + String(radio.eon[i].mappedfreq2 / 100) + "." + String((radio.eon[i].mappedfreq2 % 100) / 10))  : "") + (radio.eon[i].mappedfreq3 > 0 ? String(" /  " + String(radio.eon[i].mappedfreq3 / 100) + "." + String((radio.eon[i].mappedfreq3 % 100) / 10))  : "") + (i == radio.eon_counter - 1 ? "          " : " | "); else eonstring = myLanguage[language][88];
   if (haseonold != radio.rds.hasEON) {
     if (radio.rds.hasEON) tftPrint(-1, "EON", 153, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "EON", 153, 51, GreyoutColor, BackgroundColor, FONT16);
     haseonold = radio.rds.hasEON;
@@ -3671,12 +3667,12 @@ void showPS() {
 }
 
 void showRadioText() {
-  if (radio.rds.hasRT && RDSstatus) {
+  if (radio.rds.hasRT && radio.rds.stationText.length() > 0) {
     if (advancedRDS && radio.rds.stationText.length() < 20) {
       xPos = 0;
       sprite2.fillSprite(BackgroundColor);
       sprite2.loadFont(FONT16);
-      sprite2.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+      if (RDSstatus) sprite2.setTextColor(PrimaryColor, PrimaryColorSmooth, false); else sprite2.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
       sprite2.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
       sprite2.pushSprite(35, 220);
     } else if (!advancedRDS && radio.rds.stationText.length() < 29) {
@@ -3684,7 +3680,7 @@ void showRadioText() {
         xPos = 0;
         sprite.fillSprite(BackgroundColor);
         sprite.loadFont(FONT16);
-        sprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+        if (RDSstatus) sprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false); else sprite.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
         sprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
         sprite.pushSprite(38, 220);
       }
@@ -3703,26 +3699,20 @@ void showRadioText() {
           if (xPos < -tft.textWidth(radio.rds.stationText + " " + radio.rds.stationText32) + (charWidth * 16)) xPos = 0;
           sprite2.fillSprite(BackgroundColor);
           sprite2.loadFont(FONT16);
-          sprite2.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          if (RDSstatus) sprite2.setTextColor(PrimaryColor, PrimaryColorSmooth, false); else sprite2.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
           sprite2.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
           sprite2.pushSprite(35, 220);
         } else {
           if (xPos < -tft.textWidth(radio.rds.stationText + " " + radio.rds.stationText32) + (charWidth * 26)) xPos = 0;
           sprite.fillSprite(BackgroundColor);
           sprite.loadFont(FONT16);
-          sprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          if (RDSstatus) sprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false); else sprite.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
           sprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
           sprite.pushSprite(38, 220);
         }
         rtticker = millis();
-        cleanup = true;
       }
     }
-  } else if (cleanup == true) {
-    sprite.fillSprite(BackgroundColor);
-    sprite2.fillSprite(BackgroundColor);
-    if (advancedRDS) sprite2.pushSprite(35, 220); else sprite.pushSprite(38, 220);
-    cleanup = false;
   }
 
   if (wifi) {
@@ -3939,7 +3929,7 @@ void ShowAFEON() {
 
   if (radio.rds.hasEON) {
     if (haseonold == false) {
-      tftPrint(-1, myLanguage[language][88], 184, 54, BackgroundColor, BackgroundColor, FONT16);
+      tftPrint(-1, myLanguage[language][88], 184, 48, BackgroundColor, BackgroundColor, FONT16);
       tftPrint(-1, "PI:", 170, 32, ActiveColor, ActiveColorSmooth, FONT16);
     }
     haseonold = true;
@@ -4164,7 +4154,7 @@ void BuildDisplay() {
       }
     }
     if (showsquelch) tftPrint(-1, "SQ:", 212, 145, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "S/N", 246, 163, ActiveColor, ActiveColorSmooth, FONT16);
+    tftPrint(1, "C/N", 275, 163, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(-1, "dB", 300, 163, ActiveColor, ActiveColorSmooth, FONT16);
     if (region == 0) tftPrint(-1, "PI:", 216, 193, ActiveColor, ActiveColorSmooth, FONT16);
     if (region == 1) tftPrint(-1, "ID:", 216, 193, ActiveColor, ActiveColorSmooth, FONT16);
@@ -4344,6 +4334,9 @@ void ShowFreq(int mode) {
     eonstringold = "";
     afstringold = "";
     rds_clockold = "";
+    sprite.fillSprite(BackgroundColor);
+    sprite2.fillSprite(BackgroundColor);
+    if (advancedRDS) sprite2.pushSprite(35, 220); else sprite.pushSprite(38, 220);
 
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
@@ -4361,12 +4354,12 @@ void ShowSignalLevel() {
       snrupdatetimer = millis();
       if (!advancedRDS) {
         if (SNR > (SNRold + 1) || SNR < (SNRold - 1)) {
-          if (SNRold == 0) tftPrint(1, "--", 294, 163, BackgroundColor, BackgroundColor, FONT16); else tftPrint(1, String(SNRold), 294, 163, BackgroundColor, BackgroundColor, FONT16);
+          if (SNRold == 0) tftPrint(1, "--", 298, 163, BackgroundColor, BackgroundColor, FONT16); else tftPrint(1, String(SNRold), 298, 163, BackgroundColor, BackgroundColor, FONT16);
           if (tuned == true) {
-            if (SNR == 0) tftPrint(1, "--", 294, 163, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, String(SNR), 294, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+            if (SNR == 0) tftPrint(1, "--", 298, 163, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, String(SNR), 298, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
             SNRold = SNR;
           } else {
-            tftPrint(1, "--", 294, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+            tftPrint(1, "--", 298, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
             SNRold = 0;
           }
         }
