@@ -1752,13 +1752,13 @@ static const char* const myLanguage[16][112] = {
     "Vis RDS-feil", // 38
     "Språk", // 39
     "Velg språk", // 40
-    "TRYKK MODUS FOR Å AVSLUTE OG LAGRE", // 41
+    "TRYKK MODE FOR Å AVSLUTE OG LAGRE", // 41
     "På", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
     "Pip ved båndkant", // 45
     "Region", // 46
-    "Europe", // 47
+    "Europa", // 47
     "USA", // 48
     "Vis understrek i RDS", // 49
     "USB modus", // 50
@@ -1778,10 +1778,10 @@ static const char* const myLanguage[16][112] = {
     "AM Noise blanker", // 64
     "FM Noise blanker", // 65
     "Standarder lastet", // 66
-    "Audio utgang", // 67
-    "FM OIRT 30 kHz steps", // 68
-    "Invert display", // 69
-    "Om programvare", // 70
+    "Lydutgang", // 67
+    "FM OIRT 30 kHz steg", // 68
+    "Inverter displayet", // 69
+    "Om programvaren", // 70
     "Hovedkode:", // 71
     "Bidragsytere:", // 72
     "Ukjent", // 73
@@ -1801,7 +1801,7 @@ static const char* const myLanguage[16][112] = {
     "Ingen AF tilgjengelig", // 87
     "Ingen EON tilgjengelig", // 88
     "Ingen RT+ tilgjengelig", // 89
-    "FM default stepsize", // 90
+    "FM standard trinnstørrelse", // 90
     "Skjermsparer", // 91
     "sek", // 92
     "TRYKK BAND FOR Å LUKKE", // 93
@@ -1809,7 +1809,7 @@ static const char* const myLanguage[16][112] = {
     "25% lysstyrke", // 95
     "50% lysstyrke", // 96
     "AM RF Nivå offset:", // 97
-    "Signalmeter unit:", // 98
+    "Signalmeter måleenhet:", // 98
 	  "Bruk AF:", // 99
     "Velg FM Bånd:", // 100
     "Velg AM Bånd:", // 101
@@ -1819,10 +1819,10 @@ static const char* const myLanguage[16][112] = {
     "FM", // 105
     "OIRT", // 106
     "Roterer når skjerm av", // 107
-    "Model selector", // 108
+    "Velg Modell", // 108
     "Base (ILI9341)", // 109
-    "Portable (ILI9341)", // 110
-    "Portable touch (ILI9341)" // 111
+    "Bærbar (ILI9341)", // 110
+    "Bærbar touch-skjerm (ILI9341)" // 111
   }
 };
 
