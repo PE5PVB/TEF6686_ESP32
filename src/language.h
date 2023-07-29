@@ -297,7 +297,7 @@ static const char* const myLanguage[16][112] = {
     "Reduktor szumow FM", // 65
     "Zaladowano domyslne", // 66
     "Wyjscie dzwieku", // 67
-    "Touch rotating", // 68 for translation reference to commputer Touch Typing
+    "Bezwzrok. strojenie", // 68 for translation reference to commputer Touch Typing
     "Odwroc kolory wyswietlacza", // 69
     "O oprogramowaniu", // 70
     "Glowny kod:", // 71
@@ -336,11 +336,11 @@ static const char* const myLanguage[16][112] = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotating while screen off", // 107
-    "Model selector", // 108
-    "Base (ILI9341)", // 109
-    "Portable (ILI9341)", // 110
-    "Portable touch (ILI9341)" // 111
+    "Stroj. gdy ekran wyl.", // 107
+    "Wybor modelu", // 108
+    "Podstawowy (ILI9341)", // 109
+    "Przenosny (ILI9341)", // 110
+    "Przenosny dotyk. (ILI9341)" // 111
   },
 
   { "Hrvatski", // Croatian
