@@ -1032,59 +1032,59 @@ static const char* const myLanguage[16][112] = {
     "Veuillez relâcher le bouton", // 2
     "Écran inversé", // 3
     "Calibrer le compteur analogique", // 4
-    "Relâchez le bouton lorsque vous êtes prêt", // 5
-    "Codeur réglé sur \"Optical\"", // 6
-    "Codeur réglé sur \"Standard\"", // 7
+    "Relâchez le bouton lorsque prêt", // 5
+    "Codeur réglé sur optique", // 6
+    "Codeur réglé sur standard", // 7
     "Récepteur FM/AM", // 8
-    "Récepteur: Aucun !", // 9
-    "Volume :", // 10
-    "Convertisseur :", // 11
+    "Tuner: Aucun!", // 9
+    "Volume:", // 10
+    "Convertisseur:", // 11
     "Limite de bande basse:", // 12
     "Limite de bande haute:", // 13
-    "FM Décalage du niveau RF:", // 14
-    "Seuil minimum pour la Stéréo :", // 15
-    "Angle du filtre High Cut :", // 16
-    "Seuil minimum pour le filtre High Cut :", // 17
-    "Seuil minimum de niveau bas :", // 18
+    "FM décalage du niveau RF:", // 14
+    "Stéréo seuil minimum:", // 15
+    "Angle du filtre à coupe haute:", // 16
+    "Seuil du filtre à coupe haute:", // 17
+    "Seuil minimum de niveau bas:", // 18
     "Contraste:", // 19
     "Réglage du volume", // 20
-    "Réglage du décalage du convertisseur", // 21
-    "Réglage de la limite de bande basse", // 22
-    "Réglage de la limite de bande haute", // 23
-    "Réglage du décalage du niveau", // 24
-    "Réglage du seuil minimum pour la séparation de la Stéréo", // 25
-    "Réglage de la fréquence pour l'angle du filtre High Cut", // 26
-    "Réglage du seuil minimum pour le filtre High Cut", // 27
-    "Réglage du seuil minimum de niveau bas", // 28
-    "Réglage de la luminosité de l'affichage", // 29
+    "Décalage du convertisseur", // 21
+    "Limite de bande basse", // 22
+    "Limite de bande haute", // 23
+    "Décalage du niveau", // 24
+    "Seuil de séparation stéréo", // 25
+    "Fréquence de coupe élevée", // 26
+    "Seuil de coupe élevée", // 27
+    "Seuil de niveau bas", // 28
+    "Luminosité de l'affichage", // 29
     "Éteint", // 30
-    "L'écran est désactivé !", // 31
+    "L'écran est désactivé!", // 31
     "Pour le réactiver, décochez la case RF+", // 32
-    "ÉTEINT", // 33
+    "FERMÉ", // 33
     "RECHERCHE...", // 34
-    "Récepteur non détecté", // 35
-    "Version du récepteur : v", // 36
+    "Tuner non détecté", // 35
+    "Version du récepteur: v", // 36
     "Veuillez redémarrer le récepteur", // 37
     "Montrer les erreurs de décodage RDS", // 38
     "Langage", // 39
     "Choix de la langue", // 40
-    "APPUYEZ SUR MODE POUR SORTIR ET SAUVEGARDER", // 41
+    "APPUYEZ MODE POUR SORTIE & STOCKAGE", // 41
     "Allumé", // 42
     "Sourdine douce FM", // 43
     "Sourdine douce AM", // 44
-    "Émettre un bip lorsque la limite de bande est atteinte", // 45
+    "Bip à la limite de bande", // 45
     "Région", // 46
     "Europe", // 47
     "États-Unis", // 48
-    "Remplacer les espaces du PS (RDS) par des tirets du bas", // 49
+    "Montre les tirets du bas du PS", // 49
     "Mode USB", // 50
     "Wi-Fi actif", // 51
     "Configuration du Wi-Fi", // 52
-    "Se connecter au réseau :", // 53
+    "Se connecter au réseau:", // 53
     "pour configurer le Wi-Fi", // 54
     "Tentative de connexion en mode Wi-Fi", // 55
     "CONNEXION IMPOSSIBLE... Désactivation du Wi-Fi", // 56
-    "CONNECTÉ !", // 57
+    "CONNECTÉ!", // 57
     "Stationlist client IP", // 58
     "Affihcer la longueur d'onde SW", // 59
     "Filtre RDS", // 60
@@ -1095,7 +1095,7 @@ static const char* const myLanguage[16][112] = {
     "Réducteur de bruit FM", // 65
     "Paramètres par défaut chargés", // 66
     "Sortie audio", // 67
-    "Touch rotating", // 68 for translation reference to commputer Touch Typing
+    "Touche tournante", // 68
     "Inverser l'affichage", // 69
     "À propos du logiciel", // 70
     "Code principal :", // 71
@@ -1120,25 +1120,25 @@ static const char* const myLanguage[16][112] = {
     "Valeur du pas FM par défaut", // 90
     "Screensaver", // 91
     "Sec", // 92
-    "PRESS BAND TO CLOSE", // 93
-    "1% brightness", // 94
-    "25% brightness", // 95
-    "50% brightness", // 96
-    "AM RF Level offset:", // 97
+    "APPUYEZ SUR BAND POUR FERMER", // 93
+    "1% luminosité", // 94
+    "25% luminosité", // 95
+    "50% luminosité", // 96
+    "AM décalage du niveau RF:", // 97
     "Signalmeter unit:", // 98
-	  "Use AF:", // 99
-    "Select FM Band:", // 100
-    "Select AM Band:", // 101
+	  "Utilisez le AF:", // 99
+    "Sélectionner la bande FM:", // 100
+    "Sélectionner la bande AM:", // 101
     "LW", // 102
     "MW", // 103
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotating while screen off", // 107
-    "Model selector", // 108
+    "Rotation lorsque l'écran est éteint", // 107
+    "Sélecteur de modèle", // 108
     "Base (ILI9341)", // 109
     "Portable (ILI9341)", // 110
-    "Portable touch (ILI9341)" // 111
+    "Portable touche (ILI9341)" // 111
   },
 
   { "Български", // Bulgarian
