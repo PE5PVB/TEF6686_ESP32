@@ -274,4 +274,6 @@ class TEF6686 {
     char RDSplus1[45];
     char RDSplus2[45];
     uint16_t  currentfreq;
+	bool togglebit;
+	bool runningbit;
 };

@@ -403,9 +403,9 @@ void TEF6686::readRDS(bool showrdserrors)
 
       //PI decoder
       if (rds.correct && afreset) {
-		  rds.correctPI = rds.rdsA;
-		  afreset = false;
-	  }
+        rds.correctPI = rds.rdsA;
+        afreset = false;
+      }
 
       if (rds.region != 1 && (rds.correct || rds.pierrors)) {
         if (rds.rdsA != piold) {
@@ -734,31 +734,40 @@ void TEF6686::readRDS(bool showrdserrors)
         case RDS_GROUP_13A:   {
             // RT+ decoding
             if (rds.correct && rtplusblock == rdsblock && rds.hasRDSplus) {                                 // Are we in the right RT+ block and is all ok to go?
-              uint16_t  start_marker_1 = (rds.rdsC >> 0x07);
-              start_marker_1 = (start_marker_1 & 0x3F);
-              uint16_t length_marker_1 = (rds.rdsC >> 0x01);
-              length_marker_1 = (length_marker_1  & 0x3F);
-              uint16_t start_marker_2 = (rds.rdsD >> 0x05);
-              start_marker_2 = (start_marker_2 & 0x3F);
+              uint16_t content_type_1 = ((rds.rdsB & 0x07) << 3) + (rds.rdsC >> 13);
+              uint16_t content_type_2 = ((rds.rdsC & 0x01) << 5) + (rds.rdsD >> 11);
+              uint16_t start_marker_1 = (rds.rdsC >> 7) & 0x3F;
+              uint16_t length_marker_1 = (rds.rdsC >> 1) & 0x3F;
+              uint16_t start_marker_2 = (rds.rdsD >> 5) & 0x3F;
               uint16_t length_marker_2 = (rds.rdsD & 0x1F);
+              togglebit = bitRead(lowByte(rds.rdsB), 4);
+              runningbit = bitRead(lowByte(rds.rdsB), 3);
 
-              for (int i = 0; i <= length_marker_1; i++)RDSplus1[i] = rt_buffer2[i + start_marker_1];
-              RDSplus1[length_marker_1 + 1] = 0;
+              if (togglebit) {
+                for (int i = 0; i < 45; i++) {
+                  RDSplus1[i] = 0;
+                  RDSplus2[i] = 0;
+                }
+              }
 
-              for (int i = 0; i <= length_marker_2; i++)RDSplus2[i] = rt_buffer2[i + start_marker_2];
-              RDSplus2[length_marker_2 + 1] = 0;
+              if (runningbit && rds.rtAB == rtABold) {
+                for (int i = 0; i <= length_marker_1; i++)RDSplus1[i] = rt_buffer2[i + start_marker_1];
+                RDSplus1[length_marker_1 + 1] = 0;
+
+                for (int i = 0; i <= length_marker_2; i++)RDSplus2[i] = rt_buffer2[i + start_marker_2];
+                RDSplus2[length_marker_2 + 1] = 0;
+              }
+
+              wchar_t RTtext1[45] = L"";                                                                      // Create 16 bit char buffer for Extended ASCII
+              RDScharConverter(RDSplus1, RTtext1, sizeof(RTtext1) / sizeof(wchar_t), false);                  // Convert 8 bit ASCII to 16 bit ASCII
+              rds.RTContent1 = convertToUTF8(RTtext1);                                                        // Convert RDS characterset to ASCII
+              rds.RTContent1 = extractUTF8Substring(rds.RTContent1, 0, 44, false);                            // Make sure RT does not exceed 32 characters
+
+              wchar_t RTtext2[45] = L"";                                                                      // Create 16 bit char buffer for Extended ASCII
+              RDScharConverter(RDSplus2, RTtext2, sizeof(RTtext2) / sizeof(wchar_t), false);                  // Convert 8 bit ASCII to 16 bit ASCII
+              rds.RTContent2 = convertToUTF8(RTtext2);                                                        // Convert RDS characterset to ASCII
+              rds.RTContent2 = extractUTF8Substring(rds.RTContent2, 0, 44, false);                            // Make sure RT does not exceed 32 characters
             }
-
-            wchar_t RTtext1[45] = L"";                                                                      // Create 16 bit char buffer for Extended ASCII
-            RDScharConverter(RDSplus1, RTtext1, sizeof(RTtext1) / sizeof(wchar_t), false);                  // Convert 8 bit ASCII to 16 bit ASCII
-            rds.RTContent1 = convertToUTF8(RTtext1);                                                        // Convert RDS characterset to ASCII
-            rds.RTContent1 = extractUTF8Substring(rds.RTContent1, 0, 44, false);                            // Make sure RT does not exceed 32 characters
-
-            wchar_t RTtext2[45] = L"";                                                                      // Create 16 bit char buffer for Extended ASCII
-            RDScharConverter(RDSplus2, RTtext2, sizeof(RTtext2) / sizeof(wchar_t), false);                  // Convert 8 bit ASCII to 16 bit ASCII
-            rds.RTContent2 = convertToUTF8(RTtext2);                                                        // Convert RDS characterset to ASCII
-            rds.RTContent2 = extractUTF8Substring(rds.RTContent2, 0, 44, false);                            // Make sure RT does not exceed 32 characters
-
             if (rds.correct && rdsblock == 16 && (rds.rdsB & (1 << 4))) rds.hasTMC = true;                  // TMC flag
           }
           break;
@@ -805,7 +814,7 @@ void TEF6686::readRDS(bool showrdserrors)
 
 
                 if (offset < 4 && eon[position].pi == rds.rdsD) {
-				  for (int j = 0; j < 9; j++) EONPStext[position][j] = '\0';                                                           // Clear buffer	
+                  for (int j = 0; j < 9; j++) EONPStext[position][j] = '\0';                                                           // Clear buffer
                   eon_buffer[position][(offset * 2)  + 0] = rds.rdsC >> 8;                                                              // First character of segment
                   eon_buffer[position][(offset * 2)  + 1] = rds.rdsC & 0xFF;                                                            // Second character of segment
                   eon_buffer[position][(offset * 2)  + 2] = '\0';                                                                       // Endmarker of segment
@@ -893,7 +902,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
     RDSplus1[i] = 0;
     RDSplus2[i] = 0;
   }
-  
+
   rdsblock = 254;
   piold = 0;
   rds.correctPI = 0;
