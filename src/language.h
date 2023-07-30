@@ -100,7 +100,7 @@ static const char* const myLanguage[16][112] = {
     "50% brightness", // 96
     "AM RF Level offset:", // 97
     "Signalmeter unit:", // 98
-	  "Use AF:", // 99
+    "Use AF:", // 99
     "Select FM Band:", // 100
     "Select AM Band:", // 101
     "LW", // 102
@@ -214,7 +214,7 @@ static const char* const myLanguage[16][112] = {
     "50% helderheid", // 96
     "AM RF Level afwijking:", // 97
     "Signaalmeter eenheid:", // 98
-	  "Gebruik AF:", // 99
+    "Gebruik AF:", // 99
     "Select FM Band:", // 100
     "Select AM Band:", // 101
     "LW", // 102
@@ -262,7 +262,7 @@ static const char* const myLanguage[16][112] = {
     "Wyl.", // 30
     "Ekran jest wyciszony!", // 31
     "Aby wyl. wyciszenie odznacz RF+", // 32
-    "Wyl.", // 33
+    "WYL.", // 33
     "SKANOWANIE...", // 34
     "Nie wykryto tunera", // 35
     "Ustawiono wersje tunera: v", // 36
@@ -442,7 +442,7 @@ static const char* const myLanguage[16][112] = {
     "50% svjetlina", // 96
     "AM pomak RF razine:", // 97
     "Jedinica mjerača signala:", // 98
-	  "Use AF:", // 99
+    "Use AF:", // 99
     "Select FM Band:", // 100
     "Select AM Band:", // 101
     "LW", // 102
@@ -556,7 +556,7 @@ static const char* const myLanguage[16][112] = {
     "50% φωτεινότητα", // 96
     "AM Ολίσθηση επιπέδου RF:", // 97
     "Μονάδα μέτρησης σήματος:", // 98
-	  "Χρήση AF:", // 99
+    "Χρήση AF:", // 99
     "Επιλογή μπάντας FM:", // 100
     "Επιλογή μπάντας AM:", // 101
     "LW", // 102
@@ -604,7 +604,7 @@ static const char* const myLanguage[16][112] = {
     "Oprit", // 30
     "Ecran oprit", // 31
     "Ptr a porni debifati RF+ box", // 32
-    "Oprit", // 33
+    "OPRIT", // 33
     "Scanare...", // 34
     "Tunerul nu este detectat", // 35
     "Versiune Tuner: v", // 36
@@ -670,7 +670,7 @@ static const char* const myLanguage[16][112] = {
     "50% brightness", // 96
     "AM RF Level offset:", // 97
     "Signalmeter unit:", // 98
-	  "Use AF:", // 99
+    "Use AF:", // 99
     "Select FM Band:", // 100
     "Select AM Band:", // 101
     "LW", // 102
@@ -898,7 +898,7 @@ static const char* const myLanguage[16][112] = {
     "50% brightness", // 96
     "AM RF Level offset:", // 97
     "Signalmeter unit:", // 98
-	  "Use AF:", // 99
+    "Use AF:", // 99
     "Select FM Band:", // 100
     "Select AM Band:", // 101
     "LW", // 102
@@ -1012,7 +1012,7 @@ static const char* const myLanguage[16][112] = {
     "50% brightness", // 96
     "AM RF Level offset:", // 97
     "Signalmeter unit:", // 98
-	  "Use AF:", // 99
+    "Use AF:", // 99
     "Select FM Band:", // 100
     "Select AM Band:", // 101
     "LW", // 102
@@ -1125,8 +1125,8 @@ static const char* const myLanguage[16][112] = {
     "25% luminosité", // 95
     "50% luminosité", // 96
     "AM décalage du niveau RF:", // 97
-    "Signalmeter unit:", // 98
-	  "Utilisez le AF:", // 99
+    "Unité de mesure du signal:", // 98
+    "Utilisez le AF:", // 99
     "Sélectionner la bande FM:", // 100
     "Sélectionner la bande AM:", // 101
     "LW", // 102
@@ -1240,7 +1240,7 @@ static const char* const myLanguage[16][112] = {
     "50% brightness", // 96
     "AM RF Level offset:", // 97
     "Signalmeter unit:", // 98
-	  "Use AF:", // 99
+    "Use AF:", // 99
     "Select FM Band:", // 100
     "Select AM Band:", // 101
     "LW", // 102
@@ -1354,7 +1354,7 @@ static const char* const myLanguage[16][112] = {
     "50% яркости", // 96
     "Смещение уровня AM RF:", // 97
     "Измеритель сигнала:", // 98
-	  "Режим AF:", // 99
+    "Режим AF:", // 99
     "Выберите FM-диапазон:", // 100
     "Выберите AM-диапазон:", // 101
     "LW", // 102
@@ -1468,7 +1468,7 @@ static const char* const myLanguage[16][112] = {
     "50% яскравості", // 96
     "Зміщення рівня AM RF:", // 97
     "Вимірник сигналу:", // 98
-	  "Режим AF:", // 99
+    "Режим AF:", // 99
     "Виберіть FM-діапазон:", // 100
     "Виберіть AM-діапазон:", // 101
     "LW", // 102
@@ -1582,7 +1582,7 @@ static const char* const myLanguage[16][112] = {
     "50 % di luminosità", // 96
     "Offset livello RF AM: ", // 97
     "Unità S - meter: ", // 98
-	  "Use AF:", // 99
+    "Use AF:", // 99
     "Select FM Band:", // 100
     "Select AM Band:", // 101
     "LW", // 102
@@ -1696,7 +1696,7 @@ static const char* const myLanguage[16][112] = {
     "屏幕 50% 亮度", // 96
     "AM 高频信号偏移:", // 97
     "信号单位:", // 98
-	  "使用 AF:", // 99
+	"使用 AF:", // 99
     "选择FM波段:", // 100
     "选择AM波段:", // 101
     "LW", // 102
@@ -1744,7 +1744,7 @@ static const char* const myLanguage[16][112] = {
     "Av", // 30
     "Skjermen er dempet!", // 31
     "Oppheve demping, fjern merket RF+-boksen", // 32
-    "Av", // 33
+    "AV", // 33
     "SKANNER...", // 34
     "Tuner ikke oppdaget", // 35
     "Tuner versjon sett: v", // 36
@@ -1810,7 +1810,7 @@ static const char* const myLanguage[16][112] = {
     "50% lysstyrke", // 96
     "AM RF Nivå offset:", // 97
     "Signalmeter måleenhet:", // 98
-	  "Bruk AF:", // 99
+	"Bruk AF:", // 99
     "Velg FM Bånd:", // 100
     "Velg AM Bånd:", // 101
     "LW", // 102
