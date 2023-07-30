@@ -1816,6 +1816,10 @@ void ModeButtonPress() {
       if (screensaverset) ScreensaverTimerRestart();
       doBandSelectionFM();
       doBandSelectionAM();
+      if (touchrotating) {
+        if (poweroptions != LCD_OFF) poweroptions = LCD_OFF;
+        if (!screensaverset) screensaverset = 1;
+      }
     }
   }
   while (digitalRead(MODEBUTTON) == LOW) delay(50);
