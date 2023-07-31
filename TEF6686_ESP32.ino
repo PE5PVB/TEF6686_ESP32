@@ -3399,7 +3399,7 @@ void ShowAdvancedRDS() {
   eonstringold = eonstring;
 
   String rtplusstring;
-  if (radio.rds.hasRDSplus) rtplusstring = "1) " + String(radio.rds.RTContent1) + " - 2) " + String(radio.rds.RTContent2) + "         "; else rtplusstring = myLanguage[language][89];
+  if (radio.rds.hasRDSplus) rtplusstring = String(myLanguage[language][radio.rds.rdsplusTag1]) + ": " + String(radio.rds.RTContent1) + " - " + String(myLanguage[language][radio.rds.rdsplusTag2]) + ": " + String(radio.rds.RTContent2) + "         "; else rtplusstring = myLanguage[language][89];
   if (hasrtplusold != radio.rds.hasRDSplus) {
     if (radio.rds.hasRDSplus) tftPrint(-1, "RT+", 124, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "RT+", 124, 51, GreyoutColor, BackgroundColor, FONT16);
     hasrtplusold = radio.rds.hasRDSplus;
@@ -5091,7 +5091,7 @@ void Communication() {
         XDRGTKTCP = true;
         RemoteClient.print("o1,0\n");
         store = true;
-      } else if (RDSSPYTCP == false && XDRGTKTCP == false && data_str.length() < 5 && data_str == ("*D*R?F"))
+      } else if (RDSSPYTCP == false && XDRGTKTCP == false && data_str.length() < 6 && data_str == ("*D*R?F"))
       {
         RDSSPYTCP = true;
       } else if (RDSSPYTCP == true) {
