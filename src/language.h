@@ -2693,63 +2693,63 @@ static const char* const myLanguage[16][170] = {
     "Base (ILI9341)", // 109
     "Bærbar (ILI9341)", // 110
     "Bærbar touch-skjerm (ILI9341)", // 111
-    "Title", // 112
+    "Titel", // 112
     "Album", // 113
-    "Track", // 114
+    "Spor", // 114
     "Artist", // 115
-    "Composition", // 116
-    "Movement", // 117
-    "Conductor", // 118
-    "Composer", // 119
+    "Komposisjon", // 116
+    "Bevegelse", // 117
+    "Dirigent", // 118
+    "Komponist", // 119
     "Band", // 120
-    "Comment", // 121
-    "Genre", // 122
-    "News", // 123
-    "Local news", // 124
-    "Stockmarket", // 125
+    "Kommentar", // 121
+    "Sjanger", // 122
+    "Nyheter", // 123
+    "Lokale nyheter", // 124
+    "Aksjemarked", // 125
     "Sport", // 126
-    "Lottery", // 127
-    "Horoscope", // 128
-    "Daily Diversion", // 129
-    "Health", // 130
-    "Event", // 131
+    "Lotteri", // 127
+    "Horoskop", // 128
+    "Daglig avledning", // 129
+    "Helse", // 130
+    "Begivenhet", // 131
     "Scene", // 132
-    "Cinema", // 133
+    "Kino", // 133
     "TV", // 134
-    "Date/time", //135
-    "Weather", // 136
-    "Traffic", // 137
+    "Dato/tid", //135
+    "Vær", // 136
+    "Trafikk", // 137
     "Alarm", // 138
-    "Advertisement", // 139
-    "Website", // 140
-    "Other", // 141
-    "Short PS", // 142
-    "Long PS", // 143
-    "Now", // 144
-    "Next", //145
-    "Part", // 146
-    "Host", // 147
-    "Editor", // 148
-    "Frequency", // 149
-    "Homepage", // 150
-    "Subchannel", // 151
+    "Annonse", // 139
+    "Nettsted", // 140
+    "Annet", // 141
+    "Kort PS", // 142
+    "Lang PS", // 143
+    "Nå", // 144
+    "Neste", //145
+    "Del", // 146
+    "Vert", // 147
+    "Redaktør", // 148
+    "Frekvens", // 149
+    "Hjemmeside", // 150
+    "Underkanal", // 151
     "Hotline", // 152
-    "Studio phone", // 153
-    "Phone", // 154
+    "Studio telefon", // 153
+    "Telefon", // 154
     "SMS studio", // 155
     "SMS", // 156
-    "Email hotline", // 157
-    "Email studio", // 158
-    "Email", // 159
+    "E-post hotline", // 157
+    "E-post studio", // 158
+    "E-post", // 159
     "Chat", // 160
-    "Chat centre", // 161
-    "Vote question", // 162
-    "Vote centre", // 163
-    "Place", // 164
-    "Appointment", // 165
-    "Identifier", // 166
-    "Purchase", // 167
-    "Get data", // 168
+    "Chattesenter", // 161
+    "Stem spørsmål", // 162
+    "Stemmesenter", // 163
+    "Sted", // 164
+    "Avtale", // 165
+    "Identifikator", // 166
+    "Kjøp", // 167
+    "Få data", // 168
     "" // 169
   }
 };
