@@ -1661,63 +1661,63 @@ static const char* const myLanguage[16][170] = {
     "Base (ILI9341)", // 109
     "Portable (ILI9341)", // 110
     "Portable touche (ILI9341)", // 111
-    "Title", // 112
+    "Titre", // 112
     "Album", // 113
-    "Track", // 114
-    "Artist", // 115
+    "Piste", // 114
+    "Artiste", // 115
     "Composition", // 116
-    "Movement", // 117
-    "Conductor", // 118
-    "Composer", // 119
-    "Band", // 120
-    "Comment", // 121
+    "Mouvement", // 117
+    "Chef d'orchestre", // 118
+    "Compositeur", // 119
+    "Groupe", // 120
+    "Commentaire", // 121
     "Genre", // 122
-    "News", // 123
-    "Local news", // 124
-    "Stockmarket", // 125
+    "Actualités", // 123
+    "Actualités locales", // 124
+    "Bourse", // 125
     "Sport", // 126
-    "Lottery", // 127
+    "Loterie", // 127
     "Horoscope", // 128
-    "Daily Diversion", // 129
-    "Health", // 130
-    "Event", // 131
-    "Scene", // 132
-    "Cinema", // 133
+    "Divertissement quotidien", // 129
+    "Santé", // 130
+    "Événement", // 131
+    "Scène", // 132
+    "Cinéma", // 133
     "TV", // 134
-    "Date/time", //135
-    "Weather", // 136
-    "Traffic", // 137
-    "Alarm", // 138
-    "Advertisement", // 139
-    "Website", // 140
-    "Other", // 141
-    "Short PS", // 142
-    "Long PS", // 143
-    "Now", // 144
-    "Next", //145
-    "Part", // 146
-    "Host", // 147
-    "Editor", // 148
-    "Frequency", // 149
-    "Homepage", // 150
-    "Subchannel", // 151
+    "Date/heure", // 135
+    "Météo", // 136
+    "Trafic", // 137
+    "Alarme", // 138
+    "Publicité", // 139
+    "Site web", // 140
+    "Autre", // 141
+    "PS court", // 142
+    "PS long", // 143
+    "Maintenant", // 144
+    "Suivant", //145
+    "Partie", // 146
+    "Hôte", // 147
+    "Rédacteur", // 148
+    "Fréquence", // 149
+    "Page d'accueil", // 150
+    "Sous-canal", // 151
     "Hotline", // 152
-    "Studio phone", // 153
-    "Phone", // 154
-    "SMS studio", // 155
+    "Téléphone du studio", // 153
+    "Téléphone", // 154
+    "SMS au studio", // 155
     "SMS", // 156
-    "Email hotline", // 157
-    "Email studio", // 158
+    "Hotline par email", // 157
+    "Email du studio", // 158
     "Email", // 159
     "Chat", // 160
-    "Chat centre", // 161
-    "Vote question", // 162
-    "Vote centre", // 163
-    "Place", // 164
-    "Appointment", // 165
-    "Identifier", // 166
-    "Purchase", // 167
-    "Get data", // 168
+    "Centre de discussion", // 161
+    "Question de vote", // 162
+    "Centre de vote", // 163
+    "Lieu", // 164
+    "Rendez-vous", // 165
+    "Identifiant", // 166
+    "Achat", // 167
+    "Obtenir des données", // 168
     "" // 169
   },
 
@@ -1739,7 +1739,7 @@ static const char* const myLanguage[16][170] = {
     "Stereo праг:", // 15
     "Мин. честота на изряз.:", // 16
     "Мин. сигнал за изряз.:", // 17
-    "Праг на слаб сигнал:", // 18
+    "Праг н?? слаб сигнал:", // 18
     "Яркост:", // 19
     "Сила на звука", // 20
     "Отместване на конвертора:", // 21
