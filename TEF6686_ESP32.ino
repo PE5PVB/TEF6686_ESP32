@@ -3340,7 +3340,7 @@ void ShowAdvancedRDS() {
       sprite5.pushSprite(35, 197);
     }
   } else {
-    if (millis() - afticker >= 50) {
+    if (millis() - afticker >= 15) {
       if (xPos2 == 0) {
         if (millis() - aftickerhold >= 2000) {
           xPos2 --;
@@ -3350,7 +3350,7 @@ void ShowAdvancedRDS() {
         xPos2 --;
         aftickerhold = millis();
       }
-      if (xPos2 < -tft.textWidth(afstring) + (charWidth * 16)) xPos2 = 0;
+      if (xPos2 < -tft.textWidth(afstring) + (charWidth * 14)) xPos2 = 0;
       sprite5.fillSprite(BackgroundColor);
       sprite5.loadFont(font);
       sprite5.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
@@ -3377,7 +3377,7 @@ void ShowAdvancedRDS() {
       sprite3.pushSprite(35, 172);
     }
   } else {
-    if (millis() - eonticker >= 50) {
+    if (millis() - eonticker >= 15) {
       if (xPos3 == 0) {
         if (millis() - eontickerhold >= 2000) {
           xPos3 --;
@@ -3387,7 +3387,7 @@ void ShowAdvancedRDS() {
         xPos3 --;
         eontickerhold = millis();
       }
-      if (xPos3 < -tft.textWidth(eonstring) + (charWidth * 16)) xPos3 = 0;
+      if (xPos3 < -tft.textWidth(eonstring) + (charWidth * 14)) xPos3 = 0;
       sprite3.fillSprite(BackgroundColor);
       sprite3.loadFont(font);
       sprite3.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
@@ -3399,7 +3399,7 @@ void ShowAdvancedRDS() {
   eonstringold = eonstring;
 
   String rtplusstring;
-  if (radio.rds.hasRDSplus) rtplusstring = String(myLanguage[language][radio.rds.rdsplusTag1]) + ": " + String(radio.rds.RTContent1) + " - " + String(myLanguage[language][radio.rds.rdsplusTag2]) + ": " + String(radio.rds.RTContent2) + "         "; else rtplusstring = myLanguage[language][89];
+  if (radio.rds.hasRDSplus) rtplusstring = (radio.rds.rdsplusTag1 != 169 ? String(myLanguage[language][radio.rds.rdsplusTag1]) + ": " + String(radio.rds.RTContent1) : "") + (radio.rds.rdsplusTag2 != 169 ? " - " + String(myLanguage[language][radio.rds.rdsplusTag2]) + ": " + String(radio.rds.RTContent2) : "") + "         "; else rtplusstring = myLanguage[language][89];
   if (hasrtplusold != radio.rds.hasRDSplus) {
     if (radio.rds.hasRDSplus) tftPrint(-1, "RT+", 124, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "RT+", 124, 51, GreyoutColor, BackgroundColor, FONT16);
     hasrtplusold = radio.rds.hasRDSplus;
@@ -3414,7 +3414,7 @@ void ShowAdvancedRDS() {
       sprite4.pushSprite(35, 146);
     }
   } else {
-    if (millis() - rtplusticker >= 50) {
+    if (millis() - rtplusticker >= 15) {
       if (xPos4 == 0) {
         if (millis() - rtplustickerhold >= 2000) {
           xPos4 --;
@@ -3424,7 +3424,7 @@ void ShowAdvancedRDS() {
         xPos4 --;
         rtplustickerhold = millis();
       }
-      if (xPos4 < -tft.textWidth(rtplusstring) + (charWidth * 16)) xPos4 = 0;
+      if (xPos4 < -tft.textWidth(rtplusstring) + (charWidth * 14)) xPos4 = 0;
       sprite4.fillSprite(BackgroundColor);
       sprite4.loadFont(font);
       sprite4.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
@@ -3689,7 +3689,7 @@ void showRadioText() {
         sprite.pushSprite(38, 220);
       }
     } else {
-      if (millis() - rtticker >= 50) {
+      if (millis() - rtticker >= 15) {
         if (xPos == 0) {
           if (millis() - rttickerhold >= 2000) {
             xPos --;

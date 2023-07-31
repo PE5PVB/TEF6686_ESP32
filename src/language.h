@@ -113,64 +113,64 @@ static const char* const myLanguage[16][170] = {
     "Base (ILI9341)", // 109
     "Portable (ILI9341)", // 110
     "Portable touch (ILI9341)", // 111
-	"Title", // 112
-	"Album", // 113
-	"Track", // 114
-	"Artist", // 115
-	"Composition", // 116
-	"Movement", // 117
-	"Conductor", // 118
-	"Composer", // 119
-	"Band", // 120
-	"Comment", // 121
-	"Genre", // 122
-	"News", // 123
-	"Local news", // 124
-	"Stockmarket", // 125
-	"Sport", // 126
-	"Lottery", // 127
-	"Horoscope", // 128
-	"Daily Diversion", // 129
-	"Health", // 130
-	"Event", // 131
-	"Scene", // 132
-	"Cinema", // 133
-	"TV", // 134
-	"Date/time", //135
-	"Weather", // 136
-	"Traffic", // 137
-	"Alarm", // 138
-	"Advertisement", // 139
-	"Website", // 140
-	"Other", // 141
-	"Short PS", // 142
-	"Long PS", // 143
-	"Now", // 144
-	"Next", //145
-	"Part", // 146
-	"Host", // 147
-	"Editor", // 148
-	"Frequency", // 149
-	"Homepage", // 150
-	"Subchannel", // 151
-	"Hotline", // 152
-	"Studio phone", // 153
-	"Phone", // 154
-	"SMS studio", // 155
-	"SMS", // 156
-	"Email hotline", // 157
-	"Email studio", // 158
-	"Email", // 159
-	"Chat", // 160
-	"Chat centre", // 161
-	"Vote question", // 162
-	"Vote centre", // 163
-	"Place", // 164
-	"Appointment", // 165
-	"Identifier", // 166
-	"Purchase", // 167
-	"Get data", // 168
-	" " // 169
+    "Title", // 112
+    "Album", // 113
+    "Track", // 114
+    "Artist", // 115
+    "Composition", // 116
+    "Movement", // 117
+    "Conductor", // 118
+    "Composer", // 119
+    "Band", // 120
+    "Comment", // 121
+    "Genre", // 122
+    "News", // 123
+    "Local news", // 124
+    "Stockmarket", // 125
+    "Sport", // 126
+    "Lottery", // 127
+    "Horoscope", // 128
+    "Daily Diversion", // 129
+    "Health", // 130
+    "Event", // 131
+    "Scene", // 132
+    "Cinema", // 133
+    "TV", // 134
+    "Date/time", //135
+    "Weather", // 136
+    "Traffic", // 137
+    "Alarm", // 138
+    "Advertisement", // 139
+    "Website", // 140
+    "Other", // 141
+    "Short PS", // 142
+    "Long PS", // 143
+    "Now", // 144
+    "Next", //145
+    "Part", // 146
+    "Host", // 147
+    "Editor", // 148
+    "Frequency", // 149
+    "Homepage", // 150
+    "Subchannel", // 151
+    "Hotline", // 152
+    "Studio phone", // 153
+    "Phone", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email hotline", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Chat", // 160
+    "Chat centre", // 161
+    "Vote question", // 162
+    "Vote centre", // 163
+    "Place", // 164
+    "Appointment", // 165
+    "Identifier", // 166
+    "Purchase", // 167
+    "Get data", // 168
+    " " // 169
   },
 
   { "Nederlands", // Dutch
@@ -285,64 +285,64 @@ static const char* const myLanguage[16][170] = {
     "Basis (ILI9341)", // 109
     "Portable (ILI9341)", // 110
     "Portable touch (ILI9341)", // 111
-	"Titel", // 112
-	"Album", // 113
-	"Nummer", // 114
-	"Artiest", // 115
-	"Compositie", // 116
-	"Deel", // 117
-	"Dirigent", // 118
-	"Componist", // 119
-	"Band", // 120
-	"Opmerking", // 121
-	"Genre", // 122
-	"Nieuws", // 123
-	"Lokaal nieuws", // 124
-	"Financiële beurs", // 125
-	"Sport", // 126
-	"Loterij", // 127
-	"Horoscoop", // 128
-	"Dagelijkse grap", // 129
-	"Gezondheid", // 130
-	"Evenement", // 131
-	"Scene", // 132
-	"Bioscoop", // 133
-	"TV", // 134
-	"Datum/tijd", //135
-	"Weer", // 136
-	"Verkeer", // 137
-	"Alarm", // 138
-	"Advertentie", // 139
-	"Website", // 140
-	"Overige", // 141
-	"Korte naam", // 142
-	"Lange naam", // 143
-	"Nu", // 144
-	"Straks", //145
-	"Deel", // 146
-	"Host", // 147
-	"Regiseur", // 148
-	"Frequentie", // 149
-	"Homepage", // 150
-	"Subkanaal", // 151
-	"Hotline", // 152
-	"Studio telefoon", // 153
-	"Telefoon", // 154
-	"SMS studio", // 155
-	"SMS", // 156
-	"Email hotline", // 157
-	"Email studio", // 158
-	"Email", // 159
-	"Chat", // 160
-	"Chat centrum", // 161
-	"Stemming", // 162
-	"Stemcentrum", // 163
-	"Plaats", // 164
-	"Afspraak", // 165
-	"Identificatie", // 166
-	"Aankoop", // 167
-	"Verkrijg data", // 168	
-	"" // 169
+    "Titel", // 112
+    "Album", // 113
+    "Nummer", // 114
+    "Artiest", // 115
+    "Compositie", // 116
+    "Deel", // 117
+    "Dirigent", // 118
+    "Componist", // 119
+    "Band", // 120
+    "Opmerking", // 121
+    "Genre", // 122
+    "Nieuws", // 123
+    "Lokaal nieuws", // 124
+    "Financiële beurs", // 125
+    "Sport", // 126
+    "Loterij", // 127
+    "Horoscoop", // 128
+    "Dagelijkse grap", // 129
+    "Gezondheid", // 130
+    "Evenement", // 131
+    "Scene", // 132
+    "Bioscoop", // 133
+    "TV", // 134
+    "Datum/tijd", //135
+    "Weer", // 136
+    "Verkeer", // 137
+    "Alarm", // 138
+    "Advertentie", // 139
+    "Website", // 140
+    "Overige", // 141
+    "Korte naam", // 142
+    "Lange naam", // 143
+    "Nu", // 144
+    "Straks", //145
+    "Deel", // 146
+    "Host", // 147
+    "Regiseur", // 148
+    "Frequentie", // 149
+    "Homepage", // 150
+    "Subkanaal", // 151
+    "Hotline", // 152
+    "Studio telefoon", // 153
+    "Telefoon", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email hotline", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Chat", // 160
+    "Chat centrum", // 161
+    "Stemming", // 162
+    "Stemcentrum", // 163
+    "Plaats", // 164
+    "Afspraak", // 165
+    "Identificatie", // 166
+    "Aankoop", // 167
+    "Verkrijg data", // 168
+    "" // 169
   },
 
   { "Polski", // Polish
@@ -457,64 +457,64 @@ static const char* const myLanguage[16][170] = {
     "Podstawowy (ILI9341)", // 109
     "Przenosny (ILI9341)", // 110
     "Przenos. dotyk. (ILI9341)", // 111
-	"Tytul", // 112
-	"Album", // 113
-	"Sciezka", // 114
-	"Wykonawca", // 115
-	"Kompozycja", // 116
-	"Movement", // 117
-	"Dyrygent", // 118
-	"Kompozytor", // 119
-	"Grupa", // 120
-	"Komentarz", // 121
-	"Gatunek", // 122
-	"News", // 123
-	"Local news", // 124
-	"Stockmarket", // 125
-	"Sport", // 126
-	"Lottery", // 127
-	"Horoscope", // 128
-	"Daily Diversion", // 129
-	"Health", // 130
-	"Event", // 131
-	"Scene", // 132
-	"Cinema", // 133
-	"TV", // 134
-	"Date/time", //135
-	"Weather", // 136
-	"Traffic", // 137
-	"Alarm", // 138
-	"Advertisement", // 139
-	"Website", // 140
-	"Other", // 141
-	"Short PS", // 142
-	"Long PS", // 143
-	"Now", // 144
-	"Next", //145
-	"Part", // 146
-	"Host", // 147
-	"Editor", // 148
-	"Frequency", // 149
-	"Homepage", // 150
-	"Subchannel", // 151
-	"Hotline", // 152
-	"Studio phone", // 153
-	"Phone", // 154
-	"SMS studio", // 155
-	"SMS", // 156
-	"Email hotline", // 157
-	"Email studio", // 158
-	"Email", // 159
-	"Chat", // 160
-	"Chat centre", // 161
-	"Vote question", // 162
-	"Vote centre", // 163
-	"Place", // 164
-	"Appointment", // 165
-	"Identifier", // 166
-	"Purchase", // 167
-	"Get data", // 168	
-	"" // 169
+    "Tytul", // 112
+    "Album", // 113
+    "Sciezka", // 114
+    "Wykonawca", // 115
+    "Kompozycja", // 116
+    "Movement", // 117
+    "Dyrygent", // 118
+    "Kompozytor", // 119
+    "Grupa", // 120
+    "Komentarz", // 121
+    "Gatunek", // 122
+    "News", // 123
+    "Local news", // 124
+    "Stockmarket", // 125
+    "Sport", // 126
+    "Lottery", // 127
+    "Horoscope", // 128
+    "Daily Diversion", // 129
+    "Health", // 130
+    "Event", // 131
+    "Scene", // 132
+    "Cinema", // 133
+    "TV", // 134
+    "Date/time", //135
+    "Weather", // 136
+    "Traffic", // 137
+    "Alarm", // 138
+    "Advertisement", // 139
+    "Website", // 140
+    "Other", // 141
+    "Short PS", // 142
+    "Long PS", // 143
+    "Now", // 144
+    "Next", //145
+    "Part", // 146
+    "Host", // 147
+    "Editor", // 148
+    "Frequency", // 149
+    "Homepage", // 150
+    "Subchannel", // 151
+    "Hotline", // 152
+    "Studio phone", // 153
+    "Phone", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email hotline", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Chat", // 160
+    "Chat centre", // 161
+    "Vote question", // 162
+    "Vote centre", // 163
+    "Place", // 164
+    "Appointment", // 165
+    "Identifier", // 166
+    "Purchase", // 167
+    "Get data", // 168
+    "" // 169
   },
 
   { "Hrvatski", // Croatian
@@ -629,64 +629,64 @@ static const char* const myLanguage[16][170] = {
     "Base (ILI9341)", // 109
     "Portable (ILI9341)", // 110
     "Portable touch (ILI9341)", // 111
-	"Title", // 112
-	"Album", // 113
-	"Track", // 114
-	"Artist", // 115
-	"Composition", // 116
-	"Movement", // 117
-	"Conductor", // 118
-	"Composer", // 119
-	"Band", // 120
-	"Comment", // 121
-	"Genre", // 122
-	"News", // 123
-	"Local news", // 124
-	"Stockmarket", // 125
-	"Sport", // 126
-	"Lottery", // 127
-	"Horoscope", // 128
-	"Daily Diversion", // 129
-	"Health", // 130
-	"Event", // 131
-	"Scene", // 132
-	"Cinema", // 133
-	"TV", // 134
-	"Date/time", //135
-	"Weather", // 136
-	"Traffic", // 137
-	"Alarm", // 138
-	"Advertisement", // 139
-	"Website", // 140
-	"Other", // 141
-	"Short PS", // 142
-	"Long PS", // 143
-	"Now", // 144
-	"Next", //145
-	"Part", // 146
-	"Host", // 147
-	"Editor", // 148
-	"Frequency", // 149
-	"Homepage", // 150
-	"Subchannel", // 151
-	"Hotline", // 152
-	"Studio phone", // 153
-	"Phone", // 154
-	"SMS studio", // 155
-	"SMS", // 156
-	"Email hotline", // 157
-	"Email studio", // 158
-	"Email", // 159
-	"Chat", // 160
-	"Chat centre", // 161
-	"Vote question", // 162
-	"Vote centre", // 163
-	"Place", // 164
-	"Appointment", // 165
-	"Identifier", // 166
-	"Purchase", // 167
-	"Get data", // 168	
-	"" // 169
+    "Title", // 112
+    "Album", // 113
+    "Track", // 114
+    "Artist", // 115
+    "Composition", // 116
+    "Movement", // 117
+    "Conductor", // 118
+    "Composer", // 119
+    "Band", // 120
+    "Comment", // 121
+    "Genre", // 122
+    "News", // 123
+    "Local news", // 124
+    "Stockmarket", // 125
+    "Sport", // 126
+    "Lottery", // 127
+    "Horoscope", // 128
+    "Daily Diversion", // 129
+    "Health", // 130
+    "Event", // 131
+    "Scene", // 132
+    "Cinema", // 133
+    "TV", // 134
+    "Date/time", //135
+    "Weather", // 136
+    "Traffic", // 137
+    "Alarm", // 138
+    "Advertisement", // 139
+    "Website", // 140
+    "Other", // 141
+    "Short PS", // 142
+    "Long PS", // 143
+    "Now", // 144
+    "Next", //145
+    "Part", // 146
+    "Host", // 147
+    "Editor", // 148
+    "Frequency", // 149
+    "Homepage", // 150
+    "Subchannel", // 151
+    "Hotline", // 152
+    "Studio phone", // 153
+    "Phone", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email hotline", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Chat", // 160
+    "Chat centre", // 161
+    "Vote question", // 162
+    "Vote centre", // 163
+    "Place", // 164
+    "Appointment", // 165
+    "Identifier", // 166
+    "Purchase", // 167
+    "Get data", // 168
+    "" // 169
   },
 
   { "Ελληνικά", // Greek
@@ -801,64 +801,64 @@ static const char* const myLanguage[16][170] = {
     "Βασικό (ILI9341)", // 109
     "Φορητό (ILI9341)", // 110
     "Φορητό αφής (ILI9341)", // 111
-	"Τίτλος", // 112
-	"Άλμπουμ", // 113
-	"Κομμάτι", // 114
-	"Καλλιτέχνης", // 115
-	"Σύνθεση", // 116
-	"Κίνηση", // 117
-	"Μαέστρος", // 118
-	"Συνθέτης", // 119
-	"Μπάντα", // 120
-	"Σχόλιο", // 121
-	"Είδος", // 122
-	"Ειδήσεις", // 123
-	"Τοπικές ειδήσεις", // 124
-	"Χρηματιστήριο", // 125
-	"Αθλητικά", // 126
-	"Λοταρία", // 127
-	"Ωροσκόπιο", // 128
-	"Καθημερινές ασχολίες", // 129
-	"Υγεία", // 130
-	"Γεγονός", // 131
-	"Σκηνή", // 132
-	"Σινεμά", // 133
-	"TV", // 134
-	"Ημερομηνία/ώρα", //135
-	"Καιρός", // 136
-	"Κυκλοφορία", // 137
-	"Συναγερμός", // 138
-	"Διαφήμιση", // 139
-	"Ιστότοπος", // 140
-	"Άλλο", // 141
-	"Σύντομο PS", // 142
-	"Μακρύ PS", // 143
-	"Τώρα", // 144
-	"Στη συνέχεια", //145
-	"Μέρος", // 146
-	"Παρουσιαστής", // 147
-	"Συντάκτης", // 148
-	"Συχνότητα", // 149
-	"Ιστοσελίδα", // 150
-	"Υποφέρουσα", // 151
-	"Τηλ. επικοινωνίας", // 152
-	"Τηλ. στούντιο", // 153
-	"Τηλέφωνο", // 154
-	"SMS στούντιο", // 155
-	"SMS", // 156
-	"Email επικοινωνία", // 157
-	"Email στούντιο", // 158
-	"Email", // 159
-	"Chat", // 160
-	"Κέντρο chat", // 161
-	"Ερώτηση ψηφοφορίας", // 162
-	"Κέντρο ψηφοφορίας", // 163
-	"Τοποθεσία", // 164
-	"Ραντεβού", // 165
-	"Αναγνωριστικό", // 166
-	"Αγορά", // 167
-	"Λήψη δεδομένων", // 168	
-	"" // 169
+    "Τίτλος", // 112
+    "Άλμπουμ", // 113
+    "Κομμάτι", // 114
+    "Καλλιτέχνης", // 115
+    "Σύνθεση", // 116
+    "Κίνηση", // 117
+    "Μαέστρος", // 118
+    "Συνθέτης", // 119
+    "Μπάντα", // 120
+    "Σχόλιο", // 121
+    "Είδος", // 122
+    "Ειδήσεις", // 123
+    "Τοπικές ειδήσεις", // 124
+    "Χρηματιστήριο", // 125
+    "Αθλητικά", // 126
+    "Λοταρία", // 127
+    "Ωροσκόπιο", // 128
+    "Καθημερινές ασχολίες", // 129
+    "Υγεία", // 130
+    "Γεγονός", // 131
+    "Σκηνή", // 132
+    "Σινεμά", // 133
+    "TV", // 134
+    "Ημερομηνία/ώρα", //135
+    "Καιρός", // 136
+    "Κυκλοφορία", // 137
+    "Συναγερμός", // 138
+    "Διαφήμιση", // 139
+    "Ιστότοπος", // 140
+    "Άλλο", // 141
+    "Σύντομο PS", // 142
+    "Μακρύ PS", // 143
+    "Τώρα", // 144
+    "Στη συνέχεια", //145
+    "Μέρος", // 146
+    "Παρουσιαστής", // 147
+    "Συντάκτης", // 148
+    "Συχνότητα", // 149
+    "Ιστοσελίδα", // 150
+    "Υποφέρουσα", // 151
+    "Τηλ. επικοινωνίας", // 152
+    "Τηλ. στούντιο", // 153
+    "Τηλέφωνο", // 154
+    "SMS στούντιο", // 155
+    "SMS", // 156
+    "Email επικοινωνία", // 157
+    "Email στούντιο", // 158
+    "Email", // 159
+    "Chat", // 160
+    "Κέντρο chat", // 161
+    "Ερώτηση ψηφοφορίας", // 162
+    "Κέντρο ψηφοφορίας", // 163
+    "Τοποθεσία", // 164
+    "Ραντεβού", // 165
+    "Αναγνωριστικό", // 166
+    "Αγορά", // 167
+    "Λήψη δεδομένων", // 168
+    "" // 169
   },
 
   { "Romana", // Romanian
@@ -973,64 +973,64 @@ static const char* const myLanguage[16][170] = {
     "Base (ILI9341)", // 109
     "Portable (ILI9341)", // 110
     "Portable touch (ILI9341)", // 111
-	"Title", // 112
-	"Album", // 113
-	"Track", // 114
-	"Artist", // 115
-	"Composition", // 116
-	"Movement", // 117
-	"Conductor", // 118
-	"Composer", // 119
-	"Band", // 120
-	"Comment", // 121
-	"Genre", // 122
-	"News", // 123
-	"Local news", // 124
-	"Stockmarket", // 125
-	"Sport", // 126
-	"Lottery", // 127
-	"Horoscope", // 128
-	"Daily Diversion", // 129
-	"Health", // 130
-	"Event", // 131
-	"Scene", // 132
-	"Cinema", // 133
-	"TV", // 134
-	"Date/time", //135
-	"Weather", // 136
-	"Traffic", // 137
-	"Alarm", // 138
-	"Advertisement", // 139
-	"Website", // 140
-	"Other", // 141
-	"Short PS", // 142
-	"Long PS", // 143
-	"Now", // 144
-	"Next", //145
-	"Part", // 146
-	"Host", // 147
-	"Editor", // 148
-	"Frequency", // 149
-	"Homepage", // 150
-	"Subchannel", // 151
-	"Hotline", // 152
-	"Studio phone", // 153
-	"Phone", // 154
-	"SMS studio", // 155
-	"SMS", // 156
-	"Email hotline", // 157
-	"Email studio", // 158
-	"Email", // 159
-	"Chat", // 160
-	"Chat centre", // 161
-	"Vote question", // 162
-	"Vote centre", // 163
-	"Place", // 164
-	"Appointment", // 165
-	"Identifier", // 166
-	"Purchase", // 167
-	"Get data", // 168	
-	"" // 169
+    "Title", // 112
+    "Album", // 113
+    "Track", // 114
+    "Artist", // 115
+    "Composition", // 116
+    "Movement", // 117
+    "Conductor", // 118
+    "Composer", // 119
+    "Band", // 120
+    "Comment", // 121
+    "Genre", // 122
+    "News", // 123
+    "Local news", // 124
+    "Stockmarket", // 125
+    "Sport", // 126
+    "Lottery", // 127
+    "Horoscope", // 128
+    "Daily Diversion", // 129
+    "Health", // 130
+    "Event", // 131
+    "Scene", // 132
+    "Cinema", // 133
+    "TV", // 134
+    "Date/time", //135
+    "Weather", // 136
+    "Traffic", // 137
+    "Alarm", // 138
+    "Advertisement", // 139
+    "Website", // 140
+    "Other", // 141
+    "Short PS", // 142
+    "Long PS", // 143
+    "Now", // 144
+    "Next", //145
+    "Part", // 146
+    "Host", // 147
+    "Editor", // 148
+    "Frequency", // 149
+    "Homepage", // 150
+    "Subchannel", // 151
+    "Hotline", // 152
+    "Studio phone", // 153
+    "Phone", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email hotline", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Chat", // 160
+    "Chat centre", // 161
+    "Vote question", // 162
+    "Vote centre", // 163
+    "Place", // 164
+    "Appointment", // 165
+    "Identifier", // 166
+    "Purchase", // 167
+    "Get data", // 168
+    "" // 169
   },
 
   { "Deutsch", // German
@@ -1145,64 +1145,64 @@ static const char* const myLanguage[16][170] = {
     "Base (ILI9341)", // 109
     "Portable (ILI9341)", // 110
     "Portable touch (ILI9341)", // 111
-	"Title", // 112
-	"Album", // 113
-	"Track", // 114
-	"Artist", // 115
-	"Composition", // 116
-	"Movement", // 117
-	"Conductor", // 118
-	"Composer", // 119
-	"Band", // 120
-	"Comment", // 121
-	"Genre", // 122
-	"News", // 123
-	"Local news", // 124
-	"Stockmarket", // 125
-	"Sport", // 126
-	"Lottery", // 127
-	"Horoscope", // 128
-	"Daily Diversion", // 129
-	"Health", // 130
-	"Event", // 131
-	"Scene", // 132
-	"Cinema", // 133
-	"TV", // 134
-	"Date/time", //135
-	"Weather", // 136
-	"Traffic", // 137
-	"Alarm", // 138
-	"Advertisement", // 139
-	"Website", // 140
-	"Other", // 141
-	"Short PS", // 142
-	"Long PS", // 143
-	"Now", // 144
-	"Next", //145
-	"Part", // 146
-	"Host", // 147
-	"Editor", // 148
-	"Frequency", // 149
-	"Homepage", // 150
-	"Subchannel", // 151
-	"Hotline", // 152
-	"Studio phone", // 153
-	"Phone", // 154
-	"SMS studio", // 155
-	"SMS", // 156
-	"Email hotline", // 157
-	"Email studio", // 158
-	"Email", // 159
-	"Chat", // 160
-	"Chat centre", // 161
-	"Vote question", // 162
-	"Vote centre", // 163
-	"Place", // 164
-	"Appointment", // 165
-	"Identifier", // 166
-	"Purchase", // 167
-	"Get data", // 168	
-	"" // 169
+    "Title", // 112
+    "Album", // 113
+    "Track", // 114
+    "Artist", // 115
+    "Composition", // 116
+    "Movement", // 117
+    "Conductor", // 118
+    "Composer", // 119
+    "Band", // 120
+    "Comment", // 121
+    "Genre", // 122
+    "News", // 123
+    "Local news", // 124
+    "Stockmarket", // 125
+    "Sport", // 126
+    "Lottery", // 127
+    "Horoscope", // 128
+    "Daily Diversion", // 129
+    "Health", // 130
+    "Event", // 131
+    "Scene", // 132
+    "Cinema", // 133
+    "TV", // 134
+    "Date/time", //135
+    "Weather", // 136
+    "Traffic", // 137
+    "Alarm", // 138
+    "Advertisement", // 139
+    "Website", // 140
+    "Other", // 141
+    "Short PS", // 142
+    "Long PS", // 143
+    "Now", // 144
+    "Next", //145
+    "Part", // 146
+    "Host", // 147
+    "Editor", // 148
+    "Frequency", // 149
+    "Homepage", // 150
+    "Subchannel", // 151
+    "Hotline", // 152
+    "Studio phone", // 153
+    "Phone", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email hotline", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Chat", // 160
+    "Chat centre", // 161
+    "Vote question", // 162
+    "Vote centre", // 163
+    "Place", // 164
+    "Appointment", // 165
+    "Identifier", // 166
+    "Purchase", // 167
+    "Get data", // 168
+    "" // 169
   },
 
   { "Czech", // Czech
@@ -1317,64 +1317,64 @@ static const char* const myLanguage[16][170] = {
     "Base (ILI9341)", // 109
     "Portable (ILI9341)", // 110
     "Portable touch (ILI9341)", // 111
-	"Title", // 112
-	"Album", // 113
-	"Track", // 114
-	"Artist", // 115
-	"Composition", // 116
-	"Movement", // 117
-	"Conductor", // 118
-	"Composer", // 119
-	"Band", // 120
-	"Comment", // 121
-	"Genre", // 122
-	"News", // 123
-	"Local news", // 124
-	"Stockmarket", // 125
-	"Sport", // 126
-	"Lottery", // 127
-	"Horoscope", // 128
-	"Daily Diversion", // 129
-	"Health", // 130
-	"Event", // 131
-	"Scene", // 132
-	"Cinema", // 133
-	"TV", // 134
-	"Date/time", //135
-	"Weather", // 136
-	"Traffic", // 137
-	"Alarm", // 138
-	"Advertisement", // 139
-	"Website", // 140
-	"Other", // 141
-	"Short PS", // 142
-	"Long PS", // 143
-	"Now", // 144
-	"Next", //145
-	"Part", // 146
-	"Host", // 147
-	"Editor", // 148
-	"Frequency", // 149
-	"Homepage", // 150
-	"Subchannel", // 151
-	"Hotline", // 152
-	"Studio phone", // 153
-	"Phone", // 154
-	"SMS studio", // 155
-	"SMS", // 156
-	"Email hotline", // 157
-	"Email studio", // 158
-	"Email", // 159
-	"Chat", // 160
-	"Chat centre", // 161
-	"Vote question", // 162
-	"Vote centre", // 163
-	"Place", // 164
-	"Appointment", // 165
-	"Identifier", // 166
-	"Purchase", // 167
-	"Get data", // 168	
-	"" // 169
+    "Title", // 112
+    "Album", // 113
+    "Track", // 114
+    "Artist", // 115
+    "Composition", // 116
+    "Movement", // 117
+    "Conductor", // 118
+    "Composer", // 119
+    "Band", // 120
+    "Comment", // 121
+    "Genre", // 122
+    "News", // 123
+    "Local news", // 124
+    "Stockmarket", // 125
+    "Sport", // 126
+    "Lottery", // 127
+    "Horoscope", // 128
+    "Daily Diversion", // 129
+    "Health", // 130
+    "Event", // 131
+    "Scene", // 132
+    "Cinema", // 133
+    "TV", // 134
+    "Date/time", //135
+    "Weather", // 136
+    "Traffic", // 137
+    "Alarm", // 138
+    "Advertisement", // 139
+    "Website", // 140
+    "Other", // 141
+    "Short PS", // 142
+    "Long PS", // 143
+    "Now", // 144
+    "Next", //145
+    "Part", // 146
+    "Host", // 147
+    "Editor", // 148
+    "Frequency", // 149
+    "Homepage", // 150
+    "Subchannel", // 151
+    "Hotline", // 152
+    "Studio phone", // 153
+    "Phone", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email hotline", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Chat", // 160
+    "Chat centre", // 161
+    "Vote question", // 162
+    "Vote centre", // 163
+    "Place", // 164
+    "Appointment", // 165
+    "Identifier", // 166
+    "Purchase", // 167
+    "Get data", // 168
+    "" // 169
   },
 
   { "Slovak", // Slovak
@@ -1489,64 +1489,64 @@ static const char* const myLanguage[16][170] = {
     "Base (ILI9341)", // 109
     "Portable (ILI9341)", // 110
     "Portable touch (ILI9341)", // 111
-	"Title", // 112
-	"Album", // 113
-	"Track", // 114
-	"Artist", // 115
-	"Composition", // 116
-	"Movement", // 117
-	"Conductor", // 118
-	"Composer", // 119
-	"Band", // 120
-	"Comment", // 121
-	"Genre", // 122
-	"News", // 123
-	"Local news", // 124
-	"Stockmarket", // 125
-	"Sport", // 126
-	"Lottery", // 127
-	"Horoscope", // 128
-	"Daily Diversion", // 129
-	"Health", // 130
-	"Event", // 131
-	"Scene", // 132
-	"Cinema", // 133
-	"TV", // 134
-	"Date/time", //135
-	"Weather", // 136
-	"Traffic", // 137
-	"Alarm", // 138
-	"Advertisement", // 139
-	"Website", // 140
-	"Other", // 141
-	"Short PS", // 142
-	"Long PS", // 143
-	"Now", // 144
-	"Next", //145
-	"Part", // 146
-	"Host", // 147
-	"Editor", // 148
-	"Frequency", // 149
-	"Homepage", // 150
-	"Subchannel", // 151
-	"Hotline", // 152
-	"Studio phone", // 153
-	"Phone", // 154
-	"SMS studio", // 155
-	"SMS", // 156
-	"Email hotline", // 157
-	"Email studio", // 158
-	"Email", // 159
-	"Chat", // 160
-	"Chat centre", // 161
-	"Vote question", // 162
-	"Vote centre", // 163
-	"Place", // 164
-	"Appointment", // 165
-	"Identifier", // 166
-	"Purchase", // 167
-	"Get data", // 168	
-	"" // 169
+    "Title", // 112
+    "Album", // 113
+    "Track", // 114
+    "Artist", // 115
+    "Composition", // 116
+    "Movement", // 117
+    "Conductor", // 118
+    "Composer", // 119
+    "Band", // 120
+    "Comment", // 121
+    "Genre", // 122
+    "News", // 123
+    "Local news", // 124
+    "Stockmarket", // 125
+    "Sport", // 126
+    "Lottery", // 127
+    "Horoscope", // 128
+    "Daily Diversion", // 129
+    "Health", // 130
+    "Event", // 131
+    "Scene", // 132
+    "Cinema", // 133
+    "TV", // 134
+    "Date/time", //135
+    "Weather", // 136
+    "Traffic", // 137
+    "Alarm", // 138
+    "Advertisement", // 139
+    "Website", // 140
+    "Other", // 141
+    "Short PS", // 142
+    "Long PS", // 143
+    "Now", // 144
+    "Next", //145
+    "Part", // 146
+    "Host", // 147
+    "Editor", // 148
+    "Frequency", // 149
+    "Homepage", // 150
+    "Subchannel", // 151
+    "Hotline", // 152
+    "Studio phone", // 153
+    "Phone", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email hotline", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Chat", // 160
+    "Chat centre", // 161
+    "Vote question", // 162
+    "Vote centre", // 163
+    "Place", // 164
+    "Appointment", // 165
+    "Identifier", // 166
+    "Purchase", // 167
+    "Get data", // 168
+    "" // 169
   },
 
   { "Français", // French
@@ -1661,64 +1661,64 @@ static const char* const myLanguage[16][170] = {
     "Base (ILI9341)", // 109
     "Portable (ILI9341)", // 110
     "Portable touche (ILI9341)", // 111
-	"Title", // 112
-	"Album", // 113
-	"Track", // 114
-	"Artist", // 115
-	"Composition", // 116
-	"Movement", // 117
-	"Conductor", // 118
-	"Composer", // 119
-	"Band", // 120
-	"Comment", // 121
-	"Genre", // 122
-	"News", // 123
-	"Local news", // 124
-	"Stockmarket", // 125
-	"Sport", // 126
-	"Lottery", // 127
-	"Horoscope", // 128
-	"Daily Diversion", // 129
-	"Health", // 130
-	"Event", // 131
-	"Scene", // 132
-	"Cinema", // 133
-	"TV", // 134
-	"Date/time", //135
-	"Weather", // 136
-	"Traffic", // 137
-	"Alarm", // 138
-	"Advertisement", // 139
-	"Website", // 140
-	"Other", // 141
-	"Short PS", // 142
-	"Long PS", // 143
-	"Now", // 144
-	"Next", //145
-	"Part", // 146
-	"Host", // 147
-	"Editor", // 148
-	"Frequency", // 149
-	"Homepage", // 150
-	"Subchannel", // 151
-	"Hotline", // 152
-	"Studio phone", // 153
-	"Phone", // 154
-	"SMS studio", // 155
-	"SMS", // 156
-	"Email hotline", // 157
-	"Email studio", // 158
-	"Email", // 159
-	"Chat", // 160
-	"Chat centre", // 161
-	"Vote question", // 162
-	"Vote centre", // 163
-	"Place", // 164
-	"Appointment", // 165
-	"Identifier", // 166
-	"Purchase", // 167
-	"Get data", // 168	
-	"" // 169
+    "Title", // 112
+    "Album", // 113
+    "Track", // 114
+    "Artist", // 115
+    "Composition", // 116
+    "Movement", // 117
+    "Conductor", // 118
+    "Composer", // 119
+    "Band", // 120
+    "Comment", // 121
+    "Genre", // 122
+    "News", // 123
+    "Local news", // 124
+    "Stockmarket", // 125
+    "Sport", // 126
+    "Lottery", // 127
+    "Horoscope", // 128
+    "Daily Diversion", // 129
+    "Health", // 130
+    "Event", // 131
+    "Scene", // 132
+    "Cinema", // 133
+    "TV", // 134
+    "Date/time", //135
+    "Weather", // 136
+    "Traffic", // 137
+    "Alarm", // 138
+    "Advertisement", // 139
+    "Website", // 140
+    "Other", // 141
+    "Short PS", // 142
+    "Long PS", // 143
+    "Now", // 144
+    "Next", //145
+    "Part", // 146
+    "Host", // 147
+    "Editor", // 148
+    "Frequency", // 149
+    "Homepage", // 150
+    "Subchannel", // 151
+    "Hotline", // 152
+    "Studio phone", // 153
+    "Phone", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email hotline", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Chat", // 160
+    "Chat centre", // 161
+    "Vote question", // 162
+    "Vote centre", // 163
+    "Place", // 164
+    "Appointment", // 165
+    "Identifier", // 166
+    "Purchase", // 167
+    "Get data", // 168
+    "" // 169
   },
 
   { "Български", // Bulgarian
@@ -1833,64 +1833,64 @@ static const char* const myLanguage[16][170] = {
     "Base (ILI9341)", // 109
     "Portable (ILI9341)", // 110
     "Portable touch (ILI9341)", // 111
-	"Title", // 112
-	"Album", // 113
-	"Track", // 114
-	"Artist", // 115
-	"Composition", // 116
-	"Movement", // 117
-	"Conductor", // 118
-	"Composer", // 119
-	"Band", // 120
-	"Comment", // 121
-	"Genre", // 122
-	"News", // 123
-	"Local news", // 124
-	"Stockmarket", // 125
-	"Sport", // 126
-	"Lottery", // 127
-	"Horoscope", // 128
-	"Daily Diversion", // 129
-	"Health", // 130
-	"Event", // 131
-	"Scene", // 132
-	"Cinema", // 133
-	"TV", // 134
-	"Date/time", //135
-	"Weather", // 136
-	"Traffic", // 137
-	"Alarm", // 138
-	"Advertisement", // 139
-	"Website", // 140
-	"Other", // 141
-	"Short PS", // 142
-	"Long PS", // 143
-	"Now", // 144
-	"Next", //145
-	"Part", // 146
-	"Host", // 147
-	"Editor", // 148
-	"Frequency", // 149
-	"Homepage", // 150
-	"Subchannel", // 151
-	"Hotline", // 152
-	"Studio phone", // 153
-	"Phone", // 154
-	"SMS studio", // 155
-	"SMS", // 156
-	"Email hotline", // 157
-	"Email studio", // 158
-	"Email", // 159
-	"Chat", // 160
-	"Chat centre", // 161
-	"Vote question", // 162
-	"Vote centre", // 163
-	"Place", // 164
-	"Appointment", // 165
-	"Identifier", // 166
-	"Purchase", // 167
-	"Get data", // 168	
-	"" // 169
+    "Title", // 112
+    "Album", // 113
+    "Track", // 114
+    "Artist", // 115
+    "Composition", // 116
+    "Movement", // 117
+    "Conductor", // 118
+    "Composer", // 119
+    "Band", // 120
+    "Comment", // 121
+    "Genre", // 122
+    "News", // 123
+    "Local news", // 124
+    "Stockmarket", // 125
+    "Sport", // 126
+    "Lottery", // 127
+    "Horoscope", // 128
+    "Daily Diversion", // 129
+    "Health", // 130
+    "Event", // 131
+    "Scene", // 132
+    "Cinema", // 133
+    "TV", // 134
+    "Date/time", //135
+    "Weather", // 136
+    "Traffic", // 137
+    "Alarm", // 138
+    "Advertisement", // 139
+    "Website", // 140
+    "Other", // 141
+    "Short PS", // 142
+    "Long PS", // 143
+    "Now", // 144
+    "Next", //145
+    "Part", // 146
+    "Host", // 147
+    "Editor", // 148
+    "Frequency", // 149
+    "Homepage", // 150
+    "Subchannel", // 151
+    "Hotline", // 152
+    "Studio phone", // 153
+    "Phone", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email hotline", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Chat", // 160
+    "Chat centre", // 161
+    "Vote question", // 162
+    "Vote centre", // 163
+    "Place", // 164
+    "Appointment", // 165
+    "Identifier", // 166
+    "Purchase", // 167
+    "Get data", // 168
+    "" // 169
   },
 
   { "Русский", // Russian
@@ -2005,64 +2005,64 @@ static const char* const myLanguage[16][170] = {
     "Стандартный (ILI9341)", // 109
     "Портативный (ILI9341)", // 110
     "Портатив. сенсорный (ILI9341)", // 111
-	"Title", // 112
-	"Album", // 113
-	"Track", // 114
-	"Artist", // 115
-	"Composition", // 116
-	"Movement", // 117
-	"Conductor", // 118
-	"Composer", // 119
-	"Band", // 120
-	"Comment", // 121
-	"Genre", // 122
-	"News", // 123
-	"Local news", // 124
-	"Stockmarket", // 125
-	"Sport", // 126
-	"Lottery", // 127
-	"Horoscope", // 128
-	"Daily Diversion", // 129
-	"Health", // 130
-	"Event", // 131
-	"Scene", // 132
-	"Cinema", // 133
-	"TV", // 134
-	"Date/time", //135
-	"Weather", // 136
-	"Traffic", // 137
-	"Alarm", // 138
-	"Advertisement", // 139
-	"Website", // 140
-	"Other", // 141
-	"Short PS", // 142
-	"Long PS", // 143
-	"Now", // 144
-	"Next", //145
-	"Part", // 146
-	"Host", // 147
-	"Editor", // 148
-	"Frequency", // 149
-	"Homepage", // 150
-	"Subchannel", // 151
-	"Hotline", // 152
-	"Studio phone", // 153
-	"Phone", // 154
-	"SMS studio", // 155
-	"SMS", // 156
-	"Email hotline", // 157
-	"Email studio", // 158
-	"Email", // 159
-	"Chat", // 160
-	"Chat centre", // 161
-	"Vote question", // 162
-	"Vote centre", // 163
-	"Place", // 164
-	"Appointment", // 165
-	"Identifier", // 166
-	"Purchase", // 167
-	"Get data", // 168	
-	"" // 169
+    "Title", // 112
+    "Album", // 113
+    "Track", // 114
+    "Artist", // 115
+    "Composition", // 116
+    "Movement", // 117
+    "Conductor", // 118
+    "Composer", // 119
+    "Band", // 120
+    "Comment", // 121
+    "Genre", // 122
+    "News", // 123
+    "Local news", // 124
+    "Stockmarket", // 125
+    "Sport", // 126
+    "Lottery", // 127
+    "Horoscope", // 128
+    "Daily Diversion", // 129
+    "Health", // 130
+    "Event", // 131
+    "Scene", // 132
+    "Cinema", // 133
+    "TV", // 134
+    "Date/time", //135
+    "Weather", // 136
+    "Traffic", // 137
+    "Alarm", // 138
+    "Advertisement", // 139
+    "Website", // 140
+    "Other", // 141
+    "Short PS", // 142
+    "Long PS", // 143
+    "Now", // 144
+    "Next", //145
+    "Part", // 146
+    "Host", // 147
+    "Editor", // 148
+    "Frequency", // 149
+    "Homepage", // 150
+    "Subchannel", // 151
+    "Hotline", // 152
+    "Studio phone", // 153
+    "Phone", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email hotline", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Chat", // 160
+    "Chat centre", // 161
+    "Vote question", // 162
+    "Vote centre", // 163
+    "Place", // 164
+    "Appointment", // 165
+    "Identifier", // 166
+    "Purchase", // 167
+    "Get data", // 168
+    "" // 169
   },
 
   { "Українська", // Ukranian
@@ -2177,64 +2177,64 @@ static const char* const myLanguage[16][170] = {
     "Стандартний (ILI9341)", // 109
     "Портативний (ILI9341)", // 110
     "Портатив. сенсорний (ILI9341)", // 111
-	"Title", // 112
-	"Album", // 113
-	"Track", // 114
-	"Artist", // 115
-	"Composition", // 116
-	"Movement", // 117
-	"Conductor", // 118
-	"Composer", // 119
-	"Band", // 120
-	"Comment", // 121
-	"Genre", // 122
-	"News", // 123
-	"Local news", // 124
-	"Stockmarket", // 125
-	"Sport", // 126
-	"Lottery", // 127
-	"Horoscope", // 128
-	"Daily Diversion", // 129
-	"Health", // 130
-	"Event", // 131
-	"Scene", // 132
-	"Cinema", // 133
-	"TV", // 134
-	"Date/time", //135
-	"Weather", // 136
-	"Traffic", // 137
-	"Alarm", // 138
-	"Advertisement", // 139
-	"Website", // 140
-	"Other", // 141
-	"Short PS", // 142
-	"Long PS", // 143
-	"Now", // 144
-	"Next", //145
-	"Part", // 146
-	"Host", // 147
-	"Editor", // 148
-	"Frequency", // 149
-	"Homepage", // 150
-	"Subchannel", // 151
-	"Hotline", // 152
-	"Studio phone", // 153
-	"Phone", // 154
-	"SMS studio", // 155
-	"SMS", // 156
-	"Email hotline", // 157
-	"Email studio", // 158
-	"Email", // 159
-	"Chat", // 160
-	"Chat centre", // 161
-	"Vote question", // 162
-	"Vote centre", // 163
-	"Place", // 164
-	"Appointment", // 165
-	"Identifier", // 166
-	"Purchase", // 167
-	"Get data", // 168	
-	"" // 169
+    "Title", // 112
+    "Album", // 113
+    "Track", // 114
+    "Artist", // 115
+    "Composition", // 116
+    "Movement", // 117
+    "Conductor", // 118
+    "Composer", // 119
+    "Band", // 120
+    "Comment", // 121
+    "Genre", // 122
+    "News", // 123
+    "Local news", // 124
+    "Stockmarket", // 125
+    "Sport", // 126
+    "Lottery", // 127
+    "Horoscope", // 128
+    "Daily Diversion", // 129
+    "Health", // 130
+    "Event", // 131
+    "Scene", // 132
+    "Cinema", // 133
+    "TV", // 134
+    "Date/time", //135
+    "Weather", // 136
+    "Traffic", // 137
+    "Alarm", // 138
+    "Advertisement", // 139
+    "Website", // 140
+    "Other", // 141
+    "Short PS", // 142
+    "Long PS", // 143
+    "Now", // 144
+    "Next", //145
+    "Part", // 146
+    "Host", // 147
+    "Editor", // 148
+    "Frequency", // 149
+    "Homepage", // 150
+    "Subchannel", // 151
+    "Hotline", // 152
+    "Studio phone", // 153
+    "Phone", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email hotline", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Chat", // 160
+    "Chat centre", // 161
+    "Vote question", // 162
+    "Vote centre", // 163
+    "Place", // 164
+    "Appointment", // 165
+    "Identifier", // 166
+    "Purchase", // 167
+    "Get data", // 168
+    "" // 169
   },
 
   { "Italiano", // Italian
@@ -2349,64 +2349,64 @@ static const char* const myLanguage[16][170] = {
     "Base (ILI9341)", // 109
     "Portable (ILI9341)", // 110
     "Portable touch (ILI9341)", // 111
-	"Title", // 112
-	"Album", // 113
-	"Track", // 114
-	"Artist", // 115
-	"Composition", // 116
-	"Movement", // 117
-	"Conductor", // 118
-	"Composer", // 119
-	"Band", // 120
-	"Comment", // 121
-	"Genre", // 122
-	"News", // 123
-	"Local news", // 124
-	"Stockmarket", // 125
-	"Sport", // 126
-	"Lottery", // 127
-	"Horoscope", // 128
-	"Daily Diversion", // 129
-	"Health", // 130
-	"Event", // 131
-	"Scene", // 132
-	"Cinema", // 133
-	"TV", // 134
-	"Date/time", //135
-	"Weather", // 136
-	"Traffic", // 137
-	"Alarm", // 138
-	"Advertisement", // 139
-	"Website", // 140
-	"Other", // 141
-	"Short PS", // 142
-	"Long PS", // 143
-	"Now", // 144
-	"Next", //145
-	"Part", // 146
-	"Host", // 147
-	"Editor", // 148
-	"Frequency", // 149
-	"Homepage", // 150
-	"Subchannel", // 151
-	"Hotline", // 152
-	"Studio phone", // 153
-	"Phone", // 154
-	"SMS studio", // 155
-	"SMS", // 156
-	"Email hotline", // 157
-	"Email studio", // 158
-	"Email", // 159
-	"Chat", // 160
-	"Chat centre", // 161
-	"Vote question", // 162
-	"Vote centre", // 163
-	"Place", // 164
-	"Appointment", // 165
-	"Identifier", // 166
-	"Purchase", // 167
-	"Get data", // 168	
-	"" // 169
+    "Title", // 112
+    "Album", // 113
+    "Track", // 114
+    "Artist", // 115
+    "Composition", // 116
+    "Movement", // 117
+    "Conductor", // 118
+    "Composer", // 119
+    "Band", // 120
+    "Comment", // 121
+    "Genre", // 122
+    "News", // 123
+    "Local news", // 124
+    "Stockmarket", // 125
+    "Sport", // 126
+    "Lottery", // 127
+    "Horoscope", // 128
+    "Daily Diversion", // 129
+    "Health", // 130
+    "Event", // 131
+    "Scene", // 132
+    "Cinema", // 133
+    "TV", // 134
+    "Date/time", //135
+    "Weather", // 136
+    "Traffic", // 137
+    "Alarm", // 138
+    "Advertisement", // 139
+    "Website", // 140
+    "Other", // 141
+    "Short PS", // 142
+    "Long PS", // 143
+    "Now", // 144
+    "Next", //145
+    "Part", // 146
+    "Host", // 147
+    "Editor", // 148
+    "Frequency", // 149
+    "Homepage", // 150
+    "Subchannel", // 151
+    "Hotline", // 152
+    "Studio phone", // 153
+    "Phone", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email hotline", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Chat", // 160
+    "Chat centre", // 161
+    "Vote question", // 162
+    "Vote centre", // 163
+    "Place", // 164
+    "Appointment", // 165
+    "Identifier", // 166
+    "Purchase", // 167
+    "Get data", // 168
+    "" // 169
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -2508,7 +2508,7 @@ static const char* const myLanguage[16][170] = {
     "屏幕 50% 亮度", // 96
     "AM 高频信号偏移:", // 97
     "信号单位:", // 98
-	"使用 AF:", // 99
+    "使用 AF:", // 99
     "选择FM波段:", // 100
     "选择AM波段:", // 101
     "LW", // 102
@@ -2521,64 +2521,64 @@ static const char* const myLanguage[16][170] = {
     "原版(ILI9341)", // 109
     "便携版(ILI9341)", // 110
     "便携电阻触摸版(ILI9341)", // 111
-	"Title", // 112
-	"Album", // 113
-	"Track", // 114
-	"Artist", // 115
-	"Composition", // 116
-	"Movement", // 117
-	"Conductor", // 118
-	"Composer", // 119
-	"Band", // 120
-	"Comment", // 121
-	"Genre", // 122
-	"News", // 123
-	"Local news", // 124
-	"Stockmarket", // 125
-	"Sport", // 126
-	"Lottery", // 127
-	"Horoscope", // 128
-	"Daily Diversion", // 129
-	"Health", // 130
-	"Event", // 131
-	"Scene", // 132
-	"Cinema", // 133
-	"TV", // 134
-	"Date/time", //135
-	"Weather", // 136
-	"Traffic", // 137
-	"Alarm", // 138
-	"Advertisement", // 139
-	"Website", // 140
-	"Other", // 141
-	"Short PS", // 142
-	"Long PS", // 143
-	"Now", // 144
-	"Next", //145
-	"Part", // 146
-	"Host", // 147
-	"Editor", // 148
-	"Frequency", // 149
-	"Homepage", // 150
-	"Subchannel", // 151
-	"Hotline", // 152
-	"Studio phone", // 153
-	"Phone", // 154
-	"SMS studio", // 155
-	"SMS", // 156
-	"Email hotline", // 157
-	"Email studio", // 158
-	"Email", // 159
-	"Chat", // 160
-	"Chat centre", // 161
-	"Vote question", // 162
-	"Vote centre", // 163
-	"Place", // 164
-	"Appointment", // 165
-	"Identifier", // 166
-	"Purchase", // 167
-	"Get data", // 168	
-	"" // 169
+    "Title", // 112
+    "Album", // 113
+    "Track", // 114
+    "Artist", // 115
+    "Composition", // 116
+    "Movement", // 117
+    "Conductor", // 118
+    "Composer", // 119
+    "Band", // 120
+    "Comment", // 121
+    "Genre", // 122
+    "News", // 123
+    "Local news", // 124
+    "Stockmarket", // 125
+    "Sport", // 126
+    "Lottery", // 127
+    "Horoscope", // 128
+    "Daily Diversion", // 129
+    "Health", // 130
+    "Event", // 131
+    "Scene", // 132
+    "Cinema", // 133
+    "TV", // 134
+    "Date/time", //135
+    "Weather", // 136
+    "Traffic", // 137
+    "Alarm", // 138
+    "Advertisement", // 139
+    "Website", // 140
+    "Other", // 141
+    "Short PS", // 142
+    "Long PS", // 143
+    "Now", // 144
+    "Next", //145
+    "Part", // 146
+    "Host", // 147
+    "Editor", // 148
+    "Frequency", // 149
+    "Homepage", // 150
+    "Subchannel", // 151
+    "Hotline", // 152
+    "Studio phone", // 153
+    "Phone", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email hotline", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Chat", // 160
+    "Chat centre", // 161
+    "Vote question", // 162
+    "Vote centre", // 163
+    "Place", // 164
+    "Appointment", // 165
+    "Identifier", // 166
+    "Purchase", // 167
+    "Get data", // 168
+    "" // 169
   },
 
   { "Norsk", // Norwegian
@@ -2680,7 +2680,7 @@ static const char* const myLanguage[16][170] = {
     "50% lysstyrke", // 96
     "AM RF Nivå offset:", // 97
     "Signalmeter måleenhet:", // 98
-	"Bruk AF:", // 99
+    "Bruk AF:", // 99
     "Velg FM Bånd:", // 100
     "Velg AM Bånd:", // 101
     "LW", // 102
@@ -2693,64 +2693,64 @@ static const char* const myLanguage[16][170] = {
     "Base (ILI9341)", // 109
     "Bærbar (ILI9341)", // 110
     "Bærbar touch-skjerm (ILI9341)", // 111
-	"Titel", // 112
-	"Album", // 113
-	"Spor", // 114
-	"Artist", // 115
-	"Komposisjon", // 116
-	"Bevegelse", // 117
-	"Dirigent", // 118
-	"Komponist", // 119
-	"Band", // 120
-	"Kommentar", // 121
-	"Sjanger", // 122
-	"Nyheter", // 123
-	"Lokale nyheter", // 124
-	"Aksjemarked", // 125
-	"Sport", // 126
-	"Lotteri", // 127
-	"Horoskop", // 128
-	"Daglig avledning", // 129
-	"Helse", // 130
-	"Begivenhet", // 131
-	"Scene", // 132
-	"Kino", // 133
-	"TV", // 134
-	"Dato/tid", //135
-	"Vær", // 136
-	"Trafikk", // 137
-	"Alarm", // 138
-	"Annonse", // 139
-	"Nettsted", // 140
-	"Annet", // 141
-	"Kort PS", // 142
-	"Lang PS", // 143
-	"Nå", // 144
-	"Neste", //145
-	"Del", // 146
-	"Vert", // 147
-	"Redaktør", // 148
-	"Frekvens", // 149
-	"Hjemmeside", // 150
-	"Underkanal", // 151
-	"Hotline", // 152
-	"Studio telefon", // 153
-	"Telefon", // 154
-	"SMS studio", // 155
-	"SMS", // 156
-	"E-post hotline", // 157
-	"E-post studio", // 158
-	"E-post", // 159
-	"Chat", // 160
-	"Chattesenter", // 161
-	"Stem spørsmål", // 162
-	"Stemmesenter", // 163
-	"Sted", // 164
-	"Avtale", // 165
-	"Identifikator", // 166
-	"Kjøp", // 167
-	"Få data", // 168	
-	"" // 169
+    "Titel", // 112
+    "Album", // 113
+    "Spor", // 114
+    "Artist", // 115
+    "Komposisjon", // 116
+    "Bevegelse", // 117
+    "Dirigent", // 118
+    "Komponist", // 119
+    "Band", // 120
+    "Kommentar", // 121
+    "Sjanger", // 122
+    "Nyheter", // 123
+    "Lokale nyheter", // 124
+    "Aksjemarked", // 125
+    "Sport", // 126
+    "Lotteri", // 127
+    "Horoskop", // 128
+    "Daglig avledning", // 129
+    "Helse", // 130
+    "Begivenhet", // 131
+    "Scene", // 132
+    "Kino", // 133
+    "TV", // 134
+    "Dato/tid", //135
+    "Vær", // 136
+    "Trafikk", // 137
+    "Alarm", // 138
+    "Annonse", // 139
+    "Nettsted", // 140
+    "Annet", // 141
+    "Kort PS", // 142
+    "Lang PS", // 143
+    "Nå", // 144
+    "Neste", //145
+    "Del", // 146
+    "Vert", // 147
+    "Redaktør", // 148
+    "Frekvens", // 149
+    "Hjemmeside", // 150
+    "Underkanal", // 151
+    "Hotline", // 152
+    "Studio telefon", // 153
+    "Telefon", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "E-post hotline", // 157
+    "E-post studio", // 158
+    "E-post", // 159
+    "Chat", // 160
+    "Chattesenter", // 161
+    "Stem spørsmål", // 162
+    "Stemmesenter", // 163
+    "Sted", // 164
+    "Avtale", // 165
+    "Identifikator", // 166
+    "Kjøp", // 167
+    "Få data", // 168
+    "" // 169
   }
 };
 

@@ -762,7 +762,7 @@ void TEF6686::readRDS(bool showrdserrors)
                 }
               }
 
-              if (runningbit && rds.rtAB == rtABold) {
+              if (rds.rtAB == rtABold) {
                 for (int i = 0; i <= length_marker_1; i++)RDSplus1[i] = rt_buffer2[i + start_marker_1];
                 RDSplus1[length_marker_1 + 1] = 0;
 
