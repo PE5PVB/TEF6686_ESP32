@@ -2609,11 +2609,11 @@ static const char* const myLanguage[16][170] = {
     "Sett Stereo sep. terskel", // 25
     "Sett høy grense frekvens", // 26
     "Still inn høy grense terskel", // 27
-    "sett lav grense terskel", // 28
+    "Sett lav grense terskel", // 28
     "Sett displayets lysstyrke", // 29
     "Av", // 30
     "Skjermen er dempet!", // 31
-    "Oppheve demping, fjern merket RF+-boksen", // 32
+    "Oppheve demping, fjern RF+-boksen", // 32
     "AV", // 33
     "SKANNER...", // 34
     "Tuner ikke oppdaget", // 35
@@ -2622,7 +2622,7 @@ static const char* const myLanguage[16][170] = {
     "Vis RDS-feil", // 38
     "Språk", // 39
     "Velg språk", // 40
-    "TRYKK MODE FOR Å AVSLUTE OG LAGRE", // 41
+    "TRYKK MODE FOR Å LAGRE & AVSLUTTE", // 41
     "På", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
@@ -2640,7 +2640,7 @@ static const char* const myLanguage[16][170] = {
     "MISLYKKET!", // 56
     "TILKOBLET!", // 57
     "Stationlist klient IP", // 58
-    "Vis SW-bølgelengde", // 59
+    "Vis SW-bånd", // 59
     "RDS filter", // 60
     "Vis PI feil", // 61
     "Vis squelch", // 62
@@ -2656,7 +2656,7 @@ static const char* const myLanguage[16][170] = {
     "Bidragsytere:", // 72
     "Ukjent", // 73
     "Strømalternativer", // 74
-    "Deep sleep", // 75
+    "Dyp søvn", // 75
     "Skjerm av", // 76
     "Tema", // 77
     "Standard", // 78
@@ -2692,7 +2692,7 @@ static const char* const myLanguage[16][170] = {
     "Velg Modell", // 108
     "Base (ILI9341)", // 109
     "Bærbar (ILI9341)", // 110
-    "Bærbar touch-skjerm (ILI9341)", // 111
+    "Bærbar touch (ILI9341)", // 111
     "Titel", // 112
     "Album", // 113
     "Spor", // 114
