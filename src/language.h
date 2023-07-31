@@ -411,7 +411,7 @@ static const char* const myLanguage[16][169] = {
     "Reduktor szumow FM", // 65
     "Zaladowano domyslne", // 66
     "Wyjscie dzwieku", // 67
-    "Bezwzrok. strojenie", // 68 for translation reference to commputer Touch Typing
+    "Bezwzrokowe  strojenie", // 68 for translation reference to commputer Touch Typing
     "Odwroc kolory wyswietlacza", // 69
     "O oprogramowaniu", // 70
     "Glowny kod:", // 71
@@ -454,18 +454,18 @@ static const char* const myLanguage[16][169] = {
     "Wybor modelu", // 108
     "Podstawowy (ILI9341)", // 109
     "Przenosny (ILI9341)", // 110
-    "Przenosny dotyk. (ILI9341)", // 111
-	"Title", // 112
+    "Przenos. dotyk. (ILI9341)", // 111
+	"Tytul", // 112
 	"Album", // 113
-	"Track", // 114
-	"Artist", // 115
-	"Composition", // 116
+	"Sciezka", // 114
+	"Wykonawca", // 115
+	"Kompozycja", // 116
 	"Movement", // 117
-	"Conductor", // 118
-	"Composer", // 119
-	"Band", // 120
-	"Comment", // 121
-	"Genre", // 122
+	"Dyrygent", // 118
+	"Kompozytor", // 119
+	"Grupa", // 120
+	"Komentarz", // 121
+	"Gatunek", // 122
 	"News", // 123
 	"Local news", // 124
 	"Stockmarket", // 125
