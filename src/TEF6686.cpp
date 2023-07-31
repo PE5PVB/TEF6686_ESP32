@@ -734,14 +734,26 @@ void TEF6686::readRDS(bool showrdserrors)
         case RDS_GROUP_13A:   {
             // RT+ decoding
             if (rds.correct && rtplusblock == rdsblock && rds.hasRDSplus) {                                 // Are we in the right RT+ block and is all ok to go?
-              uint16_t content_type_1 = ((rds.rdsB & 0x07) << 3) + (rds.rdsC >> 13);
-              uint16_t content_type_2 = ((rds.rdsC & 0x01) << 5) + (rds.rdsD >> 11);
+              rds.rdsplusTag1 = ((rds.rdsB & 0x07) << 3) + (rds.rdsC >> 13);
+              rds.rdsplusTag2 = ((rds.rdsC & 0x01) << 5) + (rds.rdsD >> 11);
               uint16_t start_marker_1 = (rds.rdsC >> 7) & 0x3F;
               uint16_t length_marker_1 = (rds.rdsC >> 1) & 0x3F;
               uint16_t start_marker_2 = (rds.rdsD >> 5) & 0x3F;
               uint16_t length_marker_2 = (rds.rdsD & 0x1F);
               togglebit = bitRead(lowByte(rds.rdsB), 4);
               runningbit = bitRead(lowByte(rds.rdsB), 3);
+
+			switch (rds.rdsplusTag1) {
+				case 1 ... 53: rds.rdsplusTag1 += 111; break;
+				case 59 ... 63: rds.rdsplusTag1 += 105; break;
+				default: rds.rdsplusTag1 = 169; break;
+			}
+			
+			switch (rds.rdsplusTag2) {
+				case 1 ... 53: rds.rdsplusTag2 += 111; break;
+				case 59 ... 63: rds.rdsplusTag2 += 105; break;
+				default: rds.rdsplusTag2 = 169; break;
+			}			
 
               if (togglebit) {
                 for (int i = 0; i < 45; i++) {

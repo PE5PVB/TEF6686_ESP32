@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char* const myLanguage[16][169] = {
+static const char* const myLanguage[16][170] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -169,7 +169,8 @@ static const char* const myLanguage[16][169] = {
 	"Appointment", // 165
 	"Identifier", // 166
 	"Purchase", // 167
-	"Get data" // 168
+	"Get data", // 168
+	" " // 169
   },
 
   { "Nederlands", // Dutch
@@ -281,66 +282,67 @@ static const char* const myLanguage[16][169] = {
     "OIRT", // 106
     "Rotating while screen off", // 107
     "Model selector", // 108
-    "Base (ILI9341)", // 109
+    "Basis (ILI9341)", // 109
     "Portable (ILI9341)", // 110
     "Portable touch (ILI9341)", // 111
-	"Title", // 112
+	"Titel", // 112
 	"Album", // 113
-	"Track", // 114
-	"Artist", // 115
-	"Composition", // 116
-	"Movement", // 117
-	"Conductor", // 118
-	"Composer", // 119
+	"Nummer", // 114
+	"Artiest", // 115
+	"Compositie", // 116
+	"Deel", // 117
+	"Dirigent", // 118
+	"Componist", // 119
 	"Band", // 120
-	"Comment", // 121
+	"Opmerking", // 121
 	"Genre", // 122
-	"News", // 123
-	"Local news", // 124
-	"Stockmarket", // 125
+	"Nieuws", // 123
+	"Lokaal nieuws", // 124
+	"Financiële beurs", // 125
 	"Sport", // 126
-	"Lottery", // 127
-	"Horoscope", // 128
-	"Daily Diversion", // 129
-	"Health", // 130
-	"Event", // 131
+	"Loterij", // 127
+	"Horoscoop", // 128
+	"Dagelijkse grap", // 129
+	"Gezondheid", // 130
+	"Evenement", // 131
 	"Scene", // 132
-	"Cinema", // 133
+	"Bioscoop", // 133
 	"TV", // 134
-	"Date/time", //135
-	"Weather", // 136
-	"Traffic", // 137
+	"Datum/tijd", //135
+	"Weer", // 136
+	"Verkeer", // 137
 	"Alarm", // 138
-	"Advertisement", // 139
+	"Advertentie", // 139
 	"Website", // 140
-	"Other", // 141
-	"Short PS", // 142
-	"Long PS", // 143
-	"Now", // 144
-	"Next", //145
-	"Part", // 146
+	"Overige", // 141
+	"Korte naam", // 142
+	"Lange naam", // 143
+	"Nu", // 144
+	"Straks", //145
+	"Deel", // 146
 	"Host", // 147
-	"Editor", // 148
-	"Frequency", // 149
+	"Regiseur", // 148
+	"Frequentie", // 149
 	"Homepage", // 150
-	"Subchannel", // 151
+	"Subkanaal", // 151
 	"Hotline", // 152
-	"Studio phone", // 153
-	"Phone", // 154
+	"Studio telefoon", // 153
+	"Telefoon", // 154
 	"SMS studio", // 155
 	"SMS", // 156
 	"Email hotline", // 157
 	"Email studio", // 158
 	"Email", // 159
 	"Chat", // 160
-	"Chat centre", // 161
-	"Vote question", // 162
-	"Vote centre", // 163
-	"Place", // 164
-	"Appointment", // 165
-	"Identifier", // 166
-	"Purchase", // 167
-	"Get data" // 168	
+	"Chat centrum", // 161
+	"Stemming", // 162
+	"Stemcentrum", // 163
+	"Plaats", // 164
+	"Afspraak", // 165
+	"Identificatie", // 166
+	"Aankoop", // 167
+	"Verkrijg data", // 168	
+	"" // 169
   },
 
   { "Polski", // Polish
@@ -511,7 +513,8 @@ static const char* const myLanguage[16][169] = {
 	"Appointment", // 165
 	"Identifier", // 166
 	"Purchase", // 167
-	"Get data" // 168	
+	"Get data", // 168	
+	"" // 169
   },
 
   { "Hrvatski", // Croatian
@@ -682,7 +685,8 @@ static const char* const myLanguage[16][169] = {
 	"Appointment", // 165
 	"Identifier", // 166
 	"Purchase", // 167
-	"Get data" // 168	
+	"Get data", // 168	
+	"" // 169
   },
 
   { "Ελληνικά", // Greek
@@ -853,7 +857,8 @@ static const char* const myLanguage[16][169] = {
 	"Appointment", // 165
 	"Identifier", // 166
 	"Purchase", // 167
-	"Get data" // 168	
+	"Get data", // 168	
+	"" // 169
   },
 
   { "Romana", // Romanian
@@ -1024,7 +1029,8 @@ static const char* const myLanguage[16][169] = {
 	"Appointment", // 165
 	"Identifier", // 166
 	"Purchase", // 167
-	"Get data" // 168	
+	"Get data", // 168	
+	"" // 169
   },
 
   { "Deutsch", // German
@@ -1195,7 +1201,8 @@ static const char* const myLanguage[16][169] = {
 	"Appointment", // 165
 	"Identifier", // 166
 	"Purchase", // 167
-	"Get data" // 168	
+	"Get data", // 168	
+	"" // 169
   },
 
   { "Czech", // Czech
@@ -1366,7 +1373,8 @@ static const char* const myLanguage[16][169] = {
 	"Appointment", // 165
 	"Identifier", // 166
 	"Purchase", // 167
-	"Get data" // 168	
+	"Get data", // 168	
+	"" // 169
   },
 
   { "Slovak", // Slovak
@@ -1537,7 +1545,8 @@ static const char* const myLanguage[16][169] = {
 	"Appointment", // 165
 	"Identifier", // 166
 	"Purchase", // 167
-	"Get data" // 168	
+	"Get data", // 168	
+	"" // 169
   },
 
   { "Français", // French
@@ -1708,7 +1717,8 @@ static const char* const myLanguage[16][169] = {
 	"Appointment", // 165
 	"Identifier", // 166
 	"Purchase", // 167
-	"Get data" // 168	
+	"Get data", // 168	
+	"" // 169
   },
 
   { "Български", // Bulgarian
@@ -1879,7 +1889,8 @@ static const char* const myLanguage[16][169] = {
 	"Appointment", // 165
 	"Identifier", // 166
 	"Purchase", // 167
-	"Get data" // 168	
+	"Get data", // 168	
+	"" // 169
   },
 
   { "Русский", // Russian
@@ -2050,7 +2061,8 @@ static const char* const myLanguage[16][169] = {
 	"Appointment", // 165
 	"Identifier", // 166
 	"Purchase", // 167
-	"Get data" // 168	
+	"Get data", // 168	
+	"" // 169
   },
 
   { "Українська", // Ukranian
@@ -2221,7 +2233,8 @@ static const char* const myLanguage[16][169] = {
 	"Appointment", // 165
 	"Identifier", // 166
 	"Purchase", // 167
-	"Get data" // 168	
+	"Get data", // 168	
+	"" // 169
   },
 
   { "Italiano", // Italian
@@ -2392,7 +2405,8 @@ static const char* const myLanguage[16][169] = {
 	"Appointment", // 165
 	"Identifier", // 166
 	"Purchase", // 167
-	"Get data" // 168	
+	"Get data", // 168	
+	"" // 169
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -2563,7 +2577,8 @@ static const char* const myLanguage[16][169] = {
 	"Appointment", // 165
 	"Identifier", // 166
 	"Purchase", // 167
-	"Get data" // 168	
+	"Get data", // 168	
+	"" // 169
   },
 
   { "Norsk", // Norwegian
@@ -2734,7 +2749,8 @@ static const char* const myLanguage[16][169] = {
 	"Appointment", // 165
 	"Identifier", // 166
 	"Purchase", // 167
-	"Get data" // 168	
+	"Get data", // 168	
+	"" // 169
   }
 };
 
