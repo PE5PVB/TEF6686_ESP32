@@ -2649,7 +2649,7 @@ static const char* const myLanguage[16][170] = {
     "FM Noise blanker", // 65
     "Standarder lastet", // 66
     "Lydutgang", // 67
-    "FM OIRT 30 kHz steg", // 68
+    "Tune når skjerm av", // 68
     "Inverter displayet", // 69
     "Om programvaren", // 70
     "Hovedkode:", // 71
