@@ -949,6 +949,10 @@ void TEF6686::clearRDS (bool fullsearchrds)
   eon_counter = 0;
   afreset = true;
   rds.MS = 0;
+  rds.rdsAerror = false;
+  rds.rdsBerror = false;
+  rds.rdsCerror = false;
+  rds.rdsDerror = false;
 }
 
 void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {
