@@ -164,7 +164,11 @@ int ActiveColorSmooth;
 int AGC;
 int AMLevelOffset;
 int BackgroundColor;
+int BarSignificantColor;
+int BarInsignificantColor;
 int batupdatetimer;
+int BWAutoColor;
+int BWAutoColorSmooth;
 int BWOld;
 int bwupdatetimer;
 int charWidth = tft.textWidth("AA");
@@ -174,6 +178,8 @@ int FrameColor;
 int freqold;
 int FrequencyColor;
 int GreyoutColor;
+int InsignificantColor;
+int InsignificantColorSmooth;
 int menuoption = 30;
 int MStatusold;
 int offsetupdatetimer;
@@ -182,10 +188,12 @@ int peakholdold;
 int peakholdtimer;
 int PrimaryColor;
 int PrimaryColorSmooth;
+int RDSColor;
+int RDSColorSmooth;
 int SignificantColor;
 int SignificantColorSmooth;
-int InsignificantColor;
-int InsignificantColorSmooth;
+int StereoColor;
+int StereoColorSmooth;
 int rotary;
 int rssi;
 int rssiold = 200;
@@ -512,14 +520,14 @@ void setup() {
   tftPrint(0, myLanguage[language][8], 160, 3, PrimaryColor, PrimaryColorSmooth, FONT28);
   tftPrint(0, "Software " + String(VERSION), 160, 152, PrimaryColor, PrimaryColorSmooth, FONT16);
 
-  tft.fillSmoothCircle(160, 90, 60, SignificantColor, SignificantColorSmooth);
-  tft.fillSmoothCircle(160, 90, 52, BackgroundColor, SignificantColorSmooth);
+  tft.fillSmoothCircle(160, 90, 60, PrimaryColor, PrimaryColorSmooth);
+  tft.fillSmoothCircle(160, 90, 52, BackgroundColor, PrimaryColorSmooth);
 
   tft.fillRect(120, 230, 16, 6, GreyoutColor);
   tft.fillRect(152, 230, 16, 6, GreyoutColor);
   tft.fillRect(184, 230, 16, 6, GreyoutColor);
 
-  tft.drawBitmap(130, 80, TEFLogo, 59, 23, PrimaryColor);
+  tft.drawBitmap(130, 80, TEFLogo, 59, 23, ActiveColor);
 
   for (int x = 0; x <= ContrastSet; x++) {
     analogWrite(CONTRASTPIN, x * 2 + 27);
@@ -667,9 +675,9 @@ void loop() {
           tftPrint(0, "M", 7, 132, ActiveColor, ActiveColorSmooth, FONT16);
           for (byte segments = 0; segments < 94; segments++) {
             if (segments > 54) {
-              if (((segments - 53) % 10) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, SignificantColor);
+              if (((segments - 53) % 10) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, BarSignificantColor);
             } else {
-              if (((segments + 1) % 6) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, InsignificantColor);
+              if (((segments + 1) % 6) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, BarInsignificantColor);
             }
           }
         }
@@ -2597,7 +2605,7 @@ void KeyUp() {
             switch (menuoption) {
               case 30:
                 CurrentTheme ++;
-                if (CurrentTheme > 7) CurrentTheme = 0;
+                if (CurrentTheme > 9) CurrentTheme = 0;
                 doTheme();
                 tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
                 tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
@@ -3015,7 +3023,7 @@ void KeyDown() {
             switch (menuoption) {
               case 30:
                 CurrentTheme --;
-                if (CurrentTheme > 7) CurrentTheme = 7;
+                if (CurrentTheme > 9) CurrentTheme = 9;
                 doTheme();
                 tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
                 tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
@@ -3326,7 +3334,7 @@ void ShowAdvancedRDS() {
   String afstring;
   if (radio.rds.hasAF) for (byte i = 0; i < radio.af_counter; i++) afstring += String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10) + (radio.af[i].filler ? "(f)" : "") + (i == radio.af_counter - 1 ? "          " : " | "); else afstring = myLanguage[language][87];
   if (hasafold != radio.rds.hasAF) {
-    if (radio.rds.hasAF) tftPrint(-1, "AF", 50, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "AF", 50, 51, GreyoutColor, BackgroundColor, FONT16);
+    if (radio.rds.hasAF) tftPrint(-1, "AF", 50, 51, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "AF", 50, 51, GreyoutColor, BackgroundColor, FONT16);
     hasafold = radio.rds.hasAF;
   }
 
@@ -3364,7 +3372,7 @@ void ShowAdvancedRDS() {
   String eonstring;
   if (radio.rds.hasEON) for (byte i = 0; i < radio.eon_counter; i++) eonstring += String(radio.eon[i].picode) + (radio.eon[i].ps.length() > 0 ? String(": " + String(radio.eon[i].ps)) : "") + (radio.eon[i].mappedfreq > 0 ? String(" " + String(radio.eon[i].mappedfreq / 100) + "." + String((radio.eon[i].mappedfreq % 100) / 10))  : "") + (radio.eon[i].mappedfreq2 > 0 ? String(" / " + String(radio.eon[i].mappedfreq2 / 100) + "." + String((radio.eon[i].mappedfreq2 % 100) / 10))  : "") + (radio.eon[i].mappedfreq3 > 0 ? String(" /  " + String(radio.eon[i].mappedfreq3 / 100) + "." + String((radio.eon[i].mappedfreq3 % 100) / 10))  : "") + (i == radio.eon_counter - 1 ? "          " : " | "); else eonstring = myLanguage[language][88];
   if (haseonold != radio.rds.hasEON) {
-    if (radio.rds.hasEON) tftPrint(-1, "EON", 153, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "EON", 153, 51, GreyoutColor, BackgroundColor, FONT16);
+    if (radio.rds.hasEON) tftPrint(-1, "EON", 153, 51, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "EON", 153, 51, GreyoutColor, BackgroundColor, FONT16);
     haseonold = radio.rds.hasEON;
   }
   if (eonstring.length() < 20) {
@@ -3401,7 +3409,7 @@ void ShowAdvancedRDS() {
   String rtplusstring;
   if (radio.rds.hasRDSplus) rtplusstring = (radio.rds.rdsplusTag1 != 169 ? String(myLanguage[language][radio.rds.rdsplusTag1]) + ": " + String(radio.rds.RTContent1) : "") + (radio.rds.rdsplusTag2 != 169 ? " - " + String(myLanguage[language][radio.rds.rdsplusTag2]) + ": " + String(radio.rds.RTContent2) : "") + "         "; else rtplusstring = myLanguage[language][89];
   if (hasrtplusold != radio.rds.hasRDSplus) {
-    if (radio.rds.hasRDSplus) tftPrint(-1, "RT+", 124, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "RT+", 124, 51, GreyoutColor, BackgroundColor, FONT16);
+    if (radio.rds.hasRDSplus) tftPrint(-1, "RT+", 124, 51, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "RT+", 124, 51, GreyoutColor, BackgroundColor, FONT16);
     hasrtplusold = radio.rds.hasRDSplus;
   }
   if (rtplusstring.length() < 20) {
@@ -3436,12 +3444,12 @@ void ShowAdvancedRDS() {
   rtplusstringold = rtplusstring;
 
   if (TPold != radio.rds.hasTP) {
-    if (radio.rds.hasTP == true) tftPrint(-1, "TP", 6, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "TP", 6, 51, GreyoutColor, BackgroundColor, FONT16);
+    if (radio.rds.hasTP == true) tftPrint(-1, "TP", 6, 51, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "TP", 6, 51, GreyoutColor, BackgroundColor, FONT16);
     TPold = radio.rds.hasTP;
   }
 
   if (TAold != radio.rds.hasTA) {
-    if (radio.rds.hasTA == true) tftPrint(-1, "TA", 28, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "TA", 28, 51, GreyoutColor, BackgroundColor, FONT16);
+    if (radio.rds.hasTA == true) tftPrint(-1, "TA", 28, 51, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "TA", 28, 51, GreyoutColor, BackgroundColor, FONT16);
     TAold = radio.rds.hasTA;
   }
 
@@ -3453,13 +3461,13 @@ void ShowAdvancedRDS() {
         break;
 
       case 1:
-        tftPrint(-1, "M", 185, 51, SecondaryColor, SecondaryColorSmooth, FONT16);
+        tftPrint(-1, "M", 185, 51, PrimaryColor, PrimaryColorSmooth, FONT16);
         tftPrint(-1, "S", 198, 51, GreyoutColor, BackgroundColor, FONT16);
         break;
 
       case 2:
         tftPrint(-1, "M", 185, 51, GreyoutColor, BackgroundColor, FONT16);
-        tftPrint(-1, "S", 198, 51, SecondaryColor, SecondaryColorSmooth, FONT16);
+        tftPrint(-1, "S", 198, 51, PrimaryColor, PrimaryColorSmooth, FONT16);
         break;
     }
     MSold = radio.rds.MS;
@@ -3468,8 +3476,8 @@ void ShowAdvancedRDS() {
   rds_clock = ((hour() < 10 ? "0" : "") + String(hour()) + ":" + (minute() < 10 ? "0" : "") + String(minute()));
   if (rds_clock != rds_clockold) {
     if (radio.rds.hasCT) {
-      tftReplace(1, rds_clockold, rds_clock, 205, 109, SecondaryColor, SecondaryColorSmooth, FONT16);
-      tftPrint(-1, "CT", 72, 51, SecondaryColor, SecondaryColorSmooth, FONT16);
+      tftReplace(1, rds_clockold, rds_clock, 205, 109, PrimaryColor, PrimaryColorSmooth, FONT16);
+      tftPrint(-1, "CT", 72, 51, PrimaryColor, PrimaryColorSmooth, FONT16);
     } else {
       tftPrint(1, rds_clock, 205, 109, BackgroundColor, BackgroundColor, FONT16);
       tftPrint(-1, "CT", 72, 51, GreyoutColor, BackgroundColor, FONT16);
@@ -3484,7 +3492,7 @@ void ShowAdvancedRDS() {
   }
 
   if (hastmcold != radio.rds.hasTMC) {
-    if (radio.rds.hasTMC == true) tftPrint(-1, "TMC", 90, 51, SecondaryColor, SecondaryColorSmooth, FONT16); else tftPrint(-1, "TMC", 90, 51, GreyoutColor, BackgroundColor, FONT16);
+    if (radio.rds.hasTMC == true) tftPrint(-1, "TMC", 90, 51, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "TMC", 90, 51, GreyoutColor, BackgroundColor, FONT16);
     hastmcold = radio.rds.hasTMC;
   }
 }
@@ -4047,8 +4055,8 @@ void BuildAdvancedRDS() {
     tftPrint(-1, "ECC", 214, 193, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(-1, "LIC", 214, 208, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(-1, "PIN", 214, 223, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(1, "Dyn. PTY", 300, 130, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(1, "Art. head", 300, 145, ActiveColor, ActiveColorSmooth, FONT16);
+    tftPrint(1, "Dynamic PTY", 300, 130, ActiveColor, ActiveColorSmooth, FONT16);
+    tftPrint(1, "Artif. head", 300, 145, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(1, "Compressed", 300, 160, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(1, "Has stereo", 300, 175, ActiveColor, ActiveColorSmooth, FONT16);
 
@@ -4158,7 +4166,7 @@ void BuildDisplay() {
       }
     }
     if (showsquelch) tftPrint(-1, "SQ:", 212, 145, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(1, "C/N", 275, 163, ActiveColor, ActiveColorSmooth, FONT16);
+    tftPrint(1, "C/N", 265, 163, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(-1, "dB", 300, 163, ActiveColor, ActiveColorSmooth, FONT16);
     if (region == 0) tftPrint(-1, "PI:", 216, 193, ActiveColor, ActiveColorSmooth, FONT16);
     if (region == 1) tftPrint(-1, "ID:", 216, 193, ActiveColor, ActiveColorSmooth, FONT16);
@@ -4358,12 +4366,12 @@ void ShowSignalLevel() {
       snrupdatetimer = millis();
       if (!advancedRDS) {
         if (SNR > (SNRold + 1) || SNR < (SNRold - 1)) {
-          if (SNRold == 0) tftPrint(1, "--", 298, 163, BackgroundColor, BackgroundColor, FONT16); else tftPrint(1, String(SNRold), 298, 163, BackgroundColor, BackgroundColor, FONT16);
+          if (SNRold == 0) tftPrint(1, "--", 295, 163, BackgroundColor, BackgroundColor, FONT16); else tftPrint(1, String(SNRold), 295, 163, BackgroundColor, BackgroundColor, FONT16);
           if (tuned == true) {
-            if (SNR == 0) tftPrint(1, "--", 298, 163, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, String(SNR), 298, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+            if (SNR == 0) tftPrint(1, "--", 295, 163, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(1, String(SNR), 295, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
             SNRold = SNR;
           } else {
-            tftPrint(1, "--", 298, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+            tftPrint(1, "--", 295, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
             SNRold = 0;
           }
         }
@@ -4405,8 +4413,8 @@ void ShowSignalLevel() {
 
         if (band < BAND_GAP) segments = (SStatus + 200) / 10; else segments = (SStatus + 200) / 10;
 
-        tft.fillRect(16, 105, 2 * constrain(segments, 0, 54), 6, InsignificantColor);
-        tft.fillRect(16 + 2 * 54, 105, 2 * (constrain(segments, 54, 94) - 54), 6, SignificantColor);
+        tft.fillRect(16, 105, 2 * constrain(segments, 0, 54), 6, BarInsignificantColor);
+        tft.fillRect(16 + 2 * 54, 105, 2 * (constrain(segments, 54, 94) - 54), 6, BarSignificantColor);
         tft.fillRect(16 + 2 * constrain(segments, 0, 94), 105, 2 * (94 - constrain(segments, 0, 94)), 6, GreyoutColor);
       }
       SStatusold = SStatusprint;
@@ -4424,7 +4432,7 @@ void ShowSignalLevel() {
 void ShowRDSLogo(bool RDSstatus) {
   if (screenmute == false) {
     if (RDSstatus != RDSstatusold) {
-      if (RDSstatus) tft.drawBitmap(139, 5, RDSLogo, 35, 22, ActiveColor); else tft.drawBitmap(139, 5, RDSLogo, 35, 22, GreyoutColor);
+      if (RDSstatus) tft.drawBitmap(139, 5, RDSLogo, 35, 22, RDSColor); else tft.drawBitmap(139, 5, RDSLogo, 35, 22, GreyoutColor);
       RDSstatusold = RDSstatus;
     }
   }
@@ -4435,10 +4443,10 @@ void ShowStereoStatus() {
     if (band < BAND_GAP) Stereostatus = radio.getStereoStatus(); else Stereostatus = 0;
     if (Stereostatus != Stereostatusold) {
       if (Stereostatus == true && screenmute == false) {
-        tft.drawSmoothCircle(81, 15, 10, SignificantColor, SignificantColorSmooth);
-        tft.drawSmoothCircle(81, 15, 9, SignificantColor, SignificantColorSmooth);
-        tft.drawSmoothCircle(91, 15, 10, SignificantColor, SignificantColorSmooth);
-        tft.drawSmoothCircle(91, 15, 9, SignificantColor, SignificantColorSmooth);
+        tft.drawSmoothCircle(81, 15, 10, StereoColor, StereoColorSmooth);
+        tft.drawSmoothCircle(81, 15, 9, StereoColor, StereoColorSmooth);
+        tft.drawSmoothCircle(91, 15, 10, StereoColor, StereoColorSmooth);
+        tft.drawSmoothCircle(91, 15, 9, StereoColor, StereoColorSmooth);
       } else {
         if (screenmute == false) {
           tft.drawSmoothCircle(81, 15, 10, GreyoutColor, BackgroundColor);
@@ -4561,7 +4569,7 @@ void ShowBW() {
   }
 
   if (BW != BWOld || BWreset == true) {
-    if (BWset == 0) tftReplace(1, String (BWOld, DEC), String (BW, DEC), 220, 4, SecondaryColor, SecondaryColorSmooth, FONT28); else tftReplace(1, String (BWOld, DEC), String (BW, DEC), 220, 4, PrimaryColor, PrimaryColorSmooth, FONT28);
+    if (BWset == 0) tftReplace(1, String (BWOld, DEC), String (BW, DEC), 220, 4, BWAutoColor, BWAutoColorSmooth, FONT28); else tftReplace(1, String (BWOld, DEC), String (BW, DEC), 220, 4, PrimaryColor, PrimaryColorSmooth, FONT28);
     BWOld = BW;
     BWreset = false;
     if (wifi) {
@@ -4588,12 +4596,12 @@ void ShowModLevel() {
       peakholdmillis = millis();
     }
 
-    tft.fillRect(16, 133, 2 * constrain(segments, 0, 54), 6, InsignificantColor);
-    tft.fillRect(16 + 2 * 54, 133, 2 * (constrain(segments, 54, 94) - 54), 6, SignificantColor);
+    tft.fillRect(16, 133, 2 * constrain(segments, 0, 54), 6, BarInsignificantColor);
+    tft.fillRect(16 + 2 * 54, 133, 2 * (constrain(segments, 54, 94) - 54), 6, BarSignificantColor);
     tft.fillRect(16 + 2 * constrain(segments, 0, 94), 133, 2 * (94 - constrain(segments, 0, 94)), 6, GreyoutColor);
 
     int peakHoldPosition = 16 + 2 * constrain(peakholdold, 0, 94);
-    tft.fillRect(peakHoldPosition, 133, 2, 6, (MStatus > 80) ? SignificantColor : PrimaryColor);
+    tft.fillRect(peakHoldPosition, 133, 2, 6, (MStatus > 80) ? BarSignificantColor : PrimaryColor);
 
     if (millis() - peakholdmillis >= 1000) {
       tft.fillRect(peakHoldPosition, 133, 2, 6, GreyoutColor);
@@ -4995,15 +5003,15 @@ void ShowBattery() {
   if (batteryold != battery) {
     if (batterydetect) {
       if (battery == 0) {
-        tft.drawRect(300, 8, 12, 20, SignificantColor);
-        tft.fillRect(303, 4, 6, 4, SignificantColor);
+        tft.drawRect(300, 8, 12, 20, BarSignificantColor);
+        tft.fillRect(303, 4, 6, 4, BarSignificantColor);
         tft.fillRect(302, 10, 8, 16, BackgroundColor);
-        tft.fillRect(302, 26 - (battery * 4), 8, battery * 4, InsignificantColor);
+        tft.fillRect(302, 26 - (battery * 4), 8, battery * 4, BarInsignificantColor);
       } else {
         tft.drawRect(300, 8, 12, 20, ActiveColor);
         tft.fillRect(303, 4, 6, 4, ActiveColor);
         tft.fillRect(302, 10, 8, 16, BackgroundColor);
-        tft.fillRect(302, 26 - (battery * 4), 8, battery * 4, InsignificantColor);
+        tft.fillRect(302, 26 - (battery * 4), 8, battery * 4, BarInsignificantColor);
       }
     } else {
       tft.drawRect(300, 8, 12, 20, GreyoutColor);
@@ -5770,40 +5778,64 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       SignificantColorSmooth = 0x2000;
       InsignificantColor = 0x07E0;
       InsignificantColorSmooth = 0x00C0;
+      StereoColor = 0xF800;
+      StereoColorSmooth = 0x2000;
+      RDSColor = 0xFFE0;
+      RDSColorSmooth = 0x2120;
+      BarSignificantColor = 0xF800;
+      BarInsignificantColor = 0x07E0;
+      BWAutoColor = 0x07F7;
+      BWAutoColorSmooth = 0x0144;
       CurrentThemeString = myLanguage[language][78];
       break;
     case 1:  // Cyan theme
       PrimaryColor = 0x0F3F;
-      PrimaryColorSmooth = 0x0000;
-      SecondaryColor = 0xFFFF;
-      SecondaryColorSmooth = 0x0000;
+      PrimaryColorSmooth = 0x0105;
+      SecondaryColor = 0x867D;
+      SecondaryColorSmooth = 0x10E4;
       FrequencyColor = 0x0F3F;
-      FrameColor = 0x0248;
+      FrameColor = 0x01e9;
       GreyoutColor = 0x4A69;
       BackgroundColor = 0x0000;
       ActiveColor = 0xFFFF;
-      ActiveColorSmooth = 0x0000;
+      ActiveColorSmooth = 0x18E3;
       SignificantColor = 0xF800;
-      SignificantColorSmooth = 0x0000;
+      SignificantColorSmooth = 0x2000;
       InsignificantColor = 0x07E0;
-      InsignificantColorSmooth = 0x0140;
+      InsignificantColorSmooth = 0x00C0;
+      StereoColor = 0x0F3F;
+      StereoColorSmooth = 0x0105;
+      RDSColor = 0x0F3F;
+      RDSColorSmooth = 0x0105;
+      BarSignificantColor = 0xF800;
+      BarInsignificantColor = 0x0F3F;
+      BWAutoColor = 0x07F7;
+      BWAutoColorSmooth = 0x0144;
       CurrentThemeString = myLanguage[language][79];
       break;
     case 2:  // Crimson theme
       PrimaryColor = 0xF8C3;
-      PrimaryColorSmooth = 0x0000;
-      SecondaryColor = 0xFFFF;
-      SecondaryColorSmooth = 0x0000;
+      PrimaryColorSmooth = 0x3800;
+      SecondaryColor = 0x867D;
+      SecondaryColorSmooth = 0x10E4;
       FrequencyColor = 0xF8C3;
       FrameColor = 0x3800;
       GreyoutColor = 0x4A69;
       BackgroundColor = 0x0000;
       ActiveColor = 0xFFFF;
-      ActiveColorSmooth = 0x0000;
-      SignificantColor = 0xF8C3;
-      SignificantColorSmooth = 0x0000;
+      ActiveColorSmooth = 0x18E3;
+      SignificantColor = 0xF800;
+      SignificantColorSmooth = 0x2000;
       InsignificantColor = 0x07E0;
-      InsignificantColorSmooth = 0x0140;
+      InsignificantColorSmooth = 0x00C0;
+      StereoColor = 0xF8C3;
+      StereoColorSmooth = 0x0000;
+      RDSColor = 0xF8C3;
+      RDSColorSmooth = 0x0000;
+      BarSignificantColor = 0xF800;
+      BarInsignificantColor = 0x07E0;
+      BWAutoColor = 0x07F7;
+      BWAutoColorSmooth = 0x0144;
       CurrentThemeString = myLanguage[language][80];
       break;
     case 3:  // Monochrome theme
@@ -5821,57 +5853,89 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       SignificantColorSmooth = 0xFFFF;
       InsignificantColor = 0xFFFF;
       InsignificantColorSmooth = 0xFFFF;
+      StereoColor = 0xFFFF;
+      StereoColorSmooth = 0x0000;
+      RDSColor = 0xFFFF;
+      RDSColorSmooth = 0x0000;
+      BarSignificantColor = 0xF8C3;
+      BarInsignificantColor = 0x07E0;
+      BWAutoColor = 0x7BCF;
+      BWAutoColorSmooth = 0x1082;
       CurrentThemeString = myLanguage[language][81];
       break;
     case 4:  // Volcano theme
       PrimaryColor = 0xFC00;
-      PrimaryColorSmooth = 0xFFFF;
-      SecondaryColor = 0xFFFF;
-      SecondaryColorSmooth = 0xFFFF;
+      PrimaryColorSmooth = 0x2965;
+      SecondaryColor = 0x867D;
+      SecondaryColorSmooth = 0x10E4;
       FrequencyColor = 0xFC00;
       FrameColor = 0x2965;
       GreyoutColor = 0x5140;
       BackgroundColor = 0x0806;
       ActiveColor = 0xFFFF;
-      ActiveColorSmooth = 0x0000;
-      SignificantColor = 0xFFFF;
-      SignificantColorSmooth = 0x0806;
+      ActiveColorSmooth = 0x18E3;
+      SignificantColor = 0xF800;
+      SignificantColorSmooth = 0x2000;
       InsignificantColor = 0x07E0;
-      InsignificantColorSmooth = 0x0140;
+      InsignificantColorSmooth = 0x00C0;
+      StereoColor = 0xFC00;
+      StereoColorSmooth = 0x0105;
+      RDSColor = 0xFC00;
+      RDSColorSmooth = 0xFFFF;
+      BarSignificantColor = 0xF800;
+      BarInsignificantColor = 0xFC00;
+      BWAutoColor = 0x07F7;
+      BWAutoColorSmooth = 0x0144;
       CurrentThemeString = myLanguage[language][82];
       break;
     case 5:  // Dendro theme
       PrimaryColor = TFT_GREEN;
-      PrimaryColorSmooth = 0x0000;
-      SecondaryColor = TFT_GREEN;
-      SecondaryColorSmooth = 0x0000;
+      PrimaryColorSmooth = 0x0200;
+      SecondaryColor = 0x867D;
+      SecondaryColorSmooth = 0x10E4;
       FrequencyColor = TFT_GREEN;
       FrameColor = 0x0200;
       GreyoutColor = 0x4A69;
       BackgroundColor = 0x0000;
       ActiveColor = 0xFFFF;
-      ActiveColorSmooth = 0x0000;
-      SignificantColor = PrimaryColor;
-      SignificantColorSmooth = 0x0000;
+      ActiveColorSmooth = 0x18E3;
+      SignificantColor = 0xF800;
+      SignificantColorSmooth = 0x2000;
       InsignificantColor = 0x07E0;
-      InsignificantColorSmooth = 0x0140;
+      InsignificantColorSmooth = 0x00C0;
+      StereoColor = TFT_GREEN;
+      StereoColorSmooth = 0x0200;
+      RDSColor = TFT_GREEN;
+      RDSColorSmooth = 0x0200;
+      BarSignificantColor = 0xF800;
+      BarInsignificantColor = TFT_GREEN;
+      BWAutoColor = 0x07F7;
+      BWAutoColorSmooth = 0x0144;
       CurrentThemeString = myLanguage[language][83];
       break;
     case 6:  // Sakura theme
       PrimaryColor = 0xF3D5;
-      PrimaryColorSmooth = 0x0000;
-      SecondaryColor = 0xF3D5;
-      SecondaryColorSmooth = 0x0000;
+      PrimaryColorSmooth = 0x3008;
+      SecondaryColor = 0x867D;
+      SecondaryColorSmooth = 0x10E4;
       FrequencyColor = 0xF3D5;
       FrameColor = 0x3845;
       GreyoutColor = 0x4A69;
       BackgroundColor = 0x0000;
       ActiveColor = 0xFFFF;
-      ActiveColorSmooth = 0x0000;
-      SignificantColor = 0xFFFF;
-      SignificantColorSmooth = 0x0000;
+      ActiveColorSmooth = 0x18E3;
+      SignificantColor = 0xF800;
+      SignificantColorSmooth = 0x2000;
       InsignificantColor = 0x07E0;
-      InsignificantColorSmooth = 0x0140;
+      InsignificantColorSmooth = 0x00C0;
+      StereoColor = 0xF3D5;
+      StereoColorSmooth = 0x3008;
+      RDSColor = 0xF3D5;
+      RDSColorSmooth = 0x3008;
+      BarSignificantColor = 0xF8C3;
+      BarInsignificantColor = 0xF3D5;
+      BWAutoColor = 0xF00A;
+      BWAutoColorSmooth = 0x2802;
       CurrentThemeString = myLanguage[language][84];
       break;
     case 7:  // Whiteout theme
@@ -5889,7 +5953,65 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       SignificantColorSmooth = 0xDFFC;
       InsignificantColor = 0x07E0;
       InsignificantColorSmooth = 0x0140;
+      StereoColor = 0x0000;
+      StereoColorSmooth = 0xDFFC;
+      RDSColor = 0x0000;
+      RDSColorSmooth = 0xDFFC;
+      BarSignificantColor = 0x0000;
+      BarInsignificantColor = 0x0140;
+      BWAutoColor = 0x7BCF;
+      BWAutoColorSmooth = 0x1082;
       CurrentThemeString = myLanguage[language][85];
+      break;
+    case 8:  // Tangerine theme
+      PrimaryColor = 0xF980;
+      PrimaryColorSmooth = 0x3080;
+      SecondaryColor = 0x867D;
+      SecondaryColorSmooth = 0x10E4;
+      FrequencyColor = 0xF980;
+      FrameColor = 0x38A1;
+      GreyoutColor = 0x4A69;
+      BackgroundColor = 0x0000;
+      ActiveColor = 0xFFFF;
+      ActiveColorSmooth = 0x18E3;
+      SignificantColor = 0xF800;
+      SignificantColorSmooth = 0x2000;
+      InsignificantColor = 0x07E0;
+      InsignificantColorSmooth = 0x00C0;
+      StereoColor = 0xF980;
+      StereoColorSmooth = 0x3080;
+      RDSColor = 0xF980;
+      RDSColorSmooth = 0x3080;
+      BarSignificantColor = 0xF8C3;
+      BarInsignificantColor = 0xF980;
+      BWAutoColor = 0x07F7;
+      BWAutoColorSmooth = 0x0144;
+      CurrentThemeString = myLanguage[language][170];
+      break;
+    case 9:  // Ocean theme
+      PrimaryColor = 0x01FF;
+      PrimaryColorSmooth = 0x0006;
+      SecondaryColor = 0x867D;
+      SecondaryColorSmooth = 0x10E4;
+      FrequencyColor = 0x01FF;
+      FrameColor = 0x0010;
+      GreyoutColor = 0x4A69;
+      BackgroundColor = 0x0000;
+      ActiveColor = 0xFFFF;
+      ActiveColorSmooth = 0x18E3;
+      SignificantColor = 0xF800;
+      SignificantColorSmooth = 0x2000;
+      InsignificantColor = 0x07E0;
+      InsignificantColorSmooth = 0x00C0;
+      StereoColor = 0x01FF;
+      StereoColorSmooth = 0x0006;
+      RDSColor = 0x01FF;
+      RDSColorSmooth = 0x0006;
+      BarSignificantColor = 0xF8C3;
+      BarInsignificantColor = 0x01FF;
+      BWAutoColor = 0x07F7;
+      BWAutoColorSmooth = 0x0144;
+      CurrentThemeString = myLanguage[language][171];
       break;
   }
 }
