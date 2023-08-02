@@ -5841,8 +5841,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
     case 3:  // Monochrome theme
       PrimaryColor = 0xFFFF;
       PrimaryColorSmooth = 0x0000;
-      SecondaryColor = 0xFFFF;
-      SecondaryColorSmooth = 0x0000;
+      SecondaryColor = 0x867D;
+      SecondaryColorSmooth = 0x10E4;
       FrequencyColor = 0xFFFF;
       FrameColor = 0x2965;
       GreyoutColor = 0x4A69;
@@ -5958,7 +5958,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColor = 0x0000;
       RDSColorSmooth = 0xDFFC;
       BarSignificantColor = 0x0000;
-      BarInsignificantColor = 0x0140;
+      BarInsignificantColor = 0x07E0;
       BWAutoColor = 0x7BCF;
       BWAutoColorSmooth = 0x1082;
       CurrentThemeString = myLanguage[language][85];
@@ -5983,7 +5983,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColor = 0xF980;
       RDSColorSmooth = 0x3080;
       BarSignificantColor = 0xF8C3;
-      BarInsignificantColor = 0xF980;
+      BarInsignificantColor = 0x07E0;
       BWAutoColor = 0x07F7;
       BWAutoColorSmooth = 0x0144;
       CurrentThemeString = myLanguage[language][170];
