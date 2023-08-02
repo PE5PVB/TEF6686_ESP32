@@ -5849,10 +5849,10 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BackgroundColor = 0x0000;
       ActiveColor = 0xFFFF;
       ActiveColorSmooth = 0x0000;
-      SignificantColor = 0xFFFF;
-      SignificantColorSmooth = 0xFFFF;
-      InsignificantColor = 0xFFFF;
-      InsignificantColorSmooth = 0xFFFF;
+      SignificantColor = 0xF800;
+      SignificantColorSmooth = 0x2000;
+      InsignificantColor = 0x07E0;
+      InsignificantColorSmooth = 0x00C0;
       StereoColor = 0xFFFF;
       StereoColorSmooth = 0x0000;
       RDSColor = 0xFFFF;
