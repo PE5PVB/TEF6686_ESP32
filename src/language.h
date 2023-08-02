@@ -2607,8 +2607,8 @@ static const char* const myLanguage[16][172] = {
     "Purchase", // 167
     "Get data", // 168
     " ", // 169
-    "Tangerine", // 170
-    "Ocean" // 171
+    "桔红", // 170
+    "海之蓝" // 171
   },
 
   { "Norsk", // Norwegian
