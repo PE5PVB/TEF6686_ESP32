@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char* const myLanguage[16][170] = {
+static const char* const myLanguage[16][172] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -170,7 +170,9 @@ static const char* const myLanguage[16][170] = {
     "Identifier", // 166
     "Purchase", // 167
     "Get data", // 168
-    " " // 169
+    " ", // 169
+    "Tangerine", // 170
+    "Ocean" // 171
   },
 
   { "Nederlands", // Dutch
@@ -342,7 +344,9 @@ static const char* const myLanguage[16][170] = {
     "Identificatie", // 166
     "Aankoop", // 167
     "Verkrijg data", // 168
-    "" // 169
+    " ", // 169
+    "Tangerine", // 170
+    "Ocean" // 171
   },
 
   { "Polski", // Polish
@@ -514,7 +518,9 @@ static const char* const myLanguage[16][170] = {
     "Identifier", // 166
     "Purchase", // 167
     "Get data", // 168
-    "" // 169
+    " ", // 169
+    "Tangerine", // 170
+    "Ocean" // 171
   },
 
   { "Hrvatski", // Croatian
@@ -686,7 +692,9 @@ static const char* const myLanguage[16][170] = {
     "Identifier", // 166
     "Purchase", // 167
     "Get data", // 168
-    "" // 169
+    " ", // 169
+    "Tangerine", // 170
+    "Ocean" // 171
   },
 
   { "Ελληνικά", // Greek
@@ -858,7 +866,9 @@ static const char* const myLanguage[16][170] = {
     "Αναγνωριστικό", // 166
     "Αγορά", // 167
     "Λήψη δεδομένων", // 168
-    "" // 169
+    " ", // 169
+    "Tangerine", // 170
+    "Ocean" // 171
   },
 
   { "Romana", // Romanian
@@ -1030,7 +1040,9 @@ static const char* const myLanguage[16][170] = {
     "Identifier", // 166
     "Purchase", // 167
     "Get data", // 168
-    "" // 169
+    " ", // 169
+    "Tangerine", // 170
+    "Ocean" // 171
   },
 
   { "Deutsch", // German
@@ -1202,7 +1214,9 @@ static const char* const myLanguage[16][170] = {
     "Identifier", // 166
     "Purchase", // 167
     "Get data", // 168
-    "" // 169
+    " ", // 169
+    "Tangerine", // 170
+    "Ocean" // 171
   },
 
   { "Czech", // Czech
@@ -1374,7 +1388,9 @@ static const char* const myLanguage[16][170] = {
     "Identifier", // 166
     "Purchase", // 167
     "Get data", // 168
-    "" // 169
+    " ", // 169
+    "Tangerine", // 170
+    "Ocean" // 171
   },
 
   { "Slovak", // Slovak
@@ -1546,7 +1562,9 @@ static const char* const myLanguage[16][170] = {
     "Identifier", // 166
     "Purchase", // 167
     "Get data", // 168
-    "" // 169
+    " ", // 169
+    "Tangerine", // 170
+    "Ocean" // 171
   },
 
   { "Français", // French
@@ -1718,7 +1736,9 @@ static const char* const myLanguage[16][170] = {
     "Identifiant", // 166
     "Achat", // 167
     "Obtenir des données", // 168
-    "" // 169
+    " ", // 169
+    "Tangerine", // 170
+    "Ocean" // 171
   },
 
   { "Български", // Bulgarian
@@ -1739,7 +1759,7 @@ static const char* const myLanguage[16][170] = {
     "Stereo праг:", // 15
     "Мин. честота на изряз.:", // 16
     "Мин. сигнал за изряз.:", // 17
-    "Праг н?? слаб сигнал:", // 18
+    "Праг на слаб сигнал:", // 18
     "Яркост:", // 19
     "Сила на звука", // 20
     "Отместване на конвертора:", // 21
@@ -1890,7 +1910,9 @@ static const char* const myLanguage[16][170] = {
     "Identifier", // 166
     "Purchase", // 167
     "Get data", // 168
-    "" // 169
+    " ", // 169
+    "Tangerine", // 170
+    "Ocean" // 171
   },
 
   { "Русский", // Russian
@@ -2062,7 +2084,9 @@ static const char* const myLanguage[16][170] = {
     "Identifier", // 166
     "Purchase", // 167
     "Get data", // 168
-    "" // 169
+    " ", // 169
+    "Tangerine", // 170
+    "Ocean" // 171
   },
 
   { "Українська", // Ukranian
@@ -2234,7 +2258,9 @@ static const char* const myLanguage[16][170] = {
     "Identifier", // 166
     "Purchase", // 167
     "Get data", // 168
-    "" // 169
+    " ", // 169
+    "Tangerine", // 170
+    "Ocean" // 171
   },
 
   { "Italiano", // Italian
@@ -2406,7 +2432,9 @@ static const char* const myLanguage[16][170] = {
     "Identifier", // 166
     "Purchase", // 167
     "Get data", // 168
-    "" // 169
+    " ", // 169
+    "Tangerine", // 170
+    "Ocean" // 171
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -2578,7 +2606,9 @@ static const char* const myLanguage[16][170] = {
     "Identifier", // 166
     "Purchase", // 167
     "Get data", // 168
-    "" // 169
+    " ", // 169
+    "Tangerine", // 170
+    "Ocean" // 171
   },
 
   { "Norsk", // Norwegian
