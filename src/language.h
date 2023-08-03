@@ -2778,7 +2778,7 @@ static const char* const myLanguage[16][176] = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Roterer når skjerm av", // 107
+    "Tune når skjerm av", // 107
     "Velg Modell", // 108
     "Base (ILI9341)", // 109
     "Bærbar (ILI9341)", // 110
@@ -2844,9 +2844,9 @@ static const char* const myLanguage[16][176] = {
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
-    "Battery options", // 173
-    "Show battery value", // 174
-    "Show battery percent" // 175
+    "Batterialternativer", // 173
+    "Vis batteriverdi", // 174
+    "Vis batteriprosent" // 175
   }
 };
 
