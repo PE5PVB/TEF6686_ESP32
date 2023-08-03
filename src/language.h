@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char* const myLanguage[16][172] = {
+static const char* const myLanguage[16][173] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -172,7 +172,8 @@ static const char* const myLanguage[16][172] = {
     "Get data", // 168
     " ", // 169
     "Tangerine", // 170
-    "Ocean" // 171
+    "Ocean", // 171
+    "Indigo" // 172
   },
 
   { "Nederlands", // Dutch
@@ -346,7 +347,8 @@ static const char* const myLanguage[16][172] = {
     "Verkrijg data", // 168
     " ", // 169
     "Tangerine", // 170
-    "Ocean" // 171
+    "Ocean", // 171
+    "Indigo" // 172
   },
 
   { "Polski", // Polish
@@ -520,7 +522,8 @@ static const char* const myLanguage[16][172] = {
     "Get data", // 168
     " ", // 169
     "Tangerine", // 170
-    "Ocean" // 171
+    "Ocean", // 171
+    "Indigo" // 172
   },
 
   { "Hrvatski", // Croatian
@@ -694,7 +697,8 @@ static const char* const myLanguage[16][172] = {
     "Get data", // 168
     " ", // 169
     "Tangerine", // 170
-    "Ocean" // 171
+    "Ocean", // 171
+    "Indigo" // 172
   },
 
   { "Ελληνικά", // Greek
@@ -867,8 +871,9 @@ static const char* const myLanguage[16][172] = {
     "Αγορά", // 167
     "Λήψη δεδομένων", // 168
     " ", // 169
-    "Tangerine", // 170
-    "Ocean" // 171
+    "Μανταρινί", // 170
+    "Ωκεανός", // 171
+    "Ινδικό" // 172
   },
 
   { "Romana", // Romanian
@@ -1042,7 +1047,8 @@ static const char* const myLanguage[16][172] = {
     "Get data", // 168
     " ", // 169
     "Tangerine", // 170
-    "Ocean" // 171
+    "Ocean", // 171
+    "Indigo" // 172
   },
 
   { "Deutsch", // German
@@ -1216,7 +1222,8 @@ static const char* const myLanguage[16][172] = {
     "Get data", // 168
     " ", // 169
     "Tangerine", // 170
-    "Ocean" // 171
+    "Ocean", // 171
+    "Indigo" // 172
   },
 
   { "Czech", // Czech
@@ -1390,7 +1397,8 @@ static const char* const myLanguage[16][172] = {
     "Get data", // 168
     " ", // 169
     "Tangerine", // 170
-    "Ocean" // 171
+    "Ocean", // 171
+    "Indigo" // 172
   },
 
   { "Slovak", // Slovak
@@ -1564,7 +1572,8 @@ static const char* const myLanguage[16][172] = {
     "Get data", // 168
     " ", // 169
     "Tangerine", // 170
-    "Ocean" // 171
+    "Ocean", // 171
+    "Indigo" // 172
   },
 
   { "Français", // French
@@ -1737,8 +1746,9 @@ static const char* const myLanguage[16][172] = {
     "Achat", // 167
     "Obtenir des données", // 168
     " ", // 169
-    "Tangerine", // 170
-    "Ocean" // 171
+    "Mandarine", // 170
+    "Océan", // 171
+    "Indigo" // 172
   },
 
   { "Български", // Bulgarian
@@ -1912,7 +1922,8 @@ static const char* const myLanguage[16][172] = {
     "Get data", // 168
     " ", // 169
     "Tangerine", // 170
-    "Ocean" // 171
+    "Ocean", // 171
+    "Indigo" // 172
   },
 
   { "Русский", // Russian
@@ -2086,7 +2097,8 @@ static const char* const myLanguage[16][172] = {
     "Получить данные", // 168
     " ", // 169
     "Мандариновый", // 170
-    "Океан" // 171
+    "Океан", // 171
+    "Indigo" // 172
   },
 
   { "Українська", // Ukranian
@@ -2260,7 +2272,8 @@ static const char* const myLanguage[16][172] = {
     "Отримати дані", // 168
     " ", // 169
     "Мандариновий", // 170
-    "Океан" // 171
+    "Океан", // 171
+    "Indigo" // 172
   },
 
   { "Italiano", // Italian
@@ -2434,7 +2447,8 @@ static const char* const myLanguage[16][172] = {
     "Get data", // 168
     " ", // 169
     "Tangerine", // 170
-    "Ocean" // 171
+    "Ocean", // 171
+    "Indigo" // 172
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -2608,7 +2622,8 @@ static const char* const myLanguage[16][172] = {
     "Get data", // 168
     " ", // 169
     "桔红", // 170
-    "海之蓝" // 171
+    "海之蓝", // 171
+    "Indigo" // 172
   },
 
   { "Norsk", // Norwegian

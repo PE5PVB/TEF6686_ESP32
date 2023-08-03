@@ -2605,7 +2605,7 @@ void KeyUp() {
             switch (menuoption) {
               case 30:
                 CurrentTheme ++;
-                if (CurrentTheme > 9) CurrentTheme = 0;
+                if (CurrentTheme > 10) CurrentTheme = 0;
                 doTheme();
                 tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
                 tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
@@ -3023,7 +3023,7 @@ void KeyDown() {
             switch (menuoption) {
               case 30:
                 CurrentTheme --;
-                if (CurrentTheme > 9) CurrentTheme = 9;
+                if (CurrentTheme > 10) CurrentTheme = 9;
                 doTheme();
                 tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
                 tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
@@ -3748,8 +3748,8 @@ void BuildMenu() {
   tft.fillScreen(BackgroundColor);
   tft.drawRect(0, 0, 320, 240, FrameColor);
   tft.drawLine(0, 23, 320, 23, FrameColor);
-  tftPrint(-1, myLanguage[language][41], 10, 7, PrimaryColor, PrimaryColorSmooth, FONT16);
-  tftPrint(1, String(menupage) + "/" + String(menupagestotal), 305, 7, ActiveColor, ActiveColorSmooth, FONT16);
+  tftPrint(-1, myLanguage[language][41], 4, 7, PrimaryColor, PrimaryColorSmooth, FONT16);
+  tftPrint(1, String(menupage) + "/" + String(menupagestotal), 314, 7, ActiveColor, ActiveColorSmooth, FONT16);
   tft.drawRoundRect(8, menuoption + 3, 302, 21, 5, ActiveColor);
   switch (menupage) {
     case 1:
@@ -4155,13 +4155,13 @@ void BuildDisplay() {
     for (byte segments = 0; segments < 94; segments++) {
       if (segments > 54) {
         if (((segments - 53) % 10) == 0) {
-          tft.fillRect(16 + (2 * segments), 112, 2, 2, SignificantColor);
-          if (!showmodulation) tft.fillRect(16 + (2 * segments), 141, 2, 2, GreyoutColor); else tft.fillRect(16 + (2 * segments), 141, 2, 2, SignificantColor);
+          tft.fillRect(16 + (2 * segments), 112, 2, 2, BarSignificantColor);
+          if (!showmodulation) tft.fillRect(16 + (2 * segments), 141, 2, 2, GreyoutColor); else tft.fillRect(16 + (2 * segments), 141, 2, 2, BarSignificantColor);
         }
       } else {
         if (((segments + 1) % 6) == 0) {
-          tft.fillRect(16 + (2 * segments), 112, 2, 2, InsignificantColor);
-          if (!showmodulation) tft.fillRect(16 + (2 * segments), 141, 2, 2, GreyoutColor); else tft.fillRect(16 + (2 * segments), 141, 2, 2, InsignificantColor);
+          tft.fillRect(16 + (2 * segments), 112, 2, 2, BarInsignificantColor);
+          if (!showmodulation) tft.fillRect(16 + (2 * segments), 141, 2, 2, GreyoutColor); else tft.fillRect(16 + (2 * segments), 141, 2, 2, BarInsignificantColor);
         }
       }
     }
@@ -5764,26 +5764,26 @@ void SetTunerPatch() {
 void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
   switch (CurrentTheme) {
     case 0:  // Default PE5PVB theme
-      PrimaryColor = 0xFFE0;
+      PrimaryColor = TFT_YELLOW;
       PrimaryColorSmooth = 0x2120;
-      SecondaryColor = 0x867D;
+      SecondaryColor = TFT_SKYBLUE;
       SecondaryColorSmooth = 0x10E4;
-      FrequencyColor =  0xFFE0;
-      FrameColor = 0x001F      ;
-      GreyoutColor = 0x38E7;
-      BackgroundColor = 0x0000;
-      ActiveColor = 0xFFFF;
+      FrequencyColor = TFT_YELLOW;
+      FrameColor = TFT_BLUE;
+      GreyoutColor = 0x39A7;
+      BackgroundColor = TFT_BLACK;
+      ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
-      SignificantColor = 0xF800;
+      SignificantColor = TFT_RED;
       SignificantColorSmooth = 0x2000;
-      InsignificantColor = 0x07E0;
+      InsignificantColor = TFT_GREEN;
       InsignificantColorSmooth = 0x00C0;
-      StereoColor = 0xF800;
+      StereoColor = TFT_RED;
       StereoColorSmooth = 0x2000;
-      RDSColor = 0xFFE0;
+      RDSColor = TFT_YELLOW;
       RDSColorSmooth = 0x2120;
-      BarSignificantColor = 0xF800;
-      BarInsignificantColor = 0x07E0;
+      BarSignificantColor = TFT_RED;
+      BarInsignificantColor = TFT_GREEN;
       BWAutoColor = 0x07F7;
       BWAutoColorSmooth = 0x0144;
       CurrentThemeString = myLanguage[language][78];
@@ -5791,23 +5791,23 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
     case 1:  // Cyan theme
       PrimaryColor = 0x0F3F;
       PrimaryColorSmooth = 0x0105;
-      SecondaryColor = 0x867D;
+      SecondaryColor = TFT_SKYBLUE;
       SecondaryColorSmooth = 0x10E4;
       FrequencyColor = 0x0F3F;
       FrameColor = 0x01e9;
       GreyoutColor = 0x4A69;
-      BackgroundColor = 0x0000;
-      ActiveColor = 0xFFFF;
+      BackgroundColor = TFT_BLACK;
+      ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
-      SignificantColor = 0xF800;
+      SignificantColor = TFT_RED;
       SignificantColorSmooth = 0x2000;
-      InsignificantColor = 0x07E0;
+      InsignificantColor = TFT_GREEN;
       InsignificantColorSmooth = 0x00C0;
       StereoColor = 0x0F3F;
       StereoColorSmooth = 0x0105;
       RDSColor = 0x0F3F;
       RDSColorSmooth = 0x0105;
-      BarSignificantColor = 0xF800;
+      BarSignificantColor = TFT_RED;
       BarInsignificantColor = 0x0F3F;
       BWAutoColor = 0x07F7;
       BWAutoColorSmooth = 0x0144;
@@ -5816,74 +5816,74 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
     case 2:  // Crimson theme
       PrimaryColor = 0xF8C3;
       PrimaryColorSmooth = 0x3800;
-      SecondaryColor = 0x867D;
+      SecondaryColor = TFT_SKYBLUE;
       SecondaryColorSmooth = 0x10E4;
       FrequencyColor = 0xF8C3;
       FrameColor = 0x3800;
       GreyoutColor = 0x4A69;
-      BackgroundColor = 0x0000;
-      ActiveColor = 0xFFFF;
+      BackgroundColor = TFT_BLACK;
+      ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
-      SignificantColor = 0xF800;
+      SignificantColor = TFT_RED;
       SignificantColorSmooth = 0x2000;
-      InsignificantColor = 0x07E0;
+      InsignificantColor = TFT_GREEN;
       InsignificantColorSmooth = 0x00C0;
       StereoColor = 0xF8C3;
-      StereoColorSmooth = 0x0000;
+      StereoColorSmooth = TFT_BLACK;
       RDSColor = 0xF8C3;
-      RDSColorSmooth = 0x0000;
-      BarSignificantColor = 0xF800;
-      BarInsignificantColor = 0x07E0;
+      RDSColorSmooth = TFT_BLACK;
+      BarSignificantColor = TFT_YELLOW;
+      BarInsignificantColor = 0xF8C3;
       BWAutoColor = 0x07F7;
       BWAutoColorSmooth = 0x0144;
       CurrentThemeString = myLanguage[language][80];
       break;
     case 3:  // Monochrome theme
-      PrimaryColor = 0xFFFF;
-      PrimaryColorSmooth = 0x0000;
-      SecondaryColor = 0x867D;
+      PrimaryColor = TFT_WHITE;
+      PrimaryColorSmooth = TFT_BLACK;
+      SecondaryColor = TFT_SKYBLUE;
       SecondaryColorSmooth = 0x10E4;
-      FrequencyColor = 0xFFFF;
+      FrequencyColor = TFT_WHITE;
       FrameColor = 0x2965;
       GreyoutColor = 0x4A69;
-      BackgroundColor = 0x0000;
-      ActiveColor = 0xFFFF;
-      ActiveColorSmooth = 0x0000;
-      SignificantColor = 0xF800;
+      BackgroundColor = TFT_BLACK;
+      ActiveColor = TFT_WHITE;
+      ActiveColorSmooth = TFT_BLACK;
+      SignificantColor = TFT_RED;
       SignificantColorSmooth = 0x2000;
-      InsignificantColor = 0x07E0;
+      InsignificantColor = TFT_GREEN;
       InsignificantColorSmooth = 0x00C0;
-      StereoColor = 0xFFFF;
-      StereoColorSmooth = 0x0000;
-      RDSColor = 0xFFFF;
-      RDSColorSmooth = 0x0000;
-      BarSignificantColor = 0xF8C3;
-      BarInsignificantColor = 0x07E0;
+      StereoColor = TFT_WHITE;
+      StereoColorSmooth = TFT_BLACK;
+      RDSColor = TFT_WHITE;
+      RDSColorSmooth = TFT_BLACK;
+      BarSignificantColor = TFT_RED;
+      BarInsignificantColor = TFT_GREEN;
       BWAutoColor = 0x7BCF;
       BWAutoColorSmooth = 0x1082;
       CurrentThemeString = myLanguage[language][81];
       break;
     case 4:  // Volcano theme
-      PrimaryColor = 0xFC00;
+      PrimaryColor = TFT_ORANGE;
       PrimaryColorSmooth = 0x2965;
-      SecondaryColor = 0x867D;
+      SecondaryColor = TFT_SKYBLUE;
       SecondaryColorSmooth = 0x10E4;
-      FrequencyColor = 0xFC00;
+      FrequencyColor = TFT_ORANGE;
       FrameColor = 0x2965;
       GreyoutColor = 0x5140;
       BackgroundColor = 0x0806;
-      ActiveColor = 0xFFFF;
+      ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
-      SignificantColor = 0xF800;
+      SignificantColor = TFT_RED;
       SignificantColorSmooth = 0x2000;
-      InsignificantColor = 0x07E0;
+      InsignificantColor = TFT_GREEN;
       InsignificantColorSmooth = 0x00C0;
-      StereoColor = 0xFC00;
+      StereoColor = TFT_ORANGE;
       StereoColorSmooth = 0x0105;
-      RDSColor = 0xFC00;
-      RDSColorSmooth = 0xFFFF;
-      BarSignificantColor = 0xF800;
-      BarInsignificantColor = 0xFC00;
+      RDSColor = TFT_ORANGE;
+      RDSColorSmooth = TFT_WHITE;
+      BarSignificantColor = TFT_RED;
+      BarInsignificantColor = TFT_ORANGE;
       BWAutoColor = 0x07F7;
       BWAutoColorSmooth = 0x0144;
       CurrentThemeString = myLanguage[language][82];
@@ -5891,23 +5891,23 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
     case 5:  // Dendro theme
       PrimaryColor = TFT_GREEN;
       PrimaryColorSmooth = 0x0200;
-      SecondaryColor = 0x867D;
+      SecondaryColor = TFT_SKYBLUE;
       SecondaryColorSmooth = 0x10E4;
       FrequencyColor = TFT_GREEN;
       FrameColor = 0x0200;
       GreyoutColor = 0x4A69;
-      BackgroundColor = 0x0000;
-      ActiveColor = 0xFFFF;
+      BackgroundColor = TFT_BLACK;
+      ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
-      SignificantColor = 0xF800;
+      SignificantColor = TFT_RED;
       SignificantColorSmooth = 0x2000;
-      InsignificantColor = 0x07E0;
+      InsignificantColor = TFT_GREEN;
       InsignificantColorSmooth = 0x00C0;
       StereoColor = TFT_GREEN;
       StereoColorSmooth = 0x0200;
       RDSColor = TFT_GREEN;
       RDSColorSmooth = 0x0200;
-      BarSignificantColor = 0xF800;
+      BarSignificantColor = TFT_RED;
       BarInsignificantColor = TFT_GREEN;
       BWAutoColor = 0x07F7;
       BWAutoColorSmooth = 0x0144;
@@ -5916,49 +5916,49 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
     case 6:  // Sakura theme
       PrimaryColor = 0xF3D5;
       PrimaryColorSmooth = 0x3008;
-      SecondaryColor = 0x867D;
+      SecondaryColor = TFT_SKYBLUE;
       SecondaryColorSmooth = 0x10E4;
       FrequencyColor = 0xF3D5;
       FrameColor = 0x3845;
       GreyoutColor = 0x4A69;
-      BackgroundColor = 0x0000;
-      ActiveColor = 0xFFFF;
+      BackgroundColor = TFT_BLACK;
+      ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
-      SignificantColor = 0xF800;
+      SignificantColor = TFT_RED;
       SignificantColorSmooth = 0x2000;
-      InsignificantColor = 0x07E0;
+      InsignificantColor = TFT_GREEN;
       InsignificantColorSmooth = 0x00C0;
       StereoColor = 0xF3D5;
       StereoColorSmooth = 0x3008;
       RDSColor = 0xF3D5;
       RDSColorSmooth = 0x3008;
-      BarSignificantColor = 0xF8C3;
+      BarSignificantColor = TFT_RED;
       BarInsignificantColor = 0xF3D5;
       BWAutoColor = 0xF00A;
       BWAutoColorSmooth = 0x2802;
       CurrentThemeString = myLanguage[language][84];
       break;
     case 7:  // Whiteout theme
-      PrimaryColor = 0x0000;
+      PrimaryColor = TFT_BLACK;
       PrimaryColorSmooth = 0xDFFC;
-      SecondaryColor = 0x0000;
+      SecondaryColor = TFT_BLACK;
       SecondaryColorSmooth = 0xDFFC;
       FrequencyColor = 0x18C3;
       FrameColor = 0x630C;
       GreyoutColor = 0x9492;
       BackgroundColor = 0xDFFC;
-      ActiveColor = 0x0000;
+      ActiveColor = TFT_BLACK;
       ActiveColorSmooth = 0xDFFC;
-      SignificantColor = 0x0000;
+      SignificantColor = TFT_BLACK;
       SignificantColorSmooth = 0xDFFC;
-      InsignificantColor = 0x07E0;
+      InsignificantColor = TFT_GREEN;
       InsignificantColorSmooth = 0x0140;
-      StereoColor = 0x0000;
+      StereoColor = TFT_BLACK;
       StereoColorSmooth = 0xDFFC;
-      RDSColor = 0x0000;
+      RDSColor = TFT_BLACK;
       RDSColorSmooth = 0xDFFC;
-      BarSignificantColor = 0x0000;
-      BarInsignificantColor = 0x07E0;
+      BarSignificantColor = TFT_BLACK;
+      BarInsignificantColor = TFT_GREEN;
       BWAutoColor = 0x7BCF;
       BWAutoColorSmooth = 0x1082;
       CurrentThemeString = myLanguage[language][85];
@@ -5966,24 +5966,24 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
     case 8:  // Tangerine theme
       PrimaryColor = 0xF980;
       PrimaryColorSmooth = 0x3080;
-      SecondaryColor = 0x867D;
+      SecondaryColor = TFT_SKYBLUE;
       SecondaryColorSmooth = 0x10E4;
       FrequencyColor = 0xF980;
       FrameColor = 0x38A1;
       GreyoutColor = 0x4A69;
-      BackgroundColor = 0x0000;
-      ActiveColor = 0xFFFF;
+      BackgroundColor = TFT_BLACK;
+      ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
-      SignificantColor = 0xF800;
+      SignificantColor = TFT_RED;
       SignificantColorSmooth = 0x2000;
-      InsignificantColor = 0x07E0;
+      InsignificantColor = TFT_GREEN;
       InsignificantColorSmooth = 0x00C0;
       StereoColor = 0xF980;
       StereoColorSmooth = 0x3080;
       RDSColor = 0xF980;
       RDSColorSmooth = 0x3080;
-      BarSignificantColor = 0xF8C3;
-      BarInsignificantColor = 0x07E0;
+      BarSignificantColor = TFT_RED;
+      BarInsignificantColor = TFT_GREEN;
       BWAutoColor = 0x07F7;
       BWAutoColorSmooth = 0x0144;
       CurrentThemeString = myLanguage[language][170];
@@ -5991,27 +5991,52 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
     case 9:  // Ocean theme
       PrimaryColor = 0x01FF;
       PrimaryColorSmooth = 0x0006;
-      SecondaryColor = 0x867D;
+      SecondaryColor = TFT_SKYBLUE;
       SecondaryColorSmooth = 0x10E4;
       FrequencyColor = 0x01FF;
       FrameColor = 0x0010;
-      GreyoutColor = 0x4A69;
-      BackgroundColor = 0x0000;
-      ActiveColor = 0xFFFF;
+      GreyoutColor = 0x08A8;
+      BackgroundColor = TFT_BLACK;
+      ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
-      SignificantColor = 0xF800;
+      SignificantColor = TFT_RED;
       SignificantColorSmooth = 0x2000;
-      InsignificantColor = 0x07E0;
+      InsignificantColor = TFT_GREEN;
       InsignificantColorSmooth = 0x00C0;
       StereoColor = 0x01FF;
       StereoColorSmooth = 0x0006;
       RDSColor = 0x01FF;
       RDSColorSmooth = 0x0006;
-      BarSignificantColor = 0xF8C3;
+      BarSignificantColor = TFT_RED;
       BarInsignificantColor = 0x01FF;
       BWAutoColor = 0x07F7;
       BWAutoColorSmooth = 0x0144;
       CurrentThemeString = myLanguage[language][171];
+      break;
+    case 10:  // Indigo theme
+      PrimaryColor = 0x881F;
+      PrimaryColorSmooth = 0x2007;
+      SecondaryColor = 0x9C96;
+      SecondaryColorSmooth = 0x41C8;
+      FrequencyColor = 0x881F;
+      FrameColor = 0x6016;
+      GreyoutColor = 0x300c;
+      BackgroundColor = TFT_BLACK;
+      ActiveColor = TFT_WHITE;
+      ActiveColorSmooth = 0x18E3;
+      SignificantColor = TFT_RED;
+      SignificantColorSmooth = 0x2000;
+      InsignificantColor = TFT_GREEN;
+      InsignificantColorSmooth = 0x00C0;
+      StereoColor = 0x881F;
+      StereoColorSmooth = 0x2007;
+      RDSColor = 0x881F;
+      RDSColorSmooth = 0x2007;
+      BarSignificantColor = TFT_RED;
+      BarInsignificantColor = 0x881F;
+      BWAutoColor = 0xD01F;
+      BWAutoColorSmooth = 0x400A;
+      CurrentThemeString = myLanguage[language][172];
       break;
   }
 }
