@@ -2027,7 +2027,7 @@ static const char* const myLanguage[16][176] = {
     "Шумоподавитель FM", // 65
     "Загрузка настроек по умолчанию", // 66
     "Аудиовыход", // 67
-    "Сенсорное вращение", // 68 for translation reference to commputer Touch Typing
+    "Вращение при выкл. экране", // 68 for translation reference to commputer Touch Typing
     "Инвертировать дисплей", // 69
     "О программе", // 70
     "Основной код:", // 71
@@ -2131,10 +2131,10 @@ static const char* const myLanguage[16][176] = {
     " ", // 169
     "Мандариновый", // 170
     "Океан", // 171
-    "Indigo", // 172
-    "Battery options", // 173
-    "Show battery value", // 174
-    "Show battery percent" // 175
+    "Индиго", // 172
+    "Варианты батареи", // 173
+    "Показать значение батареи", // 174
+    "Показать процент заряда батареи" // 175
   },
 
   { "Українська", // Ukranian
@@ -2205,7 +2205,7 @@ static const char* const myLanguage[16][176] = {
     "Помпи засліплення шуму FM", // 65
     "Завантажено параметри за замовчуванням", // 66
     "Аудіо вихід", // 67
-    "Touch rotating", // 68 for translation reference to commputer Touch Typing
+    "Обертання, коли екран вимкнено", // 68 for translation reference to commputer Touch Typing
     "Перевернути дисплей", // 69
     "Про програмне забезпечення", // 70
     "Основний код:", // 71
@@ -2309,10 +2309,10 @@ static const char* const myLanguage[16][176] = {
     " ", // 169
     "Мандариновий", // 170
     "Океан", // 171
-    "Indigo", // 172
-    "Battery options", // 173
-    "Show battery value", // 174
-    "Show battery percent" // 175
+    "Індиго", // 172
+    "Варіанти батареї", // 173
+    "Показати заряд батареї", // 174
+    "Показати відсоток батареї" // 175
   },
 
   { "Italiano", // Italian
