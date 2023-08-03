@@ -174,7 +174,6 @@ static const char* const myLanguage[16][173] = {
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo" // 172
-    "Indigo" // 172
   },
 
   { "Nederlands", // Dutch
