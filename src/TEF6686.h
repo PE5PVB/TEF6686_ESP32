@@ -42,6 +42,11 @@ enum RADIO_HARDWARE_MODEL {
   RADIO_HARDWARE_CNT
 };
 
+enum RADIO_BATTERY_SELECTION {
+  BATTERY_NONE = 0, BATTERY_VALUE, BATTERY_PERCENT,
+  RADIO_BATTERY_CNT
+};
+
 static const char* const PTY_EU[] {
   "None",
   "News",

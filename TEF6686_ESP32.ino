@@ -108,6 +108,8 @@ byte bandFM;
 byte bandforbidden;
 byte battery;
 byte batteryold;
+byte batteryoptions;
+byte batteryoptionsold;
 byte BWset;
 #ifdef CHINA_PORTABLE
 byte hardwaremodel = PORTABLE_ILI9341;
@@ -220,6 +222,10 @@ int16_t SStatus;
 int8_t LevelOffset;
 int8_t LowLevelSet;
 int8_t VolSet;
+int vref = 1056;
+float batteryV;
+float batteryVold;
+float batteryPold;
 IPAddress remoteip;
 String afstringold;
 String cryptedpassword;
@@ -383,6 +389,7 @@ void setup() {
   unit = EEPROM.readByte(EE_BYTE_UNIT);
   af = EEPROM.readByte(EE_BYTE_AF);
   StereoToggle = EEPROM.readByte(EE_BYTE_STEREO);
+  batteryoptions = EEPROM.readByte(EE_BYTE_BATTERY_OPTIONS);
 
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;   // later will read from flash
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX; // later will read from flash
@@ -1816,6 +1823,7 @@ void ModeButtonPress() {
       EEPROM.writeByte(EE_BYTE_UNIT, unit);
       EEPROM.writeByte(EE_BYTE_AF, af);
       EEPROM.writeByte(EE_BYTE_STEREO, StereoToggle);
+      EEPROM.writeByte(EE_BYTE_BATTERY_OPTIONS, batteryoptions);
       EEPROM.commit();
       Serial.end();
       if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
@@ -2278,8 +2286,19 @@ void ButtonPress() {
               }
               hardwaremodelold = hardwaremodel;
               break;
+            
+            case 50:
+              tftPrint(0, myLanguage[language][173], 155, 78, ActiveColor, ActiveColorSmooth, FONT28);
+              switch (batteryoptions) {
+                case BATTERY_NONE: tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); break;
+                case BATTERY_VALUE: tftPrint(0, myLanguage[language][174], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); break;
+                case BATTERY_PERCENT: tftPrint(0, myLanguage[language][175], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); break;
+              }
+              batteryoptionsold = batteryoptions;
+              break;
           }
           break;
+
       }
     } else {
       if (menupage == 2 && menuoption == 190 && wifi == true) {
@@ -2707,6 +2726,25 @@ void KeyUp() {
                 }
                 hardwaremodelold = hardwaremodel;
                 break;
+
+              case 50:
+                switch (batteryoptionsold) {
+                  case BATTERY_NONE: tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, FONT28); break;
+                  case BATTERY_VALUE: tftPrint(0, myLanguage[language][174], 155, 118, BackgroundColor, BackgroundColor, FONT28); break;
+                  case BATTERY_PERCENT: tftPrint(0, myLanguage[language][175], 155, 118, BackgroundColor, BackgroundColor, FONT28); break;
+                }
+
+                batteryoptions++;
+                if (batteryoptions > RADIO_BATTERY_CNT - 1) batteryoptions = 0;
+
+                switch (batteryoptions) {
+                  case BATTERY_NONE: tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); break;
+                  case BATTERY_VALUE: tftPrint(0, myLanguage[language][174], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); break;
+                  case BATTERY_PERCENT: tftPrint(0, myLanguage[language][175], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); break;
+                }
+                batteryoptionsold = batteryoptions;
+                break;
+
             }
             break;
 
@@ -3124,6 +3162,24 @@ void KeyDown() {
                   case PORTABLE_TOUCH_ILI9341: tftPrint(0, myLanguage[language][111], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); break;
                 }
                 hardwaremodelold = hardwaremodel;
+                break;
+
+              case 50:
+                switch (batteryoptionsold) {
+                  case BATTERY_NONE: tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, FONT28); break;
+                  case BATTERY_VALUE: tftPrint(0, myLanguage[language][174], 155, 118, BackgroundColor, BackgroundColor, FONT28); break;
+                  case BATTERY_PERCENT: tftPrint(0, myLanguage[language][175], 155, 118, BackgroundColor, BackgroundColor, FONT28); break;
+                }
+
+                batteryoptions--;
+                if (batteryoptions > RADIO_BATTERY_CNT - 1) batteryoptions = RADIO_BATTERY_CNT - 1;
+
+                switch (batteryoptions) {
+                  case BATTERY_NONE: tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); break;
+                  case BATTERY_VALUE: tftPrint(0, myLanguage[language][174], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); break;
+                  case BATTERY_PERCENT: tftPrint(0, myLanguage[language][175], 155, 118, PrimaryColor, PrimaryColorSmooth, FONT28); break;
+                }
+                batteryoptionsold = batteryoptions;
                 break;
             }
             break;
@@ -3873,12 +3929,18 @@ void BuildMenu() {
 
     case 5:
       tftPrint(-1, myLanguage[language][108], 14, 36, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(-1, myLanguage[language][173], 14, 56, ActiveColor, ActiveColorSmooth, FONT16);
 
       switch (hardwaremodel) {
         case BASE_ILI9341: tftPrint(1, myLanguage[language][109], 305, 36, PrimaryColor, PrimaryColorSmooth, FONT16); break;
         case PORTABLE_ILI9341: tftPrint(1, myLanguage[language][110 ], 305, 36, PrimaryColor, PrimaryColorSmooth, FONT16); break;
         case PORTABLE_TOUCH_ILI9341: tftPrint(1, myLanguage[language][111], 305, 36, PrimaryColor, PrimaryColorSmooth, FONT16); break;
       }
+       switch (batteryoptions) {
+         case BATTERY_NONE: tftPrint(1, myLanguage[language][30], 305, 56, PrimaryColor, PrimaryColorSmooth, FONT16); break;
+         case BATTERY_VALUE: tftPrint(1, myLanguage[language][174], 305, 56, PrimaryColor, PrimaryColorSmooth, FONT16); break;
+         case BATTERY_PERCENT: tftPrint(1, myLanguage[language][175], 305, 56, PrimaryColor, PrimaryColorSmooth, FONT16); break;
+       }
       break;
 
   }
@@ -4166,7 +4228,7 @@ void BuildDisplay() {
       }
     }
     if (showsquelch) tftPrint(-1, "SQ:", 212, 145, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(1, "C/N", 265, 163, ActiveColor, ActiveColorSmooth, FONT16);
+    tftPrint(1, "C/N", 270, 163, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(-1, "dB", 300, 163, ActiveColor, ActiveColorSmooth, FONT16);
     if (region == 0) tftPrint(-1, "PI:", 216, 193, ActiveColor, ActiveColorSmooth, FONT16);
     if (region == 1) tftPrint(-1, "ID:", 216, 193, ActiveColor, ActiveColorSmooth, FONT16);
@@ -4999,7 +5061,9 @@ void ShowBattery() {
     return;
   }
 
-  battery = map(constrain(analogRead(BATTERY_PIN), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, BAT_LEVEL_STAGE);
+  uint16_t v = analogRead(BATTERY_PIN);
+
+  battery = map(constrain(v, BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, BAT_LEVEL_STAGE);
   if (batteryold != battery) {
     if (batterydetect) {
       if (battery == 0) {
@@ -5019,6 +5083,30 @@ void ShowBattery() {
       tft.fillRect(302, 10, 8, 16, BackgroundColor);
     }
     batteryold = battery;
+  }
+
+  if (batteryoptions > BATTERY_NONE) {
+    batteryV = ((float)v / 4095.0) * 2.0 * 3.3 * (vref / 1000.0);
+    if (batteryoptions == BATTERY_VALUE){
+      if (batteryV < BATTERY_LOW_VALUE) return;
+
+      tftPrint(-1, String(batteryVold,1), 213, 163, BackgroundColor, BackgroundColor, FONT16);
+      
+      tftPrint(-1, String(batteryV,1), 213, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+      tftPrint(-1, "V", 232, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+      batteryVold = batteryV;
+    } else if (batteryoptions == BATTERY_PERCENT) {
+      float vPer = 0.0;
+      vPer = (batteryPold - BATTERY_LOW_VALUE)/(BATTERY_FULL_VALUE - BATTERY_LOW_VALUE);
+      if (vPer >= 1) vPer = 1;
+      tftPrint(-1, String(vPer * 100, 0), 213, 163, BackgroundColor, BackgroundColor, FONT16);
+
+      vPer = (batteryV - BATTERY_LOW_VALUE)/(BATTERY_FULL_VALUE - BATTERY_LOW_VALUE);
+      if (vPer >= 1) vPer = 1;
+      tftPrint(-1, String(vPer * 100, 0), 213, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+      tftPrint(-1, "%", 230, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+      batteryPold = batteryV;
+    }
   }
 }
 
@@ -6168,6 +6256,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_UNIT, 0);
   EEPROM.writeByte(EE_BYTE_AF, 0);
   EEPROM.writeByte(EE_BYTE_STEREO, 1);
+  EEPROM.writeByte(EE_BYTE_BATTERY_OPTIONS, BATTERY_VALUE);
   EEPROM.commit();
 }
 

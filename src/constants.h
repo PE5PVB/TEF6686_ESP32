@@ -19,6 +19,10 @@
 #define BAT_LEVEL_WARN             1700
 #define BAT_LEVEL_FULL             2270
 #define BAT_LEVEL_STAGE            4
+#define BATTERY_WARN_VALUE         3.68
+#define BATTERY_LOW_VALUE          3.0
+#define BATTERY_FULL_VALUE         4.2
+
 
 #define LANGUAGE_CHS               14
 
@@ -97,9 +101,9 @@
 
 // EEPROM index defines
 #define EE_PRESETS_CNT              30
-#define EE_CHECKBYTE_VALUE          36 // 0 ~ 255,add new entry, change for new value 
+#define EE_CHECKBYTE_VALUE          32 // 0 ~ 255,add new entry, change for new value 
 
-#define EE_TOTAL_CNT                273
+#define EE_TOTAL_CNT                274
 #define EE_UINT16_FREQUENCY_FM      0
 #define EE_BYTE_VOLSET              4
 #define EE_BYTE_STEREO              5
@@ -164,6 +168,7 @@
 #define EE_BYTE_UNIT                267
 #define EE_BYTE_AF                  268
 #define EE_UINT16_FREQUENCY_OIRT    269
+#define EE_BYTE_BATTERY_OPTIONS     273
 // End of EEPROM index defines
 
 static const char* const unitString[] = {"dBμV", "dBf", "dBm"};

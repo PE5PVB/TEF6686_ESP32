@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char* const myLanguage[16][173] = {
+static const char* const myLanguage[16][176] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -173,7 +173,10 @@ static const char* const myLanguage[16][173] = {
     " ", // 169
     "Tangerine", // 170
     "Ocean", // 171
-    "Indigo" // 172
+    "Indigo", // 172
+    "Battery options", // 173
+    "Show battery value", // 174
+    "Show battery percent" // 175
   },
 
   { "Nederlands", // Dutch
@@ -348,7 +351,10 @@ static const char* const myLanguage[16][173] = {
     " ", // 169
     "Tangerine", // 170
     "Ocean", // 171
-    "Indigo" // 172
+    "Indigo", // 172
+    "Battery options", // 173
+    "Show battery value", // 174
+    "Show battery percent" // 175
   },
 
   { "Polski", // Polish
@@ -523,7 +529,10 @@ static const char* const myLanguage[16][173] = {
     " ", // 169
     "Tangerine", // 170
     "Ocean", // 171
-    "Indigo" // 172
+    "Indigo", // 172
+    "Battery options", // 173
+    "Show battery value", // 174
+    "Show battery percent" // 175
   },
 
   { "Hrvatski", // Croatian
@@ -698,7 +707,10 @@ static const char* const myLanguage[16][173] = {
     " ", // 169
     "Tangerine", // 170
     "Ocean", // 171
-    "Indigo" // 172
+    "Indigo", // 172
+    "Battery options", // 173
+    "Show battery value", // 174
+    "Show battery percent" // 175
   },
 
   { "Ελληνικά", // Greek
@@ -873,7 +885,10 @@ static const char* const myLanguage[16][173] = {
     " ", // 169
     "Μανταρινί", // 170
     "Ωκεανός", // 171
-    "Ινδικό" // 172
+    "Ινδικό", // 172
+    "Battery options", // 173
+    "Show battery value", // 174
+    "Show battery percent" // 175
   },
 
   { "Romana", // Romanian
@@ -1048,7 +1063,10 @@ static const char* const myLanguage[16][173] = {
     " ", // 169
     "Tangerine", // 170
     "Ocean", // 171
-    "Indigo" // 172
+    "Indigo", // 172
+    "Battery options", // 173
+    "Show battery value", // 174
+    "Show battery percent" // 175
   },
 
   { "Deutsch", // German
@@ -1223,7 +1241,10 @@ static const char* const myLanguage[16][173] = {
     " ", // 169
     "Tangerine", // 170
     "Ocean", // 171
-    "Indigo" // 172
+    "Indigo", // 172
+    "Battery options", // 173
+    "Show battery value", // 174
+    "Show battery percent" // 175
   },
 
   { "Czech", // Czech
@@ -1398,7 +1419,10 @@ static const char* const myLanguage[16][173] = {
     " ", // 169
     "Tangerine", // 170
     "Ocean", // 171
-    "Indigo" // 172
+    "Indigo", // 172
+    "Battery options", // 173
+    "Show battery value", // 174
+    "Show battery percent" // 175
   },
 
   { "Slovak", // Slovak
@@ -1573,7 +1597,10 @@ static const char* const myLanguage[16][173] = {
     " ", // 169
     "Tangerine", // 170
     "Ocean", // 171
-    "Indigo" // 172
+    "Indigo", // 172
+    "Battery options", // 173
+    "Show battery value", // 174
+    "Show battery percent" // 175
   },
 
   { "Français", // French
@@ -1748,7 +1775,10 @@ static const char* const myLanguage[16][173] = {
     " ", // 169
     "Mandarine", // 170
     "Océan", // 171
-    "Indigo" // 172
+    "Indigo", // 172
+    "Battery options", // 173
+    "Show battery value", // 174
+    "Show battery percent" // 175
   },
 
   { "Български", // Bulgarian
@@ -1923,7 +1953,10 @@ static const char* const myLanguage[16][173] = {
     " ", // 169
     "Tangerine", // 170
     "Ocean", // 171
-    "Indigo" // 172
+    "Indigo", // 172
+    "Battery options", // 173
+    "Show battery value", // 174
+    "Show battery percent" // 175
   },
 
   { "Русский", // Russian
@@ -2098,7 +2131,10 @@ static const char* const myLanguage[16][173] = {
     " ", // 169
     "Мандариновый", // 170
     "Океан", // 171
-    "Indigo" // 172
+    "Indigo", // 172
+    "Battery options", // 173
+    "Show battery value", // 174
+    "Show battery percent" // 175
   },
 
   { "Українська", // Ukranian
@@ -2273,7 +2309,10 @@ static const char* const myLanguage[16][173] = {
     " ", // 169
     "Мандариновий", // 170
     "Океан", // 171
-    "Indigo" // 172
+    "Indigo", // 172
+    "Battery options", // 173
+    "Show battery value", // 174
+    "Show battery percent" // 175
   },
 
   { "Italiano", // Italian
@@ -2448,7 +2487,10 @@ static const char* const myLanguage[16][173] = {
     " ", // 169
     "Tangerine", // 170
     "Ocean", // 171
-    "Indigo" // 172
+    "Indigo", // 172
+    "Battery options", // 173
+    "Show battery value", // 174
+    "Show battery percent" // 175
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -2623,7 +2665,10 @@ static const char* const myLanguage[16][173] = {
     " ", // 169
     "桔红", // 170
     "海之蓝", // 171
-    "Indigo" // 172
+    "靛青", // 172
+    "显示电池", // 173
+    "电压值", // 174
+    "电池百分比" // 175
   },
 
   { "Norsk", // Norwegian
@@ -2795,7 +2840,13 @@ static const char* const myLanguage[16][173] = {
     "Identifikator", // 166
     "Kjøp", // 167
     "Få data", // 168
-    "" // 169
+    " ", // 169
+    "Tangerine", // 170
+    "Ocean", // 171
+    "Indigo", // 172
+    "Battery options", // 173
+    "Show battery value", // 174
+    "Show battery percent" // 175
   }
 };
 
