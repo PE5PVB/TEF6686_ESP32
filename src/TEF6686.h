@@ -1,4 +1,5 @@
-#define TEF6686_h
+#ifndef TEF6686_H
+#define TEF6686_H
 
 #include "Arduino.h"
 #include "Tuner_Drv_Lithio.h"
@@ -282,3 +283,5 @@ class TEF6686 {
 	bool togglebit;
 	bool runningbit;
 };
+
+#endif
