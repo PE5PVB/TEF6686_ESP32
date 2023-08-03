@@ -5085,27 +5085,29 @@ void ShowBattery() {
     batteryold = battery;
   }
 
-  if (batteryoptions > BATTERY_NONE) {
-    batteryV = ((float)v / 4095.0) * 2.0 * 3.3 * (vref / 1000.0);
-    if (batteryoptions == BATTERY_VALUE){
-      if (batteryV < BATTERY_LOW_VALUE) return;
+  if (!advancedRDS && !afscreen) {
+    if (batteryoptions > BATTERY_NONE) {
+      batteryV = ((float)v / 4095.0) * 2.0 * 3.3 * (vref / 1000.0);
+      if (batteryoptions == BATTERY_VALUE){
+        if (batteryV < BATTERY_LOW_VALUE) return;
 
-      tftPrint(-1, String(batteryVold,1), 213, 163, BackgroundColor, BackgroundColor, FONT16);
-      
-      tftPrint(-1, String(batteryV,1), 213, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
-      tftPrint(-1, "V", 232, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
-      batteryVold = batteryV;
-    } else if (batteryoptions == BATTERY_PERCENT) {
-      float vPer = 0.0;
-      vPer = (batteryPold - BATTERY_LOW_VALUE)/(BATTERY_FULL_VALUE - BATTERY_LOW_VALUE);
-      if (vPer >= 1) vPer = 1;
-      tftPrint(-1, String(vPer * 100, 0), 213, 163, BackgroundColor, BackgroundColor, FONT16);
+        tftPrint(-1, String(batteryVold,1), 213, 163, BackgroundColor, BackgroundColor, FONT16);
+        
+        tftPrint(-1, String(batteryV,1), 213, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+        tftPrint(-1, "V", 232, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+        batteryVold = batteryV;
+      } else if (batteryoptions == BATTERY_PERCENT) {
+        float vPer = 0.0;
+        vPer = (batteryPold - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE);
+        if (vPer >= 1) vPer = 1;
+        tftPrint(-1, String(vPer * 100, 0), 213, 163, BackgroundColor, BackgroundColor, FONT16);
 
-      vPer = (batteryV - BATTERY_LOW_VALUE)/(BATTERY_FULL_VALUE - BATTERY_LOW_VALUE);
-      if (vPer >= 1) vPer = 1;
-      tftPrint(-1, String(vPer * 100, 0), 213, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
-      tftPrint(-1, "%", 230, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
-      batteryPold = batteryV;
+        vPer = (batteryV - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE);
+        if (vPer >= 1) vPer = 1;
+        tftPrint(-1, String(vPer * 100, 0), 213, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+        tftPrint(-1, "%", 230, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+        batteryPold = batteryV;
+      }
     }
   }
 }
