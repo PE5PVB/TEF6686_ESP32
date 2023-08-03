@@ -2758,9 +2758,9 @@ static const char* const myLanguage[16][176] = {
     "Sakura", // 84
     "Whiteout", // 85
     "IKKE MULIG", // 86
-    "Ingen AF tilgjengelig", // 87
-    "Ingen EON tilgjengelig", // 88
-    "Ingen RT+ tilgjengelig", // 89
+    "Ingen AF", // 87
+    "Ingen EON", // 88
+    "Ingen RT+", // 89
     "FM standard trinnstørrelse", // 90
     "Skjermsparer", // 91
     "sek", // 92
