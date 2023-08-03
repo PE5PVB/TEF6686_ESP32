@@ -3061,7 +3061,7 @@ void KeyDown() {
             switch (menuoption) {
               case 30:
                 CurrentTheme --;
-                if (CurrentTheme > 10) CurrentTheme = 9;
+                if (CurrentTheme > 10) CurrentTheme = 10;
                 doTheme();
                 tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
                 tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
