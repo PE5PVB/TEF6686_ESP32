@@ -1829,14 +1829,14 @@ void ModeButtonPress() {
       Serial.end();
       if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
       if (USBmode) Serial.begin(19200); else Serial.begin(115200);
-      ScreensaverTimerSet(screensaverOptions[screensaverset]);
-      if (screensaverset) ScreensaverTimerRestart();
       doBandSelectionFM();
       doBandSelectionAM();
       if (touchrotating) {
         if (poweroptions != LCD_OFF) poweroptions = LCD_OFF;
         if (!screensaverset) screensaverset = 1;
       }
+      ScreensaverTimerSet(screensaverOptions[screensaverset]);
+      if (screensaverset) ScreensaverTimerRestart();
     }
   }
   while (digitalRead(MODEBUTTON) == LOW) delay(50);
