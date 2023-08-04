@@ -621,7 +621,18 @@ void TEF6686::readRDS(bool showrdserrors)
               rds.hasRT = true;
               rds.rtAB = (bitRead(rds.rdsB, 4));                                                  // Get AB flag
 
+              if (initab) {
+                rtABold = rds.rtAB;
+                initab = false;
+              }
+
               if (rds.rtAB != rtABold) {                                                          // Erase old RT, because of AB change
+                initrt = false;
+                wchar_t RTtext[65] = L"";                                                           // Create 16 bit char buffer for Extended ASCII
+                RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);        // Convert 8 bit ASCII to 16 bit ASCII
+                rds.stationText = convertToUTF8(RTtext);                                            // Convert RDS characterset to ASCII
+                rds.stationText = extractUTF8Substring(rds.stationText, 0, 64, true);               // Make sure RT does not exceed 64 characters
+
                 for (byte i = 0; i < 64; i++) {
                   rt_buffer[i] = 0x20;
                 }
@@ -635,10 +646,12 @@ void TEF6686::readRDS(bool showrdserrors)
               rt_buffer[offset + 2] = rds.rdsD >> 8;                                              // Thirth character of segment
               rt_buffer[offset + 3] = rds.rdsD & 0xff;                                            // Fourth character of segment
 
-              wchar_t RTtext[65] = L"";                                                           // Create 16 bit char buffer for Extended ASCII
-              RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);        // Convert 8 bit ASCII to 16 bit ASCII
-              rds.stationText = convertToUTF8(RTtext);                                            // Convert RDS characterset to ASCII
-              rds.stationText = extractUTF8Substring(rds.stationText, 0, 64, true);               // Make sure RT does not exceed 64 characters
+              if (initrt) {
+                wchar_t RTtext[65] = L"";                                                           // Create 16 bit char buffer for Extended ASCII
+                RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);        // Convert 8 bit ASCII to 16 bit ASCII
+                rds.stationText = convertToUTF8(RTtext);                                            // Convert RDS characterset to ASCII
+                rds.stationText = extractUTF8Substring(rds.stationText, 0, 64, true);               // Make sure RT does not exceed 64 characters
+              }
 
               for (int i = 0; i < 64; i++) rt_buffer2[i] = rt_buffer[i];
             }
@@ -648,14 +661,14 @@ void TEF6686::readRDS(bool showrdserrors)
             if (showrdserrors || rds.correct) {
               // RT decoder (32 characters)
               rds.hasRT = true;
-              rds.rtAB = (bitRead(rds.rdsB, 4));                                                  // Get AB flag
+              rds.rtAB32 = (bitRead(rds.rdsB, 4));                                                  // Get AB flag
 
-              if (rds.rtAB != rtABold) {                                                          // Erase old RT, because of AB change
+              if (rds.rtAB32 != rtAB32old) {                                                          // Erase old RT, because of AB change
                 for (byte i = 0; i < 33; i++) {
                   rt_buffer32[i] = 0x20;
                 }
                 rt_buffer32[32] = '\0';
-                rtABold = rds.rtAB;
+                rtAB32old = rds.rtAB32;
               }
 
               offset = (rds.rdsB & 0xf) * 2;                                                      // Get RT character segment
@@ -743,17 +756,17 @@ void TEF6686::readRDS(bool showrdserrors)
               togglebit = bitRead(lowByte(rds.rdsB), 4);
               runningbit = bitRead(lowByte(rds.rdsB), 3);
 
-			switch (rds.rdsplusTag1) {
-				case 1 ... 53: rds.rdsplusTag1 += 111; break;
-				case 59 ... 63: rds.rdsplusTag1 += 105; break;
-				default: rds.rdsplusTag1 = 169; break;
-			}
-			
-			switch (rds.rdsplusTag2) {
-				case 1 ... 53: rds.rdsplusTag2 += 111; break;
-				case 59 ... 63: rds.rdsplusTag2 += 105; break;
-				default: rds.rdsplusTag2 = 169; break;
-			}			
+              switch (rds.rdsplusTag1) {
+                case 1 ... 53: rds.rdsplusTag1 += 111; break;
+                case 59 ... 63: rds.rdsplusTag1 += 105; break;
+                default: rds.rdsplusTag1 = 169; break;
+              }
+
+              switch (rds.rdsplusTag2) {
+                case 1 ... 53: rds.rdsplusTag2 += 111; break;
+                case 59 ... 63: rds.rdsplusTag2 += 105; break;
+                default: rds.rdsplusTag2 = 169; break;
+              }
 
               if (togglebit) {
                 for (int i = 0; i < 45; i++) {
@@ -949,10 +962,12 @@ void TEF6686::clearRDS (bool fullsearchrds)
   eon_counter = 0;
   afreset = true;
   rds.MS = 0;
-  rds.rdsAerror = false;
-  rds.rdsBerror = false;
-  rds.rdsCerror = false;
-  rds.rdsDerror = false;
+  rds.rdsAerror = true;
+  rds.rdsBerror = true;
+  rds.rdsCerror = true;
+  rds.rdsDerror = true;
+  initrt = true;
+  initab = true;
 }
 
 void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {

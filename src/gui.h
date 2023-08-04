@@ -29,6 +29,7 @@ extern bool haseonold;
 extern bool hastmcold;
 extern bool LowLevelInit;
 extern bool menuopen;
+extern bool rdsreset;
 extern bool RDSstatus;
 extern bool RDSstatusold;
 extern bool rdsstereoold;

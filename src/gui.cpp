@@ -224,6 +224,7 @@ void BuildMenu() {
 }
 
 void BuildAdvancedRDS() {
+  rdsreset = true;
   afscreen = false;
   afpage = false;
   afpagenr = 0;

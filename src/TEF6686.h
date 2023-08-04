@@ -18,7 +18,7 @@ enum RADIO_BAND {
 };
 
 // Toggle: LW -> MW -> SW
-enum RADIO_AM_BAND_SELECTION { 
+enum RADIO_AM_BAND_SELECTION {
   AM_BAND_ALL = 0, AM_BAND_LW_MW, AM_BAND_LW_SW, AM_BAND_MW_SW,
   AM_BAND_LW, AM_BAND_MW, AM_BAND_SW,
   AM_BAND_CNT
@@ -159,6 +159,7 @@ typedef struct _rds_ {
   bool hasAF;
   bool hasCT;
   bool rtAB;
+  bool rtAB32;
   bool hasRDSplus;
   bool correct;
   bool filter;
@@ -200,7 +201,7 @@ class TEF6686 {
     eon_ eon[20];
     rds_ rds;
     logbook_ logbook[22];
-	uint16_t CheckSignal(uint16_t frequency);
+    uint16_t CheckSignal(uint16_t frequency);
     uint16_t TestAF();
     void TestAFEON();
     void readRDS(bool showrdserrors);
@@ -266,13 +267,14 @@ class TEF6686 {
     char rt_buffer32[33];
     bool useRTPlus = true;
     bool ABold;
-	bool afreset;
+    bool afreset;
     char stationTextBuffer[65];
     uint16_t rdsBprevious;
     uint16_t rdsCprevious;
     uint16_t rdsDprevious;
     uint16_t piold;
     bool rtABold;
+    bool rtAB32old;
     wchar_t PStext[9] = L"";
     wchar_t EONPStext[20][9];
     wchar_t PTYNtext[9] = L"";
@@ -280,8 +282,10 @@ class TEF6686 {
     char RDSplus1[45];
     char RDSplus2[45];
     uint16_t  currentfreq;
-	bool togglebit;
-	bool runningbit;
+    bool togglebit;
+    bool runningbit;
+    bool initrt;
+    bool initab;
 };
 
 #endif

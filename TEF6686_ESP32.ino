@@ -71,6 +71,7 @@ bool menu;
 bool menuopen;
 bool nobattery;
 bool power = true;
+bool rdsreset;
 bool RDSSPYTCP;
 bool RDSSPYUSB;
 bool RDSstatus;
@@ -2217,22 +2218,22 @@ void ShowAdvancedRDS() {
   const uint8_t* font = FONT16;
   if (language == LANGUAGE_CHS) font = FONT16_CHS;
 
-  if (radio.rds.rdsAerror != errorAold) {
+  if (radio.rds.rdsAerror != errorAold || rdsreset) {
     if (radio.rds.rdsAerror) tft.fillCircle(86, 41, 5, SignificantColor); else tft.fillCircle(86, 41, 5, InsignificantColor);
     errorAold = radio.rds.rdsAerror;
   }
 
-  if (radio.rds.rdsBerror != errorBold) {
+  if (radio.rds.rdsBerror != errorBold || rdsreset) {
     if (radio.rds.rdsBerror) tft.fillCircle(124, 41, 5, SignificantColor); else tft.fillCircle(124, 41, 5, InsignificantColor);
     errorBold = radio.rds.rdsBerror;
   }
 
-  if (radio.rds.rdsCerror != errorCold) {
+  if (radio.rds.rdsCerror != errorCold || rdsreset) {
     if (radio.rds.rdsCerror) tft.fillCircle(162, 41, 5, SignificantColor); else tft.fillCircle(162, 41, 5, InsignificantColor);
     errorCold = radio.rds.rdsCerror;
   }
 
-  if (radio.rds.rdsDerror != errorDold) {
+  if (radio.rds.rdsDerror != errorDold || rdsreset) {
     if (radio.rds.rdsDerror) tft.fillCircle(200, 41, 5, SignificantColor); else tft.fillCircle(200, 41, 5, InsignificantColor);
     errorDold = radio.rds.rdsDerror;
   }
@@ -2466,6 +2467,8 @@ void ShowAdvancedRDS() {
     if (radio.rds.hasTMC == true) tftPrint(-1, "TMC", 89, 51, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "TMC", 89, 51, GreyoutColor, BackgroundColor, FONT16);
     hastmcold = radio.rds.hasTMC;
   }
+
+  rdsreset = false;
 }
 
 void doAF() {
@@ -2892,6 +2895,7 @@ void ShowFreq(int mode) {
     eonstringold = "";
     afstringold = "";
     rds_clockold = "";
+    rdsreset = true;
     sprite.fillSprite(BackgroundColor);
     sprite2.fillSprite(BackgroundColor);
     if (advancedRDS) sprite2.pushSprite(35, 220); else if (!afscreen) sprite.pushSprite(38, 220);
