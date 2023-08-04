@@ -2901,8 +2901,8 @@ void ShowFreq(int mode) {
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
       Udp.print("from=TEF tuner;freq=");
-      if (band > BAND_GAP) Udp.print(String(frequency_AM) + "000;ClearRDS=1");
-      else Udp.print(String(band == BAND_FM ? frequency : frequency_OIRT) + "0000;ClearRDS=1");
+      if (band > BAND_GAP) Udp.print(String(frequency_AM) + "000");//;ClearRDS=1");
+      else Udp.print(String(band == BAND_FM ? frequency : frequency_OIRT) + "0000");//;ClearRDS=1");
       Udp.endPacket();
     }
   }
