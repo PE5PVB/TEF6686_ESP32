@@ -3636,10 +3636,8 @@ void Communication() {
       }
     }
 
-    if (Server.hasClient())
-    {
-      if (RemoteClient.connected())
-      {
+    if (Server.hasClient()) {
+      if (RemoteClient.connected()) {
         Server.available().stop();
       } else {
         wificonnected = true;
@@ -3657,11 +3655,9 @@ void Communication() {
       XDRGTKTCP = false;
     }
 
-
     if (XDRGTKTCP == false && wificonnected == true && RemoteClient.available()) {
       String data_str = RemoteClient.readStringUntil('\n');
-      if (data_str.length() > 30 && data_str.equals(cryptedpassword))
-      {
+      if (data_str.length() > 30 && data_str.equals(cryptedpassword)) {
         radio.setFMABandw();
         if (band != BAND_FM) {
           band = BAND_FM;
@@ -3670,8 +3666,7 @@ void Communication() {
         XDRGTKTCP = true;
         RemoteClient.print("o1,0\n");
         store = true;
-      } else if (RDSSPYTCP == false && XDRGTKTCP == false && data_str.length() < 6 && data_str == ("*D*R?F"))
-      {
+      } else if (RDSSPYTCP == false && XDRGTKTCP == false && data_str.length() > 1 && data_str == ("*D*R?F")) {
         RDSSPYTCP = true;
       } else if (RDSSPYTCP == true) {
         int symPos = data_str.indexOf("*F");

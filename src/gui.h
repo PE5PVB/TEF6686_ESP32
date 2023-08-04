@@ -137,19 +137,17 @@ void MenuUp();
 void MenuDown();
 void DoMenu();
 
-// Extern:
-//void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, const uint8_t* font);
-void ShowFreq(int mode);
-void ShowBandSelectionFM(bool notglanceview, bool normaldisplay);
-void ShowBandSelectionAM(bool notglanceview, bool normaldisplay);
-void ScreensaverTimerSet(byte value);
-void ShowMemoryPos();
-void ShowTuneMode();
-void updateBW();
-void ShowStepSize();
-void updateiMS();
-void updateEQ();
-void doTheme();
-void tryWiFi();
+extern void ShowFreq(int mode);
+extern void ShowBandSelectionFM(bool notglanceview, bool normaldisplay);
+extern void ShowBandSelectionAM(bool notglanceview, bool normaldisplay);
+extern void ScreensaverTimerSet(byte value);
+extern void ShowMemoryPos();
+extern void ShowTuneMode();
+extern void updateBW();
+extern void ShowStepSize();
+extern void updateiMS();
+extern void updateEQ();
+extern void doTheme();
+extern void tryWiFi();
 
 #endif
