@@ -407,13 +407,13 @@ void BuildDisplay() {
       tft.drawCircle(86, 15, 9, SecondaryColor);
     }
 
-    if (bandforbidden) bandColor = GreyoutColor; else bandColor = SecondaryColor;
+    if (bandforbidden) bandColor = GreyoutColor; else bandColor = PrimaryColor;
     switch (band) {
-      case BAND_LW: tftPrint(-1, myLanguage[language][102], 70, 32, bandColor, SecondaryColorSmooth, FONT16); break;
-      case BAND_MW: tftPrint(-1, myLanguage[language][103], 70, 32, bandColor, SecondaryColorSmooth, FONT16); break;
-      case BAND_SW: tftPrint(-1, myLanguage[language][104], 70, 32, bandColor, SecondaryColorSmooth, FONT16); break;
-      case BAND_FM: tftPrint(-1, myLanguage[language][105], 70, 32, bandColor, SecondaryColorSmooth, FONT16); break;
-      case BAND_OIRT: tftPrint(-1, myLanguage[language][106], 70, 32, bandColor, SecondaryColorSmooth, FONT16); break;
+      case BAND_LW: tftPrint(-1, myLanguage[language][102], 70, 32, bandColor, PrimaryColorSmooth, FONT16); break;
+      case BAND_MW: tftPrint(-1, myLanguage[language][103], 70, 32, bandColor, PrimaryColorSmooth, FONT16); break;
+      case BAND_SW: tftPrint(-1, myLanguage[language][104], 70, 32, bandColor, PrimaryColorSmooth, FONT16); break;
+      case BAND_FM: tftPrint(-1, myLanguage[language][105], 70, 32, bandColor, PrimaryColorSmooth, FONT16); break;
+      case BAND_OIRT: tftPrint(-1, myLanguage[language][106], 70, 32, bandColor, PrimaryColorSmooth, FONT16); break;
     }
   }
   RDSstatusold = false;
