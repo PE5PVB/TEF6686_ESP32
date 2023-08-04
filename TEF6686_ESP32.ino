@@ -2480,7 +2480,7 @@ void doAF() {
           if ((radio.af[af_scan].frequency - 8750) / 10 < 0x10) {
             Udp.print("0");
           }
-          Udp.print((radio.af[af_scan].frequency - 8750) / 10, HEX);
+          Udp.print(String((radio.af[af_scan].frequency - 8750) / 10, HEX));
         }
       }
       af_counterold = radio.af_counter;
@@ -2583,7 +2583,7 @@ void showECC() {
       Udp.beginPacket(remoteip, 9030);
       Udp.print("ECC=");
       if (radio.rds.ECC < 0x10) Udp.print("0");
-      Udp.print(radio.rds.ECC, HEX);
+      Udp.print(String(radio.rds.ECC, HEX));
       Udp.endPacket();
     }
     ECCold = radio.rds.ECC;
@@ -2602,7 +2602,7 @@ void showPI() {
     PIold = radio.rds.picode;
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
-      Udp.print("from=TEF tuner;PI=" + String(radio.rds.picode, 4));
+      Udp.print("from=TEF_tuner;PI=" + String(radio.rds.picode, 4));
       Udp.endPacket();
     }
     strcpy(radioIdPrevious, radio.rds.picode);
@@ -2615,8 +2615,8 @@ void showPTY() {
     PTYold = radio.rds.stationType;
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
-      Udp.print("from=TEF tuner;PTY=");
-      Udp.print(radio.rds.stationTypeCode, HEX);
+      Udp.print("from=TEF_tuner;PTY=");
+      Udp.print(String(radio.rds.stationTypeCode, HEX));
       Udp.endPacket();
     }
     strcpy(programTypePrevious, radio.rds.stationType);
@@ -2635,14 +2635,14 @@ void showPS() {
     PSold = radio.rds.stationName;
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
-      Udp.print("from=TEF tuner;PS=");
+      Udp.print("from=TEF_tuner;PS=");
       char PShex[9];
       radio.rds.stationName.toCharArray(PShex, 9);
       for (int i = 0; i < 8; i++)
       {
         if (PShex[i] < 0x10) Udp.print("0");
         if (PShex[i] == 0x20) PShex[i] =  '_';
-        Udp.print(PShex[i], HEX);
+        Udp.print(String(PShex[i], HEX));
       }
       Udp.endPacket();
     }
@@ -2701,14 +2701,14 @@ void showRadioText() {
 
   if (wifi) {
     Udp.beginPacket(remoteip, 9030);
-    Udp.print("from=TEF tuner;RT1=");
+    Udp.print("from=TEF_tuner;RT1=");
     char RThex[65];
     radio.rds.stationText.toCharArray(RThex, 65);
     for (int i = 0; i < 64; i++)
     {
       if (RThex[i] < 0x10) Udp.print("0");
       if (RThex[i] == ' ') RThex[i] =  '_';
-      Udp.print(RThex[i], HEX);
+      Udp.print(String(RThex[i], HEX));
     }
     Udp.endPacket();
   }
@@ -2899,10 +2899,17 @@ void ShowFreq(int mode) {
     if (advancedRDS) sprite2.pushSprite(35, 220); else if (!afscreen) sprite.pushSprite(38, 220);
 
     if (wifi) {
+      String stationprint;
+      stationprint = "from=TEF_tuner;RcvLevel=";
+      stationprint += String(SStatus / 10);
+      stationprint += ";bandwidth=-1;freq=";
+      if (band > BAND_GAP) {
+        stationprint += String(frequency_AM) + "000";
+      } else {
+        stationprint += String(band == BAND_FM ? frequency : frequency_OIRT) + "0000";
+      }
       Udp.beginPacket(remoteip, 9030);
-      Udp.print("from=TEF tuner;freq=");
-      if (band > BAND_GAP) Udp.print(String(frequency_AM) + "000");//;ClearRDS=1");
-      else Udp.print(String(band == BAND_FM ? frequency : frequency_OIRT) + "0000");//;ClearRDS=1");
+      Udp.print(stationprint);
       Udp.endPacket();
     }
   }
@@ -2966,14 +2973,13 @@ void ShowSignalLevel() {
         tft.fillRect(16 + 2 * constrain(segments, 0, 94), 105, 2 * (94 - constrain(segments, 0, 94)), 6, GreyoutColor);
       }
       SStatusold = SStatusprint;
-
-      if (wifi) {
-        Udp.beginPacket(remoteip, 9030);
-        Udp.print("from=TEF tuner;RcvLevel=");
-        Udp.print(SStatus / 10);
-        Udp.endPacket();
-      }
     }
+  }
+  if (wifi) {
+    Udp.beginPacket(remoteip, 9030);
+    Udp.print("from=TEF_tuner;RcvLevel=");
+    Udp.print(String(SStatus / 10));
+    Udp.endPacket();
   }
 }
 
@@ -3122,8 +3128,8 @@ void ShowBW() {
     BWreset = false;
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
-      Udp.print("from=TEF tuner;Bandwidth=");
-      Udp.print(BW * 1000);
+      Udp.print("from=TEF_tuner;Bandwidth=");
+      Udp.print(String(BW * 1000));
       Udp.endPacket();
     }
   }
@@ -3604,10 +3610,6 @@ void Communication() {
         String packet = String(packetBuffer);
         if (strcmp(packetBuffer, "from=StationList;freq=?;bandwidth=?") == 0) {
           ShowFreq(0);
-          Udp.beginPacket(remoteip, 9030);
-          Udp.print("from=TEF tuner;Bandwidth=");
-          Udp.print(BW * 1000);
-          Udp.endPacket();
         } else {
           int symPos = packet.indexOf("freq=");
           String stlfreq = packet.substring(symPos + 5, packetSize);
