@@ -3589,7 +3589,7 @@ void ShowBattery() {
         vPer = (batteryV - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE);
         if (vPer >= 1) vPer = 1;
         tftPrint(-1, String(vPer * 100, 0), 213, 163, BatteryValueColor, BatteryValueColorSmooth, FONT16);
-        tftPrint(-1, "%", 230, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+        tftPrint(-1, "%", 230, 163, BatteryValueColor, BatteryValueColorSmooth, FONT16);
         batteryPold = batteryV;
       }
     }
@@ -4367,8 +4367,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
     case 1:  // Cyan theme
       PrimaryColor = 0x0F3F;
       PrimaryColorSmooth = 0x0105;
-      SecondaryColor = TFT_SKYBLUE;
-      SecondaryColorSmooth = 0x10E4;
+      SecondaryColor = 0x5BAF;
+      SecondaryColorSmooth = 0x29E8;
       FrequencyColor = 0x0F3F;
       FrameColor = 0x01e9;
       GreyoutColor = 0x2A08;
@@ -4394,8 +4394,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
     case 2:  // Crimson theme
       PrimaryColor = 0xF8C3;
       PrimaryColorSmooth = 0x3800;
-      SecondaryColor = TFT_SKYBLUE;
-      SecondaryColorSmooth = 0x10E4;
+      SecondaryColor = 0x6A08;
+      SecondaryColorSmooth = 0x30E3;
       FrequencyColor = 0xF8C3;
       FrameColor = 0x3800;
       GreyoutColor = 0x4A69;
@@ -4412,17 +4412,17 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = TFT_BLACK;
       BarSignificantColor = TFT_YELLOW;
       BarInsignificantColor = 0xF8C3;
-      BWAutoColor = 0x07F7;
-      BWAutoColorSmooth = 0x0144;
-      BatteryValueColor = 0x07F7;
-      BatteryValueColorSmooth = 0x0144;
+      BWAutoColor = 0xFBEF;
+      BWAutoColorSmooth = 0x4124;
+      BatteryValueColor = 0xFA8D;
+      BatteryValueColorSmooth = 0x3083;
       CurrentThemeString = myLanguage[language][80];
       break;
     case 3:  // Monochrome theme
       PrimaryColor = TFT_WHITE;
       PrimaryColorSmooth = TFT_BLACK;
-      SecondaryColor = TFT_SKYBLUE;
-      SecondaryColorSmooth = 0x10E4;
+      SecondaryColor = 0x7BCF;
+      SecondaryColorSmooth = 0x1082;
       FrequencyColor = TFT_WHITE;
       FrameColor = 0x2965;
       GreyoutColor = 0x4A69;
@@ -4448,8 +4448,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
     case 4:  // Volcano theme
       PrimaryColor = TFT_ORANGE;
       PrimaryColorSmooth = 0x2965;
-      SecondaryColor = TFT_SKYBLUE;
-      SecondaryColorSmooth = 0x10E4;
+      SecondaryColor = 0x6A86;
+      SecondaryColorSmooth = 0x3123;
       FrequencyColor = TFT_ORANGE;
       FrameColor = 0x2965;
       GreyoutColor = 0x5140;
@@ -4466,17 +4466,17 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = TFT_WHITE;
       BarSignificantColor = TFT_RED;
       BarInsignificantColor = TFT_ORANGE;
-      BWAutoColor = 0x07F7;
-      BWAutoColorSmooth = 0x0144;
-      BatteryValueColor = 0x07F7;
-      BatteryValueColorSmooth = 0x0144;
+      BWAutoColor = 0xF980;
+      BWAutoColorSmooth = 0x3080;
+      BatteryValueColor = 0xF980;
+      BatteryValueColorSmooth = 0x3080;
       CurrentThemeString = myLanguage[language][82];
       break;
     case 5:  // Dendro theme
       PrimaryColor = TFT_GREEN;
       PrimaryColorSmooth = 0x0200;
-      SecondaryColor = TFT_SKYBLUE;
-      SecondaryColorSmooth = 0x10E4;
+      SecondaryColor = 0x748E;
+      SecondaryColorSmooth = 0x3206;
       FrequencyColor = TFT_GREEN;
       FrameColor = 0x0200;
       GreyoutColor = 0x4A69;
@@ -4493,15 +4493,17 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = 0x0200;
       BarSignificantColor = TFT_RED;
       BarInsignificantColor = TFT_GREEN;
-      BWAutoColor = 0x07F7;
-      BWAutoColorSmooth = 0x0144;
+      BWAutoColor = 0x07F6;
+      BWAutoColorSmooth = 0x0184;
+      BatteryValueColor = 0x07F6;
+      BatteryValueColorSmooth = 0x0184;
       CurrentThemeString = myLanguage[language][83];
       break;
     case 6:  // Sakura theme
       PrimaryColor = 0xF3D5;
       PrimaryColorSmooth = 0x3008;
-      SecondaryColor = TFT_SKYBLUE;
-      SecondaryColorSmooth = 0x10E4;
+      SecondaryColor = 0x9B90;
+      SecondaryColorSmooth = 0x3946;
       FrequencyColor = 0xF3D5;
       FrameColor = 0x3845;
       GreyoutColor = 0x38C5;
@@ -4527,7 +4529,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
     case 7:  // Whiteout theme
       PrimaryColor = TFT_BLACK;
       PrimaryColorSmooth = TFT_WHITE;
-      SecondaryColor = TFT_BLACK;
+      SecondaryColor = 0x9492;
       SecondaryColorSmooth = TFT_WHITE;
       FrequencyColor = 0x18C3;
       FrameColor = 0x630C;
@@ -4554,8 +4556,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
     case 8:  // Tangerine theme
       PrimaryColor = 0xF980;
       PrimaryColorSmooth = 0x3080;
-      SecondaryColor = TFT_SKYBLUE;
-      SecondaryColorSmooth = 0x10E4;
+      SecondaryColor = 0x9B8D;
+      SecondaryColorSmooth = 0x5207;
       FrequencyColor = 0xF980;
       FrameColor = 0x38A1;
       GreyoutColor = 0x6247;
@@ -4581,8 +4583,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
     case 9:  // Ocean theme
       PrimaryColor = 0x01FF;
       PrimaryColorSmooth = 0x0006;
-      SecondaryColor = TFT_SKYBLUE;
-      SecondaryColorSmooth = 0x10E4;
+      SecondaryColor = 0x73F4;
+      SecondaryColorSmooth = 0x31A8;
       FrequencyColor = 0x01FF;
       FrameColor = 0x0010;
       GreyoutColor = 0x420C;
