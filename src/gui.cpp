@@ -9,6 +9,30 @@
 #include <Wire.h>
 #include <EEPROM.h>
 
+static void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, const uint8_t* font) {
+  if (language == LANGUAGE_CHS) {
+    if (font == FONT16) font = FONT16_CHS;
+    else if (font == FONT28) font = FONT28_CHS;
+  }
+
+  if (currentFont != font || resetFontOnNextCall) {
+    if (currentFont != nullptr) tft.unloadFont();
+    tft.loadFont(font);
+    currentFont = font;
+    resetFontOnNextCall = false;
+  }
+
+  tft.setTextColor(color, smoothcolor, false);
+
+  switch (offset) {
+    case -1: tft.setTextDatum(TL_DATUM); break;
+    case 0: tft.setTextDatum(TC_DATUM); break;
+    case 1: tft.setTextDatum(TR_DATUM); break;
+  }
+
+  tft.drawString(text, x, y, 1);
+}
+
 void BuildAFScreen() {
   if (!afscreen && RDSstatus) {
     tft.drawRoundRect(20, 30, 274, 170, 5, ActiveColor);

@@ -120,6 +120,8 @@ extern unsigned int ConverterSet;
 extern unsigned int HighEdgeSet;
 extern unsigned int LowEdgeSet;
 extern unsigned int mappedfreqold[20];
+extern bool resetFontOnNextCall;
+extern const uint8_t* currentFont;
 
 extern TFT_eSPI tft;
 extern TEF6686 radio;
@@ -134,7 +136,7 @@ void MenuDown();
 void DoMenu();
 
 // Extern:
-void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, const uint8_t* font);
+//void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, const uint8_t* font);
 void ShowFreq(int mode);
 void ShowBandSelectionFM(bool notglanceview, bool normaldisplay);
 void ShowBandSelectionAM(bool notglanceview, bool normaldisplay);
