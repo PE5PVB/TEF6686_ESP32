@@ -474,65 +474,65 @@ static const char* const myLanguage[16][176] = {
     "Sciezka", // 114
     "Wykonawca", // 115
     "Kompozycja", // 116
-    "Movement", // 117
+    "Ruch", // 117
     "Dyrygent", // 118
     "Kompozytor", // 119
     "Grupa", // 120
     "Komentarz", // 121
     "Gatunek", // 122
-    "News", // 123
-    "Local news", // 124
-    "Stockmarket", // 125
+    "Wiadomosci", // 123
+    "Lokalne wiadomosci", // 124
+    "Gielda", // 125
     "Sport", // 126
-    "Lottery", // 127
-    "Horoscope", // 128
-    "Daily Diversion", // 129
-    "Health", // 130
-    "Event", // 131
-    "Scene", // 132
-    "Cinema", // 133
+    "Loteria", // 127
+    "Horoskop", // 128
+    "Codzienny zwrot", // 129
+    "Zdrowie", // 130
+    "Wydarzenie", // 131
+    "Scena", // 132
+    "Kino", // 133
     "TV", // 134
-    "Date/time", //135
-    "Weather", // 136
-    "Traffic", // 137
+    "Data/Godzina", //135
+    "Pogoda", // 136
+    "Wiadom. drogowe", // 137
     "Alarm", // 138
-    "Advertisement", // 139
-    "Website", // 140
-    "Other", // 141
-    "Short PS", // 142
-    "Long PS", // 143
-    "Now", // 144
-    "Next", //145
-    "Part", // 146
-    "Host", // 147
-    "Editor", // 148
-    "Frequency", // 149
-    "Homepage", // 150
-    "Subchannel", // 151
-    "Hotline", // 152
-    "Studio phone", // 153
-    "Phone", // 154
-    "SMS studio", // 155
+    "Reklama", // 139
+    "Strona internet.", // 140
+    "Inne", // 141
+    "Krotki PS", // 142
+    "Dlugi PS", // 143
+    "Teraz", // 144
+    "Nastepnie", //145
+    "Czesc", // 146
+    "Prowadzacy", // 147
+    "Wydawca", // 148
+    "Czestotliwosc", // 149
+    "Strona domowa", // 150
+    "Podkanal", // 151
+    "Goraca linia", // 152
+    "Telefon do studia", // 153
+    "Telefon", // 154
+    "SMS do studia", // 155
     "SMS", // 156
-    "Email hotline", // 157
-    "Email studio", // 158
+    "Email do goracej linii", // 157
+    "Email do studia", // 158
     "Email", // 159
-    "Chat", // 160
-    "Chat centre", // 161
-    "Vote question", // 162
-    "Vote centre", // 163
-    "Place", // 164
-    "Appointment", // 165
-    "Identifier", // 166
-    "Purchase", // 167
-    "Get data", // 168
+    "Czat", // 160
+    "Centrum czatu", // 161
+    "Pytanie do glosowania", // 162
+    "Centrum glosowania", // 163
+    "Miejsce", // 164
+    "Spotkanie", // 165
+    "Identyfikator", // 166
+    "Zakup", // 167
+    "Pobierz dane", // 168
     " ", // 169
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
-    "Battery options", // 173
-    "Show voltage", // 174
-    "Show percentage" // 175
+    "Opcje baterii", // 173
+    "Pokaz napiecie", // 174
+    "Pokaz procent nalad." // 175
   },
 
   { "Hrvatski", // Croatian
