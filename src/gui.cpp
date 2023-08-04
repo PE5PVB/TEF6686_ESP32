@@ -458,6 +458,7 @@ void BuildDisplay() {
   SNRold = 254;
   af_counterold = 254;
   batteryold = 6;
+  batteryVold = 0;
   strcpy(programTypePrevious, "0");
   strcpy(radioIdPrevious, "0");
   programServicePrevious = "0";

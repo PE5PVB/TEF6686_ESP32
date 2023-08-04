@@ -86,6 +86,7 @@ extern byte touchrotating;
 extern byte unit;
 extern char programTypePrevious[18];
 extern char radioIdPrevious[6];
+extern float batteryVold;
 extern int ActiveColor;
 extern int ActiveColorSmooth;
 extern int AMLevelOffset;

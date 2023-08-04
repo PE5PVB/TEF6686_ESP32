@@ -163,6 +163,7 @@ char buff[16];
 char programTypePrevious[18];
 char radioIdPrevious[6];
 const uint8_t* currentFont = nullptr;
+float vPerold;
 int ActiveColor;
 int ActiveColorSmooth;
 int AGC;
@@ -226,10 +227,7 @@ int16_t SStatus;
 int8_t LevelOffset;
 int8_t LowLevelSet;
 int8_t VolSet;
-int vref = 1056;
-float batteryV;
 float batteryVold;
-float batteryPold;
 IPAddress remoteip;
 String afstringold;
 String cryptedpassword;
@@ -3543,58 +3541,53 @@ void ShowRSSI() {
 }
 
 void ShowBattery() {
-  if (millis() >= batupdatetimer + TIMER_BAT_TIMER) {
-    batupdatetimer = millis();
-  } else {
-    return;
-  }
-
-  uint16_t v = analogRead(BATTERY_PIN);
-
-  battery = map(constrain(v, BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, BAT_LEVEL_STAGE);
-  if (batteryold != battery) {
-    if (batterydetect) {
-      if (battery == 0) {
-        tft.drawRect(300, 8, 12, 20, BarSignificantColor);
-        tft.fillRect(303, 4, 6, 4, BarSignificantColor);
-        tft.fillRect(302, 10, 8, 16, BackgroundColor);
-        tft.fillRect(302, 26 - (battery * 4), 8, battery * 4, BarInsignificantColor);
-      } else {
-        tft.drawRect(300, 8, 12, 20, ActiveColor);
-        tft.fillRect(303, 4, 6, 4, ActiveColor);
-        tft.fillRect(302, 10, 8, 16, BackgroundColor);
-        tft.fillRect(302, 26 - (battery * 4), 8, battery * 4, BarInsignificantColor);
-      }
+  if (!wifi) {
+    if (millis() >= batupdatetimer + TIMER_BAT_TIMER) {
+      batupdatetimer = millis();
     } else {
-      tft.drawRect(300, 8, 12, 20, GreyoutColor);
-      tft.fillRect(303, 4, 6, 4, GreyoutColor);
-      tft.fillRect(302, 10, 8, 16, BackgroundColor);
+      return;
     }
-    batteryold = battery;
-  }
 
-  if (!advancedRDS && !afscreen) {
-    if (batteryoptions > BATTERY_NONE) {
-      batteryV = ((float)v / 4095.0) * 2.0 * 3.3 * (vref / 1000.0);
-      if (batteryoptions == BATTERY_VALUE) {
-        if (batteryV < BATTERY_LOW_VALUE) return;
+    uint16_t v = analogRead(BATTERY_PIN);
 
-        tftPrint(-1, String(batteryVold, 1), 213, 163, BackgroundColor, BackgroundColor, FONT16);
+    battery = map(constrain(v, BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, BAT_LEVEL_STAGE);
+    if (batteryold != battery) {
+      if (batterydetect) {
+        if (battery == 0) {
+          tft.drawRect(300, 8, 12, 20, BarSignificantColor);
+          tft.fillRect(303, 4, 6, 4, BarSignificantColor);
+          tft.fillRect(302, 10, 8, 16, BackgroundColor);
+          tft.fillRect(302, 26 - (battery * 4), 8, battery * 4, BarInsignificantColor);
+        } else {
+          tft.drawRect(300, 8, 12, 20, ActiveColor);
+          tft.fillRect(303, 4, 6, 4, ActiveColor);
+          tft.fillRect(302, 10, 8, 16, BackgroundColor);
+          tft.fillRect(302, 26 - (battery * 4), 8, battery * 4, BarInsignificantColor);
+        }
+      } else {
+        tft.drawRect(300, 8, 12, 20, GreyoutColor);
+        tft.fillRect(303, 4, 6, 4, GreyoutColor);
+        tft.fillRect(302, 10, 8, 16, BackgroundColor);
+      }
+      batteryold = battery;
+    }
 
-        tftPrint(-1, String(batteryV, 1), 213, 163, BatteryValueColor, BatteryValueColorSmooth, FONT16);
-        tftPrint(-1, "V", 232, 163, BatteryValueColor, BatteryValueColorSmooth, FONT16);
+    if (!advancedRDS && !afscreen && batterydetect) {
+      float batteryV = ((float)v / 4095.0) * 2.0 * 3.3 * (1056 / 1000.0);
+      batteryV = constrain(batteryV, 0.0, 5.0);
+      if (round(batteryV * 100.0) != round(batteryVold * 100.0)) {
         batteryVold = batteryV;
-      } else if (batteryoptions == BATTERY_PERCENT) {
-        float vPer = 0.0;
-        vPer = (batteryPold - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE);
-        if (vPer >= 1) vPer = 1;
-        tftPrint(-1, String(vPer * 100, 0), 213, 163, BackgroundColor, BackgroundColor, FONT16);
-
-        vPer = (batteryV - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE);
-        if (vPer >= 1) vPer = 1;
-        tftPrint(-1, String(vPer * 100, 0), 213, 163, BatteryValueColor, BatteryValueColorSmooth, FONT16);
-        tftPrint(-1, "%", 230, 163, BatteryValueColor, BatteryValueColorSmooth, FONT16);
-        batteryPold = batteryV;
+        if (batteryoptions == BATTERY_VALUE) {
+          tftReplace(-1, String(batteryVold, 1) + "V", String(batteryV, 1) + "V", 213, 163, BatteryValueColor, BatteryValueColorSmooth, FONT16);
+        } else if (batteryoptions == BATTERY_PERCENT) {
+          float vPer = 0.0;
+          vPer = (batteryV - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE);
+          vPer = constrain(vPer, 0.0, 1.0);
+          vPer *= 100.0;
+          Serial.println(vPer);
+          tftReplace(-1, String(vPerold, 0) + "%", String(vPer, 0) + "%", 213, 163, BatteryValueColor, BatteryValueColorSmooth, FONT16);
+          vPerold = vPer;
+        }
       }
     }
   }
