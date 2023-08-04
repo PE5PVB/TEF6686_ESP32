@@ -69,7 +69,7 @@ static const char* const myLanguage[16][176] = {
     "FM Noise blanker", // 65
     "Defaults loaded", // 66
     "Audio output", // 67
-    "Touch rotating", // 68 for translation reference to commputer Touch Typing
+    "Touch rotating", // 68 for translation reference to computer Touch Typing
     "Invert display", // 69
     "About software", // 70
     "Main code:", // 71
@@ -247,7 +247,7 @@ static const char* const myLanguage[16][176] = {
     "FM ruis filter", // 65
     "Opnieuw geconfigureerd", // 66
     "Audio uitgang", // 67
-    "Touch rotating", // 68 for translation reference to commputer Touch Typing
+    "Touch rotating", // 68 for translation reference to computer Touch Typing
     "Inverteer scherm", // 69
     "Over deze software", // 70
     "Basis code:", // 71
@@ -425,7 +425,7 @@ static const char* const myLanguage[16][176] = {
     "Reduktor szumow FM", // 65
     "Zaladowano domyslne", // 66
     "Wyjscie dzwieku", // 67
-    "Bezwzrokowe  strojenie", // 68 for translation reference to commputer Touch Typing
+    "Bezwzrokowe  strojenie", // 68 for translation reference to computer Touch Typing
     "Odwroc kolory wyswietlacza", // 69
     "O oprogramowaniu", // 70
     "Glowny kod:", // 71
@@ -603,7 +603,7 @@ static const char* const myLanguage[16][176] = {
     "FM prigušivač šuma", // 65
     "Zadane postavke učitane", // 66
     "Audio izlaz", // 67
-    "Touch rotating", // 68 for translation reference to commputer Touch Typing
+    "Touch rotating", // 68 for translation reference to computer Touch Typing
     "Invertiraj boju zaslona", // 69
     "O softveru", // 70
     "Glavni izvorni kod:", // 71
@@ -959,7 +959,7 @@ static const char* const myLanguage[16][176] = {
     "FM Noise blanker", // 65
     "Defaults loaded", // 66
     "Audio output", // 67
-    "Touch rotating", // 68 for translation reference to commputer Touch Typing
+    "Touch rotating", // 68 for translation reference to computer Touch Typing
     "Display color invert", // 69
     "About software", // 70
     "Main code:", // 71
@@ -1110,7 +1110,7 @@ static const char* const myLanguage[16][176] = {
     "Zeige RDS Fehler", // 38
     "Sprache", // 39
     "Sprache wählen", // 40
-    "MODE drücken zum Beenden+Sichern", // 41
+    "MODE drücken zum Beenden & Sichern", // 41
     "Ein", // 42
     "Softmute UKW", // 43
     "Softmute AM", // 44
@@ -1137,7 +1137,7 @@ static const char* const myLanguage[16][176] = {
     "UKW Rauschunterdrückung", // 65
     "Werkseinstellung geladen", // 66
     "Audioausgabe", // 67
-    "Touch rotating", // 68 for translation reference to commputer Touch Typing
+    "Touch rotating", // 68 for translation reference to computer Touch Typing
     "Anzeigefarben umkehren", // 69
     "Über diese Software", // 70
     "Hauptcode:", // 71
@@ -1177,20 +1177,20 @@ static const char* const myLanguage[16][176] = {
     "UKW", // 105
     "OIRT", // 106
     "Rotating while screen off", // 107
-    "Model selector", // 108
-    "Base (ILI9341)", // 109
-    "Portable (ILI9341)", // 110
-    "Portable touch (ILI9341)", // 111
-    "Title", // 112
+    "Modell auswählen", // 108
+    "Basismodell (ILI9341)", // 109
+    "Portabel (ILI9341)", // 110
+    "Portabel Touch (ILI9341)", // 111
+    "Titel", // 112
     "Album", // 113
     "Track", // 114
-    "Artist", // 115
+    "Künstler", // 115
     "Composition", // 116
     "Movement", // 117
     "Conductor", // 118
-    "Composer", // 119
+    "Komponist", // 119
     "Band", // 120
-    "Comment", // 121
+    "Kommentar", // 121
     "Genre", // 122
     "News", // 123
     "Local news", // 124
@@ -1218,17 +1218,17 @@ static const char* const myLanguage[16][176] = {
     "Part", // 146
     "Host", // 147
     "Editor", // 148
-    "Frequency", // 149
+    "Frequenz", // 149
     "Homepage", // 150
     "Subchannel", // 151
     "Hotline", // 152
     "Studio phone", // 153
-    "Phone", // 154
-    "SMS studio", // 155
+    "Telefon", // 154
+    "SMS Studio", // 155
     "SMS", // 156
-    "Email hotline", // 157
-    "Email studio", // 158
-    "Email", // 159
+    "E-mail hotline", // 157
+    "E-mail studio", // 158
+    "E-mail", // 159
     "Chat", // 160
     "Chat centre", // 161
     "Vote question", // 162
@@ -1242,9 +1242,9 @@ static const char* const myLanguage[16][176] = {
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
-    "Battery options", // 173
-    "Show voltage", // 174
-    "Show percentage" // 175
+    "Akkuoptionen", // 173
+    "Zeige Spannung", // 174
+    "Zeige Prozente" // 175
   },
 
   { "Czech", // Czech
@@ -1315,7 +1315,7 @@ static const char* const myLanguage[16][176] = {
     "FM Noise blanker", // 65
     "Defaults loaded", // 66
     "Audio output", // 67
-    "Touch rotating", // 68 for translation reference to commputer Touch Typing
+    "Touch rotating", // 68 for translation reference to computer Touch Typing
     "Display color invert", // 69
     "About software", // 70
     "Main code:", // 71
@@ -1493,7 +1493,7 @@ static const char* const myLanguage[16][176] = {
     "FM Noise blanker", // 65
     "Defaults loaded", // 66
     "Audio output", // 67
-    "Touch rotating", // 68 for translation reference to commputer Touch Typing
+    "Touch rotating", // 68 for translation reference to computer Touch Typing
     "Display color invert", // 69
     "About software", // 70
     "Main code:", // 71
@@ -1849,7 +1849,7 @@ static const char* const myLanguage[16][176] = {
     "FM заглушител на шума", // 65
     "Фабр. настройки бяха зададени", // 66
     "Аудио Изход", // 67
-    "Touch rotating", // 68 for translation reference to commputer Touch Typing
+    "Touch rotating", // 68 for translation reference to computer Touch Typing
     "Обръщане на дисплея", // 69
     "Относно софтуера", // 70
     "Главен код:", // 71
@@ -2027,7 +2027,7 @@ static const char* const myLanguage[16][176] = {
     "Шумоподавитель FM", // 65
     "Загрузка настроек по умолчанию", // 66
     "Аудиовыход", // 67
-    "Вращение при выкл. экране", // 68 for translation reference to commputer Touch Typing
+    "Вращение при выкл. экране", // 68 for translation reference to computer Touch Typing
     "Инвертировать дисплей", // 69
     "О программе", // 70
     "Основной код:", // 71
@@ -2205,7 +2205,7 @@ static const char* const myLanguage[16][176] = {
     "Помпи засліплення шуму FM", // 65
     "Завантажено параметри за замовчуванням", // 66
     "Аудіо вихід", // 67
-    "Обертання, коли екран вимкнено", // 68 for translation reference to commputer Touch Typing
+    "Обертання, коли екран вимкнено", // 68 for translation reference to computer Touch Typing
     "Перевернути дисплей", // 69
     "Про програмне забезпечення", // 70
     "Основний код:", // 71
@@ -2383,7 +2383,7 @@ static const char* const myLanguage[16][176] = {
     "Soppressione rumore FM", // 65
     "Predefiniti caricati", // 66
     "Uscita audio", // 67
-    "Touch rotating", // 68 for translation reference to commputer Touch Typing
+    "Touch rotating", // 68 for translation reference to computer Touch Typing
     "Inversione schermo", // 69
     "Info sul software", // 70
     "Codice principale:", // 71
