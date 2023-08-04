@@ -169,6 +169,8 @@ int AMLevelOffset;
 int BackgroundColor;
 int BarSignificantColor;
 int BarInsignificantColor;
+int BatteryValueColor;
+int BatteryValueColorSmooth;
 int batupdatetimer;
 int BWAutoColor;
 int BWAutoColorSmooth;
@@ -1019,7 +1021,7 @@ void ShowBandSelectionFM(bool notglanceview, bool normaldisplay) {
     bandFMx = 155;
     bandFMy = 118;
   } else {
-    bandFMx = 305;
+    bandFMx = 310;
     bandFMy = 196;
   }
 
@@ -1118,7 +1120,7 @@ void ShowBandSelectionAM(bool notglanceview, bool normaldisplay) {
     bandAMx = 155;
     bandAMy = 118;
   } else {
-    bandAMx = 305;
+    bandAMx = 310;
     bandAMy = 216;
   }
 
@@ -1829,14 +1831,14 @@ void ModeButtonPress() {
       Serial.end();
       if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
       if (USBmode) Serial.begin(19200); else Serial.begin(115200);
+      ScreensaverTimerSet(screensaverOptions[screensaverset]);
+      if (screensaverset) ScreensaverTimerRestart();
       doBandSelectionFM();
       doBandSelectionAM();
       if (touchrotating) {
         if (poweroptions != LCD_OFF) poweroptions = LCD_OFF;
         if (!screensaverset) screensaverset = 1;
       }
-      ScreensaverTimerSet(screensaverOptions[screensaverset]);
-      if (screensaverset) ScreensaverTimerRestart();
     }
   }
   while (digitalRead(MODEBUTTON) == LOW) delay(50);
@@ -2105,7 +2107,7 @@ void KeyDown() {
 
 void ShowMemoryPos() {
   if (tunemode == TUNE_MEM) {
-    if (advancedRDS) tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 215, 36, SecondaryColor, SecondaryColorSmooth, FONT16); else tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 50, 32, SecondaryColor, SecondaryColorSmooth, FONT16);
+    if (advancedRDS) tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 215, 36, SecondaryColor, SecondaryColorSmooth, FONT16); else tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 50, 32, PrimaryColor, PrimaryColorSmooth, FONT16);
     memoryposold = memorypos;
   } else {
     if (advancedRDS) tftPrint(-1, String(memorypos + 1), 215, 36, BackgroundColor, BackgroundColor, FONT16); else tftPrint(-1, String(memorypos + 1), 50, 32, BackgroundColor, BackgroundColor, FONT16);
@@ -2303,7 +2305,7 @@ void ShowAdvancedRDS() {
   String afstring;
   if (radio.rds.hasAF) for (byte i = 0; i < radio.af_counter; i++) afstring += String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10) + (radio.af[i].filler ? "(f)" : "") + (i == radio.af_counter - 1 ? "          " : " | "); else afstring = myLanguage[language][87];
   if (hasafold != radio.rds.hasAF) {
-    if (radio.rds.hasAF) tftPrint(-1, "AF", 50, 51, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "AF", 50, 51, GreyoutColor, BackgroundColor, FONT16);
+    if (radio.rds.hasAF) tftPrint(-1, "AF", 47, 51, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "AF", 47, 51, GreyoutColor, BackgroundColor, FONT16);
     hasafold = radio.rds.hasAF;
   }
 
@@ -2341,7 +2343,7 @@ void ShowAdvancedRDS() {
   String eonstring;
   if (radio.rds.hasEON) for (byte i = 0; i < radio.eon_counter; i++) eonstring += String(radio.eon[i].picode) + (radio.eon[i].ps.length() > 0 ? String(": " + String(radio.eon[i].ps)) : "") + (radio.eon[i].mappedfreq > 0 ? String(" " + String(radio.eon[i].mappedfreq / 100) + "." + String((radio.eon[i].mappedfreq % 100) / 10))  : "") + (radio.eon[i].mappedfreq2 > 0 ? String(" / " + String(radio.eon[i].mappedfreq2 / 100) + "." + String((radio.eon[i].mappedfreq2 % 100) / 10))  : "") + (radio.eon[i].mappedfreq3 > 0 ? String(" /  " + String(radio.eon[i].mappedfreq3 / 100) + "." + String((radio.eon[i].mappedfreq3 % 100) / 10))  : "") + (i == radio.eon_counter - 1 ? "          " : " | "); else eonstring = myLanguage[language][88];
   if (haseonold != radio.rds.hasEON) {
-    if (radio.rds.hasEON) tftPrint(-1, "EON", 153, 51, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "EON", 153, 51, GreyoutColor, BackgroundColor, FONT16);
+    if (radio.rds.hasEON) tftPrint(-1, "EON", 150, 51, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "EON", 150, 51, GreyoutColor, BackgroundColor, FONT16);
     haseonold = radio.rds.hasEON;
   }
   if (eonstring.length() < 20) {
@@ -2378,7 +2380,7 @@ void ShowAdvancedRDS() {
   String rtplusstring;
   if (radio.rds.hasRDSplus) rtplusstring = (radio.rds.rdsplusTag1 != 169 ? String(myLanguage[language][radio.rds.rdsplusTag1]) + ": " + String(radio.rds.RTContent1) : "") + (radio.rds.rdsplusTag2 != 169 ? " - " + String(myLanguage[language][radio.rds.rdsplusTag2]) + ": " + String(radio.rds.RTContent2) : "") + "         "; else rtplusstring = myLanguage[language][89];
   if (hasrtplusold != radio.rds.hasRDSplus) {
-    if (radio.rds.hasRDSplus) tftPrint(-1, "RT+", 124, 51, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "RT+", 124, 51, GreyoutColor, BackgroundColor, FONT16);
+    if (radio.rds.hasRDSplus) tftPrint(-1, "RT+", 122, 51, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "RT+", 122, 51, GreyoutColor, BackgroundColor, FONT16);
     hasrtplusold = radio.rds.hasRDSplus;
   }
   if (rtplusstring.length() < 20) {
@@ -2413,30 +2415,30 @@ void ShowAdvancedRDS() {
   rtplusstringold = rtplusstring;
 
   if (TPold != radio.rds.hasTP) {
-    if (radio.rds.hasTP == true) tftPrint(-1, "TP", 6, 51, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "TP", 6, 51, GreyoutColor, BackgroundColor, FONT16);
+    if (radio.rds.hasTP == true) tftPrint(-1, "TP", 3, 51, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "TP", 3, 51, GreyoutColor, BackgroundColor, FONT16);
     TPold = radio.rds.hasTP;
   }
 
   if (TAold != radio.rds.hasTA) {
-    if (radio.rds.hasTA == true) tftPrint(-1, "TA", 28, 51, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "TA", 28, 51, GreyoutColor, BackgroundColor, FONT16);
+    if (radio.rds.hasTA == true) tftPrint(-1, "TA", 25, 51, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "TA", 25, 51, GreyoutColor, BackgroundColor, FONT16);
     TAold = radio.rds.hasTA;
   }
 
   if (MSold != radio.rds.MS) {
     switch (radio.rds.MS) {
       case 0:
-        tftPrint(-1, "M", 185, 51, GreyoutColor, BackgroundColor, FONT16);
-        tftPrint(-1, "S", 198, 51, GreyoutColor, BackgroundColor, FONT16);
+        tftPrint(-1, "M", 183, 51, GreyoutColor, BackgroundColor, FONT16);
+        tftPrint(-1, "S", 199, 51, GreyoutColor, BackgroundColor, FONT16);
         break;
 
       case 1:
-        tftPrint(-1, "M", 185, 51, PrimaryColor, PrimaryColorSmooth, FONT16);
-        tftPrint(-1, "S", 198, 51, GreyoutColor, BackgroundColor, FONT16);
+        tftPrint(-1, "M", 183, 51, PrimaryColor, PrimaryColorSmooth, FONT16);
+        tftPrint(-1, "S", 199, 51, GreyoutColor, BackgroundColor, FONT16);
         break;
 
       case 2:
-        tftPrint(-1, "M", 185, 51, GreyoutColor, BackgroundColor, FONT16);
-        tftPrint(-1, "S", 198, 51, PrimaryColor, PrimaryColorSmooth, FONT16);
+        tftPrint(-1, "M", 183, 51, GreyoutColor, BackgroundColor, FONT16);
+        tftPrint(-1, "S", 199, 51, PrimaryColor, PrimaryColorSmooth, FONT16);
         break;
     }
     MSold = radio.rds.MS;
@@ -2446,10 +2448,10 @@ void ShowAdvancedRDS() {
   if (rds_clock != rds_clockold) {
     if (radio.rds.hasCT) {
       tftReplace(1, rds_clockold, rds_clock, 205, 109, PrimaryColor, PrimaryColorSmooth, FONT16);
-      tftPrint(-1, "CT", 72, 51, PrimaryColor, PrimaryColorSmooth, FONT16);
+      tftPrint(-1, "CT", 69, 51, PrimaryColor, PrimaryColorSmooth, FONT16);
     } else {
       tftPrint(1, rds_clock, 205, 109, BackgroundColor, BackgroundColor, FONT16);
-      tftPrint(-1, "CT", 72, 51, GreyoutColor, BackgroundColor, FONT16);
+      tftPrint(-1, "CT", 69, 51, GreyoutColor, BackgroundColor, FONT16);
     }
     rds_clockold = rds_clock;
   }
@@ -2461,7 +2463,7 @@ void ShowAdvancedRDS() {
   }
 
   if (hastmcold != radio.rds.hasTMC) {
-    if (radio.rds.hasTMC == true) tftPrint(-1, "TMC", 90, 51, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "TMC", 90, 51, GreyoutColor, BackgroundColor, FONT16);
+    if (radio.rds.hasTMC == true) tftPrint(-1, "TMC", 89, 51, PrimaryColor, PrimaryColorSmooth, FONT16); else tftPrint(-1, "TMC", 89, 51, GreyoutColor, BackgroundColor, FONT16);
     hastmcold = radio.rds.hasTMC;
   }
 }
@@ -3315,7 +3317,7 @@ void updateSWMIBand() {
     case SW_MI_BAND_90M:
     case SW_MI_BAND_120M:
     case SW_MI_BAND_160M:
-      tftReplace(-1, SWMIBandstringold, SWMIBandstring, 50, 51, PrimaryColor, PrimaryColorSmooth, FONT16);
+      tftReplace(-1, SWMIBandstringold, SWMIBandstring, 50, 51, SecondaryColor, SecondaryColorSmooth, FONT16);
       if (!SWMIBandstring.equals(SWMIBandstringold)) SWMIBandstringold = SWMIBandstring;
       break;
 
@@ -3575,8 +3577,8 @@ void ShowBattery() {
 
         tftPrint(-1, String(batteryVold, 1), 213, 163, BackgroundColor, BackgroundColor, FONT16);
 
-        tftPrint(-1, String(batteryV, 1), 213, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
-        tftPrint(-1, "V", 232, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+        tftPrint(-1, String(batteryV, 1), 213, 163, BatteryValueColor, BatteryValueColorSmooth, FONT16);
+        tftPrint(-1, "V", 232, 163, BatteryValueColor, BatteryValueColorSmooth, FONT16);
         batteryVold = batteryV;
       } else if (batteryoptions == BATTERY_PERCENT) {
         float vPer = 0.0;
@@ -3586,7 +3588,7 @@ void ShowBattery() {
 
         vPer = (batteryV - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE);
         if (vPer >= 1) vPer = 1;
-        tftPrint(-1, String(vPer * 100, 0), 213, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
+        tftPrint(-1, String(vPer * 100, 0), 213, 163, BatteryValueColor, BatteryValueColorSmooth, FONT16);
         tftPrint(-1, "%", 230, 163, PrimaryColor, PrimaryColorSmooth, FONT16);
         batteryPold = batteryV;
       }
@@ -4358,6 +4360,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BarInsignificantColor = TFT_GREEN;
       BWAutoColor = 0x07F7;
       BWAutoColorSmooth = 0x0144;
+      BatteryValueColor = 0x07F7;
+      BatteryValueColorSmooth = 0x0144;
       CurrentThemeString = myLanguage[language][78];
       break;
     case 1:  // Cyan theme
@@ -4367,7 +4371,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       SecondaryColorSmooth = 0x10E4;
       FrequencyColor = 0x0F3F;
       FrameColor = 0x01e9;
-      GreyoutColor = 0x4A69;
+      GreyoutColor = 0x2A08;
       BackgroundColor = TFT_BLACK;
       ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
@@ -4383,6 +4387,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BarInsignificantColor = 0x0F3F;
       BWAutoColor = 0x07F7;
       BWAutoColorSmooth = 0x0144;
+      BatteryValueColor = 0x07F7;
+      BatteryValueColorSmooth = 0x0144;
       CurrentThemeString = myLanguage[language][79];
       break;
     case 2:  // Crimson theme
@@ -4408,6 +4414,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BarInsignificantColor = 0xF8C3;
       BWAutoColor = 0x07F7;
       BWAutoColorSmooth = 0x0144;
+      BatteryValueColor = 0x07F7;
+      BatteryValueColorSmooth = 0x0144;
       CurrentThemeString = myLanguage[language][80];
       break;
     case 3:  // Monochrome theme
@@ -4433,6 +4441,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BarInsignificantColor = TFT_GREEN;
       BWAutoColor = 0x7BCF;
       BWAutoColorSmooth = 0x1082;
+      BatteryValueColor = TFT_WHITE;
+      BatteryValueColorSmooth = TFT_BLACK;
       CurrentThemeString = myLanguage[language][81];
       break;
     case 4:  // Volcano theme
@@ -4458,6 +4468,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BarInsignificantColor = TFT_ORANGE;
       BWAutoColor = 0x07F7;
       BWAutoColorSmooth = 0x0144;
+      BatteryValueColor = 0x07F7;
+      BatteryValueColorSmooth = 0x0144;
       CurrentThemeString = myLanguage[language][82];
       break;
     case 5:  // Dendro theme
@@ -4492,7 +4504,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       SecondaryColorSmooth = 0x10E4;
       FrequencyColor = 0xF3D5;
       FrameColor = 0x3845;
-      GreyoutColor = 0x4A69;
+      GreyoutColor = 0x38C5;
       BackgroundColor = TFT_BLACK;
       ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
@@ -4508,13 +4520,15 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BarInsignificantColor = 0xF3D5;
       BWAutoColor = 0xF00A;
       BWAutoColorSmooth = 0x2802;
+      BatteryValueColor = 0xF00A;
+      BatteryValueColorSmooth = 0x2802;
       CurrentThemeString = myLanguage[language][84];
       break;
     case 7:  // Whiteout theme
       PrimaryColor = TFT_BLACK;
-      PrimaryColorSmooth = 0xDFFC;
+      PrimaryColorSmooth = TFT_WHITE;
       SecondaryColor = TFT_BLACK;
-      SecondaryColorSmooth = 0xDFFC;
+      SecondaryColorSmooth = TFT_WHITE;
       FrequencyColor = 0x18C3;
       FrameColor = 0x630C;
       GreyoutColor = 0x9492;
@@ -4532,7 +4546,9 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BarSignificantColor = TFT_BLACK;
       BarInsignificantColor = TFT_GREEN;
       BWAutoColor = 0x7BCF;
-      BWAutoColorSmooth = 0x1082;
+      BWAutoColorSmooth = TFT_WHITE;
+      BatteryValueColor = TFT_BLACK;
+      BatteryValueColorSmooth = TFT_WHITE;
       CurrentThemeString = myLanguage[language][85];
       break;
     case 8:  // Tangerine theme
@@ -4542,7 +4558,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       SecondaryColorSmooth = 0x10E4;
       FrequencyColor = 0xF980;
       FrameColor = 0x38A1;
-      GreyoutColor = 0x4A69;
+      GreyoutColor = 0x6247;
       BackgroundColor = TFT_BLACK;
       ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
@@ -4556,8 +4572,10 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = 0x3080;
       BarSignificantColor = TFT_RED;
       BarInsignificantColor = TFT_GREEN;
-      BWAutoColor = 0x07F7;
-      BWAutoColorSmooth = 0x0144;
+      BWAutoColor = 0xED20;
+      BWAutoColorSmooth = 0x3940;
+      BatteryValueColor = 0xED20;
+      BatteryValueColorSmooth = 0x3940;
       CurrentThemeString = myLanguage[language][170];
       break;
     case 9:  // Ocean theme
@@ -4567,7 +4585,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       SecondaryColorSmooth = 0x10E4;
       FrequencyColor = 0x01FF;
       FrameColor = 0x0010;
-      GreyoutColor = 0x08A8;
+      GreyoutColor = 0x420C;
       BackgroundColor = TFT_BLACK;
       ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
@@ -4581,8 +4599,10 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = 0x0006;
       BarSignificantColor = TFT_RED;
       BarInsignificantColor = 0x01FF;
-      BWAutoColor = 0x07F7;
-      BWAutoColorSmooth = 0x0144;
+      BWAutoColor = 0x051F;
+      BWAutoColorSmooth = 0x0106;
+      BatteryValueColor = 0x051F;
+      BatteryValueColorSmooth = 0x0106;
       CurrentThemeString = myLanguage[language][171];
       break;
     case 10:  // Indigo theme
@@ -4592,7 +4612,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       SecondaryColorSmooth = 0x41C8;
       FrequencyColor = 0x881F;
       FrameColor = 0x6016;
-      GreyoutColor = 0x300c;
+      GreyoutColor = 0x49AC;
       BackgroundColor = TFT_BLACK;
       ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
@@ -4608,6 +4628,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BarInsignificantColor = 0x881F;
       BWAutoColor = 0xD01F;
       BWAutoColorSmooth = 0x400A;
+      BatteryValueColor = 0xD01F;
+      BatteryValueColorSmooth = 0x400A;
       CurrentThemeString = myLanguage[language][172];
       break;
   }

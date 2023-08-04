@@ -175,8 +175,8 @@ static const char* const myLanguage[16][176] = {
     "Ocean", // 171
     "Indigo", // 172
     "Battery options", // 173
-    "Show battery value", // 174
-    "Show battery percent" // 175
+    "Show voltage", // 174
+    "Show percentage" // 175
   },
 
   { "Nederlands", // Dutch
@@ -353,8 +353,8 @@ static const char* const myLanguage[16][176] = {
     "Ocean", // 171
     "Indigo", // 172
     "Battery options", // 173
-    "Show battery value", // 174
-    "Show battery percent" // 175
+    "Show voltage", // 174
+    "Show percentage" // 175
   },
 
   { "Polski", // Polish
@@ -531,8 +531,8 @@ static const char* const myLanguage[16][176] = {
     "Ocean", // 171
     "Indigo", // 172
     "Battery options", // 173
-    "Show battery value", // 174
-    "Show battery percent" // 175
+    "Show voltage", // 174
+    "Show percentage" // 175
   },
 
   { "Hrvatski", // Croatian
@@ -709,8 +709,8 @@ static const char* const myLanguage[16][176] = {
     "Ocean", // 171
     "Indigo", // 172
     "Battery options", // 173
-    "Show battery value", // 174
-    "Show battery percent" // 175
+    "Show voltage", // 174
+    "Show percentage" // 175
   },
 
   { "Ελληνικά", // Greek
@@ -886,9 +886,9 @@ static const char* const myLanguage[16][176] = {
     "Μανταρινί", // 170
     "Ωκεανός", // 171
     "Ινδικό", // 172
-    "Battery options", // 173
-    "Show battery value", // 174
-    "Show battery percent" // 175
+    "Επιλογές μπαταρίας", // 173
+    "Εμφάνιση τάσης", // 174
+    "Εμφάνιση ποσοστού" // 175
   },
 
   { "Romana", // Romanian
@@ -1065,8 +1065,8 @@ static const char* const myLanguage[16][176] = {
     "Ocean", // 171
     "Indigo", // 172
     "Battery options", // 173
-    "Show battery value", // 174
-    "Show battery percent" // 175
+    "Show voltage", // 174
+    "Show percentage" // 175
   },
 
   { "Deutsch", // German
@@ -1243,8 +1243,8 @@ static const char* const myLanguage[16][176] = {
     "Ocean", // 171
     "Indigo", // 172
     "Battery options", // 173
-    "Show battery value", // 174
-    "Show battery percent" // 175
+    "Show voltage", // 174
+    "Show percentage" // 175
   },
 
   { "Czech", // Czech
@@ -1421,8 +1421,8 @@ static const char* const myLanguage[16][176] = {
     "Ocean", // 171
     "Indigo", // 172
     "Battery options", // 173
-    "Show battery value", // 174
-    "Show battery percent" // 175
+    "Show voltage", // 174
+    "Show percentage" // 175
   },
 
   { "Slovak", // Slovak
@@ -1599,8 +1599,8 @@ static const char* const myLanguage[16][176] = {
     "Ocean", // 171
     "Indigo", // 172
     "Battery options", // 173
-    "Show battery value", // 174
-    "Show battery percent" // 175
+    "Show voltage", // 174
+    "Show percentage" // 175
   },
 
   { "Français", // French
@@ -1776,9 +1776,9 @@ static const char* const myLanguage[16][176] = {
     "Mandarine", // 170
     "Océan", // 171
     "Indigo", // 172
-    "Battery options", // 173
-    "Show battery value", // 174
-    "Show battery percent" // 175
+    "Options de batterie", // 173
+    "Montrer la tension", // 174
+    "Montrer le pourcentage" // 175
   },
 
   { "Български", // Bulgarian
@@ -1955,8 +1955,8 @@ static const char* const myLanguage[16][176] = {
     "Ocean", // 171
     "Indigo", // 172
     "Battery options", // 173
-    "Show battery value", // 174
-    "Show battery percent" // 175
+    "Show voltage", // 174
+    "Show percentage" // 175
   },
 
   { "Русский", // Russian
@@ -2489,8 +2489,8 @@ static const char* const myLanguage[16][176] = {
     "Ocean", // 171
     "Indigo", // 172
     "Battery options", // 173
-    "Show battery value", // 174
-    "Show battery percent" // 175
+    "Show voltage", // 174
+    "Show percentage" // 175
   },
 
   { "Simplified Chinese", // Simplified Chinese

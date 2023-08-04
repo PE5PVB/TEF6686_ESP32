@@ -92,6 +92,8 @@ extern int BackgroundColor;
 extern int BackgroundColorSmooth;
 extern int BarInsignificantColor;
 extern int BarSignificantColor;
+extern int BatteryValueColor;
+extern int BatteryValueColorSmooth;
 extern int FrameColor;
 extern int GreyoutColor;
 extern int menuoption;
