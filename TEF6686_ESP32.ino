@@ -681,7 +681,7 @@ void loop() {
           tftPrint(-1, "50", 87, 144, ActiveColor, ActiveColorSmooth, FONT16);
           tftPrint(-1, "70", 117, 144, ActiveColor, ActiveColorSmooth, FONT16);
           tftPrint(-1, "100", 164, 144, ActiveColor, ActiveColorSmooth, FONT16);
-          tftPrint(0, "M", 7, 132, ActiveColor, ActiveColorSmooth, FONT16);
+          tftPrint(0, "M", 7, 128, ActiveColor, ActiveColorSmooth, FONT16);
           for (byte segments = 0; segments < 94; segments++) {
             if (segments > 54) {
               if (((segments - 53) % 10) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, BarSignificantColor);
@@ -690,11 +690,11 @@ void loop() {
             }
           }
         }
-        if (region == 0) tftPrint(-1, "PI:", 216, 193, ActiveColor, ActiveColorSmooth, FONT16);
-        if (region == 1) tftPrint(-1, "ID:", 216, 193, ActiveColor, ActiveColorSmooth, FONT16);
-        tftPrint(-1, "PS:", 6, 193, ActiveColor, ActiveColorSmooth, FONT16);
-        tftPrint(-1, "RT:", 6, 221, ActiveColor, ActiveColorSmooth, FONT16);
-        tftPrint(-1, "PTY:", 6, 163, ActiveColor, ActiveColorSmooth, FONT16);
+        if (region == 0) tftPrint(-1, "PI:", 212, 193, ActiveColor, ActiveColorSmooth, FONT16);
+        if (region == 1) tftPrint(-1, "ID:", 212, 193, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, "PS:", 3, 193, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, "RT:", 3, 221, ActiveColor, ActiveColorSmooth, FONT16);
+        tftPrint(-1, "PTY:", 3, 163, ActiveColor, ActiveColorSmooth, FONT16);
         if (!showmodulation) tft.drawLine(20, 143, 204, 143, GreyoutColor); else tft.drawLine(20, 143, 204, 143, TFT_DARKGREY);
       }
       LowLevelInit = true;
@@ -716,14 +716,14 @@ void loop() {
             tftPrint(-1, "50", 87, 144, GreyoutColor, BackgroundColor, FONT16);
             tftPrint(-1, "70", 117, 144, GreyoutColor, BackgroundColor, FONT16);
             tftPrint(-1, "100", 164, 144, GreyoutColor, BackgroundColor, FONT16);
-            tftPrint(0, "M", 7, 132, GreyoutColor, BackgroundColor, FONT16);
+            tftPrint(0, "M", 7, 128, GreyoutColor, BackgroundColor, FONT16);
             tft.fillRect(16, 133, 188, 6, GreyoutColor);
           }
-          if (region == 0) tftPrint(-1, "PI:", 216, 193, GreyoutColor, BackgroundColor, FONT16);
-          if (region == 1) tftPrint(-1, "ID:", 216, 193, GreyoutColor, BackgroundColor, FONT16);
-          tftPrint(-1, "PS:", 6, 193, GreyoutColor, BackgroundColor, FONT16);
-          tftPrint(-1, "RT:", 6, 221, GreyoutColor, BackgroundColor, FONT16);
-          tftPrint(-1, "PTY:", 6, 163, GreyoutColor, BackgroundColor, FONT16);
+          if (region == 0) tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, FONT16);
+          if (region == 1) tftPrint(-1, "ID:", 212, 193, GreyoutColor, BackgroundColor, FONT16);
+          tftPrint(-1, "PS:", 3, 193, GreyoutColor, BackgroundColor, FONT16);
+          tftPrint(-1, "RT:", 3, 221, GreyoutColor, BackgroundColor, FONT16);
+          tftPrint(-1, "PTY:", 3, 163, GreyoutColor, BackgroundColor, FONT16);
           tft.drawLine(20, 143, 204, 143, GreyoutColor);
           tft.drawBitmap(139, 5, RDSLogo, 35, 22, GreyoutColor);
         }
@@ -1655,11 +1655,11 @@ void SelectBand() {
     doBW();
     radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
     if (screenmute == false) radio.clearRDS(fullsearchrds); BuildDisplay();
-    if (region == 0) tftPrint(-1, "PI:", 216, 193, GreyoutColor, BackgroundColor, FONT16);
-    if (region == 1) tftPrint(-1, "ID:", 216, 193, GreyoutColor, BackgroundColor, FONT16);
-    tftPrint(-1, "PS:", 6, 193, GreyoutColor, BackgroundColor, FONT16);
-    tftPrint(-1, "RT:", 6, 221, GreyoutColor, BackgroundColor, FONT16);
-    tftPrint(-1, "PTY:", 6, 163, GreyoutColor, BackgroundColor, FONT16);
+    if (region == 0) tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, FONT16);
+    if (region == 1) tftPrint(-1, "ID:", 212, 193, GreyoutColor, BackgroundColor, FONT16);
+    tftPrint(-1, "PS:", 3, 193, GreyoutColor, BackgroundColor, FONT16);
+    tftPrint(-1, "RT:", 3, 221, GreyoutColor, BackgroundColor, FONT16);
+    tftPrint(-1, "PTY:", 3, 163, GreyoutColor, BackgroundColor, FONT16);
     tft.drawBitmap(139, 5, RDSLogo, 35, 22, GreyoutColor);
     tft.drawRoundRect(248, 56, 32, 20, 5, GreyoutColor);
     tftPrint(0, "iMS", 265, 59, GreyoutColor, BackgroundColor, FONT16);
@@ -2595,7 +2595,7 @@ void showPI() {
     if (advancedRDS) {
       tftReplace(-1, PIold, radio.rds.picode, 244, 75, PrimaryColor, PrimaryColorSmooth, FONT28);
     } else if (afscreen) {
-      tftReplace(-1, PIold, radio.rds.picode, 30, 201, SecondaryColor, SecondaryColorSmooth, FONT16);
+      tftReplace(-1, PIold, radio.rds.picode, 30, 201, BWAutoColor, BWAutoColorSmooth, FONT16);
     } else {
       tftReplace(-1, PIold, radio.rds.picode, 244, 187, PrimaryColor, PrimaryColorSmooth, FONT28);
     }
@@ -2628,7 +2628,7 @@ void showPS() {
     if (advancedRDS) {
       tftReplace(-1, PSold, radio.rds.stationName, 38, 75, PrimaryColor, PrimaryColorSmooth, FONT28);
     } else if (afscreen) {
-      tftReplace(0, PSold, radio.rds.stationName, 160, 201, SecondaryColor, SecondaryColorSmooth, FONT16);
+      tftReplace(0, PSold, radio.rds.stationName, 160, 201, BWAutoColor, BWAutoColorSmooth, FONT16);
     } else {
       tftReplace(-1, PSold, radio.rds.stationName, 38, 187, PrimaryColor, PrimaryColorSmooth, FONT28);
     }
@@ -2840,7 +2840,7 @@ void ShowFreq(int mode) {
           tftReplace(1, String(freqold / 100) + "." + (freqold % 100 < 10 ? "0" : "") + String(freqold % 100) + " MHz", String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100) + " MHz", 310, 35, PrimaryColor, PrimaryColorSmooth, FONT16);
           freqold = freq;
         } else if (afscreen) {
-          tftReplace(1, String(freqold / 100) + "." + (freqold % 100 < 10 ? "0" : "") + String(freqold % 100) + " MHz", String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100), 290, 201, SecondaryColor, SecondaryColorSmooth, FONT16);
+          tftReplace(1, String(freqold / 100) + "." + (freqold % 100 < 10 ? "0" : "") + String(freqold % 100) + " MHz", String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100), 290, 201, BWAutoColor, BWAutoColorSmooth, FONT16);
           freqold = freq;
         } else {
           String count = String(freq / 100, DEC);

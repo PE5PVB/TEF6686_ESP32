@@ -381,13 +381,13 @@ void BuildDisplay() {
     if (showsquelch) tftPrint(-1, "SQ:", 212, 145, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(1, "C/N", 270, 163, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(-1, "dB", 300, 163, ActiveColor, ActiveColorSmooth, FONT16);
-    if (region == 0) tftPrint(-1, "PI:", 216, 193, ActiveColor, ActiveColorSmooth, FONT16);
-    if (region == 1) tftPrint(-1, "ID:", 216, 193, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "PS:", 6, 193, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "RT:", 6, 221, ActiveColor, ActiveColorSmooth, FONT16);
-    tftPrint(-1, "PTY:", 6, 163, ActiveColor, ActiveColorSmooth, FONT16);
+    if (region == 0) tftPrint(-1, "PI:", 212, 193, ActiveColor, ActiveColorSmooth, FONT16);
+    if (region == 1) tftPrint(-1, "ID:", 212, 193, ActiveColor, ActiveColorSmooth, FONT16);
+    tftPrint(-1, "PS:", 3, 193, ActiveColor, ActiveColorSmooth, FONT16);
+    tftPrint(-1, "RT:", 3, 221, ActiveColor, ActiveColorSmooth, FONT16);
+    tftPrint(-1, "PTY:", 3, 163, ActiveColor, ActiveColorSmooth, FONT16);
 
-    tftPrint(0, "S", 7, 103, ActiveColor, ActiveColorSmooth, FONT16);
+    tftPrint(0, "S", 7, 101, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(-1, "1", 24, 115, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(-1, "3", 48, 115, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(-1, "5", 72, 115, ActiveColor, ActiveColorSmooth, FONT16);
@@ -397,14 +397,14 @@ void BuildDisplay() {
     tftPrint(-1, "+30", 174, 115, ActiveColor, ActiveColorSmooth, FONT16);
 
     if (!showmodulation) {
-      tftPrint(0, "M", 7, 132, GreyoutColor, BackgroundColor, FONT16);
+      tftPrint(0, "M", 7, 128, GreyoutColor, BackgroundColor, FONT16);
       tftPrint(-1, "10", 27, 144, GreyoutColor, BackgroundColor, FONT16);
       tftPrint(-1, "30", 57, 144, GreyoutColor, BackgroundColor, FONT16);
       tftPrint(-1, "50", 87, 144, GreyoutColor, BackgroundColor, FONT16);
       tftPrint(-1, "70", 117, 144, GreyoutColor, BackgroundColor, FONT16);
       tftPrint(-1, "100", 164, 144, GreyoutColor, BackgroundColor, FONT16);
     } else {
-      tftPrint(0, "M", 7, 132, ActiveColor, ActiveColorSmooth, FONT16);
+      tftPrint(0, "M", 7, 128, ActiveColor, ActiveColorSmooth, FONT16);
       tftPrint(-1, "10", 27, 144, ActiveColor, ActiveColorSmooth, FONT16);
       tftPrint(-1, "30", 57, 144, ActiveColor, ActiveColorSmooth, FONT16);
       tftPrint(-1, "50", 87, 144, ActiveColor, ActiveColorSmooth, FONT16);
