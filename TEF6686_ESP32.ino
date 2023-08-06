@@ -352,6 +352,7 @@ void setup() {
   HighCutLevel = EEPROM.readByte(EE_BYTE_HIGHCUTLEVEL);
   HighCutOffset = EEPROM.readByte(EE_BYTE_HIGHCUTOFFSET);
   LevelOffset = EEPROM.readByte(EE_BYTE_LEVELOFFSET);
+  radio.rds.rtbuffer = EEPROM.readByte(EE_BYTE_RTBUFFER);
   edgebeep = EEPROM.readByte(EE_BYTE_EDGEBEEP);
   softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
   softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
@@ -1802,7 +1803,8 @@ void ModeButtonPress() {
       EEPROM.writeByte(EE_BYTE_BANDAM, bandAM);
       EEPROM.writeByte(EE_BYTE_HIGHCUTLEVEL, HighCutLevel);
       EEPROM.writeByte(EE_BYTE_HIGHCUTOFFSET, HighCutOffset);
-      EEPROM.writeInt(EE_BYTE_LEVELOFFSET, LevelOffset);
+      EEPROM.writeByte(EE_BYTE_LEVELOFFSET, LevelOffset);
+      EEPROM.writeByte(EE_BYTE_RTBUFFER, radio.rds.rtbuffer);
       EEPROM.writeByte(EE_BYTE_EDGEBEEP, edgebeep);
       EEPROM.writeByte(EE_BYTE_SOFTMUTEAM, softmuteam);
       EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, softmutefm);
@@ -3238,7 +3240,8 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_BANDAM, AM_BAND_ALL);
   EEPROM.writeByte(EE_BYTE_HIGHCUTLEVEL, 70);
   EEPROM.writeByte(EE_BYTE_HIGHCUTOFFSET, 0);
-  EEPROM.writeInt(EE_BYTE_LEVELOFFSET, 0);
+  EEPROM.writeByte(EE_BYTE_LEVELOFFSET, 0);
+  EEPROM.writeByte(EE_BYTE_RTBUFFER, 1);
   EEPROM.writeByte(EE_BYTE_EDGEBEEP, 0);
   EEPROM.writeByte(EE_BYTE_SOFTMUTEAM, 0);
   EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, 0);

@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char* const myLanguage[16][176] = {
+static const char* const myLanguage[16][177] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -176,7 +176,8 @@ static const char* const myLanguage[16][176] = {
     "Indigo", // 172
     "Battery options", // 173
     "Show voltage", // 174
-    "Show percentage" // 175
+    "Show percentage", // 175
+    "RT buffering" // 176
   },
 
   { "Nederlands", // Dutch
@@ -354,7 +355,8 @@ static const char* const myLanguage[16][176] = {
     "Indigo", // 172
     "Battery options", // 173
     "Show voltage", // 174
-    "Show percentage" // 175
+    "Show percentage", // 175
+    "RT buffering" // 176
   },
 
   { "Polski", // Polish
@@ -532,7 +534,8 @@ static const char* const myLanguage[16][176] = {
     "Indigo", // 172
     "Opcje baterii", // 173
     "Pokaz napiecie", // 174
-    "Pokaz procent nalad." // 175
+    "Pokaz procent nalad.", // 175
+    "RT buffering" // 176
   },
 
   { "Hrvatski", // Croatian
@@ -710,7 +713,8 @@ static const char* const myLanguage[16][176] = {
     "Indigo", // 172
     "Battery options", // 173
     "Show voltage", // 174
-    "Show percentage" // 175
+    "Show percentage", // 175
+    "RT buffering" // 176
   },
 
   { "Ελληνικά", // Greek
@@ -888,7 +892,8 @@ static const char* const myLanguage[16][176] = {
     "Ινδικό", // 172
     "Επιλογές μπαταρίας", // 173
     "Εμφάνιση τάσης", // 174
-    "Εμφάνιση ποσοστού" // 175
+    "Εμφάνιση ποσοστού", // 175
+    "RT buffering" // 176
   },
 
   { "Romana", // Romanian
@@ -1066,7 +1071,8 @@ static const char* const myLanguage[16][176] = {
     "Indigo", // 172
     "Battery options", // 173
     "Show voltage", // 174
-    "Show percentage" // 175
+    "Show percentage", // 175
+    "RT buffering" // 176
   },
 
   { "Deutsch", // German
@@ -1244,7 +1250,8 @@ static const char* const myLanguage[16][176] = {
     "Indigo", // 172
     "Akkuoptionen", // 173
     "Zeige Spannung", // 174
-    "Zeige Prozente" // 175
+    "Zeige Prozente", // 175
+    "RT buffering" // 176
   },
 
   { "Czech", // Czech
@@ -1422,7 +1429,8 @@ static const char* const myLanguage[16][176] = {
     "Indigo", // 172
     "Battery options", // 173
     "Show voltage", // 174
-    "Show percentage" // 175
+    "Show percentage", // 175
+    "RT buffering" // 176
   },
 
   { "Slovak", // Slovak
@@ -1600,7 +1608,8 @@ static const char* const myLanguage[16][176] = {
     "Indigo", // 172
     "Battery options", // 173
     "Show voltage", // 174
-    "Show percentage" // 175
+    "Show percentage", // 175
+    "RT buffering" // 176
   },
 
   { "Français", // French
@@ -1778,7 +1787,8 @@ static const char* const myLanguage[16][176] = {
     "Indigo", // 172
     "Options de batterie", // 173
     "Montrer la tension", // 174
-    "Montrer le pourcentage" // 175
+    "Montrer le pourcentage", // 175
+    "RT buffering" // 176
   },
 
   { "Български", // Bulgarian
@@ -1956,7 +1966,8 @@ static const char* const myLanguage[16][176] = {
     "Indigo", // 172
     "Battery options", // 173
     "Show voltage", // 174
-    "Show percentage" // 175
+    "Show percentage", // 175
+    "RT buffering" // 176
   },
 
   { "Русский", // Russian
@@ -2134,7 +2145,8 @@ static const char* const myLanguage[16][176] = {
     "Индиго", // 172
     "Варианты батареи", // 173
     "Показать значение батареи", // 174
-    "Показать процент заряда батареи" // 175
+    "Показать процент заряда батареи", // 175
+    "RT buffering" // 176
   },
 
   { "Українська", // Ukranian
@@ -2312,7 +2324,8 @@ static const char* const myLanguage[16][176] = {
     "Індиго", // 172
     "Варіанти батареї", // 173
     "Показати заряд батареї", // 174
-    "Показати відсоток батареї" // 175
+    "Показати відсоток батареї", // 175
+    "RT buffering" // 176
   },
 
   { "Italiano", // Italian
@@ -2490,7 +2503,8 @@ static const char* const myLanguage[16][176] = {
     "Indigo", // 172
     "Battery options", // 173
     "Show voltage", // 174
-    "Show percentage" // 175
+    "Show percentage", // 175
+    "RT buffering" // 176
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -2668,7 +2682,8 @@ static const char* const myLanguage[16][176] = {
     "靛青", // 172
     "显示电池", // 173
     "电压值", // 174
-    "电池百分比" // 175
+    "电池百分比", // 175
+    "RT buffering" // 176
   },
 
   { "Norsk", // Norwegian
@@ -2846,7 +2861,8 @@ static const char* const myLanguage[16][176] = {
     "Indigo", // 172
     "Batterialternativer", // 173
     "Vis batteriverdi", // 174
-    "Vis batteriprosent" // 175
+    "Vis batteriprosent", // 175
+    "RT buffering" // 176
   }
 };
 

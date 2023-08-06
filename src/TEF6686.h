@@ -166,6 +166,7 @@ typedef struct _rds_ {
   bool underscore;
   bool rdsreset;
   bool pierrors;
+  bool rtbuffer = true;
 } rds_;
 
 typedef struct _af_ {

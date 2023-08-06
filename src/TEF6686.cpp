@@ -628,10 +628,12 @@ void TEF6686::readRDS(bool showrdserrors)
 
               if (rds.rtAB != rtABold) {                                                          // Erase old RT, because of AB change
                 initrt = false;
-                wchar_t RTtext[65] = L"";                                                           // Create 16 bit char buffer for Extended ASCII
-                RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);        // Convert 8 bit ASCII to 16 bit ASCII
-                rds.stationText = convertToUTF8(RTtext);                                            // Convert RDS characterset to ASCII
-                rds.stationText = extractUTF8Substring(rds.stationText, 0, 64, true);               // Make sure RT does not exceed 64 characters
+                if (rds.rtbuffer) {
+                  wchar_t RTtext[65] = L"";                                                           // Create 16 bit char buffer for Extended ASCII
+                  RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);        // Convert 8 bit ASCII to 16 bit ASCII
+                  rds.stationText = convertToUTF8(RTtext);                                            // Convert RDS characterset to ASCII
+                  rds.stationText = extractUTF8Substring(rds.stationText, 0, 64, true);               // Make sure RT does not exceed 64 characters
+                }
 
                 for (byte i = 0; i < 64; i++) {
                   rt_buffer[i] = 0x20;
@@ -646,7 +648,7 @@ void TEF6686::readRDS(bool showrdserrors)
               rt_buffer[offset + 2] = rds.rdsD >> 8;                                              // Thirth character of segment
               rt_buffer[offset + 3] = rds.rdsD & 0xff;                                            // Fourth character of segment
 
-              if (initrt) {
+              if (initrt || !rds.rtbuffer) {
                 wchar_t RTtext[65] = L"";                                                           // Create 16 bit char buffer for Extended ASCII
                 RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);        // Convert 8 bit ASCII to 16 bit ASCII
                 rds.stationText = convertToUTF8(RTtext);                                            // Convert RDS characterset to ASCII
@@ -757,12 +759,14 @@ void TEF6686::readRDS(bool showrdserrors)
               runningbit = bitRead(lowByte(rds.rdsB), 3);
 
               switch (rds.rdsplusTag1) {
+                case 0: rds.rdsplusTag1 = 169; break;
                 case 1 ... 53: rds.rdsplusTag1 += 111; break;
                 case 59 ... 63: rds.rdsplusTag1 += 105; break;
                 default: rds.rdsplusTag1 = 169; break;
               }
 
               switch (rds.rdsplusTag2) {
+                case 0: rds.rdsplusTag2 = 169; break;
                 case 1 ... 53: rds.rdsplusTag2 += 111; break;
                 case 59 ... 63: rds.rdsplusTag2 += 105; break;
                 default: rds.rdsplusTag2 = 169; break;

@@ -480,17 +480,21 @@ void BuildMenu() {
     case 5:
       tftPrint(-1, myLanguage[language][108], 8, 36, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][173], 8, 56, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][176], 8, 76, ActiveColor, ActiveColorSmooth, 16);
 
       switch (hardwaremodel) {
         case BASE_ILI9341: tftPrint(1, myLanguage[language][109], 310, 36, PrimaryColor, PrimaryColorSmooth, 16); break;
         case PORTABLE_ILI9341: tftPrint(1, myLanguage[language][110 ], 310, 36, PrimaryColor, PrimaryColorSmooth, 16); break;
         case PORTABLE_TOUCH_ILI9341: tftPrint(1, myLanguage[language][111], 310, 36, PrimaryColor, PrimaryColorSmooth, 16); break;
       }
+
       switch (batteryoptions) {
         case BATTERY_NONE: tftPrint(1, myLanguage[language][30], 310, 56, PrimaryColor, PrimaryColorSmooth, 16); break;
         case BATTERY_VALUE: tftPrint(1, myLanguage[language][174], 310, 56, PrimaryColor, PrimaryColorSmooth, 16); break;
         case BATTERY_PERCENT: tftPrint(1, myLanguage[language][175], 310, 56, PrimaryColor, PrimaryColorSmooth, 16); break;
       }
+
+      if (radio.rds.rtbuffer) tftPrint(1, myLanguage[language][42], 310, 76, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 76, PrimaryColor, PrimaryColorSmooth, 16);
       break;
 
   }
@@ -1130,6 +1134,12 @@ void MenuUp() {
             }
             batteryoptionsold = batteryoptions;
             break;
+
+          case 70:
+            if (radio.rds.rtbuffer) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
+            if (radio.rds.rtbuffer) radio.rds.rtbuffer = false; else radio.rds.rtbuffer = true;
+            if (radio.rds.rtbuffer) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
         }
         break;
     }
@@ -1523,6 +1533,13 @@ void MenuDown() {
             }
             batteryoptionsold = batteryoptions;
             break;
+
+          case 70:
+            if (radio.rds.rtbuffer) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
+            if (radio.rds.rtbuffer) radio.rds.rtbuffer = false; else radio.rds.rtbuffer = true;
+            if (radio.rds.rtbuffer) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
+
         }
         break;
     }
@@ -1821,6 +1838,10 @@ void DoMenu() {
             }
             batteryoptionsold = batteryoptions;
             break;
+
+          case 70:
+            tftPrint(0, myLanguage[language][176], 155, 78, ActiveColor, ActiveColorSmooth, 28);
+            if (radio.rds.rtbuffer) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
         }
         break;
 
