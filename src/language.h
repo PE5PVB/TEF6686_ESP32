@@ -2995,7 +2995,7 @@ static const char* const myCountries[] {
   "Lesotho" // 125
   "Liberia" // 126
   "Madagas." // 127
-  "U. Arab.E." //128
+  "U. Arab.E." // 128
   "Anguilla" // 129
   "Antigua." // 130
   "Argentina" // 131
