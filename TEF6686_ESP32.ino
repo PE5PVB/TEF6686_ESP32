@@ -153,6 +153,7 @@ byte screensaverOptions[5] = {0, 3, 10, 30, 60};
 byte screensaverset;
 byte showmodulation;
 byte showSWMIBand;
+byte nowToggleSWMIBand = 0;
 byte SNRold;
 byte stepsize;
 byte StereoLevel;
@@ -1651,7 +1652,6 @@ void ToggleSWMIBand(bool frequencyup) {
 void SelectBand() {
   if (band > BAND_GAP) {
     seek = false;
-    if (tunemode == TUNE_AUTO) tunemode = TUNE_MAN;
     if (tunemode == TUNE_MI_BAND && band != BAND_SW) tunemode = TUNE_MAN;
     BWreset = true;
     BWset = 2;
@@ -1858,7 +1858,7 @@ void ShowStepSize() {
     tft.fillRect(224, 38, 15, 4, GreyoutColor);
     tft.fillRect(193, 38, 15, 4, GreyoutColor);
     if (band < BAND_GAP) tft.fillRect(148, 38, 15, 4, GreyoutColor); else tft.fillRect(162, 38, 15, 4, GreyoutColor);
-    if (band < BAND_GAP) tft.fillRect(116, 38, 15, 4, GreyoutColor); else tft.fillRect(128, 38, 15, 4, GreyoutColor);
+    if (band < BAND_GAP) tft.fillRect(116, 38, 15, 4, GreyoutColor); else if (band != BAND_LW) tft.fillRect(128, 38, 15, 4, GreyoutColor);
     if (stepsize == 1) tft.fillRect(224, 38, 15, 4, InsignificantColor);
     if (stepsize == 2) tft.fillRect(193, 38, 15, 4, InsignificantColor);
     if (stepsize == 3) {
@@ -1977,39 +1977,50 @@ void ButtonPress() {
           }
         }
       } else {
-        if (iMSEQ == 0) iMSEQ = 1;
+        if (band < BAND_GAP) {
+          if (iMSEQ == 0) iMSEQ = 1;
 
-        if (iMSEQ == 4) {
-          iMSset = 0;
-          EQset = 0;
-          updateiMS();
-          updateEQ();
-          iMSEQ = 0;
+          if (iMSEQ == 4) {
+            iMSset = 0;
+            EQset = 0;
+            updateiMS();
+            updateEQ();
+            iMSEQ = 0;
+          }
+          if (iMSEQ == 3) {
+            iMSset = 1;
+            EQset = 0;
+            updateiMS();
+            updateEQ();
+            iMSEQ = 4;
+          }
+          if (iMSEQ == 2) {
+            iMSset = 0;
+            EQset = 1;
+            updateiMS();
+            updateEQ();
+            iMSEQ = 3;
+          }
+          if (iMSEQ == 1) {
+            iMSset = 1;
+            EQset = 1;
+            updateiMS();
+            updateEQ();
+            iMSEQ = 2;
+          }
+          EEPROM.writeByte(EE_BYTE_IMSSET, iMSset);
+          EEPROM.writeByte(EE_BYTE_EQSET, EQset);
+          EEPROM.commit();
+        } else {
+          if (band == BAND_SW) {
+            if (tunemode != TUNE_MEM) {
+              nowToggleSWMIBand = !nowToggleSWMIBand;
+              tunemode = TUNE_MEM;
+              doTuneMode();
+              ShowTuneMode();
+            }
+          }
         }
-        if (iMSEQ == 3) {
-          iMSset = 1;
-          EQset = 0;
-          updateiMS();
-          updateEQ();
-          iMSEQ = 4;
-        }
-        if (iMSEQ == 2) {
-          iMSset = 0;
-          EQset = 1;
-          updateiMS();
-          updateEQ();
-          iMSEQ = 3;
-        }
-        if (iMSEQ == 1) {
-          iMSset = 1;
-          EQset = 1;
-          updateiMS();
-          updateEQ();
-          iMSEQ = 2;
-        }
-        EEPROM.writeByte(EE_BYTE_IMSSET, iMSset);
-        EEPROM.writeByte(EE_BYTE_EQSET, EQset);
-        EEPROM.commit();
       }
     }
     if (screensaverset) {
@@ -2779,17 +2790,16 @@ void doBW() {
 void doTuneMode() {
   switch (tunemode) {
     case TUNE_MAN:
-      if (band < BAND_GAP) {
-        tunemode = TUNE_AUTO;
-        if (stepsize != 0) {
-          stepsize = 0;
-          RoundStep();
-          ShowStepSize();
-        }
-      } else if (band == BAND_SW && showSWMIBand) {
-        tunemode = TUNE_MI_BAND;
+      if (band == BAND_SW) {
+        if (showSWMIBand && nowToggleSWMIBand) tunemode = TUNE_MI_BAND;
+        else tunemode = TUNE_AUTO;
       } else {
-        tunemode = TUNE_MEM;
+        tunemode = TUNE_AUTO;
+      }
+      if (stepsize != 0) {
+        stepsize = 0;
+        RoundStep();
+        ShowStepSize();
       }
       break;
     case TUNE_MI_BAND:
@@ -2811,10 +2821,14 @@ void doTuneMode() {
 void ShowTuneMode() {
   switch (tunemode) {
     case TUNE_MAN:
-      if (band == BAND_SW) {
+      if (band == BAND_SW && nowToggleSWMIBand) {
+        tftPrint(0, "AUTO", 22, 60, BackgroundColor, BackgroundColor, FONT16);
+
         tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
         tftPrint(0, "BAND", 22, 60, GreyoutColor, BackgroundColor, 16);
       } else {
+        tftPrint(0, "BAND", 22, 60, BackgroundColor, BackgroundColor, FONT16);
+
         tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
         tftPrint(0, "AUTO", 22, 60, GreyoutColor, BackgroundColor, 16);
       }
@@ -2838,10 +2852,14 @@ void ShowTuneMode() {
       break;
 
     case TUNE_MEM:
-      if (band == BAND_SW) {
+      if (band == BAND_SW && nowToggleSWMIBand) {
+        tftPrint(0, "AUTO", 22, 60, BackgroundColor, BackgroundColor, FONT16);
+
         tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
         tftPrint(0, "BAND", 22, 60, GreyoutColor, BackgroundColor, 16);
       } else {
+        tftPrint(0, "BAND", 22, 60, BackgroundColor, BackgroundColor, FONT16);
+
         tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
         tftPrint(0, "AUTO", 22, 60, GreyoutColor, BackgroundColor, 16);
       }
