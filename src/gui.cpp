@@ -49,11 +49,11 @@ void BuildAFScreen() {
     tft.drawLine(0, 199, 320, 199, FrameColor);
     tft.drawLine(0, 218, 320, 218, FrameColor);
     tft.drawLine(168, 30, 168, 199, FrameColor);
-    tft.drawLine(108, 30, 108, 0, FrameColor);
-    tft.drawLine(137, 30, 137, 0, FrameColor);
-    tft.drawLine(175, 30, 175, 0, FrameColor);
-    tft.drawLine(268, 30, 268, 0, FrameColor);
-    tftPrint(-1, "kHz", 222, 4, ActiveColor, ActiveColorSmooth, FONT28);
+    tft.drawLine(53, 30, 53, 0, FrameColor);
+    tft.drawLine(89, 30, 89, 0, FrameColor);
+    tft.drawLine(158, 30, 158, 0, FrameColor);
+    tft.drawLine(248, 30, 248, 0, FrameColor);
+    tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, FONT28);
     tftPrint(0, myLanguage[language][93], 160, 222, ActiveColor, ActiveColorSmooth, FONT16);
     tftPrint(-1, myLanguage[language][88], 184, 48, PrimaryColor, PrimaryColorSmooth, FONT16);
     tftPrint(-1, myLanguage[language][87], 6, 48, PrimaryColor, PrimaryColorSmooth, FONT16);
@@ -237,12 +237,13 @@ void BuildAdvancedRDS() {
     tft.drawLine(0, 68, 320, 68, FrameColor);
     tft.drawLine(0, 104, 320, 104, FrameColor);
     tft.drawLine(0, 126, 320, 126, FrameColor);
-    tft.drawLine(64, 30, 64, 0, FrameColor);
+    tft.drawLine(120, 30, 120, 0, FrameColor);
     tft.drawLine(210, 30, 210, 240, FrameColor);
-    tft.drawLine(108, 30, 108, 0, FrameColor);
-    tft.drawLine(137, 30, 137, 0, FrameColor);
-    tft.drawLine(175, 30, 175, 0, FrameColor);
-    tft.drawLine(268, 30, 268, 0, FrameColor);
+    tft.drawLine(53, 30, 53, 0, FrameColor);
+    tft.drawLine(89, 30, 89, 0, FrameColor);
+    tft.drawLine(120, 30, 120, 0, FrameColor);
+    tft.drawLine(158, 30, 158, 0, FrameColor);
+    tft.drawLine(248, 30, 248, 0, FrameColor);
     tft.drawLine(0, 140, 210, 140, FrameColor);
     tft.drawLine(0, 166, 210, 166, FrameColor);
     tft.drawLine(0, 193, 210, 193, FrameColor);
@@ -285,17 +286,17 @@ void BuildAdvancedRDS() {
 
     for (int i = 0; i < 33; i++) tft.fillCircle((6 * i) + 10, 133, 2, GreyoutColor);
 
-    tftPrint(-1, "kHz", 222, 4, ActiveColor, ActiveColorSmooth, FONT28);
+    tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, FONT28);
 
-    tft.drawCircle(81, 15, 10, GreyoutColor);
-    tft.drawCircle(81, 15, 9, GreyoutColor);
-    tft.drawCircle(91, 15, 10, GreyoutColor);
-    tft.drawCircle(91, 15, 9, GreyoutColor);
-    tft.drawBitmap(139, 5, RDSLogo, 35, 22, GreyoutColor);
+    tft.drawCircle(66, 15, 10, GreyoutColor);
+    tft.drawCircle(66, 15, 9, GreyoutColor);
+    tft.drawCircle(76, 15, 10, GreyoutColor);
+    tft.drawCircle(76, 15, 9, GreyoutColor);
+    tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
 
     if (StereoToggle == false) {
-      tft.drawCircle(86, 15, 10, SecondaryColor);
-      tft.drawCircle(86, 15, 9, SecondaryColor);
+      tft.drawCircle(71, 15, 10, SecondaryColor);
+      tft.drawCircle(71, 15, 9, SecondaryColor);
     }
 
     if (radio.rds.hasCT) tftPrint(1, rds_clockold, 205, 109, SecondaryColor, SecondaryColorSmooth, FONT16);
@@ -354,15 +355,15 @@ void BuildDisplay() {
     tft.drawRect(0, 0, 320, 240, FrameColor);
     tft.drawLine(0, 30, 320, 30, FrameColor);
     tft.drawLine(0, 100, 320, 100, FrameColor);
-    tft.drawLine(64, 30, 64, 0, FrameColor);
+    tft.drawLine(120, 30, 120, 0, FrameColor);
     tft.drawLine(210, 100, 210, 217, FrameColor);
-    tft.drawLine(268, 30, 268, 0, FrameColor);
+    tft.drawLine(248, 30, 248, 0, FrameColor);
     tft.drawLine(0, 160, 210, 160, FrameColor);
     tft.drawLine(0, 180, 320, 180, FrameColor);
     tft.drawLine(0, 217, 320, 217, FrameColor);
-    tft.drawLine(108, 30, 108, 0, FrameColor);
-    tft.drawLine(137, 30, 137, 0, FrameColor);
-    tft.drawLine(175, 30, 175, 0, FrameColor);
+    tft.drawLine(53, 30, 53, 0, FrameColor);
+    tft.drawLine(89, 30, 89, 0, FrameColor);
+    tft.drawLine(158, 30, 158, 0, FrameColor);
     tft.drawLine(20, 114, 204, 114, TFT_DARKGREY);
     if (!showmodulation) tft.drawLine(20, 143, 204, 143, GreyoutColor); else tft.drawLine(20, 143, 204, 143, TFT_DARKGREY);
     for (byte segments = 0; segments < 94; segments++) {
@@ -412,7 +413,7 @@ void BuildDisplay() {
       tftPrint(-1, "100", 164, 144, ActiveColor, ActiveColorSmooth, FONT16);
     }
 
-    tftPrint(-1, "kHz", 222, 4, ActiveColor, ActiveColorSmooth, FONT28);
+    tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, FONT28);
     tftPrint(-1, unitString[unit], 282, 145, ActiveColor, ActiveColorSmooth, FONT16);
 
     if (band < BAND_GAP) tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, FONT28); else tftPrint(-1, "kHz", 258, 76, ActiveColor, ActiveColorSmooth, FONT28);
@@ -422,14 +423,14 @@ void BuildDisplay() {
     tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
     if (band > BAND_GAP) tftPrint(0, "EQ", 303, 59, GreyoutColor, BackgroundColor, FONT16);
 
-    tft.drawCircle(81, 15, 10, GreyoutColor);
-    tft.drawCircle(81, 15, 9, GreyoutColor);
-    tft.drawCircle(91, 15, 10, GreyoutColor);
-    tft.drawCircle(91, 15, 9, GreyoutColor);
-    tft.drawBitmap(139, 5, RDSLogo, 35, 22, GreyoutColor);
+    tft.drawCircle(66, 15, 10, GreyoutColor);
+    tft.drawCircle(66, 15, 9, GreyoutColor);
+    tft.drawCircle(76, 15, 10, GreyoutColor);
+    tft.drawCircle(76, 15, 9, GreyoutColor);
+    tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
     if (StereoToggle == false) {
-      tft.drawCircle(86, 15, 10, SecondaryColor);
-      tft.drawCircle(86, 15, 9, SecondaryColor);
+      tft.drawCircle(71, 15, 10, SecondaryColor);
+      tft.drawCircle(71, 15, 9, SecondaryColor);
     }
 
     if (bandforbidden) bandColor = GreyoutColor; else bandColor = PrimaryColor;
