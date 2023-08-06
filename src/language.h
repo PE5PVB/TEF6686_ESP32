@@ -2869,7 +2869,7 @@ static const char* const myLanguage[16][177] = {
 static const char* const myCountries[] {
   "Germany", // 0
   "Greece", // 1
-  "Marocco", // 2
+  "Morocco", // 2
   "Moldova", // 3
   "Algeria", // 4
   "Cyprus", // 5
@@ -2895,7 +2895,7 @@ static const char* const myCountries[] {
   "Russia", // 25
   "Luxemb.", // 26
   "Tunisia", // 27
-  "Azores", // 28
+  "Palestine", // 28
   "Bulgaria", // 29
   "Madeira", // 30
   "Netherl.", // 31
@@ -2926,6 +2926,76 @@ static const char* const myCountries[] {
   "Norway", // 56
   "Belarus", // 57
   "Bosnia" // 58
+  "Monteneg." // 59 
+  "Armenia" // 60
+  "Azerbaijan" // 61
+  "Kosovo" // 62
+  "Kyrgystan" // 63
+  "Turkmenis." // 64
+  "Tajikistan" // 65
+  "Uzbekistan" // 66
+  "Malawi" // 67
+  "Mali" // 68
+  "Mauritania" // 69
+  "Mauritius" // 70
+  "Mongolia" // 71
+  "Mozambiq." // 72 
+  "Nambia" // 73
+  "Niger" // 74
+  "Nigeria" // 75
+  "Oman" // 76
+  "Qatar" // 77
+  "Rwanda" // 78
+  "Sao Tome" // 79
+  "Saudi Ara." // 80
+  "Senegal" // 81
+  "Seychel." // 82
+  "S. Leone" // 83
+  "Somalia" // 84
+  "S. Africa" // 85
+  "S. Sudan" // 86
+  "Sudan" // 87
+  "Swaziland" // 88
+  "Tanzania" // 89
+  "Togo" // 90
+  "Uganda" // 91
+  "W. Sahara" // 92
+  "Yemen" // 93
+  "Zambia" // 94
+  "Zimbabwe" // 95
+  "Angola" // 96
+  "Ascn. Isl." // 97
+  "Bahrein" // 98
+  "Benin" // 99
+  "Botswana" // 100
+  "Burkina.F." // 101
+  "Burundi" // 102
+  "Cabinda" // 103
+  "Cameroon" // 104
+  "Cape Ver." // 105 
+  "Centr. Af." // 106
+  "Chad" // 107
+  "Comoros" // 108
+  "D. Congo" // 109
+  "Congo" // 110
+  "Cote d'l." // 111
+  "Djibouti" // 112
+  "E. Guinea" // 113
+  "Eritrea" // 114
+  "Ethiopia" // 115
+  "Gabon" // 116
+  "Gambia" // 117
+  "Georgia" // 118
+  "Ghana" // 119
+  "Guinea" // 120
+  "Guinea-B." // 121
+  "Kazakh." // 122
+  "Kenya" // 123
+  "Kuwait" // 124
+  "Lesotho" // 125
+  "Liberia" // 126
+  "Madagas." // 127
+  
 };
 
 static const char* const myLanguages[] {
