@@ -535,7 +535,7 @@ static const char* const myLanguage[16][177] = {
     "Opcje baterii", // 173
     "Pokaz napiecie", // 174
     "Pokaz procent nalad.", // 175
-    "RT buffering" // 176
+    "Buforowanie RT" // 176
   },
 
   { "Hrvatski", // Croatian
