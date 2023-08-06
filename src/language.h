@@ -3093,6 +3093,9 @@ static const char* const myCountries[] {
   "Bahamas" // 222
   "BM or BH" // 223
   "EC or BR" // 224
+  "AN or BR" // 225
+  "USA/VI/ PR" // 226
+    
   
 
   
