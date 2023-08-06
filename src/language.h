@@ -1191,58 +1191,58 @@ static const char* const myLanguage[16][177] = {
     "Album", // 113
     "Track", // 114
     "Künstler", // 115
-    "Composition", // 116
-    "Movement", // 117
-    "Conductor", // 118
+    "Komposition", // 116
+    "Satz", // 117
+    "Dirigent", // 118
     "Komponist", // 119
     "Band", // 120
     "Kommentar", // 121
     "Genre", // 122
-    "News", // 123
-    "Local news", // 124
-    "Stockmarket", // 125
+    "Nachrichten", // 123
+    "Lokalnachrichten", // 124
+    "Aktienmarkt", // 125
     "Sport", // 126
-    "Lottery", // 127
-    "Horoscope", // 128
-    "Daily Diversion", // 129
-    "Health", // 130
-    "Event", // 131
-    "Scene", // 132
-    "Cinema", // 133
+    "Lotterie", // 127
+    "Horoskop", // 128
+    "Tagestipp", // 129
+    "Gesundheit", // 130
+    "Ereignis", // 131
+    "Szene", // 132
+    "Kino", // 133
     "TV", // 134
-    "Date/time", //135
-    "Weather", // 136
-    "Traffic", // 137
+    "Tag/Uhrzeit", //135
+    "Wetter", // 136
+    "Verkehr", // 137
     "Alarm", // 138
-    "Advertisement", // 139
+    "Werbung", // 139
     "Website", // 140
-    "Other", // 141
-    "Short PS", // 142
-    "Long PS", // 143
-    "Now", // 144
-    "Next", //145
-    "Part", // 146
-    "Host", // 147
-    "Editor", // 148
+    "Info", // 141
+    "Kurzer PS", // 142
+    "Langer PS", // 143
+    "Es läuft", // 144
+    "Es folgt", //145
+    "Thema", // 146
+    "Am Mikrofon", // 147
+    "Redaktion", // 148
     "Frequenz", // 149
     "Homepage", // 150
     "Subchannel", // 151
-    "Hotline", // 152
-    "Studio phone", // 153
+    "Telefon Hotline", // 152
+    "Telefon Studio", // 153
     "Telefon", // 154
     "SMS Studio", // 155
     "SMS", // 156
-    "E-mail hotline", // 157
-    "E-mail studio", // 158
+    "E-Mail Hotline", // 157
+    "E-Mail Studio", // 158
     "E-mail", // 159
     "Chat", // 160
-    "Chat centre", // 161
-    "Vote question", // 162
-    "Vote centre", // 163
-    "Place", // 164
-    "Appointment", // 165
-    "Identifier", // 166
-    "Purchase", // 167
+    "Chat-Zentrale", // 161
+    "Abstimmung", // 162
+    "Abstimmungs-Zentrale", // 163
+    "Ort", // 164
+    "Termin", // 165
+    "Musik-ID", // 166
+    "Bezugsquelle", // 167
     "Get data", // 168
     " ", // 169
     "Tangerine", // 170
@@ -1251,7 +1251,7 @@ static const char* const myLanguage[16][177] = {
     "Akkuoptionen", // 173
     "Zeige Spannung", // 174
     "Zeige Prozente", // 175
-    "RT buffering" // 176
+    "RT puffern" // 176
   },
 
   { "Czech", // Czech
