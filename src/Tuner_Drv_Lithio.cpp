@@ -234,7 +234,7 @@ bool devTEF_Radio_Get_Quality_Status_AM (int16_t *level, uint16_t *noise, uint16
   *mod = Convert8bto16b(buf + 12) / 10;
   if (*level < -200) *level = -200;
   if (*level > 1200) *level = 1200;
-  if (*noise / 10 > 40) *snr = 0; else *snr = -((int8_t)(*noise / 10));
+  if (-((int8_t)(*noise / 10)) > *level) *snr = 0; else *snr = -((int8_t)(*noise / 10)) / 10;
   return r;
 }
 
