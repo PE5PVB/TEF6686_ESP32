@@ -2995,6 +2995,109 @@ static const char* const myCountries[] {
   "Lesotho" // 125
   "Liberia" // 126
   "Madagas." // 127
+  "U. Arab.E." //128
+  "Anguilla" // 129
+  "Antigua." // 130
+  "Argentina" // 131
+  "Aruba" // 132
+  "Bahamas" // 133
+  "Barabados" // 133
+  "Belize" // 134
+  "Bermuda" // 135
+  "Bolivia" // 136
+  "Brazil" // 137
+  "Canada" // 138
+  "Cayman I." // 139
+  "Chile" // 140
+  "Colombia" // 141
+  "Costa R." // 142
+  "Cuba" // 143
+  "Dominica" // 144
+  "Domini. R" // 145
+  "El Salvad." // 146
+  "Equator" // 147
+  "Falkland." // 148
+  "Greenland" // 149
+  "Grenada" // 150
+  "Guadeloupe" // 151
+  "Guatemala" // 152
+  "Guyana" // 153
+  "Haiti" // 154
+  "Honduras" // 155
+  "Jamaica" // 156
+  "Martinique" // 157
+  "Mexico" // 158
+  "Montserrat" // 159
+  "Nether. A." // 160
+  "Nicaragua" // 161
+  "Panama" // 162
+  "Paraguay" // 163
+  "Peru" // 164
+  "Puerto R." // 165
+  "St. Kitts" // 166
+  "St. Luccia" // 167
+  "St. P.& M." // 168
+  "St. Vince." // 169
+  "Suriname" // 170
+  "T & T" // 171
+  "Turks & C." // 172
+  "U.S.A." // 173
+  "Uruguay" // 174
+  "Venezuela" // 175
+  "Virgin UK" // 176
+  "Virgin USA" // 177
+  "Afganist." // 178
+  "AU C.T." // 179
+  "AU N.S.W." // 180
+  "AU Vict." // 181
+  "AU Queen" // 182
+  "AU S. Au." // 183
+  "AU W. Au." // 183
+  "AU Tasma." // 184
+  "AU N. T." // 185
+  "Bangladesh" // 186
+  "Bhutan" // 187
+  "Brunei D." // 188
+  "Cambodia" // 189
+  "China" // 190
+  "Fiji" // 191
+  "Hong Kong" // 192
+  "India" // 193
+  "Indonesia" // 194
+  "Iran" // 195
+  "Japan" // 196
+  "Kiribati" // 197
+  "N. Korea" // 198
+  "S. Korea" // 199
+  "Laos" // 200
+  "Macao" // 201
+  "Malaysia" // 202
+  "Maldives" // 203
+  "Marshall I" // 204
+  "Micronesia" // 205
+  "Myanmar" // 206
+  "Nauru" // 207
+  "Nepal" // 208
+  "N. Zeland" // 209
+  "Pakistan" // 210
+  "Papua. N.G" // 211
+  "Philippin." // 212
+  "Samoa" // 213
+  "Singapore" // 214
+  "Solomon I." // 215
+  "Sri Lanka" // 216
+  "Taiwan" // 217
+  "Thailand" // 218
+  "Tonga" // 219
+  "Vanuatu" // 220
+  "Vietnam" // 221
+   
+  
+
+  
+    
+  
+    
   
 };
 
