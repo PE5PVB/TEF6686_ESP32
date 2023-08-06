@@ -3051,10 +3051,9 @@ static const char* const myCountries[] {
   "AU Vict." // 181
   "AU Queen" // 182
   "AU S. Au." // 183
-  "AU W. Au." // 183
-  "AU Tasma." // 184
-  "AU N. T." // 185
-  "Bangladesh" // 186
+  "AU W. Au." // 184
+  "AU Tasma." // 185
+  "AU N. T." // 186
   "Bhutan" // 187
   "Brunei D." // 188
   "Cambodia" // 189
@@ -3095,7 +3094,7 @@ static const char* const myCountries[] {
   "EC or BR" // 224
   "AN or BR" // 225
   "USA/VI/ PR" // 226
-    
+  "Bangladesh" // 227
   
 
   
