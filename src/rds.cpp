@@ -277,6 +277,10 @@ void showECC() {
   if (ECCold != radio.rds.ECC) {
     String ECC;
     if (radio.rds.picode[0] == '1') {
+      if (radio.rds.ECC == 160) ECC = myCountries[226];
+      if (radio.rds.ECC == 162) ECC = myCountries[129];
+      if (radio.rds.ECC == 163) ECC = myCountries[152];
+      if (radio.rds.ECC == 164) ECC = myCountries[137];
       if (radio.rds.ECC == 208) ECC = myCountries[104];
       if (radio.rds.ECC == 209) ECC = myCountries[83];
       if (radio.rds.ECC == 210) ECC = myCountries[76];
@@ -285,8 +289,15 @@ void showECC() {
       if (radio.rds.ECC == 226) ECC = myCountries[2];
       if (radio.rds.ECC == 227) ECC = myCountries[59];
       if (radio.rds.ECC == 228) ECC = myCountries[3];
+      if (radio.rds.ECC == 240) ECC = myCountries[179];
+      if (radio.rds.ECC == 241) ECC = myCountries[197];
       if (radio.rds.ECC == 242) ECC = myCountries[124];
+      if (radio.rds.ECC == 243) ECC = myCountries[200];
     } else if (radio.rds.picode[0] == '2') {
+      if (radio.rds.ECC == 160) ECC = myCountries[226];
+      if (radio.rds.ECC == 162) ECC = myCountries[130];
+      if (radio.rds.ECC == 163) ECC = myCountries[141];
+      if (radio.rds.ECC == 164) ECC = myCountries[155];
       if (radio.rds.ECC == 208) ECC = myCountries[106];
       if (radio.rds.ECC == 209) ECC = myCountries[126];
       if (radio.rds.ECC == 210) ECC = myCountries[95];
@@ -295,8 +306,15 @@ void showECC() {
       if (radio.rds.ECC == 226) ECC = myCountries[6];
       if (radio.rds.ECC == 227) ECC = myCountries[7];
       if (radio.rds.ECC == 228) ECC = myCountries[8];
-      if (radio.rds.ECC == 241) ECC = myCountries[77];
+      if (radio.rds.ECC == 240) ECC = myCountries[180];
+      if (radio.rds.ECC == 241) ECC = myCountries[187];
+      if (radio.rds.ECC == 242) ECC = myCountries[77];
+      if (radio.rds.ECC == 243) ECC = myCountries[218];
     } else if (radio.rds.picode[0] == '3') {
+      if (radio.rds.ECC == 160) ECC = myCountries[226];
+      if (radio.rds.ECC == 162) ECC = myCountries[224];
+      if (radio.rds.ECC == 163) ECC = myCountries[156];
+      if (radio.rds.ECC == 164) ECC = myCountries[132];
       if (radio.rds.ECC == 208) ECC = myCountries[112];
       if (radio.rds.ECC == 209) ECC = myCountries[119];
       if (radio.rds.ECC == 210) ECC = myCountries[72]; 
@@ -306,7 +324,14 @@ void showECC() {
       if (radio.rds.ECC == 226) ECC = myCountries[11];
       if (radio.rds.ECC == 227) ECC = myCountries[12];
       if (radio.rds.ECC == 229) ECC = myCountries[63];
+      if (radio.rds.ECC == 240) ECC = myCountries[181];
+      if (radio.rds.ECC == 241) ECC = myCountries[227];
+      if (radio.rds.ECC == 242) ECC = myCountries[189];
+      if (radio.rds.ECC == 243) ECC = myCountries[219];
     } else if (radio.rds.picode[0] == '4') {
+      if (radio.rds.ECC == 160) ECC = myCountries[226];
+      if (radio.rds.ECC == 162) ECC = myCountries[148];
+      if (radio.rds.ECC == 163) ECC = myCountries[157];
       if (radio.rds.ECC == 208) ECC = myCountries[127];
       if (radio.rds.ECC == 209) ECC = myCountries[69];
       if (radio.rds.ECC == 210) ECC = myCountries[91];
@@ -315,7 +340,13 @@ void showECC() {
       if (radio.rds.ECC == 225) ECC = myCountries[14];
       if (radio.rds.ECC == 226) ECC = myCountries[15];
       if (radio.rds.ECC == 227) ECC = myCountries[16];
+      if (radio.rds.ECC == 240) ECC = myCountries[182];
+      if (radio.rds.ECC == 241) ECC = myCountries[210];
+      if (radio.rds.ECC == 242) ECC = myCountries[213];
     } else if (radio.rds.picode[0] == '5') {
+      if (radio.rds.ECC == 160) ECC = myCountries[226];
+      if (radio.rds.ECC == 162) ECC = myCountries[133];
+      if (radio.rds.ECC == 164) ECC = myCountries[159];
       if (radio.rds.ECC == 208) ECC = myCountries[68];
       if (radio.rds.ECC == 209) ECC = myCountries[79];
       if (radio.rds.ECC == 210) ECC = myCountries[88];
@@ -324,7 +355,14 @@ void showECC() {
       if (radio.rds.ECC == 225) ECC = myCountries[18];
       if (radio.rds.ECC == 226) ECC = myCountries[19];
       if (radio.rds.ECC == 227) ECC = myCountries[65];
+      if (radio.rds.ECC == 240) ECC = myCountries[183];
+      if (radio.rds.ECC == 241) ECC = myCountries[191];
+      if (radio.rds.ECC == 242) ECC = myCountries[193];
     } else if (radio.rds.picode[0] == '6') {
+      if (radio.rds.ECC == 160) ECC = myCountries[226];
+      if (radio.rds.ECC == 162) ECC = myCountries[134];
+      if (radio.rds.ECC == 163) ECC = myCountries[163];
+      if (radio.rds.ECC == 164) ECC = myCountries[171];
       if (radio.rds.ECC == 208) ECC = myCountries[96];
       if (radio.rds.ECC == 209) ECC = myCountries[105];
       if (radio.rds.ECC == 210) ECC = myCountries[123];
@@ -334,8 +372,14 @@ void showECC() {
       if (radio.rds.ECC == 226) ECC = myCountries[22];
       if (radio.rds.ECC == 227) ECC = myCountries[23];
       if (radio.rds.ECC == 228) ECC = myCountries[24];
+      if (radio.rds.ECC == 240) ECC = myCountries[184];
       if (radio.rds.ECC == 241) ECC = myCountries[76];
+      if (radio.rds.ECC == 242) ECC = myCountries[201];
     } else if (radio.rds.picode[0] == '7') {
+      if (radio.rds.ECC == 160) ECC = myCountries[226];
+      if (radio.rds.ECC == 162) ECC = myCountries[139];
+      if (radio.rds.ECC == 163) ECC = myCountries[161];
+      if (radio.rds.ECC == 164) ECC = myCountries[164];
       if (radio.rds.ECC == 208) ECC = myCountries[113];
       if (radio.rds.ECC == 209) ECC = myCountries[81];
       if (radio.rds.ECC == 210) ECC = myCountries[84];
@@ -343,7 +387,13 @@ void showECC() {
       if (radio.rds.ECC == 225) ECC = myCountries[26];
       if (radio.rds.ECC == 226) ECC = myCountries[27];
       if (radio.rds.ECC == 228) ECC = myCountries[62];
+      if (radio.rds.ECC == 240) ECC = myCountries[185];
+      if (radio.rds.ECC == 241) ECC = myCountries[207];
+      if (radio.rds.ECC == 242) ECC = myCountries[221];
     } else if (radio.rds.picode[0] == '8') {
+      if (radio.rds.ECC == 160) ECC = myCountries[226];
+      if (radio.rds.ECC == 162) ECC = myCountries[142];
+      if (radio.rds.ECC == 164) ECC = myCountries[170];
       if (radio.rds.ECC == 208) ECC = myCountries[116];
       if (radio.rds.ECC == 209) ECC = myCountries[117];
       if (radio.rds.ECC == 210) ECC = myCountries[74];
@@ -353,7 +403,15 @@ void showECC() {
       if (radio.rds.ECC == 226) ECC = myCountries[30];
       if (radio.rds.ECC == 227) ECC = myCountries[31];
       if (radio.rds.ECC == 228) ECC = myCountries[32];
+      if (radio.rds.ECC == 240) ECC = myCountries[186];
+      if (radio.rds.ECC == 241) ECC = myCountries[195];
+      if (radio.rds.ECC == 242) ECC = myCountries[212];
+      if (radio.rds.ECC == 243) ECC = myCountries[190];
     } else if (radio.rds.picode[0] == '9') {
+      if (radio.rds.ECC == 160) ECC = myCountries[226];
+      if (radio.rds.ECC == 162) ECC = myCountries[143];
+      if (radio.rds.ECC == 163) ECC = myCountries[162];
+      if (radio.rds.ECC == 164) ECC = myCountries[174];
       if (radio.rds.ECC == 208) ECC = myCountries[120];
       if (radio.rds.ECC == 209) ECC = myCountries[102];
       if (radio.rds.ECC == 210) ECC = myCountries[107];
@@ -363,7 +421,15 @@ void showECC() {
       if (radio.rds.ECC == 227) ECC = myCountries[36];
       if (radio.rds.ECC == 228) ECC = myCountries[37];
       if (radio.rds.ECC == 240) ECC = myCountries[80];
+      if (radio.rds.ECC == 241) ECC = myCountries[209];
+      if (radio.rds.ECC == 242) ECC = myCountries[196];
+      if (radio.rds.ECC == 243) ECC = myCountries[211];
+      if (radio.rds.ECC == 244) ECC = myCountries[190];
     } else if (radio.rds.picode[0] == 'A') {
+      if (radio.rds.ECC == 160) ECC = myCountries[226];
+      if (radio.rds.ECC == 162) ECC = myCountries[131];
+      if (radio.rds.ECC == 163) ECC = myCountries[144];
+      if (radio.rds.ECC == 164) ECC = myCountries[166];
       if (radio.rds.ECC == 208) ECC = myCountries[85];
       if (radio.rds.ECC == 209) ECC = myCountries[97];
       if (radio.rds.ECC == 210) ECC = myCountries[121];
@@ -374,7 +440,16 @@ void showECC() {
       if (radio.rds.ECC == 226) ECC = myCountries[40];
       if (radio.rds.ECC == 227) ECC = myCountries[41];
       if (radio.rds.ECC == 228) ECC = myCountries[60];
+      if (radio.rds.ECC == 240) ECC = myCountries[178];
+      if (radio.rds.ECC == 241) ECC = myCountries[215];
+      if (radio.rds.ECC == 242) ECC = myCountries[214];
     } else if (radio.rds.picode[0] == 'B') {
+      if (radio.rds.ECC == 160) ECC = myCountries[226];
+      if (radio.rds.ECC == 161) ECC = myCountries[138];
+      if (radio.rds.ECC == 162) ECC = myCountries[137];
+      if (radio.rds.ECC == 163) ECC = myCountries[145];
+      if (radio.rds.ECC == 164) ECC = myCountries[167];
+      if (radio.rds.ECC == 165) ECC = myCountries[158];
       if (radio.rds.ECC == 208) ECC = myCountries[101];
       if (radio.rds.ECC == 210) ECC = myCountries[109];
       if (radio.rds.ECC == 209) ECC = myCountries[100];
@@ -383,8 +458,16 @@ void showECC() {
       if (radio.rds.ECC == 226) ECC = myCountries[44];
       if (radio.rds.ECC == 227) ECC = myCountries[61];
       if (radio.rds.ECC == 228) ECC = myCountries[66];
+      if (radio.rds.ECC == 240) ECC = myCountries[206];
+      if (radio.rds.ECC == 241) ECC = myCountries[188];
+      if (radio.rds.ECC == 242) ECC = myCountries[203];
       if (radio.rds.ECC == 243) ECC = myCountries[93];
     } else if (radio.rds.picode[0] == 'C') {
+      if (radio.rds.ECC == 161) ECC = myCountries[138];
+      if (radio.rds.ECC == 162) ECC = myCountries[223];
+      if (radio.rds.ECC == 163) ECC = myCountries[140];
+      if (radio.rds.ECC == 164) ECC = myCountries[146];
+      if (radio.rds.ECC == 165) ECC = myCountries[169];
       if (radio.rds.ECC == 208) ECC = myCountries[110];
       if (radio.rds.ECC == 209) ECC = myCountries[108];
       if (radio.rds.ECC == 210) ECC = myCountries[111];
@@ -394,13 +477,31 @@ void showECC() {
       if (radio.rds.ECC == 226) ECC = myCountries[47];
       if (radio.rds.ECC == 227) ECC = myCountries[48];
       if (radio.rds.ECC == 228) ECC = myCountries[118];
+      if (radio.rds.ECC == 240) ECC = myCountries[190];
+      if (radio.rds.ECC == 241) ECC = myCountries[216];
+      if (radio.rds.ECC == 242) ECC = myCountries[194];
     } else if (radio.rds.picode[0] == 'D') {
+      if (radio.rds.ECC == 160) ECC = myCountries[226];
+      if (radio.rds.ECC == 161) ECC = myCountries[138];
+      if (radio.rds.ECC == 162) ECC = myCountries[225];
+      if (radio.rds.ECC == 163) ECC = myCountries[150];
+      if (radio.rds.ECC == 164) ECC = myCountries[154];
+      if (radio.rds.ECC == 165) ECC = myCountries[158];
       if (radio.rds.ECC == 208) ECC = myCountries[90];
       if (radio.rds.ECC == 209) ECC = myCountries[89];
       if (radio.rds.ECC == 224) ECC = myCountries[0];
       if (radio.rds.ECC == 225) ECC = myCountries[49];
       if (radio.rds.ECC == 227) ECC = myCountries[122];
+      if (radio.rds.ECC == 240) ECC = myCountries[198];
+      if (radio.rds.ECC == 241) ECC = myCountries[217];
+      if (radio.rds.ECC == 242) ECC = myCountries[128];
     } else if (radio.rds.picode[0] == 'E') {
+      if (radio.rds.ECC == 160) ECC = myCountries[226];
+      if (radio.rds.ECC == 161) ECC = myCountries[138];
+      if (radio.rds.ECC == 162) ECC = myCountries[151];
+      if (radio.rds.ECC == 163) ECC = myCountries[172];
+      if (radio.rds.ECC == 164) ECC = myCountries[175];
+      if (radio.rds.ECC == 165) ECC = myCountries[158];
       if (radio.rds.ECC == 208) ECC = myCountries[99];
       if (radio.rds.ECC == 209) ECC = myCountries[115];
       if (radio.rds.ECC == 210) ECC = myCountries[94];
@@ -410,7 +511,16 @@ void showECC() {
       if (radio.rds.ECC == 227) ECC = myCountries[53];
       if (radio.rds.ECC == 228) ECC = myCountries[64];
       if (radio.rds.ECC == 240) ECC = myCountries[98];
+      if (radio.rds.ECC == 241) ECC = myCountries[199];
+      if (radio.rds.ECC == 242) ECC = myCountries[208];
+      if (radio.rds.ECC == 243) ECC = myCountries[205];
     } else if (radio.rds.picode[0] == 'F') {
+      if (radio.rds.ECC == 161) ECC = myCountries[149];
+      if (radio.rds.ECC == 162) ECC = myCountries[222];
+      if (radio.rds.ECC == 163) ECC = myCountries[153];
+      if (radio.rds.ECC == 164) ECC = myCountries[176];
+      if (radio.rds.ECC == 165) ECC = myCountries[158];
+      if (radio.rds.ECC == 166) ECC = myCountries[168];
       if (radio.rds.ECC == 208) ECC = myCountries[67];
       if (radio.rds.ECC == 209) ECC = myCountries[75];
       if (radio.rds.ECC == 210) ECC = myCountries[114];
@@ -419,7 +529,11 @@ void showECC() {
       if (radio.rds.ECC == 226) ECC = myCountries[56];
       if (radio.rds.ECC == 227) ECC = myCountries[57];
       if (radio.rds.ECC == 228) ECC = myCountries[58];
+      if (radio.rds.ECC == 240) ECC = myCountries[202];
+      if (radio.rds.ECC == 241) ECC = myCountries[192];
+      if (radio.rds.ECC == 242) ECC = myCountries[220];
       if (radio.rds.ECC == 243) ECC = myCountries[71]; 
+      if (radio.rds.ECC == 244) ECC = myCountries[204];
     } else {
       ECC = myLanguage[language][73];
     }
