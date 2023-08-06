@@ -3000,7 +3000,6 @@ static const char* const myCountries[] {
   "Antigua." // 130
   "Argentina" // 131
   "Aruba" // 132
-  "Bahamas" // 133
   "Barabados" // 133
   "Belize" // 134
   "Bermuda" // 135
@@ -3091,6 +3090,7 @@ static const char* const myCountries[] {
   "Tonga" // 219
   "Vanuatu" // 220
   "Vietnam" // 221
+  "Bahamas" // 222
    
   
 
