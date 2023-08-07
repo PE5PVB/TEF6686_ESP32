@@ -185,7 +185,7 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "PRESS MODE TO RETURN" // 184
   },
 
   { "Nederlands", // Dutch
@@ -372,7 +372,7 @@ static const char* const myLanguage[16][185] = {
     "FM instellingen", // 181
     "AM instellingen", // 182
     "Connectiviteit", // 183
-    "DRUK OP MODE OM TERUG TE GAAN", // 184
+    "DRUK OP MODE OM TERUG TE GAAN" // 184
   },
 
   { "Polski", // Polish
@@ -559,7 +559,7 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "PRESS MODE TO RETURN" // 184
   },
 
   { "Hrvatski", // Croatian
@@ -746,7 +746,7 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "PRESS MODE TO RETURN" // 184
   },
 
   { "Ελληνικά", // Greek
@@ -933,7 +933,7 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "PRESS MODE TO RETURN" // 184
   },
 
   { "Romana", // Romanian
@@ -1120,7 +1120,7 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "PRESS MODE TO RETURN" // 184
   },
 
   { "Deutsch", // German
@@ -1301,13 +1301,13 @@ static const char* const myLanguage[16][185] = {
     "Zeige Prozente", // 175
     "RT puffern", // 176
     "Main settings", // 177
-    "Audio settings", // 178
-    "Display settings", // 179
-    "RDS settings", // 180
-    "FM settings", // 181
-    "AM settings", // 182
-    "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "Audioeinstellungen", // 178
+    "Displayeinstellung", // 179
+    "RDS Einstellungen", // 180
+    "UKW Einstellungen", // 181
+    "AM Einstellungen", // 182
+    "Vernetzung", // 183
+    "DRÜCKE MODE FÜR ZURÜCK" // 184
   },
 
   { "Czech", // Czech
@@ -1494,7 +1494,7 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "PRESS MODE TO RETURN" // 184
   },
 
   { "Slovak", // Slovak
@@ -1681,7 +1681,7 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "PRESS MODE TO RETURN" // 184
   },
 
   { "Français", // French
@@ -1868,7 +1868,7 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "PRESS MODE TO RETURN" // 184
   },
 
   { "Български", // Bulgarian
@@ -2055,7 +2055,7 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "PRESS MODE TO RETURN" // 184
   },
 
   { "Русский", // Russian
@@ -2242,7 +2242,7 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "PRESS MODE TO RETURN" // 184
   },
 
   { "Українська", // Ukranian
@@ -2429,7 +2429,7 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "PRESS MODE TO RETURN" // 184
   },
 
   { "Italiano", // Italian
@@ -2616,7 +2616,7 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "PRESS MODE TO RETURN" // 184
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -2803,7 +2803,7 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "PRESS MODE TO RETURN" // 184
   },
 
   { "Norsk", // Norwegian
@@ -2990,7 +2990,7 @@ static const char* const myLanguage[16][185] = {
     "FM innstillinger", // 181
     "AM innstillinger", // 182
     "Tilkobling", // 183
-    "TRYKK MODe FOR Å RETUNERE", // 184
+    "TRYKK MODE FOR Å RETUNERE" // 184
   }
 };
 
@@ -3096,7 +3096,7 @@ static const char* const myCountries[] {
   "Bahrein", // 98
   "Benin", // 99
   "Botswana", // 100
-  "Burkina.F.", // 101
+  "Burkina F.", // 101
   "Burundi", // 102
   "Cabinda", // 103
   "Cameroon", // 104
@@ -3123,12 +3123,12 @@ static const char* const myCountries[] {
   "Lesotho", // 125
   "Liberia", // 126
   "Madagas.", // 127
-  "U. Arab.E.", // 128
+  "U.Arab.E.", // 128
   "Anguilla", // 129
   "Antigua.", // 130
   "Argentina", // 131
   "Aruba", // 132
-  "Barabados", // 133
+  "Barbados", // 133
   "Belize", // 134
   "Bermuda", // 135
   "Bolivia", // 136
@@ -3142,8 +3142,8 @@ static const char* const myCountries[] {
   "Dominica", // 144
   "Domini. R", // 145
   "El Salvad.", // 146
-  "Equator", // 147
-  "Falkland.", // 148
+  "Equador", // 147
+  "Falkland", // 148
   "Greenland", // 149
   "Grenada", // 150
   "Guadeloupe", // 151
@@ -3162,9 +3162,9 @@ static const char* const myCountries[] {
   "Peru", // 164
   "Puerto R.", // 165
   "St. Kitts", // 166
-  "St. Luccia", // 167
+  "St. Lucia", // 167
   "St. P.& M.", // 168
-  "St. Vince.", // 169
+  "St.Vincent", // 169
   "Suriname", // 170
   "T & T", // 171
   "Turks & C.", // 172
@@ -3204,9 +3204,9 @@ static const char* const myCountries[] {
   "Myanmar", // 206
   "Nauru", // 207
   "Nepal", // 208
-  "N. Zeland", // 209
+  "N.Zealand", // 209
   "Pakistan", // 210
-  "Papua. N.G", // 211
+  "Papua N.G", // 211
   "Philippin.", // 212
   "Samoa", // 213
   "Singapore", // 214
