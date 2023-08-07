@@ -3005,7 +3005,7 @@ static const char* const myCountries[] {
   "Ireland", // 7
   "Estonia", // 8
   "Andorra", // 9
-  "SanMarino", // 10
+  "San Marino", // 10
   "Poland", // 11
   "Turkey", // 12
   "Israel", // 13
