@@ -2983,14 +2983,14 @@ static const char* const myLanguage[16][185] = {
     "Vis batteriverdi", // 174
     "Vis batteriprosent", // 175
     "RT buffering", // 176
-    "Main settings", // 177
-    "Audio settings", // 178
-    "Display settings", // 179
-    "RDS settings", // 180
-    "FM settings", // 181
-    "AM settings", // 182
-    "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "Hovedinnstillinger", // 177
+    "Lydinnstillinger", // 178
+    "Skjerminnstillinger", // 179
+    "RDS-innstillinger", // 180
+    "FM innstillinger", // 181
+    "AM innstillinger", // 182
+    "Tilkobling", // 183
+    "TRYKK MODe FOR Å RETUNERE", // 184
   }
 };
 
