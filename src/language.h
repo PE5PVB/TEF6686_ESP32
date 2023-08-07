@@ -637,16 +637,16 @@ static const char* const myLanguage[16][177] = {
     "50% svjetlina", // 96
     "AM pomak RF razine:", // 97
     "Jedinica mjerača signala:", // 98
-    "Use AF:", // 99
-    "Select FM Band:", // 100
-    "Select AM Band:", // 101
+    "Koristi AF:", // 99
+    "FM opseg:", // 100
+    "AM opseg:", // 101
     "LW", // 102
     "MW", // 103
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
     "Rotating while screen off", // 107
-    "Model selector", // 108
+    "Selektor modela", // 108
     "Base (ILI9341)", // 109
     "Portable (ILI9341)", // 110
     "Portable touch (ILI9341)", // 111
@@ -711,10 +711,10 @@ static const char* const myLanguage[16][177] = {
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
-    "Battery options", // 173
-    "Show voltage", // 174
-    "Show percentage", // 175
-    "RT buffering" // 176
+    "Postavke za bateriju", // 173
+    "Prikaži napon", // 174
+    "Prikaži postotak", // 175
+    "RT pufer" // 176
   },
 
   { "Ελληνικά", // Greek
