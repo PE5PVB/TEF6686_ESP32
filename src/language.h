@@ -2753,7 +2753,7 @@ static const char* const myLanguage[16][177] = {
     "AM Noise blanker", // 64
     "FM Noise blanker", // 65
     "Standarder lastet", // 66
-    "Lydutgang", // 67
+    "Lydutgang modus", // 67
     "Tune når skjerm av", // 68
     "Inverter displayet", // 69
     "Om programvaren", // 70
@@ -2925,175 +2925,175 @@ static const char* const myCountries[] {
   "France", // 55
   "Norway", // 56
   "Belarus", // 57
-  "Bosnia" // 58
-  "Monteneg." // 59 
-  "Armenia" // 60
-  "Azerbaijan" // 61
-  "Kosovo" // 62
-  "Kyrgystan" // 63
-  "Turkmenis." // 64
-  "Tajikistan" // 65
-  "Uzbekistan" // 66
-  "Malawi" // 67
-  "Mali" // 68
-  "Mauritania" // 69
-  "Mauritius" // 70
-  "Mongolia" // 71
-  "Mozambiq." // 72 
-  "Nambia" // 73
-  "Niger" // 74
-  "Nigeria" // 75
-  "Oman" // 76
-  "Qatar" // 77
-  "Rwanda" // 78
-  "Sao Tome" // 79
-  "Saudi Ara." // 80
-  "Senegal" // 81
-  "Seychel." // 82
-  "S. Leone" // 83
-  "Somalia" // 84
-  "S. Africa" // 85
-  "S. Sudan" // 86
-  "Sudan" // 87
-  "Swaziland" // 88
-  "Tanzania" // 89
-  "Togo" // 90
-  "Uganda" // 91
-  "W. Sahara" // 92
-  "Yemen" // 93
-  "Zambia" // 94
-  "Zimbabwe" // 95
-  "Angola" // 96
-  "Ascn. Isl." // 97
-  "Bahrein" // 98
-  "Benin" // 99
-  "Botswana" // 100
-  "Burkina.F." // 101
-  "Burundi" // 102
-  "Cabinda" // 103
-  "Cameroon" // 104
-  "Cape Ver." // 105 
-  "Centr. Af." // 106
-  "Chad" // 107
-  "Comoros" // 108
-  "D. Congo" // 109
-  "Congo" // 110
-  "Cote d'l." // 111
-  "Djibouti" // 112
-  "E. Guinea" // 113
-  "Eritrea" // 114
-  "Ethiopia" // 115
-  "Gabon" // 116
-  "Gambia" // 117
-  "Georgia" // 118
-  "Ghana" // 119
-  "Guinea" // 120
-  "Guinea-B." // 121
-  "Kazakh." // 122
-  "Kenya" // 123
-  "Kuwait" // 124
-  "Lesotho" // 125
-  "Liberia" // 126
-  "Madagas." // 127
-  "U. Arab.E." // 128
-  "Anguilla" // 129
-  "Antigua." // 130
-  "Argentina" // 131
-  "Aruba" // 132
-  "Barabados" // 133
-  "Belize" // 134
-  "Bermuda" // 135
-  "Bolivia" // 136
-  "Brazil" // 137
-  "Canada" // 138
-  "Cayman I." // 139
-  "Chile" // 140
-  "Colombia" // 141
-  "Costa R." // 142
-  "Cuba" // 143
-  "Dominica" // 144
-  "Domini. R" // 145
-  "El Salvad." // 146
-  "Equator" // 147
-  "Falkland." // 148
-  "Greenland" // 149
-  "Grenada" // 150
-  "Guadeloupe" // 151
-  "Guatemala" // 152
-  "Guyana" // 153
-  "Haiti" // 154
-  "Honduras" // 155
-  "Jamaica" // 156
-  "Martinique" // 157
-  "Mexico" // 158
-  "Montserrat" // 159
-  "Nether. A." // 160
-  "Nicaragua" // 161
-  "Panama" // 162
-  "Paraguay" // 163
-  "Peru" // 164
-  "Puerto R." // 165
-  "St. Kitts" // 166
-  "St. Luccia" // 167
-  "St. P.& M." // 168
-  "St. Vince." // 169
-  "Suriname" // 170
-  "T & T" // 171
-  "Turks & C." // 172
-  "U.S.A." // 173
-  "Uruguay" // 174
-  "Venezuela" // 175
-  "Virgin UK" // 176
-  "Virgin USA" // 177
-  "Afganist." // 178
-  "AU C.T." // 179
-  "AU N.S.W." // 180
-  "AU Vict." // 181
-  "AU Queen" // 182
-  "AU S. Au." // 183
-  "AU W. Au." // 184
-  "AU Tasma." // 185
-  "AU N. T." // 186
-  "Bhutan" // 187
-  "Brunei D." // 188
-  "Cambodia" // 189
-  "China" // 190
-  "Fiji" // 191
-  "Hong Kong" // 192
-  "India" // 193
-  "Indonesia" // 194
-  "Iran" // 195
-  "Japan" // 196
-  "Kiribati" // 197
-  "N. Korea" // 198
-  "S. Korea" // 199
-  "Laos" // 200
-  "Macao" // 201
-  "Malaysia" // 202
-  "Maldives" // 203
-  "Marshall I" // 204
-  "Micronesia" // 205
-  "Myanmar" // 206
-  "Nauru" // 207
-  "Nepal" // 208
-  "N. Zeland" // 209
-  "Pakistan" // 210
-  "Papua. N.G" // 211
-  "Philippin." // 212
-  "Samoa" // 213
-  "Singapore" // 214
-  "Solomon I." // 215
-  "Sri Lanka" // 216
-  "Taiwan" // 217
-  "Thailand" // 218
-  "Tonga" // 219
-  "Vanuatu" // 220
-  "Vietnam" // 221
-  "Bahamas" // 222
-  "BM or BH" // 223
-  "EC or BR" // 224
-  "AN or BR" // 225
-  "USA/VI/ PR" // 226
+  "Bosnia", // 58
+  "Monteneg.", // 59 
+  "Armenia", // 60
+  "Azerbaijan", // 61
+  "Kosovo", // 62
+  "Kyrgystan", // 63
+  "Turkmenis.", // 64
+  "Tajikistan", // 65
+  "Uzbekistan", // 66
+  "Malawi", // 67
+  "Mali", // 68
+  "Mauritania", // 69
+  "Mauritius", // 70
+  "Mongolia", // 71
+  "Mozambiq.", // 72 
+  "Nambia", // 73
+  "Niger", // 74
+  "Nigeria", // 75
+  "Oman", // 76
+  "Qatar", // 77
+  "Rwanda", // 78
+  "Sao Tome", // 79
+  "Saudi Ara.", // 80
+  "Senegal", // 81
+  "Seychel.", // 82
+  "S. Leone", // 83
+  "Somalia", // 84
+  "S. Africa", // 85
+  "S. Sudan", // 86
+  "Sudan", // 87
+  "Swaziland", // 88
+  "Tanzania", // 89
+  "Togo", // 90
+  "Uganda", // 91
+  "W. Sahara", // 92
+  "Yemen", // 93
+  "Zambia", // 94
+  "Zimbabwe", // 95
+  "Angola", // 96
+  "Ascn. Isl.", // 97
+  "Bahrein", // 98
+  "Benin", // 99
+  "Botswana", // 100
+  "Burkina.F.", // 101
+  "Burundi", // 102
+  "Cabinda", // 103
+  "Cameroon", // 104
+  "Cape Ver.", // 105 
+  "Centr. Af.", // 106
+  "Chad", // 107
+  "Comoros", // 108
+  "D. Congo", // 109
+  "Congo", // 110
+  "Cote d'l.", // 111
+  "Djibouti", // 112
+  "E. Guinea", // 113
+  "Eritrea", // 114
+  "Ethiopia", // 115
+  "Gabon", // 116
+  "Gambia", // 117
+  "Georgia", // 118
+  "Ghana", // 119
+  "Guinea", // 120
+  "Guinea-B.", // 121
+  "Kazakh.", // 122
+  "Kenya", // 123
+  "Kuwait", // 124
+  "Lesotho", // 125
+  "Liberia", // 126
+  "Madagas.", // 127
+  "U. Arab.E.", // 128
+  "Anguilla", // 129
+  "Antigua.", // 130
+  "Argentina", // 131
+  "Aruba", // 132
+  "Barabados", // 133
+  "Belize", // 134
+  "Bermuda", // 135
+  "Bolivia", // 136
+  "Brazil", // 137
+  "Canada", // 138
+  "Cayman I.", // 139
+  "Chile", // 140
+  "Colombia", // 141
+  "Costa R.", // 142
+  "Cuba", // 143
+  "Dominica", // 144
+  "Domini. R", // 145
+  "El Salvad.", // 146
+  "Equator", // 147
+  "Falkland.", // 148
+  "Greenland", // 149
+  "Grenada", // 150
+  "Guadeloupe", // 151
+  "Guatemala", // 152
+  "Guyana", // 153
+  "Haiti", // 154
+  "Honduras", // 155
+  "Jamaica", // 156
+  "Martinique", // 157
+  "Mexico", // 158
+  "Montserrat", // 159
+  "Nether. A.", // 160
+  "Nicaragua", // 161
+  "Panama", // 162
+  "Paraguay", // 163
+  "Peru", // 164
+  "Puerto R.", // 165
+  "St. Kitts", // 166
+  "St. Luccia", // 167
+  "St. P.& M.", // 168
+  "St. Vince.", // 169
+  "Suriname", // 170
+  "T & T", // 171
+  "Turks & C.", // 172
+  "U.S.A.", // 173
+  "Uruguay", // 174
+  "Venezuela", // 175
+  "Virgin UK", // 176
+  "Virgin USA", // 177
+  "Afganist.", // 178
+  "AU C.T.", // 179
+  "AU N.S.W.", // 180
+  "AU Vict.", // 181
+  "AU Queen", // 182
+  "AU S. Au.", // 183
+  "AU W. Au.", // 184
+  "AU Tasma.", // 185
+  "AU N. T.", // 186
+  "Bhutan", // 187
+  "Brunei D.", // 188
+  "Cambodia", // 189
+  "China", // 190
+  "Fiji", // 191
+  "Hong Kong", // 192
+  "India", // 193
+  "Indonesia", // 194
+  "Iran", // 195
+  "Japan", // 196
+  "Kiribati", // 197
+  "N. Korea", // 198
+  "S. Korea", // 199
+  "Laos", // 200
+  "Macao", // 201
+  "Malaysia", // 202
+  "Maldives", // 203
+  "Marshall I", // 204
+  "Micronesia", // 205
+  "Myanmar", // 206
+  "Nauru", // 207
+  "Nepal", // 208
+  "N. Zeland", // 209
+  "Pakistan", // 210
+  "Papua. N.G", // 211
+  "Philippin.", // 212
+  "Samoa", // 213
+  "Singapore", // 214
+  "Solomon I.", // 215
+  "Sri Lanka", // 216
+  "Taiwan", // 217
+  "Thailand", // 218
+  "Tonga", // 219
+  "Vanuatu", // 220
+  "Vietnam", // 221
+  "Bahamas", // 222
+  "BM or BH", // 223
+  "EC or BR", // 224
+  "AN or BR", // 225
+  "USA/VI/ PR", // 226
   "Bangladesh" // 227
   
 
