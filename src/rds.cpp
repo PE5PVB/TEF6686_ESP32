@@ -484,7 +484,7 @@ void showECC() {
     } else if (radio.rds.picode[0] == 'D') {
       if (radio.rds.ECC == 160) ECC = myCountries[226];
       if (radio.rds.ECC == 161) ECC = myCountries[138];
-      if (radio.rds.ECC == 162) ECC = myCountries[225];
+      if (radio.rds.ECC == 162) ECC = myCountries[137];
       if (radio.rds.ECC == 163) ECC = myCountries[150];
       if (radio.rds.ECC == 164) ECC = myCountries[154];
       if (radio.rds.ECC == 165) ECC = myCountries[158];
