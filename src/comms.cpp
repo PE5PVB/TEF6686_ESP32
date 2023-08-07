@@ -549,6 +549,9 @@ void tryWiFi() {
     wifi = true;
   } else {
     if (!setupmode) tftPrint(0, myLanguage[language][56], 155, 128, SignificantColor, SignificantColorSmooth, 28);
+	Server.end();
+    Udp.stop();
+	WiFi.mode(WIFI_OFF);
     wifi = false;
     XDRGTKTCP = false;
     RDSSPYTCP = false;
