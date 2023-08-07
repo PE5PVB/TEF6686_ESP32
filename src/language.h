@@ -650,62 +650,62 @@ static const char* const myLanguage[16][177] = {
     "Base (ILI9341)", // 109
     "Portable (ILI9341)", // 110
     "Portable touch (ILI9341)", // 111
-    "Title", // 112
+    "Naslov", // 112
     "Album", // 113
-    "Track", // 114
-    "Artist", // 115
-    "Composition", // 116
-    "Movement", // 117
-    "Conductor", // 118
-    "Composer", // 119
-    "Band", // 120
-    "Comment", // 121
-    "Genre", // 122
-    "News", // 123
-    "Local news", // 124
-    "Stockmarket", // 125
+    "Pjesma", // 114
+    "Izvođač", // 115
+    "Kompozicija", // 116
+    "Pokret", // 117
+    "Dirigent", // 118
+    "Skladatelj", // 119
+    "Bend", // 120
+    "Komentar", // 121
+    "Žanr", // 122
+    "Vijesti", // 123
+    "Lokalne vijesti", // 124
+    "Burza", // 125
     "Sport", // 126
-    "Lottery", // 127
-    "Horoscope", // 128
-    "Daily Diversion", // 129
-    "Health", // 130
-    "Event", // 131
-    "Scene", // 132
-    "Cinema", // 133
+    "Lutrija", // 127
+    "Horoskop", // 128
+    "Savjet dana", // 129
+    "Zdravlje", // 130
+    "Događanja", // 131
+    "Scena", // 132
+    "Kino", // 133
     "TV", // 134
-    "Date/time", //135
-    "Weather", // 136
-    "Traffic", // 137
+    "Datum/vrijeme", //135
+    "Vremenska prognoza", // 136
+    "Promet", // 137
     "Alarm", // 138
-    "Advertisement", // 139
-    "Website", // 140
-    "Other", // 141
-    "Short PS", // 142
-    "Long PS", // 143
-    "Now", // 144
-    "Next", //145
-    "Part", // 146
-    "Host", // 147
-    "Editor", // 148
-    "Frequency", // 149
-    "Homepage", // 150
-    "Subchannel", // 151
+    "Reklama", // 139
+    "Web stranica", // 140
+    "Ostalo", // 141
+    "Kratki PS", // 142
+    "Dugi PS", // 143
+    "Sada", // 144
+    "Sljedi", //145
+    "Dio", // 146
+    "Voditelj", // 147
+    "Urednik", // 148
+    "Frekvencija", // 149
+    "Web stranica", // 150
+    "Potkanal", // 151
     "Hotline", // 152
-    "Studio phone", // 153
-    "Phone", // 154
+    "Telefon studija", // 153
+    "Telefon", // 154
     "SMS studio", // 155
     "SMS", // 156
     "Email hotline", // 157
-    "Email studio", // 158
+    "Email studija", // 158
     "Email", // 159
     "Chat", // 160
-    "Chat centre", // 161
-    "Vote question", // 162
-    "Vote centre", // 163
-    "Place", // 164
-    "Appointment", // 165
-    "Identifier", // 166
-    "Purchase", // 167
+    "Chat centar", // 161
+    "Pitanje za glasanje", // 162
+    "Centar za glasanje", // 163
+    "Mjesto", // 164
+    "Ugovoreni sastanak", // 165
+    "Identifikator", // 166
+    "Kupnja", // 167
     "Get data", // 168
     " ", // 169
     "Tangerine", // 170
