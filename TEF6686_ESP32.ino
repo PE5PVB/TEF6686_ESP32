@@ -2948,9 +2948,9 @@ void ShowBattery() {
     float batteryV = ((float)v / 4095.0) * 2.0 * 3.3 * (1056 / 1000.0);
     batteryV = constrain(batteryV, 0.0, 5.0);
     if (round(batteryV * 100.0) != round(batteryVold * 100.0)) {
-      batteryVold = batteryV;
       if (batteryoptions == BATTERY_VALUE) {
         tftReplace(-1, String(batteryVold, 1) + "V", String(batteryV, 1) + "V", 279, 9, BatteryValueColor, BatteryValueColorSmooth, 16);
+        batteryVold = batteryV;
       } else if (batteryoptions == BATTERY_PERCENT) {
         float vPer = 0.0;
         vPer = (batteryV - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE);
