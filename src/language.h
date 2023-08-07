@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char* const myLanguage[16][177] = {
+static const char* const myLanguage[16][185] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -177,7 +177,15 @@ static const char* const myLanguage[16][177] = {
     "Battery options", // 173
     "Show voltage", // 174
     "Show percentage", // 175
-    "RT buffering" // 176
+    "RT buffering", // 176
+    "Main settings", // 177
+    "Audio settings", // 178
+    "Display settings", // 179
+    "RDS settings", // 180
+    "FM settings", // 181
+    "AM settings", // 182
+    "Connectivity", // 183
+    "PRESS MODE TO RETURN", // 184
   },
 
   { "Nederlands", // Dutch
@@ -353,10 +361,18 @@ static const char* const myLanguage[16][177] = {
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
-    "Battery options", // 173
-    "Show voltage", // 174
-    "Show percentage", // 175
-    "RT buffering" // 176
+    "Batterij weergave", // 173
+    "Toon spanning", // 174
+    "Toon percentage", // 175
+    "RT buffer", // 176
+    "Algemeen", // 177
+    "Audio", // 178
+    "Weergave", // 179
+    "RDS instellingen", // 180
+    "FM instellingen", // 181
+    "AM instellingen", // 182
+    "Connectiviteit", // 183
+    "DRUK OP MODE OM TERUG TE GAAN", // 184
   },
 
   { "Polski", // Polish
@@ -535,7 +551,15 @@ static const char* const myLanguage[16][177] = {
     "Opcje baterii", // 173
     "Pokaz napiecie", // 174
     "Pokaz procent nalad.", // 175
-    "Buforowanie RT" // 176
+    "Buforowanie RT", // 176
+    "Main settings", // 177
+    "Audio settings", // 178
+    "Display settings", // 179
+    "RDS settings", // 180
+    "FM settings", // 181
+    "AM settings", // 182
+    "Connectivity", // 183
+    "PRESS MODE TO RETURN", // 184
   },
 
   { "Hrvatski", // Croatian
@@ -714,7 +738,15 @@ static const char* const myLanguage[16][177] = {
     "Postavke za bateriju", // 173
     "Prikaži napon", // 174
     "Prikaži postotak", // 175
-    "RT pufer" // 176
+    "RT pufer", // 176
+    "Main settings", // 177
+    "Audio settings", // 178
+    "Display settings", // 179
+    "RDS settings", // 180
+    "FM settings", // 181
+    "AM settings", // 182
+    "Connectivity", // 183
+    "PRESS MODE TO RETURN", // 184
   },
 
   { "Ελληνικά", // Greek
@@ -893,7 +925,15 @@ static const char* const myLanguage[16][177] = {
     "Επιλογές μπαταρίας", // 173
     "Εμφάνιση τάσης", // 174
     "Εμφάνιση ποσοστού", // 175
-    "RT buffering" // 176
+    "RT buffering", // 176
+    "Main settings", // 177
+    "Audio settings", // 178
+    "Display settings", // 179
+    "RDS settings", // 180
+    "FM settings", // 181
+    "AM settings", // 182
+    "Connectivity", // 183
+    "PRESS MODE TO RETURN", // 184
   },
 
   { "Romana", // Romanian
@@ -1072,7 +1112,15 @@ static const char* const myLanguage[16][177] = {
     "Battery options", // 173
     "Show voltage", // 174
     "Show percentage", // 175
-    "RT buffering" // 176
+    "RT buffering", // 176
+    "Main settings", // 177
+    "Audio settings", // 178
+    "Display settings", // 179
+    "RDS settings", // 180
+    "FM settings", // 181
+    "AM settings", // 182
+    "Connectivity", // 183
+    "PRESS MODE TO RETURN", // 184
   },
 
   { "Deutsch", // German
@@ -1251,7 +1299,15 @@ static const char* const myLanguage[16][177] = {
     "Akkuoptionen", // 173
     "Zeige Spannung", // 174
     "Zeige Prozente", // 175
-    "RT puffern" // 176
+    "RT puffern", // 176
+    "Main settings", // 177
+    "Audio settings", // 178
+    "Display settings", // 179
+    "RDS settings", // 180
+    "FM settings", // 181
+    "AM settings", // 182
+    "Connectivity", // 183
+    "PRESS MODE TO RETURN", // 184
   },
 
   { "Czech", // Czech
@@ -1430,7 +1486,15 @@ static const char* const myLanguage[16][177] = {
     "Battery options", // 173
     "Show voltage", // 174
     "Show percentage", // 175
-    "RT buffering" // 176
+    "RT buffering", // 176
+    "Main settings", // 177
+    "Audio settings", // 178
+    "Display settings", // 179
+    "RDS settings", // 180
+    "FM settings", // 181
+    "AM settings", // 182
+    "Connectivity", // 183
+    "PRESS MODE TO RETURN", // 184
   },
 
   { "Slovak", // Slovak
@@ -1609,7 +1673,15 @@ static const char* const myLanguage[16][177] = {
     "Battery options", // 173
     "Show voltage", // 174
     "Show percentage", // 175
-    "RT buffering" // 176
+    "RT buffering", // 176
+    "Main settings", // 177
+    "Audio settings", // 178
+    "Display settings", // 179
+    "RDS settings", // 180
+    "FM settings", // 181
+    "AM settings", // 182
+    "Connectivity", // 183
+    "PRESS MODE TO RETURN", // 184
   },
 
   { "Français", // French
@@ -1788,7 +1860,15 @@ static const char* const myLanguage[16][177] = {
     "Options de batterie", // 173
     "Montrer la tension", // 174
     "Montrer le pourcentage", // 175
-    "RT buffering" // 176
+    "RT buffering", // 176
+    "Main settings", // 177
+    "Audio settings", // 178
+    "Display settings", // 179
+    "RDS settings", // 180
+    "FM settings", // 181
+    "AM settings", // 182
+    "Connectivity", // 183
+    "PRESS MODE TO RETURN", // 184
   },
 
   { "Български", // Bulgarian
@@ -1967,7 +2047,15 @@ static const char* const myLanguage[16][177] = {
     "Battery options", // 173
     "Show voltage", // 174
     "Show percentage", // 175
-    "RT buffering" // 176
+    "RT buffering", // 176
+    "Main settings", // 177
+    "Audio settings", // 178
+    "Display settings", // 179
+    "RDS settings", // 180
+    "FM settings", // 181
+    "AM settings", // 182
+    "Connectivity", // 183
+    "PRESS MODE TO RETURN", // 184
   },
 
   { "Русский", // Russian
@@ -2146,7 +2234,15 @@ static const char* const myLanguage[16][177] = {
     "Варианты батареи", // 173
     "Показать значение батареи", // 174
     "Показать процент заряда батареи", // 175
-    "RT buffering" // 176
+    "RT buffering", // 176
+    "Main settings", // 177
+    "Audio settings", // 178
+    "Display settings", // 179
+    "RDS settings", // 180
+    "FM settings", // 181
+    "AM settings", // 182
+    "Connectivity", // 183
+    "PRESS MODE TO RETURN", // 184
   },
 
   { "Українська", // Ukranian
@@ -2325,7 +2421,15 @@ static const char* const myLanguage[16][177] = {
     "Варіанти батареї", // 173
     "Показати заряд батареї", // 174
     "Показати відсоток батареї", // 175
-    "RT buffering" // 176
+    "RT buffering", // 176
+    "Main settings", // 177
+    "Audio settings", // 178
+    "Display settings", // 179
+    "RDS settings", // 180
+    "FM settings", // 181
+    "AM settings", // 182
+    "Connectivity", // 183
+    "PRESS MODE TO RETURN", // 184
   },
 
   { "Italiano", // Italian
@@ -2504,7 +2608,15 @@ static const char* const myLanguage[16][177] = {
     "Battery options", // 173
     "Show voltage", // 174
     "Show percentage", // 175
-    "RT buffering" // 176
+    "RT buffering", // 176
+    "Main settings", // 177
+    "Audio settings", // 178
+    "Display settings", // 179
+    "RDS settings", // 180
+    "FM settings", // 181
+    "AM settings", // 182
+    "Connectivity", // 183
+    "PRESS MODE TO RETURN", // 184
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -2683,7 +2795,15 @@ static const char* const myLanguage[16][177] = {
     "显示电池", // 173
     "电压值", // 174
     "电池百分比", // 175
-    "RT buffering" // 176
+    "RT buffering", // 176
+    "Main settings", // 177
+    "Audio settings", // 178
+    "Display settings", // 179
+    "RDS settings", // 180
+    "FM settings", // 181
+    "AM settings", // 182
+    "Connectivity", // 183
+    "PRESS MODE TO RETURN", // 184
   },
 
   { "Norsk", // Norwegian
@@ -2862,7 +2982,15 @@ static const char* const myLanguage[16][177] = {
     "Batterialternativer", // 173
     "Vis batteriverdi", // 174
     "Vis batteriprosent", // 175
-    "RT buffering" // 176
+    "RT buffering", // 176
+    "Main settings", // 177
+    "Audio settings", // 178
+    "Display settings", // 179
+    "RDS settings", // 180
+    "FM settings", // 181
+    "AM settings", // 182
+    "Connectivity", // 183
+    "PRESS MODE TO RETURN", // 184
   }
 };
 
@@ -2926,7 +3054,7 @@ static const char* const myCountries[] {
   "Norway", // 56
   "Belarus", // 57
   "Bosnia", // 58
-  "Monteneg.", // 59 
+  "Monteneg.", // 59
   "Armenia", // 60
   "Azerbaijan", // 61
   "Kosovo", // 62
@@ -2939,7 +3067,7 @@ static const char* const myCountries[] {
   "Mauritania", // 69
   "Mauritius", // 70
   "Mongolia", // 71
-  "Mozambiq.", // 72 
+  "Mozambiq.", // 72
   "Nambia", // 73
   "Niger", // 74
   "Nigeria", // 75
@@ -2972,7 +3100,7 @@ static const char* const myCountries[] {
   "Burundi", // 102
   "Cabinda", // 103
   "Cameroon", // 104
-  "Cape Ver.", // 105 
+  "Cape Ver.", // 105
   "Centr. Af.", // 106
   "Chad", // 107
   "Comoros", // 108
@@ -3095,13 +3223,6 @@ static const char* const myCountries[] {
   "AN or BR", // 225
   "USA/VI/ PR", // 226
   "Bangladesh" // 227
-  
-
-  
-    
-  
-    
-  
 };
 
 static const char* const myLanguages[] {
