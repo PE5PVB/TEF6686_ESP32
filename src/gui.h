@@ -10,6 +10,23 @@
 #define SMETERPIN       27
 #define CONTRASTPIN     2
 
+#define ITEM1			30
+#define ITEM2			50
+#define ITEM3			70
+#define ITEM4			90
+#define ITEM5			110
+#define ITEM6			130
+#define ITEM7			150
+#define ITEM8			170
+#define ITEM9			190
+#define ITEM10			210
+
+#define PAGE1			1
+#define PAGE2			2
+#define PAGE3			3
+#define PAGE4			4
+#define PAGE5			5
+
 extern bool advancedRDS;
 extern bool af;
 extern bool afpage;
