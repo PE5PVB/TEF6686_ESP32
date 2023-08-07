@@ -172,7 +172,6 @@ typedef struct _rds_ {
 typedef struct _af_ {
   uint16_t  frequency;
   int16_t score;
-  bool filler;
   bool afvalid;
   bool checked;
 } af_;

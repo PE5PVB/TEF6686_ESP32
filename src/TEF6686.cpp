@@ -123,7 +123,6 @@ uint16_t TEF6686::TestAF() {
             af[y].frequency = 0;
             af[y].score = -32767;
             af[y].afvalid = true;
-            af[y].filler = false;
             af[y].checked = false;
           }
           af_counter = 0; // Reset af_counter only once after the loop.
@@ -552,7 +551,6 @@ void TEF6686::readRDS(bool showrdserrors)
 
                   if (!isValuePresent) {
                     af[af_counter].frequency = buffer0;
-                    if ((rds.rdsC & 0xFF) == 205) af[af_counter].filler = true;
                     af_counter++;
                   }
 
@@ -575,15 +573,12 @@ void TEF6686::readRDS(bool showrdserrors)
 
                       if (af[j].frequency > af[j + 1].frequency && af[j + 1].frequency != 0) {
                         uint16_t temp = af[j].frequency;
-                        bool temp2 = af[j].filler;
                         bool temp3 = af[j].afvalid;
                         bool temp4 = af[j].checked;
                         af[j].frequency = af[j + 1].frequency;
-                        af[j].filler = af[j + 1].filler;
                         af[j].afvalid = af[j + 1].afvalid;
                         af[j].checked = af[j + 1].checked;
                         af[j + 1].frequency = temp;
-                        af[j + 1].filler = temp2;
                         af[j + 1].afvalid = temp3;
                         af[j + 1].checked = temp4;
                       }
@@ -906,7 +901,6 @@ void TEF6686::clearRDS (bool fullsearchrds)
   for (i = 0; i < 50; i++) {
     af[i].frequency = 0;
     af[i].score = -32767;
-    af[i].filler = false;
     af[i].afvalid = true;
     af[i].checked = false;
   }
