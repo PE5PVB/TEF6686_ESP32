@@ -3068,7 +3068,7 @@ static const char* const myCountries[] {
   "Mauritius", // 70
   "Mongolia", // 71
   "Mozambiq.", // 72
-  "Nambia", // 73
+  "Namibia", // 73
   "Niger", // 74
   "Nigeria", // 75
   "Oman", // 76
