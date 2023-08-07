@@ -1843,10 +1843,6 @@ void ModeButtonPress() {
       if (USBmode) Serial.begin(19200); else Serial.begin(115200);
       doBandSelectionFM();
       doBandSelectionAM();
-      if (touchrotating) {
-        if (poweroptions != LCD_OFF) poweroptions = LCD_OFF;
-        if (!screensaverset) screensaverset = 1;
-      }
       ScreensaverTimerSet(screensaverOptions[screensaverset]);
       if (screensaverset) ScreensaverTimerRestart();
     }
