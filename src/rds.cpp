@@ -279,8 +279,8 @@ void showECC() {
     if (radio.rds.picode[0] == '1') {
       if (radio.rds.ECC == 160) ECC = myCountries[226];
       if (radio.rds.ECC == 162) ECC = myCountries[129];
-      if (radio.rds.ECC == 163) ECC = myCountries[152];
-      if (radio.rds.ECC == 164) ECC = myCountries[137];
+      if (radio.rds.ECC == 163) ECC = myCountries[136];
+      if (radio.rds.ECC == 164) ECC = myCountries[152];
       if (radio.rds.ECC == 208) ECC = myCountries[104];
       if (radio.rds.ECC == 209) ECC = myCountries[83];
       if (radio.rds.ECC == 210) ECC = myCountries[76];
