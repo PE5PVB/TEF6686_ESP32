@@ -323,6 +323,7 @@ void showECC() {
       if (radio.rds.ECC == 225) ECC = myCountries[10];
       if (radio.rds.ECC == 226) ECC = myCountries[11];
       if (radio.rds.ECC == 227) ECC = myCountries[12];
+      if (radio.rds.ECC == 228) ECC = myCountries[16];
       if (radio.rds.ECC == 229) ECC = myCountries[63];
       if (radio.rds.ECC == 240) ECC = myCountries[181];
       if (radio.rds.ECC == 241) ECC = myCountries[227];
@@ -339,7 +340,6 @@ void showECC() {
       if (radio.rds.ECC == 224) ECC = myCountries[13];
       if (radio.rds.ECC == 225) ECC = myCountries[14];
       if (radio.rds.ECC == 226) ECC = myCountries[15];
-      if (radio.rds.ECC == 227) ECC = myCountries[16];
       if (radio.rds.ECC == 240) ECC = myCountries[182];
       if (radio.rds.ECC == 241) ECC = myCountries[210];
       if (radio.rds.ECC == 242) ECC = myCountries[213];
