@@ -462,6 +462,7 @@ void showECC() {
       if (radio.rds.ECC == 241) ECC = myCountries[188];
       if (radio.rds.ECC == 242) ECC = myCountries[203];
       if (radio.rds.ECC == 243) ECC = myCountries[93];
+      if (radio.rds.ECC == 244) ECC = myCountries[204];
     } else if (radio.rds.picode[0] == 'C') {
       if (radio.rds.ECC == 161) ECC = myCountries[138];
       if (radio.rds.ECC == 162) ECC = myCountries[223];
@@ -533,7 +534,6 @@ void showECC() {
       if (radio.rds.ECC == 241) ECC = myCountries[192];
       if (radio.rds.ECC == 242) ECC = myCountries[220];
       if (radio.rds.ECC == 243) ECC = myCountries[71]; 
-      if (radio.rds.ECC == 244) ECC = myCountries[204];
     } else {
       ECC = myLanguage[language][73];
     }
