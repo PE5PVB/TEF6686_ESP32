@@ -283,7 +283,7 @@ void showECC() {
       if (radio.rds.ECC == 164) ECC = myCountries[152];
       if (radio.rds.ECC == 208) ECC = myCountries[104];
       if (radio.rds.ECC == 209) ECC = myCountries[73];
-      if (radio.rds.ECC == 210) ECC = myCountries[76];
+      if (radio.rds.ECC == 210) ECC = myCountries[83];
       if (radio.rds.ECC == 224) ECC = myCountries[0];
       if (radio.rds.ECC == 225) ECC = myCountries[1];
       if (radio.rds.ECC == 226) ECC = myCountries[2];
