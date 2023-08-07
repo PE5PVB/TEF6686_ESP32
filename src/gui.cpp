@@ -358,143 +358,143 @@ void BuildMenu() {
   tftPrint(1, String(menupage) + "/" + String(menupagestotal), 314, 7, ActiveColor, ActiveColorSmooth, 16);
   tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, ActiveColor);
   switch (menupage) {
-    case 1:
-      tftPrint(1, "dB", 310, 36, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(1, "MHz", 310, 56, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(1, "MHz", 310, 76, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(1, "MHz", 310, 96, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(1, "dB", 310, 116, ActiveColor, ActiveColorSmooth, 16);
-      if (StereoLevel != 0) tftPrint(1, "dBμV", 310, 136, ActiveColor, ActiveColorSmooth, 16);
-      if (HighCutLevel != 0) tftPrint(1, "Hz", 310, 156, ActiveColor, ActiveColorSmooth, 16);
-      if (HighCutOffset != 0) tftPrint(1, "dBμV", 310, 176, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(1, "dBμV", 310, 196, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(1, "%", 310, 216, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][20], 8, 36, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][21], 8, 56, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][22], 8, 76, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][23], 8, 96, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][24], 8, 116, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][25], 8, 136, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][26], 8, 156, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][27], 8, 176, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][28], 8, 196, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][29], 8, 216, ActiveColor, ActiveColorSmooth, 16);
+    case PAGE1:
+      tftPrint(1, "dB", 310, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(1, "MHz", 310, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(1, "MHz", 310, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(1, "MHz", 310, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(1, "dB", 310, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+      if (StereoLevel != 0) tftPrint(1, "dBμV", 310, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
+      if (HighCutLevel != 0) tftPrint(1, "Hz", 310, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
+      if (HighCutOffset != 0) tftPrint(1, "dBμV", 310, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(1, "dBμV", 310, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(1, "%", 310, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][20], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][21], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][22], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][23], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][24], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][25], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][26], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][27], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][28], 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][29], 8, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
 
-      if (VolSet > 0) tftPrint(1, "+" + String(VolSet, DEC), 270, 36, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(VolSet, DEC), 270, 36, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, String(ConverterSet, DEC), 270, 56, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 270, 76, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 270, 96, PrimaryColor, PrimaryColorSmooth, 16);
-      if (LevelOffset > 0) tftPrint(1, "+" + String(LevelOffset, DEC), 270, 116, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(LevelOffset, DEC), 270, 116, PrimaryColor, PrimaryColorSmooth, 16);
-      if (StereoLevel != 0) tftPrint(1, String(StereoLevel, DEC), 270, 136, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 136, PrimaryColor, PrimaryColorSmooth, 16);
-      if (HighCutLevel != 0) tftPrint(1, String(HighCutLevel * 100, DEC), 270, 156, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 156, PrimaryColor, PrimaryColorSmooth, 16);
-      if (HighCutOffset != 0) tftPrint(1, String(HighCutOffset, DEC), 270, 176, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 176, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, String(LowLevelSet, DEC), 270, 196, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, String(ContrastSet, DEC), 270, 216, PrimaryColor, PrimaryColorSmooth, 16);
+      if (VolSet > 0) tftPrint(1, "+" + String(VolSet, DEC), 270, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(VolSet, DEC), 270, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      tftPrint(1, String(ConverterSet, DEC), 270, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      tftPrint(1, String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      tftPrint(1, String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 270, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (LevelOffset > 0) tftPrint(1, "+" + String(LevelOffset, DEC), 270, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(LevelOffset, DEC), 270, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (StereoLevel != 0) tftPrint(1, String(StereoLevel, DEC), 270, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (HighCutLevel != 0) tftPrint(1, String(HighCutLevel * 100, DEC), 270, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (HighCutOffset != 0) tftPrint(1, String(HighCutOffset, DEC), 270, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      tftPrint(1, String(LowLevelSet, DEC), 270, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      tftPrint(1, String(ContrastSet, DEC), 270, ITEM10 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       break;
 
-    case 2:
-      tftPrint(-1, myLanguage[language][39], 8, 36, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][38], 8, 56, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][43], 8, 76, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][44], 8, 96, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][45], 8, 116, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][46], 8, 136, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][49], 8, 156, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][50], 8, 176, ActiveColor, ActiveColorSmooth, 16);
-      if (wifi) tftPrint(-1, String(myLanguage[language][51]) + " IP: " + String(WiFi.localIP().toString()), 8, 196, ActiveColor, ActiveColorSmooth, 16); else tftPrint(-1, myLanguage[language][51], 8, 196, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][52], 8, 216, ActiveColor, ActiveColorSmooth, 16);
+    case PAGE2:
+      tftPrint(-1, myLanguage[language][39], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][38], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][43], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][44], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][45], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][46], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][49], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][50], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
+      if (wifi) tftPrint(-1, String(myLanguage[language][51]) + " IP: " + String(WiFi.localIP().toString()), 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(-1, myLanguage[language][51], 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][52], 8, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
 
-      tftPrint(1, myLanguage[language][0], 310, 36, PrimaryColor, PrimaryColorSmooth, 16);
-      if (showrdserrors) tftPrint(1, myLanguage[language][42], 310, 56, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 56, PrimaryColor, PrimaryColorSmooth, 16);
-      if (softmutefm) tftPrint(1, myLanguage[language][42], 310, 76, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 76, PrimaryColor, PrimaryColorSmooth, 16);
-      if (softmuteam) tftPrint(1, myLanguage[language][42], 310, 96, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 96, PrimaryColor, PrimaryColorSmooth, 16);
-      if (edgebeep) tftPrint(1, myLanguage[language][42], 310, 116, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 116, PrimaryColor, PrimaryColorSmooth, 16);
-      if (region == 0) tftPrint(1, myLanguage[language][47], 310, 136, PrimaryColor, PrimaryColorSmooth, 16);
-      if (region == 1) tftPrint(1, myLanguage[language][48], 310, 136, PrimaryColor, PrimaryColorSmooth, 16);
-      if (radio.rds.underscore) tftPrint(1, myLanguage[language][42], 310, 156, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 156, PrimaryColor, PrimaryColorSmooth, 16);
-      if (USBmode) tftPrint(1, "RDS Spy", 310, 176, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, "XDRGTK", 310, 176, PrimaryColor, PrimaryColorSmooth, 16);
-      if (wifi) tftPrint(1, myLanguage[language][42], 310, 196, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 196, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, ">", 310, 216, PrimaryColor, PrimaryColorSmooth, 16);
+      tftPrint(1, myLanguage[language][0], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (showrdserrors) tftPrint(1, myLanguage[language][42], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (softmutefm) tftPrint(1, myLanguage[language][42], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (softmuteam) tftPrint(1, myLanguage[language][42], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (edgebeep) tftPrint(1, myLanguage[language][42], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (region == 0) tftPrint(1, myLanguage[language][47], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (region == 1) tftPrint(1, myLanguage[language][48], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (radio.rds.underscore) tftPrint(1, myLanguage[language][42], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (USBmode) tftPrint(1, "RDS Spy", 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, "XDRGTK", 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (wifi) tftPrint(1, myLanguage[language][42], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      tftPrint(1, ">", 310, ITEM10 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       break;
 
-    case 3:
-      tftPrint(-1, myLanguage[language][58], 8, 36, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][59], 8, 56, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][60], 8, 76, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][61], 8, 96, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][62], 8, 116, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][63], 8, 136, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][64], 8, 156, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][65], 8, 176, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][67], 8, 196, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][68], 8, 216, ActiveColor, ActiveColorSmooth, 16);
+    case PAGE3:
+      tftPrint(-1, myLanguage[language][58], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][59], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][60], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][61], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][62], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][63], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][64], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][65], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][67], 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][68], 8, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
 
-      if (amnb != 0) tftPrint(1, "%", 310, 156, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 156, ActiveColor, ActiveColorSmooth, 16);
-      if (fmnb != 0) tftPrint(1, "%", 310, 176, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 176, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(1, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 310, 36, PrimaryColor, PrimaryColorSmooth, 16);
-      if (showSWMIBand) tftPrint(1, myLanguage[language][42], 310, 56, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 56, PrimaryColor, PrimaryColorSmooth, 16);
-      if (radio.rds.filter) tftPrint(1, myLanguage[language][42], 310, 76, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 76, PrimaryColor, PrimaryColorSmooth, 16);
-      if (radio.rds.pierrors) tftPrint(1, myLanguage[language][42], 310, 96, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 96, PrimaryColor, PrimaryColorSmooth, 16);
-      if (showsquelch) tftPrint(1, myLanguage[language][42], 310, 116, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 116, PrimaryColor, PrimaryColorSmooth, 16);
-      if (showmodulation) tftPrint(1, myLanguage[language][42], 310, 136, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 136, PrimaryColor, PrimaryColorSmooth, 16);
-      if (amnb != 0) tftPrint(1, String(amnb, DEC), 270, 156, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 156, PrimaryColor, PrimaryColorSmooth, 16);
-      if (fmnb != 0) tftPrint(1, String(fmnb, DEC), 270, 176, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 176, PrimaryColor, PrimaryColorSmooth, 16);
-      if (audiomode) tftPrint(1, "MPX", 310, 196, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, "Stereo", 310, 196, PrimaryColor, PrimaryColorSmooth, 16);
-      if (touchrotating) tftPrint(1, myLanguage[language][42], 310, 216, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 216, PrimaryColor, PrimaryColorSmooth, 16);
+      if (amnb != 0) tftPrint(1, "%", 310, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
+      if (fmnb != 0) tftPrint(1, "%", 310, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(1, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (showSWMIBand) tftPrint(1, myLanguage[language][42], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (radio.rds.filter) tftPrint(1, myLanguage[language][42], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (radio.rds.pierrors) tftPrint(1, myLanguage[language][42], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (showsquelch) tftPrint(1, myLanguage[language][42], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (showmodulation) tftPrint(1, myLanguage[language][42], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (amnb != 0) tftPrint(1, String(amnb, DEC), 270, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (fmnb != 0) tftPrint(1, String(fmnb, DEC), 270, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (audiomode) tftPrint(1, "MPX", 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, "Stereo", 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (touchrotating) tftPrint(1, myLanguage[language][42], 310, ITEM10 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM10 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       break;
 
-    case 4:
-      tftPrint(-1, myLanguage[language][77], 8, 36, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][70], 8, 56, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][74], 8, 76, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][90], 8, 96, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][91], 8, 116, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][97], 8, 136, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][98], 8, 156, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][99], 8, 176, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][100], 8, 196, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][101], 8, 216, ActiveColor, ActiveColorSmooth, 16);
+    case PAGE4:
+      tftPrint(-1, myLanguage[language][77], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][70], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][74], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][90], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][91], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][97], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][98], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][99], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][100], 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][101], 8, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
 
-      tftPrint(1, "KHz", 310, 96, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(1, "dB", 310, 136, ActiveColor, ActiveColorSmooth, 16);
-      if (screensaverset) tftPrint(1, myLanguage[language][92], 310, 116, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 116, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, CurrentThemeString, 310, 36, PrimaryColor, PrimaryColorSmooth, 16);
+      tftPrint(1, "KHz", 310, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(1, "dB", 310, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
+      if (screensaverset) tftPrint(1, myLanguage[language][92], 310, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      tftPrint(1, CurrentThemeString, 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
 
       switch (poweroptions) {
-        case DEEP_SLEEP: tftPrint(1, myLanguage[language][75], 310, 76, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case LCD_OFF: tftPrint(1, myLanguage[language][76], 310, 76, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case LCD_BRIGHTNESS_1_PERCENT: tftPrint(1, myLanguage[language][94], 310, 76, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case LCD_BRIGHTNESS_A_QUARTER: tftPrint(1, myLanguage[language][95], 310, 76, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case LCD_BRIGHTNESS_HALF: tftPrint(1, myLanguage[language][96], 310, 76, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case DEEP_SLEEP: tftPrint(1, myLanguage[language][75], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case LCD_OFF: tftPrint(1, myLanguage[language][76], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case LCD_BRIGHTNESS_1_PERCENT: tftPrint(1, myLanguage[language][94], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case LCD_BRIGHTNESS_A_QUARTER: tftPrint(1, myLanguage[language][95], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case LCD_BRIGHTNESS_HALF: tftPrint(1, myLanguage[language][96], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
       }
 
-      if (fmdefaultstepsize) tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 270, 96, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 270, 96, PrimaryColor, PrimaryColorSmooth, 16);
-      if (screensaverset) tftPrint(1, String(screensaverOptions[screensaverset], DEC), 270, 116, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 116, PrimaryColor, PrimaryColorSmooth, 16);
-      if (AMLevelOffset > 0) tftPrint(1, "+" + String(AMLevelOffset, DEC), 270, 136, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(AMLevelOffset, DEC), 270, 136, PrimaryColor, PrimaryColorSmooth, 16);
-      if (af) tftPrint(1, myLanguage[language][42], 310, 176, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 176, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, unitString[unit], 310, 156, PrimaryColor, PrimaryColorSmooth, 16);
+      if (fmdefaultstepsize) tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 270, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 270, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (screensaverset) tftPrint(1, String(screensaverOptions[screensaverset], DEC), 270, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (AMLevelOffset > 0) tftPrint(1, "+" + String(AMLevelOffset, DEC), 270, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(AMLevelOffset, DEC), 270, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (af) tftPrint(1, myLanguage[language][42], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      tftPrint(1, unitString[unit], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       ShowBandSelectionFM(false, true);
       ShowBandSelectionAM(false, true);
       break;
 
-    case 5:
-      tftPrint(-1, myLanguage[language][108], 8, 36, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][173], 8, 56, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][176], 8, 76, ActiveColor, ActiveColorSmooth, 16);
+    case PAGE5:
+      tftPrint(-1, myLanguage[language][108], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][173], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][176], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
 
       switch (hardwaremodel) {
-        case BASE_ILI9341: tftPrint(1, myLanguage[language][109], 310, 36, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case PORTABLE_ILI9341: tftPrint(1, myLanguage[language][110 ], 310, 36, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case PORTABLE_TOUCH_ILI9341: tftPrint(1, myLanguage[language][111], 310, 36, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case BASE_ILI9341: tftPrint(1, myLanguage[language][109], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case PORTABLE_ILI9341: tftPrint(1, myLanguage[language][110 ], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case PORTABLE_TOUCH_ILI9341: tftPrint(1, myLanguage[language][111], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
       }
 
       switch (batteryoptions) {
-        case BATTERY_NONE: tftPrint(1, myLanguage[language][30], 310, 56, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case BATTERY_VALUE: tftPrint(1, myLanguage[language][174], 310, 56, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case BATTERY_PERCENT: tftPrint(1, myLanguage[language][175], 310, 56, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case BATTERY_NONE: tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case BATTERY_VALUE: tftPrint(1, myLanguage[language][174], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case BATTERY_PERCENT: tftPrint(1, myLanguage[language][175], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
       }
 
-      if (radio.rds.rtbuffer) tftPrint(1, myLanguage[language][42], 310, 76, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 76, PrimaryColor, PrimaryColorSmooth, 16);
+      if (radio.rds.rtbuffer) tftPrint(1, myLanguage[language][42], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       break;
 
   }
@@ -531,8 +531,8 @@ void BuildAdvancedRDS() {
 
     tftPrint(-1, "ERRORS", 3, 34, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(1, unitString[unit], 310, 51, ActiveColor, ActiveColorSmooth, 16);
-    if (region == 0) tftPrint(-1, "PI", 216, 81, ActiveColor, ActiveColorSmooth, 16);
-    if (region == 1) tftPrint(-1, "ID", 216, 81, ActiveColor, ActiveColorSmooth, 16);
+    if (region == 0) tftPrint(-1, "PI", ITEM10 + 6, 81, ActiveColor, ActiveColorSmooth, 16);
+    if (region == 1) tftPrint(-1, "ID", ITEM10 + 6, 81, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "PS", 3, 81, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "PTY", 3, 109, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "RT+", 3, 147, ActiveColor, ActiveColorSmooth, 16);
@@ -670,7 +670,7 @@ void BuildDisplay() {
     tftPrint(-1, "1", 24, 115, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "3", 48, 115, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "5", 72, 115, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "7", 96, 115, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "7", ITEM4 + 6, 115, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "9", 120, 115, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "+10", 134, 115, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "+30", 174, 115, ActiveColor, ActiveColorSmooth, 16);
@@ -694,11 +694,11 @@ void BuildDisplay() {
     tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, 28);
     tftPrint(-1, unitString[unit], 282, 145, ActiveColor, ActiveColorSmooth, 16);
 
-    if (band < BAND_GAP) tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, 28); else tftPrint(-1, "kHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
+    if (band < BAND_GAP) tftPrint(-1, "MHz", 258, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 28); else tftPrint(-1, "kHz", 258, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 28);
 
-    tft.drawRoundRect(248, 56, 32, 20, 5, GreyoutColor);
+    tft.drawRoundRect(248, ITEM2 + 6, 32, 20, 5, GreyoutColor);
     if (band > BAND_GAP) tftPrint(0, "iMS", 265, 59, GreyoutColor, BackgroundColor, 16);
-    tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
+    tft.drawRoundRect(286, ITEM2 + 6, 32, 20, 5, GreyoutColor);
     if (band > BAND_GAP) tftPrint(0, "EQ", 303, 59, GreyoutColor, BackgroundColor, 16);
 
     tft.drawCircle(66, 15, 10, GreyoutColor);
@@ -742,7 +742,7 @@ void BuildDisplay() {
   strcpy(radioIdPrevious, "0");
   programServicePrevious = "0";
   BWreset = true;
-  if (band < BAND_GAP) tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, 28); else tftPrint(-1, "kHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
+  if (band < BAND_GAP) tftPrint(-1, "MHz", 258, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 28); else tftPrint(-1, "kHz", 258, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 28);
 }
 
 void MenuUp() {
@@ -768,9 +768,9 @@ void MenuUp() {
     tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, ActiveColor);
   } else {
     switch (menupage) {
-      case 1:
+      case PAGE1:
         switch (menuoption) {
-          case 30:
+          case ITEM1:
             if (VolSet > 0) tftPrint(1, "+" + String(VolSet, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, String(VolSet, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             VolSet++;
             if (VolSet > 10) VolSet = 10;
@@ -778,7 +778,7 @@ void MenuUp() {
             radio.setVolume(VolSet);
             break;
 
-          case 50:
+          case ITEM2:
             tftPrint(1, String(ConverterSet, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             ConverterSet++;
             if (ConverterSet > 2400 || ConverterSet <= 200) {
@@ -793,21 +793,21 @@ void MenuUp() {
             tftPrint(1, String(ConverterSet, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 70:
+          case ITEM3:
             tftPrint(1, String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             LowEdgeSet ++;
             if (LowEdgeSet > 1070) LowEdgeSet = 650;
             tftPrint(1, String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 90:
+          case ITEM4:
             tftPrint(1, String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             HighEdgeSet ++;
             if (HighEdgeSet > 1080) HighEdgeSet = 660;
             tftPrint(1, String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 110:
+          case ITEM5:
             if (LevelOffset > 0) tftPrint(1, "+" + String(LevelOffset, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, String(LevelOffset, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             LevelOffset++;
             if (LevelOffset > 15) LevelOffset = -25;
@@ -816,7 +816,7 @@ void MenuUp() {
             change2 = true;
             break;
 
-          case 130:
+          case ITEM6:
             if (StereoLevel != 0) tftPrint(1, String(StereoLevel, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (StereoLevel != 0) tftPrint(-1, "dBμV", 170, 118, BackgroundColor, BackgroundColor, 28);
             StereoLevel ++;
@@ -828,7 +828,7 @@ void MenuUp() {
             radio.setStereoLevel(StereoLevel);
             break;
 
-          case 150:
+          case ITEM7:
             tftPrint(1, String(HighCutLevel * 100, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             HighCutLevel ++;
             if (HighCutLevel > 70) HighCutLevel = 15;
@@ -836,7 +836,7 @@ void MenuUp() {
             radio.setHighCutLevel(HighCutLevel);
             break;
 
-          case 170:
+          case ITEM8:
             if (HighCutOffset != 0) tftPrint(-1, "dBμV", 170, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (HighCutOffset != 0) tftPrint(1, String(HighCutOffset, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             HighCutOffset ++;
@@ -848,14 +848,14 @@ void MenuUp() {
             radio.setHighCutOffset(HighCutOffset);
             break;
 
-          case 190:
+          case ITEM9:
             tftPrint(1, String(LowLevelSet, DEC), 145, 118, BackgroundColor, BackgroundColor, 28);
             LowLevelSet++;
             if (LowLevelSet > 30) LowLevelSet = -15;
             tftPrint(1, String(LowLevelSet, DEC), 145, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 210:
+          case ITEM10:
             tftPrint(1, String(ContrastSet, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             ContrastSet ++;
             if (ContrastSet > 100) ContrastSet = 1;
@@ -865,42 +865,42 @@ void MenuUp() {
         }
         break;
 
-      case 2:
+      case PAGE2:
         switch (menuoption) {
-          case 30:
+          case ITEM1:
             tftPrint(0, myLanguage[language][0], 155, 118, BackgroundColor, BackgroundColor, 28);
             language ++;
             if (language == (sizeof (myLanguage) / sizeof (myLanguage[0]))) language = 0;
             tftPrint(0, myLanguage[language][0], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 50:
+          case ITEM2:
             if (showrdserrors) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (showrdserrors) showrdserrors = false; else showrdserrors = true;
             if (showrdserrors) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 70:
+          case ITEM3:
             if (softmutefm) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (softmutefm) softmutefm = false; else softmutefm = true;
             if (softmutefm) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             radio.setSoftmuteFM(softmutefm);
             break;
 
-          case 90:
+          case ITEM4:
             if (softmuteam) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (softmuteam) softmuteam = false; else softmuteam = true;
             if (softmuteam) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             radio.setSoftmuteAM(softmuteam);
             break;
 
-          case 110:
+          case ITEM5:
             if (edgebeep) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (edgebeep) edgebeep = false; else edgebeep = true;
             if (edgebeep) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 130:
+          case ITEM6:
             if (region == 0) tftPrint(0, myLanguage[language][47], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (region == 1) tftPrint(0, myLanguage[language][48], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (region == 0) region = 1; else region = 0;
@@ -912,19 +912,19 @@ void MenuUp() {
             radio.rds.region = region;
             break;
 
-          case 150:
+          case ITEM7:
             if (radio.rds.underscore) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (radio.rds.underscore) radio.rds.underscore = false; else radio.rds.underscore = true;
             if (radio.rds.underscore) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 170:
+          case ITEM8:
             if (USBmode) tftPrint(0, "RDS Spy", 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, "XDRGTK", 155, 118, BackgroundColor, BackgroundColor, 28);
             if (USBmode) USBmode = false; else USBmode = true;
             if (USBmode) tftPrint(0, "RDS Spy", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, "XDRGTK", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 190:
+          case ITEM9:
             if (wifi) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (wifi) wifi = false; else wifi = true;
             if (wifi) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
@@ -932,46 +932,46 @@ void MenuUp() {
         }
         break;
 
-      case 3:
+      case PAGE3:
         switch (menuoption) {
-          case 30:
+          case ITEM1:
             tftPrint(0, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             subnetclient ++;
             if (subnetclient > 254) subnetclient = 1;
             tftPrint(0, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 50:
+          case ITEM2:
             if (showSWMIBand) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (showSWMIBand) showSWMIBand = false; else showSWMIBand = true;
             if (showSWMIBand) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 70:
+          case ITEM3:
             if (radio.rds.filter) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (radio.rds.filter) radio.rds.filter = false; else radio.rds.filter = true;
             if (radio.rds.filter) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 90:
+          case ITEM4:
             if (radio.rds.pierrors) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (radio.rds.pierrors) radio.rds.pierrors = false; else radio.rds.pierrors = true;
             if (radio.rds.pierrors) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 110:
+          case ITEM5:
             if (showsquelch) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (showsquelch) showsquelch = false; else showsquelch = true;
             if (showsquelch) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 130:
+          case ITEM6:
             if (showmodulation) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (showmodulation) showmodulation = false; else showmodulation = true;
             if (showmodulation) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 150:
+          case ITEM7:
             if (amnb != 0) tftPrint(1, String(amnb, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (amnb != 0) tftPrint(-1, "%", 170, 118, BackgroundColor, BackgroundColor, 28);
             amnb ++;
@@ -983,7 +983,7 @@ void MenuUp() {
             radio.setAMNoiseBlanker(amnb);
             break;
 
-          case 170:
+          case ITEM8:
             if (fmnb != 0) tftPrint(1, String(fmnb, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (fmnb != 0) tftPrint(-1, "%", 170, 118, BackgroundColor, BackgroundColor, 28);
             fmnb ++;
@@ -995,14 +995,14 @@ void MenuUp() {
             radio.setFMNoiseBlanker(fmnb);
             break;
 
-          case 190:
+          case ITEM9:
             if (audiomode) tftPrint(0, "MPX", 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, "Stereo", 155, 118, BackgroundColor, BackgroundColor, 28);
             if (audiomode) audiomode = false; else audiomode = true;
             if (audiomode) tftPrint(0, "MPX", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, "Stereo", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             radio.setAudio(audiomode);
             break;
 
-          case 210:
+          case ITEM10:
             if (touchrotating) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (touchrotating) touchrotating = 0; else touchrotating = 1;
             if (touchrotating) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
@@ -1010,9 +1010,9 @@ void MenuUp() {
         }
         break;
 
-      case 4:
+      case PAGE4:
         switch (menuoption) {
-          case 30:
+          case ITEM1:
             CurrentTheme ++;
             if (CurrentTheme > 10) CurrentTheme = 0;
             doTheme();
@@ -1022,7 +1022,7 @@ void MenuUp() {
             tftPrint(0, CurrentThemeString, 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 70:
+          case ITEM3:
             switch (poweroptionsold) {
               case DEEP_SLEEP: tftPrint(0, myLanguage[language][75], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case LCD_OFF: tftPrint(0, myLanguage[language][76], 155, 118, BackgroundColor, BackgroundColor, 28); break;
@@ -1044,13 +1044,13 @@ void MenuUp() {
             poweroptionsold = poweroptions;
             break;
 
-          case 90:
+          case ITEM4:
             if (fmdefaultstepsize) tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             if (fmdefaultstepsize) fmdefaultstepsize = 0; else fmdefaultstepsize = 1;
             if (fmdefaultstepsize) tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 110:
+          case ITEM5:
             if (screensaverset) tftPrint(-1, myLanguage[language][92], 170, 118, BackgroundColor, BackgroundColor, 28);
             if (!screensaverset) tftPrint(1, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, String(screensaverOptions[screensaverset]), 155, 118, BackgroundColor, BackgroundColor, 28);
             screensaverset ++;
@@ -1059,7 +1059,7 @@ void MenuUp() {
             if (!screensaverset) tftPrint(1, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(screensaverOptions[screensaverset]), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 130:
+          case ITEM6:
             if (AMLevelOffset > 0) tftPrint(1, "+" + String(AMLevelOffset, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, String(AMLevelOffset, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             AMLevelOffset++;
             if (AMLevelOffset > 15) AMLevelOffset = -50;
@@ -1067,27 +1067,27 @@ void MenuUp() {
             radio.setAMOffset(AMLevelOffset);
             break;
 
-          case 150:
+          case ITEM7:
             tftPrint(0, String(unitString[unit]), 155, 118, BackgroundColor, BackgroundColor, 28);
             unit ++;
             if (unit > 2) unit = 0;
             tftPrint(0, String(unitString[unit]), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 170:
+          case ITEM8:
             if (af) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (af) af = false; else af = true;
             if (af) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 190:
+          case ITEM9:
             ShowBandSelectionFM(true, REVERSE);
             bandFM++;
             if (bandFM > FM_BAND_CNT - 1) bandFM = FM_BAND_ALL;
             ShowBandSelectionFM(true, true);
             break;
 
-          case 210:
+          case ITEM10:
             ShowBandSelectionAM(true, REVERSE);
             bandAM++;
             if (bandAM > AM_BAND_CNT - 1) bandAM = AM_BAND_ALL;
@@ -1097,9 +1097,9 @@ void MenuUp() {
         }
         break;
 
-      case 5:
+      case PAGE5:
         switch (menuoption) {
-          case 30:
+          case ITEM1:
             switch (hardwaremodelold) {
               case BASE_ILI9341: tftPrint(0, myLanguage[language][109], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case PORTABLE_ILI9341: tftPrint(0, myLanguage[language][110], 155, 118, BackgroundColor, BackgroundColor, 28); break;
@@ -1117,7 +1117,7 @@ void MenuUp() {
             hardwaremodelold = hardwaremodel;
             break;
 
-          case 50:
+          case ITEM2:
             switch (batteryoptionsold) {
               case BATTERY_NONE: tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case BATTERY_VALUE: tftPrint(0, myLanguage[language][174], 155, 118, BackgroundColor, BackgroundColor, 28); break;
@@ -1135,7 +1135,7 @@ void MenuUp() {
             batteryoptionsold = batteryoptions;
             break;
 
-          case 70:
+          case ITEM3:
             if (radio.rds.rtbuffer) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (radio.rds.rtbuffer) radio.rds.rtbuffer = false; else radio.rds.rtbuffer = true;
             if (radio.rds.rtbuffer) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
@@ -1169,9 +1169,9 @@ void MenuDown() {
     tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, ActiveColor);
   } else {
     switch (menupage) {
-      case 1:
+      case PAGE1:
         switch (menuoption) {
-          case 30:
+          case ITEM1:
             if (VolSet > 0) tftPrint(1, "+" + String(VolSet, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, String(VolSet, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             VolSet--;
             if (VolSet < -10) VolSet = -10;
@@ -1180,7 +1180,7 @@ void MenuDown() {
             radio.setVolume(VolSet);
             break;
 
-          case 50:
+          case ITEM2:
             tftPrint(1, String(ConverterSet, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             ConverterSet--;
             if (ConverterSet < 200 || ConverterSet > 2400) {
@@ -1195,20 +1195,20 @@ void MenuDown() {
             tftPrint(1, String(ConverterSet, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 70:
+          case ITEM3:
             tftPrint(1, String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             LowEdgeSet -= 10;
             if (LowEdgeSet < 650) LowEdgeSet = 1079;
             tftPrint(1, String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 90:
+          case ITEM4:
             tftPrint(1, String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             HighEdgeSet -= 10;
             if (HighEdgeSet < 660) HighEdgeSet = 1080;
             tftPrint(1, String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);                break;
 
-          case 110:
+          case ITEM5:
             if (LevelOffset > 0) tftPrint(1, "+" + String(LevelOffset, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, String(LevelOffset, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             LevelOffset--;
             if (LevelOffset < -25) LevelOffset = 15;
@@ -1216,7 +1216,7 @@ void MenuDown() {
             change2 = true;
             break;
 
-          case 130:
+          case ITEM6:
             if (StereoLevel != 0) tftPrint(1, String(StereoLevel, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (StereoLevel != 0) tftPrint(-1, "dBμV", 170, 118, BackgroundColor, BackgroundColor, 28);
             StereoLevel --;
@@ -1228,7 +1228,7 @@ void MenuDown() {
             radio.setStereoLevel(StereoLevel);
             break;
 
-          case 150:
+          case ITEM7:
             tftPrint(1, String(HighCutLevel * 100, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             HighCutLevel --;
             if (HighCutLevel < 15 || HighCutLevel > 70) HighCutLevel = 70;
@@ -1236,7 +1236,7 @@ void MenuDown() {
             radio.setHighCutLevel(HighCutLevel);
             break;
 
-          case 170:
+          case ITEM8:
             if (HighCutOffset != 0) tftPrint(-1, "dBμV", 170, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (HighCutOffset != 0) tftPrint(1, String(HighCutOffset, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             HighCutOffset --;
@@ -1248,7 +1248,7 @@ void MenuDown() {
             radio.setHighCutOffset(HighCutOffset);
             break;
 
-          case 190:
+          case ITEM9:
             tftPrint(1, String(LowLevelSet, DEC), 145, 118, BackgroundColor, BackgroundColor, 28);
             LowLevelSet--;
             if (LowLevelSet < -15) LowLevelSet = 30;
@@ -1256,7 +1256,7 @@ void MenuDown() {
             break;
 
 
-          case 210:
+          case ITEM10:
             tftPrint(1, String(ContrastSet, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             ContrastSet --;
             if (ContrastSet < 1) ContrastSet = 100;
@@ -1266,42 +1266,42 @@ void MenuDown() {
         }
         break;
 
-      case 2:
+      case PAGE2:
         switch (menuoption) {
-          case 30:
+          case ITEM1:
             tftPrint(0, myLanguage[language][0], 155, 118, BackgroundColor, BackgroundColor, 28);
             language --;
             if (language > (sizeof (myLanguage) / sizeof (myLanguage[0]))) language = (sizeof (myLanguage) / sizeof (myLanguage[0])) - 1;
             tftPrint(0, myLanguage[language][0], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 50:
+          case ITEM2:
             if (showrdserrors) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (showrdserrors) showrdserrors = false; else showrdserrors = true;
             if (showrdserrors) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 70:
+          case ITEM3:
             if (softmutefm) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (softmutefm) softmutefm = false; else softmutefm = true;
             if (softmutefm) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             radio.setSoftmuteFM(softmutefm);
             break;
 
-          case 90:
+          case ITEM4:
             if (softmuteam) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (softmuteam) softmuteam = false; else softmuteam = true;
             if (softmuteam) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             radio.setSoftmuteAM(softmuteam);
             break;
 
-          case 110:
+          case ITEM5:
             if (edgebeep) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (edgebeep) edgebeep = false; else edgebeep = true;
             if (edgebeep) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 130:
+          case ITEM6:
             if (region == 0) tftPrint(0, myLanguage[language][47], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (region == 1) tftPrint(0, myLanguage[language][48], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (region == 0) region = 1; else region = 0;
@@ -1313,19 +1313,19 @@ void MenuDown() {
             radio.rds.region = region;
             break;
 
-          case 150:
+          case ITEM7:
             if (radio.rds.underscore) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (radio.rds.underscore) radio.rds.underscore = false; else radio.rds.underscore = true;
             if (radio.rds.underscore) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 170:
+          case ITEM8:
             if (USBmode) tftPrint(0, "RDS Spy", 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, "XDRGTK", 155, 118, BackgroundColor, BackgroundColor, 28);
             if (USBmode) USBmode = false; else USBmode = true;
             if (USBmode) tftPrint(0, "RDS Spy", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, "XDRGTK", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 190:
+          case ITEM9:
             if (wifi) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (wifi) wifi = false; else wifi = true;
             if (wifi) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
@@ -1333,46 +1333,46 @@ void MenuDown() {
         }
         break;
 
-      case 3:
+      case PAGE3:
         switch (menuoption) {
-          case 30:
+          case ITEM1:
             tftPrint(0, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             subnetclient --;
             if (subnetclient < 1) subnetclient = 254;
             tftPrint(0, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 50:
+          case ITEM2:
             if (showSWMIBand) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (showSWMIBand) showSWMIBand = false; else showSWMIBand = true;
             if (showSWMIBand) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 70:
+          case ITEM3:
             if (radio.rds.filter) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (radio.rds.filter) radio.rds.filter = false; else radio.rds.filter = true;
             if (radio.rds.filter) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 90:
+          case ITEM4:
             if (radio.rds.pierrors) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (radio.rds.pierrors) radio.rds.pierrors = false; else radio.rds.pierrors = true;
             if (radio.rds.pierrors) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 110:
+          case ITEM5:
             if (showsquelch) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (showsquelch) showsquelch = false; else showsquelch = true;
             if (showsquelch) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 130:
+          case ITEM6:
             if (showmodulation) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (showmodulation) showmodulation = false; else showmodulation = true;
             if (showmodulation) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 150:
+          case ITEM7:
             if (amnb != 0) tftPrint(1, String(amnb, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (amnb != 0) tftPrint(-1, "%", 170, 118, BackgroundColor, BackgroundColor, 28);
             amnb --;
@@ -1384,7 +1384,7 @@ void MenuDown() {
             radio.setAMNoiseBlanker(amnb);
             break;
 
-          case 170:
+          case ITEM8:
             if (fmnb != 0) tftPrint(1, String(fmnb, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (fmnb != 0) tftPrint(-1, "%", 170, 118, BackgroundColor, BackgroundColor, 28);
             fmnb --;
@@ -1396,22 +1396,22 @@ void MenuDown() {
             radio.setFMNoiseBlanker(fmnb);
             break;
 
-          case 190:
+          case ITEM9:
             if (audiomode) tftPrint(0, "MPX", 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, "Stereo", 155, 118, BackgroundColor, BackgroundColor, 28);
             if (audiomode) audiomode = false; else audiomode = true;
             if (audiomode) tftPrint(0, "MPX", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, "Stereo", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             radio.setAudio(audiomode);
             break;
-          case 210:
+          case ITEM10:
             if (touchrotating) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (touchrotating) touchrotating = 0; else touchrotating = 1;
             if (touchrotating) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
         }
         break;
-      case 4:
+      case PAGE4:
         switch (menuoption) {
-          case 30:
+          case ITEM1:
             CurrentTheme --;
             if (CurrentTheme > 10) CurrentTheme = 10;
             doTheme();
@@ -1421,7 +1421,7 @@ void MenuDown() {
             tftPrint(0, CurrentThemeString, 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 70:
+          case ITEM3:
             switch (poweroptionsold) {
               case DEEP_SLEEP: tftPrint(0, myLanguage[language][75], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case LCD_OFF: tftPrint(0, myLanguage[language][76], 155, 118, BackgroundColor, BackgroundColor, 28); break;
@@ -1443,13 +1443,13 @@ void MenuDown() {
             poweroptionsold = poweroptions;
             break;
 
-          case 90:
+          case ITEM4:
             if (fmdefaultstepsize) tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             if (fmdefaultstepsize) fmdefaultstepsize = 0; else fmdefaultstepsize = 1;
             if (fmdefaultstepsize) tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 110:
+          case ITEM5:
             if (screensaverset) tftPrint(-1, myLanguage[language][92], 170, 118, BackgroundColor, BackgroundColor, 28);
             if (!screensaverset) tftPrint(1, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, String(screensaverOptions[screensaverset]), 155, 118, BackgroundColor, BackgroundColor, 28);
             screensaverset --;
@@ -1458,7 +1458,7 @@ void MenuDown() {
             if (!screensaverset) tftPrint(1, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(screensaverOptions[screensaverset]), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 130:
+          case ITEM6:
             if (AMLevelOffset > 0) tftPrint(1, "+" + String(AMLevelOffset, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, String(AMLevelOffset, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             AMLevelOffset--;
             if (AMLevelOffset < -50) AMLevelOffset = 15;
@@ -1466,27 +1466,27 @@ void MenuDown() {
             radio.setAMOffset(AMLevelOffset);
             break;
 
-          case 150:
+          case ITEM7:
             tftPrint(0, String(unitString[unit]), 155, 118, BackgroundColor, BackgroundColor, 28);
             unit --;
             if (unit > 2) unit = 2;
             tftPrint(0, String(unitString[unit]), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 170:
+          case ITEM8:
             if (af) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (af) af = false; else af = true;
             if (af) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 190:
+          case ITEM9:
             ShowBandSelectionFM(true, REVERSE);
             bandFM--;
             if (bandFM > FM_BAND_CNT) bandFM = FM_BAND_FM;
             ShowBandSelectionFM(true, true);
             break;
 
-          case 210:
+          case ITEM10:
             ShowBandSelectionAM(true, REVERSE);
             bandAM--;
             if (bandAM > AM_BAND_CNT) bandAM = AM_BAND_SW;
@@ -1496,9 +1496,9 @@ void MenuDown() {
         }
         break;
 
-      case 5:
+      case PAGE5:
         switch (menuoption) {
-          case 30:
+          case ITEM1:
             switch (hardwaremodelold) {
               case BASE_ILI9341: tftPrint(0, myLanguage[language][109], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case PORTABLE_ILI9341: tftPrint(0, myLanguage[language][110], 155, 118, BackgroundColor, BackgroundColor, 28); break;
@@ -1516,7 +1516,7 @@ void MenuDown() {
             hardwaremodelold = hardwaremodel;
             break;
 
-          case 50:
+          case ITEM2:
             switch (batteryoptionsold) {
               case BATTERY_NONE: tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case BATTERY_VALUE: tftPrint(0, myLanguage[language][174], 155, 118, BackgroundColor, BackgroundColor, 28); break;
@@ -1534,7 +1534,7 @@ void MenuDown() {
             batteryoptionsold = batteryoptions;
             break;
 
-          case 70:
+          case ITEM3:
             if (radio.rds.rtbuffer) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (radio.rds.rtbuffer) radio.rds.rtbuffer = false; else radio.rds.rtbuffer = true;
             if (radio.rds.rtbuffer) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
@@ -1552,33 +1552,33 @@ void DoMenu() {
     tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
     tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
     switch (menupage) {
-      case 1:
+      case PAGE1:
         switch (menuoption) {
-          case 30:
+          case ITEM1:
             tftPrint(0, myLanguage[language][10], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(-1, "dB", 170, 118, ActiveColor, ActiveColorSmooth, 28);
             if (VolSet > 0) tftPrint(1, "+" + String(VolSet, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(VolSet, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 50:
+          case ITEM2:
             tftPrint(0, myLanguage[language][11], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(-1, "MHz", 170, 118, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(1, String(ConverterSet, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 70:
+          case ITEM3:
             tftPrint(0, myLanguage[language][12], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(-1, "MHz", 170, 118, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(1, String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 90:
+          case ITEM4:
             tftPrint(0, myLanguage[language][13], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(-1, "MHz", 170, 118, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(1, String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 110:
+          case ITEM5:
             tftPrint(0, myLanguage[language][14], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(-1, "dB", 170, 118, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(-1, "dBμV", 190, 165, ActiveColor, ActiveColorSmooth, 28);
@@ -1587,31 +1587,31 @@ void DoMenu() {
             change2 = true;
             break;
 
-          case 130:
+          case ITEM6:
             tftPrint(0, myLanguage[language][15], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (StereoLevel != 0) tftPrint(-1, "dBμV", 170, 118, ActiveColor, ActiveColorSmooth, 28);
             if (StereoLevel != 0) tftPrint(1, String(StereoLevel, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 150:
+          case ITEM7:
             tftPrint(0, myLanguage[language][16], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (HighCutLevel != 0) tftPrint(-1, "Hz", 170, 118, ActiveColor, ActiveColorSmooth, 28);
             if (HighCutLevel != 0) tftPrint(1, String(HighCutLevel * 100, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 170:
+          case ITEM8:
             tftPrint(0, myLanguage[language][17], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (HighCutOffset != 0) tftPrint(-1, "dBμV", 170, 118, ActiveColor, ActiveColorSmooth, 28);
             if (HighCutOffset != 0) tftPrint(1, String(HighCutOffset, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 190:
+          case ITEM9:
             tftPrint(0, myLanguage[language][18], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(-1, "dBμV", 155, 118, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(1, String(LowLevelSet, DEC), 145, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 210:
+          case ITEM10:
             tftPrint(0, myLanguage[language][19], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(-1, "%", 170, 118, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(1, String(ContrastSet, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
@@ -1619,55 +1619,55 @@ void DoMenu() {
         }
         break;
 
-      case 2:
+      case PAGE2:
         switch (menuoption) {
-          case 30:
+          case ITEM1:
             tftPrint(0, myLanguage[language][40], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(0, myLanguage[language][0], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 50:
+          case ITEM2:
             tftPrint(0, myLanguage[language][38], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (showrdserrors) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 70:
+          case ITEM3:
             tftPrint(0, myLanguage[language][43], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (softmutefm) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 90:
+          case ITEM4:
             tftPrint(0, myLanguage[language][44], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (softmuteam) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 110:
+          case ITEM5:
             tftPrint(0, myLanguage[language][45], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (edgebeep) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 130:
+          case ITEM6:
             tftPrint(0, myLanguage[language][46], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (region == 0) tftPrint(0, myLanguage[language][47], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             if (region == 1) tftPrint(0, myLanguage[language][48], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 150:
+          case ITEM7:
             tftPrint(0, myLanguage[language][49], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (radio.rds.underscore) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 170:
+          case ITEM8:
             tftPrint(0, myLanguage[language][50], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (USBmode) tftPrint(0, "RDS Spy", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, "XDRGTK", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 190:
+          case ITEM9:
             tftPrint(0, myLanguage[language][51], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (wifi) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 210:
+          case ITEM10:
             tftPrint(0, myLanguage[language][53], 155, 58, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(0, "ESP_" + String(ESP_getChipId()), 155, 98, PrimaryColor, PrimaryColorSmooth, 28);
             tftPrint(0, myLanguage[language][54], 155, 138, ActiveColor, ActiveColorSmooth, 28);
@@ -1689,70 +1689,70 @@ void DoMenu() {
         }
         break;
 
-      case 3:
+      case PAGE3:
         switch (menuoption) {
-          case 30:
+          case ITEM1:
             tftPrint(0, myLanguage[language][58], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(0, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 50:
+          case ITEM2:
             tftPrint(0, myLanguage[language][59], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (showSWMIBand) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 70:
+          case ITEM3:
             tftPrint(0, myLanguage[language][60], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (radio.rds.filter) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 90:
+          case ITEM4:
             tftPrint(0, myLanguage[language][61], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (radio.rds.pierrors) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 110:
+          case ITEM5:
             tftPrint(0, myLanguage[language][62], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (showsquelch) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 130:
+          case ITEM6:
             tftPrint(0, myLanguage[language][63], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (showmodulation) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 150:
+          case ITEM7:
             tftPrint(0, myLanguage[language][64], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (amnb != 0) tftPrint(-1, "%", 170, 118, PrimaryColor, PrimaryColorSmooth, 28);
             if (amnb != 0) tftPrint(1, String(amnb, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 170:
+          case ITEM8:
             tftPrint(0, myLanguage[language][65], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (fmnb != 0) tftPrint(-1, "%", 170, 118, PrimaryColor, PrimaryColorSmooth, 28);
             if (fmnb != 0) tftPrint(1, String(fmnb, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 190:
+          case ITEM9:
             tftPrint(0, myLanguage[language][67], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (audiomode) tftPrint(0, "MPX", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, "Stereo", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 210:
+          case ITEM10:
             tftPrint(0, myLanguage[language][107], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (touchrotating) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
         }
         break;
 
-      case 4:
+      case PAGE4:
         switch (menuoption) {
-          case 30:
+          case ITEM1:
             tftPrint(0, myLanguage[language][77], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(0, CurrentThemeString, 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 50:
+          case ITEM2:
             tftPrint(0, myLanguage[language][71], 155, 38, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(0, myLanguage[language][72], 155, 88, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(0, "PE5PVB", 155, 68, PrimaryColor, PrimaryColorSmooth, 16);
@@ -1767,7 +1767,7 @@ void DoMenu() {
             tftPrint(0, "github.com/PE5PVB/TEF6686_ESP32", 155, 183, ActiveColor, ActiveColorSmooth, 16);
             break;
 
-          case 70:
+          case ITEM3:
             tftPrint(0, myLanguage[language][74], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             switch (poweroptions) {
               case DEEP_SLEEP: tftPrint(0, myLanguage[language][75], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
@@ -1779,47 +1779,47 @@ void DoMenu() {
             poweroptionsold = poweroptions;
             break;
 
-          case 90:
+          case ITEM4:
             tftPrint(-1, "KHz", 170, 118, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(0, myLanguage[language][90], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (fmdefaultstepsize) tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 110:
+          case ITEM5:
             tftPrint(0, myLanguage[language][91], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (screensaverset) tftPrint(-1, myLanguage[language][92], 170, 118, PrimaryColor, PrimaryColorSmooth, 28);
             if (!screensaverset) tftPrint(1, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(screensaverOptions[screensaverset], DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 130:
+          case ITEM6:
             tftPrint(0, myLanguage[language][97], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(-1, "dB", 170, 118, ActiveColor, ActiveColorSmooth, 28);
             if (AMLevelOffset > 0) tftPrint(1, "+" + String(AMLevelOffset, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(AMLevelOffset, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 150:
+          case ITEM7:
             tftPrint(0, myLanguage[language][98], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(0, unitString[unit], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case 170:
+          case ITEM8:
             tftPrint(0, myLanguage[language][99], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (af) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
-          case 190:
+          case ITEM9:
             tftPrint(0, myLanguage[language][100], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             ShowBandSelectionFM(true, true);
             break;
-          case 210:
+          case ITEM10:
             tftPrint(0, myLanguage[language][101], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             ShowBandSelectionAM(true, true);
             break;
         }
         break;
 
-      case 5:
+      case PAGE5:
         switch (menuoption) {
-          case 30:
+          case ITEM1:
             tftPrint(0, myLanguage[language][108], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             switch (hardwaremodel) {
               case BASE_ILI9341: tftPrint(0, myLanguage[language][109], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
@@ -1829,7 +1829,7 @@ void DoMenu() {
             hardwaremodelold = hardwaremodel;
             break;
 
-          case 50:
+          case ITEM2:
             tftPrint(0, myLanguage[language][173], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             switch (batteryoptions) {
               case BATTERY_NONE: tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
@@ -1839,7 +1839,7 @@ void DoMenu() {
             batteryoptionsold = batteryoptions;
             break;
 
-          case 70:
+          case ITEM3:
             tftPrint(0, myLanguage[language][176], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (radio.rds.rtbuffer) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
         }
