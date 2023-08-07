@@ -4,7 +4,7 @@
 #include <EEPROM.h>
 
 void Communication() {
-  if (menu == false) {
+  if (!menu) {
     if (wifi) {
       int packetSize = Udp.parsePacket();
       if (packetSize) {
@@ -55,72 +55,57 @@ void Communication() {
       if (Server.hasClient()) Server.available().stop();
     }
 
-    if (wificonnected == true && !RemoteClient.connected()) {
+    if (wificonnected && !RemoteClient.connected()) {
       wificonnected = false;
       RDSSPYTCP = false;
       XDRGTKTCP = false;
     }
 
-    if (XDRGTKTCP == false && wificonnected == true && RemoteClient.available()) {
+    if (!RDSSPYTCP && !XDRGTKTCP && RemoteClient.available()) {
       String data_str = RemoteClient.readStringUntil('\n');
-      if (data_str.length() > 30 && data_str.equals(cryptedpassword)) {
-        radio.setFMABandw();
-        if (band != BAND_FM) {
-          band = BAND_FM;
-          SelectBand();
-        }
-        XDRGTKTCP = true;
-        RemoteClient.print("o1,0\n");
-        store = true;
-      } else if (RDSSPYTCP == false && XDRGTKTCP == false && data_str.length() > 1 && data_str == ("*D*R?F")) {
+      if (data_str.indexOf("?F") != -1 || data_str.indexOf("*F") != -1) {
         RDSSPYTCP = true;
-      } else if (RDSSPYTCP == true) {
-        int symPos = data_str.indexOf("*F");
-        if (symPos >= 5) {
-          String freq = data_str.substring(0, symPos);
-          freq = freq.substring(0, freq.length() - 1);
-          frequency = freq.toInt();
-          radio.SetFreq(frequency);
-          radio.clearRDS(fullsearchrds);
+        RDSSPYUSB = false;
+      } else {
+        if (data_str.equals(cryptedpassword)) {
+          radio.setFMABandw();
           if (band != BAND_FM) {
             band = BAND_FM;
             SelectBand();
           }
-          ShowFreq(0);
+          XDRGTKTCP = true;
+          RemoteClient.print("o1,0\n");
           store = true;
+        } else {
+          RemoteClient.print("a0\n");
         }
-      } else {
-        RemoteClient.print("a0\n");
       }
     }
 
-    if (XDRGTKUSB == false && Serial.available())
-    {
-      String data_str = Serial.readStringUntil('\n');
-      if (data_str.length() > 1 && data_str == ("*D*R?F")) RDSSPYUSB = true;
+    if (RDSSPYTCP && RemoteClient.available()) {
+      String data_str = RemoteClient.readStringUntil('\n');
       int symPos = data_str.indexOf("*F");
       if (symPos >= 5) {
         String freq = data_str.substring(0, symPos);
         freq = freq.substring(0, freq.length() - 1);
         frequency = freq.toInt();
         radio.SetFreq(frequency);
+        radio.clearRDS(fullsearchrds);
         if (band != BAND_FM) {
           band = BAND_FM;
-          BWreset = true;
-          BWset = 0;
-          radio.power(0);
-          delay(50);
-          radio.SetFreq(frequency);
-          radio.clearRDS(fullsearchrds);
-          freqold = frequency_AM;
-          doBW();
-          radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
-          if (screenmute == false) radio.clearRDS(fullsearchrds); BuildDisplay();
+          SelectBand();
         }
         ShowFreq(0);
         store = true;
       }
-      if (data_str.charAt(0) == 'x') {
+    }
+
+    if (!RDSSPYUSB && !XDRGTKUSB && Serial.available()) {
+      String data_str = Serial.readStringUntil('\n');
+      if (data_str.indexOf("?F") != -1 || data_str.indexOf("*F") != -1) {
+        RDSSPYUSB = true;
+        RDSSPYTCP = false;
+      } else if (data_str.charAt(0) == 'x') {
         radio.setFMABandw();
         if (band != BAND_FM) {
           band = BAND_FM;
@@ -128,20 +113,27 @@ void Communication() {
         }
         Serial.print("OK\nT" + String(frequency * 10) + "\n");
         XDRGTKUSB = true;
-        if (menu == true) ModeButtonPress();
-        if (Squelch != Squelchold) {
-          if (screenmute == false) {
-            if (Squelchold == -100) {
-              tftPrint(-1, myLanguage[language][33], 235, 145, BackgroundColor, BackgroundColor, 16);
-            } else if (Squelchold > 920) {
-              tftPrint(-1, "ST", 235, 145, BackgroundColor, BackgroundColor, 16);
-            } else {
-              tftPrint(-1, String(Squelchold / 10), 235, 145, BackgroundColor, BackgroundColor, 16);
-            }
-          }
-        }
       }
     }
+
+    if (RDSSPYUSB && Serial.available()) {
+      String data_str = Serial.readStringUntil('\n');
+      int symPos = data_str.indexOf("*F");
+      if (symPos >= 5) {
+        String freq = data_str.substring(0, symPos);
+        freq = freq.substring(0, freq.length() - 1);
+        frequency = freq.toInt();
+        radio.SetFreq(frequency);
+        radio.clearRDS(fullsearchrds);
+        if (band != BAND_FM) {
+          band = BAND_FM;
+          SelectBand();
+        }
+        ShowFreq(0);
+        store = true;
+      }
+    }
+
     if (XDRGTKUSB || XDRGTKTCP) XDRGTKRoutine();
   }
 }
@@ -307,7 +299,7 @@ void XDRGTKRoutine() {
       case 'T':
         unsigned int freqtemp;
         freqtemp = atoi(buff + 1);
-        if (seek == true) seek = false;
+        if (seek) seek = false;
         if (freqtemp >= LWLowEdgeSet && freqtemp <= LWHighEdgeSet) {
           frequency_AM = freqtemp;
           if (band != BAND_LW) {
@@ -412,7 +404,7 @@ void XDRGTKRoutine() {
             BWset = 16;
           }
           doBW();
-          if (screenmute == false) {
+          if (!screenmute) {
             tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
             tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
             tftPrint(0, myLanguage[language][34], 160, 100, ActiveColor, ActiveColorSmooth, 28);
@@ -437,12 +429,12 @@ void XDRGTKRoutine() {
         VolSet = atoi(buff + 1);
         if (VolSet == 0) {
           radio.setMute();
-          if (screenmute == false) tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
+          if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
           XDRMute = true;
           SQ = true;
         } else {
           radio.setUnMute();
-          if (screenmute == false) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+          if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
           radio.setVolume((VolSet - 40) / 10);
           XDRMute = false;
         }
@@ -460,7 +452,7 @@ void XDRGTKRoutine() {
         store = true;
         XDRMute = false;
         radio.setUnMute();
-        if (screenmute == false) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+        if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
         VolSet = EEPROM.readInt(EE_BYTE_VOLSET);
         LowLevelSet = EEPROM.readInt(EE_BYTE_LOWLEVELSET);
         softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
@@ -510,9 +502,9 @@ void XDRGTKRoutine() {
   if (band > BAND_GAP) {
     DataPrint("Sm");
   } else {
-    if (StereoToggle == false) {
+    if (!StereoToggle) {
       DataPrint("SS");
-    } else if (Stereostatus == true) {
+    } else if (Stereostatus) {
       DataPrint("Ss");
     } else {
       DataPrint("Sm");
@@ -549,9 +541,9 @@ void tryWiFi() {
     wifi = true;
   } else {
     if (!setupmode) tftPrint(0, myLanguage[language][56], 155, 128, SignificantColor, SignificantColorSmooth, 28);
-	Server.end();
+    Server.end();
     Udp.stop();
-	WiFi.mode(WIFI_OFF);
+    WiFi.mode(WIFI_OFF);
     wifi = false;
     XDRGTKTCP = false;
     RDSSPYTCP = false;

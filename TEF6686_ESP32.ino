@@ -656,6 +656,16 @@ void loop() {
     Communication();
 
     if (!menu && !afscreen) {
+
+      if (af && dropout) {
+        frequency = radio.TestAF();
+        if (freqold != frequency) {
+          ShowFreq(0);
+          if (XDRGTKUSB == true || XDRGTKTCP == true) DataPrint("T" + String(frequency * 10));
+          store = true;
+        }
+      }
+
       if (band == BAND_FM && af && radio.rds.correctPI != 0) {
         if ((aftest && millis() >= aftimer + 3000) || ((USN > 250 || WAM > 250) && millis() >= aftimer + 1000)) {
           aftimer = millis();
@@ -2482,7 +2492,7 @@ void ShowBW() {
     BWreset = false;
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
-      Udp.print("from=TEF_tuner;Bandwidth=");
+      Udp.print("from=TEF_tuner;bandwidth=");
       Udp.print(String(BW * 1000));
       Udp.endPacket();
     }

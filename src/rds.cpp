@@ -571,11 +571,10 @@ void readRds() {
           tft.fillCircle(162, 41, 5, SignificantColor);
           tft.fillCircle(200, 41, 5, SignificantColor);
         }
-        dropout = true;
-        aftest = true;
+        if (radio.rds.correctPI != 0) dropout = true;
         aftimer = millis();
       } else {
-        if (dropout == true && PIold.length() != 0) {
+        if (dropout == true) {
           if (advancedRDS) tftPrint(-1, PIold, 244, 75, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(-1, PIold, 244, 187, PrimaryColor, PrimaryColorSmooth, 28);
           if (advancedRDS) tftPrint(-1, PSold, 38, 75, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(-1, PSold, 38, 187, PrimaryColor, PrimaryColorSmooth, 28);
           if (advancedRDS) tftPrint(-1, PTYold, 38, 109, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, PTYold, 38, 163, PrimaryColor, PrimaryColorSmooth, 16);
