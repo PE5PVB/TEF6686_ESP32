@@ -2902,13 +2902,13 @@ void ShowRSSI() {
       tft.drawBitmap(250, 4, WiFi4, 25, 25, PrimaryColor);
     } else if (rssi > -60) {
       tft.drawBitmap(250, 4, WiFi4, 25, 25, GreyoutColor);
-      tft.drawBitmap(227, 4, WiFi3, 25, 25, PrimaryColor);
+      tft.drawBitmap(250, 4, WiFi3, 25, 25, PrimaryColor);
     } else if (rssi > -70) {
       tft.drawBitmap(250, 4, WiFi4, 25, 25, GreyoutColor);
-      tft.drawBitmap(227, 4, WiFi2, 25, 25, PrimaryColor);
+      tft.drawBitmap(250, 4, WiFi2, 25, 25, PrimaryColor);
     } else if (rssi < -70) {
       tft.drawBitmap(250, 4, WiFi4, 25, 25, GreyoutColor);
-      tft.drawBitmap(227, 4, WiFi1, 25, 25, PrimaryColor);
+      tft.drawBitmap(250, 4, WiFi1, 25, 25, PrimaryColor);
     }
   }
 }
