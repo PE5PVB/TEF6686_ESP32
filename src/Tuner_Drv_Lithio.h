@@ -81,7 +81,7 @@ bool devTEF_Radio_Set_Bandwidth(uint8_t mode, uint16_t bandwidth, uint16_t contr
 bool devTEF_Radio_Set_BandwidthAM(uint8_t mode, uint16_t bandwidth, uint16_t control_sensitivity, uint16_t low_level_sensitivity);
 bool devTEF_Radio_Set_Noiseblanker_AM(uint8_t mode, uint16_t start);
 bool devTEF_Radio_Set_Attenuator_AM(uint16_t start);
-bool devTEF_Radio_Set_CoChannel_AM(uint16_t start);
+bool devTEF_Radio_Set_CoChannel_AM(uint8_t mode, uint16_t start, uint8_t level);
 bool devTEF_Radio_Set_LevelOffset(int16_t offset);
 bool devTEF_Radio_Set_AMLevelOffset(int16_t offset);
 bool devTEF_Radio_Set_Stereo_Level(uint8_t mode, uint16_t start, uint16_t slope);

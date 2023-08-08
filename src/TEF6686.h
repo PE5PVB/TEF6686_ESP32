@@ -231,7 +231,7 @@ class TEF6686 {
     void setStHiBlendLevel(uint16_t limit);
     void setStHiBlendOffset(uint8_t start);
     void setFMNoiseBlanker(uint16_t start);
-    void setAMCoChannel(uint16_t start);
+    void setAMCoChannel(uint16_t start, uint8_t level = 3);
     void setAMNoiseBlanker(uint16_t start);
     void setAMAttenuation(uint16_t start);
     void setMute();

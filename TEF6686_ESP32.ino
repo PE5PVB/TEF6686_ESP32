@@ -128,6 +128,8 @@ byte ECCold;
 byte EQset;
 byte fmdefaultstepsize;
 byte fmnb;
+byte amcodect;
+byte amcodectcount;
 byte freqoldcount;
 byte HighCutLevel;
 byte HighCutOffset;
@@ -398,6 +400,8 @@ void setup() {
   af = EEPROM.readByte(EE_BYTE_AF);
   StereoToggle = EEPROM.readByte(EE_BYTE_STEREO);
   batteryoptions = EEPROM.readByte(EE_BYTE_BATTERY_OPTIONS);
+  amcodect = EEPROM.readByte(EE_BYTE_AM_CO_DECT);
+  amcodectcount = EEPROM.readByte(EE_BYTE_AM_CO_DECT_COUNT);
 
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;   // later will read from flash
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX; // later will read from flash
@@ -600,6 +604,7 @@ void setup() {
   radio.setVolume(VolSet);
   radio.setOffset(LevelOffset);
   radio.setAMOffset(AMLevelOffset);
+  radio.setAMCoChannel(amcodect, amcodectcount);
   radio.setStereoLevel(StereoLevel);
   radio.setHighCutLevel(HighCutLevel);
   radio.setHighCutOffset(HighCutOffset);
@@ -880,6 +885,7 @@ void GetData() {
     ShowOffset();
     if (!afscreen) ShowSignalLevel();
     ShowBW();
+    updateCodetect();
   }
 }
 
@@ -1850,6 +1856,8 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_AF, af);
         EEPROM.writeByte(EE_BYTE_STEREO, StereoToggle);
         EEPROM.writeByte(EE_BYTE_BATTERY_OPTIONS, batteryoptions);
+        EEPROM.writeByte(EE_BYTE_AM_CO_DECT, amcodect);
+        EEPROM.writeByte(EE_BYTE_AM_CO_DECT_COUNT, amcodectcount);
         EEPROM.commit();
         Serial.end();
         if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
@@ -2678,6 +2686,13 @@ void updateEQ() {
   }
 }
 
+void updateCodetect() {
+  if (band > BAND_GAP) {
+    if (WAM) tftPrint(-1, "co", 50, 61, PrimaryColor, PrimaryColorSmooth, 16);
+    else tftPrint(-1, "co", 50, 61, BackgroundColor, BackgroundColor, 16);
+  }
+}
+
 void updateSWMIBand() {
   switch (SWMIBandPos) {
     case SW_MI_BAND_11M:
@@ -3301,6 +3316,8 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_AF, 0);
   EEPROM.writeByte(EE_BYTE_STEREO, 1);
   EEPROM.writeByte(EE_BYTE_BATTERY_OPTIONS, BATTERY_VALUE);
+  EEPROM.writeByte(EE_BYTE_AM_CO_DECT, 100);
+  EEPROM.writeByte(EE_BYTE_AM_CO_DECT_COUNT, 3);
   EEPROM.commit();
 }
 

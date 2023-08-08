@@ -478,10 +478,13 @@ void BuildMenu() {
       break;
 
     case PAGE5:
-      tftPrint(-1, myLanguage[language][108], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][173], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][176], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][108], 8, 36, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][173], 8, 56, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][176], 8, 76, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][185], 8, 96, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][187], 8, 116, ActiveColor, ActiveColorSmooth, 16);
 
+      if (amcodect != 0) tftPrint(1, "%", 310, 96, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 96, ActiveColor, ActiveColorSmooth, 16);
       switch (hardwaremodel) {
         case BASE_ILI9341: tftPrint(1, myLanguage[language][109], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
         case PORTABLE_ILI9341: tftPrint(1, myLanguage[language][110 ], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
@@ -495,6 +498,8 @@ void BuildMenu() {
       }
 
       if (radio.rds.rtbuffer) tftPrint(1, myLanguage[language][42], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (amcodect != 0) tftPrint(1, String(amcodect, DEC), 270, 96, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 176, PrimaryColor, PrimaryColorSmooth, 16);
+      tftPrint(1, String(amcodectcount, DEC), 310, 116, PrimaryColor, PrimaryColorSmooth, 16);
       break;
 
   }
@@ -1140,8 +1145,28 @@ void MenuUp() {
             if (radio.rds.rtbuffer) radio.rds.rtbuffer = false; else radio.rds.rtbuffer = true;
             if (radio.rds.rtbuffer) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
+
+          case ITEM4:
+            if (amcodect != 0) tftPrint(0, String(amcodect, DEC) + " %", 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
+            amcodect++;
+            if (amcodect > 150 || amcodect <= 50) {
+              if (amcodect == 1) amcodect = 50; else amcodect = 0;
+            }
+            if (amcodect != 0) tftPrint(0, String(amcodect, DEC) + " %", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            if (band > BAND_GAP) radio.setAMCoChannel(amcodect, amcodectcount);
+            break;
+
+          case ITEM5:
+            tftPrint(0, String(amcodectcount, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
+            amcodectcount++;
+            if (amcodectcount > 15) amcodectcount = 1;
+            tftPrint(0, String(amcodectcount, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            if (band > BAND_GAP) radio.setAMCoChannel(amcodect, amcodectcount);
+            break;
+
         }
         break;
+
     }
   }
 }
@@ -1409,6 +1434,7 @@ void MenuDown() {
             break;
         }
         break;
+
       case PAGE4:
         switch (menuoption) {
           case ITEM1:
@@ -1540,8 +1566,27 @@ void MenuDown() {
             if (radio.rds.rtbuffer) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
+          case ITEM4:
+            if (amcodect != 0) tftPrint(0, String(amcodect, DEC) + " %", 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
+            amcodect--;
+            if (amcodect < 50 || amcodect > 150) {
+              if (amcodect > 150) amcodect = 150; else amcodect = 0;
+            }
+            if (amcodect != 0) tftPrint(0, String(amcodect, DEC) + " %", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            if (band > BAND_GAP) radio.setAMCoChannel(amcodect, amcodectcount);
+            break;
+
+          case ITEM5:
+            tftPrint(0, String(amcodectcount, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
+            amcodectcount--;
+            if (amcodectcount < 1) amcodectcount = 15;
+            tftPrint(0, String(amcodectcount, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            if (band > BAND_GAP) radio.setAMCoChannel(amcodect, amcodectcount);
+            break;
+
         }
         break;
+
     }
   }
 }
@@ -1842,6 +1887,18 @@ void DoMenu() {
           case ITEM3:
             tftPrint(0, myLanguage[language][176], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (radio.rds.rtbuffer) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
+
+          case ITEM4:
+            tftPrint(0, myLanguage[language][186], 155, 78, ActiveColor, ActiveColorSmooth, 28);
+            if (amcodect != 0) tftPrint(0, String(amcodect, DEC) + " %", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
+
+          case ITEM5:
+            tftPrint(0, myLanguage[language][188], 155, 78, ActiveColor, ActiveColorSmooth, 28);
+            tftPrint(0, String(amcodectcount, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
+
         }
         break;
 
