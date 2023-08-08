@@ -3005,7 +3005,7 @@ static const char* const myCountries[] {
   "Ireland", // 7
   "Estonia", // 8
   "Andorra", // 9
-  "SanMarino", // 10
+  "San Marino", // 10
   "Poland", // 11
   "Turkey", // 12
   "Israel", // 13
@@ -3042,7 +3042,7 @@ static const char* const myCountries[] {
   "Monaco", // 44
   "Malta", // 45
   "U.K.", // 46
-  "Lithunia", // 47
+  "Lithuania", // 47
   "Croatia", // 48
   "Libya", // 49
   "Canaries", // 50
@@ -3053,7 +3053,7 @@ static const char* const myCountries[] {
   "France", // 55
   "Norway", // 56
   "Belarus", // 57
-  "Bosnia", // 58
+  "Bosnia H.", // 58
   "Monteneg.", // 59
   "Armenia", // 60
   "Azerbaijan", // 61
@@ -3068,7 +3068,7 @@ static const char* const myCountries[] {
   "Mauritius", // 70
   "Mongolia", // 71
   "Mozambiq.", // 72
-  "Nambia", // 73
+  "Namibia", // 73
   "Niger", // 74
   "Nigeria", // 75
   "Oman", // 76
@@ -3218,7 +3218,7 @@ static const char* const myCountries[] {
   "Vanuatu", // 220
   "Vietnam", // 221
   "Bahamas", // 222
-  "BM or BH", // 223
+  "BM or BR", // 223
   "EC or BR", // 224
   "AN or BR", // 225
   "USA/VI/ PR", // 226
