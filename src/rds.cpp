@@ -279,11 +279,11 @@ void showECC() {
     if (radio.rds.picode[0] == '1') {
       if (radio.rds.ECC == 160) ECC = myCountries[226];
       if (radio.rds.ECC == 162) ECC = myCountries[129];
-      if (radio.rds.ECC == 163) ECC = myCountries[152];
-      if (radio.rds.ECC == 164) ECC = myCountries[137];
+      if (radio.rds.ECC == 163) ECC = myCountries[136];
+      if (radio.rds.ECC == 164) ECC = myCountries[152];
       if (radio.rds.ECC == 208) ECC = myCountries[104];
-      if (radio.rds.ECC == 209) ECC = myCountries[83];
-      if (radio.rds.ECC == 210) ECC = myCountries[76];
+      if (radio.rds.ECC == 209) ECC = myCountries[73];
+      if (radio.rds.ECC == 210) ECC = myCountries[83];
       if (radio.rds.ECC == 224) ECC = myCountries[0];
       if (radio.rds.ECC == 225) ECC = myCountries[1];
       if (radio.rds.ECC == 226) ECC = myCountries[2];
@@ -370,7 +370,6 @@ void showECC() {
       if (radio.rds.ECC == 224) ECC = myCountries[20];
       if (radio.rds.ECC == 225) ECC = myCountries[21];
       if (radio.rds.ECC == 226) ECC = myCountries[22];
-      if (radio.rds.ECC == 227) ECC = myCountries[23];
       if (radio.rds.ECC == 228) ECC = myCountries[24];
       if (radio.rds.ECC == 240) ECC = myCountries[184];
       if (radio.rds.ECC == 241) ECC = myCountries[76];
@@ -462,6 +461,7 @@ void showECC() {
       if (radio.rds.ECC == 241) ECC = myCountries[188];
       if (radio.rds.ECC == 242) ECC = myCountries[203];
       if (radio.rds.ECC == 243) ECC = myCountries[93];
+      if (radio.rds.ECC == 244) ECC = myCountries[204];
     } else if (radio.rds.picode[0] == 'C') {
       if (radio.rds.ECC == 161) ECC = myCountries[138];
       if (radio.rds.ECC == 162) ECC = myCountries[223];
@@ -491,6 +491,7 @@ void showECC() {
       if (radio.rds.ECC == 209) ECC = myCountries[89];
       if (radio.rds.ECC == 224) ECC = myCountries[0];
       if (radio.rds.ECC == 225) ECC = myCountries[49];
+      if (radio.rds.ECC == 226) ECC = myCountries[23];
       if (radio.rds.ECC == 227) ECC = myCountries[122];
       if (radio.rds.ECC == 240) ECC = myCountries[198];
       if (radio.rds.ECC == 241) ECC = myCountries[217];
@@ -533,7 +534,6 @@ void showECC() {
       if (radio.rds.ECC == 241) ECC = myCountries[192];
       if (radio.rds.ECC == 242) ECC = myCountries[220];
       if (radio.rds.ECC == 243) ECC = myCountries[71]; 
-      if (radio.rds.ECC == 244) ECC = myCountries[204];
     } else {
       ECC = myLanguage[language][73];
     }
