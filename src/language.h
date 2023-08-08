@@ -552,14 +552,14 @@ static const char* const myLanguage[16][185] = {
     "Pokaz napiecie", // 174
     "Pokaz procent nalad.", // 175
     "Buforowanie RT", // 176
-    "Main settings", // 177
-    "Audio settings", // 178
-    "Display settings", // 179
-    "RDS settings", // 180
-    "FM settings", // 181
-    "AM settings", // 182
-    "Connectivity", // 183
-    "PRESS MODE TO RETURN" // 184
+    "Glowne ustawienia", // 177
+    "Ustawienia dzwieku", // 178
+    "Ustawienia wyswietlacza", // 179
+    "Ustawienia RDS", // 180
+    "Ustawienia FM", // 181
+    "Ustawienia AM", // 182
+    "Lacznosc", // 183
+    "NACISNIJ MODE ABY POWROCIC" // 184
   },
 
   { "Hrvatski", // Croatian
