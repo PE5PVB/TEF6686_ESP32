@@ -189,8 +189,8 @@ void TEF6686::setAMBandw(uint16_t bandwidth) {
   devTEF_Radio_Set_BandwidthAM(0, bandwidth * 10, 1000, 1000);
 }
 
-void TEF6686::setAMCoChannel(uint16_t start) {
-  devTEF_Radio_Set_CoChannel_AM(start * 10);
+void TEF6686::setAMCoChannel(uint16_t start, uint8_t level) {
+  if (start == 0) devTEF_Radio_Set_CoChannel_AM(0, start * 10, level); else devTEF_Radio_Set_CoChannel_AM(1, start * 10, level);
 }
 
 void TEF6686::setSoftmuteAM(uint8_t mode) {

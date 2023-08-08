@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char* const myLanguage[16][185] = {
+static const char* const myLanguage[16][189] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -185,7 +185,11 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN" // 184
+    "PRESS MODE TO RETURN", // 184
+    "AM CoChannelDet", // 185
+    "CoChannelDet sensitivity", // 186
+    "AM CoChannelDet threshold", // 187
+    "CoChannelDet counet" // 188
   },
 
   { "Nederlands", // Dutch
@@ -372,7 +376,11 @@ static const char* const myLanguage[16][185] = {
     "FM instellingen", // 181
     "AM instellingen", // 182
     "Connectiviteit", // 183
-    "DRUK OP MODE OM TERUG TE GAAN" // 184
+    "DRUK OP MODE OM TERUG TE GAAN", // 184
+    "AM CoChannelDet", // 185
+    "CoChannelDet sensitivity", // 186
+    "AM CoChannelDet threshold", // 187
+    "CoChannelDet counet" // 188
   },
 
   { "Polski", // Polish
@@ -559,7 +567,11 @@ static const char* const myLanguage[16][185] = {
     "Ustawienia FM", // 181
     "Ustawienia AM", // 182
     "Lacznosc", // 183
-    "NACISNIJ MODE ABY POWROCIC" // 184
+    "NACISNIJ MODE ABY POWROCIC", // 184
+    "AM CoChannelDet", // 185
+    "CoChannelDet sensitivity", // 186
+    "AM CoChannelDet threshold", // 187
+    "CoChannelDet counet" // 188
   },
 
   { "Hrvatski", // Croatian
@@ -746,7 +758,11 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN" // 184
+    "PRESS MODE TO RETURN", // 184
+    "AM CoChannelDet", // 185
+    "CoChannelDet sensitivity", // 186
+    "AM CoChannelDet threshold", // 187
+    "CoChannelDet counet" // 188
   },
 
   { "Ελληνικά", // Greek
@@ -933,7 +949,11 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN" // 184
+    "PRESS MODE TO RETURN", // 184
+    "AM CoChannelDet", // 185
+    "CoChannelDet sensitivity", // 186
+    "AM CoChannelDet threshold", // 187
+    "CoChannelDet counet" // 188
   },
 
   { "Romana", // Romanian
@@ -1120,7 +1140,11 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN" // 184
+    "PRESS MODE TO RETURN", // 184
+    "AM CoChannelDet", // 185
+    "CoChannelDet sensitivity", // 186
+    "AM CoChannelDet threshold", // 187
+    "CoChannelDet counet" // 188
   },
 
   { "Deutsch", // German
@@ -1307,7 +1331,11 @@ static const char* const myLanguage[16][185] = {
     "UKW Einstellungen", // 181
     "AM Einstellungen", // 182
     "Vernetzung", // 183
-    "DRÜCKE MODE FÜR ZURÜCK" // 184
+    "DRÜCKE MODE FÜR ZURÜCK", // 184
+    "AM CoChannelDet", // 185
+    "CoChannelDet sensitivity", // 186
+    "AM CoChannelDet threshold", // 187
+    "CoChannelDet counet" // 188
   },
 
   { "Czech", // Czech
@@ -1494,7 +1522,11 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN" // 184
+    "PRESS MODE TO RETURN", // 184
+    "AM CoChannelDet", // 185
+    "CoChannelDet sensitivity", // 186
+    "AM CoChannelDet threshold", // 187
+    "CoChannelDet counet" // 188
   },
 
   { "Slovak", // Slovak
@@ -1681,7 +1713,11 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN" // 184
+    "PRESS MODE TO RETURN", // 184
+    "AM CoChannelDet", // 185
+    "CoChannelDet sensitivity", // 186
+    "AM CoChannelDet threshold", // 187
+    "CoChannelDet counet" // 188
   },
 
   { "Français", // French
@@ -1868,7 +1904,11 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN" // 184
+    "PRESS MODE TO RETURN", // 184
+    "AM CoChannelDet", // 185
+    "CoChannelDet sensitivity", // 186
+    "AM CoChannelDet threshold", // 187
+    "CoChannelDet counet" // 188
   },
 
   { "Български", // Bulgarian
@@ -2055,7 +2095,11 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN" // 184
+    "PRESS MODE TO RETURN", // 184
+    "AM CoChannelDet", // 185
+    "CoChannelDet sensitivity", // 186
+    "AM CoChannelDet threshold", // 187
+    "CoChannelDet counet" // 188
   },
 
   { "Русский", // Russian
@@ -2242,7 +2286,11 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN" // 184
+    "PRESS MODE TO RETURN", // 184
+    "AM CoChannelDet", // 185
+    "CoChannelDet sensitivity", // 186
+    "AM CoChannelDet threshold", // 187
+    "CoChannelDet counet" // 188
   },
 
   { "Українська", // Ukranian
@@ -2429,7 +2477,11 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN" // 184
+    "PRESS MODE TO RETURN", // 184
+    "AM CoChannelDet", // 185
+    "CoChannelDet sensitivity", // 186
+    "AM CoChannelDet threshold", // 187
+    "CoChannelDet counet" // 188
   },
 
   { "Italiano", // Italian
@@ -2616,7 +2668,11 @@ static const char* const myLanguage[16][185] = {
     "FM settings", // 181
     "AM settings", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN" // 184
+    "PRESS MODE TO RETURN", // 184
+    "AM CoChannelDet", // 185
+    "CoChannelDet sensitivity", // 186
+    "AM CoChannelDet threshold", // 187
+    "CoChannelDet counet" // 188
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -2795,15 +2851,19 @@ static const char* const myLanguage[16][185] = {
     "显示电池", // 173
     "电压值", // 174
     "电池百分比", // 175
-    "RT buffering", // 176
-    "Main settings", // 177
-    "Audio settings", // 178
-    "Display settings", // 179
-    "RDS settings", // 180
-    "FM settings", // 181
-    "AM settings", // 182
+    "RT 缓存", // 176
+    "主要设置", // 177
+    "音频设置", // 178
+    "显示设置", // 179
+    "RDS设置", // 180
+    "FM 设置", // 181
+    "AM 设置", // 182
     "Connectivity", // 183
-    "PRESS MODE TO RETURN" // 184
+    "按 MODE 键返回", // 184
+    "AM载波跟踪", // 185
+    "设置跟踪灵敏度", // 186
+    "AM载波跟踪层级", // 187
+    "设置跟踪层级" // 188
   },
 
   { "Norsk", // Norwegian
@@ -2990,7 +3050,11 @@ static const char* const myLanguage[16][185] = {
     "FM innstillinger", // 181
     "AM innstillinger", // 182
     "Tilkobling", // 183
-    "TRYKK MODE FOR Å RETUNERE" // 184
+    "TRYKK MODE FOR Å RETUNERE", // 184
+    "AM CoChannelDet", // 185
+    "CoChannelDet sensitivity", // 186
+    "AM CoChannelDet threshold", // 187
+    "CoChannelDet counet" // 188
   }
 };
 

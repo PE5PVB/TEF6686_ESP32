@@ -60,8 +60,8 @@ bool devTEF_Radio_Set_Attenuator_AM(uint16_t start) {
   return devTEF_Set_Cmd(TEF_AM, Cmd_Set_Antenna, 5, start);
 }
 
-bool devTEF_Radio_Set_CoChannel_AM(uint16_t start) {
-  return devTEF_Set_Cmd(TEF_AM, Cmd_Set_CoChannelDet, 11, 1, 2, start, 1000, 3);
+bool devTEF_Radio_Set_CoChannel_AM(uint8_t mode, uint16_t start, uint8_t level) {
+  return devTEF_Set_Cmd(TEF_AM, Cmd_Set_CoChannelDet, 11, mode, 2, start, 1000, level);
 }
 
 bool devTEF_Radio_Set_LevelOffset(int16_t offset) {
