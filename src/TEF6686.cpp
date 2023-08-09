@@ -391,10 +391,10 @@ void TEF6686::readRDS(bool showrdserrors)
   if (rds.rdsB != rdsBprevious) {
     rds.correct = false;
 
-    if (((rds.rdsErr >> 14) & 0x02) > 0) rds.rdsAerror = true; else rds.rdsAerror = false;                // Any errors in Block A?
-    if (((rds.rdsErr >> 12) & 0x02) > 0) rds.rdsBerror = true; else rds.rdsBerror = false;                // Any errors in Block B?
-    if (((rds.rdsErr >> 10) & 0x02) > 0) rds.rdsCerror = true; else rds.rdsCerror = false;                // Any errors in Block C?
-    if (((rds.rdsErr >> 8) & 0x02) > 0) rds.rdsDerror = true; else rds.rdsDerror = false;                 // Any errors in Block D?
+    rds.rdsAerror = (((rds.rdsErr >> 14) & 0x02) == 0x02);
+    rds.rdsBerror = (((rds.rdsErr >> 12) & 0x02) == 0x02);
+    rds.rdsCerror = (((rds.rdsErr >> 10) & 0x02) == 0x02);
+    rds.rdsDerror = (((rds.rdsErr >> 8) & 0x02) == 0x02);
     if (!rds.rdsAerror && !rds.rdsBerror && !rds.rdsCerror && !rds.rdsDerror) rds.correct = true;         // Any errors in all blocks?
     if ((rdsStat & (1 << 15))) rdsReady = true;
 
