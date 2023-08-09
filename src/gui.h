@@ -23,11 +23,8 @@
 #define ITEM10			210
 
 #define PAGE_COUNT		5
-#define PAGE1			1
-#define PAGE2			2
-#define PAGE3			3
-#define PAGE4			4
-#define PAGE5			5
+
+enum menupage {PAGE1, PAGE2, PAGE3, PAGE4, PAGE5, INDEX, MAINSETTINGS, AUDIOSETTINGS, DISPLAYSETTINGS, RDSSETTINGS, FMSETTINGS, AMSETTINGS, CONNECTIVITY};
 
 extern bool advancedRDS;
 extern bool af;
