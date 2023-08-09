@@ -966,6 +966,8 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.rdsDerror = true;
   initrt = true;
   initab = true;
+  rds.rdsplusTag1 = 169;
+  rds.rdsplusTag2 = 169;
 }
 
 void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {
