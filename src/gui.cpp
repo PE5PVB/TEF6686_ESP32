@@ -341,6 +341,8 @@ void BuildAFScreen() {
     SStatusold = 2000;
     rssiold = 2000;
     batteryold = 6;
+    batteryVold = 0;
+	vPerold = 0;
     af_counterold = 254;
     strcpy(radioIdPrevious, "0");
     programServicePrevious = "0";
@@ -602,6 +604,8 @@ void BuildAdvancedRDS() {
   rssiold = 2000;
   rdsblockold = 33;
   batteryold = 6;
+  batteryVold = 0;
+  vPerold = 0;
 
   strcpy(programTypePrevious, "0");
   strcpy(radioIdPrevious, "0");
@@ -743,6 +747,7 @@ void BuildDisplay() {
   af_counterold = 254;
   batteryold = 6;
   batteryVold = 0;
+  vPerold = 0;
   strcpy(programTypePrevious, "0");
   strcpy(radioIdPrevious, "0");
   programServicePrevious = "0";

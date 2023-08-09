@@ -661,7 +661,8 @@ void loop() {
 
     if (!menu && !afscreen) {
 
-      if (af && dropout) {
+      if (af && dropout && millis() >= aftimer + 1000) {
+        aftimer = millis();
         frequency = radio.TestAF();
         if (freqold != frequency) {
           ShowFreq(0);
@@ -2973,21 +2974,15 @@ void ShowBattery() {
   }
 
   if (!wifi && batterydetect) {
-    float batteryV = ((float)v / 4095.0) * 2.0 * 3.3 * (1056 / 1000.0);
-    batteryV = constrain(batteryV, 0.0, 5.0);
-    if (round(batteryV * 100.0) != round(batteryVold * 100.0)) {
-      if (batteryoptions == BATTERY_VALUE) {
-        tftReplace(-1, String(batteryVold, 1) + "V", String(batteryV, 1) + "V", 279, 9, BatteryValueColor, BatteryValueColorSmooth, 16);
-        batteryVold = batteryV;
-      } else if (batteryoptions == BATTERY_PERCENT) {
-        float vPer = 0.0;
-        vPer = (batteryV - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE);
-        vPer = constrain(vPer, 0.0, 1.0);
-        vPer *= 100.0;
-        Serial.println(vPer);
-        tftReplace(-1, String(vPerold, 0) + "%", String(vPer, 0) + "%", 279, 9, BatteryValueColor, BatteryValueColorSmooth, 16);
-        vPerold = vPer;
-      }
+    float batteryV = constrain((((float)v / 4095.0) * 3.3 * (1100 / 1000.0) * 2.0), 0.0, 5.0);
+    float vPer = constrain((batteryV - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE), 0.0, 1.0) * 100;
+
+    if (abs(batteryV - batteryVold) > 0.05 && batteryoptions == BATTERY_VALUE) {
+      tftReplace(-1, String(batteryVold, 1) + "V", String(batteryV, 1) + "V", 279, 9, BatteryValueColor, BatteryValueColorSmooth, 16);
+      batteryVold = batteryV;
+    } else if (int(vPer) != int(vPerold) && batteryoptions == BATTERY_PERCENT && abs(vPer - vPerold) > 0.5) {
+      tftReplace(-1, String(vPerold, 0) + "%", String(vPer, 0) + "%", 279, 9, BatteryValueColor, BatteryValueColorSmooth, 16);
+      vPerold = vPer;
     }
   }
 }
