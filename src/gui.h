@@ -10,6 +10,7 @@
 #define SMETERPIN       27
 #define CONTRASTPIN     2
 
+#define ITEM_GAP		20
 #define ITEM1			30
 #define ITEM2			50
 #define ITEM3			70
@@ -21,6 +22,7 @@
 #define ITEM9			190
 #define ITEM10			210
 
+#define PAGE_COUNT		5
 #define PAGE1			1
 #define PAGE2			2
 #define PAGE3			3
@@ -85,7 +87,6 @@ extern byte HighCutOffset;
 extern byte language;
 extern byte licold;
 extern byte menupage;
-extern byte menupagestotal;
 extern byte MSold;
 extern byte poweroptions;
 extern byte poweroptionsold;

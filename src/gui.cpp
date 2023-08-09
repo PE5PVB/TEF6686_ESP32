@@ -355,7 +355,7 @@ void BuildMenu() {
   tft.drawRect(0, 0, 320, 240, FrameColor);
   tft.drawLine(0, 23, 320, 23, FrameColor);
   tftPrint(-1, myLanguage[language][41], 4, 7, PrimaryColor, PrimaryColorSmooth, 16);
-  tftPrint(1, String(menupage) + "/" + String(menupagestotal), 314, 7, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(1, String(menupage) + "/" + String(PAGE_COUNT), 314, 7, ActiveColor, ActiveColorSmooth, 16);
   tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, ActiveColor);
   switch (menupage) {
     case PAGE1:
@@ -478,11 +478,11 @@ void BuildMenu() {
       break;
 
     case PAGE5:
-      tftPrint(-1, myLanguage[language][108], 8, 36, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][173], 8, 56, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][176], 8, 76, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][185], 8, 96, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][187], 8, 116, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][108], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][173], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][176], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][185], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][187], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
 
       if (amcodect != 0) tftPrint(1, "%", 310, 96, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, 96, ActiveColor, ActiveColorSmooth, 16);
       switch (hardwaremodel) {
@@ -754,19 +754,19 @@ void MenuUp() {
   if (menuopen == false) {
     tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, BackgroundColor);
     if (hardwaremodel == BASE_ILI9341) {
-      menuoption += 20;
-      if (menuoption > 210) {
+      menuoption += ITEM_GAP;
+      if (menuoption > ITEM10) {
         menupage++;
-        if (menupage > menupagestotal) menupage = 1;
-        menuoption = 30;
+        if (menupage > PAGE_COUNT) menupage = PAGE1;
+        menuoption = ITEM1;
         BuildMenu();
       }
     } else {
-      menuoption -= 20;
-      if (menuoption < 30) {
+      menuoption -= ITEM_GAP;
+      if (menuoption < ITEM1) {
         menupage--;
-        if (menupage == 0) menupage = menupagestotal;
-        menuoption = 210;
+        if (menupage == PAGE1 - 1) menupage = PAGE_COUNT;
+        menuoption = ITEM10;
         BuildMenu();
       }
     }
@@ -1175,19 +1175,19 @@ void MenuDown() {
   if (menuopen == false) {
     tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, BackgroundColor);
     if (hardwaremodel == BASE_ILI9341) {
-      menuoption -= 20;
-      if (menuoption < 30) {
+      menuoption -= ITEM_GAP;
+      if (menuoption < ITEM1) {
         menupage--;
-        if (menupage == 0) menupage = menupagestotal;
-        menuoption = 210;
+        if (menupage == PAGE1 - 1) menupage = PAGE_COUNT;
+        menuoption = ITEM10;
         BuildMenu();
       }
     } else {
-      menuoption += 20;
-      if (menuoption > 210) {
+      menuoption += ITEM_GAP;
+      if (menuoption > ITEM10) {
         menupage++;
-        if (menupage > menupagestotal) menupage = 1;
-        menuoption = 30;
+        if (menupage > PAGE_COUNT) menupage = PAGE1;
+        menuoption = ITEM1;
         BuildMenu();
       }
     }
@@ -1904,11 +1904,11 @@ void DoMenu() {
 
     }
   } else {
-    if (menupage == 2 && menuoption == 190 && wifi == true) {
+    if (menupage == PAGE2 && menuoption == ITEM9 && wifi == true) {
       tryWiFi();
       delay(2000);
     }
-    if (menupage == 2 && menuoption == 30) {
+    if (menupage == PAGE2 && menuoption == ITEM1) {
       doTheme();
     }
     menuopen = false;
