@@ -140,8 +140,7 @@ byte licold;
 byte memoryband[EE_PRESETS_CNT];
 byte memorypos;
 byte memoryposold;
-byte menupage = 1;
-byte menupagestotal = 5;
+byte menupage = PAGE1;
 byte MSold;
 byte optenc;
 byte poweroptions;
@@ -192,7 +191,7 @@ int FrequencyColor;
 int GreyoutColor;
 int InsignificantColor;
 int InsignificantColorSmooth;
-int menuoption = 30;
+int menuoption = ITEM1;
 int MStatusold;
 int offsetupdatetimer;
 int OStatusold;
@@ -776,7 +775,7 @@ void loop() {
       }
     }
 
-    if (menu == true && menuopen == true && menupage == 1 && menuoption == 110) {
+    if (menu == true && menuopen == true && menupage == PAGE1 && menuoption == ITEM5) {
       if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
       if (millis() >= lowsignaltimer + 500 || change2 == true) {
         lowsignaltimer = millis();
