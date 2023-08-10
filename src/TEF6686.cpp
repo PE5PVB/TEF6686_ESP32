@@ -50,24 +50,6 @@ void TEF6686::TestAFEON() {
   if (!mute) devTEF_Audio_Set_Mute(0);
 }
 
-uint16_t TEF6686::CheckSignal(uint16_t frequency) {
-  uint16_t status;
-  uint16_t dummy1;
-  uint16_t dummy2;
-  uint8_t dummy3;
-  int16_t level;
-  uint16_t usn;
-  uint16_t wam;
-  int16_t offset;
-  byte timing = 0;
-  devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 3, frequency);
-  while (timing == 0 && !bitRead(timing, 15)) {
-    devTEF_Radio_Get_Quality_Status(&status, &level, &usn, &wam, &offset, &dummy1, &dummy2, &dummy3);
-    timing = lowByte(status);
-  }
-  return level;
-}
-
 uint16_t TEF6686::TestAF() {
   if (af_counter != 0) {
     uint16_t status;
