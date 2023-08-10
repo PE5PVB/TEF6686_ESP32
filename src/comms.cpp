@@ -414,7 +414,7 @@ void XDRGTKRoutine() {
 			radio.SetFreq(freq_scan);
             DataPrint(String(freq_scan * 10, DEC));
             DataPrint(" = ");
-            if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR); else  radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
+            if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN); else  radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
             DataPrint(String((SStatus / 10) + 10, DEC));
             DataPrint(", ");
           }
@@ -511,7 +511,7 @@ void XDRGTKRoutine() {
       DataPrint("Sm");
     }
   }
-  DataPrint(String(((SStatus * 100) + 10875) / 1000) + "." + String(((SStatus * 100) + 10875) / 100 % 10) + ", " + String(WAM / 10) + ", " + String(SNR) + "\n");
+  DataPrint(String(((SStatus * 100) + 10875) / 1000) + "." + String(((SStatus * 100) + 10875) / 100 % 10) + ", " + String(WAM / 10) + ", " + String(CN) + "\n");
 }
 
 void passwordcrypt() {

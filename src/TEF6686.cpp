@@ -12,7 +12,7 @@ void TEF6686::TestAFEON() {
   uint16_t rdsStat;
   uint16_t dummy1;
   uint16_t dummy2;
-  uint8_t dummy3;
+  int8_t dummy3;
   int16_t aflevel;
   uint16_t afusn;
   uint16_t afwam;
@@ -56,7 +56,7 @@ uint16_t TEF6686::TestAF() {
     uint16_t rdsStat;
     uint16_t dummy1;
     uint16_t dummy2;
-    uint8_t dummy3;
+    int8_t dummy3;
 
     int16_t aflevel;
     uint16_t afusn;
@@ -322,7 +322,7 @@ bool TEF6686::getProcessing(uint16_t &highcut, uint16_t &stereo, uint16_t &sthib
   return stband_4;
 }
 
-bool TEF6686::getStatus(int16_t &level, uint16_t &USN, uint16_t &WAM, int16_t &offset, uint16_t &bandwidth, uint16_t &modulation, uint8_t &snr) {
+bool TEF6686::getStatus(int16_t &level, uint16_t &USN, uint16_t &WAM, int16_t &offset, uint16_t &bandwidth, uint16_t &modulation, int8_t &snr) {
   uint16_t status;
   devTEF_Radio_Get_Quality_Status(&status, &level, &USN, &WAM, &offset, &bandwidth, &modulation, &snr);
   return level;
@@ -333,7 +333,7 @@ bool TEF6686::getStatus(int16_t &level, uint16_t &USN, uint16_t &WAM, int16_t &o
   return snr;
 }
 
-bool TEF6686::getStatusAM(int16_t &level, uint16_t &noise, uint16_t &cochannel, int16_t &offset, uint16_t &bandwidth, uint16_t &modulation, uint8_t &snr) {
+bool TEF6686::getStatusAM(int16_t &level, uint16_t &noise, uint16_t &cochannel, int16_t &offset, uint16_t &bandwidth, uint16_t &modulation, int8_t &snr) {
   devTEF_Radio_Get_Quality_Status_AM(&level, &noise, &cochannel, &offset, &bandwidth, &modulation, &snr);
   return level;
   return noise;

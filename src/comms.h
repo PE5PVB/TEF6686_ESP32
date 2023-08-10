@@ -73,7 +73,7 @@ extern uint16_t MStatus;
 extern uint16_t USN;
 extern uint16_t WAM;
 extern uint8_t buff_pos;
-extern uint8_t SNR;
+extern int8_t CN;
 extern unsigned int freq_scan;
 extern unsigned int frequency;
 extern unsigned int frequency_AM;

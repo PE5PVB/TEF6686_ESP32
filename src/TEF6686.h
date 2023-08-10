@@ -207,8 +207,8 @@ class TEF6686 {
     void SetFreq(uint16_t frequency);
     void SetFreqAM(uint16_t frequency);
     bool getProcessing(uint16_t &highcut, uint16_t &stereo, uint16_t &sthiblend, uint8_t &stband_1, uint8_t &stband_2, uint8_t &stband_3, uint8_t &stband_4);
-    bool getStatus(int16_t &level, uint16_t &USN, uint16_t &WAM, int16_t &offset, uint16_t &bandwidth, uint16_t &modulation, uint8_t &snr);
-    bool getStatusAM(int16_t &level, uint16_t &noise, uint16_t &cochannel, int16_t &offset, uint16_t &bandwidth, uint16_t &modulation, uint8_t &snr);
+    bool getStatus(int16_t &level, uint16_t &USN, uint16_t &WAM, int16_t &offset, uint16_t &bandwidth, uint16_t &modulation, int8_t &snr);
+    bool getStatusAM(int16_t &level, uint16_t &noise, uint16_t &cochannel, int16_t &offset, uint16_t &bandwidth, uint16_t &modulation, int8_t &snr);
     bool getIdentification(uint16_t &device, uint16_t &hw_version, uint16_t &sw_version);
     void setSoftmuteFM(uint8_t mode);
     void setSoftmuteAM(uint8_t mode);

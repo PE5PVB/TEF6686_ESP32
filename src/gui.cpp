@@ -784,7 +784,7 @@ void BuildDisplay() {
   SStatusold = 2000;
   SStatus = 100;
   rssiold = 2000;
-  SNRold = 254;
+  CNold = 254;
   af_counterold = 254;
   batteryold = 6;
   batteryVold = 0;
