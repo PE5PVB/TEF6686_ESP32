@@ -411,10 +411,11 @@ void XDRGTKRoutine() {
           }
           frequencyold = frequency;
           for (freq_scan = scanner_start; freq_scan <= scanner_end; freq_scan += scanner_step) {
+			radio.SetFreq(freq_scan);
             DataPrint(String(freq_scan * 10, DEC));
             DataPrint(" = ");
             if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR); else  radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
-            DataPrint(String((radio.CheckSignal(freq_scan) / 10) + 10, DEC));
+            DataPrint(String((SStatus / 10) + 10, DEC));
             DataPrint(", ");
           }
           DataPrint("\n");
