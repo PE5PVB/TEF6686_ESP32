@@ -3149,24 +3149,24 @@ static const char* const myLanguage[16][196] = {
     "Vis batteriprosent", // 175
     "RT buffering", // 176
     "Hovedinnstillinger", // 177
-    "Lydinnstillinger", // 178
-    "Skjerminnstillinger", // 179
-    "RDS-innstillinger", // 180
-    "FM innstillinger", // 181
-    "AM innstillinger", // 182
+    "Lyd Innstillinger", // 178
+    "Skjerm Innstillinger", // 179
+    "RDS Innstillinger", // 180
+    "FM Innstillinger", // 181
+    "AM Innstillinger", // 182
     "Tilkobling", // 183
     "TRYKK MODE FOR Å RETUNERE", // 184
     "AM CoChannelDet", // 185
-    "CoChannelDet sensitivity", // 186
-    "AM CoChannelDet threshold", // 187
+    "CoChannelDet følsomhet", // 186
+    "AM CoChannelDet-terskel", // 187
     "CoChannelDet counet", // 188
-    "MAIN", // 189
-    "AUDIO", // 190
-    "DISPLAY", // 191
+    "HOVED", // 189
+    "LYD", // 190
+    "SKJERM", // 191
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT" // 195
+    "TILKOBLE" // 195
   }
 };
 
