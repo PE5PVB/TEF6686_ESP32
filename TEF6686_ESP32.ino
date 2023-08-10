@@ -154,7 +154,7 @@ byte screensaverOptions[5] = {0, 3, 10, 30, 60};
 byte screensaverset;
 byte showmodulation;
 byte showSWMIBand;
-byte nowToggleSWMIBand = 0;
+byte nowToggleSWMIBand = 1;
 byte SNRold;
 byte stepsize;
 byte StereoLevel;
