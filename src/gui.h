@@ -22,12 +22,10 @@
 #define ITEM9			190
 #define ITEM10			210
 
-#define PAGE_COUNT		13//5
-
-enum menupage {PAGE1, PAGE2, PAGE3, PAGE4, PAGE5, INDEX, MAINSETTINGS, AUDIOSETTINGS, DISPLAYSETTINGS, RDSSETTINGS, FMSETTINGS, AMSETTINGS, CONNECTIVITY};
+enum menupage {INDEX, MAINSETTINGS, AUDIOSETTINGS, DISPLAYSETTINGS, RDSSETTINGS, FMSETTINGS, AMSETTINGS, CONNECTIVITY};
 
 extern byte menuitem;
-extern byte items[13];
+extern byte items[8];
 
 extern bool advancedRDS;
 extern bool af;
@@ -100,6 +98,7 @@ extern byte showSWMIBand;
 extern byte SNRold;
 extern byte StereoLevel;
 extern byte StereoLevel;
+extern byte submenu;
 extern byte subnetclient;
 extern byte theme;
 extern byte touchrotating;

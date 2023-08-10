@@ -1,6 +1,6 @@
 // [number of languages][number of texts][max. length of text]
 
-static const char* const myLanguage[16][189] = {
+static const char* const myLanguage[16][196] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -189,7 +189,14 @@ static const char* const myLanguage[16][189] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet" // 188
+    "CoChannelDet counet", // 188
+    "MAIN", // 189
+    "AUDIO", // 190
+    "DISPLAY", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "CONNECT" // 195
   },
 
   { "Nederlands", // Dutch
@@ -380,7 +387,14 @@ static const char* const myLanguage[16][189] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet" // 188
+    "CoChannelDet counet", // 188
+    "MAIN", // 189
+    "AUDIO", // 190
+    "DISPLAY", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "CONNECT" // 195
   },
 
   { "Polski", // Polish
@@ -571,7 +585,14 @@ static const char* const myLanguage[16][189] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet" // 188
+    "CoChannelDet counet", // 188
+    "MAIN", // 189
+    "AUDIO", // 190
+    "DISPLAY", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "CONNECT" // 195
   },
 
   { "Hrvatski", // Croatian
@@ -762,7 +783,14 @@ static const char* const myLanguage[16][189] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet" // 188
+    "CoChannelDet counet", // 188
+    "MAIN", // 189
+    "AUDIO", // 190
+    "DISPLAY", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "CONNECT" // 195
   },
 
   { "Ελληνικά", // Greek
@@ -953,7 +981,14 @@ static const char* const myLanguage[16][189] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet" // 188
+    "CoChannelDet counet", // 188
+    "MAIN", // 189
+    "AUDIO", // 190
+    "DISPLAY", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "CONNECT" // 195
   },
 
   { "Romana", // Romanian
@@ -1144,7 +1179,14 @@ static const char* const myLanguage[16][189] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet" // 188
+    "CoChannelDet counet", // 188
+    "MAIN", // 189
+    "AUDIO", // 190
+    "DISPLAY", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "CONNECT" // 195
   },
 
   { "Deutsch", // German
@@ -1335,7 +1377,14 @@ static const char* const myLanguage[16][189] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet" // 188
+    "CoChannelDet counet", // 188
+    "MAIN", // 189
+    "AUDIO", // 190
+    "DISPLAY", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "CONNECT" // 195
   },
 
   { "Czech", // Czech
@@ -1526,7 +1575,14 @@ static const char* const myLanguage[16][189] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet" // 188
+    "CoChannelDet counet", // 188
+    "MAIN", // 189
+    "AUDIO", // 190
+    "DISPLAY", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "CONNECT" // 195
   },
 
   { "Slovak", // Slovak
@@ -1717,7 +1773,14 @@ static const char* const myLanguage[16][189] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet" // 188
+    "CoChannelDet counet", // 188
+    "MAIN", // 189
+    "AUDIO", // 190
+    "DISPLAY", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "CONNECT" // 195
   },
 
   { "Français", // French
@@ -1908,7 +1971,14 @@ static const char* const myLanguage[16][189] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet" // 188
+    "CoChannelDet counet", // 188
+    "MAIN", // 189
+    "AUDIO", // 190
+    "DISPLAY", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "CONNECT" // 195
   },
 
   { "Български", // Bulgarian
@@ -2099,7 +2169,14 @@ static const char* const myLanguage[16][189] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet" // 188
+    "CoChannelDet counet", // 188
+    "MAIN", // 189
+    "AUDIO", // 190
+    "DISPLAY", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "CONNECT" // 195
   },
 
   { "Русский", // Russian
@@ -2290,7 +2367,14 @@ static const char* const myLanguage[16][189] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet" // 188
+    "CoChannelDet counet", // 188
+    "MAIN", // 189
+    "AUDIO", // 190
+    "DISPLAY", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "CONNECT" // 195
   },
 
   { "Українська", // Ukranian
@@ -2481,7 +2565,14 @@ static const char* const myLanguage[16][189] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet" // 188
+    "CoChannelDet counet", // 188
+    "MAIN", // 189
+    "AUDIO", // 190
+    "DISPLAY", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "CONNECT" // 195
   },
 
   { "Italiano", // Italian
@@ -2672,7 +2763,14 @@ static const char* const myLanguage[16][189] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet" // 188
+    "CoChannelDet counet", // 188
+    "MAIN", // 189
+    "AUDIO", // 190
+    "DISPLAY", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "CONNECT" // 195
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -2863,7 +2961,14 @@ static const char* const myLanguage[16][189] = {
     "AM载波跟踪", // 185
     "设置跟踪灵敏度", // 186
     "AM载波跟踪层级", // 187
-    "设置跟踪层级" // 188
+    "设置跟踪层级", // 188
+    "MAIN", // 189
+    "AUDIO", // 190
+    "DISPLAY", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "CONNECT" // 195
   },
 
   { "Norsk", // Norwegian
@@ -3054,7 +3159,14 @@ static const char* const myLanguage[16][189] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet" // 188
+    "CoChannelDet counet", // 188
+    "MAIN", // 189
+    "AUDIO", // 190
+    "DISPLAY", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "CONNECT" // 195
   }
 };
 
