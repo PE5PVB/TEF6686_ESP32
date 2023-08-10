@@ -140,7 +140,7 @@ byte licold;
 byte memoryband[EE_PRESETS_CNT];
 byte memorypos;
 byte memoryposold;
-byte menupage = PAGE1;
+byte menupage;
 byte MSold;
 byte optenc;
 byte poweroptions;
@@ -154,6 +154,7 @@ byte screensaverOptions[5] = {0, 3, 10, 30, 60};
 byte screensaverset;
 byte showmodulation;
 byte showSWMIBand;
+byte submenu;
 byte nowToggleSWMIBand = 0;
 byte SNRold;
 byte stepsize;
@@ -776,7 +777,7 @@ void loop() {
       }
     }
 
-    if (menu == true && menuopen == true && menupage == PAGE1 && menuoption == ITEM5) {
+    if (menu == true && menuopen == true && menupage == FMSETTINGS && menuoption == ITEM4) {
       if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
       if (millis() >= lowsignaltimer + 500 || change2 == true) {
         lowsignaltimer = millis();
@@ -1783,6 +1784,9 @@ void ModeButtonPress() {
           ShowFreq(0);
         } else {
           if (menu == false) {
+            menuoption = ITEM1;
+            menupage = INDEX;
+            menuitem = 0;
             BuildMenu();
             menu = true;
             ScreensaverTimerSet(OFF);
@@ -1790,9 +1794,9 @@ void ModeButtonPress() {
         }
       }
     } else {
-      if (menuopen) {
+      if (menuopen && !submenu) {
         ButtonPress();
-      } else {
+      } else if (!submenu) {
         OStatusold = 1000;
         Stereostatusold = false;
         SStatusold = 2000;
@@ -1866,6 +1870,14 @@ void ModeButtonPress() {
         doBandSelectionAM();
         ScreensaverTimerSet(screensaverOptions[screensaverset]);
         if (screensaverset) ScreensaverTimerRestart();
+      } else {
+        if (submenu) {
+          submenu = false;
+          menuoption = ITEM1;
+          menupage = INDEX;
+          menuitem = 0;
+          BuildMenu();
+        }
       }
     }
   }
