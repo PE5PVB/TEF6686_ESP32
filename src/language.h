@@ -187,9 +187,9 @@ static const char* const myLanguage[16][196] = {
     "Connectivity", // 183
     "PRESS MODE TO RETURN", // 184
     "AM CoChannelDet", // 185
-    "CoChannelDet sensitivity", // 186
-    "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet", // 188
+    "CoChannel Det sensitivity", // 186
+    "CoChannel Det threshold", // 187
+    "CoChannel Det counter", // 188
     "MAIN", // 189
     "AUDIO", // 190
     "DISPLAY", // 191
@@ -383,18 +383,18 @@ static const char* const myLanguage[16][196] = {
     "FM instellingen", // 181
     "AM instellingen", // 182
     "Connectiviteit", // 183
-    "DRUK OP MODE OM TERUG TE GAAN", // 184
-    "AM CoChannelDet", // 185
-    "CoChannelDet sensitivity", // 186
-    "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet", // 188
-    "MAIN", // 189
-    "AUDIO", // 190
-    "DISPLAY", // 191
+    "MODE OM TERUG TE GAAN", // 184
+    "AM CoChannel detectie", // 185
+    "CoChannel det. gevoeligheid", // 186
+    "CoChannel det. kantelpunt", // 187
+    "CoChannel det. teller", // 188
+    "ALGEMEEN", // 189
+    "GELUID", // 190
+    "SCHERM", // 191
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT" // 195
+    "VERBIND" // 195
   },
 
   { "Polski", // Polish

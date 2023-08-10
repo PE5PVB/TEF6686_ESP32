@@ -156,7 +156,6 @@ byte showmodulation;
 byte showSWMIBand;
 byte submenu;
 byte nowToggleSWMIBand = 1;
-byte SNRold;
 byte stepsize;
 byte StereoLevel;
 byte subnetclient;
@@ -214,7 +213,7 @@ int rssiold = 200;
 int scanner_filter;
 int SecondaryColor;
 int SecondaryColorSmooth;
-int snrupdatetimer;
+int SNRupdatetimer;
 int Sqstatusold;
 int Squelch;
 int Squelchold;
@@ -233,6 +232,8 @@ int16_t SAvg2;
 int16_t SStatus;
 int8_t LevelOffset;
 int8_t LowLevelSet;
+int8_t CN;
+int8_t CNold;
 int8_t VolSet;
 float batteryVold;
 IPAddress remoteip;
@@ -269,7 +270,6 @@ uint16_t SWMIBandPosold;  // Fix Me: Should store this parameter into flash, for
 uint16_t USN;
 uint16_t WAM;
 uint8_t buff_pos;
-uint8_t SNR;
 unsigned int change;
 unsigned int ConverterSet;
 unsigned int freq_scan;
@@ -759,7 +759,7 @@ void loop() {
 
       if (millis() >= lowsignaltimer + 300) {
         lowsignaltimer = millis();
-        if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
+        if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
         if (screenmute == true) readRds();
         if (menu == false) {
           doSquelch();
@@ -768,7 +768,7 @@ void loop() {
       }
 
     } else {
-      if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
+      if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
       if (menu == false) {
         doSquelch();
         readRds();
@@ -778,7 +778,7 @@ void loop() {
     }
 
     if (menu == true && menuopen == true && menupage == FMSETTINGS && menuoption == ITEM4) {
-      if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
+      if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
       if (millis() >= lowsignaltimer + 500 || change2 == true) {
         lowsignaltimer = millis();
         change2 = false;
@@ -1680,7 +1680,7 @@ void SelectBand() {
     CheckBandForbiddenAM();
     radio.SetFreqAM(frequency_AM);
     doBW();
-    radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
+    radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
     if (screenmute == false) radio.clearRDS(fullsearchrds); BuildDisplay();
     if (region == 0) tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
     if (region == 1) tftPrint(-1, "ID:", 212, 193, GreyoutColor, BackgroundColor, 16);
@@ -1704,7 +1704,7 @@ void SelectBand() {
     freqold = frequency_AM;
     CheckBandForbiddenFM();
     doBW();
-    radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
+    radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
     if (screenmute == false) radio.clearRDS(fullsearchrds); BuildDisplay();
   }
 }
@@ -2301,23 +2301,23 @@ void ShowFreq(int mode) {
 
 void ShowSignalLevel() {
   if (screenmute == false) {
-    if (millis() >= snrupdatetimer + TIMER_SNR_TIMER) {
-      snrupdatetimer = millis();
+    if (millis() >= SNRupdatetimer + TIMER_SNR_TIMER) {
+      SNRupdatetimer = millis();
       if (!advancedRDS) {
-        if (SNR > (SNRold + 1) || SNR < (SNRold - 1)) {
-          if (SNRold == 0) tftPrint(1, "--", 295, 163, BackgroundColor, BackgroundColor, 16); else tftPrint(1, String(SNRold), 295, 163, BackgroundColor, BackgroundColor, 16);
+        if (CN > (CNold + 1) || CN < (CNold - 1)) {
+          if (CNold == 0) tftPrint(1, "--", 295, 163, BackgroundColor, BackgroundColor, 16); else tftPrint(1, String(CNold), 295, 163, BackgroundColor, BackgroundColor, 16);
           if (tuned == true) {
-            if (SNR == 0) tftPrint(1, "--", 295, 163, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(SNR), 295, 163, PrimaryColor, PrimaryColorSmooth, 16);
-            SNRold = SNR;
+            if (CN == 0) tftPrint(1, "--", 295, 163, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(CN), 295, 163, PrimaryColor, PrimaryColorSmooth, 16);
+            CNold = CN;
           } else {
             tftPrint(1, "--", 295, 163, PrimaryColor, PrimaryColorSmooth, 16);
-            SNRold = 0;
+            CNold = 0;
           }
         }
       }
     }
     SAvg = (((SAvg * 9) + 5) / 10) + SStatus;
-    SAvg2 = (((SAvg2 * 9) + 5) / 10) + SNR;
+    SAvg2 = (((SAvg2 * 9) + 5) / 10) + CN;
 
     float sval = 0;
     int16_t smeter = 0;
@@ -2334,7 +2334,7 @@ void ShowSignalLevel() {
 
     smeter = int16_t(sval);
     SStatus = SAvg / 10;
-    SNR = SAvg2 / 10;
+    CN = SAvg2 / 10;
 
     if (menu == false) analogWrite(SMETERPIN, smeter);
 
@@ -3177,7 +3177,7 @@ void Seek(bool mode) {
     if (XDRGTKUSB == true || XDRGTKTCP == true) {
       if (band == BAND_FM) DataPrint("T" + String(frequency * 10) + "\n"); else DataPrint("T" + String(frequency_AM) + "\n");
     }
-    radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, SNR);
+    radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
 
     if ((USN < 200) && (WAM < 230) && (OStatus < 80 && OStatus > -80) && (Squelch < SStatus || Squelch == 920)) {
       seek = false;

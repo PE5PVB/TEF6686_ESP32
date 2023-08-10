@@ -95,7 +95,7 @@ extern byte screensaverOptions[5];
 extern byte screensaverset;
 extern byte showmodulation;
 extern byte showSWMIBand;
-extern byte SNRold;
+extern int8_t CNold;
 extern byte StereoLevel;
 extern byte StereoLevel;
 extern byte submenu;
