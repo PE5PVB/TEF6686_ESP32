@@ -3161,7 +3161,7 @@ static const char* const myLanguage[16][196] = {
     "AM CoChannelDet-terskel", // 187
     "CoChannelDet counet", // 188
     "HOVED", // 189
-    "LYD", // 190
+    "LYD ", // 190
     "SKJERM", // 191
     "RDS", // 192
     "FM", // 193
