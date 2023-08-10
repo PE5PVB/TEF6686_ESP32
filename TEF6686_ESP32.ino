@@ -2982,6 +2982,8 @@ void ShowBattery() {
       tft.fillRect(279, 8, 33, 16, BackgroundColor);
     }
     batteryold = battery;
+    batteryVold = 0;
+    vPerold = 0;
   }
 
   if (!wifi && batterydetect) {
