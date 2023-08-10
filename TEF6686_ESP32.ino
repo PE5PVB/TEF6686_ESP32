@@ -155,7 +155,7 @@ byte screensaverset;
 byte showmodulation;
 byte showSWMIBand;
 byte submenu;
-byte nowToggleSWMIBand = 0;
+byte nowToggleSWMIBand = 1;
 byte SNRold;
 byte stepsize;
 byte StereoLevel;
@@ -2983,6 +2983,8 @@ void ShowBattery() {
       tft.fillRect(279, 8, 33, 16, BackgroundColor);
     }
     batteryold = battery;
+    batteryVold = 0;
+    vPerold = 0;
   }
 
   if (!wifi && batterydetect) {
