@@ -2956,7 +2956,7 @@ static const char* const myLanguage[16][196] = {
     "RDS设置", // 180
     "FM 设置", // 181
     "AM 设置", // 182
-    "Connectivity", // 183
+    "连机模式", // 183
     "按 MODE 键返回", // 184
     "AM载波跟踪", // 185
     "设置跟踪灵敏度", // 186
