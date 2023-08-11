@@ -2354,27 +2354,27 @@ static const char* const myLanguage[16][196] = {
     "Индиго", // 172
     "Варианты батареи", // 173
     "Показать значение батареи", // 174
-    "Показать процент заряда батареи", // 175
-    "RT buffering", // 176
-    "Main settings", // 177
-    "Audio settings", // 178
-    "Display settings", // 179
-    "RDS settings", // 180
-    "FM settings", // 181
-    "AM settings", // 182
-    "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "Показать процент батареи", // 175
+    "Буферизация RT", // 176
+    "Основные настройки", // 177
+    "Настройки звука", // 178
+    "Настройки отображения", // 179
+    "Настройки RDS", // 180
+    "Настройки FM", // 181
+    "Настройки AM", // 182
+    "Соединение", // 183
+    "НАЖМИТЕ MODE, ДЛЯ ВОЗВР.", // 184
     "AM CoChannelDet", // 185
-    "CoChannelDet sensitivity", // 186
-    "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet", // 188
-    "MAIN", // 189
-    "AUDIO", // 190
-    "DISPLAY", // 191
+    "CoChannelDet чувствительность", // 186
+    "Порог AM CoChannelDet", // 187
+    "CoChannelDet количество", // 188
+    "ОСНОВНОЙ", // 189
+    "АУДИО", // 190
+    "ДИСПЛЕЙ", // 191
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT" // 195
+    "ПОДКЛЮЧЕНИЕ" // 195
   },
 
   { "Українська", // Ukranian
@@ -2553,26 +2553,26 @@ static const char* const myLanguage[16][196] = {
     "Варіанти батареї", // 173
     "Показати заряд батареї", // 174
     "Показати відсоток батареї", // 175
-    "RT buffering", // 176
-    "Main settings", // 177
-    "Audio settings", // 178
-    "Display settings", // 179
-    "RDS settings", // 180
-    "FM settings", // 181
-    "AM settings", // 182
-    "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "Буферизація RT", // 176
+    "Основні налаштування", // 177
+    "Налаштування аудіо", // 178
+    "Налаштування дисплея", // 179
+    "Налаштування RDS", // 180
+    "Налаштування FM", // 181
+    "Налаштування AM", // 182
+    "Підключення", // 183
+    "НАТИСНІТЬ MODE ДЛЯ ПОВЕР.", // 184
     "AM CoChannelDet", // 185
-    "CoChannelDet sensitivity", // 186
-    "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet", // 188
-    "MAIN", // 189
-    "AUDIO", // 190
-    "DISPLAY", // 191
+    "Чутливість CoChannelDet", // 186
+    "Поріг AM CoChannelDet", // 187
+    "CoChannelDet кількість", // 188
+    "ОСНОВНОЇ", // 189
+    "АУДІО", // 190
+    "ДИСПЛЕЙ", // 191
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT" // 195
+    "ПІДКЛЮЧЕННЯ" // 195
   },
 
   { "Italiano", // Italian
