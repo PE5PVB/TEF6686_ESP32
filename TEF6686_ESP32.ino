@@ -661,7 +661,6 @@ void loop() {
     Communication();
 
     if (!menu && !afscreen) {
-
       if (af && dropout && millis() >= aftimer + 1000) {
         aftimer = millis();
         frequency = radio.TestAF();

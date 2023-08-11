@@ -572,7 +572,6 @@ void readRds() {
           tft.fillCircle(200, 41, 5, SignificantColor);
         }
         if (radio.rds.correctPI != 0) dropout = true;
-        aftimer = millis();
       } else {
         if (dropout == true) {
           if (advancedRDS) tftPrint(-1, PIold, 244, 75, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(-1, PIold, 244, 187, PrimaryColor, PrimaryColorSmooth, 28);
