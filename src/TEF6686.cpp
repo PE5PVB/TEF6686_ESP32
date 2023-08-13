@@ -373,10 +373,11 @@ void TEF6686::readRDS(bool showrdserrors)
   if (rds.rdsB != rdsBprevious) {
     rds.correct = false;
 
-    rds.rdsAerror = (((rds.rdsErr >> 14) & 0x02) == 0x02);
-    rds.rdsBerror = (((rds.rdsErr >> 12) & 0x02) == 0x02);
-    rds.rdsCerror = (((rds.rdsErr >> 10) & 0x02) == 0x02);
-    rds.rdsDerror = (((rds.rdsErr >> 8) & 0x02) == 0x02);
+    rds.rdsAerror = ((((rds.rdsErr >> 14) & 0x03) == 0x02) || (((rds.rdsErr >> 14) & 0x03) == 0x03));
+    rds.rdsBerror = ((((rds.rdsErr >> 12) & 0x03) == 0x02) || (((rds.rdsErr >> 12) & 0x03) == 0x03));
+    rds.rdsCerror = ((((rds.rdsErr >> 10) & 0x03) == 0x02) || (((rds.rdsErr >> 10) & 0x03) == 0x03));
+    rds.rdsDerror = ((((rds.rdsErr >> 8) & 0x03) == 0x02) || (((rds.rdsErr >> 8) & 0x03) == 0x03));
+
     if (!rds.rdsAerror && !rds.rdsBerror && !rds.rdsCerror && !rds.rdsDerror) rds.correct = true;         // Any errors in all blocks?
     if ((rdsStat & (1 << 15))) rdsReady = true;
 
@@ -477,7 +478,7 @@ void TEF6686::readRDS(bool showrdserrors)
               ps_buffer[(offset * 2)  + 1] = rds.rdsD & 0xFF;                                   // Second character of segment
               ps_buffer[(offset * 2)  + 2] = '\0';                                              // Endmarker of segment
 
-              if (offset == 3 && ps_process == true) {                                          // Last chars are received
+              if (offset == 3 && ps_process) {                                                  // Last chars are received
                 if (ps_buffer != ps_buffer2) {                                                  // When difference between old and new, let's go...
                   RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), true);  // Convert 8 bit ASCII to 16 bit ASCII
                   String utf8String = convertToUTF8(PStext);                                    // Convert RDS characterset to ASCII
@@ -485,7 +486,7 @@ void TEF6686::readRDS(bool showrdserrors)
                 }
               }
 
-              if (ps_process == false) {                                                        // Let's get 2 runs of 8 PS characters fast and without refresh
+              if (!ps_process) {                                                                // Let's get 2 runs of 8 PS characters fast and without refresh
                 ps_counter ++;                                                                  // Let's count each run
                 RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), true);    // Convert 8 bit ASCII to 16 bit ASCII
                 String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
@@ -515,54 +516,65 @@ void TEF6686::readRDS(bool showrdserrors)
 
               //AF decoder
               if (rdsblock == 0) {                                                              // Only when in GROUP 0A
-                if ((rds.rdsB >> 11) == 0 && af_counter < 50) {
-                  uint16_t buffer0;
-                  uint16_t buffer1;
+                if (((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) > 224) && ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 250)) afinit = true;
+                if (afinit) {
+                  if ((rds.rdsB >> 11) == 0 && af_counter < 50) {
+                    uint16_t buffer0;
+                    uint16_t buffer1;
 
-                  if ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) buffer0 = (rds.rdsC >> 8) * 10 + 8750; else buffer0 = 0;
-                  if ((rds.rdsC & 0xFF) > 0 && (rds.rdsC & 0xFF) < 205) buffer1 = (rds.rdsC & 0xFF) * 10 + 8750; else buffer1 = 0;
-                  if (buffer0 != 0 || buffer1 != 0) rds.hasAF = true;
+                    if ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) buffer0 = (rds.rdsC >> 8) * 10 + 8750; else buffer0 = 0;
+                    if ((rds.rdsC & 0xFF) > 0 && (rds.rdsC & 0xFF) < 205) buffer1 = (rds.rdsC & 0xFF) * 10 + 8750; else buffer1 = 0;
+                    if (buffer0 != 0 || buffer1 != 0) rds.hasAF = true;
 
-                  bool isValuePresent = false;
-                  for (int i = 0; i < 50; i++) {
-                    if (buffer0 == currentfreq || buffer0 == 0 || af[i].frequency == buffer0) {
-                      isValuePresent = true;
-                      break;
+                    bool isValuePresent = false;
+                    for (int i = 0; i < 50; i++) {
+                      if (buffer0 == currentfreq || buffer0 == 0 || af[i].frequency == buffer0) {
+                        isValuePresent = true;
+                        break;
+                      }
                     }
-                  }
 
-                  if (!isValuePresent) {
-                    af[af_counter].frequency = buffer0;
-                    af_counter++;
-                  }
-
-                  isValuePresent = false;
-                  for (int i = 0; i < 50; i++) {
-                    if (buffer1 == currentfreq || buffer1 == 0 || af[i].frequency == buffer1) {
-                      isValuePresent = true;
-                      break;
+                    if (!isValuePresent) {
+                      af[af_counter].frequency = buffer0;
+                      af_counter++;
                     }
-                  }
 
-                  if (!isValuePresent) {
-                    af[af_counter].frequency = buffer1;
-                    if (af_counter < 50) af_counter++;
-                  }
+                    isValuePresent = false;
+                    for (int i = 0; i < 50; i++) {
+                      if (buffer1 == currentfreq || buffer1 == 0 || af[i].frequency == buffer1) {
+                        isValuePresent = true;
+                        break;
+                      }
+                    }
 
-                  for (int i = 0; i < 50; i++) {
-                    for (int j = 0; j < 50 - i; j++) {
-                      if (af[j].frequency == 0) continue;
+                    if (buffer0 == currentfreq && buffer0 < buffer1) af[af_counter].regional = true;
+                    if (buffer1 == currentfreq && buffer0 > buffer1) af[af_counter].regional = true;
 
-                      if (af[j].frequency > af[j + 1].frequency && af[j + 1].frequency != 0) {
-                        uint16_t temp = af[j].frequency;
-                        bool temp3 = af[j].afvalid;
-                        bool temp4 = af[j].checked;
-                        af[j].frequency = af[j + 1].frequency;
-                        af[j].afvalid = af[j + 1].afvalid;
-                        af[j].checked = af[j + 1].checked;
-                        af[j + 1].frequency = temp;
-                        af[j + 1].afvalid = temp3;
-                        af[j + 1].checked = temp4;
+                    if (!isValuePresent) {
+                      af[af_counter].frequency = buffer1;
+                      if (af_counter < 50) af_counter++;
+                    }
+
+                    if (rds.sortaf) {
+                      for (int i = 0; i < 50; i++) {
+                        for (int j = 0; j < 50 - i; j++) {
+                          if (af[j].frequency == 0) continue;
+
+                          if (af[j].frequency > af[j + 1].frequency && af[j + 1].frequency != 0) {
+                            uint16_t temp = af[j].frequency;
+                            bool temp3 = af[j].afvalid;
+                            bool temp4 = af[j].checked;
+                            bool temp5 = af[j].regional;
+                            af[j].frequency = af[j + 1].frequency;
+                            af[j].afvalid = af[j + 1].afvalid;
+                            af[j].checked = af[j + 1].checked;
+                            af[j].regional = af[j + 1].regional;
+                            af[j + 1].frequency = temp;
+                            af[j + 1].afvalid = temp3;
+                            af[j + 1].checked = temp4;
+                            af[j + 1].regional = temp5;
+                          }
+                        }
                       }
                     }
                   }
@@ -885,6 +897,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
     af[i].score = -32767;
     af[i].afvalid = true;
     af[i].checked = false;
+    af[i].regional = false;
   }
 
   for (i = 0; i < 20; i++) {
@@ -950,6 +963,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
   initab = true;
   rds.rdsplusTag1 = 169;
   rds.rdsplusTag2 = 169;
+  afinit = false;
 }
 
 void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {

@@ -73,7 +73,7 @@ bool devTEF_Radio_Set_AMLevelOffset(int16_t offset) {
 }
 
 bool devTEF_Radio_Set_RDS(bool fullsearchrds) {
-  if (fullsearchrds == true) return devTEF_Set_Cmd(TEF_FM, Cmd_Set_RDS, 9, 3, 1, 0); else return devTEF_Set_Cmd(TEF_FM, Cmd_Set_RDS, 9, 1, 1, 0);
+  if (fullsearchrds) return devTEF_Set_Cmd(TEF_FM, Cmd_Set_RDS, 9, 3, 1, 0); else return devTEF_Set_Cmd(TEF_FM, Cmd_Set_RDS, 9, 1, 1, 0);
 }
 
 bool devTEF_Radio_Set_Highcut_Level(uint8_t mode, uint16_t start, uint16_t slope) {
@@ -282,7 +282,7 @@ bool devTEF_Radio_Get_Identification (uint16_t *device, uint16_t *hw_version, ui
 }
 
 bool devTEF_Radio_Set_Wavegen(bool mode, int16_t amplitude, uint16_t freq) {
-  if (mode == true) {
+  if (mode) {
     devTEF_Set_Cmd(TEF_AUDIO, Cmd_Set_Input, 5, 240);
     return devTEF_Set_Cmd(TEF_AUDIO, Cmd_Set_WaveGen, 15, 5, 0, amplitude * 10, freq, amplitude * 10 , freq);
   } else {

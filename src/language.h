@@ -1,6 +1,6 @@
-// [number of languages][number of texts][max. length of text]
+// [number of languages][number of texts]
 
-static const char* const myLanguage[16][196] = {
+static const char* const myLanguage[16][197] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -196,7 +196,8 @@ static const char* const myLanguage[16][196] = {
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT" // 195
+    "CONNECT", // 195
+    "Auto sort AF" // 196
   },
 
   { "Nederlands", // Dutch
@@ -394,7 +395,8 @@ static const char* const myLanguage[16][196] = {
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "VERBIND" // 195
+    "VERBIND", // 195
+    "Auto AF sorteren" // 196
   },
 
   { "Polski", // Polish
@@ -592,7 +594,8 @@ static const char* const myLanguage[16][196] = {
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT" // 195
+    "CONNECT", // 195
+    "Auto sort AF" // 196
   },
 
   { "Hrvatski", // Croatian
@@ -790,7 +793,8 @@ static const char* const myLanguage[16][196] = {
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT" // 195
+    "CONNECT", // 195
+    "Auto sort AF" // 196
   },
 
   { "Ελληνικά", // Greek
@@ -988,7 +992,8 @@ static const char* const myLanguage[16][196] = {
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "ΣΥΝΔΕΣΗ" // 195
+    "ΣΥΝΔΕΣΗ", // 195
+    "Auto sort AF" // 196
   },
 
   { "Romana", // Romanian
@@ -1186,7 +1191,8 @@ static const char* const myLanguage[16][196] = {
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT" // 195
+    "CONNECT", // 195
+    "Auto sort AF" // 196
   },
 
   { "Deutsch", // German
@@ -1384,7 +1390,8 @@ static const char* const myLanguage[16][196] = {
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT" // 195
+    "CONNECT", // 195
+    "Auto sort AF" // 196
   },
 
   { "Czech", // Czech
@@ -1582,7 +1589,8 @@ static const char* const myLanguage[16][196] = {
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT" // 195
+    "CONNECT", // 195
+    "Auto sort AF" // 196
   },
 
   { "Slovak", // Slovak
@@ -1780,7 +1788,8 @@ static const char* const myLanguage[16][196] = {
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT" // 195
+    "CONNECT", // 195
+    "Auto sort AF" // 196
   },
 
   { "Français", // French
@@ -1978,7 +1987,8 @@ static const char* const myLanguage[16][196] = {
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT" // 195
+    "CONNECT", // 195
+    "Auto sort AF" // 196
   },
 
   { "Български", // Bulgarian
@@ -2176,7 +2186,8 @@ static const char* const myLanguage[16][196] = {
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT" // 195
+    "CONNECT", // 195
+    "Auto sort AF" // 196
   },
 
   { "Русский", // Russian
@@ -2374,7 +2385,8 @@ static const char* const myLanguage[16][196] = {
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "ПОДКЛЮЧЕНИЕ" // 195
+    "ПОДКЛЮЧЕНИЕ", // 195
+    "Auto sort AF" // 196
   },
 
   { "Українська", // Ukranian
@@ -2572,7 +2584,8 @@ static const char* const myLanguage[16][196] = {
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "ПІДКЛЮЧЕННЯ" // 195
+    "ПІДКЛЮЧЕННЯ", // 195
+    "Auto sort AF" // 196
   },
 
   { "Italiano", // Italian
@@ -2770,7 +2783,8 @@ static const char* const myLanguage[16][196] = {
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT" // 195
+    "CONNECT", // 195
+    "Auto sort AF" // 196
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -2968,7 +2982,8 @@ static const char* const myLanguage[16][196] = {
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT" // 195
+    "CONNECT", // 195
+    "Auto sort AF" // 196
   },
 
   { "Norsk", // Norwegian
@@ -3166,7 +3181,8 @@ static const char* const myLanguage[16][196] = {
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "TILKOBLE" // 195
+    "TILKOBLE", // 195
+    "Auto sort AF" // 196
   }
 };
 

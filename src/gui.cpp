@@ -6,7 +6,7 @@
 #include <EEPROM.h>
 
 byte menuitem;
-byte items[8] = {8, 2, 6, 9, 7, 9, 7, 4};
+byte items[8] = {8, 2, 6, 9, 8, 9, 7, 4};
 
 void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
   switch (CurrentTheme) {
@@ -347,8 +347,8 @@ void BuildAFScreen() {
     batteryVold = 0;
     vPerold = 0;
     af_counterold = 254;
-    strcpy(radioIdPrevious, "0");
-    programServicePrevious = "0";
+    strcpy(radioIdPrevious, "");
+    programServicePrevious = "";
     for (byte i = 0; i < 11; i++) eonpsold[i] = "";
 
   }
@@ -456,6 +456,7 @@ void BuildMenu() {
       tftPrint(-1, myLanguage[language][61], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][99], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][176], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
+	  tftPrint(-1, myLanguage[language][196], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
 
       if (showrdserrors) tftPrint(1, myLanguage[language][42], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (region == 0) tftPrint(1, myLanguage[language][47], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
@@ -465,6 +466,7 @@ void BuildMenu() {
       if (radio.rds.pierrors) tftPrint(1, myLanguage[language][42], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (af) tftPrint(1, myLanguage[language][42], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (radio.rds.rtbuffer) tftPrint(1, myLanguage[language][42], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+	  if (radio.rds.sortaf) tftPrint(1, myLanguage[language][42], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       break;
 
     case FMSETTINGS:
@@ -620,7 +622,7 @@ void BuildAdvancedRDS() {
     tft.drawCircle(76, 15, 9, GreyoutColor);
     tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
 
-    if (StereoToggle == false) {
+    if (!StereoToggle) {
       tft.drawCircle(71, 15, 10, SecondaryColor);
       tft.drawCircle(71, 15, 9, SecondaryColor);
     }
@@ -648,9 +650,9 @@ void BuildAdvancedRDS() {
   batteryVold = 0;
   vPerold = 0;
 
-  strcpy(programTypePrevious, "0");
-  strcpy(radioIdPrevious, "0");
-  programServicePrevious = "0";
+  strcpy(programTypePrevious, "");
+  strcpy(radioIdPrevious, "");
+  programServicePrevious = "";
   ptynold = " ";
   MSold = 0;
   ECCold = 254;
@@ -756,7 +758,7 @@ void BuildDisplay() {
     tft.drawCircle(76, 15, 10, GreyoutColor);
     tft.drawCircle(76, 15, 9, GreyoutColor);
     tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
-    if (StereoToggle == false) {
+    if (!StereoToggle) {
       tft.drawCircle(71, 15, 10, SecondaryColor);
       tft.drawCircle(71, 15, 9, SecondaryColor);
     }
@@ -789,15 +791,15 @@ void BuildDisplay() {
   batteryold = 6;
   batteryVold = 0;
   vPerold = 0;
-  strcpy(programTypePrevious, "0");
-  strcpy(radioIdPrevious, "0");
-  programServicePrevious = "0";
+  strcpy(programTypePrevious, "");
+  strcpy(radioIdPrevious, "");
+  programServicePrevious = "";
   BWreset = true;
   if (band < BAND_GAP) tftPrint(-1, "MHz", 258, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 28); else tftPrint(-1, "kHz", 258, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 28);
 }
 
 void MenuUp() {
-  if (menuopen == false) {
+  if (!menuopen) {
     tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, BackgroundColor);
     if (hardwaremodel == BASE_ILI9341) {
       menuoption += ITEM_GAP;
@@ -1052,6 +1054,12 @@ void MenuUp() {
             if (radio.rds.rtbuffer) radio.rds.rtbuffer = false; else radio.rds.rtbuffer = true;
             if (radio.rds.rtbuffer) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
+
+			case ITEM8:
+            if (radio.rds.sortaf) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
+            if (radio.rds.sortaf) radio.rds.sortaf = false; else radio.rds.sortaf = true;
+            if (radio.rds.sortaf) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
         }
         break;
 
@@ -1253,7 +1261,7 @@ void MenuUp() {
 }
 
 void MenuDown() {
-  if (menuopen == false) {
+  if (!menuopen) {
     tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, BackgroundColor);
     if (hardwaremodel == BASE_ILI9341) {
       menuoption -= ITEM_GAP;
@@ -1509,6 +1517,12 @@ void MenuDown() {
             if (radio.rds.rtbuffer) radio.rds.rtbuffer = false; else radio.rds.rtbuffer = true;
             if (radio.rds.rtbuffer) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
+
+          case ITEM8:
+            if (radio.rds.sortaf) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
+            if (radio.rds.sortaf) radio.rds.sortaf = false; else radio.rds.sortaf = true;
+            if (radio.rds.sortaf) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
         }
         break;
 
@@ -1709,7 +1723,7 @@ void MenuDown() {
 }
 
 void DoMenu() {
-  if (menuopen == false) {
+  if (!menuopen) {
     if (menupage != INDEX) {
       menuopen = true;
       tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
@@ -1952,6 +1966,11 @@ void DoMenu() {
             tftPrint(0, myLanguage[language][176], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (radio.rds.rtbuffer) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
+
+          case ITEM8:
+            tftPrint(0, myLanguage[language][196], 155, 78, ActiveColor, ActiveColorSmooth, 28);
+            if (radio.rds.sortaf) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
         }
         break;
 
@@ -2109,7 +2128,7 @@ void DoMenu() {
         break;
     }
   } else {
-    if (menupage == CONNECTIVITY && menuoption == ITEM2 && wifi == true) {
+    if (menupage == CONNECTIVITY && menuoption == ITEM2 && wifi) {
       tryWiFi();
       delay(2000);
     }

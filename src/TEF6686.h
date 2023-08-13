@@ -166,6 +166,7 @@ typedef struct _rds_ {
   bool underscore;
   bool rdsreset;
   bool pierrors;
+  bool sortaf;
   bool rtbuffer = true;
 } rds_;
 
@@ -174,6 +175,7 @@ typedef struct _af_ {
   int16_t score;
   bool afvalid;
   bool checked;
+  bool regional;
 } af_;
 
 typedef struct _eon_ {
@@ -285,6 +287,7 @@ class TEF6686 {
     bool runningbit;
     bool initrt;
     bool initab;
+	bool afinit;
 };
 
 #endif

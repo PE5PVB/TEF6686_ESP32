@@ -118,6 +118,7 @@
 #define EE_BYTE_HIGHCUTOFFSET       23
 #define EE_BYTE_LEVELOFFSET         24
 #define EE_BYTE_RTBUFFER			25
+#define EE_BYTE_SORTAF				26
 #define EE_BYTE_EDGEBEEP            28
 #define EE_BYTE_SOFTMUTEAM          29
 #define EE_BYTE_SOFTMUTEFM          30
