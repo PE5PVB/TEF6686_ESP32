@@ -2147,7 +2147,7 @@ void ShowFreq(int mode) {
             sprite1.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             sprite1.drawString(String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100) + " ", 218, -6);
             sprite1.pushSprite(46, 46);
-//            freqold = freq;
+            //            freqold = freq;
           } else if (mode == 1) {
             sprite1.fillSprite(BackgroundColor);
             sprite1.pushSprite(46, 46);
@@ -2795,18 +2795,12 @@ void ShowBattery() {
       if (battery == 0) {
         tft.drawRect(277, 6, 37, 20, BarSignificantColor);
         tft.fillRect(313, 13, 4, 6, BarSignificantColor);
-        tft.fillRect(279, 8, 33, 16, BackgroundColor);
-        if (batteryoptions != BATTERY_VALUE || batteryoptions != BATTERY_PERCENT) {
-          tft.fillRect(279, 24 - (battery * 4), 33, battery * 4, BarInsignificantColor);
-        }
       } else {
         tft.drawRect(277, 6, 37, 20, ActiveColor);
         tft.fillRect(313, 13, 4, 6, ActiveColor);
-        tft.fillRect(279, 8, 33, 16, BackgroundColor);
-        if (batteryoptions != BATTERY_VALUE || batteryoptions != BATTERY_PERCENT) {
-          tft.fillRect(279, 24 - (battery * 4), 33, battery * 4, BarInsignificantColor);
-        }
       }
+      tft.fillRect(279, 8, 33, 16, BackgroundColor);
+      if (batteryoptions != BATTERY_VALUE && batteryoptions != BATTERY_PERCENT) tft.fillRect(279, 24 - (battery * 4), 33, battery * 4, BarInsignificantColor);
     } else {
       tft.drawRect(277, 6, 37, 20, GreyoutColor);
       tft.fillRect(313, 13, 4, 6, GreyoutColor);
@@ -2825,6 +2819,7 @@ void ShowBattery() {
       tftReplace(-1, String(batteryVold, 1) + "V", String(batteryV, 1) + "V", 279, 9, BatteryValueColor, BatteryValueColorSmooth, 16);
       batteryVold = batteryV;
     } else if (int(vPer) != int(vPerold) && batteryoptions == BATTERY_PERCENT && abs(vPer - vPerold) > 0.5) {
+      if (vPer > 99.0) vPer = 99.0;
       tftReplace(-1, String(vPerold, 0) + "%", String(vPer, 0) + "%", 279, 9, BatteryValueColor, BatteryValueColorSmooth, 16);
       vPerold = vPer;
     }
