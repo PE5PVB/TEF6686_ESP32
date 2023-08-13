@@ -582,7 +582,7 @@ static const char* const myLanguage[16][196] = {
     "Ustawienia AM", // 182
     "Lacznosc", // 183
     "NACISNIJ MODE ABY WROCIC", // 184
-    "Detek. miedzykanlowey AM", // 185
+    "Detek. miedzykanalowy AM", // 185
     "Czulosc detek. miedzykanal.", // 186
     "Prog detek. miedzykanalowego AM", // 187
     "Licznik detek. miedzykanal.", // 188
