@@ -2816,12 +2816,12 @@ void ShowBattery() {
     float vPer = constrain((batteryV - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE), 0.0, 1.0) * 100;
 
     if (abs(batteryV - batteryVold) > 0.05 && batteryoptions == BATTERY_VALUE) {
-      tftReplace(-1, String(batteryVold, 1) + "V", String(batteryV, 1) + "V", 279, 9, BatteryValueColor, BatteryValueColorSmooth, 16);
       batteryVold = batteryV;
+      tftReplace(-1, String(batteryVold, 1) + "V", String(batteryV, 1) + "V", 279, 9, BatteryValueColor, BatteryValueColorSmooth, 16);
     } else if (int(vPer) != int(vPerold) && batteryoptions == BATTERY_PERCENT && abs(vPer - vPerold) > 0.5) {
+      vPerold = vPer;
       if (vPer > 99.0) vPer = 99.0;
       tftReplace(-1, String(vPerold, 0) + "%", String(vPer, 0) + "%", 279, 9, BatteryValueColor, BatteryValueColorSmooth, 16);
-      vPerold = vPer;
     }
   }
 }
