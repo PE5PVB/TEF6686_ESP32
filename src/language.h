@@ -585,7 +585,7 @@ static const char* const myLanguage[16][196] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet", // 188
+    "CoChannelDet counter", // 188
     "MAIN", // 189
     "AUDIO", // 190
     "DISPLAY", // 191
@@ -783,7 +783,7 @@ static const char* const myLanguage[16][196] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet", // 188
+    "CoChannelDet counter", // 188
     "MAIN", // 189
     "AUDIO", // 190
     "DISPLAY", // 191
@@ -969,26 +969,26 @@ static const char* const myLanguage[16][196] = {
     "Επιλογές μπαταρίας", // 173
     "Εμφάνιση τάσης", // 174
     "Εμφάνιση ποσοστού", // 175
-    "RT buffering", // 176
-    "Main settings", // 177
-    "Audio settings", // 178
-    "Display settings", // 179
-    "RDS settings", // 180
-    "FM settings", // 181
-    "AM settings", // 182
-    "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
-    "AM CoChannelDet", // 185
-    "CoChannelDet sensitivity", // 186
-    "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet", // 188
-    "MAIN", // 189
-    "AUDIO", // 190
-    "DISPLAY", // 191
+    "RT προφόρτωση", // 176
+    "Βασικές ρυθμίσεις", // 177
+    "Ρυθμίσεις ήχου", // 178
+    "Ρυθμίσεις εμφάνισης", // 179
+    "Ρυθμίσεις RDS", // 180
+    "Ρυθμίσεις FM", // 181
+    "Ρυθμίσεις AM", // 182
+    "Συνδεσιμότητα", // 183
+    "ΠΙΕΣΤΕ MODE ΓΙΑ ΕΠΙΣΤΡΟΦΗ", // 184
+    "Εντοπισμός ομοκαναλικού AM", // 185
+    "Ευαισθησία ομοκαναλικού AM", // 186
+    "Κατώφλι ομοκαναλικού AM", // 187
+    "Μετρητής ομοκαναλικού AM", // 188
+    "ΒΑΣΙΚΕΣ", // 189
+    "ΗΧΟΣ", // 190
+    "ΕΜΦΑΝΙΣΗ", // 191
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT" // 195
+    "ΣΥΝΔΕΣΗ" // 195
   },
 
   { "Romana", // Romanian
@@ -1179,7 +1179,7 @@ static const char* const myLanguage[16][196] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet", // 188
+    "CoChannelDet counter", // 188
     "MAIN", // 189
     "AUDIO", // 190
     "DISPLAY", // 191
@@ -1377,7 +1377,7 @@ static const char* const myLanguage[16][196] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet", // 188
+    "CoChannelDet counter", // 188
     "MAIN", // 189
     "AUDIO", // 190
     "DISPLAY", // 191
@@ -1575,7 +1575,7 @@ static const char* const myLanguage[16][196] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet", // 188
+    "CoChannelDet counter", // 188
     "MAIN", // 189
     "AUDIO", // 190
     "DISPLAY", // 191
@@ -1773,7 +1773,7 @@ static const char* const myLanguage[16][196] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet", // 188
+    "CoChannelDet counter", // 188
     "MAIN", // 189
     "AUDIO", // 190
     "DISPLAY", // 191
@@ -1971,7 +1971,7 @@ static const char* const myLanguage[16][196] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet", // 188
+    "CoChannelDet counter", // 188
     "MAIN", // 189
     "AUDIO", // 190
     "DISPLAY", // 191
@@ -2169,7 +2169,7 @@ static const char* const myLanguage[16][196] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet", // 188
+    "CoChannelDet counter", // 188
     "MAIN", // 189
     "AUDIO", // 190
     "DISPLAY", // 191
@@ -2763,7 +2763,7 @@ static const char* const myLanguage[16][196] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet", // 188
+    "CoChannelDet counter", // 188
     "MAIN", // 189
     "AUDIO", // 190
     "DISPLAY", // 191
@@ -3159,7 +3159,7 @@ static const char* const myLanguage[16][196] = {
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
-    "CoChannelDet counet", // 188
+    "CoChannelDet counter", // 188
     "HOVED", // 189
     "LYD", // 190
     "SKJERM", // 191
