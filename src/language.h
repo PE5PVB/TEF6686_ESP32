@@ -594,7 +594,7 @@ static const char* const myLanguage[16][197] = {
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "LACZNOSC" // 195
+    "LACZNOSC", // 195
     "Auto sort AF" // 196
   },
 
