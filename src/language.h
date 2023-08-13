@@ -581,18 +581,18 @@ static const char* const myLanguage[16][196] = {
     "Ustawienia FM", // 181
     "Ustawienia AM", // 182
     "Lacznosc", // 183
-    "NACISNIJ MODE ABY POWROCIC", // 184
-    "AM CoChannelDet", // 185
-    "CoChannelDet sensitivity", // 186
-    "AM CoChannelDet threshold", // 187
-    "CoChannelDet counter", // 188
-    "MAIN", // 189
-    "AUDIO", // 190
-    "DISPLAY", // 191
+    "NACISNIJ MODE ABY WROCIC", // 184
+    "Detek. miedzykanlowey AM", // 185
+    "Czulosc detek. miedzykanal.", // 186
+    "Prog detek. miedzykanalowego AM", // 187
+    "Licznik detek. miedzykanal.", // 188
+    "GLOWNE", // 189
+    "DZWIEK", // 190
+    "WYSWIETLACZ", // 191
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT" // 195
+    "LACZNOSC" // 195
   },
 
   { "Hrvatski", // Croatian
