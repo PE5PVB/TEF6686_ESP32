@@ -536,7 +536,8 @@ void TEF6686::readRDS(bool showrdserrors)
 
                     if (!isValuePresent) {
                       af[af_counter].frequency = buffer0;
-                      af_counter++;
+					  if (buffer1 == currentfreq && buffer0 > buffer1) af[af_counter].regional = true;
+                      if (af_counter < 50) af_counter++;
                     }
 
                     isValuePresent = false;
@@ -547,11 +548,9 @@ void TEF6686::readRDS(bool showrdserrors)
                       }
                     }
 
-                    if (buffer0 == currentfreq && buffer0 < buffer1) af[af_counter].regional = true;
-                    if (buffer1 == currentfreq && buffer0 > buffer1) af[af_counter].regional = true;
-
                     if (!isValuePresent) {
                       af[af_counter].frequency = buffer1;
+					  if (buffer0 == currentfreq && buffer0 < buffer1) af[af_counter].regional = true;
                       if (af_counter < 50) af_counter++;
                     }
 
