@@ -287,7 +287,8 @@ class TEF6686 {
     bool runningbit;
     bool initrt;
     bool initab;
-	bool afinit;
+    bool afinit;
+    bool errorfreepi;
 };
 
 #endif

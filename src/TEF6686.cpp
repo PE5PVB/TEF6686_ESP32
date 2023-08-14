@@ -373,10 +373,10 @@ void TEF6686::readRDS(bool showrdserrors)
   if (rds.rdsB != rdsBprevious) {
     rds.correct = false;
 
-    rds.rdsAerror = ((((rds.rdsErr >> 14) & 0x03) == 0x02) || (((rds.rdsErr >> 14) & 0x03) == 0x03));
-    rds.rdsBerror = ((((rds.rdsErr >> 12) & 0x03) == 0x02) || (((rds.rdsErr >> 12) & 0x03) == 0x03));
-    rds.rdsCerror = ((((rds.rdsErr >> 10) & 0x03) == 0x02) || (((rds.rdsErr >> 10) & 0x03) == 0x03));
-    rds.rdsDerror = ((((rds.rdsErr >> 8) & 0x03) == 0x02) || (((rds.rdsErr >> 8) & 0x03) == 0x03));
+    rds.rdsAerror = (((rds.rdsErr >> 14) & 0x03) > 1);
+    rds.rdsBerror = (((rds.rdsErr >> 12) & 0x03) > 1);
+    rds.rdsCerror = (((rds.rdsErr >> 10) & 0x03) > 1);
+    rds.rdsDerror = (((rds.rdsErr >> 8) & 0x03) > 1);
 
     if (!rds.rdsAerror && !rds.rdsBerror && !rds.rdsCerror && !rds.rdsDerror) rds.correct = true;         // Any errors in all blocks?
     if ((rdsStat & (1 << 15))) rdsReady = true;
@@ -405,8 +405,15 @@ void TEF6686::readRDS(bool showrdserrors)
           }
         }
 
-        if (((rds.rdsErr >> 14) & 0x02) > 2) rds.picode[5] = '?';
-        if (((rds.rdsErr >> 14) & 0x01) > 1) rds.picode[4] = '?'; else rds.picode[4] = ' ';               // Not sure, add a ?
+		if (rds.correct) errorfreepi = true;
+
+if (!errorfreepi) {
+        if (((rds.rdsErr >> 14) & 0x03) > 2) rds.picode[5] = '?'; else rds.picode[5] = ' ';
+        if (((rds.rdsErr >> 14) & 0x03) > 1) rds.picode[4] = '?'; else rds.picode[4] = ' ';               // Not sure, add a ?
+} else {
+	rds.picode[4] = ' ';
+	rds.picode[5] = ' ';
+}
         rds.picode[6] = '\0';
         if (strncmp(rds.picode, "0000", 4) == 0) {
           if (piold != 0) {
@@ -422,6 +429,10 @@ void TEF6686::readRDS(bool showrdserrors)
               }
             }
           } else {
+            if (rds.stationName.length() == 0) {
+              memset(rds.picode, 0, sizeof(rds.picode));
+            }
+
             memset(rds.picode, 0, sizeof(rds.picode));
           }
         }
@@ -536,7 +547,7 @@ void TEF6686::readRDS(bool showrdserrors)
 
                     if (!isValuePresent) {
                       af[af_counter].frequency = buffer0;
-					  if (buffer1 == currentfreq && buffer0 > buffer1) af[af_counter].regional = true;
+                      if (buffer1 == currentfreq && buffer0 > buffer1) af[af_counter].regional = true;
                       if (af_counter < 50) af_counter++;
                     }
 
@@ -550,7 +561,7 @@ void TEF6686::readRDS(bool showrdserrors)
 
                     if (!isValuePresent) {
                       af[af_counter].frequency = buffer1;
-					  if (buffer0 == currentfreq && buffer0 < buffer1) af[af_counter].regional = true;
+                      if (buffer0 == currentfreq && buffer0 < buffer1) af[af_counter].regional = true;
                       if (af_counter < 50) af_counter++;
                     }
 
@@ -963,6 +974,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.rdsplusTag1 = 169;
   rds.rdsplusTag2 = 169;
   afinit = false;
+  errorfreepi = false;
 }
 
 void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {

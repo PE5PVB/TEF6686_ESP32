@@ -1,6 +1,6 @@
 // [number of languages][number of texts]
 
-static const char* const myLanguage[16][197] = {
+static const char* const myLanguage[16][198] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -197,7 +197,8 @@ static const char* const myLanguage[16][197] = {
     "FM", // 193
     "AM", // 194
     "CONNECT", // 195
-    "Auto sort AF" // 196
+    "Auto sort AF", // 196
+    "Stationlist ID" // 197
   },
 
   { "Nederlands", // Dutch
@@ -396,7 +397,8 @@ static const char* const myLanguage[16][197] = {
     "FM", // 193
     "AM", // 194
     "VERBIND", // 195
-    "Auto AF sorteren" // 196
+    "Auto AF sorteren", // 196
+    "Stationlist ID" // 197
   },
 
   { "Polski", // Polish
@@ -595,7 +597,8 @@ static const char* const myLanguage[16][197] = {
     "FM", // 193
     "AM", // 194
     "LACZNOSC", // 195
-    "Auto sort AF" // 196
+    "Auto sort AF", // 196
+    "Stationlist ID" // 197
   },
 
   { "Hrvatski", // Croatian
@@ -794,7 +797,8 @@ static const char* const myLanguage[16][197] = {
     "FM", // 193
     "AM", // 194
     "CONNECT", // 195
-    "Auto sort AF" // 196
+    "Auto sort AF", // 196
+    "Stationlist ID" // 197
   },
 
   { "Ελληνικά", // Greek
@@ -993,7 +997,8 @@ static const char* const myLanguage[16][197] = {
     "FM", // 193
     "AM", // 194
     "ΣΥΝΔΕΣΗ", // 195
-    "Auto sort AF" // 196
+    "Auto sort AF", // 196
+    "Stationlist ID" // 197
   },
 
   { "Romana", // Romanian
@@ -1192,7 +1197,8 @@ static const char* const myLanguage[16][197] = {
     "FM", // 193
     "AM", // 194
     "CONNECT", // 195
-    "Auto sort AF" // 196
+    "Auto sort AF", // 196
+    "Stationlist ID" // 197
   },
 
   { "Deutsch", // German
@@ -1391,7 +1397,8 @@ static const char* const myLanguage[16][197] = {
     "FM", // 193
     "AM", // 194
     "CONNECT", // 195
-    "Auto sort AF" // 196
+    "Auto sort AF", // 196
+    "Stationlist ID" // 197
   },
 
   { "Czech", // Czech
@@ -1590,7 +1597,8 @@ static const char* const myLanguage[16][197] = {
     "FM", // 193
     "AM", // 194
     "CONNECT", // 195
-    "Auto sort AF" // 196
+    "Auto sort AF", // 196
+    "Stationlist ID" // 197
   },
 
   { "Slovak", // Slovak
@@ -1789,7 +1797,8 @@ static const char* const myLanguage[16][197] = {
     "FM", // 193
     "AM", // 194
     "CONNECT", // 195
-    "Auto sort AF" // 196
+    "Auto sort AF", // 196
+    "Stationlist ID" // 197
   },
 
   { "Français", // French
@@ -1988,7 +1997,8 @@ static const char* const myLanguage[16][197] = {
     "FM", // 193
     "AM", // 194
     "CONNECT", // 195
-    "Auto sort AF" // 196
+    "Auto sort AF", // 196
+    "Stationlist ID" // 197
   },
 
   { "Български", // Bulgarian
@@ -2187,7 +2197,8 @@ static const char* const myLanguage[16][197] = {
     "FM", // 193
     "AM", // 194
     "CONNECT", // 195
-    "Auto sort AF" // 196
+    "Auto sort AF", // 196
+    "Stationlist ID" // 197
   },
 
   { "Русский", // Russian
@@ -2386,7 +2397,8 @@ static const char* const myLanguage[16][197] = {
     "FM", // 193
     "AM", // 194
     "ПОДКЛЮЧЕНИЕ", // 195
-    "Auto sort AF" // 196
+    "Auto sort AF", // 196
+    "Stationlist ID" // 197
   },
 
   { "Українська", // Ukranian
@@ -2585,7 +2597,8 @@ static const char* const myLanguage[16][197] = {
     "FM", // 193
     "AM", // 194
     "ПІДКЛЮЧЕННЯ", // 195
-    "Auto sort AF" // 196
+    "Auto sort AF", // 196
+    "Stationlist ID" // 197
   },
 
   { "Italiano", // Italian
@@ -2784,7 +2797,8 @@ static const char* const myLanguage[16][197] = {
     "FM", // 193
     "AM", // 194
     "CONNECT", // 195
-    "Auto sort AF" // 196
+    "Auto sort AF", // 196
+    "Stationlist ID" // 197
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -2983,7 +2997,8 @@ static const char* const myLanguage[16][197] = {
     "FM", // 193
     "AM", // 194
     "CONNECT", // 195
-    "Auto sort AF" // 196
+    "Auto sort AF", // 196
+    "Stationlist ID" // 197
   },
 
   { "Norsk", // Norwegian
@@ -3182,7 +3197,8 @@ static const char* const myLanguage[16][197] = {
     "FM", // 193
     "AM", // 194
     "TILKOBLE", // 195
-    "Auto sort AF" // 196
+    "Auto sort AF", // 196
+    "Stationlist ID" // 197
   }
 };
 

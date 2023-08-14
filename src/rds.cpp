@@ -317,7 +317,7 @@ void showECC() {
       if (radio.rds.ECC == 164) ECC = myCountries[132];
       if (radio.rds.ECC == 208) ECC = myCountries[112];
       if (radio.rds.ECC == 209) ECC = myCountries[119];
-      if (radio.rds.ECC == 210) ECC = myCountries[72]; 
+      if (radio.rds.ECC == 210) ECC = myCountries[72];
       if (radio.rds.ECC == 211) ECC = myCountries[92];
       if (radio.rds.ECC == 224) ECC = myCountries[9];
       if (radio.rds.ECC == 225) ECC = myCountries[10];
@@ -432,9 +432,9 @@ void showECC() {
       if (radio.rds.ECC == 208) ECC = myCountries[85];
       if (radio.rds.ECC == 209) ECC = myCountries[97];
       if (radio.rds.ECC == 210) ECC = myCountries[121];
-      if (radio.rds.ECC == 211) ECC = myCountries[70]; 
+      if (radio.rds.ECC == 211) ECC = myCountries[70];
       if (radio.rds.ECC == 212) ECC = myCountries[86];
-      if (radio.rds.ECC == 224) ECC = myCountries[38]; 
+      if (radio.rds.ECC == 224) ECC = myCountries[38];
       if (radio.rds.ECC == 225) ECC = myCountries[39];
       if (radio.rds.ECC == 226) ECC = myCountries[40];
       if (radio.rds.ECC == 227) ECC = myCountries[41];
@@ -533,7 +533,7 @@ void showECC() {
       if (radio.rds.ECC == 240) ECC = myCountries[202];
       if (radio.rds.ECC == 241) ECC = myCountries[192];
       if (radio.rds.ECC == 242) ECC = myCountries[220];
-      if (radio.rds.ECC == 243) ECC = myCountries[71]; 
+      if (radio.rds.ECC == 243) ECC = myCountries[71];
     } else {
       ECC = myLanguage[language][73];
     }
@@ -777,13 +777,11 @@ void ShowAFEON() {
       for (byte i = 0; i < radio.af_counter; i++) {
         byte x = i - (afpagenr == 2 ? 30 : 0);
         if (radio.af[i].checked) {
-          tftPrint(1, String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 50 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), InsignificantColor, InsignificantColorSmooth, 16);
+          tftPrint(1, (radio.af[i].regional ? "R " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 50 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), InsignificantColor, InsignificantColorSmooth, 16);
         } else if (!radio.af[i].afvalid) {
-          tftPrint(1, String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 50 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), SignificantColor, SignificantColorSmooth, 16);
-        } else if (radio.af[i].regional) {
-          tftPrint(1, String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 50 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), SecondaryColor, SecondaryColorSmooth, 16);
+          tftPrint(1, (radio.af[i].regional ? "R " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 50 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), SignificantColor, SignificantColorSmooth, 16);
         } else {
-          tftPrint(1, String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 50 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), PrimaryColor, PrimaryColorSmooth, 16);
+          tftPrint(1, (radio.af[i].regional ? "R " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 50 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), PrimaryColor, PrimaryColorSmooth, 16);
         }
         if (i == 29  + (afpagenr == 2 ? 30 : 0)) i = 254;
       }

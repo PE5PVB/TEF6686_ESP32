@@ -45,7 +45,7 @@ extern byte licold;
 extern byte MSold;
 extern byte rdsblockold;
 extern char programTypePrevious[18];
-extern char radioIdPrevious[6];
+extern char radioIdPrevious[7];
 extern int ActiveColor;
 extern int ActiveColorSmooth;
 extern int BackgroundColor;

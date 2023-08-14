@@ -52,6 +52,8 @@ bool afscreen;
 bool aftest;
 bool artheadold;
 bool batterydetect = true;
+bool beepresetstart;
+bool beepresetstop;
 bool BWreset;
 bool change2;
 bool compressedold;
@@ -156,6 +158,7 @@ byte screensaverset;
 byte showmodulation;
 byte showSWMIBand;
 byte submenu;
+byte stationlistid;
 byte nowToggleSWMIBand = 1;
 byte stepsize;
 byte StereoLevel;
@@ -166,7 +169,7 @@ byte tunemode;
 byte unit;
 char buff[16];
 char programTypePrevious[18];
-char radioIdPrevious[6];
+char radioIdPrevious[7];
 const uint8_t* currentFont = nullptr;
 float vPerold;
 int ActiveColor;
@@ -406,6 +409,7 @@ void setup() {
   amcodect = EEPROM.readByte(EE_BYTE_AM_CO_DECT);
   amcodectcount = EEPROM.readByte(EE_BYTE_AM_CO_DECT_COUNT);
   radio.rds.sortaf = EEPROM.readByte(EE_BYTE_SORTAF);
+  stationlistid = EEPROM.readByte(EE_BYTE_STATIONLISTID);
 
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;   // later will read from flash
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX; // later will read from flash
@@ -654,7 +658,7 @@ void setup() {
   SelectBand();
 
   setupmode = false;
-  radio.tone(50, -5, 2000);
+  if (edgebeep) radio.tone(50, -5, 2000);
 
   if (screensaverset) {
     ScreensaverTimerInit();
@@ -665,7 +669,7 @@ void setup() {
 void loop() {
   if (digitalRead(BANDBUTTON) == LOW ) BANDBUTTONPress();
 
-  if (power) {
+  if (power || poweroptions == DEEP_SLEEP) {
     if (millis() >= tuningtimer + 200) Communication();
 
     if (!menu && !afscreen) {
@@ -851,7 +855,9 @@ void loop() {
         }
       }
     }
-  } else {
+  }
+
+  if (!power) {
     if (rotary == -1) {
       if (!touchrotating) {
         rotary = 0;
@@ -1784,6 +1790,7 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_AM_CO_DECT, amcodect);
         EEPROM.writeByte(EE_BYTE_AM_CO_DECT_COUNT, amcodectcount);
         EEPROM.writeByte(EE_BYTE_SORTAF, radio.rds.sortaf);
+        EEPROM.writeByte(EE_BYTE_STATIONLISTID, stationlistid);
         EEPROM.commit();
         Serial.end();
         if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
@@ -2128,7 +2135,6 @@ void ShowFreq(int mode) {
           DivdeSWMIBand();
           updateSWMIBand();
         }
-
       } else {
         unsigned int freq = 0;
         if (band == BAND_FM) freq = frequency + ConverterSet * 100;
@@ -2147,7 +2153,7 @@ void ShowFreq(int mode) {
             sprite1.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             sprite1.drawString(String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100) + " ", 218, -6);
             sprite1.pushSprite(46, 46);
-            //            freqold = freq;
+            freqold = freq;
           } else if (mode == 1) {
             sprite1.fillSprite(BackgroundColor);
             sprite1.pushSprite(46, 46);
@@ -2168,21 +2174,18 @@ void ShowFreq(int mode) {
     sprite.fillSprite(BackgroundColor);
     sprite2.fillSprite(BackgroundColor);
     if (advancedRDS) sprite2.pushSprite(35, 220); else if (!afscreen) sprite.pushSprite(38, 220);
+  }
 
-    if (wifi) {
-      String stationprint;
-      stationprint = "from=TEF_tuner;RcvLevel=";
-      stationprint += String(SStatus / 10);
-      stationprint += ";bandwidth=-1;freq=";
-      if (band > BAND_GAP) {
-        stationprint += String(frequency_AM) + "000";
-      } else {
-        stationprint += String(band == BAND_FM ? frequency : frequency_OIRT) + "0000";
-      }
-      Udp.beginPacket(remoteip, 9030);
-      Udp.print(stationprint);
-      Udp.endPacket();
+  if (wifi) {
+    Udp.beginPacket(remoteip, 9030);
+    if (band == BAND_FM) {
+      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";RcvLevel=" + String(SStatus / 10) + ";bandwidth=-1;freq=" + String(frequency) + "0000");
+    } else if (band == BAND_OIRT) {
+      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";RcvLevel=" + String(SStatus / 10) + ";bandwidth=-1;freq=" + String(frequency_OIRT) + "0000");
+    } else {
+      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";RcvLevel=" + String(SStatus / 10) + ";bandwidth=-1;freq=" + String(frequency_AM) + "000");
     }
+    Udp.endPacket();
   }
   tuningtimer = millis();
 }
@@ -2249,8 +2252,7 @@ void ShowSignalLevel() {
   }
   if (wifi) {
     Udp.beginPacket(remoteip, 9030);
-    Udp.print("from=TEF_tuner;RcvLevel=");
-    Udp.print(String(SStatus / 10));
+    Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";RcvLevel=" + String(SStatus / 10));
     Udp.endPacket();
   }
 }
@@ -2400,8 +2402,7 @@ void ShowBW() {
     BWreset = false;
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
-      Udp.print("from=TEF_tuner;bandwidth=");
-      Udp.print(String(BW * 1000));
+      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";bandwidth=" + String(BW * 1000));
       Udp.endPacket();
     }
   }
@@ -2610,12 +2611,20 @@ void updateSWMIBand() {
     case SW_MI_BAND_90M:
     case SW_MI_BAND_120M:
     case SW_MI_BAND_160M:
-      tftReplace(-1, SWMIBandstringold, SWMIBandstring, 50, 51, SecondaryColor, SecondaryColorSmooth, 16);
-      if (!SWMIBandstring.equals(SWMIBandstringold)) SWMIBandstringold = SWMIBandstring;
+      tftPrint(-1, SWMIBandstring, 50, 51, SecondaryColor, SecondaryColorSmooth, 16);
+      beepresetstart = true;
+      if (edgebeep && beepresetstop) {
+        EdgeBeeper();
+        beepresetstop = false;
+      }
       break;
 
     case SW_MI_BAND_GAP:
-      tftPrint(-1, SWMIBandstringold, 50, 51, BackgroundColor, BackgroundColor, 16);
+      beepresetstop = true;
+      if (edgebeep && beepresetstart) {
+        EdgeBeeper();
+        beepresetstart = false;
+      }
       break;
   }
 }
@@ -2813,15 +2822,14 @@ void ShowBattery() {
 
   if (!wifi && batterydetect) {
     float batteryV = constrain((((float)v / 4095.0) * 3.3 * (1100 / 1000.0) * 2.0), 0.0, 5.0);
-    float vPer = constrain((batteryV - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE), 0.0, 1.0) * 100;
+    float vPer = constrain((batteryV - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE), 0.0, 0.99) * 100;
 
     if (abs(batteryV - batteryVold) > 0.05 && batteryoptions == BATTERY_VALUE) {
-      batteryVold = batteryV;
       tftReplace(-1, String(batteryVold, 1) + "V", String(batteryV, 1) + "V", 279, 9, BatteryValueColor, BatteryValueColorSmooth, 16);
+      batteryVold = batteryV;
     } else if (int(vPer) != int(vPerold) && batteryoptions == BATTERY_PERCENT && abs(vPer - vPerold) > 0.5) {
-      vPerold = vPer;
-      if (vPer > 99.0) vPer = 99.0;
       tftReplace(-1, String(vPerold, 0) + "%", String(vPer, 0) + "%", 279, 9, BatteryValueColor, BatteryValueColorSmooth, 16);
+      vPerold = vPer;
     }
   }
 }
@@ -2982,9 +2990,8 @@ void TuneDown() {
 }
 
 void EdgeBeeper() {
-  bool x = radio.mute;
   radio.tone(50, -5, 2000);
-  if (x) {
+  if (radio.mute) {
     radio.setMute();
     if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
   } else {
@@ -3152,6 +3159,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_AM_CO_DECT, 100);
   EEPROM.writeByte(EE_BYTE_AM_CO_DECT_COUNT, 3);
   EEPROM.writeByte(EE_BYTE_SORTAF, 1);
+  EEPROM.writeByte(EE_BYTE_STATIONLISTID, 1);
   EEPROM.commit();
 }
 
