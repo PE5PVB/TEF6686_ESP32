@@ -33,7 +33,7 @@ void TEF6686::TestAFEON() {
         delay(200);
         devTEF_Radio_Get_RDS_Status(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
         if (rdsStat & (1 << 9)) {
-          if (rds.rdsA == rds.correctPI) {
+          if (rds.rdsA == rds.correctPI && (((rds.rdsErr >> 14) & 0x03) == 0)) {
             af[x].checked = true;
             af[x].afvalid = true;
           } else {
@@ -99,7 +99,7 @@ uint16_t TEF6686::TestAF() {
       delay(200);
       devTEF_Radio_Get_RDS_Status(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
       if (rdsStat & (1 << 9)) {
-        if (rds.rdsA == rds.correctPI) {
+        if (rds.rdsA == rds.correctPI && (((rds.rdsErr >> 14) & 0x03) == 0)) {
           currentfreq = af[highestIndex].frequency;
           for (byte y = 0; y < 50; y++) {
             af[y].frequency = 0;
@@ -371,25 +371,22 @@ void TEF6686::readRDS(bool showrdserrors)
   }
 
   if (rds.rdsB != rdsBprevious) {
-    rds.correct = false;
+    rds.rdsAerror = (((rds.rdsErr >> 14) & 0x03) > 0);
+    rds.rdsBerror = (((rds.rdsErr >> 12) & 0x03) > 0);
+    rds.rdsCerror = (((rds.rdsErr >> 10) & 0x03) > 0);
+    rds.rdsDerror = (((rds.rdsErr >> 8) & 0x03) > 0);
 
-    rds.rdsAerror = (((rds.rdsErr >> 14) & 0x03) > 1);
-    rds.rdsBerror = (((rds.rdsErr >> 12) & 0x03) > 1);
-    rds.rdsCerror = (((rds.rdsErr >> 10) & 0x03) > 1);
-    rds.rdsDerror = (((rds.rdsErr >> 8) & 0x03) > 1);
-
-    if (!rds.rdsAerror && !rds.rdsBerror && !rds.rdsCerror && !rds.rdsDerror) rds.correct = true;         // Any errors in all blocks?
     if ((rdsStat & (1 << 15))) rdsReady = true;
 
     if (rdsReady) {                                                                                       // We have all data to decode... let's go...
 
       //PI decoder
-      if (rds.correct && afreset) {
+      if (!rds.rdsAerror && afreset) {
         rds.correctPI = rds.rdsA;
         afreset = false;
       }
 
-      if (rds.region != 1 && (rds.correct || rds.pierrors)) {
+      if (rds.region != 1 && (!rds.rdsAerror || (rds.pierrors && !errorfreepi))) {
         if (rds.rdsA != piold) {
           piold = rds.rdsA;
           rds.picode[0] = (rds.rdsA >> 12) & 0xF;
@@ -405,15 +402,15 @@ void TEF6686::readRDS(bool showrdserrors)
           }
         }
 
-		if (rds.correct) errorfreepi = true;
+        if (!rds.rdsAerror) errorfreepi = true;
 
-if (!errorfreepi) {
-        if (((rds.rdsErr >> 14) & 0x03) > 2) rds.picode[5] = '?'; else rds.picode[5] = ' ';
-        if (((rds.rdsErr >> 14) & 0x03) > 1) rds.picode[4] = '?'; else rds.picode[4] = ' ';               // Not sure, add a ?
-} else {
-	rds.picode[4] = ' ';
-	rds.picode[5] = ' ';
-}
+        if (!errorfreepi) {
+          if (((rds.rdsErr >> 14) & 0x03) > 2) rds.picode[5] = '?'; else rds.picode[5] = ' ';
+          if (((rds.rdsErr >> 14) & 0x03) > 1) rds.picode[4] = '?'; else rds.picode[4] = ' ';               // Not sure, add a ?
+        } else {
+          rds.picode[4] = ' ';
+          rds.picode[5] = ' ';
+        }
         rds.picode[6] = '\0';
         if (strncmp(rds.picode, "0000", 4) == 0) {
           if (piold != 0) {
@@ -473,13 +470,13 @@ if (!errorfreepi) {
       // TP Indicator
       rds.hasTP = (bitRead(rds.rdsB, 10));
 
-      if (rds.correct) rdsblock = rds.rdsB >> 11;
+      if (!rds.rdsBerror) rdsblock = rds.rdsB >> 11; else return;
       switch (rdsblock) {
         case RDS_GROUP_0A:
         case RDS_GROUP_0B:
           {
             //PS decoder
-            if (showrdserrors || rds.correct) {
+            if (showrdserrors || (!rds.rdsBerror && !rds.rdsDerror)) {
               offset = rds.rdsB & 0x03;                                                         // Let's get the character offset for PS
 
               ps_buffer2[(offset * 2) + 0] = ps_buffer[(offset * 2) + 0];                       // Make a copy of the PS buffer
@@ -516,15 +513,15 @@ if (!errorfreepi) {
               rds.stationTypeCode = (rds.rdsB >> 5) & 0x1F;                                     // Get 5 PTY bits from Block B
               if (rds.region == 0) strcpy(rds.stationType, PTY_EU[rds.stationTypeCode]);
               if (rds.region == 1) strcpy(rds.stationType, PTY_USA[rds.stationTypeCode]);
-            }
 
-            if (rds.correct) {
               //TA decoder
               rds.hasTA = (bitRead(rds.rdsB, 4)) && (bitRead(rds.rdsB, 10)) & 0x1F;             // Read TA flag
 
               //MS decoder
               if (((bitRead(rds.rdsB, 3)) & 0x1F) == 1) rds.MS = 1; else rds.MS = 2;            // Read MS flag
-
+			}
+			
+			if (!rds.rdsCerror) {
               //AF decoder
               if (rdsblock == 0) {                                                              // Only when in GROUP 0A
                 if (((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) > 224) && ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 250)) afinit = true;
@@ -594,7 +591,7 @@ if (!errorfreepi) {
           } break;
 
         case RDS_GROUP_1A: {
-            if (rds.correct) {
+            if (!rds.rdsCerror) {
               if (rds.rdsC >> 12 == 0) {                                                          // ECC code readout
                 rds.ECC = rds.rdsC & 0xff;
                 rds.hasECC = true;
@@ -604,7 +601,9 @@ if (!errorfreepi) {
                 rds.LIC = rds.rdsC & 0xff;
                 rds.hasLIC = true;
               }
-
+			}
+			
+			if (!rds.rdsDerror) {
               if (rds.rdsD != 0) {                                                                // PIN decoder
                 rds.hasPIN = true;
                 rds.pinMin = rds.rdsD & 0x3f;
@@ -615,7 +614,7 @@ if (!errorfreepi) {
           } break;
 
         case RDS_GROUP_2A: {
-            if (showrdserrors || rds.correct) {
+            if (showrdserrors || (!rds.rdsBerror && !rds.rdsCerror && !rds.rdsDerror)) {
               // RT decoder (64 characters)
               rds.hasRT = true;
               rds.rtAB = (bitRead(rds.rdsB, 4));                                                  // Get AB flag
@@ -659,7 +658,7 @@ if (!errorfreepi) {
           } break;
 
         case RDS_GROUP_2B: {
-            if (showrdserrors || rds.correct) {
+            if (showrdserrors || (!rds.rdsBerror && !rds.rdsDerror)) {
               // RT decoder (32 characters)
               rds.hasRT = true;
               rds.rtAB32 = (bitRead(rds.rdsB, 4));                                                  // Get AB flag
@@ -684,15 +683,17 @@ if (!errorfreepi) {
           } break;
 
         case RDS_GROUP_3A: {
+			if (!rds.rdsDerror) {
             // RT+ init
             if (rds.rdsD == 0x4BD7) {                                                             // Check for RT+ application
               rds.hasRDSplus = true;                                                              // Set flag
               rtplusblock = ((rds.rdsB & 0x1F) >> 1) * 2;                                         // Get RT+ Block
             }
+			}
           } break;
 
         case RDS_GROUP_4A: {
-            if (rds.correct) {
+            if (!rds.rdsBerror && !rds.rdsCerror && !rds.rdsDerror) {
               // CT
               uint32_t mjd;
               mjd = (rds.rdsB & 0x03);
@@ -724,7 +725,7 @@ if (!errorfreepi) {
           } break;
 
         case RDS_GROUP_10A: {
-            if (rds.correct) {
+            if (!rds.rdsCerror && !rds.rdsDerror) {
               // PTYN
               offset = bitRead(rds.rdsB, 0);                                                                // Get char offset
 
@@ -747,7 +748,7 @@ if (!errorfreepi) {
         case RDS_GROUP_12A:
         case RDS_GROUP_13A:   {
             // RT+ decoding
-            if (rds.correct && rtplusblock == rdsblock && rds.hasRDSplus) {                                 // Are we in the right RT+ block and is all ok to go?
+            if ((!rds.rdsBerror && !rds.rdsCerror && !rds.rdsDerror) && rtplusblock == rdsblock && rds.hasRDSplus) {                                 // Are we in the right RT+ block and is all ok to go?
               rds.rdsplusTag1 = ((rds.rdsB & 0x07) << 3) + (rds.rdsC >> 13);
               rds.rdsplusTag2 = ((rds.rdsC & 0x01) << 5) + (rds.rdsD >> 11);
               uint16_t start_marker_1 = (rds.rdsC >> 7) & 0x3F;
@@ -796,13 +797,13 @@ if (!errorfreepi) {
               rds.RTContent2 = convertToUTF8(RTtext2);                                                        // Convert RDS characterset to ASCII
               rds.RTContent2 = extractUTF8Substring(rds.RTContent2, 0, 44, false);                            // Make sure RT does not exceed 32 characters
             }
-            if (rds.correct && rdsblock == 16 && (rds.rdsB & (1 << 4))) rds.hasTMC = true;                  // TMC flag
+            if (!rds.rdsBerror && rdsblock == 16 && (rds.rdsB & (1 << 4))) rds.hasTMC = true;                  // TMC flag
           }
           break;
 
         case RDS_GROUP_14A: {
             // EON
-            if (rds.correct) {
+            if (!rds.rdsDerror) {
               rds.hasEON = true;                                                                                                        // Group is there, so we have EON
 
               bool isValuePresent = false;
@@ -952,7 +953,6 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.hasCT = false;
   rds.hasTMC = false;
   rds.hasRDSplus = false;
-  rds.correct = false;
   rt_process = false;
   ps_process = false;
   rds.rdsreset = true;

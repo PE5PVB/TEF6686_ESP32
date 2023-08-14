@@ -161,7 +161,6 @@ typedef struct _rds_ {
   bool rtAB;
   bool rtAB32;
   bool hasRDSplus;
-  bool correct;
   bool filter;
   bool underscore;
   bool rdsreset;
