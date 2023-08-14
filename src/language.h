@@ -997,8 +997,8 @@ static const char* const myLanguage[16][198] = {
     "FM", // 193
     "AM", // 194
     "ΣΥΝΔΕΣΗ", // 195
-    "Auto sort AF", // 196
-    "Stationlist ID" // 197
+    "Αυτόματη ταξινόμηση AF", // 196
+    "ID λίστας σταθμών" // 197
   },
 
   { "Romana", // Romanian
