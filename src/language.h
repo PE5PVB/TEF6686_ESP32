@@ -597,7 +597,7 @@ static const char* const myLanguage[16][198] = {
     "FM", // 193
     "AM", // 194
     "LACZNOSC", // 195
-    "Auto sort AF", // 196
+    "Automat. sortowanie AF", // 196
     "Stationlist ID" // 197
   },
 
