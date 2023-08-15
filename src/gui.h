@@ -78,6 +78,7 @@ extern byte fmdefaultstepsize;
 extern byte fmnb;
 extern byte amcodect;
 extern byte amcodectcount;
+extern byte amrfagc;
 extern byte hardwaremodel;
 extern byte hardwaremodelold;
 extern byte HighCutLevel;
