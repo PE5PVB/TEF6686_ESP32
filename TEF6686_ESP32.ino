@@ -133,6 +133,7 @@ byte fmdefaultstepsize;
 byte fmnb;
 byte amcodect;
 byte amcodectcount;
+byte amrfagc;
 byte freqoldcount;
 byte HighCutLevel;
 byte HighCutOffset;
@@ -408,6 +409,7 @@ void setup() {
   batteryoptions = EEPROM.readByte(EE_BYTE_BATTERY_OPTIONS);
   amcodect = EEPROM.readByte(EE_BYTE_AM_CO_DECT);
   amcodectcount = EEPROM.readByte(EE_BYTE_AM_CO_DECT_COUNT);
+  amrfagc = EEPROM.readByte(EE_BYTE_AM_RF_AGC);
   radio.rds.sortaf = EEPROM.readByte(EE_BYTE_SORTAF);
   stationlistid = EEPROM.readByte(EE_BYTE_STATIONLISTID);
 
@@ -631,7 +633,10 @@ void setup() {
   radio.setVolume(VolSet);
   radio.setOffset(LevelOffset);
   radio.setAMOffset(AMLevelOffset);
-  radio.setAMCoChannel(amcodect, amcodectcount);
+  if (band > BAND_GAP) {
+    radio.setAMCoChannel(amcodect, amcodectcount);
+    radio.setAMAttenuation(amrfagc);
+  }
   radio.setStereoLevel(StereoLevel);
   radio.setHighCutLevel(HighCutLevel);
   radio.setHighCutOffset(HighCutOffset);
@@ -1602,6 +1607,8 @@ void SelectBand() {
     LimitAMFrequency();
     CheckBandForbiddenAM();
     radio.SetFreqAM(frequency_AM);
+    radio.setAMAttenuation(amrfagc);
+    radio.setAMCoChannel(amcodect, amcodectcount);
     doBW();
     if (!screenmute) {
       BuildDisplay();
@@ -1789,6 +1796,7 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_BATTERY_OPTIONS, batteryoptions);
         EEPROM.writeByte(EE_BYTE_AM_CO_DECT, amcodect);
         EEPROM.writeByte(EE_BYTE_AM_CO_DECT_COUNT, amcodectcount);
+        EEPROM.writeByte(EE_BYTE_AM_RF_AGC, amrfagc);
         EEPROM.writeByte(EE_BYTE_SORTAF, radio.rds.sortaf);
         EEPROM.writeByte(EE_BYTE_STATIONLISTID, stationlistid);
         EEPROM.commit();

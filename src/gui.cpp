@@ -6,7 +6,7 @@
 #include <EEPROM.h>
 
 byte menuitem;
-byte items[8] = {8, 2, 6, 9, 8, 9, 7, 5};
+byte items[8] = {8, 2, 6, 9, 8, 9, 8, 5};
 
 void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
   switch (CurrentTheme) {
@@ -511,6 +511,7 @@ void BuildMenu() {
       tftPrint(-1, myLanguage[language][59], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][185], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][187], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][198], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
 
 
       if (softmuteam) tftPrint(1, myLanguage[language][42], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
@@ -518,6 +519,7 @@ void BuildMenu() {
       if (amnb != 0) tftPrint(1, String(amnb, DEC), 270, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       tftPrint(1, "dB", 310, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
       if (AMLevelOffset > 0) tftPrint(1, "+" + String(AMLevelOffset, DEC), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(AMLevelOffset, DEC), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (amrfagc != 0) tftPrint(1, "dB", 310, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
 
       switch (bandAM) {
         case AM_BAND_ALL: tftPrint(1, myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
@@ -533,6 +535,7 @@ void BuildMenu() {
       if (amcodect != 0) tftPrint(1, "%", 310, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
       if (amcodect != 0) tftPrint(1, String(amcodect, DEC), 270, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       tftPrint(1, String(amcodectcount, DEC), 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (amrfagc != 0) tftPrint(1, String(amrfagc, DEC), 270, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       break;
 
     case CONNECTIVITY:
@@ -1233,6 +1236,17 @@ void MenuUp() {
             tftPrint(0, String(amcodectcount, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             if (band > BAND_GAP) radio.setAMCoChannel(amcodect, amcodectcount);
             break;
+
+          case ITEM8:
+            if (amrfagc != 0) tftPrint(1, String(amrfagc, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
+            if (amrfagc != 0) tftPrint(-1, "dB", 170, 118, BackgroundColor, BackgroundColor, 28);
+            amrfagc += 6;
+            if (amrfagc > 36) amrfagc = 0;
+            if (amrfagc != 0) tftPrint(1, String(amrfagc, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            if (amrfagc != 0) tftPrint(-1, "dB", 170, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            if (band > BAND_GAP) radio.setAMAttenuation(amrfagc);
+            break;
+
         }
         break;
 
@@ -1702,6 +1716,17 @@ void MenuDown() {
             tftPrint(0, String(amcodectcount, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             if (band > BAND_GAP) radio.setAMCoChannel(amcodect, amcodectcount);
             break;
+
+          case ITEM8:
+            if (amrfagc != 0) tftPrint(1, String(amrfagc, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
+            if (amrfagc != 0) tftPrint(-1, "dB", 170, 118, BackgroundColor, BackgroundColor, 28);
+            amrfagc -= 6;
+            if (amrfagc > 36) amrfagc = 36;
+            if (amrfagc != 0) tftPrint(1, String(amrfagc, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            if (amrfagc != 0) tftPrint(-1, "dB", 170, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            if (band > BAND_GAP) radio.setAMAttenuation(amrfagc);
+            break;
+
         }
         break;
 
@@ -2098,6 +2123,12 @@ void DoMenu() {
           case ITEM7:
             tftPrint(0, myLanguage[language][188], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(0, String(amcodectcount, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
+
+          case ITEM8:
+            tftPrint(0, myLanguage[language][198], 155, 78, ActiveColor, ActiveColorSmooth, 28);
+            if (amrfagc != 0) tftPrint(-1, "dB", 170, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            if (amrfagc != 0) tftPrint(1, String(amrfagc, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
         }
