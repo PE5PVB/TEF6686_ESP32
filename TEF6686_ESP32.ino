@@ -3166,6 +3166,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_BATTERY_OPTIONS, BATTERY_VALUE);
   EEPROM.writeByte(EE_BYTE_AM_CO_DECT, 100);
   EEPROM.writeByte(EE_BYTE_AM_CO_DECT_COUNT, 3);
+  EEPROM.writeByte(EE_BYTE_AM_RF_AGC, 0);
   EEPROM.writeByte(EE_BYTE_SORTAF, 1);
   EEPROM.writeByte(EE_BYTE_STATIONLISTID, 1);
   EEPROM.commit();
