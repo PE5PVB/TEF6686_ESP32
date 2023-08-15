@@ -674,7 +674,7 @@ void setup() {
 void loop() {
   if (digitalRead(BANDBUTTON) == LOW ) BANDBUTTONPress();
 
-  if (power || poweroptions == DEEP_SLEEP) {
+  if (power || poweroptions == LCD_OFF) {
     if (millis() >= tuningtimer + 200) Communication();
 
     if (!menu && !afscreen) {
@@ -2121,66 +2121,66 @@ void DoMemoryPosTune() {
 }
 
 void ShowFreq(int mode) {
-  if (!screenmute) {
-    if (!setupmode) {
-      if (band != BAND_FM && band != BAND_OIRT) { // Fix Me :take care of 9K/10K Step
-        if (freqold < 2000 && frequency_AM >= 2000 && stepsize == 0) if (frequency_AM != 27000 && freqold != 144) radio.SetFreqAM(2000);
-        if (freqold >= 2000 && frequency_AM < 2000 && stepsize == 0) if (frequency_AM != 144 && freqold != 27000) radio.SetFreqAM(1998);
-      }
+  if (!setupmode) {
+    if (band != BAND_FM && band != BAND_OIRT) { // Fix Me :take care of 9K/10K Step
+      if (freqold < 2000 && frequency_AM >= 2000 && stepsize == 0) if (frequency_AM != 27000 && freqold != 144) radio.SetFreqAM(2000);
+      if (freqold >= 2000 && frequency_AM < 2000 && stepsize == 0) if (frequency_AM != 144 && freqold != 27000) radio.SetFreqAM(1998);
     }
+  }
+
+  detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A));
+  detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B));
+  if (band > BAND_GAP) {
+    sprite1.fillSprite(BackgroundColor);
+    sprite1.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+    sprite1.drawString(String(frequency_AM) + " ", 218, -6);
+    if (!screenmute) sprite1.pushSprite(46, 46);
+    freqold = frequency_AM;
+
+    if (band == BAND_SW && showSWMIBand) {
+      DivdeSWMIBand();
+      updateSWMIBand();
+    }
+  } else {
+    unsigned int freq = 0;
+    if (band == BAND_FM) freq = frequency + ConverterSet * 100;
+    if (band == BAND_OIRT) freq = frequency_OIRT;
 
     if (!screenmute) {
-      detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A));
-      detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B));
-      if (band > BAND_GAP) {
-        sprite1.fillSprite(BackgroundColor);
-        sprite1.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-        sprite1.drawString(String(frequency_AM) + " ", 218, -6);
-        sprite1.pushSprite(46, 46);
-        freqold = frequency_AM;
-
-        if (band == BAND_SW && showSWMIBand) {
-          DivdeSWMIBand();
-          updateSWMIBand();
-        }
+      if (advancedRDS) {
+        for (int i = 0; i < 33; i++) tft.fillCircle((6 * i) + 10, 133, 2, GreyoutColor);
+        tftReplace(1, String(freqold / 100) + "." + (freqold % 100 < 10 ? "0" : "") + String(freqold % 100) + " MHz", String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100) + " MHz", 310, 35, PrimaryColor, PrimaryColorSmooth, 16);
+        freqold = freq;
+      } else if (afscreen) {
+        tftReplace(1, String(freqold / 100) + "." + (freqold % 100 < 10 ? "0" : "") + String(freqold % 100) + " MHz", String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100), 290, 201, BWAutoColor, BWAutoColorSmooth, 16);
+        freqold = freq;
       } else {
-        unsigned int freq = 0;
-        if (band == BAND_FM) freq = frequency + ConverterSet * 100;
-        if (band == BAND_OIRT) freq = frequency_OIRT;
-
-        if (advancedRDS) {
-          for (int i = 0; i < 33; i++) tft.fillCircle((6 * i) + 10, 133, 2, GreyoutColor);
-          tftReplace(1, String(freqold / 100) + "." + (freqold % 100 < 10 ? "0" : "") + String(freqold % 100) + " MHz", String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100) + " MHz", 310, 35, PrimaryColor, PrimaryColorSmooth, 16);
+        if (mode == 0) {
+          sprite1.fillSprite(BackgroundColor);
+          sprite1.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          sprite1.drawString(String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100) + " ", 218, -6);
+          sprite1.pushSprite(46, 46);
           freqold = freq;
-        } else if (afscreen) {
-          tftReplace(1, String(freqold / 100) + "." + (freqold % 100 < 10 ? "0" : "") + String(freqold % 100) + " MHz", String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100), 290, 201, BWAutoColor, BWAutoColorSmooth, 16);
-          freqold = freq;
-        } else {
-          if (mode == 0) {
-            sprite1.fillSprite(BackgroundColor);
-            sprite1.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            sprite1.drawString(String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100) + " ", 218, -6);
-            sprite1.pushSprite(46, 46);
-            freqold = freq;
-          } else if (mode == 1) {
-            sprite1.fillSprite(BackgroundColor);
-            sprite1.pushSprite(46, 46);
-          }
+        } else if (mode == 1) {
+          sprite1.fillSprite(BackgroundColor);
+          sprite1.pushSprite(46, 46);
         }
       }
-      attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
-      attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
     }
-    strcpy(programTypePrevious, "0");
-    strcpy(radioIdPrevious, "0");
-    programServicePrevious = "0";
-    rtplusstringold = "";
-    eonstringold = "";
-    afstringold = "";
-    rds_clockold = "";
-    rdsreset = true;
-    sprite.fillSprite(BackgroundColor);
-    sprite2.fillSprite(BackgroundColor);
+  }
+  attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
+  strcpy(programTypePrevious, "0");
+  strcpy(radioIdPrevious, "0");
+  programServicePrevious = "0";
+  rtplusstringold = "";
+  eonstringold = "";
+  afstringold = "";
+  rds_clockold = "";
+  rdsreset = true;
+  sprite.fillSprite(BackgroundColor);
+  sprite2.fillSprite(BackgroundColor);
+  if (!screenmute) {
     if (advancedRDS) sprite2.pushSprite(35, 220); else if (!afscreen) sprite.pushSprite(38, 220);
   }
 

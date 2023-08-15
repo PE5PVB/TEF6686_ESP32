@@ -386,7 +386,7 @@ void TEF6686::readRDS(bool showrdserrors)
         afreset = false;
       }
 
-      if (rds.region != 1 && (!rds.rdsAerror || (rds.pierrors && !errorfreepi))) {
+      if (rds.region != 1 && ((!rds.rdsAerror && !rds.rdsBerror && !rds.rdsCerror && !rds.rdsDerror) || (rds.pierrors && !errorfreepi))) {
         if (rds.rdsA != piold) {
           piold = rds.rdsA;
           rds.picode[0] = (rds.rdsA >> 12) & 0xF;
@@ -402,7 +402,7 @@ void TEF6686::readRDS(bool showrdserrors)
           }
         }
 
-        if (!rds.rdsAerror) errorfreepi = true;
+        if (!rds.rdsAerror && !rds.rdsBerror && !rds.rdsCerror && !rds.rdsDerror) errorfreepi = true;
 
         if (!errorfreepi) {
           if (((rds.rdsErr >> 14) & 0x03) > 2) rds.picode[5] = '?'; else rds.picode[5] = ' ';
