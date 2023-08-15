@@ -199,7 +199,7 @@ static const char* const myLanguage[16][199] = {
     "CONNECT", // 195
     "Auto sort AF", // 196
     "Stationlist ID", // 197
-    "AM antenna attenuation" // 198
+    "AM ATT" // 198
   },
 
   { "Nederlands", // Dutch
@@ -400,7 +400,7 @@ static const char* const myLanguage[16][199] = {
     "VERBIND", // 195
     "Auto AF sorteren", // 196
     "Stationlist ID", // 197
-    "AM antenna attenuation" // 198
+    "AM ATT" // 198
   },
 
   { "Polski", // Polish
@@ -601,7 +601,7 @@ static const char* const myLanguage[16][199] = {
     "LACZNOSC", // 195
     "Automat. sortowanie AF", // 196
     "Stationlist ID", // 197
-    "AM antenna attenuation" // 198
+    "AM ATT" // 198
   },
 
   { "Hrvatski", // Croatian
@@ -802,7 +802,7 @@ static const char* const myLanguage[16][199] = {
     "CONNECT", // 195
     "Auto sort AF", // 196
     "Stationlist ID", // 197
-    "AM antenna attenuation" // 198
+    "AM ATT" // 198
   },
 
   { "Ελληνικά", // Greek
@@ -1003,7 +1003,7 @@ static const char* const myLanguage[16][199] = {
     "ΣΥΝΔΕΣΗ", // 195
     "Αυτόματη ταξινόμηση AF", // 196
     "ID λίστας σταθμών", // 197
-    "AM antenna attenuation" // 198
+    "AM ATT" // 198
   },
 
   { "Romana", // Romanian
@@ -1204,7 +1204,7 @@ static const char* const myLanguage[16][199] = {
     "CONNECT", // 195
     "Auto sort AF", // 196
     "Stationlist ID", // 197
-    "AM antenna attenuation" // 198
+    "AM ATT" // 198
   },
 
   { "Deutsch", // German
@@ -1405,7 +1405,7 @@ static const char* const myLanguage[16][199] = {
     "CONNECT", // 195
     "Auto sort AF", // 196
     "Stationlist ID", // 197
-    "AM antenna attenuation" // 198
+    "AM ATT" // 198
   },
 
   { "Czech", // Czech
@@ -1606,7 +1606,7 @@ static const char* const myLanguage[16][199] = {
     "CONNECT", // 195
     "Auto sort AF", // 196
     "Stationlist ID", // 197
-    "AM antenna attenuation" // 198
+    "AM ATT" // 198
   },
 
   { "Slovak", // Slovak
@@ -1807,7 +1807,7 @@ static const char* const myLanguage[16][199] = {
     "CONNECT", // 195
     "Auto sort AF", // 196
     "Stationlist ID", // 197
-    "AM antenna attenuation" // 198
+    "AM ATT" // 198
   },
 
   { "Français", // French
@@ -2008,7 +2008,7 @@ static const char* const myLanguage[16][199] = {
     "CONNECT", // 195
     "Auto sort AF", // 196
     "Stationlist ID", // 197
-    "AM antenna attenuation" // 198
+    "AM ATT" // 198
   },
 
   { "Български", // Bulgarian
@@ -2209,7 +2209,7 @@ static const char* const myLanguage[16][199] = {
     "CONNECT", // 195
     "Auto sort AF", // 196
     "Stationlist ID", // 197
-    "AM antenna attenuation" // 198
+    "AM ATT" // 198
   },
 
   { "Русский", // Russian
@@ -2410,7 +2410,7 @@ static const char* const myLanguage[16][199] = {
     "ПОДКЛЮЧЕНИЕ", // 195
     "Auto sort AF", // 196
     "Stationlist ID", // 197
-    "AM antenna attenuation" // 198
+    "AM ATT" // 198
   },
 
   { "Українська", // Ukranian
@@ -2611,7 +2611,7 @@ static const char* const myLanguage[16][199] = {
     "ПІДКЛЮЧЕННЯ", // 195
     "Auto sort AF", // 196
     "Stationlist ID", // 197
-    "AM antenna attenuation" // 198
+    "AM ATT" // 198
   },
 
   { "Italiano", // Italian
@@ -2812,7 +2812,7 @@ static const char* const myLanguage[16][199] = {
     "CONNECT", // 195
     "Auto sort AF", // 196
     "Stationlist ID", // 197
-    "AM antenna attenuation" // 198
+    "AM ATT" // 198
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3013,7 +3013,7 @@ static const char* const myLanguage[16][199] = {
     "CONNECT", // 195
     "自动排列AF", // 196
     "Stationlist ID", // 197
-    "AM天线放大" // 198
+    "AM天线衰减" // 198
   },
 
   { "Norsk", // Norwegian
@@ -3214,7 +3214,7 @@ static const char* const myLanguage[16][199] = {
     "TILKOBLE", // 195
     "Auto sort AF", // 196
     "Stationlist ID", // 197
-    "AM antenna attenuation" // 198
+    "AM ATT" // 198
   }
 };
 
