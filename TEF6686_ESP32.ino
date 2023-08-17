@@ -131,6 +131,7 @@ byte ECCold;
 byte EQset;
 byte fmdefaultstepsize;
 byte fmnb;
+byte fmdeemphasis;
 byte amcodect;
 byte amcodectcount;
 byte amrfagc;
@@ -412,6 +413,7 @@ void setup() {
   amrfagc = EEPROM.readByte(EE_BYTE_AM_RF_AGC);
   radio.rds.sortaf = EEPROM.readByte(EE_BYTE_SORTAF);
   stationlistid = EEPROM.readByte(EE_BYTE_STATIONLISTID);
+  fmdeemphasis = EEPROM.readByte(EE_BYTE_FM_DEEMPHASIS);
 
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;   // later will read from flash
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX; // later will read from flash
@@ -648,7 +650,7 @@ void setup() {
   radio.setAMNoiseBlanker(amnb);
   radio.setFMNoiseBlanker(fmnb);
   radio.setAudio(audiomode);
-  if (region == 1) radio.setDeemphasis(2);
+  radio.setDeemphasis(fmdeemphasis);
   radio.rds.region = region;
   LowLevelInit = true;
 
@@ -733,8 +735,8 @@ void loop() {
             }
           }
         }
-        if (region == 0) tftPrint(-1, "PI:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
-        if (region == 1) tftPrint(-1, "ID:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
+        if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
+        if (region == REGION_US) tftPrint(-1, "ID:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
         tftPrint(-1, "PS:", 3, 193, ActiveColor, ActiveColorSmooth, 16);
         tftPrint(-1, "RT:", 3, 221, ActiveColor, ActiveColorSmooth, 16);
         tftPrint(-1, "PTY:", 3, 163, ActiveColor, ActiveColorSmooth, 16);
@@ -762,8 +764,8 @@ void loop() {
             tftPrint(0, "M", 7, 128, GreyoutColor, BackgroundColor, 16);
             tft.fillRect(16, 133, 188, 6, GreyoutColor);
           }
-          if (region == 0) tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
-          if (region == 1) tftPrint(-1, "ID:", 212, 193, GreyoutColor, BackgroundColor, 16);
+          if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
+          if (region == REGION_US) tftPrint(-1, "ID:", 212, 193, GreyoutColor, BackgroundColor, 16);
           tftPrint(-1, "PS:", 3, 193, GreyoutColor, BackgroundColor, 16);
           tftPrint(-1, "RT:", 3, 221, GreyoutColor, BackgroundColor, 16);
           tftPrint(-1, "PTY:", 3, 163, GreyoutColor, BackgroundColor, 16);
@@ -1612,8 +1614,8 @@ void SelectBand() {
     doBW();
     if (!screenmute) {
       BuildDisplay();
-      if (region == 0) tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
-      if (region == 1) tftPrint(-1, "ID:", 212, 193, GreyoutColor, BackgroundColor, 16);
+      if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
+      if (region == REGION_US) tftPrint(-1, "ID:", 212, 193, GreyoutColor, BackgroundColor, 16);
       tftPrint(-1, "PS:", 3, 193, GreyoutColor, BackgroundColor, 16);
       tftPrint(-1, "RT:", 3, 221, GreyoutColor, BackgroundColor, 16);
       tftPrint(-1, "PTY:", 3, 163, GreyoutColor, BackgroundColor, 16);
@@ -1799,6 +1801,7 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_AM_RF_AGC, amrfagc);
         EEPROM.writeByte(EE_BYTE_SORTAF, radio.rds.sortaf);
         EEPROM.writeByte(EE_BYTE_STATIONLISTID, stationlistid);
+        EEPROM.writeByte(EE_BYTE_FM_DEEMPHASIS, fmdeemphasis);
         EEPROM.commit();
         Serial.end();
         if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
@@ -1887,8 +1890,8 @@ void RoundStep() {
     radio.SetFreq(frequency_OIRT);
   } else {
     if (band == BAND_MW) {
-      unsigned int freq = frequency_AM / (region == 0 ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K);
-      frequency_AM = freq * (region == 0 ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K);
+      unsigned int freq = frequency_AM / (region == REGION_EU ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K);
+      frequency_AM = freq * (region == REGION_EU ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K);
       radio.SetFreqAM(frequency_AM);
     } else if (band == BAND_SW) {
       Round5K(frequency_AM);
@@ -2854,10 +2857,10 @@ void TuneUp() {
   if (stepsize == 0) {
     if (band > BAND_GAP) {
       if (frequency_AM < MWHighEdgeSet) {
-        if (region == 0) {
+        if (region == REGION_EU) {
           temp = FREQ_MW_STEP_9K;
           frequency_AM = (frequency_AM / FREQ_MW_STEP_9K) * FREQ_MW_STEP_9K;
-        } else if (region == 1) {
+        } else if (region == REGION_US) {
           temp = FREQ_MW_STEP_10K;
           frequency_AM = (frequency_AM / FREQ_MW_STEP_10K) * FREQ_MW_STEP_10K;
         }
@@ -2933,7 +2936,7 @@ void TuneDown() {
           frequency_AM = 1998;
           temp = 0;
         } else {
-          temp = region == 0 ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K;
+          temp = region == REGION_EU ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K;
           frequency_AM = (frequency_AM / temp) * temp;
         }
       } else {
@@ -3169,6 +3172,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_AM_RF_AGC, 0);
   EEPROM.writeByte(EE_BYTE_SORTAF, 1);
   EEPROM.writeByte(EE_BYTE_STATIONLISTID, 1);
+  EEPROM.writeByte(EE_BYTE_FM_DEEMPHASIS, DEEMPHASIS_50);
   EEPROM.commit();
 }
 

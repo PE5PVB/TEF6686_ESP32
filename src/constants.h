@@ -48,6 +48,11 @@
 #define FREQ_FM_OIRT_START         6500   // use values of 1/10 * kHz
 #define FREQ_FM_OIRT_END           7400   // use values of 1/10 * kHz
 
+#define FM_DEEMPHASIS_50           50
+#define FM_DEEMPHASIS_70           70
+#define REGION_EU                  0
+#define REGION_US                  1
+
 // according to https://www.short-wave.info/index.php?feature=frequencies
 #define FREQ_SW_START       1800
 #define FREQ_SW_END         27000
@@ -101,9 +106,9 @@
 
 // EEPROM index defines
 #define EE_PRESETS_CNT              30
-#define EE_CHECKBYTE_VALUE          18 // 0 ~ 255,add new entry, change for new value 
+#define EE_CHECKBYTE_VALUE          32 // 0 ~ 255,add new entry, change for new value 
 
-#define EE_TOTAL_CNT                277
+#define EE_TOTAL_CNT                278
 #define EE_UINT16_FREQUENCY_FM      0
 #define EE_BYTE_VOLSET              4
 #define EE_BYTE_STEREO              5
@@ -175,6 +180,7 @@
 #define EE_BYTE_AM_CO_DECT          274
 #define EE_BYTE_AM_CO_DECT_COUNT    275
 #define EE_BYTE_AM_RF_AGC           276
+#define EE_BYTE_FM_DEEMPHASIS       277
 // End of EEPROM index defines
 
 static const char* const unitString[] = {"dBμV", "dBf", "dBm"};
