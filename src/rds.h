@@ -44,6 +44,7 @@ extern byte language;
 extern byte licold;
 extern byte MSold;
 extern byte rdsblockold;
+extern byte stationlistid;
 extern char programTypePrevious[18];
 extern char radioIdPrevious[7];
 extern int ActiveColor;

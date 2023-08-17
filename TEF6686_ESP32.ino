@@ -887,27 +887,27 @@ void loop() {
 
 void GetData() {
   if (band < BAND_GAP) ShowStereoStatus();
-  if (!screenmute) {
-    if (band < BAND_GAP) {
-      if (advancedRDS && !afscreen) ShowAdvancedRDS();
-      if (afscreen) ShowAFEON();
-      if (!afscreen)
-      {
-        showPTY();
-        if (millis() >= tuningtimer + 200) doAF();
-        if (millis() >= tuningtimer + 200) showECC();
-        showRadioText();
-      }
-      showPI();
-      showPS();
+  if (band < BAND_GAP) {
+    if (advancedRDS && !afscreen && !screenmute) ShowAdvancedRDS();
+    if (afscreen && !screenmute) ShowAFEON();
+    if (!afscreen)
+    {
+      showPTY();
+      if (millis() >= tuningtimer + 200) doAF();
+      if (millis() >= tuningtimer + 200) showECC();
+      showRadioText();
     }
+    showPI();
+    showPS();
+  }
+  if (!screenmute) {
     ShowRSSI();
     if (millis() >= tuningtimer + 200) ShowBattery();
     ShowOffset();
-    if (!afscreen) ShowSignalLevel();
     ShowBW();
     updateCodetect();
   }
+  if (!afscreen) ShowSignalLevel();
 }
 
 void WakeToSleep(bool yes) {
