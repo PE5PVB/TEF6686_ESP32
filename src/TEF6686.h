@@ -48,6 +48,11 @@ enum RADIO_BATTERY_SELECTION {
   RADIO_BATTERY_CNT
 };
 
+enum RADIO_FM_DEEMPHASIS {
+  DEEMPHASIS_NONE = 0, DEEMPHASIS_50, DEEMPHASIS_70, 
+  DEEMPHASIS_COUNT
+};
+
 static const char* const PTY_EU[] {
   "None",
   "News",

@@ -76,6 +76,7 @@ extern byte CurrentTheme;
 extern byte ECCold;
 extern byte fmdefaultstepsize;
 extern byte fmnb;
+extern byte fmdeemphasis;
 extern byte amcodect;
 extern byte amcodectcount;
 extern byte amrfagc;
