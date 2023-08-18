@@ -2820,7 +2820,7 @@ void ShowBattery() {
         tft.fillRect(313, 13, 4, 6, ActiveColor);
       }
       tft.fillRect(279, 8, 33, 16, BackgroundColor);
-      if (batteryoptions != BATTERY_VALUE && batteryoptions != BATTERY_PERCENT) tft.fillRect(279, 24 - (battery * 4), 33, battery * 4, BarInsignificantColor);
+      if (batteryoptions != BATTERY_VALUE && batteryoptions != BATTERY_PERCENT) tft.fillRect(279, 8, 17 + (battery * 4), 16, BarInsignificantColor);
     } else {
       tft.drawRect(277, 6, 37, 20, GreyoutColor);
       tft.fillRect(313, 13, 4, 6, GreyoutColor);
