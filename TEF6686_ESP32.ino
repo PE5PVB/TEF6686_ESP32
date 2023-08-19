@@ -1812,6 +1812,16 @@ void ModeButtonPress() {
         if (screensaverset) ScreensaverTimerRestart();
       } else {
         if (submenu) {
+          if (menuopen) {
+            if (menupage == CONNECTIVITY && menuoption == ITEM2 && wifi) {
+              tryWiFi();
+              delay(2000);
+            }
+            if (menupage == DISPLAYSETTINGS && menuoption == ITEM5) {
+              doTheme();
+            }
+            menuopen = false;
+          }
           submenu = false;
           menuoption = ITEM1;
           menupage = INDEX;
