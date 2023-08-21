@@ -502,7 +502,7 @@ void BuildMenu() {
         case FM_BAND_OIRT: tftPrint(1, myLanguage[language][106], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
         case FM_BAND_FM: tftPrint(1, myLanguage[language][105], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
       }
-      if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(1, String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_70), DEC), 270, ITEM10 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM10 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(1, String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_75), DEC), 270, ITEM10 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM10 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(1, "μs", 310, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
       break;
 
@@ -1029,7 +1029,7 @@ void MenuUp() {
             if (region == REGION_US) tftPrint(0, myLanguage[language][48], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             regionold = region;
             if (region == REGION_EU) { fmdeemphasis = DEEMPHASIS_50; radio.setDeemphasis(fmdeemphasis); }
-            if (region == REGION_US) { fmdeemphasis = DEEMPHASIS_70; radio.setDeemphasis(fmdeemphasis); }
+            if (region == REGION_US) { fmdeemphasis = DEEMPHASIS_75; radio.setDeemphasis(fmdeemphasis); }
             radio.rds.region = region;
             break;
 
@@ -1162,12 +1162,12 @@ void MenuUp() {
 
           case ITEM10:
             tftPrint(0, myLanguage[language][199], 155, 78, ActiveColor, ActiveColorSmooth, 28);
-            if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(1, String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_70), DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
+            if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(1, String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_75), DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (fmnb != 0) tftPrint(-1, "μs", 170, 118, ActiveColor, ActiveColor, 28);
             if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(-1, "μs", 170, 118, BackgroundColor, BackgroundColor, 28);
             fmdeemphasis++;
             if (fmdeemphasis > DEEMPHASIS_COUNT - 1) fmdeemphasis = DEEMPHASIS_NONE;
-            if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(1, String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_70), DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(1, String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_75), DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(-1, "μs", 170, 118, ActiveColor, PrimaryColorSmooth, 28);
             radio.setDeemphasis(fmdeemphasis);
             break;
@@ -1523,7 +1523,7 @@ void MenuDown() {
             if (region == REGION_US) tftPrint(0, myLanguage[language][48], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             regionold = region;
             if (region == REGION_EU) { fmdeemphasis = DEEMPHASIS_50; radio.setDeemphasis(fmdeemphasis); }
-            if (region == REGION_US) { fmdeemphasis = DEEMPHASIS_70; radio.setDeemphasis(fmdeemphasis); }
+            if (region == REGION_US) { fmdeemphasis = DEEMPHASIS_75; radio.setDeemphasis(fmdeemphasis); }
             radio.rds.region = region;
             break;
 
@@ -1655,11 +1655,11 @@ void MenuDown() {
 
           case ITEM10:
             tftPrint(0, myLanguage[language][199], 155, 78, ActiveColor, ActiveColorSmooth, 28);
-            if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(1, String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_70), DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
+            if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(1, String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_75), DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(-1, "μs", 170, 118, BackgroundColor, BackgroundColor, 28);
             fmdeemphasis--;
             if (fmdeemphasis > DEEMPHASIS_COUNT - 1) fmdeemphasis = DEEMPHASIS_COUNT - 1;
-            if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(1, String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_70), DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(1, String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_75), DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(-1, "μs", 170, 118, ActiveColor, PrimaryColorSmooth, 28);
             radio.setDeemphasis(fmdeemphasis);
             break;
@@ -2106,7 +2106,7 @@ void DoMenu() {
 
           case ITEM10:
             tftPrint(0, myLanguage[language][199], 155, 78, ActiveColor, ActiveColorSmooth, 28);
-            if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(1, String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_70), DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(1, String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_75), DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(-1, "μs", 170, 118, ActiveColor, PrimaryColorSmooth, 28);
             break;
 

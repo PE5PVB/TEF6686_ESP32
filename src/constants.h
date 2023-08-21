@@ -49,7 +49,7 @@
 #define FREQ_FM_OIRT_END           7400   // use values of 1/10 * kHz
 
 #define FM_DEEMPHASIS_50           50
-#define FM_DEEMPHASIS_70           70
+#define FM_DEEMPHASIS_75           75
 #define REGION_EU                  0
 #define REGION_US                  1
 
