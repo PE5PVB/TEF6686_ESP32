@@ -454,7 +454,7 @@ void setup() {
       }
       break;
     case BAND_OIRT:
-      if (frequency % FREQ_OIRT_STEP_30K != 0) {
+      if (frequency % FREQ_OIRT_STEP_30K != 2) {
         Round30K(frequency_OIRT);
       }
       break;
@@ -1853,8 +1853,11 @@ void ShowStepSize() {
 }
 
 void Round30K(unsigned int freq) {
-  if (freq % FREQ_OIRT_STEP_30K < FREQ_OIRT_STEP_30K) {
-    frequency_OIRT = (freq - freq % FREQ_OIRT_STEP_30K);
+  if (freq % FREQ_OIRT_STEP_30K == 1) {
+    frequency_OIRT = (freq + 1);
+  }
+  else if (freq % FREQ_OIRT_STEP_30K == 0) {
+    frequency_OIRT = (freq - 1);
   }
 }
 
