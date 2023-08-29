@@ -277,7 +277,7 @@ void doAF() {
   if (radio.af_counter != af_counterold && radio.rds.hasAF == true) {
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
-      Udp.print("AF=");
+      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";AF=");
 
       for (byte af_scan = 0; af_scan < radio.af_counter; af_scan++) {
         if (wifi) {
@@ -570,7 +570,7 @@ void showECC() {
 
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
-      Udp.print("ECC=");
+      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";ECC=");
       if (radio.rds.ECC < 0x10) Udp.print("0");
       Udp.print(String(radio.rds.ECC, HEX));
       Udp.endPacket();
