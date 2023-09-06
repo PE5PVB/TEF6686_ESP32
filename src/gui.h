@@ -50,7 +50,7 @@ extern bool rdsreset;
 extern bool RDSstatus;
 extern bool RDSstatusold;
 extern bool rdsstereoold;
-extern bool showrdserrors;
+extern byte showrdserrors;
 extern bool showsquelch;
 extern bool softmuteam;
 extern bool softmutefm;
