@@ -529,6 +529,12 @@ void TEF6686::readRDS(byte showrdserrors)
             if (!rdsCerrorThreshold) {
               //AF decoder
               if (rdsblock == 0) {                                                              // Only when in GROUP 0A
+
+                if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250) {
+                  if (afmethodcounter > 2) afmethodB == true;
+                  afmethodcounter = 0;
+                }
+
                 if (((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) > 224) && ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 250)) afinit = true;
                 if (afinit) {
                   if ((rds.rdsB >> 11) == 0 && af_counter < 50) {
@@ -549,7 +555,10 @@ void TEF6686::readRDS(byte showrdserrors)
 
                     if (!isValuePresent) {
                       af[af_counter].frequency = buffer0;
-                      if (buffer1 == currentfreq && buffer0 > buffer1) af[af_counter].regional = true;
+                      if (buffer1 == currentfreq && buffer0 > buffer1) {
+                        af[af_counter].regional = true;
+                        afmethodcounter++;
+                      }
                       if (af_counter < 50) af_counter++;
                     }
 
@@ -563,7 +572,10 @@ void TEF6686::readRDS(byte showrdserrors)
 
                     if (!isValuePresent) {
                       af[af_counter].frequency = buffer1;
-                      if (buffer0 == currentfreq && buffer0 < buffer1) af[af_counter].regional = true;
+                      if (buffer0 == currentfreq && buffer0 < buffer1) {
+                        af[af_counter].regional = true;
+                        afmethodcounter++;
+                      }
                       if (af_counter < 50) af_counter++;
                     }
 
@@ -602,7 +614,7 @@ void TEF6686::readRDS(byte showrdserrors)
                 rds.hasECC = true;
               }
 
-              if (rds.rdsC >> 12 == 3) {                                                          // ECC code readout
+              if (rds.rdsC >> 12 == 3) {                                                          // LIC code readout
                 rds.LIC = rds.rdsC & 0xff;
                 rds.hasLIC = true;
               }
@@ -980,6 +992,8 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.rdsplusTag2 = 169;
   afinit = false;
   errorfreepi = false;
+  afmethodB = false;
+  afmethodcounter = 0;
 }
 
 void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {

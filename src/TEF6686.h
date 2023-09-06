@@ -256,6 +256,7 @@ class TEF6686 {
     uint8_t rdsblock;
     uint8_t rtplusblock;
     bool mute;
+    bool afmethodB;
 
   private:
     void RDScharConverter(const char* input, wchar_t* output, size_t size, bool under);
@@ -297,6 +298,7 @@ class TEF6686 {
     bool rdsBerrorThreshold;
     bool rdsCerrorThreshold;
     bool rdsDerrorThreshold;
+    byte afmethodcounter;
 };
 
 #endif

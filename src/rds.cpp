@@ -809,11 +809,11 @@ void ShowAFEON() {
       for (byte i = 0; i < radio.af_counter; i++) {
         byte x = i - (afpagenr == 2 ? 30 : 0);
         if (radio.af[i].checked) {
-          if (!screenmute) tftPrint(1, (radio.af[i].regional ? "R " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 50 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), InsignificantColor, InsignificantColorSmooth, 16);
+          if (!screenmute) tftPrint(1, (radio.af[i].regional && radio.afmethodB ? "R " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 50 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), InsignificantColor, InsignificantColorSmooth, 16);
         } else if (!radio.af[i].afvalid) {
-          if (!screenmute) tftPrint(1, (radio.af[i].regional ? "R " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 50 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), SignificantColor, SignificantColorSmooth, 16);
+          if (!screenmute) tftPrint(1, (radio.af[i].regional && radio.afmethodB ? "R " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 50 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), SignificantColor, SignificantColorSmooth, 16);
         } else {
-          if (!screenmute) tftPrint(1, (radio.af[i].regional ? "R " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 50 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), PrimaryColor, PrimaryColorSmooth, 16);
+          if (!screenmute) tftPrint(1, (radio.af[i].regional && radio.afmethodB ? "R " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 50 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), PrimaryColor, PrimaryColorSmooth, 16);
         }
         if (i == 29  + (afpagenr == 2 ? 30 : 0)) i = 254;
       }
