@@ -3027,7 +3027,10 @@ void EdgeBeeper() {
 void Seek(bool mode) {
   if (band < BAND_GAP) {
     radio.setMute();
-    if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
+    if (!screenmute) {
+      tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
+      ShowRDSLogo(false);
+    }
     if (!mode) TuneDown(); else TuneUp();
     delay(50);
     ShowFreq(0);
