@@ -328,6 +328,7 @@ unsigned long rtplustickerhold;
 unsigned long rtticker;
 unsigned long rttickerhold;
 unsigned long tuningtimer;
+unsigned long udptimer;
 
 TEF6686 radio;
 TFT_eSprite sprite = TFT_eSprite(&tft);
@@ -2203,11 +2204,11 @@ void ShowFreq(int mode) {
   if (wifi) {
     Udp.beginPacket(remoteip, 9030);
     if (band == BAND_FM) {
-      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";RcvLevel=" + String(SStatus / 10) + ";bandwidth=-1;freq=" + String(frequency) + "0000");
+      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";freq=" + String(frequency) + "0000");
     } else if (band == BAND_OIRT) {
-      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";RcvLevel=" + String(SStatus / 10) + ";bandwidth=-1;freq=" + String(frequency_OIRT) + "0000");
+      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";freq=" + String(frequency_OIRT) + "0000");
     } else {
-      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";RcvLevel=" + String(SStatus / 10) + ";bandwidth=-1;freq=" + String(frequency_AM) + "000");
+      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";freq=" + String(frequency_AM) + "000");
     }
     Udp.endPacket();
   }
@@ -2274,7 +2275,8 @@ void ShowSignalLevel() {
       SStatusold = SStatusprint;
     }
   }
-  if (wifi) {
+  if (wifi && millis() >= udptimer + 2000) {
+    udptimer = millis();
     Udp.beginPacket(remoteip, 9030);
     Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";RcvLevel=" + String(SStatus / 10));
     Udp.endPacket();

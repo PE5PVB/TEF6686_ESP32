@@ -287,11 +287,11 @@ void doAF() {
           Udp.print(String((radio.af[af_scan].frequency - 8750) / 10, HEX));
         }
       }
-      af_counterold = radio.af_counter;
 
       for (int i = 0; i < 25 - radio.af_counter; i++) Udp.print("00");
       Udp.endPacket();
     }
+    af_counterold = radio.af_counter;
   }
 }
 
@@ -772,17 +772,19 @@ void showRadioText() {
   }
 
   if (wifi) {
-    Udp.beginPacket(remoteip, 9030);
-    Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";RT1=");
-    char RThex[65];
-    radio.rds.stationText.toCharArray(RThex, 65);
-    for (int i = 0; i < 64; i++)
-    {
-      if (RThex[i] < 0x10) Udp.print("0");
-      if (RThex[i] == ' ') RThex[i] =  '_';
-      Udp.print(String(RThex[i], HEX));
+    if (RTold != (radio.rds.stationText + " " + radio.rds.stationText32)) {
+      Udp.beginPacket(remoteip, 9030);
+      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";RT1=");
+      char RThex[65];
+      radio.rds.stationText.toCharArray(RThex, 65);
+      for (int i = 0; i < 64; i++)
+      {
+        if (RThex[i] < 0x10) Udp.print("0");
+        if (RThex[i] == ' ') RThex[i] =  '_';
+        Udp.print(String(RThex[i], HEX));
+      }
+      Udp.endPacket();
     }
-    Udp.endPacket();
   }
   RTold = radio.rds.stationText + " " + radio.rds.stationText32;
 }
