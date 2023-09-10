@@ -3125,7 +3125,6 @@ void MuteScreen(bool setting) {
     setupmode = true;
     tft.writecommand(0x11);
     analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
-    radio.clearRDS(fullsearchrds);
     BuildDisplay();
     setupmode = false;
   } else if (setting && !screenmute) {
