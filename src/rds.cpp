@@ -44,7 +44,7 @@ void ShowAdvancedRDS() {
     rdsstereoold = radio.rds.hasStereo;
   }
 
-  if (ptynold != radio.rds.PTYN) {
+  if (ptynold != radio.rds.PTYN || rdsreset) {
     if (!screenmute) tftPrint(-1, "PTYN N/A", 216, 109, BackgroundColor, BackgroundColor, 16);
     if (!screenmute) tftPrint(-1, ptynold, 216, 109, BackgroundColor, BackgroundColor, 16);
     if (radio.rds.PTYN.length() == 0) radio.rds.PTYN = "PTYN N/A";
@@ -52,7 +52,7 @@ void ShowAdvancedRDS() {
     ptynold = radio.rds.PTYN;
   }
 
-  if (licold != radio.rds.LIC) {
+  if (licold != radio.rds.LIC || rdsreset) {
     if (!screenmute) tftPrint(-1, "N/A", 242, 208, BackgroundColor, BackgroundColor, 16);
     if (!screenmute) tftPrint(-1, LIColdString, 242, 208, BackgroundColor, BackgroundColor, 16);
 
