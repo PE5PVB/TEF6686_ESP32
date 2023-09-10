@@ -778,7 +778,12 @@ void loop() {
 
       if (millis() >= lowsignaltimer + 300) {
         lowsignaltimer = millis();
-        if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+        if (!screenmute || (screenmute && (XDRGTKTCP || XDRGTKUSB))) {
+          if (band < BAND_GAP)
+            radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+          else
+            radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+        }
         if (screenmute) readRds();
         if (!menu) {
           doSquelch();
@@ -787,7 +792,12 @@ void loop() {
       }
 
     } else {
-      if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+      if (!screenmute || (screenmute && (XDRGTKTCP || XDRGTKUSB))) {
+        if (band < BAND_GAP)
+          radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+        else
+          radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+      }
       if (!menu) {
         doSquelch();
         if (millis() >= tuningtimer + 200) readRds();
