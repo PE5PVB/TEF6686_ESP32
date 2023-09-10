@@ -531,7 +531,7 @@ void TEF6686::readRDS(byte showrdserrors)
               if (rdsblock == 0) {                                                              // Only when in GROUP 0A
 
                 if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250) {
-                  if (afmethodcounter > 2) afmethodB == true;
+                  if (afmethodcounter > 2) afmethodB = true;
                   afmethodcounter = 0;
                 }
 
@@ -544,6 +544,7 @@ void TEF6686::readRDS(byte showrdserrors)
                     if ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) buffer0 = (rds.rdsC >> 8) * 10 + 8750; else buffer0 = 0;
                     if ((rds.rdsC & 0xFF) > 0 && (rds.rdsC & 0xFF) < 205) buffer1 = (rds.rdsC & 0xFF) * 10 + 8750; else buffer1 = 0;
                     if (buffer0 != 0 || buffer1 != 0) rds.hasAF = true;
+					if (buffer0 == currentfreq || buffer1 == currentfreq) afmethodcounter++;
 
                     bool isValuePresent = false;
                     for (int i = 0; i < 50; i++) {
@@ -555,10 +556,7 @@ void TEF6686::readRDS(byte showrdserrors)
 
                     if (!isValuePresent) {
                       af[af_counter].frequency = buffer0;
-                      if (buffer1 == currentfreq && buffer0 > buffer1) {
-                        af[af_counter].regional = true;
-                        afmethodcounter++;
-                      }
+                      if (buffer1 == currentfreq && buffer0 > buffer1) af[af_counter].regional = true;
                       if (af_counter < 50) af_counter++;
                     }
 
@@ -572,10 +570,7 @@ void TEF6686::readRDS(byte showrdserrors)
 
                     if (!isValuePresent) {
                       af[af_counter].frequency = buffer1;
-                      if (buffer0 == currentfreq && buffer0 < buffer1) {
-                        af[af_counter].regional = true;
-                        afmethodcounter++;
-                      }
+                      if (buffer0 == currentfreq && buffer0 < buffer1) af[af_counter].regional = true;
                       if (af_counter < 50) af_counter++;
                     }
 
