@@ -76,6 +76,7 @@ bool menu;
 bool menuopen;
 bool nobattery;
 bool power = true;
+bool rdsflagreset;
 bool rdsreset;
 bool RDSSPYTCP;
 bool RDSSPYUSB;
@@ -678,7 +679,10 @@ void loop() {
   if (digitalRead(BANDBUTTON) == LOW ) BANDBUTTONPress();
 
   if (power || poweroptions == LCD_OFF) {
-    if (millis() >= tuningtimer + 200) Communication();
+    if (millis() >= tuningtimer + 200) {
+      rdsflagreset = false;
+      Communication();
+    }
 
     if (!menu && !afscreen) {
       if (af && dropout && millis() >= aftimer + 1000) {
@@ -2223,6 +2227,10 @@ void ShowFreq(int mode) {
     Udp.endPacket();
   }
   tuningtimer = millis();
+  if (!rdsflagreset) {
+    ShowRDSLogo(false);
+    rdsflagreset = true;
+  }
 }
 
 void ShowSignalLevel() {
@@ -3039,10 +3047,7 @@ void EdgeBeeper() {
 void Seek(bool mode) {
   if (band < BAND_GAP) {
     radio.setMute();
-    if (!screenmute) {
-      tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
-      ShowRDSLogo(false);
-    }
+    if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
     if (!mode) TuneDown(); else TuneUp();
     delay(50);
     ShowFreq(0);
