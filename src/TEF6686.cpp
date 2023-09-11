@@ -343,7 +343,7 @@ bool TEF6686::getStatusAM(int16_t &level, uint16_t &noise, uint16_t &cochannel, 
   return snr;
 }
 
-void TEF6686::readRDS(bool showrdserrors)
+void TEF6686::readRDS(byte showrdserrors)
 {
   uint16_t rdsStat;
   uint8_t offset;
@@ -376,17 +376,22 @@ void TEF6686::readRDS(bool showrdserrors)
     rds.rdsCerror = (((rds.rdsErr >> 10) & 0x03) > 0);
     rds.rdsDerror = (((rds.rdsErr >> 8) & 0x03) > 0);
 
+    rdsAerrorThreshold = (((rds.rdsErr >> 14) & 0x03) > showrdserrors);
+    rdsBerrorThreshold = (((rds.rdsErr >> 12) & 0x03) > showrdserrors);
+    rdsCerrorThreshold = (((rds.rdsErr >> 10) & 0x03) > showrdserrors);
+    rdsDerrorThreshold = (((rds.rdsErr >> 8) & 0x03) > showrdserrors);
+
     if ((rdsStat & (1 << 15))) rdsReady = true;
 
     if (rdsReady) {                                                                                       // We have all data to decode... let's go...
 
       //PI decoder
-      if (!rds.rdsAerror && afreset) {
+      if (!rdsAerrorThreshold && afreset) {
         rds.correctPI = rds.rdsA;
         afreset = false;
       }
 
-      if (rds.region != 1 && ((!rds.rdsAerror && !rds.rdsBerror && !rds.rdsCerror && !rds.rdsDerror) || (rds.pierrors && !errorfreepi))) {
+      if (rds.region != 1 && ((!rdsAerrorThreshold && !rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold) || (rds.pierrors && !errorfreepi))) {
         if (rds.rdsA != piold) {
           piold = rds.rdsA;
           rds.picode[0] = (rds.rdsA >> 12) & 0xF;
@@ -402,7 +407,7 @@ void TEF6686::readRDS(bool showrdserrors)
           }
         }
 
-        if (!rds.rdsAerror && !rds.rdsBerror && !rds.rdsCerror && !rds.rdsDerror) errorfreepi = true;
+        if (!rdsAerrorThreshold && !rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold) errorfreepi = true;
 
         if (!errorfreepi) {
           if (((rds.rdsErr >> 14) & 0x03) > 2) rds.picode[5] = '?'; else rds.picode[5] = ' ';
@@ -470,13 +475,13 @@ void TEF6686::readRDS(bool showrdserrors)
       // TP Indicator
       rds.hasTP = (bitRead(rds.rdsB, 10));
 
-      if (!rds.rdsBerror) rdsblock = rds.rdsB >> 11; else return;
+      if (!rdsBerrorThreshold) rdsblock = rds.rdsB >> 11; else return;
       switch (rdsblock) {
         case RDS_GROUP_0A:
         case RDS_GROUP_0B:
           {
             //PS decoder
-            if (showrdserrors || (!rds.rdsBerror && !rds.rdsDerror)) {
+            if (showrdserrors == 3 || (!rdsBerrorThreshold && !rdsDerrorThreshold)) {
               offset = rds.rdsB & 0x03;                                                         // Let's get the character offset for PS
 
               ps_buffer2[(offset * 2) + 0] = ps_buffer[(offset * 2) + 0];                       // Make a copy of the PS buffer
@@ -509,7 +514,7 @@ void TEF6686::readRDS(bool showrdserrors)
             }
 
             // PTY decoder
-            if (!rds.rdsBerror) {
+            if (!rdsBerrorThreshold) {
               rds.stationTypeCode = (rds.rdsB >> 5) & 0x1F;                                     // Get 5 PTY bits from Block B
               if (rds.region == 0) strcpy(rds.stationType, PTY_EU[rds.stationTypeCode]);
               if (rds.region == 1) strcpy(rds.stationType, PTY_USA[rds.stationTypeCode]);
@@ -519,11 +524,17 @@ void TEF6686::readRDS(bool showrdserrors)
 
               //MS decoder
               if (((bitRead(rds.rdsB, 3)) & 0x1F) == 1) rds.MS = 1; else rds.MS = 2;            // Read MS flag
-			}
-			
-			if (!rds.rdsCerror) {
+            }
+
+            if (!rdsCerrorThreshold) {
               //AF decoder
               if (rdsblock == 0) {                                                              // Only when in GROUP 0A
+
+                if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250) {
+                  if (afmethodcounter > 2) afmethodB = true;
+                  afmethodcounter = 0;
+                }
+
                 if (((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) > 224) && ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 250)) afinit = true;
                 if (afinit) {
                   if ((rds.rdsB >> 11) == 0 && af_counter < 50) {
@@ -533,6 +544,7 @@ void TEF6686::readRDS(bool showrdserrors)
                     if ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) buffer0 = (rds.rdsC >> 8) * 10 + 8750; else buffer0 = 0;
                     if ((rds.rdsC & 0xFF) > 0 && (rds.rdsC & 0xFF) < 205) buffer1 = (rds.rdsC & 0xFF) * 10 + 8750; else buffer1 = 0;
                     if (buffer0 != 0 || buffer1 != 0) rds.hasAF = true;
+					if (buffer0 == currentfreq || buffer1 == currentfreq) afmethodcounter++;
 
                     bool isValuePresent = false;
                     for (int i = 0; i < 50; i++) {
@@ -591,19 +603,19 @@ void TEF6686::readRDS(bool showrdserrors)
           } break;
 
         case RDS_GROUP_1A: {
-            if (!rds.rdsCerror) {
+            if (!rdsCerrorThreshold) {
               if (rds.rdsC >> 12 == 0) {                                                          // ECC code readout
                 rds.ECC = rds.rdsC & 0xff;
                 rds.hasECC = true;
               }
 
-              if (rds.rdsC >> 12 == 3) {                                                          // ECC code readout
+              if (rds.rdsC >> 12 == 3) {                                                          // LIC code readout
                 rds.LIC = rds.rdsC & 0xff;
                 rds.hasLIC = true;
               }
-			}
-			
-			if (!rds.rdsDerror) {
+            }
+
+            if (!rdsDerrorThreshold) {
               if (rds.rdsD != 0) {                                                                // PIN decoder
                 rds.hasPIN = true;
                 rds.pinMin = rds.rdsD & 0x3f;
@@ -614,7 +626,7 @@ void TEF6686::readRDS(bool showrdserrors)
           } break;
 
         case RDS_GROUP_2A: {
-            if (showrdserrors || (!rds.rdsBerror && !rds.rdsCerror && !rds.rdsDerror)) {
+            if (showrdserrors == 3 || (!rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold)) {
               // RT decoder (64 characters)
               rds.hasRT = true;
               rds.rtAB = (bitRead(rds.rdsB, 4));                                                  // Get AB flag
@@ -658,7 +670,7 @@ void TEF6686::readRDS(bool showrdserrors)
           } break;
 
         case RDS_GROUP_2B: {
-            if (showrdserrors || (!rds.rdsBerror && !rds.rdsDerror)) {
+            if (showrdserrors == 3 || (!rdsBerrorThreshold && !rdsDerrorThreshold)) {
               // RT decoder (32 characters)
               rds.hasRT = true;
               rds.rtAB32 = (bitRead(rds.rdsB, 4));                                                  // Get AB flag
@@ -683,17 +695,17 @@ void TEF6686::readRDS(bool showrdserrors)
           } break;
 
         case RDS_GROUP_3A: {
-			if (!rds.rdsDerror) {
-            // RT+ init
-            if (rds.rdsD == 0x4BD7) {                                                             // Check for RT+ application
-              rds.hasRDSplus = true;                                                              // Set flag
-              rtplusblock = ((rds.rdsB & 0x1F) >> 1) * 2;                                         // Get RT+ Block
+            if (!rdsDerrorThreshold) {
+              // RT+ init
+              if (rds.rdsD == 0x4BD7) {                                                             // Check for RT+ application
+                rds.hasRDSplus = true;                                                              // Set flag
+                rtplusblock = ((rds.rdsB & 0x1F) >> 1) * 2;                                         // Get RT+ Block
+              }
             }
-			}
           } break;
 
         case RDS_GROUP_4A: {
-            if (!rds.rdsBerror && !rds.rdsCerror && !rds.rdsDerror) {
+            if (!rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold) {
               // CT
               uint32_t mjd;
               mjd = (rds.rdsB & 0x03);
@@ -725,7 +737,7 @@ void TEF6686::readRDS(bool showrdserrors)
           } break;
 
         case RDS_GROUP_10A: {
-            if (!rds.rdsCerror && !rds.rdsDerror) {
+            if (!rdsCerrorThreshold && !rdsDerrorThreshold) {
               // PTYN
               offset = bitRead(rds.rdsB, 0);                                                                // Get char offset
 
@@ -748,7 +760,7 @@ void TEF6686::readRDS(bool showrdserrors)
         case RDS_GROUP_12A:
         case RDS_GROUP_13A:   {
             // RT+ decoding
-            if ((!rds.rdsBerror && !rds.rdsCerror && !rds.rdsDerror) && rtplusblock == rdsblock && rds.hasRDSplus) {                                 // Are we in the right RT+ block and is all ok to go?
+            if ((!rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold) && rtplusblock == rdsblock && rds.hasRDSplus) {                                 // Are we in the right RT+ block and is all ok to go?
               rds.rdsplusTag1 = ((rds.rdsB & 0x07) << 3) + (rds.rdsC >> 13);
               rds.rdsplusTag2 = ((rds.rdsC & 0x01) << 5) + (rds.rdsD >> 11);
               uint16_t start_marker_1 = (rds.rdsC >> 7) & 0x3F;
@@ -797,13 +809,13 @@ void TEF6686::readRDS(bool showrdserrors)
               rds.RTContent2 = convertToUTF8(RTtext2);                                                        // Convert RDS characterset to ASCII
               rds.RTContent2 = extractUTF8Substring(rds.RTContent2, 0, 44, false);                            // Make sure RT does not exceed 32 characters
             }
-            if (!rds.rdsBerror && rdsblock == 16 && (rds.rdsB & (1 << 4))) rds.hasTMC = true;                  // TMC flag
+            if (!rdsBerrorThreshold && rdsblock == 16 && (rds.rdsB & (1 << 4))) rds.hasTMC = true;                  // TMC flag
           }
           break;
 
         case RDS_GROUP_14A: {
             // EON
-            if (!rds.rdsDerror) {
+            if (!rdsDerrorThreshold) {
               rds.hasEON = true;                                                                                                        // Group is there, so we have EON
 
               bool isValuePresent = false;
@@ -975,6 +987,8 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.rdsplusTag2 = 169;
   afinit = false;
   errorfreepi = false;
+  afmethodB = false;
+  afmethodcounter = 0;
 }
 
 void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {

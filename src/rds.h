@@ -30,7 +30,7 @@ extern bool RDSstatus;
 extern bool rdsstereoold;
 extern bool screenmute;
 extern bool setupmode;
-extern bool showrdserrors;
+extern byte showrdserrors;
 extern bool TAold;
 extern bool TPold;
 extern bool wifi;

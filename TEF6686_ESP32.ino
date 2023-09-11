@@ -76,6 +76,7 @@ bool menu;
 bool menuopen;
 bool nobattery;
 bool power = true;
+bool rdsflagreset;
 bool rdsreset;
 bool RDSSPYTCP;
 bool RDSSPYUSB;
@@ -87,7 +88,7 @@ bool screenmute;
 bool screensavertriggered = false;
 bool seek;
 bool setupmode;
-bool showrdserrors;
+byte showrdserrors;
 bool showsquelch;
 bool softmuteam;
 bool softmutefm;
@@ -328,6 +329,7 @@ unsigned long rtplustickerhold;
 unsigned long rtticker;
 unsigned long rttickerhold;
 unsigned long tuningtimer;
+unsigned long udptimer;
 
 TEF6686 radio;
 TFT_eSprite sprite = TFT_eSprite(&tft);
@@ -677,7 +679,10 @@ void loop() {
   if (digitalRead(BANDBUTTON) == LOW ) BANDBUTTONPress();
 
   if (power || poweroptions == LCD_OFF) {
-    if (millis() >= tuningtimer + 200) Communication();
+    if (millis() >= tuningtimer + 200) {
+      rdsflagreset = false;
+      Communication();
+    }
 
     if (!menu && !afscreen) {
       if (af && dropout && millis() >= aftimer + 1000) {
@@ -777,7 +782,12 @@ void loop() {
 
       if (millis() >= lowsignaltimer + 300) {
         lowsignaltimer = millis();
-        if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+        if (!screenmute || (screenmute && (XDRGTKTCP || XDRGTKUSB))) {
+          if (band < BAND_GAP)
+            radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+          else
+            radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+        }
         if (screenmute) readRds();
         if (!menu) {
           doSquelch();
@@ -786,7 +796,12 @@ void loop() {
       }
 
     } else {
-      if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+      if (!screenmute || (screenmute && (XDRGTKTCP || XDRGTKUSB))) {
+        if (band < BAND_GAP)
+          radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+        else
+          radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+      }
       if (!menu) {
         doSquelch();
         if (millis() >= tuningtimer + 200) readRds();
@@ -2203,15 +2218,19 @@ void ShowFreq(int mode) {
   if (wifi) {
     Udp.beginPacket(remoteip, 9030);
     if (band == BAND_FM) {
-      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";RcvLevel=" + String(SStatus / 10) + ";bandwidth=-1;freq=" + String(frequency) + "0000");
+      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";freq=" + String(frequency) + "0000");
     } else if (band == BAND_OIRT) {
-      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";RcvLevel=" + String(SStatus / 10) + ";bandwidth=-1;freq=" + String(frequency_OIRT) + "0000");
+      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";freq=" + String(frequency_OIRT) + "0000");
     } else {
-      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";RcvLevel=" + String(SStatus / 10) + ";bandwidth=-1;freq=" + String(frequency_AM) + "000");
+      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";freq=" + String(frequency_AM) + "000");
     }
     Udp.endPacket();
   }
   tuningtimer = millis();
+  if (!rdsflagreset) {
+    ShowRDSLogo(false);
+    rdsflagreset = true;
+  }
 }
 
 void ShowSignalLevel() {
@@ -2274,7 +2293,8 @@ void ShowSignalLevel() {
       SStatusold = SStatusprint;
     }
   }
-  if (wifi) {
+  if (wifi && millis() >= udptimer + 2000) {
+    udptimer = millis();
     Udp.beginPacket(remoteip, 9030);
     Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";RcvLevel=" + String(SStatus / 10));
     Udp.endPacket();
@@ -3105,7 +3125,6 @@ void MuteScreen(bool setting) {
     setupmode = true;
     tft.writecommand(0x11);
     analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
-    radio.clearRDS(fullsearchrds);
     BuildDisplay();
     setupmode = false;
   } else if (setting && !screenmute) {
@@ -3136,7 +3155,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, 0);
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, 828);
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_LANGUAGE, 0); else EEPROM.writeByte(EE_BYTE_LANGUAGE, LANGUAGE_CHS);
-  EEPROM.writeByte(EE_BYTE_SHOWRDSERRORS, 0);
+  EEPROM.writeByte(EE_BYTE_SHOWRDSERRORS, 1);
   EEPROM.writeByte(EE_BYTE_TEF, 0);
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 0); else EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 1);
   EEPROM.writeByte(EE_BYTE_ROTARYMODE, 0);

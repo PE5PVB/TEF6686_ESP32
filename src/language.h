@@ -1,6 +1,6 @@
 // [number of languages][number of texts]
 
-static const char* const myLanguage[16][200] = {
+static const char* const myLanguage[16][203] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -200,7 +200,10 @@ static const char* const myLanguage[16][200] = {
     "Auto sort AF", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemphasis" // 199
+    "FM deemphasis", // 199
+    "Small", // 200
+    "Large", // 201
+    "All" // 202
   },
 
   { "Nederlands", // Dutch
@@ -402,7 +405,10 @@ static const char* const myLanguage[16][200] = {
     "Auto AF sorteren", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemphasis" // 199
+    "FM deemphasis", // 199
+    "Laag", // 200
+    "Middel", // 201
+    "Alles" // 202
   },
 
   { "Polski", // Polish
@@ -604,7 +610,10 @@ static const char* const myLanguage[16][200] = {
     "Automat. sortowanie AF", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemphasis" // 199
+    "FM deemphasis", // 199
+    "Small", // 200
+    "Large", // 201
+    "All" // 202
   },
 
   { "Hrvatski", // Croatian
@@ -806,7 +815,10 @@ static const char* const myLanguage[16][200] = {
     "Auto sort AF", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemphasis" // 199
+    "FM deemphasis", // 199
+    "Small", // 200
+    "Large", // 201
+    "All" // 202
   },
 
   { "Ελληνικά", // Greek
@@ -1008,7 +1020,10 @@ static const char* const myLanguage[16][200] = {
     "Αυτόματη ταξινόμηση AF", // 196
     "ID λίστας σταθμών", // 197
     "AM εξασθένιση", // 198
-    "FM αποέμφαση" // 199
+    "FM αποέμφαση", // 199
+    "Small", // 200
+    "Large", // 201
+    "All" // 202
   },
 
   { "Romana", // Romanian
@@ -1210,7 +1225,10 @@ static const char* const myLanguage[16][200] = {
     "Auto sort AF", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemphasis" // 199
+    "FM deemphasis", // 199
+    "Small", // 200
+    "Large", // 201
+    "All" // 202
   },
 
   { "Deutsch", // German
@@ -1412,7 +1430,10 @@ static const char* const myLanguage[16][200] = {
     "Auto sort AF", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemphasis" // 199
+    "FM deemphasis", // 199
+    "Small", // 200
+    "Large", // 201
+    "All" // 202
   },
 
   { "Czech", // Czech
@@ -1614,7 +1635,10 @@ static const char* const myLanguage[16][200] = {
     "Auto sort AF", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemphasis" // 199
+    "FM deemphasis", // 199
+    "Small", // 200
+    "Large", // 201
+    "All" // 202
   },
 
   { "Slovak", // Slovak
@@ -1816,7 +1840,10 @@ static const char* const myLanguage[16][200] = {
     "Auto sort AF", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemphasis" // 199
+    "FM deemphasis", // 199
+    "Small", // 200
+    "Large", // 201
+    "All" // 202
   },
 
   { "Français", // French
@@ -2018,7 +2045,10 @@ static const char* const myLanguage[16][200] = {
     "Auto sort AF", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemphasis" // 199
+    "FM deemphasis", // 199
+    "Small", // 200
+    "Large", // 201
+    "All" // 202
   },
 
   { "Български", // Bulgarian
@@ -2220,7 +2250,10 @@ static const char* const myLanguage[16][200] = {
     "Auto sort AF", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemphasis" // 199
+    "FM deemphasis", // 199
+    "Small", // 200
+    "Large", // 201
+    "All" // 202
   },
 
   { "Русский", // Russian
@@ -2422,7 +2455,10 @@ static const char* const myLanguage[16][200] = {
     "Auto sort AF", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemphasis" // 199
+    "FM deemphasis", // 199
+    "Small", // 200
+    "Large", // 201
+    "All" // 202
   },
 
   { "Українська", // Ukranian
@@ -2624,7 +2660,10 @@ static const char* const myLanguage[16][200] = {
     "Auto sort AF", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemphasis" // 199
+    "FM deemphasis", // 199
+    "Small", // 200
+    "Large", // 201
+    "All" // 202
   },
 
   { "Italiano", // Italian
@@ -2826,7 +2865,10 @@ static const char* const myLanguage[16][200] = {
     "Auto sort AF", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemphasis" // 199
+    "FM deemphasis", // 199
+    "Small", // 200
+    "Large", // 201
+    "All" // 202
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3028,7 +3070,10 @@ static const char* const myLanguage[16][200] = {
     "自动排列AF", // 196
     "Stationlist ID", // 197
     "AM天线衰减", // 198
-    "FM去加重" // 199
+    "FM去加重", // 199
+    "Small", // 200
+    "Large", // 201
+    "All" // 202
   },
 
   { "Norsk", // Norwegian
@@ -3230,7 +3275,10 @@ static const char* const myLanguage[16][200] = {
     "Auto sort AF", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemphasis" // 199
+    "FM deemphasis", // 199
+    "Small", // 200
+    "Large", // 201
+    "All" // 202
   }
 };
 

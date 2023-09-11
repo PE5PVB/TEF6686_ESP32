@@ -458,7 +458,13 @@ void BuildMenu() {
       tftPrint(-1, myLanguage[language][176], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][196], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
 
-      if (showrdserrors) tftPrint(1, myLanguage[language][42], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      switch (showrdserrors) {
+        case 0: tftPrint(1, myLanguage[language][30], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case 1: tftPrint(1, myLanguage[language][200], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case 2: tftPrint(1, myLanguage[language][201], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case 3: tftPrint(1, myLanguage[language][202], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+      }
+
       if (region == REGION_EU) tftPrint(1, myLanguage[language][47], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (region == REGION_US) tftPrint(1, myLanguage[language][48], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (radio.rds.underscore) tftPrint(1, myLanguage[language][42], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
@@ -1016,9 +1022,21 @@ void MenuUp() {
       case RDSSETTINGS:
         switch (menuoption) {
           case ITEM1:
-            if (showrdserrors) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
-            if (showrdserrors) showrdserrors = false; else showrdserrors = true;
-            if (showrdserrors) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            switch (showrdserrors) {
+              case 0: tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28); break;
+              case 1: tftPrint(0, myLanguage[language][200], 155, 118, BackgroundColor, BackgroundColor, 28); break;
+              case 2: tftPrint(0, myLanguage[language][201], 155, 118, BackgroundColor, BackgroundColor, 28); break;
+              case 3: tftPrint(0, myLanguage[language][202], 155, 118, BackgroundColor, BackgroundColor, 28); break;
+            }
+            showrdserrors++;
+            if (showrdserrors > 3) showrdserrors = 0;
+
+            switch (showrdserrors) {
+              case 0: tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 1: tftPrint(0, myLanguage[language][200], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 2: tftPrint(0, myLanguage[language][201], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 3: tftPrint(0, myLanguage[language][202], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+            }
             break;
 
           case ITEM2:
@@ -1028,8 +1046,14 @@ void MenuUp() {
             if (region == REGION_EU) tftPrint(0, myLanguage[language][47], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             if (region == REGION_US) tftPrint(0, myLanguage[language][48], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             regionold = region;
-            if (region == REGION_EU) { fmdeemphasis = DEEMPHASIS_50; radio.setDeemphasis(fmdeemphasis); }
-            if (region == REGION_US) { fmdeemphasis = DEEMPHASIS_75; radio.setDeemphasis(fmdeemphasis); }
+            if (region == REGION_EU) {
+              fmdeemphasis = DEEMPHASIS_50;
+              radio.setDeemphasis(fmdeemphasis);
+            }
+            if (region == REGION_US) {
+              fmdeemphasis = DEEMPHASIS_75;
+              radio.setDeemphasis(fmdeemphasis);
+            }
             radio.rds.region = region;
             break;
 
@@ -1510,9 +1534,21 @@ void MenuDown() {
       case RDSSETTINGS:
         switch (menuoption) {
           case ITEM1:
-            if (showrdserrors) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
-            if (showrdserrors) showrdserrors = false; else showrdserrors = true;
-            if (showrdserrors) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            switch (showrdserrors) {
+              case 0: tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28); break;
+              case 1: tftPrint(0, myLanguage[language][200], 155, 118, BackgroundColor, BackgroundColor, 28); break;
+              case 2: tftPrint(0, myLanguage[language][201], 155, 118, BackgroundColor, BackgroundColor, 28); break;
+              case 3: tftPrint(0, myLanguage[language][202], 155, 118, BackgroundColor, BackgroundColor, 28); break;
+            }
+            showrdserrors--;
+            if (showrdserrors > 3) showrdserrors = 3;
+
+            switch (showrdserrors) {
+              case 0: tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 1: tftPrint(0, myLanguage[language][200], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 2: tftPrint(0, myLanguage[language][201], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 3: tftPrint(0, myLanguage[language][202], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+            }
             break;
 
           case ITEM2:
@@ -1522,8 +1558,14 @@ void MenuDown() {
             if (region == REGION_EU) tftPrint(0, myLanguage[language][47], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             if (region == REGION_US) tftPrint(0, myLanguage[language][48], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             regionold = region;
-            if (region == REGION_EU) { fmdeemphasis = DEEMPHASIS_50; radio.setDeemphasis(fmdeemphasis); }
-            if (region == REGION_US) { fmdeemphasis = DEEMPHASIS_75; radio.setDeemphasis(fmdeemphasis); }
+            if (region == REGION_EU) {
+              fmdeemphasis = DEEMPHASIS_50;
+              radio.setDeemphasis(fmdeemphasis);
+            }
+            if (region == REGION_US) {
+              fmdeemphasis = DEEMPHASIS_75;
+              radio.setDeemphasis(fmdeemphasis);
+            }
             radio.rds.region = region;
             break;
 
@@ -2002,7 +2044,13 @@ void DoMenu() {
         switch (menuoption) {
           case ITEM1:
             tftPrint(0, myLanguage[language][38], 155, 78, ActiveColor, ActiveColorSmooth, 28);
-            if (showrdserrors) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            switch (showrdserrors) {
+              case 0: tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 1: tftPrint(0, myLanguage[language][200], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 2: tftPrint(0, myLanguage[language][201], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 3: tftPrint(0, myLanguage[language][202], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+            }
+
             break;
 
           case ITEM2:

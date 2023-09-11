@@ -49,7 +49,7 @@ enum RADIO_BATTERY_SELECTION {
 };
 
 enum RADIO_FM_DEEMPHASIS {
-  DEEMPHASIS_NONE = 0, DEEMPHASIS_50, DEEMPHASIS_75, 
+  DEEMPHASIS_NONE = 0, DEEMPHASIS_50, DEEMPHASIS_75,
   DEEMPHASIS_COUNT
 };
 
@@ -209,7 +209,7 @@ class TEF6686 {
     logbook_ logbook[22];
     uint16_t TestAF();
     void TestAFEON();
-    void readRDS(bool showrdserrors);
+    void readRDS(byte showrdserrors);
     void SetFreq(uint16_t frequency);
     void SetFreqAM(uint16_t frequency);
     bool getProcessing(uint16_t &highcut, uint16_t &stereo, uint16_t &sthiblend, uint8_t &stband_1, uint8_t &stband_2, uint8_t &stband_3, uint8_t &stband_4);
@@ -256,6 +256,7 @@ class TEF6686 {
     uint8_t rdsblock;
     uint8_t rtplusblock;
     bool mute;
+    bool afmethodB;
 
   private:
     void RDScharConverter(const char* input, wchar_t* output, size_t size, bool under);
@@ -293,6 +294,11 @@ class TEF6686 {
     bool initab;
     bool afinit;
     bool errorfreepi;
+    bool rdsAerrorThreshold;
+    bool rdsBerrorThreshold;
+    bool rdsCerrorThreshold;
+    bool rdsDerrorThreshold;
+    byte afmethodcounter;
 };
 
 #endif

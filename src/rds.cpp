@@ -44,7 +44,7 @@ void ShowAdvancedRDS() {
     rdsstereoold = radio.rds.hasStereo;
   }
 
-  if (ptynold != radio.rds.PTYN) {
+  if (ptynold != radio.rds.PTYN || rdsreset) {
     if (!screenmute) tftPrint(-1, "PTYN N/A", 216, 109, BackgroundColor, BackgroundColor, 16);
     if (!screenmute) tftPrint(-1, ptynold, 216, 109, BackgroundColor, BackgroundColor, 16);
     if (radio.rds.PTYN.length() == 0) radio.rds.PTYN = "PTYN N/A";
@@ -52,7 +52,7 @@ void ShowAdvancedRDS() {
     ptynold = radio.rds.PTYN;
   }
 
-  if (licold != radio.rds.LIC) {
+  if (licold != radio.rds.LIC || rdsreset) {
     if (!screenmute) tftPrint(-1, "N/A", 242, 208, BackgroundColor, BackgroundColor, 16);
     if (!screenmute) tftPrint(-1, LIColdString, 242, 208, BackgroundColor, BackgroundColor, 16);
 
@@ -287,11 +287,11 @@ void doAF() {
           Udp.print(String((radio.af[af_scan].frequency - 8750) / 10, HEX));
         }
       }
-      af_counterold = radio.af_counter;
 
       for (int i = 0; i < 25 - radio.af_counter; i++) Udp.print("00");
       Udp.endPacket();
     }
+    af_counterold = radio.af_counter;
   }
 }
 
@@ -587,7 +587,7 @@ void readRds() {
     if (!screenmute) {
       if (!afscreen) {
         if (!RDSstatus) {
-          if (advancedRDS) tftPrint(-1, PIold, 244, 75, SecondaryColor, SecondaryColorSmooth, 28); else tftPrint(-1, PIold, 244, 187, SecondaryColor, SecondaryColorSmooth, 28);
+          if (advancedRDS) tftPrint(-1, PIold, 240, 75, SecondaryColor, SecondaryColorSmooth, 28); else tftPrint(-1, PIold, 240, 187, SecondaryColor, SecondaryColorSmooth, 28);
           if (advancedRDS) tftPrint(-1, PSold, 38, 75, SecondaryColor, SecondaryColorSmooth, 28); else tftPrint(-1, PSold, 38, 187, SecondaryColor, SecondaryColorSmooth, 28);
           if (advancedRDS) tftPrint(-1, PTYold, 38, 109, SecondaryColor, SecondaryColorSmooth, 16); else tftPrint(-1, PTYold, 38, 163, SecondaryColor, SecondaryColorSmooth, 16);
           if (advancedRDS) {
@@ -599,7 +599,7 @@ void readRds() {
           if (radio.rds.correctPI != 0) dropout = true;
         } else {
           if (dropout == true) {
-            if (advancedRDS) tftPrint(-1, PIold, 244, 75, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(-1, PIold, 244, 187, PrimaryColor, PrimaryColorSmooth, 28);
+            if (advancedRDS) tftPrint(-1, PIold, 240, 75, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(-1, PIold, 240, 187, PrimaryColor, PrimaryColorSmooth, 28);
             if (advancedRDS) tftPrint(-1, PSold, 38, 75, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(-1, PSold, 38, 187, PrimaryColor, PrimaryColorSmooth, 28);
             if (advancedRDS) tftPrint(-1, PTYold, 38, 109, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, PTYold, 38, 163, PrimaryColor, PrimaryColorSmooth, 16);
             dropout = false;
@@ -664,11 +664,11 @@ void showPI() {
   if (strcmp(radio.rds.picode, radioIdPrevious)) {
     if (!screenmute) {
       if (advancedRDS) {
-        tftReplace(-1, PIold, radio.rds.picode, 244, 75, PrimaryColor, PrimaryColorSmooth, 28);
+        tftReplace(-1, PIold, radio.rds.picode, 240, 75, PrimaryColor, PrimaryColorSmooth, 28);
       } else if (afscreen) {
         tftReplace(-1, PIold, radio.rds.picode, 30, 201, BWAutoColor, BWAutoColorSmooth, 16);
       } else {
-        tftReplace(-1, PIold, radio.rds.picode, 244, 187, PrimaryColor, PrimaryColorSmooth, 28);
+        tftReplace(-1, PIold, radio.rds.picode, 240, 187, PrimaryColor, PrimaryColorSmooth, 28);
       }
     }
     PIold = radio.rds.picode;
@@ -772,17 +772,19 @@ void showRadioText() {
   }
 
   if (wifi) {
-    Udp.beginPacket(remoteip, 9030);
-    Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";RT1=");
-    char RThex[65];
-    radio.rds.stationText.toCharArray(RThex, 65);
-    for (int i = 0; i < 64; i++)
-    {
-      if (RThex[i] < 0x10) Udp.print("0");
-      if (RThex[i] == ' ') RThex[i] =  '_';
-      Udp.print(String(RThex[i], HEX));
+    if (RTold != (radio.rds.stationText + " " + radio.rds.stationText32)) {
+      Udp.beginPacket(remoteip, 9030);
+      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";RT1=");
+      char RThex[65];
+      radio.rds.stationText.toCharArray(RThex, 65);
+      for (int i = 0; i < 64; i++)
+      {
+        if (RThex[i] < 0x10) Udp.print("0");
+        if (RThex[i] == ' ') RThex[i] =  '_';
+        Udp.print(String(RThex[i], HEX));
+      }
+      Udp.endPacket();
     }
-    Udp.endPacket();
   }
   RTold = radio.rds.stationText + " " + radio.rds.stationText32;
 }
@@ -809,11 +811,11 @@ void ShowAFEON() {
       for (byte i = 0; i < radio.af_counter; i++) {
         byte x = i - (afpagenr == 2 ? 30 : 0);
         if (radio.af[i].checked) {
-          if (!screenmute) tftPrint(1, (radio.af[i].regional ? "R " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 50 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), InsignificantColor, InsignificantColorSmooth, 16);
+          if (!screenmute) tftPrint(1, (radio.af[i].regional && radio.afmethodB ? "R " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 50 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), InsignificantColor, InsignificantColorSmooth, 16);
         } else if (!radio.af[i].afvalid) {
-          if (!screenmute) tftPrint(1, (radio.af[i].regional ? "R " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 50 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), SignificantColor, SignificantColorSmooth, 16);
+          if (!screenmute) tftPrint(1, (radio.af[i].regional && radio.afmethodB ? "R " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 50 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), SignificantColor, SignificantColorSmooth, 16);
         } else {
-          if (!screenmute) tftPrint(1, (radio.af[i].regional ? "R " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 50 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), PrimaryColor, PrimaryColorSmooth, 16);
+          if (!screenmute) tftPrint(1, (radio.af[i].regional && radio.afmethodB ? "R " : "") + String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 50 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), PrimaryColor, PrimaryColorSmooth, 16);
         }
         if (i == 29  + (afpagenr == 2 ? 30 : 0)) i = 254;
       }
