@@ -608,12 +608,12 @@ static const char* const myLanguage[16][203] = {
     "AM", // 194
     "LACZNOSC", // 195
     "Automat. sortowanie AF", // 196
-    "Stationlist ID", // 197
-    "AM ATT", // 198
-    "FM deemphasis", // 199
-    "Small", // 200
-    "Large", // 201
-    "All" // 202
+    "Identyfikator Stationlist", // 197
+    "Tlumik ant. AM", // 198
+    "Deemfaza FM", // 199
+    "Male", // 200
+    "Duze", // 201
+    "Wszystkie" // 202
   },
 
   { "Hrvatski", // Croatian
