@@ -136,7 +136,7 @@ static const char* const myLanguage[16][203] = {
     "Scene", // 132
     "Cinema", // 133
     "TV", // 134
-    "Date/time", //135
+    "Date/time", // 135
     "Weather", // 136
     "Traffic", // 137
     "Alarm", // 138
@@ -146,7 +146,7 @@ static const char* const myLanguage[16][203] = {
     "Short PS", // 142
     "Long PS", // 143
     "Now", // 144
-    "Next", //145
+    "Next", // 145
     "Part", // 146
     "Host", // 147
     "Editor", // 148
@@ -341,7 +341,7 @@ static const char* const myLanguage[16][203] = {
     "Scene", // 132
     "Bioscoop", // 133
     "TV", // 134
-    "Datum/tijd", //135
+    "Datum/tijd", // 135
     "Weer", // 136
     "Verkeer", // 137
     "Alarm", // 138
@@ -351,7 +351,7 @@ static const char* const myLanguage[16][203] = {
     "Korte naam", // 142
     "Lange naam", // 143
     "Nu", // 144
-    "Straks", //145
+    "Straks", // 145
     "Deel", // 146
     "Host", // 147
     "Regiseur", // 148
@@ -546,7 +546,7 @@ static const char* const myLanguage[16][203] = {
     "Scena", // 132
     "Kino", // 133
     "TV", // 134
-    "Data/Godzina", //135
+    "Data/Godzina", // 135
     "Pogoda", // 136
     "Wiadom. drogowe", // 137
     "Alarm", // 138
@@ -556,7 +556,7 @@ static const char* const myLanguage[16][203] = {
     "Krotki PS", // 142
     "Dlugi PS", // 143
     "Teraz", // 144
-    "Nastepnie", //145
+    "Nastepnie", // 145
     "Czesc", // 146
     "Prowadzacy", // 147
     "Wydawca", // 148
@@ -751,7 +751,7 @@ static const char* const myLanguage[16][203] = {
     "Scena", // 132
     "Kino", // 133
     "TV", // 134
-    "Datum/vrijeme", //135
+    "Datum/vrijeme", // 135
     "Vremenska prognoza", // 136
     "Promet", // 137
     "Alarm", // 138
@@ -761,7 +761,7 @@ static const char* const myLanguage[16][203] = {
     "Kratki PS", // 142
     "Dugi PS", // 143
     "Sada", // 144
-    "Sljedi", //145
+    "Sljedi", // 145
     "Dio", // 146
     "Voditelj", // 147
     "Urednik", // 148
@@ -956,7 +956,7 @@ static const char* const myLanguage[16][203] = {
     "Σκηνή", // 132
     "Σινεμά", // 133
     "TV", // 134
-    "Ημερομηνία/ώρα", //135
+    "Ημερομηνία/ώρα", // 135
     "Καιρός", // 136
     "Κυκλοφορία", // 137
     "Συναγερμός", // 138
@@ -966,7 +966,7 @@ static const char* const myLanguage[16][203] = {
     "Σύντομο PS", // 142
     "Μακρύ PS", // 143
     "Τώρα", // 144
-    "Στη συνέχεια", //145
+    "Στη συνέχεια", // 145
     "Μέρος", // 146
     "Παρουσιαστής", // 147
     "Συντάκτης", // 148
@@ -1161,7 +1161,7 @@ static const char* const myLanguage[16][203] = {
     "Scene", // 132
     "Cinema", // 133
     "TV", // 134
-    "Date/time", //135
+    "Date/time", // 135
     "Weather", // 136
     "Traffic", // 137
     "Alarm", // 138
@@ -1171,7 +1171,7 @@ static const char* const myLanguage[16][203] = {
     "Short PS", // 142
     "Long PS", // 143
     "Now", // 144
-    "Next", //145
+    "Next", // 145
     "Part", // 146
     "Host", // 147
     "Editor", // 148
@@ -1289,7 +1289,7 @@ static const char* const myLanguage[16][203] = {
     "Verb.versuch zu WLAN", // 55
     "FEHLER! WLAN deaktiviert", // 56
     "VERBUNDEN!", // 57
-    "Stationlist Client IP", // 58
+    "Stationlist Rechner IP", // 58
     "Zeige KW-Wellenlänge", // 59
     "RDS-Filter", // 60
     "Zeige PI Fehler", // 61
@@ -1338,7 +1338,7 @@ static const char* const myLanguage[16][203] = {
     "KW", // 104
     "UKW", // 105
     "OIRT", // 106
-    "Rotating while screen off", // 107
+    "Rotieren bei Bildschirm aus", // 107
     "Modell auswählen", // 108
     "Basismodell (ILI9341)", // 109
     "Portabel (ILI9341)", // 110
@@ -1366,7 +1366,7 @@ static const char* const myLanguage[16][203] = {
     "Szene", // 132
     "Kino", // 133
     "TV", // 134
-    "Tag/Uhrzeit", //135
+    "Tag/Uhrzeit", // 135
     "Wetter", // 136
     "Verkehr", // 137
     "Alarm", // 138
@@ -1376,7 +1376,7 @@ static const char* const myLanguage[16][203] = {
     "Kurzer PS", // 142
     "Langer PS", // 143
     "Es läuft", // 144
-    "Es folgt", //145
+    "Es folgt", // 145
     "Thema", // 146
     "Am Mikrofon", // 147
     "Redaktion", // 148
@@ -1399,7 +1399,7 @@ static const char* const myLanguage[16][203] = {
     "Termin", // 165
     "Musik-ID", // 166
     "Bezugsquelle", // 167
-    "Get data", // 168
+    "Empfange Daten", // 168
     " ", // 169
     "Tangerine", // 170
     "Ocean", // 171
@@ -1408,32 +1408,32 @@ static const char* const myLanguage[16][203] = {
     "Zeige Spannung", // 174
     "Zeige Prozente", // 175
     "RT puffern", // 176
-    "Main settings", // 177
+    "Haupteinstellungen", // 177
     "Audioeinstellungen", // 178
     "Displayeinstellung", // 179
     "RDS Einstellungen", // 180
     "UKW Einstellungen", // 181
     "AM Einstellungen", // 182
-    "Vernetzung", // 183
+    "Netzwerk", // 183
     "DRÜCKE MODE FÜR ZURÜCK", // 184
     "AM CoChannelDet", // 185
-    "CoChannelDet sensitivity", // 186
-    "AM CoChannelDet threshold", // 187
+    "CoChannelDet Empfindlichkeit", // 186
+    "AM CoChannelDet Threshold", // 187
     "CoChannelDet counter", // 188
-    "MAIN", // 189
+    "HAUPT", // 189
     "AUDIO", // 190
-    "DISPLAY", // 191
+    "ANZEIGE", // 191
     "RDS", // 192
-    "FM", // 193
+    "UKW", // 193
     "AM", // 194
-    "CONNECT", // 195
-    "Auto sort AF", // 196
+    "NETZ", // 195
+    "AF Autosortierung", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemphasis", // 199
-    "Small", // 200
-    "Large", // 201
-    "All" // 202
+    "UKW Deemphasis", // 199
+    "Gering", // 200
+    "Groß", // 201
+    "Alles" // 202
   },
 
   { "Czech", // Czech
@@ -1571,7 +1571,7 @@ static const char* const myLanguage[16][203] = {
     "Scene", // 132
     "Cinema", // 133
     "TV", // 134
-    "Date/time", //135
+    "Date/time", // 135
     "Weather", // 136
     "Traffic", // 137
     "Alarm", // 138
@@ -1581,7 +1581,7 @@ static const char* const myLanguage[16][203] = {
     "Short PS", // 142
     "Long PS", // 143
     "Now", // 144
-    "Next", //145
+    "Next", // 145
     "Part", // 146
     "Host", // 147
     "Editor", // 148
@@ -1776,7 +1776,7 @@ static const char* const myLanguage[16][203] = {
     "Scene", // 132
     "Cinema", // 133
     "TV", // 134
-    "Date/time", //135
+    "Date/time", // 135
     "Weather", // 136
     "Traffic", // 137
     "Alarm", // 138
@@ -1786,7 +1786,7 @@ static const char* const myLanguage[16][203] = {
     "Short PS", // 142
     "Long PS", // 143
     "Now", // 144
-    "Next", //145
+    "Next", // 145
     "Part", // 146
     "Host", // 147
     "Editor", // 148
@@ -1991,7 +1991,7 @@ static const char* const myLanguage[16][203] = {
     "PS court", // 142
     "PS long", // 143
     "Maintenant", // 144
-    "Suivant", //145
+    "Suivant", // 145
     "Partie", // 146
     "Hôte", // 147
     "Rédacteur", // 148
@@ -2186,7 +2186,7 @@ static const char* const myLanguage[16][203] = {
     "Scene", // 132
     "Cinema", // 133
     "TV", // 134
-    "Date/time", //135
+    "Date/time", // 135
     "Weather", // 136
     "Traffic", // 137
     "Alarm", // 138
@@ -2196,7 +2196,7 @@ static const char* const myLanguage[16][203] = {
     "Short PS", // 142
     "Long PS", // 143
     "Now", // 144
-    "Next", //145
+    "Next", // 145
     "Part", // 146
     "Host", // 147
     "Editor", // 148
@@ -2801,7 +2801,7 @@ static const char* const myLanguage[16][203] = {
     "Scene", // 132
     "Cinema", // 133
     "TV", // 134
-    "Date/time", //135
+    "Date/time", // 135
     "Weather", // 136
     "Traffic", // 137
     "Alarm", // 138
@@ -2811,7 +2811,7 @@ static const char* const myLanguage[16][203] = {
     "Short PS", // 142
     "Long PS", // 143
     "Now", // 144
-    "Next", //145
+    "Next", // 145
     "Part", // 146
     "Host", // 147
     "Editor", // 148
@@ -3006,7 +3006,7 @@ static const char* const myLanguage[16][203] = {
     "Scene", // 132
     "Cinema", // 133
     "TV", // 134
-    "Date/time", //135
+    "Date/time", // 135
     "Weather", // 136
     "Traffic", // 137
     "Alarm", // 138
@@ -3016,7 +3016,7 @@ static const char* const myLanguage[16][203] = {
     "Short PS", // 142
     "Long PS", // 143
     "Now", // 144
-    "Next", //145
+    "Next", // 145
     "Part", // 146
     "Host", // 147
     "Editor", // 148
@@ -3211,7 +3211,7 @@ static const char* const myLanguage[16][203] = {
     "Scene", // 132
     "Kino", // 133
     "TV", // 134
-    "Dato/tid", //135
+    "Dato/tid", // 135
     "Vær", // 136
     "Trafikk", // 137
     "Alarm", // 138
@@ -3221,7 +3221,7 @@ static const char* const myLanguage[16][203] = {
     "Kort PS", // 142
     "Lang PS", // 143
     "Nå", // 144
-    "Neste", //145
+    "Neste", // 145
     "Del", // 146
     "Vert", // 147
     "Redaktør", // 148
