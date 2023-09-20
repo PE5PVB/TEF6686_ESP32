@@ -3275,10 +3275,10 @@ static const char* const myLanguage[16][203] = {
     "Auto sort AF", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemphasis", // 199
-    "Small", // 200
-    "Large", // 201
-    "All" // 202
+    "FM ettertrykkelse", // 199
+    "Lite", // 200
+    "Mye", // 201
+    "Alt" // 202
   }
 };
 
