@@ -3045,17 +3045,17 @@ void EdgeBeeper() {
 }
 
 void Seek(bool mode) {
-  if (band < BAND_GAP) {
-    radio.setMute();
-    if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
-    if (!mode) TuneDown(); else TuneUp();
-    delay(50);
-    ShowFreq(0);
-    if (XDRGTKUSB || XDRGTKTCP) {
-      if (band == BAND_FM) DataPrint("T" + String(frequency * 10) + "\n"); else DataPrint("T" + String(frequency_AM) + "\n");
-    }
-    radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+  radio.setMute();
+  if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
+  if (!mode) TuneDown(); else TuneUp();
+  delay(50);
+  ShowFreq(0);
+  if (XDRGTKUSB || XDRGTKTCP) {
+    if (band == BAND_FM) DataPrint("T" + String(frequency * 10) + "\n"); else DataPrint("T" + String(frequency_AM) + "\n");
+  }
 
+  if (band < BAND_GAP) {
+    radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
     if ((USN < 200) && (WAM < 230) && (OStatus < 80 && OStatus > -80) && (Squelch < SStatus || Squelch == 920)) {
       seek = false;
       radio.setUnMute();
@@ -3065,6 +3065,16 @@ void Seek(bool mode) {
       seek = true;
       if (RDSSPYUSB) Serial.print("G:\r\nRESET-------\r\n\r\n");
       if (RDSSPYTCP) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
+    }
+  } else {
+    radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+    if ((USN < 100) && (OStatus < 2 && OStatus > -2) && (Squelch < SStatus || Squelch == 920)) {
+      seek = false;
+      radio.setUnMute();
+      if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+      store = true;
+    } else {
+      seek = true;
     }
   }
 }
