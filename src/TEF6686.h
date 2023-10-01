@@ -275,9 +275,6 @@ class TEF6686 {
     bool ABold;
     bool afreset;
     char stationTextBuffer[65];
-    uint16_t rdsBprevious;
-    uint16_t rdsCprevious;
-    uint16_t rdsDprevious;
     uint16_t piold;
     bool rtABold;
     bool rtAB32old;
