@@ -220,11 +220,13 @@ void TEF6686::setVolume(int8_t volume) {
 
 void TEF6686::setMute() {
   mute = true;
+  if (mpxmode) devTEF_Radio_Specials(0);
   devTEF_Audio_Set_Mute(1);
 }
 
 void TEF6686::setUnMute() {
   mute = false;
+  if (mpxmode) devTEF_Radio_Specials(1);
   devTEF_Audio_Set_Mute(0);
 }
 
@@ -243,6 +245,7 @@ void TEF6686::setDeemphasis(uint8_t timeconstant) {
 
 void TEF6686::setAudio(uint8_t audio) {
   devTEF_Radio_Specials(audio);
+  if (audio == 0) mpxmode = false; else mpxmode = true;
 }
 
 void TEF6686::setFMSI(uint8_t mode) {

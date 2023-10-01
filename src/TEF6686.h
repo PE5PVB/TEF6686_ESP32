@@ -274,6 +274,7 @@ class TEF6686 {
     bool useRTPlus = true;
     bool ABold;
     bool afreset;
+	bool mpxmode;
     char stationTextBuffer[65];
     uint16_t piold;
     bool rtABold;
