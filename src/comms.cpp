@@ -17,24 +17,37 @@ void Communication() {
         } else {
           int symPos = packet.indexOf("freq=");
           String stlfreq = packet.substring(symPos + 5, packetSize);
+
           if ((stlfreq.toInt()) / 10000 > 6500 && (stlfreq.toInt()) / 10000 < 10800) {
-            if (band != BAND_FM) {
-              band = BAND_FM;
-              SelectBand();
-            }
             frequency = (stlfreq.toInt()) / 10000;
+            if (frequency >= FREQ_FM_OIRT_START && frequency <= FREQ_FM_OIRT_END && band != BAND_OIRT) {
+              band = BAND_OIRT;
+              SelectBand();
+            } else {
+              if (band != BAND_FM) {
+                band = BAND_FM;
+                SelectBand();
+              }
+            }
             radio.SetFreq(frequency);
           }
 
-          // To Do: AM
-          //          if ((stlfreq.toInt()) / 1000 > 144 && (stlfreq.toInt()) / 1000 < 27000) {
-          //            if (band != 5) {
-          //              band = 5;
-          //            SelectBand();
-          //            }
-          //            frequency5 = (stlfreq.toInt()) / 1000;
-          //            radio.SetFreqAM(frequency5);
-          //          }
+          if ((stlfreq.toInt()) / 1000 > 144 && (stlfreq.toInt()) / 1000 < 27000) {
+            frequency_AM = (stlfreq.toInt()) / 1000;
+            if (frequency_AM >= FREQ_LW_LOW_EDGE_MIN && frequency_AM <= FREQ_LW_HIGH_EDGE_MAX && band != BAND_LW) {
+              band = BAND_LW;
+              SelectBand();
+            } else if (frequency_AM >= FREQ_MW_LOW_EDGE_MIN_9K && frequency_AM <= FREQ_MW_HIGH_EDGE_MAX_9K && band != BAND_MW) {
+              band = BAND_MW;
+              SelectBand();
+            } else {
+              if (band != BAND_SW) {
+                band = BAND_SW;
+                SelectBand();
+              }
+            }
+            radio.SetFreqAM(frequency_AM);
+          }
           radio.clearRDS(fullsearchrds);
           ShowFreq(0);
           store = true;
@@ -411,7 +424,7 @@ void XDRGTKRoutine() {
           }
           frequencyold = frequency;
           for (freq_scan = scanner_start; freq_scan <= scanner_end; freq_scan += scanner_step) {
-			radio.SetFreq(freq_scan);
+            radio.SetFreq(freq_scan);
             DataPrint(String(freq_scan * 10, DEC));
             DataPrint(" = ");
             if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN); else  radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
