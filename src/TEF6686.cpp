@@ -492,6 +492,7 @@ void TEF6686::readRDS(byte showrdserrors)
 
             if (offset == 3 && ps_process) {                                                  // Last chars are received
               if (ps_buffer != ps_buffer2) {                                                  // When difference between old and new, let's go...
+                for (byte i = 0; i < 9; i++) PStext[i] = L'\0';                               // Clear old PStext before converting
                 RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), true);  // Convert 8 bit ASCII to 16 bit ASCII
                 String utf8String = convertToUTF8(PStext);                                    // Convert RDS characterset to ASCII
                 rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);               // Make sure PS does not exceed 8 characters
