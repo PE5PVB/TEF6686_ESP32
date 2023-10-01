@@ -603,7 +603,6 @@ void TEF6686::readRDS(byte showrdserrors)
         } break;
 
       case RDS_GROUP_1A: {
-          Serial.println(rds.rdsC >> 12);
           if (!rdsCerrorThreshold) {
             if (rds.rdsC >> 12 == 0) {                                                          // ECC code readout
               rds.ECC = rds.rdsC & 0xff;
