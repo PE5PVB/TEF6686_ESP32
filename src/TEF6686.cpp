@@ -474,10 +474,7 @@ void TEF6686::readRDS(byte showrdserrors)
       rds.picode[6] = '\0';
     }
 
-    // TP Indicator
-    rds.hasTP = (bitRead(rds.rdsB, 10));
-
-    if (!rdsBerrorThreshold) rdsblock = rds.rdsB >> 11; else return;
+    if (!rds.rdsBerror || showrdserrors == 3) rdsblock = rds.rdsB >> 11; else return;
     switch (rdsblock) {
       case RDS_GROUP_0A:
       case RDS_GROUP_0B:
@@ -528,6 +525,9 @@ void TEF6686::readRDS(byte showrdserrors)
             //MS decoder
             if (((bitRead(rds.rdsB, 3)) & 0x1F) == 1) rds.MS = 1; else rds.MS = 2;            // Read MS flag
           }
+
+          // TP Indicator
+          rds.hasTP = (bitRead(rds.rdsB, 10));
 
           if (!rdsCerrorThreshold) {
             //AF decoder
