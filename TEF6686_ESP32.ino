@@ -119,6 +119,8 @@ byte batteryold;
 byte batteryoptions;
 byte batteryoptionsold;
 byte BWset;
+byte BWsetAM;
+byte BWsetFM;
 #ifdef CHINA_PORTABLE
 byte hardwaremodel = PORTABLE_ILI9341;
 #else
@@ -416,6 +418,8 @@ void setup() {
   radio.rds.sortaf = EEPROM.readByte(EE_BYTE_SORTAF);
   stationlistid = EEPROM.readByte(EE_BYTE_STATIONLISTID);
   fmdeemphasis = EEPROM.readByte(EE_BYTE_FM_DEEMPHASIS);
+  BWsetFM = EEPROM.readByte(EE_BYTE_BWSET_FM);
+  BWsetAM = EEPROM.readByte(EE_BYTE_BWSET_AM);
 
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;   // later will read from flash
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX; // later will read from flash
@@ -1617,7 +1621,7 @@ void SelectBand() {
     seek = false;
     if (tunemode == TUNE_MI_BAND && band != BAND_SW) tunemode = TUNE_MAN;
     BWreset = true;
-    BWset = 2;
+    BWset = BWsetAM;
     if (band == BAND_LW) freqold = frequency_LW;
     if (band == BAND_MW) freqold = frequency_MW;
     if (band == BAND_SW) freqold = frequency_SW;
@@ -1651,7 +1655,7 @@ void SelectBand() {
     PTYold = "";
     RTold = "";
     BWreset = true;
-    BWset = 0;
+    BWset = BWsetFM;
     radio.clearRDS(fullsearchrds);
     freqold = frequency_AM;
     CheckBandForbiddenFM();
@@ -2695,6 +2699,8 @@ void doBW() {
       case 15: radio.setFMBandw(287); break;
       case 16: radio.setFMBandw(311); break;
     }
+    BWsetFM = BWset;
+    EEPROM.writeByte(EE_BYTE_BWSET_FM, BWsetFM);
   } else {
     if (BWset > 4) BWset = 1;
 
@@ -2704,9 +2710,12 @@ void doBW() {
       case 3: radio.setAMBandw(6); break;
       case 4: radio.setAMBandw(8); break;
     }
+    BWsetAM = BWset;
+    EEPROM.writeByte(EE_BYTE_BWSET_AM, BWsetAM);
   }
   updateBW();
   BWreset = true;
+  EEPROM.commit();
 }
 
 void doTuneMode() {
@@ -3215,6 +3224,8 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_SORTAF, 1);
   EEPROM.writeByte(EE_BYTE_STATIONLISTID, 1);
   EEPROM.writeByte(EE_BYTE_FM_DEEMPHASIS, DEEMPHASIS_50);
+  EEPROM.writeByte(EE_BYTE_BWSET_FM, 0);
+  EEPROM.writeByte(EE_BYTE_BWSET_AM, 2);
   EEPROM.commit();
 }
 
