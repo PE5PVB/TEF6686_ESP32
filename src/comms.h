@@ -10,6 +10,8 @@
 #include "WiFiConnect.h"
 #include "WiFiConnectParam.h"
 
+extern bool advancedRDS;
+extern bool afscreen;
 extern bool aftest;
 extern bool BWreset;
 extern bool direction;
@@ -76,7 +78,11 @@ extern uint8_t buff_pos;
 extern int8_t CN;
 extern unsigned int freq_scan;
 extern unsigned int frequency;
+extern unsigned int frequency_OIRT;
+extern unsigned int frequency_LW;
 extern unsigned int frequency_AM;
+extern unsigned int frequency_MW;
+extern unsigned int frequency_SW;
 extern unsigned int frequencyold;
 extern unsigned int LWHighEdgeSet;
 extern unsigned int LWLowEdgeSet;
@@ -106,7 +112,9 @@ extern void ShowFreq(int mode);
 extern void SelectBand();
 extern void doBW();
 extern void BuildDisplay();
+extern void BuildAdvancedRDS();
 extern void ModeButtonPress();
+extern void ScreensaverTimerReopen();
 extern void Seek(bool mode);
 extern void doStereoToggle();
 extern void MuteScreen(bool setting);

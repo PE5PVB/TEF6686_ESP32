@@ -41,7 +41,7 @@
 #include "ARS_Colors.h"
 TFT_eSPI tft = TFT_eSPI(320, 240);
 #else
-#define VERSION         "v2.00"
+#define VERSION         "v2.00 development beta"
 TFT_eSPI tft = TFT_eSPI(240, 320);
 #endif
 

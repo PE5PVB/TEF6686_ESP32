@@ -17,7 +17,7 @@ void Communication() {
         } else {
           int symPos = packet.indexOf("freq=");
           String stlfreq = packet.substring(symPos + 5, packetSize);
-
+          if (afscreen) BuildAdvancedRDS();
           if ((stlfreq.toInt()) / 10000 > 6500 && (stlfreq.toInt()) / 10000 < 10800) {
             frequency = (stlfreq.toInt()) / 10000;
             if (frequency >= FREQ_FM_OIRT_START && frequency <= FREQ_FM_OIRT_END && band != BAND_OIRT) {
@@ -29,19 +29,31 @@ void Communication() {
                 SelectBand();
               }
             }
-            radio.SetFreq(frequency);
+            if (band == BAND_OIRT) {
+              frequency_OIRT = frequency;
+              radio.SetFreq(frequency_OIRT);
+            } else {
+              radio.SetFreq(frequency);
+            }
           }
 
           if ((stlfreq.toInt()) / 1000 > 144 && (stlfreq.toInt()) / 1000 < 27000) {
+            if (afscreen || advancedRDS) {
+              BuildDisplay();
+              ScreensaverTimerReopen();
+            }
             frequency_AM = (stlfreq.toInt()) / 1000;
             if (frequency_AM >= FREQ_LW_LOW_EDGE_MIN && frequency_AM <= FREQ_LW_HIGH_EDGE_MAX && band != BAND_LW) {
               band = BAND_LW;
+              frequency_LW = frequency_AM;
               SelectBand();
             } else if (frequency_AM >= FREQ_MW_LOW_EDGE_MIN_9K && frequency_AM <= FREQ_MW_HIGH_EDGE_MAX_9K && band != BAND_MW) {
               band = BAND_MW;
+              frequency_MW = frequency_AM;
               SelectBand();
             } else {
               if (band != BAND_SW) {
+                frequency_SW = frequency_AM;
                 band = BAND_SW;
                 SelectBand();
               }
@@ -137,6 +149,7 @@ void Communication() {
         freq = freq.substring(0, freq.length() - 1);
         frequency = freq.toInt();
         radio.SetFreq(frequency);
+        if (afscreen) BuildAdvancedRDS();
         radio.clearRDS(fullsearchrds);
         if (band != BAND_FM) {
           band = BAND_FM;
@@ -315,6 +328,7 @@ void XDRGTKRoutine() {
         if (seek) seek = false;
         if (freqtemp >= LWLowEdgeSet && freqtemp <= LWHighEdgeSet) {
           frequency_AM = freqtemp;
+          if (afscreen || advancedRDS) BuildDisplay();
           if (band != BAND_LW) {
             band = BAND_LW;
             SelectBand();
@@ -324,6 +338,7 @@ void XDRGTKRoutine() {
         }
         if (freqtemp >= MWLowEdgeSet && freqtemp <= MWHighEdgeSet) {
           frequency_AM = freqtemp;
+          if (afscreen || advancedRDS) BuildDisplay();
           if (band != BAND_MW) {
             band = BAND_MW;
             SelectBand();
@@ -333,6 +348,7 @@ void XDRGTKRoutine() {
         }
         if (freqtemp >= SWLowEdgeSet && freqtemp <= SWHighEdgeSet) {
           frequency_AM = freqtemp;
+          if (afscreen || advancedRDS) BuildDisplay();
           if (band != BAND_SW) {
             band = BAND_SW;
             SelectBand();
@@ -342,6 +358,7 @@ void XDRGTKRoutine() {
         }
         if (freqtemp >= FREQ_FM_START && freqtemp <= FREQ_FM_END) {
           frequency = freqtemp / 10;
+          if (afscreen) BuildAdvancedRDS();
           if (band != BAND_FM) {
             band = BAND_FM;
             SelectBand();
