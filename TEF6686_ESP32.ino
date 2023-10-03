@@ -2598,13 +2598,13 @@ void updateBW() {
 void updateiMS() {
   if (band < BAND_GAP) {
     if (iMSset == 0) {
-      if (!screenmute) {
+      if (!screenmute && !advancedRDS && !afscreen) {
         tft.drawRoundRect(248, 56, 32, 20, 5, ActiveColor);
         tftPrint(0, "iMS", 265, 59, ActiveColor, ActiveColorSmooth, 16);
       }
       radio.setiMS(1);
     } else {
-      if (!screenmute) {
+      if (!screenmute && !advancedRDS && !afscreen) {
         tft.drawRoundRect(248, 56, 32, 20, 5, GreyoutColor);
         tftPrint(0, "iMS", 265, 59, GreyoutColor, BackgroundColor, 16);
       }
@@ -2616,13 +2616,13 @@ void updateiMS() {
 void updateEQ() {
   if (band < BAND_GAP) {
     if (EQset == 0) {
-      if (!screenmute) {
+      if (!screenmute && !advancedRDS && !afscreen) {
         tft.drawRoundRect(286, 56, 32, 20, 5, ActiveColor);
         tftPrint(0, "EQ", 303, 59, ActiveColor, ActiveColorSmooth, 16);
       }
       radio.setEQ(1);
     } else {
-      if (!screenmute) {
+      if (!screenmute && !advancedRDS && !afscreen) {
         tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
         tftPrint(0, "EQ", 303, 59, GreyoutColor, BackgroundColor, 16);
       }
