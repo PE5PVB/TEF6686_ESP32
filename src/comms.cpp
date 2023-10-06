@@ -205,6 +205,7 @@ void XDRGTKRoutine() {
         break;
 
       case 'C':
+        if (afscreen || advancedRDS) BuildDisplay();
         byte scanmethod;
         scanmethod = atol(buff + 1);
         if (scanmethod == 1) {
