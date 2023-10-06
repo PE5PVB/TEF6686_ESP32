@@ -2722,8 +2722,11 @@ void doTuneMode() {
   switch (tunemode) {
     case TUNE_MAN:
       if (band == BAND_SW) {
-        if (showSWMIBand && nowToggleSWMIBand) tunemode = TUNE_MI_BAND;
-        else tunemode = TUNE_AUTO;
+        if (showSWMIBand && nowToggleSWMIBand) {
+          tunemode = TUNE_MI_BAND;
+        } else {
+          tunemode = TUNE_AUTO;
+        }
       } else {
         tunemode = TUNE_AUTO;
       }
@@ -2733,6 +2736,7 @@ void doTuneMode() {
         ShowStepSize();
       }
       break;
+      
     case TUNE_MI_BAND:
     case TUNE_AUTO:
       tunemode = TUNE_MEM;
@@ -2754,12 +2758,10 @@ void ShowTuneMode() {
     case TUNE_MAN:
       if (band == BAND_SW && nowToggleSWMIBand) {
         tftPrint(0, "AUTO", 22, 60, BackgroundColor, BackgroundColor, 16);
-
         tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
         tftPrint(0, "BAND", 22, 60, GreyoutColor, BackgroundColor, 16);
       } else {
         tftPrint(0, "BAND", 22, 60, BackgroundColor, BackgroundColor, 16);
-
         tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
         tftPrint(0, "AUTO", 22, 60, GreyoutColor, BackgroundColor, 16);
       }

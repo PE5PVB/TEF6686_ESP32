@@ -618,6 +618,8 @@ void TEF6686::readRDS(byte showrdserrors)
             }
           }
 
+          if (rds.rdsC >> 12 == 1) rds.hasTMC = true;                                           // TMC flag
+
           if (!rdsDerrorThreshold) {
             if (rds.rdsD != 0) {                                                                // PIN decoder
               rds.hasPIN = true;
@@ -812,7 +814,7 @@ void TEF6686::readRDS(byte showrdserrors)
             rds.RTContent2 = convertToUTF8(RTtext2);                                                        // Convert RDS characterset to ASCII
             rds.RTContent2 = extractUTF8Substring(rds.RTContent2, 0, 44, false);                            // Make sure RT does not exceed 32 characters
           }
-          if (!rdsBerrorThreshold && rdsblock == 16 && (rds.rdsB & (1 << 4))) rds.hasTMC = true;                  // TMC flag
+          if (!rdsBerrorThreshold && rdsblock == 16 && (bitRead(rds.rdsB, 15))) rds.hasTMC = true;          // TMC flag
         }
         break;
 
