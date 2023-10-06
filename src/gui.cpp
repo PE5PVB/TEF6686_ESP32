@@ -557,7 +557,7 @@ void BuildMenu() {
       if (USBmode) tftPrint(1, "RDS Spy", 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, "XDRGTK", 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (wifi) tftPrint(1, myLanguage[language][42], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       tftPrint(1, ">", 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (wifi) tftPrint(1, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, "-", 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       tftPrint(1, String(stationlistid, DEC), 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       break;
 
@@ -2251,8 +2251,13 @@ void DoMenu() {
             } break;
 
           case ITEM4:
-            tftPrint(0, myLanguage[language][58], 155, 78, ActiveColor, ActiveColorSmooth, 28);
-            tftPrint(0, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            if (wifi) {
+              tftPrint(0, myLanguage[language][58], 155, 78, ActiveColor, ActiveColorSmooth, 28);
+              tftPrint(0, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            } else {
+              menuopen = false;
+              BuildMenu();
+            }
             break;
 
           case ITEM5:
