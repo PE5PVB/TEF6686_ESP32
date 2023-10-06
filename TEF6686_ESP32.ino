@@ -506,12 +506,20 @@ void setup() {
   sprite3.setTextDatum(TL_DATUM);
   sprite4.setTextDatum(TL_DATUM);
   sprite5.setTextDatum(TL_DATUM);
-  sprite.loadFont(FONT16);
   sprite1.loadFont(FREQFONT);
-  sprite2.loadFont(FONT16);
-  sprite3.loadFont(FONT16);
-  sprite4.loadFont(FONT16);
-  sprite5.loadFont(FONT16);
+  if (language == LANGUAGE_CHS) {
+    sprite.loadFont(FONT16_CHS);
+    sprite2.loadFont(FONT16_CHS);
+    sprite3.loadFont(FONT16_CHS);
+    sprite4.loadFont(FONT16_CHS);
+    sprite5.loadFont(FONT16_CHS);
+  } else {
+    sprite.loadFont(FONT16);
+    sprite2.loadFont(FONT16);
+    sprite3.loadFont(FONT16);
+    sprite4.loadFont(FONT16);
+    sprite5.loadFont(FONT16);
+  }
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH) {
     if (rotarymode == 0) rotarymode = 1; else rotarymode = 0;
@@ -1825,6 +1833,24 @@ void ModeButtonPress() {
         Serial.end();
         if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
         if (USBmode) Serial.begin(19200); else Serial.begin(115200);
+        sprite.unloadFont();
+        sprite2.unloadFont();
+        sprite3.unloadFont();
+        sprite4.unloadFont();
+        sprite5.unloadFont();
+        if (language == LANGUAGE_CHS) {
+          sprite.loadFont(FONT16_CHS);
+          sprite2.loadFont(FONT16_CHS);
+          sprite3.loadFont(FONT16_CHS);
+          sprite4.loadFont(FONT16_CHS);
+          sprite5.loadFont(FONT16_CHS);
+        } else {
+          sprite.loadFont(FONT16);
+          sprite2.loadFont(FONT16);
+          sprite3.loadFont(FONT16);
+          sprite4.loadFont(FONT16);
+          sprite5.loadFont(FONT16);
+        }
         doBandSelectionFM();
         doBandSelectionAM();
         ScreensaverTimerSet(screensaverOptions[screensaverset]);
@@ -2736,7 +2762,7 @@ void doTuneMode() {
         ShowStepSize();
       }
       break;
-      
+
     case TUNE_MI_BAND:
     case TUNE_AUTO:
       tunemode = TUNE_MEM;
