@@ -2239,6 +2239,8 @@ void ShowFreq(int mode) {
   afstringold = "";
   rds_clockold = "";
   rdsreset = true;
+  ECCold = 254;
+  licold = 254;
   sprite.fillSprite(BackgroundColor);
   sprite2.fillSprite(BackgroundColor);
   if (!screenmute) {
