@@ -2889,8 +2889,11 @@ void ShowBattery() {
         tft.drawRoundRect(277, 6, 37, 20, 2, ActiveColor);
         tft.fillRoundRect(313, 13, 4, 6, 2, ActiveColor);
       }
-      tft.fillRoundRect(279, 8, 33, 16, 2, BackgroundColor);
-      if (batteryoptions != BATTERY_VALUE && batteryoptions != BATTERY_PERCENT) tft.fillRoundRect(279, 8, (battery * 8) , 16, 2, BarInsignificantColor);
+      if (batteryoptions != BATTERY_VALUE && batteryoptions != BATTERY_PERCENT && battery != 0) {
+        tft.fillRoundRect(279, 8, (battery * 8) , 16, 2, BarInsignificantColor);
+      } else {
+        tft.fillRoundRect(279, 8, 33, 16, 2, BackgroundColor);
+      }
     } else {
       tft.drawRoundRect(277, 6, 37, 20, 2, GreyoutColor);
       tft.fillRoundRect(313, 13, 4, 6, 2, GreyoutColor);
