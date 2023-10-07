@@ -3071,9 +3071,9 @@ static const char* const myLanguage[16][203] = {
     "Stationlist ID", // 197
     "AM天线衰减", // 198
     "FM去加重", // 199
-    "Small", // 200
-    "Large", // 201
-    "All" // 202
+    "少量", // 200
+    "大量", // 201
+    "全部" // 202
   },
 
   { "Norsk", // Norwegian
