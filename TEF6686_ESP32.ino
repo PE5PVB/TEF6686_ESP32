@@ -917,12 +917,11 @@ void GetData() {
   if (band < BAND_GAP) {
     if (advancedRDS && !afscreen && !screenmute) ShowAdvancedRDS();
     if (afscreen && !screenmute) ShowAFEON();
-    if (!afscreen)
-    {
+    if (!afscreen) {
       showPTY();
-      if (millis() >= tuningtimer + 200) doAF();
-      if (millis() >= tuningtimer + 200) showECC();
+      showECC();
       showRadioText();
+      if (millis() >= tuningtimer + 200) doAF();
     }
     showPI();
     showPS();
