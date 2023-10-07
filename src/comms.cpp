@@ -560,24 +560,30 @@ void passwordcrypt() {
 }
 
 void tryWiFi() {
-  if (!setupmode) {
+  if (!setupmode && wifi) {
     tft.drawRoundRect(1, 60, 319, 140, 5, ActiveColor);
     tft.fillRoundRect(3, 62, 315, 136, 5, BackgroundColor);
     tftPrint(0, myLanguage[language][55], 155, 88, ActiveColor, ActiveColorSmooth, 28);
   }
-  if (wc.autoConnect()) {
-    Server.begin();
-    Udp.begin(9031);
-    remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
-    if (!setupmode) tftPrint(0, myLanguage[language][57], 155, 128, InsignificantColor, InsignificantColorSmooth, 28);
-    wifi = true;
+  if (wifi) {
+    if (wc.autoConnect()) {
+      Server.begin();
+      Udp.begin(9031);
+      remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
+      if (!setupmode) tftPrint(0, myLanguage[language][57], 155, 128, InsignificantColor, InsignificantColorSmooth, 28);
+      wifi = true;
+    } else {
+      if (!setupmode) tftPrint(0, myLanguage[language][56], 155, 128, SignificantColor, SignificantColorSmooth, 28);
+      Server.end();
+      Udp.stop();
+      WiFi.mode(WIFI_OFF);
+      wifi = false;
+      XDRGTKTCP = false;
+      RDSSPYTCP = false;
+    }
   } else {
-    if (!setupmode) tftPrint(0, myLanguage[language][56], 155, 128, SignificantColor, SignificantColorSmooth, 28);
     Server.end();
     Udp.stop();
     WiFi.mode(WIFI_OFF);
-    wifi = false;
-    XDRGTKTCP = false;
-    RDSSPYTCP = false;
   }
 }
