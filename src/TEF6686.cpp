@@ -735,9 +735,11 @@ void TEF6686::readRDS(byte showrdserrors)
             rds.minute = (rds.rdsD >> 6) & 0x3f;
             rds.offsetplusmin = bitRead(rds.rdsD, 5);
             rds.offset = (rds.rdsD & 0x3f);
-            rds.hasCT = true;
-            setTime(rds.hour, rds.minute, 0, rds.day, rds.month, rds.year);
-            adjustTime((((rds.offsetplusmin ? -rds.offset : rds.offset) / 2) * 3600));
+            if (minute() != rds.minute || !rds.hasCT) {
+              rds.hasCT = true;
+              setTime(rds.hour, rds.minute, 0, rds.day, rds.month, rds.year);
+              adjustTime((((rds.offsetplusmin ? -rds.offset : rds.offset) / 2) * 3600));
+            }
           }
         } break;
 
