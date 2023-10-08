@@ -948,7 +948,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rdsblock = 254;
   piold = 0;
   rds.correctPI = 0;
-  rds.ECC = 0;
+  rds.ECC = 254;
   rds.LIC = 254;
   rds.pinHour = 0;
   rds.pinMin = 0;

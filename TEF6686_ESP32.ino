@@ -2241,7 +2241,6 @@ void ShowFreq(int mode) {
   rds_clockold = "";
   rdsreset = true;
   clearrds = true;
-  ECCold = 254;
   licold = 254;
 
   if (wifi) {
