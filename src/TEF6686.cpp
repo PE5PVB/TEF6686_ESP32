@@ -490,14 +490,16 @@ void TEF6686::readRDS(byte showrdserrors)
 
             ps_buffer2[(offset * 2) + 0] = ps_buffer[(offset * 2) + 0];                         // Make a copy of the PS buffer
             ps_buffer2[(offset * 2) + 1] = ps_buffer[(offset * 2) + 1];
+            ps_buffer2[(offset * 2)  + 2] = '\0';                                               // Endmarker of segment
 
             ps_buffer[(offset * 2)  + 0] = rds.rdsD >> 8;                                       // First character of segment
             ps_buffer[(offset * 2)  + 1] = rds.rdsD & 0xFF;                                     // Second character of segment
             ps_buffer[(offset * 2)  + 2] = '\0';                                                // Endmarker of segment
 
+
             if (offset == 3 && ps_process && (!psincomplete || showrdserrors == 3)) {           // Last chars are received
-              if (ps_buffer != ps_buffer2) {                                                    // When difference between old and new, let's go...
-                RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), true);    // Convert 8 bit ASCII to 16 bit ASCII
+              if (strcmp(ps_buffer, ps_buffer2) == 0) {                                         // When difference between old and new, let's go...
+                RDScharConverter(ps_buffer2, PStext, sizeof(PStext) / sizeof(wchar_t), true);   // Convert 8 bit ASCII to 16 bit ASCII
                 String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
                 rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);                 // Make sure PS does not exceed 8 characters
               }
