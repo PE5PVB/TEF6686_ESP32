@@ -586,7 +586,7 @@ void readRds() {
     if (!screenmute) {
       if (!afscreen) {
         if (!RDSstatus) {
-          if (advancedRDS) tftPrint(-1, PIold, 240, 75, SecondaryColor, SecondaryColorSmooth, 28); else tftPrint(-1, PIold, 240, 187, SecondaryColor, SecondaryColorSmooth, 28);
+          if (advancedRDS) tftPrint(0, PIold, 275, 75, SecondaryColor, SecondaryColorSmooth, 28); else tftPrint(0, PIold, 275, 187, SecondaryColor, SecondaryColorSmooth, 28);
           if (advancedRDS) tftPrint(-1, PSold, 38, 75, SecondaryColor, SecondaryColorSmooth, 28); else tftPrint(-1, PSold, 38, 187, SecondaryColor, SecondaryColorSmooth, 28);
           if (advancedRDS) tftPrint(-1, PTYold, 38, 109, SecondaryColor, SecondaryColorSmooth, 16); else tftPrint(-1, PTYold, 38, 163, SecondaryColor, SecondaryColorSmooth, 16);
           if (advancedRDS) {
@@ -598,7 +598,7 @@ void readRds() {
           if (radio.rds.correctPI != 0) dropout = true;
         } else {
           if (dropout == true) {
-            if (advancedRDS) tftPrint(-1, PIold, 240, 75, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(-1, PIold, 240, 187, PrimaryColor, PrimaryColorSmooth, 28);
+            if (advancedRDS) tftPrint(0, PIold, 275, 75, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, PIold, 275, 187, PrimaryColor, PrimaryColorSmooth, 28);
             if (advancedRDS) tftPrint(-1, PSold, 38, 75, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(-1, PSold, 38, 187, PrimaryColor, PrimaryColorSmooth, 28);
             if (advancedRDS) tftPrint(-1, PTYold, 38, 109, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, PTYold, 38, 163, PrimaryColor, PrimaryColorSmooth, 16);
             dropout = false;
@@ -663,11 +663,11 @@ void showPI() {
   if (strcmp(radio.rds.picode, radioIdPrevious)) {
     if (!screenmute) {
       if (advancedRDS) {
-        tftReplace(-1, PIold, radio.rds.picode, 240, 75, PrimaryColor, PrimaryColorSmooth, 28);
+        tftReplace(0, PIold, radio.rds.picode, 275, 75, PrimaryColor, PrimaryColorSmooth, 28);
       } else if (afscreen) {
         tftReplace(-1, PIold, radio.rds.picode, 30, 201, BWAutoColor, BWAutoColorSmooth, 16);
       } else {
-        tftReplace(-1, PIold, radio.rds.picode, 240, 187, PrimaryColor, PrimaryColorSmooth, 28);
+        tftReplace(0, PIold, radio.rds.picode, 275, 187, PrimaryColor, PrimaryColorSmooth, 28);
       }
     }
     PIold = radio.rds.picode;
