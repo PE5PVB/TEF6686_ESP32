@@ -2888,10 +2888,10 @@ void ShowBattery() {
   }
 
   uint16_t v = analogRead(BATTERY_PIN);
-
   battery = map(constrain(v, BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, BAT_LEVEL_STAGE);
+  
   if (batteryold != battery) {
-    if (batterydetect) {
+    if (!wifi && batterydetect) {
       if (battery == 0) {
         tft.drawRoundRect(277, 6, 37, 20, 2, BarSignificantColor);
         tft.fillRoundRect(313, 13, 4, 6, 2, BarSignificantColor);
