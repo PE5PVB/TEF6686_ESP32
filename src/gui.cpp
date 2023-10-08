@@ -2244,6 +2244,7 @@ void DoMenu() {
               XDRGTK_key = XDRGTK_key_input.getValue();
               EEPROM.writeString(EE_STRING_XDRGTK_KEY, XDRGTK_key);
               EEPROM.commit();
+			  wifi = true;
               tryWiFi();
               delay(2000);
               menuopen = false;
