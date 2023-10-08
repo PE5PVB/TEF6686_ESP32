@@ -2243,11 +2243,6 @@ void ShowFreq(int mode) {
   clearrds = true;
   ECCold = 254;
   licold = 254;
-  sprite.fillSprite(BackgroundColor);
-  sprite2.fillSprite(BackgroundColor);
-  if (!screenmute) {
-    if (advancedRDS) sprite2.pushSprite(35, 220); else if (!afscreen) sprite.pushSprite(38, 220);
-  }
 
   if (wifi) {
     Udp.beginPacket(remoteip, 9030);
@@ -2261,8 +2256,20 @@ void ShowFreq(int mode) {
     Udp.endPacket();
   }
   tuningtimer = millis();
-  if (!rdsflagreset) {
+  
+  if (!rdsflagreset && !screenmute && !afscreen) {
     ShowRDSLogo(false);
+    sprite.fillSprite(BackgroundColor);
+    sprite2.fillSprite(BackgroundColor);
+    if (!advancedRDS) {
+      tft.fillCircle(314, 223, 2, GreyoutColor);
+      tft.fillCircle(314, 234, 2, GreyoutColor);
+      sprite.pushSprite(38, 220);
+    } else {
+      tft.fillCircle(203, 223, 2, GreyoutColor);
+      tft.fillCircle(203, 234, 2, GreyoutColor);
+      sprite2.pushSprite(35, 220);
+    }
     rdsflagreset = true;
   }
 }

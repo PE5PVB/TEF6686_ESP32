@@ -328,6 +328,7 @@ void BuildAFScreen() {
     tft.drawLine(168, 30, 168, 199, FrameColor);
     tft.drawLine(53, 30, 53, 0, FrameColor);
     tft.drawLine(89, 30, 89, 0, FrameColor);
+    tft.drawLine(120, 30, 120, 0, FrameColor);
     tft.drawLine(158, 30, 158, 0, FrameColor);
     tft.drawLine(248, 30, 248, 0, FrameColor);
     tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, 28);

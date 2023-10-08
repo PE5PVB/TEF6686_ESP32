@@ -738,7 +738,6 @@ void TEF6686::readRDS(byte showrdserrors)
             rds.hour += rds.offset;
             rds.hour = (((byte)rds.hour + 24) % 24);
             rds.hasCT = true;
-            Serial.println(rds.offset);
           }
         } break;
 

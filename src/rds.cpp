@@ -596,13 +596,6 @@ void readRds() {
               tft.fillCircle(162, 41, 5, SignificantColor);
               tft.fillCircle(200, 41, 5, SignificantColor);
             }
-            if (!advancedRDS) {
-              tft.fillCircle(314, 223, 2, GreyoutColor);
-              tft.fillCircle(314, 234, 2, GreyoutColor);
-            } else {
-              tft.fillCircle(203, 223, 2, GreyoutColor);
-              tft.fillCircle(203, 234, 2, GreyoutColor);
-            }
             clearrds = false;
           }
           if (radio.rds.correctPI != 0) dropout = true;
