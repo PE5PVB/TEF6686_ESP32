@@ -596,6 +596,13 @@ void readRds() {
               tft.fillCircle(162, 41, 5, SignificantColor);
               tft.fillCircle(200, 41, 5, SignificantColor);
             }
+            if (!advancedRDS) {
+              tft.fillCircle(314, 223, 2, GreyoutColor);
+              tft.fillCircle(314, 234, 2, GreyoutColor);
+            } else {
+              tft.fillCircle(203, 223, 2, GreyoutColor);
+              tft.fillCircle(203, 234, 2, GreyoutColor);
+            }
             clearrds = false;
           }
           if (radio.rds.correctPI != 0) dropout = true;
@@ -605,6 +612,13 @@ void readRds() {
             if (advancedRDS) tftPrint(0, PIold, 275, 75, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, PIold, 275, 187, PrimaryColor, PrimaryColorSmooth, 28);
             if (advancedRDS) tftPrint(-1, PSold, 38, 75, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(-1, PSold, 38, 187, PrimaryColor, PrimaryColorSmooth, 28);
             if (advancedRDS) tftPrint(-1, PTYold, 38, 109, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, PTYold, 38, 163, PrimaryColor, PrimaryColorSmooth, 16);
+            if (!advancedRDS) {
+              tft.fillCircle(314, 223, 2, GreyoutColor);
+              tft.fillCircle(314, 234, 2, GreyoutColor);
+            } else {
+              tft.fillCircle(203, 223, 2, GreyoutColor);
+              tft.fillCircle(203, 234, 2, GreyoutColor);
+            }
             dropout = false;
           }
         }
@@ -757,19 +771,38 @@ void showRadioText() {
           rttickerhold = millis();
         }
         if (advancedRDS) {
-          if (xPos < -tft.textWidth(radio.rds.stationText + " " + radio.rds.stationText32) + (charWidth * 16)) xPos = 0;
+          if (xPos < -tft.textWidth(radio.rds.stationText + " " + radio.rds.stationText32) + (charWidth * 10)) xPos = 0;
           sprite2.fillSprite(BackgroundColor);
           if (RDSstatus) sprite2.setTextColor(PrimaryColor, PrimaryColorSmooth, false); else sprite2.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
           sprite2.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
           sprite2.pushSprite(35, 220);
         } else {
-          if (xPos < -tft.textWidth(radio.rds.stationText + " " + radio.rds.stationText32) + (charWidth * 26)) xPos = 0;
+          if (xPos < -tft.textWidth(radio.rds.stationText + " " + radio.rds.stationText32) + (charWidth * 20)) xPos = 0;
           sprite.fillSprite(BackgroundColor);
           if (RDSstatus) sprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false); else sprite.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
           sprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
           sprite.pushSprite(38, 220);
         }
         rtticker = millis();
+      }
+    }
+  }
+  if (radio.rds.hasRT) {
+    if (!advancedRDS) {
+      if (radio.rds.rtAB) {
+        tft.fillCircle(314, 223, 2, GreyoutColor);
+        tft.fillCircle(314, 234, 2, InsignificantColor);
+      } else {
+        tft.fillCircle(314, 223, 2, InsignificantColor);
+        tft.fillCircle(314, 234, 2, GreyoutColor);
+      }
+    } else {
+      if (radio.rds.rtAB) {
+        tft.fillCircle(203, 223, 2, GreyoutColor);
+        tft.fillCircle(203, 234, 2, InsignificantColor);
+      } else {
+        tft.fillCircle(203, 223, 2, InsignificantColor);
+        tft.fillCircle(203, 234, 2, GreyoutColor);
       }
     }
   }

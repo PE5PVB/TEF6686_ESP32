@@ -495,9 +495,9 @@ void setup() {
   tft.setSwapBytes(true);
   tft.fillScreen(BackgroundColor);
 
-  sprite.createSprite(280, 19);
+  sprite.createSprite(270, 19);
   sprite1.createSprite(200, 50);
-  sprite2.createSprite(172, 19);
+  sprite2.createSprite(162, 19);
   sprite3.createSprite(172, 19);
   sprite4.createSprite(172, 19);
   sprite5.createSprite(172, 19);
@@ -2240,6 +2240,7 @@ void ShowFreq(int mode) {
   afstringold = "";
   rds_clockold = "";
   rdsreset = true;
+  clearrds = true;
   ECCold = 254;
   licold = 254;
   sprite.fillSprite(BackgroundColor);
