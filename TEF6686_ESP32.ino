@@ -275,7 +275,7 @@ String XDRGTKRDSold;
 uint16_t BW;
 uint16_t MStatus;
 uint16_t SWMIBandPos;
-uint16_t SWMIBandPosold;  // Fix Me: Should store this parameter into flash, for use of restart.
+uint16_t SWMIBandPosold;
 uint16_t USN;
 uint16_t WAM;
 uint8_t buff_pos;
@@ -286,7 +286,7 @@ unsigned int frequency;
 unsigned int frequency_OIRT;
 unsigned int frequency_AM;
 unsigned int frequency_LW;
-unsigned int frequency_MIBand_11M; // Surive before tuner restart
+unsigned int frequency_MIBand_11M;
 unsigned int frequency_MIBand_120M;
 unsigned int frequency_MIBand_13M;
 unsigned int frequency_MIBand_15M;
@@ -795,10 +795,11 @@ void loop() {
       if (millis() >= lowsignaltimer + 300) {
         lowsignaltimer = millis();
         if (!screenmute || (screenmute && (XDRGTKTCP || XDRGTKUSB))) {
-          if (band < BAND_GAP)
+          if (band < BAND_GAP) {
             radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
-          else
+          } else {
             radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+          }
         }
         if (screenmute) readRds();
         if (!menu) {
@@ -809,10 +810,11 @@ void loop() {
 
     } else {
       if (!screenmute || (screenmute && (XDRGTKTCP || XDRGTKUSB))) {
-        if (band < BAND_GAP)
+        if (band < BAND_GAP) {
           radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
-        else
+        } else {
           radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+        }
       }
       if (!menu) {
         doSquelch();
@@ -1039,12 +1041,10 @@ void ScreensaverInterrupt()
 void CheckBandForbiddenFM () {
   switch (band) {
     case BAND_FM:
-      if (bandFM == FM_BAND_OIRT) bandforbidden = 1;
-      else bandforbidden = 0;
+      if (bandFM == FM_BAND_OIRT) bandforbidden = 1; else bandforbidden = 0;
       break;
     case BAND_OIRT:
-      if (bandFM == FM_BAND_FM) bandforbidden = 1;
-      else bandforbidden = 0;
+      if (bandFM == FM_BAND_FM) bandforbidden = 1; else bandforbidden = 0;
       break;
   }
 }
@@ -1061,8 +1061,7 @@ void doBandSelectionFM() {
         if (frequency_OIRT > FREQ_FM_OIRT_END) {
           frequency_OIRT = FREQ_FM_OIRT_START;
           if (edgebeep) EdgeBeeper();
-        }
-        else if (frequency_OIRT < FREQ_FM_OIRT_START) {
+        } else if (frequency_OIRT < FREQ_FM_OIRT_START) {
           frequency_OIRT = FREQ_FM_OIRT_END;
           if (edgebeep) EdgeBeeper();
         }
@@ -1088,16 +1087,13 @@ void doBandSelectionFM() {
 void CheckBandForbiddenAM () {
   switch (band) {
     case BAND_LW:
-      if (bandAM == AM_BAND_MW_SW || bandAM == AM_BAND_MW || bandAM == AM_BAND_SW) bandforbidden = 1;
-      else bandforbidden = 0;
+      if (bandAM == AM_BAND_MW_SW || bandAM == AM_BAND_MW || bandAM == AM_BAND_SW) bandforbidden = 1; else bandforbidden = 0;
       break;
     case BAND_MW:
-      if (bandAM == AM_BAND_LW_SW || bandAM == AM_BAND_LW || bandAM == AM_BAND_SW) bandforbidden = 1;
-      else bandforbidden = 0;
+      if (bandAM == AM_BAND_LW_SW || bandAM == AM_BAND_LW || bandAM == AM_BAND_SW) bandforbidden = 1; else bandforbidden = 0;
       break;
     case BAND_SW:
-      if (bandAM == AM_BAND_LW_MW || bandAM == AM_BAND_LW || bandAM == AM_BAND_MW) bandforbidden = 1;
-      else bandforbidden = 0;
+      if (bandAM == AM_BAND_LW_MW || bandAM == AM_BAND_LW || bandAM == AM_BAND_MW) bandforbidden = 1; else bandforbidden = 0;
       break;
   }
 }
@@ -1150,49 +1146,56 @@ void doBandSelectionAM() {
 void ToggleBand(byte nowBand) {
   switch (nowBand) {
     case BAND_LW:
-      if (bandAM == AM_BAND_LW_MW || bandAM == AM_BAND_ALL) band = BAND_MW;
-      else if (bandAM == AM_BAND_LW_SW) band = BAND_SW;
-      else if (bandAM == AM_BAND_LW) {
-        if (bandFM == FM_BAND_FM) band = BAND_FM;
-        else band = BAND_OIRT;
+      if (bandAM == AM_BAND_LW_MW || bandAM == AM_BAND_ALL) {
+        band = BAND_MW;
+      } else if (bandAM == AM_BAND_LW_SW) {
+        band = BAND_SW;
+      } else if (bandAM == AM_BAND_LW) {
+        if (bandFM == FM_BAND_FM) band = BAND_FM; else band = BAND_OIRT;
       }
       break;
     case BAND_MW:
-      if (bandAM == AM_BAND_MW_SW || bandAM == AM_BAND_ALL) band = BAND_SW;
-      else if (bandAM == AM_BAND_LW_MW || bandAM == AM_BAND_MW) {
-        if (bandFM == FM_BAND_FM) band = BAND_FM;
-        else band = BAND_OIRT;
+      if (bandAM == AM_BAND_MW_SW || bandAM == AM_BAND_ALL) {
+        band = BAND_SW;
+      } else if (bandAM == AM_BAND_LW_MW || bandAM == AM_BAND_MW) {
+        if (bandFM == FM_BAND_FM) band = BAND_FM; else band = BAND_OIRT;
       }
       break;
     case BAND_SW:
-      if (bandFM == FM_BAND_FM) band = BAND_FM;
-      else band = BAND_OIRT;
+      if (bandFM == FM_BAND_FM) band = BAND_FM; else band = BAND_OIRT;
       break;
     case BAND_OIRT:
-      if (bandFM == FM_BAND_ALL) band = BAND_FM;
-      else if (bandFM == FM_BAND_OIRT) {
+      if (bandFM == FM_BAND_ALL) {
+        band = BAND_FM;
+      } else if (bandFM == FM_BAND_OIRT) {
         if (bandAM == AM_BAND_ALL || bandAM == AM_BAND_LW_MW || bandAM == AM_BAND_LW_SW || bandAM == AM_BAND_LW) {
           band = BAND_LW;
           if (stepsize > 3) stepsize = 3;
         }
-        else if (bandAM == AM_BAND_MW_SW || bandAM == AM_BAND_MW) band = BAND_MW;
-        else if (bandAM == AM_BAND_SW) band = BAND_SW;
+      } else if (bandAM == AM_BAND_MW_SW || bandAM == AM_BAND_MW) {
+        band = BAND_MW;
+      } else if (bandAM == AM_BAND_SW) {
+        band = BAND_SW;
       } else if (bandFM == FM_BAND_FM) {
         if (bandAM == AM_BAND_ALL || bandAM == AM_BAND_LW_MW || bandAM == AM_BAND_LW_SW || bandAM == AM_BAND_LW) {
           band = BAND_LW;
           if (stepsize > 3) stepsize = 3;
         }
-        else if (bandAM == AM_BAND_MW_SW || bandAM == AM_BAND_MW) band = BAND_MW;
-        else if (bandAM == AM_BAND_SW) band = BAND_SW;
+      } else if (bandAM == AM_BAND_MW_SW || bandAM == AM_BAND_MW) {
+        band = BAND_MW;
+      } else if (bandAM == AM_BAND_SW) {
+        band = BAND_SW;
       }
       break;
     case BAND_FM:
       if (bandAM == AM_BAND_ALL || bandAM == AM_BAND_LW_MW || bandAM == AM_BAND_LW_SW || bandAM == AM_BAND_LW) {
         band = BAND_LW;
         if (stepsize > 3) stepsize = 3;
+      } else if (bandAM == AM_BAND_MW_SW || bandAM == AM_BAND_MW) {
+        band = BAND_MW;
+      } else if (bandAM == AM_BAND_SW) {
+        band = BAND_SW;
       }
-      else if (bandAM == AM_BAND_MW_SW || bandAM == AM_BAND_MW) band = BAND_MW;
-      else if (bandAM == AM_BAND_SW) band = BAND_SW;
       break;
   }
 }
@@ -1899,8 +1902,7 @@ void ShowStepSize() {
 void Round30K(unsigned int freq) {
   if (freq % FREQ_OIRT_STEP_30K == 1) {
     frequency_OIRT = (freq + 1);
-  }
-  else if (freq % FREQ_OIRT_STEP_30K == 0) {
+  } else if (freq % FREQ_OIRT_STEP_30K == 0) {
     frequency_OIRT = (freq - 1);
   }
 }
@@ -1908,11 +1910,9 @@ void Round30K(unsigned int freq) {
 void Round50K(unsigned int freq) {
   if (freq % 10 < 3) {
     frequency = (freq - freq % 10);
-  }
-  else if (freq % 10 > 2 && freq % 10 < 8) {
+  } else if (freq % 10 > 2 && freq % 10 < 8) {
     frequency = (freq - (freq % 10 - 5));
-  }
-  else if (freq % 10 > 7) {
+  } else if (freq % 10 > 7) {
     frequency = (freq - (freq % 10) + 10);
   }
 }
@@ -1928,11 +1928,9 @@ void Round100K(unsigned int freq) {
 void Round5K(unsigned int freqAM) {
   if (freqAM % 10 < 3) {
     frequency_AM = (freqAM - freqAM % 10);
-  }
-  else if (freqAM % 10 > 2 && freqAM % 10 < 8) {
+  } else if (freqAM % 10 > 2 && freqAM % 10 < 8) {
     frequency_AM = (freqAM - (freqAM % 10 - 5));
-  }
-  else if (freqAM % 10 > 7) {
+  } else if (freqAM % 10 > 7) {
     frequency_AM = (freqAM - (freqAM % 10) + 10);
   }
 }
@@ -1958,9 +1956,13 @@ void RoundStep() {
 
   while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
 
-  if (band == BAND_FM) EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, frequency);
-  else if (band == BAND_OIRT) EEPROM.writeUInt(EE_UINT16_FREQUENCY_OIRT, frequency_OIRT);
-  else EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, frequency_AM);
+  if (band == BAND_FM) {
+    EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, frequency);
+  } else if (band == BAND_OIRT) {
+    EEPROM.writeUInt(EE_UINT16_FREQUENCY_OIRT, frequency_OIRT);
+  } else {
+    EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, frequency_AM);
+  }
   EEPROM.commit();
 }
 
@@ -1991,8 +1993,7 @@ void ButtonPress() {
           stepsize++;
           if (band == BAND_SW || band < BAND_GAP) {
             if (stepsize > 4) stepsize = 0;
-          }
-          else {
+          } else {
             if (stepsize > 3) stepsize = 0;
           }
 
@@ -2664,8 +2665,7 @@ void updateEQ() {
 
 void updateCodetect() {
   if (band > BAND_GAP) {
-    if (WAM) tftPrint(-1, "co", 50, 61, PrimaryColor, PrimaryColorSmooth, 16);
-    else tftPrint(-1, "co", 50, 61, BackgroundColor, BackgroundColor, 16);
+    if (WAM) tftPrint(-1, "co", 50, 61, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "co", 50, 61, BackgroundColor, BackgroundColor, 16);
   }
 }
 
