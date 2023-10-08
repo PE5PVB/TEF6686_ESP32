@@ -481,59 +481,59 @@ void TEF6686::readRDS(byte showrdserrors)
         {
           //PS decoder
           if (showrdserrors == 3 || (!rdsBerrorThreshold && !rdsDerrorThreshold)) {
-            offset = rds.rdsB & 0x03;                                                         // Let's get the character offset for PS
+            offset = rds.rdsB & 0x03;                                                           // Let's get the character offset for PS
+            offsetold = offset;
+            if (offset == 0 && offsetold != 3) psincomplete = false; else psincomplete = true;  // Routine to check if all PS blocks are available
+            if (offset == 1 && offsetold != 0) psincomplete = false; else psincomplete = true;
+            if (offset == 2 && offsetold != 1) psincomplete = false; else psincomplete = true;
+            if (offset == 3 && offsetold != 2) psincomplete = false; else psincomplete = true;
 
-            ps_buffer2[(offset * 2) + 0] = ps_buffer[(offset * 2) + 0];                       // Make a copy of the PS buffer
+            ps_buffer2[(offset * 2) + 0] = ps_buffer[(offset * 2) + 0];                         // Make a copy of the PS buffer
             ps_buffer2[(offset * 2) + 1] = ps_buffer[(offset * 2) + 1];
 
-            ps_buffer[(offset * 2)  + 0] = rds.rdsD >> 8;                                     // First character of segment
-            ps_buffer[(offset * 2)  + 1] = rds.rdsD & 0xFF;                                   // Second character of segment
-            ps_buffer[(offset * 2)  + 2] = '\0';                                              // Endmarker of segment
+            ps_buffer[(offset * 2)  + 0] = rds.rdsD >> 8;                                       // First character of segment
+            ps_buffer[(offset * 2)  + 1] = rds.rdsD & 0xFF;                                     // Second character of segment
+            ps_buffer[(offset * 2)  + 2] = '\0';                                                // Endmarker of segment
 
-            if (offset == 3 && ps_process) {                                                  // Last chars are received
-              if (ps_buffer != ps_buffer2) {                                                  // When difference between old and new, let's go...
-                for (byte i = 0; i < 9; i++) PStext[i] = L'\0';                               // Clear old PStext before converting
-                RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), true);  // Convert 8 bit ASCII to 16 bit ASCII
-                String utf8String = convertToUTF8(PStext);                                    // Convert RDS characterset to ASCII
-                rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);               // Make sure PS does not exceed 8 characters
+            if (offset == 3 && ps_process && (!psincomplete || showrdserrors == 3)) {           // Last chars are received
+              if (ps_buffer != ps_buffer2) {                                                    // When difference between old and new, let's go...
+                RDScharConverter(ps_buffer2, PStext, sizeof(PStext) / sizeof(wchar_t), true);    // Convert 8 bit ASCII to 16 bit ASCII
+                String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
+                rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);                 // Make sure PS does not exceed 8 characters
               }
             }
 
-            if (!ps_process) {                                                                // Let's get 2 runs of 8 PS characters fast and without refresh
-              ps_counter ++;                                                                  // Let's count each run
-              RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), true);    // Convert 8 bit ASCII to 16 bit ASCII
-              String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
+            if (!ps_process) {                                                                  // Let's get 2 runs of 8 PS characters fast and without refresh
+              ps_counter ++;                                                                    // Let's count each run
+              RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), true);      // Convert 8 bit ASCII to 16 bit ASCII
+              String utf8String = convertToUTF8(PStext);                                        // Convert RDS characterset to ASCII
               rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);
-              if (ps_counter == 6) ps_process = true;                                         // OK, we had 2 runs, now let's go the idle PS writing
+              if (ps_counter >= 24 && !psincomplete) ps_process = true;                         // OK, we had a few runs, now let's go the idle PS writing
             }
 
-            if (offset == 0) rds.hasDynamicPTY = bitRead(rds.rdsB, 2) & 0x1F;                 // Dynamic PTY flag
-            if (offset == 1) rds.hasCompressed = bitRead(rds.rdsB, 2) & 0x1F;                 // Compressed flag
-            if (offset == 2) rds.hasArtificialhead = bitRead(rds.rdsB, 2) & 0x1F;             // Artificial head flag
-            if (offset == 3) rds.hasStereo = bitRead(rds.rdsB, 2) & 0x1F;                     // Stereo flag
+            if (offset == 0) rds.hasDynamicPTY = bitRead(rds.rdsB, 2) & 0x1F;                   // Dynamic PTY flag
+            if (offset == 1) rds.hasCompressed = bitRead(rds.rdsB, 2) & 0x1F;                   // Compressed flag
+            if (offset == 2) rds.hasArtificialhead = bitRead(rds.rdsB, 2) & 0x1F;               // Artificial head flag
+            if (offset == 3) rds.hasStereo = bitRead(rds.rdsB, 2) & 0x1F;                       // Stereo flag
           }
 
-          // PTY decoder
           if (!rdsBerrorThreshold) {
-            rds.stationTypeCode = (rds.rdsB >> 5) & 0x1F;                                     // Get 5 PTY bits from Block B
+            rds.stationTypeCode = (rds.rdsB >> 5) & 0x1F;                                       // Get 5 PTY bits from Block B
             if (rds.region == 0) strcpy(rds.stationType, PTY_EU[rds.stationTypeCode]);
             if (rds.region == 1) strcpy(rds.stationType, PTY_USA[rds.stationTypeCode]);
 
-            //TA decoder
-            rds.hasTA = (bitRead(rds.rdsB, 4)) && (bitRead(rds.rdsB, 10)) & 0x1F;             // Read TA flag
+            rds.hasTA = (bitRead(rds.rdsB, 4)) && (bitRead(rds.rdsB, 10)) & 0x1F;               // Read TA flag
 
-            //MS decoder
-            if (((bitRead(rds.rdsB, 3)) & 0x1F) == 1) rds.MS = 1; else rds.MS = 2;            // Read MS flag
+            if (((bitRead(rds.rdsB, 3)) & 0x1F) == 1) rds.MS = 1; else rds.MS = 2;              // Read MS flag
           }
 
-          // TP Indicator
-          rds.hasTP = (bitRead(rds.rdsB, 10));
+          rds.hasTP = (bitRead(rds.rdsB, 10));                                                  // Read TP flag
 
           if (!rdsCerrorThreshold) {
             //AF decoder
-            if (rdsblock == 0) {                                                              // Only when in GROUP 0A
+            if (rdsblock == 0) {                                                                // Only when in GROUP 0A
 
-              if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250) {
+              if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250) {                             // Check for AF method B
                 if (afmethodcounter > 2) afmethodB = true;
                 afmethodcounter = 0;
               }
