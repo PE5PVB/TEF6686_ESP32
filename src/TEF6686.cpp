@@ -522,9 +522,9 @@ void TEF6686::readRDS(byte showrdserrors)
             if (rds.region == 0) strcpy(rds.stationType, PTY_EU[rds.stationTypeCode]);
             if (rds.region == 1) strcpy(rds.stationType, PTY_USA[rds.stationTypeCode]);
 
-            rds.hasTA = (bitRead(rds.rdsB, 4)) && (bitRead(rds.rdsB, 10)) & 0x1F;               // Read TA flag
+            rds.hasTA = (bitRead(rds.rdsB, 4));                                                 // Read TA flag
 
-            if (((bitRead(rds.rdsB, 3)) & 0x1F) == 1) rds.MS = 1; else rds.MS = 2;              // Read MS flag
+            if ((bitRead(rds.rdsB, 3)) == 1) rds.MS = 1; else rds.MS = 2;                       // Read MS flag
           }
 
           rds.hasTP = (bitRead(rds.rdsB, 10));                                                  // Read TP flag
