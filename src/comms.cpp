@@ -19,20 +19,25 @@ void Communication() {
           String stlfreq = packet.substring(symPos + 5, packetSize);
           if (afscreen) BuildAdvancedRDS();
           if ((stlfreq.toInt()) / 10000 > 6500 && (stlfreq.toInt()) / 10000 < 10800) {
-            frequency = (stlfreq.toInt()) / 10000;
-            if (frequency >= FREQ_FM_OIRT_START && frequency <= FREQ_FM_OIRT_END && band != BAND_OIRT) {
-              band = BAND_OIRT;
-              SelectBand();
+            unsigned int tempfreq = (stlfreq.toInt()) / 10000;
+            if (tempfreq >= FREQ_FM_OIRT_START && tempfreq <= FREQ_FM_OIRT_END) {
+              if (band != BAND_OIRT) {
+                band = BAND_OIRT;
+                frequency_OIRT = tempfreq;
+                BuildDisplay();
+              }
             } else {
               if (band != BAND_FM) {
                 band = BAND_FM;
-                SelectBand();
+                frequency = tempfreq;
+                BuildDisplay();
               }
             }
             if (band == BAND_OIRT) {
-              frequency_OIRT = frequency;
+              frequency_OIRT = tempfreq;
               radio.SetFreq(frequency_OIRT);
             } else {
+              frequency = tempfreq;
               radio.SetFreq(frequency);
             }
           }
