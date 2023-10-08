@@ -795,7 +795,7 @@ void loop() {
 
       if (millis() >= lowsignaltimer + 300) {
         lowsignaltimer = millis();
-        if (!screenmute || (screenmute && (XDRGTKTCP || XDRGTKUSB))) {
+        if (af || (!screenmute || (screenmute && (XDRGTKTCP || XDRGTKUSB)))) {
           if (band < BAND_GAP) {
             radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
           } else {
@@ -810,7 +810,7 @@ void loop() {
       }
 
     } else {
-      if (!screenmute || (screenmute && (XDRGTKTCP || XDRGTKUSB))) {
+      if (af || (!screenmute || (screenmute && (XDRGTKTCP || XDRGTKUSB)))) {
         if (band < BAND_GAP) {
           radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
         } else {
@@ -2256,7 +2256,7 @@ void ShowFreq(int mode) {
     Udp.endPacket();
   }
   tuningtimer = millis();
-  
+
   if (!rdsflagreset && !screenmute && !afscreen) {
     ShowRDSLogo(false);
     sprite.fillSprite(BackgroundColor);
@@ -2889,7 +2889,7 @@ void ShowBattery() {
 
   uint16_t v = analogRead(BATTERY_PIN);
   battery = map(constrain(v, BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, BAT_LEVEL_STAGE);
-  
+
   if (batteryold != battery) {
     if (!wifi && batterydetect) {
       if (battery == 0) {
