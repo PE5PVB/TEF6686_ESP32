@@ -497,7 +497,7 @@ void TEF6686::readRDS(byte showrdserrors)
 
             if (offset == 3 && ps_process && (!psincomplete || showrdserrors == 3)) {           // Last chars are received
               if (ps_buffer != ps_buffer2) {                                                    // When difference between old and new, let's go...
-                RDScharConverter(ps_buffer2, PStext, sizeof(PStext) / sizeof(wchar_t), true);    // Convert 8 bit ASCII to 16 bit ASCII
+                RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), true);    // Convert 8 bit ASCII to 16 bit ASCII
                 String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
                 rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);                 // Make sure PS does not exceed 8 characters
               }
@@ -733,13 +733,12 @@ void TEF6686::readRDS(byte showrdserrors)
             rds.hour = ((rds.rdsD >> 12) & 0x0f);
             rds.hour += ((rds.rdsC <<  4) & 0x0010);
             rds.minute = (rds.rdsD >> 6) & 0x3f;
-            rds.offsetplusmin = bitRead(rds.rdsD, 5);
-            rds.offset = (rds.rdsD & 0x3f);
-            if (!rds.hasCT) {
-              rds.hasCT = true;
-              setTime(rds.hour, rds.minute, 0, rds.day, rds.month, rds.year);
-              adjustTime((((rds.offsetplusmin ? -rds.offset : rds.offset) / 2) * 3600));
-            }
+            rds.offset = ((bitRead(rds.rdsD, 5) ? -rds.rdsD & 0x3f : rds.rdsD & 0x3f) / 2);
+            setTime(rds.hour, rds.minute, 0, rds.day, rds.month, rds.year);
+            rds.hour += rds.offset;
+            rds.hour = (((byte)rds.hour + 24) % 24);
+            rds.hasCT = true;
+            Serial.println(rds.offset);
           }
         } break;
 

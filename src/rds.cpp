@@ -243,7 +243,7 @@ void ShowAdvancedRDS() {
     MSold = radio.rds.MS;
   }
 
-  rds_clock = ((hour() < 10 ? "0" : "") + String(hour()) + ":" + (minute() < 10 ? "0" : "") + String(minute()));
+  rds_clock = ((radio.rds.hour < 10 ? "0" : "") + String(radio.rds.hour) + ":" + (radio.rds.minute < 10 ? "0" : "") + String(radio.rds.minute));
   if (rds_clock != rds_clockold) {
     if (!screenmute) {
       if (radio.rds.hasCT) {
