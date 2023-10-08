@@ -13,6 +13,7 @@ extern bool afscreen;
 extern bool aftest;
 extern bool artheadold;
 extern bool compressedold;
+extern bool clearrds;
 extern bool dropout;
 extern bool dynamicPTYold;
 extern bool errorAold;

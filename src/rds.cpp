@@ -586,17 +586,21 @@ void readRds() {
     if (!screenmute) {
       if (!afscreen) {
         if (!RDSstatus) {
-          if (advancedRDS) tftPrint(0, PIold, 275, 75, SecondaryColor, SecondaryColorSmooth, 28); else tftPrint(0, PIold, 275, 187, SecondaryColor, SecondaryColorSmooth, 28);
-          if (advancedRDS) tftPrint(-1, PSold, 38, 75, SecondaryColor, SecondaryColorSmooth, 28); else tftPrint(-1, PSold, 38, 187, SecondaryColor, SecondaryColorSmooth, 28);
-          if (advancedRDS) tftPrint(-1, PTYold, 38, 109, SecondaryColor, SecondaryColorSmooth, 16); else tftPrint(-1, PTYold, 38, 163, SecondaryColor, SecondaryColorSmooth, 16);
-          if (advancedRDS) {
-            tft.fillCircle(86, 41, 5, SignificantColor);
-            tft.fillCircle(124, 41, 5, SignificantColor);
-            tft.fillCircle(162, 41, 5, SignificantColor);
-            tft.fillCircle(200, 41, 5, SignificantColor);
+          if (clearrds) {
+            if (advancedRDS) tftPrint(0, PIold, 275, 75, SecondaryColor, SecondaryColorSmooth, 28); else tftPrint(0, PIold, 275, 187, SecondaryColor, SecondaryColorSmooth, 28);
+            if (advancedRDS) tftPrint(-1, PSold, 38, 75, SecondaryColor, SecondaryColorSmooth, 28); else tftPrint(-1, PSold, 38, 187, SecondaryColor, SecondaryColorSmooth, 28);
+            if (advancedRDS) tftPrint(-1, PTYold, 38, 109, SecondaryColor, SecondaryColorSmooth, 16); else tftPrint(-1, PTYold, 38, 163, SecondaryColor, SecondaryColorSmooth, 16);
+            if (advancedRDS) {
+              tft.fillCircle(86, 41, 5, SignificantColor);
+              tft.fillCircle(124, 41, 5, SignificantColor);
+              tft.fillCircle(162, 41, 5, SignificantColor);
+              tft.fillCircle(200, 41, 5, SignificantColor);
+            }
+            clearrds = false;
           }
           if (radio.rds.correctPI != 0) dropout = true;
         } else {
+          clearrds = true;
           if (dropout == true) {
             if (advancedRDS) tftPrint(0, PIold, 275, 75, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, PIold, 275, 187, PrimaryColor, PrimaryColorSmooth, 28);
             if (advancedRDS) tftPrint(-1, PSold, 38, 75, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(-1, PSold, 38, 187, PrimaryColor, PrimaryColorSmooth, 28);

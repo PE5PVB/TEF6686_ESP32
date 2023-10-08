@@ -57,6 +57,7 @@ bool beepresetstop;
 bool BWreset;
 bool change2;
 bool compressedold;
+bool clearrds;
 bool direction;
 bool dropout;
 bool dynamicPTYold;
