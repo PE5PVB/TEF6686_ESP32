@@ -298,6 +298,7 @@ void doAF() {
 void showECC() {
   if (ECCold != radio.rds.ECC) {
     String ECC;
+    ECC = myLanguage[language][73];
     if (radio.rds.picode[0] == '1') {
       if (radio.rds.ECC == 160) ECC = myCountries[226];
       if (radio.rds.ECC == 162) ECC = myCountries[129];
@@ -556,8 +557,6 @@ void showECC() {
       if (radio.rds.ECC == 241) ECC = myCountries[192];
       if (radio.rds.ECC == 242) ECC = myCountries[220];
       if (radio.rds.ECC == 243) ECC = myCountries[71];
-    } else {
-      ECC = myLanguage[language][73];
     }
     if (advancedRDS) {
       if (!screenmute) {
