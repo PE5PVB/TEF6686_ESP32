@@ -15,22 +15,24 @@ void Communication() {
         if (strcmp(packetBuffer, "from=StationList;freq=?;bandwidth=?") == 0) {
           ShowFreq(0);
         } else {
+          externaltune = true;
           int symPos = packet.indexOf("freq=");
           String stlfreq = packet.substring(symPos + 5, packetSize);
           if (afscreen) BuildAdvancedRDS();
+
           if ((stlfreq.toInt()) / 10000 > 6500 && (stlfreq.toInt()) / 10000 < 10800) {
             unsigned int tempfreq = (stlfreq.toInt()) / 10000;
             if (tempfreq >= FREQ_FM_OIRT_START && tempfreq <= FREQ_FM_OIRT_END) {
               if (band != BAND_OIRT) {
                 band = BAND_OIRT;
                 frequency_OIRT = tempfreq;
-                BuildDisplay();
+                SelectBand();
               }
             } else {
               if (band != BAND_FM) {
                 band = BAND_FM;
                 frequency = tempfreq;
-                BuildDisplay();
+                SelectBand();
               }
             }
             if (band == BAND_OIRT) {
@@ -47,18 +49,18 @@ void Communication() {
               BuildDisplay();
               ScreensaverTimerReopen();
             }
-            frequency_AM = (stlfreq.toInt()) / 1000;
+            unsigned int tempfreq = (stlfreq.toInt()) / 1000;
             if (frequency_AM >= FREQ_LW_LOW_EDGE_MIN && frequency_AM <= FREQ_LW_HIGH_EDGE_MAX && band != BAND_LW) {
               band = BAND_LW;
-              frequency_LW = frequency_AM;
+              frequency_LW = tempfreq;
               SelectBand();
             } else if (frequency_AM >= FREQ_MW_LOW_EDGE_MIN_9K && frequency_AM <= FREQ_MW_HIGH_EDGE_MAX_9K && band != BAND_MW) {
               band = BAND_MW;
-              frequency_MW = frequency_AM;
+              frequency_MW = tempfreq;
               SelectBand();
             } else {
               if (band != BAND_SW) {
-                frequency_SW = frequency_AM;
+                frequency_SW = tempfreq;
                 band = BAND_SW;
                 SelectBand();
               }
@@ -68,6 +70,7 @@ void Communication() {
           radio.clearRDS(fullsearchrds);
           ShowFreq(0);
           store = true;
+          externaltune = false;
         }
       }
     }

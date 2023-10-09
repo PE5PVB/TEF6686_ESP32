@@ -66,6 +66,7 @@ bool errorAold;
 bool errorBold;
 bool errorCold;
 bool errorDold;
+bool externaltune;
 bool fullsearchrds;
 bool hasafold;
 bool haseonold;
@@ -1645,7 +1646,7 @@ void SelectBand() {
     if (band == BAND_MW) freqold = frequency_MW;
     if (band == BAND_SW) freqold = frequency_SW;
     LimitAMFrequency();
-    CheckBandForbiddenAM();
+    if (!externaltune) CheckBandForbiddenAM();
     radio.SetFreqAM(frequency_AM);
     radio.setAMAttenuation(amrfagc);
     radio.setAMCoChannel(amcodect, amcodectcount);
@@ -1677,7 +1678,7 @@ void SelectBand() {
     BWset = BWsetFM;
     radio.clearRDS(fullsearchrds);
     freqold = frequency_AM;
-    CheckBandForbiddenFM();
+    if (!externaltune) CheckBandForbiddenFM();
     doBW();
     if (!screenmute) BuildDisplay();
   }

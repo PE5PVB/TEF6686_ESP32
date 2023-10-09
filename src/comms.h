@@ -15,6 +15,7 @@ extern bool afscreen;
 extern bool aftest;
 extern bool BWreset;
 extern bool direction;
+extern bool externaltune;
 extern bool fullsearchrds;
 extern bool menu;
 extern bool RDSSPYTCP;
