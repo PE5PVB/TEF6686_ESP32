@@ -2253,6 +2253,7 @@ void ShowFreq(int mode) {
   rdsreset = true;
   clearrds = true;
   licold = 254;
+  ECCold = 253;
 
   if (wifi) {
     Udp.beginPacket(remoteip, 9030);

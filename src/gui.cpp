@@ -664,13 +664,12 @@ void BuildAdvancedRDS() {
   batteryold = 6;
   batteryVold = 0;
   vPerold = 0;
-
+  ECCold = 253;
   strcpy(programTypePrevious, "");
   strcpy(radioIdPrevious, "");
   programServicePrevious = "";
   ptynold = " ";
   MSold = 0;
-  ECCold = 254;
   licold = 254;
   af_counterold = 254;
   TAold = false;
