@@ -335,12 +335,14 @@ unsigned long tuningtimer;
 unsigned long udptimer;
 
 TEF6686 radio;
-TFT_eSprite sprite = TFT_eSprite(&tft);
-TFT_eSprite sprite1 = TFT_eSprite(&tft);
-TFT_eSprite sprite2 = TFT_eSprite(&tft);
-TFT_eSprite sprite3 = TFT_eSprite(&tft);
-TFT_eSprite sprite4 = TFT_eSprite(&tft);
-TFT_eSprite sprite5 = TFT_eSprite(&tft);
+TFT_eSprite RadiotextSprite = TFT_eSprite(&tft);
+TFT_eSprite FrequencySprite = TFT_eSprite(&tft);
+TFT_eSprite AdvRadiotextSprite = TFT_eSprite(&tft);
+TFT_eSprite EONSprite = TFT_eSprite(&tft);
+TFT_eSprite RTPlusSprite = TFT_eSprite(&tft);
+TFT_eSprite AFSprite = TFT_eSprite(&tft);
+TFT_eSprite SquelchSprite = TFT_eSprite(&tft);
+
 WiFiConnect wc;
 WiFiServer Server(7373);
 WiFiClient RemoteClient;
@@ -495,31 +497,37 @@ void setup() {
   tft.setSwapBytes(true);
   tft.fillScreen(BackgroundColor);
 
-  sprite.createSprite(270, 19);
-  sprite1.createSprite(200, 50);
-  sprite2.createSprite(162, 19);
-  sprite3.createSprite(172, 19);
-  sprite4.createSprite(172, 19);
-  sprite5.createSprite(172, 19);
-  sprite.setTextDatum(TL_DATUM);
-  sprite1.setTextDatum(TR_DATUM);
-  sprite2.setTextDatum(TL_DATUM);
-  sprite3.setTextDatum(TL_DATUM);
-  sprite4.setTextDatum(TL_DATUM);
-  sprite5.setTextDatum(TL_DATUM);
-  sprite1.loadFont(FREQFONT);
+  RadiotextSprite.createSprite(270, 19);
+  FrequencySprite.createSprite(200, 50);
+  AdvRadiotextSprite.createSprite(162, 19);
+  EONSprite.createSprite(172, 19);
+  RTPlusSprite.createSprite(172, 19);
+  AFSprite.createSprite(172, 19);
+  SquelchSprite.createSprite(47, 19);
+
+  RadiotextSprite.setTextDatum(TL_DATUM);
+  FrequencySprite.setTextDatum(TR_DATUM);
+  AdvRadiotextSprite.setTextDatum(TL_DATUM);
+  EONSprite.setTextDatum(TL_DATUM);
+  RTPlusSprite.setTextDatum(TL_DATUM);
+  AFSprite.setTextDatum(TL_DATUM);
+  SquelchSprite.setTextDatum(TL_DATUM);
+
+  FrequencySprite.loadFont(FREQFONT);
   if (language == LANGUAGE_CHS) {
-    sprite.loadFont(FONT16_CHS);
-    sprite2.loadFont(FONT16_CHS);
-    sprite3.loadFont(FONT16_CHS);
-    sprite4.loadFont(FONT16_CHS);
-    sprite5.loadFont(FONT16_CHS);
+    RadiotextSprite.loadFont(FONT16_CHS);
+    AdvRadiotextSprite.loadFont(FONT16_CHS);
+    EONSprite.loadFont(FONT16_CHS);
+    RTPlusSprite.loadFont(FONT16_CHS);
+    AFSprite.loadFont(FONT16_CHS);
+    SquelchSprite.loadFont(FONT16_CHS);
   } else {
-    sprite.loadFont(FONT16);
-    sprite2.loadFont(FONT16);
-    sprite3.loadFont(FONT16);
-    sprite4.loadFont(FONT16);
-    sprite5.loadFont(FONT16);
+    RadiotextSprite.loadFont(FONT16);
+    AdvRadiotextSprite.loadFont(FONT16);
+    EONSprite.loadFont(FONT16);
+    RTPlusSprite.loadFont(FONT16);
+    AFSprite.loadFont(FONT16);
+    SquelchSprite.loadFont(FONT16);
   }
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH) {
@@ -1836,23 +1844,26 @@ void ModeButtonPress() {
         Serial.end();
         if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
         if (USBmode) Serial.begin(19200); else Serial.begin(115200);
-        sprite.unloadFont();
-        sprite2.unloadFont();
-        sprite3.unloadFont();
-        sprite4.unloadFont();
-        sprite5.unloadFont();
+        RadiotextSprite.unloadFont();
+        AdvRadiotextSprite.unloadFont();
+        EONSprite.unloadFont();
+        RTPlusSprite.unloadFont();
+        AFSprite.unloadFont();
+        SquelchSprite.unloadFont();
         if (language == LANGUAGE_CHS) {
-          sprite.loadFont(FONT16_CHS);
-          sprite2.loadFont(FONT16_CHS);
-          sprite3.loadFont(FONT16_CHS);
-          sprite4.loadFont(FONT16_CHS);
-          sprite5.loadFont(FONT16_CHS);
+          RadiotextSprite.loadFont(FONT16_CHS);
+          AdvRadiotextSprite.loadFont(FONT16_CHS);
+          EONSprite.loadFont(FONT16_CHS);
+          RTPlusSprite.loadFont(FONT16_CHS);
+          AFSprite.loadFont(FONT16_CHS);
+          SquelchSprite.loadFont(FONT16_CHS);
         } else {
-          sprite.loadFont(FONT16);
-          sprite2.loadFont(FONT16);
-          sprite3.loadFont(FONT16);
-          sprite4.loadFont(FONT16);
-          sprite5.loadFont(FONT16);
+          RadiotextSprite.loadFont(FONT16);
+          AdvRadiotextSprite.loadFont(FONT16);
+          EONSprite.loadFont(FONT16);
+          RTPlusSprite.loadFont(FONT16);
+          AFSprite.loadFont(FONT16);
+          SquelchSprite.loadFont(FONT16);
         }
         doBandSelectionFM();
         doBandSelectionAM();
@@ -2193,10 +2204,10 @@ void ShowFreq(int mode) {
   detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A));
   detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B));
   if (band > BAND_GAP) {
-    sprite1.fillSprite(BackgroundColor);
-    sprite1.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-    sprite1.drawString(String(frequency_AM) + " ", 218, -6);
-    if (!screenmute) sprite1.pushSprite(46, 46);
+    FrequencySprite.fillSprite(BackgroundColor);
+    FrequencySprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+    FrequencySprite.drawString(String(frequency_AM) + " ", 218, -6);
+    if (!screenmute) FrequencySprite.pushSprite(46, 46);
     freqold = frequency_AM;
 
     if (band == BAND_SW && showSWMIBand) {
@@ -2218,14 +2229,14 @@ void ShowFreq(int mode) {
         freqold = freq;
       } else {
         if (mode == 0) {
-          sprite1.fillSprite(BackgroundColor);
-          sprite1.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          sprite1.drawString(String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100) + " ", 218, -6);
-          sprite1.pushSprite(46, 46);
+          FrequencySprite.fillSprite(BackgroundColor);
+          FrequencySprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FrequencySprite.drawString(String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100) + " ", 218, -6);
+          FrequencySprite.pushSprite(46, 46);
           freqold = freq;
         } else if (mode == 1) {
-          sprite1.fillSprite(BackgroundColor);
-          sprite1.pushSprite(46, 46);
+          FrequencySprite.fillSprite(BackgroundColor);
+          FrequencySprite.pushSprite(46, 46);
         }
       }
     }
@@ -2258,16 +2269,16 @@ void ShowFreq(int mode) {
 
   if (!rdsflagreset && !screenmute && !afscreen) {
     ShowRDSLogo(false);
-    sprite.fillSprite(BackgroundColor);
-    sprite2.fillSprite(BackgroundColor);
+    RadiotextSprite.fillSprite(BackgroundColor);
+    AdvRadiotextSprite.fillSprite(BackgroundColor);
     if (!advancedRDS) {
       tft.fillCircle(314, 223, 2, GreyoutColor);
       tft.fillCircle(314, 234, 2, GreyoutColor);
-      sprite.pushSprite(38, 220);
+      RadiotextSprite.pushSprite(38, 220);
     } else {
       tft.fillCircle(203, 223, 2, GreyoutColor);
       tft.fillCircle(203, 234, 2, GreyoutColor);
-      sprite2.pushSprite(35, 220);
+      AdvRadiotextSprite.pushSprite(35, 220);
     }
     rdsflagreset = true;
   }
@@ -2530,27 +2541,26 @@ void doSquelch() {
     if (unit == 2) SquelchShow = round((float(Squelch) / 10.0 - 10.0 * log10(75) - 90.0) * 10.0) / 10;
 
     if (Squelch > 920) Squelch = 920;
-    if (showsquelch && !advancedRDS && !afscreen) {
+
+    if (!screenmute && showsquelch && !advancedRDS && !afscreen) {
       if (!menu && (Squelch > Squelchold + 2 || Squelch < Squelchold - 2)) {
-        if (Squelchold == -100) {
-          if (Squelch != Squelchold) tftPrint(-1, myLanguage[language][33], 235, 145, BackgroundColor, BackgroundColor, 16);
-        } else if (Squelchold == 920) {
-          if (Squelch != Squelchold) tftPrint(-1, "ST", 235, 145, BackgroundColor, BackgroundColor, 16);
-        } else {
-          if (Squelch != Squelchold) tftPrint(-1, String(SquelchShowold), 235, 145, BackgroundColor, BackgroundColor, 16);
-        }
+        SquelchSprite.fillSprite(BackgroundColor);
+        SquelchSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+
         if (Squelch == -100) {
-          if (Squelch != Squelchold) tftPrint(-1, myLanguage[language][33], 235, 145, PrimaryColor, PrimaryColorSmooth, 16);
+          SquelchSprite.drawString(String(myLanguage[language][33]), 0, 0);
         } else if (Squelch == 920) {
-          tftPrint(-1, "ST", 235, 145, PrimaryColor, PrimaryColorSmooth, 16);
+          SquelchSprite.drawString("ST", 0, 0);
         } else {
-          if (Squelch != Squelchold) tftPrint(-1, String(SquelchShow), 235, 145, PrimaryColor, PrimaryColorSmooth, 16);
+          SquelchSprite.drawString(String(SquelchShow), 0, 0);
         }
         SquelchShowold = SquelchShow;
+        if (Squelch != Squelchold) SquelchSprite.pushSprite(235, 145);
       }
       Squelchold = Squelch;
     }
   }
+
   if ((XDRGTKUSB || XDRGTKTCP)) {
     if (!XDRMute) {
       if (Squelch != -1) {
@@ -2576,20 +2586,17 @@ void doSquelch() {
       }
       if (!screenmute && showsquelch && !advancedRDS && !afscreen) {
         if (Squelch != Squelchold) {
-          if (Squelchold == -1) {
-            if (Squelch != Squelchold) tftPrint(-1, "ST", 235, 145, BackgroundColor, BackgroundColor, 16);
-          } else if (Squelchold == 0) {
-            if (Squelch != Squelchold) tftPrint(-1, myLanguage[language][33], 235, 145, BackgroundColor, BackgroundColor, 16);
-          } else {
-            if (Squelch != Squelchold) tftPrint(-1, String(SquelchShowold), 235, 145, BackgroundColor, BackgroundColor, 16);
-          }
+          SquelchSprite.fillSprite(BackgroundColor);
+          SquelchSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+
           if (Squelch == -1) {
-            if (Squelch != Squelchold) tftPrint(-1, "ST", 235, 145, PrimaryColor, PrimaryColorSmooth, 16);
+            SquelchSprite.drawString("ST", 0, 0);
           } else if (Squelch == 0) {
-            if (Squelch != Squelchold) tftPrint(-1, myLanguage[language][33], 235, 145, PrimaryColor, PrimaryColorSmooth, 16);
+            SquelchSprite.drawString(String(myLanguage[language][33]), 0, 0);
           } else {
-            if (Squelch != Squelchold) tftPrint(-1, String(SquelchShow), 235, 145, PrimaryColor, PrimaryColorSmooth, 16);
+            SquelchSprite.drawString(String(SquelchShow), 0, 0);
           }
+          if (Squelch != Squelchold) SquelchSprite.pushSprite(235, 145);
           Squelchold = Squelch;
           SquelchShowold = SquelchShow;
         }

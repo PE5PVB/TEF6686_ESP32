@@ -102,11 +102,11 @@ extern TFT_eSPI tft;
 extern TEF6686 radio;
 extern WiFiClient RemoteClient;
 extern WiFiUDP Udp;
-extern TFT_eSprite sprite;
-extern TFT_eSprite sprite2;
-extern TFT_eSprite sprite3;
-extern TFT_eSprite sprite4;
-extern TFT_eSprite sprite5;
+extern TFT_eSprite RadiotextSprite;
+extern TFT_eSprite AdvRadiotextSprite;
+extern TFT_eSprite EONSprite;
+extern TFT_eSprite RTPlusSprite;
+extern TFT_eSprite AFSprite;
 
 void ShowAdvancedRDS();
 void readRds();
