@@ -144,6 +144,7 @@
 #define EE_BYTE_LOWLEVELSET         47
 #define EE_BYTE_BWSET_FM            48
 #define EE_BYTE_BWSET_AM            49
+#define EE_BYTE_BANDAUTOSW          50
 #define EE_BYTE_MEMORYPOS           51
 #define EE_BYTE_REGION              52
 #define EE_BYTE_RDS_UNDERSCORE      53
