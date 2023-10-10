@@ -350,7 +350,6 @@ void TEF6686::readRDS(byte showrdserrors)
 {
   uint16_t rdsStat;
   uint8_t offset;
-  bool rdsReady;
   if (rds.filter) {
     devTEF_Radio_Get_RDS_Status(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
   } else {
@@ -364,9 +363,7 @@ void TEF6686::readRDS(byte showrdserrors)
     }
   }
 
-  bool bitValue = (rdsStat & (1 << 9)) != 0;
-
-  if (bitValue) {
+  if (rds.rdsA > 0 || rds.rdsB > 0 || rds.rdsC > 0 || rds.rdsD > 0) {
     rds.hasRDS = true;                                                                                    // RDS decoder synchronized and data available
     bitStartTime = 0;
   } else {
@@ -383,9 +380,7 @@ void TEF6686::readRDS(byte showrdserrors)
   rdsCerrorThreshold = (((rds.rdsErr >> 10) & 0x03) > showrdserrors);
   rdsDerrorThreshold = (((rds.rdsErr >> 8) & 0x03) > showrdserrors);
 
-  if ((rdsStat & (1 << 15))) rdsReady = true;
-
-  if (rdsReady) {                                                                                       // We have all data to decode... let's go...
+  if (bitRead(rdsStat, 9)) {                                                                                      // We have all data to decode... let's go...
 
     //PI decoder
     if (!rdsAerrorThreshold && afreset) {
@@ -482,23 +477,17 @@ void TEF6686::readRDS(byte showrdserrors)
           //PS decoder
           if (showrdserrors == 3 || (!rdsBerrorThreshold && !rdsDerrorThreshold)) {
             offset = rds.rdsB & 0x03;                                                           // Let's get the character offset for PS
-            offsetold = offset;
-            if (offset == 0 && offsetold != 3) psincomplete = false; else psincomplete = true;  // Routine to check if all PS blocks are available
-            if (offset == 1 && offsetold != 0) psincomplete = false; else psincomplete = true;
-            if (offset == 2 && offsetold != 1) psincomplete = false; else psincomplete = true;
-            if (offset == 3 && offsetold != 2) psincomplete = false; else psincomplete = true;
 
             ps_buffer2[(offset * 2) + 0] = ps_buffer[(offset * 2) + 0];                         // Make a copy of the PS buffer
             ps_buffer2[(offset * 2) + 1] = ps_buffer[(offset * 2) + 1];
-            ps_buffer2[(offset * 2)  + 2] = '\0';                                               // Endmarker of segment
+            ps_buffer2[8] = '\0';                                                               // Endmarker
 
             ps_buffer[(offset * 2)  + 0] = rds.rdsD >> 8;                                       // First character of segment
             ps_buffer[(offset * 2)  + 1] = rds.rdsD & 0xFF;                                     // Second character of segment
-            ps_buffer[(offset * 2)  + 2] = '\0';                                                // Endmarker of segment
+            ps_buffer[8] = '\0';                                                                // Endmarker
 
-
-            if (offset == 3 && ps_process && (!psincomplete || showrdserrors == 3)) {           // Last chars are received
-              if (strcmp(ps_buffer, ps_buffer2) == 0) {                                         // When difference between old and new, let's go...
+            if (offset == 3 && ps_process) {                                                    // Last chars are received
+              if (strcmp(ps_buffer, ps_buffer2) == 0) {                                         // When no difference between current and buffer, let's go...
                 RDScharConverter(ps_buffer2, PStext, sizeof(PStext) / sizeof(wchar_t), true);   // Convert 8 bit ASCII to 16 bit ASCII
                 String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
                 rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);                 // Make sure PS does not exceed 8 characters
@@ -510,7 +499,7 @@ void TEF6686::readRDS(byte showrdserrors)
               RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), true);      // Convert 8 bit ASCII to 16 bit ASCII
               String utf8String = convertToUTF8(PStext);                                        // Convert RDS characterset to ASCII
               rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);
-              if (ps_counter >= 24 && !psincomplete) ps_process = true;                         // OK, we had a few runs, now let's go the idle PS writing
+              if (ps_counter > 3) ps_process = true;                                            // OK, we had one runs, now let's go the idle PS writing
             }
 
             if (offset == 0) rds.hasDynamicPTY = bitRead(rds.rdsB, 2) & 0x1F;                   // Dynamic PTY flag

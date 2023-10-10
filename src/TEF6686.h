@@ -297,8 +297,6 @@ class TEF6686 {
     bool rdsCerrorThreshold;
     bool rdsDerrorThreshold;
     byte afmethodcounter;
-	byte offsetold;
-	bool psincomplete;
 };
 
 #endif
