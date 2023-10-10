@@ -50,22 +50,34 @@ void Communication() {
               ScreensaverTimerReopen();
             }
             unsigned int tempfreq = (stlfreq.toInt()) / 1000;
-            if (tempfreq >= FREQ_LW_LOW_EDGE_MIN && tempfreq <= FREQ_LW_HIGH_EDGE_MAX && band != BAND_LW) {
-              band = BAND_LW;
+            if (tempfreq >= FREQ_LW_LOW_EDGE_MIN && tempfreq <= FREQ_LW_HIGH_EDGE_MAX) {
               frequency_LW = tempfreq;
-              SelectBand();
-            } else if (tempfreq >= FREQ_MW_LOW_EDGE_MIN_9K && tempfreq <= FREQ_MW_HIGH_EDGE_MAX_9K && band != BAND_MW) {
-              band = BAND_MW;
+              if (band != BAND_LW) {
+                band = BAND_LW;
+                SelectBand();
+              } else {
+                radio.SetFreqAM(frequency_LW);
+				frequency_AM = frequency_LW;
+              }
+            } else if (tempfreq >= FREQ_MW_LOW_EDGE_MIN_9K && tempfreq <= FREQ_MW_HIGH_EDGE_MAX_9K) {
               frequency_MW = tempfreq;
-              SelectBand();
+              if (band != BAND_MW) {
+                band = BAND_MW;
+                SelectBand();
+              } else {
+                radio.SetFreqAM(frequency_MW);
+				frequency_AM = frequency_MW;
+              }
             } else {
+              frequency_SW = tempfreq;
               if (band != BAND_SW) {
-                frequency_SW = tempfreq;
                 band = BAND_SW;
                 SelectBand();
+              } else {
+                radio.SetFreqAM(frequency_SW);
+				frequency_AM = frequency_SW;
               }
             }
-            radio.SetFreqAM(frequency_AM);
           }
           radio.clearRDS(fullsearchrds);
           ShowFreq(0);
