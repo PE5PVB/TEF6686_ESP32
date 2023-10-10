@@ -50,11 +50,11 @@ void Communication() {
               ScreensaverTimerReopen();
             }
             unsigned int tempfreq = (stlfreq.toInt()) / 1000;
-            if (frequency_AM >= FREQ_LW_LOW_EDGE_MIN && frequency_AM <= FREQ_LW_HIGH_EDGE_MAX && band != BAND_LW) {
+            if (tempfreq >= FREQ_LW_LOW_EDGE_MIN && tempfreq <= FREQ_LW_HIGH_EDGE_MAX && band != BAND_LW) {
               band = BAND_LW;
               frequency_LW = tempfreq;
               SelectBand();
-            } else if (frequency_AM >= FREQ_MW_LOW_EDGE_MIN_9K && frequency_AM <= FREQ_MW_HIGH_EDGE_MAX_9K && band != BAND_MW) {
+            } else if (tempfreq >= FREQ_MW_LOW_EDGE_MIN_9K && tempfreq <= FREQ_MW_HIGH_EDGE_MAX_9K && band != BAND_MW) {
               band = BAND_MW;
               frequency_MW = tempfreq;
               SelectBand();
