@@ -5,7 +5,6 @@
 #include <Wire.h>
 #include <math.h>
 #include <TFT_eSPI.h>               // https://github.com/Bodmer/TFT_eSPI
-#include <TimeLib.h>                // https://github.com/PaulStoffregen/Time
 #include <Hash.h>                   // https://github.com/bbx10/Hash_tng
 #include "src/WiFiConnect.h"
 #include "src/WiFiConnectParam.h"
