@@ -282,7 +282,6 @@ class TEF6686 {
     wchar_t PStext[9] = L"";
     wchar_t EONPStext[20][9];
     wchar_t PTYNtext[9] = L"";
-    byte ps_counter;
     char RDSplus1[45];
     char RDSplus2[45];
     uint16_t  currentfreq;
@@ -297,6 +296,10 @@ class TEF6686 {
     bool rdsCerrorThreshold;
     bool rdsDerrorThreshold;
     byte afmethodcounter;
+	bool packet0;
+	bool packet1;
+	bool packet2;
+	bool packet3;
 };
 
 #endif

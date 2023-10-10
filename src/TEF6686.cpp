@@ -495,11 +495,14 @@ void TEF6686::readRDS(byte showrdserrors)
             }
 
             if (!ps_process) {                                                                  // Let's get 2 runs of 8 PS characters fast and without refresh
-              ps_counter ++;                                                                    // Let's count each run
+              if (offset == 0) packet0 = true;
+              if (offset == 1) packet1 = true;
+              if (offset == 2) packet2 = true;
+              if (offset == 3) packet3 = true;
               RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), true);      // Convert 8 bit ASCII to 16 bit ASCII
               String utf8String = convertToUTF8(PStext);                                        // Convert RDS characterset to ASCII
               rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);
-              if (ps_counter > 3) ps_process = true;                                            // OK, we had one runs, now let's go the idle PS writing
+              if (packet0 && packet1 && packet2 && packet3) ps_process = true;                  // OK, we had one runs, now let's go the idle PS writing
             }
 
             if (offset == 0) rds.hasDynamicPTY = bitRead(rds.rdsB, 2) & 0x1F;                   // Dynamic PTY flag
@@ -963,7 +966,6 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.hasCompressed = false;
   rds.hasDynamicPTY = false;
   rds.hasStereo = false;
-  ps_counter = 0;
   af_counter = 0;
   eon_counter = 0;
   afreset = true;
@@ -980,6 +982,10 @@ void TEF6686::clearRDS (bool fullsearchrds)
   errorfreepi = false;
   afmethodB = false;
   afmethodcounter = 0;
+  packet0 = false;
+  packet1 = false;
+  packet2 = false;
+  packet3 = false;
 }
 
 void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {
