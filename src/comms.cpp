@@ -348,33 +348,36 @@ void XDRGTKRoutine() {
         freqtemp = atoi(buff + 1);
         if (seek) seek = false;
         if (freqtemp >= LWLowEdgeSet && freqtemp <= LWHighEdgeSet) {
-          frequency_AM = freqtemp;
+		  frequency_LW = freqtemp;
+		  frequency_AM = freqtemp;
           if (afscreen || advancedRDS) BuildDisplay();
           if (band != BAND_LW) {
             band = BAND_LW;
             SelectBand();
           }
-          radio.SetFreqAM(frequency_AM);
+          radio.SetFreqAM(frequency_LW);
           DataPrint("M1\n");
         }
         if (freqtemp >= MWLowEdgeSet && freqtemp <= MWHighEdgeSet) {
-          frequency_AM = freqtemp;
+		  frequency_AM = freqtemp;
+		  frequency_MW = freqtemp;
           if (afscreen || advancedRDS) BuildDisplay();
           if (band != BAND_MW) {
             band = BAND_MW;
             SelectBand();
           }
-          radio.SetFreqAM(frequency_AM);
+          radio.SetFreqAM(frequency_MW);
           DataPrint("M1\n");
         }
         if (freqtemp >= SWLowEdgeSet && freqtemp <= SWHighEdgeSet) {
-          frequency_AM = freqtemp;
+		  frequency_SW = freqtemp;
+		  frequency_AM = freqtemp;
           if (afscreen || advancedRDS) BuildDisplay();
           if (band != BAND_SW) {
             band = BAND_SW;
             SelectBand();
           }
-          radio.SetFreqAM(frequency_AM);
+          radio.SetFreqAM(frequency_SW);
           DataPrint("M1\n");
         }
         if (freqtemp >= FREQ_FM_START && freqtemp <= FREQ_FM_END) {
