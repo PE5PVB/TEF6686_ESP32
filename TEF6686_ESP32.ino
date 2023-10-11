@@ -425,10 +425,10 @@ void setup() {
   BWsetAM = EEPROM.readByte(EE_BYTE_BWSET_AM);
   nowToggleSWMIBand = EEPROM.readByte(EE_BYTE_BANDAUTOSW);
 
-  LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;   // later will read from flash
-  LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX; // later will read from flash
-  MWLowEdgeSet = region == 0 ? FREQ_MW_LOW_EDGE_MIN_9K : FREQ_MW_LOW_EDGE_MIN_10K;      // later will read from flash
-  MWHighEdgeSet = region == 0 ? FREQ_MW_HIGH_EDGE_MAX_9K : FREQ_MW_HIGH_EDGE_MAX_10K;   // later will read from flash
+  LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;
+  LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX;
+  MWLowEdgeSet = region == 0 ? FREQ_MW_LOW_EDGE_MIN_9K : FREQ_MW_LOW_EDGE_MIN_10K;
+  MWHighEdgeSet = region == 0 ? FREQ_MW_HIGH_EDGE_MAX_9K : FREQ_MW_HIGH_EDGE_MAX_10K;
   SWLowEdgeSet = FREQ_SW_LOW_EDGE_MIN;
   SWHighEdgeSet = FREQ_SW_HIGH_EDGE_MAX;
   if (LowEdgeOIRTSet < FREQ_FM_OIRT_START || LowEdgeOIRTSet > FREQ_FM_OIRT_END) LowEdgeOIRTSet = FREQ_FM_OIRT_START;
@@ -1280,7 +1280,7 @@ void LimitAMFrequency() {
     case BAND_MW:
       frequency_AM = frequency_MW;
       if (frequency_AM > MWHighEdgeSet || frequency_AM < MWLowEdgeSet) {
-        frequency_AM = MWLowEdgeSet; // take care of 9K/10K step
+        frequency_AM = MWLowEdgeSet;
       }
       break;
     case BAND_SW:
@@ -2200,7 +2200,7 @@ void DoMemoryPosTune() {
 
 void ShowFreq(int mode) {
   if (!setupmode) {
-    if (band != BAND_FM && band != BAND_OIRT) { // Fix Me :take care of 9K/10K Step
+    if (band != BAND_FM && band != BAND_OIRT) {
       if (freqold < 2000 && frequency_AM >= 2000 && stepsize == 0) if (frequency_AM != 27000 && freqold != 144) radio.SetFreqAM(2000);
       if (freqold >= 2000 && frequency_AM < 2000 && stepsize == 0) if (frequency_AM != 144 && freqold != 27000) radio.SetFreqAM(1998);
     }
@@ -2212,13 +2212,17 @@ void ShowFreq(int mode) {
     FrequencySprite.fillSprite(BackgroundColor);
     FrequencySprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
     FrequencySprite.drawString(String(frequency_AM) + " ", 218, -6);
-    if (!screenmute) FrequencySprite.pushSprite(46, 46);
-    freqold = frequency_AM;
-
+    FrequencySprite.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
+    FrequencySprite.setTextDatum(TL_DATUM);
+    FrequencySprite.loadFont(FONT16);
     if (band == BAND_SW && showSWMIBand) {
       DivdeSWMIBand();
       updateSWMIBand();
     }
+    if (!screenmute) FrequencySprite.pushSprite(46, 46);
+    FrequencySprite.setTextDatum(TR_DATUM);
+    FrequencySprite.loadFont(FREQFONT);
+    freqold = frequency_AM;
   } else {
     unsigned int freq = 0;
     if (band == BAND_FM) freq = frequency + ConverterSet * 100;
@@ -2707,7 +2711,7 @@ void updateSWMIBand() {
     case SW_MI_BAND_90M:
     case SW_MI_BAND_120M:
     case SW_MI_BAND_160M:
-      tftPrint(-1, SWMIBandstring, 50, 51, SecondaryColor, SecondaryColorSmooth, 16);
+      FrequencySprite.drawString(SWMIBandstring + " ", 0, 0);
       beepresetstart = true;
       if (edgebeep && beepresetstop) {
         EdgeBeeper();
@@ -3029,7 +3033,7 @@ void TuneDown() {
   if (stepsize == 0) {
     if (band > BAND_GAP) {
       if (frequency_AM <= MWHighEdgeSet) {
-        if (frequency_AM == 2000) { // Fix Me :take care of 9K/10K Step
+        if (frequency_AM == 2000) {
           frequency_AM = 1998;
           temp = 0;
         } else {
