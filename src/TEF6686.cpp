@@ -4,8 +4,6 @@
 #include <TimeLib.h>                // https://github.com/PaulStoffregen/Time
 
 unsigned long rdstimer = 0;
-unsigned long bitStartTime = 0;
-bool lastBitState = false;
 
 void TEF6686::TestAFEON() {
   uint16_t status;
@@ -360,12 +358,7 @@ void TEF6686::readRDS(byte showrdserrors)
     }
   }
 
-  if (rds.rdsA > 0 || rds.rdsB > 0 || rds.rdsC > 0 || rds.rdsD > 0) {
-    rds.hasRDS = true;                                                                                    // RDS decoder synchronized and data available
-    bitStartTime = 0;
-  } else {
-    if (bitStartTime == 0) bitStartTime = millis(); else if (millis() - bitStartTime >= 87) rds.hasRDS = false;
-  }
+  if (highByte(rds.rdsErr) != 0xff) rds.hasRDS = true; else rds.hasRDS = false;                                      // RDS decoder synchronized and data available
 
   rds.rdsAerror = (((rds.rdsErr >> 14) & 0x03) > 0);
   rds.rdsBerror = (((rds.rdsErr >> 12) & 0x03) > 0);
