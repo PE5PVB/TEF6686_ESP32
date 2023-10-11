@@ -687,6 +687,11 @@ void BuildAdvancedRDS() {
   haseonold = false;
   BWreset = true;
   pinstringold = "";
+  hasrtplusold = false;
+  eonstringold = "";
+  afstringold = "";
+  rtplusstringold = "";
+  
   ShowMemoryPos();
 }
 
