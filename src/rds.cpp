@@ -815,6 +815,7 @@ void showRadioText() {
       Udp.endPacket();
     }
   }
+  if (RTold != (radio.rds.stationText + " " + radio.rds.stationText32)) xPos = 0;
   RTold = radio.rds.stationText + " " + radio.rds.stationText32;
 }
 
