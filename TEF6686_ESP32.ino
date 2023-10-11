@@ -1236,6 +1236,9 @@ void BANDBUTTONPress() {
               ToggleBand(band);
               StoreFrequency();
               SelectBand();
+              if (XDRGTKUSB || XDRGTKTCP) {
+                if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10)); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10)); else DataPrint("M1\nT" + String(frequency_AM));
+              }
             }
             ScreensaverTimerRestart();
           }
@@ -2113,7 +2116,7 @@ void KeyUp() {
           break;
       }
       if (XDRGTKUSB || XDRGTKTCP) {
-        if (band == BAND_FM) DataPrint("T" + String(frequency * 10)); else DataPrint("T" + String(frequency_AM));
+        if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10)); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10)); else DataPrint("M1\nT" + String(frequency_AM));
       }
       radio.clearRDS(fullsearchrds);
       change = 0;
@@ -2159,7 +2162,7 @@ void KeyDown() {
           break;
       }
       if (XDRGTKUSB || XDRGTKTCP) {
-        if (band == BAND_FM) DataPrint("T" + String(frequency * 10)); else DataPrint("T" + String(frequency_AM));
+        if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10)); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10)); else DataPrint("M1\nT" + String(frequency_AM));
       }
       radio.clearRDS(fullsearchrds);
       change = 0;
@@ -3119,7 +3122,7 @@ void Seek(bool mode) {
   delay(50);
   ShowFreq(0);
   if (XDRGTKUSB || XDRGTKTCP) {
-    if (band == BAND_FM) DataPrint("T" + String(frequency * 10) + "\n"); else DataPrint("T" + String(frequency_AM) + "\n");
+    if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10)); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10)); else DataPrint("M1\nT" + String(frequency_AM));
   }
 
   if (band < BAND_GAP) {
