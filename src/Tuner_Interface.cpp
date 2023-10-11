@@ -1,5 +1,4 @@
 #include "TEF6686.h"
-#include "Tuner_Patch_Lithio_V101_p119.h"
 #include "Tuner_Patch_Lithio_V102_p224.h"
 #include "Tuner_Patch_Lithio_V205_p512.h"
 #include <Wire.h>
@@ -117,10 +116,6 @@ void Tuner_Patch(byte TEF) {
   Wire.write(0x74);
   Wire.endTransmission();
   switch (TEF) {
-    case 101:
-      Tuner_Patch_Load(pPatchBytes101, PatchSize101);
-      break;
-
     case 102:
       Tuner_Patch_Load(pPatchBytes102, PatchSize102);
       break;
@@ -141,10 +136,6 @@ void Tuner_Patch(byte TEF) {
   Wire.write(0x75);
   Wire.endTransmission();
   switch (TEF) {
-    case 101:
-      Tuner_Patch_Load(pLutBytes101, LutSize101);
-      break;
-
     case 102:
       Tuner_Patch_Load(pLutBytes102, LutSize102);
       break;

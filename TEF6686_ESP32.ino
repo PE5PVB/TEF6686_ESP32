@@ -610,7 +610,7 @@ void setup() {
 
   TEF = EEPROM.readByte(EE_BYTE_TEF);
 
-  if (TEF != 101 && TEF != 102 && TEF != 205) SetTunerPatch();
+  if (TEF != 102 && TEF != 205) SetTunerPatch();
 
   radio.init(TEF);
   uint16_t device;
@@ -3148,7 +3148,7 @@ void Seek(bool mode) {
 }
 
 void SetTunerPatch() {
-  if (TEF != 101 && TEF != 102 && TEF != 205) {
+  if (TEF != 102 && TEF != 205) {
     radio.init(102);
     uint16_t device;
     uint16_t hw;
