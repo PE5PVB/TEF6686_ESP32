@@ -9,7 +9,6 @@ bool lastBitState = false;
 
 void TEF6686::TestAFEON() {
   uint16_t status;
-  uint16_t rdsStat;
   uint16_t dummy1;
   uint16_t dummy2;
   int8_t dummy3;
@@ -31,8 +30,8 @@ void TEF6686::TestAFEON() {
       if (afoffset > -125 || afoffset < 125) {
         devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, af[x].frequency);
         delay(200);
-        devTEF_Radio_Get_RDS_Status(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
-        if (rdsStat & (1 << 9)) {
+        devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
+        if (rds.rdsStat & (1 << 9)) {
           if (rds.rdsA == rds.correctPI && (((rds.rdsErr >> 14) & 0x03) == 0)) {
             af[x].checked = true;
             af[x].afvalid = true;
@@ -53,7 +52,6 @@ void TEF6686::TestAFEON() {
 uint16_t TEF6686::TestAF() {
   if (af_counter != 0) {
     uint16_t status;
-    uint16_t rdsStat;
     uint16_t dummy1;
     uint16_t dummy2;
     int8_t dummy3;
@@ -71,7 +69,7 @@ uint16_t TEF6686::TestAF() {
     byte timing;
 
     devTEF_Radio_Get_Quality_Status(&status, &currentlevel, &currentusn, &currentwam, &currentoffset, &dummy1, &dummy2, &dummy3);
-    devTEF_Radio_Get_RDS_Status(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
+    devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
 
     for (int x = 0; x < af_counter; x++) {
       timing = 0;
@@ -97,8 +95,8 @@ uint16_t TEF6686::TestAF() {
     if (af_counter != 0 && af[highestIndex].afvalid && af[highestIndex].score > (currentlevel - currentusn - currentwam) && (af[highestIndex].score - (currentlevel - currentusn - currentwam)) >= 70) {
       devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, af[highestIndex].frequency);
       delay(200);
-      devTEF_Radio_Get_RDS_Status(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
-      if (rdsStat & (1 << 9)) {
+      devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
+      if (rds.rdsStat & (1 << 9)) {
         if (rds.rdsA == rds.correctPI && (((rds.rdsErr >> 14) & 0x03) == 0)) {
           currentfreq = af[highestIndex].frequency;
           for (byte y = 0; y < 50; y++) {
@@ -348,17 +346,16 @@ bool TEF6686::getStatusAM(int16_t &level, uint16_t &noise, uint16_t &cochannel, 
 
 void TEF6686::readRDS(byte showrdserrors)
 {
-  uint16_t rdsStat;
   uint8_t offset;
   if (rds.filter) {
-    devTEF_Radio_Get_RDS_Status(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
+    devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
   } else {
     if (millis() >= rdstimer + 87) {
       rdstimer += 87;
-      devTEF_Radio_Get_RDS_Data(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
+      devTEF_Radio_Get_RDS_Data(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
 
-      if ((rdsStat & (1 << 14))) {
-        for (int i = 0; i < 22; i++) devTEF_Radio_Get_RDS_Data(&rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
+      if ((rds.rdsStat & (1 << 14))) {
+        for (int i = 0; i < 22; i++) devTEF_Radio_Get_RDS_Data(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
       }
     }
   }
@@ -380,7 +377,7 @@ void TEF6686::readRDS(byte showrdserrors)
   rdsCerrorThreshold = (((rds.rdsErr >> 10) & 0x03) > showrdserrors);
   rdsDerrorThreshold = (((rds.rdsErr >> 8) & 0x03) > showrdserrors);
 
-  if (bitRead(rdsStat, 9)) {                                                                                      // We have all data to decode... let's go...
+  if (bitRead(rds.rdsStat, 9)) {                                                                                      // We have all data to decode... let's go...
 
     //PI decoder
     if (!rdsAerrorThreshold && afreset) {
