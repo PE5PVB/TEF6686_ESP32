@@ -105,10 +105,10 @@
 #define SW_MI_BAND_160M     160
 
 // EEPROM index defines
-#define EE_PRESETS_CNT              30
-#define EE_CHECKBYTE_VALUE          33 // 0 ~ 255,add new entry, change for new value 
+#define EE_PRESETS_CNT              99
+#define EE_CHECKBYTE_VALUE          34 // 0 ~ 255,add new entry, change for new value 
 
-#define EE_TOTAL_CNT                278
+#define EE_TOTAL_CNT                617
 #define EE_UINT16_FREQUENCY_FM      0
 #define EE_BYTE_VOLSET              4
 #define EE_BYTE_STEREO              5
@@ -154,36 +154,38 @@
 #define EE_BYTE_SHOWSWMIBAND        57
 #define EE_BYTE_RDS_FILTER          58
 #define EE_BYTE_RDS_PIERRORS        59
-#define EE_PRESETS_BAND_START       60
-#define EE_PRESETS_START            100
+#define EE_BYTE_SHOWSQUELCH         60
+#define EE_BYTE_SHOWMODULATION      61
+#define EE_BYTE_AM_NB               62
+#define EE_BYTE_FM_NB               63
+#define EE_BYTE_AUDIOMODE           64
+#define EE_BYTE_TOUCH_ROTATING      65
+#define EE_BYTE_HARDWARE_MODEL      66
+#define EE_BYTE_POWEROPTIONS        67
+#define EE_BYTE_CURRENTTHEME        68
+#define EE_BYTE_FMDEFAULTSTEPSIZE   69
+#define EE_BYTE_SCREENSAVERSET      70
+#define EE_BYTE_UNIT                71
+#define EE_BYTE_AF                  72
+#define EE_BYTE_BATTERY_OPTIONS     73
+#define EE_BYTE_AM_CO_DECT          74
+#define EE_BYTE_AM_CO_DECT_COUNT    75
+#define EE_BYTE_AM_RF_AGC           76
+#define EE_BYTE_FM_DEEMPHASIS       77
+#define EE_UINT16_FREQUENCY_LW      78
+#define EE_UINT16_FREQUENCY_MW      82
+#define EE_UINT16_FREQUENCY_SW      86
+#define EE_UINT16_LOWEDGEOIRTSET    90
+#define EE_UINT16_HIGHEDGEOIRTSET   94
+#define EE_INT16_AMLEVELOFFSET      98
+#define EE_UINT16_FREQUENCY_OIRT    102
+#define EE_STRING_XDRGTK_KEY        106  // 11 byte
+#define EE_PRESETS_BAND_START       118
+#define EE_PRESETS_START            220
 #define EE_PRESETS_FREQUENCY        8750
 
-#define EE_UINT16_FREQUENCY_LW      221
-#define EE_UINT16_FREQUENCY_MW      225
-#define EE_UINT16_FREQUENCY_SW      229
-#define EE_STRING_XDRGTK_KEY        233  // 11 byte
-#define EE_BYTE_SHOWSQUELCH         244
-#define EE_BYTE_SHOWMODULATION      245
-#define EE_BYTE_AM_NB               246
-#define EE_BYTE_FM_NB               247
-#define EE_BYTE_AUDIOMODE           248
-#define EE_BYTE_TOUCH_ROTATING      249
-#define EE_UINT16_LOWEDGEOIRTSET    250
-#define EE_UINT16_HIGHEDGEOIRTSET   254
-#define EE_BYTE_HARDWARE_MODEL      258
-#define EE_BYTE_POWEROPTIONS        259
-#define EE_BYTE_CURRENTTHEME        260
-#define EE_BYTE_FMDEFAULTSTEPSIZE   261
-#define EE_BYTE_SCREENSAVERSET      262
-#define EE_INT16_AMLEVELOFFSET      263
-#define EE_BYTE_UNIT                267
-#define EE_BYTE_AF                  268
-#define EE_UINT16_FREQUENCY_OIRT    269
-#define EE_BYTE_BATTERY_OPTIONS     273
-#define EE_BYTE_AM_CO_DECT          274
-#define EE_BYTE_AM_CO_DECT_COUNT    275
-#define EE_BYTE_AM_RF_AGC           276
-#define EE_BYTE_FM_DEEMPHASIS       277
+
+
 // End of EEPROM index defines
 
 static const char* const unitString[] = {"dBμV", "dBf", "dBm"};
