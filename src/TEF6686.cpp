@@ -557,7 +557,6 @@ void TEF6686::readRDS(byte showrdserrors)
 
                   if (!isValuePresent) {
                     af[af_counter].frequency = buffer1;
-                    if (buffer0 == currentfreq && buffer0 < buffer1) af[af_counter].regional = true;
                     if (af_counter < 50) af_counter++;
                   }
 
