@@ -517,9 +517,8 @@ void TEF6686::readRDS(byte showrdserrors)
             //AF decoder
             if (rdsblock == 0) {                                                                // Only when in GROUP 0A
 
-              if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250) {                             // Check for AF method B
-                if (afmethodcounter > 2) afmethodB = true;
-                afmethodcounter = 0;
+              if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == currentfreq) {  // Check for AF method B
+                afmethodB = true;
               }
 
               if (((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) > 224) && ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 250)) afinit = true;
@@ -531,6 +530,10 @@ void TEF6686::readRDS(byte showrdserrors)
                   if ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) buffer0 = (rds.rdsC >> 8) * 10 + 8750; else buffer0 = 0;
                   if ((rds.rdsC & 0xFF) > 0 && (rds.rdsC & 0xFF) < 205) buffer1 = (rds.rdsC & 0xFF) * 10 + 8750; else buffer1 = 0;
                   if (buffer0 != 0 || buffer1 != 0) rds.hasAF = true;
+
+                  if (buffer1 == currentfreq && buffer0 > buffer1) for (int x = 0; x < af_counter; x++) if (af[x].frequency == buffer0) af[x].regional = true;
+                  if (buffer0 == currentfreq && buffer0 > buffer1) for (int x = 0; x < af_counter; x++) if (af[x].frequency == buffer1) af[x].regional = true;
+
                   if (buffer0 == currentfreq || buffer1 == currentfreq) afmethodcounter++;
 
                   bool isValuePresent = false;
@@ -543,7 +546,6 @@ void TEF6686::readRDS(byte showrdserrors)
 
                   if (!isValuePresent) {
                     af[af_counter].frequency = buffer0;
-                    if (buffer1 == currentfreq && buffer0 > buffer1) af[af_counter].regional = true;
                     if (af_counter < 50) af_counter++;
                   }
 
@@ -776,8 +778,8 @@ void TEF6686::readRDS(byte showrdserrors)
                 RDSplus1[i] = 0x20;
                 RDSplus2[i] = 0x20;
               }
-			  RDSplus1[44] = 0;
-			  RDSplus2[44] = 0;
+              RDSplus1[44] = 0;
+              RDSplus2[44] = 0;
             }
 
             if (rds.rtAB == rtABold) {
@@ -899,7 +901,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
   ptyn_buffer[8] = 0;
   PStext[8] = L'\0';
   PTYNtext[8] = L'\0';
-  
+
   for (i = 0; i < 64; i++) rt_buffer[i] = 0x20;
   rt_buffer[64] = 0;
   for (i = 0; i < 32; i++) rt_buffer32[i] = 0x20;
