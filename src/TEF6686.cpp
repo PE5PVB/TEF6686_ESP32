@@ -773,10 +773,12 @@ void TEF6686::readRDS(byte showrdserrors)
             }
 
             if (togglebit) {
-              for (int i = 0; i < 45; i++) {
-                RDSplus1[i] = 0;
-                RDSplus2[i] = 0;
+              for (int i = 0; i < 44; i++) {
+                RDSplus1[i] = 0x20;
+                RDSplus2[i] = 0x20;
               }
+			  RDSplus1[44] = 0;
+			  RDSplus2[44] = 0;
             }
 
             if (rds.rtAB == rtABold) {
@@ -888,16 +890,25 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.RTContent2 = "";
   rds.PTYN = "";
 
-  for (i = 0; i < 9; i++) {
-    ps_buffer[i] = 0;
+  for (i = 0; i < 8; i++) {
+    ps_buffer[i] = 0x20;
     PStext[i] = L'\0';
-    ptyn_buffer[i] = 0;
+    ptyn_buffer[i] = 0x20;
     PTYNtext[i] = L'\0';
   }
-  for (i = 0; i < 65; i++) rt_buffer[i] = 0;
-  for (i = 0; i < 33; i++) rt_buffer32[i] = 0;
-  for (i = 0; i < 18; i++) rds.stationType[i] = 0;
-  for (i = 0; i < 6; i++) rds.picode[i] = 0;
+  ps_buffer[8] = 0;
+  ptyn_buffer[8] = 0;
+  PStext[8] = L'\0';
+  PTYNtext[8] = L'\0';
+  
+  for (i = 0; i < 64; i++) rt_buffer[i] = 0x20;
+  rt_buffer[64] = 0;
+  for (i = 0; i < 32; i++) rt_buffer32[i] = 0x20;
+  rt_buffer32[32] = 0;
+  for (i = 0; i < 17; i++) rds.stationType[i] = 0x20;
+  rds.stationType[17] = 0;
+  for (i = 0; i < 6; i++) rds.picode[i] = 0x20;
+  rds.picode[6] = 0;
 
   for (i = 0; i < 50; i++) {
     af[i].frequency = 0;

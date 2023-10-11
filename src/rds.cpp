@@ -626,8 +626,9 @@ void readRds() {
       if (radio.rds.rdsDerror) RDSSPYRDS += "----"; else RDSSPYRDS += String(((radio.rds.rdsD >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsD >> 8) & 0xF, HEX) + String(((radio.rds.rdsD) >> 4) & 0xF, HEX) + String((radio.rds.rdsD) & 0xF, HEX);
       RDSSPYRDS += "\r\n\r\n";
 
-      if (bitRead(radio.rds.rdsStat, 9)) {
+      if (RDSSPYRDS != RDSSPYRDSold) {
         if (RDSSPYUSB) Serial.print(RDSSPYRDS); else RemoteClient.print(RDSSPYRDS);
+		RDSSPYRDSold = RDSSPYRDS;
       }
     }
 
@@ -661,8 +662,9 @@ void readRds() {
       XDRGTKRDS += String(erroutput, HEX);
       XDRGTKRDS += "\n";
 
-      if (bitRead(radio.rds.rdsStat, 9)) {
+      if (XDRGTKRDS != XDRGTKRDSold) {
         DataPrint(XDRGTKRDS);
+		XDRGTKRDSold = XDRGTKRDS;
       }
     }
   }
