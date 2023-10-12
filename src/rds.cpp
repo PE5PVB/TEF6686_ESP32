@@ -56,30 +56,16 @@ void ShowAdvancedRDS() {
     if (!screenmute) tftPrint(-1, "N/A", 242, 208, BackgroundColor, BackgroundColor, 16);
     if (!screenmute) tftPrint(-1, LIColdString, 242, 208, BackgroundColor, BackgroundColor, 16);
 
-    if (radio.rds.LIC > 0 && radio.rds.LIC < 44) {
+    if (radio.rds.LIC > 0 && radio.rds.LIC < 171) {
       if (!screenmute) {
         if (radio.rds.hasLIC) tftPrint(-1, myLanguages[radio.rds.LIC], 242, 208, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "N/A", 242, 208, PrimaryColor, PrimaryColorSmooth, 16);
       }
       LIColdString = myLanguages[radio.rds.LIC];
     } else {
-      byte lic;
-      switch (radio.rds.LIC) {
-        case 73: lic = 44; break;
-        case 86: lic = 45; break;
-        case 96: lic = 46; break;
-        case 99: lic = 47; break;
-        case 108: lic = 48; break;
-        case 112: lic = 49; break;
-        case 113: lic = 50; break;
-        case 119: lic = 51; break;
-        case 125: lic = 52; break;
-        case 126: lic = 53; break;
-        default: lic = 0; break;
-      }
       if (!screenmute) {
-        if (radio.rds.hasLIC) tftPrint(-1, myLanguages[lic], 242, 208, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "N/A", 242, 208, PrimaryColor, PrimaryColorSmooth, 16);
+        if (radio.rds.hasLIC) tftPrint(-1, myLanguages[0], 242, 208, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "N/A", 242, 208, PrimaryColor, PrimaryColorSmooth, 16);
       }
-      LIColdString = myLanguages[lic];
+      LIColdString = myLanguages[0];
     }
     licold = radio.rds.LIC;
   }

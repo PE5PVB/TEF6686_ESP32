@@ -3530,58 +3530,128 @@ static const char* const myCountries[] {
 };
 
 static const char* const myLanguages[] {
-  "Unknown", // 0
-  "Albanian", // 1
-  "Breton", // 2
-  "Catalan", // 3
-  "Croatian", // 4
-  "Welsh", // 5
-  "Czech", // 6
-  "Danish", // 7
-  "German", // 8
-  "English", // 9
-  "Spanish", // 10
-  "Esperanto", // 11
-  "Estonian", // 12
-  "Basque", // 13
-  "Faroese", // 14
-  "French", // 15
-  "Frisian", // 16
-  "Irish", // 17
-  "Gaelic", // 18
-  "Galician", // 19
-  "Icelandic", // 20
-  "Italian", // 21
-  "Lappish", // 22
-  "Latin", // 23
-  "Latvian", // 24
-  "Luxemb.", // 25
-  "Lithuan.", // 26
-  "Hungarian", // 27
-  "Maltese", // 28
-  "Dutch", // 29
-  "Norwegian", // 30
-  "Occitan", // 31
-  "Polish", // 32
-  "Portug.", // 33
-  "Romanian", // 34
-  "Romansh", // 35
-  "Serbian", // 36
-  "Slovak", // 37
-  "Slovene", // 38
-  "Finnish", // 39
-  "Swedish", // 40
-  "Turkish", // 41
-  "Flemish", // 42
-  "Walloon", // 43
-  "Ukranian", // 44
-  "Russian", // 45
-  "Moldavian", // 46
-  "Macedon.", // 47
-  "Hebrew", // 48
-  "Greek", // 49
-  "Georgian", // 50
-  "Bulgarian", // 51
-  "Armenian", // 52
-  "Arabic" // 53
+  "Unknown",
+  "Albanian",
+  "Breton",
+  "Catalan",
+  "Croatian",
+  "Welsh",
+  "Czech",
+  "Danish",
+  "German",
+  "English",
+  "Spanish",
+  "Esperanto",
+  "Estonian",
+  "Basque",
+  "Faroese",
+  "French",
+  "Frisian",
+  "Irish",
+  "Gaelic",
+  "Galician",
+  "Icelandic",
+  "Italian",
+  "Lappish",
+  "Latin",
+  "Latvian",
+  "Luxembourgian",
+  "Lithuanian",
+  "Hungarian",
+  "Maltese",
+  "Dutch",
+  "Norwegian",
+  "Occitan",
+  "Polish",
+  "Portuguese",
+  "Romanian",
+  "Romansh",
+  "Serbian",
+  "Slovak",
+  "Slovene",
+  "Finnish",
+  "Swedish",
+  "Turkish",
+  "Flemish",
+  "Walloon",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "Background",
+  "",
+  "",
+  "",
+  "",
+  "Zulu",
+  "Vietnamese",
+  "Uzbek",
+  "Urdu",
+  "Ukrainian",
+  "Thai",
+  "Telugu",
+  "Tatar",
+  "Tamil",
+  "Tadzhik",
+  "Swahili",
+  "SrananTongo",
+  "Somali",
+  "Sinhalese",
+  "Shona",
+  "Serbo-Croat",
+  "Ruthenian",
+  "Russian",
+  "Quechua",
+  "Pushtu",
+  "Punjabi",
+  "Persian",
+  "Papamiento",
+  "Oriya",
+  "Nepali",
+  "Ndebele",
+  "Marathi",
+  "Moldovian",
+  "Malaysian",
+  "Malagasay",
+  "Macedonian",
+  "Laotian",
+  "Korean",
+  "Khmer",
+  "Kazakh",
+  "Kannada",
+  "Japanese",
+  "Indonesian",
+  "Hindi",
+  "Hebrew",
+  "Hausa",
+  "Gurani",
+  "Gujurati",
+  "Greek",
+  "Georgian",
+  "Fulani",
+  "Dari",
+  "Churash",
+  "Chinese",
+  "Burmese",
+  "Bulgarian",
+  "Bengali",
+  "Belorussian",
+  "Bambora",
+  "Azerbaijan",
+  "Assamese",
+  "Armenian",
+  "Arabic",
+  "Amharic"
 };
