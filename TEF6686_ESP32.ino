@@ -56,7 +56,6 @@ bool beepresetstop;
 bool BWreset;
 bool change2;
 bool compressedold;
-bool clearrds;
 bool direction;
 bool dropout;
 bool dynamicPTYold;
@@ -424,6 +423,7 @@ void setup() {
   BWsetFM = EEPROM.readByte(EE_BYTE_BWSET_FM);
   BWsetAM = EEPROM.readByte(EE_BYTE_BWSET_AM);
   nowToggleSWMIBand = EEPROM.readByte(EE_BYTE_BANDAUTOSW);
+  radio.rds.fastps = EEPROM.readByte(EE_BYTE_FASTPS);
 
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX;
@@ -811,7 +811,7 @@ void loop() {
             radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
           }
         }
-        if (screenmute) readRds();
+        if (screenmute || radio.rds.correctPI != 0) readRds();
         if (!menu) {
           doSquelch();
           GetData();
@@ -1844,6 +1844,7 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_SORTAF, radio.rds.sortaf);
         EEPROM.writeByte(EE_BYTE_STATIONLISTID, stationlistid);
         EEPROM.writeByte(EE_BYTE_FM_DEEMPHASIS, fmdeemphasis);
+        EEPROM.writeByte(EE_BYTE_FASTPS, radio.rds.fastps);
         EEPROM.commit();
         Serial.end();
         if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
@@ -2263,7 +2264,6 @@ void ShowFreq(int mode) {
   afstringold = "";
   rds_clockold = "";
   rdsreset = true;
-  clearrds = true;
   licold = 254;
   ECCold = 253;
 
@@ -3289,6 +3289,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_BWSET_FM, 0);
   EEPROM.writeByte(EE_BYTE_BWSET_AM, 2);
   EEPROM.writeByte(EE_BYTE_BANDAUTOSW, 0);
+  EEPROM.writeByte(EE_BYTE_FASTPS, 1);
   EEPROM.commit();
 }
 

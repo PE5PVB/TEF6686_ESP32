@@ -6,7 +6,7 @@
 #include <EEPROM.h>
 
 byte menuitem;
-byte items[8] = {8, 2, 6, 9, 8, 10, 8, 5};
+byte items[8] = {8, 2, 6, 9, 9, 10, 8, 5};
 
 void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
   switch (CurrentTheme) {
@@ -458,6 +458,7 @@ void BuildMenu() {
       tftPrint(-1, myLanguage[language][99], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][176], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][196], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][203], 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
 
       switch (showrdserrors) {
         case 0: tftPrint(1, myLanguage[language][30], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
@@ -474,6 +475,7 @@ void BuildMenu() {
       if (af) tftPrint(1, myLanguage[language][42], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (radio.rds.rtbuffer) tftPrint(1, myLanguage[language][42], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (radio.rds.sortaf) tftPrint(1, myLanguage[language][42], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (radio.rds.fastps) tftPrint(1, myLanguage[language][42], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       break;
 
     case FMSETTINGS:
@@ -691,7 +693,7 @@ void BuildAdvancedRDS() {
   eonstringold = "";
   afstringold = "";
   rtplusstringold = "";
-  
+
   ShowMemoryPos();
 }
 
@@ -1096,6 +1098,12 @@ void MenuUp() {
             if (radio.rds.sortaf) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (radio.rds.sortaf) radio.rds.sortaf = false; else radio.rds.sortaf = true;
             if (radio.rds.sortaf) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
+
+          case ITEM9:
+            if (radio.rds.fastps) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
+            if (radio.rds.fastps) radio.rds.fastps = false; else radio.rds.fastps = true;
+            if (radio.rds.fastps) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
         }
         break;
@@ -1609,6 +1617,12 @@ void MenuDown() {
             if (radio.rds.sortaf) radio.rds.sortaf = false; else radio.rds.sortaf = true;
             if (radio.rds.sortaf) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
+
+          case ITEM9:
+            if (radio.rds.fastps) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
+            if (radio.rds.fastps) radio.rds.fastps = false; else radio.rds.fastps = true;
+            if (radio.rds.fastps) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
         }
         break;
 
@@ -2093,6 +2107,11 @@ void DoMenu() {
             tftPrint(0, myLanguage[language][196], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (radio.rds.sortaf) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
+
+          case ITEM9:
+            tftPrint(0, myLanguage[language][203], 155, 78, ActiveColor, ActiveColorSmooth, 28);
+            if (radio.rds.fastps) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
         }
         break;
 
@@ -2249,7 +2268,7 @@ void DoMenu() {
               XDRGTK_key = XDRGTK_key_input.getValue();
               EEPROM.writeString(EE_STRING_XDRGTK_KEY, XDRGTK_key);
               EEPROM.commit();
-			  wifi = true;
+              wifi = true;
               tryWiFi();
               delay(2000);
               menuopen = false;

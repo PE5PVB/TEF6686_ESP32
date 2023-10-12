@@ -4,6 +4,8 @@
 #include <TimeLib.h>                // https://github.com/PaulStoffregen/Time
 
 unsigned long rdstimer = 0;
+unsigned long bitStartTime = 0;
+bool lastBitState = false;
 
 void TEF6686::TestAFEON() {
   uint16_t status;
@@ -358,7 +360,16 @@ void TEF6686::readRDS(byte showrdserrors)
     }
   }
 
-  if (highByte(rds.rdsErr) != 0xff) rds.hasRDS = true; else rds.hasRDS = false;                                      // RDS decoder synchronized and data available
+  if (highByte(rds.rdsErr) != 0xff) {
+    rds.hasRDS = true;                                                                            // RDS decoder synchronized and data available
+    bitStartTime = 0;
+  } else {
+    if (bitStartTime == 0) {
+      bitStartTime = millis();
+    } else if (millis() - bitStartTime >= 87) {
+      rds.hasRDS = false;
+    }
+  }
 
   rds.rdsAerror = (((rds.rdsErr >> 14) & 0x03) > 0);
   rds.rdsBerror = (((rds.rdsErr >> 12) & 0x03) > 0);
@@ -370,7 +381,7 @@ void TEF6686::readRDS(byte showrdserrors)
   rdsCerrorThreshold = (((rds.rdsErr >> 10) & 0x03) > showrdserrors);
   rdsDerrorThreshold = (((rds.rdsErr >> 8) & 0x03) > showrdserrors);
 
-  if (bitRead(rds.rdsStat, 9)) {                                                                                      // We have all data to decode... let's go...
+  if (bitRead(rds.rdsStat, 9)) {                                                                  // We have all data to decode... let's go...
 
     //PI decoder
     if (!rdsAerrorThreshold && afreset) {
@@ -387,9 +398,9 @@ void TEF6686::readRDS(byte showrdserrors)
         rds.picode[3] = rds.rdsA & 0xF;
         for (int i = 0; i < 4; i++) {
           if (rds.picode[i] < 10) {
-            rds.picode[i] += '0';                                                                       // Add ASCII offset for decimal digits
+            rds.picode[i] += '0';                                                                 // Add ASCII offset for decimal digits
           } else {
-            rds.picode[i] += 'A' - 10;                                                                  // Add ASCII offset for hexadecimal letters A-F
+            rds.picode[i] += 'A' - 10;                                                            // Add ASCII offset for hexadecimal letters A-F
           }
         }
       }
@@ -398,7 +409,7 @@ void TEF6686::readRDS(byte showrdserrors)
 
       if (!errorfreepi) {
         if (((rds.rdsErr >> 14) & 0x03) > 2) rds.picode[5] = '?'; else rds.picode[5] = ' ';
-        if (((rds.rdsErr >> 14) & 0x03) > 1) rds.picode[4] = '?'; else rds.picode[4] = ' ';               // Not sure, add a ?
+        if (((rds.rdsErr >> 14) & 0x03) > 1) rds.picode[4] = '?'; else rds.picode[4] = ' ';       // Not sure, add a ?
       } else {
         rds.picode[4] = ' ';
         rds.picode[5] = ' ';
@@ -412,9 +423,9 @@ void TEF6686::readRDS(byte showrdserrors)
           rds.picode[3] = piold & 0xF;
           for (int i = 0; i < 4; i++) {
             if (rds.picode[i] < 10) {
-              rds.picode[i] += '0';                                                                     // Add ASCII offset for decimal digits
+              rds.picode[i] += '0';                                                               // Add ASCII offset for decimal digits
             } else {
-              rds.picode[i] += 'A' - 10;                                                                // Add ASCII offset for hexadecimal letters A-F
+              rds.picode[i] += 'A' - 10;                                                          // Add ASCII offset for hexadecimal letters A-F
             }
           }
         } else {
@@ -428,7 +439,7 @@ void TEF6686::readRDS(byte showrdserrors)
     }
 
     // USA Station callsign decoder
-    if (rds.region == 1) {                                                                              // When ID was decoded correctly before, no need to decode again.
+    if (rds.region == 1) {                                                                        // When ID was decoded correctly before, no need to decode again.
       uint16_t stationID = rds.rdsA;
       if (stationID > 4096) {
         if (stationID > 21671 && (stationID & 0xF00U) >> 8 == 0) stationID = ((uint16_t)uint8_t(0xA0 + ((stationID & 0xF000U) >> 12)) << 8) + lowByte(stationID); // C0DE -> ACDE
@@ -455,7 +466,7 @@ void TEF6686::readRDS(byte showrdserrors)
         }
       }
       if (((rds.rdsErr >> 14) & 0x02) > 2) rds.picode[5] = '?';
-      if (((rds.rdsErr >> 14) & 0x01) > 1) rds.picode[4] = '?'; else rds.picode[4] = ' ';     // Not sure, add a ?
+      if (((rds.rdsErr >> 14) & 0x01) > 1) rds.picode[4] = '?'; else rds.picode[4] = ' ';       // Not sure, add a ?
       rds.picode[6] = '\0';
     }
 
@@ -476,7 +487,7 @@ void TEF6686::readRDS(byte showrdserrors)
             ps_buffer[(offset * 2)  + 1] = rds.rdsD & 0xFF;                                     // Second character of segment
             ps_buffer[8] = '\0';                                                                // Endmarker
 
-            if (offset == 3 && ps_process) {                                                    // Last chars are received
+            if (offset == 3 && (ps_process || !rds.fastps)) {                                   // Last chars are received
               if (strcmp(ps_buffer, ps_buffer2) == 0) {                                         // When no difference between current and buffer, let's go...
                 RDScharConverter(ps_buffer2, PStext, sizeof(PStext) / sizeof(wchar_t), true);   // Convert 8 bit ASCII to 16 bit ASCII
                 String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
@@ -484,7 +495,7 @@ void TEF6686::readRDS(byte showrdserrors)
               }
             }
 
-            if (!ps_process) {                                                                  // Let's get 2 runs of 8 PS characters fast and without refresh
+            if (!ps_process && rds.fastps) {                                                    // Let's get 2 runs of 8 PS characters fast and without refresh
               if (offset == 0) packet0 = true;
               if (offset == 1) packet1 = true;
               if (offset == 2) packet2 = true;
@@ -629,10 +640,10 @@ void TEF6686::readRDS(byte showrdserrors)
             if (rds.rtAB != rtABold) {                                                          // Erase old RT, because of AB change
               initrt = false;
               if (rds.rtbuffer) {
-                wchar_t RTtext[65] = L"";                                                           // Create 16 bit char buffer for Extended ASCII
-                RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);        // Convert 8 bit ASCII to 16 bit ASCII
-                rds.stationText = convertToUTF8(RTtext);                                            // Convert RDS characterset to ASCII
-                rds.stationText = extractUTF8Substring(rds.stationText, 0, 64, true);               // Make sure RT does not exceed 64 characters
+                wchar_t RTtext[65] = L"";                                                       // Create 16 bit char buffer for Extended ASCII
+                RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);    // Convert 8 bit ASCII to 16 bit ASCII
+                rds.stationText = convertToUTF8(RTtext);                                        // Convert RDS characterset to ASCII
+                rds.stationText = extractUTF8Substring(rds.stationText, 0, 64, true);           // Make sure RT does not exceed 64 characters
               }
 
               for (byte i = 0; i < 64; i++) {
@@ -649,10 +660,10 @@ void TEF6686::readRDS(byte showrdserrors)
             rt_buffer[offset + 3] = rds.rdsD & 0xff;                                            // Fourth character of segment
 
             if (initrt || !rds.rtbuffer) {
-              wchar_t RTtext[65] = L"";                                                           // Create 16 bit char buffer for Extended ASCII
-              RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);        // Convert 8 bit ASCII to 16 bit ASCII
-              rds.stationText = convertToUTF8(RTtext);                                            // Convert RDS characterset to ASCII
-              rds.stationText = extractUTF8Substring(rds.stationText, 0, 64, true);               // Make sure RT does not exceed 64 characters
+              wchar_t RTtext[65] = L"";                                                         // Create 16 bit char buffer for Extended ASCII
+              RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);      // Convert 8 bit ASCII to 16 bit ASCII
+              rds.stationText = convertToUTF8(RTtext);                                          // Convert RDS characterset to ASCII
+              rds.stationText = extractUTF8Substring(rds.stationText, 0, 64, true);             // Make sure RT does not exceed 64 characters
             }
 
             for (int i = 0; i < 64; i++) rt_buffer2[i] = rt_buffer[i];
@@ -663,9 +674,9 @@ void TEF6686::readRDS(byte showrdserrors)
           if (showrdserrors == 3 || (!rdsBerrorThreshold && !rdsDerrorThreshold)) {
             // RT decoder (32 characters)
             rds.hasRT = true;
-            rds.rtAB32 = (bitRead(rds.rdsB, 4));                                                  // Get AB flag
+            rds.rtAB32 = (bitRead(rds.rdsB, 4));                                                // Get AB flag
 
-            if (rds.rtAB32 != rtAB32old) {                                                          // Erase old RT, because of AB change
+            if (rds.rtAB32 != rtAB32old) {                                                      // Erase old RT, because of AB change
               for (byte i = 0; i < 33; i++) {
                 rt_buffer32[i] = 0x20;
               }

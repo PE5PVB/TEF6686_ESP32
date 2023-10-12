@@ -171,6 +171,7 @@ typedef struct _rds_ {
   bool rdsreset;
   bool pierrors;
   bool sortaf;
+  bool fastps;
   bool rtbuffer = true;
 } rds_;
 
@@ -274,7 +275,7 @@ class TEF6686 {
     bool useRTPlus = true;
     bool ABold;
     bool afreset;
-	bool mpxmode;
+    bool mpxmode;
     char stationTextBuffer[65];
     uint16_t piold;
     bool rtABold;
@@ -296,10 +297,10 @@ class TEF6686 {
     bool rdsCerrorThreshold;
     bool rdsDerrorThreshold;
     byte afmethodcounter;
-	bool packet0;
-	bool packet1;
-	bool packet2;
-	bool packet3;
+    bool packet0;
+    bool packet1;
+    bool packet2;
+    bool packet3;
 };
 
 #endif

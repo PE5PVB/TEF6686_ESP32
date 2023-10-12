@@ -1,6 +1,6 @@
 // [number of languages][number of texts]
 
-static const char* const myLanguage[16][203] = {
+static const char* const myLanguage[16][204] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -203,7 +203,8 @@ static const char* const myLanguage[16][203] = {
     "FM deemphasis", // 199
     "Small", // 200
     "Large", // 201
-    "All" // 202
+    "All", // 202
+    "Fast PS" // 203
   },
 
   { "Nederlands", // Dutch
@@ -314,7 +315,7 @@ static const char* const myLanguage[16][203] = {
     "FM", // 105
     "OIRT", // 106
     "Rotating while screen off", // 107
-    "Model selector", // 108
+    "Model keuze", // 108
     "Basis (ILI9341)", // 109
     "Portable (ILI9341)", // 110
     "Portable touch (ILI9341)", // 111
@@ -408,7 +409,8 @@ static const char* const myLanguage[16][203] = {
     "FM deemphasis", // 199
     "Laag", // 200
     "Middel", // 201
-    "Alles" // 202
+    "Alles", // 202
+    "Snelle PS" // 203
   },
 
   { "Polski", // Polish
@@ -613,7 +615,8 @@ static const char* const myLanguage[16][203] = {
     "Deemfaza FM", // 199
     "Male", // 200
     "Duze", // 201
-    "Wszystkie" // 202
+    "Wszystkie", // 202
+    "Fast PS" // 203
   },
 
   { "Hrvatski", // Croatian
@@ -818,7 +821,8 @@ static const char* const myLanguage[16][203] = {
     "FM deemphasis", // 199
     "Small", // 200
     "Large", // 201
-    "All" // 202
+    "All", // 202
+    "Fast PS" // 203
   },
 
   { "Ελληνικά", // Greek
@@ -1023,7 +1027,8 @@ static const char* const myLanguage[16][203] = {
     "FM αποέμφαση", // 199
     "Μικρό", // 200
     "Μεγάλο", // 201
-    "Όλα" // 202
+    "Όλα", // 202
+    "Fast PS" // 203
   },
 
   { "Romana", // Romanian
@@ -1228,7 +1233,8 @@ static const char* const myLanguage[16][203] = {
     "FM deemphasis", // 199
     "Small", // 200
     "Large", // 201
-    "All" // 202
+    "All", // 202
+    "Fast PS" // 203
   },
 
   { "Deutsch", // German
@@ -1433,7 +1439,8 @@ static const char* const myLanguage[16][203] = {
     "UKW Deemphasis", // 199
     "Gering", // 200
     "Groß", // 201
-    "Alles" // 202
+    "Alles", // 202
+    "Fast PS" // 203
   },
 
   { "Czech", // Czech
@@ -1638,7 +1645,8 @@ static const char* const myLanguage[16][203] = {
     "FM deemphasis", // 199
     "Small", // 200
     "Large", // 201
-    "All" // 202
+    "All", // 202
+    "Fast PS" // 203
   },
 
   { "Slovak", // Slovak
@@ -1843,7 +1851,8 @@ static const char* const myLanguage[16][203] = {
     "FM deemphasis", // 199
     "Small", // 200
     "Large", // 201
-    "All" // 202
+    "All", // 202
+    "Fast PS" // 203
   },
 
   { "Français", // French
@@ -2048,7 +2057,8 @@ static const char* const myLanguage[16][203] = {
     "FM deemphasis", // 199
     "Small", // 200
     "Large", // 201
-    "All" // 202
+    "All", // 202
+    "Fast PS" // 203
   },
 
   { "Български", // Bulgarian
@@ -2253,7 +2263,8 @@ static const char* const myLanguage[16][203] = {
     "FM deemphasis", // 199
     "Small", // 200
     "Large", // 201
-    "All" // 202
+    "All", // 202
+    "Fast PS" // 203
   },
 
   { "Русский", // Russian
@@ -2458,7 +2469,8 @@ static const char* const myLanguage[16][203] = {
     "FM deemphasis", // 199
     "Small", // 200
     "Large", // 201
-    "All" // 202
+    "All", // 202
+    "Fast PS" // 203
   },
 
   { "Українська", // Ukranian
@@ -2663,7 +2675,8 @@ static const char* const myLanguage[16][203] = {
     "FM deemphasis", // 199
     "Small", // 200
     "Large", // 201
-    "All" // 202
+    "All", // 202
+    "Fast PS" // 203
   },
 
   { "Italiano", // Italian
@@ -2868,7 +2881,8 @@ static const char* const myLanguage[16][203] = {
     "FM deemphasis", // 199
     "Small", // 200
     "Large", // 201
-    "All" // 202
+    "All", // 202
+    "Fast PS" // 203
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3073,7 +3087,8 @@ static const char* const myLanguage[16][203] = {
     "FM去加重", // 199
     "少量", // 200
     "大量", // 201
-    "全部" // 202
+    "全部", // 202
+    "Fast PS" // 203
   },
 
   { "Norsk", // Norwegian
@@ -3278,7 +3293,8 @@ static const char* const myLanguage[16][203] = {
     "FM ettertrykkelse", // 199
     "Lite", // 200
     "Mye", // 201
-    "Alt" // 202
+    "Alt", // 202
+    "Fast PS" // 203
   }
 };
 

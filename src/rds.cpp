@@ -209,14 +209,14 @@ void ShowAdvancedRDS() {
 
   if (TPold != radio.rds.hasTP) {
     if (!screenmute) {
-      if (radio.rds.hasTP == true) tftPrint(-1, "TP", 3, 51, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "TP", 3, 51, GreyoutColor, BackgroundColor, 16);
+      if (radio.rds.hasTP) tftPrint(-1, "TP", 3, 51, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "TP", 3, 51, GreyoutColor, BackgroundColor, 16);
     }
     TPold = radio.rds.hasTP;
   }
 
   if (TAold != radio.rds.hasTA) {
     if (!screenmute) {
-      if (radio.rds.hasTA == true) tftPrint(-1, "TA", 25, 51, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "TA", 25, 51, GreyoutColor, BackgroundColor, 16);
+      if (radio.rds.hasTA) tftPrint(-1, "TA", 25, 51, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "TA", 25, 51, GreyoutColor, BackgroundColor, 16);
     }
     TAold = radio.rds.hasTA;
   }
@@ -265,7 +265,7 @@ void ShowAdvancedRDS() {
 
   if (hastmcold != radio.rds.hasTMC) {
     if (!screenmute) {
-      if (radio.rds.hasTMC == true) tftPrint(-1, "TMC", 89, 51, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "TMC", 89, 51, GreyoutColor, BackgroundColor, 16);
+      if (radio.rds.hasTMC) tftPrint(-1, "TMC", 89, 51, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "TMC", 89, 51, GreyoutColor, BackgroundColor, 16);
     }
     hastmcold = radio.rds.hasTMC;
   }
@@ -274,7 +274,7 @@ void ShowAdvancedRDS() {
 }
 
 void doAF() {
-  if (radio.af_counter != af_counterold && radio.rds.hasAF == true) {
+  if (radio.af_counter != af_counterold && radio.rds.hasAF) {
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
       Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";AF=");
@@ -583,37 +583,33 @@ void readRds() {
   if (band < BAND_GAP) {
     RDSstatus = radio.rds.hasRDS;
     ShowRDSLogo(RDSstatus);
-    if (!screenmute) {
-      if (!afscreen) {
-        if (!RDSstatus) {
-          if (clearrds) {
-            if (advancedRDS) tftPrint(0, PIold, 275, 75, SecondaryColor, SecondaryColorSmooth, 28); else tftPrint(0, PIold, 275, 187, SecondaryColor, SecondaryColorSmooth, 28);
-            if (advancedRDS) tftPrint(-1, PSold, 38, 75, SecondaryColor, SecondaryColorSmooth, 28); else tftPrint(-1, PSold, 38, 187, SecondaryColor, SecondaryColorSmooth, 28);
-            if (advancedRDS) tftPrint(-1, PTYold, 38, 109, SecondaryColor, SecondaryColorSmooth, 16); else tftPrint(-1, PTYold, 38, 163, SecondaryColor, SecondaryColorSmooth, 16);
-            if (advancedRDS) {
-              tft.fillCircle(86, 41, 5, SignificantColor);
-              tft.fillCircle(124, 41, 5, SignificantColor);
-              tft.fillCircle(162, 41, 5, SignificantColor);
-              tft.fillCircle(200, 41, 5, SignificantColor);
-            }
-            clearrds = false;
+    if (!screenmute && !afscreen) {
+      if (!RDSstatus) {
+        if (radio.rds.correctPI != 0) {
+          if (advancedRDS) tftPrint(0, PIold, 275, 75, SecondaryColor, SecondaryColorSmooth, 28); else tftPrint(0, PIold, 275, 187, SecondaryColor, SecondaryColorSmooth, 28);
+          if (advancedRDS) tftPrint(-1, PSold, 38, 75, SecondaryColor, SecondaryColorSmooth, 28); else tftPrint(-1, PSold, 38, 187, SecondaryColor, SecondaryColorSmooth, 28);
+          if (advancedRDS) tftPrint(-1, PTYold, 38, 109, SecondaryColor, SecondaryColorSmooth, 16); else tftPrint(-1, PTYold, 38, 163, SecondaryColor, SecondaryColorSmooth, 16);
+          if (advancedRDS) {
+            tft.fillCircle(86, 41, 5, SignificantColor);
+            tft.fillCircle(124, 41, 5, SignificantColor);
+            tft.fillCircle(162, 41, 5, SignificantColor);
+            tft.fillCircle(200, 41, 5, SignificantColor);
           }
-          if (radio.rds.correctPI != 0) dropout = true;
-        } else {
-          clearrds = true;
-          if (dropout == true) {
-            if (advancedRDS) tftPrint(0, PIold, 275, 75, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, PIold, 275, 187, PrimaryColor, PrimaryColorSmooth, 28);
-            if (advancedRDS) tftPrint(-1, PSold, 38, 75, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(-1, PSold, 38, 187, PrimaryColor, PrimaryColorSmooth, 28);
-            if (advancedRDS) tftPrint(-1, PTYold, 38, 109, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, PTYold, 38, 163, PrimaryColor, PrimaryColorSmooth, 16);
-            if (!advancedRDS) {
-              tft.fillCircle(314, 223, 2, GreyoutColor);
-              tft.fillCircle(314, 234, 2, GreyoutColor);
-            } else {
-              tft.fillCircle(203, 223, 2, GreyoutColor);
-              tft.fillCircle(203, 234, 2, GreyoutColor);
-            }
-            dropout = false;
+		  dropout = true;
+        }
+      } else {
+        if (dropout) {
+          if (advancedRDS) tftPrint(0, PIold, 275, 75, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, PIold, 275, 187, PrimaryColor, PrimaryColorSmooth, 28);
+          if (advancedRDS) tftPrint(-1, PSold, 38, 75, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(-1, PSold, 38, 187, PrimaryColor, PrimaryColorSmooth, 28);
+          if (advancedRDS) tftPrint(-1, PTYold, 38, 109, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, PTYold, 38, 163, PrimaryColor, PrimaryColorSmooth, 16);
+          if (!advancedRDS) {
+            tft.fillCircle(314, 223, 2, GreyoutColor);
+            tft.fillCircle(314, 234, 2, GreyoutColor);
+          } else {
+            tft.fillCircle(203, 223, 2, GreyoutColor);
+            tft.fillCircle(203, 234, 2, GreyoutColor);
           }
+          dropout = false;
         }
       }
     }
@@ -628,7 +624,7 @@ void readRds() {
 
       if (RDSSPYRDS != RDSSPYRDSold) {
         if (RDSSPYUSB) Serial.print(RDSSPYRDS); else RemoteClient.print(RDSSPYRDS);
-		RDSSPYRDSold = RDSSPYRDS;
+        RDSSPYRDSold = RDSSPYRDS;
       }
     }
 
@@ -664,7 +660,7 @@ void readRds() {
 
       if (XDRGTKRDS != XDRGTKRDSold) {
         DataPrint(XDRGTKRDS);
-		XDRGTKRDSold = XDRGTKRDS;
+        XDRGTKRDSold = XDRGTKRDS;
       }
     }
   }
@@ -852,7 +848,7 @@ void ShowAFEON() {
 
       if (radio.af_counter > 10 + (afpagenr == 2 ? 30 : 0)) tft.drawLine(59, 54, 59, 191, SecondaryColor);
       if (radio.af_counter > 20 + (afpagenr == 2 ? 30 : 0)) tft.drawLine(113, 54, 113, 191, SecondaryColor);
-      if (afpage == true && !screenmute) tftPrint(1, String(afpagenr) + "/2", 315, 222, SecondaryColor, SecondaryColorSmooth, 16);
+      if (afpage && !screenmute) tftPrint(1, String(afpagenr) + "/2", 315, 222, SecondaryColor, SecondaryColorSmooth, 16);
     }
     af_counterold = radio.af_counter;
   }
