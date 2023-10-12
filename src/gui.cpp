@@ -1921,20 +1921,25 @@ void DoMenu() {
 
           case ITEM8:
             menuopen = true;
-            tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
-            tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
-            tftPrint(0, myLanguage[language][71], 155, 38, ActiveColor, ActiveColorSmooth, 28);
-            tftPrint(0, myLanguage[language][72], 155, 88, ActiveColor, ActiveColorSmooth, 28);
-            tftPrint(0, "PE5PVB", 155, 68, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "ohmytime", 145, 118, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "HyperDX", 145, 133, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "MCelliotG", 155, 118, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "andimik", 155, 133, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "DXHR05", 145, 148, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "NoobishSVK", 145, 163, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "yo2ldk", 155, 148, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "Justin_Peng(Portable)", 155, 163, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(0, "github.com/PE5PVB/TEF6686_ESP32", 155, 183, ActiveColor, ActiveColorSmooth, 16);
+            tft.drawRoundRect(10, 10, 300, 220, 5, ActiveColor);
+            tft.fillRoundRect(12, 12, 296, 216, 5, BackgroundColor);
+            tftPrint(0, myLanguage[language][71], 155, 18, ActiveColor, ActiveColorSmooth, 28);
+            tftPrint(0, myLanguage[language][72], 155, 68, ActiveColor, ActiveColorSmooth, 28);
+            tftPrint(0, "PE5PVB", 155, 48, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "ohmytime", 145, 98, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "HyperDX", 145, 113, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "MCelliotG", 155, 98, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "andimik", 155, 113, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "DXHR05", 145, 128, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "NoobishSVK", 145, 143, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "yo2ldk", 155, 128, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "Justin_Peng(Portable)", 155, 143, PrimaryColor, PrimaryColorSmooth, 16);
+			tftPrint(1, "mx4zxc", 145, 158, PrimaryColor, PrimaryColorSmooth, 16);
+			tftPrint(-1, "elektronik232", 155, 158, PrimaryColor, PrimaryColorSmooth, 16);
+			tftPrint(1, "KOTYA8", 145, 173, PrimaryColor, PrimaryColorSmooth, 16);
+			tftPrint(-1, "mrwish7", 155, 173, PrimaryColor, PrimaryColorSmooth, 16);
+			tftPrint(1, "lxsxl", 145, 188, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(0, "github.com/PE5PVB/TEF6686_ESP32", 155, 208, ActiveColor, ActiveColorSmooth, 16);
             break;
         }
         break;
