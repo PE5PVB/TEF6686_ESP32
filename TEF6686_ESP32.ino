@@ -802,6 +802,7 @@ void loop() {
         LowLevelInit = false;
       }
 
+      if (screenmute || radio.rds.correctPI != 0) readRds();
       if (millis() >= lowsignaltimer + 300) {
         lowsignaltimer = millis();
         if (af || (!screenmute || (screenmute && (XDRGTKTCP || XDRGTKUSB)))) {
@@ -811,7 +812,6 @@ void loop() {
             radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
           }
         }
-        if (screenmute || radio.rds.correctPI != 0) readRds();
         if (!menu) {
           doSquelch();
           GetData();
