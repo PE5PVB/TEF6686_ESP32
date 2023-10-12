@@ -46,6 +46,7 @@ TFT_eSPI tft = TFT_eSPI(240, 320);
 
 bool advancedRDS;
 bool af;
+bool afmethodBold;
 bool afpage;
 bool afscreen;
 bool aftest;
@@ -2266,6 +2267,7 @@ void ShowFreq(int mode) {
   rdsreset = true;
   licold = 254;
   ECCold = 253;
+  afmethodBold = false;
 
   if (wifi) {
     Udp.beginPacket(remoteip, 9030);

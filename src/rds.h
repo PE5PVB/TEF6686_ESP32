@@ -8,6 +8,7 @@
 #include <WiFi.h>
 
 extern bool advancedRDS;
+extern bool afmethodBold;
 extern bool afpage;
 extern bool afscreen;
 extern bool aftest;

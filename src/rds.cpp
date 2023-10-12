@@ -832,7 +832,7 @@ void ShowAFEON() {
       afpagenr = 0;
     }
 
-    if (af_counterold != radio.af_counter) {
+    if (af_counterold != radio.af_counter || radio.afmethodB != afmethodBold) {
       tft.fillRect(2, 48, 166, 150, BackgroundColor);
       for (byte i = 0; i < radio.af_counter; i++) {
         byte x = i - (afpagenr == 2 ? 30 : 0);
@@ -851,6 +851,7 @@ void ShowAFEON() {
       if (afpage && !screenmute) tftPrint(1, String(afpagenr) + "/2", 315, 222, SecondaryColor, SecondaryColorSmooth, 16);
     }
     af_counterold = radio.af_counter;
+	afmethodBold = radio.afmethodB;
   }
 
   if (radio.rds.hasEON) {
