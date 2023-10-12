@@ -1095,7 +1095,7 @@ void TEF6686::RDScharConverter(const char* input, wchar_t* output, size_t size, 
       case 0x21 ... 0x5D: output[i] = static_cast<wchar_t>(currentChar); break;
       case 0x5E: output[i] = L'―'; break;
       case 0x5F: output[i] = L'_'; break;
-      case 0x60: output[i] = L'‖'; break;
+      case 0x60: output[i] = L'`'; break;
       case 0x61 ... 0x7d: output[i] = static_cast<wchar_t>(currentChar); break;
       case 0x7E: output[i] = L'¯'; break;
       case 0x7F: output[i] = L' '; break;
