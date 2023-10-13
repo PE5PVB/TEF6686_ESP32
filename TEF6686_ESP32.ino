@@ -713,6 +713,10 @@ void loop() {
         frequency = radio.TestAF();
         if (freqold != frequency) {
           ShowFreq(0);
+          if (radio.afmethodB) {
+            afmethodBold = true;
+            radio.clearRDS(fullsearchrds);
+          }
           if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String(frequency * 10));
           store = true;
         }
@@ -725,6 +729,10 @@ void loop() {
           frequency = radio.TestAF();
           if (freqold != frequency) {
             ShowFreq(0);
+            if (radio.afmethodB) {
+              afmethodBold = true;
+              radio.clearRDS(fullsearchrds);
+            }
             if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String(frequency * 10));
             store = true;
           }
@@ -736,6 +744,10 @@ void loop() {
             frequency = radio.TestAF();
             if (freqold != frequency) {
               ShowFreq(0);
+              if (radio.afmethodB) {
+                afmethodBold = true;
+                radio.clearRDS(fullsearchrds);
+              }
               if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String(frequency * 10));
               store = true;
             }
