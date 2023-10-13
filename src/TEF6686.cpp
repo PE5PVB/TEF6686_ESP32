@@ -528,8 +528,9 @@ void TEF6686::readRDS(byte showrdserrors)
             //AF decoder
             if (rdsblock == 0) {                                                                // Only when in GROUP 0A
 
-              if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == currentfreq) {  // Check for AF method B
+              if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == currentfreq && !afmethodB) {  // Check for AF method B
                 afmethodB = true;
+                af_updatecounter++;
               }
 
               if (((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) > 224) && ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 250)) afinit = true;
@@ -542,10 +543,37 @@ void TEF6686::readRDS(byte showrdserrors)
                   if ((rds.rdsC & 0xFF) > 0 && (rds.rdsC & 0xFF) < 205) buffer1 = (rds.rdsC & 0xFF) * 10 + 8750; else buffer1 = 0;
                   if (buffer0 != 0 || buffer1 != 0) rds.hasAF = true;
 
-                  if (buffer1 == currentfreq && buffer0 > buffer1) for (int x = 0; x < af_counter; x++) if (af[x].frequency == buffer0) af[x].regional = true;
-                  if (buffer0 == currentfreq && buffer0 > buffer1) for (int x = 0; x < af_counter; x++) if (af[x].frequency == buffer1) af[x].regional = true;
+                  if (buffer1 == currentfreq && buffer0 > buffer1) {
+                    for (int x = 0; x < af_counter; x++) {
+                      if (af[x].frequency == buffer0 && !af[x].regional) {
+                        af[x].regional = true;
+                        af_updatecounter++;
+                      }
+                    }
+                  } else if (buffer1 == currentfreq && buffer0 < buffer1) {
+                    for (int x = 0; x < af_counter; x++) {
+                      if (af[x].frequency == buffer0 && !af[x].mixed) {
+                        af[x].mixed = true;
+                        af_updatecounter++;
+                      }
+                    }
+                  }
 
-                  if (buffer0 == currentfreq || buffer1 == currentfreq) afmethodcounter++;
+                  if (buffer0 == currentfreq && buffer0 > buffer1) {
+                    for (int x = 0; x < af_counter; x++) {
+                      if (af[x].frequency == buffer1 && !af[x].regional) {
+                        af[x].regional = true;
+                        af_updatecounter++;
+                      }
+                    }
+                  } else if (buffer0 == currentfreq && buffer0 < buffer1) {
+                    for (int x = 0; x < af_counter; x++) {
+                      if (af[x].frequency == buffer0 && !af[x].mixed) {
+                        af[x].mixed = true;
+                        af_updatecounter++;
+                      }
+                    }
+                  }
 
                   bool isValuePresent = false;
                   for (int i = 0; i < 50; i++) {
@@ -558,6 +586,7 @@ void TEF6686::readRDS(byte showrdserrors)
                   if (!isValuePresent) {
                     af[af_counter].frequency = buffer0;
                     if (af_counter < 50) af_counter++;
+                    af_updatecounter++;
                   }
 
                   isValuePresent = false;
@@ -571,6 +600,7 @@ void TEF6686::readRDS(byte showrdserrors)
                   if (!isValuePresent) {
                     af[af_counter].frequency = buffer1;
                     if (af_counter < 50) af_counter++;
+                    af_updatecounter++;
                   }
 
                   if (rds.sortaf) {
@@ -945,6 +975,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
     af[i].afvalid = true;
     af[i].checked = false;
     af[i].regional = false;
+    af[i].mixed = false;
   }
 
   for (i = 0; i < 20; i++) {
@@ -997,6 +1028,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.hasDynamicPTY = false;
   rds.hasStereo = false;
   af_counter = 0;
+  af_updatecounter = 0;
   eon_counter = 0;
   afreset = true;
   rds.MS = 0;
@@ -1011,7 +1043,6 @@ void TEF6686::clearRDS (bool fullsearchrds)
   afinit = false;
   errorfreepi = false;
   afmethodB = false;
-  afmethodcounter = 0;
   packet0 = false;
   packet1 = false;
   packet2 = false;

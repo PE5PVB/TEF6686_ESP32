@@ -12,47 +12,6 @@ enum RDS_GROUPS {
   RDS_GROUP_12A, RDS_GROUP_12B, RDS_GROUP_13A, RDS_GROUP_13B, RDS_GROUP_14A, RDS_GROUP_14B, RDS_GROUP_15A, RDS_GROUP_15B
 };
 
-// FM band: before BAND_GAP; AM band: after BAND_GAP
-enum RADIO_BAND {
-  BAND_OIRT = 0, BAND_FM, BAND_GAP, BAND_LW, BAND_MW, BAND_SW
-};
-
-// Toggle: LW -> MW -> SW
-enum RADIO_AM_BAND_SELECTION {
-  AM_BAND_ALL = 0, AM_BAND_LW_MW, AM_BAND_LW_SW, AM_BAND_MW_SW,
-  AM_BAND_LW, AM_BAND_MW, AM_BAND_SW,
-  AM_BAND_CNT
-};
-
-// Toggle: OIRT -> FM
-enum RADIO_FM_BAND_SELECTION {
-  FM_BAND_ALL = 0, FM_BAND_OIRT, FM_BAND_FM,
-  FM_BAND_CNT
-};
-
-enum RADIO_TUNE_MODE {
-  TUNE_MAN, TUNE_AUTO, TUNE_MEM, TUNE_MI_BAND
-};
-
-enum RADIO_POWER_MODE {
-  DEEP_SLEEP = 0, LCD_OFF, LCD_BRIGHTNESS_1_PERCENT, LCD_BRIGHTNESS_A_QUARTER, LCD_BRIGHTNESS_HALF, RADIO_POWER_MODE_CNT
-};
-
-enum RADIO_HARDWARE_MODEL {
-  BASE_ILI9341 = 0, PORTABLE_ILI9341, PORTABLE_TOUCH_ILI9341,
-  RADIO_HARDWARE_CNT
-};
-
-enum RADIO_BATTERY_SELECTION {
-  BATTERY_NONE = 0, BATTERY_VALUE, BATTERY_PERCENT,
-  RADIO_BATTERY_CNT
-};
-
-enum RADIO_FM_DEEMPHASIS {
-  DEEMPHASIS_NONE = 0, DEEMPHASIS_50, DEEMPHASIS_75,
-  DEEMPHASIS_COUNT
-};
-
 static const char* const PTY_EU[] {
   "None",
   "News",
@@ -181,6 +140,7 @@ typedef struct _af_ {
   bool afvalid;
   bool checked;
   bool regional;
+  bool mixed;
 } af_;
 
 typedef struct _eon_ {
@@ -258,6 +218,7 @@ class TEF6686 {
     uint8_t rtplusblock;
     bool mute;
     bool afmethodB;
+    byte af_updatecounter;
 
   private:
     void RDScharConverter(const char* input, wchar_t* output, size_t size, bool under);
@@ -296,11 +257,9 @@ class TEF6686 {
     bool rdsBerrorThreshold;
     bool rdsCerrorThreshold;
     bool rdsDerrorThreshold;
-    byte afmethodcounter;
     bool packet0;
     bool packet1;
     bool packet2;
     bool packet3;
 };
-
 #endif
