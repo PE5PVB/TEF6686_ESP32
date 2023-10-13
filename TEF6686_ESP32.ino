@@ -108,6 +108,7 @@ bool XDRGTKTCP;
 bool XDRGTKUSB;
 bool XDRMute;
 byte af_counterold;
+byte aid_counterold;
 byte afpagenr;
 byte amnb;
 byte audiomode;
@@ -248,6 +249,7 @@ int8_t VolSet;
 float batteryVold;
 IPAddress remoteip;
 String afstringold;
+String AIDString;
 String cryptedpassword;
 String CurrentThemeString;
 String ECColdtxt;
@@ -2280,6 +2282,7 @@ void ShowFreq(int mode) {
   licold = 254;
   ECCold = 253;
   afmethodBold = false;
+  aid_counterold = 0;
 
   if (wifi) {
     Udp.beginPacket(remoteip, 9030);

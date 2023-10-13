@@ -810,7 +810,7 @@ void showRadioText() {
 
 void ShowAFEON() {
   if (radio.rds.hasAF) {
-    if (hasafold == false) {
+    if (!hasafold) {
       if (!screenmute) tftPrint(-1, myLanguage[language][87], 6, 54, BackgroundColor, BackgroundColor, 16);
       if (!screenmute) tftPrint(-1, "AF:", 4, 32, ActiveColor, ActiveColorSmooth, 16);
       hasafold = true;
@@ -842,8 +842,8 @@ void ShowAFEON() {
       if (radio.af_counter > 10 + (afpagenr == 2 ? 30 : 0)) tft.drawLine(59, 54, 59, 191, SecondaryColor);
       if (radio.af_counter > 20 + (afpagenr == 2 ? 30 : 0)) tft.drawLine(113, 54, 113, 191, SecondaryColor);
       if (afpage && !screenmute) tftPrint(1, String(afpagenr) + "/2", 315, 222, SecondaryColor, SecondaryColorSmooth, 16);
+      af_counterold = radio.af_updatecounter;
     }
-    af_counterold = radio.af_updatecounter;
   }
 
   if (radio.rds.hasEON) {
@@ -852,7 +852,9 @@ void ShowAFEON() {
       tftPrint(-1, "PI:", 170, 32, ActiveColor, ActiveColorSmooth, 16);
     }
     haseonold = true;
-    if (!screenmute) {
+
+    if (!screenmute && millis() >= eonticker + 1000) {
+      eonticker = millis();
       byte y = 0;
       if (afpagenr == 2) y = 10;
       for (byte i = 0; i < radio.eon_counter; i++) {
@@ -876,6 +878,63 @@ void ShowAFEON() {
         }
         if (i == 10) i = 254;
       }
+    }
+  }
+
+  if (radio.rds.hasAID) {
+    if (aid_counterold != radio.rds.aid_counter) {
+      AIDString = "";
+      char id[5];
+
+      for (int y = 0; y < radio.rds.aid_counter; y++) {
+        bool aidProcessed = false;
+
+        for (int i = 0; i < 65; i++) {
+          if (radio.rds.aid[y] == oda_app_ids[i]) {
+            if (!aidProcessed) {
+              char id[5];
+              for (int z = 0; z < 4; z++) {
+                uint8_t nibble = (radio.rds.aid[y] >> (4 * (3 - z))) & 0xF;
+                if (nibble < 10) {
+                  id[z] = nibble + '0';
+                } else {
+                  id[z] = nibble - 10 + 'A';
+                }
+              }
+              id[4] = '\0';
+
+              AIDString += String(id);
+              AIDString += ": ";
+              AIDString += oda_app_names[i];
+
+              aidProcessed = true;
+            }
+            break;
+          }
+        }
+
+        if (!AIDString.isEmpty() && y < radio.rds.aid_counter - 1 && aidProcessed) {
+          AIDString += " | ";
+        }
+      }
+      aid_counterold = radio.rds.aid_counter;
+    }
+
+    if (!screenmute) {
+      if (xPos == 0) {
+        if (millis() - rttickerhold >= 2000) {
+          xPos --;
+          rttickerhold = millis();
+        }
+      } else {
+        xPos --;
+        rttickerhold = millis();
+      }
+      if (xPos < -tft.textWidth(String(myLanguage[language][93]) + "  -  " + String(myLanguage[language][204]) + ": " + AIDString) + (charWidth * 14)) xPos = 0;
+      RadiotextSprite.fillSprite(BackgroundColor);
+      RadiotextSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+      RadiotextSprite.drawString(String(myLanguage[language][93]) + "  -  " + String(myLanguage[language][204]) + ": " + AIDString, xPos, 2);
+      RadiotextSprite.pushSprite(38, 220);
     }
   }
 }

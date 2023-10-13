@@ -352,7 +352,6 @@ void BuildAFScreen() {
     programServicePrevious = "";
 	afmethodBold = false;
     for (byte i = 0; i < 11; i++) eonpsold[i] = "";
-
   }
 }
 

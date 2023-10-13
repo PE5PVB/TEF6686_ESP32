@@ -1,6 +1,6 @@
 // [number of languages][number of texts]
 
-static const char* const myLanguage[16][204] = {
+static const char* const myLanguage[16][205] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -204,7 +204,8 @@ static const char* const myLanguage[16][204] = {
     "Small", // 200
     "Large", // 201
     "All", // 202
-    "Fast PS" // 203
+    "Fast PS", // 203
+    "Detected applications" // 204
   },
 
   { "Nederlands", // Dutch
@@ -410,7 +411,8 @@ static const char* const myLanguage[16][204] = {
     "Laag", // 200
     "Middel", // 201
     "Alles", // 202
-    "Snelle PS" // 203
+    "Snelle PS", // 203
+    "Gedetecteerde applicaties" // 204
   },
 
   { "Polski", // Polish
@@ -616,7 +618,8 @@ static const char* const myLanguage[16][204] = {
     "Male", // 200
     "Duze", // 201
     "Wszystkie", // 202
-    "Fast PS" // 203
+    "Fast PS", // 203
+    "Detected applications" // 204
   },
 
   { "Hrvatski", // Croatian
@@ -822,7 +825,8 @@ static const char* const myLanguage[16][204] = {
     "Small", // 200
     "Large", // 201
     "All", // 202
-    "Fast PS" // 203
+    "Fast PS", // 203
+    "Detected applications" // 204
   },
 
   { "Ελληνικά", // Greek
@@ -1028,7 +1032,8 @@ static const char* const myLanguage[16][204] = {
     "Μικρό", // 200
     "Μεγάλο", // 201
     "Όλα", // 202
-    "Fast PS" // 203
+    "Fast PS", // 203
+    "Detected applications" // 204
   },
 
   { "Romana", // Romanian
@@ -1234,7 +1239,8 @@ static const char* const myLanguage[16][204] = {
     "Small", // 200
     "Large", // 201
     "All", // 202
-    "Fast PS" // 203
+    "Fast PS", // 203
+    "Detected applications" // 204
   },
 
   { "Deutsch", // German
@@ -1440,7 +1446,8 @@ static const char* const myLanguage[16][204] = {
     "Gering", // 200
     "Groß", // 201
     "Alles", // 202
-    "Fast PS" // 203
+    "Fast PS", // 203
+    "Detected applications" // 204
   },
 
   { "Czech", // Czech
@@ -1646,7 +1653,8 @@ static const char* const myLanguage[16][204] = {
     "Small", // 200
     "Large", // 201
     "All", // 202
-    "Fast PS" // 203
+    "Fast PS", // 203
+    "Detected applications" // 204
   },
 
   { "Slovak", // Slovak
@@ -1852,7 +1860,8 @@ static const char* const myLanguage[16][204] = {
     "Small", // 200
     "Large", // 201
     "All", // 202
-    "Fast PS" // 203
+    "Fast PS", // 203
+    "Detected applications" // 204
   },
 
   { "Français", // French
@@ -2058,7 +2067,8 @@ static const char* const myLanguage[16][204] = {
     "Small", // 200
     "Large", // 201
     "All", // 202
-    "Fast PS" // 203
+    "Fast PS", // 203
+    "Detected applications" // 204
   },
 
   { "Български", // Bulgarian
@@ -2264,7 +2274,8 @@ static const char* const myLanguage[16][204] = {
     "Small", // 200
     "Large", // 201
     "All", // 202
-    "Fast PS" // 203
+    "Fast PS", // 203
+    "Detected applications" // 204
   },
 
   { "Русский", // Russian
@@ -2470,7 +2481,8 @@ static const char* const myLanguage[16][204] = {
     "Small", // 200
     "Large", // 201
     "All", // 202
-    "Fast PS" // 203
+    "Fast PS", // 203
+    "Detected applications" // 204
   },
 
   { "Українська", // Ukranian
@@ -2676,7 +2688,8 @@ static const char* const myLanguage[16][204] = {
     "Small", // 200
     "Large", // 201
     "All", // 202
-    "Fast PS" // 203
+    "Fast PS", // 203
+    "Detected applications" // 204
   },
 
   { "Italiano", // Italian
@@ -2882,7 +2895,8 @@ static const char* const myLanguage[16][204] = {
     "Small", // 200
     "Large", // 201
     "All", // 202
-    "Fast PS" // 203
+    "Fast PS", // 203
+    "Detected applications" // 204
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3088,7 +3102,8 @@ static const char* const myLanguage[16][204] = {
     "少量", // 200
     "大量", // 201
     "全部", // 202
-    "Fast PS" // 203
+    "Fast PS", // 203
+    "Detected applications" // 204
   },
 
   { "Norsk", // Norwegian
@@ -3294,7 +3309,8 @@ static const char* const myLanguage[16][204] = {
     "Lite", // 200
     "Mye", // 201
     "Alt", // 202
-    "Fast PS" // 203
+    "Fast PS", // 203
+    "Detected applications" // 204
   }
 };
 

@@ -39,6 +39,7 @@ extern bool wifi;
 extern bool XDRGTKTCP;
 extern bool XDRGTKUSB;
 extern byte af_counterold;
+extern byte aid_counterold;
 extern byte afpagenr;
 extern byte band;
 extern byte ECCold;
@@ -70,6 +71,7 @@ extern int xPos3;
 extern int xPos4;
 extern IPAddress remoteip;
 extern String afstringold;
+extern String AIDString;
 extern String ECColdtxt;
 extern String eonpsold[11];
 extern String eonstringold;
@@ -123,5 +125,4 @@ extern void ShowRDSLogo(bool RDSstatus);
 extern void DataPrint(String string);
 extern void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize);
 extern void tftReplace(int8_t offset, const String & textold, const String & text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize);
-
 #endif
