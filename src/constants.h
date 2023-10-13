@@ -106,7 +106,7 @@
 
 // EEPROM index defines
 #define EE_PRESETS_CNT              99
-#define EE_CHECKBYTE_VALUE          34 // 0 ~ 255,add new entry, change for new value 
+#define EE_CHECKBYTE_VALUE          35 // 0 ~ 255,add new entry, change for new value 
 
 #define EE_TOTAL_CNT                618
 #define EE_UINT16_FREQUENCY_FM      0
