@@ -360,7 +360,7 @@ void TEF6686::readRDS(byte showrdserrors)
     }
   }
 
-  if (highByte(rds.rdsErr) != 0xff) {
+  if (bitRead(rds.rdsStat, 15)) {
     rds.hasRDS = true;                                                                            // RDS decoder synchronized and data available
     bitStartTime = 0;
   } else {
