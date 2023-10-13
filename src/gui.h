@@ -29,6 +29,7 @@ extern byte items[8];
 
 extern bool advancedRDS;
 extern bool af;
+extern bool afmethodBold;
 extern bool afpage;
 extern bool afscreen;
 extern bool artheadold;

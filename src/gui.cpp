@@ -350,6 +350,7 @@ void BuildAFScreen() {
     af_counterold = 254;
     strcpy(radioIdPrevious, "");
     programServicePrevious = "";
+	afmethodBold = false;
     for (byte i = 0; i < 11; i++) eonpsold[i] = "";
 
   }
@@ -645,15 +646,16 @@ void BuildAdvancedRDS() {
     }
 
     if (radio.rds.hasCT) tftPrint(1, rds_clockold, 205, 109, SecondaryColor, SecondaryColorSmooth, 16);
-    tftPrint(-1, "TP", 3, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "TA", 25, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "AF", 47, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "CT", 69, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "TMC", 89, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "RT+", 122, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "EON", 150, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "M", 183, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "S", 199, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "TP", 2, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "TA", 21, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "AF", 42, 51, GreyoutColor, BackgroundColor, 16);
+	tftPrint(-1, "-R", 60, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "CT", 78, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "TMC", 95, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "RT+", 130, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "EON", 157, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "S", 188, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "M", 196, 51, GreyoutColor, BackgroundColor, 16);
   }
 
   RDSstatusold = false;
@@ -693,7 +695,7 @@ void BuildAdvancedRDS() {
   eonstringold = "";
   afstringold = "";
   rtplusstringold = "";
-
+  afmethodBold = false;
   ShowMemoryPos();
 }
 
