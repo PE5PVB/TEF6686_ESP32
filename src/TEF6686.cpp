@@ -766,7 +766,7 @@ void TEF6686::readRDS(byte showrdserrors)
               rds.aid_counter++;
             }
 
-            if (rds.rdsD == 0xCD46) {                                                             // Check for RT+ application
+            if (rds.rdsD == 0xCD46) {                                                             // Check for TMC application
               rds.hasTMC = true;                                                                  // TMC flag
             }
 
