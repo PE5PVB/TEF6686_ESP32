@@ -548,6 +548,7 @@ void TEF6686::readRDS(byte showrdserrors)
                       if (af[x].frequency == buffer0 && !af[x].regional) {
                         af[x].regional = true;
                         af_updatecounter++;
+						break;
                       }
                     }
                   } else if (buffer1 == currentfreq && buffer0 < buffer1) {
@@ -555,6 +556,7 @@ void TEF6686::readRDS(byte showrdserrors)
                       if (af[x].frequency == buffer0 && !af[x].mixed) {
                         af[x].mixed = true;
                         af_updatecounter++;
+						break;
                       }
                     }
                   }
@@ -564,6 +566,7 @@ void TEF6686::readRDS(byte showrdserrors)
                       if (af[x].frequency == buffer1 && !af[x].regional) {
                         af[x].regional = true;
                         af_updatecounter++;
+						break;
                       }
                     }
                   } else if (buffer0 == currentfreq && buffer0 < buffer1) {
@@ -571,6 +574,7 @@ void TEF6686::readRDS(byte showrdserrors)
                       if (af[x].frequency == buffer0 && !af[x].mixed) {
                         af[x].mixed = true;
                         af_updatecounter++;
+						break;
                       }
                     }
                   }
@@ -613,14 +617,17 @@ void TEF6686::readRDS(byte showrdserrors)
                           bool temp3 = af[j].afvalid;
                           bool temp4 = af[j].checked;
                           bool temp5 = af[j].regional;
+						  bool temp6 = af[j].mixed;
                           af[j].frequency = af[j + 1].frequency;
                           af[j].afvalid = af[j + 1].afvalid;
                           af[j].checked = af[j + 1].checked;
                           af[j].regional = af[j + 1].regional;
+						  af[j].mixed = af[j + 1].mixed;
                           af[j + 1].frequency = temp;
                           af[j + 1].afvalid = temp3;
                           af[j + 1].checked = temp4;
                           af[j + 1].regional = temp5;
+						  af[j + 1].mixed = temp6;
                         }
                       }
                     }
