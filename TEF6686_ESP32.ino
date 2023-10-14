@@ -948,6 +948,7 @@ void GetData() {
       showPTY();
       showECC();
       showRadioText();
+      if (!advancedRDS) showCT();
       if (millis() >= tuningtimer + 200) doAF();
     }
     showPI();
@@ -2134,6 +2135,7 @@ void KeyUp() {
       if (XDRGTKUSB || XDRGTKTCP) {
         if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10)); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10)); else DataPrint("M1\nT" + String(frequency_AM));
       }
+      if (radio.rds.hasCT) tftPrint(1, rds_clock, 205, 163, BackgroundColor, BackgroundColor, 16);
       radio.clearRDS(fullsearchrds);
       change = 0;
       ShowFreq(0);
@@ -2180,6 +2182,7 @@ void KeyDown() {
       if (XDRGTKUSB || XDRGTKTCP) {
         if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10)); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10)); else DataPrint("M1\nT" + String(frequency_AM));
       }
+      if (radio.rds.hasCT) tftPrint(1, rds_clock, 38, 109, BackgroundColor, BackgroundColor, 16);
       radio.clearRDS(fullsearchrds);
       change = 0;
       ShowFreq(0);

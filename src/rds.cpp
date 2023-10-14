@@ -725,6 +725,21 @@ void showPS() {
   }
 }
 
+void showCT() {
+  if (!screenmute && !afscreen && !advancedRDS) {
+    rds_clock = ((radio.rds.hour < 10 ? "0" : "") + String(radio.rds.hour) + ":" + (radio.rds.minute < 10 ? "0" : "") + String(radio.rds.minute));
+    if (rds_clock != rds_clockold) {
+      if (radio.rds.hasCT) {
+        tftReplace(1, rds_clockold, rds_clock, 205, 163, PrimaryColor, PrimaryColorSmooth, 16);
+		Serial.println(rds_clock);
+      } else {
+        tftPrint(1, rds_clock, 205, 163, BackgroundColor, BackgroundColor, 16);
+      }
+    }
+    rds_clockold = rds_clock;
+  }
+}
+
 void showRadioText() {
   if (radio.rds.hasRT && radio.rds.stationText.length() > 0) {
     if (advancedRDS && radio.rds.stationText.length() < 20) {

@@ -350,7 +350,7 @@ void BuildAFScreen() {
     af_counterold = 254;
     strcpy(radioIdPrevious, "");
     programServicePrevious = "";
-	afmethodBold = false;
+    afmethodBold = false;
     for (byte i = 0; i < 11; i++) eonpsold[i] = "";
   }
 }
@@ -644,11 +644,10 @@ void BuildAdvancedRDS() {
       tft.drawCircle(71, 15, 9, SecondaryColor);
     }
 
-    if (radio.rds.hasCT) tftPrint(1, rds_clockold, 205, 109, SecondaryColor, SecondaryColorSmooth, 16);
     tftPrint(-1, "TP", 2, 51, GreyoutColor, BackgroundColor, 16);
     tftPrint(-1, "TA", 21, 51, GreyoutColor, BackgroundColor, 16);
     tftPrint(-1, "AF", 42, 51, GreyoutColor, BackgroundColor, 16);
-	tftPrint(-1, "-B", 60, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "-B", 60, 51, GreyoutColor, BackgroundColor, 16);
     tftPrint(-1, "CT", 78, 51, GreyoutColor, BackgroundColor, 16);
     tftPrint(-1, "TMC", 95, 51, GreyoutColor, BackgroundColor, 16);
     tftPrint(-1, "RT+", 130, 51, GreyoutColor, BackgroundColor, 16);
@@ -695,6 +694,7 @@ void BuildAdvancedRDS() {
   afstringold = "";
   rtplusstringold = "";
   afmethodBold = false;
+  rds_clockold = "";
   ShowMemoryPos();
 }
 
@@ -813,6 +813,7 @@ void BuildDisplay() {
   batteryold = 6;
   batteryVold = 0;
   vPerold = 0;
+  rds_clockold = "";
   strcpy(programTypePrevious, "");
   strcpy(radioIdPrevious, "");
   programServicePrevious = "";
@@ -1935,11 +1936,11 @@ void DoMenu() {
             tftPrint(1, "NoobishSVK", 145, 143, PrimaryColor, PrimaryColorSmooth, 16);
             tftPrint(-1, "yo2ldk", 155, 128, PrimaryColor, PrimaryColorSmooth, 16);
             tftPrint(-1, "Justin_Peng(Portable)", 155, 143, PrimaryColor, PrimaryColorSmooth, 16);
-			tftPrint(1, "mx4zxc", 145, 158, PrimaryColor, PrimaryColorSmooth, 16);
-			tftPrint(-1, "elektronik232", 155, 158, PrimaryColor, PrimaryColorSmooth, 16);
-			tftPrint(1, "KOTYA8", 145, 173, PrimaryColor, PrimaryColorSmooth, 16);
-			tftPrint(-1, "mrwish7", 155, 173, PrimaryColor, PrimaryColorSmooth, 16);
-			tftPrint(1, "lxsxl", 145, 188, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "mx4zxc", 145, 158, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "elektronik232", 155, 158, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "KOTYA8", 145, 173, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "mrwish7", 155, 173, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "lxsxl", 145, 188, PrimaryColor, PrimaryColorSmooth, 16);
             tftPrint(0, "github.com/PE5PVB/TEF6686_ESP32", 155, 208, ActiveColor, ActiveColorSmooth, 16);
             break;
         }

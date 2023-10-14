@@ -120,6 +120,7 @@ void showPTY();
 void showPS();
 void showRadioText();
 void ShowAFEON();
+void showCT();
 
 extern void ShowRDSLogo(bool RDSstatus);
 extern void DataPrint(String string);
