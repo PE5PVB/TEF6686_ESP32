@@ -1,6 +1,6 @@
 // [number of languages][number of texts]
 
-static const char* const myLanguage[16][205] = {
+static const char* const myLanguage[17][205] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -3311,6 +3311,213 @@ static const char* const myLanguage[16][205] = {
     "Alt", // 202
     "Rask PS", // 203
     "Oppdaget applikasjoner" // 204
+  },
+
+  { "Español", // Spanish
+    "La dirección rotativa cambió", // 1
+    "Por favor, suelte el botón", // 2
+    "Pantalla girada", // 3
+    "Calibrar el medidor analógico", // 4
+    "Suelte el botón cuando esté listo", // 5
+    "Codificador configurado como óptico", // 6
+    "Codificador configurado como estándar", // 7
+    "Receptor FM/AM", // 8
+    "Sintonizador: ¡Ninguno!", // 9
+    "Volumen:", // 10
+    "Convertidor:", // 11
+    "Banda baja:", // 12
+    "Banda alta:", // 13
+    "Desplazamiento de nivel RF de FM:", // 14
+    "Umbral estéreo:", // 15
+    "Esquina de corte alta:", // 16
+    "Umbral de corte alto:", // 17
+    "Umbral de nivel bajo:", // 18
+    "Contraste:", // 19
+    "Ajustar volumen", // 20
+    "Ajustar desplazamiento del convertidor", // 21
+    "Ajustar banda baja", // 22
+    "Ajustar banda alta", // 23
+    "Ajustar desplazamiento de nivel", // 24
+    "Ajustar umbral de separación estéreo", // 25
+    "Ajustar frecuencia de corte alta", // 26
+    "Ajustar umbral de corte alto", // 27
+    "Ajustar umbral de nivel bajo", // 28
+    "Ajustar brillo de la pantalla", // 29
+    "Apagar", // 30
+    "¡La pantalla está en silencio!", // 31
+    "Para desactivar, desmarque la casilla RF+", // 32
+    "APAGADO", // 33
+    "ESCANEANDO...", // 34
+    "Sintonizador no detectado", // 35
+    "Versión del sintonizador establecida: v", // 36
+    "Por favor, reinicie el sintonizador", // 37
+    "Mostrar errores RDS", // 38
+    "Idioma", // 39
+    "Elegir idioma", // 40
+    "PRESIONE MODE PARA SALIR Y GUARDAR", // 41
+    "Encendido", // 42
+    "Silencio FM", // 43
+    "Silencio AM", // 44
+    "Pitido en el borde de la banda", // 45
+    "Región", // 46
+    "Europa", // 47
+    "EE. UU.", // 48
+    "Mostrar guion bajo en RDS", // 49
+    "Modo USB", // 50
+    "Wi-Fi activado", // 51
+    "Configurar Wi-Fi", // 52
+    "Conectar a: ", // 53
+    "para configurar Wi-Fi", // 54
+    "Intentando conectar a Wi-Fi", // 55
+    "¡FALLIDO!", // 56
+    "¡CONECTADO!", // 57
+    "IP del cliente de la lista de estaciones", // 58
+    "Mostrar longitud de onda de SW", // 59
+    "Filtro RDS", // 60
+    "Mostrar errores de PI", // 61
+    "Mostrar squelch", // 62
+    "Medidor de modulación", // 63
+    "Atenuador de ruido AM", // 64
+    "Atenuador de ruido FM", // 65
+    "Carga de configuración predeterminada", // 66
+    "Salida de audio", // 67
+    "Rotación táctil", // 68
+    "Invertir pantalla", // 69
+    "Acerca del software", // 70
+    "Código principal:", // 71
+    "Colaboradores:", // 72
+    "Desconocido", // 73
+    "Opciones de energía", // 74
+    "Suspensión profunda", // 75
+    "Apagar pantalla", // 76
+    "Tema", // 77
+    "Predeterminado", // 78
+    "Cian", // 79
+    "Carmesí", // 80
+    "Monocromo", // 81
+    "Volcán", // 82
+    "Dendro", // 83
+    "Sakura", // 84
+    "Blanqueo total", // 85
+    "NO ES POSIBLE", // 86
+    "No hay AF disponible", // 87
+    "No hay EON disponible", // 88
+    "No hay RT+ disponible", // 89
+    "Paso predeterminado de FM", // 90
+    "Protector de pantalla", // 91
+    "seg.", // 92
+    "PRESIONE BAND PARA CERRAR", // 93
+    "1% de brillo", // 94
+    "25% de brillo", // 95
+    "50% de brillo", // 96
+    "Desplazamiento de nivel RF de AM:", // 97
+    "Unidad de medidor de señal:", // 98
+    "Usar AF:", // 99
+    "Seleccionar banda de FM:", // 100
+    "Seleccionar banda de AM:", // 101
+    "LW", // 102
+    "AM", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT", // 106
+    "Rotación con pantalla apagada", // 107
+    "Selector de modelo", // 108
+    "Base (ILI9341)", // 109
+    "Portátil (ILI9341)", // 110
+    "Táctil portátil (ILI9341)", // 111
+    "Título", // 112
+    "Álbum", // 113
+    "Pista", // 114
+    "Artista", // 115
+    "Composición", // 116
+    "Movimiento", // 117
+    "Director", // 118
+    "Compositor", // 119
+    "Banda", // 120
+    "Comentario", // 121
+    "Género", // 122
+    "Noticias", // 123
+    "Noticias locales", // 124
+    "Mercado de valores", // 125
+    "Deportes", // 126
+    "Lotería", // 127
+    "Horóscopo", // 128
+    "Diversión diaria", // 129
+    "Salud", // 130
+    "Evento", // 131
+    "Escena", // 132
+    "Cine", // 133
+    "TV", // 134
+    "Fecha/hora", // 135
+    "Clima", // 136
+    "Tráfico", // 137
+    "Alarma", // 138
+    "Anuncio", // 139
+    "Sitio web", // 140
+    "Otro", // 141
+    "PS corto", // 142
+    "PS largo", // 143
+    "Ahora", // 144
+    "Siguiente", // 145
+    "Parte", // 146
+    "Anfitrión", // 147
+    "Editor", // 148
+    "Frecuencia", // 149
+    "Página de inicio", // 150
+    "Subcanal", // 151
+    "Línea directa", // 152
+    "Teléfono del estudio", // 153
+    "Teléfono", // 154
+    "SMS al estudio", // 155
+    "SMS", // 156
+    "Correo electrónico de la línea directa", // 157
+    "Correo electrónico del estudio", // 158
+    "Correo electrónico", // 159
+    "Chat", // 160
+    "Centro de chat", // 161
+    "Pregunta de votación", // 162
+    "Centro de votación", // 163
+    "Lugar", // 164
+    "Cita", // 165
+    "Identificador", // 166
+    "Compra", // 167
+    "Obtener datos", // 168
+    " ", // 169
+    "Mandarina", // 170
+    "Océano", // 171
+    "Índigo", // 172
+    "Opciones de batería", // 173
+    "Mostrar voltaje", // 174
+    "Mostrar porcentaje", // 175
+    "Buffering de RT", // 176
+    "Configuración principal", // 177
+    "Configuración de audio", // 178
+    "Configuración de pantalla", // 179
+    "Configuración de RDS", // 180
+    "Configuración de FM", // 181
+    "Configuración de AM", // 182
+    "Conectividad", // 183
+    "PRESIONE MODE PARA VOLVER", // 184
+    "Detección de co-canal AM", // 185
+    "Sensibilidad de detección de co-canal", // 186
+    "Umbral de detección de co-canal", // 187
+    "Contador de detección de co-canal", // 188
+    "PRINCIPAL", // 189
+    "AUDIO", // 190
+    "PANTALLA", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "CONECTAR", // 195
+    "Orden automático de AF", // 196
+    "ID de lista de estaciones", // 197
+    "Atenuación de AM", // 198
+    "Despreocupación de FM", // 199
+    "Pequeño", // 200
+    "Grande", // 201
+    "Todo", // 202
+    "PS rápido", // 203
+    "Aplicaciones detectadas" // 204
   }
 };
 
