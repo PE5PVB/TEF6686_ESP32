@@ -597,6 +597,7 @@ void BuildAdvancedRDS() {
     tft.drawRect(0, 0, 320, 240, FrameColor);
 
     tftPrint(-1, "ERRORS", 3, 34, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(1, "MHz", 310, 35, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(1, unitString[unit], 310, 51, ActiveColor, ActiveColorSmooth, 16);
     if (region == REGION_EU) tftPrint(-1, "PI", ITEM10 + 6, 81, ActiveColor, ActiveColorSmooth, 16);
     if (region == REGION_US) tftPrint(-1, "ID", ITEM10 + 6, 81, ActiveColor, ActiveColorSmooth, 16);
