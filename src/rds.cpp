@@ -731,7 +731,6 @@ void showCT() {
     if (rds_clock != rds_clockold) {
       if (radio.rds.hasCT) {
         tftReplace(1, rds_clockold, rds_clock, 205, 163, PrimaryColor, PrimaryColorSmooth, 16);
-		Serial.println(rds_clock);
       } else {
         tftPrint(1, rds_clock, 205, 163, BackgroundColor, BackgroundColor, 16);
       }
