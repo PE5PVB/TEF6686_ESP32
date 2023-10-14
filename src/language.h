@@ -2474,15 +2474,15 @@ static const char* const myLanguage[17][205] = {
     "FM", // 193
     "AM", // 194
     "ПОДКЛЮЧЕНИЕ", // 195
-    "Auto sort AF", // 196
+    "Авто сорт. AF", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
     "FM deemphasis", // 199
-    "Small", // 200
-    "Large", // 201
-    "All", // 202
-    "Fast PS", // 203
-    "Detected applications" // 204
+    "Мало", // 200
+    "Много", // 201
+    "Все", // 202
+    "Быстрый PS", // 203
+    "Обнаруженные приложения" // 204
   },
 
   { "Українська", // Ukranian
@@ -2681,15 +2681,15 @@ static const char* const myLanguage[17][205] = {
     "FM", // 193
     "AM", // 194
     "ПІДКЛЮЧЕННЯ", // 195
-    "Auto sort AF", // 196
+    "Авто сорт. AF", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
     "FM deemphasis", // 199
-    "Small", // 200
-    "Large", // 201
-    "All", // 202
-    "Fast PS", // 203
-    "Detected applications" // 204
+    "Мало", // 200
+    "Багато", // 201
+    "Усе", // 202
+    "Швидкий PS", // 203
+    "Виявлені програми" // 204
   },
 
   { "Italiano", // Italian
