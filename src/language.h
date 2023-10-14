@@ -932,7 +932,7 @@ static const char* const myLanguage[16][205] = {
     "Επιλογή μπάντας FM:", // 100
     "Επιλογή μπάντας AM:", // 101
     "LW", // 102
-    "MW", // 103
+    "AM", // 103
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
@@ -1032,8 +1032,8 @@ static const char* const myLanguage[16][205] = {
     "Μικρό", // 200
     "Μεγάλο", // 201
     "Όλα", // 202
-    "Fast PS", // 203
-    "Detected applications" // 204
+    "Γρήγορο PS", // 203
+    "Εντοπισμένες εφαρμογές" // 204
   },
 
   { "Romana", // Romanian
@@ -1967,7 +1967,7 @@ static const char* const myLanguage[16][205] = {
     "Sélectionner la bande FM:", // 100
     "Sélectionner la bande AM:", // 101
     "LW", // 102
-    "MW", // 103
+    "AM", // 103
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
@@ -2041,34 +2041,34 @@ static const char* const myLanguage[16][205] = {
     "Montrer la tension", // 174
     "Montrer le pourcentage", // 175
     "RT buffering", // 176
-    "Main settings", // 177
-    "Audio settings", // 178
-    "Display settings", // 179
-    "RDS settings", // 180
-    "FM settings", // 181
-    "AM settings", // 182
-    "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "Paramètres principaux", // 177
+    "Paramètres audio", // 178
+    "Paramètres d'affichage", // 179
+    "Paramètres RDS", // 180
+    "Paramètres FM", // 181
+    "Paramètres AM", // 182
+    "Connectivité", // 183
+    "APPUYEZ MODE POUR RETOURNER", // 184
     "AM CoChannelDet", // 185
-    "CoChannelDet sensitivity", // 186
-    "AM CoChannelDet threshold", // 187
-    "CoChannelDet counter", // 188
-    "MAIN", // 189
+    "CoChannelDet sensibilité", // 186
+    "AM CoChannelDet sueil", // 187
+    "CoChannelDet compteur", // 188
+    "PRINCIPAUX", // 189
     "AUDIO", // 190
-    "DISPLAY", // 191
+    "AFFICHAGE", // 191
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT", // 195
+    "CONNECTER", // 195
     "Auto sort AF", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemphasis", // 199
-    "Small", // 200
-    "Large", // 201
-    "All", // 202
-    "Fast PS", // 203
-    "Detected applications" // 204
+    "FM déemphasie", // 199
+    "Petites", // 200
+    "Grosses", // 201
+    "Toutes", // 202
+    "PS rapide", // 203
+    "Applications détectées" // 204
   },
 
   { "Български", // Bulgarian
