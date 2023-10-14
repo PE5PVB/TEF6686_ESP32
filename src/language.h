@@ -3309,8 +3309,8 @@ static const char* const myLanguage[16][205] = {
     "Lite", // 200
     "Mye", // 201
     "Alt", // 202
-    "Fast PS", // 203
-    "Detected applications" // 204
+    "Rask PS", // 203
+    "Oppdaget applikasjoner" // 204
   }
 };
 
