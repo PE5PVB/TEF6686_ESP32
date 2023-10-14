@@ -3752,129 +3752,133 @@ static const char* const myCountries[] {
   "Bangladesh" // 227
 };
 
-static const char* const myLanguages[] {
-  "Unknown",
-  "Albanian",
-  "Breton",
-  "Catalan",
-  "Croatian",
-  "Welsh",
-  "Czech",
-  "Danish",
-  "German",
-  "English",
-  "Spanish",
-  "Esperanto",
-  "Estonian",
-  "Basque",
-  "Faroese",
-  "French",
-  "Frisian",
-  "Irish",
-  "Gaelic",
-  "Galician",
-  "Icelandic",
-  "Italian",
-  "Lappish",
-  "Latin",
-  "Latvian",
-  "Luxemb.",
-  "Lithua.",
-  "Hungar.",
-  "Maltese",
-  "Dutch",
-  "Norweg.",
-  "Occitan",
-  "Polish",
-  "Portug.",
-  "Romanian",
-  "Romansh",
-  "Serbian",
-  "Slovak",
-  "Slovene",
-  "Finnish",
-  "Swedish",
-  "Turkish",
-  "Flemish",
-  "Walloon",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "Backgr.",
-  "",
-  "",
-  "",
-  "",
-  "Zulu",
-  "Vietnam.",
-  "Uzbek",
-  "Urdu",
-  "Ukrain.",
-  "Thai",
-  "Telugu",
-  "Tatar",
-  "Tamil",
-  "Tadzhik",
-  "Swahili",
-  "SrananT.",
-  "Somali",
-  "Sinhalese",
-  "Shona",
-  "Serbo-C.",
-  "Ruthen.",
-  "Russian",
-  "Quechua",
-  "Pushtu",
-  "Punjabi",
-  "Persian",
-  "Papami.",
-  "Oriya",
-  "Nepali",
-  "Ndebele",
-  "Marathi",
-  "Moldov.",
-  "Malays.",
-  "Malagas.",
-  "Macedon.",
-  "Laotian",
-  "Korean",
-  "Khmer",
-  "Kazakh",
-  "Kannada",
-  "Japanese",
-  "Indones.",
-  "Hindi",
-  "Hebrew",
-  "Hausa",
-  "Gurani",
-  "Gujurati",
-  "Greek",
-  "Georgian",
-  "Fulani",
-  "Dari",
-  "Churash",
-  "Chinese",
-  "Burmese",
-  "Bulgarian",
-  "Bengali",
-  "Belorus.",
-  "Bambora",
-  "Azerbaij.",
-  "Assamese",
-  "Armenian",
-  "Arabic",
-  "Amharic"
+static const char* const myLanguages[] = {
+  "Unknown",         // 0
+  "Albanian",        // 1
+  "Breton",          // 2
+  "Catalan",         // 3
+  "Croatian",        // 4
+  "Welsh",           // 5
+  "Czech",           // 6
+  "Danish",          // 7
+  "German",          // 8
+  "English",         // 9
+  "Spanish",         // 10
+  "Esperanto",       // 11
+  "Estonian",        // 12
+  "Basque",          // 13
+  "Faroese",         // 14
+  "French",          // 15
+  "Frisian",         // 16
+  "Irish",           // 17
+  "Gaelic",          // 18
+  "Galician",        // 19
+  "Icelandic",       // 20
+  "Italian",         // 21
+  "Lappish",         // 22
+  "Latin",           // 23
+  "Latvian",         // 24
+  "Luxemb.",         // 25
+  "Lithua.",         // 26
+  "Hungar.",         // 27
+  "Maltese",         // 28
+  "Dutch",           // 29
+  "Norweg.",         // 30
+  "Occitan",         // 31
+  "Polish",          // 32
+  "Portug.",         // 33
+  "Romanian",        // 34
+  "Romansh",         // 35
+  "Serbian",         // 36
+  "Slovak",          // 37
+  "Slovene",         // 38
+  "Finnish",         // 39
+  "Swedish",         // 40
+  "Turkish",         // 41
+  "Flemish",         // 42
+  "Walloon",         // 43
+  "",                // 44
+  "",                // 45
+  "",                // 46
+  "",                // 47
+  "",                // 48
+  "",                // 49
+  "",                // 50
+  "",                // 51
+  "",                // 52
+  "",                // 53
+  "",                // 54
+  "",                // 55
+  "",                // 56
+  "",                // 57
+  "",                // 58
+  "",                // 59
+  "",                // 60
+  "",                // 61
+  "",                // 62
+  "",                // 63
+  "Backgr.",         // 64
+  "",                // 65
+  "",                // 66
+  "",                // 67
+  "",                // 68
+  "Zulu",            // 69
+  "Vietnam.",        // 70
+  "Uzbek",           // 71
+  "Urdu",            // 72
+  "Ukrain.",         // 73
+  "Thai",            // 74
+  "Telugu",          // 75
+  "Tatar",           // 76
+  "Tamil",           // 77
+  "Tadzhik",         // 78
+  "Swahili",         // 79
+  "SrananT.",        // 80
+  "Somali",          // 81
+  "Sinhalese",       // 82
+  "Shona",           // 83
+  "Serbo-C.",        // 84
+  "Ruthen.",         // 85
+  "Russian",         // 86
+  "Quechua",         // 87
+  "Pushtu",          // 88
+  "Punjabi",         // 89
+  "Persian",         // 90
+  "Papami.",         // 91
+  "Oriya",           // 92
+  "Nepali",          // 93
+  "Ndebele",         // 94
+  "Marathi",         // 95
+  "Moldov.",         // 96
+  "Malays.",         // 97
+  "Malagas.",        // 98
+  "Macedon.",        // 99
+  "Laotian",         // 100
+  "Korean",          // 101
+  "Khmer",           // 102
+  "Kazakh",          // 103
+  "Kannada",         // 104
+  "Japanese",        // 105
+  "Indones.",        // 106
+  "Hindi",           // 107
+  "Hebrew",          // 108
+  "Hausa",           // 109
+  "Gurani",          // 110
+  "Gujurati",        // 111
+  "Greek",           // 112
+  "Georgian",        // 113
+  "Fulani",          // 114
+  "Dari",            // 115
+  "Churash",         // 116
+  "Chinese",         // 117
+  "Burmese",         // 118
+  "Bulgarian",       // 119
+  "Bengali",         // 120
+  "Belorus.",        // 121
+  "Bambora",         // 122
+  "Azerbaij.",       // 123
+  "Assamese",        // 124
+  "Armenian",        // 125
+  "Arabic",          // 126
+  "Amharic"          // 127
 };
