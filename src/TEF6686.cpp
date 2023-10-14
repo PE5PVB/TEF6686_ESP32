@@ -528,9 +528,12 @@ void TEF6686::readRDS(byte showrdserrors)
             //AF decoder
             if (rdsblock == 0) {                                                                // Only when in GROUP 0A
 
-              if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == currentfreq && !afmethodB) {  // Check for AF method B
+              if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == currentfreq) {  // Check for AF method B
                 afmethodB = true;
+                afmethodBprobe = true;
                 af_updatecounter++;
+              } else if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == !currentfreq) {
+                afmethodBprobe = false;
               }
 
               if (((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) > 224) && ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 250)) afinit = true;
@@ -543,38 +546,48 @@ void TEF6686::readRDS(byte showrdserrors)
                   if ((rds.rdsC & 0xFF) > 0 && (rds.rdsC & 0xFF) < 205) buffer1 = (rds.rdsC & 0xFF) * 10 + 8750; else buffer1 = 0;
                   if (buffer0 != 0 || buffer1 != 0) rds.hasAF = true;
 
-                  if (buffer1 == currentfreq && buffer0 > buffer1) {
-                    for (int x = 0; x < af_counter; x++) {
-                      if (af[x].frequency == buffer0 && !af[x].regional) {
-                        af[x].regional = true;
-                        af_updatecounter++;
-                        break;
+                  if (afmethodBprobe) {
+                    if (buffer1 == currentfreq && buffer0 > buffer1) {
+                      for (int x = 0; x < af_counter; x++) {
+                        if (af[x].frequency == buffer0 && !af[x].regional) {
+                          if (!af[x].regional) {
+                            af[x].regional = true;
+                            af_updatecounter++;
+                          }
+                          break;
+                        }
+                      }
+                    } else if (buffer1 == currentfreq && buffer0 < buffer1) {
+                      for (int x = 0; x < af_counter; x++) {
+                        if (af[x].frequency == buffer0 && !af[x].mixed) {
+                          if (!af[x].mixed) {
+                            af[x].mixed = true;
+                            af_updatecounter++;
+                          }
+                          break;
+                        }
                       }
                     }
-                  } else if (buffer1 == currentfreq && buffer0 < buffer1) {
-                    for (int x = 0; x < af_counter; x++) {
-                      if (af[x].frequency == buffer0 && !af[x].mixed) {
-                        af[x].mixed = true;
-                        af_updatecounter++;
-                        break;
-                      }
-                    }
-                  }
 
-                  if (buffer0 == currentfreq && buffer0 > buffer1) {
-                    for (int x = 0; x < af_counter; x++) {
-                      if (af[x].frequency == buffer1 && !af[x].regional) {
-                        af[x].regional = true;
-                        af_updatecounter++;
-                        break;
+                    if (buffer0 == currentfreq && buffer0 > buffer1) {
+                      for (int x = 0; x < af_counter; x++) {
+                        if (af[x].frequency == buffer1 && !af[x].regional) {
+                          if (!af[x].regional) {
+                            af[x].regional = true;
+                            af_updatecounter++;
+                          }
+                          break;
+                        }
                       }
-                    }
-                  } else if (buffer0 == currentfreq && buffer0 < buffer1) {
-                    for (int x = 0; x < af_counter; x++) {
-                      if (af[x].frequency == buffer0 && !af[x].mixed) {
-                        af[x].mixed = true;
-                        af_updatecounter++;
-                        break;
+                    } else if (buffer0 == currentfreq && buffer0 < buffer1) {
+                      for (int x = 0; x < af_counter; x++) {
+                        if (af[x].frequency == buffer0 && !af[x].mixed) {
+                          if (!af[x].mixed) {
+                            af[x].mixed = true;
+                            af_updatecounter++;
+                          }
+                          break;
+                        }
                       }
                     }
                   }
@@ -1077,6 +1090,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
   packet2 = false;
   packet3 = false;
   rds.aid_counter = 0;
+  afmethodBprobe = false;
 }
 
 void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {
