@@ -526,17 +526,25 @@ void TEF6686::readRDS(byte showrdserrors)
 
           if (!rdsCerrorThreshold) {
             //AF decoder
-            if (rdsblock == 0) {                                                                // Only when in GROUP 0A
+            if (rdsblock == 0 && rds.rdsC != rdsCold) {                                                                // Only when in GROUP 0A
 
               if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == currentfreq) {               // Check for AF method B
                 afmethodB = true;
                 afmethodBprobe = true;
                 af_updatecounter++;
-              } else if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == !currentfreq) {
+                af_counterb = (rds.rdsC >> 8) - 224;
+                af_counterbcheck = 1;
+              } else if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) != currentfreq) {
                 afmethodBprobe = false;
+                af_counterb = 0;
+                af_counterbcheck = 0;
               }
 
-              if (((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) > 224) && ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 250)) afinit = true;  // AF valid
+              if (((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) && ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205)) {
+                afinit = true;  // AF valid
+                if (afmethodBprobe) af_counterbcheck += 2;
+              }
+
               if (afinit) {
                 if ((rds.rdsB >> 11) == 0 && af_counter < 50) {
                   uint16_t buffer0;
@@ -545,6 +553,8 @@ void TEF6686::readRDS(byte showrdserrors)
                   if ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) buffer0 = (rds.rdsC >> 8) * 10 + 8750; else buffer0 = 0;
                   if ((rds.rdsC & 0xFF) > 0 && (rds.rdsC & 0xFF) < 205) buffer1 = (rds.rdsC & 0xFF) * 10 + 8750; else buffer1 = 0;
                   if (buffer0 != 0 || buffer1 != 0) rds.hasAF = true;
+
+                  if (afmethodBprobe && af_counterbcheck > af_counterb) afmethodBprobe = false;                                     // If more than counter received disable probe flag
 
                   if (afmethodBprobe) {                                                                                             // Check for Reg. flags
                     if (buffer1 == currentfreq && buffer0 > buffer1) {
@@ -581,7 +591,7 @@ void TEF6686::readRDS(byte showrdserrors)
                       }
                     } else if (buffer0 == currentfreq && buffer0 < buffer1) {
                       for (int x = 0; x < af_counter; x++) {
-                        if (af[x].frequency == buffer0 && !af[x].mixed) {
+                        if (af[x].frequency == buffer1 && !af[x].mixed) {
                           if (!af[x].mixed) {
                             af[x].mixed = true;
                             af_updatecounter++;
@@ -593,6 +603,7 @@ void TEF6686::readRDS(byte showrdserrors)
                   }
 
                   if (buffer0 != currentfreq && buffer1 != currentfreq && afmethodB && afmethodBprobe) {                            // Remove faulty Reg. flags
+                    afmethodBprobe = false;
                     for (int x = 0; x < af_counter; x++) {
                       if (af[x].frequency == buffer0 || af[x].frequency == buffer1) {
                         if (af[x].mixed) {
@@ -663,6 +674,7 @@ void TEF6686::readRDS(byte showrdserrors)
                   }
                 }
               }
+              rdsCold = rds.rdsC;
             }
           }
         } break;

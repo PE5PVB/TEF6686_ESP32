@@ -705,5 +705,8 @@ class TEF6686 {
     bool packet2;
     bool packet3;
     bool afmethodBprobe;
+    uint16_t rdsCold;
+    uint8_t af_counterb;
+    uint8_t af_counterbcheck;
 };
 #endif
