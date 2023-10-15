@@ -2009,10 +2009,30 @@ void ButtonPress() {
       } else {
         memorystore = false;
         EEPROM.writeByte(memorypos + EE_PRESETS_BAND_START, band);
-        if (band == BAND_FM) EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_START, frequency); else EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_START, frequency_AM);
+        if (band == BAND_FM) {
+          EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_START, frequency);
+        } else if (band == BAND_OIRT) {
+          EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_START, frequency_OIRT);
+        } else if (band == BAND_LW) {
+          EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_START, frequency_LW);
+        } else if (band == BAND_MW) {
+          EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_START, frequency_MW);
+        } else {
+          EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_START, frequency_SW);
+        }
         EEPROM.commit();
         memoryband[memorypos] = band;
-        if (band == BAND_FM) memory[memorypos] = frequency; else memory[memorypos] = frequency_AM;
+        if (band == BAND_FM) {
+          memory[memorypos] = frequency;
+        } else if (band == BAND_OIRT) {
+          memory[memorypos] = frequency_OIRT;
+        } else if (band == BAND_LW) {
+          memory[memorypos] = frequency_LW;
+        } else if (band == BAND_MW) {
+          memory[memorypos] = frequency_MW;
+        } else {
+          memory[memorypos] = frequency_SW;
+        }
         ShowTuneMode();
       }
     } else {
@@ -2210,12 +2230,21 @@ void DoMemoryPosTune() {
     band = memoryband[memorypos];
   }
 
-  if (band == BAND_FM || band == BAND_OIRT) {
+  if (band == BAND_FM) {
     frequency = memory[memorypos];
     radio.SetFreq(frequency);
+  } else if (band == BAND_OIRT) {
+    frequency_OIRT = memory[memorypos];
+    radio.SetFreq(frequency_OIRT);
+  } else if (band == BAND_LW) {
+    frequency_LW = memory[memorypos];
+    radio.SetFreqAM(frequency_LW);
+  } else if (band == BAND_MW) {
+    frequency_MW = memory[memorypos];
+    radio.SetFreqAM(frequency_MW);
   } else {
-    frequency_AM = memory[memorypos];
-    radio.SetFreqAM(frequency_AM);
+    frequency_SW = memory[memorypos];
+    radio.SetFreqAM(frequency_SW);
   }
   ShowFreq(0);
 }
