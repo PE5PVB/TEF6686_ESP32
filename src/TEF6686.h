@@ -94,6 +94,368 @@ static const uint16_t oda_app_ids[] {
   0xE4A6, 0xE5D7, 0xE911, 0xFF7F, 0xFF80
 };
 
+static const char* const ECCtext[] {
+  "Germany", // 0
+  "Greece", // 1
+  "Morocco", // 2
+  "Moldova", // 3
+  "Algeria", // 4
+  "Cyprus", // 5
+  "Czech R.", // 6
+  "Ireland", // 7
+  "Estonia", // 8
+  "Andorra", // 9
+  "San Marino", // 10
+  "Poland", // 11
+  "Turkey", // 12
+  "Israel", // 13
+  "Switzerl.", // 14
+  "Vatican", // 15
+  "Macedonia", // 16
+  "Italy", // 17
+  "Jordan", // 18
+  "Slovakia", // 19
+  "Belgium", // 20
+  "Finland", // 21
+  "Syria", // 22
+  "Serbia", // 23
+  "Ukraine", // 24
+  "Russia", // 25
+  "Luxemb.", // 26
+  "Tunisia", // 27
+  "Palestine", // 28
+  "Bulgaria", // 29
+  "Madeira", // 30
+  "Netherl.", // 31
+  "Portugal", // 32
+  "Albania", // 33
+  "Denmark", // 34
+  "Liechtst.", // 35
+  "Latvia", // 36
+  "Slovenia", // 37
+  "Austria", // 38
+  "Gibraltar", // 39
+  "Iceland", // 40
+  "Lebanon", // 41
+  "Hungary", // 42
+  "Iraq", // 43
+  "Monaco", // 44
+  "Malta", // 45
+  "U.K.", // 46
+  "Lithuania", // 47
+  "Croatia", // 48
+  "Libya", // 49
+  "Canaries", // 50
+  "Romania", // 51
+  "Spain", // 52
+  "Sweden", // 53
+  "Egypt", // 54
+  "France", // 55
+  "Norway", // 56
+  "Belarus", // 57
+  "Bosnia H.", // 58
+  "Monteneg.", // 59
+  "Armenia", // 60
+  "Azerbaijan", // 61
+  "Kosovo", // 62
+  "Kyrgystan", // 63
+  "Turkmenis.", // 64
+  "Tajikistan", // 65
+  "Uzbekistan", // 66
+  "Malawi", // 67
+  "Mali", // 68
+  "Mauritania", // 69
+  "Mauritius", // 70
+  "Mongolia", // 71
+  "Mozambiq.", // 72
+  "Namibia", // 73
+  "Niger", // 74
+  "Nigeria", // 75
+  "Oman", // 76
+  "Qatar", // 77
+  "Rwanda", // 78
+  "Sao Tome", // 79
+  "Saudi Ara.", // 80
+  "Senegal", // 81
+  "Seychel.", // 82
+  "S. Leone", // 83
+  "Somalia", // 84
+  "S. Africa", // 85
+  "S. Sudan", // 86
+  "Sudan", // 87
+  "Swaziland", // 88
+  "Tanzania", // 89
+  "Togo", // 90
+  "Uganda", // 91
+  "W. Sahara", // 92
+  "Yemen", // 93
+  "Zambia", // 94
+  "Zimbabwe", // 95
+  "Angola", // 96
+  "Ascn. Isl.", // 97
+  "Bahrein", // 98
+  "Benin", // 99
+  "Botswana", // 100
+  "Burkina F.", // 101
+  "Burundi", // 102
+  "Cabinda", // 103
+  "Cameroon", // 104
+  "Cape Ver.", // 105
+  "Centr. Af.", // 106
+  "Chad", // 107
+  "Comoros", // 108
+  "D. Congo", // 109
+  "Congo", // 110
+  "Cote d'l.", // 111
+  "Djibouti", // 112
+  "E. Guinea", // 113
+  "Eritrea", // 114
+  "Ethiopia", // 115
+  "Gabon", // 116
+  "Gambia", // 117
+  "Georgia", // 118
+  "Ghana", // 119
+  "Guinea", // 120
+  "Guinea-B.", // 121
+  "Kazakh.", // 122
+  "Kenya", // 123
+  "Kuwait", // 124
+  "Lesotho", // 125
+  "Liberia", // 126
+  "Madagas.", // 127
+  "U.Arab.E.", // 128
+  "Anguilla", // 129
+  "Antigua.", // 130
+  "Argentina", // 131
+  "Aruba", // 132
+  "Barbados", // 133
+  "Belize", // 134
+  "Bermuda", // 135
+  "Bolivia", // 136
+  "Brazil", // 137
+  "Canada", // 138
+  "Cayman I.", // 139
+  "Chile", // 140
+  "Colombia", // 141
+  "Costa R.", // 142
+  "Cuba", // 143
+  "Dominica", // 144
+  "Domini. R", // 145
+  "El Salvad.", // 146
+  "Equador", // 147
+  "Falkland", // 148
+  "Greenland", // 149
+  "Grenada", // 150
+  "Guadeloupe", // 151
+  "Guatemala", // 152
+  "Guyana", // 153
+  "Haiti", // 154
+  "Honduras", // 155
+  "Jamaica", // 156
+  "Martinique", // 157
+  "Mexico", // 158
+  "Montserrat", // 159
+  "Nether. A.", // 160
+  "Nicaragua", // 161
+  "Panama", // 162
+  "Paraguay", // 163
+  "Peru", // 164
+  "Puerto R.", // 165
+  "St. Kitts", // 166
+  "St. Lucia", // 167
+  "St. P.& M.", // 168
+  "St.Vincent", // 169
+  "Suriname", // 170
+  "T & T", // 171
+  "Turks & C.", // 172
+  "U.S.A.", // 173
+  "Uruguay", // 174
+  "Venezuela", // 175
+  "Virgin UK", // 176
+  "Virgin USA", // 177
+  "Afganist.", // 178
+  "AU C.T.", // 179
+  "AU N.S.W.", // 180
+  "AU Vict.", // 181
+  "AU Queen", // 182
+  "AU S. Au.", // 183
+  "AU W. Au.", // 184
+  "AU Tasma.", // 185
+  "AU N. T.", // 186
+  "Bhutan", // 187
+  "Brunei D.", // 188
+  "Cambodia", // 189
+  "China", // 190
+  "Fiji", // 191
+  "Hong Kong", // 192
+  "India", // 193
+  "Indonesia", // 194
+  "Iran", // 195
+  "Japan", // 196
+  "Kiribati", // 197
+  "N. Korea", // 198
+  "S. Korea", // 199
+  "Laos", // 200
+  "Macao", // 201
+  "Malaysia", // 202
+  "Maldives", // 203
+  "Marshall I", // 204
+  "Micronesia", // 205
+  "Myanmar", // 206
+  "Nauru", // 207
+  "Nepal", // 208
+  "N.Zealand", // 209
+  "Pakistan", // 210
+  "Papua N.G", // 211
+  "Philippin.", // 212
+  "Samoa", // 213
+  "Singapore", // 214
+  "Solomon I.", // 215
+  "Sri Lanka", // 216
+  "Taiwan", // 217
+  "Thailand", // 218
+  "Tonga", // 219
+  "Vanuatu", // 220
+  "Vietnam", // 221
+  "Bahamas", // 222
+  "BM or BR", // 223
+  "EC or BR", // 224
+  "AN or BR", // 225
+  "USA/VI/ PR", // 226
+  "Bangladesh" // 227
+};
+
+static const char* const LICtext[] = {
+  "Unknown",         // 0
+  "Albanian",        // 1
+  "Breton",          // 2
+  "Catalan",         // 3
+  "Croatian",        // 4
+  "Welsh",           // 5
+  "Czech",           // 6
+  "Danish",          // 7
+  "German",          // 8
+  "English",         // 9
+  "Spanish",         // 10
+  "Esperanto",       // 11
+  "Estonian",        // 12
+  "Basque",          // 13
+  "Faroese",         // 14
+  "French",          // 15
+  "Frisian",         // 16
+  "Irish",           // 17
+  "Gaelic",          // 18
+  "Galician",        // 19
+  "Icelandic",       // 20
+  "Italian",         // 21
+  "Lappish",         // 22
+  "Latin",           // 23
+  "Latvian",         // 24
+  "Luxemb.",         // 25
+  "Lithua.",         // 26
+  "Hungar.",         // 27
+  "Maltese",         // 28
+  "Dutch",           // 29
+  "Norweg.",         // 30
+  "Occitan",         // 31
+  "Polish",          // 32
+  "Portug.",         // 33
+  "Romanian",        // 34
+  "Romansh",         // 35
+  "Serbian",         // 36
+  "Slovak",          // 37
+  "Slovene",         // 38
+  "Finnish",         // 39
+  "Swedish",         // 40
+  "Turkish",         // 41
+  "Flemish",         // 42
+  "Walloon",         // 43
+  "",                // 44
+  "",                // 45
+  "",                // 46
+  "",                // 47
+  "",                // 48
+  "",                // 49
+  "",                // 50
+  "",                // 51
+  "",                // 52
+  "",                // 53
+  "",                // 54
+  "",                // 55
+  "",                // 56
+  "",                // 57
+  "",                // 58
+  "",                // 59
+  "",                // 60
+  "",                // 61
+  "",                // 62
+  "",                // 63
+  "Backgr.",         // 64
+  "",                // 65
+  "",                // 66
+  "",                // 67
+  "",                // 68
+  "Zulu",            // 69
+  "Vietnam.",        // 70
+  "Uzbek",           // 71
+  "Urdu",            // 72
+  "Ukrain.",         // 73
+  "Thai",            // 74
+  "Telugu",          // 75
+  "Tatar",           // 76
+  "Tamil",           // 77
+  "Tadzhik",         // 78
+  "Swahili",         // 79
+  "SrananT.",        // 80
+  "Somali",          // 81
+  "Sinhalese",       // 82
+  "Shona",           // 83
+  "Serbo-C.",        // 84
+  "Ruthen.",         // 85
+  "Russian",         // 86
+  "Quechua",         // 87
+  "Pushtu",          // 88
+  "Punjabi",         // 89
+  "Persian",         // 90
+  "Papami.",         // 91
+  "Oriya",           // 92
+  "Nepali",          // 93
+  "Ndebele",         // 94
+  "Marathi",         // 95
+  "Moldov.",         // 96
+  "Malays.",         // 97
+  "Malagas.",        // 98
+  "Macedon.",        // 99
+  "Laotian",         // 100
+  "Korean",          // 101
+  "Khmer",           // 102
+  "Kazakh",          // 103
+  "Kannada",         // 104
+  "Japanese",        // 105
+  "Indones.",        // 106
+  "Hindi",           // 107
+  "Hebrew",          // 108
+  "Hausa",           // 109
+  "Gurani",          // 110
+  "Gujurati",        // 111
+  "Greek",           // 112
+  "Georgian",        // 113
+  "Fulani",          // 114
+  "Dari",            // 115
+  "Churash",         // 116
+  "Chinese",         // 117
+  "Burmese",         // 118
+  "Bulgarian",       // 119
+  "Bengali",         // 120
+  "Belorus.",        // 121
+  "Bambora",         // 122
+  "Azerbaij.",       // 123
+  "Assamese",        // 124
+  "Armenian",        // 125
+  "Arabic",          // 126
+  "Amharic"          // 127
+};
+
 static const char* const oda_app_names[] {
   "None",
   "Cross referencing DAB within RDS",
