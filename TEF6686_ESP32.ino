@@ -76,7 +76,6 @@ bool memorystore;
 bool menu;
 bool menuopen;
 bool nobattery;
-bool power = true;
 bool rdsflagreset;
 bool rdsreset;
 bool RDSSPYTCP;
@@ -172,6 +171,7 @@ byte StereoLevel;
 byte subnetclient;
 byte TEF;
 byte theme;
+byte tot;
 byte tunemode;
 byte unit;
 char buff[16];
@@ -333,6 +333,7 @@ unsigned long rtplusticker;
 unsigned long rtplustickerhold;
 unsigned long rtticker;
 unsigned long rttickerhold;
+unsigned long tottimer;
 unsigned long tuningtimer;
 unsigned long udptimer;
 
@@ -427,6 +428,7 @@ void setup() {
   BWsetAM = EEPROM.readByte(EE_BYTE_BWSET_AM);
   nowToggleSWMIBand = EEPROM.readByte(EE_BYTE_BANDAUTOSW);
   radio.rds.fastps = EEPROM.readByte(EE_BYTE_FASTPS);
+  tot = EEPROM.readByte(EE_BYTE_TOT);
 
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX;
@@ -698,20 +700,40 @@ void setup() {
     ScreensaverTimerInit();
     ScreensaverTimerSet(screensaverOptions[screensaverset]);
   }
+  tottimer = millis();
 }
 
 void loop() {
+  if (tot != 0) {
+    unsigned long totprobe = tot * 60000;
+    if (millis() >= tottimer + totprobe) deepSleep();
+  }
   if (digitalRead(BANDBUTTON) == LOW ) BANDBUTTONPress();
 
-  if (power || poweroptions == LCD_OFF) {
-    if (millis() >= tuningtimer + 200) {
-      rdsflagreset = false;
-      Communication();
+  if (millis() >= tuningtimer + 200) {
+    rdsflagreset = false;
+    Communication();
+  }
+
+  if (!menu && !afscreen) {
+    if (af && dropout && millis() >= aftimer + 1000) {
+      aftimer = millis();
+      frequency = radio.TestAF();
+      if (freqold != frequency) {
+        ShowFreq(0);
+        if (radio.afmethodB) {
+          afmethodBold = true;
+          radio.clearRDS(fullsearchrds);
+        }
+        if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String(frequency * 10));
+        store = true;
+      }
     }
 
-    if (!menu && !afscreen) {
-      if (af && dropout && millis() >= aftimer + 1000) {
+    if (band == BAND_FM && af && radio.rds.correctPI != 0) {
+      if ((aftest && millis() >= aftimer + 3000) || ((USN > 250 || WAM > 250) && millis() >= aftimer + 1000)) {
         aftimer = millis();
+        aftest = false;
         frequency = radio.TestAF();
         if (freqold != frequency) {
           ShowFreq(0);
@@ -724,10 +746,9 @@ void loop() {
         }
       }
 
-      if (band == BAND_FM && af && radio.rds.correctPI != 0) {
-        if ((aftest && millis() >= aftimer + 3000) || ((USN > 250 || WAM > 250) && millis() >= aftimer + 1000)) {
-          aftimer = millis();
-          aftest = false;
+      if (band == BAND_FM && millis() >= aftimer + 10000) {
+        aftimer = millis();
+        if (USN > 150 || WAM > 150) {
           frequency = radio.TestAF();
           if (freqold != frequency) {
             ShowFreq(0);
@@ -739,101 +760,72 @@ void loop() {
             store = true;
           }
         }
-
-        if (band == BAND_FM && millis() >= aftimer + 10000) {
-          aftimer = millis();
-          if (USN > 150 || WAM > 150) {
-            frequency = radio.TestAF();
-            if (freqold != frequency) {
-              ShowFreq(0);
-              if (radio.afmethodB) {
-                afmethodBold = true;
-                radio.clearRDS(fullsearchrds);
-              }
-              if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String(frequency * 10));
-              store = true;
-            }
-          }
-        }
       }
     }
+  }
 
-    if (seek) Seek(direction);
+  if (seek) Seek(direction);
 
-    if ((SStatus / 10 > LowLevelSet) && !LowLevelInit && !menu && band < BAND_GAP) {
-      if (!screenmute && !advancedRDS && !afscreen) {
-        if (showmodulation) {
-          tftPrint(-1, "10", 27, 144, ActiveColor, ActiveColorSmooth, 16);
-          tftPrint(-1, "30", 57, 144, ActiveColor, ActiveColorSmooth, 16);
-          tftPrint(-1, "50", 87, 144, ActiveColor, ActiveColorSmooth, 16);
-          tftPrint(-1, "70", 117, 144, ActiveColor, ActiveColorSmooth, 16);
-          tftPrint(-1, "100", 164, 144, ActiveColor, ActiveColorSmooth, 16);
-          tftPrint(0, "M", 7, 128, ActiveColor, ActiveColorSmooth, 16);
-          for (byte segments = 0; segments < 94; segments++) {
-            if (segments > 54) {
-              if (((segments - 53) % 10) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, BarSignificantColor);
-            } else {
-              if (((segments + 1) % 6) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, BarInsignificantColor);
-            }
-          }
-        }
-        if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
-        if (region == REGION_US) tftPrint(-1, "ID:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
-        tftPrint(-1, "PS:", 3, 193, ActiveColor, ActiveColorSmooth, 16);
-        tftPrint(-1, "RT:", 3, 221, ActiveColor, ActiveColorSmooth, 16);
-        tftPrint(-1, "PTY:", 3, 163, ActiveColor, ActiveColorSmooth, 16);
-        if (!showmodulation) tft.drawLine(20, 143, 204, 143, GreyoutColor); else tft.drawLine(20, 143, 204, 143, TFT_DARKGREY);
-      }
-      LowLevelInit = true;
-    }
-
-    if ((SStatus / 10 <= LowLevelSet) && band < BAND_GAP) {
-      if (LowLevelInit && !menu) {
-        if (!screenmute && !afscreen && !advancedRDS) {
-          for (byte segments = 0; segments < 94; segments++) {
-            if (segments > 54) {
-              if (((segments - 53) % 10) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, GreyoutColor);
-            } else {
-              if (((segments + 1) % 6) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, GreyoutColor);
-            }
-          }
-          if (showmodulation) {
-            tftPrint(-1, "10", 27, 144, GreyoutColor, BackgroundColor, 16);
-            tftPrint(-1, "30", 57, 144, GreyoutColor, BackgroundColor, 16);
-            tftPrint(-1, "50", 87, 144, GreyoutColor, BackgroundColor, 16);
-            tftPrint(-1, "70", 117, 144, GreyoutColor, BackgroundColor, 16);
-            tftPrint(-1, "100", 164, 144, GreyoutColor, BackgroundColor, 16);
-            tftPrint(0, "M", 7, 128, GreyoutColor, BackgroundColor, 16);
-            tft.fillRect(16, 133, 188, 6, GreyoutColor);
-          }
-          if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
-          if (region == REGION_US) tftPrint(-1, "ID:", 212, 193, GreyoutColor, BackgroundColor, 16);
-          tftPrint(-1, "PS:", 3, 193, GreyoutColor, BackgroundColor, 16);
-          tftPrint(-1, "RT:", 3, 221, GreyoutColor, BackgroundColor, 16);
-          tftPrint(-1, "PTY:", 3, 163, GreyoutColor, BackgroundColor, 16);
-          tft.drawLine(20, 143, 204, 143, GreyoutColor);
-          tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
-        }
-        LowLevelInit = false;
-      }
-
-      if (screenmute || radio.rds.correctPI != 0) readRds();
-      if (millis() >= lowsignaltimer + 300) {
-        lowsignaltimer = millis();
-        if (af || (!screenmute || (screenmute && (XDRGTKTCP || XDRGTKUSB)))) {
-          if (band < BAND_GAP) {
-            radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+  if ((SStatus / 10 > LowLevelSet) && !LowLevelInit && !menu && band < BAND_GAP) {
+    if (!screenmute && !advancedRDS && !afscreen) {
+      if (showmodulation) {
+        tftPrint(-1, "10", 27, 144, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, "30", 57, 144, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, "50", 87, 144, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, "70", 117, 144, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, "100", 164, 144, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(0, "M", 7, 128, ActiveColor, ActiveColorSmooth, 16);
+        for (byte segments = 0; segments < 94; segments++) {
+          if (segments > 54) {
+            if (((segments - 53) % 10) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, BarSignificantColor);
           } else {
-            radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+            if (((segments + 1) % 6) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, BarInsignificantColor);
           }
         }
-        if (!menu) {
-          doSquelch();
-          GetData();
-        }
       }
+      if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
+      if (region == REGION_US) tftPrint(-1, "ID:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, "PS:", 3, 193, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, "RT:", 3, 221, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, "PTY:", 3, 163, ActiveColor, ActiveColorSmooth, 16);
+      if (!showmodulation) tft.drawLine(20, 143, 204, 143, GreyoutColor); else tft.drawLine(20, 143, 204, 143, TFT_DARKGREY);
+    }
+    LowLevelInit = true;
+  }
 
-    } else {
+  if ((SStatus / 10 <= LowLevelSet) && band < BAND_GAP) {
+    if (LowLevelInit && !menu) {
+      if (!screenmute && !afscreen && !advancedRDS) {
+        for (byte segments = 0; segments < 94; segments++) {
+          if (segments > 54) {
+            if (((segments - 53) % 10) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, GreyoutColor);
+          } else {
+            if (((segments + 1) % 6) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, GreyoutColor);
+          }
+        }
+        if (showmodulation) {
+          tftPrint(-1, "10", 27, 144, GreyoutColor, BackgroundColor, 16);
+          tftPrint(-1, "30", 57, 144, GreyoutColor, BackgroundColor, 16);
+          tftPrint(-1, "50", 87, 144, GreyoutColor, BackgroundColor, 16);
+          tftPrint(-1, "70", 117, 144, GreyoutColor, BackgroundColor, 16);
+          tftPrint(-1, "100", 164, 144, GreyoutColor, BackgroundColor, 16);
+          tftPrint(0, "M", 7, 128, GreyoutColor, BackgroundColor, 16);
+          tft.fillRect(16, 133, 188, 6, GreyoutColor);
+        }
+        if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
+        if (region == REGION_US) tftPrint(-1, "ID:", 212, 193, GreyoutColor, BackgroundColor, 16);
+        tftPrint(-1, "PS:", 3, 193, GreyoutColor, BackgroundColor, 16);
+        tftPrint(-1, "RT:", 3, 221, GreyoutColor, BackgroundColor, 16);
+        tftPrint(-1, "PTY:", 3, 163, GreyoutColor, BackgroundColor, 16);
+        tft.drawLine(20, 143, 204, 143, GreyoutColor);
+        tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
+      }
+      LowLevelInit = false;
+    }
+
+    if (screenmute || radio.rds.correctPI != 0) readRds();
+    if (millis() >= lowsignaltimer + 300) {
+      lowsignaltimer = millis();
       if (af || (!screenmute || (screenmute && (XDRGTKTCP || XDRGTKUSB)))) {
         if (band < BAND_GAP) {
           radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
@@ -843,97 +835,106 @@ void loop() {
       }
       if (!menu) {
         doSquelch();
-        if (millis() >= tuningtimer + 200) readRds();
         GetData();
-        if (!screenmute && !afscreen && !advancedRDS) ShowModLevel();
       }
     }
 
-    if (menu && menuopen && menupage == FMSETTINGS && menuoption == ITEM4) {
-      if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
-      if (millis() >= lowsignaltimer + 500 || change2) {
-        lowsignaltimer = millis();
-        change2 = false;
-        if (SStatus > SStatusold || SStatus < SStatusold) {
-          if (SStatusold / 10 != SStatus / 10) tftReplace(1, String(SStatusold / 10), String(SStatus / 10), 140, 149, PrimaryColor, PrimaryColorSmooth, 48);
-          tftReplace(1, "." + String(abs(SStatusold % 10)), "." + String(abs(SStatus % 10)), 160, 149, PrimaryColor, PrimaryColorSmooth, 28);
-          SStatusold = SStatus;
-        }
-      }
-    }
-
-    if (rotary == -1) {
-      if (screensavertriggered) {
-        if (!touchrotating) {
-          rotary = 0;
-          WakeToSleep(REVERSE);
-        }
+  } else {
+    if (af || (!screenmute || (screenmute && (XDRGTKTCP || XDRGTKUSB)))) {
+      if (band < BAND_GAP) {
+        radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
       } else {
-        KeyUp();
-        if (screensaverset && !menu && !screensavertriggered) ScreensaverTimerRestart();
+        radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
       }
     }
-    if (rotary == 1) {
-      if (screensavertriggered) {
-        if (!touchrotating) {
-          rotary = 0;
-          WakeToSleep(REVERSE);
-        }
-      } else {
-        KeyDown();
-        if (screensaverset && !menu && !screensavertriggered) ScreensaverTimerRestart();
-      }
+    if (!menu) {
+      doSquelch();
+      if (millis() >= tuningtimer + 200) readRds();
+      GetData();
+      if (!screenmute && !afscreen && !advancedRDS) ShowModLevel();
     }
+  }
 
-    if (digitalRead(ROTARY_BUTTON) == LOW) if (!afscreen) ButtonPress();
-    if (digitalRead(MODEBUTTON) == LOW && !screenmute) ModeButtonPress();
-    if (digitalRead(BWBUTTON) == LOW && !screenmute) if (!afscreen) BWButtonPress();
-
-    if (store) change++;
-
-    if (change > 200 && store) {
-      detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A));
-      detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B));
-      EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, frequency);
-      EEPROM.writeUInt(EE_UINT16_FREQUENCY_OIRT, frequency_OIRT);
-      EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, frequency_AM);
-      EEPROM.writeByte(EE_BYTE_BAND, band);
-      EEPROM.writeUInt(EE_UINT16_FREQUENCY_LW, frequency_LW);
-      EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, frequency_MW);
-      EEPROM.writeUInt(EE_UINT16_FREQUENCY_SW, frequency_SW);
-      EEPROM.commit();
-      store = false;
-      attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
-      attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
-    }
-
-    if (screensaverset) {
-      if (screensaver_IRQ)
-      {
-        screensaver_IRQ = OFF;
-        if (!screensavertriggered && !advancedRDS && !menu) {
-          WakeToSleep(true);
-        }
+  if (menu && menuopen && menupage == FMSETTINGS && menuoption == ITEM4) {
+    if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+    if (millis() >= lowsignaltimer + 500 || change2) {
+      lowsignaltimer = millis();
+      change2 = false;
+      if (SStatus > SStatusold || SStatus < SStatusold) {
+        if (SStatusold / 10 != SStatus / 10) tftReplace(1, String(SStatusold / 10), String(SStatus / 10), 140, 149, PrimaryColor, PrimaryColorSmooth, 48);
+        tftReplace(1, "." + String(abs(SStatusold % 10)), "." + String(abs(SStatus % 10)), 160, 149, PrimaryColor, PrimaryColorSmooth, 28);
+        SStatusold = SStatus;
       }
     }
   }
 
-  if (!power) {
-    if (rotary == -1) {
+  if (rotary == -1) {
+    tottimer = millis();
+    if (screensavertriggered) {
       if (!touchrotating) {
         rotary = 0;
         WakeToSleep(REVERSE);
-      } else {
-        KeyUp();
       }
+    } else {
+      KeyUp();
+      if (screensaverset && !menu && !screensavertriggered) ScreensaverTimerRestart();
     }
-
-    if (rotary == 1) {
+  }
+  if (rotary == 1) {
+    tottimer = millis();
+    if (screensavertriggered) {
       if (!touchrotating) {
         rotary = 0;
         WakeToSleep(REVERSE);
-      } else {
-        KeyDown();
+      }
+    } else {
+      KeyDown();
+      if (screensaverset && !menu && !screensavertriggered) ScreensaverTimerRestart();
+    }
+  }
+
+  if (digitalRead(ROTARY_BUTTON) == LOW) {
+    tottimer = millis();
+    if (screensavertriggered && !touchrotating) WakeToSleep(REVERSE);
+    if (!afscreen) ButtonPress();
+  }
+
+  if (digitalRead(MODEBUTTON) == LOW) {
+    tottimer = millis();
+    if (screensavertriggered && !touchrotating) WakeToSleep(REVERSE);
+    if (!screenmute) ModeButtonPress();
+  }
+
+  if (digitalRead(BWBUTTON) == LOW) {
+    tottimer = millis();
+    if (screensavertriggered && !touchrotating) WakeToSleep(REVERSE);
+    if (!screenmute && !afscreen) BWButtonPress();
+  }
+
+  if (store) change++;
+
+  if (change > 200 && store) {
+    detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A));
+    detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B));
+    EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, frequency);
+    EEPROM.writeUInt(EE_UINT16_FREQUENCY_OIRT, frequency_OIRT);
+    EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, frequency_AM);
+    EEPROM.writeByte(EE_BYTE_BAND, band);
+    EEPROM.writeUInt(EE_UINT16_FREQUENCY_LW, frequency_LW);
+    EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, frequency_MW);
+    EEPROM.writeUInt(EE_UINT16_FREQUENCY_SW, frequency_SW);
+    EEPROM.commit();
+    store = false;
+    attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
+  }
+
+  if (screensaverset) {
+    if (screensaver_IRQ)
+    {
+      screensaver_IRQ = OFF;
+      if (!screensavertriggered && !advancedRDS && !menu) {
+        WakeToSleep(true);
       }
     }
   }
@@ -968,15 +969,7 @@ void WakeToSleep(bool yes) {
   if (yes) {
     screensavertriggered = true;
     switch (poweroptions) {
-      case DEEP_SLEEP:
-        power = false;
-        analogWrite(SMETERPIN, 0);
-        MuteScreen(1);
-        StoreFrequency();
-        radio.power(1);
-        break;
       case LCD_OFF:
-        power = false;
         analogWrite(SMETERPIN, 0);
         MuteScreen(1);
         StoreFrequency();
@@ -996,11 +989,7 @@ void WakeToSleep(bool yes) {
     }
   } else {
     switch (poweroptions) {
-      case DEEP_SLEEP:
-        ESP.restart();
-        break;
       case LCD_OFF:
-        power = true;
         pinMode (STANDBYLED, OUTPUT);
         digitalWrite(STANDBYLED, LOW);
         analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
@@ -1227,53 +1216,50 @@ void ToggleBand(byte nowBand) {
 }
 
 void BANDBUTTONPress() {
-  if (!power) {
-    if (screensavertriggered) WakeToSleep(REVERSE);
+  if (screensavertriggered) WakeToSleep(REVERSE);
+  if (afscreen) {
+    BuildAdvancedRDS();
   } else {
-    if (afscreen) {
-      BuildAdvancedRDS();
-    } else {
-      unsigned long counterold = millis();
-      unsigned long counter = millis();
-      if (!menu && power) {
-        while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
+    unsigned long counterold = millis();
+    unsigned long counter = millis();
+    if (!menu) {
+      while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
 
-        if (counter - counterold < 1000) {
-          if (screensavertriggered) {
-            WakeToSleep(REVERSE);
-            return;
-          }
+      if (counter - counterold < 1000) {
+        if (screensavertriggered) {
+          WakeToSleep(REVERSE);
+          return;
+        }
 
-          if (advancedRDS) {
-            BuildDisplay();
-            ScreensaverTimerReopen();
-          } else {
-            if (tunemode != TUNE_MEM) {
-              ToggleBand(band);
-              StoreFrequency();
-              SelectBand();
-              if (XDRGTKUSB || XDRGTKTCP) {
-                if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10)); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10)); else DataPrint("M1\nT" + String(frequency_AM));
-              }
-            }
-            ScreensaverTimerRestart();
-          }
+        if (advancedRDS) {
+          BuildDisplay();
+          ScreensaverTimerReopen();
         } else {
-          if (screensavertriggered) {
-            WakeToSleep(REVERSE);
-            return;
+          if (tunemode != TUNE_MEM) {
+            ToggleBand(band);
+            StoreFrequency();
+            SelectBand();
+            if (XDRGTKUSB || XDRGTKTCP) {
+              if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10)); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10)); else DataPrint("M1\nT" + String(frequency_AM));
+            }
           }
+          ScreensaverTimerRestart();
+        }
+      } else {
+        if (screensavertriggered) {
+          WakeToSleep(REVERSE);
+          return;
+        }
 
-          if (band < BAND_GAP) {
-            if (advancedRDS && !seek) BuildAFScreen(); else BuildAdvancedRDS();
-          } else {
-            WakeToSleep(true);
-          }
+        if (band < BAND_GAP) {
+          if (advancedRDS && !seek) BuildAFScreen(); else BuildAdvancedRDS();
+        } else {
+          WakeToSleep(true);
         }
       }
-      while (digitalRead(BANDBUTTON) == LOW) delay(50);
-      delay(100);
     }
+    while (digitalRead(BANDBUTTON) == LOW) delay(50);
+    delay(100);
   }
 }
 
@@ -1861,6 +1847,7 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_STATIONLISTID, stationlistid);
         EEPROM.writeByte(EE_BYTE_FM_DEEMPHASIS, fmdeemphasis);
         EEPROM.writeByte(EE_BYTE_FASTPS, radio.rds.fastps);
+        EEPROM.writeByte(EE_BYTE_TOT, tot);
         EEPROM.commit();
         Serial.end();
         if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
@@ -3339,6 +3326,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_BWSET_AM, 2);
   EEPROM.writeByte(EE_BYTE_BANDAUTOSW, 0);
   EEPROM.writeByte(EE_BYTE_FASTPS, 1);
+  EEPROM.writeByte(EE_BYTE_TOT, 60);
   EEPROM.commit();
 }
 
@@ -3409,4 +3397,13 @@ void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int colo
   }
 
   tft.drawString(text, x, y, 1);
+}
+
+void deepSleep() {
+  analogWrite(SMETERPIN, 0);
+  MuteScreen(1);
+  StoreFrequency();
+  radio.power(1);
+  esp_sleep_enable_ext0_wakeup(GPIO_NUM_34, LOW);
+  esp_deep_sleep_start();
 }

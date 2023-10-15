@@ -106,7 +106,7 @@
 
 // EEPROM index defines
 #define EE_PRESETS_CNT              99
-#define EE_CHECKBYTE_VALUE          35 // 0 ~ 255,add new entry, change for new value 
+#define EE_CHECKBYTE_VALUE          36 // 0 ~ 255,add new entry, change for new value 
 
 #define EE_TOTAL_CNT                618
 #define EE_UINT16_FREQUENCY_FM      0
@@ -181,8 +181,9 @@
 #define EE_UINT16_FREQUENCY_OIRT    102
 #define EE_STRING_XDRGTK_KEY        106  // 11 byte
 #define EE_BYTE_FASTPS              118
-#define EE_PRESETS_BAND_START       119
-#define EE_PRESETS_START            221
+#define EE_BYTE_TOT					119
+#define EE_PRESETS_BAND_START       120
+#define EE_PRESETS_START            220
 #define EE_PRESETS_FREQUENCY        8750
 
 // End of EEPROM index defines
@@ -212,7 +213,7 @@ enum RADIO_TUNE_MODE {
 };
 
 enum RADIO_POWER_MODE {
-  DEEP_SLEEP = 0, LCD_OFF, LCD_BRIGHTNESS_1_PERCENT, LCD_BRIGHTNESS_A_QUARTER, LCD_BRIGHTNESS_HALF, RADIO_POWER_MODE_CNT
+  LCD_OFF, LCD_BRIGHTNESS_1_PERCENT, LCD_BRIGHTNESS_A_QUARTER, LCD_BRIGHTNESS_HALF, RADIO_POWER_MODE_CNT
 };
 
 enum RADIO_HARDWARE_MODEL {

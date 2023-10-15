@@ -1,6 +1,6 @@
 // [number of languages][number of texts]
 
-static const char* const myLanguage[17][205] = {
+static const char* const myLanguage[17][206] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -75,8 +75,8 @@ static const char* const myLanguage[17][205] = {
     "Main code:", // 71
     "Contributors:", // 72
     "Unknown", // 73
-    "Power options", // 74
-    "Deep sleep", // 75
+    "Screensaver options", // 74
+    "Time-out timer", // 75
     "Screen off", // 76
     "Theme", // 77
     "Default", // 78
@@ -205,7 +205,8 @@ static const char* const myLanguage[17][205] = {
     "Large", // 201
     "All", // 202
     "Fast PS", // 203
-    "Detected applications" // 204
+    "Detected applications", // 204
+    "Min." // 205
   },
 
   { "Nederlands", // Dutch
@@ -282,8 +283,8 @@ static const char* const myLanguage[17][205] = {
     "Basis code:", // 71
     "Bijgedragen:", // 72
     "Onbekend", // 73
-    "Bespaar opties", // 74
-    "Volledig uit", // 75
+    "Screensaver opties", // 74
+    "Auto uitschakelen", // 75
     "Scherm uit", // 76
     "Thema", // 77
     "Default", // 78
@@ -412,7 +413,8 @@ static const char* const myLanguage[17][205] = {
     "Middel", // 201
     "Alles", // 202
     "Snelle PS", // 203
-    "Gedetecteerde applicaties" // 204
+    "Gedetecteerde applicaties", // 204
+    "Min." // 205
   },
 
   { "Polski", // Polish
@@ -489,8 +491,8 @@ static const char* const myLanguage[17][205] = {
     "Glowny kod:", // 71
     "Wspoltworcy:", // 72
     "Nieznany", // 73
-    "Opcje zasilania", // 74
-    "Glebokie uspienie", // 75
+    "Screensaver options", // 74
+    "Time-out timer", // 75
     "Wylacz ekran", // 76
     "Motyw", // 77
     "Domyslny", // 78
@@ -619,7 +621,8 @@ static const char* const myLanguage[17][205] = {
     "Duze", // 201
     "Wszystkie", // 202
     "Fast PS", // 203
-    "Detected applications" // 204
+    "Detected applications", // 204
+    "Min." // 205
   },
 
   { "Hrvatski", // Croatian
@@ -696,8 +699,8 @@ static const char* const myLanguage[17][205] = {
     "Glavni izvorni kod:", // 71
     "Suradnici:", // 72
     "Nepoznato", // 73
-    "Power options", // 74
-    "Deep sleep", // 75
+    "Screensaver options", // 74
+    "Time-out timer", // 75
     "Zaslon isključiti", // 76
     "Tema dizajna", // 77
     "Zadano", // 78
@@ -826,7 +829,8 @@ static const char* const myLanguage[17][205] = {
     "Large", // 201
     "All", // 202
     "Fast PS", // 203
-    "Detected applications" // 204
+    "Detected applications", // 204
+    "Min." // 205
   },
 
   { "Ελληνικά", // Greek
@@ -903,8 +907,8 @@ static const char* const myLanguage[17][205] = {
     "Κύριος κώδικας:", // 71
     "Συνεργάτες:", // 72
     "Άγνωστο", // 73
-    "Επιλογές ενέργειας", // 74
-    "Βαθιά αναμονή", // 75
+    "Screensaver options", // 74
+    "Time-out timer", // 75
     "Οθόνη σβηστή", // 76
     "Θέμα", // 77
     "Προεπιλογή", // 78
@@ -1033,7 +1037,8 @@ static const char* const myLanguage[17][205] = {
     "Μεγάλο", // 201
     "Όλα", // 202
     "Γρήγορο PS", // 203
-    "Εντοπισμένες εφαρμογές" // 204
+    "Εντοπισμένες εφαρμογές", // 204
+    "Min." // 205
   },
 
   { "Romana", // Romanian
@@ -1110,8 +1115,8 @@ static const char* const myLanguage[17][205] = {
     "Main code:", // 71
     "Contributors:", // 72
     "Unknown", // 73
-    "Power options", // 74
-    "Deep sleep", // 75
+    "Screensaver options", // 74
+    "Time-out timer", // 75
     "Screen off", // 76
     "Theme", // 77
     "Default", // 78
@@ -1240,7 +1245,8 @@ static const char* const myLanguage[17][205] = {
     "Large", // 201
     "All", // 202
     "Fast PS", // 203
-    "Detected applications" // 204
+    "Detected applications", // 204
+    "Min." // 205
   },
 
   { "Deutsch", // German
@@ -1317,8 +1323,8 @@ static const char* const myLanguage[17][205] = {
     "Hauptcode:", // 71
     "Mitwirkende:", // 72
     "Unbekannt", // 73
-    "Energieeinstellungen", // 74
-    "Komplett aus", // 75
+    "Screensaver options", // 74
+    "Time-out timer", // 75
     "Bildschirm aus", // 76
     "Thema", // 77
     "Standard", // 78
@@ -1447,7 +1453,8 @@ static const char* const myLanguage[17][205] = {
     "Groß", // 201
     "Alles", // 202
     "Schnelles PS", // 203
-    "Erkenne Applikationen" // 204
+    "Erkenne Applikationen", // 204
+    "Min." // 205
   },
 
   { "Czech", // Czech
@@ -1524,8 +1531,8 @@ static const char* const myLanguage[17][205] = {
     "Main code:", // 71
     "Contributors:", // 72
     "Unknown", // 73
-    "Power options", // 74
-    "Deep sleep", // 75
+    "Screensaver options", // 74
+    "Time-out timer", // 75
     "Screen off", // 76
     "Theme", // 77
     "Default", // 78
@@ -1654,7 +1661,8 @@ static const char* const myLanguage[17][205] = {
     "Large", // 201
     "All", // 202
     "Fast PS", // 203
-    "Detected applications" // 204
+    "Detected applications", // 204
+    "Min." // 205
   },
 
   { "Slovak", // Slovak
@@ -1731,8 +1739,8 @@ static const char* const myLanguage[17][205] = {
     "Main code:", // 71
     "Contributors:", // 72
     "Unknown", // 73
-    "Power options", // 74
-    "Deep sleep", // 75
+    "Screensaver options", // 74
+    "Time-out timer", // 75
     "Screen off", // 76
     "Theme", // 77
     "Default", // 78
@@ -1861,7 +1869,8 @@ static const char* const myLanguage[17][205] = {
     "Large", // 201
     "All", // 202
     "Fast PS", // 203
-    "Detected applications" // 204
+    "Detected applications", // 204
+    "Min." // 205
   },
 
   { "Français", // French
@@ -1938,8 +1947,8 @@ static const char* const myLanguage[17][205] = {
     "Code principal :", // 71
     "Contributeurs :", // 72
     "Inconnu", // 73
-    "Options d'énergie", // 74
-    "Veille profonde", // 75
+    "Screensaver options", // 74
+    "Time-out timer", // 75
     "Affichage éteint", // 76
     "Thème", // 77
     "Défaut", // 78
@@ -2068,7 +2077,8 @@ static const char* const myLanguage[17][205] = {
     "Grosses", // 201
     "Toutes", // 202
     "PS rapide", // 203
-    "Applications détectées" // 204
+    "Applications détectées", // 204
+    "Min." // 205
   },
 
   { "Български", // Bulgarian
@@ -2145,8 +2155,8 @@ static const char* const myLanguage[17][205] = {
     "Главен код:", // 71
     "Сътрудници:", // 72
     "Неизвестно", // 73
-    "Опции при заспиване", // 74
-    "Режим дълбок сън", // 75
+    "Screensaver options", // 74
+    "Time-out timer", // 75
     "Изключен дисплей", // 76
     "Тема", // 77
     "По подразбиране", // 78
@@ -2275,7 +2285,8 @@ static const char* const myLanguage[17][205] = {
     "Large", // 201
     "All", // 202
     "Fast PS", // 203
-    "Detected applications" // 204
+    "Detected applications", // 204
+    "Min." // 205
   },
 
   { "Русский", // Russian
@@ -2352,8 +2363,8 @@ static const char* const myLanguage[17][205] = {
     "Основной код:", // 71
     "Соавторы:", // 72
     "Неизвестно", // 73
-    "Параметры питания", // 74
-    "Глубокий сон", // 75
+    "Screensaver options", // 74
+    "Time-out timer", // 75
     "Экран выключен", // 76
     "Тема", // 77
     "По умолчанию", // 78
@@ -2482,7 +2493,8 @@ static const char* const myLanguage[17][205] = {
     "Много", // 201
     "Все", // 202
     "Быстрый PS", // 203
-    "Обнаруженные приложения" // 204
+    "Обнаруженные приложения", // 204
+    "Min." // 205
   },
 
   { "Українська", // Ukranian
@@ -2559,8 +2571,8 @@ static const char* const myLanguage[17][205] = {
     "Основний код:", // 71
     "Учасники:", // 72
     "Невідомо", // 73
-    "Опції живлення", // 74
-    "Глибокий сон", // 75
+    "Screensaver options", // 74
+    "Time-out timer", // 75
     "Екран вимкнено", // 76
     "Тема", // 77
     "За замовчуванням", // 78
@@ -2689,7 +2701,8 @@ static const char* const myLanguage[17][205] = {
     "Багато", // 201
     "Усе", // 202
     "Швидкий PS", // 203
-    "Виявлені програми" // 204
+    "Виявлені програми", // 204
+    "Min." // 205
   },
 
   { "Italiano", // Italian
@@ -2766,8 +2779,8 @@ static const char* const myLanguage[17][205] = {
     "Codice principale:", // 71
     "Collaboratori: ", // 72
     "Sconosciuto", // 73
-    "Opzioni risparmio energia", // 74
-    "Deep sleep", // 75
+    "Screensaver options", // 74
+    "Time-out timer", // 75
     "Schermo spento", // 76
     "Motivo display", // 77
     "Predefinito", // 78
@@ -2896,7 +2909,8 @@ static const char* const myLanguage[17][205] = {
     "Large", // 201
     "All", // 202
     "Fast PS", // 203
-    "Detected applications" // 204
+    "Detected applications", // 204
+    "Min." // 205
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -2973,8 +2987,8 @@ static const char* const myLanguage[17][205] = {
     "主程序:", // 71
     "贡献者:", // 72
     "未知", // 73
-    "电源选项", // 74
-    "深度睡眠", // 75
+    "Screensaver options", // 74
+    "Time-out timer", // 75
     "关闭屏幕", // 76
     "主题&颜色", // 77
     "默认", // 78
@@ -3103,7 +3117,8 @@ static const char* const myLanguage[17][205] = {
     "大量", // 201
     "全部", // 202
     "Fast PS", // 203
-    "Detected applications" // 204
+    "Detected applications", // 204
+    "Min." // 205
   },
 
   { "Norsk", // Norwegian
@@ -3180,8 +3195,8 @@ static const char* const myLanguage[17][205] = {
     "Hovedkode:", // 71
     "Bidragsytere:", // 72
     "Ukjent", // 73
-    "Strømalternativer", // 74
-    "Dyp søvn", // 75
+    "Screensaver options", // 74
+    "Time-out timer", // 75
     "Skjerm av", // 76
     "Tema", // 77
     "Standard", // 78
@@ -3310,7 +3325,8 @@ static const char* const myLanguage[17][205] = {
     "Mye", // 201
     "Alt", // 202
     "Rask PS", // 203
-    "Oppdaget applikasjoner" // 204
+    "Oppdaget applikasjoner", // 204
+    "Min." // 205
   },
 
   { "Español", // Spanish
@@ -3387,8 +3403,8 @@ static const char* const myLanguage[17][205] = {
     "Código principal:", // 71
     "Colaboradores:", // 72
     "Desconocido", // 73
-    "Opciones de energía", // 74
-    "Suspensión profunda", // 75
+    "Screensaver options", // 74
+    "Time-out timer", // 75
     "Apagar pantalla", // 76
     "Tema", // 77
     "Predeterminado", // 78
@@ -3517,368 +3533,7 @@ static const char* const myLanguage[17][205] = {
     "Grande", // 201
     "Todo", // 202
     "PS rápido", // 203
-    "Aplicaciones detectadas" // 204
+    "Aplicaciones detectadas", // 204
+    "Min." // 205
   }
-};
-
-static const char* const myCountries[] {
-  "Germany", // 0
-  "Greece", // 1
-  "Morocco", // 2
-  "Moldova", // 3
-  "Algeria", // 4
-  "Cyprus", // 5
-  "Czech R.", // 6
-  "Ireland", // 7
-  "Estonia", // 8
-  "Andorra", // 9
-  "San Marino", // 10
-  "Poland", // 11
-  "Turkey", // 12
-  "Israel", // 13
-  "Switzerl.", // 14
-  "Vatican", // 15
-  "Macedonia", // 16
-  "Italy", // 17
-  "Jordan", // 18
-  "Slovakia", // 19
-  "Belgium", // 20
-  "Finland", // 21
-  "Syria", // 22
-  "Serbia", // 23
-  "Ukraine", // 24
-  "Russia", // 25
-  "Luxemb.", // 26
-  "Tunisia", // 27
-  "Palestine", // 28
-  "Bulgaria", // 29
-  "Madeira", // 30
-  "Netherl.", // 31
-  "Portugal", // 32
-  "Albania", // 33
-  "Denmark", // 34
-  "Liechtst.", // 35
-  "Latvia", // 36
-  "Slovenia", // 37
-  "Austria", // 38
-  "Gibraltar", // 39
-  "Iceland", // 40
-  "Lebanon", // 41
-  "Hungary", // 42
-  "Iraq", // 43
-  "Monaco", // 44
-  "Malta", // 45
-  "U.K.", // 46
-  "Lithuania", // 47
-  "Croatia", // 48
-  "Libya", // 49
-  "Canaries", // 50
-  "Romania", // 51
-  "Spain", // 52
-  "Sweden", // 53
-  "Egypt", // 54
-  "France", // 55
-  "Norway", // 56
-  "Belarus", // 57
-  "Bosnia H.", // 58
-  "Monteneg.", // 59
-  "Armenia", // 60
-  "Azerbaijan", // 61
-  "Kosovo", // 62
-  "Kyrgystan", // 63
-  "Turkmenis.", // 64
-  "Tajikistan", // 65
-  "Uzbekistan", // 66
-  "Malawi", // 67
-  "Mali", // 68
-  "Mauritania", // 69
-  "Mauritius", // 70
-  "Mongolia", // 71
-  "Mozambiq.", // 72
-  "Namibia", // 73
-  "Niger", // 74
-  "Nigeria", // 75
-  "Oman", // 76
-  "Qatar", // 77
-  "Rwanda", // 78
-  "Sao Tome", // 79
-  "Saudi Ara.", // 80
-  "Senegal", // 81
-  "Seychel.", // 82
-  "S. Leone", // 83
-  "Somalia", // 84
-  "S. Africa", // 85
-  "S. Sudan", // 86
-  "Sudan", // 87
-  "Swaziland", // 88
-  "Tanzania", // 89
-  "Togo", // 90
-  "Uganda", // 91
-  "W. Sahara", // 92
-  "Yemen", // 93
-  "Zambia", // 94
-  "Zimbabwe", // 95
-  "Angola", // 96
-  "Ascn. Isl.", // 97
-  "Bahrein", // 98
-  "Benin", // 99
-  "Botswana", // 100
-  "Burkina F.", // 101
-  "Burundi", // 102
-  "Cabinda", // 103
-  "Cameroon", // 104
-  "Cape Ver.", // 105
-  "Centr. Af.", // 106
-  "Chad", // 107
-  "Comoros", // 108
-  "D. Congo", // 109
-  "Congo", // 110
-  "Cote d'l.", // 111
-  "Djibouti", // 112
-  "E. Guinea", // 113
-  "Eritrea", // 114
-  "Ethiopia", // 115
-  "Gabon", // 116
-  "Gambia", // 117
-  "Georgia", // 118
-  "Ghana", // 119
-  "Guinea", // 120
-  "Guinea-B.", // 121
-  "Kazakh.", // 122
-  "Kenya", // 123
-  "Kuwait", // 124
-  "Lesotho", // 125
-  "Liberia", // 126
-  "Madagas.", // 127
-  "U.Arab.E.", // 128
-  "Anguilla", // 129
-  "Antigua.", // 130
-  "Argentina", // 131
-  "Aruba", // 132
-  "Barbados", // 133
-  "Belize", // 134
-  "Bermuda", // 135
-  "Bolivia", // 136
-  "Brazil", // 137
-  "Canada", // 138
-  "Cayman I.", // 139
-  "Chile", // 140
-  "Colombia", // 141
-  "Costa R.", // 142
-  "Cuba", // 143
-  "Dominica", // 144
-  "Domini. R", // 145
-  "El Salvad.", // 146
-  "Equador", // 147
-  "Falkland", // 148
-  "Greenland", // 149
-  "Grenada", // 150
-  "Guadeloupe", // 151
-  "Guatemala", // 152
-  "Guyana", // 153
-  "Haiti", // 154
-  "Honduras", // 155
-  "Jamaica", // 156
-  "Martinique", // 157
-  "Mexico", // 158
-  "Montserrat", // 159
-  "Nether. A.", // 160
-  "Nicaragua", // 161
-  "Panama", // 162
-  "Paraguay", // 163
-  "Peru", // 164
-  "Puerto R.", // 165
-  "St. Kitts", // 166
-  "St. Lucia", // 167
-  "St. P.& M.", // 168
-  "St.Vincent", // 169
-  "Suriname", // 170
-  "T & T", // 171
-  "Turks & C.", // 172
-  "U.S.A.", // 173
-  "Uruguay", // 174
-  "Venezuela", // 175
-  "Virgin UK", // 176
-  "Virgin USA", // 177
-  "Afganist.", // 178
-  "AU C.T.", // 179
-  "AU N.S.W.", // 180
-  "AU Vict.", // 181
-  "AU Queen", // 182
-  "AU S. Au.", // 183
-  "AU W. Au.", // 184
-  "AU Tasma.", // 185
-  "AU N. T.", // 186
-  "Bhutan", // 187
-  "Brunei D.", // 188
-  "Cambodia", // 189
-  "China", // 190
-  "Fiji", // 191
-  "Hong Kong", // 192
-  "India", // 193
-  "Indonesia", // 194
-  "Iran", // 195
-  "Japan", // 196
-  "Kiribati", // 197
-  "N. Korea", // 198
-  "S. Korea", // 199
-  "Laos", // 200
-  "Macao", // 201
-  "Malaysia", // 202
-  "Maldives", // 203
-  "Marshall I", // 204
-  "Micronesia", // 205
-  "Myanmar", // 206
-  "Nauru", // 207
-  "Nepal", // 208
-  "N.Zealand", // 209
-  "Pakistan", // 210
-  "Papua N.G", // 211
-  "Philippin.", // 212
-  "Samoa", // 213
-  "Singapore", // 214
-  "Solomon I.", // 215
-  "Sri Lanka", // 216
-  "Taiwan", // 217
-  "Thailand", // 218
-  "Tonga", // 219
-  "Vanuatu", // 220
-  "Vietnam", // 221
-  "Bahamas", // 222
-  "BM or BR", // 223
-  "EC or BR", // 224
-  "AN or BR", // 225
-  "USA/VI/ PR", // 226
-  "Bangladesh" // 227
-};
-
-static const char* const myLanguages[] = {
-  "Unknown",         // 0
-  "Albanian",        // 1
-  "Breton",          // 2
-  "Catalan",         // 3
-  "Croatian",        // 4
-  "Welsh",           // 5
-  "Czech",           // 6
-  "Danish",          // 7
-  "German",          // 8
-  "English",         // 9
-  "Spanish",         // 10
-  "Esperanto",       // 11
-  "Estonian",        // 12
-  "Basque",          // 13
-  "Faroese",         // 14
-  "French",          // 15
-  "Frisian",         // 16
-  "Irish",           // 17
-  "Gaelic",          // 18
-  "Galician",        // 19
-  "Icelandic",       // 20
-  "Italian",         // 21
-  "Lappish",         // 22
-  "Latin",           // 23
-  "Latvian",         // 24
-  "Luxemb.",         // 25
-  "Lithua.",         // 26
-  "Hungar.",         // 27
-  "Maltese",         // 28
-  "Dutch",           // 29
-  "Norweg.",         // 30
-  "Occitan",         // 31
-  "Polish",          // 32
-  "Portug.",         // 33
-  "Romanian",        // 34
-  "Romansh",         // 35
-  "Serbian",         // 36
-  "Slovak",          // 37
-  "Slovene",         // 38
-  "Finnish",         // 39
-  "Swedish",         // 40
-  "Turkish",         // 41
-  "Flemish",         // 42
-  "Walloon",         // 43
-  "",                // 44
-  "",                // 45
-  "",                // 46
-  "",                // 47
-  "",                // 48
-  "",                // 49
-  "",                // 50
-  "",                // 51
-  "",                // 52
-  "",                // 53
-  "",                // 54
-  "",                // 55
-  "",                // 56
-  "",                // 57
-  "",                // 58
-  "",                // 59
-  "",                // 60
-  "",                // 61
-  "",                // 62
-  "",                // 63
-  "Backgr.",         // 64
-  "",                // 65
-  "",                // 66
-  "",                // 67
-  "",                // 68
-  "Zulu",            // 69
-  "Vietnam.",        // 70
-  "Uzbek",           // 71
-  "Urdu",            // 72
-  "Ukrain.",         // 73
-  "Thai",            // 74
-  "Telugu",          // 75
-  "Tatar",           // 76
-  "Tamil",           // 77
-  "Tadzhik",         // 78
-  "Swahili",         // 79
-  "SrananT.",        // 80
-  "Somali",          // 81
-  "Sinhalese",       // 82
-  "Shona",           // 83
-  "Serbo-C.",        // 84
-  "Ruthen.",         // 85
-  "Russian",         // 86
-  "Quechua",         // 87
-  "Pushtu",          // 88
-  "Punjabi",         // 89
-  "Persian",         // 90
-  "Papami.",         // 91
-  "Oriya",           // 92
-  "Nepali",          // 93
-  "Ndebele",         // 94
-  "Marathi",         // 95
-  "Moldov.",         // 96
-  "Malays.",         // 97
-  "Malagas.",        // 98
-  "Macedon.",        // 99
-  "Laotian",         // 100
-  "Korean",          // 101
-  "Khmer",           // 102
-  "Kazakh",          // 103
-  "Kannada",         // 104
-  "Japanese",        // 105
-  "Indones.",        // 106
-  "Hindi",           // 107
-  "Hebrew",          // 108
-  "Hausa",           // 109
-  "Gurani",          // 110
-  "Gujurati",        // 111
-  "Greek",           // 112
-  "Georgian",        // 113
-  "Fulani",          // 114
-  "Dari",            // 115
-  "Churash",         // 116
-  "Chinese",         // 117
-  "Burmese",         // 118
-  "Bulgarian",       // 119
-  "Bengali",         // 120
-  "Belorus.",        // 121
-  "Bambora",         // 122
-  "Azerbaij.",       // 123
-  "Assamese",        // 124
-  "Armenian",        // 125
-  "Arabic",          // 126
-  "Amharic"          // 127
 };
