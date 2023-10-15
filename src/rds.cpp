@@ -85,7 +85,7 @@ void ShowAdvancedRDS() {
   if (radio.rds.hasAF) for (byte i = 0; i < radio.af_counter; i++) afstring += String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10) + (i == radio.af_counter - 1 ? "          " : " | "); else afstring = myLanguage[language][87];
   if (hasafold != radio.rds.hasAF) {
     if (!screenmute) {
-      if (radio.rds.hasAF) tftPrint(-1, "AF", 42, 51, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "AF", 42, 51, GreyoutColor, BackgroundColor, 16);
+      if (radio.rds.hasAF) tftPrint(-1, "AF", 52, 51, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "AF", 52, 51, GreyoutColor, BackgroundColor, 16);
     }
     hasafold = radio.rds.hasAF;
   }
@@ -123,7 +123,7 @@ void ShowAdvancedRDS() {
   if (radio.rds.hasEON) for (byte i = 0; i < radio.eon_counter; i++) eonstring += String(radio.eon[i].picode) + (radio.eon[i].ps.length() > 0 ? String(": " + String(radio.eon[i].ps)) : "") + (radio.eon[i].mappedfreq > 0 ? String(" " + String(radio.eon[i].mappedfreq / 100) + "." + String((radio.eon[i].mappedfreq % 100) / 10))  : "") + (radio.eon[i].mappedfreq2 > 0 ? String(" / " + String(radio.eon[i].mappedfreq2 / 100) + "." + String((radio.eon[i].mappedfreq2 % 100) / 10))  : "") + (radio.eon[i].mappedfreq3 > 0 ? String(" /  " + String(radio.eon[i].mappedfreq3 / 100) + "." + String((radio.eon[i].mappedfreq3 % 100) / 10))  : "") + (i == radio.eon_counter - 1 ? "          " : " | "); else eonstring = myLanguage[language][88];
   if (haseonold != radio.rds.hasEON) {
     if (!screenmute)  {
-      if (radio.rds.hasEON) tftPrint(-1, "EON", 157, 51, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "EON", 157, 51, GreyoutColor, BackgroundColor, 16);
+      if (radio.rds.hasEON) tftPrint(-1, "EON", 155, 51, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "EON", 155, 51, GreyoutColor, BackgroundColor, 16);
     }
     haseonold = radio.rds.hasEON;
   }
@@ -160,7 +160,7 @@ void ShowAdvancedRDS() {
   if (radio.rds.hasRDSplus) rtplusstring = (radio.rds.rdsplusTag1 != 169 ? String(myLanguage[language][radio.rds.rdsplusTag1]) + ": " + String(radio.rds.RTContent1) : "") + (radio.rds.rdsplusTag2 != 169 ? " - " + String(myLanguage[language][radio.rds.rdsplusTag2]) + ": " + String(radio.rds.RTContent2) : "") + "         "; else rtplusstring = myLanguage[language][89];
   if (hasrtplusold != radio.rds.hasRDSplus) {
     if (!screenmute) {
-      if (radio.rds.hasRDSplus) tftPrint(-1, "RT+", 130, 51, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "RT+", 130, 51, GreyoutColor, BackgroundColor, 16);
+      if (radio.rds.hasRDSplus) tftPrint(-1, "RT+", 127, 51, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "RT+", 127, 51, GreyoutColor, BackgroundColor, 16);
     }
     hasrtplusold = radio.rds.hasRDSplus;
   }
@@ -202,14 +202,14 @@ void ShowAdvancedRDS() {
 
   if (TAold != radio.rds.hasTA) {
     if (!screenmute) {
-      if (radio.rds.hasTA) tftPrint(-1, "TA", 21, 51, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "TA", 21, 51, GreyoutColor, BackgroundColor, 16);
+      if (radio.rds.hasTA) tftPrint(-1, "TA", 25, 51, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "TA", 25, 51, GreyoutColor, BackgroundColor, 16);
     }
     TAold = radio.rds.hasTA;
   }
 
   if (afmethodBold != radio.afmethodB || rdsreset) {
     if (!screenmute) {
-      if (radio.afmethodB) tftPrint(-1, "-B", 60, 51, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "-B", 60, 51, GreyoutColor, BackgroundColor, 16);
+      if (radio.afmethodB) tftPrint(-1, "-B", 70, 51, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "-B", 70, 51, GreyoutColor, BackgroundColor, 16);
     }
     afmethodBold = radio.afmethodB;
   }
@@ -236,20 +236,6 @@ void ShowAdvancedRDS() {
     MSold = radio.rds.MS;
   }
 
-  rds_clock = ((radio.rds.hour < 10 ? "0" : "") + String(radio.rds.hour) + ":" + (radio.rds.minute < 10 ? "0" : "") + String(radio.rds.minute));
-  if (rds_clock != rds_clockold) {
-    if (!screenmute) {
-      if (radio.rds.hasCT) {
-        tftReplace(1, rds_clockold, rds_clock, 205, 109, PrimaryColor, PrimaryColorSmooth, 16);
-        tftPrint(-1, "CT", 78, 51, PrimaryColor, PrimaryColorSmooth, 16);
-      } else {
-        tftPrint(1, rds_clock, 205, 109, BackgroundColor, BackgroundColor, 16);
-        tftPrint(-1, "CT", 78, 51, GreyoutColor, BackgroundColor, 16);
-      }
-    }
-    rds_clockold = rds_clock;
-  }
-
   if (rdsblockold != radio.rdsblock) {
     if (rdsblockold < 33) tft.fillCircle((6 * rdsblockold) + 10, 133, 2, SignificantColor);
     if (radio.rdsblock < 33) tft.fillCircle((6 * radio.rdsblock) + 10, 133, 2, InsignificantColor);
@@ -258,7 +244,7 @@ void ShowAdvancedRDS() {
 
   if (hastmcold != radio.rds.hasTMC) {
     if (!screenmute) {
-      if (radio.rds.hasTMC) tftPrint(-1, "TMC", 95, 51, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "TMC", 95, 51, GreyoutColor, BackgroundColor, 16);
+      if (radio.rds.hasTMC) tftPrint(-1, "TMC", 90, 51, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "TMC", 90, 51, GreyoutColor, BackgroundColor, 16);
     }
     hastmcold = radio.rds.hasTMC;
   }
@@ -726,13 +712,13 @@ void showPS() {
 }
 
 void showCT() {
-  if (!screenmute && !afscreen && !advancedRDS) {
+  if (!screenmute) {
     rds_clock = ((radio.rds.hour < 10 ? "0" : "") + String(radio.rds.hour) + ":" + (radio.rds.minute < 10 ? "0" : "") + String(radio.rds.minute));
     if (rds_clock != rds_clockold) {
       if (radio.rds.hasCT) {
-        tftReplace(1, rds_clockold, rds_clock, 205, 163, PrimaryColor, PrimaryColorSmooth, 16);
+        if (advancedRDS) tftReplace(1, rds_clockold, rds_clock, 205, 109, PrimaryColor, PrimaryColorSmooth, 16); else tftReplace(1, rds_clockold, rds_clock, 205, 163, PrimaryColor, PrimaryColorSmooth, 16);
       } else {
-        tftPrint(1, rds_clock, 205, 163, BackgroundColor, BackgroundColor, 16);
+        if (advancedRDS) tftPrint(1, rds_clock, 205, 109, BackgroundColor, BackgroundColor, 16); else tftPrint(1, rds_clock, 205, 163, BackgroundColor, BackgroundColor, 16);
       }
     }
     rds_clockold = rds_clock;

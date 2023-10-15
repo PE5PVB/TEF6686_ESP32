@@ -646,13 +646,12 @@ void BuildAdvancedRDS() {
     }
 
     tftPrint(-1, "TP", 2, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "TA", 21, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "AF", 42, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "-B", 60, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "CT", 78, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "TMC", 95, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "RT+", 130, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "EON", 157, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "TA", 25, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "AF", 52, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "-B", 70, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "TMC", 90, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "RT+", 127, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "EON", 155, 51, GreyoutColor, BackgroundColor, 16);
     tftPrint(-1, "S", 188, 51, GreyoutColor, BackgroundColor, 16);
     tftPrint(-1, "M", 196, 51, GreyoutColor, BackgroundColor, 16);
   }

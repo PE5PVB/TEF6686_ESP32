@@ -948,7 +948,7 @@ void GetData() {
       showPTY();
       showECC();
       showRadioText();
-      if (!advancedRDS) showCT();
+      showCT();
       if (millis() >= tuningtimer + 200) doAF();
     }
     showPI();
