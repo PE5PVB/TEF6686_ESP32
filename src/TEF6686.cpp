@@ -528,7 +528,7 @@ void TEF6686::readRDS(byte showrdserrors)
             //AF decoder
             if (rdsblock == 0) {                                                                // Only when in GROUP 0A
 
-              if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == currentfreq) {  // Check for AF method B
+              if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == currentfreq) {               // Check for AF method B
                 afmethodB = true;
                 afmethodBprobe = true;
                 af_updatecounter++;
@@ -536,7 +536,7 @@ void TEF6686::readRDS(byte showrdserrors)
                 afmethodBprobe = false;
               }
 
-              if (((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) > 224) && ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 250)) afinit = true;
+              if (((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) > 224) && ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 250)) afinit = true;  // AF valid
               if (afinit) {
                 if ((rds.rdsB >> 11) == 0 && af_counter < 50) {
                   uint16_t buffer0;
@@ -546,7 +546,7 @@ void TEF6686::readRDS(byte showrdserrors)
                   if ((rds.rdsC & 0xFF) > 0 && (rds.rdsC & 0xFF) < 205) buffer1 = (rds.rdsC & 0xFF) * 10 + 8750; else buffer1 = 0;
                   if (buffer0 != 0 || buffer1 != 0) rds.hasAF = true;
 
-                  if (afmethodBprobe) {
+                  if (afmethodBprobe) {                                                                                             // Check for Reg. flags
                     if (buffer1 == currentfreq && buffer0 > buffer1) {
                       for (int x = 0; x < af_counter; x++) {
                         if (af[x].frequency == buffer0 && !af[x].regional) {
@@ -592,22 +592,38 @@ void TEF6686::readRDS(byte showrdserrors)
                     }
                   }
 
+                  if (buffer0 != currentfreq && buffer1 != currentfreq && afmethodB && afmethodBprobe) {                            // Remove faulty Reg. flags
+                    for (int x = 0; x < af_counter; x++) {
+                      if (af[x].frequency == buffer0 || af[x].frequency == buffer1) {
+                        if (af[x].mixed) {
+                          af[x].mixed = false;
+                          af_updatecounter++;
+                        }
+                        if (af[x].regional) {
+                          af[x].regional = false;
+                          af_updatecounter++;
+                        }
+                      }
+                      break;
+                    }
+                  }
+
                   bool isValuePresent = false;
-                  for (int i = 0; i < 50; i++) {
+                  for (int i = 0; i < 50; i++) {                                                                                    // Check if already in list
                     if (rds.sortaf && ((buffer0 == currentfreq) || buffer0 == 0 || af[i].frequency == buffer0)) {
                       isValuePresent = true;
                       break;
                     }
                   }
 
-                  if (!isValuePresent) {
+                  if (!isValuePresent) {                                                                                            // Add frequency to list
                     af[af_counter].frequency = buffer0;
                     if (af_counter < 50) af_counter++;
                     af_updatecounter++;
                   }
 
                   isValuePresent = false;
-                  for (int i = 0; i < 50; i++) {
+                  for (int i = 0; i < 50; i++) {                                                                                    // Check if already in list
                     if (rds.sortaf && ((buffer1 == currentfreq) || buffer1 == 0 || af[i].frequency == buffer1)) {
                       isValuePresent = true;
                       break;
@@ -615,12 +631,12 @@ void TEF6686::readRDS(byte showrdserrors)
                   }
 
                   if (!isValuePresent) {
-                    af[af_counter].frequency = buffer1;
+                    af[af_counter].frequency = buffer1;                                                                             // Add frequency to list
                     if (af_counter < 50) af_counter++;
                     af_updatecounter++;
                   }
 
-                  if (rds.sortaf) {
+                  if (rds.sortaf) {                                                                                                 // Sort AF list (low to high)
                     for (int i = 0; i < 50; i++) {
                       for (int j = 0; j < 50 - i; j++) {
                         if (af[j].frequency == 0) continue;
