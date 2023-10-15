@@ -1446,8 +1446,8 @@ static const char* const myLanguage[17][205] = {
     "Gering", // 200
     "Groß", // 201
     "Alles", // 202
-    "Fast PS", // 203
-    "Detected applications" // 204
+    "Schnelles PS", // 203
+    "Erkenne Applikationen" // 204
   },
 
   { "Czech", // Czech
