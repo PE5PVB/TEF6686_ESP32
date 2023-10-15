@@ -951,7 +951,7 @@ void ShowAFEON() {
       RadiotextSprite.fillSprite(BackgroundColor);
       RadiotextSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
       RadiotextSprite.drawString(String(myLanguage[language][93]) + "  -  " + String(myLanguage[language][204]) + ": " + AIDString, xPos, 2);
-      RadiotextSprite.pushSprite(38, 220);
+      RadiotextSprite.pushSprite(5, 220);
     }
   }
 }
