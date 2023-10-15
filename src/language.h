@@ -3195,8 +3195,8 @@ static const char* const myLanguage[17][206] = {
     "Hovedkode:", // 71
     "Bidragsytere:", // 72
     "Ukjent", // 73
-    "Screensaver options", // 74
-    "Time-out timer", // 75
+    "Skjermspareralternativer", // 74
+    "Tidsavbruddstimer", // 75
     "Skjerm av", // 76
     "Tema", // 77
     "Standard", // 78
