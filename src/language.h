@@ -1041,85 +1041,85 @@ static const char* const myLanguage[17][206] = {
     "Min." // 205
   },
 
-  { "Romana", // Romanian
+  { "Română", // Romanian
     "Sens rotire schimbat", // 1
-    "Eliberati butonul", // 2
+    "Eliberaţi butonul", // 2
     "Ecran inversat", // 3
-    "Calibrati S-metrul analog", // 4
-    "Eliberati butonul cand terminati", // 5
+    "Calibraţi S-metrul analog", // 4
+    "Eliberaţi butonul cand terminaţi", // 5
     "Encoderul setat pe Optic", // 6
     "Encoderul setat pe Standard", // 7
     "Receptor FM/AM ", // 8
-    "Nu exista Tuner !", // 9
+    "Nu există Tuner !", // 9
     "Volum:", // 10
     "Convertor:", // 11
-    "Limita inferioara a benzii:", // 12
-    "Limita superioara a benzii:", // 13
+    "Limita inferioară a benzii:", // 12
+    "Limita superioară a benzii:", // 13
     "FM offset ptr. nivel RF:", // 14
     "Prag ptr. Stereo :", // 15
-    "Limita taiere inalte:", // 16
-    "Prag taiere inalte:", // 17
-    "Prag taiere joase:", // 18
+    "Limită tăiere inalte:", // 16
+    "Prag tăiere inalte:", // 17
+    "Prag tăiere joase:", // 18
     "Contrast:", // 19
-    "Seteaza volum", // 20
-    "Seteaza offset ptr convertor ", // 21
-    "Seteaza marginea de jos a benzii", // 22
-    "Seteaza marginea de sus a benzii", // 23
-    "Seteaza nivel offset", // 24
-    "Seteaza prag separare Stereo", // 25
-    "Seteaza limita de sus inalte", // 26
-    "Seteaza prag taiere inalte", // 27
-    "Seteaza pragul nivelului de jos", // 28
-    "Seteaza luminozitatea ptr. Display ", // 29
+    "Setează volum", // 20
+    "Setează offset ptr convertor ", // 21
+    "Setează marginea de jos a benzii", // 22
+    "Setează marginea de sus a benzii", // 23
+    "Setează nivel offset", // 24
+    "Setează prag separare Stereo", // 25
+    "Setează limita de sus inalte", // 26
+    "Setează prag taiere inalte", // 27
+    "Setează pragul nivelului de jos", // 28
+    "Setează luminozitatea ptr. ecran", // 29
     "Oprit", // 30
     "Ecran oprit", // 31
-    "Ptr a porni debifati RF+ box", // 32
+    "Ptr a porni debifați RF+ box", // 32
     "OPRIT", // 33
     "Scanare...", // 34
     "Tunerul nu este detectat", // 35
     "Versiune Tuner: v", // 36
-    "Va rog restartati tuner", // 37
-    "Arata erorile RDS", // 38
-    "Limba", // 39
+    "Vă rog restartați tuner", // 37
+    "Arată erorile RDS", // 38
+    "Limbă", // 39
     "Alege Limba", // 40
-    "Apasa MODE pentru a salva si iesi", // 41
+    "Apasa MODE ptr salvare și ieșire", // 41
     "Pornit", // 42
-    "FM fara sonor", // 43
-    "AM fara sonor", // 44
-    "Sunet la marginea Benzii", // 45
+    "FM fără sonor", // 43
+    "AM fără sonor", // 44
+    "Sunet la marginea benzii", // 45
     "Regiune", // 46
     "Europa", // 47
     "SUA", // 48
-    "Arata evidentiat in RDS", // 49
-    "USB mode", // 50
-    "Wi-Fi active", // 51
-    "Configure Wi-Fi", // 52
-    "Connect to: ", // 53
-    "to configure Wi-Fi", // 54
-    "Trying to connect Wi-Fi", // 55
-    "FAILED!", // 56
-    "CONNECTED!", // 57
-    "Stationlist client IP", // 58
-    "Show SW wavelength", // 59
-    "RDS filter", // 60
-    "Show PI errors", // 61
-    "Show squelch", // 62
-    "Modulation meter", // 63
-    "AM Noise blanker", // 64
-    "FM Noise blanker", // 65
-    "Defaults loaded", // 66
-    "Audio output", // 67
-    "Touch rotating", // 68 for translation reference to computer Touch Typing
-    "Display color invert", // 69
-    "About software", // 70
-    "Main code:", // 71
-    "Contributors:", // 72
-    "Unknown", // 73
-    "Screensaver options", // 74
-    "Time-out timer", // 75
-    "Screen off", // 76
-    "Theme", // 77
-    "Default", // 78
+    "Arată evidențiat in RDS", // 49
+    "Mod USB", // 50
+    "Wi-Fi activ", // 51
+    "Configurare Wi-Fi", // 52
+    "Conectare la: ", // 53
+    "Către configurare Wi-Fi", // 54
+    "Se conectează Wi-Fi", // 55
+    "EȘUAT!", // 56
+    "CONECTARE!", // 57
+    "Listă rețele IP", // 58
+    "Arată lungimea de undă SW", // 59
+    "Filtru RDS", // 60
+    "Arată erorile PI", // 61
+    "Arată limitatorul", // 62
+    "Măsurare modulație", // 63
+    "Eliminare zgomot AM", // 64
+    "Eliminare zgomot FM", // 65
+    "Incărcare valori implicite", // 66
+    "Ieșire audio ", // 67
+    "Rotire prin atingere", // 68 for translation reference to computer Touch Typing
+    "Arată culorile inversate", // 69
+    "Despre soft", // 70
+    "Despre cod:", // 71
+    "Contribuitori:", // 72
+    "Necunoscut", // 73
+    "Opțiuni economizor ecran", // 74
+    "Intervalul de timp", // 75
+    "Ecran oprit", // 76
+    "Teme", // 77
+    "Implicit", // 78
     "Cyan", // 79
     "Crimson", // 80
     "Monochrome", // 81
@@ -1127,71 +1127,71 @@ static const char* const myLanguage[17][206] = {
     "Dendro", // 83
     "Sakura", // 84
     "Whiteout", // 85
-    "NOT POSSIBLE", // 86
-    "No AF available", // 87
-    "No EON available", // 88
-    "No RT+ available", // 89
-    "FM min stepsize", // 90
-    "Screensaver", // 91
+    "Nu este posibil", // 86
+    "Fără AF disponibil", // 87
+    "Fără EON disponibil", // 88
+    "Fără RT+ disponibil", // 89
+    "Pasul FM minim", // 90
+    "Economizor ecran", // 91
     "Sec", // 92
-    "PRESS BAND TO CLOSE", // 93
-    "1% brightness", // 94
-    "25% brightness", // 95
-    "50% brightness", // 96
-    "AM RF Level offset:", // 97
-    "Signalmeter unit:", // 98
-    "Use AF:", // 99
-    "Select FM Band:", // 100
-    "Select AM Band:", // 101
+    "APASĂ BAND PENTRU IEȘIRE", // 93
+    "1% luminozitate", // 94
+    "25% luminozitate", // 95
+    "50% luminozitate", // 96
+    "AM compensare nivel RF:", // 97
+    "Unitate masură semnal:", // 98
+    "Folosește AF:", // 99
+    "Alege banda FM:", // 100
+    "Alege banda AM:", // 101
     "LW", // 102
     "MW", // 103
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotating while screen off", // 107
+    "Rotire cand ecranul este oprit", // 107
     "Model selector", // 108
-    "Base (ILI9341)", // 109
-    "Portable (ILI9341)", // 110
-    "Portable touch (ILI9341)", // 111
-    "Title", // 112
+    "Bază (ILI9341)", // 109
+    "Portabil (ILI9341)", // 110
+    "Portabil tactil (ILI9341)", // 111
+    "Titlu", // 112
     "Album", // 113
-    "Track", // 114
+    "Piesă", // 114
     "Artist", // 115
-    "Composition", // 116
-    "Movement", // 117
-    "Conductor", // 118
-    "Composer", // 119
-    "Band", // 120
-    "Comment", // 121
-    "Genre", // 122
-    "News", // 123
-    "Local news", // 124
-    "Stockmarket", // 125
+    "Compozitie", // 116
+    "Deplasare", // 117
+    "Dirijor", // 118
+    "Compozitor", // 119
+    "Banda", // 120
+    "Comentariu", // 121
+    "Genuri", // 122
+    "Stiri", // 123
+    "Stiri locale", // 124
+    "PiataBursiera", // 125
     "Sport", // 126
-    "Lottery", // 127
-    "Horoscope", // 128
-    "Daily Diversion", // 129
-    "Health", // 130
-    "Event", // 131
+    "Loterie", // 127
+    "Horoscop", // 128
+    "Cotidian", // 129
+    "Sanatate", // 130
+    "Concurs", // 131
     "Scene", // 132
     "Cinema", // 133
     "TV", // 134
-    "Date/time", // 135
-    "Weather", // 136
-    "Traffic", // 137
-    "Alarm", // 138
-    "Advertisement", // 139
+    "Data/timp", // 135
+    "Meteo", // 136
+    "Trafic", // 137
+    "Alarma", // 138
+    "Avertisment", // 139
     "Website", // 140
     "Other", // 141
-    "Short PS", // 142
-    "Long PS", // 143
-    "Now", // 144
-    "Next", // 145
+    "Scurt PS", // 142
+    "Lung PS", // 143
+    "Acum", // 144
+    "Urmatorul", // 145
     "Part", // 146
     "Host", // 147
     "Editor", // 148
-    "Frequency", // 149
-    "Homepage", // 150
+    "Frecventa", // 149
+    "Prima pagina", // 150
     "Subchannel", // 151
     "Hotline", // 152
     "Studio phone", // 153
@@ -1214,38 +1214,38 @@ static const char* const myLanguage[17][206] = {
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
-    "Battery options", // 173
-    "Show voltage", // 174
-    "Show percentage", // 175
-    "RT buffering", // 176
-    "Main settings", // 177
-    "Audio settings", // 178
-    "Display settings", // 179
-    "RDS settings", // 180
-    "FM settings", // 181
-    "AM settings", // 182
-    "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "Optiuni baterie", // 173
+    "Arată voltajul", // 174
+    "Arată procentele", // 175
+    "Stocare RT", // 176
+    "Setarile principale", // 177
+    "Setări audio", // 178
+    "Setări ecran", // 179
+    "Setări RDS", // 180
+    "Setări FM", // 181
+    "Setări AM", // 182
+    "Conectivitate", // 183
+    "Apasă MODE pentru ieșire", // 184
     "AM CoChannelDet", // 185
-    "CoChannelDet sensitivity", // 186
-    "AM CoChannelDet threshold", // 187
+    "Sensibilitate CoChannelDet", // 186
+    "Pragul AM CoChannelDet", // 187
     "CoChannelDet counter", // 188
-    "MAIN", // 189
+    "PRINCIPAL", // 189
     "AUDIO", // 190
-    "DISPLAY", // 191
+    "ECRAN", // 191
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT", // 195
-    "Auto sort AF", // 196
-    "Stationlist ID", // 197
+    "CONECTARE", // 195
+    "Sortare auto AF", // 196
+    "Listă rețele ID", // 197
     "AM ATT", // 198
     "FM deemphasis", // 199
-    "Small", // 200
-    "Large", // 201
-    "All", // 202
-    "Fast PS", // 203
-    "Detected applications", // 204
+    "Mic", // 200
+    "Mare", // 201
+    "Toate", // 202
+    "PS rapid", // 203
+    "Identificare aplicații", // 204
     "Min." // 205
   },
 
