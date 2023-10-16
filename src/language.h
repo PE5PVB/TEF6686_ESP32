@@ -802,34 +802,34 @@ static const char* const myLanguage[17][206] = {
     "Prikaži napon", // 174
     "Prikaži postotak", // 175
     "RT pufer", // 176
-    "Main settings", // 177
-    "Audio settings", // 178
-    "Display settings", // 179
-    "RDS settings", // 180
-    "FM settings", // 181
-    "AM settings", // 182
-    "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "Glavno", // 177
+    "Zvuk", // 178
+    "Zaslon", // 179
+    "RDS postavke", // 180
+    "FM postavke", // 181
+    "AM postavke", // 182
+    "Povezivost", // 183
+    "PRITISNITE MODE ZA POVRATAK", // 184
     "AM CoChannelDet", // 185
-    "CoChannelDet sensitivity", // 186
-    "AM CoChannelDet threshold", // 187
-    "CoChannelDet counter", // 188
-    "MAIN", // 189
-    "AUDIO", // 190
-    "DISPLAY", // 191
+    "CoChannelDet osjetljivost", // 186
+    "AM CoChannelDet razina", // 187
+    "CoChannelDet brojač", // 188
+    "GLAVNO", // 189
+    "ZVUK", // 190
+    "ZASLON", // 191
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT", // 195
-    "Auto sort AF", // 196
+    "SPOJI", // 195
+    "Autom. sortiranje AF-a", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
     "FM deemphasis", // 199
-    "Small", // 200
-    "Large", // 201
-    "All", // 202
-    "Fast PS", // 203
-    "Detected applications", // 204
+    "Malo", // 200
+    "Veliko", // 201
+    "Sve", // 202
+    "Brzi PS", // 203
+    "Otkrivene aplikacije", // 204
     "Min." // 205
   },
 
