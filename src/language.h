@@ -620,8 +620,8 @@ static const char* const myLanguage[17][206] = {
     "Male", // 200
     "Duze", // 201
     "Wszystkie", // 202
-    "Fast PS", // 203
-    "Detected applications", // 204
+    "Szybki PS", // 203
+    "Wykryte aplikacje", // 204
     "Min." // 205
   },
 
