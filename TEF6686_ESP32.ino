@@ -1220,7 +1220,6 @@ void ToggleBand(byte nowBand) {
 }
 
 void BANDBUTTONPress() {
-  if (screensavertriggered) WakeToSleep(REVERSE);
   if (afscreen) {
     BuildAdvancedRDS();
   } else {
