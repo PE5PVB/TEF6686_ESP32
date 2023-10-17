@@ -2227,14 +2227,14 @@ void DoMemoryPosTune() {
     frequency_OIRT = memory[memorypos];
     radio.SetFreq(frequency_OIRT);
   } else if (band == BAND_LW) {
-    frequency_LW = memory[memorypos];
-    radio.SetFreqAM(frequency_LW);
+    frequency_AM = memory[memorypos];
+    radio.SetFreqAM(frequency_AM);
   } else if (band == BAND_MW) {
-    frequency_MW = memory[memorypos];
-    radio.SetFreqAM(frequency_MW);
+    frequency_AM = memory[memorypos];
+    radio.SetFreqAM(frequency_AM);
   } else {
-    frequency_SW = memory[memorypos];
-    radio.SetFreqAM(frequency_SW);
+    frequency_AM = memory[memorypos];
+    radio.SetFreqAM(frequency_AM);
   }
   ShowFreq(0);
 }
