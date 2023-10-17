@@ -3189,7 +3189,7 @@ static const char* const myLanguage[17][206] = {
     "FM Noise blanker", // 65
     "Standarder lastet", // 66
     "Lydutgang modus", // 67
-    "Tune når skjermsparer på", // 68
+    "Tillat tuning under skjermsparer", // 68
     "Inverter displayet", // 69
     "Om programvaren", // 70
     "Hovedkode:", // 71
