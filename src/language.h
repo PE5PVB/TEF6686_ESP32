@@ -69,7 +69,7 @@ static const char* const myLanguage[17][206] = {
     "FM Noise blanker", // 65
     "Defaults loaded", // 66
     "Audio output", // 67
-    "Touch rotating", // 68 for translation reference to computer Touch Typing
+    "Allow tuning during screensaver", // 68
     "Invert display", // 69
     "About software", // 70
     "Main code:", // 71
@@ -277,7 +277,7 @@ static const char* const myLanguage[17][206] = {
     "FM ruis filter", // 65
     "Opnieuw geconfigureerd", // 66
     "Audio uitgang", // 67
-    "Touch rotating", // 68 for translation reference to computer Touch Typing
+    "Afstemmen tijdens schermbeveiliging", // 68
     "Inverteer scherm", // 69
     "Over deze software", // 70
     "Basis code:", // 71
@@ -485,7 +485,7 @@ static const char* const myLanguage[17][206] = {
     "Reduktor szumow FM", // 65
     "Zaladowano domyslne", // 66
     "Wyjscie dzwieku", // 67
-    "Bezwzrokowe  strojenie", // 68 for translation reference to computer Touch Typing
+    "Allow tuning during screensaver", // 68
     "Odwroc kolory wyswietlacza", // 69
     "O oprogramowaniu", // 70
     "Glowny kod:", // 71
@@ -693,7 +693,7 @@ static const char* const myLanguage[17][206] = {
     "FM prigušivač šuma", // 65
     "Zadane postavke učitane", // 66
     "Audio izlaz", // 67
-    "Touch rotating", // 68 for translation reference to computer Touch Typing
+    "Allow tuning during screensaver", // 68
     "Invertiraj boju zaslona", // 69
     "O softveru", // 70
     "Glavni izvorni kod:", // 71
@@ -901,7 +901,7 @@ static const char* const myLanguage[17][206] = {
     "Απαλοιφή θορύβου FM", // 65
     "Οι προεπιλογές φορτώθηκαν", // 66
     "Έξοδος ήχου", // 67
-    "Περιστροφή αφής", // 68
+    "Allow tuning during screensaver", // 68
     "Αναστροφή χρωμάτων οθόνης", // 69
     "Πληροφορίες λογισμικού", // 70
     "Κύριος κώδικας:", // 71
@@ -1109,7 +1109,7 @@ static const char* const myLanguage[17][206] = {
     "Eliminare zgomot FM", // 65
     "Incărcare valori implicite", // 66
     "Ieșire audio ", // 67
-    "Rotire prin atingere", // 68 for translation reference to computer Touch Typing
+    "Allow tuning during screensaver", // 68
     "Arată culorile inversate", // 69
     "Despre soft", // 70
     "Despre cod:", // 71
@@ -1317,7 +1317,7 @@ static const char* const myLanguage[17][206] = {
     "UKW Rauschunterdrückung", // 65
     "Werkseinstellung geladen", // 66
     "Audioausgabe", // 67
-    "Touch rotating", // 68 for translation reference to computer Touch Typing
+    "Allow tuning during screensaver", // 68
     "Anzeigefarben umkehren", // 69
     "Über diese Software", // 70
     "Hauptcode:", // 71
@@ -1525,7 +1525,7 @@ static const char* const myLanguage[17][206] = {
     "FM Noise blanker", // 65
     "Defaults loaded", // 66
     "Audio output", // 67
-    "Touch rotating", // 68 for translation reference to computer Touch Typing
+    "Allow tuning during screensaver", // 68
     "Display color invert", // 69
     "About software", // 70
     "Main code:", // 71
@@ -1733,7 +1733,7 @@ static const char* const myLanguage[17][206] = {
     "FM Noise blanker", // 65
     "Defaults loaded", // 66
     "Audio output", // 67
-    "Touch rotating", // 68 for translation reference to computer Touch Typing
+    "Allow tuning during screensaver", // 68
     "Display color invert", // 69
     "About software", // 70
     "Main code:", // 71
@@ -1941,7 +1941,7 @@ static const char* const myLanguage[17][206] = {
     "Réducteur de bruit FM", // 65
     "Paramètres par défaut chargés", // 66
     "Sortie audio", // 67
-    "Touche tournante", // 68
+    "Allow tuning during screensaver", // 68
     "Inverser l'affichage", // 69
     "À propos du logiciel", // 70
     "Code principal :", // 71
@@ -2149,7 +2149,7 @@ static const char* const myLanguage[17][206] = {
     "FM заглушител на шума", // 65
     "Фабр. настройки бяха зададени", // 66
     "Аудио Изход", // 67
-    "Touch rotating", // 68 for translation reference to computer Touch Typing
+    "Allow tuning during screensaver", // 68
     "Обръщане на дисплея", // 69
     "Относно софтуера", // 70
     "Главен код:", // 71
@@ -2357,7 +2357,7 @@ static const char* const myLanguage[17][206] = {
     "Шумоподавитель FM", // 65
     "Загрузка настроек по умолчанию", // 66
     "Аудиовыход", // 67
-    "Вращение при выкл. экране", // 68 for translation reference to computer Touch Typing
+    "Allow tuning during screensaver", // 68
     "Инвертировать дисплей", // 69
     "О программе", // 70
     "Основной код:", // 71
@@ -2565,7 +2565,7 @@ static const char* const myLanguage[17][206] = {
     "Помпи засліплення шуму FM", // 65
     "Завантажено параметри за замовчуванням", // 66
     "Аудіо вихід", // 67
-    "Обертання, коли екран вимкнено", // 68 for translation reference to computer Touch Typing
+    "Allow tuning during screensaver", // 68
     "Перевернути дисплей", // 69
     "Про програмне забезпечення", // 70
     "Основний код:", // 71
@@ -2773,7 +2773,7 @@ static const char* const myLanguage[17][206] = {
     "Soppressione rumore FM", // 65
     "Predefiniti caricati", // 66
     "Uscita audio", // 67
-    "Touch rotating", // 68 for translation reference to computer Touch Typing
+    "Allow tuning during screensaver", // 68
     "Inversione schermo", // 69
     "Info sul software", // 70
     "Codice principale:", // 71
@@ -3189,7 +3189,7 @@ static const char* const myLanguage[17][206] = {
     "FM Noise blanker", // 65
     "Standarder lastet", // 66
     "Lydutgang modus", // 67
-    "Tune når skjerm av", // 68
+    "Allow tuning during screensaver", // 68
     "Inverter displayet", // 69
     "Om programvaren", // 70
     "Hovedkode:", // 71
@@ -3397,7 +3397,7 @@ static const char* const myLanguage[17][206] = {
     "Atenuador de ruido FM", // 65
     "Carga de configuración predeterminada", // 66
     "Salida de audio", // 67
-    "Rotación táctil", // 68
+    "Allow tuning during screensaver", // 68
     "Invertir pantalla", // 69
     "Acerca del software", // 70
     "Código principal:", // 71
