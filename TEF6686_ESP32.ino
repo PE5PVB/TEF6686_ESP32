@@ -874,6 +874,8 @@ void loop() {
       if (!touchrotating) {
         rotary = 0;
         WakeToSleep(REVERSE);
+      } else {
+        KeyUp();
       }
     } else {
       KeyUp();
@@ -886,6 +888,8 @@ void loop() {
       if (!touchrotating) {
         rotary = 0;
         WakeToSleep(REVERSE);
+      } else {
+        KeyDown();
       }
     } else {
       KeyDown();
