@@ -830,7 +830,7 @@ void ShowAFEON() {
       for (byte i = 0; i < radio.af_counter; i++) {
         byte x = i - (afpagenr == 2 ? 30 : 0);
         if (!screenmute) {
-          tftPrint(-1, ((radio.afmethodB && !radio.af[i].regional && radio.af[i].mixed) ? "S " : (radio.afmethodB && radio.af[i].regional && radio.af[i].mixed) ? "M " : (radio.afmethodB && radio.af[i].regional && !radio.af[i].mixed) ? "R " : ""), 10 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), ActiveColor, ActiveColorSmooth, 16);
+          tftPrint(-1, (radio.afmethodB && !radio.af[i].regional && radio.af[i].same) ? "S " : (radio.afmethodB && radio.af[i].regional && radio.af[i].same) ? "M " : (radio.afmethodB && radio.af[i].regional && !radio.af[i].same) ? "R " : "", 10 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), ActiveColor, ActiveColorSmooth, 16);
           if (radio.af[i].checked) {
             tftPrint(1, String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 55 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), InsignificantColor, InsignificantColorSmooth, 16);
           } else if (!radio.af[i].afvalid) {

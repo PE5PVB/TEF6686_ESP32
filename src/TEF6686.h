@@ -583,7 +583,7 @@ typedef struct _af_ {
   bool afvalid;
   bool checked;
   bool regional;
-  bool mixed;
+  bool same;
 } af_;
 
 typedef struct _eon_ {
