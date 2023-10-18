@@ -97,7 +97,7 @@ uint16_t TEF6686::TestAF() {
       delay(200);
       devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
       if (rds.rdsStat & (1 << 9)) {
-        if ((afmethodB && rds.afreg && ((rds.rdsA >> 8) & 0x0F) == (rds.correctPI & 0x0F) || !afmethodB && rds.rdsA == rds.correctPI) && (((rds.rdsErr >> 14) & 0x03) == 0)) {
+        if (((afmethodB && rds.afreg && ((rds.rdsA >> 8) & 0x0F) == (rds.correctPI & 0x0F)) || (!afmethodB && rds.rdsA == rds.correctPI)) && (((rds.rdsErr >> 14) & 0x03) == 0)) {
           currentfreq = af[highestIndex].frequency;
           for (byte y = 0; y < 50; y++) {
             af[y].frequency = 0;

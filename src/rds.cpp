@@ -626,7 +626,6 @@ void ShowAFEON() {
         for (int i = 0; i < 65; i++) {
           if (radio.rds.aid[y] == oda_app_ids[i]) {
             if (!aidProcessed) {
-              char id[5];
               for (int z = 0; z < 4; z++) {
                 uint8_t nibble = (radio.rds.aid[y] >> (4 * (3 - z))) & 0xF;
                 if (nibble < 10) {
