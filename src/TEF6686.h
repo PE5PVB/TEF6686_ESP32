@@ -370,31 +370,31 @@ static const char* const LICtext[] = {
   "Turkish",         // 41
   "Flemish",         // 42
   "Walloon",         // 43
-  "",                // 44
-  "",                // 45
-  "",                // 46
-  "",                // 47
-  "",                // 48
-  "",                // 49
-  "",                // 50
-  "",                // 51
-  "",                // 52
-  "",                // 53
-  "",                // 54
-  "",                // 55
-  "",                // 56
-  "",                // 57
-  "",                // 58
-  "",                // 59
-  "",                // 60
-  "",                // 61
-  "",                // 62
-  "",                // 63
+  "Unknown",         // 44
+  "Unknown",         // 45
+  "Unknown",         // 46
+  "Unknown",         // 47
+  "Unknown",         // 48
+  "Unknown",         // 49
+  "Unknown",         // 50
+  "Unknown",         // 51
+  "Unknown",         // 52
+  "Unknown",         // 53
+  "Unknown",         // 54
+  "Unknown",         // 55
+  "Unknown",         // 56
+  "Unknown",         // 57
+  "Unknown",         // 58
+  "Unknown",         // 59
+  "Unknown",         // 60
+  "Unknown",         // 61
+  "Unknown",         // 62
+  "Unknown",         // 63
   "Backgr.",         // 64
-  "",                // 65
-  "",                // 66
-  "",                // 67
-  "",                // 68
+  "Unknown",         // 65
+  "Unknown",         // 66
+  "Unknown",         // 67
+  "Unknown",         // 68
   "Zulu",            // 69
   "Vietnam.",        // 70
   "Uzbek",           // 71
