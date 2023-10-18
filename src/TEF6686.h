@@ -326,7 +326,7 @@ static const char* const ECCtext[] {
 };
 
 static const char* const LICtext[] = {
-  "Unknown",         // 0
+  "Not def.",        // 0
   "Albanian",        // 1
   "Breton",          // 2
   "Catalan",         // 3
