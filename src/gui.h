@@ -33,7 +33,7 @@ extern bool afpage;
 extern bool afscreen;
 extern bool artheadold;
 extern bool BWreset;
-extern bool change2;
+extern bool change;
 extern bool compressedold;
 extern bool dynamicPTYold;
 extern bool edgebeep;

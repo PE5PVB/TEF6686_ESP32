@@ -1175,7 +1175,7 @@ void MenuUp() {
             if (LevelOffset > 15) LevelOffset = -25;
             if (LevelOffset > 0) tftPrint(1, "+" + String(LevelOffset, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(LevelOffset, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             radio.setOffset(LevelOffset);
-            change2 = true;
+            change = true;
             break;
 
           case ITEM5:
@@ -1712,7 +1712,7 @@ void MenuDown() {
             LevelOffset--;
             if (LevelOffset < -25) LevelOffset = 15;
             if (LevelOffset > 0) tftPrint(1, "+" + String(LevelOffset, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(LevelOffset, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);                radio.setOffset(LevelOffset);
-            change2 = true;
+            change = true;
             break;
 
           case ITEM5:
@@ -2203,7 +2203,7 @@ void DoMenu() {
             tftPrint(-1, "dBμV", 190, 165, ActiveColor, ActiveColorSmooth, 28);
             if (LevelOffset > 0) tftPrint(1, "+" + String(LevelOffset, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(LevelOffset, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             SStatusold = 2000;
-            change2 = true;
+            change = true;
             break;
 
           case ITEM5:

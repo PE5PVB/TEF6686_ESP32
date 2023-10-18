@@ -54,7 +54,7 @@ bool batterydetect = true;
 bool beepresetstart;
 bool beepresetstop;
 bool BWreset;
-bool change2;
+bool change;
 bool compressedold;
 bool direction;
 bool dropout;
@@ -282,7 +282,6 @@ uint16_t SWMIBandPosold;
 uint16_t USN;
 uint16_t WAM;
 uint8_t buff_pos;
-unsigned int change;
 unsigned int ConverterSet;
 unsigned int freq_scan;
 unsigned int frequency;
@@ -711,6 +710,15 @@ void loop() {
   if (digitalRead(BANDBUTTON) == LOW ) BANDBUTTONPress();
 
   if (millis() >= tuningtimer + 200) {
+    if (store) {
+      detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A));
+      detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B));
+      StoreFrequency();
+      store = false;
+      attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
+      attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
+    }
+
     rdsflagreset = false;
     Communication();
   }
@@ -860,9 +868,9 @@ void loop() {
 
   if (menu && menuopen && menupage == FMSETTINGS && menuoption == ITEM4) {
     if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
-    if (millis() >= lowsignaltimer + 500 || change2) {
+    if (millis() >= lowsignaltimer + 500 || change) {
       lowsignaltimer = millis();
-      change2 = false;
+      change = false;
       if (SStatus > SStatusold || SStatus < SStatusold) {
         if (SStatusold / 10 != SStatus / 10) tftReplace(1, String(SStatusold / 10), String(SStatus / 10), 140, 149, PrimaryColor, PrimaryColorSmooth, 48);
         tftReplace(1, "." + String(abs(SStatusold % 10)), "." + String(abs(SStatus % 10)), 160, 149, PrimaryColor, PrimaryColorSmooth, 28);
@@ -916,24 +924,6 @@ void loop() {
     tottimer = millis();
     if (screensavertriggered && !touchrotating) WakeToSleep(REVERSE);
     if (!screenmute && !afscreen) BWButtonPress();
-  }
-
-  if (store) change++;
-
-  if (change > 200 && store) {
-    detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A));
-    detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B));
-    EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, frequency);
-    EEPROM.writeUInt(EE_UINT16_FREQUENCY_OIRT, frequency_OIRT);
-    EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, frequency_AM);
-    EEPROM.writeByte(EE_BYTE_BAND, band);
-    EEPROM.writeUInt(EE_UINT16_FREQUENCY_LW, frequency_LW);
-    EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, frequency_MW);
-    EEPROM.writeUInt(EE_UINT16_FREQUENCY_SW, frequency_SW);
-    EEPROM.commit();
-    store = false;
-    attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
-    attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
   }
 
   if (screensaverset) {
@@ -2150,7 +2140,6 @@ void KeyUp() {
       }
       if (radio.rds.hasCT) tftPrint(1, rds_clock, 205, 163, BackgroundColor, BackgroundColor, 16);
       radio.clearRDS(fullsearchrds);
-      change = 0;
       ShowFreq(0);
       store = true;
     } else {
@@ -2197,7 +2186,6 @@ void KeyDown() {
       }
       if (radio.rds.hasCT) tftPrint(1, rds_clock, 38, 109, BackgroundColor, BackgroundColor, 16);
       radio.clearRDS(fullsearchrds);
-      change = 0;
       ShowFreq(0);
       store = true;
     } else {
