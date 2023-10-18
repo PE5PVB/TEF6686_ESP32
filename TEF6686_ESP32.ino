@@ -45,7 +45,6 @@ TFT_eSPI tft = TFT_eSPI(240, 320);
 #endif
 
 bool advancedRDS;
-bool af;
 bool afmethodBold;
 bool afpage;
 bool afscreen;
@@ -108,6 +107,7 @@ bool XDRGTKUSB;
 bool XDRMute;
 byte af_counterold;
 byte aid_counterold;
+byte af;
 byte afpagenr;
 byte amnb;
 byte audiomode;
@@ -716,12 +716,13 @@ void loop() {
   }
 
   if (!menu && !afscreen) {
-    if (af && dropout && millis() >= aftimer + 1000) {
+    if (af != 0 && dropout && millis() >= aftimer + 1000) {
       aftimer = millis();
       frequency = radio.TestAF();
       if (freqold != frequency) {
         ShowFreq(0);
         if (radio.afmethodB) {
+          if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
           afmethodBold = true;
           radio.clearRDS(fullsearchrds);
         }
@@ -730,7 +731,7 @@ void loop() {
       }
     }
 
-    if (band == BAND_FM && af && radio.rds.correctPI != 0) {
+    if (band == BAND_FM && af != 0 && radio.rds.correctPI != 0) {
       if ((aftest && millis() >= aftimer + 3000) || ((USN > 250 || WAM > 250) && millis() >= aftimer + 1000)) {
         aftimer = millis();
         aftest = false;
@@ -738,6 +739,7 @@ void loop() {
         if (freqold != frequency) {
           ShowFreq(0);
           if (radio.afmethodB) {
+            if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
             afmethodBold = true;
             radio.clearRDS(fullsearchrds);
           }
@@ -753,6 +755,7 @@ void loop() {
           if (freqold != frequency) {
             ShowFreq(0);
             if (radio.afmethodB) {
+              if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
               afmethodBold = true;
               radio.clearRDS(fullsearchrds);
             }

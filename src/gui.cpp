@@ -474,7 +474,13 @@ void BuildMenu() {
       if (radio.rds.underscore) tftPrint(1, myLanguage[language][42], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (radio.rds.filter) tftPrint(1, myLanguage[language][42], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (radio.rds.pierrors) tftPrint(1, myLanguage[language][42], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (af) tftPrint(1, myLanguage[language][42], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+
+      switch (af) {
+        case 0: tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case 1: tftPrint(1, myLanguage[language][42], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case 2: tftPrint(1, "AF REG", 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+      }
+
       if (radio.rds.rtbuffer) tftPrint(1, myLanguage[language][42], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (radio.rds.sortaf) tftPrint(1, myLanguage[language][42], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (radio.rds.fastps) tftPrint(1, myLanguage[language][42], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16);
@@ -1097,9 +1103,19 @@ void MenuUp() {
             break;
 
           case ITEM6:
-            if (af) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
-            if (af) af = false; else af = true;
-            if (af) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            switch (af) {
+              case 0: tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28); break;
+              case 1: tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); break;
+              case 2: tftPrint(0, "AF REG", 155, 118, BackgroundColor, BackgroundColor, 28); break;
+            }
+            af++;
+            if (af > 2) af = 0;
+
+            switch (af) {
+              case 0: tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 1: tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 2: tftPrint(0, "AF REG", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+            }
             break;
 
           case ITEM7:
@@ -1625,9 +1641,19 @@ void MenuDown() {
             break;
 
           case ITEM6:
-            if (af) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
-            if (af) af = false; else af = true;
-            if (af) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            switch (af) {
+              case 0: tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28); break;
+              case 1: tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); break;
+              case 2: tftPrint(0, "AF REG", 155, 118, BackgroundColor, BackgroundColor, 28); break;
+            }
+            af--;
+            if (af > 2) af = 2;
+
+            switch (af) {
+              case 0: tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 1: tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 2: tftPrint(0, "AF REG", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+            }
             break;
 
           case ITEM7:
@@ -2127,7 +2153,11 @@ void DoMenu() {
 
           case ITEM6:
             tftPrint(0, myLanguage[language][99], 155, 78, ActiveColor, ActiveColorSmooth, 28);
-            if (af) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            switch (af) {
+              case 0: tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 1: tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 2: tftPrint(0, "AF REG", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+            }
             break;
 
           case ITEM7:

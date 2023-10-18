@@ -577,6 +577,7 @@ typedef struct _rds_ {
   bool sortaf;
   bool fastps;
   bool rtbuffer = true;
+  bool afreg;
 } rds_;
 
 typedef struct _af_ {
