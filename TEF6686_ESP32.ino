@@ -2812,7 +2812,7 @@ void doBWtuneDown() {
   if (band < BAND_GAP) {
     if (BWset > 16) BWset = 16;
   } else {
-    if (BWset > 4) BWset = 4;
+    if (BWset == 0) BWset = 4;
   }
   doBW();
   ShowBW();
