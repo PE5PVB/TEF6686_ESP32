@@ -676,11 +676,321 @@ void TEF6686::readRDS(byte showrdserrors)
             if (rds.rdsC >> 12 == 0) {                                                          // ECC code readout
               rds.ECC = rds.rdsC & 0xff;
               rds.hasECC = true;
+
+              switch (rds.picode[0]) {
+                case '1': {
+                    if (rds.ECC == 160) rds.ECCtext = ECCtext[226];
+                    if (rds.ECC == 162) rds.ECCtext = ECCtext[129];
+                    if (rds.ECC == 163) rds.ECCtext = ECCtext[136];
+                    if (rds.ECC == 164) rds.ECCtext = ECCtext[152];
+                    if (rds.ECC == 208) rds.ECCtext = ECCtext[104];
+                    if (rds.ECC == 209) rds.ECCtext = ECCtext[73];
+                    if (rds.ECC == 210) rds.ECCtext = ECCtext[83];
+                    if (rds.ECC == 224) rds.ECCtext = ECCtext[0];
+                    if (rds.ECC == 225) rds.ECCtext = ECCtext[1];
+                    if (rds.ECC == 226) rds.ECCtext = ECCtext[2];
+                    if (rds.ECC == 227) rds.ECCtext = ECCtext[59];
+                    if (rds.ECC == 228) rds.ECCtext = ECCtext[3];
+                    if (rds.ECC == 240) rds.ECCtext = ECCtext[179];
+                    if (rds.ECC == 241) rds.ECCtext = ECCtext[197];
+                    if (rds.ECC == 242) rds.ECCtext = ECCtext[124];
+                    if (rds.ECC == 243) rds.ECCtext = ECCtext[200];
+                    break;
+                  }
+
+                case '2': {
+                    if (rds.ECC == 160) rds.ECCtext = ECCtext[226];
+                    if (rds.ECC == 162) rds.ECCtext = ECCtext[130];
+                    if (rds.ECC == 163) rds.ECCtext = ECCtext[141];
+                    if (rds.ECC == 164) rds.ECCtext = ECCtext[155];
+                    if (rds.ECC == 208) rds.ECCtext = ECCtext[106];
+                    if (rds.ECC == 209) rds.ECCtext = ECCtext[126];
+                    if (rds.ECC == 210) rds.ECCtext = ECCtext[95];
+                    if (rds.ECC == 224) rds.ECCtext = ECCtext[4];
+                    if (rds.ECC == 225) rds.ECCtext = ECCtext[5];
+                    if (rds.ECC == 226) rds.ECCtext = ECCtext[6];
+                    if (rds.ECC == 227) rds.ECCtext = ECCtext[7];
+                    if (rds.ECC == 228) rds.ECCtext = ECCtext[8];
+                    if (rds.ECC == 240) rds.ECCtext = ECCtext[180];
+                    if (rds.ECC == 241) rds.ECCtext = ECCtext[187];
+                    if (rds.ECC == 242) rds.ECCtext = ECCtext[77];
+                    if (rds.ECC == 243) rds.ECCtext = ECCtext[218];
+                    break;
+                  }
+
+                case '3': {
+                    if (rds.ECC == 160) rds.ECCtext = ECCtext[226];
+                    if (rds.ECC == 162) rds.ECCtext = ECCtext[224];
+                    if (rds.ECC == 163) rds.ECCtext = ECCtext[156];
+                    if (rds.ECC == 164) rds.ECCtext = ECCtext[132];
+                    if (rds.ECC == 208) rds.ECCtext = ECCtext[112];
+                    if (rds.ECC == 209) rds.ECCtext = ECCtext[119];
+                    if (rds.ECC == 210) rds.ECCtext = ECCtext[72];
+                    if (rds.ECC == 211) rds.ECCtext = ECCtext[92];
+                    if (rds.ECC == 224) rds.ECCtext = ECCtext[9];
+                    if (rds.ECC == 225) rds.ECCtext = ECCtext[10];
+                    if (rds.ECC == 226) rds.ECCtext = ECCtext[11];
+                    if (rds.ECC == 227) rds.ECCtext = ECCtext[12];
+                    if (rds.ECC == 228) rds.ECCtext = ECCtext[16];
+                    if (rds.ECC == 229) rds.ECCtext = ECCtext[63];
+                    if (rds.ECC == 240) rds.ECCtext = ECCtext[181];
+                    if (rds.ECC == 241) rds.ECCtext = ECCtext[227];
+                    if (rds.ECC == 242) rds.ECCtext = ECCtext[189];
+                    if (rds.ECC == 243) rds.ECCtext = ECCtext[219];
+                    break;
+                  }
+
+                case '4': {
+                    if (rds.ECC == 160) rds.ECCtext = ECCtext[226];
+                    if (rds.ECC == 162) rds.ECCtext = ECCtext[148];
+                    if (rds.ECC == 163) rds.ECCtext = ECCtext[157];
+                    if (rds.ECC == 208) rds.ECCtext = ECCtext[127];
+                    if (rds.ECC == 209) rds.ECCtext = ECCtext[69];
+                    if (rds.ECC == 210) rds.ECCtext = ECCtext[91];
+                    if (rds.ECC == 211) rds.ECCtext = ECCtext[103];
+                    if (rds.ECC == 224) rds.ECCtext = ECCtext[13];
+                    if (rds.ECC == 225) rds.ECCtext = ECCtext[14];
+                    if (rds.ECC == 226) rds.ECCtext = ECCtext[15];
+                    if (rds.ECC == 240) rds.ECCtext = ECCtext[182];
+                    if (rds.ECC == 241) rds.ECCtext = ECCtext[210];
+                    if (rds.ECC == 242) rds.ECCtext = ECCtext[213];
+                    break;
+                  }
+
+                case '5': {
+                    if (rds.ECC == 160) rds.ECCtext = ECCtext[226];
+                    if (rds.ECC == 162) rds.ECCtext = ECCtext[133];
+                    if (rds.ECC == 164) rds.ECCtext = ECCtext[159];
+                    if (rds.ECC == 208) rds.ECCtext = ECCtext[68];
+                    if (rds.ECC == 209) rds.ECCtext = ECCtext[79];
+                    if (rds.ECC == 210) rds.ECCtext = ECCtext[88];
+                    if (rds.ECC == 211) rds.ECCtext = ECCtext[78];
+                    if (rds.ECC == 224) rds.ECCtext = ECCtext[17];
+                    if (rds.ECC == 225) rds.ECCtext = ECCtext[18];
+                    if (rds.ECC == 226) rds.ECCtext = ECCtext[19];
+                    if (rds.ECC == 227) rds.ECCtext = ECCtext[65];
+                    if (rds.ECC == 240) rds.ECCtext = ECCtext[183];
+                    if (rds.ECC == 241) rds.ECCtext = ECCtext[191];
+                    if (rds.ECC == 242) rds.ECCtext = ECCtext[193];
+                    break;
+                  }
+
+                case '6': {
+                    if (rds.ECC == 160) rds.ECCtext = ECCtext[226];
+                    if (rds.ECC == 162) rds.ECCtext = ECCtext[134];
+                    if (rds.ECC == 163) rds.ECCtext = ECCtext[163];
+                    if (rds.ECC == 164) rds.ECCtext = ECCtext[171];
+                    if (rds.ECC == 208) rds.ECCtext = ECCtext[96];
+                    if (rds.ECC == 209) rds.ECCtext = ECCtext[105];
+                    if (rds.ECC == 210) rds.ECCtext = ECCtext[123];
+                    if (rds.ECC == 211) rds.ECCtext = ECCtext[125];
+                    if (rds.ECC == 224) rds.ECCtext = ECCtext[20];
+                    if (rds.ECC == 225) rds.ECCtext = ECCtext[21];
+                    if (rds.ECC == 226) rds.ECCtext = ECCtext[22];
+                    if (rds.ECC == 228) rds.ECCtext = ECCtext[24];
+                    if (rds.ECC == 240) rds.ECCtext = ECCtext[184];
+                    if (rds.ECC == 241) rds.ECCtext = ECCtext[76];
+                    if (rds.ECC == 242) rds.ECCtext = ECCtext[201];
+                    break;
+                  }
+
+                case '7': {
+                    if (rds.ECC == 160) rds.ECCtext = ECCtext[226];
+                    if (rds.ECC == 162) rds.ECCtext = ECCtext[139];
+                    if (rds.ECC == 163) rds.ECCtext = ECCtext[161];
+                    if (rds.ECC == 164) rds.ECCtext = ECCtext[164];
+                    if (rds.ECC == 208) rds.ECCtext = ECCtext[113];
+                    if (rds.ECC == 209) rds.ECCtext = ECCtext[81];
+                    if (rds.ECC == 210) rds.ECCtext = ECCtext[84];
+                    if (rds.ECC == 224) rds.ECCtext = ECCtext[25];
+                    if (rds.ECC == 225) rds.ECCtext = ECCtext[26];
+                    if (rds.ECC == 226) rds.ECCtext = ECCtext[27];
+                    if (rds.ECC == 228) rds.ECCtext = ECCtext[62];
+                    if (rds.ECC == 240) rds.ECCtext = ECCtext[185];
+                    if (rds.ECC == 241) rds.ECCtext = ECCtext[207];
+                    if (rds.ECC == 242) rds.ECCtext = ECCtext[221];
+                    break;
+                  }
+
+                case '8': {
+                    if (rds.ECC == 160) rds.ECCtext = ECCtext[226];
+                    if (rds.ECC == 162) rds.ECCtext = ECCtext[142];
+                    if (rds.ECC == 164) rds.ECCtext = ECCtext[170];
+                    if (rds.ECC == 208) rds.ECCtext = ECCtext[116];
+                    if (rds.ECC == 209) rds.ECCtext = ECCtext[117];
+                    if (rds.ECC == 210) rds.ECCtext = ECCtext[74];
+                    if (rds.ECC == 211) rds.ECCtext = ECCtext[82];
+                    if (rds.ECC == 224) rds.ECCtext = ECCtext[28];
+                    if (rds.ECC == 225) rds.ECCtext = ECCtext[29];
+                    if (rds.ECC == 226) rds.ECCtext = ECCtext[30];
+                    if (rds.ECC == 227) rds.ECCtext = ECCtext[31];
+                    if (rds.ECC == 228) rds.ECCtext = ECCtext[32];
+                    if (rds.ECC == 240) rds.ECCtext = ECCtext[186];
+                    if (rds.ECC == 241) rds.ECCtext = ECCtext[195];
+                    if (rds.ECC == 242) rds.ECCtext = ECCtext[212];
+                    if (rds.ECC == 243) rds.ECCtext = ECCtext[190];
+                    break;
+                  }
+
+                case '9': {
+                    if (rds.ECC == 160) rds.ECCtext = ECCtext[226];
+                    if (rds.ECC == 162) rds.ECCtext = ECCtext[143];
+                    if (rds.ECC == 163) rds.ECCtext = ECCtext[162];
+                    if (rds.ECC == 164) rds.ECCtext = ECCtext[174];
+                    if (rds.ECC == 208) rds.ECCtext = ECCtext[120];
+                    if (rds.ECC == 209) rds.ECCtext = ECCtext[102];
+                    if (rds.ECC == 210) rds.ECCtext = ECCtext[107];
+                    if (rds.ECC == 224) rds.ECCtext = ECCtext[33];
+                    if (rds.ECC == 225) rds.ECCtext = ECCtext[34];
+                    if (rds.ECC == 226) rds.ECCtext = ECCtext[35];
+                    if (rds.ECC == 227) rds.ECCtext = ECCtext[36];
+                    if (rds.ECC == 228) rds.ECCtext = ECCtext[37];
+                    if (rds.ECC == 240) rds.ECCtext = ECCtext[80];
+                    if (rds.ECC == 241) rds.ECCtext = ECCtext[209];
+                    if (rds.ECC == 242) rds.ECCtext = ECCtext[196];
+                    if (rds.ECC == 243) rds.ECCtext = ECCtext[211];
+                    if (rds.ECC == 244) rds.ECCtext = ECCtext[190];
+                    break;
+                  }
+
+                case 'A': {
+                    if (rds.ECC == 160) rds.ECCtext = ECCtext[226];
+                    if (rds.ECC == 162) rds.ECCtext = ECCtext[131];
+                    if (rds.ECC == 163) rds.ECCtext = ECCtext[144];
+                    if (rds.ECC == 164) rds.ECCtext = ECCtext[166];
+                    if (rds.ECC == 208) rds.ECCtext = ECCtext[85];
+                    if (rds.ECC == 209) rds.ECCtext = ECCtext[97];
+                    if (rds.ECC == 210) rds.ECCtext = ECCtext[121];
+                    if (rds.ECC == 211) rds.ECCtext = ECCtext[70];
+                    if (rds.ECC == 212) rds.ECCtext = ECCtext[86];
+                    if (rds.ECC == 224) rds.ECCtext = ECCtext[38];
+                    if (rds.ECC == 225) rds.ECCtext = ECCtext[39];
+                    if (rds.ECC == 226) rds.ECCtext = ECCtext[40];
+                    if (rds.ECC == 227) rds.ECCtext = ECCtext[41];
+                    if (rds.ECC == 228) rds.ECCtext = ECCtext[60];
+                    if (rds.ECC == 240) rds.ECCtext = ECCtext[178];
+                    if (rds.ECC == 241) rds.ECCtext = ECCtext[215];
+                    if (rds.ECC == 242) rds.ECCtext = ECCtext[214];
+                    break;
+                  }
+
+                case 'B': {
+                    if (rds.ECC == 160) rds.ECCtext = ECCtext[226];
+                    if (rds.ECC == 161) rds.ECCtext = ECCtext[138];
+                    if (rds.ECC == 162) rds.ECCtext = ECCtext[137];
+                    if (rds.ECC == 163) rds.ECCtext = ECCtext[145];
+                    if (rds.ECC == 164) rds.ECCtext = ECCtext[167];
+                    if (rds.ECC == 165) rds.ECCtext = ECCtext[158];
+                    if (rds.ECC == 208) rds.ECCtext = ECCtext[101];
+                    if (rds.ECC == 210) rds.ECCtext = ECCtext[109];
+                    if (rds.ECC == 209) rds.ECCtext = ECCtext[100];
+                    if (rds.ECC == 224) rds.ECCtext = ECCtext[42];
+                    if (rds.ECC == 225) rds.ECCtext = ECCtext[43];
+                    if (rds.ECC == 226) rds.ECCtext = ECCtext[44];
+                    if (rds.ECC == 227) rds.ECCtext = ECCtext[61];
+                    if (rds.ECC == 228) rds.ECCtext = ECCtext[66];
+                    if (rds.ECC == 240) rds.ECCtext = ECCtext[206];
+                    if (rds.ECC == 241) rds.ECCtext = ECCtext[188];
+                    if (rds.ECC == 242) rds.ECCtext = ECCtext[203];
+                    if (rds.ECC == 243) rds.ECCtext = ECCtext[93];
+                    if (rds.ECC == 244) rds.ECCtext = ECCtext[204];
+                    break;
+                  }
+
+                case 'C': {
+                    if (rds.ECC == 161) rds.ECCtext = ECCtext[138];
+                    if (rds.ECC == 162) rds.ECCtext = ECCtext[223];
+                    if (rds.ECC == 163) rds.ECCtext = ECCtext[140];
+                    if (rds.ECC == 164) rds.ECCtext = ECCtext[146];
+                    if (rds.ECC == 165) rds.ECCtext = ECCtext[169];
+                    if (rds.ECC == 208) rds.ECCtext = ECCtext[110];
+                    if (rds.ECC == 209) rds.ECCtext = ECCtext[108];
+                    if (rds.ECC == 210) rds.ECCtext = ECCtext[111];
+                    if (rds.ECC == 211) rds.ECCtext = ECCtext[87];
+                    if (rds.ECC == 224) rds.ECCtext = ECCtext[45];
+                    if (rds.ECC == 225) rds.ECCtext = ECCtext[46];
+                    if (rds.ECC == 226) rds.ECCtext = ECCtext[47];
+                    if (rds.ECC == 227) rds.ECCtext = ECCtext[48];
+                    if (rds.ECC == 228) rds.ECCtext = ECCtext[118];
+                    if (rds.ECC == 240) rds.ECCtext = ECCtext[190];
+                    if (rds.ECC == 241) rds.ECCtext = ECCtext[216];
+                    if (rds.ECC == 242) rds.ECCtext = ECCtext[194];
+                    break;
+                  }
+
+                case 'D': {
+                    if (rds.ECC == 160) rds.ECCtext = ECCtext[226];
+                    if (rds.ECC == 161) rds.ECCtext = ECCtext[138];
+                    if (rds.ECC == 162) rds.ECCtext = ECCtext[225];
+                    if (rds.ECC == 163) rds.ECCtext = ECCtext[150];
+                    if (rds.ECC == 164) rds.ECCtext = ECCtext[154];
+                    if (rds.ECC == 165) rds.ECCtext = ECCtext[158];
+                    if (rds.ECC == 208) rds.ECCtext = ECCtext[90];
+                    if (rds.ECC == 209) rds.ECCtext = ECCtext[89];
+                    if (rds.ECC == 224) rds.ECCtext = ECCtext[0];
+                    if (rds.ECC == 225) rds.ECCtext = ECCtext[49];
+                    if (rds.ECC == 226) rds.ECCtext = ECCtext[23];
+                    if (rds.ECC == 227) rds.ECCtext = ECCtext[122];
+                    if (rds.ECC == 240) rds.ECCtext = ECCtext[198];
+                    if (rds.ECC == 241) rds.ECCtext = ECCtext[217];
+                    if (rds.ECC == 242) rds.ECCtext = ECCtext[128];
+                    break;
+                  }
+
+                case 'E': {
+                    if (rds.ECC == 160) rds.ECCtext = ECCtext[226];
+                    if (rds.ECC == 161) rds.ECCtext = ECCtext[138];
+                    if (rds.ECC == 162) rds.ECCtext = ECCtext[151];
+                    if (rds.ECC == 163) rds.ECCtext = ECCtext[172];
+                    if (rds.ECC == 164) rds.ECCtext = ECCtext[175];
+                    if (rds.ECC == 165) rds.ECCtext = ECCtext[158];
+                    if (rds.ECC == 208) rds.ECCtext = ECCtext[99];
+                    if (rds.ECC == 209) rds.ECCtext = ECCtext[115];
+                    if (rds.ECC == 210) rds.ECCtext = ECCtext[94];
+                    if (rds.ECC == 224) rds.ECCtext = ECCtext[50];
+                    if (rds.ECC == 225) rds.ECCtext = ECCtext[51];
+                    if (rds.ECC == 226) rds.ECCtext = ECCtext[52];
+                    if (rds.ECC == 227) rds.ECCtext = ECCtext[53];
+                    if (rds.ECC == 228) rds.ECCtext = ECCtext[64];
+                    if (rds.ECC == 240) rds.ECCtext = ECCtext[98];
+                    if (rds.ECC == 241) rds.ECCtext = ECCtext[199];
+                    if (rds.ECC == 242) rds.ECCtext = ECCtext[208];
+                    if (rds.ECC == 243) rds.ECCtext = ECCtext[205];
+                    break;
+                  }
+
+                case 'F': {
+                    if (rds.ECC == 161) rds.ECCtext = ECCtext[149];
+                    if (rds.ECC == 162) rds.ECCtext = ECCtext[222];
+                    if (rds.ECC == 163) rds.ECCtext = ECCtext[153];
+                    if (rds.ECC == 164) rds.ECCtext = ECCtext[176];
+                    if (rds.ECC == 165) rds.ECCtext = ECCtext[158];
+                    if (rds.ECC == 166) rds.ECCtext = ECCtext[168];
+                    if (rds.ECC == 208) rds.ECCtext = ECCtext[67];
+                    if (rds.ECC == 209) rds.ECCtext = ECCtext[75];
+                    if (rds.ECC == 210) rds.ECCtext = ECCtext[114];
+                    if (rds.ECC == 224) rds.ECCtext = ECCtext[54];
+                    if (rds.ECC == 225) rds.ECCtext = ECCtext[55];
+                    if (rds.ECC == 226) rds.ECCtext = ECCtext[56];
+                    if (rds.ECC == 227) rds.ECCtext = ECCtext[57];
+                    if (rds.ECC == 228) rds.ECCtext = ECCtext[58];
+                    if (rds.ECC == 240) rds.ECCtext = ECCtext[202];
+                    if (rds.ECC == 241) rds.ECCtext = ECCtext[192];
+                    if (rds.ECC == 242) rds.ECCtext = ECCtext[220];
+                    if (rds.ECC == 243) rds.ECCtext = ECCtext[71];
+                    break;
+                  }
+                default: {
+                    rds.ECCtext = "";
+                    break;
+                  }
+              }
             }
 
             if (rds.rdsC >> 12 == 3) {                                                          // LIC code readout
               rds.LIC = rds.rdsC & 0xff;
               rds.hasLIC = true;
+              if (rds.LIC > 0 && rds.LIC < 128) rds.LICtext = LICtext[rds.LIC]; else rds.LICtext = "";
             }
           }
 
@@ -1000,31 +1310,37 @@ void TEF6686::readRDS(byte showrdserrors)
 void TEF6686::clearRDS (bool fullsearchrds)
 {
   devTEF_Radio_Set_RDS(fullsearchrds);
-  uint8_t i;
   rds.stationName = "";
   rds.stationText = "";
   rds.stationText32 = "";
   rds.RTContent1 = "";
   rds.RTContent2 = "";
   rds.PTYN = "";
+  rds.ECCtext = "";
+  rds.LICtext = "";
 
+  ps_buffer[8] = 0;
+  ptyn_buffer[8] = 0;
+  PStext[8] = L'\0';
+  PTYNtext[8] = L'\0';
+
+  uint8_t i;
   for (i = 0; i < 8; i++) {
     ps_buffer[i] = 0x20;
     PStext[i] = L'\0';
     ptyn_buffer[i] = 0x20;
     PTYNtext[i] = L'\0';
   }
-  ps_buffer[8] = 0;
-  ptyn_buffer[8] = 0;
-  PStext[8] = L'\0';
-  PTYNtext[8] = L'\0';
 
   for (i = 0; i < 64; i++) rt_buffer[i] = 0x20;
   rt_buffer[64] = 0;
+
   for (i = 0; i < 32; i++) rt_buffer32[i] = 0x20;
   rt_buffer32[32] = 0;
+
   for (i = 0; i < 17; i++) rds.stationType[i] = 0x20;
   rds.stationType[17] = 0;
+
   for (i = 0; i < 6; i++) rds.picode[i] = 0x20;
   rds.picode[6] = 0;
 

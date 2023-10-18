@@ -534,6 +534,8 @@ typedef struct _rds_ {
   String RTContent1;
   String RTContent2;
   String PTYN;
+  String ECCtext;
+  String LICtext;
   char stationType[18];
   char picode[7];
   uint16_t hour, minute, day, month, year, rdsA, rdsB, rdsC, rdsD, rdsErr, rdsStat, correctPI, rdsplusTag1, rdsplusTag2;
