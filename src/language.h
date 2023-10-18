@@ -485,14 +485,14 @@ static const char* const myLanguage[17][206] = {
     "Reduktor szumow FM", // 65
     "Zaladowano domyslne", // 66
     "Wyjscie dzwieku", // 67
-    "Allow tuning during screensaver", // 68
+    "Stroj. gdy ekran wyl.", // 68
     "Odwroc kolory wyswietlacza", // 69
     "O oprogramowaniu", // 70
     "Glowny kod:", // 71
     "Wspoltworcy:", // 72
     "Nieznany", // 73
-    "Screensaver options", // 74
-    "Time-out timer", // 75
+    "Opcje wygaszacza", // 74
+    "Wylacznik czasowy", // 75
     "Wylacz ekran", // 76
     "Motyw", // 77
     "Domyslny", // 78
