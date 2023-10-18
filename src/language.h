@@ -1055,34 +1055,34 @@ static const char* const myLanguage[17][206] = {
     "Convertor:", // 11
     "Limita inferioară a benzii:", // 12
     "Limita superioară a benzii:", // 13
-    "FM offset ptr. nivel RF:", // 14
+    "FM decalaj nivel RF:", // 14
     "Prag ptr. Stereo :", // 15
-    "Limită tăiere inalte:", // 16
-    "Prag tăiere inalte:", // 17
+    "Limită tăiere înalte:", // 16
+    "Prag tăiere înalte:", // 17
     "Prag tăiere joase:", // 18
     "Contrast:", // 19
     "Setează volum", // 20
-    "Setează offset ptr convertor ", // 21
+    "Setează decalaj convertor", // 21
     "Setează marginea de jos a benzii", // 22
     "Setează marginea de sus a benzii", // 23
-    "Setează nivel offset", // 24
+    "Setează nivel decalaj", // 24
     "Setează prag separare Stereo", // 25
-    "Setează limita de sus inalte", // 26
-    "Setează prag taiere inalte", // 27
+    "Setează limita de sus înalte", // 26
+    "Setează prag tăiere înalte", // 27
     "Setează pragul nivelului de jos", // 28
-    "Setează luminozitatea ptr. ecran", // 29
+    "Setează luminozitatea ecran", // 29
     "Oprit", // 30
     "Ecran oprit", // 31
-    "Ptr a porni debifați RF+ box", // 32
+    "Pentru pornire debifați RF+", // 32
     "OPRIT", // 33
     "Scanare...", // 34
     "Tunerul nu este detectat", // 35
     "Versiune Tuner: v", // 36
-    "Vă rog restartați tuner", // 37
+    "Vă rog restartați radioul", // 37
     "Arată erorile RDS", // 38
     "Limbă", // 39
     "Alege Limba", // 40
-    "Apasa MODE ptr salvare și ieșire", // 41
+    "Apasă MODE ptr salvare și ieșire", // 41
     "Pornit", // 42
     "FM fără sonor", // 43
     "AM fără sonor", // 44
@@ -1109,7 +1109,7 @@ static const char* const myLanguage[17][206] = {
     "Eliminare zgomot FM", // 65
     "Incărcare valori implicite", // 66
     "Ieșire audio ", // 67
-    "Allow tuning during screensaver", // 68
+    "Reglare cu economizor ecran pornit", // 68
     "Arată culorile inversate", // 69
     "Despre soft", // 70
     "Despre cod:", // 71
@@ -1149,7 +1149,7 @@ static const char* const myLanguage[17][206] = {
     "FM", // 105
     "OIRT", // 106
     "Rotire cand ecranul este oprit", // 107
-    "Model selector", // 108
+    "Model ecran", // 108
     "Bază (ILI9341)", // 109
     "Portabil (ILI9341)", // 110
     "Portabil tactil (ILI9341)", // 111
@@ -1157,7 +1157,7 @@ static const char* const myLanguage[17][206] = {
     "Album", // 113
     "Piesă", // 114
     "Artist", // 115
-    "Compozitie", // 116
+    "Compoziție", // 116
     "Deplasare", // 117
     "Dirijor", // 118
     "Compozitor", // 119
@@ -1182,7 +1182,7 @@ static const char* const myLanguage[17][206] = {
     "Alarma", // 138
     "Avertisment", // 139
     "Website", // 140
-    "Other", // 141
+    "Altceva", // 141
     "Scurt PS", // 142
     "Lung PS", // 143
     "Acum", // 144
@@ -1214,7 +1214,7 @@ static const char* const myLanguage[17][206] = {
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
-    "Optiuni baterie", // 173
+    "Opțiuni baterie", // 173
     "Arată voltajul", // 174
     "Arată procentele", // 175
     "Stocare RT", // 176
@@ -1226,10 +1226,10 @@ static const char* const myLanguage[17][206] = {
     "Setări AM", // 182
     "Conectivitate", // 183
     "Apasă MODE pentru ieșire", // 184
-    "AM CoChannelDet", // 185
+    "AM detectare CoChannelDet", // 185
     "Sensibilitate CoChannelDet", // 186
     "Pragul AM CoChannelDet", // 187
-    "CoChannelDet counter", // 188
+    "CoChannelDet opus", // 188
     "PRINCIPAL", // 189
     "AUDIO", // 190
     "ECRAN", // 191
@@ -1240,7 +1240,7 @@ static const char* const myLanguage[17][206] = {
     "Sortare auto AF", // 196
     "Listă rețele ID", // 197
     "AM ATT", // 198
-    "FM deemphasis", // 199
+    "Deaccentuare FM", // 199
     "Mic", // 200
     "Mare", // 201
     "Toate", // 202
