@@ -54,6 +54,7 @@ bool batterydetect = true;
 bool beepresetstart;
 bool beepresetstop;
 bool BWreset;
+bool BWtune;
 bool change;
 bool compressedold;
 bool direction;
@@ -886,13 +887,14 @@ void loop() {
         rotary = 0;
         WakeToSleep(REVERSE);
       } else {
-        KeyUp();
+        if (BWtune) doBWtuneUp(); else KeyUp();
       }
     } else {
-      KeyUp();
+      if (BWtune) doBWtuneUp(); else KeyUp();
       if (screensaverset && !menu && !screensavertriggered) ScreensaverTimerRestart();
     }
   }
+
   if (rotary == 1) {
     tottimer = millis();
     if (screensavertriggered) {
@@ -900,10 +902,10 @@ void loop() {
         rotary = 0;
         WakeToSleep(REVERSE);
       } else {
-        KeyDown();
+        if (BWtune) doBWtuneDown(); else KeyDown();
       }
     } else {
-      KeyDown();
+      if (BWtune) doBWtuneDown(); else KeyDown();
       if (screensaverset && !menu && !screensavertriggered) ScreensaverTimerRestart();
     }
   }
@@ -920,7 +922,9 @@ void loop() {
     if (!screenmute) ModeButtonPress();
   }
 
-  if (digitalRead(BWBUTTON) == LOW) {
+  if (digitalRead(BWBUTTON) == HIGH && BWtune) BWtune = false;
+
+  if (digitalRead(BWBUTTON) == LOW && !BWtune) {
     tottimer = millis();
     if (screensavertriggered && !touchrotating) WakeToSleep(REVERSE);
     if (!screenmute && !afscreen) BWButtonPress();
@@ -1693,18 +1697,17 @@ void BWButtonPress() {
     while (digitalRead(BWBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
 
     if (counter - counterold < 1000) {
+      doStereoToggle();
+    } else {
       BWset++;
       doBW();
-    } else {
-      doStereoToggle();
+      BWtune = true;
     }
     if (screensaverset) {
       ScreensaverTimerRestart();
     }
+    delay(100);
   }
-
-  while (digitalRead(BWBUTTON) == LOW) delay(50);
-  delay(100);
 }
 
 void doStereoToggle() {
@@ -2528,10 +2531,10 @@ void ShowOffset() {
 }
 
 void ShowBW() {
-  if (millis() >= bwupdatetimer + TIMER_BW_TIMER) {
+  if (!BWtune && millis() >= bwupdatetimer + TIMER_BW_TIMER) {
     bwupdatetimer = millis();
   } else {
-    return;
+    if (!BWtune) return;
   }
 
   if (BW != BWOld || BWreset) {
@@ -2801,6 +2804,30 @@ void doBW() {
   updateBW();
   BWreset = true;
   EEPROM.commit();
+}
+
+void doBWtuneDown() {
+  rotary = 0;
+  BWset--;
+  if (band < BAND_GAP) {
+    if (BWset > 16) BWset = 16;
+  } else {
+    if (BWset > 4) BWset = 4;
+  }
+  doBW();
+  ShowBW();
+}
+
+void doBWtuneUp() {
+  rotary = 0;
+  BWset++;
+  if (band < BAND_GAP) {
+    if (BWset > 16) BWset = 0;
+  } else {
+    if (BWset > 4) BWset = 1;
+  }
+  doBW();
+  ShowBW();
 }
 
 void doTuneMode() {
