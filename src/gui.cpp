@@ -1984,7 +1984,7 @@ void DoMenu() {
             tftPrint(1, "NoobishSVK", 145, 143, PrimaryColor, PrimaryColorSmooth, 16);
             tftPrint(-1, "yo2ldk", 155, 128, PrimaryColor, PrimaryColorSmooth, 16);
             tftPrint(-1, "Justin_Peng(Portable)", 155, 143, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "mx4zxc", 145, 158, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "Overland DX", 145, 158, PrimaryColor, PrimaryColorSmooth, 16);
             tftPrint(-1, "elektronik232", 155, 158, PrimaryColor, PrimaryColorSmooth, 16);
             tftPrint(1, "KOTYA8", 145, 173, PrimaryColor, PrimaryColorSmooth, 16);
             tftPrint(-1, "mrwish7", 155, 173, PrimaryColor, PrimaryColorSmooth, 16);
