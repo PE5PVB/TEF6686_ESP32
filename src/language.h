@@ -1457,7 +1457,7 @@ static const char* const myLanguage[17][206] = {
     "Min." // 205
   },
 
-  { "Czech", // Czech
+  { "Český", // Czech
     "Směr enkóderu byl změněn", // 1
     "Prosím, pusťte tlačítko", // 2
     "Obrazovka otočena", // 3
@@ -1507,35 +1507,35 @@ static const char* const myLanguage[17][206] = {
     "Evropa", // 47
     "USA", // 48
     "Zobrazit podtržítka v RDS", // 49
-    "USB mode", // 50
+    "USB mód", // 50
     "Wi-Fi active", // 51
-    "Configure Wi-Fi", // 52
-    "Connect to: ", // 53
-    "to configure Wi-Fi", // 54
-    "Trying to connect Wi-Fi", // 55
-    "FAILED!", // 56
-    "CONNECTED!", // 57
-    "Stationlist client IP", // 58
-    "Show SW wavelength", // 59
+    "Konfigurace Wi-Fi", // 52
+    "Připojte se k: ", // 53
+    "pro nakonfigurování Wi-Fi", // 54
+    "Wi-Fi připojení probíhá...", // 55
+    "NEPŘIPOJENO!", // 56
+    "PŘIPOJENO!", // 57
+    "Stationlist IP", // 58
+    "Zobrazit SW pásmo", // 59
     "RDS filter", // 60
-    "Show PI errors", // 61
-    "Show squelch", // 62
-    "Modulation meter", // 63
-    "AM Noise blanker", // 64
-    "FM Noise blanker", // 65
-    "Defaults loaded", // 66
-    "Audio output", // 67
-    "Allow tuning during screensaver", // 68
-    "Display color invert", // 69
-    "About software", // 70
-    "Main code:", // 71
-    "Contributors:", // 72
-    "Unknown", // 73
-    "Screensaver options", // 74
-    "Time-out timer", // 75
-    "Screen off", // 76
-    "Theme", // 77
-    "Default", // 78
+    "Zobrazit chyby v PI", // 61
+    "Zobrazit squelch", // 62
+    "Graf modulace", // 63
+    "Tlumič šumu (AM)", // 64
+    "Tlumič šumu (FM)", // 65
+    "Výchozí hodnoty načteny", // 66
+    "Zvukový výstup", // 67
+    "Povolit ladění přes šetřic", // 68
+    "Invertování barev", // 69
+    "O softvéru", // 70
+    "Hlavní kód:", // 71
+    "Přispěli:", // 72
+    "Neznámý", // 73
+    "Nastavení šetřiče obrazovky", // 74
+    "Čas", // 75
+    "Vypnutí obrazovky", // 76
+    "Vzhled", // 77
+    "Výchozí", // 78
     "Cyan", // 79
     "Crimson", // 80
     "Monochrome", // 81
@@ -1543,32 +1543,32 @@ static const char* const myLanguage[17][206] = {
     "Dendro", // 83
     "Sakura", // 84
     "Whiteout", // 85
-    "NOT POSSIBLE", // 86
-    "No AF available", // 87
-    "No EON available", // 88
-    "No RT+ available", // 89
-    "FM min stepsize", // 90
-    "Screensaver", // 91
-    "Sec", // 92
-    "PRESS BAND TO CLOSE", // 93
-    "1% brightness", // 94
-    "25% brightness", // 95
-    "50% brightness", // 96
-    "AM RF Level offset:", // 97
-    "Signalmeter unit:", // 98
-    "Use AF:", // 99
-    "Select FM Band:", // 100
-    "Select AM Band:", // 101
+    "ODPOJTE USB", // 86
+    "AF nedostupné", // 87
+    "EON nedostupný", // 88
+    "RT+ nedostupný", // 89
+    "Krokování FM", // 90
+    "Šetřič obrazovky", // 91
+    "Sekund", // 92
+    "ZMÁČKNĚTE BAND PRO ZAVŘENÍ", // 93
+    "1% jas", // 94
+    "25% jas", // 95
+    "50% jas", // 96
+    "AM Offset signálu:", // 97
+    "Jednotka signálu:", // 98
+    "AF:", // 99
+    "Zvolte FM pásmo:", // 100
+    "Zvolte AM pásmo:", // 101
     "LW", // 102
     "MW", // 103
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
     "Rotating while screen off", // 107
-    "Model selector", // 108
-    "Base (ILI9341)", // 109
-    "Portable (ILI9341)", // 110
-    "Portable touch (ILI9341)", // 111
+    "Volba modelu", // 108
+    "Základ (ILI9341)", // 109
+    "Přenosný (ILI9341)", // 110
+    "Přenosný - dotykový (ILI9341)", // 111
     "Title", // 112
     "Album", // 113
     "Track", // 114
@@ -1630,42 +1630,42 @@ static const char* const myLanguage[17][206] = {
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
-    "Battery options", // 173
-    "Show voltage", // 174
-    "Show percentage", // 175
-    "RT buffering", // 176
-    "Main settings", // 177
-    "Audio settings", // 178
-    "Display settings", // 179
-    "RDS settings", // 180
-    "FM settings", // 181
-    "AM settings", // 182
-    "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "Nastavení baterie", // 173
+    "Zobrazit napětí", // 174
+    "Zobrazit procenta", // 175
+    "RT načítaní", // 176
+    "Hlavní nastavení", // 177
+    "Nastavení zvuku", // 178
+    "Nastavení displeje", // 179
+    "Nastavení RDS", // 180
+    "Nastavení FM pásma", // 181
+    "Nastavení AM pásma", // 182
+    "Konektivita", // 183
+    "ZMÁČKNĚTE MODE PRO VRÁCENÍ", // 184
     "AM CoChannelDet", // 185
-    "CoChannelDet sensitivity", // 186
-    "AM CoChannelDet threshold", // 187
-    "CoChannelDet counter", // 188
-    "MAIN", // 189
-    "AUDIO", // 190
-    "DISPLAY", // 191
+    "Citlivost CoChannelDet", // 186
+    "Práh AM CoChannelDet", // 187
+    "CoChannelDet počítadlo", // 188
+    "HLAVNÍ", // 189
+    "ZVUK", // 190
+    "DISPLEJ", // 191
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT", // 195
-    "Auto sort AF", // 196
+    "PŘIPOJENÍ", // 195
+    "Auto řazení AF", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
     "FM deemphasis", // 199
-    "Small", // 200
-    "Large", // 201
-    "All", // 202
-    "Fast PS", // 203
-    "Detected applications", // 204
+    "Malý", // 200
+    "Velký", // 201
+    "Vše", // 202
+    "Rychlé načtení PS", // 203
+    "Detekované aplikace", // 204
     "Min." // 205
   },
 
-  { "Slovak", // Slovak
+  { "Slovenský", // Slovak
     "Smer enkóderu bol zmenený", // 1
     "Prosím, pusťte tlačidlo", // 2
     "Obrazovka otočená", // 3
@@ -1715,35 +1715,35 @@ static const char* const myLanguage[17][206] = {
     "Európa", // 47
     "USA", // 48
     "Zobraziť podtržítka v RDS", // 49
-    "USB mode", // 50
+    "USB mód", // 50
     "Wi-Fi active", // 51
-    "Configure Wi-Fi", // 52
-    "Connect to: ", // 53
-    "to configure Wi-Fi", // 54
-    "Trying to connect Wi-Fi", // 55
-    "FAILED!", // 56
-    "CONNECTED!", // 57
-    "Stationlist client IP", // 58
-    "Show SW wavelength", // 59
+    "Konfigurace Wi-Fi", // 52
+    "Pripojte sa k: ", // 53
+    "pre nakonfigurovánie Wi-Fi", // 54
+    "Wi-Fi pripojenie prebieha...", // 55
+    "NEPRIPOJENÉ!", // 56
+    "PRIPOJENÉ!", // 57
+    "Stationlist IP", // 58
+    "Zobraziť SW pásmo", // 59
     "RDS filter", // 60
-    "Show PI errors", // 61
-    "Show squelch", // 62
-    "Modulation meter", // 63
-    "AM Noise blanker", // 64
-    "FM Noise blanker", // 65
-    "Defaults loaded", // 66
-    "Audio output", // 67
-    "Allow tuning during screensaver", // 68
-    "Display color invert", // 69
-    "About software", // 70
-    "Main code:", // 71
-    "Contributors:", // 72
-    "Unknown", // 73
-    "Screensaver options", // 74
-    "Time-out timer", // 75
-    "Screen off", // 76
-    "Theme", // 77
-    "Default", // 78
+    "Zobraziť chyby v PI", // 61
+    "Zobraziť squelch", // 62
+    "Graf modulácie", // 63
+    "Utlmenie šumu (AM)", // 64
+    "Utlmenie šumu (FM)", // 65
+    "Východzie hodnoty načítané", // 66
+    "Zvukový výstup", // 67
+    "Povolit ladenie počas šetriča", // 68
+    "Invertovanie farieb", // 69
+    "O softvéri", // 70
+    "Hlavný kód:", // 71
+    "Prispeli:", // 72
+    "Neznámy", // 73
+    "Nastavenia šetriča obrazovky", // 74
+    "Čas", // 75
+    "Vypnutie obrazovky", // 76
+    "Vzhľad", // 77
+    "Východzí", // 78
     "Cyan", // 79
     "Crimson", // 80
     "Monochrome", // 81
@@ -1751,32 +1751,32 @@ static const char* const myLanguage[17][206] = {
     "Dendro", // 83
     "Sakura", // 84
     "Whiteout", // 85
-    "NOT POSSIBLE", // 86
-    "No AF available", // 87
-    "No EON available", // 88
-    "No RT+ available", // 89
-    "FM min stepsize", // 90
-    "Screensaver", // 91
-    "Sec", // 92
-    "PRESS BAND TO CLOSE", // 93
-    "1% brightness", // 94
-    "25% brightness", // 95
-    "50% brightness", // 96
-    "AM RF Level offset:", // 97
-    "Signalmeter unit:", // 98
-    "Use AF:", // 99
-    "Select FM Band:", // 100
-    "Select AM Band:", // 101
+    "ODPOJTE USB", // 86
+    "AF nedostupné", // 87
+    "EON nedostupný", // 88
+    "RT+ nedostupný", // 89
+    "Krokovanie FM", // 90
+    "Šetrič obrazovky", // 91
+    "Sekúnd", // 92
+    "STLAČTE BAND PRE UZAVRETIE", // 93
+    "1% jas", // 94
+    "25% jas", // 95
+    "50% jas", // 96
+    "AM Offset signálu:", // 97
+    "Jednotka signálu:", // 98
+    "AF:", // 99
+    "Zvoľte FM pásmo:", // 100
+    "Zvoľte AM pásmo:", // 101
     "LW", // 102
     "MW", // 103
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
     "Rotating while screen off", // 107
-    "Model selector", // 108
-    "Base (ILI9341)", // 109
-    "Portable (ILI9341)", // 110
-    "Portable touch (ILI9341)", // 111
+    "Voľba modelu", // 108
+    "Základ (ILI9341)", // 109
+    "Prenosný (ILI9341)", // 110
+    "Prenosný - dotykový (ILI9341)", // 111
     "Title", // 112
     "Album", // 113
     "Track", // 114
@@ -1838,38 +1838,38 @@ static const char* const myLanguage[17][206] = {
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
-    "Battery options", // 173
-    "Show voltage", // 174
-    "Show percentage", // 175
-    "RT buffering", // 176
-    "Main settings", // 177
-    "Audio settings", // 178
-    "Display settings", // 179
-    "RDS settings", // 180
-    "FM settings", // 181
-    "AM settings", // 182
-    "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "Nastavenia batérie", // 173
+    "Zobraziť napätie", // 174
+    "Zobraziť percentá", // 175
+    "RT načítanie", // 176
+    "Hlavné nastavenia", // 177
+    "Nastavenia zvuku", // 178
+    "Nastavenia displeja", // 179
+    "Nastavenia RDS", // 180
+    "Nastavenia FM pásma", // 181
+    "Nastavenia AM pásma", // 182
+    "Konektivita", // 183
+    "STĽACTE MODE PRE NÁVRAT", // 184
     "AM CoChannelDet", // 185
-    "CoChannelDet sensitivity", // 186
-    "AM CoChannelDet threshold", // 187
-    "CoChannelDet counter", // 188
-    "MAIN", // 189
-    "AUDIO", // 190
-    "DISPLAY", // 191
+    "Citlivosť CoChannelDet", // 186
+    "Prah AM CoChannelDet", // 187
+    "CoChannelDet počítadlo", // 188
+    "HLAVNÝ", // 189
+    "ZVUK", // 190
+    "DISPLEJ", // 191
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT", // 195
-    "Auto sort AF", // 196
+    "PRIPOJENIE", // 195
+    "Auto radenie AF", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
     "FM deemphasis", // 199
-    "Small", // 200
-    "Large", // 201
-    "All", // 202
-    "Fast PS", // 203
-    "Detected applications", // 204
+    "Malý", // 200
+    "Veľký", // 201
+    "Všetko", // 202
+    "Rýchle načítanie PS", // 203
+    "Detegované aplikácie", // 204
     "Min." // 205
   },
 
