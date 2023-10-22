@@ -2979,7 +2979,7 @@ void ShowBattery() {
         tft.drawRoundRect(277, 6, 37, 20, 2, ActiveColor);
         tft.fillRoundRect(313, 13, 4, 6, 2, ActiveColor);
       }
-      if (batteryoptions != BATTERY_VALUE && batteryoptions != BATTERY_PERCENT && battery != 0) {
+      if (batteryoptions != BATTERY_VALUE && batteryoptions != BATTERY_VALUE2 && batteryoptions != BATTERY_PERCENT && battery != 0) {
         tft.fillRoundRect(279, 8, (battery * 8) , 16, 2, BarInsignificantColor);
       } else {
         tft.fillRoundRect(279, 8, 33, 16, 2, BackgroundColor);
@@ -3000,6 +3000,9 @@ void ShowBattery() {
 
     if (abs(batteryV - batteryVold) > 0.05 && batteryoptions == BATTERY_VALUE) {
       tftReplace(-1, String(batteryVold, 1) + "V", String(batteryV, 1) + "V", 279, 9, BatteryValueColor, BatteryValueColorSmooth, 16);
+      batteryVold = batteryV;
+	} else if (abs(batteryV - batteryVold) > 0.05 && batteryoptions == BATTERY_VALUE2) {
+      tftReplace(-1, String(batteryVold, 2) + "v", String(batteryV, 2) + "v", 279, 9, BatteryValueColor, BatteryValueColorSmooth, 16);
       batteryVold = batteryV;
     } else if (int(vPer) != int(vPerold) && batteryoptions == BATTERY_PERCENT && abs(vPer - vPerold) > 0.5) {
       tftReplace(-1, String(vPerold, 0) + "%", String(vPer, 0) + "%", 279, 9, BatteryValueColor, BatteryValueColorSmooth, 16);
