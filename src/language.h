@@ -1441,9 +1441,9 @@ static const char* const myLanguage[17][207] = {
     "Netzwerk", // 183
     "DRÜCKE MODE FÜR ZURÜCK", // 184
     "AM CoChannelDet", // 185
-    "CoChannelDet Empfindlichkeit", // 186
-    "AM CoChannelDet Threshold", // 187
-    "CoChannelDet counter", // 188
+    "AM CoChannelDet Empfindlichkeit", // 186
+    "AM CoChannelDet Schwelle", // 187
+    "AM CoChannelDet Zähler", // 188
     "HAUPT", // 189
     "AUDIO", // 190
     "ANZEIGE", // 191
@@ -1455,13 +1455,13 @@ static const char* const myLanguage[17][207] = {
     "Stationlist ID", // 197
     "AM ATT", // 198
     "UKW Deemphasis", // 199
-    "Gering", // 200
-    "Groß", // 201
-    "Alles", // 202
+    "Wenig", // 200
+    "Viel", // 201
+    "Maximal", // 202
     "Schnelles PS", // 203
-    "Erkenne Applikationen", // 204
+    "Erkannte Applikationen", // 204
     "Min.", // 205
-    "Dynamic SPI speed" // 206
+    "Dynam. SPI-Geschwindigkeit" // 206
   },
 
   { "Český", // Czech
