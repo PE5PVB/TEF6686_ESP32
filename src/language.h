@@ -1317,14 +1317,14 @@ static const char* const myLanguage[17][206] = {
     "UKW Rauschunterdrückung", // 65
     "Werkseinstellung geladen", // 66
     "Audioausgabe", // 67
-    "Allow tuning during screensaver", // 68
+    "Tunen bei Bildschirmschoner erlauben", // 68
     "Anzeigefarben umkehren", // 69
     "Über diese Software", // 70
     "Hauptcode:", // 71
     "Mitwirkende:", // 72
     "Unbekannt", // 73
-    "Screensaver options", // 74
-    "Time-out timer", // 75
+    "Bildschirmschoneroptionen", // 74
+    "Abschaltzeit", // 75
     "Bildschirm aus", // 76
     "Thema", // 77
     "Standard", // 78
@@ -1356,7 +1356,7 @@ static const char* const myLanguage[17][206] = {
     "KW", // 104
     "UKW", // 105
     "OIRT", // 106
-    "Rotieren bei Bildschirm aus", // 107
+    "Drehen bei Bildschirm aus", // 107
     "Modell auswählen", // 108
     "Basismodell (ILI9341)", // 109
     "Portabel (ILI9341)", // 110
