@@ -450,7 +450,7 @@ void BuildMenu() {
       switch (batteryoptions) {
         case BATTERY_NONE: tftPrint(1, myLanguage[language][30], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
         case BATTERY_VALUE: tftPrint(1, myLanguage[language][174], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-		case BATTERY_VALUE2: tftPrint(1, myLanguage[language][207], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+	case BATTERY_VALUE2: tftPrint(1, myLanguage[language][207], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
         case BATTERY_PERCENT: tftPrint(1, myLanguage[language][175], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
       }
 
@@ -1032,7 +1032,7 @@ void MenuUp() {
             switch (batteryoptionsold) {
               case BATTERY_NONE: tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case BATTERY_VALUE: tftPrint(0, myLanguage[language][174], 155, 118, BackgroundColor, BackgroundColor, 28); break;
-			  case BATTERY_VALUE2: tftPrint(0, myLanguage[language][207], 155, 118, BackgroundColor, BackgroundColor, 28); break;
+	      case BATTERY_VALUE2: tftPrint(0, myLanguage[language][207], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case BATTERY_PERCENT: tftPrint(0, myLanguage[language][175], 155, 118, BackgroundColor, BackgroundColor, 28); break;
             }
 
@@ -1042,7 +1042,7 @@ void MenuUp() {
             switch (batteryoptions) {
               case BATTERY_NONE: tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
               case BATTERY_VALUE: tftPrint(0, myLanguage[language][174], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
-			  case BATTERY_VALUE2: tftPrint(0, myLanguage[language][207], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+	      case BATTERY_VALUE2: tftPrint(0, myLanguage[language][207], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
               case BATTERY_PERCENT: tftPrint(0, myLanguage[language][175], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
             }
             batteryoptionsold = batteryoptions;
@@ -1586,7 +1586,7 @@ void MenuDown() {
             switch (batteryoptionsold) {
               case BATTERY_NONE: tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case BATTERY_VALUE: tftPrint(0, myLanguage[language][174], 155, 118, BackgroundColor, BackgroundColor, 28); break;
-			  case BATTERY_VALUE2: tftPrint(0, myLanguage[language][207], 155, 118, BackgroundColor, BackgroundColor, 28); break;
+	      case BATTERY_VALUE2: tftPrint(0, myLanguage[language][207], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case BATTERY_PERCENT: tftPrint(0, myLanguage[language][175], 155, 118, BackgroundColor, BackgroundColor, 28); break;
             }
 
@@ -1596,7 +1596,7 @@ void MenuDown() {
             switch (batteryoptions) {
               case BATTERY_NONE: tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
               case BATTERY_VALUE: tftPrint(0, myLanguage[language][174], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
-			  case BATTERY_VALUE2: tftPrint(0, myLanguage[language][207], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+	      case BATTERY_VALUE2: tftPrint(0, myLanguage[language][207], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
               case BATTERY_PERCENT: tftPrint(0, myLanguage[language][175], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
             }
             batteryoptionsold = batteryoptions;
