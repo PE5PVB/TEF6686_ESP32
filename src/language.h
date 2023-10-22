@@ -901,14 +901,14 @@ static const char* const myLanguage[17][206] = {
     "Απαλοιφή θορύβου FM", // 65
     "Οι προεπιλογές φορτώθηκαν", // 66
     "Έξοδος ήχου", // 67
-    "Allow tuning during screensaver", // 68
+    "Συντονισμός κατά την προστασία οθόνης", // 68
     "Αναστροφή χρωμάτων οθόνης", // 69
     "Πληροφορίες λογισμικού", // 70
     "Κύριος κώδικας:", // 71
     "Συνεργάτες:", // 72
     "Άγνωστο", // 73
-    "Screensaver options", // 74
-    "Time-out timer", // 75
+    "Επιλογές προστασίας οθόνης", // 74
+    "Χρονοδιακόπτης λήξης", // 75
     "Οθόνη σβηστή", // 76
     "Θέμα", // 77
     "Προεπιλογή", // 78
@@ -924,7 +924,7 @@ static const char* const myLanguage[17][206] = {
     "Μη διαθέσιμο EON", // 88
     "Μη διαθέσιμο RT+", // 89
     "Μέγεθος βήματος FM", // 90
-    "Φύλαξη οθόνης", // 91
+    "Προστασία οθόνης", // 91
     "Δευτ.", // 92
     "ΠΙΕΣΤΕ BAND ΓΙΑ ΚΛΕΙΣΙΜΟ", // 93
     "1% φωτεινότητα", // 94
@@ -1038,7 +1038,7 @@ static const char* const myLanguage[17][206] = {
     "Όλα", // 202
     "Γρήγορο PS", // 203
     "Εντοπισμένες εφαρμογές", // 204
-    "Min." // 205
+    "Λεπτ." // 205
   },
 
   { "Română", // Romanian
@@ -1941,14 +1941,14 @@ static const char* const myLanguage[17][206] = {
     "Réducteur de bruit FM", // 65
     "Paramètres par défaut chargés", // 66
     "Sortie audio", // 67
-    "Allow tuning during screensaver", // 68
+    "Réglage pendant l'économiseur d'écran", // 68
     "Inverser l'affichage", // 69
     "À propos du logiciel", // 70
     "Code principal :", // 71
     "Contributeurs :", // 72
     "Inconnu", // 73
-    "Screensaver options", // 74
-    "Time-out timer", // 75
+    "Options d'économiseur d'écran", // 74
+    "Temporisateur", // 75
     "Affichage éteint", // 76
     "Thème", // 77
     "Défaut", // 78
@@ -3397,7 +3397,7 @@ static const char* const myLanguage[17][206] = {
     "Atenuador de ruido FM", // 65
     "Carga de configuración predeterminada", // 66
     "Salida de audio", // 67
-    "Allow tuning during screensaver", // 68
+    "Sintonización durante el protector de pantalla", // 68
     "Invertir pantalla", // 69
     "Acerca del software", // 70
     "Código principal:", // 71
@@ -3416,9 +3416,9 @@ static const char* const myLanguage[17][206] = {
     "Sakura", // 84
     "Blanqueo total", // 85
     "NO ES POSIBLE", // 86
-    "No hay AF disponible", // 87
-    "No hay EON disponible", // 88
-    "No hay RT+ disponible", // 89
+    "No AF disponible", // 87
+    "No EON disponible", // 88
+    "No RT+ disponible", // 89
     "Paso predeterminado de FM", // 90
     "Protector de pantalla", // 91
     "seg.", // 92
