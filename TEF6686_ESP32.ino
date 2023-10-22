@@ -175,6 +175,8 @@ byte theme;
 byte tot;
 byte tunemode;
 byte unit;
+byte spispeed;
+byte spispeedold;
 char buff[16];
 char programTypePrevious[18];
 char radioIdPrevious[7];
