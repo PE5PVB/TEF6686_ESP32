@@ -2147,7 +2147,7 @@ void DoMenu() {
             switch (batteryoptions) {
               case BATTERY_NONE: tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
               case BATTERY_VALUE: tftPrint(0, myLanguage[language][174], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
-			  case BATTERY_VALUE2: tftPrint(0, myLanguage[language][207], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+	      case BATTERY_VALUE2: tftPrint(0, myLanguage[language][207], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
               case BATTERY_PERCENT: tftPrint(0, myLanguage[language][175], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
             }
             batteryoptionsold = batteryoptions;
