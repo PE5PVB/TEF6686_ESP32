@@ -208,7 +208,7 @@ static const char* const myLanguage[17][208] = {
     "Detected applications", // 204
     "Min.", // 205
     "Dynamic SPI speed", // 206
-	"Battery value (2Dig)" // 207
+    "Battery value (2Dig)" // 207
   },
 
   { "Nederlands", // Dutch
@@ -418,7 +418,7 @@ static const char* const myLanguage[17][208] = {
     "Gedetecteerde applicaties", // 204
     "Min.", // 205
     "Dynamic SPI speed", // 206
-	"Battery value 2D" // 207
+    "Battery value 2D" // 207
   },
 
   { "Polski", // Polish
@@ -628,7 +628,7 @@ static const char* const myLanguage[17][208] = {
     "Wykryte aplikacje", // 204
     "Min.", // 205
     "Dynamic SPI speed", // 206
-	"Battery value 2D" // 207
+    "Battery value 2D" // 207
   },
 
   { "Hrvatski", // Croatian
@@ -838,7 +838,7 @@ static const char* const myLanguage[17][208] = {
     "Otkrivene aplikacije", // 204
     "Min.", // 205
     "Dynamic SPI speed", // 206
-	"Battery value 2D" // 207
+    "Battery value 2D" // 207
   },
 
   { "Ελληνικά", // Greek
@@ -1048,7 +1048,7 @@ static const char* const myLanguage[17][208] = {
     "Εντοπισμένες εφαρμογές", // 204
     "Λεπτ.", // 205
     "Dynamic SPI speed", // 206
-	"Battery value 2D" // 207
+    "Battery value 2D" // 207
   },
 
   { "Română", // Romanian
@@ -1258,7 +1258,7 @@ static const char* const myLanguage[17][208] = {
     "Identificare aplicații", // 204
     "Min.", // 205
     "Dynamic SPI speed", // 206
-	"Battery value 2D" // 207
+    "Battery value 2D" // 207
   },
 
   { "Deutsch", // German
@@ -1468,7 +1468,7 @@ static const char* const myLanguage[17][208] = {
     "Erkenne Applikationen", // 204
     "Min.", // 205
     "Dynamic SPI speed", // 206
-	"Battery value 2D" // 207
+    "Battery value 2D" // 207
   },
 
   { "Český", // Czech
@@ -1678,7 +1678,7 @@ static const char* const myLanguage[17][208] = {
     "Detekované aplikace", // 204
     "Min.", // 205
     "Dynamic SPI speed", // 206
-	"Battery value 2D" // 207
+    "Battery value 2Dig" // 207
   },
 
   { "Slovenský", // Slovak
@@ -1888,7 +1888,7 @@ static const char* const myLanguage[17][208] = {
     "Detegované aplikácie", // 204
     "Min.", // 205
     "Dynamic SPI speed", // 206
-	"Battery value 2D" // 207
+    "Battery value 2Dig" // 207
   },
 
   { "Français", // French
@@ -2098,7 +2098,7 @@ static const char* const myLanguage[17][208] = {
     "Applications détectées", // 204
     "Min.", // 205
     "Dynamic SPI speed", // 206
-	"Battery value 2D" // 207
+    "Battery value 2Dig" // 207
   },
 
   { "Български", // Bulgarian
@@ -2308,7 +2308,7 @@ static const char* const myLanguage[17][208] = {
     "Detected applications", // 204
     "Min.", // 205
     "Dynamic SPI speed", // 206
-	"Battery value 2D" // 207
+    "Battery value 2Dig" // 207
   },
 
   { "Русский", // Russian
@@ -2518,7 +2518,7 @@ static const char* const myLanguage[17][208] = {
     "Обнаруженные приложения", // 204
     "мин.", // 205
     "Dynamic SPI speed", // 206
-	"Battery value 2D" // 207
+    "Battery value 2Dig" // 207
   },
 
   { "Українська", // Ukranian
@@ -2728,7 +2728,7 @@ static const char* const myLanguage[17][208] = {
     "Виявлені програми", // 204
     "мін.", // 205
     "Dynamic SPI speed", // 206
-	"Battery value 2D" // 207
+    "Battery value 2D" // 207
   },
 
   { "Italiano", // Italian
@@ -2938,7 +2938,7 @@ static const char* const myLanguage[17][208] = {
     "Detected applications", // 204
     "Min.", // 205
     "Dynamic SPI speed", // 206
-	"Battery value 2D" // 207
+    "Battery value 2D" // 207
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3148,7 +3148,7 @@ static const char* const myLanguage[17][208] = {
     "Detected applications", // 204
     "分钟", // 205
     "调整SPI通讯速率", // 206
-	"Battery value 2D" // 207
+    "Battery value 2D" // 207
   },
 
   { "Norsk", // Norwegian
@@ -3358,7 +3358,7 @@ static const char* const myLanguage[17][208] = {
     "Oppdaget applikasjoner", // 204
     "Min.", // 205
     "Dynamic SPI speed", // 206
-	"Batteri Volt (2dig)" // 207
+    "Batteri Volt (2dig)" // 207
   },
 
   { "Español", // Spanish
@@ -3568,6 +3568,6 @@ static const char* const myLanguage[17][208] = {
     "Aplicaciones detectadas", // 204
     "Min.", // 205
     "Dynamic SPI speed", // 206
-	"Battery value 2D" // 207
+    "Battery value 2D" // 207
   }
 };
