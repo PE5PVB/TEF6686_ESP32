@@ -109,6 +109,8 @@ extern byte theme;
 extern byte tot;
 extern byte touchrotating;
 extern byte unit;
+extern byte spispeed;
+extern byte spispeedold;
 extern char programTypePrevious[18];
 extern char radioIdPrevious[7];
 extern float batteryVold;
