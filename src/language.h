@@ -3762,5 +3762,4 @@ static const char* const myLanguage[17][207] = {
     "Min.", // 205
     "Velocidade dinâmica de SPI" // 206
 }
-
 };
