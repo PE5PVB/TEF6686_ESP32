@@ -1,6 +1,6 @@
 // [number of languages][number of texts]
 
-static const char* const myLanguage[17][207] = {
+static const char* const myLanguage[18][207] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -1043,7 +1043,7 @@ static const char* const myLanguage[17][207] = {
     "Γρήγορο PS", // 203
     "Εντοπισμένες εφαρμογές", // 204
     "Λεπτ.", // 205
-    "Dynamic SPI speed" // 206
+    "Δυναμική ταχύτητα SPI" // 206
   },
 
   { "Română", // Romanian
@@ -2088,7 +2088,7 @@ static const char* const myLanguage[17][207] = {
     "PS rapide", // 203
     "Applications détectées", // 204
     "Min.", // 205
-    "Dynamic SPI speed" // 206
+    "Vitesse SPI dynamique" // 206
   },
 
   { "Български", // Bulgarian
@@ -3420,7 +3420,7 @@ static const char* const myLanguage[17][207] = {
     "Colaboradores:", // 72
     "Desconocido", // 73
     "Screensaver options", // 74
-    "Time-out timer", // 75
+    "Temporizador de tiempo muerto", // 75
     "Apagar pantalla", // 76
     "Tema", // 77
     "Predeterminado", // 78
@@ -3551,6 +3551,215 @@ static const char* const myLanguage[17][207] = {
     "PS rápido", // 203
     "Aplicaciones detectadas", // 204
     "Min.", // 205
-    "Dynamic SPI speed" // 206
-  }
+    "Velocidad de SPI dinámica" // 206
+  },
+
+  { "Português", // Portuguese
+    "Direção rotativa alterada", // 1
+    "Solte o botão, por favor", // 2
+    "Tela invertida", // 3
+    "Calibrar o medidor analógico", // 4
+    "Solte o botão quando estiver pronto", // 5
+    "codificador definido como óptico", // 6
+    "codificador definido como padrão", // 7
+    "Receptor FM/AM", // 8
+    "Sintonizador: !Nenhum!", // 9
+    "Volume:", // 10
+    "Conversor:", // 11
+    "Borda da faixa baixa:", // 12
+    "Borda da faixa alta:", // 13
+    "Deslocamento do nível de RF FM:", // 14
+    "Limiar estéreo:", // 15
+    "Canto de corte alto:", // 16
+    "Limiar de corte alto:", // 17
+    "Limiar de nível baixo:", // 18
+    "Contraste:", // 19
+    "Definir volume", // 20
+    "Definir deslocamento do conversor", // 21
+    "Definir borda da faixa baixa", // 22
+    "Definir borda da faixa alta", // 23
+    "Definir deslocamento de nível", // 24
+    "Definir limiar de separação estéreo", // 25
+    "Definir frequência do canto de corte alto", // 26
+    "Definir limiar de corte alto", // 27
+    "Definir limiar de nível baixo", // 28
+    "Definir brilho da tela", // 29
+    "Desligado", // 30
+    "A tela está silenciada!", // 31
+    "Para desativar o silenciamento, desmarque a caixa RF+", // 32
+    "DESATIVADO", // 33
+    "ANALISANDO...", // 34
+    "Sintonizador não detectado", // 35
+    "Versão do sintonizador definida: v", // 36
+    "Por favor, reinicie o sintonizador", // 37
+    "Mostrar erros RDS", // 38
+    "Idioma", // 39
+    "Escolha o idioma", // 40
+    "PRESSIONE O MODO PARA SAIR E SALVAR", // 41
+    "Ligado", // 42
+    "Silenciamento suave FM", // 43
+    "Silenciamento suave AM", // 44
+    "Bipe na borda da faixa", // 45
+    "Região", // 46
+    "Europa", // 47
+    "EUA", // 48
+    "Mostrar sublinhado no RDS", // 49
+    "Modo USB", // 50
+    "Wi-Fi ativo", // 51
+    "Configurar Wi-Fi", // 52
+    "Conectar a: ", // 53
+    "para configurar o Wi-Fi", // 54
+    "Tentando conectar ao Wi-Fi", // 55
+    "FALHA!", // 56
+    "CONECTADO!", // 57
+    "IP do cliente da lista de estações", // 58
+    "Mostrar comprimento de onda SW", // 59
+    "Filtro RDS", // 60
+    "Mostrar erros PI", // 61
+    "Mostrar squelch", // 62
+    "Medidor de modulação", // 63
+    "Supressor de ruído AM", // 64
+    "Supressor de ruído FM", // 65
+    "Padrões carregados", // 66
+    "Saída de áudio", // 67
+    "Ajuste durante a proteção de tela", // 68
+    "Inverter a tela", // 69
+    "Sobre o software", // 70
+    "Código principal:", // 71
+    "Contribuidores:", // 72
+    "Desconhecido", // 73
+    "Opções de proteção de tela", // 74
+    "Temporizador de desligamento", // 75
+    "Desligar a tela", // 76
+    "Tema", // 77
+    "Padrão", // 78
+    "Ciano", // 79
+    "Carmesim", // 80
+    "Monocromático", // 81
+    "Vulcão", // 82
+    "Dendro", // 83
+    "Sakura", // 84
+    "Branco total", // 85
+    "NÃO POSSÍVEL", // 86
+    "Nenhum AF disponível", // 87
+    "Nenhum EON disponível", // 88
+    "Nenhum RT+ disponível", // 89
+    "Passo padrão FM", // 90
+    "Proteção de tela", // 91
+    "Segundos", // 92
+    "PRESSIONE BAND PARA FECHAR", // 93
+    "1% de brilho", // 94
+    "25% de brilho", // 95
+    "50% de brilho", // 96
+    "Deslocamento de nível de RF AM:", // 97
+    "Unidade de medidor de sinal:", // 98
+    "Usar AF:", // 99
+    "Selecionar faixa FM:", // 100
+    "Selecionar faixa AM:", // 101
+    "LW", // 102
+    "AM", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT", // 106
+    "Rotativo enquanto a tela está desligada", // 107
+    "Seletor de modelo", // 108
+    "Base (ILI9341)", // 109
+    "Portátil (ILI9341)", // 110
+    "Toque portátil (ILI9341)", // 111
+    "Título", // 112
+    "Álbum", // 113
+    "Faixa", // 114
+    "Artista", // 115
+    "Composição", // 116
+    "Movimento", // 117
+    "Maestro", // 118
+    "Compositor", // 119
+    "Banda", // 120
+    "Comentário", // 121
+    "Gênero", // 122
+    "Notícias", // 123
+    "Notícias locais", // 124
+    "Mercado de ações", // 125
+    "Esportes", // 126
+    "Loteria", // 127
+    "Horóscopo", // 128
+    "Diversão diária", // 129
+    "Saúde", // 130
+    "Evento", // 131
+    "Cena", // 132
+    "Cinema", // 133
+    "TV", // 134
+    "Data/hora", // 135
+    "Clima", // 136
+    "Tráfego", // 137
+    "Alarme", // 138
+    "Anúncio", // 139
+    "Website", // 140
+    "Outros", // 141
+    "PS curto", // 142
+    "PS longo", // 143
+    "Agora", // 144
+    "Próximo", // 145
+    "Parte", // 146
+    "Apresentador", // 147
+    "Editor", // 148
+    "Frequência", // 149
+    "Página inicial", // 150
+    "Subcanal", // 151
+    "Hotline", // 152
+    "Telefone do estúdio", // 153
+    "Telefone", // 154
+    "SMS do estúdio", // 155
+    "SMS", // 156
+    "E-mail da hotline", // 157
+    "E-mail do estúdio", // 158
+    "E-mail", // 159
+    "Chat", // 160
+    "Centro de chat", // 161
+    "Pergunta de votação", // 162
+    "Centro de votação", // 163
+    "Local", // 164
+    "Compromisso", // 165
+    "Identificador", // 166
+    "Compra", // 167
+    "Obter dados", // 168
+    " ", // 169
+    "Tangerina", // 170
+    "Oceano", // 171
+    "Índigo", // 172
+    "Opções de bateria", // 173
+    "Mostrar voltagem", // 174
+    "Mostrar porcentagem", // 175
+    "Buffering RT", // 176
+    "Configurações principais", // 177
+    "Configurações de áudio", // 178
+    "Configurações de tela", // 179
+    "Configurações RDS", // 180
+    "Configurações FM", // 181
+    "Configurações AM", // 182
+    "Conectividade", // 183
+    "PRESSIONE MODO PARA VOLTAR", // 184
+    "AM CoChannelDet", // 185
+    "Sensibilidade do CoChannel Det", // 186
+    "Limiar do CoChannel Det", // 187
+    "Contador do CoChannel Det", // 188
+    "PRINCIPAL", // 189
+    "ÁUDIO", // 190
+    "EXIBIÇÃO", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "CONECTAR", // 195
+    "Classificar AF automaticamente", // 196
+    "ID da lista de estações", // 197
+    "Atenuação AM", // 198
+    "Desênfase FM", // 199
+    "Pequeno", // 200
+    "Grande", // 201
+    "Tudo", // 202
+    "PS rápido", // 203
+    "Aplicativos detectados", // 204
+    "Min.", // 205
+    "Velocidade dinâmica de SPI" // 206
+}
 };
