@@ -837,7 +837,7 @@ void loop() {
       LowLevelInit = false;
     }
 
-    if (screenmute || radio.rds.correctPI != 0) readRds();
+    if (!menu && (screenmute || radio.rds.correctPI != 0)) readRds();
     if (millis() >= lowsignaltimer + 300) {
       lowsignaltimer = millis();
       if (af || (!screenmute || (screenmute && (XDRGTKTCP || XDRGTKUSB)))) {
@@ -945,10 +945,10 @@ void loop() {
 
 void GetData() {
   if (band < BAND_GAP) ShowStereoStatus();
-  if (band < BAND_GAP) {
+  if (band < BAND_GAP && !menu) {
     if (advancedRDS && !afscreen && !screenmute) ShowAdvancedRDS();
     if (afscreen && !screenmute) ShowAFEON();
-    if (!afscreen) {
+    if (!afscreen && !menu) {
       showPTY();
       showECC();
       showRadioText();
