@@ -528,7 +528,7 @@ void TEF6686::readRDS(byte showrdserrors)
             //AF decoder
             if (rdsblock == 0 && rds.rdsC != rdsCold) {                                         // Only when in GROUP 0A
 
-              if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == currentfreq) {
+              if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == currentfreq && rds.hasAF) {
                 afmethodB = true;                                                               // Check for AF method B
                 afmethodBprobe = true;
                 af_updatecounter++;
