@@ -547,7 +547,7 @@ void ShowAFEON() {
       hasafold = true;
     }
 
-    if (radio.af_counter > 30 || radio.eon_counter > 10) {
+    if (radio.af_counter > 30 || radio.eon_counter > 9) {
       if (!afpage) {
         afpage = true;
         afpagenr = 1;
@@ -610,7 +610,7 @@ void ShowAFEON() {
           tftPrint(1, String(radio.eon[i + y].mappedfreq / 100) + "." + String((radio.eon[i + y].mappedfreq % 100) / 10), 316, 48 + (15 * i), PrimaryColor, PrimaryColorSmooth, 16);
           mappedfreqold[i + y] = radio.eon[i + y].mappedfreq;
         }
-        if (i == 10) i = 254;
+        if (i == 9) i = 254;
       }
     }
   }
