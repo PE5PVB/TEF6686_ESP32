@@ -32,6 +32,7 @@
 #define FREQ_OIRT_STEP_30K         3
 #define FREQ_FM_STEP_50K           5
 #define FREQ_FM_STEP_100K          10
+#define FREQ_FM_STEP_200K          20
 
 #define FREQ_LW_LOW_EDGE_MIN       144
 #define FREQ_LW_HIGH_EDGE_MAX      519

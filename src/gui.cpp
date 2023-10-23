@@ -384,7 +384,7 @@ void BuildMenu() {
       tftPrint(-1, myLanguage[language][68], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][206], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
 
-      tftPrint(1, "Mhz", 310, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16); 
+      tftPrint(1, "Mhz", 310, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
 
       switch (hardwaremodel) {
         case BASE_ILI9341: tftPrint(1, myLanguage[language][109], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
@@ -393,7 +393,7 @@ void BuildMenu() {
       }
 
       if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  myLanguage[language][78] + String(SPI_FREQUENCY / 1000000, DEC), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      else tftPrint(1, String(spispeed * 10 ,DEC), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      else tftPrint(1, String(spispeed * 10 , DEC), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
 
       if (touchrotating) tftPrint(1, myLanguage[language][42], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       break;
@@ -518,7 +518,12 @@ void BuildMenu() {
       if (fmnb != 0) tftPrint(1, "%", 310, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
       if (fmnb != 0) tftPrint(1, String(fmnb, DEC), 270, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       tftPrint(1, "KHz", 310, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
-      if (fmdefaultstepsize) tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 270, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 270, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+
+      switch (fmdefaultstepsize) {
+        case 0: tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 270, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case 1: tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 270, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case 2: tftPrint(1, String(FREQ_FM_STEP_200K * 10, DEC), 270, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+      }
 
       switch (bandFM) {
         case FM_BAND_ALL: tftPrint(1, myLanguage[language][105] + String(",") + myLanguage[language][106], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
@@ -888,13 +893,13 @@ void MenuUp() {
 
           case ITEM3:
             if (spispeed == SPI_SPEED_DEFAULT) tftPrint(0,  myLanguage[language][78] + String(SPI_FREQUENCY / 1000000, DEC) + " Mhz", 155, 118, BackgroundColor, BackgroundColor, 28);
-            else tftPrint(0, String(spispeed * 10 ,DEC) + " Mhz", 155, 118, BackgroundColor, BackgroundColor, 28);
+            else tftPrint(0, String(spispeed * 10 , DEC) + " Mhz", 155, 118, BackgroundColor, BackgroundColor, 28);
 
             spispeed++;
             if (spispeed > SPI_SPEED_COUNT - 1) spispeed = 0;
 
             if (spispeed == SPI_SPEED_DEFAULT) tftPrint(0,  myLanguage[language][78] + String(SPI_FREQUENCY / 1000000, DEC) + " Mhz", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
-            else tftPrint(0, String(spispeed * 10 ,DEC) + " Mhz", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            else tftPrint(0, String(spispeed * 10 , DEC) + " Mhz", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
 
             if (spispeed == SPI_SPEED_DEFAULT) SPI.setFrequency(SPI_FREQUENCY); else SPI.setFrequency(spispeed * 1000000);
             spispeedold = spispeed;
@@ -1225,9 +1230,18 @@ void MenuUp() {
             break;
 
           case ITEM8:
-            if (fmdefaultstepsize) tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
-            if (fmdefaultstepsize) fmdefaultstepsize = 0; else fmdefaultstepsize = 1;
-            if (fmdefaultstepsize) tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            switch (fmdefaultstepsize) {
+              case 0: tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); break;
+              case 1: tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); break;
+              case 2: tftPrint(1, String(FREQ_FM_STEP_200K * 10, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); break;
+            }
+            fmdefaultstepsize++;
+            if (fmdefaultstepsize > 2) fmdefaultstepsize = 0;
+            switch (fmdefaultstepsize) {
+              case 0: tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 1: tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 2: tftPrint(1, String(FREQ_FM_STEP_200K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+            }
             break;
 
           case ITEM9:
@@ -1438,13 +1452,13 @@ void MenuDown() {
             break;
           case ITEM3:
             if (spispeed == SPI_SPEED_DEFAULT) tftPrint(0,  myLanguage[language][78] + String(SPI_FREQUENCY / 1000000, DEC) + " Mhz", 155, 118, BackgroundColor, BackgroundColor, 28);
-            else tftPrint(0, String(spispeed * 10 ,DEC) + " Mhz", 155, 118, BackgroundColor, BackgroundColor, 28);
+            else tftPrint(0, String(spispeed * 10 , DEC) + " Mhz", 155, 118, BackgroundColor, BackgroundColor, 28);
 
             spispeed--;
             if (spispeed > SPI_SPEED_COUNT - 1) spispeed = SPI_SPEED_COUNT - 1;
 
             if (spispeed == SPI_SPEED_DEFAULT) tftPrint(0,  myLanguage[language][78] + String(SPI_FREQUENCY / 1000000, DEC) + " Mhz", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
-            else tftPrint(0, String(spispeed * 10 ,DEC) + " Mhz", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            else tftPrint(0, String(spispeed * 10 , DEC) + " Mhz", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
 
             if (spispeed == SPI_SPEED_DEFAULT) SPI.setFrequency(SPI_FREQUENCY); else SPI.setFrequency(spispeed * 1000000);
             spispeedold = spispeed;
@@ -1776,9 +1790,18 @@ void MenuDown() {
             break;
 
           case ITEM8:
-            if (fmdefaultstepsize) tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
-            if (fmdefaultstepsize) fmdefaultstepsize = 0; else fmdefaultstepsize = 1;
-            if (fmdefaultstepsize) tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            switch (fmdefaultstepsize) {
+              case 0: tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); break;
+              case 1: tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); break;
+              case 2: tftPrint(1, String(FREQ_FM_STEP_200K * 10, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); break;
+            }
+            fmdefaultstepsize--;
+            if (fmdefaultstepsize > 2) fmdefaultstepsize = 2;
+            switch (fmdefaultstepsize) {
+              case 0: tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 1: tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 2: tftPrint(1, String(FREQ_FM_STEP_200K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+            }
             break;
 
           case ITEM9:
@@ -2048,7 +2071,7 @@ void DoMenu() {
           case ITEM3:
             tftPrint(0, myLanguage[language][206], 155, 78, ActiveColor, ActiveColorSmooth, 28);
             if (spispeed == SPI_SPEED_DEFAULT) tftPrint(0,  myLanguage[language][78] + String(SPI_FREQUENCY / 1000000, DEC) + " Mhz", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
-            else tftPrint(0, String(spispeed * 10 ,DEC) + " Mhz", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            else tftPrint(0, String(spispeed * 10 , DEC) + " Mhz", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
         }
@@ -2267,7 +2290,11 @@ void DoMenu() {
           case ITEM8:
             tftPrint(-1, "KHz", 170, 118, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(0, myLanguage[language][90], 155, 78, ActiveColor, ActiveColorSmooth, 28);
-            if (fmdefaultstepsize) tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            switch (fmdefaultstepsize) {
+              case 0: tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 1: tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case 2: tftPrint(1, String(FREQ_FM_STEP_200K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+            }
             break;
 
           case ITEM9:

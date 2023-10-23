@@ -1946,6 +1946,14 @@ void Round100K(unsigned int freq) {
   }
 }
 
+void Round200K(unsigned int freq) {
+  if (freq % 10 < 5) {
+    frequency = (freq - freq % 10);
+  } else {
+    frequency = (freq - (freq % 10) + 10);
+    if ((freq % 10) % 2 != 0) frequency += 10;
+  }
+}
 void Round5K(unsigned int freqAM) {
   if (freqAM % 10 < 3) {
     frequency_AM = (freqAM - freqAM % 10);
@@ -1959,7 +1967,11 @@ void Round5K(unsigned int freqAM) {
 void RoundStep() {
   if (band == BAND_FM) {
     unsigned int freq = frequency;
-    if (fmdefaultstepsize == 1) Round100K(freq); else Round50K(freq);
+    switch (fmdefaultstepsize) {
+      case 0: Round50K(freq); break;
+      case 1: Round100K(freq); break;
+      case 2: Round200K(freq); break;
+    }
     radio.SetFreq(frequency);
   } else if (band == BAND_OIRT) {
     Round30K(frequency_OIRT);
@@ -3035,7 +3047,11 @@ void TuneUp() {
       if (band == BAND_OIRT) {
         temp = FREQ_OIRT_STEP_30K;
       } else {
-        if (fmdefaultstepsize == 1) temp = FREQ_FM_STEP_100K; else temp = FREQ_FM_STEP_50K;
+        switch (fmdefaultstepsize) {
+          case 0: temp = FREQ_FM_STEP_50K; break;
+          case 1: temp = FREQ_FM_STEP_100K; break;
+          case 2: temp = FREQ_FM_STEP_200K; break;
+        }
       }
     }
   }
@@ -3110,7 +3126,11 @@ void TuneDown() {
       if (band == BAND_OIRT) {
         temp = FREQ_OIRT_STEP_30K;
       } else {
-        if (fmdefaultstepsize == 1) temp = FREQ_FM_STEP_100K; else temp = FREQ_FM_STEP_50K;
+        switch (fmdefaultstepsize) {
+          case 0: temp = FREQ_FM_STEP_50K; break;
+          case 1: temp = FREQ_FM_STEP_100K; break;
+          case 2: temp = FREQ_FM_STEP_200K; break;
+        }
       }
     }
   }
