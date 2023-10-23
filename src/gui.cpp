@@ -618,8 +618,11 @@ void BuildAdvancedRDS() {
     tftPrint(-1, "ERRORS", 3, 34, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(1, "MHz", 310, 35, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(1, unitString[unit], 310, 51, ActiveColor, ActiveColorSmooth, 16);
-    if (region == REGION_EU) tftPrint(-1, "PI", ITEM10 + 6, 81, ActiveColor, ActiveColorSmooth, 16);
-    if (region == REGION_US) tftPrint(-1, "ID", ITEM10 + 6, 81, ActiveColor, ActiveColorSmooth, 16);
+    if (region == REGION_EU) tftPrint(-1, "PI", 216, 81, ActiveColor, ActiveColorSmooth, 16);
+    if (region == REGION_US) {
+      tftPrint(-1, "PI:", 216, 72, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, "ID:", 216, 89, ActiveColor, ActiveColorSmooth, 16);
+    }
     tftPrint(-1, "PS", 3, 81, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "PTY", 3, 109, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "RT+", 3, 147, ActiveColor, ActiveColorSmooth, 16);
@@ -754,7 +757,10 @@ void BuildDisplay() {
     tftPrint(1, "C/N", 270, 163, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "dB", 300, 163, ActiveColor, ActiveColorSmooth, 16);
     if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
-    if (region == REGION_US) tftPrint(-1, "ID:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
+    if (region == REGION_US) {
+      tftPrint(-1, "PI:", 212, 184, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, "ID:", 212, 201, ActiveColor, ActiveColorSmooth, 16);
+    }
     tftPrint(-1, "PS:", 3, 193, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "RT:", 3, 221, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "PTY:", 3, 163, ActiveColor, ActiveColorSmooth, 16);
@@ -1098,14 +1104,6 @@ void MenuUp() {
             if (region == REGION_EU) tftPrint(0, myLanguage[language][47], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             if (region == REGION_US) tftPrint(0, myLanguage[language][48], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             regionold = region;
-            if (region == REGION_EU) {
-              fmdeemphasis = DEEMPHASIS_50;
-              radio.setDeemphasis(fmdeemphasis);
-            }
-            if (region == REGION_US) {
-              fmdeemphasis = DEEMPHASIS_75;
-              radio.setDeemphasis(fmdeemphasis);
-            }
             radio.rds.region = region;
             break;
 
@@ -1659,14 +1657,6 @@ void MenuDown() {
             if (region == REGION_EU) tftPrint(0, myLanguage[language][47], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             if (region == REGION_US) tftPrint(0, myLanguage[language][48], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             regionold = region;
-            if (region == REGION_EU) {
-              fmdeemphasis = DEEMPHASIS_50;
-              radio.setDeemphasis(fmdeemphasis);
-            }
-            if (region == REGION_US) {
-              fmdeemphasis = DEEMPHASIS_75;
-              radio.setDeemphasis(fmdeemphasis);
-            }
             radio.rds.region = region;
             break;
 

@@ -389,7 +389,7 @@ void TEF6686::readRDS(byte showrdserrors)
       afreset = false;
     }
 
-    if (rds.region != 1 && ((!rdsAerrorThreshold && !rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold) || (rds.pierrors && !errorfreepi))) {
+    if (((!rdsAerrorThreshold && !rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold) || (rds.pierrors && !errorfreepi))) {
       if (rds.rdsA != piold) {
         piold = rds.rdsA;
         rds.picode[0] = (rds.rdsA >> 12) & 0xF;
@@ -436,38 +436,34 @@ void TEF6686::readRDS(byte showrdserrors)
           memset(rds.picode, 0, sizeof(rds.picode));
         }
       }
-    }
 
-    // USA Station callsign decoder
-    if (rds.region == 1) {                                                                        // When ID was decoded correctly before, no need to decode again.
+      // USA Station callsign decoder
       uint16_t stationID = rds.rdsA;
       if (stationID > 4096) {
         if (stationID > 21671 && (stationID & 0xF00U) >> 8 == 0) stationID = ((uint16_t)uint8_t(0xA0 + ((stationID & 0xF000U) >> 12)) << 8) + lowByte(stationID); // C0DE -> ACDE
         if (stationID > 21671 && lowByte(stationID) == 0) stationID = 0xAF00 + uint8_t(highByte(stationID)); // CD00 -> AFCD
         if (stationID < 39247) {
           if (stationID > 21671) {
-            rds.picode[0] = 'W';
+            rds.stationID[0] = 'W';
             stationID -= 21672;
           } else {
-            rds.picode[0] = 'K';
+            rds.stationID[0] = 'K';
             stationID -= 4096;
           }
-          rds.picode[1] = char(stationID / 676 + 65);
-          rds.picode[2] = char((stationID - 676 * int(stationID / 676)) / 26 + 65);
-          rds.picode[3] = char(((stationID - 676 * int(stationID / 676)) % 26) + 65);
-          rds.picode[5] = '\0';
+          rds.stationID[1] = char(stationID / 676 + 65);
+          rds.stationID[2] = char((stationID - 676 * int(stationID / 676)) / 26 + 65);
+          rds.stationID[3] = char(((stationID - 676 * int(stationID / 676)) % 26) + 65);
+          rds.stationID[5] = '\0';
         } else {
           stationID -= 4835;
-          rds.picode[0] = 'K';
-          rds.picode[1] = char(stationID / 676 + 65);
-          rds.picode[2] = char((stationID - 676 * int(stationID / 676)) / 26 + 65);
-          rds.picode[3] = char(((stationID - 676 * int(stationID / 676)) % 26) + 65);
-          rds.picode[5] = '\0';
+          rds.stationID[0] = 'K';
+          rds.stationID[1] = char(stationID / 676 + 65);
+          rds.stationID[2] = char((stationID - 676 * int(stationID / 676)) / 26 + 65);
+          rds.stationID[3] = char(((stationID - 676 * int(stationID / 676)) % 26) + 65);
+          rds.stationID[5] = '\0';
         }
       }
-      if (((rds.rdsErr >> 14) & 0x02) > 2) rds.picode[5] = '?';
-      if (((rds.rdsErr >> 14) & 0x01) > 1) rds.picode[4] = '?'; else rds.picode[4] = ' ';       // Not sure, add a ?
-      rds.picode[6] = '\0';
+      rds.stationID[6] = '\0';
     }
 
     if (!rds.rdsBerror || showrdserrors == 3) rdsblock = rds.rdsB >> 11; else return;
@@ -1341,8 +1337,12 @@ void TEF6686::clearRDS (bool fullsearchrds)
   for (i = 0; i < 17; i++) rds.stationType[i] = 0x20;
   rds.stationType[17] = 0;
 
-  for (i = 0; i < 6; i++) rds.picode[i] = 0x20;
-  rds.picode[6] = 0;
+  for (i = 0; i < 6; i++) {
+    rds.picode[i] = 0x20;
+    rds.stationID[i] = 0x20;
+    rds.picode[6] = 0;
+    rds.stationID[6] = 0;
+  }
 
   for (i = 0; i < 50; i++) {
     af[i].frequency = 0;

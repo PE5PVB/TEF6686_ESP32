@@ -326,7 +326,7 @@ static const char* const ECCtext[] {
 };
 
 static const char* const LICtext[] = {
-  "Not def.",        // 0
+  "Unknown",         // 0
   "Albanian",        // 1
   "Breton",          // 2
   "Catalan",         // 3
@@ -538,6 +538,7 @@ typedef struct _rds_ {
   String LICtext;
   char stationType[18];
   char picode[7];
+  char stationID[7];
   uint16_t hour, minute, day, month, year, rdsA, rdsB, rdsC, rdsD, rdsErr, rdsStat, correctPI, rdsplusTag1, rdsplusTag2;
   uint16_t aid[10];
   byte aid_counter;

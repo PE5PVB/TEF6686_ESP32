@@ -273,6 +273,7 @@ String RTold;
 String rtplusstringold;
 String salt;
 String saltkey = "                ";
+String stationIDold;
 String SWMIBandstring = String();
 String SWMIBandstringold = String();
 String XDRGTK_key;
@@ -798,7 +799,10 @@ void loop() {
         }
       }
       if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
-      if (region == REGION_US) tftPrint(-1, "ID:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
+      if (region == REGION_US) {
+        tftPrint(-1, "PI:", 212, 184, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, "ID:", 212, 201, ActiveColor, ActiveColorSmooth, 16);
+      }
       tftPrint(-1, "PS:", 3, 193, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, "RT:", 3, 221, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, "PTY:", 3, 163, ActiveColor, ActiveColorSmooth, 16);
@@ -827,7 +831,10 @@ void loop() {
           tft.fillRect(16, 133, 188, 6, GreyoutColor);
         }
         if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
-        if (region == REGION_US) tftPrint(-1, "ID:", 212, 193, GreyoutColor, BackgroundColor, 16);
+        if (region == REGION_US) {
+          tftPrint(-1, "PI:", 212, 184, GreyoutColor, BackgroundColor, 16);
+          tftPrint(-1, "ID:", 212, 201, GreyoutColor, BackgroundColor, 16);
+        }
         tftPrint(-1, "PS:", 3, 193, GreyoutColor, BackgroundColor, 16);
         tftPrint(-1, "RT:", 3, 221, GreyoutColor, BackgroundColor, 16);
         tftPrint(-1, "PTY:", 3, 163, GreyoutColor, BackgroundColor, 16);
@@ -1661,7 +1668,11 @@ void SelectBand() {
     if (!screenmute) {
       BuildDisplay();
       if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
-      if (region == REGION_US) tftPrint(-1, "ID:", 212, 193, GreyoutColor, BackgroundColor, 16);
+      if (region == REGION_US) {
+        tftPrint(-1, "PI:", 212, 184, GreyoutColor, BackgroundColor, 16);
+        tftPrint(-1, "ID:", 212, 201, GreyoutColor, BackgroundColor, 16);
+      }
+
       tftPrint(-1, "PS:", 3, 193, GreyoutColor, BackgroundColor, 16);
       tftPrint(-1, "RT:", 3, 221, GreyoutColor, BackgroundColor, 16);
       tftPrint(-1, "PTY:", 3, 163, GreyoutColor, BackgroundColor, 16);
