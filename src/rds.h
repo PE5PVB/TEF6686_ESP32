@@ -21,6 +21,7 @@ extern bool errorAold;
 extern bool errorBold;
 extern bool errorCold;
 extern bool errorDold;
+extern bool fullsearchrds;
 extern bool hasafold;
 extern bool haseonold;
 extern bool hasrtplusold;

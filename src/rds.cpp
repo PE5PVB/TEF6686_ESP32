@@ -396,6 +396,7 @@ void readRds() {
 
 void showPI() {
   if (strcmp(radio.rds.picode, radioIdPrevious)) {
+    if (!radio.rds.rdsAerror && !radio.rds.rdsBerror && !radio.rds.rdsCerror && !radio.rds.rdsDerror && radio.rds.rdsA != radio.rds.correctPI && PIold.length() > 1) radio.clearRDS(fullsearchrds);
     if (!screenmute) {
       if (advancedRDS) {
         if (region == REGION_EU) tftReplace(0, PIold, radio.rds.picode, 275, 75, PrimaryColor, PrimaryColorSmooth, 28);
