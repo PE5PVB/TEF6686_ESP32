@@ -524,14 +524,15 @@ void TEF6686::readRDS(byte showrdserrors)
             //AF decoder
             if (rdsblock == 0 && rds.rdsC != rdsCold) {                                         // Only when in GROUP 0A
 
-              if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == currentfreq && rds.hasAF) {
+              if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == currentfreq && rds.hasAF && afmethodBtrigger) {
                 afmethodB = true;                                                               // Check for AF method B
                 afmethodBprobe = true;
                 af_updatecounter++;
                 af_counterb = (rds.rdsC >> 8) - 224;
                 af_counterbcheck = 1;
-              } else if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) != currentfreq) {
+              } else if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) != currentfreq && rds.hasAF) {
                 afmethodBprobe = false;
+				afmethodBtrigger = true;
                 af_counterb = 0;
                 af_counterbcheck = 0;
               }
@@ -1427,6 +1428,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
   packet3 = false;
   rds.aid_counter = 0;
   afmethodBprobe = false;
+  afmethodBtrigger = false;
 }
 
 void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {
