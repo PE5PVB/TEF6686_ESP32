@@ -274,7 +274,7 @@ void showECC() {
         tftPrint(-1, ECColdtxt, 242, 193, BackgroundColor, BackgroundColor, 16);
         if (radio.rds.hasECC) tftPrint(-1, (radio.rds.ECCtext.length() == 0 ? myLanguage[language][73] : radio.rds.ECCtext), 242, 193, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "N/A", 242, 193, PrimaryColor, PrimaryColorSmooth, 16);
       }
-      if (radio.rds.ECCtext.length() == 0) ECColdtxt = myLanguage[language][87]; else ECColdtxt = radio.rds.ECCtext;
+      if (radio.rds.ECCtext.length() == 0) ECColdtxt = myLanguage[language][73]; else ECColdtxt = radio.rds.ECCtext;
     }
 
     if (wifi) {
