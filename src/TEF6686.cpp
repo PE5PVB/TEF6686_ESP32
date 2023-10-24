@@ -526,6 +526,11 @@ void TEF6686::readRDS(byte showrdserrors)
             //AF decoder
             if (rdsblock == 0 && rds.rdsC != rdsCold) {                                         // Only when in GROUP 0A
 
+              if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250) {
+				  afinit = true;  // AF detected
+				  rds.hasAF = true;
+			  }
+
               if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == currentfreq && rds.hasAF && afmethodBtrigger) {
                 afmethodB = true;                                                               // Check for AF method B
                 afmethodBprobe = true;
@@ -540,7 +545,6 @@ void TEF6686::readRDS(byte showrdserrors)
               }
 
               if (((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) && ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205)) {
-                afinit = true;  // AF valid
                 if (afmethodBprobe) af_counterbcheck += 2;
               }
 
@@ -551,7 +555,6 @@ void TEF6686::readRDS(byte showrdserrors)
 
                   if ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) buffer0 = (rds.rdsC >> 8) * 10 + 8750; else buffer0 = 0;
                   if ((rds.rdsC & 0xFF) > 0 && (rds.rdsC & 0xFF) < 205) buffer1 = (rds.rdsC & 0xFF) * 10 + 8750; else buffer1 = 0;
-                  if (buffer0 != 0 || buffer1 != 0) rds.hasAF = true;
 
                   if (afmethodBprobe && af_counterbcheck > af_counterb) afmethodBprobe = false; // If more than counter received disable probe flag
 
