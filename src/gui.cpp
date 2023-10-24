@@ -335,7 +335,6 @@ void BuildAFScreen() {
     tftPrint(0, myLanguage[language][93], 160, 222, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, myLanguage[language][88], 184, 48, PrimaryColor, PrimaryColorSmooth, 16);
     tftPrint(-1, myLanguage[language][87], 6, 48, PrimaryColor, PrimaryColorSmooth, 16);
-    for (byte i = 0; i < 20; i++) mappedfreqold[i] = 0;
     RDSstatusold = false;
     ShowFreq(0);
     Stereostatusold = false;
@@ -351,7 +350,9 @@ void BuildAFScreen() {
     strcpy(radioIdPrevious, "");
     programServicePrevious = "";
     afmethodBold = false;
-    for (byte i = 0; i < 11; i++) eonpsold[i] = "";
+    for (byte i = 0; i < 20; i++) eonpsold[i] = "";
+    for (byte i = 0; i < 20; i++) mappedfreqold[i] = 0;
+    for (byte i = 0; i < 20; i++) eonpicodeold[0][i] = '\0';
   }
 }
 

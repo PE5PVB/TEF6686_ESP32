@@ -527,9 +527,9 @@ void TEF6686::readRDS(byte showrdserrors)
             if (rdsblock == 0 && rds.rdsC != rdsCold) {                                         // Only when in GROUP 0A
 
               if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250) {
-				  afinit = true;  // AF detected
-				  rds.hasAF = true;
-			  }
+                afinit = true;  // AF detected
+                rds.hasAF = true;
+              }
 
               if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == currentfreq && rds.hasAF && afmethodBtrigger) {
                 afmethodB = true;                                                               // Check for AF method B
@@ -1240,7 +1240,7 @@ void TEF6686::readRDS(byte showrdserrors)
 
             bool isValuePresent = false;
             for (int i = 0; i < 20; i++) {
-              if (eon[i].pi == rds.rdsD) {                                                      // Check if EON is already in array
+              if (eon[i].pi == rds.rdsD || rds.rdsA == rds.rdsD) {                              // Check if EON is already in array
                 isValuePresent = true;
                 break;
               }

@@ -712,6 +712,6 @@ class TEF6686 {
     uint16_t rdsCold;
     uint8_t af_counterb;
     uint8_t af_counterbcheck;
-	bool afmethodBtrigger;
+    bool afmethodBtrigger;
 };
 #endif

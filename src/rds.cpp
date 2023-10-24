@@ -381,7 +381,7 @@ void readRds() {
 
 void showPI() {
   if (strcmp(radio.rds.picode, radioIdPrevious)) {
-    if (!radio.rds.rdsAerror && !radio.rds.rdsBerror && !radio.rds.rdsCerror && !radio.rds.rdsDerror && radio.rds.rdsA != radio.rds.correctPI && PIold.length() > 1) radio.clearRDS(fullsearchrds);
+    if (!afscreen && !radio.rds.rdsAerror && !radio.rds.rdsBerror && !radio.rds.rdsCerror && !radio.rds.rdsDerror && radio.rds.rdsA != radio.rds.correctPI && PIold.length() > 1) radio.clearRDS(fullsearchrds);
     if (!screenmute) {
       if (advancedRDS) {
         if (region == REGION_EU) tftReplace(0, PIold, radio.rds.picode, 275, 75, PrimaryColor, PrimaryColorSmooth, 28);
@@ -553,6 +553,15 @@ void showRadioText() {
 }
 
 void ShowAFEON() {
+  if (radio.af_counter > 30 || radio.eon_counter > 9) {
+    if (!afpage) {
+      afpage = true;
+      afpagenr = 1;
+    }
+  }
+
+  if (afpage) tftPrint(1, String(afpagenr) + "/2", 315, 222, SecondaryColor, SecondaryColorSmooth, 16);
+
   if (radio.rds.hasAF) {
     if (!hasafold) {
       if (!screenmute) tftPrint(-1, myLanguage[language][87], 6, 54, BackgroundColor, BackgroundColor, 16);
@@ -560,16 +569,7 @@ void ShowAFEON() {
       hasafold = true;
     }
 
-    if (radio.af_counter > 30 || radio.eon_counter > 9) {
-      if (!afpage) {
-        afpage = true;
-        afpagenr = 1;
-      }
-    } else {
-      afpagenr = 0;
-    }
-
-    if (af_counterold != radio.af_updatecounter) {
+    if (af_counterold != radio.af_updatecounter && (afpage != 2 && radio.af_counter < 31)) {
       tft.fillRect(2, 48, 166, 150, BackgroundColor);
       for (byte i = 0; i < radio.af_counter; i++) {
         byte x = i - (afpagenr == 2 ? 30 : 0);
@@ -588,7 +588,6 @@ void ShowAFEON() {
 
       if (radio.af_counter > 10 + (afpagenr == 2 ? 30 : 0)) tft.drawLine(59, 54, 59, 191, SecondaryColor);
       if (radio.af_counter > 20 + (afpagenr == 2 ? 30 : 0)) tft.drawLine(113, 54, 113, 191, SecondaryColor);
-      if (afpage && !screenmute) tftPrint(1, String(afpagenr) + "/2", 315, 222, SecondaryColor, SecondaryColorSmooth, 16);
       af_counterold = radio.af_updatecounter;
     }
   }
@@ -605,21 +604,22 @@ void ShowAFEON() {
       byte y = 0;
       if (afpagenr == 2) y = 10;
       for (byte i = 0; i < radio.eon_counter; i++) {
+        if (strcmp(eonpicodeold[i + y], radio.eon[i + y].picode) != 0) tftPrint(-1, String(eonpicodeold[i + y]), 170, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
         tftPrint(-1, String(radio.eon[i + y].picode), 170, 48 + (15 * i), PrimaryColor, PrimaryColorSmooth, 16);
+        strcpy(eonpicodeold[i + y], radio.eon[i + y].picode);
+
         if (radio.eon[i + y].ps.length() > 0) {
           tftPrint(-1, "PS:", 206, 32, ActiveColor, ActiveColorSmooth, 16);
-          if (radio.eon[i + y].ps != eonpsold[i + y]) {
-            tftPrint(-1, String(eonpsold[i + y]), 206, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
-            eonpsold[i + y] = radio.eon[i + y].ps;
-          }
+
+          if (strcmp(radio.eon[i + y].ps.c_str(), eonpsold[i + y].c_str()) != 0) tftPrint(-1, String(eonpsold[i + y]), 206, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
           tftPrint(-1, String(radio.eon[i + y].ps), 206, 48 + (15 * i), SecondaryColor, SecondaryColorSmooth, 16);
+          eonpsold[i + y] = radio.eon[i + y].ps;
         }
 
         if (radio.eon[i + y].mappedfreq > 0) {
           tftPrint(1, "FREQ:", 316, 32, ActiveColor, ActiveColorSmooth, 16);
-          if (radio.eon[i + y].mappedfreq != mappedfreqold[i + y]) {
-            tftPrint(1, String(mappedfreqold[i + y] / 100) + "." + String((mappedfreqold[i + y] % 100) / 10), 316, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
-          }
+
+          if (radio.eon[i + y].mappedfreq != mappedfreqold[i + y]) tftPrint(1, String(mappedfreqold[i + y] / 100) + "." + String((mappedfreqold[i + y] % 100) / 10), 316, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
           tftPrint(1, String(radio.eon[i + y].mappedfreq / 100) + "." + String((radio.eon[i + y].mappedfreq % 100) / 10), 316, 48 + (15 * i), PrimaryColor, PrimaryColorSmooth, 16);
           mappedfreqold[i + y] = radio.eon[i + y].mappedfreq;
         }
