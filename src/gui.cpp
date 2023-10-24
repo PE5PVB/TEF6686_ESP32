@@ -699,10 +699,6 @@ void BuildAdvancedRDS() {
   TAold = false;
   TPold = false;
   hastmcold = false;
-  errorAold = true;
-  errorBold = true;
-  errorCold = true;
-  errorDold = true;
   dynamicPTYold = false;
   artheadold = false;
   compressedold = false;
