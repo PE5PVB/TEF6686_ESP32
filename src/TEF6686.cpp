@@ -236,9 +236,11 @@ void TEF6686::setAGC(uint8_t agc) {
 }
 
 void TEF6686::setDeemphasis(uint8_t timeconstant) {
-  if (timeconstant == 1) devTEF_Radio_Set_Deemphasis(500);
-  if (timeconstant == 2) devTEF_Radio_Set_Deemphasis(750);
-  if (timeconstant == 3) devTEF_Radio_Set_Deemphasis(0);
+  switch (timeconstant) {
+    case 1: devTEF_Radio_Set_Deemphasis(500); break;
+    case 2: devTEF_Radio_Set_Deemphasis(750); break;
+    default: devTEF_Radio_Set_Deemphasis(0); break;
+  }
 }
 
 void TEF6686::setAudio(uint8_t audio) {
@@ -532,7 +534,7 @@ void TEF6686::readRDS(byte showrdserrors)
                 af_counterbcheck = 1;
               } else if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) != currentfreq && rds.hasAF) {
                 afmethodBprobe = false;
-				afmethodBtrigger = true;
+                afmethodBtrigger = true;
                 af_counterb = 0;
                 af_counterbcheck = 0;
               }

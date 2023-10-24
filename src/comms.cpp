@@ -57,7 +57,7 @@ void Communication() {
                 SelectBand();
               } else {
                 radio.SetFreqAM(frequency_LW);
-				frequency_AM = frequency_LW;
+                frequency_AM = frequency_LW;
               }
             } else if (tempfreq >= FREQ_MW_LOW_EDGE_MIN_9K && tempfreq <= FREQ_MW_HIGH_EDGE_MAX_9K) {
               frequency_MW = tempfreq;
@@ -66,7 +66,7 @@ void Communication() {
                 SelectBand();
               } else {
                 radio.SetFreqAM(frequency_MW);
-				frequency_AM = frequency_MW;
+                frequency_AM = frequency_MW;
               }
             } else {
               frequency_SW = tempfreq;
@@ -75,7 +75,7 @@ void Communication() {
                 SelectBand();
               } else {
                 radio.SetFreqAM(frequency_SW);
-				frequency_AM = frequency_SW;
+                frequency_AM = frequency_SW;
               }
             }
           }
@@ -248,8 +248,14 @@ void XDRGTKRoutine() {
         break;
 
       case 'D':
-        DeEmphasis = atol(buff + 1);
-        DataPrint("D" + String(DeEmphasis) + "\n");
+        byte demp;
+        demp = atol(buff + 1);
+        DataPrint("D" + String(demp) + "\n");
+        switch (demp) {
+          case 0: DeEmphasis = 1; break;
+          case 1: DeEmphasis = 2; break;
+          case 2: DeEmphasis = 0; break;
+        }
         radio.setDeemphasis(DeEmphasis);
         break;
 
@@ -348,8 +354,8 @@ void XDRGTKRoutine() {
         freqtemp = atoi(buff + 1);
         if (seek) seek = false;
         if (freqtemp >= LWLowEdgeSet && freqtemp <= LWHighEdgeSet) {
-		  frequency_LW = freqtemp;
-		  frequency_AM = freqtemp;
+          frequency_LW = freqtemp;
+          frequency_AM = freqtemp;
           if (afscreen || advancedRDS) BuildDisplay();
           if (band != BAND_LW) {
             band = BAND_LW;
@@ -359,8 +365,8 @@ void XDRGTKRoutine() {
           DataPrint("M1\n");
         }
         if (freqtemp >= MWLowEdgeSet && freqtemp <= MWHighEdgeSet) {
-		  frequency_AM = freqtemp;
-		  frequency_MW = freqtemp;
+          frequency_AM = freqtemp;
+          frequency_MW = freqtemp;
           if (afscreen || advancedRDS) BuildDisplay();
           if (band != BAND_MW) {
             band = BAND_MW;
@@ -370,8 +376,8 @@ void XDRGTKRoutine() {
           DataPrint("M1\n");
         }
         if (freqtemp >= SWLowEdgeSet && freqtemp <= SWHighEdgeSet) {
-		  frequency_SW = freqtemp;
-		  frequency_AM = freqtemp;
+          frequency_SW = freqtemp;
+          frequency_AM = freqtemp;
           if (afscreen || advancedRDS) BuildDisplay();
           if (band != BAND_SW) {
             band = BAND_SW;
