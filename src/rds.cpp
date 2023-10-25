@@ -282,7 +282,6 @@ void readRds() {
       if (!RDSstatus) {
         if (radio.rds.correctPI != 0) {
           if (region == REGION_EU) {
-
             if (advancedRDS) tftPrint(0, PIold, 275, 75, SecondaryColor, SecondaryColorSmooth, 28); else tftPrint(0, PIold, 275, 187, SecondaryColor, SecondaryColorSmooth, 28);
           }
 
@@ -298,6 +297,13 @@ void readRds() {
             tft.fillCircle(124, 41, 5, SignificantColor);
             tft.fillCircle(162, 41, 5, SignificantColor);
             tft.fillCircle(200, 41, 5, SignificantColor);
+          }
+          if (radio.rds.hasCT) {
+            if (advancedRDS) {
+              tftPrint(1, rds_clock, 205, 109, SecondaryColor, SecondaryColorSmooth, 16);
+            } else {
+              tftPrint(1, rds_clock, 205, 163, SecondaryColor, SecondaryColorSmooth, 16);
+            }
           }
           dropout = true;
         }
@@ -321,6 +327,13 @@ void readRds() {
           } else {
             tft.fillCircle(203, 223, 2, GreyoutColor);
             tft.fillCircle(203, 234, 2, GreyoutColor);
+          }
+          if (radio.rds.hasCT) {
+            if (advancedRDS) {
+              tftReplace(1, rds_clockold, rds_clock, 205, 109, PrimaryColor, PrimaryColorSmooth, 16);
+            } else {
+              tftReplace(1, rds_clockold, rds_clock, 205, 163, PrimaryColor, PrimaryColorSmooth, 16);
+            }
           }
           dropout = false;
         }
@@ -457,15 +470,22 @@ void showPS() {
 
 void showCT() {
   if (!screenmute) {
-    rds_clock = ((radio.rds.hour < 10 ? "0" : "") + String(radio.rds.hour) + ":" + (radio.rds.minute < 10 ? "0" : "") + String(radio.rds.minute));
-    if (rds_clock != rds_clockold) {
-      if (radio.rds.hasCT) {
+    if (radio.rds.hasCT) rds_clock = ((radio.rds.hour < 10 ? "0" : "") + String(radio.rds.hour) + ":" + (radio.rds.minute < 10 ? "0" : "") + String(radio.rds.minute)); else rds_clock = ((rtc.getHour(true) < 10 ? "0" : "") + String(rtc.getHour(true)) + ":" + (rtc.getMinute() < 10 ? "0" : "") + String(rtc.getMinute()));
+    if (rds_clock != rds_clockold || hasCTold != radio.rds.hasCT) {
+      if (radio.rds.hasCT && RDSstatus) {
+        rtcset = true;
+        rtc.setTime(0, radio.rds.minute, radio.rds.hour, radio.rds.day, radio.rds.month, radio.rds.year);
         if (advancedRDS) tftReplace(1, rds_clockold, rds_clock, 205, 109, PrimaryColor, PrimaryColorSmooth, 16); else tftReplace(1, rds_clockold, rds_clock, 205, 163, PrimaryColor, PrimaryColorSmooth, 16);
       } else {
-        if (advancedRDS) tftPrint(1, rds_clock, 205, 109, BackgroundColor, BackgroundColor, 16); else tftPrint(1, rds_clock, 205, 163, BackgroundColor, BackgroundColor, 16);
+        if (rtcset) {
+          if (advancedRDS) tftReplace(1, rds_clockold, rds_clock, 205, 109, SecondaryColor, SecondaryColorSmooth, 16); else tftReplace(1, rds_clockold, rds_clock, 205, 163, SecondaryColor, SecondaryColorSmooth, 16);
+        } else {
+          if (advancedRDS) tftPrint(1, rds_clock, 205, 109, BackgroundColor, BackgroundColor, 16); else tftPrint(1, rds_clock, 205, 163, BackgroundColor, BackgroundColor, 16);
+        }
       }
     }
     rds_clockold = rds_clock;
+    hasCTold = radio.rds.hasCT;
   }
 }
 

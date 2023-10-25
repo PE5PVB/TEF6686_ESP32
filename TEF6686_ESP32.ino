@@ -4,6 +4,7 @@
 #include <EEPROM.h>
 #include <Wire.h>
 #include <math.h>
+#include <ESP32Time.h>              // https://github.com/fbiego/ESP32Time
 #include <TFT_eSPI.h>               // https://github.com/Bodmer/TFT_eSPI
 #include <Hash.h>                   // https://github.com/bbx10/Hash_tng
 #include "src/WiFiConnect.h"
@@ -64,6 +65,7 @@ bool edgebeep;
 bool externaltune;
 bool fullsearchrds;
 bool hasafold;
+bool hasCTold;
 bool haseonold;
 bool hasrtplusold;
 bool hastmcold;
@@ -80,6 +82,7 @@ bool RDSstatus;
 bool RDSstatusold;
 bool rdsstereoold;
 bool resetFontOnNextCall;
+bool rtcset;
 bool screenmute;
 bool screensavertriggered = false;
 bool seek;
@@ -338,6 +341,8 @@ unsigned long tuningtimer;
 unsigned long udptimer;
 
 TEF6686 radio;
+ESP32Time rtc(0);
+
 TFT_eSprite RadiotextSprite = TFT_eSprite(&tft);
 TFT_eSprite FrequencySprite = TFT_eSprite(&tft);
 TFT_eSprite AdvRadiotextSprite = TFT_eSprite(&tft);
@@ -948,6 +953,7 @@ void loop() {
 }
 
 void GetData() {
+  showCT();
   if (band < BAND_GAP) ShowStereoStatus();
   if (band < BAND_GAP && !menu) {
     if (advancedRDS && !afscreen && !screenmute) ShowAdvancedRDS();
@@ -956,7 +962,6 @@ void GetData() {
       showPTY();
       showECC();
       showRadioText();
-      showCT();
       if (millis() >= tuningtimer + 200) doAF();
     }
     showPI();

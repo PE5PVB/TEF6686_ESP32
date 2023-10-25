@@ -6,6 +6,7 @@
 #include <WiFiClient.h>
 #include "TEF6686.h"
 #include <WiFi.h>
+#include <ESP32Time.h>
 
 extern bool advancedRDS;
 extern bool afmethodBold;
@@ -19,6 +20,7 @@ extern bool dropout;
 extern bool dynamicPTYold;
 extern bool fullsearchrds;
 extern bool hasafold;
+extern bool hasCTold;
 extern bool haseonold;
 extern bool hasrtplusold;
 extern bool hastmcold;
@@ -27,6 +29,7 @@ extern bool RDSSPYTCP;
 extern bool RDSSPYUSB;
 extern bool RDSstatus;
 extern bool rdsstereoold;
+extern bool rtcset;
 extern bool screenmute;
 extern bool setupmode;
 extern byte showrdserrors;
@@ -101,6 +104,7 @@ extern unsigned long rtplustickerhold;
 extern unsigned long rtticker;
 extern unsigned long rttickerhold;
 
+extern ESP32Time rtc;
 extern TFT_eSPI tft;
 extern TEF6686 radio;
 extern WiFiClient RemoteClient;
