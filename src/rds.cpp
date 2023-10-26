@@ -480,7 +480,13 @@ void showCT() {
         if (rtcset) {
           if (advancedRDS) tftReplace(1, rds_clockold, rds_clock, 205, 109, SecondaryColor, SecondaryColorSmooth, 16); else tftReplace(1, rds_clockold, rds_clock, 205, 163, SecondaryColor, SecondaryColorSmooth, 16);
         } else {
-          if (advancedRDS) tftPrint(1, rds_clock, 205, 109, BackgroundColor, BackgroundColor, 16); else tftPrint(1, rds_clock, 205, 163, BackgroundColor, BackgroundColor, 16);
+          if (advancedRDS) {
+            tftPrint(1, rds_clockold, 205, 109, BackgroundColor, BackgroundColor, 16);
+            tftPrint(1, rds_clock, 205, 109, BackgroundColor, BackgroundColor, 16);
+          } else {
+            tftPrint(1, rds_clockold, 205, 163, BackgroundColor, BackgroundColor, 16);
+            tftPrint(1, rds_clock, 205, 163, BackgroundColor, BackgroundColor, 16);
+          }
         }
       }
     }

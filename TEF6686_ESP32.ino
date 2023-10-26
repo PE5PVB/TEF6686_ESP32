@@ -953,7 +953,7 @@ void loop() {
 }
 
 void GetData() {
-  showCT();
+  if (!afscreen) showCT();
   if (band < BAND_GAP) ShowStereoStatus();
   if (band < BAND_GAP && !menu) {
     if (advancedRDS && !afscreen && !screenmute) ShowAdvancedRDS();
