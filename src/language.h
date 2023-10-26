@@ -905,7 +905,7 @@ static const char* const myLanguage[18][207] = {
     "Απαλοιφή θορύβου FM", // 65
     "Οι προεπιλογές φορτώθηκαν", // 66
     "Έξοδος ήχου", // 67
-    "Συντονισμός κατά την προστασία οθόνης", // 68
+    "Συντονισμός σε προστασία οθόνης", // 68
     "Αναστροφή χρωμάτων οθόνης", // 69
     "Πληροφορίες λογισμικού", // 70
     "Κύριος κώδικας:", // 71
@@ -931,9 +931,9 @@ static const char* const myLanguage[18][207] = {
     "Προστασία οθόνης", // 91
     "Δευτ.", // 92
     "ΠΙΕΣΤΕ BAND ΓΙΑ ΚΛΕΙΣΙΜΟ", // 93
-    "1% φωτεινότητα", // 94
-    "25% φωτεινότητα", // 95
-    "50% φωτεινότητα", // 96
+    "1% φωτεινή", // 94
+    "25% φωτεινή", // 95
+    "50% φωτεινή", // 96
     "AM Ολίσθηση επιπέδου RF:", // 97
     "Μονάδα μέτρησης σήματος:", // 98
     "Χρήση AF:", // 99
@@ -3413,13 +3413,13 @@ static const char* const myLanguage[18][207] = {
     "Atenuador de ruido FM", // 65
     "Carga de configuración predeterminada", // 66
     "Salida de audio", // 67
-    "Sintonización durante el protector de pantalla", // 68
+    "Sintonización durante el protector", // 68
     "Invertir pantalla", // 69
     "Acerca del software", // 70
     "Código principal:", // 71
     "Colaboradores:", // 72
     "Desconocido", // 73
-    "Screensaver options", // 74
+    "Opciones de protector de pantalla", // 74
     "Temporizador de tiempo muerto", // 75
     "Apagar pantalla", // 76
     "Tema", // 77
@@ -3524,7 +3524,7 @@ static const char* const myLanguage[18][207] = {
     "Buffering de RT", // 176
     "Configuración principal", // 177
     "Configuración de audio", // 178
-    "Configuración de pantalla", // 179
+    "Configuración de visualización", // 179
     "Configuración de RDS", // 180
     "Configuración de FM", // 181
     "Configuración de AM", // 182
@@ -3536,7 +3536,7 @@ static const char* const myLanguage[18][207] = {
     "Contador de detección de co-canal", // 188
     "PRINCIPAL", // 189
     "AUDIO", // 190
-    "PANTALLA", // 191
+    "VISUALIZACIÓN", // 191
     "RDS", // 192
     "FM", // 193
     "AM", // 194
@@ -3551,7 +3551,7 @@ static const char* const myLanguage[18][207] = {
     "PS rápido", // 203
     "Aplicaciones detectadas", // 204
     "Min.", // 205
-    "Velocidad de SPI dinámica" // 206
+    "Velocidad de SPI" // 206
   },
 
   { "Português", // Portuguese
@@ -3579,8 +3579,8 @@ static const char* const myLanguage[18][207] = {
     "Definir borda da faixa baixa", // 22
     "Definir borda da faixa alta", // 23
     "Definir deslocamento de nível", // 24
-    "Definir limiar de separação estéreo", // 25
-    "Definir frequência do canto de corte alto", // 26
+    "Limiar de separação estéreo", // 25
+    "Frequência do canto de corte alto", // 26
     "Definir limiar de corte alto", // 27
     "Definir limiar de nível baixo", // 28
     "Definir brilho da tela", // 29
@@ -3595,7 +3595,7 @@ static const char* const myLanguage[18][207] = {
     "Mostrar erros RDS", // 38
     "Idioma", // 39
     "Escolha o idioma", // 40
-    "PRESSIONE O MODO PARA SAIR E SALVAR", // 41
+    "PRESSIONE O MODE PARA SAIR E SALVAR", // 41
     "Ligado", // 42
     "Silenciamento suave FM", // 43
     "Silenciamento suave AM", // 44
@@ -3622,7 +3622,7 @@ static const char* const myLanguage[18][207] = {
     "Supressor de ruído FM", // 65
     "Padrões carregados", // 66
     "Saída de áudio", // 67
-    "Ajuste durante a proteção de tela", // 68
+    "Sintonização com proteção de tela", // 68
     "Inverter a tela", // 69
     "Sobre o software", // 70
     "Código principal:", // 71
@@ -3641,9 +3641,9 @@ static const char* const myLanguage[18][207] = {
     "Sakura", // 84
     "Branco total", // 85
     "NÃO POSSÍVEL", // 86
-    "Nenhum AF disponível", // 87
-    "Nenhum EON disponível", // 88
-    "Nenhum RT+ disponível", // 89
+    "AF não disponível", // 87
+    "EON não disponível", // 88
+    "RT+ não disponível", // 89
     "Passo padrão FM", // 90
     "Proteção de tela", // 91
     "Segundos", // 92
@@ -3663,7 +3663,7 @@ static const char* const myLanguage[18][207] = {
     "OIRT", // 106
     "Rotativo enquanto a tela está desligada", // 107
     "Seletor de modelo", // 108
-    "Base (ILI9341)", // 109
+    "Básico (ILI9341)", // 109
     "Portátil (ILI9341)", // 110
     "Toque portátil (ILI9341)", // 111
     "Título", // 112
@@ -3733,7 +3733,7 @@ static const char* const myLanguage[18][207] = {
     "Buffering RT", // 176
     "Configurações principais", // 177
     "Configurações de áudio", // 178
-    "Configurações de tela", // 179
+    "Configurações de exibição", // 179
     "Configurações RDS", // 180
     "Configurações FM", // 181
     "Configurações AM", // 182
