@@ -350,6 +350,7 @@ TFT_eSprite EONSprite = TFT_eSprite(&tft);
 TFT_eSprite RTPlusSprite = TFT_eSprite(&tft);
 TFT_eSprite AFSprite = TFT_eSprite(&tft);
 TFT_eSprite SquelchSprite = TFT_eSprite(&tft);
+TFT_eSprite MenuInfobox = TFT_eSprite(&tft);
 
 WiFiConnect wc;
 WiFiServer Server(7373);
@@ -515,6 +516,7 @@ void setup() {
   RTPlusSprite.createSprite(172, 19);
   AFSprite.createSprite(172, 19);
   SquelchSprite.createSprite(47, 19);
+  MenuInfobox.createSprite(292, 80);
 
   RadiotextSprite.setTextDatum(TL_DATUM);
   FrequencySprite.setTextDatum(TR_DATUM);
@@ -523,8 +525,10 @@ void setup() {
   RTPlusSprite.setTextDatum(TL_DATUM);
   AFSprite.setTextDatum(TL_DATUM);
   SquelchSprite.setTextDatum(TL_DATUM);
+  MenuInfobox.setTextDatum(TC_DATUM);
 
   FrequencySprite.loadFont(FREQFONT);
+
   if (language == LANGUAGE_CHS) {
     RadiotextSprite.loadFont(FONT16_CHS);
     AdvRadiotextSprite.loadFont(FONT16_CHS);
@@ -532,6 +536,7 @@ void setup() {
     RTPlusSprite.loadFont(FONT16_CHS);
     AFSprite.loadFont(FONT16_CHS);
     SquelchSprite.loadFont(FONT16_CHS);
+    MenuInfobox.loadFont(FONT28_CHS);
   } else {
     RadiotextSprite.loadFont(FONT16);
     AdvRadiotextSprite.loadFont(FONT16);
@@ -539,6 +544,7 @@ void setup() {
     RTPlusSprite.loadFont(FONT16);
     AFSprite.loadFont(FONT16);
     SquelchSprite.loadFont(FONT16);
+    MenuInfobox.loadFont(FONT28);
   }
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH) {
@@ -1872,6 +1878,7 @@ void ModeButtonPress() {
         RTPlusSprite.unloadFont();
         AFSprite.unloadFont();
         SquelchSprite.unloadFont();
+        MenuInfobox.unloadFont();
         if (language == LANGUAGE_CHS) {
           RadiotextSprite.loadFont(FONT16_CHS);
           AdvRadiotextSprite.loadFont(FONT16_CHS);
@@ -1879,6 +1886,7 @@ void ModeButtonPress() {
           RTPlusSprite.loadFont(FONT16_CHS);
           AFSprite.loadFont(FONT16_CHS);
           SquelchSprite.loadFont(FONT16_CHS);
+          MenuInfobox.loadFont(FONT28_CHS);
         } else {
           RadiotextSprite.loadFont(FONT16);
           AdvRadiotextSprite.loadFont(FONT16);
@@ -1886,6 +1894,7 @@ void ModeButtonPress() {
           RTPlusSprite.loadFont(FONT16);
           AFSprite.loadFont(FONT16);
           SquelchSprite.loadFont(FONT16);
+          MenuInfobox.loadFont(FONT28);
         }
         doBandSelectionFM();
         doBandSelectionAM();
@@ -3386,7 +3395,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.commit();
 }
 
-void tftReplace(int8_t offset, const String & textold, const String & text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize) {
+void tftReplace(int8_t offset, const String &textold, const String &text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize) {
   const uint8_t *selectedFont = nullptr;
   if (language == LANGUAGE_CHS) {
     if (fontsize == 16) selectedFont = FONT16_CHS;
@@ -3422,10 +3431,13 @@ void tftReplace(int8_t offset, const String & textold, const String & text, int1
     case 1: tft.setTextDatum(TR_DATUM); break;
   }
 
-  tft.drawString(text, x, y);
+  String modifiedText = text;
+  modifiedText.replace("\n", " ");
+
+  tft.drawString(modifiedText, x, y);
 }
 
-void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize) {
+void tftPrint(int8_t offset, const String &text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize) {
   const uint8_t *selectedFont = nullptr;
   if (language == LANGUAGE_CHS) {
     if (fontsize == 16) selectedFont = FONT16_CHS;
@@ -3452,7 +3464,10 @@ void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int colo
     case 1: tft.setTextDatum(TR_DATUM); break;
   }
 
-  tft.drawString(text, x, y, 1);
+  String modifiedText = text;
+  modifiedText.replace("\n", " ");
+
+  tft.drawString(modifiedText, x, y, 1);
 }
 
 void deepSleep() {

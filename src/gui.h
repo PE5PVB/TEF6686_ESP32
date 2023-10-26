@@ -164,6 +164,7 @@ extern unsigned int mappedfreqold[20];
 extern TFT_eSPI tft;
 extern TEF6686 radio;
 extern WiFiConnect wc;
+extern TFT_eSprite MenuInfobox;
 
 void BuildAFScreen();
 void BuildMenu();
@@ -173,6 +174,7 @@ void MenuUp();
 void MenuDown();
 void DoMenu();
 void doTheme();
+void Infoboxprint(const char* input);
 
 extern void ShowFreq(int mode);
 extern void ShowBandSelectionFM(bool notglanceview, bool normaldisplay);
