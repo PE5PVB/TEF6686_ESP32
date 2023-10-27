@@ -838,65 +838,65 @@ static const char* const myLanguage[18][207] = {
   },
 
   { "Ελληνικά", // Greek
-    "Η διεύθυνση του ρότορα άλλαξε", // 1
+    "Η διεύθυνση του ρότορα\nάλλαξε", // 1
     "Ελευθερώστε το πλήκτρο", // 2
     "Η οθόνη αναποδογύρισε", // 3
-    "Βαθμονόμηση αναλογικού μετρητή", // 4
-    "Αφήστε το πλήκτρο όταν είστε έτοιμοι", // 5
-    "ο κωδικοποιητής ρυθμίστηκε σε οπτικός", // 6
-    "ο κωδικοποιητής ρυθμίστηκε σε στάνταρ", // 7
+    "Βαθμονόμηση\nαναλογικού μετρητή", // 4
+    "Αφήστε το πλήκτρο\nόταν είστε έτοιμοι", // 5
+    "ο κωδικοποιητής ρυθμίστηκε\nσε οπτικός", // 6
+    "ο κωδικοποιητής ρυθμίστηκε\nσε στάνταρ", // 7
     "Δέκτης FM/AM", // 8
     "Tuner: !Κανένα!", // 9
     "Ένταση ήχου:", // 10
     "Μετατροπέας:", // 11
     "Κάτω όριο μπάντας:", // 12
     "Άνω όριο μπάντας:", // 13
-    "FM Ολίσθηση επιπέδου RF:", // 14
+    "FM Ολίσθηση\nεπιπέδου RF:", // 14
     "Κατώφλι στέρεο:", // 15
     "Όριο υψηλής αποκοπής:", // 16
-    "Κατώφλι υψηλής αποκοπής:", // 17
-    "Κατώφλι χαμηλού επιπέδου:", // 18
+    "Κατώφλι υψηλής\nαποκοπής:", // 17
+    "Κατώφλι χαμηλού\nεπιπέδου:", // 18
     "Αντίθεση:", // 19
     "Ορισμός έντασης ήχου", // 20
     "Ολίσθηση (offset) κωδικοποιητή", // 21
     "Κάτω όριο μπάντας", // 22
     "Άνω όριο μπάντας", // 23
     "Επίπεδο ολίσθησης", // 24
-    "Κατώφλι διαχωρισμού στέρεο", // 25
+    "Κατώφλι διαχωρισμού\nστέρεο", // 25
     "Συχνότητα υψηλής αποκοπής", // 26
-    "Κατώφλι υψηλής αποκοπής", // 27
-    "Κατώφλι χαμηλού επιπέδου", // 28
+    "Κατώφλι υψηλής\nαποκοπής", // 27
+    "Κατώφλι χαμηλού\nεπιπέδου", // 28
     "Φωτεινότητα οθόνης", // 29
     "Ανενεργό", // 30
     "Οθόνη σε σίγαση!", // 31
-    "Για επαναφορά ήχου τσεκάρετε το RF+", // 32
+    "Για επαναφορά ήχου\nτσεκάρετε το RF+", // 32
     "ΑΝΕΝ.", // 33
     "ΑΝΙΧΝΕΥΣΗ...", // 34
     "Το tuner δεν εντοπίστηκε", // 35
-    "Η έκδοση tuner ορίστηκε σε: v", // 36
-    "Παρακαλώ επανεκκινήστε το tuner", // 37
-    "Περιθώριο σφαλμάτων RDS", // 38
+    "Η έκδοση tuner\nορίστηκε σε: v", // 36
+    "Παρακαλώ επανεκκινήστε\nτο tuner", // 37
+    "Περιθώριο σφαλμάτων\nRDS", // 38
     "Γλώσσα", // 39
     "Επιλογή γλώσσας", // 40
     "ΠΙΕΣΤΕ MODE ΓΙΑ ΕΞΟΔΟ & ΑΠΟΘΗΚΕΥΣΗ", // 41
     "Ενεργό", // 42
     "Ήπια σίγαση FM", // 43
     "Ήπια σίγαση AM", // 44
-    "Ηχητικό σήμα στο όριο μπάντας", // 45
+    "Ηχητικό σήμα στο όριο\nμπάντας", // 45
     "Περιοχή", // 46
     "Ευρώπη", // 47
     "Η.Π.Α.", // 48
-    "Εμφάνιση κάτω παύλας στο RDS", // 49
+    "Εμφάνιση κάτω παύλας\nστο RDS", // 49
     "USB λειτουργία", // 50
     "Wi-Fi ενεργό", // 51
     "Ρύθμιση Wi-Fi", // 52
     "Συνδεθείτε στο: ", // 53
     "για ρύθμιση του WiFi", // 54
-    "Προσπάθεια σύνδεσης στο WiFi", // 55
-    "ΑΠΟΤΥΧΙΑ.. WiFi ανενεργό", // 56
+    "Προσπάθεια σύνδεσης\nστο WiFi", // 55
+    "ΑΠΟΤΥΧΙΑ..\nWiFi ανενεργό", // 56
     "ΣΕ ΣΥΝΔΕΣΗ!", // 57
     "IP πελάτη λίστας σταθμών", // 58
-    "Εμφάνιση μήκους κύματος SW", // 59
+    "Εμφάνιση μήκους\nκύματος SW", // 59
     "Φίλτρο RDS", // 60
     "Εμφάνιση σφαλμάτων PI", // 61
     "Εμφάνιση squelch", // 62
@@ -905,13 +905,13 @@ static const char* const myLanguage[18][207] = {
     "Απαλοιφή θορύβου FM", // 65
     "Οι προεπιλογές φορτώθηκαν", // 66
     "Έξοδος ήχου", // 67
-    "Συντονισμός σε προστασία οθόνης", // 68
+    "Συντονισμός σε προστασία\nοθόνης", // 68
     "Αναστροφή χρωμάτων οθόνης", // 69
     "Πληροφορίες λογισμικού", // 70
     "Κύριος κώδικας:", // 71
     "Συνεργάτες:", // 72
     "Άγνωστο", // 73
-    "Επιλογές προστασίας οθόνης", // 74
+    "Επιλογές προστασίας\nοθόνης", // 74
     "Χρονοδιακόπτης λήξης", // 75
     "Οθόνη σβηστή", // 76
     "Θέμα", // 77
@@ -934,8 +934,8 @@ static const char* const myLanguage[18][207] = {
     "1% φωτεινή", // 94
     "25% φωτεινή", // 95
     "50% φωτεινή", // 96
-    "AM Ολίσθηση επιπέδου RF:", // 97
-    "Μονάδα μέτρησης σήματος:", // 98
+    "AM Ολίσθηση\nεπιπέδου RF:", // 97
+    "Μονάδα μέτρησης\nσήματος:", // 98
     "Χρήση AF:", // 99
     "Επιλογή μπάντας FM:", // 100
     "Επιλογή μπάντας AM:", // 101
@@ -944,7 +944,7 @@ static const char* const myLanguage[18][207] = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Περιστροφή με οθόνη σβηστή", // 107
+    "Περιστροφή με οθόνη\nσβηστή", // 107
     "Επιλογή μοντέλου", // 108
     "Βασικό (ILI9341)", // 109
     "Φορητό (ILI9341)", // 110
@@ -1022,10 +1022,10 @@ static const char* const myLanguage[18][207] = {
     "Ρυθμίσεις AM", // 182
     "Συνδεσιμότητα", // 183
     "ΠΙΕΣΤΕ MODE ΓΙΑ ΕΠΙΣΤΡΟΦΗ", // 184
-    "Εντοπισμός ομοκαναλικού AM", // 185
-    "Ευαισθησία ομοκαναλικού AM", // 186
-    "Κατώφλι ομοκαναλικού AM", // 187
-    "Μετρητής ομοκαναλικού AM", // 188
+    "Εντοπισμός\nομοκαναλικού AM", // 185
+    "Ευαισθησία\nομοκαναλικού AM", // 186
+    "Κατώφλι\nομοκαναλικού AM", // 187
+    "Μετρητής\nομοκαναλικού AM", // 188
     "ΒΑΣΙΚΕΣ", // 189
     "ΗΧΟΣ", // 190
     "ΕΜΦΑΝΙΣΗ", // 191
@@ -1033,7 +1033,7 @@ static const char* const myLanguage[18][207] = {
     "FM", // 193
     "AM", // 194
     "ΣΥΝΔΕΣΗ", // 195
-    "Αυτόματη ταξινόμηση AF", // 196
+    "Αυτόματη ταξινόμηση\nAF", // 196
     "ID λίστας σταθμών", // 197
     "AM εξασθένιση", // 198
     "FM αποέμφαση", // 199
@@ -1043,7 +1043,7 @@ static const char* const myLanguage[18][207] = {
     "Γρήγορο PS", // 203
     "Εντοπισμένες εφαρμογές", // 204
     "Λεπτ.", // 205
-    "Δυναμική ταχύτητα SPI" // 206
+    "Δυναμική ταχύτητα\nSPI" // 206
   },
 
   { "Română", // Romanian
@@ -1884,12 +1884,12 @@ static const char* const myLanguage[18][207] = {
 
   { "Français", // French
     "Sens de rotation modifié", // 1
-    "Veuillez relâcher le bouton", // 2
+    "Veuillez relâcher\nle bouton", // 2
     "Écran inversé", // 3
-    "Calibrer le compteur analogique", // 4
-    "Relâchez le bouton lorsque prêt", // 5
-    "Codeur réglé sur optique", // 6
-    "Codeur réglé sur standard", // 7
+    "Calibrer le compteur\nanalogique", // 4
+    "Relâchez le bouton\nlorsque prêt", // 5
+    "Codeur réglé\nsur optique", // 6
+    "Codeur réglé\nsur standard", // 7
     "Récepteur FM/AM", // 8
     "Tuner: Aucun!", // 9
     "Volume:", // 10
@@ -1898,65 +1898,65 @@ static const char* const myLanguage[18][207] = {
     "Limite de bande haute:", // 13
     "FM décalage du niveau RF:", // 14
     "Stéréo seuil minimum:", // 15
-    "Angle du filtre à coupe haute:", // 16
-    "Seuil du filtre à coupe haute:", // 17
-    "Seuil minimum de niveau bas:", // 18
+    "Angle du filtre\nà coupe haute:", // 16
+    "Seuil du filtre\nà coupe haute:", // 17
+    "Seuil minimum de\nniveau bas:", // 18
     "Contraste:", // 19
     "Réglage du volume", // 20
     "Décalage du convertisseur", // 21
     "Limite de bande basse", // 22
     "Limite de bande haute", // 23
     "Décalage du niveau", // 24
-    "Seuil de séparation stéréo", // 25
-    "Fréquence de coupe élevée", // 26
+    "Seuil de séparation\nstéréo", // 25
+    "Fréquence de coupe\nélevée", // 26
     "Seuil de coupe élevée", // 27
     "Seuil de niveau bas", // 28
     "Luminosité de l'affichage", // 29
     "Éteint", // 30
     "L'écran est désactivé!", // 31
-    "Pour le réactiver, décochez la case RF+", // 32
+    "Pour le réactiver,\ndécochez la case RF+", // 32
     "FERMÉ", // 33
     "RECHERCHE...", // 34
     "Tuner non détecté", // 35
     "Version du récepteur: v", // 36
-    "Veuillez redémarrer le récepteur", // 37
-    "Montrer les erreurs de décodage RDS", // 38
+    "Veuillez redémarrer\nle récepteur", // 37
+    "Montrer les erreurs\nde décodage RDS", // 38
     "Langage", // 39
     "Choix de la langue", // 40
     "APPUYEZ MODE POUR SORTIE & STOCKAGE", // 41
     "Allumé", // 42
     "Sourdine douce FM", // 43
     "Sourdine douce AM", // 44
-    "Bip à la limite de bande", // 45
+    "Bip à la limite\nde bande", // 45
     "Région", // 46
     "Europe", // 47
     "États-Unis", // 48
-    "Montre les tirets du bas du PS", // 49
+    "Montre les tirets du\nbas du PS", // 49
     "Mode USB", // 50
     "Wi-Fi actif", // 51
     "Configuration du Wi-Fi", // 52
     "Se connecter au réseau:", // 53
-    "pour configurer le Wi-Fi", // 54
-    "Tentative de connexion en mode Wi-Fi", // 55
-    "CONNEXION IMPOSSIBLE... Désactivation du Wi-Fi", // 56
+    "pour configurer\nle Wi-Fi", // 54
+    "Tentative de connexion\nen mode Wi-Fi", // 55
+    "CONNEXION IMPOSSIBLE...\nDésactivation du Wi-Fi", // 56
     "CONNECTÉ!", // 57
     "Stationlist client IP", // 58
-    "Affihcer la longueur d'onde SW", // 59
+    "Afficher la longueur\nd'onde SW", // 59
     "Filtre RDS", // 60
-    "Afficher les erreurs de décodage PI", // 61
+    "Afficher les erreurs\nde décodage PI", // 61
     "Afficher le squelch", // 62
     "Compteur de modulation", // 63
     "Réducteur de bruit AM", // 64
     "Réducteur de bruit FM", // 65
-    "Paramètres par défaut chargés", // 66
+    "Paramètres par défaut\nchargés", // 66
     "Sortie audio", // 67
-    "Réglage pendant l'économiseur d'écran", // 68
+    "Réglage pendant\nl'économiseur d'écran", // 68
     "Inverser l'affichage", // 69
     "À propos du logiciel", // 70
     "Code principal :", // 71
     "Contributeurs :", // 72
     "Inconnu", // 73
-    "Options d'économiseur d'écran", // 74
+    "Options d'économiseur\nd'écran", // 74
     "Temporisateur", // 75
     "Affichage éteint", // 76
     "Thème", // 77
@@ -1972,24 +1972,24 @@ static const char* const myLanguage[18][207] = {
     "AF indisponible", // 87
     "EON indisponible", // 88
     "RT+ indisponible", // 89
-    "Valeur du pas FM par défaut", // 90
+    "Valeur du pas FM\npar défaut", // 90
     "Screensaver", // 91
     "Sec", // 92
     "APPUYEZ SUR BAND POUR FERMER", // 93
     "1% luminosité", // 94
     "25% luminosité", // 95
     "50% luminosité", // 96
-    "AM décalage du niveau RF:", // 97
-    "Unité de mesure du signal:", // 98
+    "AM décalage du\nniveau RF:", // 97
+    "Unité de mesure\ndu signal:", // 98
     "Utilisez le AF:", // 99
-    "Sélectionner la bande FM:", // 100
-    "Sélectionner la bande AM:", // 101
+    "Sélectionner la\nbande FM:", // 100
+    "Sélectionner la\nbande AM:", // 101
     "LW", // 102
     "AM", // 103
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotation lorsque l'écran est éteint", // 107
+    "Rotation lorsque\nl'écran est éteint", // 107
     "Sélecteur de modèle", // 108
     "Base (ILI9341)", // 109
     "Portable (ILI9341)", // 110
@@ -2068,9 +2068,9 @@ static const char* const myLanguage[18][207] = {
     "Connectivité", // 183
     "APPUYEZ MODE POUR RETOURNER", // 184
     "AM CoChannelDet", // 185
-    "CoChannelDet sensibilité", // 186
-    "AM CoChannelDet sueil", // 187
-    "CoChannelDet compteur", // 188
+    "CoChannelDet\nsensibilité", // 186
+    "AM CoChannelDet\nsueil", // 187
+    "CoChannelDet\ncompteur", // 188
     "PRINCIPAUX", // 189
     "AUDIO", // 190
     "AFFICHAGE", // 191
@@ -2088,7 +2088,7 @@ static const char* const myLanguage[18][207] = {
     "PS rapide", // 203
     "Applications détectées", // 204
     "Min.", // 205
-    "Vitesse SPI dynamique" // 206
+    "Vitesse SPI\ndynamique" // 206
   },
 
   { "Български", // Bulgarian
@@ -3346,43 +3346,43 @@ static const char* const myLanguage[18][207] = {
   },
 
   { "Español", // Spanish
-    "La dirección rotativa cambió", // 1
-    "Por favor, suelte el botón", // 2
+    "La dirección rotativa\ncambió", // 1
+    "Por favor,\nsuelte el botón", // 2
     "Pantalla girada", // 3
-    "Calibrar el medidor analógico", // 4
-    "Suelte el botón cuando esté listo", // 5
-    "Codificador configurado como óptico", // 6
-    "Codificador configurado como estándar", // 7
+    "Calibrar el medidor\nanalógico", // 4
+    "Suelte el botón\ncuando esté listo", // 5
+    "Codificador configurado\ncomo óptico", // 6
+    "Codificador configurado\ncomo estándar", // 7
     "Receptor FM/AM", // 8
     "Sintonizador: ¡Ninguno!", // 9
     "Volumen:", // 10
     "Convertidor:", // 11
     "Banda baja:", // 12
     "Banda alta:", // 13
-    "Desplazamiento de nivel RF de FM:", // 14
+    "Desplazamiento de\nnivel RF de FM:", // 14
     "Umbral estéreo:", // 15
     "Esquina de corte alta:", // 16
     "Umbral de corte alto:", // 17
     "Umbral de nivel bajo:", // 18
     "Contraste:", // 19
     "Ajustar volumen", // 20
-    "Ajustar desplazamiento del convertidor", // 21
+    "Ajustar desplazamiento\ndel convertidor", // 21
     "Ajustar banda baja", // 22
     "Ajustar banda alta", // 23
     "Ajustar desplazamiento de nivel", // 24
-    "Ajustar umbral de separación estéreo", // 25
+    "Ajustar umbral de\nseparación estéreo", // 25
     "Ajustar frecuencia de corte alta", // 26
     "Ajustar umbral de corte alto", // 27
     "Ajustar umbral de nivel bajo", // 28
     "Ajustar brillo de la pantalla", // 29
     "Apagar", // 30
     "¡La pantalla está en silencio!", // 31
-    "Para desactivar, desmarque la casilla RF+", // 32
+    "Para desactivar,\ndesmarque la casilla RF+", // 32
     "APAGADO", // 33
     "ESCANEANDO...", // 34
     "Sintonizador no detectado", // 35
-    "Versión del sintonizador establecida: v", // 36
-    "Por favor, reinicie el sintonizador", // 37
+    "Versión del sintonizador\nestablecida: v", // 36
+    "Por favor, reinicie\nel sintonizador", // 37
     "Mostrar errores RDS", // 38
     "Idioma", // 39
     "Elegir idioma", // 40
@@ -3390,37 +3390,37 @@ static const char* const myLanguage[18][207] = {
     "Encendido", // 42
     "Silencio FM", // 43
     "Silencio AM", // 44
-    "Pitido en el borde de la banda", // 45
+    "Pitido en el borde\nde la banda", // 45
     "Región", // 46
     "Europa", // 47
     "EE. UU.", // 48
-    "Mostrar guion bajo en RDS", // 49
+    "Mostrar guion bajo\nen RDS", // 49
     "Modo USB", // 50
     "Wi-Fi activado", // 51
     "Configurar Wi-Fi", // 52
     "Conectar a: ", // 53
-    "para configurar Wi-Fi", // 54
-    "Intentando conectar a Wi-Fi", // 55
+    "para configurar\nWi-Fi", // 54
+    "Intentando conectar\na Wi-Fi", // 55
     "¡FALLIDO!", // 56
     "¡CONECTADO!", // 57
-    "IP del cliente de la lista de estaciones", // 58
-    "Mostrar longitud de onda de SW", // 59
+    "IP del cliente de la\nlista de estaciones", // 58
+    "Mostrar longitud de\nonda de SW", // 59
     "Filtro RDS", // 60
     "Mostrar errores de PI", // 61
     "Mostrar squelch", // 62
     "Medidor de modulación", // 63
-    "Atenuador de ruido AM", // 64
-    "Atenuador de ruido FM", // 65
-    "Carga de configuración predeterminada", // 66
+    "Atenuador de\nruido AM", // 64
+    "Atenuador de\nruido FM", // 65
+    "Carga de configuración\npredeterminada", // 66
     "Salida de audio", // 67
-    "Sintonización durante el protector", // 68
+    "Sintonización durante\nel protector", // 68
     "Invertir pantalla", // 69
     "Acerca del software", // 70
     "Código principal:", // 71
     "Colaboradores:", // 72
     "Desconocido", // 73
-    "Opciones de protector de pantalla", // 74
-    "Temporizador de tiempo muerto", // 75
+    "Opciones de protector\nde pantalla", // 74
+    "Temporizador de\ntiempo muerto", // 75
     "Apagar pantalla", // 76
     "Tema", // 77
     "Predeterminado", // 78
@@ -3435,15 +3435,15 @@ static const char* const myLanguage[18][207] = {
     "No AF disponible", // 87
     "No EON disponible", // 88
     "No RT+ disponible", // 89
-    "Paso predeterminado de FM", // 90
+    "Paso predeterminado\nde FM", // 90
     "Protector de pantalla", // 91
     "seg.", // 92
     "PRESIONE BAND PARA CERRAR", // 93
     "1% de brillo", // 94
     "25% de brillo", // 95
     "50% de brillo", // 96
-    "Desplazamiento de nivel RF de AM:", // 97
-    "Unidad de medidor de señal:", // 98
+    "Desplazamiento de\nnivel RF de AM:", // 97
+    "Unidad de medidor\nde señal:", // 98
     "Usar AF:", // 99
     "Seleccionar banda de FM:", // 100
     "Seleccionar banda de AM:", // 101
@@ -3452,7 +3452,7 @@ static const char* const myLanguage[18][207] = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotación con pantalla apagada", // 107
+    "Rotación con\npantalla apagada", // 107
     "Selector de modelo", // 108
     "Base (ILI9341)", // 109
     "Portátil (ILI9341)", // 110
@@ -3502,8 +3502,8 @@ static const char* const myLanguage[18][207] = {
     "Teléfono", // 154
     "SMS al estudio", // 155
     "SMS", // 156
-    "Correo electrónico de la línea directa", // 157
-    "Correo electrónico del estudio", // 158
+    "Correo electrónico\nde la línea directa", // 157
+    "Correo electrónico\ndel estudio", // 158
     "Correo electrónico", // 159
     "Chat", // 160
     "Centro de chat", // 161
@@ -3530,10 +3530,10 @@ static const char* const myLanguage[18][207] = {
     "Configuración de AM", // 182
     "Conectividad", // 183
     "PRESIONE MODE PARA VOLVER", // 184
-    "Detección de co-canal AM", // 185
-    "Sensibilidad de detección de co-canal", // 186
-    "Umbral de detección de co-canal", // 187
-    "Contador de detección de co-canal", // 188
+    "Detección de\nco-canal AM", // 185
+    "Sensibilidad de\ndetección de co-canal", // 186
+    "Umbral de detección\nde co-canal", // 187
+    "Contador de detección\nde co-canal", // 188
     "PRINCIPAL", // 189
     "AUDIO", // 190
     "VISUALIZACIÓN", // 191
@@ -3544,7 +3544,7 @@ static const char* const myLanguage[18][207] = {
     "Orden automático de AF", // 196
     "ID de lista de estaciones", // 197
     "Atenuación de AM", // 198
-    "Despreocupación de FM", // 199
+    "Despreocupación\nde FM", // 199
     "Pequeño", // 200
     "Grande", // 201
     "Todo", // 202
@@ -3555,43 +3555,43 @@ static const char* const myLanguage[18][207] = {
   },
 
   { "Português", // Portuguese
-    "Direção rotativa alterada", // 1
-    "Solte o botão, por favor", // 2
+    "Direção rotativa\nalterada", // 1
+    "Solte o botão,por favor", // 2
     "Tela invertida", // 3
-    "Calibrar o medidor analógico", // 4
-    "Solte o botão quando estiver pronto", // 5
-    "codificador definido como óptico", // 6
-    "codificador definido como padrão", // 7
+    "Calibrar o medidor\nanalógico", // 4
+    "Solte o botão quando\nestiver pronto", // 5
+    "codificador definido\ncomo óptico", // 6
+    "codificador definido\ncomo padrão", // 7
     "Receptor FM/AM", // 8
     "Sintonizador: !Nenhum!", // 9
     "Volume:", // 10
     "Conversor:", // 11
     "Borda da faixa baixa:", // 12
     "Borda da faixa alta:", // 13
-    "Deslocamento do nível de RF FM:", // 14
+    "Deslocamento do nível\nde RF FM:", // 14
     "Limiar estéreo:", // 15
     "Canto de corte alto:", // 16
     "Limiar de corte alto:", // 17
     "Limiar de nível baixo:", // 18
     "Contraste:", // 19
     "Definir volume", // 20
-    "Definir deslocamento do conversor", // 21
-    "Definir borda da faixa baixa", // 22
-    "Definir borda da faixa alta", // 23
-    "Definir deslocamento de nível", // 24
-    "Limiar de separação estéreo", // 25
-    "Frequência do canto de corte alto", // 26
-    "Definir limiar de corte alto", // 27
-    "Definir limiar de nível baixo", // 28
-    "Definir brilho da tela", // 29
+    "Definir deslocamento\ndo conversor", // 21
+    "Definir borda\nda faixa baixa", // 22
+    "Definir borda\nda faixa alta", // 23
+    "Definir deslocamento\nde nível", // 24
+    "Limiar de separação\nestéreo", // 25
+    "Frequência do canto\nde corte alto", // 26
+    "Definir limiar\nde corte alto", // 27
+    "Definir limiar\nde nível baixo", // 28
+    "Definir brilho\nda tela", // 29
     "Desligado", // 30
     "A tela está silenciada!", // 31
-    "Para desativar o silenciamento, desmarque a caixa RF+", // 32
+    "Para desativar o silenciamento,\ndesmarque a caixa RF+", // 32
     "DESATIVADO", // 33
     "ANALISANDO...", // 34
     "Sintonizador não detectado", // 35
     "Versão do sintonizador definida: v", // 36
-    "Por favor, reinicie o sintonizador", // 37
+    "Por favor,\nreinicie o sintonizador", // 37
     "Mostrar erros RDS", // 38
     "Idioma", // 39
     "Escolha o idioma", // 40
@@ -3603,17 +3603,17 @@ static const char* const myLanguage[18][207] = {
     "Região", // 46
     "Europa", // 47
     "EUA", // 48
-    "Mostrar sublinhado no RDS", // 49
+    "Mostrar sublinhado\nno RDS", // 49
     "Modo USB", // 50
     "Wi-Fi ativo", // 51
     "Configurar Wi-Fi", // 52
     "Conectar a: ", // 53
-    "para configurar o Wi-Fi", // 54
-    "Tentando conectar ao Wi-Fi", // 55
+    "para configurar\no Wi-Fi", // 54
+    "Tentando conectar\nao Wi-Fi", // 55
     "FALHA!", // 56
     "CONECTADO!", // 57
-    "IP do cliente da lista de estações", // 58
-    "Mostrar comprimento de onda SW", // 59
+    "IP do cliente da lista\nde estações", // 58
+    "Mostrar comprimento\nde onda SW", // 59
     "Filtro RDS", // 60
     "Mostrar erros PI", // 61
     "Mostrar squelch", // 62
@@ -3622,14 +3622,14 @@ static const char* const myLanguage[18][207] = {
     "Supressor de ruído FM", // 65
     "Padrões carregados", // 66
     "Saída de áudio", // 67
-    "Sintonização com proteção de tela", // 68
+    "Sintonização com\nproteção de tela", // 68
     "Inverter a tela", // 69
     "Sobre o software", // 70
     "Código principal:", // 71
     "Contribuidores:", // 72
     "Desconhecido", // 73
-    "Opções de proteção de tela", // 74
-    "Temporizador de desligamento", // 75
+    "Opções de proteção\nde tela", // 74
+    "Temporizador de\ndesligamento", // 75
     "Desligar a tela", // 76
     "Tema", // 77
     "Padrão", // 78
@@ -3651,8 +3651,8 @@ static const char* const myLanguage[18][207] = {
     "1% de brilho", // 94
     "25% de brilho", // 95
     "50% de brilho", // 96
-    "Deslocamento de nível de RF AM:", // 97
-    "Unidade de medidor de sinal:", // 98
+    "Deslocamento de nível\nde RF AM:", // 97
+    "Unidade de medidor\nde sinal:", // 98
     "Usar AF:", // 99
     "Selecionar faixa FM:", // 100
     "Selecionar faixa AM:", // 101
@@ -3661,7 +3661,7 @@ static const char* const myLanguage[18][207] = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotativo enquanto a tela está desligada", // 107
+    "Rotativo enquanto a tela\nestá desligada", // 107
     "Seletor de modelo", // 108
     "Básico (ILI9341)", // 109
     "Portátil (ILI9341)", // 110
@@ -3740,9 +3740,9 @@ static const char* const myLanguage[18][207] = {
     "Conectividade", // 183
     "PRESSIONE MODO PARA VOLTAR", // 184
     "AM CoChannelDet", // 185
-    "Sensibilidade do CoChannel Det", // 186
-    "Limiar do CoChannel Det", // 187
-    "Contador do CoChannel Det", // 188
+    "Sensibilidade do\nCoChannel Det", // 186
+    "Limiar do\nCoChannel Det", // 187
+    "Contador do\nCoChannel Det", // 188
     "PRINCIPAL", // 189
     "ÁUDIO", // 190
     "EXIBIÇÃO", // 191
@@ -3750,7 +3750,7 @@ static const char* const myLanguage[18][207] = {
     "FM", // 193
     "AM", // 194
     "CONECTAR", // 195
-    "Classificar AF automaticamente", // 196
+    "Classificar AF\nautomaticamente", // 196
     "ID da lista de estações", // 197
     "Atenuação AM", // 198
     "Desênfase FM", // 199
@@ -3760,6 +3760,6 @@ static const char* const myLanguage[18][207] = {
     "PS rápido", // 203
     "Aplicativos detectados", // 204
     "Min.", // 205
-    "Velocidade dinâmica de SPI" // 206
+    "Velocidade dinâmica\nde SPI" // 206
 }
 };
