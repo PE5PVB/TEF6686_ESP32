@@ -2,6 +2,7 @@
 #include <map>
 #include <Arduino.h>
 #include <TimeLib.h>                // https://github.com/PaulStoffregen/Time
+#include "callsigns_usa.h"
 
 unsigned long rdstimer = 0;
 unsigned long bitStartTime = 0;
