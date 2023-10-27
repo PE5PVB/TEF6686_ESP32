@@ -361,6 +361,12 @@ byte screensaver_IRQ = OFF;
 
 void setup() {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
+  gpio_set_drive_capability((gpio_num_t) 5, GPIO_DRIVE_CAP_0);
+  gpio_set_drive_capability((gpio_num_t) 16, GPIO_DRIVE_CAP_0);
+  gpio_set_drive_capability((gpio_num_t) 17, GPIO_DRIVE_CAP_0);
+  gpio_set_drive_capability((gpio_num_t) 18, GPIO_DRIVE_CAP_0);
+  gpio_set_drive_capability((gpio_num_t) 19, GPIO_DRIVE_CAP_0);
+  gpio_set_drive_capability((gpio_num_t) 23, GPIO_DRIVE_CAP_0);
   setupmode = true;
   EEPROM.begin(EE_TOTAL_CNT);
   if (EEPROM.readByte(EE_BYTE_CHECKBYTE) != EE_CHECKBYTE_VALUE) DefaultSettings(hardwaremodel);
