@@ -558,8 +558,8 @@ void setup() {
     EEPROM.writeByte(EE_BYTE_ROTARYMODE, rotarymode);
     EEPROM.commit();
     analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
-    tftPrint(0, myLanguage[language][1], 155, 85, ActiveColor, ActiveColorSmooth, 28);
-    tftPrint(0, myLanguage[language][2], 155, 115, ActiveColor, ActiveColorSmooth, 28);
+    tftPrint(0, myLanguage[language][1], 155, 70, ActiveColor, ActiveColorSmooth, 28);
+    tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(BWBUTTON) == LOW) delay(50);
   }
 
@@ -574,16 +574,16 @@ void setup() {
     EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, displayflip);
     EEPROM.commit();
     analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
-    tftPrint(0, myLanguage[language][3], 155, 85, ActiveColor, ActiveColorSmooth, 28);
-    tftPrint(0, myLanguage[language][2], 155, 115, ActiveColor, ActiveColorSmooth, 28);
+    tftPrint(0, myLanguage[language][3], 155, 70, ActiveColor, ActiveColorSmooth, 28);
+    tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(MODEBUTTON) == LOW) delay(50);
   }
 
   if (digitalRead(BANDBUTTON) == LOW) {
     analogWrite(SMETERPIN, 511);
     analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
-    tftPrint(0, myLanguage[language][4], 155, 85, ActiveColor, ActiveColorSmooth, 28);
-    tftPrint(0, myLanguage[language][5], 155, 115, ActiveColor, ActiveColorSmooth, 28);
+    tftPrint(0, myLanguage[language][4], 155, 70, ActiveColor, ActiveColorSmooth, 28);
+    tftPrint(0, myLanguage[language][5], 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(BANDBUTTON) == LOW) delay(50);
     analogWrite(SMETERPIN, 0);
   }
@@ -592,22 +592,22 @@ void setup() {
     analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
     if (optenc == 0) {
       optenc = 1;
-      tftPrint(0, myLanguage[language][6], 155, 85, ActiveColor, ActiveColorSmooth, 28);
+      tftPrint(0, myLanguage[language][6], 155, 70, ActiveColor, ActiveColorSmooth, 28);
     } else {
       optenc = 0;
-      tftPrint(0, myLanguage[language][7], 155, 85, ActiveColor, ActiveColorSmooth, 28);
+      tftPrint(0, myLanguage[language][7], 155, 70, ActiveColor, ActiveColorSmooth, 28);
     }
     EEPROM.writeByte(EE_BYTE_OPTENC, optenc);
     EEPROM.commit();
-    tftPrint(0, myLanguage[language][2], 155, 115, ActiveColor, ActiveColorSmooth, 28);
+    tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
   }
 
   if (digitalRead(ROTARY_BUTTON) == LOW && digitalRead(BWBUTTON) == LOW) {
     analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
     DefaultSettings(hardwaremodel);
-    tftPrint(0, myLanguage[language][66], 155, 85, ActiveColor, ActiveColorSmooth, 28);
-    tftPrint(0, myLanguage[language][2], 155, 115, ActiveColor, ActiveColorSmooth, 28);
+    tftPrint(0, myLanguage[language][66], 155, 70, ActiveColor, ActiveColorSmooth, 28);
+    tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(ROTARY_BUTTON) == LOW && digitalRead(BWBUTTON) == LOW) delay(50);
     ESP.restart();
   }
