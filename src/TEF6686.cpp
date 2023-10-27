@@ -2,7 +2,8 @@
 #include <map>
 #include <Arduino.h>
 #include <TimeLib.h>                // https://github.com/PaulStoffregen/Time
-#include "callsigns_usa.h"
+#include "SPIFFS.h"
+//#include "callsigns_usa.h"
 
 unsigned long rdstimer = 0;
 unsigned long bitStartTime = 0;
@@ -441,32 +442,89 @@ void TEF6686::readRDS(byte showrdserrors)
       }
 
       // USA Station callsign decoder
-      uint16_t stationID = rds.rdsA;
-      if (stationID > 4096) {
-        if (stationID > 21671 && (stationID & 0xF00U) >> 8 == 0) stationID = ((uint16_t)uint8_t(0xA0 + ((stationID & 0xF000U) >> 12)) << 8) + lowByte(stationID); // C0DE -> ACDE
-        if (stationID > 21671 && lowByte(stationID) == 0) stationID = 0xAF00 + uint8_t(highByte(stationID)); // CD00 -> AFCD
-        if (stationID < 39247) {
-          if (stationID > 21671) {
-            rds.stationID[0] = 'W';
-            stationID -= 21672;
-          } else {
-            rds.stationID[0] = 'K';
-            stationID -= 4096;
+      if (ps_process && rds.correctPI != 0 && rds.region == 1 && correctPIold != rds.correctPI) {
+        bool foundMatch = false;
+
+        if (SPIFFS.begin(true)) {
+          File file = SPIFFS.open("/USA_callsigns.csv");
+          if (file) {
+            int i = 0;
+            while (file.available() && !isprint(file.peek())) {
+              file.read();
+              i++;
+            }
+
+            char buffer[64];
+            while (file.available()) {
+              int bytesRead = file.readBytesUntil('\n', buffer, sizeof(buffer) - 1);
+              buffer[bytesRead] = '\0';
+
+              char *token = strtok(buffer, ";");
+
+              int firstColumnValue;
+              uint16_t frequencyValue;
+              char stationID[8];
+              char stationState[8];
+
+              if (token) {
+                firstColumnValue = atoi(token);
+                token = strtok(NULL, ";");
+                frequencyValue = atoi(token);
+                token = strtok(NULL, ";");
+                strncpy(stationID, token, sizeof(stationID) - 1);
+                stationID[sizeof(stationID) - 1] = '\0';
+                token = strtok(NULL, ";");
+                strncpy(stationState, token, sizeof(stationState) - 1);
+                stationState[sizeof(stationState) - 1] = '\0';
+              }
+
+              if (frequencyValue == currentfreq && static_cast<uint16_t>(firstColumnValue) == rds.correctPI) {
+                strncpy(rds.stationID, stationID, 7);
+                strncpy(rds.stationState, stationState, 2);
+                foundMatch = true;
+                break;
+              }
+            }
           }
-          rds.stationID[1] = char(stationID / 676 + 65);
-          rds.stationID[2] = char((stationID - 676 * int(stationID / 676)) / 26 + 65);
-          rds.stationID[3] = char(((stationID - 676 * int(stationID / 676)) % 26) + 65);
-          rds.stationID[5] = '\0';
-        } else {
-          stationID -= 4835;
-          rds.stationID[0] = 'K';
-          rds.stationID[1] = char(stationID / 676 + 65);
-          rds.stationID[2] = char((stationID - 676 * int(stationID / 676)) / 26 + 65);
-          rds.stationID[3] = char(((stationID - 676 * int(stationID / 676)) % 26) + 65);
-          rds.stationID[5] = '\0';
         }
+        /*        for (int i = 0; i < sizeof(callsign_USA) / sizeof(callsign_USA[0]); i++) {
+                  if (callsign_USA[i][0].csusa_pi == rds.correctPI && callsign_USA[i][0].csusa_freq == currentfreq / 10) {
+                    strncpy(rds.stationID, callsign_USA[i][0].csusa_callsign, 7);
+                    foundMatch = true;
+                    return;
+                  }
+                }
+        */
+
+        if (!foundMatch) {
+          uint16_t stationID = rds.rdsA;
+          if (stationID > 4096) {
+            if (stationID > 21671 && (stationID & 0xF00U) >> 8 == 0) stationID = ((uint16_t)uint8_t(0xA0 + ((stationID & 0xF000U) >> 12)) << 8) + lowByte(stationID); // C0DE -> ACDE
+            if (stationID > 21671 && lowByte(stationID) == 0) stationID = 0xAF00 + uint8_t(highByte(stationID)); // CD00 -> AFCD
+            if (stationID < 39247) {
+              if (stationID > 21671) {
+                rds.stationID[0] = 'W';
+                stationID -= 21672;
+              } else {
+                rds.stationID[0] = 'K';
+                stationID -= 4096;
+              }
+              rds.stationID[1] = char(stationID / 676 + 65);
+              rds.stationID[2] = char((stationID - 676 * int(stationID / 676)) / 26 + 65);
+              rds.stationID[3] = char(((stationID - 676 * int(stationID / 676)) % 26) + 65);
+            } else {
+              stationID -= 4835;
+              rds.stationID[0] = 'K';
+              rds.stationID[1] = char(stationID / 676 + 65);
+              rds.stationID[2] = char((stationID - 676 * int(stationID / 676)) / 26 + 65);
+              rds.stationID[3] = char(((stationID - 676 * int(stationID / 676)) % 26) + 65);
+            }
+          }
+          rds.stationID[7] = '?';
+          rds.stationID[8] = '\0';
+        }
+        correctPIold = rds.correctPI;
       }
-      rds.stationID[6] = '\0';
     }
 
     if (!rds.rdsBerror || showrdserrors == 3) rdsblock = rds.rdsB >> 11; else return;
@@ -1344,12 +1402,15 @@ void TEF6686::clearRDS (bool fullsearchrds)
   for (i = 0; i < 17; i++) rds.stationType[i] = 0x20;
   rds.stationType[17] = 0;
 
-  for (i = 0; i < 6; i++) {
-    rds.picode[i] = 0x20;
-    rds.stationID[i] = 0x20;
-    rds.picode[6] = 0;
-    rds.stationID[6] = 0;
-  }
+  for (i = 0; i < 6; i++) rds.picode[i] = 0x20;
+  rds.picode[6] = 0;
+
+  for (i = 0; i < 8; i++) rds.stationID[i] = 0x20;
+  rds.stationID[8] = 0;
+
+
+  for (i = 0; i < 3; i++) rds.stationState[i] = 0x20;
+  rds.stationState[3] = 0;
 
   for (i = 0; i < 50; i++) {
     af[i].frequency = 0;
@@ -1435,6 +1496,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.aid_counter = 0;
   afmethodBprobe = false;
   afmethodBtrigger = false;
+  correctPIold = 0;
 }
 
 void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {

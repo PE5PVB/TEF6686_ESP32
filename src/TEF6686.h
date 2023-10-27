@@ -538,7 +538,8 @@ typedef struct _rds_ {
   String LICtext;
   char stationType[18];
   char picode[7];
-  char stationID[7];
+  char stationID[8];
+  char stationState[3];
   uint16_t hour, minute, day, month, year, rdsA, rdsB, rdsC, rdsD, rdsErr, rdsStat, correctPI, rdsplusTag1, rdsplusTag2;
   uint16_t aid[10];
   byte aid_counter;
@@ -713,5 +714,6 @@ class TEF6686 {
     uint8_t af_counterb;
     uint8_t af_counterbcheck;
     bool afmethodBtrigger;
+	uint16_t correctPIold;
 };
 #endif
