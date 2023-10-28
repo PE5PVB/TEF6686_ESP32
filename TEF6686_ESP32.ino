@@ -465,7 +465,6 @@ void setup() {
   btStop();
 
   if (USBmode) Serial.begin(19200); else Serial.begin(115200);
-  for (int i = 0; i < EE_PRESETS_CNT; i++) Serial.println(EEPROM.readByte(i + EE_PRESET_MS_START));
   
   if (iMSset == 1 && EQset == 1) iMSEQ = 2;
   if (iMSset == 0 && EQset == 1) iMSEQ = 3;
