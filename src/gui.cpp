@@ -347,9 +347,9 @@ void BuildAFScreen() {
     batteryVold = 0;
     vPerold = 0;
     af_counterold = 254;
-    strcpy(radioIdPrevious, "");
-    programServicePrevious = "";
     afmethodBold = false;
+    PIold = " ";
+    PSold = " ";
     for (byte i = 0; i < 20; i++) eonpsold[i] = "";
     for (byte i = 0; i < 20; i++) mappedfreqold[i] = 0;
     for (byte i = 0; i < 20; i++) eonpicodeold[0][i] = '\0';
@@ -691,9 +691,11 @@ void BuildAdvancedRDS() {
   vPerold = 0;
   ECCold = 253;
   strcpy(programTypePrevious, "");
-  strcpy(radioIdPrevious, "");
-  programServicePrevious = "";
   ptynold = " ";
+  PIold = " ";
+  PSold = " ";
+  stationIDold = " ";
+  stationStateold = " ";
   MSold = 0;
   licold = 254;
   af_counterold = 254;
@@ -837,8 +839,10 @@ void BuildDisplay() {
   vPerold = 0;
   rds_clockold = "";
   strcpy(programTypePrevious, "");
-  strcpy(radioIdPrevious, "");
-  programServicePrevious = "";
+  PIold = " ";
+  PSold = " ";
+  stationIDold = " ";
+  stationStateold = " ";
   BWreset = true;
   if (band < BAND_GAP) tftPrint(-1, "MHz", 258, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 28); else tftPrint(-1, "kHz", 258, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 28);
 }

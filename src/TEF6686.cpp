@@ -407,6 +407,7 @@ void TEF6686::readRDS(byte showrdserrors)
             rds.picode[i] += 'A' - 10;                                                            // Add ASCII offset for hexadecimal letters A-F
           }
         }
+        rds.picodetext = rds.picode;
       }
 
       if (!rdsAerrorThreshold && !rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold) errorfreepi = true;
@@ -444,9 +445,33 @@ void TEF6686::readRDS(byte showrdserrors)
       // USA Station callsign decoder
       if (ps_process && rds.correctPI != 0 && rds.region == 1 && correctPIold != rds.correctPI) {
         bool foundMatch = false;
+        File file;
 
         if (SPIFFS.begin(true)) {
-          File file = SPIFFS.open("/USA_callsigns.csv");
+          delay(5);
+          if (currentfreq < 9000) {
+            file = SPIFFS.open("/USA_87-90.csv");
+          } else if (currentfreq > 9000 && currentfreq < 9200) {
+            file = SPIFFS.open("/USA_90-92.csv");
+          } else if (currentfreq > 9200 && currentfreq < 9400) {
+            file = SPIFFS.open("/USA_92-94.csv");
+          } else if (currentfreq > 9400 && currentfreq < 9600) {
+            file = SPIFFS.open("/USA_94-96.csv");
+          } else if (currentfreq > 9600 && currentfreq < 9800) {
+            file = SPIFFS.open("/USA_96-98.csv");
+          } else if (currentfreq > 9800 && currentfreq < 10000) {
+            file = SPIFFS.open("/USA_98-100.csv");
+          } else if (currentfreq > 10000 && currentfreq < 10200) {
+            file = SPIFFS.open("/USA_100-102.csv");
+          } else if (currentfreq > 10200 && currentfreq < 10400) {
+            file = SPIFFS.open("/USA_102-104.csv");
+          } else if (currentfreq > 10400 && currentfreq < 10600) {
+            file = SPIFFS.open("/USA_104-106.csv");
+          } else if (currentfreq > 10600) {
+            file = SPIFFS.open("/USA_106-108.csv");
+          }
+
+          delay(5);
           if (file) {
             int i = 0;
             while (file.available() && !isprint(file.peek())) {
@@ -454,7 +479,7 @@ void TEF6686::readRDS(byte showrdserrors)
               i++;
             }
 
-            char buffer[64];
+            char buffer[25];
             while (file.available()) {
               int bytesRead = file.readBytesUntil('\n', buffer, sizeof(buffer) - 1);
               buffer[bytesRead] = '\0';
@@ -487,14 +512,6 @@ void TEF6686::readRDS(byte showrdserrors)
             }
           }
         }
-        /*        for (int i = 0; i < sizeof(callsign_USA) / sizeof(callsign_USA[0]); i++) {
-                  if (callsign_USA[i][0].csusa_pi == rds.correctPI && callsign_USA[i][0].csusa_freq == currentfreq / 10) {
-                    strncpy(rds.stationID, callsign_USA[i][0].csusa_callsign, 7);
-                    foundMatch = true;
-                    return;
-                  }
-                }
-        */
 
         if (!foundMatch) {
           uint16_t stationID = rds.rdsA;
@@ -524,6 +541,8 @@ void TEF6686::readRDS(byte showrdserrors)
           rds.stationID[8] = '\0';
         }
         correctPIold = rds.correctPI;
+        rds.stationIDtext = rds.stationID;
+        rds.stationStatetext = rds.stationState;
       }
     }
 
@@ -1379,6 +1398,9 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.PTYN = "";
   rds.ECCtext = "";
   rds.LICtext = "";
+  rds.picodetext = "";
+  rds.stationIDtext = "";
+  rds.stationStatetext = "";
 
   ps_buffer[8] = 0;
   ptyn_buffer[8] = 0;

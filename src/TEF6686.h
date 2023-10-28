@@ -536,6 +536,9 @@ typedef struct _rds_ {
   String PTYN;
   String ECCtext;
   String LICtext;
+  String picodetext;
+  String stationIDtext;
+  String stationStatetext;
   char stationType[18];
   char picode[7];
   char stationID[8];
@@ -714,6 +717,6 @@ class TEF6686 {
     uint8_t af_counterb;
     uint8_t af_counterbcheck;
     bool afmethodBtrigger;
-	uint16_t correctPIold;
+    uint16_t correctPIold;
 };
 #endif

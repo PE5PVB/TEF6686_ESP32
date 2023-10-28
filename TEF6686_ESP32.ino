@@ -179,9 +179,6 @@ byte spispeedold;
 char buff[16];
 char eonpicodeold[20][6];
 char programTypePrevious[18];
-char radioIdPrevious[7];
-char stationIDPrevious[8];
-char stationStatePrevious[3];
 const uint8_t* currentFont = nullptr;
 float vPerold;
 int ActiveColor;
@@ -263,7 +260,6 @@ String eonstringold;
 String LIColdString;
 String pinstringold;
 String PIold;
-String programServicePrevious;
 String PSold;
 String ptynold = " ";
 String PTYold;
@@ -369,6 +365,8 @@ void setup() {
   gpio_set_drive_capability((gpio_num_t) 17, GPIO_DRIVE_CAP_0);
   gpio_set_drive_capability((gpio_num_t) 18, GPIO_DRIVE_CAP_0);
   gpio_set_drive_capability((gpio_num_t) 19, GPIO_DRIVE_CAP_0);
+  gpio_set_drive_capability((gpio_num_t)21, GPIO_DRIVE_CAP_0);
+  gpio_set_drive_capability((gpio_num_t)22, GPIO_DRIVE_CAP_0);
   gpio_set_drive_capability((gpio_num_t) 23, GPIO_DRIVE_CAP_0);
   setupmode = true;
   EEPROM.begin(EE_TOTAL_CNT);
@@ -488,7 +486,6 @@ void setup() {
         Round30K(frequency_OIRT);
       }
       break;
-    default: break;
   }
 
   tft.init();
@@ -2332,9 +2329,6 @@ void ShowFreq(int mode) {
   }
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
-  strcpy(programTypePrevious, "0");
-  strcpy(radioIdPrevious, "0");
-  programServicePrevious = "0";
   rtplusstringold = "";
   eonstringold = "";
   afstringold = "";

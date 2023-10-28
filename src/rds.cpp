@@ -394,7 +394,7 @@ void readRds() {
 }
 
 void showPI() {
-  if (strcmp(radio.rds.picode, radioIdPrevious) && strcmp(radio.rds.stationID, stationIDPrevious) && strcmp(radio.rds.stationState, stationStatePrevious)) {
+  if ((region == REGION_US && (radio.rds.picodetext != PIold || radio.rds.stationIDtext != stationIDold || radio.rds.stationStatetext != stationStateold)) || (region != REGION_US && radio.rds.picodetext != PIold)) {
     if (!afscreen && !radio.rds.rdsAerror && !radio.rds.rdsBerror && !radio.rds.rdsCerror && !radio.rds.rdsDerror && radio.rds.rdsA != radio.rds.correctPI && PIold.length() > 1) radio.clearRDS(fullsearchrds);
     if (!screenmute) {
       if (advancedRDS) {
@@ -422,9 +422,6 @@ void showPI() {
         Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";PI=" + String(radio.rds.picode, 4));
         Udp.endPacket();
       }
-      strcpy(radioIdPrevious, radio.rds.picode);
-	  strcpy(stationIDPrevious, radio.rds.stationID);
-	  strcpy(stationStatePrevious, radio.rds.stationState);
     }
   }
 }
@@ -446,7 +443,7 @@ void showPTY() {
 }
 
 void showPS() {
-  if (radio.rds.stationName != programServicePrevious) {
+  if (radio.rds.stationName != PSold) {
     if (!screenmute) {
       if (advancedRDS) {
         tftReplace(-1, PSold, radio.rds.stationName, 38, 75, PrimaryColor, PrimaryColorSmooth, 28);
@@ -470,7 +467,6 @@ void showPS() {
       }
       Udp.endPacket();
     }
-    programServicePrevious = radio.rds.stationName;
   }
 }
 
