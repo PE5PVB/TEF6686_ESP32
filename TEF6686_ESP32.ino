@@ -465,7 +465,7 @@ void setup() {
   btStop();
 
   if (USBmode) Serial.begin(19200); else Serial.begin(115200);
-  
+
   if (iMSset == 1 && EQset == 1) iMSEQ = 2;
   if (iMSset == 0 && EQset == 1) iMSEQ = 3;
   if (iMSset == 1 && EQset == 0) iMSEQ = 4;
@@ -1732,9 +1732,9 @@ void BWButtonPress() {
       if (band == BAND_FM || band == BAND_OIRT) {
         doStereoToggle();
       } else {
-      BWset++;
-      doBW();
-      BWtune = true;
+        BWset++;
+        doBW();
+        BWtune = true;
       }
     } else {
       BWset++;
@@ -2198,10 +2198,12 @@ void KeyUp() {
       if (XDRGTKUSB || XDRGTKTCP) {
         if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10)); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10)); else DataPrint("M1\nT" + String(frequency_AM));
       }
-      if (radio.rds.hasCT) tftPrint(1, rds_clock, 205, 163, BackgroundColor, BackgroundColor, 16);
-      radio.clearRDS(fullsearchrds);
-      ShowFreq(0);
-      store = true;
+      if (!memorystore) {
+        if (radio.rds.hasCT) tftPrint(1, rds_clock, 205, 163, BackgroundColor, BackgroundColor, 16);
+        radio.clearRDS(fullsearchrds);
+        ShowFreq(0);
+        store = true;
+      }
     } else {
       MenuUp();
     }
@@ -2244,10 +2246,12 @@ void KeyDown() {
       if (XDRGTKUSB || XDRGTKTCP) {
         if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10)); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10)); else DataPrint("M1\nT" + String(frequency_AM));
       }
-      if (radio.rds.hasCT) tftPrint(1, rds_clock, 38, 109, BackgroundColor, BackgroundColor, 16);
-      radio.clearRDS(fullsearchrds);
-      ShowFreq(0);
-      store = true;
+      if (!memorystore) {
+        if (radio.rds.hasCT) tftPrint(1, rds_clock, 205, 163, BackgroundColor, BackgroundColor, 16);
+        radio.clearRDS(fullsearchrds);
+        ShowFreq(0);
+        store = true;
+      }
     } else {
       MenuDown();
     }
