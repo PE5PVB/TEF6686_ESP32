@@ -3,7 +3,6 @@
 #include <Arduino.h>
 #include <TimeLib.h>                // https://github.com/PaulStoffregen/Time
 #include "SPIFFS.h"
-//#include "callsigns_usa.h"
 
 unsigned long rdstimer = 0;
 unsigned long bitStartTime = 0;
@@ -34,7 +33,7 @@ void TEF6686::TestAFEON() {
         delay(200);
         devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
         if (rds.rdsStat & (1 << 9)) {
-          if (rds.rdsA == rds.correctPI && (((rds.rdsErr >> 14) & 0x03) == 0)) {
+          if (((afmethodB && rds.afreg && ((rds.rdsA >> 8) & 0x0F) == (rds.correctPI & 0x0F)) || (!afmethodB && rds.rdsA == rds.correctPI)) && (((rds.rdsErr >> 14) & 0x03) == 0)) {
             af[x].checked = true;
             af[x].afvalid = true;
           } else {
@@ -486,8 +485,8 @@ void TEF6686::readRDS(byte showrdserrors)
 
               char *token = strtok(buffer, ";");
 
-              int firstColumnValue;
-              uint16_t frequencyValue;
+              int firstColumnValue = 0;
+              uint16_t frequencyValue = 0;
               char stationID[8];
               char stationState[8];
 
@@ -1431,8 +1430,8 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.stationID[8] = 0;
 
 
-  for (i = 0; i < 3; i++) rds.stationState[i] = 0x20;
-  rds.stationState[3] = 0;
+  for (i = 0; i < 2; i++) rds.stationState[i] = 0x20;
+  rds.stationState[2] = 0;
 
   for (i = 0; i < 50; i++) {
     af[i].frequency = 0;

@@ -541,7 +541,7 @@ typedef struct _rds_ {
   String stationStatetext;
   char stationType[18];
   char picode[7];
-  char stationID[8];
+  char stationID[9];
   char stationState[3];
   uint16_t hour, minute, day, month, year, rdsA, rdsB, rdsC, rdsD, rdsErr, rdsStat, correctPI, rdsplusTag1, rdsplusTag2;
   uint16_t aid[10];

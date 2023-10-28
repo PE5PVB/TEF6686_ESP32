@@ -1,3 +1,5 @@
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wbool-compare"
 #include "rds.h"
 #include "language.h"
 #include "constants.h"
@@ -712,3 +714,4 @@ void ShowAFEON() {
     }
   }
 }
+#pragma GCC diagnostic pop
