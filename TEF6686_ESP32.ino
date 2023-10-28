@@ -3243,7 +3243,7 @@ void Seek(bool mode) {
     }
   } else {
     radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
-    if ((USN < 100) && (OStatus < 2 && OStatus > -2) && (Squelch < SStatus || Squelch == 920)) {
+    if ((USN < 200) && (OStatus < 2 && OStatus > -2) && (Squelch < SStatus || Squelch == 920)) {
       seek = false;
       radio.setUnMute();
       if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
