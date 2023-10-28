@@ -4,6 +4,7 @@
 #include <WiFi.h>
 #include <Wire.h>
 #include <EEPROM.h>
+#include <cstring>
 
 byte menuitem;
 byte items[8] = {8, 3, 6, 10, 9, 10, 8, 5};
@@ -352,7 +353,9 @@ void BuildAFScreen() {
     PSold = " ";
     for (byte i = 0; i < 20; i++) eonpsold[i] = "";
     for (byte i = 0; i < 20; i++) mappedfreqold[i] = 0;
-    for (byte i = 0; i < 20; i++) eonpicodeold[0][i] = '\0';
+    for (byte i = 0; i < 20; i++) {
+      std::memset(eonpicodeold[i], '\0', sizeof(eonpicodeold[i]));
+    }
   }
 }
 
