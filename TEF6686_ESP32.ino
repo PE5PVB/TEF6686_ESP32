@@ -70,6 +70,7 @@ bool haseonold;
 bool hasrtplusold;
 bool hastmcold;
 bool LowLevelInit;
+bool memoryms[EE_PRESETS_CNT];
 bool memorystore;
 bool menu;
 bool menuopen;
@@ -147,6 +148,7 @@ byte iMSset;
 byte language;
 byte licold;
 byte memoryband[EE_PRESETS_CNT];
+byte memorybw[EE_PRESETS_CNT];
 byte memorypos;
 byte memoryposold;
 byte menupage;
@@ -365,8 +367,8 @@ void setup() {
   gpio_set_drive_capability((gpio_num_t) 17, GPIO_DRIVE_CAP_0);
   gpio_set_drive_capability((gpio_num_t) 18, GPIO_DRIVE_CAP_0);
   gpio_set_drive_capability((gpio_num_t) 19, GPIO_DRIVE_CAP_0);
-  gpio_set_drive_capability((gpio_num_t)21, GPIO_DRIVE_CAP_0);
-  gpio_set_drive_capability((gpio_num_t)22, GPIO_DRIVE_CAP_0);
+  gpio_set_drive_capability((gpio_num_t) 21, GPIO_DRIVE_CAP_0);
+  gpio_set_drive_capability((gpio_num_t) 22, GPIO_DRIVE_CAP_0);
   gpio_set_drive_capability((gpio_num_t) 23, GPIO_DRIVE_CAP_0);
   setupmode = true;
   EEPROM.begin(EE_TOTAL_CNT);
@@ -457,10 +459,14 @@ void setup() {
 
   for (int i = 0; i < EE_PRESETS_CNT; i++) memoryband[i] = EEPROM.readByte(i + EE_PRESETS_BAND_START);
   for (int i = 0; i < EE_PRESETS_CNT; i++) memory[i] = EEPROM.readUInt((i * 4) + EE_PRESETS_START);
+  for (int i = 0; i < EE_PRESETS_CNT; i++) memorybw[i] = EEPROM.readByte(i + EE_PRESET_BW_START);
+  for (int i = 0; i < EE_PRESETS_CNT; i++) memoryms[i] = EEPROM.readByte(i + EE_PRESET_MS_START);
+
   btStop();
 
   if (USBmode) Serial.begin(19200); else Serial.begin(115200);
-
+  for (int i = 0; i < EE_PRESETS_CNT; i++) Serial.println(EEPROM.readByte(i + EE_PRESET_MS_START));
+  
   if (iMSset == 1 && EQset == 1) iMSEQ = 2;
   if (iMSset == 0 && EQset == 1) iMSEQ = 3;
   if (iMSset == 1 && EQset == 0) iMSEQ = 4;
@@ -1724,7 +1730,13 @@ void BWButtonPress() {
     while (digitalRead(BWBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
 
     if (counter - counterold < 1000) {
-      doStereoToggle();
+      if (band == BAND_FM || band == BAND_OIRT) {
+        doStereoToggle();
+      } else {
+      BWset++;
+      doBW();
+      BWtune = true;
+      }
     } else {
       BWset++;
       doBW();
@@ -2037,6 +2049,8 @@ void ButtonPress() {
       } else {
         memorystore = false;
         EEPROM.writeByte(memorypos + EE_PRESETS_BAND_START, band);
+        EEPROM.writeByte(memorypos + EE_PRESET_BW_START, BWset);
+        EEPROM.writeByte(memorypos + EE_PRESET_MS_START, StereoToggle);
         if (band == BAND_FM) {
           EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_START, frequency);
         } else if (band == BAND_OIRT) {
@@ -2050,6 +2064,8 @@ void ButtonPress() {
         }
         EEPROM.commit();
         memoryband[memorypos] = band;
+        memorybw[memorypos] = BWset;
+        memoryms[memorypos] = StereoToggle;
         if (band == BAND_FM) {
           memory[memorypos] = frequency;
         } else if (band == BAND_OIRT) {
@@ -2273,6 +2289,16 @@ void DoMemoryPosTune() {
     radio.SetFreqAM(frequency_AM);
   }
   ShowFreq(0);
+
+  if (band == BAND_FM || band == BAND_OIRT) {
+    if (memoryms[memorypos]) StereoToggle = false; else StereoToggle = true;
+    doStereoToggle();
+  }
+
+  BWset = memorybw[memorypos];
+  doBW();
+  BWtune = true;
+
 }
 
 void ShowFreq(int mode) {
@@ -3362,6 +3388,8 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_RDS_PIERRORS, 0);
   for (int i = 0; i < EE_PRESETS_CNT; i++) EEPROM.writeByte(i + EE_PRESETS_BAND_START, BAND_FM);
   for (int i = 0; i < EE_PRESETS_CNT; i++) EEPROM.writeUInt((i * 4) + EE_PRESETS_START, EE_PRESETS_FREQUENCY);
+  for (int i = 0; i < EE_PRESETS_CNT; i++) EEPROM.writeByte(i + EE_PRESET_BW_START, 0);
+  for (int i = 0; i < EE_PRESETS_CNT; i++) EEPROM.writeByte(i + EE_PRESET_MS_START, 0);
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_LW, 180); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_LW, 164);
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, 540); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, 639);
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_SW, 1800); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_SW, 5000);
