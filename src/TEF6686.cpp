@@ -1452,11 +1452,11 @@ void TEF6686::clearRDS (bool fullsearchrds)
   for (i = 0; i < 6; i++) rds.picode[i] = 0x20;
   rds.picode[6] = 0;
 
-  for (i = 0; i < 5; i++) rds.dabafeid[i] = 0x20;
-  rds.dabafeid[5] = 0;
+  for (i = 0; i < 4; i++) rds.dabafeid[i] = 0x20;
+  rds.dabafeid[4] = 0;
 
-  for (i = 0; i < 4; i++) rds.dabafchannel[i] = 0x20;
-  rds.dabafchannel[4] = 0;
+  for (i = 0; i < 3; i++) rds.dabafchannel[i] = 0x20;
+  rds.dabafchannel[3] = 0;
 
   for (i = 0; i < 8; i++) rds.stationID[i] = 0x20;
   rds.stationID[8] = 0;
