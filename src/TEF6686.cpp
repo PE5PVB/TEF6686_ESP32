@@ -750,9 +750,10 @@ void TEF6686::readRDS(byte showrdserrors)
           }
         } break;
 
-      case RDS_GROUP_1A: {
+      case RDS_GROUP_1A:
+      case RDS_GROUP_1B: {
           if (!rdsCerrorThreshold) {
-            if (rds.rdsC >> 12 == 0) {                                                          // ECC code readout
+            if (rds.rdsC >> 12 == 0 && rdsblock == RDS_GROUP_1A) {                               // ECC code readout
               rds.ECC = rds.rdsC & 0xff;
               rds.hasECC = true;
 
@@ -1066,14 +1067,14 @@ void TEF6686::readRDS(byte showrdserrors)
               }
             }
 
-            if (rds.rdsC >> 12 == 3) {                                                          // LIC code readout
+            if (rds.rdsC >> 12 == 3 && rdsblock == RDS_GROUP_1A) {                              // LIC code readout
               rds.LIC = rds.rdsC & 0xff;
               rds.hasLIC = true;
               if (rds.LIC > 0 && rds.LIC < 128) rds.LICtext = LICtext[rds.LIC]; else rds.LICtext = "";
             }
           }
 
-          if (rds.rdsC >> 12 == 1) rds.hasTMC = true;                                           // TMC flag
+          if (rds.rdsC >> 12 == 1 && rdsblock == RDS_GROUP_1A) rds.hasTMC = true;               // TMC flag
 
           if (!rdsDerrorThreshold) {
             if (rds.rdsD != 0) {                                                                // PIN decoder
