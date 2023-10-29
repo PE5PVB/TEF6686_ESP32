@@ -1240,14 +1240,16 @@ void TEF6686::readRDS(byte showrdserrors)
           if (!rdsCerrorThreshold && !rdsDerrorThreshold) {
             // PTYN
             offset = bitRead(rds.rdsB, 0);                                                      // Get char offset
-
-            ptyn_buffer[(offset * 4) + 0] = rds.rdsC >> 8;                                      // Get position 1 and 5
-            ptyn_buffer[(offset * 4) + 1] = rds.rdsC & 0xFF;                                    // Get position 2 and 6
-            ptyn_buffer[(offset * 4) + 2] = rds.rdsD >> 8;                                      // Get position 3 and 7
-            ptyn_buffer[(offset * 4) + 3] = rds.rdsD & 0xFF;                                    // Get position 4 and 8
-            RDScharConverter(ptyn_buffer, PTYNtext, sizeof(PTYNtext) / sizeof(wchar_t), false); // Convert 8 bit ASCII to 16 bit ASCII
-            String utf8String = convertToUTF8(PTYNtext);                                        // Convert RDS characterset to ASCII
-            rds.PTYN = extractUTF8Substring(utf8String, 0, 8, false);                           // Make sure text is not longer than 8 chars
+            if (rds.rdsC != 0 && rds.rdsD != 0) {
+              ptyn_buffer[(offset * 4) + 0] = rds.rdsC >> 8;                                      // Get position 1 and 5
+              ptyn_buffer[(offset * 4) + 1] = rds.rdsC & 0xFF;                                    // Get position 2 and 6
+              ptyn_buffer[(offset * 4) + 2] = rds.rdsD >> 8;                                      // Get position 3 and 7
+              ptyn_buffer[(offset * 4) + 3] = rds.rdsD & 0xFF;                                    // Get position 4 and 8
+              for (byte i = 0; i < 8; i++) PTYNtext[i] = L'\0';
+              RDScharConverter(ptyn_buffer, PTYNtext, sizeof(PTYNtext) / sizeof(wchar_t), false); // Convert 8 bit ASCII to 16 bit ASCII
+              String utf8String = convertToUTF8(PTYNtext);                                        // Convert RDS characterset to ASCII
+              rds.PTYN = extractUTF8Substring(utf8String, 0, 8, false);                           // Make sure text is not longer than 8 chars
+            }
           }
         } break;
 
@@ -1331,7 +1333,7 @@ void TEF6686::readRDS(byte showrdserrors)
                 rds.dabafeid[i] += 'A' - 10;                                                          // Add ASCII offset for hexadecimal letters A-F
               }
             }
-			rds.dabafeid[4] = 0;
+            rds.dabafeid[4] = 0;
           }
         }
         break;
