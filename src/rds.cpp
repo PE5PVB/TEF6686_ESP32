@@ -72,10 +72,10 @@ void ShowAdvancedRDS() {
   if (afstring.length() < 20) {
     if (afstringold != afstring) {
       xPos2 = 0;
-      AFSprite.fillSprite(BackgroundColor);
-      AFSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-      AFSprite.drawString(afstring, xPos2, 2);
-      AFSprite.pushSprite(35, 197);
+      RDSSprite.fillSprite(BackgroundColor);
+      RDSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+      RDSSprite.drawString(afstring, xPos2, 2);
+      RDSSprite.pushSprite(35, 197);
     }
   } else {
     if (millis() - afticker >= 15) {
@@ -89,10 +89,10 @@ void ShowAdvancedRDS() {
         aftickerhold = millis();
       }
       if (xPos2 < -tft.textWidth(afstring) + (charWidth * 14)) xPos2 = 0;
-      AFSprite.fillSprite(BackgroundColor);
-      AFSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-      AFSprite.drawString(afstring, xPos2, 2);
-      AFSprite.pushSprite(35, 197);
+      RDSSprite.fillSprite(BackgroundColor);
+      RDSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+      RDSSprite.drawString(afstring, xPos2, 2);
+      RDSSprite.pushSprite(35, 197);
       afticker = millis();
     }
   }
@@ -109,10 +109,10 @@ void ShowAdvancedRDS() {
   if (eonstring.length() < 20) {
     if (eonstringold != eonstring) {
       xPos3 = 0;
-      EONSprite.fillSprite(BackgroundColor);
-      EONSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-      EONSprite.drawString(eonstring, xPos3, 2);
-      EONSprite.pushSprite(35, 172);
+      RDSSprite.fillSprite(BackgroundColor);
+      RDSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+      RDSSprite.drawString(eonstring, xPos3, 2);
+      RDSSprite.pushSprite(35, 172);
     }
   } else {
     if (millis() - eonticker >= 15) {
@@ -126,10 +126,10 @@ void ShowAdvancedRDS() {
         eontickerhold = millis();
       }
       if (xPos3 < -tft.textWidth(eonstring) + (charWidth * 14)) xPos3 = 0;
-      EONSprite.fillSprite(BackgroundColor);
-      EONSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-      EONSprite.drawString(eonstring, xPos3, 2);
-      EONSprite.pushSprite(35, 172);
+      RDSSprite.fillSprite(BackgroundColor);
+      RDSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+      RDSSprite.drawString(eonstring, xPos3, 2);
+      RDSSprite.pushSprite(35, 172);
       eonticker = millis();
     }
   }
@@ -146,10 +146,10 @@ void ShowAdvancedRDS() {
   if (rtplusstring.length() < 20) {
     if (rtplusstringold != rtplusstring) {
       xPos4 = 0;
-      RTPlusSprite.fillSprite(BackgroundColor);
-      RTPlusSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-      RTPlusSprite.drawString(rtplusstring, xPos4, 2);
-      RTPlusSprite.pushSprite(35, 146);
+      RDSSprite.fillSprite(BackgroundColor);
+      RDSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+      RDSSprite.drawString(rtplusstring, xPos4, 2);
+      RDSSprite.pushSprite(35, 146);
     }
   } else {
     if (millis() - rtplusticker >= 15) {
@@ -163,10 +163,10 @@ void ShowAdvancedRDS() {
         rtplustickerhold = millis();
       }
       if (xPos4 < -tft.textWidth(rtplusstring) + (charWidth * 14)) xPos4 = 0;
-      RTPlusSprite.fillSprite(BackgroundColor);
-      RTPlusSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-      RTPlusSprite.drawString(rtplusstring, xPos4, 2);
-      RTPlusSprite.pushSprite(35, 146);
+      RDSSprite.fillSprite(BackgroundColor);
+      RDSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+      RDSSprite.drawString(rtplusstring, xPos4, 2);
+      RDSSprite.pushSprite(35, 146);
       rtplusticker = millis();
     }
   }

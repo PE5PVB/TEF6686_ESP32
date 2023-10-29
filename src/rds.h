@@ -110,9 +110,7 @@ extern WiFiClient RemoteClient;
 extern WiFiUDP Udp;
 extern TFT_eSprite RadiotextSprite;
 extern TFT_eSprite AdvRadiotextSprite;
-extern TFT_eSprite EONSprite;
-extern TFT_eSprite RTPlusSprite;
-extern TFT_eSprite AFSprite;
+extern TFT_eSprite RDSSprite;
 
 void ShowAdvancedRDS();
 void readRds();

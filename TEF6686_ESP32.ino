@@ -347,11 +347,8 @@ ESP32Time rtc(0);
 TFT_eSprite RadiotextSprite = TFT_eSprite(&tft);
 TFT_eSprite FrequencySprite = TFT_eSprite(&tft);
 TFT_eSprite AdvRadiotextSprite = TFT_eSprite(&tft);
-TFT_eSprite EONSprite = TFT_eSprite(&tft);
-TFT_eSprite RTPlusSprite = TFT_eSprite(&tft);
-TFT_eSprite AFSprite = TFT_eSprite(&tft);
+TFT_eSprite RDSSprite = TFT_eSprite(&tft);
 TFT_eSprite SquelchSprite = TFT_eSprite(&tft);
-TFT_eSprite MenuInfobox = TFT_eSprite(&tft);
 
 WiFiConnect wc;
 WiFiServer Server(7373);
@@ -523,39 +520,26 @@ void setup() {
   RadiotextSprite.createSprite(270, 19);
   FrequencySprite.createSprite(200, 50);
   AdvRadiotextSprite.createSprite(162, 19);
-  EONSprite.createSprite(172, 19);
-  RTPlusSprite.createSprite(172, 19);
-  AFSprite.createSprite(172, 19);
+  RDSSprite.createSprite(172, 19);
   SquelchSprite.createSprite(47, 19);
-  MenuInfobox.createSprite(292, 80);
 
   RadiotextSprite.setTextDatum(TL_DATUM);
   FrequencySprite.setTextDatum(TR_DATUM);
   AdvRadiotextSprite.setTextDatum(TL_DATUM);
-  EONSprite.setTextDatum(TL_DATUM);
-  RTPlusSprite.setTextDatum(TL_DATUM);
-  AFSprite.setTextDatum(TL_DATUM);
+  RDSSprite.setTextDatum(TL_DATUM);
   SquelchSprite.setTextDatum(TL_DATUM);
-  MenuInfobox.setTextDatum(TC_DATUM);
-
   FrequencySprite.loadFont(FREQFONT);
 
   if (language == LANGUAGE_CHS) {
     RadiotextSprite.loadFont(FONT16_CHS);
     AdvRadiotextSprite.loadFont(FONT16_CHS);
-    EONSprite.loadFont(FONT16_CHS);
-    RTPlusSprite.loadFont(FONT16_CHS);
-    AFSprite.loadFont(FONT16_CHS);
+    RDSSprite.loadFont(FONT16_CHS);
     SquelchSprite.loadFont(FONT16_CHS);
-    MenuInfobox.loadFont(FONT28_CHS);
   } else {
     RadiotextSprite.loadFont(FONT16);
     AdvRadiotextSprite.loadFont(FONT16);
-    EONSprite.loadFont(FONT16);
-    RTPlusSprite.loadFont(FONT16);
-    AFSprite.loadFont(FONT16);
+    RDSSprite.loadFont(FONT16);
     SquelchSprite.loadFont(FONT16);
-    MenuInfobox.loadFont(FONT28);
   }
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH) {
@@ -672,6 +656,8 @@ void setup() {
   }
   tftPrint(0, "Patch: v" + String(TEF), 160, 202, ActiveColor, ActiveColorSmooth, 28);
 
+  if (analogRead(BATTERY_PIN) < 200) batterydetect = false;
+  
   if (wifi) {
     tryWiFi();
     tft.fillRect(184, 230, 16, 6, PrimaryColor);
@@ -712,7 +698,6 @@ void setup() {
     Wire.endTransmission();
   }
 
-  if (analogRead(BATTERY_PIN) < 200) batterydetect = false;
   SelectBand();
 
   setupmode = false;
@@ -1891,27 +1876,18 @@ void ModeButtonPress() {
         if (USBmode) Serial.begin(19200); else Serial.begin(115200);
         RadiotextSprite.unloadFont();
         AdvRadiotextSprite.unloadFont();
-        EONSprite.unloadFont();
-        RTPlusSprite.unloadFont();
-        AFSprite.unloadFont();
+        RDSSprite.unloadFont();
         SquelchSprite.unloadFont();
-        MenuInfobox.unloadFont();
         if (language == LANGUAGE_CHS) {
           RadiotextSprite.loadFont(FONT16_CHS);
           AdvRadiotextSprite.loadFont(FONT16_CHS);
-          EONSprite.loadFont(FONT16_CHS);
-          RTPlusSprite.loadFont(FONT16_CHS);
-          AFSprite.loadFont(FONT16_CHS);
+          RDSSprite.loadFont(FONT16_CHS);
           SquelchSprite.loadFont(FONT16_CHS);
-          MenuInfobox.loadFont(FONT28_CHS);
         } else {
           RadiotextSprite.loadFont(FONT16);
           AdvRadiotextSprite.loadFont(FONT16);
-          EONSprite.loadFont(FONT16);
-          RTPlusSprite.loadFont(FONT16);
-          AFSprite.loadFont(FONT16);
+          RDSSprite.loadFont(FONT16);
           SquelchSprite.loadFont(FONT16);
-          MenuInfobox.loadFont(FONT28);
         }
         doBandSelectionFM();
         doBandSelectionAM();
@@ -3033,7 +3009,8 @@ void ShowBattery() {
     return;
   }
 
-  uint16_t v = analogRead(BATTERY_PIN);
+  uint16_t v = 0;
+  if (!wifi) v = analogRead(BATTERY_PIN);
   battery = map(constrain(v, BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, BAT_LEVEL_STAGE);
 
   if (batteryold != battery) {

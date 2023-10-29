@@ -2439,9 +2439,6 @@ void Infoboxprint(const char* input) {
     }
   }
 
-  MenuInfobox.fillSprite(BackgroundColor);
-  MenuInfobox.setTextColor(ActiveColor, ActiveColorSmooth, false);
-
   if (newlineIndex != -1) {
     char* line1 = (char*)malloc((newlineIndex + 1) * sizeof(char));
     strncpy(line1, input, newlineIndex);
@@ -2450,14 +2447,11 @@ void Infoboxprint(const char* input) {
     char* line2 = (char*)malloc((length - newlineIndex) * sizeof(char));
     strcpy(line2, input + newlineIndex + 1);
 
-    MenuInfobox.drawString(line1, 146, 15);
-    MenuInfobox.drawString(line2, 146, 45);
-
+	tftPrint(0, line1, 155, 48, ActiveColor, ActiveColorSmooth, 28);
+	tftPrint(0, line2, 155, 78, ActiveColor, ActiveColorSmooth, 28);
     free(line1);
     free(line2);
   } else {
-    MenuInfobox.drawString(input, 146, 15);
+	  tftPrint(0, input, 155, 78, ActiveColor, ActiveColorSmooth, 28);
   }
-
-  MenuInfobox.pushSprite(14, 34);
 }
