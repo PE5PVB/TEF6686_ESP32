@@ -356,7 +356,10 @@ void BuildAFScreen() {
     for (byte i = 0; i < 20; i++) {
       std::memset(eonpicodeold[i], '\0', sizeof(eonpicodeold[i]));
     }
+	
+    if (radio.rds.hasDABAF && radio.rds.dabaffreq != 0) tftPrint(1, "DAB: " + String(radio.rds.dabafchannel) + " (" + String(radio.rds.dabafeid) + ")", 166, 32, SecondaryColor, SecondaryColorSmooth, 16);
   }
+
 }
 
 void BuildMenu() {
@@ -2447,11 +2450,11 @@ void Infoboxprint(const char* input) {
     char* line2 = (char*)malloc((length - newlineIndex) * sizeof(char));
     strcpy(line2, input + newlineIndex + 1);
 
-	tftPrint(0, line1, 155, 48, ActiveColor, ActiveColorSmooth, 28);
-	tftPrint(0, line2, 155, 78, ActiveColor, ActiveColorSmooth, 28);
+    tftPrint(0, line1, 155, 48, ActiveColor, ActiveColorSmooth, 28);
+    tftPrint(0, line2, 155, 78, ActiveColor, ActiveColorSmooth, 28);
     free(line1);
     free(line2);
   } else {
-	  tftPrint(0, input, 155, 78, ActiveColor, ActiveColorSmooth, 28);
+    tftPrint(0, input, 155, 78, ActiveColor, ActiveColorSmooth, 28);
   }
 }

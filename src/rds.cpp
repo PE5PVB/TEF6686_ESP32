@@ -290,7 +290,7 @@ void readRds() {
           if (region == REGION_US) {
             if (advancedRDS) tftPrint(-1, PIold, 240, 72, SecondaryColor, SecondaryColorSmooth, 16); else tftPrint(-1, PIold, 240, 184, SecondaryColor, SecondaryColorSmooth, 16);
             if (advancedRDS) tftPrint(-1, stationIDold, 240, 89, SecondaryColor, SecondaryColorSmooth, 16); else tftPrint(-1, stationIDold, 240, 201, SecondaryColor, SecondaryColorSmooth, 16);
-			if (advancedRDS) tftPrint(1, stationStateold, 318, 89, SecondaryColor, SecondaryColorSmooth, 16); else tftPrint(1, stationStateold, 318, 201, SecondaryColor, SecondaryColorSmooth, 16);
+            if (advancedRDS) tftPrint(1, stationStateold, 318, 89, SecondaryColor, SecondaryColorSmooth, 16); else tftPrint(1, stationStateold, 318, 201, SecondaryColor, SecondaryColorSmooth, 16);
           }
 
           if (advancedRDS) tftPrint(-1, PSold, 38, 75, SecondaryColor, SecondaryColorSmooth, 28); else tftPrint(-1, PSold, 38, 187, SecondaryColor, SecondaryColorSmooth, 28);
@@ -404,7 +404,7 @@ void showPI() {
         if (region == REGION_US) {
           tftReplace(-1, PIold, radio.rds.picode, 240, 72, PrimaryColor, PrimaryColorSmooth, 16);
           tftReplace(-1, stationIDold, radio.rds.stationID, 240, 89, PrimaryColor, PrimaryColorSmooth, 16);
-		  tftReplace(1, stationStateold, radio.rds.stationState, 318, 89, SecondaryColor, SecondaryColorSmooth, 16);
+          tftReplace(1, stationStateold, radio.rds.stationState, 318, 89, SecondaryColor, SecondaryColorSmooth, 16);
         }
       } else if (afscreen) {
         tftReplace(-1, PIold, radio.rds.picode, 30, 201, BWAutoColor, BWAutoColorSmooth, 16);
@@ -413,12 +413,12 @@ void showPI() {
         if (region == REGION_US) {
           tftReplace(-1, PIold, radio.rds.picode, 240, 184, PrimaryColor, PrimaryColorSmooth, 16);
           tftReplace(-1, stationIDold, radio.rds.stationID, 240, 201, PrimaryColor, PrimaryColorSmooth, 16);
-		  tftReplace(1, stationStateold, radio.rds.stationState, 318, 201, SecondaryColor, SecondaryColorSmooth, 16);
+          tftReplace(1, stationStateold, radio.rds.stationState, 318, 201, SecondaryColor, SecondaryColorSmooth, 16);
         }
       }
       PIold = radio.rds.picode;
       stationIDold = radio.rds.stationID;
-	  stationStateold = radio.rds.stationState;
+      stationStateold = radio.rds.stationState;
       if (wifi) {
         Udp.beginPacket(remoteip, 9030);
         Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";PI=" + String(radio.rds.picode, 4));

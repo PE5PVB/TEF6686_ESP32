@@ -657,7 +657,7 @@ void setup() {
   tftPrint(0, "Patch: v" + String(TEF), 160, 202, ActiveColor, ActiveColorSmooth, 28);
 
   if (analogRead(BATTERY_PIN) < 200) batterydetect = false;
-  
+
   if (wifi) {
     tryWiFi();
     tft.fillRect(184, 230, 16, 6, PrimaryColor);

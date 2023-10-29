@@ -1197,6 +1197,11 @@ void TEF6686::readRDS(byte showrdserrors)
               rds.hasRDSplus = true;                                                            // Set flag
               rtplusblock = ((rds.rdsB & 0x1F) >> 1) * 2;                                       // Get RT+ Block
             }
+
+            if (rds.rdsD == 0x0093) {                                                           // Check for DAB+ AF application
+              rds.hasDABAF = true;                                                              // Set flag
+              DABAFblock = ((rds.rdsB & 0x1F) >> 1) * 2;                                        // Get RT+ Block
+            }
           }
         } break;
 
@@ -1307,6 +1312,27 @@ void TEF6686::readRDS(byte showrdserrors)
             rds.RTContent2 = extractUTF8Substring(rds.RTContent2, 0, 44, false);                // Make sure RT does not exceed 32 characters
           }
           if (!rdsBerrorThreshold && rdsblock == 16 && (bitRead(rds.rdsB, 15))) rds.hasTMC = true;  // TMC flag
+
+          if ((!rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold) && DABAFblock == rdsblock && rds.hasDABAF) {
+            rds.dabaffreq = (rds.rdsC * 16);
+
+            for (size_t i = 0; i < sizeof(DABfrequencyTable) / sizeof(DABfrequencyTable[0]); ++i) {
+              if (DABfrequencyTable[i].frequency == rds.dabaffreq) strcpy(rds.dabafchannel, DABfrequencyTable[i].label);
+            }
+
+            rds.dabafeid[0] = (rds.rdsD >> 12) & 0xF;
+            rds.dabafeid[1] = (rds.rdsD >> 8) & 0xF;
+            rds.dabafeid[2] = (rds.rdsD >> 4) & 0xF;
+            rds.dabafeid[3] = rds.rdsD & 0xF;
+            for (int i = 0; i < 4; i++) {
+              if (rds.dabafeid[i] < 10) {
+                rds.dabafeid[i] += '0';                                                               // Add ASCII offset for decimal digits
+              } else {
+                rds.dabafeid[i] += 'A' - 10;                                                          // Add ASCII offset for hexadecimal letters A-F
+              }
+            }
+			rds.dabafeid[4] = 0;
+          }
         }
         break;
 
@@ -1426,9 +1452,14 @@ void TEF6686::clearRDS (bool fullsearchrds)
   for (i = 0; i < 6; i++) rds.picode[i] = 0x20;
   rds.picode[6] = 0;
 
+  for (i = 0; i < 5; i++) rds.dabafeid[i] = 0x20;
+  rds.dabafeid[5] = 0;
+
+  for (i = 0; i < 4; i++) rds.dabafchannel[i] = 0x20;
+  rds.dabafchannel[4] = 0;
+
   for (i = 0; i < 8; i++) rds.stationID[i] = 0x20;
   rds.stationID[8] = 0;
-
 
   for (i = 0; i < 2; i++) rds.stationState[i] = 0x20;
   rds.stationState[2] = 0;
@@ -1474,6 +1505,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.pinMin = 0;
   rds.pinDay = 0;
   rds.stationTypeCode = 32;
+  rds.dabaffreq = 0;
   rds.hasPIN = false;
   rds.hasECC = false;
   rds.hasLIC = false;
@@ -1487,6 +1519,7 @@ void TEF6686::clearRDS (bool fullsearchrds)
   rds.hasTMC = false;
   rds.hasAID = false;
   rds.hasRDSplus = false;
+  rds.hasDABAF = false;
   rt_process = false;
   ps_process = false;
   rds.rdsreset = true;

@@ -524,6 +524,30 @@ static const char* const oda_app_names[] {
   "RFT+ (work title)"
 };
 
+struct DABFrequencyLabel {
+  uint32_t frequency;
+  const char* label;
+};
+
+const DABFrequencyLabel DABfrequencyTable[] = {
+  { 174928,  "5A"}, { 176640,  "5B"}, { 178352,  "5C"}, { 180064,  "5D"},
+  { 181936,  "6A"}, { 183648,  "6B"}, { 185360,  "6C"}, { 187072,  "6D"},
+  { 188928,  "7A"}, { 190640,  "7B"}, { 192352,  "7C"}, { 194064,  "7D"},
+  { 195936,  "8A"}, { 197648,  "8B"}, { 199360,  "8C"}, { 201072,  "8D"},
+  { 202928,  "9A"}, { 204640,  "9B"}, { 206352,  "9C"}, { 208064,  "9D"},
+  { 209936, "10A"}, { 211648, "10B"}, { 213360, "10C"}, { 215072, "10D"},
+  { 216928, "11A"}, { 218640, "11B"}, { 220352, "11C"}, { 222064, "11D"},
+  { 223936, "12A"}, { 225648, "12B"}, { 227360, "12C"}, { 229072, "12D"},
+  { 230784, "13A"}, { 232496, "13B"}, { 234208, "13C"}, { 235776, "13D"},
+  { 237488, "13E"}, { 239200, "13F"}, {1452960,  "LA"}, {1454672,  "LB"},
+  {1456384,  "LC"}, {1458096,  "LD"}, {1459808,  "LE"}, {1461520,  "LF"},
+  {1463232,  "LG"}, {1464944,  "LH"}, {1466656,  "LI"}, {1468368,  "LJ"},
+  {1470080,  "LK"}, {1471792,  "LL"}, {1473504,  "LM"}, {1475216,  "LN"},
+  {1476928,  "LO"}, {1478640,  "LP"}, {1480352,  "LQ"}, {1482064,  "LR"},
+  {1483776,  "LS"}, {1485488,  "LT"}, {1487200,  "LU"}, {1488912,  "LV"},
+  {1490624,  "LW"}
+};
+
 typedef struct _rds_ {
   byte region;
   byte stationTypeCode;
@@ -543,8 +567,11 @@ typedef struct _rds_ {
   char picode[7];
   char stationID[9];
   char stationState[3];
+  char dabafeid[5];
+  char dabafchannel[4];
   uint16_t hour, minute, day, month, year, rdsA, rdsB, rdsC, rdsD, rdsErr, rdsStat, correctPI, rdsplusTag1, rdsplusTag2;
   uint16_t aid[10];
+  uint32_t dabaffreq;
   byte aid_counter;
   int8_t offset;
   unsigned int ECC;
@@ -564,6 +591,7 @@ typedef struct _rds_ {
   bool hasPIN;
   bool hasECC;
   bool hasLIC;
+  bool hasDABAF;
   bool hasRT;
   bool hasTP;
   bool hasTA;
@@ -666,7 +694,6 @@ class TEF6686 {
     uint8_t eon_counter;
     uint8_t logbook_counter;
     uint8_t rdsblock;
-    uint8_t rtplusblock;
     bool mute;
     bool afmethodB;
     byte af_updatecounter;
@@ -718,5 +745,7 @@ class TEF6686 {
     uint8_t af_counterbcheck;
     bool afmethodBtrigger;
     uint16_t correctPIold;
+    uint8_t rtplusblock;
+    uint8_t DABAFblock;
 };
 #endif
