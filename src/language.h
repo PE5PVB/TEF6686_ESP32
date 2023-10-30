@@ -11,16 +11,16 @@ static const char* const myLanguage[18][207] = {
     "encoder set to standard", // 7
     "FM/AM receiver", // 8
     "Tuner: !None!", // 9
-    "Volume:", // 10
-    "Converter:", // 11
-    "Low band edge:", // 12
-    "High band edge:", // 13
-    "FM RF Level offset:", // 14
-    "Stereo threshold:", // 15
-    "High Cut corner:", // 16
-    "Highcut threshold:", // 17
-    "Low level threshold:", // 18
-    "Contrast:", // 19
+    "Volume", // 10
+    "Converter", // 11
+    "Low band edge", // 12
+    "High band edge", // 13
+    "FM RF Level offset", // 14
+    "Stereo threshold", // 15
+    "High Cut corner", // 16
+    "Highcut threshold", // 17
+    "Low level threshold", // 18
+    "Contrast", // 19
     "Set volume", // 20
     "Set converter offset", // 21
     "Set low band edge", // 22
@@ -98,11 +98,11 @@ static const char* const myLanguage[18][207] = {
     "1% brightness", // 94
     "25% brightness", // 95
     "50% brightness", // 96
-    "AM RF Level offset:", // 97
-    "Signalmeter unit:", // 98
-    "Use AF:", // 99
-    "Select FM Band:", // 100
-    "Select AM Band:", // 101
+    "AM RF Level offset", // 97
+    "Signalmeter unit", // 98
+    "Use AF", // 99
+    "Select FM Band", // 100
+    "Select AM Band", // 101
     "LW", // 102
     "MW", // 103
     "SW", // 104
@@ -220,16 +220,16 @@ static const char* const myLanguage[18][207] = {
     "encoder ingesteld als standaard", // 7
     "FM/AM ontvanger", // 8
     "Tuner: !Geen!", // 9
-    "Volume:", // 10
-    "Converter:", // 11
-    "Lage bandgrens:", // 12
-    "Hoge bandgrens:", // 13
-    "FM RF niveau afwijking:", // 14
-    "Stereo grens:", // 15
-    "Hoge tonen afval:", // 16
-    "Hoog afval grens:", // 17
-    "Laag signaal grens:", // 18
-    "Helderheid:", // 19
+    "Volume", // 10
+    "Converter", // 11
+    "Lage bandgrens", // 12
+    "Hoge bandgrens", // 13
+    "FM RF niveau afwijking", // 14
+    "Stereo grens", // 15
+    "Hoge tonen afval", // 16
+    "Hoog afval grens", // 17
+    "Laag signaal grens", // 18
+    "Helderheid", // 19
     "Audio volume", // 20
     "Converter offset", // 21
     "Band ondergrens", // 22
@@ -307,8 +307,8 @@ static const char* const myLanguage[18][207] = {
     "1% helderheid", // 94
     "25% helderheid", // 95
     "50% helderheid", // 96
-    "AM RF Level afwijking:", // 97
-    "Signaalmeter eenheid:", // 98
+    "AM RF Level afwijking", // 97
+    "Signaalmeter eenheid", // 98
     "Gebruik AF", // 99
     "Selecteer\nFM banden", // 100
     "Selecteer\nAM banden", // 101
