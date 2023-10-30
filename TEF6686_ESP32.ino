@@ -3066,7 +3066,7 @@ void TuneUp() {
   unsigned int temp = 0;
   if (stepsize == 0) {
     if (band > BAND_GAP) {
-      if (frequency_AM < MWHighEdgeSet) {
+      if (frequency_AM < MWHighEdgeSet && frequency_AM > MWLowEdgeSet) {
         if (region == REGION_EU) {
           temp = FREQ_MW_STEP_9K;
           frequency_AM = (frequency_AM / FREQ_MW_STEP_9K) * FREQ_MW_STEP_9K;
@@ -3074,6 +3074,9 @@ void TuneUp() {
           temp = FREQ_MW_STEP_10K;
           frequency_AM = (frequency_AM / FREQ_MW_STEP_10K) * FREQ_MW_STEP_10K;
         }
+      } else if (frequency_AM < MWLowEdgeSet) {
+        temp = FREQ_MW_STEP_9K;
+        frequency_AM = (frequency_AM / FREQ_MW_STEP_9K) * FREQ_MW_STEP_9K;
       } else {
         temp = FREQ_SW_STEP_5K;
         frequency_AM = (frequency_AM / FREQ_SW_STEP_5K) * FREQ_SW_STEP_5K;
@@ -3145,17 +3148,20 @@ void TuneDown() {
   unsigned int temp = 0;
   if (stepsize == 0) {
     if (band > BAND_GAP) {
-      if (frequency_AM <= MWHighEdgeSet) {
-        if (frequency_AM == 2000) {
-          frequency_AM = 1998;
-          temp = 0;
-        } else {
-          temp = region == REGION_EU ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K;
-          frequency_AM = (frequency_AM / temp) * temp;
+      if (frequency_AM < MWHighEdgeSet && frequency_AM > MWLowEdgeSet) {
+        if (region == REGION_EU) {
+          temp = FREQ_MW_STEP_9K;
+          frequency_AM = (frequency_AM / FREQ_MW_STEP_9K) * FREQ_MW_STEP_9K;
+        } else if (region == REGION_US) {
+          temp = FREQ_MW_STEP_10K;
+          frequency_AM = (frequency_AM / FREQ_MW_STEP_10K) * FREQ_MW_STEP_10K;
         }
+      } else if (frequency_AM < MWLowEdgeSet) {
+        temp = FREQ_MW_STEP_9K;
+        frequency_AM = (frequency_AM / FREQ_MW_STEP_9K) * FREQ_MW_STEP_9K;
       } else {
         temp = FREQ_SW_STEP_5K;
-        frequency_AM = (frequency_AM / temp) * temp;
+        frequency_AM = (frequency_AM / FREQ_SW_STEP_5K) * FREQ_SW_STEP_5K;
       }
     } else {
       if (band == BAND_OIRT) {
