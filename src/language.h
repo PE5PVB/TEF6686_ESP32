@@ -69,7 +69,7 @@ static const char* const myLanguage[18][207] = {
     "FM Noise blanker", // 65
     "Defaults loaded", // 66
     "Audio output", // 67
-    "Allow tuning during screensaver", // 68
+    "Allow tuning\nduring screensaver", // 68
     "Invert display", // 69
     "About software", // 70
     "Main code:", // 71
@@ -170,7 +170,7 @@ static const char* const myLanguage[18][207] = {
     "Identifier", // 166
     "Purchase", // 167
     "Get data", // 168
-    " ", // 169
+    "MW default stepsize", // 169
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
@@ -186,10 +186,10 @@ static const char* const myLanguage[18][207] = {
     "AM settings", // 182
     "Connectivity", // 183
     "PRESS MODE TO RETURN", // 184
-    "AM CoChannelDet", // 185
-    "CoChannel Det sensitivity", // 186
-    "CoChannel Det threshold", // 187
-    "CoChannel Det counter", // 188
+    "CoChannel Detector", // 185
+    "CoChannel Detector\nsensitivity", // 186
+    "CoChannel Detector\nthreshold", // 187
+    "CoChannel Detector\ncounter", // 188
     "MAIN", // 189
     "AUDIO", // 190
     "DISPLAY", // 191
@@ -199,7 +199,7 @@ static const char* const myLanguage[18][207] = {
     "CONNECT", // 195
     "Auto sort AF", // 196
     "Stationlist ID", // 197
-    "AM ATT", // 198
+    "AM AGC", // 198
     "FM deemphasis", // 199
     "Small", // 200
     "Large", // 201
@@ -379,7 +379,7 @@ static const char* const myLanguage[18][207] = {
     "Identificatie", // 166
     "Aankoop", // 167
     "Verkrijg data", // 168
-    " ", // 169
+    "MW Stapgrootte", // 169
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
@@ -588,7 +588,7 @@ static const char* const myLanguage[18][207] = {
     "Identyfikator", // 166
     "Zakup", // 167
     "Pobierz dane", // 168
-    " ", // 169
+    "MW default stepsize", // 169
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
@@ -696,7 +696,7 @@ static const char* const myLanguage[18][207] = {
     "FM prigušivač šuma", // 65
     "Zadane postavke učitane", // 66
     "Audio izlaz", // 67
-    "Allow tuning during screensaver", // 68
+    "Allow tuning\nduring screensaver", // 68
     "Invertiraj boju zaslona", // 69
     "O softveru", // 70
     "Glavni izvorni kod:", // 71
@@ -797,7 +797,7 @@ static const char* const myLanguage[18][207] = {
     "Identifikator", // 166
     "Kupnja", // 167
     "Get data", // 168
-    " ", // 169
+    "MW default stepsize", // 169
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
@@ -1006,7 +1006,7 @@ static const char* const myLanguage[18][207] = {
     "Αναγνωριστικό", // 166
     "Αγορά", // 167
     "Λήψη δεδομένων", // 168
-    " ", // 169
+    "MW default stepsize", // 169
     "Μανταρινί", // 170
     "Ωκεανός", // 171
     "Ινδικό", // 172
@@ -1215,7 +1215,7 @@ static const char* const myLanguage[18][207] = {
     "Identifier", // 166
     "Purchase", // 167
     "Get data", // 168
-    " ", // 169
+    "MW default stepsize", // 169
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
@@ -1424,7 +1424,7 @@ static const char* const myLanguage[18][207] = {
     "Musik-ID", // 166
     "Bezugsquelle", // 167
     "Empfange Daten", // 168
-    " ", // 169
+    "MW default stepsize", // 169
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
@@ -1633,7 +1633,7 @@ static const char* const myLanguage[18][207] = {
     "Identifier", // 166
     "Purchase", // 167
     "Get data", // 168
-    " ", // 169
+    "MW default stepsize", // 169
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
@@ -1842,7 +1842,7 @@ static const char* const myLanguage[18][207] = {
     "Identifier", // 166
     "Purchase", // 167
     "Get data", // 168
-    " ", // 169
+    "MW default stepsize", // 169
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
@@ -2051,7 +2051,7 @@ static const char* const myLanguage[18][207] = {
     "Identifiant", // 166
     "Achat", // 167
     "Obtenir des données", // 168
-    " ", // 169
+    "MW default stepsize", // 169
     "Mandarine", // 170
     "Océan", // 171
     "Indigo", // 172
@@ -2260,7 +2260,7 @@ static const char* const myLanguage[18][207] = {
     "Identifier", // 166
     "Purchase", // 167
     "Get data", // 168
-    " ", // 169
+    "MW default stepsize", // 169
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
@@ -2469,7 +2469,7 @@ static const char* const myLanguage[18][207] = {
     "Идентификатор", // 166
     "Покупка", // 167
     "Получить данные", // 168
-    " ", // 169
+    "MW default stepsize", // 169
     "Мандариновый", // 170
     "Океан", // 171
     "Индиго", // 172
@@ -2678,7 +2678,7 @@ static const char* const myLanguage[18][207] = {
     "Ідентифікатор", // 166
     "Покупка", // 167
     "Отримати дані", // 168
-    " ", // 169
+    "MW default stepsize", // 169
     "Мандариновий", // 170
     "Океан", // 171
     "Індиго", // 172
@@ -2887,7 +2887,7 @@ static const char* const myLanguage[18][207] = {
     "Identifier", // 166
     "Purchase", // 167
     "Get data", // 168
-    " ", // 169
+    "MW default stepsize", // 169
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
@@ -3096,7 +3096,7 @@ static const char* const myLanguage[18][207] = {
     "Identifier", // 166
     "Purchase", // 167
     "Get data", // 168
-    " ", // 169
+    "MW default stepsize", // 169
     "桔红", // 170
     "海之蓝", // 171
     "靛青", // 172
@@ -3305,7 +3305,7 @@ static const char* const myLanguage[18][207] = {
     "Identifikator", // 166
     "Kjøp", // 167
     "Få data", // 168
-    " ", // 169
+    "MW default stepsize", // 169
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
@@ -3514,7 +3514,7 @@ static const char* const myLanguage[18][207] = {
     "Identificador", // 166
     "Compra", // 167
     "Obtener datos", // 168
-    " ", // 169
+    "MW default stepsize", // 169
     "Mandarina", // 170
     "Océano", // 171
     "Índigo", // 172
@@ -3723,7 +3723,7 @@ static const char* const myLanguage[18][207] = {
     "Identificador", // 166
     "Compra", // 167
     "Obter dados", // 168
-    " ", // 169
+    "MW default stepsize", // 169
     "Tangerina", // 170
     "Oceano", // 171
     "Índigo", // 172
@@ -3761,5 +3761,5 @@ static const char* const myLanguage[18][207] = {
     "Aplicativos detectados", // 204
     "Min.", // 205
     "Velocidade dinâmica\nde SPI" // 206
-}
+  }
 };

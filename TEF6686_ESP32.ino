@@ -74,6 +74,7 @@ bool memoryms[EE_PRESETS_CNT];
 bool memorystore;
 bool menu;
 bool menuopen;
+bool mwstepsize;
 bool nobattery;
 bool rdsflagreset;
 bool rdsreset;
@@ -158,7 +159,6 @@ byte poweroptions;
 byte poweroptionsold;
 byte rdsblockold;
 byte region;
-byte regionold;
 byte rotarymode;
 byte touchrotating;
 byte screensaverOptions[5] = {0, 3, 10, 30, 60};
@@ -441,11 +441,12 @@ void setup() {
   nowToggleSWMIBand = EEPROM.readByte(EE_BYTE_BANDAUTOSW);
   radio.rds.fastps = EEPROM.readByte(EE_BYTE_FASTPS);
   tot = EEPROM.readByte(EE_BYTE_TOT);
+  mwstepsize = EEPROM.readByte(EE_BYTE_MWREGION);
 
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX;
-  MWLowEdgeSet = region == 0 ? FREQ_MW_LOW_EDGE_MIN_9K : FREQ_MW_LOW_EDGE_MIN_10K;
-  MWHighEdgeSet = region == 0 ? FREQ_MW_HIGH_EDGE_MAX_9K : FREQ_MW_HIGH_EDGE_MAX_10K;
+  MWLowEdgeSet = mwstepsize == false ? FREQ_MW_LOW_EDGE_MIN_9K : FREQ_MW_LOW_EDGE_MIN_10K;
+  MWHighEdgeSet = mwstepsize == false ? FREQ_MW_HIGH_EDGE_MAX_9K : FREQ_MW_HIGH_EDGE_MAX_10K;
   SWLowEdgeSet = FREQ_SW_LOW_EDGE_MIN;
   SWHighEdgeSet = FREQ_SW_HIGH_EDGE_MAX;
   if (LowEdgeOIRTSet < FREQ_FM_OIRT_START || LowEdgeOIRTSet > FREQ_FM_OIRT_END) LowEdgeOIRTSet = FREQ_FM_OIRT_START;
@@ -1874,6 +1875,7 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_FM_DEEMPHASIS, fmdeemphasis);
         EEPROM.writeByte(EE_BYTE_FASTPS, radio.rds.fastps);
         EEPROM.writeByte(EE_BYTE_TOT, tot);
+        EEPROM.writeByte(EE_BYTE_MWREGION, mwstepsize);
         EEPROM.commit();
         Serial.end();
         if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
@@ -1893,6 +1895,8 @@ void ModeButtonPress() {
           RDSSprite.loadFont(FONT16);
           SquelchSprite.loadFont(FONT16);
         }
+        MWLowEdgeSet = mwstepsize == false ? FREQ_MW_LOW_EDGE_MIN_9K : FREQ_MW_LOW_EDGE_MIN_10K;
+        MWHighEdgeSet = mwstepsize == false ? FREQ_MW_HIGH_EDGE_MAX_9K : FREQ_MW_HIGH_EDGE_MAX_10K;
         doBandSelectionFM();
         doBandSelectionAM();
         ScreensaverTimerSet(screensaverOptions[screensaverset]);
@@ -1997,8 +2001,8 @@ void RoundStep() {
     radio.SetFreq(frequency_OIRT);
   } else {
     if (band == BAND_MW) {
-      unsigned int freq = frequency_AM / (region == REGION_EU ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K);
-      frequency_AM = freq * (region == REGION_EU ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K);
+      unsigned int freq = frequency_AM / (mwstepsize == false ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K);
+      frequency_AM = freq * (mwstepsize == false ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K);
       radio.SetFreqAM(frequency_AM);
     } else if (band == BAND_SW) {
       Round5K(frequency_AM);
@@ -3067,10 +3071,10 @@ void TuneUp() {
   if (stepsize == 0) {
     if (band > BAND_GAP) {
       if (frequency_AM < MWHighEdgeSet && frequency_AM > MWLowEdgeSet) {
-        if (region == REGION_EU) {
+        if (!mwstepsize) {
           temp = FREQ_MW_STEP_9K;
           frequency_AM = (frequency_AM / FREQ_MW_STEP_9K) * FREQ_MW_STEP_9K;
-        } else if (region == REGION_US) {
+        } else if (mwstepsize) {
           temp = FREQ_MW_STEP_10K;
           frequency_AM = (frequency_AM / FREQ_MW_STEP_10K) * FREQ_MW_STEP_10K;
         }
@@ -3149,10 +3153,10 @@ void TuneDown() {
   if (stepsize == 0) {
     if (band > BAND_GAP) {
       if (frequency_AM < MWHighEdgeSet && frequency_AM > MWLowEdgeSet) {
-        if (region == REGION_EU) {
+        if (!mwstepsize) {
           temp = FREQ_MW_STEP_9K;
           frequency_AM = (frequency_AM / FREQ_MW_STEP_9K) * FREQ_MW_STEP_9K;
-        } else if (region == REGION_US) {
+        } else if (mwstepsize) {
           temp = FREQ_MW_STEP_10K;
           frequency_AM = (frequency_AM / FREQ_MW_STEP_10K) * FREQ_MW_STEP_10K;
         }
@@ -3412,7 +3416,8 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_BWSET_AM, 2);
   EEPROM.writeByte(EE_BYTE_BANDAUTOSW, 0);
   EEPROM.writeByte(EE_BYTE_FASTPS, 1);
-  EEPROM.writeByte(EE_BYTE_TOT, 60);
+  EEPROM.writeByte(EE_BYTE_TOT, 0);
+  EEPROM.writeByte(EE_BYTE_MWREGION, 0);
   EEPROM.commit();
 }
 
