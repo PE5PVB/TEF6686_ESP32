@@ -1310,8 +1310,8 @@ static const char* const myLanguage[18][207] = {
     "WLAN konfigurieren", // 52
     "Verbinde mit:", // 53
     "um WLAN einzustellen", // 54
-    "Verb.versuch zu WLAN", // 55
-    "FEHLER! WLAN deaktiviert", // 56
+    "Verbindungsversuch\nzum WLAN", // 55
+    "FEHLER! WLAN\n nicht gefunden", // 56
     "VERBUNDEN!", // 57
     "Stationlist Rechner IP", // 58
     "Zeige KW-Wellenlänge", // 59
@@ -1321,16 +1321,16 @@ static const char* const myLanguage[18][207] = {
     "Modulationspegel", // 63
     "AM Rauschunterdrückung", // 64
     "UKW Rauschunterdrückung", // 65
-    "Werkseinstellung geladen", // 66
+    "Werkseinstellungen\nwurden geladen", // 66
     "Audioausgabe", // 67
-    "Tunen bei Bildschirmschoner erlauben", // 68
+    "Tunen während des\nBildschirmschoners erlauben", // 68
     "Anzeigefarben umkehren", // 69
     "Über diese Software", // 70
     "Hauptcode:", // 71
     "Mitwirkende:", // 72
     "Unbekannt", // 73
     "Bildschirmschoneroptionen", // 74
-    "Abschaltzeit", // 75
+    "Abschaltezeit", // 75
     "Bildschirm aus", // 76
     "Thema", // 77
     "Standard", // 78
@@ -1345,7 +1345,7 @@ static const char* const myLanguage[18][207] = {
     "Keine AF verfügbar", // 87
     "Kein EON verfügbar", // 88
     "Kein RT+ verfügbar", // 89
-    "UKW min. Schrittweite", // 90
+    "UKW Standard-Schrittweite", // 90
     "Bildschirmschoner", // 91
     "Sek", // 92
     "ZUM SCHLIEßEN BAND DRÜCKEN", // 93
@@ -1397,8 +1397,8 @@ static const char* const myLanguage[18][207] = {
     "Werbung", // 139
     "Website", // 140
     "Info", // 141
-    "Kurzer PS", // 142
-    "Langer PS", // 143
+    "Kurzes PS", // 142
+    "Langes PS", // 143
     "Es läuft", // 144
     "Es folgt", // 145
     "Thema", // 146
@@ -1424,13 +1424,13 @@ static const char* const myLanguage[18][207] = {
     "Musik-ID", // 166
     "Bezugsquelle", // 167
     "Empfange Daten", // 168
-    "MW default stepsize", // 169
+    "MW Standard-Schrittweite", // 169
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
     "Akkuoptionen", // 173
-    "Zeige Spannung", // 174
-    "Zeige Prozente", // 175
+    "Spannung anzeigen", // 174
+    "Prozente anzeigen", // 175
     "RT puffern", // 176
     "Haupteinstellungen", // 177
     "Audioeinstellungen", // 178
@@ -1440,10 +1440,10 @@ static const char* const myLanguage[18][207] = {
     "AM Einstellungen", // 182
     "Netzwerk", // 183
     "DRÜCKE MODE FÜR ZURÜCK", // 184
-    "AM CoChannelDet", // 185
-    "AM CoChannelDet Empfindlichkeit", // 186
-    "AM CoChannelDet Schwelle", // 187
-    "AM CoChannelDet Zähler", // 188
+    "AM Gleichkanalerkennung", // 185
+    "AM Gleichkanalerkennung\nEmpfindlichkeit", // 186
+    "AM Gleichkanalerkennung\nSchwelle", // 187
+    "AM Gleichkanalerkennung\nZähler", // 188
     "HAUPT", // 189
     "AUDIO", // 190
     "ANZEIGE", // 191
@@ -1461,7 +1461,7 @@ static const char* const myLanguage[18][207] = {
     "Schnelles PS", // 203
     "Erkannte Applikationen", // 204
     "Min.", // 205
-    "Dynam. SPI-Geschwindigkeit" // 206
+    "Dynamische SPI-Geschwindigkeit" // 206
   },
 
   { "Český", // Czech
@@ -2769,12 +2769,12 @@ static const char* const myLanguage[18][207] = {
     "USA", // 48
     "Mostra trattino basso in RDS", // 49
     "Modalità USB", // 50
-    "Wi - Fi attivo", // 51
-    "Configura Wi - Fi", // 52
+    "Wi-Fi attivo", // 51
+    "Configura Wi-Fi", // 52
     "Connetti a: ", // 53
-    "per configurare il Wi - Fi", // 54
+    "per configurare il Wi-Fi", // 54
     "Connessione al Wi-Fi", // 55
-    "NON RIUSCITA. WiFi inattivo", // 56
+    "NON RIUSCITA. Wi-Fi inattivo", // 56
     "CONNESSO!", // 57
     "IP per StationList", // 58
     "Mostra banda SW in m.", // 59
@@ -2812,11 +2812,11 @@ static const char* const myLanguage[18][207] = {
     "Salvaschermo", // 91
     "Secondi", // 92
     "PREMI BAND PER CHIUDERE", // 93
-    "1 % luminosità", // 94
-    "25 % di luminosità", // 95
-    "50 % di luminosità", // 96
+    "1% luminosità", // 94
+    "25% di luminosità", // 95
+    "50% di luminosità", // 96
     "Offset livello RF AM: ", // 97
-    "Unità S - meter: ", // 98
+    "Unità S-meter: ", // 98
     "Use AF:", // 99
     "Select FM Band:", // 100
     "Select AM Band:", // 101
