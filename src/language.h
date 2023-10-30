@@ -278,7 +278,7 @@ static const char* const myLanguage[18][207] = {
     "FM ruis filter", // 65
     "Opnieuw geconfigureerd", // 66
     "Audio uitgang", // 67
-    "Afstemmen tijdens schermbeveiliging", // 68
+    "Afstemmen tijdens\nschermbeveiliging", // 68
     "Inverteer scherm", // 69
     "Over deze software", // 70
     "Basis code:", // 71
@@ -288,7 +288,7 @@ static const char* const myLanguage[18][207] = {
     "Auto uitschakelen", // 75
     "Scherm uit", // 76
     "Thema", // 77
-    "Default", // 78
+    "Standaard", // 78
     "Cyan", // 79
     "Crimson", // 80
     "Monochrome", // 81
@@ -300,7 +300,7 @@ static const char* const myLanguage[18][207] = {
     "Geen AF data", // 87
     "Geen EON data", // 88
     "Geen RT+ data", // 89
-    "FM stapgrootte", // 90
+    "FM standaard\nstapgrootte", // 90
     "Schermbeveiliging", // 91
     "sec.", // 92
     "DRUK OP BAND OM AF TE SLUITEN", // 93
@@ -309,15 +309,15 @@ static const char* const myLanguage[18][207] = {
     "50% helderheid", // 96
     "AM RF Level afwijking:", // 97
     "Signaalmeter eenheid:", // 98
-    "Gebruik AF:", // 99
-    "Select FM Band:", // 100
-    "Select AM Band:", // 101
+    "Gebruik AF", // 99
+    "Selecteer\nFM banden", // 100
+    "Selecteer\nAM banden", // 101
     "LW", // 102
     "MW", // 103
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotating while screen off", // 107
+    "Afstemmen tijdens\nschermbeveiliging", // 107
     "Model keuze", // 108
     "Basis (ILI9341)", // 109
     "Portable (ILI9341)", // 110
@@ -379,7 +379,7 @@ static const char* const myLanguage[18][207] = {
     "Identificatie", // 166
     "Aankoop", // 167
     "Verkrijg data", // 168
-    "MW Stapgrootte", // 169
+    "MW standaard\nstapgrootte", // 169
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
@@ -395,10 +395,10 @@ static const char* const myLanguage[18][207] = {
     "AM instellingen", // 182
     "Connectiviteit", // 183
     "MODE OM TERUG TE GAAN", // 184
-    "AM CoChannel detectie", // 185
-    "CoChannel det. gevoeligheid", // 186
-    "CoChannel det. kantelpunt", // 187
-    "CoChannel det. teller", // 188
+    "CoChannel Detectie", // 185
+    "CoChannel Detectie\ngevoeligheid", // 186
+    "CoChannel Detectie\ndrempel", // 187
+    "CoChannel Detectie\nteller", // 188
     "ALGEMEEN", // 189
     "GELUID", // 190
     "SCHERM", // 191
@@ -408,7 +408,7 @@ static const char* const myLanguage[18][207] = {
     "VERBIND", // 195
     "Auto AF sorteren", // 196
     "Stationlist ID", // 197
-    "AM ATT", // 198
+    "AM AGC", // 198
     "FM deemphasis", // 199
     "Laag", // 200
     "Middel", // 201
@@ -416,7 +416,7 @@ static const char* const myLanguage[18][207] = {
     "Snelle PS", // 203
     "Gedetecteerde applicaties", // 204
     "Min.", // 205
-    "Dynamic SPI speed" // 206
+    "Dynamische\nSPI snelheid" // 206
   },
 
   { "Polski", // Polish

@@ -388,7 +388,7 @@ void BuildMenu() {
 
     case MAINSETTINGS:
       tftPrint(-1, myLanguage[language][108], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][68], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][107], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][206], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
 
       tftPrint(1, "Mhz", 310, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
