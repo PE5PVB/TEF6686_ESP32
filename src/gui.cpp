@@ -16,7 +16,6 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       PrimaryColorSmooth = 0x2120;
       SecondaryColor = TFT_SKYBLUE;
       SecondaryColorSmooth = 0x10E4;
-      FrequencyColor = TFT_YELLOW;
       FrameColor = TFT_BLUE;
       GreyoutColor = 0x39A7;
       BackgroundColor = TFT_BLACK;
@@ -43,7 +42,6 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       PrimaryColorSmooth = 0x0105;
       SecondaryColor = 0x5BAF;
       SecondaryColorSmooth = 0x29E8;
-      FrequencyColor = 0x0F3F;
       FrameColor = 0x01e9;
       GreyoutColor = 0x2A08;
       BackgroundColor = TFT_BLACK;
@@ -70,7 +68,6 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       PrimaryColorSmooth = 0x3800;
       SecondaryColor = 0x6A08;
       SecondaryColorSmooth = 0x30E3;
-      FrequencyColor = 0xF8C3;
       FrameColor = 0x3800;
       GreyoutColor = 0x4A69;
       BackgroundColor = TFT_BLACK;
@@ -97,7 +94,6 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       PrimaryColorSmooth = TFT_BLACK;
       SecondaryColor = 0x7BCF;
       SecondaryColorSmooth = 0x1082;
-      FrequencyColor = TFT_WHITE;
       FrameColor = 0x2965;
       GreyoutColor = 0x4A69;
       BackgroundColor = TFT_BLACK;
@@ -124,7 +120,6 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       PrimaryColorSmooth = 0x2965;
       SecondaryColor = 0x6A86;
       SecondaryColorSmooth = 0x3123;
-      FrequencyColor = TFT_ORANGE;
       FrameColor = 0x2965;
       GreyoutColor = 0x5140;
       BackgroundColor = 0x0806;
@@ -151,7 +146,6 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       PrimaryColorSmooth = 0x0200;
       SecondaryColor = 0x748E;
       SecondaryColorSmooth = 0x3206;
-      FrequencyColor = TFT_GREEN;
       FrameColor = 0x0200;
       GreyoutColor = 0x4A69;
       BackgroundColor = TFT_BLACK;
@@ -178,7 +172,6 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       PrimaryColorSmooth = 0x3008;
       SecondaryColor = 0x9B90;
       SecondaryColorSmooth = 0x3946;
-      FrequencyColor = 0xF3D5;
       FrameColor = 0x3845;
       GreyoutColor = 0x38C5;
       BackgroundColor = TFT_BLACK;
@@ -205,7 +198,6 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       PrimaryColorSmooth = TFT_WHITE;
       SecondaryColor = 0x9492;
       SecondaryColorSmooth = TFT_WHITE;
-      FrequencyColor = 0x18C3;
       FrameColor = 0x630C;
       GreyoutColor = 0x9492;
       BackgroundColor = 0xDFFC;
@@ -232,7 +224,6 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       PrimaryColorSmooth = 0x3080;
       SecondaryColor = 0x9B8D;
       SecondaryColorSmooth = 0x5207;
-      FrequencyColor = 0xF980;
       FrameColor = 0x38A1;
       GreyoutColor = 0x6247;
       BackgroundColor = TFT_BLACK;
@@ -259,7 +250,6 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       PrimaryColorSmooth = 0x0006;
       SecondaryColor = 0x73F4;
       SecondaryColorSmooth = 0x31A8;
-      FrequencyColor = 0x01FF;
       FrameColor = 0x0010;
       GreyoutColor = 0x420C;
       BackgroundColor = TFT_BLACK;
@@ -286,7 +276,6 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       PrimaryColorSmooth = 0x2007;
       SecondaryColor = 0x9C96;
       SecondaryColorSmooth = 0x41C8;
-      FrequencyColor = 0x881F;
       FrameColor = 0x6016;
       GreyoutColor = 0x49AC;
       BackgroundColor = TFT_BLACK;

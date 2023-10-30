@@ -202,7 +202,6 @@ int DeEmphasis;
 int ForceMono;
 int FrameColor;
 int freqold;
-int FrequencyColor;
 int GreyoutColor;
 int InsignificantColor;
 int InsignificantColorSmooth;

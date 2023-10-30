@@ -123,7 +123,6 @@ extern int BatteryValueColorSmooth;
 extern int BWAutoColor;
 extern int BWAutoColorSmooth;
 extern int FrameColor;
-extern int FrequencyColor;
 extern int GreyoutColor;
 extern int InsignificantColor;
 extern int InsignificantColorSmooth;
