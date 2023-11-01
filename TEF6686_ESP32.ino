@@ -2190,7 +2190,6 @@ void KeyUp() {
         if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10)); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10)); else DataPrint("M1\nT" + String(frequency_AM));
       }
       if (!memorystore) {
-        if (radio.rds.hasCT) tftPrint(1, rds_clock, 205, 163, BackgroundColor, BackgroundColor, 16);
         radio.clearRDS(fullsearchrds);
         ShowFreq(0);
         store = true;
@@ -2238,7 +2237,6 @@ void KeyDown() {
         if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10)); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10)); else DataPrint("M1\nT" + String(frequency_AM));
       }
       if (!memorystore) {
-        if (radio.rds.hasCT) tftPrint(1, rds_clock, 205, 163, BackgroundColor, BackgroundColor, 16);
         radio.clearRDS(fullsearchrds);
         ShowFreq(0);
         store = true;
@@ -2352,12 +2350,12 @@ void ShowFreq(int mode) {
   rtplusstringold = "";
   eonstringold = "";
   afstringold = "";
-  rds_clockold = "";
   rdsreset = true;
   licold = 254;
   ECCold = 253;
   afmethodBold = false;
   aid_counterold = 0;
+  dropout = false;
 
   if (wifi) {
     Udp.beginPacket(remoteip, 9030);
