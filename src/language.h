@@ -939,11 +939,11 @@ static const char* const myLanguage[18][207] = {
     "Χρήση AF:", // 99
     "Επιλογή μπάντας FM:", // 100
     "Επιλογή μπάντας AM:", // 101
-    "LW", // 102 ***
+    "LW", // 102
     "AM", // 103
-    "SW", // 104 ***
-    "FM", // 105 ***
-    "OIRT", // 106 ***
+    "SW", // 104
+    "FM", // 105
+    "OIRT", // 106
     "Περιστροφή με οθόνη\nσβηστή", // 107
     "Επιλογή μοντέλου", // 108
     "Βασικό (ILI9341)", // 109
@@ -996,8 +996,8 @@ static const char* const myLanguage[18][207] = {
     "SMS", // 156 ***
     "Email επικοινωνία", // 157
     "Email στούντιο", // 158
-    "Email", // 159 ***
-    "Chat", // 160 ***
+    "Email", // 159
+    "Chat", // 160
     "Κέντρο chat", // 161
     "Ερώτηση ψηφοφορίας", // 162
     "Κέντρο ψηφοφορίας", // 163
@@ -1006,7 +1006,7 @@ static const char* const myLanguage[18][207] = {
     "Αναγνωριστικό", // 166
     "Αγορά", // 167
     "Λήψη δεδομένων", // 168
-    "MW default stepsize", // 169 ***
+    "Προεπιλεγμένο μέγεθος\nβήματος ΑΜ", // 169 ***
     "Μανταρινί", // 170
     "Ωκεανός", // 171
     "Ινδικό", // 172
@@ -1029,9 +1029,9 @@ static const char* const myLanguage[18][207] = {
     "ΒΑΣΙΚΕΣ", // 189
     "ΗΧΟΣ", // 190
     "ΕΜΦΑΝΙΣΗ", // 191
-    "RDS", // 192 ***
-    "FM", // 193 ***
-    "AM", // 194 ***
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
     "ΣΥΝΔΕΣΗ", // 195
     "Αυτόματη ταξινόμηση\nAF", // 196
     "ID λίστας σταθμών", // 197
@@ -1929,7 +1929,7 @@ static const char* const myLanguage[18][207] = {
     "Sourdine douce AM", // 44
     "Bip à la limite\nde bande", // 45
     "Région", // 46
-    "Europe", // 47 ***
+    "Europe", // 47
     "États-Unis", // 48
     "Montre les tirets du\nbas du PS", // 49
     "Mode USB", // 50
@@ -1940,7 +1940,7 @@ static const char* const myLanguage[18][207] = {
     "Tentative de connexion\nen mode Wi-Fi", // 55
     "CONNEXION IMPOSSIBLE...\nDésactivation du Wi-Fi", // 56
     "CONNECTÉ!", // 57
-    "Stationlist client IP", // 58 ***
+    "Stationlist client IP", // 58
     "Afficher la longueur\nd'onde SW", // 59
     "Filtre RDS", // 60
     "Afficher les erreurs\nde décodage PI", // 61
@@ -1961,19 +1961,19 @@ static const char* const myLanguage[18][207] = {
     "Affichage éteint", // 76
     "Thème", // 77
     "Défaut", // 78
-    "Cyan", // 79 ***
+    "Cyan", // 79
     "Cramoisi", // 80
-    "Monochrome", // 81 ***
+    "Monochrome", // 81
     "Volcan", // 82
-    "Dendro", // 83 ***
-    "Sakura", // 84 ***
+    "Dendro", // 83
+    "Sakura", // 84
     "Voile blanc", // 85
     "IMPOSSIBLE", // 86
     "AF indisponible", // 87
     "EON indisponible", // 88
     "RT+ indisponible", // 89
     "Valeur du pas FM\npar défaut", // 90
-    "Screensaver", // 91 ***
+    "Économiseur d'affichage", // 91
     "Sec", // 92 ***
     "APPUYEZ SUR BAND POUR FERMER", // 93
     "1% luminosité", // 94
@@ -1984,39 +1984,39 @@ static const char* const myLanguage[18][207] = {
     "Utilisez le AF:", // 99
     "Sélectionner la\nbande FM:", // 100
     "Sélectionner la\nbande AM:", // 101
-    "LW", // 102 ***
+    "LW", // 102
     "AM", // 103
-    "SW", // 104 ***
-    "FM", // 105 ***
-    "OIRT", // 106 ***
+    "SW", // 104
+    "FM", // 105
+    "OIRT", // 106
     "Rotation lorsque\nl'écran est éteint", // 107
     "Sélecteur de modèle", // 108
-    "Base (ILI9341)", // 109 ***
-    "Portable (ILI9341)", // 110 ***
+    "Base (ILI9341)", // 109
+    "Portable (ILI9341)", // 110
     "Portable touche (ILI9341)", // 111
     "Titre", // 112
-    "Album", // 113 ***
+    "Album", // 113
     "Piste", // 114
     "Artiste", // 115
-    "Composition", // 116 ***
+    "Composition", // 116
     "Mouvement", // 117
     "Chef d'orchestre", // 118
     "Compositeur", // 119
     "Groupe", // 120
     "Commentaire", // 121
-    "Genre", // 122 ***
+    "Genre", // 122
     "Actualités", // 123
     "Actualités locales", // 124
     "Bourse", // 125
-    "Sport", // 126 ***
+    "Sport", // 126
     "Loterie", // 127
-    "Horoscope", // 128 ***
+    "Horoscope", // 128
     "Divertissement quotidien", // 129
     "Santé", // 130
     "Événement", // 131
     "Scène", // 132
     "Cinéma", // 133
-    "TV", // 134 ***
+    "TV", // 134
     "Date/heure", // 135
     "Météo", // 136
     "Trafic", // 137
@@ -2034,15 +2034,15 @@ static const char* const myLanguage[18][207] = {
     "Fréquence", // 149
     "Page d'accueil", // 150
     "Sous-canal", // 151
-    "Hotline", // 152 ***
+    "Hotline", // 152
     "Téléphone du studio", // 153
     "Téléphone", // 154
     "SMS au studio", // 155
-    "SMS", // 156 ***
+    "SMS", // 156
     "Hotline par email", // 157
     "Email du studio", // 158
-    "Email", // 159 ***
-    "Chat", // 160 ***
+    "Email", // 159
+    "Chat", // 160
     "Centre de discussion", // 161
     "Question de vote", // 162
     "Centre de vote", // 163
@@ -2051,14 +2051,14 @@ static const char* const myLanguage[18][207] = {
     "Identifiant", // 166
     "Achat", // 167
     "Obtenir des données", // 168
-    "MW default stepsize", // 169 ***
+    "AM taille de pas\npar défaut", // 169
     "Mandarine", // 170
     "Océan", // 171
-    "Indigo", // 172 ***
+    "Indigo", // 172
     "Options de batterie", // 173
     "Montrer la tension", // 174
     "Montrer le pourcentage", // 175
-    "RT buffering", // 176 ***
+    "RT buffering", // 176
     "Paramètres principaux", // 177
     "Paramètres audio", // 178
     "Paramètres d'affichage", // 179
@@ -2072,14 +2072,14 @@ static const char* const myLanguage[18][207] = {
     "AM CoChannelDet\nsueil", // 187
     "CoChannelDet\ncompteur", // 188
     "PRINCIPAUX", // 189
-    "AUDIO", // 190 ***
+    "AUDIO", // 190
     "AFFICHAGE", // 191
-    "RDS", // 192 ***
-    "FM", // 193 ***
-    "AM", // 194 ***
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
     "CONNECTER", // 195
-    "Auto sort AF", // 196 ***
-    "Stationlist ID", // 197 ***
+    "Tri AF automatique", // 196
+    "Stationlist ID", // 197
     "AM ATT", // 198
     "FM déemphasie", // 199
     "Petites", // 200
@@ -2087,7 +2087,7 @@ static const char* const myLanguage[18][207] = {
     "Toutes", // 202
     "PS rapide", // 203
     "Applications détectées", // 204
-    "Min.", // 205 ***
+    "Min.", // 205
     "Vitesse SPI\ndynamique" // 206
   },
 
@@ -3428,8 +3428,8 @@ static const char* const myLanguage[18][207] = {
     "Carmesí", // 80
     "Monocromo", // 81
     "Volcán", // 82
-    "Dendro", // 83 ***
-    "Sakura", // 84 ***
+    "Dendro", // 83
+    "Sakura", // 84
     "Blanqueo total", // 85
     "NO ES POSIBLE", // 86
     "No AF disponible", // 87
@@ -3447,14 +3447,14 @@ static const char* const myLanguage[18][207] = {
     "Usar AF:", // 99
     "Seleccionar banda de FM:", // 100
     "Seleccionar banda de AM:", // 101
-    "LW", // 102 ***
+    "LW", // 102
     "AM", // 103
-    "SW", // 104 ***
-    "FM", // 105 ***
-    "OIRT", // 106 ***
+    "SW", // 104
+    "FM", // 105
+    "OIRT", // 106
     "Rotación con\npantalla apagada", // 107
     "Selector de modelo", // 108
-    "Base (ILI9341)", // 109 ***
+    "Base (ILI9341)", // 109
     "Portátil (ILI9341)", // 110
     "Táctil portátil (ILI9341)", // 111
     "Título", // 112
@@ -3479,7 +3479,7 @@ static const char* const myLanguage[18][207] = {
     "Evento", // 131
     "Escena", // 132
     "Cine", // 133
-    "TV", // 134 ***
+    "TV", // 134
     "Fecha/hora", // 135
     "Clima", // 136
     "Tráfico", // 137
@@ -3493,7 +3493,7 @@ static const char* const myLanguage[18][207] = {
     "Siguiente", // 145
     "Parte", // 146
     "Anfitrión", // 147
-    "Editor", // 148 ***
+    "Editor", // 148
     "Frecuencia", // 149
     "Página de inicio", // 150
     "Subcanal", // 151
@@ -3501,11 +3501,11 @@ static const char* const myLanguage[18][207] = {
     "Teléfono del estudio", // 153
     "Teléfono", // 154
     "SMS al estudio", // 155
-    "SMS", // 156 ***
+    "SMS", // 156
     "Correo electrónico\nde la línea directa", // 157
     "Correo electrónico\ndel estudio", // 158
     "Correo electrónico", // 159
-    "Chat", // 160 ***
+    "Chat", // 160
     "Centro de chat", // 161
     "Pregunta de votación", // 162
     "Centro de votación", // 163
@@ -3514,7 +3514,7 @@ static const char* const myLanguage[18][207] = {
     "Identificador", // 166
     "Compra", // 167
     "Obtener datos", // 168
-    "MW default stepsize", // 169 ***
+    "Tamaño de paso\nAM predeterminado", // 169 ***
     "Mandarina", // 170
     "Océano", // 171
     "Índigo", // 172
@@ -3535,11 +3535,11 @@ static const char* const myLanguage[18][207] = {
     "Umbral de detección\nde co-canal", // 187
     "Contador de detección\nde co-canal", // 188
     "PRINCIPAL", // 189
-    "AUDIO", // 190 ***
+    "AUDIO", // 190
     "VISUALIZACIÓN", // 191
-    "RDS", // 192 ***
-    "FM", // 193 ***
-    "AM", // 194 ***
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
     "CONECTAR", // 195
     "Orden automático de AF", // 196
     "ID de lista de estaciones", // 197
@@ -3550,7 +3550,7 @@ static const char* const myLanguage[18][207] = {
     "Todo", // 202
     "PS rápido", // 203
     "Aplicaciones detectadas", // 204
-    "Min.", // 205 ***
+    "Min.", // 205
     "Velocidad de SPI" // 206
   },
 
@@ -3637,8 +3637,8 @@ static const char* const myLanguage[18][207] = {
     "Carmesim", // 80
     "Monocromático", // 81
     "Vulcão", // 82
-    "Dendro", // 83 ***
-    "Sakura", // 84 ***
+    "Dendro", // 83
+    "Sakura", // 84
     "Branco total", // 85
     "NÃO POSSÍVEL", // 86
     "AF não disponível", // 87
@@ -3656,11 +3656,11 @@ static const char* const myLanguage[18][207] = {
     "Usar AF:", // 99
     "Selecionar faixa FM:", // 100
     "Selecionar faixa AM:", // 101
-    "LW", // 102 ***
+    "LW", // 102
     "AM", // 103
-    "SW", // 104 ***
-    "FM", // 105 ***
-    "OIRT", // 106 ***
+    "SW", // 104
+    "FM", // 105
+    "OIRT", // 106
     "Rotativo enquanto a tela\nestá desligada", // 107
     "Seletor de modelo", // 108
     "Básico (ILI9341)", // 109
@@ -3687,14 +3687,14 @@ static const char* const myLanguage[18][207] = {
     "Saúde", // 130
     "Evento", // 131
     "Cena", // 132
-    "Cinema", // 133 ***
-    "TV", // 134 ***
+    "Cinema", // 133
+    "TV", // 134
     "Data/hora", // 135
     "Clima", // 136
     "Tráfego", // 137
     "Alarme", // 138
     "Anúncio", // 139
-    "Website", // 140 ***
+    "Website", // 140
     "Outros", // 141
     "PS curto", // 142
     "PS longo", // 143
@@ -3702,19 +3702,19 @@ static const char* const myLanguage[18][207] = {
     "Próximo", // 145
     "Parte", // 146
     "Apresentador", // 147
-    "Editor", // 148 ***
+    "Editor", // 148
     "Frequência", // 149
     "Página inicial", // 150
     "Subcanal", // 151
-    "Hotline", // 152 ***
+    "Hotline", // 152
     "Telefone do estúdio", // 153
     "Telefone", // 154
     "SMS do estúdio", // 155
-    "SMS", // 156 ***
+    "SMS", // 156
     "E-mail da hotline", // 157
     "E-mail do estúdio", // 158
     "E-mail", // 159
-    "Chat", // 160 ***
+    "Chat", // 160
     "Centro de chat", // 161
     "Pergunta de votação", // 162
     "Centro de votação", // 163
@@ -3723,7 +3723,7 @@ static const char* const myLanguage[18][207] = {
     "Identificador", // 166
     "Compra", // 167
     "Obter dados", // 168
-    "MW default stepsize", // 169 ***
+    "Tamanho padrão\nda etapa AM", // 169
     "Tangerina", // 170
     "Oceano", // 171
     "Índigo", // 172
@@ -3746,9 +3746,9 @@ static const char* const myLanguage[18][207] = {
     "PRINCIPAL", // 189
     "ÁUDIO", // 190
     "EXIBIÇÃO", // 191
-    "RDS", // 192 ***
-    "FM", // 193 ***
-    "AM", // 194 ***
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
     "CONECTAR", // 195
     "Classificar AF\nautomaticamente", // 196
     "ID da lista de estações", // 197
@@ -3759,7 +3759,7 @@ static const char* const myLanguage[18][207] = {
     "Tudo", // 202
     "PS rápido", // 203
     "Aplicativos detectados", // 204
-    "Min.", // 205 ***
+    "Min.", // 205
     "Velocidade dinâmica\nde SPI" // 206
   }
 };
