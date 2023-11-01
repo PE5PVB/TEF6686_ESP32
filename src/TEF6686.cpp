@@ -409,7 +409,12 @@ void TEF6686::readRDS(byte showrdserrors)
         rds.picodetext = rds.picode;
       }
 
-      if (!rdsAerrorThreshold && !rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold) errorfreepi = true;
+      if (!rdsAerrorThreshold && !rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold) {
+        rds.picode[4] = ' ';
+        rds.picode[5] = ' ';
+        errorfreepi = true;
+        rds.picodetext = rds.picode;
+      }
 
       if (!errorfreepi) {
         if (((rds.rdsErr >> 14) & 0x03) > 2) rds.picode[5] = '?'; else rds.picode[5] = ' ';
