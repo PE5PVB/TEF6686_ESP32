@@ -1299,31 +1299,31 @@ static const char* const myLanguage[18][207] = {
     "MODE drücken zum Beenden & Sichern", // 41
     "Ein", // 42
     "Softmute UKW", // 43
-    "Softmute AM", // 44 ***
+    "Softmute AM", // 44
     "Piepston am Bandende", // 45
-    "Region", // 46 ***
+    "Region", // 46
     "Europa", // 47
-    "USA", // 48 ***
+    "USA", // 48
     "Zeige Unterstrich im RDS", // 49
     "USB-Modus", // 50
     "WLAN aktiv", // 51
     "WLAN konfigurieren", // 52
     "Verbinde mit:", // 53
     "um WLAN einzustellen", // 54
-    "Verbindungsversuch\nzum WLAN", // 55
-    "FEHLER! WLAN\n nicht gefunden", // 56
+    "Verbindungsversuch", // 55
+    "FEHLER!", // 56
     "VERBUNDEN!", // 57
     "Stationlist Rechner IP", // 58
-    "Zeige KW-Wellenlänge", // 59
+    "KW-Wellenlänge anzeigen", // 59
     "RDS-Filter", // 60
     "Zeige PI Fehler", // 61
     "Zeige Rauschsperre", // 62
     "Modulationspegel", // 63
-    "AM Rauschunterdrückung", // 64
-    "UKW Rauschunterdrückung", // 65
+    "Rauschunterdrückung", // 64
+    "Rauschunterdrückung", // 65
     "Werkseinstellungen\nwurden geladen", // 66
     "Audioausgabe", // 67
-    "Tunen während des\nBildschirmschoners erlauben", // 68
+    "Tunen bei Bildschirmschoner erlauben", // 68
     "Anzeigefarben umkehren", // 69
     "Über diese Software", // 70
     "Hauptcode:", // 71
@@ -1334,54 +1334,54 @@ static const char* const myLanguage[18][207] = {
     "Bildschirm aus", // 76
     "Thema", // 77
     "Standard", // 78
-    "Cyan", // 79 ***
-    "Crimson", // 80 ***
-    "Monochrome", // 81 ***
-    "Volcano", // 82 ***
-    "Dendro", // 83 ***
-    "Sakura", // 84 ***
-    "Whiteout", // 85 ***
+    "Cyan", // 79
+    "Crimson", // 80
+    "Monochrom", // 81
+    "Volcano", // 82
+    "Dendro", // 83
+    "Sakura", // 84
+    "Whiteout", // 85
     "NICHT MÖGLICH", // 86
     "Keine AF verfügbar", // 87
     "Kein EON verfügbar", // 88
     "Kein RT+ verfügbar", // 89
-    "UKW Standard-Schrittweite", // 90
+    "Standard-Schrittweite", // 90
     "Bildschirmschoner", // 91
     "Sek", // 92
     "ZUM SCHLIEßEN BAND DRÜCKEN", // 93
     "1% Helligkeit", // 94
     "25% Helligkeit", // 95
     "50% Helligkeit", // 96
-    "AM RF Pegeloffset:", // 97
+    "RF Pegeloffset:", // 97
     "Einheit Signalpegel:", // 98
     "Verwende AF:", // 99
     "Wähle UKW Band:", // 100
     "Wähle AM Band:", // 101
-    "LW", // 102 ***
-    "MW", // 103 ***
+    "LW", // 102
+    "MW", // 103
     "KW", // 104
     "UKW", // 105
-    "OIRT", // 106 ***
-    "Drehen bei Bildschirm aus", // 107
+    "OIRT", // 106
+    "Tunen bei Bildschirm aus", // 107
     "Modell auswählen", // 108
     "Basismodell (ILI9341)", // 109
     "Portabel (ILI9341)", // 110
     "Portabel Touch (ILI9341)", // 111
     "Titel", // 112
-    "Album", // 113 ***
-    "Track", // 114 ***
+    "Album", // 113
+    "Track", // 114
     "Künstler", // 115
     "Komposition", // 116
     "Satz", // 117
     "Dirigent", // 118
     "Komponist", // 119
-    "Band", // 120 ***
+    "Band", // 120
     "Kommentar", // 121
-    "Genre", // 122 ***
+    "Genre", // 122
     "Nachrichten", // 123
     "Lokalnachrichten", // 124
     "Aktienmarkt", // 125
-    "Sport", // 126 ***
+    "Sport", // 126
     "Lotterie", // 127
     "Horoskop", // 128
     "Tagestipp", // 129
@@ -1389,13 +1389,13 @@ static const char* const myLanguage[18][207] = {
     "Ereignis", // 131
     "Szene", // 132
     "Kino", // 133
-    "TV", // 134 ***
+    "TV", // 134
     "Tag/Uhrzeit", // 135
     "Wetter", // 136
     "Verkehr", // 137
-    "Alarm", // 138 ***
+    "Alarm", // 138
     "Werbung", // 139
-    "Website", // 140 ***
+    "Website", // 140
     "Info", // 141
     "Kurzes PS", // 142
     "Langes PS", // 143
@@ -1405,17 +1405,17 @@ static const char* const myLanguage[18][207] = {
     "Am Mikrofon", // 147
     "Redaktion", // 148
     "Frequenz", // 149
-    "Homepage", // 150 ***
-    "Subchannel", // 151 ***
+    "Homepage", // 150
+    "Subchannel", // 151
     "Telefon Hotline", // 152
     "Telefon Studio", // 153
     "Telefon", // 154
-    "SMS Studio", // 155 ***
-    "SMS", // 156 ***
+    "SMS Studio", // 155
+    "SMS", // 156
     "E-Mail Hotline", // 157
     "E-Mail Studio", // 158
     "E-mail", // 159
-    "Chat", // 160 ***
+    "Chat", // 160
     "Chat-Zentrale", // 161
     "Abstimmung", // 162
     "Abstimmungs-Zentrale", // 163
@@ -1424,10 +1424,10 @@ static const char* const myLanguage[18][207] = {
     "Musik-ID", // 166
     "Bezugsquelle", // 167
     "Empfange Daten", // 168
-    "MW Standard-Schrittweite", // 169
-    "Tangerine", // 170 ***
-    "Ocean", // 171 ***
-    "Indigo", // 172 ***
+    "MW\nStandard-Schrittweite", // 169
+    "Tangerine", // 170
+    "Ocean", // 171
+    "Indigo", // 172
     "Akkuoptionen", // 173
     "Spannung anzeigen", // 174
     "Prozente anzeigen", // 175
@@ -1440,19 +1440,19 @@ static const char* const myLanguage[18][207] = {
     "AM Einstellungen", // 182
     "Netzwerk", // 183
     "DRÜCKE MODE FÜR ZURÜCK", // 184
-    "AM Gleichkanalerkennung", // 185
-    "AM Gleichkanalerkennung\nEmpfindlichkeit", // 186
-    "AM Gleichkanalerkennung\nSchwelle", // 187
-    "AM Gleichkanalerkennung\nZähler", // 188
+    "Gleichkanalerkennung", // 185
+    "Gleichkanalerkennung Empf.", // 186
+    "Gleichkanalerkennung\nSchwelle", // 187
+    "Gleichkanalerkennung\nZähler", // 188
     "HAUPT", // 189
-    "AUDIO", // 190 ***
+    "AUDIO", // 190
     "ANZEIGE", // 191
-    "RDS", // 192 ***
+    "RDS", // 192 
     "UKW", // 193
-    "AM", // 194 ***
+    "AM", // 194
     "NETZ", // 195
     "AF Autosortierung", // 196
-    "Stationlist ID", // 197 ***
+    "Stationlist ID", // 197
     "AM ATT", // 198
     "UKW Deemphasis", // 199
     "Wenig", // 200
@@ -1460,8 +1460,8 @@ static const char* const myLanguage[18][207] = {
     "Maximal", // 202
     "Schnelles PS", // 203
     "Erkannte Applikationen", // 204
-    "Min.", // 205 ***
-    "Dynamische SPI-Geschwindigkeit" // 206
+    "Min.", // 205
+    "Dyn. SPI-Geschwind." // 206
   },
 
   { "Český", // Czech
