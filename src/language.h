@@ -1,5 +1,5 @@
 // [number of languages][number of texts]
-
+// *** means the text is the same as in English
 static const char* const myLanguage[18][207] = {
   { "English", // English
     "Rotary direction changed", // 1
@@ -220,8 +220,8 @@ static const char* const myLanguage[18][207] = {
     "encoder ingesteld als standaard", // 7
     "FM/AM ontvanger", // 8
     "Tuner: !Geen!", // 9
-    "Volume", // 10
-    "Converter", // 11
+    "Volume", // 10 ***
+    "Converter", // 11 ***
     "Lage bandgrens", // 12
     "Hoge bandgrens", // 13
     "FM RF niveau afwijking", // 14
@@ -253,14 +253,14 @@ static const char* const myLanguage[18][207] = {
     "Kies taal", // 40
     "DRUK OP MODE OM AF TE SLUITEN", // 41
     "Aan", // 42
-    "Softmute FM", // 43
-    "Softmute AM", // 44
+    "Softmute FM", // 43 ***
+    "Softmute AM", // 44 ***
     "Piep op bandeinde", // 45
     "Regio", // 46
     "Europa", // 47
-    "USA", // 48
+    "USA", // 48 ***
     "Toon underscore in RDS", // 49
-    "USB mode", // 50
+    "USB mode", // 50 ***
     "Wi-Fi aktief", // 51
     "Configureer Wi-Fi", // 52
     "Verbind met: ", // 53
@@ -268,9 +268,9 @@ static const char* const myLanguage[18][207] = {
     "Verbinden met Wi-Fi...", // 55
     "MISLUKT!", // 56
     "VERBONDEN!", // 57
-    "Stationlist client IP", // 58
+    "Stationlist client IP", // 58 ***
     "Toon SW golflengte", // 59
-    "RDS filter", // 60
+    "RDS filter", // 60 ***
     "Toon PI fouten", // 61
     "Toon squelch", // 62
     "Modulatie meter", // 63
@@ -289,13 +289,13 @@ static const char* const myLanguage[18][207] = {
     "Scherm uit", // 76
     "Thema", // 77
     "Standaard", // 78
-    "Cyan", // 79
-    "Crimson", // 80
-    "Monochrome", // 81
-    "Volcano", // 82
-    "Dendro", // 83
-    "Sakura", // 84
-    "Whiteout", // 85
+    "Cyan", // 79 ***
+    "Crimson", // 80 ***
+    "Monochrome", // 81 ***
+    "Volcano", // 82 ***
+    "Dendro", // 83 ***
+    "Sakura", // 84 ***
+    "Whiteout", // 85 ***
     "NIET MOGELIJK", // 86
     "Geen AF data", // 87
     "Geen EON data", // 88
@@ -312,65 +312,65 @@ static const char* const myLanguage[18][207] = {
     "Gebruik AF", // 99
     "Selecteer\nFM banden", // 100
     "Selecteer\nAM banden", // 101
-    "LW", // 102
-    "MW", // 103
-    "SW", // 104
-    "FM", // 105
-    "OIRT", // 106
+    "LW", // 102 ***
+    "MW", // 103 ***
+    "SW", // 104 ***
+    "FM", // 105 ***
+    "OIRT", // 106 ***
     "Afstemmen tijdens\nschermbeveiliging", // 107
     "Model keuze", // 108
     "Basis (ILI9341)", // 109
-    "Portable (ILI9341)", // 110
-    "Portable touch (ILI9341)", // 111
+    "Portable (ILI9341)", // 110 ***
+    "Portable touch (ILI9341)", // 111 ***
     "Titel", // 112
-    "Album", // 113
+    "Album", // 113 ***
     "Nummer", // 114
     "Artiest", // 115
     "Compositie", // 116
     "Deel", // 117
     "Dirigent", // 118
     "Componist", // 119
-    "Band", // 120
+    "Band", // 120 ***
     "Opmerking", // 121
-    "Genre", // 122
+    "Genre", // 122 ***
     "Nieuws", // 123
     "Lokaal nieuws", // 124
     "Financiële beurs", // 125
-    "Sport", // 126
+    "Sport", // 126 ***
     "Loterij", // 127
     "Horoscoop", // 128
     "Dagelijkse grap", // 129
     "Gezondheid", // 130
     "Evenement", // 131
-    "Scene", // 132
+    "Scene", // 132 ***
     "Bioscoop", // 133
-    "TV", // 134
+    "TV", // 134 ***
     "Datum/tijd", // 135
     "Weer", // 136
     "Verkeer", // 137
-    "Alarm", // 138
+    "Alarm", // 138 ***
     "Advertentie", // 139
-    "Website", // 140
+    "Website", // 140 ***
     "Overige", // 141
     "Korte naam", // 142
     "Lange naam", // 143
     "Nu", // 144
     "Straks", // 145
     "Deel", // 146
-    "Host", // 147
+    "Host", // 147 ***
     "Regiseur", // 148
     "Frequentie", // 149
-    "Homepage", // 150
+    "Homepage", // 150 ***
     "Subkanaal", // 151
-    "Hotline", // 152
+    "Hotline", // 152 ***
     "Studio telefoon", // 153
     "Telefoon", // 154
-    "SMS studio", // 155
-    "SMS", // 156
-    "Email hotline", // 157
-    "Email studio", // 158
-    "Email", // 159
-    "Chat", // 160
+    "SMS studio", // 155 ***
+    "SMS", // 156 ***
+    "Email hotline", // 157 ***
+    "Email studio", // 158 ***
+    "Email", // 159 ***
+    "Chat", // 160 ***
     "Chat centrum", // 161
     "Stemming", // 162
     "Stemcentrum", // 163
@@ -380,9 +380,9 @@ static const char* const myLanguage[18][207] = {
     "Aankoop", // 167
     "Verkrijg data", // 168
     "MW standaard\nstapgrootte", // 169
-    "Tangerine", // 170
-    "Ocean", // 171
-    "Indigo", // 172
+    "Tangerine", // 170 ***
+    "Ocean", // 171 ***
+    "Indigo", // 172 ***
     "Batterij weergave", // 173
     "Toon spanning", // 174
     "Toon percentage", // 175
@@ -402,20 +402,20 @@ static const char* const myLanguage[18][207] = {
     "ALGEMEEN", // 189
     "GELUID", // 190
     "SCHERM", // 191
-    "RDS", // 192
-    "FM", // 193
-    "AM", // 194
+    "RDS", // 192 ***
+    "FM", // 193 ***
+    "AM", // 194 ***
     "VERBIND", // 195
     "Auto AF sorteren", // 196
-    "Stationlist ID", // 197
-    "AM AGC", // 198
-    "FM deemphasis", // 199
+    "Stationlist ID", // 197 ***
+    "AM AGC", // 198 ***
+    "FM deemphasis", // 199 ***
     "Laag", // 200
     "Middel", // 201
     "Alles", // 202
     "Snelle PS", // 203
     "Gedetecteerde applicaties", // 204
-    "Min.", // 205
+    "Min.", // 205 ***
     "Dynamische\nSPI snelheid" // 206
   },
 
@@ -465,9 +465,9 @@ static const char* const myLanguage[18][207] = {
     "Lagodne wyciszanie FM", // 43
     "Lagodne wyciszanie AM", // 44
     "Beep na krawedzi pasma", // 45
-    "Region", // 46
+    "Region", // 46 ***
     "Europa", // 47
-    "USA", // 48
+    "USA", // 48 ***
     "Pokaz podkreslenia w RDS", // 49
     "Tryb USB", // 50
     "Wi-Fi aktywne", // 51
@@ -498,13 +498,13 @@ static const char* const myLanguage[18][207] = {
     "Wylacz ekran", // 76
     "Motyw", // 77
     "Domyslny", // 78
-    "Cyan", // 79
-    "Crimson", // 80
-    "Monochrome", // 81
-    "Volcano", // 82
-    "Dendro", // 83
-    "Sakura", // 84
-    "Whiteout", // 85
+    "Cyan", // 79 ***
+    "Crimson", // 80 ***
+    "Monochrome", // 81 ***
+    "Volcano", // 82 ***
+    "Dendro", // 83 ***
+    "Sakura", // 84 ***
+    "Whiteout", // 85 ***
     "NIEMOZLIWE", // 86
     "AF niedostepny", // 87
     "EON niedostepny", // 88
@@ -521,18 +521,18 @@ static const char* const myLanguage[18][207] = {
     "Uzywaj AF", // 99
     "Wybierz pasmo FM", // 100
     "Wybierz pasmo AM", // 101
-    "LW", // 102
-    "MW", // 103
-    "SW", // 104
-    "FM", // 105
-    "OIRT", // 106
+    "LW", // 102 ***
+    "MW", // 103 ***
+    "SW", // 104 ***
+    "FM", // 105 ***
+    "OIRT", // 106 ***
     "Stroj. gdy ekran wyl.", // 107
     "Wybor modelu", // 108
     "Podstawowy (ILI9341)", // 109
     "Przenosny (ILI9341)", // 110
     "Przenos. dotyk. (ILI9341)", // 111
     "Tytul", // 112
-    "Album", // 113
+    "Album", // 113 ***
     "Sciezka", // 114
     "Wykonawca", // 115
     "Kompozycja", // 116
@@ -545,7 +545,7 @@ static const char* const myLanguage[18][207] = {
     "Wiadomosci", // 123
     "Lokalne wiadomosci", // 124
     "Gielda", // 125
-    "Sport", // 126
+    "Sport", // 126 ***
     "Loteria", // 127
     "Horoskop", // 128
     "Codzienny zwrot", // 129
@@ -553,11 +553,11 @@ static const char* const myLanguage[18][207] = {
     "Wydarzenie", // 131
     "Scena", // 132
     "Kino", // 133
-    "TV", // 134
+    "TV", // 134 ***
     "Data/Godzina", // 135
     "Pogoda", // 136
     "Wiadom. drogowe", // 137
-    "Alarm", // 138
+    "Alarm", // 138 ***
     "Reklama", // 139
     "Strona internet.", // 140
     "Inne", // 141
@@ -575,10 +575,10 @@ static const char* const myLanguage[18][207] = {
     "Telefon do studia", // 153
     "Telefon", // 154
     "SMS do studia", // 155
-    "SMS", // 156
+    "SMS", // 156 ***
     "Email do goracej linii", // 157
     "Email do studia", // 158
-    "Email", // 159
+    "Email", // 159 ***
     "Czat", // 160
     "Centrum czatu", // 161
     "Pytanie do glosowania", // 162
@@ -588,10 +588,10 @@ static const char* const myLanguage[18][207] = {
     "Identyfikator", // 166
     "Zakup", // 167
     "Pobierz dane", // 168
-    "MW default stepsize", // 169
-    "Tangerine", // 170
-    "Ocean", // 171
-    "Indigo", // 172
+    "MW default stepsize", // 169 ***
+    "Tangerine", // 170 ***
+    "Ocean", // 171 ***
+    "Indigo", // 172 ***
     "Opcje baterii", // 173
     "Pokaz napiecie", // 174
     "Pokaz procent nalad.", // 175
@@ -611,9 +611,9 @@ static const char* const myLanguage[18][207] = {
     "GLOWNE", // 189
     "DZWIEK", // 190
     "WYSWIETLACZ", // 191
-    "RDS", // 192
-    "FM", // 193
-    "AM", // 194
+    "RDS", // 192 ***
+    "FM", // 193 ***
+    "AM", // 194 ***
     "LACZNOSC", // 195
     "Automat. sortowanie AF", // 196
     "Identyfikator Stationlist", // 197
@@ -624,8 +624,8 @@ static const char* const myLanguage[18][207] = {
     "Wszystkie", // 202
     "Szybki PS", // 203
     "Wykryte aplikacje", // 204
-    "Min.", // 205
-    "Dynamic SPI speed" // 206
+    "Min.", // 205 ***
+    "Dynamic SPI speed" // 206 ***
   },
 
   { "Hrvatski", // Croatian
@@ -671,8 +671,8 @@ static const char* const myLanguage[18][207] = {
     "Odaberite jezik", // 40
     "PRITISNITE MODE ZA IZLAZ I SPREMANJE", // 41
     "Uključeno", // 42
-    "Softmute FM", // 43
-    "Softmute AM", // 44
+    "Softmute FM", // 43 ***
+    "Softmute AM", // 44 ***
     "Beep na rubu frekv. opsega", // 45
     "Regija", // 46
     "Europa", // 47
@@ -688,38 +688,38 @@ static const char* const myLanguage[18][207] = {
     "SPOJENO!", // 57
     "IP klijenta StationList", // 58
     "Prikaži valnu duljinu KV-a", // 59
-    "RDS filter", // 60
-    "Show PI errors", // 61
+    "RDS filter", // 60 ***
+    "Show PI errors", // 61 ***
     "Prikaži squelch", // 62
     "Mjerač modulacije", // 63
     "AM prigušivač šuma", // 64
     "FM prigušivač šuma", // 65
     "Zadane postavke učitane", // 66
     "Audio izlaz", // 67
-    "Allow tuning\nduring screensaver", // 68
+    "Allow tuning\nduring screensaver", // 68 ***
     "Invertiraj boju zaslona", // 69
     "O softveru", // 70
     "Glavni izvorni kod:", // 71
     "Suradnici:", // 72
     "Nepoznato", // 73
-    "Screensaver options", // 74
-    "Time-out timer", // 75
+    "Screensaver options", // 74 ***
+    "Time-out timer", // 75 ***
     "Zaslon isključiti", // 76
     "Tema dizajna", // 77
     "Zadano", // 78
-    "Cyan", // 79
-    "Crimson", // 80
-    "Monochrome", // 81
-    "Volcano", // 82
-    "Dendro", // 83
-    "Sakura", // 84
-    "Whiteout", // 85
+    "Cyan", // 79 ***
+    "Crimson", // 80 ***
+    "Monochrome", // 81 ***
+    "Volcano", // 82 ***
+    "Dendro", // 83 ***
+    "Sakura", // 84 ***
+    "Whiteout", // 85 ***
     "NIJE MOGUĆE", // 86
     "AF nedostupan", // 87
     "EON nedostupan", // 88
     "RT+ nedostupan", // 89
     "FM min korak", // 90
-    "Screensaver", // 91
+    "Screensaver", // 91 ***
     "Sek", // 92
     "PRITISNITE BAND ZA IZLAZ", // 93
     "1% svjetlina", // 94
@@ -730,18 +730,18 @@ static const char* const myLanguage[18][207] = {
     "Koristi AF:", // 99
     "FM opseg:", // 100
     "AM opseg:", // 101
-    "LW", // 102
-    "MW", // 103
-    "SW", // 104
-    "FM", // 105
-    "OIRT", // 106
-    "Rotating while screen off", // 107
+    "LW", // 102 ***
+    "MW", // 103 ***
+    "SW", // 104 ***
+    "FM", // 105 ***
+    "OIRT", // 106 ***
+    "Rotating while screen off", // 107 ***
     "Selektor modela", // 108
-    "Base (ILI9341)", // 109
-    "Portable (ILI9341)", // 110
-    "Portable touch (ILI9341)", // 111
+    "Base (ILI9341)", // 109 ***
+    "Portable (ILI9341)", // 110 ***
+    "Portable touch (ILI9341)", // 111 ***
     "Naslov", // 112
-    "Album", // 113
+    "Album", // 113 ***
     "Pjesma", // 114
     "Izvođač", // 115
     "Kompozicija", // 116
@@ -754,7 +754,7 @@ static const char* const myLanguage[18][207] = {
     "Vijesti", // 123
     "Lokalne vijesti", // 124
     "Burza", // 125
-    "Sport", // 126
+    "Sport", // 126 ***
     "Lutrija", // 127
     "Horoskop", // 128
     "Savjet dana", // 129
@@ -762,11 +762,11 @@ static const char* const myLanguage[18][207] = {
     "Događanja", // 131
     "Scena", // 132
     "Kino", // 133
-    "TV", // 134
+    "TV", // 134 ***
     "Datum/vrijeme", // 135
     "Vremenska prognoza", // 136
     "Promet", // 137
-    "Alarm", // 138
+    "Alarm", // 138 ***
     "Reklama", // 139
     "Web stranica", // 140
     "Ostalo", // 141
@@ -780,15 +780,15 @@ static const char* const myLanguage[18][207] = {
     "Frekvencija", // 149
     "Web stranica", // 150
     "Potkanal", // 151
-    "Hotline", // 152
+    "Hotline", // 152 ***
     "Telefon studija", // 153
     "Telefon", // 154
-    "SMS studio", // 155
-    "SMS", // 156
-    "Email hotline", // 157
+    "SMS studio", // 155 ***
+    "SMS", // 156 ***
+    "Email hotline", // 157 ***
     "Email studija", // 158
-    "Email", // 159
-    "Chat", // 160
+    "Email", // 159 ***
+    "Chat", // 160 ***
     "Chat centar", // 161
     "Pitanje za glasanje", // 162
     "Centar za glasanje", // 163
@@ -796,11 +796,11 @@ static const char* const myLanguage[18][207] = {
     "Ugovoreni sastanak", // 165
     "Identifikator", // 166
     "Kupnja", // 167
-    "Get data", // 168
-    "MW default stepsize", // 169
-    "Tangerine", // 170
-    "Ocean", // 171
-    "Indigo", // 172
+    "Get data", // 168 ***
+    "MW default stepsize", // 169 ***
+    "Tangerine", // 170 ***
+    "Ocean", // 171 ***
+    "Indigo", // 172 ***
     "Postavke za bateriju", // 173
     "Prikaži napon", // 174
     "Prikaži postotak", // 175
@@ -820,21 +820,21 @@ static const char* const myLanguage[18][207] = {
     "GLAVNO", // 189
     "ZVUK", // 190
     "ZASLON", // 191
-    "RDS", // 192
-    "FM", // 193
-    "AM", // 194
+    "RDS", // 192 ***
+    "FM", // 193 ***
+    "AM", // 194 ***
     "SPOJI", // 195
     "Autom. sortiranje AF-a", // 196
-    "Stationlist ID", // 197
+    "Stationlist ID", // 197 ***
     "AM ATT", // 198
-    "FM deemphasis", // 199
+    "FM deemphasis", // 199 ***
     "Malo", // 200
     "Veliko", // 201
     "Sve", // 202
     "Brzi PS", // 203
     "Otkrivene aplikacije", // 204
-    "Min.", // 205
-    "Dynamic SPI speed" // 206
+    "Min.", // 205 ***
+    "Dynamic SPI speed" // 206 ***
   },
 
   { "Ελληνικά", // Greek
@@ -939,11 +939,11 @@ static const char* const myLanguage[18][207] = {
     "Χρήση AF:", // 99
     "Επιλογή μπάντας FM:", // 100
     "Επιλογή μπάντας AM:", // 101
-    "LW", // 102
+    "LW", // 102 ***
     "AM", // 103
-    "SW", // 104
-    "FM", // 105
-    "OIRT", // 106
+    "SW", // 104 ***
+    "FM", // 105 ***
+    "OIRT", // 106 ***
     "Περιστροφή με οθόνη\nσβηστή", // 107
     "Επιλογή μοντέλου", // 108
     "Βασικό (ILI9341)", // 109
@@ -971,7 +971,7 @@ static const char* const myLanguage[18][207] = {
     "Γεγονός", // 131
     "Σκηνή", // 132
     "Σινεμά", // 133
-    "TV", // 134
+    "TV", // 134 ***
     "Ημερομηνία/ώρα", // 135
     "Καιρός", // 136
     "Κυκλοφορία", // 137
@@ -993,11 +993,11 @@ static const char* const myLanguage[18][207] = {
     "Τηλ. στούντιο", // 153
     "Τηλέφωνο", // 154
     "SMS στούντιο", // 155
-    "SMS", // 156
+    "SMS", // 156 ***
     "Email επικοινωνία", // 157
     "Email στούντιο", // 158
-    "Email", // 159
-    "Chat", // 160
+    "Email", // 159 ***
+    "Chat", // 160 ***
     "Κέντρο chat", // 161
     "Ερώτηση ψηφοφορίας", // 162
     "Κέντρο ψηφοφορίας", // 163
@@ -1006,7 +1006,7 @@ static const char* const myLanguage[18][207] = {
     "Αναγνωριστικό", // 166
     "Αγορά", // 167
     "Λήψη δεδομένων", // 168
-    "MW default stepsize", // 169
+    "MW default stepsize", // 169 ***
     "Μανταρινί", // 170
     "Ωκεανός", // 171
     "Ινδικό", // 172
@@ -1029,9 +1029,9 @@ static const char* const myLanguage[18][207] = {
     "ΒΑΣΙΚΕΣ", // 189
     "ΗΧΟΣ", // 190
     "ΕΜΦΑΝΙΣΗ", // 191
-    "RDS", // 192
-    "FM", // 193
-    "AM", // 194
+    "RDS", // 192 ***
+    "FM", // 193 ***
+    "AM", // 194 ***
     "ΣΥΝΔΕΣΗ", // 195
     "Αυτόματη ταξινόμηση\nAF", // 196
     "ID λίστας σταθμών", // 197
@@ -1125,20 +1125,20 @@ static const char* const myLanguage[18][207] = {
     "Ecran oprit", // 76
     "Teme", // 77
     "Implicit", // 78
-    "Cyan", // 79
-    "Crimson", // 80
-    "Monochrome", // 81
-    "Volcano", // 82
-    "Dendro", // 83
-    "Sakura", // 84
-    "Whiteout", // 85
+    "Cyan", // 79 ***
+    "Crimson", // 80 ***
+    "Monochrome", // 81 ***
+    "Volcano", // 82 ***
+    "Dendro", // 83 ***
+    "Sakura", // 84 ***
+    "Whiteout", // 85 ***
     "Nu este posibil", // 86
     "Fără AF disponibil", // 87
     "Fără EON disponibil", // 88
     "Fără RT+ disponibil", // 89
     "Pasul FM minim", // 90
     "Economizor ecran", // 91
-    "Sec", // 92
+    "Sec", // 92 ***
     "APASĂ BAND PENTRU IEȘIRE", // 93
     "1% luminozitate", // 94
     "25% luminozitate", // 95
@@ -1148,20 +1148,20 @@ static const char* const myLanguage[18][207] = {
     "Folosește AF:", // 99
     "Alege banda FM:", // 100
     "Alege banda AM:", // 101
-    "LW", // 102
-    "MW", // 103
-    "SW", // 104
-    "FM", // 105
-    "OIRT", // 106
+    "LW", // 102 ***
+    "MW", // 103 ***
+    "SW", // 104 ***
+    "FM", // 105 ***
+    "OIRT", // 106 ***
     "Rotire cand ecranul este oprit", // 107
     "Model ecran", // 108
     "Bază (ILI9341)", // 109
     "Portabil (ILI9341)", // 110
     "Portabil tactil (ILI9341)", // 111
     "Titlu", // 112
-    "Album", // 113
+    "Album", // 113 ***
     "Piesă", // 114
-    "Artist", // 115
+    "Artist", // 115 ***
     "Compoziție", // 116
     "Deplasare", // 117
     "Dirijor", // 118
@@ -1172,53 +1172,53 @@ static const char* const myLanguage[18][207] = {
     "Stiri", // 123
     "Stiri locale", // 124
     "PiataBursiera", // 125
-    "Sport", // 126
+    "Sport", // 126 ***
     "Loterie", // 127
     "Horoscop", // 128
     "Cotidian", // 129
     "Sanatate", // 130
     "Concurs", // 131
-    "Scene", // 132
-    "Cinema", // 133
-    "TV", // 134
+    "Scene", // 132 ***
+    "Cinema", // 133 ***
+    "TV", // 134 ***
     "Data/timp", // 135
     "Meteo", // 136
     "Trafic", // 137
     "Alarma", // 138
     "Avertisment", // 139
-    "Website", // 140
+    "Website", // 140 ***
     "Altceva", // 141
     "Scurt PS", // 142
     "Lung PS", // 143
     "Acum", // 144
     "Urmatorul", // 145
-    "Part", // 146
-    "Host", // 147
-    "Editor", // 148
+    "Part", // 146 ***
+    "Host", // 147 ***
+    "Editor", // 148 ***
     "Frecventa", // 149
     "Prima pagina", // 150
-    "Subchannel", // 151
-    "Hotline", // 152
-    "Studio phone", // 153
-    "Phone", // 154
-    "SMS studio", // 155
-    "SMS", // 156
-    "Email hotline", // 157
-    "Email studio", // 158
-    "Email", // 159
-    "Chat", // 160
-    "Chat centre", // 161
-    "Vote question", // 162
-    "Vote centre", // 163
-    "Place", // 164
-    "Appointment", // 165
-    "Identifier", // 166
-    "Purchase", // 167
-    "Get data", // 168
-    "MW default stepsize", // 169
-    "Tangerine", // 170
-    "Ocean", // 171
-    "Indigo", // 172
+    "Subchannel", // 151 ***
+    "Hotline", // 152 ***
+    "Studio phone", // 153 ***
+    "Phone", // 154 ***
+    "SMS studio", // 155 ***
+    "SMS", // 156 ***
+    "Email hotline", // 157 ***
+    "Email studio", // 158 ***
+    "Email", // 159 ***
+    "Chat", // 160 ***
+    "Chat centre", // 161 ***
+    "Vote question", // 162 ***
+    "Vote centre", // 163 ***
+    "Place", // 164 ***
+    "Appointment", // 165 ***
+    "Identifier", // 166 ***
+    "Purchase", // 167 ***
+    "Get data", // 168 ***
+    "MW default stepsize", // 169 ***
+    "Tangerine", // 170 ***
+    "Ocean", // 171 ***
+    "Indigo", // 172 ***
     "Opțiuni baterie", // 173
     "Arată voltajul", // 174
     "Arată procentele", // 175
@@ -1236,11 +1236,11 @@ static const char* const myLanguage[18][207] = {
     "Pragul AM CoChannelDet", // 187
     "CoChannelDet opus", // 188
     "PRINCIPAL", // 189
-    "AUDIO", // 190
+    "AUDIO", // 190 ***
     "ECRAN", // 191
-    "RDS", // 192
-    "FM", // 193
-    "AM", // 194
+    "RDS", // 192 ***
+    "FM", // 193 ***
+    "AM", // 194 ***
     "CONECTARE", // 195
     "Sortare auto AF", // 196
     "Listă rețele ID", // 197
@@ -1251,8 +1251,8 @@ static const char* const myLanguage[18][207] = {
     "Toate", // 202
     "PS rapid", // 203
     "Identificare aplicații", // 204
-    "Min.", // 205
-    "Dynamic SPI speed" // 206
+    "Min.", // 205 ***
+    "Dynamic SPI speed" // 206 ***
   },
 
   { "Deutsch", // German
@@ -1299,11 +1299,11 @@ static const char* const myLanguage[18][207] = {
     "MODE drücken zum Beenden & Sichern", // 41
     "Ein", // 42
     "Softmute UKW", // 43
-    "Softmute AM", // 44
+    "Softmute AM", // 44 ***
     "Piepston am Bandende", // 45
-    "Region", // 46
+    "Region", // 46 ***
     "Europa", // 47
-    "USA", // 48
+    "USA", // 48 ***
     "Zeige Unterstrich im RDS", // 49
     "USB-Modus", // 50
     "WLAN aktiv", // 51
@@ -1334,13 +1334,13 @@ static const char* const myLanguage[18][207] = {
     "Bildschirm aus", // 76
     "Thema", // 77
     "Standard", // 78
-    "Cyan", // 79
-    "Crimson", // 80
-    "Monochrome", // 81
-    "Volcano", // 82
-    "Dendro", // 83
-    "Sakura", // 84
-    "Whiteout", // 85
+    "Cyan", // 79 ***
+    "Crimson", // 80 ***
+    "Monochrome", // 81 ***
+    "Volcano", // 82 ***
+    "Dendro", // 83 ***
+    "Sakura", // 84 ***
+    "Whiteout", // 85 ***
     "NICHT MÖGLICH", // 86
     "Keine AF verfügbar", // 87
     "Kein EON verfügbar", // 88
@@ -1357,31 +1357,31 @@ static const char* const myLanguage[18][207] = {
     "Verwende AF:", // 99
     "Wähle UKW Band:", // 100
     "Wähle AM Band:", // 101
-    "LW", // 102
-    "MW", // 103
+    "LW", // 102 ***
+    "MW", // 103 ***
     "KW", // 104
     "UKW", // 105
-    "OIRT", // 106
+    "OIRT", // 106 ***
     "Drehen bei Bildschirm aus", // 107
     "Modell auswählen", // 108
     "Basismodell (ILI9341)", // 109
     "Portabel (ILI9341)", // 110
     "Portabel Touch (ILI9341)", // 111
     "Titel", // 112
-    "Album", // 113
-    "Track", // 114
+    "Album", // 113 ***
+    "Track", // 114 ***
     "Künstler", // 115
     "Komposition", // 116
     "Satz", // 117
     "Dirigent", // 118
     "Komponist", // 119
-    "Band", // 120
+    "Band", // 120 ***
     "Kommentar", // 121
-    "Genre", // 122
+    "Genre", // 122 ***
     "Nachrichten", // 123
     "Lokalnachrichten", // 124
     "Aktienmarkt", // 125
-    "Sport", // 126
+    "Sport", // 126 ***
     "Lotterie", // 127
     "Horoskop", // 128
     "Tagestipp", // 129
@@ -1389,13 +1389,13 @@ static const char* const myLanguage[18][207] = {
     "Ereignis", // 131
     "Szene", // 132
     "Kino", // 133
-    "TV", // 134
+    "TV", // 134 ***
     "Tag/Uhrzeit", // 135
     "Wetter", // 136
     "Verkehr", // 137
-    "Alarm", // 138
+    "Alarm", // 138 ***
     "Werbung", // 139
-    "Website", // 140
+    "Website", // 140 ***
     "Info", // 141
     "Kurzes PS", // 142
     "Langes PS", // 143
@@ -1405,17 +1405,17 @@ static const char* const myLanguage[18][207] = {
     "Am Mikrofon", // 147
     "Redaktion", // 148
     "Frequenz", // 149
-    "Homepage", // 150
-    "Subchannel", // 151
+    "Homepage", // 150 ***
+    "Subchannel", // 151 ***
     "Telefon Hotline", // 152
     "Telefon Studio", // 153
     "Telefon", // 154
-    "SMS Studio", // 155
-    "SMS", // 156
+    "SMS Studio", // 155 ***
+    "SMS", // 156 ***
     "E-Mail Hotline", // 157
     "E-Mail Studio", // 158
     "E-mail", // 159
-    "Chat", // 160
+    "Chat", // 160 ***
     "Chat-Zentrale", // 161
     "Abstimmung", // 162
     "Abstimmungs-Zentrale", // 163
@@ -1425,9 +1425,9 @@ static const char* const myLanguage[18][207] = {
     "Bezugsquelle", // 167
     "Empfange Daten", // 168
     "MW Standard-Schrittweite", // 169
-    "Tangerine", // 170
-    "Ocean", // 171
-    "Indigo", // 172
+    "Tangerine", // 170 ***
+    "Ocean", // 171 ***
+    "Indigo", // 172 ***
     "Akkuoptionen", // 173
     "Spannung anzeigen", // 174
     "Prozente anzeigen", // 175
@@ -1445,14 +1445,14 @@ static const char* const myLanguage[18][207] = {
     "AM Gleichkanalerkennung\nSchwelle", // 187
     "AM Gleichkanalerkennung\nZähler", // 188
     "HAUPT", // 189
-    "AUDIO", // 190
+    "AUDIO", // 190 ***
     "ANZEIGE", // 191
-    "RDS", // 192
+    "RDS", // 192 ***
     "UKW", // 193
-    "AM", // 194
+    "AM", // 194 ***
     "NETZ", // 195
     "AF Autosortierung", // 196
-    "Stationlist ID", // 197
+    "Stationlist ID", // 197 ***
     "AM ATT", // 198
     "UKW Deemphasis", // 199
     "Wenig", // 200
@@ -1460,7 +1460,7 @@ static const char* const myLanguage[18][207] = {
     "Maximal", // 202
     "Schnelles PS", // 203
     "Erkannte Applikationen", // 204
-    "Min.", // 205
+    "Min.", // 205 ***
     "Dynamische SPI-Geschwindigkeit" // 206
   },
 
@@ -1507,15 +1507,15 @@ static const char* const myLanguage[18][207] = {
     "Vyberte jazyk", // 40
     "ZMÁČKNĚTE MODE PRO ULOŽENÍ", // 41
     "Zap", // 42
-    "Softmute FM", // 43
-    "Softmute AM", // 44
+    "Softmute FM", // 43 ***
+    "Softmute AM", // 44 ***
     "Pípnutí na konci pásma", // 45
-    "Region", // 46
+    "Region", // 46 ***
     "Evropa", // 47
-    "USA", // 48
+    "USA", // 48 ***
     "Zobrazit podtržítka v RDS", // 49
     "USB mód", // 50
-    "Wi-Fi active", // 51
+    "Wi-Fi active", // 51 ***
     "Konfigurace Wi-Fi", // 52
     "Připojte se k: ", // 53
     "pro nakonfigurování Wi-Fi", // 54
@@ -1524,7 +1524,7 @@ static const char* const myLanguage[18][207] = {
     "PŘIPOJENO!", // 57
     "Stationlist IP", // 58
     "Zobrazit SW pásmo", // 59
-    "RDS filter", // 60
+    "RDS filter", // 60 ***
     "Zobrazit chyby v PI", // 61
     "Zobrazit squelch", // 62
     "Graf modulace", // 63
@@ -1543,13 +1543,13 @@ static const char* const myLanguage[18][207] = {
     "Vypnutí obrazovky", // 76
     "Vzhled", // 77
     "Výchozí", // 78
-    "Cyan", // 79
-    "Crimson", // 80
-    "Monochrome", // 81
-    "Volcano", // 82
-    "Dendro", // 83
-    "Sakura", // 84
-    "Whiteout", // 85
+    "Cyan", // 79 ***
+    "Crimson", // 80 ***
+    "Monochrome", // 81 ***
+    "Volcano", // 82 ***
+    "Dendro", // 83 ***
+    "Sakura", // 84 ***
+    "Whiteout", // 85 ***
     "ODPOJTE USB", // 86
     "AF nedostupné", // 87
     "EON nedostupný", // 88
@@ -1566,77 +1566,77 @@ static const char* const myLanguage[18][207] = {
     "AF:", // 99
     "Zvolte FM pásmo:", // 100
     "Zvolte AM pásmo:", // 101
-    "LW", // 102
-    "MW", // 103
-    "SW", // 104
-    "FM", // 105
-    "OIRT", // 106
-    "Rotating while screen off", // 107
+    "LW", // 102 ***
+    "MW", // 103 ***
+    "SW", // 104 ***
+    "FM", // 105 ***
+    "OIRT", // 106 ***
+    "Rotating while screen off", // 107 ***
     "Volba modelu", // 108
     "Základ (ILI9341)", // 109
     "Přenosný (ILI9341)", // 110
     "Přenosný - dotykový (ILI9341)", // 111
-    "Title", // 112
-    "Album", // 113
-    "Track", // 114
-    "Artist", // 115
-    "Composition", // 116
-    "Movement", // 117
-    "Conductor", // 118
-    "Composer", // 119
-    "Band", // 120
-    "Comment", // 121
-    "Genre", // 122
-    "News", // 123
-    "Local news", // 124
-    "Stockmarket", // 125
-    "Sport", // 126
-    "Lottery", // 127
-    "Horoscope", // 128
-    "Daily Diversion", // 129
-    "Health", // 130
-    "Event", // 131
-    "Scene", // 132
-    "Cinema", // 133
-    "TV", // 134
-    "Date/time", // 135
-    "Weather", // 136
-    "Traffic", // 137
-    "Alarm", // 138
-    "Advertisement", // 139
-    "Website", // 140
-    "Other", // 141
-    "Short PS", // 142
-    "Long PS", // 143
-    "Now", // 144
-    "Next", // 145
-    "Part", // 146
-    "Host", // 147
-    "Editor", // 148
-    "Frequency", // 149
-    "Homepage", // 150
-    "Subchannel", // 151
-    "Hotline", // 152
-    "Studio phone", // 153
-    "Phone", // 154
-    "SMS studio", // 155
-    "SMS", // 156
-    "Email hotline", // 157
-    "Email studio", // 158
-    "Email", // 159
-    "Chat", // 160
-    "Chat centre", // 161
-    "Vote question", // 162
-    "Vote centre", // 163
-    "Place", // 164
-    "Appointment", // 165
-    "Identifier", // 166
-    "Purchase", // 167
-    "Get data", // 168
-    "MW default stepsize", // 169
-    "Tangerine", // 170
-    "Ocean", // 171
-    "Indigo", // 172
+    "Title", // 112 ***
+    "Album", // 113 ***
+    "Track", // 114 ***
+    "Artist", // 115 ***
+    "Composition", // 116 ***
+    "Movement", // 117 ***
+    "Conductor", // 118 ***
+    "Composer", // 119 ***
+    "Band", // 120 ***
+    "Comment", // 121 ***
+    "Genre", // 122 ***
+    "News", // 123 ***
+    "Local news", // 124 ***
+    "Stockmarket", // 125 ***
+    "Sport", // 126 ***
+    "Lottery", // 127 ***
+    "Horoscope", // 128 ***
+    "Daily Diversion", // 129 ***
+    "Health", // 130 ***
+    "Event", // 131 ***
+    "Scene", // 132 ***
+    "Cinema", // 133 ***
+    "TV", // 134 ***
+    "Date/time", // 135 ***
+    "Weather", // 136 ***
+    "Traffic", // 137 ***
+    "Alarm", // 138 ***
+    "Advertisement", // 139 ***
+    "Website", // 140 ***
+    "Other", // 141 ***
+    "Short PS", // 142 ***
+    "Long PS", // 143 ***
+    "Now", // 144 ***
+    "Next", // 145 ***
+    "Part", // 146 ***
+    "Host", // 147 ***
+    "Editor", // 148 ***
+    "Frequency", // 149 ***
+    "Homepage", // 150 ***
+    "Subchannel", // 151 ***
+    "Hotline", // 152 ***
+    "Studio phone", // 153 ***
+    "Phone", // 154 ***
+    "SMS studio", // 155 ***
+    "SMS", // 156 ***
+    "Email hotline", // 157 ***
+    "Email studio", // 158 ***
+    "Email", // 159 ***
+    "Chat", // 160 ***
+    "Chat centre", // 161 ***
+    "Vote question", // 162 ***
+    "Vote centre", // 163 ***
+    "Place", // 164 ***
+    "Appointment", // 165 ***
+    "Identifier", // 166 ***
+    "Purchase", // 167 ***
+    "Get data", // 168 ***
+    "MW default stepsize", // 169 ***
+    "Tangerine", // 170 ***
+    "Ocean", // 171 ***
+    "Indigo", // 172 ***
     "Nastavení baterie", // 173
     "Zobrazit napětí", // 174
     "Zobrazit procenta", // 175
@@ -1656,21 +1656,21 @@ static const char* const myLanguage[18][207] = {
     "HLAVNÍ", // 189
     "ZVUK", // 190
     "DISPLEJ", // 191
-    "RDS", // 192
-    "FM", // 193
-    "AM", // 194
+    "RDS", // 192 ***
+    "FM", // 193 ***
+    "AM", // 194 ***
     "PŘIPOJENÍ", // 195
     "Auto řazení AF", // 196
-    "Stationlist ID", // 197
+    "Stationlist ID", // 197 ***
     "AM ATT", // 198
-    "FM deemphasis", // 199
+    "FM deemphasis", // 199 ***
     "Malý", // 200
     "Velký", // 201
     "Vše", // 202
     "Rychlé načtení PS", // 203
     "Detekované aplikace", // 204
-    "Min.", // 205
-    "Dynamic SPI speed" // 206
+    "Min.", // 205 ***
+    "Dynamic SPI speed" // 206 ***
   },
 
   { "Slovenský", // Slovak
@@ -1716,15 +1716,15 @@ static const char* const myLanguage[18][207] = {
     "Vyberte jazyk", // 40
     "STLAČTE MODE PRE ULOŽENIE", // 41
     "Zap", // 42
-    "Softmute FM", // 43
-    "Softmute AM", // 44
+    "Softmute FM", // 43 ***
+    "Softmute AM", // 44 ***
     "Pípnutie na konci pásma", // 45
-    "Region", // 46
+    "Region", // 46 ***
     "Európa", // 47
-    "USA", // 48
+    "USA", // 48 ***
     "Zobraziť podtržítka v RDS", // 49
     "USB mód", // 50
-    "Wi-Fi active", // 51
+    "Wi-Fi active", // 51 ***
     "Konfigurace Wi-Fi", // 52
     "Pripojte sa k: ", // 53
     "pre nakonfigurovánie Wi-Fi", // 54
@@ -1733,7 +1733,7 @@ static const char* const myLanguage[18][207] = {
     "PRIPOJENÉ!", // 57
     "Stationlist IP", // 58
     "Zobraziť SW pásmo", // 59
-    "RDS filter", // 60
+    "RDS filter", // 60 ***
     "Zobraziť chyby v PI", // 61
     "Zobraziť squelch", // 62
     "Graf modulácie", // 63
@@ -1752,13 +1752,13 @@ static const char* const myLanguage[18][207] = {
     "Vypnutie obrazovky", // 76
     "Vzhľad", // 77
     "Východzí", // 78
-    "Cyan", // 79
-    "Crimson", // 80
-    "Monochrome", // 81
-    "Volcano", // 82
-    "Dendro", // 83
-    "Sakura", // 84
-    "Whiteout", // 85
+    "Cyan", // 79 ***
+    "Crimson", // 80 ***
+    "Monochrome", // 81 ***
+    "Volcano", // 82 ***
+    "Dendro", // 83 ***
+    "Sakura", // 84 ***
+    "Whiteout", // 85 ***
     "ODPOJTE USB", // 86
     "AF nedostupné", // 87
     "EON nedostupný", // 88
@@ -1775,77 +1775,77 @@ static const char* const myLanguage[18][207] = {
     "AF:", // 99
     "Zvoľte FM pásmo:", // 100
     "Zvoľte AM pásmo:", // 101
-    "LW", // 102
-    "MW", // 103
-    "SW", // 104
-    "FM", // 105
-    "OIRT", // 106
-    "Rotating while screen off", // 107
+    "LW", // 102 ***
+    "MW", // 103 ***
+    "SW", // 104 ***
+    "FM", // 105 ***
+    "OIRT", // 106 ***
+    "Rotating while screen off", // 107 ***
     "Voľba modelu", // 108
     "Základ (ILI9341)", // 109
     "Prenosný (ILI9341)", // 110
     "Prenosný - dotykový (ILI9341)", // 111
-    "Title", // 112
-    "Album", // 113
-    "Track", // 114
-    "Artist", // 115
-    "Composition", // 116
-    "Movement", // 117
-    "Conductor", // 118
-    "Composer", // 119
-    "Band", // 120
-    "Comment", // 121
-    "Genre", // 122
-    "News", // 123
-    "Local news", // 124
-    "Stockmarket", // 125
-    "Sport", // 126
-    "Lottery", // 127
-    "Horoscope", // 128
-    "Daily Diversion", // 129
-    "Health", // 130
-    "Event", // 131
-    "Scene", // 132
-    "Cinema", // 133
-    "TV", // 134
-    "Date/time", // 135
-    "Weather", // 136
-    "Traffic", // 137
-    "Alarm", // 138
-    "Advertisement", // 139
-    "Website", // 140
-    "Other", // 141
-    "Short PS", // 142
-    "Long PS", // 143
-    "Now", // 144
-    "Next", // 145
-    "Part", // 146
-    "Host", // 147
-    "Editor", // 148
-    "Frequency", // 149
-    "Homepage", // 150
-    "Subchannel", // 151
-    "Hotline", // 152
-    "Studio phone", // 153
-    "Phone", // 154
-    "SMS studio", // 155
-    "SMS", // 156
-    "Email hotline", // 157
-    "Email studio", // 158
-    "Email", // 159
-    "Chat", // 160
-    "Chat centre", // 161
-    "Vote question", // 162
-    "Vote centre", // 163
-    "Place", // 164
-    "Appointment", // 165
-    "Identifier", // 166
-    "Purchase", // 167
-    "Get data", // 168
-    "MW default stepsize", // 169
-    "Tangerine", // 170
-    "Ocean", // 171
-    "Indigo", // 172
+    "Title", // 112 ***
+    "Album", // 113 ***
+    "Track", // 114 ***
+    "Artist", // 115 ***
+    "Composition", // 116 ***
+    "Movement", // 117 ***
+    "Conductor", // 118 ***
+    "Composer", // 119 ***
+    "Band", // 120 ***
+    "Comment", // 121 ***
+    "Genre", // 122 ***
+    "News", // 123 ***
+    "Local news", // 124 ***
+    "Stockmarket", // 125 ***
+    "Sport", // 126 ***
+    "Lottery", // 127 ***
+    "Horoscope", // 128 ***
+    "Daily Diversion", // 129 ***
+    "Health", // 130 ***
+    "Event", // 131 ***
+    "Scene", // 132 ***
+    "Cinema", // 133 ***
+    "TV", // 134 ***
+    "Date/time", // 135 ***
+    "Weather", // 136 ***
+    "Traffic", // 137 ***
+    "Alarm", // 138 ***
+    "Advertisement", // 139 ***
+    "Website", // 140 ***
+    "Other", // 141 ***
+    "Short PS", // 142 ***
+    "Long PS", // 143 ***
+    "Now", // 144 ***
+    "Next", // 145 ***
+    "Part", // 146 ***
+    "Host", // 147 ***
+    "Editor", // 148 ***
+    "Frequency", // 149 ***
+    "Homepage", // 150 ***
+    "Subchannel", // 151 ***
+    "Hotline", // 152 ***
+    "Studio phone", // 153 ***
+    "Phone", // 154 ***
+    "SMS studio", // 155 ***
+    "SMS", // 156 ***
+    "Email hotline", // 157 ***
+    "Email studio", // 158 ***
+    "Email", // 159 ***
+    "Chat", // 160 ***
+    "Chat centre", // 161 ***
+    "Vote question", // 162 ***
+    "Vote centre", // 163 ***
+    "Place", // 164 ***
+    "Appointment", // 165 ***
+    "Identifier", // 166 ***
+    "Purchase", // 167 ***
+    "Get data", // 168 ***
+    "MW default stepsize", // 169 ***
+    "Tangerine", // 170 ***
+    "Ocean", // 171 ***
+    "Indigo", // 172 ***
     "Nastavenia batérie", // 173
     "Zobraziť napätie", // 174
     "Zobraziť percentá", // 175
@@ -1865,21 +1865,21 @@ static const char* const myLanguage[18][207] = {
     "HLAVNÝ", // 189
     "ZVUK", // 190
     "DISPLEJ", // 191
-    "RDS", // 192
-    "FM", // 193
-    "AM", // 194
+    "RDS", // 192 ***
+    "FM", // 193 ***
+    "AM", // 194 ***
     "PRIPOJENIE", // 195
     "Auto radenie AF", // 196
-    "Stationlist ID", // 197
+    "Stationlist ID", // 197 ***
     "AM ATT", // 198
-    "FM deemphasis", // 199
+    "FM deemphasis", // 199 ***
     "Malý", // 200
     "Veľký", // 201
     "Všetko", // 202
     "Rýchle načítanie PS", // 203
     "Detegované aplikácie", // 204
-    "Min.", // 205
-    "Dynamic SPI speed" // 206
+    "Min.", // 205 ***
+    "Dynamic SPI speed" // 206 ***
   },
 
   { "Français", // French
@@ -1929,7 +1929,7 @@ static const char* const myLanguage[18][207] = {
     "Sourdine douce AM", // 44
     "Bip à la limite\nde bande", // 45
     "Région", // 46
-    "Europe", // 47
+    "Europe", // 47 ***
     "États-Unis", // 48
     "Montre les tirets du\nbas du PS", // 49
     "Mode USB", // 50
@@ -1940,7 +1940,7 @@ static const char* const myLanguage[18][207] = {
     "Tentative de connexion\nen mode Wi-Fi", // 55
     "CONNEXION IMPOSSIBLE...\nDésactivation du Wi-Fi", // 56
     "CONNECTÉ!", // 57
-    "Stationlist client IP", // 58
+    "Stationlist client IP", // 58 ***
     "Afficher la longueur\nd'onde SW", // 59
     "Filtre RDS", // 60
     "Afficher les erreurs\nde décodage PI", // 61
@@ -1961,20 +1961,20 @@ static const char* const myLanguage[18][207] = {
     "Affichage éteint", // 76
     "Thème", // 77
     "Défaut", // 78
-    "Cyan", // 79
+    "Cyan", // 79 ***
     "Cramoisi", // 80
-    "Monochrome", // 81
+    "Monochrome", // 81 ***
     "Volcan", // 82
-    "Dendro", // 83
-    "Sakura", // 84
+    "Dendro", // 83 ***
+    "Sakura", // 84 ***
     "Voile blanc", // 85
     "IMPOSSIBLE", // 86
     "AF indisponible", // 87
     "EON indisponible", // 88
     "RT+ indisponible", // 89
     "Valeur du pas FM\npar défaut", // 90
-    "Screensaver", // 91
-    "Sec", // 92
+    "Screensaver", // 91 ***
+    "Sec", // 92 ***
     "APPUYEZ SUR BAND POUR FERMER", // 93
     "1% luminosité", // 94
     "25% luminosité", // 95
@@ -1984,39 +1984,39 @@ static const char* const myLanguage[18][207] = {
     "Utilisez le AF:", // 99
     "Sélectionner la\nbande FM:", // 100
     "Sélectionner la\nbande AM:", // 101
-    "LW", // 102
+    "LW", // 102 ***
     "AM", // 103
-    "SW", // 104
-    "FM", // 105
-    "OIRT", // 106
+    "SW", // 104 ***
+    "FM", // 105 ***
+    "OIRT", // 106 ***
     "Rotation lorsque\nl'écran est éteint", // 107
     "Sélecteur de modèle", // 108
-    "Base (ILI9341)", // 109
-    "Portable (ILI9341)", // 110
+    "Base (ILI9341)", // 109 ***
+    "Portable (ILI9341)", // 110 ***
     "Portable touche (ILI9341)", // 111
     "Titre", // 112
-    "Album", // 113
+    "Album", // 113 ***
     "Piste", // 114
     "Artiste", // 115
-    "Composition", // 116
+    "Composition", // 116 ***
     "Mouvement", // 117
     "Chef d'orchestre", // 118
     "Compositeur", // 119
     "Groupe", // 120
     "Commentaire", // 121
-    "Genre", // 122
+    "Genre", // 122 ***
     "Actualités", // 123
     "Actualités locales", // 124
     "Bourse", // 125
-    "Sport", // 126
+    "Sport", // 126 ***
     "Loterie", // 127
-    "Horoscope", // 128
+    "Horoscope", // 128 ***
     "Divertissement quotidien", // 129
     "Santé", // 130
     "Événement", // 131
     "Scène", // 132
     "Cinéma", // 133
-    "TV", // 134
+    "TV", // 134 ***
     "Date/heure", // 135
     "Météo", // 136
     "Trafic", // 137
@@ -2034,15 +2034,15 @@ static const char* const myLanguage[18][207] = {
     "Fréquence", // 149
     "Page d'accueil", // 150
     "Sous-canal", // 151
-    "Hotline", // 152
+    "Hotline", // 152 ***
     "Téléphone du studio", // 153
     "Téléphone", // 154
     "SMS au studio", // 155
-    "SMS", // 156
+    "SMS", // 156 ***
     "Hotline par email", // 157
     "Email du studio", // 158
-    "Email", // 159
-    "Chat", // 160
+    "Email", // 159 ***
+    "Chat", // 160 ***
     "Centre de discussion", // 161
     "Question de vote", // 162
     "Centre de vote", // 163
@@ -2051,14 +2051,14 @@ static const char* const myLanguage[18][207] = {
     "Identifiant", // 166
     "Achat", // 167
     "Obtenir des données", // 168
-    "MW default stepsize", // 169
+    "MW default stepsize", // 169 ***
     "Mandarine", // 170
     "Océan", // 171
-    "Indigo", // 172
+    "Indigo", // 172 ***
     "Options de batterie", // 173
     "Montrer la tension", // 174
     "Montrer le pourcentage", // 175
-    "RT buffering", // 176
+    "RT buffering", // 176 ***
     "Paramètres principaux", // 177
     "Paramètres audio", // 178
     "Paramètres d'affichage", // 179
@@ -2072,14 +2072,14 @@ static const char* const myLanguage[18][207] = {
     "AM CoChannelDet\nsueil", // 187
     "CoChannelDet\ncompteur", // 188
     "PRINCIPAUX", // 189
-    "AUDIO", // 190
+    "AUDIO", // 190 ***
     "AFFICHAGE", // 191
-    "RDS", // 192
-    "FM", // 193
-    "AM", // 194
+    "RDS", // 192 ***
+    "FM", // 193 ***
+    "AM", // 194 ***
     "CONNECTER", // 195
-    "Auto sort AF", // 196
-    "Stationlist ID", // 197
+    "Auto sort AF", // 196 ***
+    "Stationlist ID", // 197 ***
     "AM ATT", // 198
     "FM déemphasie", // 199
     "Petites", // 200
@@ -2087,7 +2087,7 @@ static const char* const myLanguage[18][207] = {
     "Toutes", // 202
     "PS rapide", // 203
     "Applications détectées", // 204
-    "Min.", // 205
+    "Min.", // 205 ***
     "Vitesse SPI\ndynamique" // 206
   },
 
@@ -2165,13 +2165,13 @@ static const char* const myLanguage[18][207] = {
     "Главен код:", // 71
     "Сътрудници:", // 72
     "Неизвестно", // 73
-    "Screensaver options", // 74
-    "Time-out timer", // 75
+    "Screensaver options", // 74 ***
+    "Time-out timer", // 75 ***
     "Изключен дисплей", // 76
     "Тема", // 77
     "По подразбиране", // 78
     "Циан", // 79
-    "Crimson", // 80
+    "Crimson", // 80 ***
     "Двуцветен", // 81
     "Вулкан", // 82
     "Горски", // 83
@@ -2207,7 +2207,7 @@ static const char* const myLanguage[18][207] = {
     "Албум", // 113
     "Песен", // 114
     "Изпълнител", // 115
-    "Composition", // 116
+    "Composition", // 116 ***
     "Действие", // 117
     "Диригент", // 118
     "Композитор", // 119
@@ -2220,9 +2220,9 @@ static const char* const myLanguage[18][207] = {
     "Спорт", // 126
     "Лото", // 127
     "Хороскоп", // 128
-    "Daily Diversion", // 129
+    "Daily Diversion", // 129 ***
     "Здраве", // 130
-    "Event", // 131
+    "Event", // 131 ***
     "Сцена", // 132
     "Кино", // 133
     "ТВ", // 134
@@ -2232,50 +2232,50 @@ static const char* const myLanguage[18][207] = {
     "Аларма", // 138
     "Реклама", // 139
     "Уеб страница", // 140
-    "Other", // 141
-    "Short PS", // 142
-    "Long PS", // 143
-    "Now", // 144
+    "Other", // 141 ***
+    "Short PS", // 142 ***
+    "Long PS", // 143 ***
+    "Now", // 144 ***
     "Следващ", // 145
-    "Part", // 146
-    "Host", // 147
-    "Editor", // 148
+    "Part", // 146 ***
+    "Host", // 147 ***
+    "Editor", // 148 ***
     "Честота", // 149
     "Начална страница", // 150
-    "Subchannel", // 151
+    "Subchannel", // 151 ***
     "Гореща линия", // 152
     "Студиен тел", // 153
     "Телефон", // 154
-    "SMS studio", // 155
-    "SMS", // 156
+    "SMS studio", // 155 ***
+    "SMS", // 156 ***
     "Имейл гореща линия", // 157
     "Имейл до студиото", // 158
     "Имейл", // 159
     "Чат", // 160
     "Чат център", // 161
-    "Vote question", // 162
-    "Vote centre", // 163
-    "Place", // 164
-    "Appointment", // 165
+    "Vote question", // 162 ***
+    "Vote centre", // 163 ***
+    "Place", // 164 ***
+    "Appointment", // 165 ***
     "Идентификатор", // 166
     "Покупка", // 167
     "Получи данни", // 168
-    "MW default stepsize", // 169
-    "Tangerine", // 170
+    "MW default stepsize", // 169 ***
+    "Tangerine", // 170 ***
     "Океан", // 171
     "Индиго", // 172
-    "Battery options", // 173
-    "Show voltage", // 174
-    "Show percentage", // 175
-    "RT buffering", // 176
+    "Battery options", // 173 ***
+    "Show voltage", // 174 ***
+    "Show percentage", // 175 ***
+    "RT buffering", // 176 ***
     "Главни настройки", // 177
     "Аудио-настройка", // 178
     "Екран-настроийка", // 179
     "RDS настройки", // 180
     "FM настройки", // 181
     "AM/СВ настройки", // 182
-    "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "Connectivity", // 183 ***
+    "PRESS MODE TO RETURN", // 184 ***
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
@@ -2283,21 +2283,21 @@ static const char* const myLanguage[18][207] = {
     "ГЛАВНО МЕНЮ", // 189
     "АУДИО", // 190
     "ЕКРАН", // 191
-    "RDS", // 192
+    "RDS", // 192 ***
     "УКВ (FM)", // 193
     "СВ (AM)", // 194
     "ВРЪЗКА", // 195
-    "Auto sort AF", // 196
+    "Auto sort AF", // 196 ***
     "Stationlist Идентификатор", // 197
     "СВ атенюатор", // 198
-    "FM deemphasis", // 199
-    "Small", // 200
-    "Large", // 201
+    "FM deemphasis", // 199 ***
+    "Small", // 200 ***
+    "Large", // 201 ***
     "Всички", // 202
-    "Fast PS", // 203
-    "Detected applications", // 204
+    "Fast PS", // 203 ***
+    "Detected applications", // 204 ***
     "Мин.", // 205
-    "Dynamic SPI speed" // 206
+    "Dynamic SPI speed" // 206 ***
   },
 
   { "Русский", // Russian
@@ -2402,11 +2402,11 @@ static const char* const myLanguage[18][207] = {
     "Режим AF:", // 99
     "Выберите FM-диапазон:", // 100
     "Выберите AM-диапазон:", // 101
-    "LW", // 102
-    "MW", // 103
-    "SW", // 104
-    "FM", // 105
-    "OIRT", // 106
+    "LW", // 102 ***
+    "MW", // 103 ***
+    "SW", // 104 ***
+    "FM", // 105 ***
+    "OIRT", // 106 ***
     "Вращение при выкл. экране", // 107
     "Выбор модели", // 108
     "Стандартный (ILI9341)", // 109
@@ -2456,10 +2456,10 @@ static const char* const myLanguage[18][207] = {
     "Телефон студии", // 153
     "Телефон", // 154
     "SMS студии", // 155
-    "SMS", // 156
+    "SMS", // 156 ***
     "Email горячей линии", // 157
     "Email студии", // 158
-    "Email", // 159
+    "Email", // 159 ***
     "Чат", // 160
     "Чат-центр", // 161
     "Вопрос голосования", // 162
@@ -2469,7 +2469,7 @@ static const char* const myLanguage[18][207] = {
     "Идентификатор", // 166
     "Покупка", // 167
     "Получить данные", // 168
-    "MW default stepsize", // 169
+    "MW default stepsize", // 169 ***
     "Мандариновый", // 170
     "Океан", // 171
     "Индиго", // 172
@@ -2492,21 +2492,21 @@ static const char* const myLanguage[18][207] = {
     "ОСНОВНОЙ", // 189
     "АУДИО", // 190
     "ДИСПЛЕЙ", // 191
-    "RDS", // 192
-    "FM", // 193
-    "AM", // 194
+    "RDS", // 192 ***
+    "FM", // 193 ***
+    "AM", // 194 ***
     "ПОДКЛЮЧЕНИЕ", // 195
     "Авто сорт. AF", // 196
-    "Stationlist ID", // 197
+    "Stationlist ID", // 197 ***
     "AM ATT", // 198
-    "FM deemphasis", // 199
+    "FM deemphasis", // 199 ***
     "Мало", // 200
     "Много", // 201
     "Все", // 202
     "Быстрый PS", // 203
     "Обнаруженные приложения", // 204
     "мин.", // 205
-    "Dynamic SPI speed" // 206
+    "Dynamic SPI speed" // 206 ***
   },
 
   { "Українська", // Ukranian
@@ -2611,11 +2611,11 @@ static const char* const myLanguage[18][207] = {
     "Режим AF:", // 99
     "Виберіть FM-діапазон:", // 100
     "Виберіть AM-діапазон:", // 101
-    "LW", // 102
-    "MW", // 103
-    "SW", // 104
-    "FM", // 105
-    "OIRT", // 106
+    "LW", // 102 ***
+    "MW", // 103 ***
+    "SW", // 104 ***
+    "FM", // 105 ***
+    "OIRT", // 106 ***
     "Обертання, коли екран вимкнено", // 107
     "Вибір моделі", // 108
     "Стандартний (ILI9341)", // 109
@@ -2665,10 +2665,10 @@ static const char* const myLanguage[18][207] = {
     "Телефон студії", // 153
     "Телефон", // 154
     "SMS студії", // 155
-    "SMS", // 156
+    "SMS", // 156 ***
     "Email гарячої лінії", // 157
     "Email студії", // 158
-    "Email", // 159
+    "Email", // 159 ***
     "Чат", // 160
     "Чат-центр", // 161
     "Питання голосування", // 162
@@ -2678,7 +2678,7 @@ static const char* const myLanguage[18][207] = {
     "Ідентифікатор", // 166
     "Покупка", // 167
     "Отримати дані", // 168
-    "MW default stepsize", // 169
+    "MW default stepsize", // 169 ***
     "Мандариновий", // 170
     "Океан", // 171
     "Індиго", // 172
@@ -2701,21 +2701,21 @@ static const char* const myLanguage[18][207] = {
     "ОСНОВНОЇ", // 189
     "АУДІО", // 190
     "ДИСПЛЕЙ", // 191
-    "RDS", // 192
-    "FM", // 193
-    "AM", // 194
+    "RDS", // 192 ***
+    "FM", // 193 ***
+    "AM", // 194 ***
     "ПІДКЛЮЧЕННЯ", // 195
     "Авто сорт. AF", // 196
-    "Stationlist ID", // 197
+    "Stationlist ID", // 197 ***
     "AM ATT", // 198
-    "FM deemphasis", // 199
+    "FM deemphasis", // 199 ***
     "Мало", // 200
     "Багато", // 201
     "Усе", // 202
     "Швидкий PS", // 203
     "Виявлені програми", // 204
     "мін.", // 205
-    "Dynamic SPI speed" // 206
+    "Dynamic SPI speed" // 206 ***
   },
 
   { "Italiano", // Italian
@@ -2748,10 +2748,10 @@ static const char* const myLanguage[18][207] = {
     "Imp. soglia taglio alti", // 27
     "Imp. soglia di livello basso", // 28
     "Imp. la luminosità del display", // 29
-    "Off", // 30
+    "Off", // 30 ***
     "Schermo disattivato!", // 31
     "Deseleziona box RF+ per audio", // 32
-    "OFF", // 33
+    "OFF", // 33 ***
     "SCANSIONE...", // 34
     "Ricevitore non rilevato", // 35
     "Versione ricevitore impostata: v", // 36
@@ -2760,13 +2760,13 @@ static const char* const myLanguage[18][207] = {
     "Lingua", // 39
     "Scegli la lingua", // 40
     "SALVA E ESCI: PREMI MODE", // 41
-    "On", // 42
-    "Softmute FM", // 43
-    "Softmute AM", // 44
+    "On", // 42 ***
+    "Softmute FM", // 43 ***
+    "Softmute AM", // 44 ***
     "Beep sul limite di banda", // 45
     "Regione", // 46
     "Europa", // 47
-    "USA", // 48
+    "USA", // 48 ***
     "Mostra trattino basso in RDS", // 49
     "Modalità USB", // 50
     "Wi-Fi attivo", // 51
@@ -2792,8 +2792,8 @@ static const char* const myLanguage[18][207] = {
     "Codice principale:", // 71
     "Collaboratori: ", // 72
     "Sconosciuto", // 73
-    "Screensaver options", // 74
-    "Time-out timer", // 75
+    "Screensaver options", // 74 ***
+    "Time-out timer", // 75 ***
     "Schermo spento", // 76
     "Motivo display", // 77
     "Predefinito", // 78
@@ -2801,8 +2801,8 @@ static const char* const myLanguage[18][207] = {
     "Cremisi", // 80
     "Monocromatico", // 81
     "Vulcano", // 82
-    "Dendro", // 83
-    "Sakura", // 84
+    "Dendro", // 83 ***
+    "Sakura", // 84 ***
     "Sbiancato", // 85
     "IMPOSSIBILE", // 86
     "AF non disponibile", // 87
@@ -2820,111 +2820,111 @@ static const char* const myLanguage[18][207] = {
     "Use AF:", // 99
     "Select FM Band:", // 100
     "Select AM Band:", // 101
-    "LW", // 102
-    "MW", // 103
-    "SW", // 104
-    "FM", // 105
-    "OIRT", // 106
-    "Rotating while screen off", // 107
-    "Model selector", // 108
-    "Base (ILI9341)", // 109
-    "Portable (ILI9341)", // 110
-    "Portable touch (ILI9341)", // 111
-    "Title", // 112
-    "Album", // 113
-    "Track", // 114
-    "Artist", // 115
-    "Composition", // 116
-    "Movement", // 117
-    "Conductor", // 118
-    "Composer", // 119
-    "Band", // 120
-    "Comment", // 121
-    "Genre", // 122
-    "News", // 123
-    "Local news", // 124
-    "Stockmarket", // 125
-    "Sport", // 126
-    "Lottery", // 127
-    "Horoscope", // 128
-    "Daily Diversion", // 129
-    "Health", // 130
-    "Event", // 131
-    "Scene", // 132
-    "Cinema", // 133
-    "TV", // 134
-    "Date/time", // 135
-    "Weather", // 136
-    "Traffic", // 137
-    "Alarm", // 138
-    "Advertisement", // 139
-    "Website", // 140
-    "Other", // 141
-    "Short PS", // 142
-    "Long PS", // 143
-    "Now", // 144
-    "Next", // 145
-    "Part", // 146
-    "Host", // 147
-    "Editor", // 148
-    "Frequency", // 149
-    "Homepage", // 150
-    "Subchannel", // 151
-    "Hotline", // 152
-    "Studio phone", // 153
-    "Phone", // 154
-    "SMS studio", // 155
-    "SMS", // 156
-    "Email hotline", // 157
-    "Email studio", // 158
-    "Email", // 159
-    "Chat", // 160
-    "Chat centre", // 161
-    "Vote question", // 162
-    "Vote centre", // 163
-    "Place", // 164
-    "Appointment", // 165
-    "Identifier", // 166
-    "Purchase", // 167
-    "Get data", // 168
-    "MW default stepsize", // 169
-    "Tangerine", // 170
-    "Ocean", // 171
-    "Indigo", // 172
-    "Battery options", // 173
-    "Show voltage", // 174
-    "Show percentage", // 175
-    "RT buffering", // 176
-    "Main settings", // 177
-    "Audio settings", // 178
-    "Display settings", // 179
-    "RDS settings", // 180
-    "FM settings", // 181
-    "AM settings", // 182
-    "Connectivity", // 183
-    "PRESS MODE TO RETURN", // 184
+    "LW", // 102 ***
+    "MW", // 103 ***
+    "SW", // 104 ***
+    "FM", // 105 ***
+    "OIRT", // 106 ***
+    "Rotating while screen off", // 107 ***
+    "Model selector", // 108 ***
+    "Base (ILI9341)", // 109 ***
+    "Portable (ILI9341)", // 110 ***
+    "Portable touch (ILI9341)", // 111 ***
+    "Title", // 112 ***
+    "Album", // 113 ***
+    "Track", // 114 ***
+    "Artist", // 115 ***
+    "Composition", // 116 ***
+    "Movement", // 117 ***
+    "Conductor", // 118 ***
+    "Composer", // 119 ***
+    "Band", // 120 ***
+    "Comment", // 121 ***
+    "Genre", // 122 ***
+    "News", // 123 ***
+    "Local news", // 124 ***
+    "Stockmarket", // 125 ***
+    "Sport", // 126 ***
+    "Lottery", // 127 ***
+    "Horoscope", // 128 ***
+    "Daily Diversion", // 129 ***
+    "Health", // 130 ***
+    "Event", // 131 ***
+    "Scene", // 132 ***
+    "Cinema", // 133 ***
+    "TV", // 134 ***
+    "Date/time", // 135 ***
+    "Weather", // 136 ***
+    "Traffic", // 137 ***
+    "Alarm", // 138 ***
+    "Advertisement", // 139 ***
+    "Website", // 140 ***
+    "Other", // 141 ***
+    "Short PS", // 142 ***
+    "Long PS", // 143 ***
+    "Now", // 144 ***
+    "Next", // 145 ***
+    "Part", // 146 ***
+    "Host", // 147 ***
+    "Editor", // 148 ***
+    "Frequency", // 149 ***
+    "Homepage", // 150 ***
+    "Subchannel", // 151 ***
+    "Hotline", // 152 ***
+    "Studio phone", // 153 ***
+    "Phone", // 154 ***
+    "SMS studio", // 155 ***
+    "SMS", // 156 ***
+    "Email hotline", // 157 ***
+    "Email studio", // 158 ***
+    "Email", // 159 ***
+    "Chat", // 160 ***
+    "Chat centre", // 161 ***
+    "Vote question", // 162 ***
+    "Vote centre", // 163 ***
+    "Place", // 164 ***
+    "Appointment", // 165 ***
+    "Identifier", // 166 ***
+    "Purchase", // 167 ***
+    "Get data", // 168 ***
+    "MW default stepsize", // 169 ***
+    "Tangerine", // 170 ***
+    "Ocean", // 171 ***
+    "Indigo", // 172 ***
+    "Battery options", // 173 ***
+    "Show voltage", // 174 ***
+    "Show percentage", // 175 ***
+    "RT buffering", // 176 ***
+    "Main settings", // 177 ***
+    "Audio settings", // 178 ***
+    "Display settings", // 179 ***
+    "RDS settings", // 180 ***
+    "FM settings", // 181 ***
+    "AM settings", // 182 ***
+    "Connectivity", // 183 ***
+    "PRESS MODE TO RETURN", // 184 ***
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
     "CoChannelDet counter", // 188
-    "MAIN", // 189
-    "AUDIO", // 190
-    "DISPLAY", // 191
-    "RDS", // 192
-    "FM", // 193
-    "AM", // 194
-    "CONNECT", // 195
-    "Auto sort AF", // 196
-    "Stationlist ID", // 197
+    "MAIN", // 189 ***
+    "AUDIO", // 190 ***
+    "DISPLAY", // 191 ***
+    "RDS", // 192 ***
+    "FM", // 193 ***
+    "AM", // 194 ***
+    "CONNECT", // 195 ***
+    "Auto sort AF", // 196 ***
+    "Stationlist ID", // 197 ***
     "AM ATT", // 198
-    "FM deemphasis", // 199
-    "Small", // 200
-    "Large", // 201
-    "All", // 202
-    "Fast PS", // 203
-    "Detected applications", // 204
-    "Min.", // 205
-    "Dynamic SPI speed" // 206
+    "FM deemphasis", // 199 ***
+    "Small", // 200 ***
+    "Large", // 201 ***
+    "All", // 202 ***
+    "Fast PS", // 203 ***
+    "Detected applications", // 204 ***
+    "Min.", // 205 ***
+    "Dynamic SPI speed" // 206 ***
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -2960,7 +2960,7 @@ static const char* const myLanguage[18][207] = {
     "关闭", // 30
     "屏幕静音!", // 31
     "点击RF+按钮解除静音", // 32
-    "OFF", // 33
+    "OFF", // 33 ***
     "搜索中...", // 34
     "未检测到收音芯片", // 35
     "收音芯片版本: v", // 36
@@ -3029,74 +3029,74 @@ static const char* const myLanguage[18][207] = {
     "使用 AF:", // 99
     "选择FM波段:", // 100
     "选择AM波段:", // 101
-    "LW", // 102
-    "MW", // 103
-    "SW", // 104
-    "FM", // 105
-    "OIRT", // 106
+    "LW", // 102 ***
+    "MW", // 103 ***
+    "SW", // 104 ***
+    "FM", // 105 ***
+    "OIRT", // 106 ***
     "熄屏操作飞梭", // 107
     "硬件型号选择", // 108
     "原版(ILI9341)", // 109
     "便携版(ILI9341)", // 110
     "便携电阻触摸版(ILI9341)", // 111
-    "Title", // 112
-    "Album", // 113
-    "Track", // 114
-    "Artist", // 115
-    "Composition", // 116
-    "Movement", // 117
-    "Conductor", // 118
-    "Composer", // 119
-    "Band", // 120
-    "Comment", // 121
-    "Genre", // 122
-    "News", // 123
-    "Local news", // 124
-    "Stockmarket", // 125
-    "Sport", // 126
-    "Lottery", // 127
-    "Horoscope", // 128
-    "Daily Diversion", // 129
-    "Health", // 130
-    "Event", // 131
-    "Scene", // 132
-    "Cinema", // 133
-    "TV", // 134
-    "Date/time", // 135
-    "Weather", // 136
-    "Traffic", // 137
-    "Alarm", // 138
-    "Advertisement", // 139
-    "Website", // 140
-    "Other", // 141
-    "Short PS", // 142
-    "Long PS", // 143
-    "Now", // 144
-    "Next", // 145
-    "Part", // 146
-    "Host", // 147
-    "Editor", // 148
-    "Frequency", // 149
-    "Homepage", // 150
-    "Subchannel", // 151
-    "Hotline", // 152
-    "Studio phone", // 153
-    "Phone", // 154
-    "SMS studio", // 155
-    "SMS", // 156
-    "Email hotline", // 157
-    "Email studio", // 158
-    "Email", // 159
-    "Chat", // 160
-    "Chat centre", // 161
-    "Vote question", // 162
-    "Vote centre", // 163
-    "Place", // 164
-    "Appointment", // 165
-    "Identifier", // 166
-    "Purchase", // 167
-    "Get data", // 168
-    "MW default stepsize", // 169
+    "Title", // 112 ***
+    "Album", // 113 ***
+    "Track", // 114 ***
+    "Artist", // 115 ***
+    "Composition", // 116 ***
+    "Movement", // 117 ***
+    "Conductor", // 118 ***
+    "Composer", // 119 ***
+    "Band", // 120 ***
+    "Comment", // 121 ***
+    "Genre", // 122 ***
+    "News", // 123 ***
+    "Local news", // 124 ***
+    "Stockmarket", // 125 ***
+    "Sport", // 126 ***
+    "Lottery", // 127 ***
+    "Horoscope", // 128 ***
+    "Daily Diversion", // 129 ***
+    "Health", // 130 ***
+    "Event", // 131 ***
+    "Scene", // 132 ***
+    "Cinema", // 133 ***
+    "TV", // 134 ***
+    "Date/time", // 135 ***
+    "Weather", // 136 ***
+    "Traffic", // 137 ***
+    "Alarm", // 138 ***
+    "Advertisement", // 139 ***
+    "Website", // 140 ***
+    "Other", // 141 ***
+    "Short PS", // 142 ***
+    "Long PS", // 143 ***
+    "Now", // 144 ***
+    "Next", // 145 ***
+    "Part", // 146 ***
+    "Host", // 147 ***
+    "Editor", // 148 ***
+    "Frequency", // 149 ***
+    "Homepage", // 150 ***
+    "Subchannel", // 151 ***
+    "Hotline", // 152 ***
+    "Studio phone", // 153 ***
+    "Phone", // 154 ***
+    "SMS studio", // 155 ***
+    "SMS", // 156 ***
+    "Email hotline", // 157 ***
+    "Email studio", // 158 ***
+    "Email", // 159 ***
+    "Chat", // 160 ***
+    "Chat centre", // 161 ***
+    "Vote question", // 162 ***
+    "Vote centre", // 163 ***
+    "Place", // 164 ***
+    "Appointment", // 165 ***
+    "Identifier", // 166 ***
+    "Purchase", // 167 ***
+    "Get data", // 168 ***
+    "MW default stepsize", // 169 ***
     "桔红", // 170
     "海之蓝", // 171
     "靛青", // 172
@@ -3124,14 +3124,14 @@ static const char* const myLanguage[18][207] = {
     "AM 设置", // 194
     "连机模式", // 195
     "自动排列AF", // 196
-    "Stationlist ID", // 197
+    "Stationlist ID", // 197 ***
     "AM天线衰减", // 198
     "FM去加重", // 199
     "少量", // 200
     "大量", // 201
     "全部", // 202
     "快速 PS", // 203
-    "Detected applications", // 204
+    "Detected applications", // 204 ***
     "分钟", // 205
     "调整SPI通讯速率" // 206
   },
@@ -3179,12 +3179,12 @@ static const char* const myLanguage[18][207] = {
     "Velg språk", // 40
     "TRYKK MODE FOR Å LAGRE & AVSLUTTE", // 41
     "På", // 42
-    "Softmute FM", // 43
-    "Softmute AM", // 44
+    "Softmute FM", // 43 ***
+    "Softmute AM", // 44 ***
     "Pip ved båndkant", // 45
-    "Region", // 46
+    "Region", // 46 ***
     "Europa", // 47
-    "USA", // 48
+    "USA", // 48 ***
     "Vis understrek i RDS", // 49
     "USB modus", // 50
     "Wi-Fi aktiv", // 51
@@ -3196,12 +3196,12 @@ static const char* const myLanguage[18][207] = {
     "TILKOBLET!", // 57
     "Stationlist klient IP", // 58
     "Vis SW-bånd", // 59
-    "RDS filter", // 60
+    "RDS filter", // 60 ***
     "Vis PI feil", // 61
     "Vis squelch", // 62
     "Modulasjonsmåler", // 63
-    "AM Noise blanker", // 64
-    "FM Noise blanker", // 65
+    "AM Noise blanker", // 64 ***
+    "FM Noise blanker", // 65 ***
     "Standarder lastet", // 66
     "Lydutgang modus", // 67
     "Tillat tuning under skjermsparer", // 68
@@ -3215,13 +3215,13 @@ static const char* const myLanguage[18][207] = {
     "Skjerm av", // 76
     "Tema", // 77
     "Standard", // 78
-    "Cyan", // 79
-    "Crimson", // 80
-    "Monochrome", // 81
-    "Volcano", // 82
-    "Dendro", // 83
-    "Sakura", // 84
-    "Whiteout", // 85
+    "Cyan", // 79 ***
+    "Crimson", // 80 ***
+    "Monochrome", // 81 ***
+    "Volcano", // 82 ***
+    "Dendro", // 83 ***
+    "Sakura", // 84 ***
+    "Whiteout", // 85 ***
     "IKKE MULIG", // 86
     "Ingen AF", // 87
     "Ingen EON", // 88
@@ -3238,43 +3238,43 @@ static const char* const myLanguage[18][207] = {
     "Bruk AF:", // 99
     "Velg FM Bånd:", // 100
     "Velg AM Bånd:", // 101
-    "LW", // 102
-    "MW", // 103
-    "SW", // 104
-    "FM", // 105
-    "OIRT", // 106
+    "LW", // 102 ***
+    "MW", // 103 ***
+    "SW", // 104 ***
+    "FM", // 105 ***
+    "OIRT", // 106 ***
     "Tune når skjerm av", // 107
     "Velg Modell", // 108
-    "Base (ILI9341)", // 109
+    "Base (ILI9341)", // 109 ***
     "Bærbar (ILI9341)", // 110
     "Bærbar touch (ILI9341)", // 111
     "Titel", // 112
-    "Album", // 113
+    "Album", // 113 ***
     "Spor", // 114
-    "Artist", // 115
+    "Artist", // 115 ***
     "Komposisjon", // 116
     "Bevegelse", // 117
     "Dirigent", // 118
     "Komponist", // 119
-    "Band", // 120
+    "Band", // 120 ***
     "Kommentar", // 121
     "Sjanger", // 122
     "Nyheter", // 123
     "Lokale nyheter", // 124
     "Aksjemarked", // 125
-    "Sport", // 126
+    "Sport", // 126 ***
     "Lotteri", // 127
     "Horoskop", // 128
     "Daglig avledning", // 129
     "Helse", // 130
     "Begivenhet", // 131
-    "Scene", // 132
+    "Scene", // 132 ***
     "Kino", // 133
-    "TV", // 134
+    "TV", // 134 ***
     "Dato/tid", // 135
     "Vær", // 136
     "Trafikk", // 137
-    "Alarm", // 138
+    "Alarm", // 138 ***
     "Annonse", // 139
     "Nettsted", // 140
     "Annet", // 141
@@ -3288,15 +3288,15 @@ static const char* const myLanguage[18][207] = {
     "Frekvens", // 149
     "Hjemmeside", // 150
     "Underkanal", // 151
-    "Hotline", // 152
+    "Hotline", // 152 ***
     "Studio telefon", // 153
     "Telefon", // 154
-    "SMS studio", // 155
-    "SMS", // 156
+    "SMS studio", // 155 ***
+    "SMS", // 156 ***
     "E-post hotline", // 157
     "E-post studio", // 158
     "E-post", // 159
-    "Chat", // 160
+    "Chat", // 160 ***
     "Chattesenter", // 161
     "Stem spørsmål", // 162
     "Stemmesenter", // 163
@@ -3305,14 +3305,14 @@ static const char* const myLanguage[18][207] = {
     "Identifikator", // 166
     "Kjøp", // 167
     "Få data", // 168
-    "MW default stepsize", // 169
-    "Tangerine", // 170
-    "Ocean", // 171
-    "Indigo", // 172
+    "MW default stepsize", // 169 ***
+    "Tangerine", // 170 ***
+    "Ocean", // 171 ***
+    "Indigo", // 172 ***
     "Batterialternativer", // 173
     "Vis batteriverdi", // 174
     "Vis batteriprosent", // 175
-    "RT buffering", // 176
+    "RT buffering", // 176 ***
     "Hovedinnstillinger", // 177
     "Lydinnstillinger", // 178
     "Skjerminnstillinger", // 179
@@ -3328,12 +3328,12 @@ static const char* const myLanguage[18][207] = {
     "HOVED", // 189
     "LYD", // 190
     "SKJERM", // 191
-    "RDS", // 192
-    "FM", // 193
-    "AM", // 194
+    "RDS", // 192 ***
+    "FM", // 193 ***
+    "AM", // 194 ***
     "TILKOBLE", // 195
-    "Auto sort AF", // 196
-    "Stationlist ID", // 197
+    "Auto sort AF", // 196 ***
+    "Stationlist ID", // 197 ***
     "AM ATT", // 198
     "FM ettertrykkelse", // 199
     "Lite", // 200
@@ -3341,8 +3341,8 @@ static const char* const myLanguage[18][207] = {
     "Alt", // 202
     "Rask PS", // 203
     "Oppdaget applikasjoner", // 204
-    "Min.", // 205
-    "Dynamic SPI speed" // 206
+    "Min.", // 205 ***
+    "Dynamic SPI speed" // 206 ***
   },
 
   { "Español", // Spanish
@@ -3428,8 +3428,8 @@ static const char* const myLanguage[18][207] = {
     "Carmesí", // 80
     "Monocromo", // 81
     "Volcán", // 82
-    "Dendro", // 83
-    "Sakura", // 84
+    "Dendro", // 83 ***
+    "Sakura", // 84 ***
     "Blanqueo total", // 85
     "NO ES POSIBLE", // 86
     "No AF disponible", // 87
@@ -3447,14 +3447,14 @@ static const char* const myLanguage[18][207] = {
     "Usar AF:", // 99
     "Seleccionar banda de FM:", // 100
     "Seleccionar banda de AM:", // 101
-    "LW", // 102
+    "LW", // 102 ***
     "AM", // 103
-    "SW", // 104
-    "FM", // 105
-    "OIRT", // 106
+    "SW", // 104 ***
+    "FM", // 105 ***
+    "OIRT", // 106 ***
     "Rotación con\npantalla apagada", // 107
     "Selector de modelo", // 108
-    "Base (ILI9341)", // 109
+    "Base (ILI9341)", // 109 ***
     "Portátil (ILI9341)", // 110
     "Táctil portátil (ILI9341)", // 111
     "Título", // 112
@@ -3479,7 +3479,7 @@ static const char* const myLanguage[18][207] = {
     "Evento", // 131
     "Escena", // 132
     "Cine", // 133
-    "TV", // 134
+    "TV", // 134 ***
     "Fecha/hora", // 135
     "Clima", // 136
     "Tráfico", // 137
@@ -3493,7 +3493,7 @@ static const char* const myLanguage[18][207] = {
     "Siguiente", // 145
     "Parte", // 146
     "Anfitrión", // 147
-    "Editor", // 148
+    "Editor", // 148 ***
     "Frecuencia", // 149
     "Página de inicio", // 150
     "Subcanal", // 151
@@ -3501,11 +3501,11 @@ static const char* const myLanguage[18][207] = {
     "Teléfono del estudio", // 153
     "Teléfono", // 154
     "SMS al estudio", // 155
-    "SMS", // 156
+    "SMS", // 156 ***
     "Correo electrónico\nde la línea directa", // 157
     "Correo electrónico\ndel estudio", // 158
     "Correo electrónico", // 159
-    "Chat", // 160
+    "Chat", // 160 ***
     "Centro de chat", // 161
     "Pregunta de votación", // 162
     "Centro de votación", // 163
@@ -3514,7 +3514,7 @@ static const char* const myLanguage[18][207] = {
     "Identificador", // 166
     "Compra", // 167
     "Obtener datos", // 168
-    "MW default stepsize", // 169
+    "MW default stepsize", // 169 ***
     "Mandarina", // 170
     "Océano", // 171
     "Índigo", // 172
@@ -3535,11 +3535,11 @@ static const char* const myLanguage[18][207] = {
     "Umbral de detección\nde co-canal", // 187
     "Contador de detección\nde co-canal", // 188
     "PRINCIPAL", // 189
-    "AUDIO", // 190
+    "AUDIO", // 190 ***
     "VISUALIZACIÓN", // 191
-    "RDS", // 192
-    "FM", // 193
-    "AM", // 194
+    "RDS", // 192 ***
+    "FM", // 193 ***
+    "AM", // 194 ***
     "CONECTAR", // 195
     "Orden automático de AF", // 196
     "ID de lista de estaciones", // 197
@@ -3550,7 +3550,7 @@ static const char* const myLanguage[18][207] = {
     "Todo", // 202
     "PS rápido", // 203
     "Aplicaciones detectadas", // 204
-    "Min.", // 205
+    "Min.", // 205 ***
     "Velocidad de SPI" // 206
   },
 
@@ -3637,8 +3637,8 @@ static const char* const myLanguage[18][207] = {
     "Carmesim", // 80
     "Monocromático", // 81
     "Vulcão", // 82
-    "Dendro", // 83
-    "Sakura", // 84
+    "Dendro", // 83 ***
+    "Sakura", // 84 ***
     "Branco total", // 85
     "NÃO POSSÍVEL", // 86
     "AF não disponível", // 87
@@ -3656,11 +3656,11 @@ static const char* const myLanguage[18][207] = {
     "Usar AF:", // 99
     "Selecionar faixa FM:", // 100
     "Selecionar faixa AM:", // 101
-    "LW", // 102
+    "LW", // 102 ***
     "AM", // 103
-    "SW", // 104
-    "FM", // 105
-    "OIRT", // 106
+    "SW", // 104 ***
+    "FM", // 105 ***
+    "OIRT", // 106 ***
     "Rotativo enquanto a tela\nestá desligada", // 107
     "Seletor de modelo", // 108
     "Básico (ILI9341)", // 109
@@ -3687,14 +3687,14 @@ static const char* const myLanguage[18][207] = {
     "Saúde", // 130
     "Evento", // 131
     "Cena", // 132
-    "Cinema", // 133
-    "TV", // 134
+    "Cinema", // 133 ***
+    "TV", // 134 ***
     "Data/hora", // 135
     "Clima", // 136
     "Tráfego", // 137
     "Alarme", // 138
     "Anúncio", // 139
-    "Website", // 140
+    "Website", // 140 ***
     "Outros", // 141
     "PS curto", // 142
     "PS longo", // 143
@@ -3702,19 +3702,19 @@ static const char* const myLanguage[18][207] = {
     "Próximo", // 145
     "Parte", // 146
     "Apresentador", // 147
-    "Editor", // 148
+    "Editor", // 148 ***
     "Frequência", // 149
     "Página inicial", // 150
     "Subcanal", // 151
-    "Hotline", // 152
+    "Hotline", // 152 ***
     "Telefone do estúdio", // 153
     "Telefone", // 154
     "SMS do estúdio", // 155
-    "SMS", // 156
+    "SMS", // 156 ***
     "E-mail da hotline", // 157
     "E-mail do estúdio", // 158
     "E-mail", // 159
-    "Chat", // 160
+    "Chat", // 160 ***
     "Centro de chat", // 161
     "Pergunta de votação", // 162
     "Centro de votação", // 163
@@ -3723,7 +3723,7 @@ static const char* const myLanguage[18][207] = {
     "Identificador", // 166
     "Compra", // 167
     "Obter dados", // 168
-    "MW default stepsize", // 169
+    "MW default stepsize", // 169 ***
     "Tangerina", // 170
     "Oceano", // 171
     "Índigo", // 172
@@ -3746,9 +3746,9 @@ static const char* const myLanguage[18][207] = {
     "PRINCIPAL", // 189
     "ÁUDIO", // 190
     "EXIBIÇÃO", // 191
-    "RDS", // 192
-    "FM", // 193
-    "AM", // 194
+    "RDS", // 192 ***
+    "FM", // 193 ***
+    "AM", // 194 ***
     "CONECTAR", // 195
     "Classificar AF\nautomaticamente", // 196
     "ID da lista de estações", // 197
@@ -3759,7 +3759,7 @@ static const char* const myLanguage[18][207] = {
     "Tudo", // 202
     "PS rápido", // 203
     "Aplicativos detectados", // 204
-    "Min.", // 205
+    "Min.", // 205 ***
     "Velocidade dinâmica\nde SPI" // 206
   }
 };
