@@ -389,7 +389,7 @@ void BuildMenu() {
       }
 
       if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][78]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      else tftPrint(1, String(spispeed * 10 , DEC), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      else tftPrint(1, String(spispeed * 10, DEC), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
 
       if (touchrotating) tftPrint(1, myLanguage[language][42], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       break;
@@ -897,15 +897,16 @@ void MenuUp() {
 
           case ITEM3:
             if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][78]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
-            else tftPrint(1, String(spispeed * 10 , DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
+            else tftPrint(1, String(spispeed * 10, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
 
             spispeed++;
             if (spispeed > SPI_SPEED_COUNT - 1) spispeed = 0;
 
             if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][78]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
-            else tftPrint(1, String(spispeed * 10 , DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
-
-            if (spispeed == SPI_SPEED_DEFAULT) SPI.setFrequency(SPI_FREQUENCY); else SPI.setFrequency(spispeed * 1000000);
+            else tftPrint(1, String(spispeed * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+#ifdef DYNAMIC_SPI_SPEED
+            if (spispeed == SPI_SPEED_DEFAULT) tft.setSPISpeed(SPI_FREQUENCY / 1000000); else tft.setSPISpeed(spispeed * 10);
+#endif
             spispeedold = spispeed;
             break;
         }
@@ -1456,15 +1457,17 @@ void MenuDown() {
             break;
           case ITEM3:
             if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][78]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
-            else tftPrint(1, String(spispeed * 10 , DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
+            else tftPrint(1, String(spispeed * 10, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
 
             spispeed--;
             if (spispeed > SPI_SPEED_COUNT - 1) spispeed = SPI_SPEED_COUNT - 1;
 
             if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][78]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
-            else tftPrint(1, String(spispeed * 10 , DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            else tftPrint(1, String(spispeed * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
 
-            if (spispeed == SPI_SPEED_DEFAULT) SPI.setFrequency(SPI_FREQUENCY); else SPI.setFrequency(spispeed * 1000000);
+#ifdef DYNAMIC_SPI_SPEED
+            if (spispeed == SPI_SPEED_DEFAULT) tft.setSPISpeed(SPI_FREQUENCY / 1000000); else tft.setSPISpeed(spispeed * 10);
+#endif
             spispeedold = spispeed;
             break;
 
