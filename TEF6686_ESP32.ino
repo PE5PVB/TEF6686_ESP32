@@ -35,6 +35,7 @@
 #define SMETERPIN       27
 // #define ARS                 // uncomment for BGR type display (ARS version)
 // #define CHINA_PORTABLE      // uncomment for China Portable build (Simplified Chinese)
+// #define DYNAMIC_SPI_SPEED   // uncomment to enable dynamic SPI Speed https://github.com/ohmytime/TFT_eSPI_DynamicSpeed
 
 #ifdef ARS
 #define VERSION         "v2.00ARS"
