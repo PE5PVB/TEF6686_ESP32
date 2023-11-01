@@ -33,17 +33,21 @@
 #define CONTRASTPIN     2
 #define STANDBYLED      19
 #define SMETERPIN       27
-// #define ARS                 // uncomment for BGR type display (ARS version)
+#define VERSION         "v2.00 development beta"
+
 // #define CHINA_PORTABLE      // uncomment for China Portable build (Simplified Chinese)
-// #define DYNAMIC_SPI_SPEED   // uncomment to enable dynamic SPI Speed https://github.com/ohmytime/TFT_eSPI_DynamicSpeed
+#define DYNAMIC_SPI_SPEED   // uncomment to enable dynamic SPI Speed https://github.com/ohmytime/TFT_eSPI_DynamicSpeed
 
 #ifdef ARS
-#define VERSION         "v2.00ARS"
-#include "ARS_Colors.h"
 TFT_eSPI tft = TFT_eSPI(320, 240);
 #else
-#define VERSION         "v2.00 development beta"
 TFT_eSPI tft = TFT_eSPI(240, 320);
+#endif
+
+#ifdef DYNAMIC_SPI_SPEED
+bool dynamicspi = true;
+#else
+bool dynamicspi = false;
 #endif
 
 bool advancedRDS;
@@ -442,7 +446,9 @@ void setup() {
   radio.rds.fastps = EEPROM.readByte(EE_BYTE_FASTPS);
   tot = EEPROM.readByte(EE_BYTE_TOT);
   mwstepsize = EEPROM.readByte(EE_BYTE_MWREGION);
+  spispeed = EEPROM.readByte(EE_BYTE_SPISPEED);
 
+  if (spispeed == SPI_SPEED_DEFAULT) tft.setSPISpeed(SPI_FREQUENCY / 1000000); else tft.setSPISpeed(spispeed * 10);
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX;
   MWLowEdgeSet = mwstepsize == false ? FREQ_MW_LOW_EDGE_MIN_9K : FREQ_MW_LOW_EDGE_MIN_10K;
@@ -1876,6 +1882,7 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_FASTPS, radio.rds.fastps);
         EEPROM.writeByte(EE_BYTE_TOT, tot);
         EEPROM.writeByte(EE_BYTE_MWREGION, mwstepsize);
+        EEPROM.writeByte(EE_BYTE_SPISPEED, spispeed);
         EEPROM.commit();
         Serial.end();
         if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
@@ -3418,6 +3425,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_FASTPS, 1);
   EEPROM.writeByte(EE_BYTE_TOT, 0);
   EEPROM.writeByte(EE_BYTE_MWREGION, 0);
+  EEPROM.writeByte(EE_BYTE_SPISPEED, SPI_SPEED_DEFAULT);
   EEPROM.commit();
 }
 

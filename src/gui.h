@@ -36,6 +36,7 @@ extern bool BWreset;
 extern bool change;
 extern bool compressedold;
 extern bool dynamicPTYold;
+extern bool dynamicspi;
 extern bool edgebeep;
 extern bool hasafold;
 extern bool haseonold;

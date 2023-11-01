@@ -7,7 +7,7 @@
 #include <cstring>
 
 byte menuitem;
-byte items[8] = {8, 3, 6, 10, 9, 10, 9, 5};
+byte items[8] = {8, (dynamicspi ? 3 : 2), 6, 10, 9, 10, 9, 5};
 
 void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
   switch (CurrentTheme) {
@@ -378,9 +378,6 @@ void BuildMenu() {
     case MAINSETTINGS:
       tftPrint(-1, myLanguage[language][108], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][107], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][206], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
-
-      tftPrint(1, "Mhz", 310, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
 
       switch (hardwaremodel) {
         case BASE_ILI9341: tftPrint(1, myLanguage[language][109], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
@@ -388,10 +385,14 @@ void BuildMenu() {
         case PORTABLE_TOUCH_ILI9341: tftPrint(1, myLanguage[language][111], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
       }
 
-      if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][78]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      else tftPrint(1, String(spispeed * 10, DEC), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-
       if (touchrotating) tftPrint(1, myLanguage[language][42], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+
+      if (dynamicspi) {
+        tftPrint(1, "MHz", 310, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][206], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+        if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][78]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        else tftPrint(1, String(spispeed * 10, DEC), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      }
       break;
 
     case AUDIOSETTINGS:
@@ -904,9 +905,8 @@ void MenuUp() {
 
             if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][78]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             else tftPrint(1, String(spispeed * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
-#ifdef DYNAMIC_SPI_SPEED
+
             if (spispeed == SPI_SPEED_DEFAULT) tft.setSPISpeed(SPI_FREQUENCY / 1000000); else tft.setSPISpeed(spispeed * 10);
-#endif
             spispeedold = spispeed;
             break;
         }
@@ -1465,9 +1465,7 @@ void MenuDown() {
             if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][78]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             else tftPrint(1, String(spispeed * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
 
-#ifdef DYNAMIC_SPI_SPEED
             if (spispeed == SPI_SPEED_DEFAULT) tft.setSPISpeed(SPI_FREQUENCY / 1000000); else tft.setSPISpeed(spispeed * 10);
-#endif
             spispeedold = spispeed;
             break;
 
@@ -2078,7 +2076,7 @@ void DoMenu() {
           case ITEM3:
             Infoboxprint(myLanguage[language][206]);
             tftPrint(-1, "MHz", 170, 118, ActiveColor, ActiveColorSmooth, 28);
-            if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][78]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(spispeed * 10 , DEC) + " MHz", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][78]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(spispeed * 10 , DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
         }
         break;
