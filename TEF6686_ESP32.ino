@@ -5,7 +5,7 @@
 #include <Wire.h>
 #include <math.h>
 #include <ESP32Time.h>              // https://github.com/fbiego/ESP32Time
-#include <TFT_eSPI.h>               // https://github.com/Bodmer/TFT_eSPI
+#include <TFT_eSPI.h>               // https://github.com/ohmytime/TFT_eSPI_DynamicSpeed (Modified version)
 #include <Hash.h>                   // https://github.com/bbx10/Hash_tng
 #include "src/WiFiConnect.h"
 #include "src/WiFiConnectParam.h"
