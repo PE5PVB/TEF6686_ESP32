@@ -32,8 +32,9 @@ void TEF6686::TestAFEON() {
         devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, af[x].frequency);
         delay(200);
         devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
+
         if (rds.rdsStat & (1 << 9)) {
-          if (((afmethodB && rds.afreg && ((rds.rdsA >> 8) & 0x0F) == (rds.correctPI & 0x0F)) || (!afmethodB && rds.rdsA == rds.correctPI)) && (((rds.rdsErr >> 14) & 0x03) == 0)) {
+          if ((afmethodB && rds.afreg ? (((rds.rdsA >> 8) & 0xF) > 2 && ((rds.correctPI >> 8) & 0xF) > 2 && ((rds.rdsA >> 12) & 0xF) == ((rds.correctPI >> 12) & 0xF) && (rds.rdsA & 0xFF) == (rds.correctPI & 0xFF)) || rds.rdsA == rds.correctPI : rds.rdsA == rds.correctPI)) {
             af[x].checked = true;
             af[x].afvalid = true;
           } else {
@@ -98,7 +99,7 @@ uint16_t TEF6686::TestAF() {
       delay(200);
       devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
       if (rds.rdsStat & (1 << 9)) {
-        if (((afmethodB && rds.afreg && ((rds.rdsA >> 8) & 0x0F) == (rds.correctPI & 0x0F)) || (!afmethodB && rds.rdsA == rds.correctPI)) && (((rds.rdsErr >> 14) & 0x03) == 0)) {
+        if ((afmethodB && rds.afreg ? (((rds.rdsA >> 8) & 0xF) > 2 && ((rds.correctPI >> 8) & 0xF) > 2 && ((rds.rdsA >> 12) & 0xF) == ((rds.correctPI >> 12) & 0xF) && (rds.rdsA & 0xFF) == (rds.correctPI & 0xFF)) || rds.rdsA == rds.correctPI : rds.rdsA == rds.correctPI)) {
           currentfreq = af[highestIndex].frequency;
           for (byte y = 0; y < 50; y++) {
             af[y].frequency = 0;
@@ -1420,8 +1421,7 @@ void TEF6686::readRDS(byte showrdserrors)
   }
 }
 
-void TEF6686::clearRDS (bool fullsearchrds)
-{
+void TEF6686::clearRDS (bool fullsearchrds) {
   devTEF_Radio_Set_RDS(fullsearchrds);
   rds.stationName = "";
   rds.stationText = "";

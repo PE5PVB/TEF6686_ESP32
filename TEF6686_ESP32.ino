@@ -432,6 +432,7 @@ void setup() {
   AMLevelOffset = EEPROM.readInt(EE_INT16_AMLEVELOFFSET);
   unit = EEPROM.readByte(EE_BYTE_UNIT);
   af = EEPROM.readByte(EE_BYTE_AF);
+  if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
   StereoToggle = EEPROM.readByte(EE_BYTE_STEREO);
   batteryoptions = EEPROM.readByte(EE_BYTE_BATTERY_OPTIONS);
   amcodect = EEPROM.readByte(EE_BYTE_AM_CO_DECT);
@@ -745,7 +746,6 @@ void loop() {
       if (freqold != frequency) {
         ShowFreq(0);
         if (radio.afmethodB) {
-          if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
           afmethodBold = true;
           radio.clearRDS(fullsearchrds);
         }
@@ -762,7 +762,6 @@ void loop() {
         if (freqold != frequency) {
           ShowFreq(0);
           if (radio.afmethodB) {
-            if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
             afmethodBold = true;
             radio.clearRDS(fullsearchrds);
           }
@@ -778,7 +777,6 @@ void loop() {
           if (freqold != frequency) {
             ShowFreq(0);
             if (radio.afmethodB) {
-              if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
               afmethodBold = true;
               radio.clearRDS(fullsearchrds);
             }
@@ -1884,6 +1882,7 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_MWREGION, mwstepsize);
         EEPROM.writeByte(EE_BYTE_SPISPEED, spispeed);
         EEPROM.commit();
+        if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
         Serial.end();
         if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
         if (USBmode) Serial.begin(19200); else Serial.begin(115200);
