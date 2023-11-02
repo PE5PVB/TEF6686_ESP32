@@ -2436,7 +2436,7 @@ void DoMenu() {
   } else {
     if (menupage == CONNECTIVITY && menuoption == ITEM2) {
       tryWiFi();
-      if (wifi) delay(2000);
+      delay(2000);
     }
     if (menupage == DISPLAYSETTINGS && menuoption == ITEM5) {
       doTheme();
