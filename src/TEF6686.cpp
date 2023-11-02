@@ -1084,10 +1084,12 @@ void TEF6686::readRDS(byte showrdserrors)
 
           if (!rdsDerrorThreshold) {
             if (rds.rdsD != 0) {                                                                // PIN decoder
-              rds.hasPIN = true;
-              rds.pinMin = rds.rdsD & 0x3f;
-              rds.pinHour = rds.rdsD >> 6 & 0x1f;
-              rds.pinDay = rds.rdsD >> 11 & 0x1f;
+              if ((rds.rdsD & 0x3f) < 61 && ((rds.rdsD >> 6) & 0x1f) < 24) {
+                rds.hasPIN = true;
+                rds.pinMin = rds.rdsD & 0x3f;
+                rds.pinHour = rds.rdsD >> 6 & 0x1f;
+                rds.pinDay = rds.rdsD >> 11 & 0x1f;
+              }
             }
           }
         } break;
@@ -1228,17 +1230,19 @@ void TEF6686::readRDS(byte showrdserrors)
             J = J - 1461 * Y / 4 + 31;
             M = 80 * (J + 0) / 2447;
 
-            rds.day = J - 2447 * M / 80;
+            if ((J - 2447 * M / 80) < 32) rds.day = J - 2447 * M / 80;
             J = M / 11;
 
-            rds.month = M +  2 - (12 * J);
-            rds.year = 100 * (C - 49) + Y + J;
-            rds.hour = ((rds.rdsD >> 12) & 0x0f);
-            rds.hour += ((rds.rdsC <<  4) & 0x0010);
-            rds.minute = (rds.rdsD >> 6) & 0x3f;
-            rds.offset = ((bitRead(rds.rdsD, 5) ? -rds.rdsD & 0x3f : rds.rdsD & 0x3f) / 2);
-            rds.hour += rds.offset;
-            rds.hour = (((byte)rds.hour + 24) % 24);
+            if ((M +  2 - (12 * J)) < 13) rds.month = M +  2 - (12 * J);
+            if ((100 * (C - 49) + Y + J) > 2022) rds.year = 100 * (C - 49) + Y + J;
+            if ((((rds.rdsD >> 12) & 0x0f)) < 25) {
+              rds.hour = ((rds.rdsD >> 12) & 0x0f);
+              rds.hour += ((rds.rdsC <<  4) & 0x0010);
+              rds.offset = ((bitRead(rds.rdsD, 5) ? -rds.rdsD & 0x3f : rds.rdsD & 0x3f) / 2);
+              rds.hour += rds.offset;
+              rds.hour = (((byte)rds.hour + 24) % 24);
+            }
+            if (((rds.rdsD >> 6) & 0x3f) < 60) rds.minute = (rds.rdsD >> 6) & 0x3f;
             rds.hasCT = true;
           }
         } break;
