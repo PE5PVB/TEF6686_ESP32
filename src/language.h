@@ -588,7 +588,7 @@ static const char* const myLanguage[18][207] = {
     "Identyfikator", // 166
     "Zakup", // 167
     "Pobierz dane", // 168
-    "MW default stepsize", // 169 ***
+    "Domyslny krok MW", // 169 ***
     "Tangerine", // 170 ***
     "Ocean", // 171 ***
     "Indigo", // 172 ***
@@ -625,7 +625,7 @@ static const char* const myLanguage[18][207] = {
     "Szybki PS", // 203
     "Wykryte aplikacje", // 204
     "Min.", // 205 ***
-    "Dynamic SPI speed" // 206 ***
+    "Dynam. predkosc SPI" // 206 ***
   },
 
   { "Hrvatski", // Croatian
