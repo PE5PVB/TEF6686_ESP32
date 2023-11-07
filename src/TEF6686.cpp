@@ -1416,6 +1416,30 @@ void TEF6686::readRDS(byte showrdserrors)
                 }
               }
             }
+            for (int i = 0; i < 20; i++) {
+              for (int j = 0; j < 20 - i - 1; j++) {
+                if (eon[j].pi == 0) continue;
+
+                if (eon[j].pi > eon[j + 1].pi && eon[j + 1].pi != 0) {
+                  std::swap(eon[j].pi, eon[j + 1].pi);
+                  std::swap(eon[j].mappedfreq, eon[j + 1].mappedfreq);
+                  std::swap(eon[j].mappedfreq2, eon[j + 1].mappedfreq2);
+                  std::swap(eon[j].mappedfreq3, eon[j + 1].mappedfreq3);
+                  char temp6[6];
+                  strncpy(temp6, eon[j].picode, sizeof(temp6) - 1);
+                  temp6[sizeof(temp6) - 1] = '\0';
+                  strncpy(eon[j].picode, eon[j + 1].picode, sizeof(eon[j].picode) - 1);
+                  eon[j].picode[sizeof(eon[j].picode) - 1] = '\0';
+                  strncpy(eon[j + 1].picode, temp6, sizeof(eon[j + 1].picode) - 1);
+                  eon[j + 1].picode[sizeof(eon[j + 1].picode) - 1] = '\0';
+
+                  std::swap(eon[j].ps, eon[j + 1].ps);
+                  std::swap(eon[j].eonvalid, eon[j + 1].eonvalid);
+                  std::swap(eon[j].checked, eon[j + 1].checked);
+                }
+              }
+            }
+
           }
         }
         break;
@@ -1570,7 +1594,7 @@ void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {
 }
 
 void TEF6686::I2Sin(bool mode) {
-	devTEF_Radio_Set_I2S_Input(mode);
+  devTEF_Radio_Set_I2S_Input(mode);
 }
 
 String TEF6686::convertToUTF8(const wchar_t* input) {
