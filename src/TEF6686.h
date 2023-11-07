@@ -1,4 +1,4 @@
-#ifndef TEF6686_H
+ifndef TEF6686_H
 #define TEF6686_H
 
 #include "Arduino.h"
@@ -655,6 +655,7 @@ class TEF6686 {
     bool getStatus(int16_t &level, uint16_t &USN, uint16_t &WAM, int16_t &offset, uint16_t &bandwidth, uint16_t &modulation, int8_t &snr);
     bool getStatusAM(int16_t &level, uint16_t &noise, uint16_t &cochannel, int16_t &offset, uint16_t &bandwidth, uint16_t &modulation, int8_t &snr);
     bool getIdentification(uint16_t &device, uint16_t &hw_version, uint16_t &sw_version);
+    void I2Sin(bool mode);
     void setSoftmuteFM(uint8_t mode);
     void setSoftmuteAM(uint8_t mode);
     void setMono(bool mono);

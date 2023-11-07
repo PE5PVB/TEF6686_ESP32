@@ -234,7 +234,7 @@ bool devTEF_Radio_Get_Quality_Status_AM (int16_t *level, uint16_t *noise, uint16
   *mod = Convert8bto16b(buf + 12) / 10;
   if (*level < -200) *level = -200;
   if (*level > 1200) *level = 1200;
-  *snr = int(0.46222375 * (float)(*level) / 10 - 0.082495118 * (float)(*noise/50) / 10) + 10;
+  *snr = int(0.46222375 * (float)(*level) / 10 - 0.082495118 * (float)(*noise / 50) / 10) + 10;
   return r;
 }
 
@@ -288,5 +288,13 @@ bool devTEF_Radio_Set_Wavegen(bool mode, int16_t amplitude, uint16_t freq) {
   } else {
     devTEF_Set_Cmd(TEF_AUDIO, Cmd_Set_Input, 5, 0);
     return devTEF_Set_Cmd(TEF_AUDIO, Cmd_Set_WaveGen, 15, 0);
+  }
+}
+
+bool devTEF_Radio_Set_I2S_Input(bool mode) {
+  if (mode) {
+    return devTEF_Set_Cmd(TEF_AUDIO, Cmd_Set_Input, 5, 32);
+  } else {
+    return devTEF_Set_Cmd(TEF_AUDIO, Cmd_Set_Input, 5, 0);
   }
 }

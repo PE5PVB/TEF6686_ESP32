@@ -107,5 +107,6 @@ bool devTEF_Radio_Set_StHiBlend_Noise(uint8_t mode, uint16_t start, uint16_t slo
 bool devTEF_Radio_Set_StHiBlend_Mph(uint8_t mode, uint16_t start, uint16_t slope);
 bool devTEF_Radio_Set_NoisBlanker(uint8_t mode, uint16_t start);
 bool devTEF_Radio_Set_Wavegen(bool mode, int16_t amplitude, uint16_t freq);
+bool devTEF_Radio_Set_I2S_Input(bool mode);
 
 #endif

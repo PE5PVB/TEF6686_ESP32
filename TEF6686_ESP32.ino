@@ -710,7 +710,7 @@ void setup() {
 
   setupmode = false;
   if (edgebeep) radio.tone(50, -5, 2000);
-
+  radio.I2Sin(true);
   if (screensaverset) {
     ScreensaverTimerInit();
     ScreensaverTimerSet(screensaverOptions[screensaverset]);

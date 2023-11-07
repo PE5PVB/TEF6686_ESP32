@@ -1569,6 +1569,10 @@ void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {
   devTEF_Radio_Set_Wavegen(0, 0, 0);
 }
 
+void TEF6686::I2Sin(bool mode) {
+	devTEF_Radio_Set_I2S_Input(mode);
+}
+
 String TEF6686::convertToUTF8(const wchar_t* input) {
   String output;
   while (*input) {
