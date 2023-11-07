@@ -560,7 +560,6 @@ typedef struct _rds_ {
   String PTYN;
   String ECCtext;
   String LICtext;
-  String picodetext;
   String stationIDtext;
   String stationStatetext;
   char stationType[18];

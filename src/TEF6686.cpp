@@ -407,14 +407,12 @@ void TEF6686::readRDS(byte showrdserrors)
             rds.picode[i] += 'A' - 10;                                                            // Add ASCII offset for hexadecimal letters A-F
           }
         }
-        rds.picodetext = rds.picode;
       }
 
       if (!rdsAerrorThreshold && !rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold) {
         rds.picode[4] = ' ';
         rds.picode[5] = ' ';
         errorfreepi = true;
-        rds.picodetext = rds.picode;
       }
 
       if (!errorfreepi) {
@@ -1435,7 +1433,6 @@ void TEF6686::clearRDS (bool fullsearchrds) {
   rds.PTYN = "";
   rds.ECCtext = "";
   rds.LICtext = "";
-  rds.picodetext = "";
   rds.stationIDtext = "";
   rds.stationStatetext = "";
 
