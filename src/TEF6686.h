@@ -1,4 +1,4 @@
-ifndef TEF6686_H
+#ifndef TEF6686_H
 #define TEF6686_H
 
 #include "Arduino.h"

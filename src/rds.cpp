@@ -282,7 +282,7 @@ void readRds() {
     ShowRDSLogo(RDSstatus);
     if (!screenmute && !afscreen) {
       if (!RDSstatus) {
-        if (radio.rds.correctPI != 0) {
+        if (radio.rds.correctPI != 0 && !dropout) {
           if (region == REGION_EU) {
             if (advancedRDS) tftPrint(0, PIold, 275, 75, SecondaryColor, SecondaryColorSmooth, 28); else tftPrint(0, PIold, 275, 187, SecondaryColor, SecondaryColorSmooth, 28);
           }
@@ -301,11 +301,26 @@ void readRds() {
             tft.fillCircle(162, 41, 5, SignificantColor);
             tft.fillCircle(200, 41, 5, SignificantColor);
           }
+
+          if (advancedRDS && radio.rds.stationText.length() < 20) {
+            xPos = 0;
+            AdvRadiotextSprite.fillSprite(BackgroundColor);
+            AdvRadiotextSprite.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
+            AdvRadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
+            AdvRadiotextSprite.pushSprite(35, 220);
+          } else if (!advancedRDS && radio.rds.stationText.length() < 29) {
+            xPos = 0;
+            RadiotextSprite.fillSprite(BackgroundColor);
+            RadiotextSprite.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
+            RadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
+            RadiotextSprite.pushSprite(38, 220);
+          }
+
           if (radio.rds.hasCT) {
             if (advancedRDS) {
-              tftPrint(1, rds_clockold, 205, 109, SecondaryColor, SecondaryColorSmooth, 16);
+              tftPrint(1, rds_clock, 205, 109, SecondaryColor, SecondaryColorSmooth, 16);
             } else {
-              tftPrint(1, rds_clockold, 205, 163, SecondaryColor, SecondaryColorSmooth, 16);
+              tftPrint(1, rds_clock, 205, 163, SecondaryColor, SecondaryColorSmooth, 16);
             }
           }
           dropout = true;
@@ -331,11 +346,26 @@ void readRds() {
             tft.fillCircle(203, 223, 2, GreyoutColor);
             tft.fillCircle(203, 234, 2, GreyoutColor);
           }
+
+          if (advancedRDS && radio.rds.stationText.length() < 20) {
+            xPos = 0;
+            AdvRadiotextSprite.fillSprite(BackgroundColor);
+            AdvRadiotextSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            AdvRadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
+            AdvRadiotextSprite.pushSprite(35, 220);
+          } else if (!advancedRDS && radio.rds.stationText.length() < 29) {
+            xPos = 0;
+            RadiotextSprite.fillSprite(BackgroundColor);
+            RadiotextSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            RadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
+            RadiotextSprite.pushSprite(38, 220);
+          }
+
           if (radio.rds.hasCT) {
             if (advancedRDS) {
-              tftPrint(1, rds_clockold, 205, 109, PrimaryColor, PrimaryColorSmooth, 16);
+              tftPrint(1, rds_clock, 205, 109, PrimaryColor, PrimaryColorSmooth, 16);
             } else {
-              tftPrint(1, rds_clockold, 205, 163, PrimaryColor, PrimaryColorSmooth, 16);
+              tftPrint(1, rds_clock, 205, 163, PrimaryColor, PrimaryColorSmooth, 16);
             }
           }
           dropout = false;
@@ -474,7 +504,15 @@ void showPS() {
 
 void showCT() {
   if (!screenmute) {
-    if (radio.rds.hasCT && !dropout) rds_clock = ((radio.rds.hour < 10 ? "0" : "") + String(radio.rds.hour) + ":" + (radio.rds.minute < 10 ? "0" : "") + String(radio.rds.minute)); else if (!radio.rds.hasCT || dropout)rds_clock = ((rtc.getHour(true) < 10 ? "0" : "") + String(rtc.getHour(true)) + ":" + (rtc.getMinute() < 10 ? "0" : "") + String(rtc.getMinute()));
+    if (radio.rds.hasCT && !dropout) {
+      rds_clock = ((radio.rds.hour < 10 ? "0" : "") + String(radio.rds.hour) + ":" + (radio.rds.minute < 10 ? "0" : "") + String(radio.rds.minute));
+    } else if (!radio.rds.hasCT || dropout) {
+      rds_clock = ((rtc.getHour(true) < 10 ? "0" : "") + String(rtc.getHour(true)) + ":" + (rtc.getMinute() < 10 ? "0" : "") + String(rtc.getMinute()));
+      if (dropout) {
+        radio.rds.hour = rtc.getHour(true);
+        radio.rds.minute = rtc.getMinute();
+      }
+    }
     if (rds_clock != rds_clockold || hasCTold != radio.rds.hasCT) {
       if (radio.rds.hasCT && RDSstatus) {
         rtcset = true;
