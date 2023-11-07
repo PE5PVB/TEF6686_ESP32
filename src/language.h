@@ -3152,9 +3152,9 @@ static const char* const myLanguage[18][207] = {
     "Høy bånd grense:", // 13
     "FM RF-nivåforskyvning:", // 14
     "Stereo terskel:", // 15
-    "High Cut corner:", // 16
-    "Highcut grense:", // 17
-    "Low level grense:", // 18
+    "Høyeste grense:", // 16
+    "Høyeste grense:", // 17
+    "Laveste grense:", // 18
     "Kontrast:", // 19
     "Sett lyd", // 20
     "Sett omformeroffset", // 21
@@ -3204,7 +3204,7 @@ static const char* const myLanguage[18][207] = {
     "FM Noise blanker", // 65 ***
     "Standarder lastet", // 66
     "Lydutgang modus", // 67
-    "Tillat tuning under skjermsparer", // 68
+    "Tillat tuning når\nskjerm avslått", // 68
     "Inverter displayet", // 69
     "Om programvaren", // 70
     "Hovedkode:", // 71
@@ -3226,7 +3226,7 @@ static const char* const myLanguage[18][207] = {
     "Ingen AF", // 87
     "Ingen EON", // 88
     "Ingen RT+", // 89
-    "FM standard trinnstørrelse", // 90
+    "FM standard\ntrinnstørrelse", // 90
     "Skjermsparer", // 91
     "sek", // 92
     "TRYKK BAND FOR Å LUKKE", // 93
@@ -3322,9 +3322,9 @@ static const char* const myLanguage[18][207] = {
     "Tilkobling", // 183
     "TRYKK MODE FOR Å RETUNERE", // 184
     "AM CoChannelDet", // 185
-    "CoChannelDet sensitivity", // 186
-    "AM CoChannelDet threshold", // 187
-    "CoChannelDet counter", // 188
+    "CoChannelDet\nfølsomhet", // 186
+    "AM CoChannelDet teller", // 187
+    "CoChannelDet teller", // 188
     "HOVED", // 189
     "LYD", // 190
     "SKJERM", // 191
