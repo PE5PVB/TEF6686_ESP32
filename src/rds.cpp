@@ -474,7 +474,7 @@ void showPS() {
 
 void showCT() {
   if (!screenmute) {
-    if (radio.rds.hasCT) rds_clock = ((radio.rds.hour < 10 ? "0" : "") + String(radio.rds.hour) + ":" + (radio.rds.minute < 10 ? "0" : "") + String(radio.rds.minute)); else rds_clock = ((rtc.getHour(true) < 10 ? "0" : "") + String(rtc.getHour(true)) + ":" + (rtc.getMinute() < 10 ? "0" : "") + String(rtc.getMinute()));
+    if (radio.rds.hasCT && !dropout) rds_clock = ((radio.rds.hour < 10 ? "0" : "") + String(radio.rds.hour) + ":" + (radio.rds.minute < 10 ? "0" : "") + String(radio.rds.minute)); else if (!radio.rds.hasCT || dropout)rds_clock = ((rtc.getHour(true) < 10 ? "0" : "") + String(rtc.getHour(true)) + ":" + (rtc.getMinute() < 10 ? "0" : "") + String(rtc.getMinute()));
     if (rds_clock != rds_clockold || hasCTold != radio.rds.hasCT) {
       if (radio.rds.hasCT && RDSstatus) {
         rtcset = true;
