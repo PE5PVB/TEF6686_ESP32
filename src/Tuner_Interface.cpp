@@ -3,7 +3,7 @@
 #include "Tuner_Patch_Lithio_V205_p512.h"
 #include <Wire.h>
 
-static const unsigned char tuner_init_tab[] = {
+const unsigned char tuner_init_tab[] PROGMEM = {
   7, 0x20, 0x0B, 0x01, 0x03, 0x98, 0x00, 0x00,
   5, 0x20, 0x14, 0x01, 0x00, 0x00,
   5, 0x20, 0x16, 0x01, 0x00, 0x00,
@@ -34,7 +34,7 @@ static const unsigned char tuner_init_tab[] = {
   13, 0x30, 0x16, 0x01, 0x00, 0x20, 0x00, 0x01, 0x00, 0x10, 0x00, 0x00, 0x12, 0xc0
 };
 
-static const unsigned char tuner_init_tab4000[] = {
+const unsigned char tuner_init_tab4000[] PROGMEM = {
   3, 0x14, 0x00, 0x01,
   2, 0xff, 50,
   9, 0x40, 0x04, 0x01, 0x00, 0x3D, 0x09, 0x00, 0x00, 0x00,
@@ -42,7 +42,7 @@ static const unsigned char tuner_init_tab4000[] = {
   2, 0xff, 100,
 };
 
-static const unsigned char tuner_init_tab9216[] = {
+const unsigned char tuner_init_tab9216[] PROGMEM = {
   3, 0x14, 0x00, 0x01,
   2, 0xff, 50,
   9, 0x40, 0x04, 0x01, 0x00, 0x8C, 0xA0, 0x00, 0x00, 0x00,
@@ -67,25 +67,22 @@ bool Tuner_ReadBuffer(unsigned char *buf, uint16_t len) {
   return 0;
 }
 
-bool Tuner_Patch_Load(const unsigned char *pLutBytes, uint16_t size) {
+static void Tuner_Patch_Load(const unsigned char *pLutBytes, uint16_t size) {
   unsigned char buf[24 + 1];
   uint16_t i, len;
   uint16_t r;
   buf[0] = 0x1b;
 
-  while (size)
-  {
+  while (size) {
     len = (size > 24) ? 24 : size;
     size -= len;
 
-    for (i = 0; i < len; i++) buf[1 + i] = pLutBytes[i];
+    for (i = 0; i < len; i++) buf[1 + i] = pgm_read_byte(&pLutBytes[i]);
     pLutBytes += len;
 
     if (1 != (r = Tuner_WriteBuffer(buf, len + 1))) break;
   }
-  return r;
 }
-
 
 bool Tuner_Table_Write(const unsigned char *tab) {
   if (tab[1] == 0xff) {
@@ -157,32 +154,11 @@ void Tuner_I2C_Init() {
   delay(5);
 }
 
-bool Tuner_Init(void) {
+void Tuner_Init(const unsigned char *table) {
   uint16_t r;
-  const unsigned char *p = tuner_init_tab;
+  const unsigned char *p = table;
 
-  for (uint16_t i = 0; i < sizeof(tuner_init_tab); i += (p[i] + 1)) {
+  for (uint16_t i = 0; i < sizeof(tuner_init_tab); i += (pgm_read_byte(p + i) + 1)) {
     if (1 != (r = Tuner_Table_Write(p + i))) break;
   }
-  return r;
-}
-
-bool Tuner_Init4000(void) {
-  uint16_t r;
-  const unsigned char *p = tuner_init_tab4000;
-
-  for (uint16_t i = 0; i < sizeof(tuner_init_tab4000); i += (p[i] + 1)) {
-    if (1 != (r = Tuner_Table_Write(p + i))) break;
-  }
-  return r;
-}
-
-bool Tuner_Init9216(void) {
-  uint16_t r;
-  const unsigned char *p = tuner_init_tab9216;
-
-  for (uint16_t i = 0; i < sizeof(tuner_init_tab9216); i += (p[i] + 1)) {
-    if (1 != (r = Tuner_Table_Write(p + i))) break;
-  }
-  return r;
 }

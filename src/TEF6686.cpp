@@ -128,9 +128,9 @@ void TEF6686::init(byte TEF) {
   if (bootstatus == 0) {
     Tuner_Patch(TEF);
     delay(50);
-    if (digitalRead(15) == LOW) Tuner_Init9216(); else Tuner_Init4000();
+    if (digitalRead(15) == LOW) Tuner_Init(tuner_init_tab9216); else Tuner_Init(tuner_init_tab4000);
     power(1);
-    Tuner_Init();
+    Tuner_Init(tuner_init_tab);
   }
 }
 
