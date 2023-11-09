@@ -752,5 +752,7 @@ class TEF6686 {
     uint16_t correctPIold;
     uint8_t rtplusblock;
     uint8_t DABAFblock;
+    uint8_t doublecounter;
+    uint16_t doubletestfreq;
 };
 #endif

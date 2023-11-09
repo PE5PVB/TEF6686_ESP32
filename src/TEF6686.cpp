@@ -612,30 +612,37 @@ void TEF6686::readRDS(byte showrdserrors)
                 rds.hasAF = true;
               }
 
-              if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == currentfreq && rds.hasAF && afmethodBtrigger) {
-                afmethodB = true;                                                               // Check for AF method B
-                afmethodBprobe = true;
-                af_updatecounter++;
-                af_counterb = (rds.rdsC >> 8) - 224;
-                af_counterbcheck = 1;
-              } else if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) != currentfreq && rds.hasAF) {
-                afmethodBprobe = false;
-                afmethodBtrigger = true;
-                af_counterb = 0;
-                af_counterbcheck = 0;
-              }
-
-              if (((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) && ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205)) {
-                if (afmethodBprobe) af_counterbcheck += 2;
-              }
-
               if (afinit) {
+                if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == currentfreq && rds.hasAF) {
+                  if (afmethodBtrigger) afmethodB = true;                                       // Check for AF method B
+                  afmethodBprobe = true;
+                  af_updatecounter++;
+                  af_counterb = (rds.rdsC >> 8) - 224;
+                  af_counterbcheck = 1;
+                  doublecounter = 0;
+                  doubletestfreq = (rds.rdsC & 0xFF) * 10 + 8750;
+                } else if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) != currentfreq && rds.hasAF) {
+                  afmethodBprobe = false;
+                  afmethodBtrigger = true;
+                  af_counterb = 0;
+                  af_counterbcheck = 0;
+                  doublecounter = 0;
+                  doubletestfreq = (rds.rdsC & 0xFF) * 10 + 8750;
+                }
+
+                if (((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) && ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205)) {
+                  if (afmethodBprobe) af_counterbcheck += 2;
+                }
+
                 if ((rds.rdsB >> 11) == 0 && af_counter < 50) {
                   uint16_t buffer0;
                   uint16_t buffer1;
 
                   if ((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) buffer0 = (rds.rdsC >> 8) * 10 + 8750; else buffer0 = 0;
                   if ((rds.rdsC & 0xFF) > 0 && (rds.rdsC & 0xFF) < 205) buffer1 = (rds.rdsC & 0xFF) * 10 + 8750; else buffer1 = 0;
+
+                  if (((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) && (buffer0 == doubletestfreq || buffer1 == doubletestfreq)) doublecounter++;
+                  if (doublecounter > 0) afmethodB = true;                                      // If signed frequency also in the AF list, AF Method B detected
 
                   if (afmethodBprobe && af_counterbcheck > af_counterb) afmethodBprobe = false; // If more than counter received disable probe flag
 
@@ -1248,7 +1255,7 @@ void TEF6686::readRDS(byte showrdserrors)
       case RDS_GROUP_10A: {
           if (!rdsCerrorThreshold && !rdsDerrorThreshold) {
             // PTYN
-            offset = bitRead(rds.rdsB, 0);                                                      // Get char offset
+            offset = bitRead(rds.rdsB, 0);                                                        // Get char offset
             if (rds.rdsC != 0 && rds.rdsD != 0) {
               ptyn_buffer[(offset * 4) + 0] = rds.rdsC >> 8;                                      // Get position 1 and 5
               ptyn_buffer[(offset * 4) + 1] = rds.rdsC & 0xFF;                                    // Get position 2 and 6
@@ -1337,9 +1344,9 @@ void TEF6686::readRDS(byte showrdserrors)
             rds.dabafeid[3] = rds.rdsD & 0xF;
             for (int i = 0; i < 4; i++) {
               if (rds.dabafeid[i] < 10) {
-                rds.dabafeid[i] += '0';                                                               // Add ASCII offset for decimal digits
+                rds.dabafeid[i] += '0';                                                         // Add ASCII offset for decimal digits
               } else {
-                rds.dabafeid[i] += 'A' - 10;                                                          // Add ASCII offset for hexadecimal letters A-F
+                rds.dabafeid[i] += 'A' - 10;                                                    // Add ASCII offset for hexadecimal letters A-F
               }
             }
             rds.dabafeid[4] = 0;
@@ -1381,17 +1388,17 @@ void TEF6686::readRDS(byte showrdserrors)
 
             byte position;
             for (position = 0; position < 20; position++) {
-              if (eon[position].pi == rds.rdsD) {                                             // Find position in array
+              if (eon[position].pi == rds.rdsD) {                                               // Find position in array
                 break;
               }
             }
 
 
             if (offset < 4 && eon[position].pi == rds.rdsD) {
-              for (int j = 0; j < 9; j++) EONPStext[position][j] = '\0';                      // Clear buffer
-              eon_buffer[position][(offset * 2)  + 0] = rds.rdsC >> 8;                        // First character of segment
-              eon_buffer[position][(offset * 2)  + 1] = rds.rdsC & 0xFF;                      // Second character of segment
-              eon_buffer[position][(offset * 2)  + 2] = '\0';                                 // Endmarker of segment
+              for (int j = 0; j < 9; j++) EONPStext[position][j] = '\0';                        // Clear buffer
+              eon_buffer[position][(offset * 2)  + 0] = rds.rdsC >> 8;                          // First character of segment
+              eon_buffer[position][(offset * 2)  + 1] = rds.rdsC & 0xFF;                        // Second character of segment
+              eon_buffer[position][(offset * 2)  + 2] = '\0';                                   // Endmarker of segment
             }
 
             if (offset > 3 && eon[position].pi == rds.rdsD) {                                                                       // Last chars are received
@@ -1409,9 +1416,9 @@ void TEF6686::readRDS(byte showrdserrors)
             if (bitRead(rds.rdsB, 4) && eon[position].pi == rds.rdsD) eon[position].tp = true;
 
             if (offset > 4 && offset < 9 && eon[position].pi == rds.rdsD) {
-              if (((rds.rdsC >> 8) * 10 + 8750) == currentfreq) {                             // Check if mapped frequency belongs to current frequency
+              if (((rds.rdsC >> 8) * 10 + 8750) == currentfreq) {                               // Check if mapped frequency belongs to current frequency
                 if (eon[position].mappedfreq == 0) {
-                  eon[position].mappedfreq = ((rds.rdsC & 0xFF) * 10 + 8750);                 // Add mapped frequency to array
+                  eon[position].mappedfreq = ((rds.rdsC & 0xFF) * 10 + 8750);                   // Add mapped frequency to array
                 } else {
                   if (eon[position].mappedfreq2 == 0 && eon[position].mappedfreq != ((rds.rdsC & 0xFF) * 10 + 8750)) {
                     eon[position].mappedfreq2 = ((rds.rdsC & 0xFF) * 10 + 8750);
