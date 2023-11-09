@@ -315,7 +315,6 @@ void BuildAFScreen() {
     tft.drawLine(0, 30, 320, 30, FrameColor);
     tft.drawLine(0, 199, 320, 199, FrameColor);
     tft.drawLine(0, 218, 320, 218, FrameColor);
-    tft.drawLine(168, 30, 168, 199, FrameColor);
     tft.drawLine(53, 30, 53, 0, FrameColor);
     tft.drawLine(89, 30, 89, 0, FrameColor);
     tft.drawLine(120, 30, 120, 0, FrameColor);
@@ -323,8 +322,7 @@ void BuildAFScreen() {
     tft.drawLine(248, 30, 248, 0, FrameColor);
     tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, 28);
     tftPrint(0, myLanguage[language][93], 160, 222, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, myLanguage[language][88], 184, 48, PrimaryColor, PrimaryColorSmooth, 16);
-    tftPrint(-1, myLanguage[language][87], 6, 48, PrimaryColor, PrimaryColorSmooth, 16);
+    if (afpagenr == 1) tftPrint(-1, myLanguage[language][87], 6, 48, PrimaryColor, PrimaryColorSmooth, 16); else if (afpagenr == 2) tftPrint(-1, myLanguage[language][88], 6, 48, PrimaryColor, PrimaryColorSmooth, 16);
     RDSstatusold = false;
     ShowFreq(0);
     Stereostatusold = false;
@@ -340,13 +338,16 @@ void BuildAFScreen() {
     afmethodBold = false;
     PIold = " ";
     PSold = " ";
-    for (byte i = 0; i < 20; i++) eonpsold[i] = "";
-    for (byte i = 0; i < 20; i++) mappedfreqold[i] = 0;
     for (byte i = 0; i < 20; i++) {
-      std::memset(eonpicodeold[i], '\0', sizeof(eonpicodeold[i]));
+      mappedfreqold[i] = 0;
+      mappedfreqold2[i] = 0;
+      mappedfreqold3[i] = 0;
+      eonpicodeold[i][0] = '\0';
+      eonpsold[i] = "";
     }
+    for (byte i = 0; i < 20; i++) std::memset(eonpicodeold[i], '\0', sizeof(eonpicodeold[i]));
 
-    if (radio.rds.hasDABAF && radio.rds.dabaffreq != 0) tftPrint(1, "DAB: " + String(radio.rds.dabafchannel) + " (" + String(radio.rds.dabafeid) + ")", 166, 32, SecondaryColor, SecondaryColorSmooth, 16);
+    if (afpagenr == 1 && radio.rds.hasDABAF && radio.rds.dabaffreq != 0) tftPrint(1, "DAB: " + String(radio.rds.dabafchannel) + " (" + String(radio.rds.dabafeid) + ")", 166, 32, SecondaryColor, SecondaryColorSmooth, 16);
   }
 
 }
@@ -590,7 +591,7 @@ void BuildAdvancedRDS() {
   rdsreset = true;
   afscreen = false;
   afpage = false;
-  afpagenr = 0;
+  afpagenr = 1;
   advancedRDS = true;
   ScreensaverTimerSet(OFF);
   if (theme == 0) {

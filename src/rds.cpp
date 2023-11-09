@@ -621,122 +621,154 @@ void showRadioText() {
 }
 
 void ShowAFEON() {
-  if (radio.af_counter > 30 || radio.eon_counter > 9) {
-    if (!afpage) {
-      afpage = true;
-      afpagenr = 1;
-    }
-  }
-
-  if (afpage) tftPrint(1, String(afpagenr) + "/2", 315, 222, SecondaryColor, SecondaryColorSmooth, 16);
-
-  if (radio.rds.hasAF) {
-    if (!hasafold) {
-      if (!screenmute) tftPrint(-1, myLanguage[language][87], 6, 48, BackgroundColor, BackgroundColor, 16);
-      if (!screenmute) tftPrint(-1, "AF:", 4, 32, ActiveColor, ActiveColorSmooth, 16);
-      hasafold = true;
+  if (!screenmute) {
+    if (radio.eon_counter > 9) {
+      if (!afpage) {
+        afpage = true;
+        tftPrint(1, String(afpagenr) + "/2", 315, 222, BackgroundColor, BackgroundColor, 16);
+      }
     }
 
-    if (!(afpage && afpagenr == 2 && radio.af_updatecounter < 30)) {
+    if (afpage) tftPrint(1, String(afpagenr) + "/3", 315, 222, SecondaryColor, SecondaryColorSmooth, 16); else tftPrint(1, String(afpagenr) + "/2", 315, 222, SecondaryColor, SecondaryColorSmooth, 16);
+
+    if (radio.rds.hasAF && afpagenr == 1) {
+      if (!hasafold) {
+        tftPrint(-1, myLanguage[language][87], 6, 48, BackgroundColor, BackgroundColor, 16);
+        tftPrint(-1, "AF:", 4, 32, ActiveColor, ActiveColorSmooth, 16);
+        hasafold = true;
+      }
+
       if (af_counterold != radio.af_updatecounter) {
-        tft.fillRect(2, 48, 166, 150, BackgroundColor);
+        tft.fillRect(2, 48, 316, 150, BackgroundColor);
         for (byte i = 0; i < radio.af_counter; i++) {
-          byte x = i - (afpagenr == 2 ? 30 : 0);
-          if (!screenmute) {
-            tftPrint(-1, (radio.afmethodB && !radio.af[i].regional && radio.af[i].same) ? "S " : (radio.afmethodB && radio.af[i].regional && radio.af[i].same) ? "M " : (radio.afmethodB && radio.af[i].regional && !radio.af[i].same) ? "R " : "", 10 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), ActiveColor, ActiveColorSmooth, 16);
-            if (radio.af[i].checked) {
-              tftPrint(1, String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 55 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), InsignificantColor, InsignificantColorSmooth, 16);
-            } else if (!radio.af[i].afvalid) {
-              tftPrint(1, String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 55 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), SignificantColor, SignificantColorSmooth, 16);
-            } else {
-              tftPrint(1, String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 55 + (x > 9 ? 54 : 0) + (x > 19 ? 54 : 0), 48 + (15 * x) - (x > 9 ? 150 : 0) - (x > 19 ? 150 : 0), PrimaryColor, PrimaryColorSmooth, 16);
-            }
+          tftPrint(-1, (radio.afmethodB && !radio.af[i].regional && radio.af[i].same) ? "S " : (radio.afmethodB && radio.af[i].regional && radio.af[i].same) ? "M " : (radio.afmethodB && radio.af[i].regional && !radio.af[i].same) ? "R " : "", 10 + (i > 9 ? 54 : 0) + (i > 19 ? 54 : 0) + (i > 29 ? 54 : 0) + (i > 39 ? 54 : 0), 48 + (15 * i) - (i > 9 ? 150 : 0) - (i > 19 ? 150 : 0) - (i > 29 ? 150 : 0) - (i > 39 ? 150 : 0), ActiveColor, ActiveColorSmooth, 16);
+          if (radio.af[i].checked) {
+            tftPrint(1, String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 55 + (i > 9 ? 54 : 0) + (i > 19 ? 54 : 0) + (i > 29 ? 54 : 0) + (i > 39 ? 54 : 0), 48 + (15 * i) - (i > 9 ? 150 : 0) - (i > 19 ? 150 : 0) - (i > 29 ? 150 : 0) - (i > 39 ? 150 : 0), InsignificantColor, InsignificantColorSmooth, 16);
+          } else if (!radio.af[i].afvalid) {
+            tftPrint(1, String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 55 + (i > 9 ? 54 : 0) + (i > 19 ? 54 : 0) + (i > 29 ? 54 : 0) + (i > 39 ? 54 : 0), 48 + (15 * i) - (i > 9 ? 150 : 0) - (i > 19 ? 150 : 0) - (i > 29 ? 150 : 0) - (i > 39 ? 150 : 0), SignificantColor, SignificantColorSmooth, 16);
+          } else {
+            tftPrint(1, String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10), 55 + (i > 9 ? 54 : 0) + (i > 19 ? 54 : 0) + (i > 29 ? 54 : 0) + (i > 39 ? 54 : 0), 48 + (15 * i) - (i > 9 ? 150 : 0) - (i > 19 ? 150 : 0) - (i > 29 ? 150 : 0) - (i > 39 ? 150 : 0), PrimaryColor, PrimaryColorSmooth, 16);
           }
-          if (i == 29  + (afpagenr == 2 ? 30 : 0)) i = 254;
         }
-
-        if (radio.af_counter > 10 + (afpagenr == 2 ? 30 : 0)) tft.drawLine(59, 54, 59, 191, SecondaryColor);
-        if (radio.af_counter > 20 + (afpagenr == 2 ? 30 : 0)) tft.drawLine(113, 54, 113, 191, SecondaryColor);
+        if (radio.af_counter > 10) tft.drawLine(59, 54, 59, 191, SecondaryColor);
+        if (radio.af_counter > 20) tft.drawLine(113, 54, 113, 191, SecondaryColor);
+        if (radio.af_counter > 30) tft.drawLine(167, 54, 167, 191, SecondaryColor);
+        if (radio.af_counter > 40) tft.drawLine(221, 54, 221, 191, SecondaryColor);
         af_counterold = radio.af_updatecounter;
       }
     }
-  }
 
-  if (radio.rds.hasEON) {
-    if (!haseonold && !screenmute) {
-      tftPrint(-1, myLanguage[language][88], 184, 48, BackgroundColor, BackgroundColor, 16);
-      tftPrint(-1, "PI:", 170, 32, ActiveColor, ActiveColorSmooth, 16);
-    }
-    haseonold = true;
+    if (radio.rds.hasEON && afpagenr > 1) {
+      if (!haseonold) {
+        tftPrint(-1, myLanguage[language][88], 6, 48, BackgroundColor, BackgroundColor, 16);
+        tftPrint(-1, "PI:", 4, 32, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(0, "TA:", 276, 32, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(0, "TP:", 302, 32, ActiveColor, ActiveColorSmooth, 16);
+        haseonold = true;
+      }
 
-    if (!screenmute && millis() >= eonticker + 1000) {
-      eonticker = millis();
-      byte y = 0;
-      if (afpagenr == 2) y = 10;
-      for (byte i = 0; i < radio.eon_counter; i++) {
-        if (strcmp(eonpicodeold[i + y], radio.eon[i + y].picode) != 0) tftPrint(-1, String(eonpicodeold[i + y]), 170, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
-        tftPrint(-1, String(radio.eon[i + y].picode), 170, 48 + (15 * i), PrimaryColor, PrimaryColorSmooth, 16);
-        strcpy(eonpicodeold[i + y], radio.eon[i + y].picode);
+      if (millis() >= eonticker + 1000) {
+        eonticker = millis();
+        byte y = 0;
+        if (afpagenr == 3) y = 10;
+        for (byte i = 0; i < radio.eon_counter; i++) {
+          if (strcmp(eonpicodeold[i + y], radio.eon[i + y].picode) != 0) tftPrint(-1, String(eonpicodeold[i + y]), 4, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+          tftPrint(-1, String(radio.eon[i + y].picode), 4, 48 + (15 * i), PrimaryColor, PrimaryColorSmooth, 16);
+          strcpy(eonpicodeold[i + y], radio.eon[i + y].picode);
 
-        if (radio.eon[i + y].ps.length() > 0) {
-          tftPrint(-1, "PS:", 206, 32, ActiveColor, ActiveColorSmooth, 16);
+          if (radio.eon[i + y].ps.length() > 0) {
+            tftPrint(-1, "PS:", 66, 32, ActiveColor, ActiveColorSmooth, 16);
 
-          if (strcmp(radio.eon[i + y].ps.c_str(), eonpsold[i + y].c_str()) != 0) tftPrint(-1, String(eonpsold[i + y]), 206, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
-          tftPrint(-1, String(radio.eon[i + y].ps), 206, 48 + (15 * i), SecondaryColor, SecondaryColorSmooth, 16);
-          eonpsold[i + y] = radio.eon[i + y].ps;
+            if (strcmp(radio.eon[i + y].ps.c_str(), eonpsold[i + y].c_str()) != 0) tftPrint(-1, String(eonpsold[i + y]), 66, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+            tftPrint(-1, String(radio.eon[i + y].ps), 66, 48 + (15 * i), SecondaryColor, SecondaryColorSmooth, 16);
+            eonpsold[i + y] = radio.eon[i + y].ps;
+          } else {
+            tftPrint(-1, String(eonpsold[i + y]), 66, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+          }
+
+          if (radio.eon[i + y].mappedfreq > 0) {
+            tftPrint(1, "FREQ:", 176, 32, ActiveColor, ActiveColorSmooth, 16);
+
+            if (radio.eon[i + y].mappedfreq != mappedfreqold[i + y]) tftPrint(1, String(mappedfreqold[i + y] / 100) + "." + String((mappedfreqold[i + y] % 100) / 10), 176, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+            tftPrint(1, String(radio.eon[i + y].mappedfreq / 100) + "." + String((radio.eon[i + y].mappedfreq % 100) / 10), 176, 48 + (15 * i), PrimaryColor, PrimaryColorSmooth, 16);
+            mappedfreqold[i + y] = radio.eon[i + y].mappedfreq;
+          } else {
+            tftPrint(1, String(mappedfreqold[i + y] / 100) + "." + String((mappedfreqold[i + y] % 100) / 10), 176, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+          }
+
+          if (radio.eon[i + y].mappedfreq2 > 0) {
+            if (radio.eon[i + y].mappedfreq2 != mappedfreqold2[i + y]) tftPrint(1, String(mappedfreqold2[i + y] / 100) + "." + String((mappedfreqold2[i + y] % 100) / 10), 216, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+            tftPrint(1, String(radio.eon[i + y].mappedfreq2 / 100) + "." + String((radio.eon[i + y].mappedfreq2 % 100) / 10), 216, 48 + (15 * i), SecondaryColor, PrimaryColorSmooth, 16);
+            mappedfreqold2[i + y] = radio.eon[i + y].mappedfreq2;
+          } else {
+            tftPrint(1, String(mappedfreqold2[i + y] / 100) + "." + String((mappedfreqold2[i + y] % 100) / 10), 216, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+          }
+
+
+          if (radio.eon[i + y].mappedfreq3 > 0) {
+            if (radio.eon[i + y].mappedfreq3 != mappedfreqold3[i + y]) tftPrint(1, String(mappedfreqold3[i + y] / 100) + "." + String((mappedfreqold3[i + y] % 100) / 10), 256, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+            tftPrint(1, String(radio.eon[i + y].mappedfreq3 / 100) + "." + String((radio.eon[i + y].mappedfreq3 % 100) / 10), 256, 48 + (15 * i), PrimaryColor, PrimaryColorSmooth, 16);
+            mappedfreqold3[i + y] = radio.eon[i + y].mappedfreq3;
+          } else {
+            tftPrint(1, String(mappedfreqold3[i + y] / 100) + "." + String((mappedfreqold3[i + y] % 100) / 10), 256, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+          }
+
+
+          if (radio.eon[i + y].taset) {
+            if (radio.eon[i + y].ta) {
+              tft.fillCircle(276, 54 + (15 * i), 4, InsignificantColor);
+            } else {
+              tft.fillCircle(276, 54 + (15 * i), 4, BackgroundColor);
+            }
+          } else {
+            tft.fillCircle(276, 54 + (15 * i), 4, BackgroundColor);
+          }
+
+          if (radio.eon[i + y].tp) tft.fillCircle(302, 54 + (15 * i), 4, InsignificantColor); else tft.fillCircle(302, 54 + (15 * i), 4, BackgroundColor);
+
+          if (i == 9) i = 254;
         }
-
-        if (radio.eon[i + y].mappedfreq > 0) {
-          tftPrint(1, "FREQ:", 316, 32, ActiveColor, ActiveColorSmooth, 16);
-
-          if (radio.eon[i + y].mappedfreq != mappedfreqold[i + y]) tftPrint(1, String(mappedfreqold[i + y] / 100) + "." + String((mappedfreqold[i + y] % 100) / 10), 316, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
-          tftPrint(1, String(radio.eon[i + y].mappedfreq / 100) + "." + String((radio.eon[i + y].mappedfreq % 100) / 10), 316, 48 + (15 * i), PrimaryColor, PrimaryColorSmooth, 16);
-          mappedfreqold[i + y] = radio.eon[i + y].mappedfreq;
-        }
-        if (i == 9) i = 254;
       }
     }
-  }
 
-  if (radio.rds.hasAID) {
-    if (aid_counterold != radio.rds.aid_counter) {
-      AIDString = "";
-      char id[5];
+    if (radio.rds.hasAID) {
+      if (aid_counterold != radio.rds.aid_counter) {
+        AIDString = "";
+        char id[5];
 
-      for (int y = 0; y < radio.rds.aid_counter; y++) {
-        bool aidProcessed = false;
+        for (int y = 0; y < radio.rds.aid_counter; y++) {
+          bool aidProcessed = false;
 
-        for (int i = 0; i < 65; i++) {
-          if (radio.rds.aid[y] == oda_app_ids[i]) {
-            if (!aidProcessed) {
-              for (int z = 0; z < 4; z++) {
-                uint8_t nibble = (radio.rds.aid[y] >> (4 * (3 - z))) & 0xF;
-                if (nibble < 10) {
-                  id[z] = nibble + '0';
-                } else {
-                  id[z] = nibble - 10 + 'A';
+          for (int i = 0; i < 65; i++) {
+            if (radio.rds.aid[y] == oda_app_ids[i]) {
+              if (!aidProcessed) {
+                for (int z = 0; z < 4; z++) {
+                  uint8_t nibble = (radio.rds.aid[y] >> (4 * (3 - z))) & 0xF;
+                  if (nibble < 10) {
+                    id[z] = nibble + '0';
+                  } else {
+                    id[z] = nibble - 10 + 'A';
+                  }
                 }
+                id[4] = '\0';
+
+                AIDString += String(id);
+                AIDString += ": ";
+                AIDString += oda_app_names[i];
+
+                aidProcessed = true;
               }
-              id[4] = '\0';
-
-              AIDString += String(id);
-              AIDString += ": ";
-              AIDString += oda_app_names[i];
-
-              aidProcessed = true;
+              break;
             }
-            break;
+          }
+
+          if (!AIDString.isEmpty() && y < radio.rds.aid_counter - 1 && aidProcessed) {
+            AIDString += " | ";
           }
         }
-
-        if (!AIDString.isEmpty() && y < radio.rds.aid_counter - 1 && aidProcessed) {
-          AIDString += " | ";
-        }
+        aid_counterold = radio.rds.aid_counter;
       }
-      aid_counterold = radio.rds.aid_counter;
-    }
 
-    if (!screenmute) {
       if (xPos == 0) {
         if (millis() - rttickerhold >= 2000) {
           xPos --;

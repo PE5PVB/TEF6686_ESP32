@@ -93,6 +93,8 @@ extern String stationStateold;
 extern String XDRGTKRDS;
 extern String XDRGTKRDSold;
 extern unsigned int mappedfreqold[20];
+extern unsigned int mappedfreqold2[20];
+extern unsigned int mappedfreqold3[20];
 extern unsigned long afticker;
 extern unsigned long aftickerhold;
 extern unsigned long aftimer;

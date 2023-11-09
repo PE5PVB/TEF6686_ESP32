@@ -1379,43 +1379,49 @@ void TEF6686::readRDS(byte showrdserrors)
 
             offset = rds.rdsB & 0x0F;                                                           // Read offset
 
-            if (offset < 9) {
-              byte position;
-              for (position = 0; position < 20; position++) {
-                if (eon[position].pi == rds.rdsD) {                                             // Find position in array
-                  break;
-                }
+            byte position;
+            for (position = 0; position < 20; position++) {
+              if (eon[position].pi == rds.rdsD) {                                             // Find position in array
+                break;
               }
+            }
 
 
-              if (offset < 4 && eon[position].pi == rds.rdsD) {
-                for (int j = 0; j < 9; j++) EONPStext[position][j] = '\0';                      // Clear buffer
-                eon_buffer[position][(offset * 2)  + 0] = rds.rdsC >> 8;                        // First character of segment
-                eon_buffer[position][(offset * 2)  + 1] = rds.rdsC & 0xFF;                      // Second character of segment
-                eon_buffer[position][(offset * 2)  + 2] = '\0';                                 // Endmarker of segment
-              }
+            if (offset < 4 && eon[position].pi == rds.rdsD) {
+              for (int j = 0; j < 9; j++) EONPStext[position][j] = '\0';                      // Clear buffer
+              eon_buffer[position][(offset * 2)  + 0] = rds.rdsC >> 8;                        // First character of segment
+              eon_buffer[position][(offset * 2)  + 1] = rds.rdsC & 0xFF;                      // Second character of segment
+              eon_buffer[position][(offset * 2)  + 2] = '\0';                                 // Endmarker of segment
+            }
 
-              if (offset > 3 && eon[position].pi == rds.rdsD) {                                                                       // Last chars are received
-                RDScharConverter(eon_buffer[position], EONPStext[position], sizeof(EONPStext[position]) / sizeof(wchar_t), true);     // Convert 8 bit ASCII to 16 bit ASCII
-                String utf8String = convertToUTF8(EONPStext[position]);                                                               // Convert RDS characterset to ASCII
-                eon[position].ps = extractUTF8Substring(utf8String, 0, 8, true);                                                      // Make sure PS does not exceed 8 characters
-                for (int j = 0; j < 9; j++) eon_buffer[position][j] = '\0';                                                           // Clear buffer
-              }
+            if (offset > 3 && eon[position].pi == rds.rdsD) {                                                                       // Last chars are received
+              RDScharConverter(eon_buffer[position], EONPStext[position], sizeof(EONPStext[position]) / sizeof(wchar_t), true);     // Convert 8 bit ASCII to 16 bit ASCII
+              String utf8String = convertToUTF8(EONPStext[position]);                                                               // Convert RDS characterset to ASCII
+              eon[position].ps = extractUTF8Substring(utf8String, 0, 8, true);                                                      // Make sure PS does not exceed 8 characters
+              for (int j = 0; j < 9; j++) eon_buffer[position][j] = '\0';                                                           // Clear buffer
+            }
 
-              if (offset > 4 && eon[position].pi == rds.rdsD) {
-                if (((rds.rdsC >> 8) * 10 + 8750) == currentfreq) {                             // Check if mapped frequency belongs to current frequency
-                  if (eon[position].mappedfreq == 0) {
-                    eon[position].mappedfreq = ((rds.rdsC & 0xFF) * 10 + 8750);                 // Add mapped frequency to array
-                  } else {
-                    if (eon[position].mappedfreq2 == 0 && eon[position].mappedfreq != (rds.rdsC & 0xFF) * 10 + 8750) {
-                      eon[position].mappedfreq2 = ((rds.rdsC & 0xFF) * 10 + 8750);
-                    } else if (eon[position].mappedfreq3 == 0 && eon[position].mappedfreq != (rds.rdsC & 0xFF) * 10 + 8750 && eon[position].mappedfreq2 != (rds.rdsC & 0xFF) * 10 + 8750) {
-                      eon[position].mappedfreq3 = ((rds.rdsC & 0xFF) * 10 + 8750);
-                    }
+            if (offset == 13 && eon[position].pi == rds.rdsD) {
+              eon[position].taset = true;
+              eon[position].ta = bitRead(rds.rdsC, 0);
+            }
+
+            if (bitRead(rds.rdsB, 4) && eon[position].pi == rds.rdsD) eon[position].tp = true;
+
+            if (offset > 4 && offset < 9 && eon[position].pi == rds.rdsD) {
+              if (((rds.rdsC >> 8) * 10 + 8750) == currentfreq) {                             // Check if mapped frequency belongs to current frequency
+                if (eon[position].mappedfreq == 0) {
+                  eon[position].mappedfreq = ((rds.rdsC & 0xFF) * 10 + 8750);                 // Add mapped frequency to array
+                } else {
+                  if (eon[position].mappedfreq2 == 0 && eon[position].mappedfreq != ((rds.rdsC & 0xFF) * 10 + 8750)) {
+                    eon[position].mappedfreq2 = ((rds.rdsC & 0xFF) * 10 + 8750);
+                  } else if (eon[position].mappedfreq2 != ((rds.rdsC & 0xFF) * 10 + 8750) && eon[position].mappedfreq != ((rds.rdsC & 0xFF) * 10 + 8750)) {
+                    if (eon[position].mappedfreq3 == 0) eon[position].mappedfreq3 = ((rds.rdsC & 0xFF) * 10 + 8750);
                   }
                 }
               }
             }
+
             for (int i = 0; i < 20; i++) {
               for (int j = 0; j < 20 - i - 1; j++) {
                 if (eon[j].pi == 0) continue;
@@ -1434,12 +1440,12 @@ void TEF6686::readRDS(byte showrdserrors)
                   eon[j + 1].picode[sizeof(eon[j + 1].picode) - 1] = '\0';
 
                   std::swap(eon[j].ps, eon[j + 1].ps);
-                  std::swap(eon[j].eonvalid, eon[j + 1].eonvalid);
-                  std::swap(eon[j].checked, eon[j + 1].checked);
+                  std::swap(eon[j].ta, eon[j + 1].ta);
+                  std::swap(eon[j].tp, eon[j + 1].tp);
+                  std::swap(eon[j].taset, eon[j + 1].taset);
                 }
               }
             }
-
           }
         }
         break;
@@ -1512,7 +1518,9 @@ void TEF6686::clearRDS (bool fullsearchrds) {
     eon[i].mappedfreq = 0;
     eon[i].mappedfreq2 = 0;
     eon[i].mappedfreq3 = 0;
-    eon[i].checked = false;
+    eon[i].ta = false;
+    eon[i].tp = false;
+    eon[i].taset = false;
     for (int y = 0; y < 5; y++) {
       eon[i].picode[y] = '\0';
     }

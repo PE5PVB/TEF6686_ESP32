@@ -162,6 +162,8 @@ extern unsigned int ConverterSet;
 extern unsigned int HighEdgeSet;
 extern unsigned int LowEdgeSet;
 extern unsigned int mappedfreqold[20];
+extern unsigned int mappedfreqold2[20];
+extern unsigned int mappedfreqold3[20];
 
 extern TFT_eSPI tft;
 extern TEF6686 radio;

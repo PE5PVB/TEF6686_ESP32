@@ -322,6 +322,8 @@ unsigned int LowEdgeSet;
 unsigned int LWHighEdgeSet;
 unsigned int LWLowEdgeSet;
 unsigned int mappedfreqold[20];
+unsigned int mappedfreqold2[20];
+unsigned int mappedfreqold3[20];
 unsigned int memory[EE_PRESETS_CNT];
 unsigned int MWHighEdgeSet;
 unsigned int MWLowEdgeSet;
@@ -1772,8 +1774,8 @@ void ModeButtonPress() {
     BuildDisplay();
     ScreensaverTimerReopen();
   } else if (afscreen) {
-    if (afpagenr == 1) afpagenr = 2; else if (afpagenr == 2) afpagenr = 1;
-    if (afpagenr != 0) BuildAFScreen();
+    if (afpagenr == 1) afpagenr = 2; else if (afpagenr == 2 && afpage) afpagenr = 3; else afpagenr = 1;
+    BuildAFScreen();
   } else {
     if (!menu) {
       seek = false;

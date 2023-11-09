@@ -632,8 +632,9 @@ typedef struct _eon_ {
   uint16_t  pi;
   char picode[6];
   String ps;
-  bool eonvalid;
-  bool checked;
+  bool ta;
+  bool tp;
+  bool taset;
 } eon_;
 
 typedef struct _logbook_ {
@@ -646,8 +647,8 @@ typedef struct _logbook_ {
 
 class TEF6686 {
   public:
-    af_  af[50];
-    eon_ eon[20];
+    af_  af[51];
+    eon_ eon[21];
     rds_ rds;
     logbook_ logbook[22];
     uint16_t TestAF();
