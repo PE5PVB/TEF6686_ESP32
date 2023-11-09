@@ -256,13 +256,11 @@ int8_t CNold;
 int8_t VolSet;
 float batteryVold;
 IPAddress remoteip;
-String afstringold;
 String AIDString;
 String cryptedpassword;
 String CurrentThemeString;
 String ECColdtxt;
 String eonpsold[20];
-String eonstringold;
 String LIColdString;
 String pinstringold;
 String PIold;
@@ -274,7 +272,6 @@ String rds_clockold;
 String RDSSPYRDS;
 String RDSSPYRDSold;
 String RTold;
-String rtplusstringold;
 String salt;
 String saltkey = "                ";
 String stationIDold;
@@ -2348,9 +2345,7 @@ void ShowFreq(int mode) {
   }
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
-  rtplusstringold = "";
-  eonstringold = "";
-  afstringold = "";
+
   rdsreset = true;
   licold = 254;
   ECCold = 253;

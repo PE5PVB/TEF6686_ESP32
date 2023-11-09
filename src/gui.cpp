@@ -710,9 +710,6 @@ void BuildAdvancedRDS() {
   BWreset = true;
   pinstringold = "";
   hasrtplusold = false;
-  eonstringold = "";
-  afstringold = "";
-  rtplusstringold = "";
   afmethodBold = false;
   rds_clockold = "";
   ShowMemoryPos();
