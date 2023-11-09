@@ -107,7 +107,7 @@ uint16_t TEF6686::TestAF() {
             af[y].afvalid = true;
             af[y].checked = false;
           }
-          af_counter = 0; // Reset af_counter only once after the loop.
+          af_counter = 0;
         } else {
           af[highestIndex].afvalid = false;
           devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, currentfreq);
@@ -148,7 +148,7 @@ void TEF6686::power(bool mode) {
 
 void TEF6686::SetFreq(uint16_t frequency) {
   devTEF_Radio_Tune_To(frequency);
-  currentfreq = frequency;
+  currentfreq = ((frequency + 5) / 10) * 10;
 }
 
 void TEF6686::SetFreqAM(uint16_t frequency) {
