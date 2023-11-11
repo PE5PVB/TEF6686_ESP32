@@ -718,7 +718,7 @@ void TEF6686::readRDS(byte showrdserrors)
 
                   bool isValuePresent = false;
                   for (int i = 0; i < 50; i++) {                                                // Check if already in list
-                    if ((buffer0 == currentfreq) || buffer0 == 0 || af[i].frequency == buffer0) {
+                    if (rds.sortaf && (buffer0 == currentfreq) || buffer0 == 0 || af[i].frequency == buffer0) {
                       isValuePresent = true;
                       break;
                     }
@@ -732,7 +732,7 @@ void TEF6686::readRDS(byte showrdserrors)
 
                   isValuePresent = false;
                   for (int i = 0; i < 50; i++) {                                                // Check if already in list
-                    if ((buffer1 == currentfreq) || buffer1 == 0 || af[i].frequency == buffer1) {
+                    if (rds.sortaf && (buffer1 == currentfreq) || buffer1 == 0 || af[i].frequency == buffer1) {
                       isValuePresent = true;
                       break;
                     }
