@@ -540,6 +540,21 @@ void TEF6686::readRDS(byte showrdserrors)
               rds.stationID[3] = char(((stationID - 676 * int(stationID / 676)) % 26) + 65);
             }
           }
+
+          bool faultyID = false;
+
+          for (byte i = 0; i < 4; i++) {
+            if (!(rds.stationID[i] >= 'A' && rds.stationID[i] <= 'Z')) {
+              faultyID = true;
+              break;
+            }
+          }
+
+          if (faultyID) {
+            for (byte i = 0; i < 9; i++) {
+              rds.stationID[i] = ' ';
+            }
+          }
           rds.stationID[7] = '?';
           rds.stationID[8] = '\0';
         }
