@@ -7,7 +7,7 @@
 #include <cstring>
 
 byte menuitem;
-byte items[8] = {8, (dynamicspi ? 3 : 2), 6, 10, 9, 10, 9, 5};
+byte items[8] = {8, (dynamicspi ? 3 : 2), 6, 10, 9, 10, 10, 5};
 
 void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
   switch (CurrentTheme) {
@@ -542,6 +542,7 @@ void BuildMenu() {
       tftPrint(-1, myLanguage[language][187], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][198], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][169], 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][207], 8, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
 
       if (softmuteam) tftPrint(1, myLanguage[language][42], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (amnb != 0) tftPrint(1, "%", 310, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
@@ -567,6 +568,7 @@ void BuildMenu() {
       tftPrint(1, String(amcodectcount, DEC), 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (amrfagc != 0) tftPrint(1, String(amrfagc, DEC), 270, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (mwstepsize) tftPrint(1, "10", 270, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, "9", 270, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      tftPrint(1, String(amscansens), 310, ITEM10 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       break;
 
     case CONNECTIVITY:
@@ -1367,6 +1369,13 @@ void MenuUp() {
             if (mwstepsize) mwstepsize = false; else mwstepsize = true;
             if (mwstepsize) tftPrint (1, "10", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint (1, "9", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
+
+          case ITEM10:
+            tftPrint(1, String(amscansens), 155, 118, BackgroundColor, BackgroundColor, 28);
+            amscansens++;
+            if (amscansens > 10) amscansens = 1;
+            tftPrint(1, String(amscansens), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
         }
         break;
 
@@ -1926,6 +1935,13 @@ void MenuDown() {
             if (mwstepsize) mwstepsize = false; else mwstepsize = true;
             if (mwstepsize) tftPrint (1, "10", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint (1, "9", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
+
+          case ITEM10:
+            tftPrint(1, String(amscansens), 155, 118, BackgroundColor, BackgroundColor, 28);
+            amscansens--;
+            if (amscansens == 0) amscansens = 10;
+            tftPrint(1, String(amscansens), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
         }
         break;
 
@@ -2376,6 +2392,11 @@ void DoMenu() {
             Infoboxprint(myLanguage[language][169]);
             tftPrint(-1, "kHz", 170, 118, ActiveColor, ActiveColorSmooth, 28);
             if (mwstepsize) tftPrint (1, "10", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint (1, "9", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
+
+          case ITEM10:
+            Infoboxprint(myLanguage[language][207]);
+            tftPrint (1, String(amscansens), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
         }
         break;

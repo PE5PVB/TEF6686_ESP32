@@ -1,6 +1,6 @@
 // [number of languages][number of texts]
 // *** means the text is the same as in English
-static const char* const myLanguage[18][207] = {
+static const char* const myLanguage[18][208] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -207,7 +207,8 @@ static const char* const myLanguage[18][207] = {
     "Fast PS", // 203
     "Detected applications", // 204
     "Min.", // 205
-    "Dynamic SPI speed" // 206
+    "Dynamic SPI speed", // 206
+    "Scan sensitivity" // 207
   },
 
   { "Nederlands", // Dutch
@@ -416,7 +417,8 @@ static const char* const myLanguage[18][207] = {
     "Snelle PS", // 203
     "Gedetecteerde applicaties", // 204
     "Min.", // 205 ***
-    "Dynamische\nSPI snelheid" // 206
+    "Dynamische\nSPI snelheid", // 206
+    "Zoek gevoeligheid" // 207
   },
 
   { "Polski", // Polish
@@ -625,7 +627,8 @@ static const char* const myLanguage[18][207] = {
     "Szybki PS", // 203
     "Wykryte aplikacje", // 204
     "Min.", // 205 ***
-    "Dynam. predkosc SPI" // 206 ***
+    "Dynam. predkosc SPI", // 206 ***
+    "Scan sensitivity" // 207
   },
 
   { "Hrvatski", // Croatian
@@ -834,7 +837,8 @@ static const char* const myLanguage[18][207] = {
     "Brzi PS", // 203
     "Otkrivene aplikacije", // 204
     "Min.", // 205 ***
-    "Dynamic SPI speed" // 206 ***
+    "Dynamic SPI speed", // 206 ***
+    "Scan sensitivity" // 207
   },
 
   { "Ελληνικά", // Greek
@@ -1043,7 +1047,8 @@ static const char* const myLanguage[18][207] = {
     "Γρήγορο PS", // 203
     "Εντοπισμένες εφαρμογές", // 204
     "Λεπτ.", // 205
-    "Δυναμική ταχύτητα\nSPI" // 206
+    "Δυναμική ταχύτητα\nSPI", // 206
+    "Scan sensitivity" // 207
   },
 
   { "Română", // Romanian
@@ -1252,7 +1257,8 @@ static const char* const myLanguage[18][207] = {
     "PS rapid", // 203
     "Identificare aplicații", // 204
     "Min.", // 205 ***
-    "Dynamic SPI speed" // 206 ***
+    "Dynamic SPI speed", // 206 ***
+    "Scan sensitivity" // 207
   },
 
   { "Deutsch", // German
@@ -1447,7 +1453,7 @@ static const char* const myLanguage[18][207] = {
     "HAUPT", // 189
     "AUDIO", // 190
     "ANZEIGE", // 191
-    "RDS", // 192 
+    "RDS", // 192
     "UKW", // 193
     "AM", // 194
     "NETZ", // 195
@@ -1461,7 +1467,8 @@ static const char* const myLanguage[18][207] = {
     "Schnelles PS", // 203
     "Erkannte Applikationen", // 204
     "Min.", // 205
-    "Dyn. SPI-Geschwind." // 206
+    "Dyn. SPI-Geschwind.", // 206
+    "Scan sensitivity" // 207
   },
 
   { "Český", // Czech
@@ -1670,7 +1677,8 @@ static const char* const myLanguage[18][207] = {
     "Rychlé načtení PS", // 203
     "Detekované aplikace", // 204
     "Min.", // 205 ***
-    "Dynamic SPI speed" // 206 ***
+    "Dynamic SPI speed", // 206 ***
+    "Scan sensitivity" // 207
   },
 
   { "Slovenský", // Slovak
@@ -1879,7 +1887,8 @@ static const char* const myLanguage[18][207] = {
     "Rýchle načítanie PS", // 203
     "Detegované aplikácie", // 204
     "Min.", // 205 ***
-    "Dynamic SPI speed" // 206 ***
+    "Dynamic SPI speed", // 206 ***
+    "Scan sensitivity" // 207
   },
 
   { "Français", // French
@@ -2088,7 +2097,8 @@ static const char* const myLanguage[18][207] = {
     "PS rapide", // 203
     "Applications détectées", // 204
     "Min.", // 205
-    "Vitesse SPI\ndynamique" // 206
+    "Vitesse SPI\ndynamique", // 206
+    "Scan sensitivity" // 207
   },
 
   { "Български", // Bulgarian
@@ -2297,7 +2307,8 @@ static const char* const myLanguage[18][207] = {
     "Fast PS", // 203 ***
     "Detected applications", // 204 ***
     "Мин.", // 205
-    "Dynamic SPI speed" // 206 ***
+    "Dynamic SPI speed", // 206 ***
+    "Scan sensitivity" // 207
   },
 
   { "Русский", // Russian
@@ -2506,7 +2517,8 @@ static const char* const myLanguage[18][207] = {
     "Быстрый PS", // 203
     "Обнаруженные приложения", // 204
     "мин.", // 205
-    "Скорость шины дисплея SPI" // 206 ***
+    "Скорость шины дисплея SPI", // 206 ***
+    "Scan sensitivity" // 207
   },
 
   { "Українська", // Ukranian
@@ -2715,7 +2727,8 @@ static const char* const myLanguage[18][207] = {
     "Швидкий PS", // 203
     "Виявлені програми", // 204
     "мін.", // 205
-    "Dynamic SPI speed" // 206 ***
+    "Dynamic SPI speed", // 206 ***
+    "Scan sensitivity" // 207
   },
 
   { "Italiano", // Italian
@@ -2924,7 +2937,8 @@ static const char* const myLanguage[18][207] = {
     "Fast PS", // 203 ***
     "Detected applications", // 204 ***
     "Min.", // 205 ***
-    "Dynamic SPI speed" // 206 ***
+    "Dynamic SPI speed", // 206 ***
+    "Scan sensitivity" // 207
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3133,7 +3147,8 @@ static const char* const myLanguage[18][207] = {
     "快速 PS", // 203
     "Detected applications", // 204 ***
     "分钟", // 205
-    "调整SPI通讯速率" // 206
+    "调整SPI通讯速率", // 206
+    "Scan sensitivity" // 207
   },
 
   { "Norsk", // Norwegian
@@ -3342,7 +3357,8 @@ static const char* const myLanguage[18][207] = {
     "Rask PS", // 203
     "Oppdaget applikasjoner", // 204
     "Min.", // 205 ***
-    "Dynamisk SPI hastighet" // 206 ***
+    "Dynamisk SPI hastighet", // 206 ***
+    "Scan sensitivity" // 207
   },
 
   { "Español", // Spanish
@@ -3551,7 +3567,8 @@ static const char* const myLanguage[18][207] = {
     "PS rápido", // 203
     "Aplicaciones detectadas", // 204
     "Min.", // 205
-    "Velocidad de SPI" // 206
+    "Velocidad de SPI", // 206
+    "Scan sensitivity" // 207
   },
 
   { "Português", // Portuguese
@@ -3760,6 +3777,7 @@ static const char* const myLanguage[18][207] = {
     "PS rápido", // 203
     "Aplicativos detectados", // 204
     "Min.", // 205
-    "Velocidade dinâmica\nde SPI" // 206
+    "Velocidade dinâmica\nde SPI", // 206
+    "Scan sensitivity" // 207
   }
 };

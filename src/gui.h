@@ -62,6 +62,7 @@ extern byte af;
 extern byte af_counterold;
 extern byte afpagenr;
 extern byte amnb;
+extern byte amscansens;
 extern byte audiomode;
 extern byte band;
 extern byte bandAM;
