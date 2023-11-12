@@ -1468,7 +1468,7 @@ static const char* const myLanguage[18][208] = {
     "Erkannte Applikationen", // 204
     "Min.", // 205
     "Dyn. SPI-Geschwind.", // 206
-    "Scan Empfindlichkeit" // 207
+    "Scan sensitivity" // 207
   },
 
   { "Český", // Czech
