@@ -515,7 +515,7 @@ void BuildMenu() {
       if (softmutefm) tftPrint(1, myLanguage[language][42], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (fmnb != 0) tftPrint(1, "%", 310, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
       if (fmnb != 0) tftPrint(1, String(fmnb, DEC), 270, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, "KHz", 310, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(1, "kHz", 310, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
 
       switch (fmdefaultstepsize) {
         case 0: tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 270, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
@@ -2307,7 +2307,7 @@ void DoMenu() {
             break;
 
           case ITEM8:
-            tftPrint(-1, "KHz", 170, 118, ActiveColor, ActiveColorSmooth, 28);
+            tftPrint(-1, "kHz", 170, 118, ActiveColor, ActiveColorSmooth, 28);
             Infoboxprint(myLanguage[language][90]);
             switch (fmdefaultstepsize) {
               case 0: tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
