@@ -1267,8 +1267,8 @@ static const char* const myLanguage[18][208] = {
     "Bildschirm gedreht", // 3
     "Analogmeter kalibrieren", // 4
     "Taste loslassen wenn bereit", // 5
-    "Enkoder auf optisch", // 6
-    "Enkoder auf Standard", // 7
+    "Drehgeber optisch", // 6
+    "Drehgeber standard", // 7
     "UKW/AM Empfänger", // 8
     "!KEIN! Tuner", // 9
     "Lautstärke:", // 10
@@ -1276,9 +1276,9 @@ static const char* const myLanguage[18][208] = {
     "Unteres Bandende:", // 12
     "Oberes Bandende:", // 13
     "FM RF-Pegeloffset:", // 14
-    "Stereoschwelle:", // 15
-    "High-Cut-Ende:", // 16
-    "High-Cut-Schwelle:", // 17
+    "Stereotrennschwelle:", // 15
+    "Tiefpass Eckfrequenz:", // 16
+    "Tiefpass Schwelle:", // 17
     "Low-Level-Schwelle:", // 18
     "Kontrast:", // 19
     "Lautstärke", // 20
@@ -1287,8 +1287,8 @@ static const char* const myLanguage[18][208] = {
     "Oberes Bandende", // 23
     "Pegeloffset", // 24
     "Stereotrennschwelle", // 25
-    "High-Cut-Eckfrequenz", // 26
-    "High-Cut-Schwelle", // 27
+    "Tiefpass Eckfrequenz", // 26
+    "Tiefpass Schwelle", // 27
     "Low-Level-Schwelle", // 28
     "Anzeigehelligkeit", // 29
     "Aus", // 30
@@ -1304,8 +1304,8 @@ static const char* const myLanguage[18][208] = {
     "Sprache wählen", // 40
     "MODE drücken zum Beenden & Sichern", // 41
     "Ein", // 42
-    "Softmute UKW", // 43
-    "Softmute AM", // 44
+    "Sanfte\nStummschaltung UKW", // 43
+    "Sanfte\nStummschaltung AM", // 44
     "Piepston am Bandende", // 45
     "Region", // 46
     "Europa", // 47
@@ -1329,14 +1329,14 @@ static const char* const myLanguage[18][208] = {
     "Rauschunterdrückung", // 65
     "Werkseinstellungen\nwurden geladen", // 66
     "Audioausgabe", // 67
-    "Tunen bei Bildschirmschoner erlauben", // 68
+    "Tunen bei\nBildschirmschoner erlauben", // 68
     "Anzeigefarben umkehren", // 69
     "Über diese Software", // 70
     "Hauptcode:", // 71
     "Mitwirkende:", // 72
     "Unbekannt", // 73
     "Bildschirmschoneroptionen", // 74
-    "Abschaltezeit", // 75
+    "Abschaltzeit", // 75
     "Bildschirm aus", // 76
     "Thema", // 77
     "Standard", // 78
@@ -1351,7 +1351,7 @@ static const char* const myLanguage[18][208] = {
     "Keine AF verfügbar", // 87
     "Kein EON verfügbar", // 88
     "Kein RT+ verfügbar", // 89
-    "Standard-Schrittweite", // 90
+    "UKW\nStandard-Schrittweite", // 90
     "Bildschirmschoner", // 91
     "Sek", // 92
     "ZUM SCHLIEßEN BAND DRÜCKEN", // 93
@@ -1430,7 +1430,7 @@ static const char* const myLanguage[18][208] = {
     "Musik-ID", // 166
     "Bezugsquelle", // 167
     "Empfange Daten", // 168
-    "MW\nStandard-Schrittweite", // 169
+    "MW\nStandardschrittweite", // 169
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
@@ -1447,7 +1447,7 @@ static const char* const myLanguage[18][208] = {
     "Netzwerk", // 183
     "DRÜCKE MODE FÜR ZURÜCK", // 184
     "Gleichkanalerkennung", // 185
-    "Gleichkanalerkennung Empf.", // 186
+    "Gleichkanalerkennung\nEmpfindlichkeit", // 186
     "Gleichkanalerkennung\nSchwelle", // 187
     "Gleichkanalerkennung\nZähler", // 188
     "HAUPT", // 189
@@ -1460,15 +1460,15 @@ static const char* const myLanguage[18][208] = {
     "AF Autosortierung", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
-    "UKW Deemphasis", // 199
+    "Entzerrung auf UKW", // 199
     "Wenig", // 200
     "Viel", // 201
     "Maximal", // 202
     "Schnelles PS", // 203
     "Erkannte Applikationen", // 204
     "Min.", // 205
-    "Dyn. SPI-Geschwind.", // 206
-    "Scan sensitivity" // 207
+    "Dynamische \nSPI-Geschwindigkeit", // 206
+    "Scanempfindlichkeit" // 207
   },
 
   { "Český", // Czech
