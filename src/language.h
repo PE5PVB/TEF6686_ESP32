@@ -1048,7 +1048,7 @@ static const char* const myLanguage[18][208] = {
     "Εντοπισμένες εφαρμογές", // 204
     "Λεπτ.", // 205
     "Δυναμική ταχύτητα\nSPI", // 206
-    "Scan sensitivity" // 207
+    "Ευαισθησία\nανίχνευσης" // 207
   },
 
   { "Română", // Romanian
@@ -2098,7 +2098,7 @@ static const char* const myLanguage[18][208] = {
     "Applications détectées", // 204
     "Min.", // 205
     "Vitesse SPI\ndynamique", // 206
-    "Scan sensitivity" // 207
+    "Sensibilité\ndu scanne " // 207
   },
 
   { "Български", // Bulgarian
@@ -3568,7 +3568,7 @@ static const char* const myLanguage[18][208] = {
     "Aplicaciones detectadas", // 204
     "Min.", // 205
     "Velocidad de SPI", // 206
-    "Scan sensitivity" // 207
+    "Sensibilidad\ndel escaneo" // 207
   },
 
   { "Português", // Portuguese
@@ -3778,6 +3778,6 @@ static const char* const myLanguage[18][208] = {
     "Aplicativos detectados", // 204
     "Min.", // 205
     "Velocidade dinâmica\nde SPI", // 206
-    "Scan sensitivity" // 207
+    "Sensibilidade\nda varredura" // 207
   }
 };
