@@ -1358,11 +1358,11 @@ static const char* const myLanguage[18][208] = {
     "1% Helligkeit", // 94
     "25% Helligkeit", // 95
     "50% Helligkeit", // 96
-    "RF Pegeloffset:", // 97
-    "Einheit Signalpegel:", // 98
-    "Verwende AF:", // 99
-    "Wähle UKW Band:", // 100
-    "Wähle AM Band:", // 101
+    "RF Pegeloffset", // 97
+    "Einheit Signalpegel", // 98
+    "Verwende AF", // 99
+    "Wähle UKW Band", // 100
+    "Wähle AM Band", // 101
     "LW", // 102
     "MW", // 103
     "KW", // 104
@@ -1468,7 +1468,7 @@ static const char* const myLanguage[18][208] = {
     "Erkannte Applikationen", // 204
     "Min.", // 205
     "Dyn. SPI-Geschwind.", // 206
-    "Scan sensitivity" // 207
+    "Scan Empfindlichkeit" // 207
   },
 
   { "Český", // Czech
