@@ -3374,7 +3374,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_IMSSET, 1);
   EEPROM.writeByte(EE_BYTE_EQSET, 1);
   EEPROM.writeByte(EE_BYTE_BAND, BAND_FM);
-  EEPROM.writeInt(EE_BYTE_LOWLEVELSET, -10);
+  EEPROM.writeInt(EE_BYTE_LOWLEVELSET, -15);
   EEPROM.writeByte(EE_BYTE_MEMORYPOS, 0);
   EEPROM.writeByte(EE_BYTE_REGION, 0);
   EEPROM.writeByte(EE_BYTE_RDS_UNDERSCORE, 0);

@@ -520,13 +520,11 @@ void showRadioText() {
       AdvRadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
       AdvRadiotextSprite.pushSprite(35, 220);
     } else if (!advancedRDS && radio.rds.stationText.length() < 29) {
-      if (RTold != radio.rds.stationText + " " + radio.rds.stationText32) {
         xPos = 0;
         RadiotextSprite.fillSprite(BackgroundColor);
         if (RDSstatus) RadiotextSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false); else RadiotextSprite.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
         RadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
         RadiotextSprite.pushSprite(38, 220);
-      }
     } else {
       if (millis() - rtticker >= 15) {
         if (xPos == 0) {
@@ -672,7 +670,7 @@ void ShowAFEON() {
 
           if (radio.eon[i + y].mappedfreq2 > 0) {
             if (radio.eon[i + y].mappedfreq2 != mappedfreqold2[i + y]) tftPrint(1, String(mappedfreqold2[i + y] / 100) + "." + String((mappedfreqold2[i + y] % 100) / 10), 216, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
-            tftPrint(1, String(radio.eon[i + y].mappedfreq2 / 100) + "." + String((radio.eon[i + y].mappedfreq2 % 100) / 10), 216, 48 + (15 * i), SecondaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, String(radio.eon[i + y].mappedfreq2 / 100) + "." + String((radio.eon[i + y].mappedfreq2 % 100) / 10), 216, 48 + (15 * i), PrimaryColor, PrimaryColorSmooth, 16);
             mappedfreqold2[i + y] = radio.eon[i + y].mappedfreq2;
           } else {
             tftPrint(1, String(mappedfreqold2[i + y] / 100) + "." + String((mappedfreqold2[i + y] % 100) / 10), 216, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
