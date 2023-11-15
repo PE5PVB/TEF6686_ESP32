@@ -520,11 +520,11 @@ void showRadioText() {
       AdvRadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
       AdvRadiotextSprite.pushSprite(35, 220);
     } else if (!advancedRDS && radio.rds.stationText.length() < 29) {
-        xPos = 0;
-        RadiotextSprite.fillSprite(BackgroundColor);
-        if (RDSstatus) RadiotextSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false); else RadiotextSprite.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
-        RadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
-        RadiotextSprite.pushSprite(38, 220);
+      xPos = 0;
+      RadiotextSprite.fillSprite(BackgroundColor);
+      if (RDSstatus) RadiotextSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false); else RadiotextSprite.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
+      RadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
+      RadiotextSprite.pushSprite(38, 220);
     } else {
       if (millis() - rtticker >= 15) {
         if (xPos == 0) {
@@ -633,9 +633,10 @@ void ShowAFEON() {
     if (radio.rds.hasEON && afpagenr > 1) {
       if (!haseonold) {
         tftPrint(-1, myLanguage[language][88], 6, 48, BackgroundColor, BackgroundColor, 16);
-        tftPrint(-1, "PI:", 4, 32, ActiveColor, ActiveColorSmooth, 16);
-        tftPrint(0, "TA:", 276, 32, ActiveColor, ActiveColorSmooth, 16);
-        tftPrint(0, "TP:", 302, 32, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, "PI", 4, 32, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(0, "TA", 250, 32, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(0, "TP", 276, 32, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(0, "PTY", 304, 32, ActiveColor, ActiveColorSmooth, 16);
         haseonold = true;
       }
 
@@ -649,54 +650,59 @@ void ShowAFEON() {
           strcpy(eonpicodeold[i + y], radio.eon[i + y].picode);
 
           if (radio.eon[i + y].ps.length() > 0) {
-            tftPrint(-1, "PS:", 66, 32, ActiveColor, ActiveColorSmooth, 16);
+            tftPrint(-1, "PS", 46, 32, ActiveColor, ActiveColorSmooth, 16);
 
-            if (strcmp(radio.eon[i + y].ps.c_str(), eonpsold[i + y].c_str()) != 0) tftPrint(-1, String(eonpsold[i + y]), 66, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
-            tftPrint(-1, String(radio.eon[i + y].ps), 66, 48 + (15 * i), SecondaryColor, SecondaryColorSmooth, 16);
+            if (strcmp(radio.eon[i + y].ps.c_str(), eonpsold[i + y].c_str()) != 0) tftPrint(-1, String(eonpsold[i + y]), 46, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+            tftPrint(-1, String(radio.eon[i + y].ps), 46, 48 + (15 * i), SecondaryColor, SecondaryColorSmooth, 16);
             eonpsold[i + y] = radio.eon[i + y].ps;
           } else {
-            tftPrint(-1, String(eonpsold[i + y]), 66, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+            tftPrint(-1, String(eonpsold[i + y]), 46, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
           }
 
           if (radio.eon[i + y].mappedfreq > 0) {
-            tftPrint(1, "FREQ:", 176, 32, ActiveColor, ActiveColorSmooth, 16);
+            tftPrint(1, "FREQ", 156, 32, ActiveColor, ActiveColorSmooth, 16);
 
-            if (radio.eon[i + y].mappedfreq != mappedfreqold[i + y]) tftPrint(1, String(mappedfreqold[i + y] / 100) + "." + String((mappedfreqold[i + y] % 100) / 10), 176, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
-            tftPrint(1, String(radio.eon[i + y].mappedfreq / 100) + "." + String((radio.eon[i + y].mappedfreq % 100) / 10), 176, 48 + (15 * i), PrimaryColor, PrimaryColorSmooth, 16);
+            if (radio.eon[i + y].mappedfreq != mappedfreqold[i + y]) tftPrint(1, String(mappedfreqold[i + y] / 100) + "." + String((mappedfreqold[i + y] % 100) / 10), 156, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+            tftPrint(1, String(radio.eon[i + y].mappedfreq / 100) + "." + String((radio.eon[i + y].mappedfreq % 100) / 10), 156, 48 + (15 * i), PrimaryColor, PrimaryColorSmooth, 16);
             mappedfreqold[i + y] = radio.eon[i + y].mappedfreq;
           } else {
-            tftPrint(1, String(mappedfreqold[i + y] / 100) + "." + String((mappedfreqold[i + y] % 100) / 10), 176, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+            tftPrint(1, String(mappedfreqold[i + y] / 100) + "." + String((mappedfreqold[i + y] % 100) / 10), 156, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
           }
 
           if (radio.eon[i + y].mappedfreq2 > 0) {
-            if (radio.eon[i + y].mappedfreq2 != mappedfreqold2[i + y]) tftPrint(1, String(mappedfreqold2[i + y] / 100) + "." + String((mappedfreqold2[i + y] % 100) / 10), 216, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
-            tftPrint(1, String(radio.eon[i + y].mappedfreq2 / 100) + "." + String((radio.eon[i + y].mappedfreq2 % 100) / 10), 216, 48 + (15 * i), PrimaryColor, PrimaryColorSmooth, 16);
+            if (radio.eon[i + y].mappedfreq2 != mappedfreqold2[i + y]) tftPrint(1, String(mappedfreqold2[i + y] / 100) + "." + String((mappedfreqold2[i + y] % 100) / 10), 196, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+            tftPrint(1, String(radio.eon[i + y].mappedfreq2 / 100) + "." + String((radio.eon[i + y].mappedfreq2 % 100) / 10), 196, 48 + (15 * i), PrimaryColor, PrimaryColorSmooth, 16);
             mappedfreqold2[i + y] = radio.eon[i + y].mappedfreq2;
           } else {
-            tftPrint(1, String(mappedfreqold2[i + y] / 100) + "." + String((mappedfreqold2[i + y] % 100) / 10), 216, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+            tftPrint(1, String(mappedfreqold2[i + y] / 100) + "." + String((mappedfreqold2[i + y] % 100) / 10), 196, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
           }
 
 
           if (radio.eon[i + y].mappedfreq3 > 0) {
-            if (radio.eon[i + y].mappedfreq3 != mappedfreqold3[i + y]) tftPrint(1, String(mappedfreqold3[i + y] / 100) + "." + String((mappedfreqold3[i + y] % 100) / 10), 256, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
-            tftPrint(1, String(radio.eon[i + y].mappedfreq3 / 100) + "." + String((radio.eon[i + y].mappedfreq3 % 100) / 10), 256, 48 + (15 * i), PrimaryColor, PrimaryColorSmooth, 16);
+            if (radio.eon[i + y].mappedfreq3 != mappedfreqold3[i + y]) tftPrint(1, String(mappedfreqold3[i + y] / 100) + "." + String((mappedfreqold3[i + y] % 100) / 10), 236, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+            tftPrint(1, String(radio.eon[i + y].mappedfreq3 / 100) + "." + String((radio.eon[i + y].mappedfreq3 % 100) / 10), 236, 48 + (15 * i), PrimaryColor, PrimaryColorSmooth, 16);
             mappedfreqold3[i + y] = radio.eon[i + y].mappedfreq3;
           } else {
-            tftPrint(1, String(mappedfreqold3[i + y] / 100) + "." + String((mappedfreqold3[i + y] % 100) / 10), 256, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+            tftPrint(1, String(mappedfreqold3[i + y] / 100) + "." + String((mappedfreqold3[i + y] % 100) / 10), 236, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
           }
 
 
           if (radio.eon[i + y].taset) {
             if (radio.eon[i + y].ta) {
-              tft.fillCircle(276, 54 + (15 * i), 4, InsignificantColor);
+              tft.fillCircle(250, 54 + (15 * i), 4, InsignificantColor);
             } else {
-              tft.fillCircle(276, 54 + (15 * i), 4, BackgroundColor);
+              tft.fillCircle(250, 54 + (15 * i), 4, BackgroundColor);
             }
           } else {
-            tft.fillCircle(276, 54 + (15 * i), 4, BackgroundColor);
+            tft.fillCircle(250, 54 + (15 * i), 4, BackgroundColor);
           }
 
-          if (radio.eon[i + y].tp) tft.fillCircle(302, 54 + (15 * i), 4, InsignificantColor); else tft.fillCircle(302, 54 + (15 * i), 4, BackgroundColor);
+          if (radio.eon[i + y].tp) tft.fillCircle(276, 54 + (15 * i), 4, InsignificantColor); else tft.fillCircle(276, 54 + (15 * i), 4, BackgroundColor);
+
+          if (radio.eon[i + y].pty != eonptyold[i + y]) {
+            tftReplace(0, String(eonptyold[i + y]), (radio.eon[i + y].pty < 32 ? String(radio.eon[i + y].pty) : " "), 304, 48 + (15 * i), PrimaryColor, PrimaryColorSmooth, 16);
+            eonptyold[i + y] = radio.eon[i + y].pty;
+          }
 
           if (i == 9) i = 254;
         }

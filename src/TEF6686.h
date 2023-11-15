@@ -635,6 +635,7 @@ typedef struct _eon_ {
   bool ta;
   bool tp;
   bool taset;
+  uint8_t pty;
 } eon_;
 
 typedef struct _logbook_ {

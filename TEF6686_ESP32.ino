@@ -140,6 +140,7 @@ byte ContrastSet;
 byte CurrentTheme;
 byte displayflip;
 byte ECCold;
+byte eonptyold[20];
 byte EQset;
 byte fmdefaultstepsize;
 byte fmnb;

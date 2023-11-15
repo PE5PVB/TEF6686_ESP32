@@ -46,6 +46,7 @@ extern byte ECCold;
 extern byte language;
 extern byte licold;
 extern byte MSold;
+extern byte eonptyold[20];
 extern byte rdsblockold;
 extern byte region;
 extern byte stationlistid;
