@@ -1431,14 +1431,14 @@ void TEF6686::readRDS(byte showrdserrors)
 
             if (bitRead(rds.rdsB, 4) && eon[position].pi == rds.rdsD) eon[position].tp = true;
 
-            if (offset > 4 && offset < 9 && eon[position].pi == rds.rdsD) {
-              if (((rds.rdsC >> 8) * 10 + 8750) == currentfreq) {                               // Check if mapped frequency belongs to current frequency
+            if (offset > 4 && offset < 9 && eon[position].pi == rds.rdsD) {                     // Check if mapped frequency belongs to current frequency
+              if (((rds.rdsC >> 8) * 10 + 8750) == currentfreq && (rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) {
                 if (eon[position].mappedfreq == 0) {
                   eon[position].mappedfreq = ((rds.rdsC & 0xFF) * 10 + 8750);                   // Add mapped frequency to array
                 } else {
-                  if (eon[position].mappedfreq2 == 0 && eon[position].mappedfreq != ((rds.rdsC & 0xFF) * 10 + 8750)) {
+                  if (eon[position].mappedfreq2 == 0 && eon[position].mappedfreq != ((rds.rdsC & 0xFF) * 10 + 8750) && (rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) {
                     eon[position].mappedfreq2 = ((rds.rdsC & 0xFF) * 10 + 8750);
-                  } else if (eon[position].mappedfreq2 != ((rds.rdsC & 0xFF) * 10 + 8750) && eon[position].mappedfreq != ((rds.rdsC & 0xFF) * 10 + 8750)) {
+                  } else if (eon[position].mappedfreq2 != ((rds.rdsC & 0xFF) * 10 + 8750) && eon[position].mappedfreq != ((rds.rdsC & 0xFF) * 10 + 8750) && (rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) {
                     if (eon[position].mappedfreq3 == 0) eon[position].mappedfreq3 = ((rds.rdsC & 0xFF) * 10 + 8750);
                   }
                 }
