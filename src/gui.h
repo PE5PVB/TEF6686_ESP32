@@ -90,6 +90,7 @@ extern byte menupage;
 extern byte MSold;
 extern byte poweroptions;
 extern byte poweroptionsold;
+extern byte eonptyold[20];
 extern byte rdsblockold;
 extern byte region;
 extern byte screensaverOptions[5];

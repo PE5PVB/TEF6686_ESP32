@@ -7,7 +7,7 @@
 #include <cstring>
 
 byte menuitem;
-byte items[8] = {8, (dynamicspi ? 3 : 2), 6, 10, 9, 10, 10, 5};
+byte items[8] = {8, static_cast<byte>(dynamicspi ? 3 : 2), 6, 10, 9, 10, 10, 5};
 
 void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
   switch (CurrentTheme) {
@@ -348,6 +348,7 @@ void BuildAFScreen() {
       mappedfreqold3[i] = 0;
       eonpicodeold[i][0] = '\0';
       eonpsold[i] = "";
+      eonptyold[i] = 254;
     }
     for (byte i = 0; i < 20; i++) std::memset(eonpicodeold[i], '\0', sizeof(eonpicodeold[i]));
 
