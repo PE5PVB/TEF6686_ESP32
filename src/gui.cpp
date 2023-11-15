@@ -322,7 +322,11 @@ void BuildAFScreen() {
     tft.drawLine(248, 30, 248, 0, FrameColor);
     tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, 28);
     tftPrint(0, myLanguage[language][93], 160, 222, ActiveColor, ActiveColorSmooth, 16);
-    if (afpagenr == 1) tftPrint(-1, myLanguage[language][87], 6, 48, PrimaryColor, PrimaryColorSmooth, 16); else if (afpagenr == 2) tftPrint(-1, myLanguage[language][88], 6, 48, PrimaryColor, PrimaryColorSmooth, 16);
+    if (afpagenr == 1) {
+      if (!radio.rds.hasAF) tftPrint(-1, myLanguage[language][87], 6, 48, PrimaryColor, PrimaryColorSmooth, 16);
+    } else if (afpagenr == 2) {
+      if (!radio.rds.hasEON) tftPrint(-1, myLanguage[language][88], 6, 48, PrimaryColor, PrimaryColorSmooth, 16);
+    }
     RDSstatusold = false;
     ShowFreq(0);
     Stereostatusold = false;
