@@ -486,8 +486,8 @@ void BuildMenu() {
 
       switch (af) {
         case 0: tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case 1: tftPrint(1, myLanguage[language][42], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case 2: tftPrint(1, "AF REG", 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case 1: tftPrint(1, String(myLanguage[language][42]) + " / REG ON", 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case 2: tftPrint(1, String(myLanguage[language][42]) + " / REG OFF", 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
       }
 
       if (radio.rds.rtbuffer) tftPrint(1, myLanguage[language][42], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
