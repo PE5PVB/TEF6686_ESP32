@@ -149,6 +149,7 @@ void TEF6686::power(bool mode) {
 void TEF6686::SetFreq(uint16_t frequency) {
   devTEF_Radio_Tune_To(frequency);
   currentfreq = ((frequency + 5) / 10) * 10;
+  currentfreq2 = frequency;
 }
 
 void TEF6686::SetFreqAM(uint16_t frequency) {
@@ -452,25 +453,25 @@ void TEF6686::readRDS(byte showrdserrors)
 
         if (SPIFFS.begin(true)) {
           delay(5);
-          if (currentfreq < 9000) {
+          if (currentfreq2 < 9000) {
             file = SPIFFS.open("/USA_87-90.csv");
-          } else if (currentfreq > 9000 && currentfreq < 9200) {
+          } else if (currentfreq2 > 9000 && currentfreq2 < 9200) {
             file = SPIFFS.open("/USA_90-92.csv");
-          } else if (currentfreq > 9200 && currentfreq < 9400) {
+          } else if (currentfreq2 > 9200 && currentfreq2 < 9400) {
             file = SPIFFS.open("/USA_92-94.csv");
-          } else if (currentfreq > 9400 && currentfreq < 9600) {
+          } else if (currentfreq2 > 9400 && currentfreq2 < 9600) {
             file = SPIFFS.open("/USA_94-96.csv");
-          } else if (currentfreq > 9600 && currentfreq < 9800) {
+          } else if (currentfreq2 > 9600 && currentfreq2 < 9800) {
             file = SPIFFS.open("/USA_96-98.csv");
-          } else if (currentfreq > 9800 && currentfreq < 10000) {
+          } else if (currentfreq2 > 9800 && currentfreq2 < 10000) {
             file = SPIFFS.open("/USA_98-100.csv");
-          } else if (currentfreq > 10000 && currentfreq < 10200) {
+          } else if (currentfreq2 > 10000 && currentfreq2 < 10200) {
             file = SPIFFS.open("/USA_100-102.csv");
-          } else if (currentfreq > 10200 && currentfreq < 10400) {
+          } else if (currentfreq2 > 10200 && currentfreq2 < 10400) {
             file = SPIFFS.open("/USA_102-104.csv");
-          } else if (currentfreq > 10400 && currentfreq < 10600) {
+          } else if (currentfreq2 > 10400 && currentfreq2 < 10600) {
             file = SPIFFS.open("/USA_104-106.csv");
-          } else if (currentfreq > 10600) {
+          } else if (currentfreq2 > 10600) {
             file = SPIFFS.open("/USA_106-108.csv");
           }
 
@@ -506,7 +507,7 @@ void TEF6686::readRDS(byte showrdserrors)
                 stationState[sizeof(stationState) - 1] = '\0';
               }
 
-              if (frequencyValue == currentfreq && static_cast<uint16_t>(firstColumnValue) == rds.correctPI) {
+              if (frequencyValue == currentfreq2 && static_cast<uint16_t>(firstColumnValue) == rds.correctPI) {
                 strncpy(rds.stationID, stationID, 7);
                 strncpy(rds.stationState, stationState, 2);
                 foundMatch = true;

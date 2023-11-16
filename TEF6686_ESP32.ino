@@ -1979,13 +1979,14 @@ void Round100K(unsigned int freq) {
 }
 
 void Round200K(unsigned int freq) {
-  if (freq % 10 < 5) {
-    frequency = (freq - freq % 10);
-  } else {
-    frequency = (freq - (freq % 10) + 10);
-    if ((freq % 10) % 2 != 0) frequency += 10;
-  }
+  frequency = (freq / 10) * 10;
+
+  if (freq % 10 >= 5) frequency += 10;
+  if ((frequency / 100) % 2 == 0) frequency += 10;
+  if (frequency > 10800) frequency = 10790;
+  if (frequency % 20 == 0 && (frequency / 10) % 2 == 0) frequency -= 10;
 }
+
 void Round5K(unsigned int freqAM) {
   if (freqAM % 10 < 3) {
     frequency_AM = (freqAM - freqAM % 10);
@@ -3109,8 +3110,10 @@ void TuneUp() {
 
   if (band == BAND_FM) {
     frequency += temp;
+    if (fmdefaultstepsize == 2 && stepsize == 0 && frequency == 8795) frequency = 8790;
     if (frequency >= (HighEdgeSet * 10) + 1) {
       frequency = LowEdgeSet * 10;
+      if (fmdefaultstepsize == 2 && stepsize == 0 && frequency == 8750) frequency = 8775;
       if (edgebeep) EdgeBeeper();
     }
     radio.SetFreq(frequency);
@@ -3191,8 +3194,12 @@ void TuneDown() {
 
   if (band == BAND_FM) {
     frequency -= temp;
+    if (fmdefaultstepsize == 2 && stepsize == 0 && frequency == 8770) frequency = 8775;
+    if (fmdefaultstepsize == 2 && stepsize == 0 && frequency == 8755) frequency = 10790;
+
     if (frequency < LowEdgeSet * 10) {
       frequency = HighEdgeSet * 10;
+      if (fmdefaultstepsize == 2 && stepsize == 0 && frequency == 10800) frequency = 10790;
       if (edgebeep) EdgeBeeper();
     }
     radio.SetFreq(frequency);
