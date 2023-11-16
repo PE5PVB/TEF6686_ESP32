@@ -378,7 +378,7 @@ void setup() {
 
   frequency = EEPROM.readUInt(EE_UINT16_FREQUENCY_FM);
   frequency_OIRT = EEPROM.readUInt(EE_UINT16_FREQUENCY_OIRT);
-  VolSet = EEPROM.readInt(EE_BYTE_VOLSET);
+  VolSet = EEPROM.readByte(EE_BYTE_VOLSET);
   ConverterSet = EEPROM.readUInt(EE_UINT16_CONVERTERSET);
   LowEdgeSet = EEPROM.readUInt(EE_UINT16_FMLOWEDGESET);
   HighEdgeSet = EEPROM.readUInt(EE_UINT16_FMHIGHEDGESET);
@@ -405,7 +405,7 @@ void setup() {
   iMSset = EEPROM.readByte(EE_BYTE_IMSSET);
   EQset = EEPROM.readByte(EE_BYTE_EQSET);
   band = EEPROM.readByte(EE_BYTE_BAND);
-  LowLevelSet = EEPROM.readInt(EE_BYTE_LOWLEVELSET);
+  LowLevelSet = EEPROM.readByte(EE_BYTE_LOWLEVELSET);
   memorypos = EEPROM.readByte(EE_BYTE_MEMORYPOS);
   region = EEPROM.readByte(EE_BYTE_REGION);
   radio.rds.underscore = EEPROM.readByte(EE_BYTE_RDS_UNDERSCORE);
@@ -1829,7 +1829,7 @@ void ModeButtonPress() {
         menu = false;
         menuopen = false;
         LowLevelInit = true;
-        EEPROM.writeInt(EE_BYTE_VOLSET, VolSet);
+        EEPROM.writeByte(EE_BYTE_VOLSET, VolSet);
         EEPROM.writeUInt(EE_UINT16_CONVERTERSET, ConverterSet);
         EEPROM.writeUInt(EE_UINT16_FMLOWEDGESET, LowEdgeSet);
         EEPROM.writeUInt(EE_UINT16_FMHIGHEDGESET, HighEdgeSet);
@@ -1846,7 +1846,7 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, softmutefm);
         EEPROM.writeByte(EE_BYTE_LANGUAGE, language);
         EEPROM.writeByte(EE_BYTE_SHOWRDSERRORS, showrdserrors);
-        EEPROM.writeInt(EE_BYTE_LOWLEVELSET, LowLevelSet);
+        EEPROM.writeByte(EE_BYTE_LOWLEVELSET, LowLevelSet);
         EEPROM.writeByte(EE_BYTE_REGION, region);
         EEPROM.writeByte(EE_BYTE_RDS_UNDERSCORE, radio.rds.underscore);
         EEPROM.writeByte(EE_BYTE_USBMODE, USBmode);
@@ -3348,7 +3348,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_CHECKBYTE, EE_CHECKBYTE_VALUE);
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, 10000); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, 8900);
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_OIRT, FREQ_FM_OIRT_START);
-  EEPROM.writeInt(EE_BYTE_VOLSET, 0);
+  EEPROM.writeByte(EE_BYTE_VOLSET, 0);
   EEPROM.writeUInt(EE_UINT16_CONVERTERSET, 0);
   EEPROM.writeUInt(EE_UINT16_FMLOWEDGESET, 875);
   EEPROM.writeUInt(EE_UINT16_FMHIGHEDGESET, 1080);
@@ -3375,7 +3375,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_IMSSET, 1);
   EEPROM.writeByte(EE_BYTE_EQSET, 1);
   EEPROM.writeByte(EE_BYTE_BAND, BAND_FM);
-  EEPROM.writeInt(EE_BYTE_LOWLEVELSET, -15);
+  EEPROM.writeByte(EE_BYTE_LOWLEVELSET, -15);
   EEPROM.writeByte(EE_BYTE_MEMORYPOS, 0);
   EEPROM.writeByte(EE_BYTE_REGION, 0);
   EEPROM.writeByte(EE_BYTE_RDS_UNDERSCORE, 0);
