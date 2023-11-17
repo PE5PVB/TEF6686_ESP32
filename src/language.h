@@ -628,7 +628,7 @@ static const char* const myLanguage[18][208] = {
     "Wykryte aplikacje", // 204
     "Min.", // 205 ***
     "Dynam. predkosc SPI", // 206 ***
-    "Scan sensitivity" // 207
+    "Czulosc skanowania" // 207
   },
 
   { "Hrvatski", // Croatian
