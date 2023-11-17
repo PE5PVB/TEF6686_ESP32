@@ -142,6 +142,7 @@ byte displayflip;
 byte ECCold;
 byte eonptyold[20];
 byte EQset;
+byte fmscansens;
 byte fmdefaultstepsize;
 byte fmnb;
 byte fmdeemphasis;
@@ -450,6 +451,7 @@ void setup() {
   mwstepsize = EEPROM.readByte(EE_BYTE_MWREGION);
   spispeed = EEPROM.readByte(EE_BYTE_SPISPEED);
   amscansens = EEPROM.readByte(EE_BYTE_AMSCANSENS);
+  fmscansens = EEPROM.readByte(EE_BYTE_FMSCANSENS);
 
   if (spispeed == SPI_SPEED_DEFAULT) tft.setSPISpeed(SPI_FREQUENCY / 1000000); else tft.setSPISpeed(spispeed * 10);
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;
@@ -1884,6 +1886,7 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_MWREGION, mwstepsize);
         EEPROM.writeByte(EE_BYTE_SPISPEED, spispeed);
         EEPROM.writeByte(EE_BYTE_AMSCANSENS, amscansens);
+        EEPROM.writeByte(EE_BYTE_FMSCANSENS, fmscansens);
         EEPROM.commit();
         if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
         Serial.end();
@@ -3263,7 +3266,7 @@ void Seek(bool mode) {
 
   if (band < BAND_GAP) {
     radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
-    if ((USN < 200) && (WAM < 230) && (OStatus < 80 && OStatus > -80) && (Squelch < SStatus || Squelch == 920)) {
+    if ((USN < fmscansens * 30) && (WAM < 230) && (OStatus < 80 && OStatus > -80) && (Squelch < SStatus || Squelch == 920)) {
       seek = false;
       radio.setUnMute();
       if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
@@ -3432,6 +3435,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_MWREGION, 0);
   EEPROM.writeByte(EE_BYTE_SPISPEED, 3);
   EEPROM.writeByte(EE_BYTE_AMSCANSENS, 4);
+  EEPROM.writeByte(EE_BYTE_FMSCANSENS, 4);
   EEPROM.commit();
 }
 

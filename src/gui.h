@@ -74,6 +74,7 @@ extern byte batteryoptionsold;
 extern byte ContrastSet;
 extern byte CurrentTheme;
 extern byte ECCold;
+extern byte fmscansens;
 extern byte fmdefaultstepsize;
 extern byte fmnb;
 extern byte fmdeemphasis;
