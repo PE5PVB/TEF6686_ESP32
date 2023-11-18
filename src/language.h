@@ -2736,9 +2736,9 @@ static const char* const myLanguage[18][208] = {
     "Rilascia il pulsante", // 2
     "Schermo capovolto", // 3
     "Calibraz. meter analogico", // 4
-    "Se pronto, rilasciare pulsante", // 5
-    "Codifica di freq: ottica", // 6
-    "Ccodifica di freq: standard", // 7
+    "Al termine, rilasciare pulsante", // 5
+    "Sintonia di freq: ottica", // 6
+    "Sintonia di freq: standard", // 7
     "Ricevitore FM/AM", // 8
     "Ricevitore: !Nessuno!", // 9
     "Volume: ", // 10
@@ -2799,16 +2799,16 @@ static const char* const myLanguage[18][208] = {
     "Soppressione rumore FM", // 65
     "Predefiniti caricati", // 66
     "Uscita audio", // 67
-    "Allow tuning during screensaver", // 68
+    "Consenti sintonia con salvaschermo", // 68
     "Inversione schermo", // 69
     "Info sul software", // 70
     "Codice principale:", // 71
     "Collaboratori: ", // 72
     "Sconosciuto", // 73
-    "Screensaver options", // 74 ***
-    "Time-out timer", // 75 ***
+    "Opzioni salvaschermo", // 74 ***
+    "Timer di time-out", // 75 ***
     "Schermo spento", // 76
-    "Motivo display", // 77
+    "Motivo schermo", // 77
     "Predefinito", // 78
     "Ciano", // 79
     "Cremisi", // 80
@@ -2830,115 +2830,115 @@ static const char* const myLanguage[18][208] = {
     "50% di luminosità", // 96
     "Offset livello RF AM: ", // 97
     "Unità S-meter: ", // 98
-    "Use AF:", // 99
-    "Select FM Band:", // 100
-    "Select AM Band:", // 101
+    "Utilizzare AF:", // 99
+    "Selezionare banda FM:", // 100
+    "Selezionare banda AM:", // 101
     "LW", // 102 ***
     "MW", // 103 ***
     "SW", // 104 ***
     "FM", // 105 ***
     "OIRT", // 106 ***
-    "Rotating while screen off", // 107 ***
-    "Model selector", // 108 ***
+    "Rotazione a schermo spento", // 107 ***
+    "Selezionare modello", // 108 ***
     "Base (ILI9341)", // 109 ***
-    "Portable (ILI9341)", // 110 ***
-    "Portable touch (ILI9341)", // 111 ***
-    "Title", // 112 ***
+    "Portatile (ILI9341)", // 110 ***
+    "Portatile touch (ILI9341)", // 111 ***
+    "Titolo", // 112 ***
     "Album", // 113 ***
-    "Track", // 114 ***
-    "Artist", // 115 ***
-    "Composition", // 116 ***
-    "Movement", // 117 ***
-    "Conductor", // 118 ***
-    "Composer", // 119 ***
+    "Traccia", // 114 ***
+    "Artista", // 115 ***
+    "Composizione", // 116 ***
+    "Movimento", // 117 ***
+    "Direttore", // 118 ***
+    "Compositore", // 119 ***
     "Band", // 120 ***
-    "Comment", // 121 ***
-    "Genre", // 122 ***
-    "News", // 123 ***
-    "Local news", // 124 ***
-    "Stockmarket", // 125 ***
+    "Commento", // 121 ***
+    "Genere", // 122 ***
+    "Notizie", // 123 ***
+    "Notizie locali", // 124 ***
+    "Borsa", // 125 ***
     "Sport", // 126 ***
-    "Lottery", // 127 ***
-    "Horoscope", // 128 ***
-    "Daily Diversion", // 129 ***
-    "Health", // 130 ***
-    "Event", // 131 ***
-    "Scene", // 132 ***
+    "Lotterie", // 127 ***
+    "Oroscopo", // 128 ***
+    "Svago quotidiano", // 129 ***
+    "Salute", // 130 ***
+    "Eventi", // 131 ***
+    "Scena", // 132 ***
     "Cinema", // 133 ***
     "TV", // 134 ***
-    "Date/time", // 135 ***
-    "Weather", // 136 ***
-    "Traffic", // 137 ***
-    "Alarm", // 138 ***
-    "Advertisement", // 139 ***
-    "Website", // 140 ***
-    "Other", // 141 ***
-    "Short PS", // 142 ***
-    "Long PS", // 143 ***
-    "Now", // 144 ***
-    "Next", // 145 ***
-    "Part", // 146 ***
-    "Host", // 147 ***
-    "Editor", // 148 ***
-    "Frequency", // 149 ***
+    "Data/ora", // 135 ***
+    "Meteo", // 136 ***
+    "Traffico", // 137 ***
+    "Allerta", // 138 ***
+    "Pubblicità", // 139 ***
+    "Sito Web", // 140 ***
+    "Altro", // 141 ***
+    "PS breve", // 142 ***
+    "PS lungo", // 143 ***
+    "Adesso", // 144 ***
+    "Prossimo", // 145 ***
+    "Parte", // 146 ***
+    "Conduttore", // 147 ***
+    "Redattore", // 148 ***
+    "Frequenza", // 149 ***
     "Homepage", // 150 ***
-    "Subchannel", // 151 ***
-    "Hotline", // 152 ***
-    "Studio phone", // 153 ***
-    "Phone", // 154 ***
+    "Sottocanale", // 151 ***
+    "Telefono emergenze", // 152 ***
+    "Telefono studio", // 153 ***
+    "Telefono", // 154 ***
     "SMS studio", // 155 ***
     "SMS", // 156 ***
-    "Email hotline", // 157 ***
+    "Email emergenze", // 157 ***
     "Email studio", // 158 ***
     "Email", // 159 ***
     "Chat", // 160 ***
-    "Chat centre", // 161 ***
-    "Vote question", // 162 ***
-    "Vote centre", // 163 ***
-    "Place", // 164 ***
-    "Appointment", // 165 ***
-    "Identifier", // 166 ***
-    "Purchase", // 167 ***
-    "Get data", // 168 ***
-    "MW default stepsize", // 169 ***
+    "Centro Chat", // 161 ***
+    "Domanda votazione", // 162 ***
+    "Centro votazione", // 163 ***
+    "Luogo", // 164 ***
+    "Appuntamento", // 165 ***
+    "Identificatore", // 166 ***
+    "Acquisto", // 167 ***
+    "Ottieni dati", // 168 ***
+    "Passo di default MW", // 169 ***
     "Tangerine", // 170 ***
     "Ocean", // 171 ***
     "Indigo", // 172 ***
-    "Battery options", // 173 ***
-    "Show voltage", // 174 ***
-    "Show percentage", // 175 ***
-    "RT buffering", // 176 ***
-    "Main settings", // 177 ***
-    "Audio settings", // 178 ***
-    "Display settings", // 179 ***
-    "RDS settings", // 180 ***
-    "FM settings", // 181 ***
-    "AM settings", // 182 ***
-    "Connectivity", // 183 ***
-    "PRESS MODE TO RETURN", // 184 ***
-    "AM CoChannelDet", // 185
-    "CoChannelDet sensitivity", // 186
-    "AM CoChannelDet threshold", // 187
-    "CoChannelDet counter", // 188
-    "MAIN", // 189 ***
+    "Opzioni batteria", // 173 ***
+    "Mostra tensione", // 174 ***
+    "Mostra percentuale", // 175 ***
+    "Buffering RT", // 176 ***
+    "Impostazioni principali", // 177 ***
+    "Impostazioni audio", // 178 ***
+    "Impostazioni schermo", // 179 ***
+    "Impostazioni RDS", // 180 ***
+    "Impostazioni FM", // 181 ***
+    "Impostazioni AM", // 182 ***
+    "Connettività", // 183 ***
+    "PREMI MODO PER CONFERMARE", // 184 ***
+    "CoChannelDet AM", // 185
+    "Sensibilità CoChannelDet", // 186
+    "Soglia CoChannelDet AM", // 187
+    "Contatore CoChannelDet", // 188
+    "PRINCIPALE", // 189 ***
     "AUDIO", // 190 ***
-    "DISPLAY", // 191 ***
+    "SCHERMO", // 191 ***
     "RDS", // 192 ***
     "FM", // 193 ***
     "AM", // 194 ***
-    "CONNECT", // 195 ***
-    "Auto sort AF", // 196 ***
-    "Stationlist ID", // 197 ***
-    "AM ATT", // 198
-    "FM deemphasis", // 199 ***
-    "Small", // 200 ***
-    "Large", // 201 ***
-    "All", // 202 ***
-    "Fast PS", // 203 ***
-    "Detected applications", // 204 ***
+    "CONNETTI", // 195 ***
+    "Autoordinamento AF", // 196 ***
+    "ID Stationlist", // 197 ***
+    "ATT AM", // 198
+    "Deenfasi FM", // 199 ***
+    "Piccolo", // 200 ***
+    "Grande", // 201 ***
+    "Tutto", // 202 ***
+    "PS veloce", // 203 ***
+    "Applicazioni rilevate", // 204 ***
     "Min.", // 205 ***
-    "Dynamic SPI speed", // 206 ***
-    "Scan sensitivity" // 207
+    "Velocità SPI Dinamico", // 206 ***
+    "Sensibilità scansione" // 207
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -2951,16 +2951,16 @@ static const char* const myLanguage[18][208] = {
     "设置为标准编码器", // 7
     "FM/AM TEF6686收音机", // 8
     "没有收音芯片 ！", // 9
-    "音量:", // 10
-    "偏移量:", // 11
-    "FM 最低频率:", // 12
-    "FM 最高频率:", // 13
-    "FM信号偏移量:", // 14
-    "立体声阈值:", // 15
-    "高切角:", // 16
-    "高切门限:", // 17
-    "弱信号门限:", // 18
-    "屏幕亮度:", // 19
+    "音量", // 10
+    "偏移量", // 11
+    "FM 最低频率", // 12
+    "FM 最高频率", // 13
+    "FM信号偏移量", // 14
+    "立体声阈值", // 15
+    "高切角", // 16
+    "高切门限", // 17
+    "弱信号门限", // 18
+    "屏幕亮度", // 19
     "设置音量", // 20
     "设置频率偏移量", // 21
     "设置 FM 最低频率", // 22
@@ -3012,8 +3012,8 @@ static const char* const myLanguage[18][208] = {
     "盲操", // 68
     "LCD颜色反转", // 69
     "关于(About)", // 70
-    "主程序:", // 71
-    "贡献者:", // 72
+    "主程序", // 71
+    "贡献者", // 72
     "未知", // 73
     "屏保选项", // 74
     "倒计时关机", // 75
@@ -3038,11 +3038,11 @@ static const char* const myLanguage[18][208] = {
     "屏幕 1% 亮度", // 94
     "屏幕 25% 亮度", // 95
     "屏幕 50% 亮度", // 96
-    "AM 高频信号偏移:", // 97
-    "信号单位:", // 98
-    "使用 AF:", // 99
-    "选择FM波段:", // 100
-    "选择AM波段:", // 101
+    "AM 高频信号偏移", // 97
+    "信号单位", // 98
+    "使用 AF", // 99
+    "选择FM波段", // 100
+    "选择AM波段", // 101
     "LW", // 102 ***
     "MW", // 103 ***
     "SW", // 104 ***
@@ -3148,7 +3148,7 @@ static const char* const myLanguage[18][208] = {
     "Detected applications", // 204 ***
     "分钟", // 205
     "调整SPI通讯速率", // 206
-    "Scan sensitivity" // 207
+    "搜索灵敏度" // 207
   },
 
   { "Norsk", // Norwegian
