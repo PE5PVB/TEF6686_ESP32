@@ -109,7 +109,7 @@
 #define EE_PRESETS_CNT              99
 #define EE_CHECKBYTE_VALUE          42 // 0 ~ 255,add new entry, change for new value
 
-#define EE_TOTAL_CNT                819
+#define EE_TOTAL_CNT                821
 #define EE_UINT16_FREQUENCY_FM      0
 #define EE_BYTE_VOLSET              4
 #define EE_BYTE_STEREO              5
