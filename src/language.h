@@ -3357,8 +3357,8 @@ static const char* const myLanguage[18][208] = {
     "Rask PS", // 203
     "Oppdaget applikasjoner", // 204
     "Min.", // 205 ***
-    "Dynamisk SPI hastighet", // 206 ***
-    "Scan sensitivity" // 207
+    "Dynamisk SPI hastighet", // 206
+    "Skannefølsomhet" // 207
   },
 
   { "Español", // Spanish
