@@ -677,13 +677,13 @@ void BuildAdvancedRDS() {
     }
 
     tftPrint(-1, "TP", 2, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "TA", 25, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "AF", 52, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "-B", 70, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "TMC", 90, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "RT+", 127, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "EON", 155, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "S", 188, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "TA", 24, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "AF", 50, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "-B", 68, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "TMC", 88, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "RT+", 125, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "EON", 153, 51, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "S", 185, 51, GreyoutColor, BackgroundColor, 16);
     tftPrint(-1, "M", 196, 51, GreyoutColor, BackgroundColor, 16);
   }
 
@@ -2152,7 +2152,7 @@ void DoMenu() {
 
           case ITEM7:
             Infoboxprint(myLanguage[language][199]);
-            if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(1, String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_75), DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(1, String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_75), DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(-1, "μs", 170, 118, ActiveColor, PrimaryColorSmooth, 28);
             break;
         }
@@ -2221,7 +2221,7 @@ void DoMenu() {
           case ITEM10:
             Infoboxprint(myLanguage[language][75]);
             if (tot != 0) tftPrint(-1, myLanguage[language][205], 170, 118, ActiveColor, ActiveColorSmooth, 28);
-            if (tot != 0) tftPrint(1, String(tot), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            if (tot != 0) tftPrint(1, String(tot), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
         }
         break;
