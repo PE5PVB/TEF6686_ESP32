@@ -33,7 +33,7 @@
 #define CONTRASTPIN     2
 #define STANDBYLED      19
 #define SMETERPIN       27
-#define VERSION         "v2.00 development beta"
+#define VERSION         "v2rc1"
 
 // #define CHINA_PORTABLE      // uncomment for China Portable build (Simplified Chinese)
 #define DYNAMIC_SPI_SPEED   // uncomment to enable dynamic SPI Speed https://github.com/ohmytime/TFT_eSPI_DynamicSpeed
