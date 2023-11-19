@@ -119,7 +119,7 @@ void ShowAdvancedRDS() {
   if (radio.rds.hasRDSplus) rtplusstring = (radio.rds.rdsplusTag1 != 169 ? String(myLanguage[language][radio.rds.rdsplusTag1]) + ": " + String(radio.rds.RTContent1) : "") + (radio.rds.rdsplusTag2 != 169 ? " - " + String(myLanguage[language][radio.rds.rdsplusTag2]) + ": " + String(radio.rds.RTContent2) : "") + "         "; else rtplusstring = myLanguage[language][89];
   if (hasrtplusold != radio.rds.hasRDSplus) {
     if (!screenmute) {
-      if (radio.rds.hasRDSplus) tftPrint(-1, "RT+", 125, 51, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "RT+", 125, 51, GreyoutColor, BackgroundColor, 16);
+      if (radio.rds.hasRDSplus) tftPrint(-1, "RT+", 123, 51, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "RT+", 123, 51, GreyoutColor, BackgroundColor, 16);
     }
     hasrtplusold = radio.rds.hasRDSplus;
   }
