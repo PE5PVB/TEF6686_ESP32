@@ -35,6 +35,7 @@ extern bool artheadold;
 extern bool BWreset;
 extern bool change;
 extern bool compressedold;
+extern bool dropout;
 extern bool dynamicPTYold;
 extern bool dynamicspi;
 extern bool edgebeep;

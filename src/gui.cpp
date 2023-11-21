@@ -597,7 +597,6 @@ void BuildMenu() {
 }
 
 void BuildAdvancedRDS() {
-  rdsreset = true;
   afscreen = false;
   afpage = false;
   afpagenr = 1;
@@ -721,6 +720,8 @@ void BuildAdvancedRDS() {
   hasrtplusold = false;
   afmethodBold = false;
   rds_clockold = "";
+  dropout = false;
+  rdsreset = true;
   ShowMemoryPos();
 }
 
@@ -849,6 +850,7 @@ void BuildDisplay() {
   stationIDold = " ";
   stationStateold = " ";
   BWreset = true;
+  dropout = false;
   if (band < BAND_GAP) tftPrint(-1, "MHz", 258, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 28); else tftPrint(-1, "kHz", 258, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 28);
 }
 
