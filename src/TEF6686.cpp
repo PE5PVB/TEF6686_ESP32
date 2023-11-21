@@ -1418,9 +1418,9 @@ void TEF6686::readRDS(byte showrdserrors)
             }
 
             if (offset > 3 && eon[position].pi == rds.rdsD) {                                                                       // Last chars are received
-              RDScharConverter(eon_buffer[position], EONPStext[position], sizeof(EONPStext[position]) / sizeof(wchar_t), true);     // Convert 8 bit ASCII to 16 bit ASCII
+              RDScharConverter(eon_buffer[position], EONPStext[position], sizeof(EONPStext[position]) / sizeof(wchar_t), false);     // Convert 8 bit ASCII to 16 bit ASCII
               String utf8String = convertToUTF8(EONPStext[position]);                                                               // Convert RDS characterset to ASCII
-              eon[position].ps = extractUTF8Substring(utf8String, 0, 8, true);                                                      // Make sure PS does not exceed 8 characters
+              eon[position].ps = extractUTF8Substring(utf8String, 0, 8, false);                                                      // Make sure PS does not exceed 8 characters
               for (int j = 0; j < 9; j++) eon_buffer[position][j] = '\0';                                                           // Clear buffer
             }
 
