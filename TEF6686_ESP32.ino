@@ -1119,6 +1119,10 @@ void doBandSelectionFM() {
         SelectBand();
       }
       break;
+    case FM_BAND_NONE:
+      ToggleBand(band);
+      SelectBand();
+      break;
   }
 }
 
@@ -1178,6 +1182,29 @@ void doBandSelectionAM() {
         SelectBand();
       }
       break;
+    case AM_BAND_NONE:
+      ToggleBand(band);
+      SelectBand();
+      break;
+  }
+}
+
+void AMjumptoFM() {
+  if (bandFM != FM_BAND_NONE) {
+    if (bandFM == FM_BAND_FM) band = BAND_FM; else band = BAND_OIRT;
+  } else {
+    // do nothing
+  }
+}
+
+void FMjumptoAM() {
+  if (bandAM == AM_BAND_ALL || bandAM == AM_BAND_LW_MW || bandAM == AM_BAND_LW_SW || bandAM == AM_BAND_LW) {
+    band = BAND_LW;
+    if (stepsize > 3) stepsize = 3;
+  } else if (bandAM == AM_BAND_MW_SW || bandAM == AM_BAND_MW) {
+    band = BAND_MW;
+  } else if (bandAM == AM_BAND_SW) {
+    band = BAND_SW;
   }
 }
 
@@ -1188,51 +1215,56 @@ void ToggleBand(byte nowBand) {
         band = BAND_MW;
       } else if (bandAM == AM_BAND_LW_SW) {
         band = BAND_SW;
-      } else if (bandAM == AM_BAND_LW) {
-        if (bandFM == FM_BAND_FM) band = BAND_FM; else band = BAND_OIRT;
+      } else if (bandAM == AM_BAND_LW || bandAM == AM_BAND_NONE) {
+        AMjumptoFM();
       }
       break;
     case BAND_MW:
       if (bandAM == AM_BAND_MW_SW || bandAM == AM_BAND_ALL) {
         band = BAND_SW;
-      } else if (bandAM == AM_BAND_LW_MW || bandAM == AM_BAND_MW) {
-        if (bandFM == FM_BAND_FM) band = BAND_FM; else band = BAND_OIRT;
+      } else if (bandAM == AM_BAND_LW_MW) {
+        if (bandFM != FM_BAND_NONE) {
+          if (bandFM == FM_BAND_FM) band = BAND_FM; else band = BAND_OIRT;
+        } else {
+          band = BAND_LW;
+        }
+      } else if (bandAM == AM_BAND_MW || bandAM == AM_BAND_NONE) {
+        AMjumptoFM();
       }
       break;
     case BAND_SW:
-      if (bandFM == FM_BAND_FM) band = BAND_FM; else band = BAND_OIRT;
+      if (bandFM != FM_BAND_NONE) {
+        if (bandFM == FM_BAND_FM) band = BAND_FM; else band = BAND_OIRT;
+      } else {
+        if (bandAM == AM_BAND_LW_SW || bandAM == AM_BAND_ALL) {
+          band = BAND_LW;
+        } else if (bandAM == AM_BAND_MW_SW) {
+          band = BAND_MW;
+        } else if (bandAM == AM_BAND_SW || bandAM == AM_BAND_NONE) {
+          AMjumptoFM();
+        }
+      }
       break;
     case BAND_OIRT:
-      if (bandFM == FM_BAND_ALL) {
+      if (bandFM == FM_BAND_ALL || bandFM == FM_BAND_FM) {
         band = BAND_FM;
       } else if (bandFM == FM_BAND_OIRT) {
-        if (bandAM == AM_BAND_ALL || bandAM == AM_BAND_LW_MW || bandAM == AM_BAND_LW_SW || bandAM == AM_BAND_LW) {
-          band = BAND_LW;
-          if (stepsize > 3) stepsize = 3;
+        if (bandAM != AM_BAND_NONE) {
+          FMjumptoAM();
+        } else {
+          // do nothing
         }
-      } else if (bandAM == AM_BAND_MW_SW || bandAM == AM_BAND_MW) {
-        band = BAND_MW;
-      } else if (bandAM == AM_BAND_SW) {
-        band = BAND_SW;
-      } else if (bandFM == FM_BAND_FM) {
-        if (bandAM == AM_BAND_ALL || bandAM == AM_BAND_LW_MW || bandAM == AM_BAND_LW_SW || bandAM == AM_BAND_LW) {
-          band = BAND_LW;
-          if (stepsize > 3) stepsize = 3;
-        }
-      } else if (bandAM == AM_BAND_MW_SW || bandAM == AM_BAND_MW) {
-        band = BAND_MW;
-      } else if (bandAM == AM_BAND_SW) {
-        band = BAND_SW;
       }
       break;
     case BAND_FM:
-      if (bandAM == AM_BAND_ALL || bandAM == AM_BAND_LW_MW || bandAM == AM_BAND_LW_SW || bandAM == AM_BAND_LW) {
-        band = BAND_LW;
-        if (stepsize > 3) stepsize = 3;
-      } else if (bandAM == AM_BAND_MW_SW || bandAM == AM_BAND_MW) {
-        band = BAND_MW;
-      } else if (bandAM == AM_BAND_SW) {
-        band = BAND_SW;
+      if (bandAM != AM_BAND_NONE) {
+        FMjumptoAM();
+      } else {
+        if (bandFM == FM_BAND_OIRT || bandFM == FM_BAND_ALL) {
+          band = BAND_OIRT;
+        } else if (bandFM == FM_BAND_FM) {
+          // do nothing
+        } 
       }
       break;
   }
