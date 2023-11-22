@@ -658,7 +658,7 @@ void TEF6686::readRDS(byte showrdserrors)
                   if ((rds.rdsC & 0xFF) > 0 && (rds.rdsC & 0xFF) < 205) buffer1 = (rds.rdsC & 0xFF) * 10 + 8750; else buffer1 = 0;
 
                   if (((rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205) && (buffer0 == doubletestfreq || buffer1 == doubletestfreq)) doublecounter++;
-                  if (doublecounter > 0) afmethodB = true;                                      // If signed frequency also in the AF list, AF Method B detected
+                  if (doublecounter > 1) afmethodB = true;                                      // If signed frequency also appears more than once in the AF list, AF Method B detected
 
                   if (afmethodBprobe && af_counterbcheck > af_counterb) afmethodBprobe = false; // If more than counter received disable probe flag
 
