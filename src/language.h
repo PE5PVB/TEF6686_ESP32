@@ -209,7 +209,7 @@ static const char* const myLanguage[18][209] = {
     "Min.", // 205
     "Dynamic SPI speed", // 206
     "Scan sensitivity", // 207
-    "NONE" // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "NONE"
   },
 
   { "Nederlands", // Dutch
@@ -420,7 +420,7 @@ static const char* const myLanguage[18][209] = {
     "Min.", // 205 ***
     "Dynamische\nSPI snelheid", // 206
     "Zoek gevoeligheid", // 207
-    "NONE" // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "Geen"
   },
 
   { "Polski", // Polish
