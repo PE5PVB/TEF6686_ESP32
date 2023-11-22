@@ -3374,7 +3374,7 @@ static const char* const myLanguage[18][209] = {
     "Min.", // 205 ***
     "Dynamisk SPI hastighet", // 206
     "Skannefølsomhet", // 207
-    "NONE" // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "INGEN" // 208
   },
 
   { "Español", // Spanish
