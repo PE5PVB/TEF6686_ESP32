@@ -1816,6 +1816,7 @@ void ModeButtonPress() {
   } else {
     if (!menu) {
       seek = false;
+      memorystore = false;
       unsigned long counterold = millis();
       unsigned long counter = millis();
       while (digitalRead(MODEBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
