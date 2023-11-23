@@ -3248,7 +3248,7 @@ static const char* const myLanguage[18][210] = {
     "Vis SW-bånd", // 59
     "RDS filter", // 60 ***
     "Vis PI feil", // 61
-    "Vis squelch", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
+    "Bruk squelch", // 62
     "Modulasjonsmåler", // 63
     "AM Noise blanker", // 64 ***
     "FM Noise blanker", // 65 ***
