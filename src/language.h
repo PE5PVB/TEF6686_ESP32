@@ -1053,7 +1053,7 @@ static const char* const myLanguage[18][209] = {
     "Λεπτά", // 205
     "Δυναμική ταχύτητα\nSPI", // 206
     "Ευαισθησία\nανίχνευσης", // 207
-    "NONE" // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "KAMIA" // 208
   },
 
   { "Română", // Romanian
@@ -2108,7 +2108,7 @@ static const char* const myLanguage[18][209] = {
     "Min.", // 205
     "Vitesse SPI\ndynamique", // 206
     "Sensibilité\ndu scanne ", // 207
-    "NONE" // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "AUC." // 208
   },
 
   { "Български", // Bulgarian
@@ -3585,7 +3585,7 @@ static const char* const myLanguage[18][209] = {
     "Min.", // 205
     "Velocidad de SPI", // 206
     "Sensibilidad\ndel escaneo", // 207
-    "NONE" // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "NING." // 208
   },
 
   { "Português", // Portuguese
@@ -3796,6 +3796,6 @@ static const char* const myLanguage[18][209] = {
     "Min.", // 205
     "Velocidade dinâmica\nde SPI", // 206
     "Sensibilidade\nda varredura", // 207
-    "NONE" // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "NEN." // 208
   }
 };
