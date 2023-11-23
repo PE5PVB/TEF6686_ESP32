@@ -160,6 +160,7 @@ byte memoryband[EE_PRESETS_CNT];
 byte memorybw[EE_PRESETS_CNT];
 byte memorypos;
 byte memoryposold;
+byte memoryposstatus;
 byte menupage;
 byte MSold;
 byte optenc;
@@ -501,6 +502,8 @@ void setup() {
       }
       break;
   }
+
+  if (IsStationEmpty()) memoryposstatus = MEM_DARK; else memoryposstatus = MEM_NORMAL;
 
   tft.init();
   doTheme();
@@ -2073,6 +2076,10 @@ void ButtonPress() {
     if (tunemode == TUNE_MEM) {
       if (!memorystore) {
         memorystore = true;
+        if (!IsStationEmpty()) memoryposstatus = MEM_EXIST;
+        else memoryposstatus = MEM_NORMAL;
+        ShowMemoryPos();
+
         ShowTuneMode();
       } else {
         memorystore = false;
@@ -2106,6 +2113,10 @@ void ButtonPress() {
           memory[memorypos] = frequency_SW;
         }
         ShowTuneMode();
+        if (memoryposstatus == MEM_DARK || memoryposstatus == MEM_EXIST) {
+          memoryposstatus = MEM_NORMAL;
+          ShowMemoryPos();
+        }
       }
     } else {
       seek = false;
@@ -2208,9 +2219,14 @@ void KeyUp() {
 
         case TUNE_MEM:
           memorypos++;
-          if (memorypos > EE_PRESETS_CNT - 1) memorypos = 0;
+          if (memorypos > EE_PRESETS_CNT - 1) memorypos = 0; 
+          if (!memorystore) {
+            DoMemoryPosTune();
+          } else {
+            if (!IsStationEmpty()) memoryposstatus = MEM_EXIST;
+            else memoryposstatus = MEM_NORMAL;
+          }
           ShowMemoryPos();
-          if (!memorystore) DoMemoryPosTune();
           EEPROM.writeByte(EE_BYTE_MEMORYPOS, memorypos);
           EEPROM.commit();
           break;
@@ -2256,8 +2272,13 @@ void KeyDown() {
         case TUNE_MEM:
           memorypos--;
           if (memorypos > EE_PRESETS_CNT - 1) memorypos = EE_PRESETS_CNT - 1;
+          if (!memorystore) {
+            DoMemoryPosTune();
+          } else {
+            if (!IsStationEmpty()) memoryposstatus = MEM_EXIST;
+            else memoryposstatus = MEM_NORMAL;
+          }
           ShowMemoryPos();
-          if (!memorystore) DoMemoryPosTune();
           EEPROM.writeByte(EE_BYTE_MEMORYPOS, memorypos);
           EEPROM.commit();
           break;
@@ -2285,9 +2306,24 @@ void KeyDown() {
   }
 }
 
+bool IsStationEmpty() {
+  if (memoryband[memorypos] == BAND_FM && memory[memorypos] == EE_PRESETS_FREQUENCY) {
+    return true;
+  }
+  return false;
+}
+
 void ShowMemoryPos() {
   if (tunemode == TUNE_MEM) {
-    if (advancedRDS) tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 215, 36, SecondaryColor, SecondaryColorSmooth, 16); else tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 50, 32, PrimaryColor, PrimaryColorSmooth, 16);
+    int memposcolor;
+    log_e("memoryposstatus %d:",memoryposstatus);
+    switch (memoryposstatus) {
+      // case MEM_DARK: memposcolor = GreyoutColor; break;
+      case MEM_DARK: memposcolor = InsignificantColor; break;
+      case MEM_NORMAL: memposcolor = PrimaryColor; break;
+      case MEM_EXIST: memposcolor = SignificantColor; break;
+    }
+    if (advancedRDS) tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 215, 36, SecondaryColor, SecondaryColorSmooth, 16); else tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 50, 32, memposcolor, PrimaryColorSmooth, 16);
     memoryposold = memorypos;
   } else {
     if (advancedRDS) tftPrint(-1, String(memorypos + 1), 215, 36, BackgroundColor, BackgroundColor, 16); else tftPrint(-1, String(memorypos + 1), 50, 32, BackgroundColor, BackgroundColor, 16);
@@ -2295,6 +2331,14 @@ void ShowMemoryPos() {
 }
 
 void DoMemoryPosTune() {
+  // Process empty stations
+  if (IsStationEmpty()) {
+    memoryposstatus = MEM_DARK;
+    return;
+  } else {
+    memoryposstatus = MEM_NORMAL;
+  }
+
   if (band != memoryband[memorypos]) {
     band = memoryband[memorypos];
     SelectBand();

@@ -73,7 +73,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BackgroundColor = TFT_BLACK;
       ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
-      SignificantColor = TFT_RED;
+      SignificantColor = TFT_GREEN;
       SignificantColorSmooth = 0x2000;
       InsignificantColor = TFT_GREEN;
       InsignificantColorSmooth = 0x00C0;
@@ -153,7 +153,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       ActiveColorSmooth = 0x18E3;
       SignificantColor = TFT_RED;
       SignificantColorSmooth = 0x2000;
-      InsignificantColor = TFT_GREEN;
+      InsignificantColor = 0xAA1C;
       InsignificantColorSmooth = 0x00C0;
       StereoColor = TFT_GREEN;
       StereoColorSmooth = 0x0200;
@@ -203,7 +203,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BackgroundColor = 0xDFFC;
       ActiveColor = TFT_BLACK;
       ActiveColorSmooth = 0xDFFC;
-      SignificantColor = TFT_BLACK;
+      SignificantColor = TFT_RED;
       SignificantColorSmooth = 0xDFFC;
       InsignificantColor = TFT_GREEN;
       InsignificantColorSmooth = 0x0140;
