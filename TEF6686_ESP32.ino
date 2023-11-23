@@ -1266,7 +1266,7 @@ void ToggleBand(byte nowBand) {
           band = BAND_OIRT;
         } else if (bandFM == FM_BAND_FM) {
           // do nothing
-        } 
+        }
       }
       break;
   }
@@ -2219,7 +2219,7 @@ void KeyUp() {
 
         case TUNE_MEM:
           memorypos++;
-          if (memorypos > EE_PRESETS_CNT - 1) memorypos = 0; 
+          if (memorypos > EE_PRESETS_CNT - 1) memorypos = 0;
           if (!memorystore) {
             DoMemoryPosTune();
           } else {
@@ -2315,15 +2315,26 @@ bool IsStationEmpty() {
 
 void ShowMemoryPos() {
   if (tunemode == TUNE_MEM) {
-    int memposcolor;
-    log_e("memoryposstatus %d:",memoryposstatus);
+    int memposcolor = 0;
+    int memposcolorsmooth = 0;
+    log_e("memoryposstatus %d:", memoryposstatus);
     switch (memoryposstatus) {
-      // case MEM_DARK: memposcolor = GreyoutColor; break;
-      case MEM_DARK: memposcolor = InsignificantColor; break;
-      case MEM_NORMAL: memposcolor = PrimaryColor; break;
-      case MEM_EXIST: memposcolor = SignificantColor; break;
+      case MEM_DARK:
+        memposcolor = InsignificantColor;
+        memposcolorsmooth = InsignificantColorSmooth;
+        break;
+
+      case MEM_NORMAL:
+        memposcolor = PrimaryColor;
+        memposcolorsmooth = PrimaryColorSmooth;
+        break;
+
+      case MEM_EXIST:
+        memposcolor = SignificantColor;
+        memposcolorsmooth = SignificantColorSmooth;
+        break;
     }
-    if (advancedRDS) tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 215, 36, SecondaryColor, SecondaryColorSmooth, 16); else tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 50, 32, memposcolor, PrimaryColorSmooth, 16);
+    if (advancedRDS) tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 215, 36, SecondaryColor, SecondaryColorSmooth, 16); else tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 50, 32, memposcolor, memposcolorsmooth, 16);
     memoryposold = memorypos;
   } else {
     if (advancedRDS) tftPrint(-1, String(memorypos + 1), 215, 36, BackgroundColor, BackgroundColor, 16); else tftPrint(-1, String(memorypos + 1), 50, 32, BackgroundColor, BackgroundColor, 16);
