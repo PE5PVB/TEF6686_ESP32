@@ -3395,7 +3395,7 @@ static const char* const myLanguage[18][210] = {
     "Dynamisk SPI hastighet", // 206
     "Skannefølsomhet", // 207
     "INGEN", // 208
-    "Software version" // 209
+    "Programvareversjon" // 209
   },
 
   { "Español", // Spanish
