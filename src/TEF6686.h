@@ -749,6 +749,7 @@ class TEF6686 {
     bool afmethodBprobe;
     uint16_t rdsCold;
     uint8_t af_counterb;
+    uint8_t af_number;
     uint8_t af_counterbcheck;
     bool afmethodBtrigger;
     uint16_t correctPIold;
