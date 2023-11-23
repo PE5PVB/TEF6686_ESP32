@@ -94,7 +94,7 @@ bool screensavertriggered = false;
 bool seek;
 bool setupmode;
 byte showrdserrors;
-bool showsquelch;
+bool usesquelch;
 bool softmuteam;
 bool softmutefm;
 bool SQ;
@@ -420,7 +420,7 @@ void setup() {
   frequency_MW = EEPROM.readUInt(EE_UINT16_FREQUENCY_MW);
   frequency_SW = EEPROM.readUInt(EE_UINT16_FREQUENCY_SW);
   XDRGTK_key = EEPROM.readString(EE_STRING_XDRGTK_KEY);
-  showsquelch = EEPROM.readByte(EE_BYTE_SHOWSQUELCH);
+  usesquelch = EEPROM.readByte(EE_BYTE_USESQUELCH);
   showmodulation = EEPROM.readByte(EE_BYTE_SHOWMODULATION);
   amnb = EEPROM.readByte(EE_BYTE_AM_NB);
   fmnb = EEPROM.readByte(EE_BYTE_FM_NB);
@@ -1892,7 +1892,7 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_SHOWSWMIBAND, showSWMIBand);
         EEPROM.writeByte(EE_BYTE_RDS_FILTER, radio.rds.filter);
         EEPROM.writeByte(EE_BYTE_RDS_PIERRORS, radio.rds.pierrors);
-        EEPROM.writeByte(EE_BYTE_SHOWSQUELCH, showsquelch);
+        EEPROM.writeByte(EE_BYTE_USESQUELCH, usesquelch);
         EEPROM.writeByte(EE_BYTE_SHOWMODULATION, showmodulation);
         EEPROM.writeByte(EE_BYTE_AM_NB, amnb);
         EEPROM.writeByte(EE_BYTE_FM_NB, fmnb);
@@ -2729,14 +2729,14 @@ void ShowModLevel() {
 
 void doSquelch() {
   if (!XDRGTKUSB && !XDRGTKTCP) {
-    Squelch = analogRead(PIN_POT) / 4 - 100;
+    if (usesquelch) Squelch = analogRead(PIN_POT) / 4 - 100; else Squelch = 0;
     if (unit == 0) SquelchShow = Squelch / 10;
     if (unit == 1) SquelchShow = ((Squelch * 100) + 10875) / 1000;
     if (unit == 2) SquelchShow = round((float(Squelch) / 10.0 - 10.0 * log10(75) - 90.0) * 10.0) / 10;
 
     if (Squelch > 920) Squelch = 920;
 
-    if (!screenmute && showsquelch && !advancedRDS && !afscreen) {
+    if (!screenmute && usesquelch && !advancedRDS && !afscreen) {
       if (!menu && (Squelch > Squelchold + 2 || Squelch < Squelchold - 2)) {
         SquelchSprite.fillSprite(BackgroundColor);
         SquelchSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
@@ -2778,7 +2778,7 @@ void doSquelch() {
           SQ = true;
         }
       }
-      if (!screenmute && showsquelch && !advancedRDS && !afscreen) {
+      if (!screenmute && usesquelch && !advancedRDS && !afscreen) {
         if (Squelch != Squelchold) {
           SquelchSprite.fillSprite(BackgroundColor);
           SquelchSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
@@ -3490,7 +3490,7 @@ void DefaultSettings(byte userhardwaremodel) {
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, 540); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, 639);
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_SW, 1800); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_SW, 5000);
   EEPROM.writeString(EE_STRING_XDRGTK_KEY, "password");
-  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_SHOWSQUELCH, 1); else EEPROM.writeByte(EE_BYTE_SHOWSQUELCH, 0);
+  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_USESQUELCH, 1); else EEPROM.writeByte(EE_BYTE_USESQUELCH, 0);
   EEPROM.writeByte(EE_BYTE_SHOWMODULATION, 1);
   EEPROM.writeByte(EE_BYTE_AM_NB, 0);
   EEPROM.writeByte(EE_BYTE_FM_NB, 0);

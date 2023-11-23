@@ -50,7 +50,7 @@ extern bool rdsreset;
 extern bool RDSstatus;
 extern bool RDSstatusold;
 extern bool rdsstereoold;
-extern bool showsquelch;
+extern bool usesquelch;
 extern bool softmuteam;
 extern bool softmutefm;
 extern bool Stereostatusold;

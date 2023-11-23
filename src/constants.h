@@ -155,7 +155,7 @@
 #define EE_BYTE_SHOWSWMIBAND        57
 #define EE_BYTE_RDS_FILTER          58
 #define EE_BYTE_RDS_PIERRORS        59
-#define EE_BYTE_SHOWSQUELCH         60
+#define EE_BYTE_USESQUELCH          60
 #define EE_BYTE_SHOWMODULATION      61
 #define EE_BYTE_AM_NB               62
 #define EE_BYTE_FM_NB               63

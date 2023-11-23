@@ -68,7 +68,7 @@ static const char* const myLanguage[18][210] = {
     "Show SW wavelength", // 59
     "RDS filter", // 60
     "Show PI errors", // 61
-    "Show squelch", // 62
+    "Use squelch", // 62
     "Modulation meter", // 63
     "AM Noise blanker", // 64
     "FM Noise blanker", // 65
@@ -280,7 +280,7 @@ static const char* const myLanguage[18][210] = {
     "Toon SW golflengte", // 59
     "RDS filter", // 60 ***
     "Toon PI fouten", // 61
-    "Toon squelch", // 62
+    "Gebruik squelch", // 62
     "Modulatie meter", // 63
     "AM ruis filter", // 64
     "FM ruis filter", // 65
@@ -492,7 +492,7 @@ static const char* const myLanguage[18][210] = {
     "Pokaz dlugosci fal SW", // 59
     "Filtr RDS", // 60
     "Pokaz bledy PI", // 61
-    "Pokaz blokade szumow", // 62
+    "Pokaz blokade szumow", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
     "Wskaznik modulacji", // 63
     "Reduktor szumow AM", // 64
     "Reduktor szumow FM", // 65
@@ -639,7 +639,7 @@ static const char* const myLanguage[18][210] = {
     "Dynam. predkosc SPI", // 206 ***
     "Czulosc skanowania", // 207
     "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
-    "Software version" // 209
+    "Software version" // 209 
   },
 
   { "Hrvatski", // Croatian
@@ -704,7 +704,7 @@ static const char* const myLanguage[18][210] = {
     "Prikaži valnu duljinu KV-a", // 59
     "RDS filter", // 60 ***
     "Show PI errors", // 61 ***
-    "Prikaži squelch", // 62
+    "Prikaži squelch", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
     "Mjerač modulacije", // 63
     "AM prigušivač šuma", // 64
     "FM prigušivač šuma", // 65
@@ -916,7 +916,7 @@ static const char* const myLanguage[18][210] = {
     "Εμφάνιση μήκους\nκύματος SW", // 59
     "Φίλτρο RDS", // 60
     "Εμφάνιση σφαλμάτων PI", // 61
-    "Εμφάνιση squelch", // 62
+    "Εμφάνιση squelch", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
     "Μετρητής διαμόρφωσης", // 63
     "Απαλοιφή θορύβου AM", // 64
     "Απαλοιφή θορύβου FM", // 65
@@ -1128,7 +1128,7 @@ static const char* const myLanguage[18][210] = {
     "Arată lungimea de undă SW", // 59
     "Filtru RDS", // 60
     "Arată erorile PI", // 61
-    "Arată limitatorul", // 62
+    "Arată limitatorul", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
     "Măsurare modulație", // 63
     "Eliminare zgomot AM", // 64
     "Eliminare zgomot FM", // 65
@@ -1340,7 +1340,7 @@ static const char* const myLanguage[18][210] = {
     "KW-Wellenlänge anzeigen", // 59
     "RDS-Filter", // 60
     "Zeige PI Fehler", // 61
-    "Zeige Rauschsperre", // 62
+    "Zeige Rauschsperre", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
     "Modulationspegel", // 63
     "Rauschunterdrückung", // 64
     "Rauschunterdrückung", // 65
@@ -1552,7 +1552,7 @@ static const char* const myLanguage[18][210] = {
     "Zobrazit SW pásmo", // 59
     "RDS filter", // 60 ***
     "Zobrazit chyby v PI", // 61
-    "Zobrazit squelch", // 62
+    "Zobrazit squelch", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
     "Graf modulace", // 63
     "Tlumič šumu (AM)", // 64
     "Tlumič šumu (FM)", // 65
@@ -1764,7 +1764,7 @@ static const char* const myLanguage[18][210] = {
     "Zobraziť SW pásmo", // 59
     "RDS filter", // 60 ***
     "Zobraziť chyby v PI", // 61
-    "Zobraziť squelch", // 62
+    "Zobraziť squelch", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
     "Graf modulácie", // 63
     "Utlmenie šumu (AM)", // 64
     "Utlmenie šumu (FM)", // 65
@@ -1976,7 +1976,7 @@ static const char* const myLanguage[18][210] = {
     "Afficher la longueur\nd'onde SW", // 59
     "Filtre RDS", // 60
     "Afficher les erreurs\nde décodage PI", // 61
-    "Afficher le squelch", // 62
+    "Afficher le squelch", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
     "Compteur de modulation", // 63
     "Réducteur de bruit AM", // 64
     "Réducteur de bruit FM", // 65
@@ -2188,7 +2188,7 @@ static const char* const myLanguage[18][210] = {
     "Показв. на дълж. на вълната при КВ", // 59
     "RDS филтър", // 60
     "Показване на PI грешки", // 61
-    "Показване на squelch индикатор", // 62
+    "Показване на squelch индикатор", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
     "Индикатор за модулация", // 63
     "AM заглушител на шума", // 64
     "FM заглушител на шума", // 65
@@ -2400,7 +2400,7 @@ static const char* const myLanguage[18][210] = {
     "Отображать длину волны", // 59
     "Фильтр RDS-данных", // 60
     "Ошибки PI-кода", // 61
-    "Отображать шумодав", // 62
+    "Отображать шумодав", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
     "Уровень модуляции", // 63
     "AM Noise blanker", // 64
     "FM Noise blanker", // 65
@@ -2612,7 +2612,7 @@ static const char* const myLanguage[18][210] = {
     "Показувати довжину хвилі КВ", // 59
     "Фільтр RDS", // 60
     "Показувати помилки PI", // 61
-    "Показувати шумоподавлення", // 62
+    "Показувати шумоподавлення", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
     "Метр модуляції", // 63
     "Помпи засліплення шуму AM", // 64
     "Помпи засліплення шуму FM", // 65
@@ -2824,7 +2824,7 @@ static const char* const myLanguage[18][210] = {
     "Mostra banda SW in m.", // 59
     "Filtro RDS", // 60
     "Mostra errori PI", // 61
-    "Mostra squelch", // 62
+    "Mostra squelch", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
     "Meter di modulazione", // 63
     "Soppressione rumore AM", // 64
     "Soppressione rumore FM", // 65
@@ -3036,7 +3036,7 @@ static const char* const myLanguage[18][210] = {
     "显示短波米波段", // 59
     "RDS 过滤器", // 60
     "显示 PI errors", // 61
-    "主画面显示SQ", // 62
+    "主画面显示SQ", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
     "主画面显示M表", // 63
     "AM 噪声消除", // 64
     "FM 噪声消除", // 65
@@ -3248,7 +3248,7 @@ static const char* const myLanguage[18][210] = {
     "Vis SW-bånd", // 59
     "RDS filter", // 60 ***
     "Vis PI feil", // 61
-    "Vis squelch", // 62
+    "Vis squelch", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
     "Modulasjonsmåler", // 63
     "AM Noise blanker", // 64 ***
     "FM Noise blanker", // 65 ***
@@ -3460,7 +3460,7 @@ static const char* const myLanguage[18][210] = {
     "Mostrar longitud de\nonda de SW", // 59
     "Filtro RDS", // 60
     "Mostrar errores de PI", // 61
-    "Mostrar squelch", // 62
+    "Mostrar squelch", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
     "Medidor de modulación", // 63
     "Atenuador de\nruido AM", // 64
     "Atenuador de\nruido FM", // 65
@@ -3672,7 +3672,7 @@ static const char* const myLanguage[18][210] = {
     "Mostrar comprimento\nde onda SW", // 59
     "Filtro RDS", // 60
     "Mostrar erros PI", // 61
-    "Mostrar squelch", // 62
+    "Mostrar squelch", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
     "Medidor de modulação", // 63
     "Supressor de ruído AM", // 64
     "Supressor de ruído FM", // 65
