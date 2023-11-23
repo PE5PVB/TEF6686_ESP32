@@ -2756,10 +2756,10 @@ static const char* const myLanguage[18][210] = {
     "Швидкий PS", // 203
     "Виявлені програми", // 204
     "мін.", // 205
-    "Dynamic SPI speed", // 206 ***
-    "Scan sensitivity", // 207
+    "Швидкість шини дисплея (SPI)", // 206 ***
+    "Чутливість сканування", // 207
     "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
-    "Software version" // 209
+    "Версія ПО" // 209
   },
 
   { "Italiano", // Italian
