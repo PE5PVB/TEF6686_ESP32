@@ -1,6 +1,11 @@
+#ifndef LANGUAGE_H
+#define LANGUAGE_H
+
+#define VERSION "v2.00 RC2"
+
 // [number of languages][number of texts]
 // *** means the text is the same as in English
-static const char* const myLanguage[18][209] = {
+static const char* const myLanguage[18][210] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -209,7 +214,8 @@ static const char* const myLanguage[18][209] = {
     "Min.", // 205
     "Dynamic SPI speed", // 206
     "Scan sensitivity", // 207
-    "NONE"
+    "NONE", // 208
+    "Software version" // 209
   },
 
   { "Nederlands", // Dutch
@@ -420,7 +426,8 @@ static const char* const myLanguage[18][209] = {
     "Min.", // 205 ***
     "Dynamische\nSPI snelheid", // 206
     "Zoek gevoeligheid", // 207
-    "Geen"
+    "Geen", // 208
+    "Software versie" // 209
   },
 
   { "Polski", // Polish
@@ -631,7 +638,8 @@ static const char* const myLanguage[18][209] = {
     "Min.", // 205 ***
     "Dynam. predkosc SPI", // 206 ***
     "Czulosc skanowania", // 207
-    "NONE" // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "Software version" // 209
   },
 
   { "Hrvatski", // Croatian
@@ -842,7 +850,8 @@ static const char* const myLanguage[18][209] = {
     "Min.", // 205 ***
     "Dynamic SPI speed", // 206 ***
     "Scan sensitivity", // 207
-    "NONE" // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "Software version" // 209
   },
 
   { "Ελληνικά", // Greek
@@ -1053,7 +1062,8 @@ static const char* const myLanguage[18][209] = {
     "Λεπτά", // 205
     "Δυναμική ταχύτητα\nSPI", // 206
     "Ευαισθησία\nανίχνευσης", // 207
-    "KAMIA" // 208
+    "KAMIA", // 208
+    "Software version" // 209
   },
 
   { "Română", // Romanian
@@ -1264,7 +1274,8 @@ static const char* const myLanguage[18][209] = {
     "Min.", // 205 ***
     "Dynamic SPI speed", // 206 ***
     "Scan sensitivity", // 207
-    "NONE" // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "Software version" // 209
   },
 
   { "Deutsch", // German
@@ -1475,7 +1486,8 @@ static const char* const myLanguage[18][209] = {
     "Min.", // 205
     "Dynamische \nSPI-Geschwindigkeit", // 206
     "Scanempfindlichkeit", // 207
-    "NONE" // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "Software version" // 209
   },
 
   { "Český", // Czech
@@ -1686,7 +1698,8 @@ static const char* const myLanguage[18][209] = {
     "Min.", // 205 ***
     "Dynamic SPI speed", // 206 ***
     "Scan sensitivity", // 207
-    "NONE" // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "Software version" // 209
   },
 
   { "Slovenský", // Slovak
@@ -1897,7 +1910,8 @@ static const char* const myLanguage[18][209] = {
     "Min.", // 205 ***
     "Dynamic SPI speed", // 206 ***
     "Scan sensitivity", // 207
-    "NONE" // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "Software version" // 209
   },
 
   { "Français", // French
@@ -2108,7 +2122,8 @@ static const char* const myLanguage[18][209] = {
     "Min.", // 205
     "Vitesse SPI\ndynamique", // 206
     "Sensibilité\ndu scanne ", // 207
-    "AUC." // 208
+    "AUC.", // 208
+    "Software version" // 209
   },
 
   { "Български", // Bulgarian
@@ -2319,7 +2334,8 @@ static const char* const myLanguage[18][209] = {
     "Мин.", // 205
     "Dynamic SPI speed", // 206 ***
     "Scan sensitivity", // 207
-    "NONE" // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "Software version" // 209
   },
 
   { "Русский", // Russian
@@ -2530,7 +2546,8 @@ static const char* const myLanguage[18][209] = {
     "мин.", // 205
     "Скорость шины дисплея (SPI)", // 206 ***
     "Чувствительность сканирования", // 207
-    "NONE" // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "Software version" // 209
   },
 
   { "Українська", // Ukranian
@@ -2741,7 +2758,8 @@ static const char* const myLanguage[18][209] = {
     "мін.", // 205
     "Dynamic SPI speed", // 206 ***
     "Scan sensitivity", // 207
-    "NONE" // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "Software version" // 209
   },
 
   { "Italiano", // Italian
@@ -2952,7 +2970,8 @@ static const char* const myLanguage[18][209] = {
     "Min.", // 205 ***
     "Velocità SPI Dinamico", // 206 ***
     "Sensibilità scansione", // 207
-    "NONE" // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "Software version" // 209
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3163,7 +3182,8 @@ static const char* const myLanguage[18][209] = {
     "分钟", // 205
     "调整SPI通讯速率", // 206
     "搜索灵敏度", // 207
-    "不可用" // 208
+    "不可用", // 208
+    "Software version" // 209
   },
 
   { "Norsk", // Norwegian
@@ -3374,7 +3394,8 @@ static const char* const myLanguage[18][209] = {
     "Min.", // 205 ***
     "Dynamisk SPI hastighet", // 206
     "Skannefølsomhet", // 207
-    "INGEN" // 208
+    "INGEN", // 208
+    "Software version" // 209
   },
 
   { "Español", // Spanish
@@ -3585,7 +3606,8 @@ static const char* const myLanguage[18][209] = {
     "Min.", // 205
     "Velocidad de SPI", // 206
     "Sensibilidad\ndel escaneo", // 207
-    "NING." // 208
+    "NING.", // 208
+    "Software version" // 209
   },
 
   { "Português", // Portuguese
@@ -3796,6 +3818,8 @@ static const char* const myLanguage[18][209] = {
     "Min.", // 205
     "Velocidade dinâmica\nde SPI", // 206
     "Sensibilidade\nda varredura", // 207
-    "NEN." // 208
+    "NEN.", // 208
+    "Software version" // 209
   }
 };
+#endif

@@ -379,6 +379,7 @@ void BuildMenu() {
       tftPrint(0, myLanguage[language][182], 160, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(0, myLanguage[language][183], 160, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(0, myLanguage[language][70], 160, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(0, String(myLanguage[language][209]) + " " + String(VERSION), 160, ITEM10 + 6, SecondaryColor, SecondaryColorSmooth, 16);
       break;
 
     case MAINSETTINGS:
@@ -2078,25 +2079,28 @@ void DoMenu() {
 
           case ITEM8:
             menuopen = true;
-            tft.drawRoundRect(10, 10, 300, 220, 5, ActiveColor);
-            tft.fillRoundRect(12, 12, 296, 216, 5, BackgroundColor);
-            tftPrint(0, myLanguage[language][71], 155, 18, ActiveColor, ActiveColorSmooth, 28);
-            tftPrint(0, myLanguage[language][72], 155, 68, ActiveColor, ActiveColorSmooth, 28);
-            tftPrint(0, "PE5PVB", 155, 48, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "ohmytime", 145, 98, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "HyperDX", 145, 113, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "MCelliotG", 155, 98, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "andimik", 155, 113, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "DXHR05", 145, 128, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "NoobishSVK", 145, 143, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "yo2ldk", 155, 128, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "Justin_Peng(Portable)", 155, 143, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "Overland DX", 145, 158, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "elektronik232", 155, 158, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "KOTYA8", 145, 173, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "mrwish7", 155, 173, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "lxsxl", 145, 188, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(0, "github.com/PE5PVB/TEF6686_ESP32", 155, 208, ActiveColor, ActiveColorSmooth, 16);
+            tft.drawRoundRect(10, 6, 300, 230, 5, ActiveColor);
+            tft.fillRoundRect(12, 8, 296, 226, 5, BackgroundColor);
+            tftPrint(0, myLanguage[language][71], 155, 13, ActiveColor, ActiveColorSmooth, 28);
+            tftPrint(0, myLanguage[language][72], 155, 63, ActiveColor, ActiveColorSmooth, 28);
+            tftPrint(0, "PE5PVB", 155, 43, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "ohmytime", 145, 93, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "HyperDX", 145, 108, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "MCelliotG", 155, 93, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "andimik", 155, 108, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "DXHR05", 145, 123, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "NoobishSVK", 145, 138, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "yo2ldk", 155, 123, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "Justin_Peng(Portable)", 155, 138, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "Overland DX", 145, 153, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "elektronik232", 155, 153, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "KOTYA8", 145, 168, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "mrwish7", 155, 168, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "lxsxl", 145, 183, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "leryfm", 155, 183, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "marsel90-1", 145, 198, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "lawendel", 155, 198, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(0, "github.com/PE5PVB/TEF6686_ESP32", 155, 215, ActiveColor, ActiveColorSmooth, 16);
             break;
         }
         break;
