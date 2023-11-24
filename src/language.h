@@ -916,7 +916,7 @@ static const char* const myLanguage[18][210] = {
     "Εμφάνιση μήκους\nκύματος SW", // 59
     "Φίλτρο RDS", // 60
     "Εμφάνιση σφαλμάτων PI", // 61
-    "Εμφάνιση squelch", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
+    "Χρήση squelch", // 62
     "Μετρητής διαμόρφωσης", // 63
     "Απαλοιφή θορύβου AM", // 64
     "Απαλοιφή θορύβου FM", // 65
@@ -1976,7 +1976,7 @@ static const char* const myLanguage[18][210] = {
     "Afficher la longueur\nd'onde SW", // 59
     "Filtre RDS", // 60
     "Afficher les erreurs\nde décodage PI", // 61
-    "Afficher le squelch", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
+    "Utiliser le squelch", // 62
     "Compteur de modulation", // 63
     "Réducteur de bruit AM", // 64
     "Réducteur de bruit FM", // 65
@@ -3460,7 +3460,7 @@ static const char* const myLanguage[18][210] = {
     "Mostrar longitud de\nonda de SW", // 59
     "Filtro RDS", // 60
     "Mostrar errores de PI", // 61
-    "Mostrar squelch", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
+    "Usar squelch", // 62
     "Medidor de modulación", // 63
     "Atenuador de\nruido AM", // 64
     "Atenuador de\nruido FM", // 65
@@ -3672,7 +3672,7 @@ static const char* const myLanguage[18][210] = {
     "Mostrar comprimento\nde onda SW", // 59
     "Filtro RDS", // 60
     "Mostrar erros PI", // 61
-    "Mostrar squelch", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
+    "Usar squelch", // 62
     "Medidor de modulação", // 63
     "Supressor de ruído AM", // 64
     "Supressor de ruído FM", // 65
