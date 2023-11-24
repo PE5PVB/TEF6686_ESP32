@@ -2364,14 +2364,14 @@ void DoMemoryPosTune() {
     frequency_OIRT = memory[memorypos];
     radio.SetFreq(frequency_OIRT);
   } else if (band == BAND_LW) {
-    frequency_AM = memory[memorypos];
-    radio.SetFreqAM(frequency_AM);
+    frequency_LW = memory[memorypos];
+    radio.SetFreqAM(frequency_LW);
   } else if (band == BAND_MW) {
-    frequency_AM = memory[memorypos];
-    radio.SetFreqAM(frequency_AM);
-  } else {
-    frequency_AM = memory[memorypos];
-    radio.SetFreqAM(frequency_AM);
+    frequency_MW = memory[memorypos];
+    radio.SetFreqAM(frequency_MW);
+  } else if (band == BAND_SW){
+    frequency_SW = memory[memorypos];
+    radio.SetFreqAM(frequency_SW);
   }
   ShowFreq(0);
 
