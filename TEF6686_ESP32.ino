@@ -1703,11 +1703,9 @@ void SelectBand() {
     if (tunemode == TUNE_MI_BAND && band != BAND_SW) tunemode = TUNE_MAN;
     BWreset = true;
     BWset = BWsetAM;
-    switch (band) {
-      case BAND_LW: freqold = frequency_LW; frequency_AM = frequency_LW; break;
-      case BAND_MW: freqold = frequency_MW; frequency_AM = frequency_LW; break;
-      case BAND_SW: freqold = frequency_SW; frequency_AM = frequency_SW; break;
-    }
+    if (band == BAND_LW) freqold = frequency_LW;
+    if (band == BAND_MW) freqold = frequency_MW;
+    if (band == BAND_SW) freqold = frequency_SW;
     LimitAMFrequency();
     if (!externaltune) CheckBandForbiddenAM();
     radio.SetFreqAM(frequency_AM);
@@ -2319,6 +2317,7 @@ void ShowMemoryPos() {
   if (tunemode == TUNE_MEM) {
     int memposcolor = 0;
     int memposcolorsmooth = 0;
+    log_e("memoryposstatus %d:", memoryposstatus);
     switch (memoryposstatus) {
       case MEM_DARK:
         memposcolor = InsignificantColor;
@@ -2398,11 +2397,6 @@ void ShowFreq(int mode) {
   detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A));
   detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B));
   if (band > BAND_GAP) {
-    switch (band) {
-      case BAND_LW: frequency_AM = frequency_LW; break;
-      case BAND_MW: frequency_AM = frequency_MW; break;
-      case BAND_SW: frequency_AM = frequency_SW; break;
-    }
     FrequencySprite.fillSprite(BackgroundColor);
     FrequencySprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
     FrequencySprite.drawString(String(frequency_AM) + " ", 218, -6);
