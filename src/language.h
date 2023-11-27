@@ -3223,7 +3223,7 @@ static const char* const myLanguage[18][210] = {
     "SKANNER...", // 34
     "Tuner ikke oppdaget", // 35
     "Tuner versjon sett: v", // 36
-    "Start tuneren på nytt", // 37
+    "Restart radioen", // 37
     "Vis RDS-feil", // 38
     "Språk", // 39
     "Velg språk", // 40
@@ -3250,8 +3250,8 @@ static const char* const myLanguage[18][210] = {
     "Vis PI feil", // 61
     "Bruk squelch", // 62
     "Modulasjonsmåler", // 63
-    "AM Noise blanker", // 64 ***
-    "FM Noise blanker", // 65 ***
+    "AM Støydemper", // 64
+    "FM Støydemper", // 65
     "Standarder lastet", // 66
     "Lydutgang modus", // 67
     "Tillat tuning når\nskjerm avslått", // 68
@@ -3286,8 +3286,8 @@ static const char* const myLanguage[18][210] = {
     "AM RF Nivå offset:", // 97
     "Signalmeter måleenhet:", // 98
     "Bruk AF:", // 99
-    "Velg FM Bånd:", // 100
-    "Velg AM Bånd:", // 101
+    "Velg FM Band:", // 100
+    "Velg AM Band:", // 101
     "LW", // 102 ***
     "MW", // 103 ***
     "SW", // 104 ***
@@ -3355,7 +3355,7 @@ static const char* const myLanguage[18][210] = {
     "Identifikator", // 166
     "Kjøp", // 167
     "Få data", // 168
-    "MW default stepsize", // 169 ***
+    "MW std. trinnstørrelse", // 169
     "Tangerine", // 170 ***
     "Ocean", // 171 ***
     "Indigo", // 172 ***
@@ -3382,7 +3382,7 @@ static const char* const myLanguage[18][210] = {
     "FM", // 193 ***
     "AM", // 194 ***
     "TILKOBLE", // 195
-    "Auto sort AF", // 196 ***
+    "Auto sorterings AF", // 196
     "Stationlist ID", // 197 ***
     "AM ATT", // 198
     "FM ettertrykkelse", // 199
