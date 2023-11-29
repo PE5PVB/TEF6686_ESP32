@@ -1326,7 +1326,7 @@ static const char* const myLanguage[18][210] = {
     "Piepston am Bandende", // 45
     "Region", // 46
     "Europa", // 47
-    "America", // 48
+    "Amerika", // 48
     "Zeige Unterstrich im RDS", // 49
     "USB-Modus", // 50
     "WLAN aktiv", // 51
@@ -1340,7 +1340,7 @@ static const char* const myLanguage[18][210] = {
     "KW-Wellenlänge anzeigen", // 59
     "RDS-Filter", // 60
     "Zeige PI Fehler", // 61
-    "Zeige Rauschsperre", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
+    "Verwende Rauschsperre", // 62
     "Modulationspegel", // 63
     "Rauschunterdrückung", // 64
     "Rauschunterdrückung", // 65
@@ -1437,7 +1437,7 @@ static const char* const myLanguage[18][210] = {
     "SMS", // 156
     "E-Mail Hotline", // 157
     "E-Mail Studio", // 158
-    "E-mail", // 159
+    "E-Mail", // 159
     "Chat", // 160
     "Chat-Zentrale", // 161
     "Abstimmung", // 162
@@ -1486,8 +1486,8 @@ static const char* const myLanguage[18][210] = {
     "Min.", // 205
     "Dynamische \nSPI-Geschwindigkeit", // 206
     "Scanempfindlichkeit", // 207
-    "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
-    "Software version" // 209
+    "KEINE", // 208
+    "Softwareversion" // 209
   },
 
   { "Český", // Czech
