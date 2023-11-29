@@ -54,7 +54,7 @@ static const char* const myLanguage[18][210] = {
     "Beep at band edge", // 45
     "Region", // 46
     "Europe", // 47
-    "USA", // 48
+    "America", // 48
     "Show underscore in RDS", // 49
     "USB mode", // 50
     "Wi-Fi active", // 51
@@ -266,7 +266,7 @@ static const char* const myLanguage[18][210] = {
     "Piep op bandeinde", // 45
     "Regio", // 46
     "Europa", // 47
-    "USA", // 48 ***
+    "Amerika", // 48 ***
     "Toon underscore in RDS", // 49
     "USB mode", // 50 ***
     "Wi-Fi aktief", // 51
@@ -478,7 +478,7 @@ static const char* const myLanguage[18][210] = {
     "Beep na krawedzi pasma", // 45
     "Region", // 46 ***
     "Europa", // 47
-    "USA", // 48 ***
+    "America", // 48 ***
     "Pokaz podkreslenia w RDS", // 49
     "Tryb USB", // 50
     "Wi-Fi aktywne", // 51
@@ -690,7 +690,7 @@ static const char* const myLanguage[18][210] = {
     "Beep na rubu frekv. opsega", // 45
     "Regija", // 46
     "Europa", // 47
-    "SAD", // 48
+    "Amerika", // 48
     "Prikaži donju crtu u RDS-u", // 49
     "Način rada USB-a", // 50
     "Wi-Fi", // 51
@@ -902,7 +902,7 @@ static const char* const myLanguage[18][210] = {
     "Ηχητικό σήμα στο όριο\nμπάντας", // 45
     "Περιοχή", // 46
     "Ευρώπη", // 47
-    "Η.Π.Α.", // 48
+    "Αμερική", // 48
     "Εμφάνιση κάτω παύλας\nστο RDS", // 49
     "USB λειτουργία", // 50
     "Wi-Fi ενεργό", // 51
@@ -1114,7 +1114,7 @@ static const char* const myLanguage[18][210] = {
     "Sunet la marginea benzii", // 45
     "Regiune", // 46
     "Europa", // 47
-    "SUA", // 48
+    "America", // 48
     "Arată evidențiat in RDS", // 49
     "Mod USB", // 50
     "Wi-Fi activ", // 51
@@ -1326,7 +1326,7 @@ static const char* const myLanguage[18][210] = {
     "Piepston am Bandende", // 45
     "Region", // 46
     "Europa", // 47
-    "USA", // 48
+    "America", // 48
     "Zeige Unterstrich im RDS", // 49
     "USB-Modus", // 50
     "WLAN aktiv", // 51
@@ -1538,7 +1538,7 @@ static const char* const myLanguage[18][210] = {
     "Pípnutí na konci pásma", // 45
     "Region", // 46 ***
     "Evropa", // 47
-    "USA", // 48 ***
+    "America", // 48 ***
     "Zobrazit podtržítka v RDS", // 49
     "USB mód", // 50
     "Wi-Fi active", // 51 ***
@@ -1750,7 +1750,7 @@ static const char* const myLanguage[18][210] = {
     "Pípnutie na konci pásma", // 45
     "Region", // 46 ***
     "Európa", // 47
-    "USA", // 48 ***
+    "America", // 48 ***
     "Zobraziť podtržítka v RDS", // 49
     "USB mód", // 50
     "Wi-Fi active", // 51 ***
@@ -1962,7 +1962,7 @@ static const char* const myLanguage[18][210] = {
     "Bip à la limite\nde bande", // 45
     "Région", // 46
     "Europe", // 47
-    "États-Unis", // 48
+    "Amérique", // 48
     "Montre les tirets du\nbas du PS", // 49
     "Mode USB", // 50
     "Wi-Fi actif", // 51
@@ -2174,7 +2174,7 @@ static const char* const myLanguage[18][210] = {
     "Звук при край на чест. лента", // 45
     "Регион", // 46
     "Европа", // 47
-    "САЩ", // 48
+    "Америка", // 48
     "Показване на долни черти в RDS", // 49
     "USB режим", // 50
     "Активиране на Wi-Fi", // 51
@@ -2386,7 +2386,7 @@ static const char* const myLanguage[18][210] = {
     "Край диапазона (звук): ", // 45
     "Регион", // 46
     "Европа", // 47
-    "США", // 48
+    "Америка", // 48
     "Показывать _ в RDS", // 49
     "Режим USB", // 50
     "Wi-Fi активен", // 51
@@ -2598,7 +2598,7 @@ static const char* const myLanguage[18][210] = {
     "Сигнал звуку на межі діапазону", // 45
     "Регіон", // 46
     "Європа", // 47
-    "США", // 48
+    "америка", // 48
     "Показувати підкреслення в RDS", // 49
     "Режим USB", // 50
     "Wi-Fi активний", // 51
@@ -2810,7 +2810,7 @@ static const char* const myLanguage[18][210] = {
     "Beep sul limite di banda", // 45
     "Regione", // 46
     "Europa", // 47
-    "USA", // 48 ***
+    "America", // 48 ***
     "Mostra trattino basso in RDS", // 49
     "Modalità USB", // 50
     "Wi-Fi attivo", // 51
@@ -3022,7 +3022,7 @@ static const char* const myLanguage[18][210] = {
     "频率边界嘟声提醒", // 45
     "国家与地区", // 46
     "欧洲", // 47
-    "美洲", // 48
+    "美国", // 48
     "RDS中显示下划线", // 49
     "USB 连机模式选择", // 50
     "打开Wifi", // 51
@@ -3234,7 +3234,7 @@ static const char* const myLanguage[18][210] = {
     "Pip ved båndkant", // 45
     "Region", // 46 ***
     "Europa", // 47
-    "USA", // 48 ***
+    "America", // 48 ***
     "Vis understrek i RDS", // 49
     "USB modus", // 50
     "Wi-Fi aktiv", // 51
@@ -3446,7 +3446,7 @@ static const char* const myLanguage[18][210] = {
     "Pitido en el borde\nde la banda", // 45
     "Región", // 46
     "Europa", // 47
-    "EE. UU.", // 48
+    "America", // 48
     "Mostrar guion bajo\nen RDS", // 49
     "Modo USB", // 50
     "Wi-Fi activado", // 51
@@ -3658,7 +3658,7 @@ static const char* const myLanguage[18][210] = {
     "Bipe na borda da faixa", // 45
     "Região", // 46
     "Europa", // 47
-    "EUA", // 48
+    "América", // 48
     "Mostrar sublinhado\nno RDS", // 49
     "Modo USB", // 50
     "Wi-Fi ativo", // 51
