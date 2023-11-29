@@ -1288,7 +1288,7 @@ void MenuUp() {
           case ITEM10:
             tftPrint(1, String(fmscansens), 155, 118, BackgroundColor, BackgroundColor, 28);
             fmscansens++;
-            if (fmscansens > 10) fmscansens = 1;
+            if (fmscansens > 15) fmscansens = 1;
             tftPrint(1, String(fmscansens), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
         }
@@ -1395,7 +1395,7 @@ void MenuUp() {
           case ITEM10:
             tftPrint(1, String(amscansens), 155, 118, BackgroundColor, BackgroundColor, 28);
             amscansens++;
-            if (amscansens > 10) amscansens = 1;
+            if (amscansens > 15) amscansens = 1;
             tftPrint(1, String(amscansens), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
         }
@@ -1864,7 +1864,7 @@ void MenuDown() {
           case ITEM10:
             tftPrint(1, String(fmscansens), 155, 118, BackgroundColor, BackgroundColor, 28);
             fmscansens--;
-            if (fmscansens == 0) fmscansens = 10;
+            if (fmscansens == 0) fmscansens = 15;
             tftPrint(1, String(fmscansens), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
         }
@@ -1971,7 +1971,7 @@ void MenuDown() {
           case ITEM10:
             tftPrint(1, String(amscansens), 155, 118, BackgroundColor, BackgroundColor, 28);
             amscansens--;
-            if (amscansens == 0) amscansens = 10;
+            if (amscansens == 0) amscansens = 15;
             tftPrint(1, String(amscansens), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
         }
