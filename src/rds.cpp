@@ -300,7 +300,6 @@ void readRds() {
       } else {
         if (dropout) {
           if (region == REGION_EU) {
-
             if (advancedRDS) tftPrint(0, PIold, 275, 75, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, PIold, 275, 187, PrimaryColor, PrimaryColorSmooth, 28);
           }
 

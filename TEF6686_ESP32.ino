@@ -751,6 +751,7 @@ void loop() {
       frequency = radio.TestAF();
       if (freqold != frequency) {
         ShowFreq(0);
+        dropout = true;
         if (radio.afmethodB) {
           afmethodBold = true;
           radio.clearRDS(fullsearchrds);
@@ -767,6 +768,7 @@ void loop() {
         frequency = radio.TestAF();
         if (freqold != frequency) {
           ShowFreq(0);
+          dropout = true;
           if (radio.afmethodB) {
             afmethodBold = true;
             radio.clearRDS(fullsearchrds);
@@ -782,6 +784,7 @@ void loop() {
           frequency = radio.TestAF();
           if (freqold != frequency) {
             ShowFreq(0);
+            dropout = true;
             if (radio.afmethodB) {
               afmethodBold = true;
               radio.clearRDS(fullsearchrds);
@@ -2370,7 +2373,7 @@ void DoMemoryPosTune() {
   } else if (band == BAND_MW) {
     frequency_MW = memory[memorypos];
     radio.SetFreqAM(frequency_MW);
-  } else if (band == BAND_SW){
+  } else if (band == BAND_SW) {
     frequency_SW = memory[memorypos];
     radio.SetFreqAM(frequency_SW);
   }
