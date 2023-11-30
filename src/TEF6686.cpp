@@ -623,7 +623,7 @@ void TEF6686::readRDS(byte showrdserrors)
             //AF decoder
             if (rdsblock == 0 && rds.rdsC != rdsCold) {                                         // Only when in GROUP 0A
 
-              if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250) {
+              if (((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250) || (rds.sortaf && (rds.rdsC >> 8) > 0 && (rds.rdsC >> 8) < 205)) {
                 afinit = true;  // AF detected
                 rds.hasAF = true;
               }
