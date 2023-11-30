@@ -434,7 +434,7 @@ void showPI() {
           }
         }
         if (region == REGION_US) {
-          if (RDSstatus) {
+          if (!RDSstatus) {
             if (String(radio.rds.picode) != PIold) tftReplace(-1, PIold, radio.rds.picode, 240, 184, SecondaryColor, SecondaryColorSmooth, 16);
             tftReplace(-1, stationIDold, radio.rds.stationID, 240, 201, SecondaryColor, SecondaryColorSmooth, 16);
           } else {
