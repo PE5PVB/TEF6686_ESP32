@@ -29,6 +29,7 @@ extern bool softmutefm;
 extern bool SQ;
 extern bool StereoToggle;
 extern bool store;
+extern bool usesquelch;
 extern bool wifi;
 extern bool wificonnected;
 extern bool XDRGTKdata;

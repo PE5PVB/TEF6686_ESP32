@@ -522,6 +522,7 @@ void XDRGTKRoutine() {
         radio.setSoftmuteFM(softmutefm);
         radio.setSoftmuteAM(softmuteam);
         if (screenmute) MuteScreen(0);
+        if (!usesquelch) radio.setUnMute();
         break;
 
       case 'Z':

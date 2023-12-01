@@ -717,6 +717,7 @@ void setup() {
   setupmode = false;
   if (edgebeep) radio.tone(50, -5, 2000);
   radio.I2Sin(false);
+  if (!usesquelch) radio.setUnMute();
   if (screensaverset) {
     ScreensaverTimerInit();
     ScreensaverTimerSet(screensaverOptions[screensaverset]);
@@ -1929,6 +1930,7 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_FMSCANSENS, fmscansens);
         EEPROM.commit();
         if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
+        if (!usesquelch) radio.setUnMute();
         Serial.end();
         if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
         if (USBmode) Serial.begin(19200); else Serial.begin(115200);
@@ -2737,8 +2739,8 @@ void ShowModLevel() {
 }
 
 void doSquelch() {
-  if (!XDRGTKUSB && !XDRGTKTCP) {
-    if (usesquelch) Squelch = analogRead(PIN_POT) / 4 - 100; else Squelch = 0;
+  if (!XDRGTKUSB && !XDRGTKTCP && usesquelch) {
+    Squelch = analogRead(PIN_POT) / 4 - 100;
     if (unit == 0) SquelchShow = Squelch / 10;
     if (unit == 1) SquelchShow = ((Squelch * 100) + 10875) / 1000;
     if (unit == 2) SquelchShow = round((float(Squelch) / 10.0 - 10.0 * log10(75) - 90.0) * 10.0) / 10;
@@ -2805,7 +2807,7 @@ void doSquelch() {
         }
       }
     }
-  } else {
+  } else if (usesquelch) {
     if (Squelch != 920) {
       if (Squelch < SStatus || Squelch == -100 || Squelch == 0) {
         if (!seek) radio.setUnMute();
