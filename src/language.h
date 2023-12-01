@@ -453,7 +453,7 @@ static const char* const myLanguage[18][210] = {
     "Ustaw głośność", // 20
     "Ustaw odchylenie konwertera", // 21
     "Ustaw dolną granicę pasma", // 22
-    "Ustaw gorną granicę pasma", // 23
+    "Ustaw górną granicę pasma", // 23
     "Ustaw odchylenie sygnału", // 24
     "Ustaw próg separacji Stereo", // 25
     "Częst. gran. filtra dolnoprzep.", // 26
@@ -599,7 +599,7 @@ static const char* const myLanguage[18][210] = {
     "Identyfikator", // 166
     "Zakup", // 167
     "Pobierz dane", // 168
-    "Domyślny krok MW", // 169 ***
+    "Domyślny krok MW", // 169
     "Tangerine", // 170 ***
     "Ocean", // 171 ***
     "Indigo", // 172 ***
@@ -636,7 +636,7 @@ static const char* const myLanguage[18][210] = {
     "Szybki PS", // 203
     "Wykryte aplikacje", // 204
     "Min.", // 205 ***
-    "Dynam. prędkość SPI", // 206 ***
+    "Dynam. prędkość SPI", // 206
     "Czułość skanowania", // 207
     "BRAK", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
     "Wersja oprog." // 209 
