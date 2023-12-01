@@ -433,82 +433,82 @@ static const char* const myLanguage[18][210] = {
   { "Polski", // Polish
     "Kierunek obrotu zmieniony", // 1
     "Zwolnij przycisk", // 2
-    "Obrocono ekran", // 3
+    "Obrócono ekran", // 3
     "Kalibracja analogowego miernika", // 4
     "Zwolnij przycisk gdy gotowe", // 5
     "wybrano enkoder optyczny", // 6
     "wybrano standardowy enkoder", // 7
     "Odbiornik FM/AM", // 8
     "Tuner: !Brak!", // 9
-    "Glosnosc:", // 10
+    "Głośność:", // 10
     "Konwerter:", // 11
     "Dolna granica pasma:", // 12
-    "Gorna granica pasma:", // 13
+    "Górna granica pasma:", // 13
     "FM Odchylenie poziomu RF:", // 14
-    "Prog Stereo:", // 15
-    "Krawedz dolnoprzep..:", // 16
-    "Prog dolnoprzepust.:", // 17
-    "Prog niskiego sygnalu:", // 18
+    "Próg Stereo:", // 15
+    "Krawędź dolnoprzep..:", // 16
+    "Próg dolnoprzepust.:", // 17
+    "Próg niskiego sygnału:", // 18
     "Kontrast:", // 19
-    "Ustaw glosnosc", // 20
+    "Ustaw głośność", // 20
     "Ustaw odchylenie konwertera", // 21
-    "Ustaw dolna granice pasma", // 22
-    "Ustaw gorna granice pasma", // 23
-    "Ustaw odchylenie sygnalu", // 24
-    "Ustaw prog separacji Stereo", // 25
-    "Czest. gran. filtra dolnoprzep.", // 26
-    "Ustaw prog dolnoprzep.", // 27
-    "Ustaw dolna granice sygnalu", // 28
-    "Ustaw jasnosc wyswietlacza", // 29
-    "Wyl.", // 30
+    "Ustaw dolną granicę pasma", // 22
+    "Ustaw górną granicę pasma", // 23
+    "Ustaw odchylenie sygnału", // 24
+    "Ustaw próg separacji Stereo", // 25
+    "Częst. gran. filtra dolnoprzep.", // 26
+    "Ustaw próg dolnoprzep.", // 27
+    "Ustaw dolną granicę sygnału", // 28
+    "Ustaw jasność wyświetlacza", // 29
+    "Wył.", // 30
     "Ekran jest wyciszony!", // 31
-    "Aby wyl. wyciszenie odznacz RF+", // 32
-    "WYL.", // 33
+    "Aby wył. wyciszenie odznacz RF+", // 32
+    "WYŁ.", // 33
     "SKANOWANIE...", // 34
     "Nie wykryto tunera", // 35
-    "Ustawiono wersje tunera: v", // 36
-    "Prosze uruchomic pon. tuner", // 37
-    "Pokaz bledy RDS", // 38
-    "Jezyk", // 39
-    "Wybierz swoj jezyk", // 40
-    "WCISNIJ MODE ABY ZAMKNAC I ZAPISAC", // 41
-    "Wlacz.", // 42
-    "Lagodne wyciszanie FM", // 43
-    "Lagodne wyciszanie AM", // 44
-    "Beep na krawedzi pasma", // 45
+    "Ustawiono wersję tunera: v", // 36
+    "Proszę uruchomić pon. tuner", // 37
+    "Pokaż błędy RDS", // 38
+    "Język", // 39
+    "Wybierz swój język", // 40
+    "WCIŚNIJ MODE ABY ZAMKNĄĆ I ZAPISAĆ", // 41
+    "Włącz.", // 42
+    "Łagodne wyciszanie FM", // 43
+    "Łagodne wyciszanie AM", // 44
+    "Beep na krawędzi pasma", // 45
     "Region", // 46 ***
     "Europa", // 47
-    "America", // 48 ***
-    "Pokaz podkreslenia w RDS", // 49
+    "Ameryka", // 48 ***
+    "Pokaż podkreślenia w RDS", // 49
     "Tryb USB", // 50
     "Wi-Fi aktywne", // 51
     "Konfiguracja Wi-Fi", // 52
-    "Polacz z: ", // 53
-    "aby skonfigurowac Wi-Fi", // 54
-    "Proba polaczenia z Wi-Fi", // 55
-    "BLAD.. WiFi wylaczone", // 56
-    "POLACZONO!", // 57
+    "Połącz z: ", // 53
+    "aby skonfigurować Wi-Fi", // 54
+    "Próba połączenia z Wi-Fi", // 55
+    "BŁĄD.. WiFi wyłączone", // 56
+    "POŁĄCZONO!", // 57
     "IP klienta Stationlist", // 58
-    "Pokaz dlugosci fal SW", // 59
+    "Pokaż długości fal SW", // 59
     "Filtr RDS", // 60
-    "Pokaz bledy PI", // 61
-    "Pokaz blokade szumow", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
-    "Wskaznik modulacji", // 63
-    "Reduktor szumow AM", // 64
-    "Reduktor szumow FM", // 65
-    "Zaladowano domyslne", // 66
-    "Wyjscie dzwieku", // 67
-    "Stroj. gdy ekran wyl.", // 68
-    "Odwroc kolory wyswietlacza", // 69
+    "Pokaż błędy PI", // 61
+    "Użyj blokady szumów", // 62
+    "Wskaźnik modulacji", // 63
+    "Reduktor szumów AM", // 64
+    "Reduktor szumów FM", // 65
+    "Załadowano domyślne", // 66
+    "Wyjście dźwięku", // 67
+    "Stroj. gdy ekran wył.", // 68
+    "Odwróć kolory wyświetlacza", // 69
     "O oprogramowaniu", // 70
-    "Glowny kod:", // 71
-    "Wspoltworcy:", // 72
+    "Główny kod:", // 71
+    "Współtwórcy:", // 72
     "Nieznany", // 73
     "Opcje wygaszacza", // 74
-    "Wylacznik czasowy", // 75
-    "Wylacz ekran", // 76
+    "Wyłącznik czasowy", // 75
+    "Wyłącz ekran", // 76
     "Motyw", // 77
-    "Domyslny", // 78
+    "Domyślny", // 78
     "Cyan", // 79 ***
     "Crimson", // 80 ***
     "Monochrome", // 81 ***
@@ -516,20 +516,20 @@ static const char* const myLanguage[18][210] = {
     "Dendro", // 83 ***
     "Sakura", // 84 ***
     "Whiteout", // 85 ***
-    "NIEMOZLIWE", // 86
-    "AF niedostepny", // 87
-    "EON niedostepny", // 88
-    "RT+ niedostepny", // 89
+    "NIEMOŻLIWE", // 86
+    "AF niedostępny", // 87
+    "EON niedostępny", // 88
+    "RT+ niedostępny", // 89
     "Minimalny krok FM", // 90
     "Wygaszacz ekranu", // 91
     "Sek", // 92
-    "NACISNIJ BAND ABY ZAMKNAC", // 93
-    "1% jasnosci", // 94
-    "25% jasnosci", // 95
-    "50% jasnosci", // 96
+    "NACIŚNIJ BAND ABY ZAMKNĄĆ", // 93
+    "1% jasności", // 94
+    "25% jasności", // 95
+    "50% jasności", // 96
     "Odchylenie poziomu RF AM", // 97
-    "Jednostka sygnalu", // 98
-    "Uzywaj AF", // 99
+    "Jednostka sygnału", // 98
+    "Używaj AF", // 99
     "Wybierz pasmo FM", // 100
     "Wybierz pasmo AM", // 101
     "LW", // 102 ***
@@ -537,14 +537,14 @@ static const char* const myLanguage[18][210] = {
     "SW", // 104 ***
     "FM", // 105 ***
     "OIRT", // 106 ***
-    "Stroj. gdy ekran wyl.", // 107
-    "Wybor modelu", // 108
+    "Stroj. gdy ekran wył.", // 107
+    "Wybór modelu", // 108
     "Podstawowy (ILI9341)", // 109
-    "Przenosny (ILI9341)", // 110
-    "Przenos. dotyk. (ILI9341)", // 111
-    "Tytul", // 112
+    "Przenośny (ILI9341)", // 110
+    "Przenoś. dotyk. (ILI9341)", // 111
+    "Tytuł", // 112
     "Album", // 113 ***
-    "Sciezka", // 114
+    "Ścieżka", // 114
     "Wykonawca", // 115
     "Kompozycja", // 116
     "Ruch", // 117
@@ -553,9 +553,9 @@ static const char* const myLanguage[18][210] = {
     "Grupa", // 120
     "Komentarz", // 121
     "Gatunek", // 122
-    "Wiadomosci", // 123
-    "Lokalne wiadomosci", // 124
-    "Gielda", // 125
+    "Wiadomości", // 123
+    "Lokalne wiadomości", // 124
+    "Giełda", // 125
     "Sport", // 126 ***
     "Loteria", // 127
     "Horoskop", // 128
@@ -572,72 +572,72 @@ static const char* const myLanguage[18][210] = {
     "Reklama", // 139
     "Strona internet.", // 140
     "Inne", // 141
-    "Krotki PS", // 142
-    "Dlugi PS", // 143
+    "Krótki PS", // 142
+    "Długi PS", // 143
     "Teraz", // 144
-    "Nastepnie", // 145
-    "Czesc", // 146
-    "Prowadzacy", // 147
+    "Następnie", // 145
+    "Część", // 146
+    "Prowadzący", // 147
     "Wydawca", // 148
-    "Czestotliwosc", // 149
+    "Częstotliwość", // 149
     "Strona domowa", // 150
-    "Podkanal", // 151
-    "Goraca linia", // 152
+    "Podkanał", // 151
+    "Gorąca linia", // 152
     "Telefon do studia", // 153
     "Telefon", // 154
     "SMS do studia", // 155
     "SMS", // 156 ***
-    "Email do goracej linii", // 157
+    "Email do gorącej linii", // 157
     "Email do studia", // 158
     "Email", // 159 ***
     "Czat", // 160
     "Centrum czatu", // 161
-    "Pytanie do glosowania", // 162
-    "Centrum glosowania", // 163
+    "Pytanie do głosowania", // 162
+    "Centrum głosowania", // 163
     "Miejsce", // 164
     "Spotkanie", // 165
     "Identyfikator", // 166
     "Zakup", // 167
     "Pobierz dane", // 168
-    "Domyslny krok MW", // 169 ***
+    "Domyślny krok MW", // 169
     "Tangerine", // 170 ***
     "Ocean", // 171 ***
     "Indigo", // 172 ***
     "Opcje baterii", // 173
-    "Pokaz napiecie", // 174
-    "Pokaz procent nalad.", // 175
+    "Pokaż napięcie", // 174
+    "Pokaż procent naład.", // 175
     "Buforowanie RT", // 176
-    "Glowne ustawienia", // 177
-    "Ustawienia dzwieku", // 178
-    "Ustawienia wyswietlacza", // 179
+    "Główne ustawienia", // 177
+    "Ustawienia dźwięku", // 178
+    "Ustawienia wyświetlacza", // 179
     "Ustawienia RDS", // 180
     "Ustawienia FM", // 181
     "Ustawienia AM", // 182
-    "Lacznosc", // 183
-    "NACISNIJ MODE ABY WROCIC", // 184
-    "Detek. miedzykanalowy AM", // 185
-    "Czulosc detek. miedzykanal.", // 186
-    "Prog detek. miedzykanalowego AM", // 187
-    "Licznik detek. miedzykanal.", // 188
-    "GLOWNE", // 189
-    "DZWIEK", // 190
-    "WYSWIETLACZ", // 191
+    "Łączność", // 183
+    "NACIŚNIJ MODE ABY WRÓCIĆ", // 184
+    "Detek. międzykanałowy AM", // 185
+    "Czułość detek. międzykanał.", // 186
+    "Próg detek. międzykanałowego AM", // 187
+    "Licznik detek. międzykanał.", // 188
+    "GŁÓWNE", // 189
+    "DŹWIĘK", // 190
+    "WYŚWIETLACZ", // 191
     "RDS", // 192 ***
     "FM", // 193 ***
     "AM", // 194 ***
-    "LACZNOSC", // 195
+    "ŁĄCZNOŚĆ", // 195
     "Automat. sortowanie AF", // 196
     "Identyfikator Stationlist", // 197
-    "Tlumik ant. AM", // 198
+    "Tłumik ant. AM", // 198
     "Deemfaza FM", // 199
-    "Male", // 200
-    "Duze", // 201
+    "Małe", // 200
+    "Duże", // 201
     "Wszystkie", // 202
     "Szybki PS", // 203
     "Wykryte aplikacje", // 204
     "Min.", // 205 ***
-    "Dynam. predkosc SPI", // 206 ***
-    "Czulosc skanowania", // 207
+    "Dynam. prędkość SPI", // 206
+    "Czułość skanowania", // 207
     "BRAK", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
     "Wersja oprog." // 209 
   },
