@@ -1063,7 +1063,7 @@ static const char* const myLanguage[18][210] = {
     "Δυναμική ταχύτητα\nSPI", // 206
     "Ευαισθησία\nανίχνευσης", // 207
     "KAMIA", // 208
-    "Software version" // 209
+    "Έκδοση λογισμικού" // 209
   },
 
   { "Română", // Romanian
@@ -2122,8 +2122,8 @@ static const char* const myLanguage[18][210] = {
     "Min.", // 205
     "Vitesse SPI\ndynamique", // 206
     "Sensibilité\ndu scanne ", // 207
-    "AUC.", // 208
-    "Software version" // 209
+    "AUCUNE", // 208
+    "Version de logiciel" // 209
   },
 
   { "Български", // Bulgarian
@@ -3606,8 +3606,8 @@ static const char* const myLanguage[18][210] = {
     "Min.", // 205
     "Velocidad de SPI", // 206
     "Sensibilidad\ndel escaneo", // 207
-    "NING.", // 208
-    "Software version" // 209
+    "NINGUNA", // 208
+    "Versión del software" // 209
   },
 
   { "Português", // Portuguese
@@ -3818,8 +3818,8 @@ static const char* const myLanguage[18][210] = {
     "Min.", // 205
     "Velocidade dinâmica\nde SPI", // 206
     "Sensibilidade\nda varredura", // 207
-    "NEN.", // 208
-    "Software version" // 209
+    "NENHUM", // 208
+    "Versão do software" // 209
   }
 };
 #endif
