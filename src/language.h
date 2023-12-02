@@ -638,8 +638,8 @@ static const char* const myLanguage[18][210] = {
     "Min.", // 205 ***
     "Dynam. prędkość SPI", // 206
     "Czułość skanowania", // 207
-    "BRAK", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
-    "Wersja oprog." // 209 
+    "BRAK", // 208
+    "Wersja oprogramowania" // 209 
   },
 
   { "Hrvatski", // Croatian
