@@ -1277,6 +1277,7 @@ void ToggleBand(byte nowBand) {
 }
 
 void BANDBUTTONPress() {
+  if (!usesquelch) radio.setUnMute();
   if (afscreen) {
     BuildAdvancedRDS();
   } else {
@@ -1756,6 +1757,7 @@ void SelectBand() {
 }
 
 void BWButtonPress() {
+  if (!usesquelch) radio.setUnMute();
   if (!menu) {
     seek = false;
     unsigned long counterold = millis();
@@ -1812,6 +1814,7 @@ void doStereoToggle() {
 }
 
 void ModeButtonPress() {
+  if (!usesquelch) radio.setUnMute();
   if (advancedRDS) {
     BuildDisplay();
     ScreensaverTimerReopen();
@@ -2078,6 +2081,7 @@ void RoundStep() {
 }
 
 void ButtonPress() {
+  if (!usesquelch) radio.setUnMute();
   if (advancedRDS) BuildDisplay();
   if (!menu) {
     if (tunemode == TUNE_MEM) {

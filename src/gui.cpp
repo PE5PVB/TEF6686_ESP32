@@ -777,7 +777,7 @@ void BuildDisplay() {
     tftPrint(-1, "1", 24, 115, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "3", 48, 115, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "5", 72, 115, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "7", ITEM4 + 6, 115, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "7", 96, 115, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "9", 120, 115, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "+10", 134, 115, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "+30", 174, 115, ActiveColor, ActiveColorSmooth, 16);
@@ -801,11 +801,9 @@ void BuildDisplay() {
     tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, 28);
     tftPrint(-1, unitString[unit], 282, 145, ActiveColor, ActiveColorSmooth, 16);
 
-    if (band < BAND_GAP) tftPrint(-1, "MHz", 258, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 28); else tftPrint(-1, "kHz", 258, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 28);
-
-    tft.drawRoundRect(248, ITEM2 + 6, 32, 20, 5, GreyoutColor);
+    tft.drawRoundRect(248, 56, 32, 20, 5, GreyoutColor);
     if (band > BAND_GAP) tftPrint(0, "iMS", 265, 59, GreyoutColor, BackgroundColor, 16);
-    tft.drawRoundRect(286, ITEM2 + 6, 32, 20, 5, GreyoutColor);
+    tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
     if (band > BAND_GAP) tftPrint(0, "EQ", 303, 59, GreyoutColor, BackgroundColor, 16);
 
     tft.drawCircle(66, 15, 10, GreyoutColor);
@@ -854,7 +852,7 @@ void BuildDisplay() {
   stationStateold = " ";
   BWreset = true;
   dropout = false;
-  if (band < BAND_GAP) tftPrint(-1, "MHz", 258, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 28); else tftPrint(-1, "kHz", 258, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 28);
+  if (band < BAND_GAP) tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, 28); else tftPrint(-1, "kHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
 }
 
 void MenuUp() {
