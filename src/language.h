@@ -3612,7 +3612,7 @@ static const char* const myLanguage[18][210] = {
 
   { "Português", // Portuguese
     "Direção rotativa\nalterada", // 1
-    "Solte o botão,por favor", // 2
+    "Solte o botão,\npor favor", // 2
     "Tela invertida", // 3
     "Calibrar o medidor\nanalógico", // 4
     "Solte o botão quando\nestiver pronto", // 5
