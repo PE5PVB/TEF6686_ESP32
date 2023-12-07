@@ -2529,7 +2529,7 @@ static const char* const myLanguage[18][210] = {
     "Порог AM CoChannelDet", // 188
     "ОСНОВНЫЕ", // 189
     "ЗВУКОВЫЕ", // 190
-    "ОТОБРАЖЕНИЕ", // 191
+    "ДИСПЛЕЙ", // 191
     "RDS", // 192
     "FM", // 193
     "AM", // 194
@@ -2544,10 +2544,10 @@ static const char* const myLanguage[18][210] = {
     "Быстрый PS", // 203
     "Обнаруженные приложения", // 204
     "мин.", // 205
-    "Скорость шины дисплея (SPI)", // 206 ***
+    "Частота шины дисплея SPI", // 206 ***
     "Чувствительность сканирования", // 207
-    "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
-    "Software version" // 209
+    "Отсутствуют", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "Версия прошивки" // 209
   },
 
   { "Українська", // Ukranian
