@@ -2546,7 +2546,7 @@ static const char* const myLanguage[18][210] = {
     "мин.", // 205
     "Частота шины дисплея SPI", // 206 ***
     "Чувствительность сканирования", // 207
-    "Отсутствуют", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
+    "Отсутствуют", // 208
     "Версия прошивки" // 209
   },
 
