@@ -3535,7 +3535,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_FASTPS, 1);
   EEPROM.writeByte(EE_BYTE_TOT, 0);
   EEPROM.writeByte(EE_BYTE_MWREGION, 0);
-  EEPROM.writeByte(EE_BYTE_SPISPEED, 3);
+  EEPROM.writeByte(EE_BYTE_SPISPEED, 0);
   EEPROM.writeByte(EE_BYTE_AMSCANSENS, 4);
   EEPROM.writeByte(EE_BYTE_FMSCANSENS, 4);
   EEPROM.commit();
