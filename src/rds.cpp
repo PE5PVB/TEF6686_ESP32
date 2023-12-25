@@ -79,7 +79,7 @@ void ShowAdvancedRDS() {
       }
     } else {
       xPos2 --;
-      afticker = millis();
+      aftickerhold = millis();
     }
     if (xPos2 < -tft.textWidth(afstring) + (charWidth * 14)) xPos2 = 0;
     RDSSprite.fillSprite(BackgroundColor);
@@ -106,7 +106,7 @@ void ShowAdvancedRDS() {
       }
     } else {
       xPos3 --;
-      eonticker = millis();
+      eontickerhold = millis();
     }
     if (xPos3 < -tft.textWidth(eonstring) + (charWidth * 14)) xPos3 = 0;
     RDSSprite.fillSprite(BackgroundColor);
@@ -134,7 +134,7 @@ void ShowAdvancedRDS() {
       }
     } else {
       xPos4 --;
-      rtplusticker = millis();
+      rtplustickerhold = millis();
     }
     if (xPos4 < -tft.textWidth(rtplusstring) + (charWidth * 14)) xPos4 = 0;
     RDSSprite.fillSprite(BackgroundColor);
@@ -582,7 +582,7 @@ void showRadioText() {
           }
         } else {
           xPos --;
-          rtticker = millis();
+          rttickerhold = millis();
         }
         if (advancedRDS) {
           if (xPos < -tft.textWidth(radio.rds.stationText + " " + radio.rds.stationText32) + (charWidth * 10)) xPos = 0;
@@ -802,7 +802,7 @@ void ShowAFEON() {
         }
       } else {
         xPos --;
-        rtticker = millis();
+        rttickerhold = millis();
       }
       if (xPos < -tft.textWidth(String(myLanguage[language][93]) + "  -  " + String(myLanguage[language][204]) + ": " + AIDString) + (charWidth * 14)) xPos = 0;
       RadiotextSprite.fillSprite(BackgroundColor);
