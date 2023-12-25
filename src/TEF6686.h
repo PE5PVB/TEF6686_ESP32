@@ -4,6 +4,7 @@
 #include "Arduino.h"
 #include "Tuner_Drv_Lithio.h"
 #include "Tuner_Interface.h"
+#include "RdsPiBuffer.hpp"
 
 extern const unsigned char tuner_init_tab[] PROGMEM;
 extern const unsigned char tuner_init_tab9216[] PROGMEM;
@@ -614,6 +615,7 @@ typedef struct _rds_ {
   bool fastps;
   bool rtbuffer = true;
   bool afreg;
+  RdsPiBuffer piBuffer;
 } rds_;
 
 typedef struct _af_ {

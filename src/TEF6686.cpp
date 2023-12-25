@@ -1493,6 +1493,7 @@ void TEF6686::readRDS(byte showrdserrors)
 
 void TEF6686::clearRDS (bool fullsearchrds) {
   devTEF_Radio_Set_RDS(fullsearchrds);
+  rds.piBuffer.clear();
   rds.stationName = "";
   rds.stationText = "";
   rds.stationText32 = "";

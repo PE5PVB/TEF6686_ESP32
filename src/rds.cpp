@@ -359,12 +359,22 @@ void readRds() {
     }
 
     if ((RDSstatus && XDRGTKUSB) || (RDSstatus && XDRGTKTCP)) {
-      DataPrint ("P");
-      DataPrint (String(((radio.rds.rdsA >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsA >> 8) & 0xF, HEX));
-      DataPrint (String(((radio.rds.rdsA) >> 4) & 0xF, HEX) + String((radio.rds.rdsA) & 0xF, HEX));
-      if (((radio.rds.rdsErr >> 14) & 0x02) > 2) DataPrint("?");
-      if (((radio.rds.rdsErr >> 14) & 0x01) > 1) DataPrint("?");
-      DataPrint ("\n");
+
+      uint8_t piError = radio.rds.rdsErr >> 14;
+      if (piError < 3) {
+        uint8_t piState = radio.rds.piBuffer.add(radio.rds.rdsA, piError);
+
+        if (piState != RdsPiBuffer::STATE_INVALID) {
+          DataPrint ("P");
+          DataPrint (String(((radio.rds.rdsA >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsA >> 8) & 0xF, HEX));
+          DataPrint (String(((radio.rds.rdsA) >> 4) & 0xF, HEX) + String((radio.rds.rdsA) & 0xF, HEX));
+          while (piState != 0) {
+            DataPrint("?");
+            piState--;
+          }
+          DataPrint ("\n");
+        }
+      }
 
       XDRGTKRDS = "R";
       XDRGTKRDS += String(((radio.rds.rdsB >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsB >> 8) & 0xF, HEX);
@@ -375,17 +385,12 @@ void readRds() {
       XDRGTKRDS += String(((radio.rds.rdsD) >> 4) & 0xF, HEX) + String((radio.rds.rdsD) & 0xF, HEX);
 
       uint8_t erroutput = 0;
-      erroutput |= (highByte(radio.rds.rdsErr) & 0x04) >> 2;
-      erroutput |= (highByte(radio.rds.rdsErr) & 0x02) << 2;
-      erroutput |= (highByte(radio.rds.rdsErr) & 0x01) << 6;
-      erroutput |= (highByte(radio.rds.rdsErr) & 0x08) >> 3;
-      erroutput |= (highByte(radio.rds.rdsErr) & 0x10) >> 1;
-      erroutput |= (highByte(radio.rds.rdsErr) & 0x40) << 1;
-      erroutput |= (highByte(radio.rds.rdsErr) & 0x80) >> 7;
-      erroutput |= (highByte(radio.rds.rdsErr) & 0x20) << 5;
+      erroutput |= (radio.rds.rdsErr >> 8) & B00110000 >> 4;
+      erroutput |= (radio.rds.rdsErr >> 8) & B00001100;
+      erroutput |= (radio.rds.rdsErr >> 8) & B00000011 << 4;
 
-      if (highByte(radio.rds.rdsErr) < 0x10) XDRGTKRDS += "0";
-      XDRGTKRDS += String(erroutput, HEX);
+      XDRGTKRDS += String((erroutput >> 4) & 0xF, HEX);
+      XDRGTKRDS += String(erroutput & 0xF, HEX);
       XDRGTKRDS += "\n";
 
       if (XDRGTKRDS != XDRGTKRDSold) {
