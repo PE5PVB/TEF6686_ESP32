@@ -145,6 +145,7 @@ byte fmscansens;
 byte fmdefaultstepsize;
 byte fmnb;
 byte fmdeemphasis;
+byte freqfont;
 byte amcodect;
 byte amcodectcount;
 byte amrfagc;
@@ -209,6 +210,8 @@ int charWidth = tft.textWidth("AA");
 int DeEmphasis;
 int ForceMono;
 int FrameColor;
+int FreqColor;
+int FreqColorSmooth;
 int freqold;
 int GreyoutColor;
 int InsignificantColor;
@@ -261,7 +264,6 @@ float batteryVold;
 IPAddress remoteip;
 String AIDString;
 String cryptedpassword;
-String CurrentThemeString;
 String ECColdtxt;
 String eonpsold[20];
 String LIColdString;
@@ -452,6 +454,7 @@ void setup() {
   spispeed = EEPROM.readByte(EE_BYTE_SPISPEED);
   amscansens = EEPROM.readByte(EE_BYTE_AMSCANSENS);
   fmscansens = EEPROM.readByte(EE_BYTE_FMSCANSENS);
+  freqfont = EEPROM.readByte(EE_BYTE_FREQFONT);
 
   if (spispeed == SPI_SPEED_DEFAULT) tft.setSPISpeed(SPI_FREQUENCY / 1000000); else tft.setSPISpeed(spispeed * 10);
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;
@@ -542,7 +545,13 @@ void setup() {
   AdvRadiotextSprite.setTextDatum(TL_DATUM);
   RDSSprite.setTextDatum(TL_DATUM);
   SquelchSprite.setTextDatum(TL_DATUM);
-  FrequencySprite.loadFont(FREQFONT);
+  switch (freqfont) {
+    case 0: FrequencySprite.loadFont(FREQFONT0); break;
+    case 1: FrequencySprite.loadFont(FREQFONT1); break;
+    case 2: FrequencySprite.loadFont(FREQFONT2); break;
+    case 3: FrequencySprite.loadFont(FREQFONT3); break;
+    case 4: FrequencySprite.loadFont(FREQFONT4); break;
+  }
 
   if (language == LANGUAGE_CHS) {
     RadiotextSprite.loadFont(FONT16_CHS);
@@ -1705,6 +1714,7 @@ void ToggleSWMIBand(bool frequencyup) {
 void SelectBand() {
   if (band > BAND_GAP) {
     seek = false;
+    if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
     if (tunemode == TUNE_MI_BAND && band != BAND_SW) tunemode = TUNE_MAN;
     BWreset = true;
     BWset = BWsetAM;
@@ -1760,6 +1770,7 @@ void BWButtonPress() {
   if (!usesquelch) radio.setUnMute();
   if (!menu) {
     seek = false;
+    if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
     unsigned long counterold = millis();
     unsigned long counter = millis();
     while (digitalRead(BWBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
@@ -1824,6 +1835,7 @@ void ModeButtonPress() {
   } else {
     if (!menu) {
       seek = false;
+      if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
       memorystore = false;
       unsigned long counterold = millis();
       unsigned long counter = millis();
@@ -1869,9 +1881,6 @@ void ModeButtonPress() {
         radio.clearRDS(fullsearchrds);
         CheckBandForbiddenFM();
         CheckBandForbiddenAM();
-        BuildDisplay();
-        ShowSignalLevel();
-        ShowBW();
         menu = false;
         menuopen = false;
         LowLevelInit = true;
@@ -1941,6 +1950,7 @@ void ModeButtonPress() {
         AdvRadiotextSprite.unloadFont();
         RDSSprite.unloadFont();
         SquelchSprite.unloadFont();
+        FrequencySprite.unloadFont();
         if (language == LANGUAGE_CHS) {
           RadiotextSprite.loadFont(FONT16_CHS);
           AdvRadiotextSprite.loadFont(FONT16_CHS);
@@ -1952,6 +1962,17 @@ void ModeButtonPress() {
           RDSSprite.loadFont(FONT16);
           SquelchSprite.loadFont(FONT16);
         }
+        switch (freqfont) {
+          case 0: FrequencySprite.loadFont(FREQFONT0); break;
+          case 1: FrequencySprite.loadFont(FREQFONT1); break;
+          case 2: FrequencySprite.loadFont(FREQFONT2); break;
+          case 3: FrequencySprite.loadFont(FREQFONT3); break;
+          case 4: FrequencySprite.loadFont(FREQFONT4); break;
+        }
+
+        BuildDisplay();
+        ShowSignalLevel();
+        ShowBW();
         MWLowEdgeSet = mwstepsize == false ? FREQ_MW_LOW_EDGE_MIN_9K : FREQ_MW_LOW_EDGE_MIN_10K;
         MWHighEdgeSet = mwstepsize == false ? FREQ_MW_HIGH_EDGE_MAX_9K : FREQ_MW_HIGH_EDGE_MAX_10K;
         doBandSelectionFM();
@@ -1987,15 +2008,15 @@ void ShowStepSize() {
   if (!advancedRDS) {
     tft.fillRect(222, 38, 15, 4, GreyoutColor);
     tft.fillRect(193, 38, 15, 4, GreyoutColor);
-    if (band < BAND_GAP) tft.fillRect(148, 38, 15, 4, GreyoutColor); else tft.fillRect(162, 38, 15, 4, GreyoutColor);
-    if (band < BAND_GAP) tft.fillRect(116, 38, 15, 4, GreyoutColor); else if (band != BAND_LW && band != BAND_MW) tft.fillRect(130, 38, 15, 4, GreyoutColor);
+    if (band < BAND_GAP) tft.fillRect(144, 38, 15, 4, GreyoutColor); else tft.fillRect(162, 38, 15, 4, GreyoutColor);
+    if (band < BAND_GAP) tft.fillRect(110, 38, 15, 4, GreyoutColor); else if (band != BAND_LW && band != BAND_MW) tft.fillRect(130, 38, 15, 4, GreyoutColor);
     if (stepsize == 1) tft.fillRect(222, 38, 15, 4, InsignificantColor);
     if (stepsize == 2) tft.fillRect(193, 38, 15, 4, InsignificantColor);
     if (stepsize == 3) {
-      if (band < BAND_GAP) tft.fillRect(148, 38, 15, 4, InsignificantColor); else tft.fillRect(162, 38, 15, 4, InsignificantColor);
+      if (band < BAND_GAP) tft.fillRect(144, 38, 15, 4, InsignificantColor); else tft.fillRect(162, 38, 15, 4, InsignificantColor);
     }
     if (stepsize == 4) {
-      if (band < BAND_GAP) tft.fillRect(116, 38, 15, 4, InsignificantColor); else tft.fillRect(130, 38, 15, 4, InsignificantColor);
+      if (band < BAND_GAP) tft.fillRect(110, 38, 15, 4, InsignificantColor); else tft.fillRect(130, 38, 15, 4, InsignificantColor);
     }
   }
 }
@@ -2131,6 +2152,7 @@ void ButtonPress() {
       }
     } else {
       seek = false;
+      if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
       unsigned long counterold = millis();
       unsigned long counter = millis();
       while (digitalRead(ROTARY_BUTTON) == LOW && counter - counterold <= 1000) counter = millis();
@@ -2413,7 +2435,7 @@ void ShowFreq(int mode) {
       case BAND_SW: frequency_AM = frequency_SW; break;
     }
     FrequencySprite.fillSprite(BackgroundColor);
-    FrequencySprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+    FrequencySprite.setTextColor(FreqColor, FreqColorSmooth, false);
     FrequencySprite.drawString(String(frequency_AM) + " ", 218, -6);
     FrequencySprite.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
     FrequencySprite.setTextDatum(TL_DATUM);
@@ -2424,7 +2446,13 @@ void ShowFreq(int mode) {
     }
     if (!screenmute) FrequencySprite.pushSprite(46, 46);
     FrequencySprite.setTextDatum(TR_DATUM);
-    FrequencySprite.loadFont(FREQFONT);
+    switch (freqfont) {
+      case 0: FrequencySprite.loadFont(FREQFONT0); break;
+      case 1: FrequencySprite.loadFont(FREQFONT1); break;
+      case 2: FrequencySprite.loadFont(FREQFONT2); break;
+      case 3: FrequencySprite.loadFont(FREQFONT3); break;
+      case 4: FrequencySprite.loadFont(FREQFONT4); break;
+    }
     freqold = frequency_AM;
   } else {
     unsigned int freq = 0;
@@ -2442,7 +2470,7 @@ void ShowFreq(int mode) {
       } else {
         if (mode == 0) {
           FrequencySprite.fillSprite(BackgroundColor);
-          FrequencySprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FrequencySprite.setTextColor(FreqColor, FreqColorSmooth, false);
           FrequencySprite.drawString(String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100) + " ", 218, -6);
           FrequencySprite.pushSprite(46, 46);
           freqold = freq;
@@ -2541,8 +2569,8 @@ void ShowSignalLevel() {
       if (advancedRDS) {
         tftReplace(1, String(SStatusold / 10) + "." + String(abs(SStatusold % 10)), String(SStatusprint / 10) + "." + String(abs(SStatusprint % 10)), 273, 51, PrimaryColor, PrimaryColorSmooth, 16);
       } else {
-        if (SStatusold / 10 != SStatusprint / 10) tftReplace(1, String(SStatusold / 10), String(SStatusprint / 10), 288, 105, PrimaryColor, PrimaryColorSmooth, 48);
-        tftReplace(1, "." + String(abs(SStatusold % 10)), "." + String(abs(SStatusprint % 10)), 310, 105, PrimaryColor, PrimaryColorSmooth, 28);
+        if (SStatusold / 10 != SStatusprint / 10) tftReplace(1, String(SStatusold / 10), String(SStatusprint / 10), 288, 105, FreqColor, FreqColorSmooth, 48);
+        tftReplace(1, "." + String(abs(SStatusold % 10)), "." + String(abs(SStatusprint % 10)), 310, 105, FreqColor, FreqColorSmooth, 28);
 
         if (band < BAND_GAP) segments = (SStatus + 200) / 10; else segments = (SStatus + 200) / 10;
 
@@ -3538,6 +3566,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_SPISPEED, 0);
   EEPROM.writeByte(EE_BYTE_AMSCANSENS, 4);
   EEPROM.writeByte(EE_BYTE_FMSCANSENS, 4);
+  EEPROM.writeByte(EE_BYTE_FREQFONT, 3);
   EEPROM.commit();
 }
 
@@ -3593,7 +3622,15 @@ void tftPrint(int8_t offset, const String &text, int16_t x, int16_t y, int color
     if (fontsize == 28) selectedFont = FONT28;
   }
   if (fontsize == 48) selectedFont = FONT48;
-  if (fontsize == 52) selectedFont = FREQFONT;
+  if (fontsize == 52) {
+    switch (freqfont) {
+      case 0: selectedFont = FREQFONT0; break;
+      case 1: selectedFont = FREQFONT1; break;
+      case 2: selectedFont = FREQFONT2; break;
+      case 3: selectedFont = FREQFONT3; break;
+      case 4: selectedFont = FREQFONT4; break;
+    }
+  }
 
   if (currentFont != selectedFont || resetFontOnNextCall) {
     if (currentFont != nullptr) tft.unloadFont();

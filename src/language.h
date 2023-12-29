@@ -1,11 +1,11 @@
 #ifndef LANGUAGE_H
 #define LANGUAGE_H
 
-#define VERSION "v2.00"
+#define VERSION "v2.00.1"
 
 // [number of languages][number of texts]
 // *** means the text is the same as in English
-static const char* const myLanguage[18][210] = {
+static const char* const myLanguage[18][211] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -84,14 +84,14 @@ static const char* const myLanguage[18][210] = {
     "Time-out timer", // 75
     "Screen off", // 76
     "Theme", // 77
-    "Default", // 78
-    "Cyan", // 79
-    "Crimson", // 80
-    "Monochrome", // 81
-    "Volcano", // 82
-    "Dendro", // 83
-    "Sakura", // 84
-    "Whiteout", // 85
+    "", // 78
+    "", // 79
+    "", // 80
+    "", // 81
+    "", // 82
+    "", // 83
+    "", // 84
+    "", // 85
     "NOT POSSIBLE", // 86
     "No AF available", // 87
     "No EON available", // 88
@@ -215,7 +215,8 @@ static const char* const myLanguage[18][210] = {
     "Dynamic SPI speed", // 206
     "Scan sensitivity", // 207
     "NONE", // 208
-    "Software version" // 209
+    "Software version", // 209
+	"Frequency font" // 210
   },
 
   { "Nederlands", // Dutch
@@ -296,14 +297,14 @@ static const char* const myLanguage[18][210] = {
     "Auto uitschakelen", // 75
     "Scherm uit", // 76
     "Thema", // 77
-    "Standaard", // 78
-    "Cyan", // 79 ***
-    "Crimson", // 80 ***
-    "Monochrome", // 81 ***
-    "Volcano", // 82 ***
-    "Dendro", // 83 ***
-    "Sakura", // 84 ***
-    "Whiteout", // 85 ***
+    "", // 78
+    "", // 79 ***
+    "", // 80 ***
+    "", // 81 ***
+    "", // 82 ***
+    "", // 83 ***
+    "", // 84 ***
+    "", // 85 ***
     "NIET MOGELIJK", // 86
     "Geen AF data", // 87
     "Geen EON data", // 88
@@ -427,7 +428,8 @@ static const char* const myLanguage[18][210] = {
     "Dynamische\nSPI snelheid", // 206
     "Zoek gevoeligheid", // 207
     "Geen", // 208
-    "Software versie" // 209
+    "Software versie", // 209
+	"Frequentie font" // 210	
   },
 
   { "Polski", // Polish
@@ -508,14 +510,14 @@ static const char* const myLanguage[18][210] = {
     "Wyłącznik czasowy", // 75
     "Wyłącz ekran", // 76
     "Motyw", // 77
-    "Domyślny", // 78
-    "Cyan", // 79 ***
-    "Crimson", // 80 ***
-    "Monochrome", // 81 ***
-    "Volcano", // 82 ***
-    "Dendro", // 83 ***
-    "Sakura", // 84 ***
-    "Whiteout", // 85 ***
+    "", // 78
+    "", // 79 ***
+    "", // 80 ***
+    "", // 81 ***
+    "", // 82 ***
+    "", // 83 ***
+    "", // 84 ***
+    "", // 85 ***
     "NIEMOŻLIWE", // 86
     "AF niedostępny", // 87
     "EON niedostępny", // 88
@@ -639,7 +641,8 @@ static const char* const myLanguage[18][210] = {
     "Dynam. prędkość SPI", // 206
     "Czułość skanowania", // 207
     "BRAK", // 208
-    "Wersja oprogramowania" // 209 
+    "Wersja oprogramowania", // 209 
+	"Frequency font" // 210	***
   },
 
   { "Hrvatski", // Croatian
@@ -720,14 +723,14 @@ static const char* const myLanguage[18][210] = {
     "Time-out timer", // 75 ***
     "Zaslon isključiti", // 76
     "Tema dizajna", // 77
-    "Zadano", // 78
-    "Cyan", // 79 ***
-    "Crimson", // 80 ***
-    "Monochrome", // 81 ***
-    "Volcano", // 82 ***
-    "Dendro", // 83 ***
-    "Sakura", // 84 ***
-    "Whiteout", // 85 ***
+    "", // 78
+    "", // 79 ***
+    "", // 80 ***
+    "", // 81 ***
+    "", // 82 ***
+    "", // 83 ***
+    "", // 84 ***
+    "", // 85 ***
     "NIJE MOGUĆE", // 86
     "AF nedostupan", // 87
     "EON nedostupan", // 88
@@ -851,7 +854,8 @@ static const char* const myLanguage[18][210] = {
     "Dynamic SPI speed", // 206 ***
     "Scan sensitivity", // 207
     "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
-    "Software version" // 209
+    "Software version", // 209
+	"Frequency font" // 210 ***	
   },
 
   { "Ελληνικά", // Greek
@@ -932,14 +936,14 @@ static const char* const myLanguage[18][210] = {
     "Χρονοδιακόπτης λήξης", // 75
     "Οθόνη σβηστή", // 76
     "Θέμα", // 77
-    "Προεπιλογή", // 78
-    "Κυανό", // 79
-    "Βυσσινί", // 80
-    "Μονόχρωμο", // 81
-    "Ηφαίστειο", // 82
-    "Δένδρο", // 83
-    "Σάκουρα", // 84
-    "Λευκό τοπίο", // 85
+    "", // 78
+    "", // 79
+    "", // 80
+    "", // 81
+    "", // 82
+    "", // 83
+    "", // 84
+    "", // 85
     "ΜΗ ΔΥΝΑΤΟ", // 86
     "Μη διαθέσιμο AF", // 87
     "Μη διαθέσιμο EON", // 88
@@ -1063,7 +1067,8 @@ static const char* const myLanguage[18][210] = {
     "Δυναμική ταχύτητα\nSPI", // 206
     "Ευαισθησία\nανίχνευσης", // 207
     "KAMIA", // 208
-    "Έκδοση λογισμικού" // 209
+    "Έκδοση λογισμικού", // 209
+	"Frequency font" // 210 ***	
   },
 
   { "Română", // Romanian
@@ -1144,14 +1149,14 @@ static const char* const myLanguage[18][210] = {
     "Intervalul de timp", // 75
     "Ecran oprit", // 76
     "Teme", // 77
-    "Implicit", // 78
-    "Cyan", // 79 ***
-    "Crimson", // 80 ***
-    "Monochrome", // 81 ***
-    "Volcano", // 82 ***
-    "Dendro", // 83 ***
-    "Sakura", // 84 ***
-    "Whiteout", // 85 ***
+    "", // 78
+    "", // 79 ***
+    "", // 80 ***
+    "", // 81 ***
+    "", // 82 ***
+    "", // 83 ***
+    "", // 84 ***
+    "", // 85 ***
     "Nu este posibil", // 86
     "Fără AF disponibil", // 87
     "Fără EON disponibil", // 88
@@ -1275,7 +1280,8 @@ static const char* const myLanguage[18][210] = {
     "Dynamic SPI speed", // 206 ***
     "Scan sensitivity", // 207
     "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
-    "Software version" // 209
+    "Software version", // 209
+	"Frequency font" // 210 ***	
   },
 
   { "Deutsch", // German
@@ -1356,14 +1362,14 @@ static const char* const myLanguage[18][210] = {
     "Abschaltzeit", // 75
     "Bildschirm aus", // 76
     "Thema", // 77
-    "Standard", // 78
-    "Cyan", // 79
-    "Crimson", // 80
-    "Monochrom", // 81
-    "Volcano", // 82
-    "Dendro", // 83
-    "Sakura", // 84
-    "Whiteout", // 85
+    "", // 78
+    "", // 79
+    "", // 80
+    "", // 81
+    "", // 82
+    "", // 83
+    "", // 84
+    "", // 85
     "NICHT MÖGLICH", // 86
     "Keine AF verfügbar", // 87
     "Kein EON verfügbar", // 88
@@ -1487,7 +1493,8 @@ static const char* const myLanguage[18][210] = {
     "Dynamische \nSPI-Geschwindigkeit", // 206
     "Scanempfindlichkeit", // 207
     "KEINE", // 208
-    "Softwareversion" // 209
+    "Softwareversion", // 209
+	"Frequency font" // 210 ***	
   },
 
   { "Český", // Czech
@@ -1568,14 +1575,14 @@ static const char* const myLanguage[18][210] = {
     "Čas", // 75
     "Vypnutí obrazovky", // 76
     "Vzhled", // 77
-    "Výchozí", // 78
-    "Cyan", // 79 ***
-    "Crimson", // 80 ***
-    "Monochrome", // 81 ***
-    "Volcano", // 82 ***
-    "Dendro", // 83 ***
-    "Sakura", // 84 ***
-    "Whiteout", // 85 ***
+    "", // 78
+    "", // 79 ***
+    "", // 80 ***
+    "", // 81 ***
+    "", // 82 ***
+    "", // 83 ***
+    "", // 84 ***
+    "", // 85 ***
     "ODPOJTE USB", // 86
     "AF nedostupné", // 87
     "EON nedostupný", // 88
@@ -1699,7 +1706,8 @@ static const char* const myLanguage[18][210] = {
     "Dynamic SPI speed", // 206 ***
     "Scan sensitivity", // 207
     "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
-    "Software version" // 209
+    "Software version", // 209
+	"Frequency font" // 210 ***	
   },
 
   { "Slovenský", // Slovak
@@ -1780,14 +1788,14 @@ static const char* const myLanguage[18][210] = {
     "Čas", // 75
     "Vypnutie obrazovky", // 76
     "Vzhľad", // 77
-    "Východzí", // 78
-    "Cyan", // 79 ***
-    "Crimson", // 80 ***
-    "Monochrome", // 81 ***
-    "Volcano", // 82 ***
-    "Dendro", // 83 ***
-    "Sakura", // 84 ***
-    "Whiteout", // 85 ***
+    "", // 78
+    "", // 79 ***
+    "", // 80 ***
+    "", // 81 ***
+    "", // 82 ***
+    "", // 83 ***
+    "", // 84 ***
+    "", // 85 ***
     "ODPOJTE USB", // 86
     "AF nedostupné", // 87
     "EON nedostupný", // 88
@@ -1911,7 +1919,8 @@ static const char* const myLanguage[18][210] = {
     "Dynamic SPI speed", // 206 ***
     "Scan sensitivity", // 207
     "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
-    "Software version" // 209
+    "Software version", // 209
+	"Frequency font" // 210 ***	
   },
 
   { "Français", // French
@@ -1992,14 +2001,14 @@ static const char* const myLanguage[18][210] = {
     "Temporisateur", // 75
     "Affichage éteint", // 76
     "Thème", // 77
-    "Défaut", // 78
-    "Cyan", // 79
-    "Cramoisi", // 80
-    "Monochrome", // 81
-    "Volcan", // 82
-    "Dendro", // 83
-    "Sakura", // 84
-    "Voile blanc", // 85
+    "", // 78
+    "", // 79
+    "", // 80
+    "", // 81
+    "", // 82
+    "", // 83
+    "", // 84
+    "", // 85
     "IMPOSSIBLE", // 86
     "AF indisponible", // 87
     "EON indisponible", // 88
@@ -2123,7 +2132,8 @@ static const char* const myLanguage[18][210] = {
     "Vitesse SPI\ndynamique", // 206
     "Sensibilité\ndu scanne ", // 207
     "AUCUNE", // 208
-    "Version de logiciel" // 209
+    "Version de logiciel", // 209
+	"Frequency font" // 210 ***	
   },
 
   { "Български", // Bulgarian
@@ -2204,14 +2214,14 @@ static const char* const myLanguage[18][210] = {
     "Time-out timer", // 75 ***
     "Изключен дисплей", // 76
     "Тема", // 77
-    "По подразбиране", // 78
-    "Циан", // 79
-    "Crimson", // 80 ***
-    "Двуцветен", // 81
-    "Вулкан", // 82
-    "Горски", // 83
-    "Червено бял", // 84
-    "Бяла буря", // 85
+    "", // 78
+    "", // 79
+    "", // 80 ***
+    "", // 81
+    "", // 82
+    "", // 83
+    "", // 84
+    "", // 85
     "НЕ Е ВЪЗМОЖНО", // 86
     "AF опцията не е налична", // 87
     "EON опцията не е налична", // 88
@@ -2335,7 +2345,8 @@ static const char* const myLanguage[18][210] = {
     "Dynamic SPI speed", // 206 ***
     "Scan sensitivity", // 207
     "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
-    "Software version" // 209
+    "Software version", // 209
+	"Frequency font" // 210 ***	
   },
 
   { "Русский", // Russian
@@ -2416,14 +2427,14 @@ static const char* const myLanguage[18][210] = {
     "Глубокий сон", // 75
     "Погасить экран", // 76
     "Тема", // 77
-    "Default", // 78
-    "Cyan", // 79
-    "Crimson", // 80
-    "Monochrome", // 81
-    "Volcano", // 82
-    "Dendro", // 83
-    "Sakura", // 84
-    "Whiteout", // 85
+    "", // 78
+    "", // 79
+    "", // 80
+    "", // 81
+    "", // 82
+    "", // 83
+    "", // 84
+    "", // 85
     "НЕВОЗМОЖНО", // 86
     "Нет данных", // 87
     "Нет данных", // 88
@@ -2547,7 +2558,8 @@ static const char* const myLanguage[18][210] = {
     "Частота шины дисплея SPI", // 206 ***
     "Чувствительность сканирования", // 207
     "Отсутствуют", // 208
-    "Версия прошивки" // 209
+    "Версия прошивки", // 209
+	"Frequency font" // 210 ***	
   },
 
   { "Українська", // Ukranian
@@ -2628,14 +2640,14 @@ static const char* const myLanguage[18][210] = {
     "Таймер тайм-ауту", // 75
     "Екран вимкнено", // 76
     "Тема", // 77
-    "За замовчуванням", // 78
-    "Ціан", // 79
-    "Малиновий", // 80
-    "Монохромний", // 81
-    "Вулкан", // 82
-    "Дендро", // 83
-    "Сакура", // 84
-    "Білесенький", // 85
+    "", // 78
+    "", // 79
+    "", // 80
+    "", // 81
+    "", // 82
+    "", // 83
+    "", // 84
+    "", // 85
     "НЕ МОЖЛИВО", // 86
     "Немає доступних AF", // 87
     "Немає доступного EON", // 88
@@ -2759,7 +2771,8 @@ static const char* const myLanguage[18][210] = {
     "Швидкість шини дисплея (SPI)", // 206 ***
     "Чутливість сканування", // 207
     "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
-    "Версія ПО" // 209
+    "Версія ПО", // 209
+	"Frequency font" // 210 ***	
   },
 
   { "Italiano", // Italian
@@ -2840,14 +2853,14 @@ static const char* const myLanguage[18][210] = {
     "Timer di time-out", // 75 ***
     "Schermo spento", // 76
     "Motivo schermo", // 77
-    "Predefinito", // 78
-    "Ciano", // 79
-    "Cremisi", // 80
-    "Monocromatico", // 81
-    "Vulcano", // 82
-    "Dendro", // 83 ***
-    "Sakura", // 84 ***
-    "Sbiancato", // 85
+    "", // 78
+    "", // 79
+    "", // 80
+    "", // 81
+    "", // 82
+    "", // 83 ***
+    "", // 84 ***
+    "", // 85
     "IMPOSSIBILE", // 86
     "AF non disponibile", // 87
     "EON non disponibile", // 88
@@ -2971,7 +2984,8 @@ static const char* const myLanguage[18][210] = {
     "Velocità SPI Dinamico", // 206 ***
     "Sensibilità scansione", // 207
     "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
-    "Software version" // 209
+    "Software version", // 209
+	"Frequency font" // 210 ***	
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3052,14 +3066,14 @@ static const char* const myLanguage[18][210] = {
     "倒计时关机", // 75
     "关闭屏幕", // 76
     "主题&颜色", // 77
-    "默认", // 78
-    "青色", // 79
-    "西瓜红", // 80
-    "珍珠白", // 81
-    "湖蓝", // 82
-    "草绿", // 83
-    "樱花紫", // 84
-    "纯白", // 85
+    "", // 78
+    "", // 79
+    "", // 80
+    "", // 81
+    "", // 82
+    "", // 83
+    "", // 84
+    "", // 85
     "不可用", // 86
     "AF 不可用", // 87
     "EON 不可用", // 88
@@ -3183,7 +3197,8 @@ static const char* const myLanguage[18][210] = {
     "调整SPI通讯速率", // 206
     "搜索灵敏度", // 207
     "不可用", // 208
-    "Software version" // 209
+    "Software version", // 209
+	"Frequency font" // 210 ***	
   },
 
   { "Norsk", // Norwegian
@@ -3264,14 +3279,14 @@ static const char* const myLanguage[18][210] = {
     "Tidsavbruddstimer", // 75
     "Skjerm av", // 76
     "Tema", // 77
-    "Standard", // 78
-    "Cyan", // 79 ***
-    "Crimson", // 80 ***
-    "Monochrome", // 81 ***
-    "Volcano", // 82 ***
-    "Dendro", // 83 ***
-    "Sakura", // 84 ***
-    "Whiteout", // 85 ***
+    "", // 78
+    "", // 79 ***
+    "", // 80 ***
+    "", // 81 ***
+    "", // 82 ***
+    "", // 83 ***
+    "", // 84 ***
+    "", // 85 ***
     "IKKE MULIG", // 86
     "Ingen AF", // 87
     "Ingen EON", // 88
@@ -3395,7 +3410,8 @@ static const char* const myLanguage[18][210] = {
     "Dynamisk SPI hastighet", // 206
     "Skannefølsomhet", // 207
     "INGEN", // 208
-    "Programvareversjon" // 209
+    "Programvareversjon", // 209
+	"Frequency font" // 210 ***	
   },
 
   { "Español", // Spanish
@@ -3476,14 +3492,14 @@ static const char* const myLanguage[18][210] = {
     "Temporizador de\ntiempo muerto", // 75
     "Apagar pantalla", // 76
     "Tema", // 77
-    "Predeterminado", // 78
-    "Cian", // 79
-    "Carmesí", // 80
-    "Monocromo", // 81
-    "Volcán", // 82
-    "Dendro", // 83
-    "Sakura", // 84
-    "Blanqueo total", // 85
+    "", // 78
+    "", // 79
+    "", // 80
+    "", // 81
+    "", // 82
+    "", // 83
+    "", // 84
+    "", // 85
     "NO ES POSIBLE", // 86
     "No AF disponible", // 87
     "No EON disponible", // 88
@@ -3607,7 +3623,8 @@ static const char* const myLanguage[18][210] = {
     "Velocidad de SPI", // 206
     "Sensibilidad\ndel escaneo", // 207
     "NINGUNA", // 208
-    "Versión del software" // 209
+    "Versión del software", // 209
+	"Frequency font" // 210 ***	
   },
 
   { "Português", // Portuguese
@@ -3688,14 +3705,14 @@ static const char* const myLanguage[18][210] = {
     "Temporizador de\ndesligamento", // 75
     "Desligar a tela", // 76
     "Tema", // 77
-    "Padrão", // 78
-    "Ciano", // 79
-    "Carmesim", // 80
-    "Monocromático", // 81
-    "Vulcão", // 82
-    "Dendro", // 83
-    "Sakura", // 84
-    "Branco total", // 85
+    "", // 78
+    "", // 79
+    "", // 80
+    "", // 81
+    "", // 82
+    "", // 83
+    "", // 84
+    "", // 85
     "NÃO POSSÍVEL", // 86
     "AF não disponível", // 87
     "EON não disponível", // 88
@@ -3819,7 +3836,8 @@ static const char* const myLanguage[18][210] = {
     "Velocidade dinâmica\nde SPI", // 206
     "Sensibilidade\nda varredura", // 207
     "NENHUM", // 208
-    "Versão do software" // 209
+    "Versão do software", // 209
+	"Frequency font" // 210 ***	
   }
 };
 #endif
