@@ -1940,6 +1940,7 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_SPISPEED, spispeed);
         EEPROM.writeByte(EE_BYTE_AMSCANSENS, amscansens);
         EEPROM.writeByte(EE_BYTE_FMSCANSENS, fmscansens);
+        EEPROM.writeByte(EE_BYTE_FREQFONT, freqfont);
         EEPROM.commit();
         if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
         if (!usesquelch) radio.setUnMute();
