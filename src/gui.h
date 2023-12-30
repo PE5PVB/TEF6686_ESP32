@@ -10,17 +10,17 @@
 #define SMETERPIN       27
 #define CONTRASTPIN     2
 
-#define ITEM_GAP		20
-#define ITEM1			30
-#define ITEM2			50
-#define ITEM3			70
-#define ITEM4			90
-#define ITEM5			110
-#define ITEM6			130
-#define ITEM7			150
-#define ITEM8			170
-#define ITEM9			190
-#define ITEM10			210
+#define ITEM_GAP    20
+#define ITEM1     30
+#define ITEM2     50
+#define ITEM3     70
+#define ITEM4     90
+#define ITEM5     110
+#define ITEM6     130
+#define ITEM7     150
+#define ITEM8     170
+#define ITEM9     190
+#define ITEM10      210
 
 enum menupage {INDEX, MAINSETTINGS, AUDIOSETTINGS, DISPLAYSETTINGS, RDSSETTINGS, FMSETTINGS, AMSETTINGS, CONNECTIVITY};
 
@@ -73,6 +73,7 @@ extern byte batteryold;
 extern byte batteryoptions;
 extern byte batteryoptionsold;
 extern byte ContrastSet;
+extern byte CurrentSkin;
 extern byte CurrentTheme;
 extern byte ECCold;
 extern byte fmscansens;
@@ -107,7 +108,6 @@ extern byte StereoLevel;
 extern byte StereoLevel;
 extern byte submenu;
 extern byte subnetclient;
-extern byte theme;
 extern byte tot;
 extern byte touchrotating;
 extern byte unit;

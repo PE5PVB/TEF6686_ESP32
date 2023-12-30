@@ -84,7 +84,7 @@ static const char* const myLanguage[18][211] = {
     "Time-out timer", // 75
     "Screen off", // 76
     "Theme", // 77
-    "", // 78
+    "Skin", // 78
     "", // 79
     "", // 80
     "", // 81
@@ -216,7 +216,7 @@ static const char* const myLanguage[18][211] = {
     "Scan sensitivity", // 207
     "NONE", // 208
     "Software version", // 209
-	"Frequency font" // 210
+    "Frequency font" // 210
   },
 
   { "Nederlands", // Dutch
@@ -297,7 +297,7 @@ static const char* const myLanguage[18][211] = {
     "Auto uitschakelen", // 75
     "Scherm uit", // 76
     "Thema", // 77
-    "", // 78
+    "Uiterlijk", // 78 ***
     "", // 79 ***
     "", // 80 ***
     "", // 81 ***
@@ -429,7 +429,7 @@ static const char* const myLanguage[18][211] = {
     "Zoek gevoeligheid", // 207
     "Geen", // 208
     "Software versie", // 209
-	"Frequentie font" // 210	
+    "Frequentie font" // 210
   },
 
   { "Polski", // Polish
@@ -510,7 +510,7 @@ static const char* const myLanguage[18][211] = {
     "Wyłącznik czasowy", // 75
     "Wyłącz ekran", // 76
     "Motyw", // 77
-    "", // 78
+    "Skin", // 78 ***
     "", // 79 ***
     "", // 80 ***
     "", // 81 ***
@@ -641,8 +641,8 @@ static const char* const myLanguage[18][211] = {
     "Dynam. prędkość SPI", // 206
     "Czułość skanowania", // 207
     "BRAK", // 208
-    "Wersja oprogramowania", // 209 
-	"Czcionka częstotliwości" // 210	***
+    "Wersja oprogramowania", // 209
+    "Czcionka częstotliwości" // 210  ***
   },
 
   { "Hrvatski", // Croatian
@@ -723,7 +723,7 @@ static const char* const myLanguage[18][211] = {
     "Time-out timer", // 75 ***
     "Zaslon isključiti", // 76
     "Tema dizajna", // 77
-    "", // 78
+    "Skin", // 78 ***
     "", // 79 ***
     "", // 80 ***
     "", // 81 ***
@@ -855,7 +855,7 @@ static const char* const myLanguage[18][211] = {
     "Scan sensitivity", // 207
     "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
     "Software version", // 209
-	"Frequency font" // 210 ***	
+    "Frequency font" // 210 ***
   },
 
   { "Ελληνικά", // Greek
@@ -936,7 +936,7 @@ static const char* const myLanguage[18][211] = {
     "Χρονοδιακόπτης λήξης", // 75
     "Οθόνη σβηστή", // 76
     "Θέμα", // 77
-    "", // 78
+    "Skin", // 78 ***
     "", // 79
     "", // 80
     "", // 81
@@ -1068,7 +1068,7 @@ static const char* const myLanguage[18][211] = {
     "Ευαισθησία\nανίχνευσης", // 207
     "KAMIA", // 208
     "Έκδοση λογισμικού", // 209
-	"Frequency font" // 210 ***	
+    "Frequency font" // 210 ***
   },
 
   { "Română", // Romanian
@@ -1149,7 +1149,7 @@ static const char* const myLanguage[18][211] = {
     "Intervalul de timp", // 75
     "Ecran oprit", // 76
     "Teme", // 77
-    "", // 78
+    "Skin", // 78 ***
     "", // 79 ***
     "", // 80 ***
     "", // 81 ***
@@ -1281,7 +1281,7 @@ static const char* const myLanguage[18][211] = {
     "Scan sensitivity", // 207
     "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
     "Software version", // 209
-	"Frequency font" // 210 ***	
+    "Frequency font" // 210 ***
   },
 
   { "Deutsch", // German
@@ -1362,7 +1362,7 @@ static const char* const myLanguage[18][211] = {
     "Abschaltzeit", // 75
     "Bildschirm aus", // 76
     "Thema", // 77
-    "", // 78
+    "Skin", // 78 ***
     "", // 79
     "", // 80
     "", // 81
@@ -1494,7 +1494,7 @@ static const char* const myLanguage[18][211] = {
     "Scanempfindlichkeit", // 207
     "KEINE", // 208
     "Softwareversion", // 209
-	"Frequenz-Schriftart" // 210 ***	
+    "Frequenz-Schriftart" // 210 ***
   },
 
   { "Český", // Czech
@@ -1575,7 +1575,7 @@ static const char* const myLanguage[18][211] = {
     "Čas", // 75
     "Vypnutí obrazovky", // 76
     "Vzhled", // 77
-    "", // 78
+    "Skin", // 78 ***
     "", // 79 ***
     "", // 80 ***
     "", // 81 ***
@@ -1707,7 +1707,7 @@ static const char* const myLanguage[18][211] = {
     "Scan sensitivity", // 207
     "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
     "Software version", // 209
-	"Frequency font" // 210 ***	
+    "Frequency font" // 210 ***
   },
 
   { "Slovenský", // Slovak
@@ -1788,7 +1788,7 @@ static const char* const myLanguage[18][211] = {
     "Čas", // 75
     "Vypnutie obrazovky", // 76
     "Vzhľad", // 77
-    "", // 78
+    "Skin", // 78 ***
     "", // 79 ***
     "", // 80 ***
     "", // 81 ***
@@ -1920,7 +1920,7 @@ static const char* const myLanguage[18][211] = {
     "Scan sensitivity", // 207
     "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
     "Software version", // 209
-	"Frequency font" // 210 ***	
+    "Frequency font" // 210 ***
   },
 
   { "Français", // French
@@ -2001,7 +2001,7 @@ static const char* const myLanguage[18][211] = {
     "Temporisateur", // 75
     "Affichage éteint", // 76
     "Thème", // 77
-    "", // 78
+    "Skin", // 78 ***
     "", // 79
     "", // 80
     "", // 81
@@ -2133,7 +2133,7 @@ static const char* const myLanguage[18][211] = {
     "Sensibilité\ndu scanne ", // 207
     "AUCUNE", // 208
     "Version de logiciel", // 209
-	"Frequency font" // 210 ***	
+    "Frequency font" // 210 ***
   },
 
   { "Български", // Bulgarian
@@ -2214,7 +2214,7 @@ static const char* const myLanguage[18][211] = {
     "Time-out timer", // 75 ***
     "Изключен дисплей", // 76
     "Тема", // 77
-    "", // 78
+    "Skin", // 78 ***
     "", // 79
     "", // 80 ***
     "", // 81
@@ -2346,7 +2346,7 @@ static const char* const myLanguage[18][211] = {
     "Scan sensitivity", // 207
     "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
     "Software version", // 209
-	"Frequency font" // 210 ***	
+    "Frequency font" // 210 ***
   },
 
   { "Русский", // Russian
@@ -2427,7 +2427,7 @@ static const char* const myLanguage[18][211] = {
     "Глубокий сон", // 75
     "Погасить экран", // 76
     "Тема", // 77
-    "", // 78
+    "Skin", // 78 ***
     "", // 79
     "", // 80
     "", // 81
@@ -2559,7 +2559,7 @@ static const char* const myLanguage[18][211] = {
     "Чувствительность сканирования", // 207
     "Отсутствуют", // 208
     "Версия прошивки", // 209
-	"Frequency font" // 210 ***	
+    "Frequency font" // 210 ***
   },
 
   { "Українська", // Ukranian
@@ -2640,7 +2640,7 @@ static const char* const myLanguage[18][211] = {
     "Таймер тайм-ауту", // 75
     "Екран вимкнено", // 76
     "Тема", // 77
-    "", // 78
+    "Skin", // 78 ***
     "", // 79
     "", // 80
     "", // 81
@@ -2772,7 +2772,7 @@ static const char* const myLanguage[18][211] = {
     "Чутливість сканування", // 207
     "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
     "Версія ПО", // 209
-	"Frequency font" // 210 ***	
+    "Frequency font" // 210 ***
   },
 
   { "Italiano", // Italian
@@ -2853,7 +2853,7 @@ static const char* const myLanguage[18][211] = {
     "Timer di time-out", // 75 ***
     "Schermo spento", // 76
     "Motivo schermo", // 77
-    "", // 78
+    "Skin", // 78 ***
     "", // 79
     "", // 80
     "", // 81
@@ -2985,7 +2985,7 @@ static const char* const myLanguage[18][211] = {
     "Sensibilità scansione", // 207
     "NONE", // 208 represents: AM/FM bands unavailable(please delete this note after translation）
     "Software version", // 209
-	"Frequency font" // 210 ***	
+    "Frequency font" // 210 ***
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3066,7 +3066,7 @@ static const char* const myLanguage[18][211] = {
     "倒计时关机", // 75
     "关闭屏幕", // 76
     "主题&颜色", // 77
-    "", // 78
+    "Skin", // 78 ***
     "", // 79
     "", // 80
     "", // 81
@@ -3198,7 +3198,7 @@ static const char* const myLanguage[18][211] = {
     "搜索灵敏度", // 207
     "不可用", // 208
     "Software version", // 209
-	"Frequency font" // 210 ***	
+    "Frequency font" // 210 ***
   },
 
   { "Norsk", // Norwegian
@@ -3279,7 +3279,7 @@ static const char* const myLanguage[18][211] = {
     "Tidsavbruddstimer", // 75
     "Skjerm av", // 76
     "Tema", // 77
-    "", // 78
+    "Skin", // 78 ***
     "", // 79 ***
     "", // 80 ***
     "", // 81 ***
@@ -3411,7 +3411,7 @@ static const char* const myLanguage[18][211] = {
     "Skannefølsomhet", // 207
     "INGEN", // 208
     "Programvareversjon", // 209
-	"Frequency font" // 210 ***	
+    "Frequency font" // 210 ***
   },
 
   { "Español", // Spanish
@@ -3492,7 +3492,7 @@ static const char* const myLanguage[18][211] = {
     "Temporizador de\ntiempo muerto", // 75
     "Apagar pantalla", // 76
     "Tema", // 77
-    "", // 78
+    "Skin", // 78 ***
     "", // 79
     "", // 80
     "", // 81
@@ -3624,7 +3624,7 @@ static const char* const myLanguage[18][211] = {
     "Sensibilidad\ndel escaneo", // 207
     "NINGUNA", // 208
     "Versión del software", // 209
-	"Frequency font" // 210 ***	
+    "Frequency font" // 210 ***
   },
 
   { "Português", // Portuguese
@@ -3705,7 +3705,7 @@ static const char* const myLanguage[18][211] = {
     "Temporizador de\ndesligamento", // 75
     "Desligar a tela", // 76
     "Tema", // 77
-    "", // 78
+    "Skin", // 78 ***
     "", // 79
     "", // 80
     "", // 81
@@ -3837,7 +3837,7 @@ static const char* const myLanguage[18][211] = {
     "Sensibilidade\nda varredura", // 207
     "NENHUM", // 208
     "Versão do software", // 209
-	"Frequency font" // 210 ***	
+    "Frequency font" // 210 ***
   }
 };
 #endif

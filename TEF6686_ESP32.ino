@@ -136,6 +136,7 @@ byte hardwaremodel = BASE_ILI9341;
 #endif
 byte hardwaremodelold;
 byte ContrastSet;
+byte CurrentSkin;
 byte CurrentTheme;
 byte displayflip;
 byte ECCold;
@@ -181,7 +182,6 @@ byte stepsize;
 byte StereoLevel;
 byte subnetclient;
 byte TEF;
-byte theme;
 byte tot;
 byte tunemode;
 byte unit;
@@ -457,6 +457,7 @@ void setup() {
   amscansens = EEPROM.readByte(EE_BYTE_AMSCANSENS);
   fmscansens = EEPROM.readByte(EE_BYTE_FMSCANSENS);
   freqfont = EEPROM.readByte(EE_BYTE_FREQFONT);
+  CurrentSkin = EEPROM.readByte(EE_BYTE_SKIN);
 
   if (spispeed == SPI_SPEED_DEFAULT) tft.setSPISpeed(SPI_FREQUENCY / 1000000); else tft.setSPISpeed(spispeed * 10);
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;
@@ -1943,6 +1944,7 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_AMSCANSENS, amscansens);
         EEPROM.writeByte(EE_BYTE_FMSCANSENS, fmscansens);
         EEPROM.writeByte(EE_BYTE_FREQFONT, freqfont);
+        EEPROM.writeByte(EE_BYTE_SKIN, CurrentSkin);
         EEPROM.commit();
         if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
         if (!usesquelch) radio.setUnMute();
@@ -3570,6 +3572,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_AMSCANSENS, 4);
   EEPROM.writeByte(EE_BYTE_FMSCANSENS, 4);
   EEPROM.writeByte(EE_BYTE_FREQFONT, 3);
+  EEPROM.writeByte(EE_BYTE_SKIN, 0);
   EEPROM.commit();
 }
 

@@ -7,7 +7,7 @@
 #include <cstring>
 
 byte menuitem;
-byte items[8] = {8, static_cast<byte>(dynamicspi ? 4 : 3), 7, 10, 9, 10, 10, 5};
+byte items[8] = {8, static_cast<byte>(dynamicspi ? 5 : 3), 7, 10, 9, 10, 10, 5};
 
 void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
   switch (CurrentTheme) {
@@ -34,7 +34,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BarSignificantColor = TFT_RED;
       BarInsignificantColor = TFT_GREEN;
       ModBarSignificantColor = TFT_RED;
-      ModBarInsignificantColor = TFT_GREEN;	  
+      ModBarInsignificantColor = TFT_GREEN;
       BWAutoColor = 0x07F7;
       BWAutoColorSmooth = 0x0144;
       BatteryValueColor = 0x07F7;
@@ -237,7 +237,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BarSignificantColor = TFT_BLACK;
       BarInsignificantColor = TFT_GREEN;
       ModBarSignificantColor = TFT_BLACK;
-      ModBarInsignificantColor = TFT_GREEN;	  
+      ModBarInsignificantColor = TFT_GREEN;
       BWAutoColor = 0x7BCF;
       BWAutoColorSmooth = TFT_WHITE;
       BatteryValueColor = TFT_BLACK;
@@ -372,7 +372,7 @@ void BuildAFScreen() {
   }
   afscreen = true;
   advancedRDS = false;
-  if (theme == 0) {
+  if (CurrentSkin == 0) {
     tft.fillScreen(BackgroundColor);
     tft.drawRect(0, 0, 320, 240, FrameColor);
     tft.drawLine(0, 30, 320, 30, FrameColor);
@@ -449,6 +449,7 @@ void BuildMenu() {
       tftPrint(-1, myLanguage[language][108], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][107], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][75], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][62], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
 
       switch (hardwaremodel) {
         case BASE_ILI9341: tftPrint(1, myLanguage[language][109], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
@@ -459,11 +460,13 @@ void BuildMenu() {
       if (touchrotating) tftPrint(1, myLanguage[language][42], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (tot != 0) tftPrint(1, String(tot), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (tot != 0) tftPrint(1, myLanguage[language][205], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (usesquelch) tftPrint(1, myLanguage[language][42], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+
       if (dynamicspi) {
-        tftPrint(1, "MHz", 310, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
-        tftPrint(-1, myLanguage[language][206], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
-        if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][78]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 270, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-        else tftPrint(1, String(spispeed * 10, DEC), 270, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        tftPrint(1, "MHz", 310, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][206], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+        if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][78]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 270, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        else tftPrint(1, String(spispeed * 10, DEC), 270, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       }
       break;
 
@@ -493,38 +496,39 @@ void BuildMenu() {
     case DISPLAYSETTINGS:
       tftPrint(-1, myLanguage[language][39], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][29], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][62], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][63], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][77], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][91], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][74], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][173], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][98], 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][63], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][91], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][74], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][173], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][98], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][78], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][77], 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][210], 8, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
 
       tftPrint(1, myLanguage[language][0], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       tftPrint(1, "%", 310, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(1, String(ContrastSet, DEC), 270, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (usesquelch) tftPrint(1, myLanguage[language][42], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (showmodulation) tftPrint(1, myLanguage[language][42], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, Theme[CurrentTheme], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (screensaverset) tftPrint(1, myLanguage[language][92], 310, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (screensaverset) tftPrint(1, String(screensaverOptions[screensaverset], DEC), 270, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+
+      if (showmodulation) tftPrint(1, myLanguage[language][42], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (screensaverset) tftPrint(1, myLanguage[language][92], 310, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (screensaverset) tftPrint(1, String(screensaverOptions[screensaverset], DEC), 270, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
 
       switch (poweroptions) {
-        case LCD_OFF: tftPrint(1, myLanguage[language][76], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case LCD_BRIGHTNESS_1_PERCENT: tftPrint(1, myLanguage[language][94], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case LCD_BRIGHTNESS_A_QUARTER: tftPrint(1, myLanguage[language][95], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case LCD_BRIGHTNESS_HALF: tftPrint(1, myLanguage[language][96], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case LCD_OFF: tftPrint(1, myLanguage[language][76], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case LCD_BRIGHTNESS_1_PERCENT: tftPrint(1, myLanguage[language][94], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case LCD_BRIGHTNESS_A_QUARTER: tftPrint(1, myLanguage[language][95], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case LCD_BRIGHTNESS_HALF: tftPrint(1, myLanguage[language][96], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
       }
 
       switch (batteryoptions) {
-        case BATTERY_NONE: tftPrint(1, myLanguage[language][30], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case BATTERY_VALUE: tftPrint(1, myLanguage[language][174], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case BATTERY_PERCENT: tftPrint(1, myLanguage[language][175], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case BATTERY_NONE: tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case BATTERY_VALUE: tftPrint(1, myLanguage[language][174], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case BATTERY_PERCENT: tftPrint(1, myLanguage[language][175], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
       }
 
-      tftPrint(1, unitString[unit], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      tftPrint(1, unitString[unit], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      tftPrint(1, Skin[CurrentSkin], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      tftPrint(1, Theme[CurrentTheme], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       tftPrint(1, FreqFont[freqfont], 310, ITEM10 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       break;
 
@@ -669,7 +673,7 @@ void BuildAdvancedRDS() {
   afpagenr = 1;
   advancedRDS = true;
   ScreensaverTimerSet(OFF);
-  if (theme == 0) {
+  if (CurrentSkin == 0) {
     tft.fillScreen(BackgroundColor);
     tft.drawRect(0, 0, 320, 240, FrameColor);
     tft.drawLine(0, 30, 320, 30, FrameColor);
@@ -732,7 +736,7 @@ void BuildAdvancedRDS() {
     tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, 28);
 
     tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
-	tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+    tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
 
     if (!StereoToggle) {
       tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
@@ -798,7 +802,7 @@ void BuildDisplay() {
   afscreen = false;
   advancedRDS = false;
   int bandColor;
-  if (theme == 0) {
+  if (CurrentSkin == 0) {
     tft.fillScreen(BackgroundColor);
     tft.drawRect(0, 0, 320, 240, FrameColor);
     tft.drawLine(0, 30, 320, 30, FrameColor);
@@ -873,8 +877,8 @@ void BuildDisplay() {
     if (band > BAND_GAP) tftPrint(0, "EQ", 303, 59, GreyoutColor, BackgroundColor, 16);
 
     tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
-	tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
-	
+    tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+
     if (!StereoToggle) {
       tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
       tft.drawSmoothCircle(71, 15, 9, SecondaryColor, SecondaryColorSmooth);
@@ -990,6 +994,12 @@ void MenuUp() {
             break;
 
           case ITEM4:
+            if (usesquelch) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
+            if (usesquelch) usesquelch = false; else usesquelch = true;
+            if (usesquelch) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
+
+          case ITEM5:
             if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][78]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             else tftPrint(1, String(spispeed * 10, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
 
@@ -1092,28 +1102,12 @@ void MenuUp() {
             break;
 
           case ITEM3:
-            if (usesquelch) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
-            if (usesquelch) usesquelch = false; else usesquelch = true;
-            if (usesquelch) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
-            break;
-
-          case ITEM4:
             if (showmodulation) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (showmodulation) showmodulation = false; else showmodulation = true;
             if (showmodulation) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case ITEM5:
-            CurrentTheme ++;
-            if (CurrentTheme > 11) CurrentTheme = 0;
-            doTheme();
-            tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
-            tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
-            tftPrint(0, myLanguage[language][77], 155, 78, ActiveColor, ActiveColorSmooth, 28);
-            tftPrint(0, Theme[CurrentTheme], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
-            break;
-
-          case ITEM6:
+          case ITEM4:
             if (screensaverset) tftPrint(-1, myLanguage[language][92], 170, 118, BackgroundColor, BackgroundColor, 28);
             if (!screensaverset) tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, String(screensaverOptions[screensaverset]), 155, 118, BackgroundColor, BackgroundColor, 28);
             screensaverset ++;
@@ -1122,7 +1116,7 @@ void MenuUp() {
             if (!screensaverset) tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(screensaverOptions[screensaverset]), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case ITEM7:
+          case ITEM5:
             switch (poweroptionsold) {
               case LCD_OFF: tftPrint(0, myLanguage[language][76], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case LCD_BRIGHTNESS_1_PERCENT: tftPrint(0, myLanguage[language][94], 155, 118, BackgroundColor, BackgroundColor, 28); break;
@@ -1142,7 +1136,7 @@ void MenuUp() {
             poweroptionsold = poweroptions;
             break;
 
-          case ITEM8:
+          case ITEM6:
             switch (batteryoptionsold) {
               case BATTERY_NONE: tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case BATTERY_VALUE: tftPrint(0, myLanguage[language][174], 155, 118, BackgroundColor, BackgroundColor, 28); break;
@@ -1160,18 +1154,35 @@ void MenuUp() {
             batteryoptionsold = batteryoptions;
             break;
 
-          case ITEM9:
-            tftPrint(0, String(unitString[unit]), 155, 118, BackgroundColor, BackgroundColor, 28);
+          case ITEM7:
+            tftPrint(0, unitString[unit], 155, 118, BackgroundColor, BackgroundColor, 28);
             unit ++;
-            if (unit > 2) unit = 0;
-            tftPrint(0, String(unitString[unit]), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            if (unit > sizeof(unitString) / sizeof(unitString[0]) - 1) unit = 0;
+            tftPrint(0, unitString[unit], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
+
+          case ITEM8:
+            tftPrint(0, Skin[CurrentSkin], 155, 118, BackgroundColor, BackgroundColor, 28);
+            CurrentSkin ++;
+            if (CurrentSkin > sizeof(Skin) / sizeof(Skin[0]) - 1) CurrentSkin = 0;
+            tftPrint(0, Skin[CurrentSkin], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
+
+          case ITEM9:
+            CurrentTheme ++;
+            if (CurrentTheme > sizeof(Theme) / sizeof(Theme[0]) - 1) CurrentTheme = 0;
+            doTheme();
+            tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
+            tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
+            tftPrint(0, myLanguage[language][77], 155, 78, ActiveColor, ActiveColorSmooth, 28);
+            tftPrint(0, Theme[CurrentTheme], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
           case ITEM10:
-            tftPrint(0, String(FreqFont[freqfont]), 155, 118, BackgroundColor, BackgroundColor, 28);
+            tftPrint(0, FreqFont[freqfont], 155, 118, BackgroundColor, BackgroundColor, 28);
             freqfont ++;
-            if (freqfont > 4) freqfont = 0;
-            tftPrint(0, String(FreqFont[freqfont]), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            if (freqfont > sizeof(FreqFont) / sizeof(FreqFont[0]) - 1) freqfont = 0;
+            tftPrint(0, FreqFont[freqfont], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
         }
         break;
@@ -1574,6 +1585,12 @@ void MenuDown() {
             break;
 
           case ITEM4:
+            if (usesquelch) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
+            if (usesquelch) usesquelch = false; else usesquelch = true;
+            if (usesquelch) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
+
+          case ITEM5:
             if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][78]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             else tftPrint(1, String(spispeed * 10, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
 
@@ -1677,28 +1694,12 @@ void MenuDown() {
             break;
 
           case ITEM3:
-            if (usesquelch) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
-            if (usesquelch) usesquelch = false; else usesquelch = true;
-            if (usesquelch) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
-            break;
-
-          case ITEM4:
             if (showmodulation) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (showmodulation) showmodulation = false; else showmodulation = true;
             if (showmodulation) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case ITEM5:
-            CurrentTheme --;
-            if (CurrentTheme > 10) CurrentTheme = 11;
-            doTheme();
-            tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
-            tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
-            tftPrint(0, myLanguage[language][77], 155, 78, ActiveColor, ActiveColorSmooth, 28);
-            tftPrint(0, Theme[CurrentTheme], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
-            break;
-
-          case ITEM6:
+          case ITEM4:
             if (screensaverset) tftPrint(-1, myLanguage[language][92], 170, 118, BackgroundColor, BackgroundColor, 28);
             if (!screensaverset) tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, String(screensaverOptions[screensaverset]), 155, 118, BackgroundColor, BackgroundColor, 28);
             screensaverset --;
@@ -1707,7 +1708,7 @@ void MenuDown() {
             if (!screensaverset) tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(screensaverOptions[screensaverset]), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case ITEM7:
+          case ITEM5:
             switch (poweroptionsold) {
               case LCD_OFF: tftPrint(0, myLanguage[language][76], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case LCD_BRIGHTNESS_1_PERCENT: tftPrint(0, myLanguage[language][94], 155, 118, BackgroundColor, BackgroundColor, 28); break;
@@ -1727,7 +1728,7 @@ void MenuDown() {
             poweroptionsold = poweroptions;
             break;
 
-          case ITEM8:
+          case ITEM6:
             switch (batteryoptionsold) {
               case BATTERY_NONE: tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case BATTERY_VALUE: tftPrint(0, myLanguage[language][174], 155, 118, BackgroundColor, BackgroundColor, 28); break;
@@ -1745,18 +1746,35 @@ void MenuDown() {
             batteryoptionsold = batteryoptions;
             break;
 
-          case ITEM9:
-            tftPrint(0, String(unitString[unit]), 155, 118, BackgroundColor, BackgroundColor, 28);
+          case ITEM7:
+            tftPrint(0, unitString[unit], 155, 118, BackgroundColor, BackgroundColor, 28);
             unit --;
-            if (unit > 2) unit = 2;
-            tftPrint(0, String(unitString[unit]), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            if (unit > sizeof(unitString) / sizeof(unitString[0]) - 1) unit = sizeof(unitString) / sizeof(unitString[0]) - 1;
+            tftPrint(0, unitString[unit], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
+
+          case ITEM8:
+            tftPrint(0, Skin[CurrentSkin], 155, 118, BackgroundColor, BackgroundColor, 28);
+            CurrentSkin --;
+            if (CurrentSkin > sizeof(Skin) / sizeof(Skin[0]) - 1) CurrentSkin = sizeof(Skin) / sizeof(Skin[0]) - 1;
+            tftPrint(0, Skin[CurrentSkin], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
+
+          case ITEM9:
+            CurrentTheme --;
+            if (CurrentTheme > sizeof(Theme) / sizeof(Theme[0]) - 1) CurrentTheme = sizeof(Theme) / sizeof(Theme[0]) - 1;
+            doTheme();
+            tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
+            tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
+            tftPrint(0, myLanguage[language][77], 155, 78, ActiveColor, ActiveColorSmooth, 28);
+            tftPrint(0, Theme[CurrentTheme], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
           case ITEM10:
-            tftPrint(0, String(FreqFont[freqfont]), 155, 118, BackgroundColor, BackgroundColor, 28);
+            tftPrint(0, FreqFont[freqfont], 155, 118, BackgroundColor, BackgroundColor, 28);
             freqfont --;
-            if (freqfont > 4) freqfont = 4;
-            tftPrint(0, String(FreqFont[freqfont]), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            if (freqfont > sizeof(FreqFont) / sizeof(FreqFont[0]) - 1) freqfont = sizeof(FreqFont) / sizeof(FreqFont[0]) - 1;
+            tftPrint(0, FreqFont[freqfont], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
         }
         break;
@@ -2211,6 +2229,11 @@ void DoMenu() {
             break;
 
           case ITEM4:
+            Infoboxprint(myLanguage[language][62]);
+            if (usesquelch) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
+
+          case ITEM5:
             Infoboxprint(myLanguage[language][206]);
             tftPrint(-1, "MHz", 170, 118, ActiveColor, ActiveColorSmooth, 28);
             if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][78]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(spispeed * 10 , DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
@@ -2276,27 +2299,17 @@ void DoMenu() {
             break;
 
           case ITEM3:
-            Infoboxprint(myLanguage[language][62]);
-            if (usesquelch) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
-            break;
-
-          case ITEM4:
             Infoboxprint(myLanguage[language][63]);
             if (showmodulation) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case ITEM5:
-            Infoboxprint(myLanguage[language][77]);
-            tftPrint(0, Theme[CurrentTheme], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
-            break;
-
-          case ITEM6:
+          case ITEM4:
             Infoboxprint(myLanguage[language][91]);
             if (screensaverset) tftPrint(-1, myLanguage[language][92], 170, 118, ActiveColor, ActiveColorSmooth, 28);
             if (!screensaverset) tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(screensaverOptions[screensaverset], DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
-          case ITEM7:
+          case ITEM5:
             Infoboxprint(myLanguage[language][74]);
             switch (poweroptions) {
               case LCD_OFF: tftPrint(0, myLanguage[language][76], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
@@ -2307,7 +2320,7 @@ void DoMenu() {
             poweroptionsold = poweroptions;
             break;
 
-          case ITEM8:
+          case ITEM6:
             Infoboxprint(myLanguage[language][173]);
             switch (batteryoptions) {
               case BATTERY_NONE: tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
@@ -2317,9 +2330,19 @@ void DoMenu() {
             batteryoptionsold = batteryoptions;
             break;
 
-          case ITEM9:
+          case ITEM7:
             Infoboxprint(myLanguage[language][98]);
             tftPrint(0, unitString[unit], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
+
+          case ITEM8:
+            Infoboxprint(myLanguage[language][78]);
+            tftPrint(0, Skin[CurrentSkin], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
+
+          case ITEM9:
+            Infoboxprint(myLanguage[language][77]);
+            tftPrint(0, Theme[CurrentTheme], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
           case ITEM10:
