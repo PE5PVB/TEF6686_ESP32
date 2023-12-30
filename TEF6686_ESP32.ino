@@ -217,6 +217,8 @@ int GreyoutColor;
 int InsignificantColor;
 int InsignificantColorSmooth;
 int menuoption = ITEM1;
+int ModBarInsignificantColor;
+int ModBarSignificantColor;
 int MStatusold;
 int offsetupdatetimer;
 int OStatusold;
@@ -822,7 +824,7 @@ void loop() {
           if (segments > 54) {
             if (((segments - 53) % 10) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, BarSignificantColor);
           } else {
-            if (((segments + 1) % 6) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, BarInsignificantColor);
+            if (((segments + 1) % 6) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, ModBarInsignificantColor);
           }
         }
       }
@@ -2756,12 +2758,12 @@ void ShowModLevel() {
       peakholdmillis = millis();
     }
 
-    tft.fillRect(16, 133, 2 * constrain(segments, 0, 54), 6, BarInsignificantColor);
-    tft.fillRect(16 + 2 * 54, 133, 2 * (constrain(segments, 54, 94) - 54), 6, BarSignificantColor);
+    tft.fillRect(16, 133, 2 * constrain(segments, 0, 54), 6, ModBarInsignificantColor);
+    tft.fillRect(16 + 2 * 54, 133, 2 * (constrain(segments, 54, 94) - 54), 6, ModBarSignificantColor);
     tft.fillRect(16 + 2 * constrain(segments, 0, 94), 133, 2 * (94 - constrain(segments, 0, 94)), 6, GreyoutColor);
 
     int peakHoldPosition = 16 + 2 * constrain(peakholdold, 0, 94);
-    tft.fillRect(peakHoldPosition, 133, 2, 6, (MStatus > 80) ? BarSignificantColor : PrimaryColor);
+    tft.fillRect(peakHoldPosition, 133, 2, 6, (MStatus > 80) ? ModBarSignificantColor : PrimaryColor);
 
     if (millis() - peakholdmillis >= 1000) {
       tft.fillRect(peakHoldPosition, 133, 2, 6, GreyoutColor);

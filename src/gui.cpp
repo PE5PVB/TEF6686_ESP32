@@ -33,6 +33,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = 0x2120;
       BarSignificantColor = TFT_RED;
       BarInsignificantColor = TFT_GREEN;
+      ModBarSignificantColor = TFT_RED;
+      ModBarInsignificantColor = TFT_GREEN;	  
       BWAutoColor = 0x07F7;
       BWAutoColorSmooth = 0x0144;
       BatteryValueColor = 0x07F7;
@@ -60,6 +62,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = 0x0105;
       BarSignificantColor = TFT_RED;
       BarInsignificantColor = 0x0F3F;
+      ModBarSignificantColor = TFT_RED;
+      ModBarInsignificantColor = 0x0F3F;
       BWAutoColor = 0x07F7;
       BWAutoColorSmooth = 0x0144;
       BatteryValueColor = 0x07F7;
@@ -87,6 +91,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = TFT_BLACK;
       BarSignificantColor = TFT_YELLOW;
       BarInsignificantColor = 0xF8C3;
+      ModBarSignificantColor = TFT_YELLOW;
+      ModBarInsignificantColor = 0xF8C3;
       BWAutoColor = 0xFBEF;
       BWAutoColorSmooth = 0x4124;
       BatteryValueColor = 0xFA8D;
@@ -114,6 +120,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = TFT_BLACK;
       BarSignificantColor = TFT_RED;
       BarInsignificantColor = TFT_GREEN;
+      ModBarSignificantColor = TFT_RED;
+      ModBarInsignificantColor = TFT_GREEN;
       BWAutoColor = 0x7BCF;
       BWAutoColorSmooth = 0x1082;
       BatteryValueColor = TFT_WHITE;
@@ -141,6 +149,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = TFT_WHITE;
       BarSignificantColor = TFT_RED;
       BarInsignificantColor = TFT_ORANGE;
+      ModBarSignificantColor = TFT_RED;
+      ModBarInsignificantColor = TFT_ORANGE;
       BWAutoColor = 0xF980;
       BWAutoColorSmooth = 0x3080;
       BatteryValueColor = 0xF980;
@@ -168,6 +178,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = 0x0200;
       BarSignificantColor = TFT_RED;
       BarInsignificantColor = TFT_GREEN;
+      ModBarSignificantColor = TFT_RED;
+      ModBarInsignificantColor = TFT_GREEN;
       BWAutoColor = 0x07F6;
       BWAutoColorSmooth = 0x0184;
       BatteryValueColor = 0x07F6;
@@ -195,6 +207,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = 0x3008;
       BarSignificantColor = TFT_RED;
       BarInsignificantColor = 0xF3D5;
+      ModBarSignificantColor = TFT_RED;
+      ModBarInsignificantColor = 0xF3D5;
       BWAutoColor = 0xF00A;
       BWAutoColorSmooth = 0x2802;
       BatteryValueColor = 0xF00A;
@@ -222,6 +236,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = 0xDFFC;
       BarSignificantColor = TFT_BLACK;
       BarInsignificantColor = TFT_GREEN;
+      ModBarSignificantColor = TFT_BLACK;
+      ModBarInsignificantColor = TFT_GREEN;	  
       BWAutoColor = 0x7BCF;
       BWAutoColorSmooth = TFT_WHITE;
       BatteryValueColor = TFT_BLACK;
@@ -249,6 +265,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = 0x3080;
       BarSignificantColor = TFT_RED;
       BarInsignificantColor = TFT_GREEN;
+      ModBarSignificantColor = TFT_RED;
+      ModBarInsignificantColor = TFT_GREEN;
       BWAutoColor = 0xED20;
       BWAutoColorSmooth = 0x3940;
       BatteryValueColor = 0xED20;
@@ -276,6 +294,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = 0x0006;
       BarSignificantColor = TFT_RED;
       BarInsignificantColor = 0x01FF;
+      ModBarSignificantColor = TFT_RED;
+      ModBarInsignificantColor = 0x01FF;
       BWAutoColor = 0x051F;
       BWAutoColorSmooth = 0x0106;
       BatteryValueColor = 0x051F;
@@ -303,6 +323,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = 0x2007;
       BarSignificantColor = TFT_RED;
       BarInsignificantColor = 0x881F;
+      ModBarSignificantColor = TFT_RED;
+      ModBarInsignificantColor = 0x881F;
       BWAutoColor = 0xD01F;
       BWAutoColorSmooth = 0x400A;
       BatteryValueColor = 0xD01F;
@@ -331,6 +353,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = 0x2120;
       BarSignificantColor = TFT_RED;
       BarInsignificantColor = 0x01FF;
+      ModBarSignificantColor = TFT_RED;
+      ModBarInsignificantColor = TFT_GREEN;
       BWAutoColor = 0x07F7;
       BWAutoColorSmooth = 0x0144;
       BatteryValueColor = 0x07F7;

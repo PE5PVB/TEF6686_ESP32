@@ -135,6 +135,8 @@ extern int GreyoutColor;
 extern int InsignificantColor;
 extern int InsignificantColorSmooth;
 extern int menuoption;
+extern int ModBarInsignificantColor;
+extern int ModBarSignificantColor;
 extern int PrimaryColor;
 extern int PrimaryColorSmooth;
 extern int RDSColor;
