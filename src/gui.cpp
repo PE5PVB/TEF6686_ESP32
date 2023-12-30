@@ -442,7 +442,7 @@ void BuildMenu() {
       tftPrint(0, myLanguage[language][182], 160, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(0, myLanguage[language][183], 160, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(0, myLanguage[language][70], 160, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(0, String(myLanguage[language][209]) + " " + String(VERSION), 160, ITEM10 + 6, SecondaryColor, SecondaryColorSmooth, 16);
+      tftPrint(0, String(myLanguage[language][84]) + " " + String(VERSION), 160, ITEM10 + 6, SecondaryColor, SecondaryColorSmooth, 16);
       break;
 
     case MAINSETTINGS:
@@ -459,12 +459,12 @@ void BuildMenu() {
 
       if (touchrotating) tftPrint(1, myLanguage[language][42], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (tot != 0) tftPrint(1, String(tot), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (tot != 0) tftPrint(1, myLanguage[language][205], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (tot != 0) tftPrint(1, myLanguage[language][80], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (usesquelch) tftPrint(1, myLanguage[language][42], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
 
       if (dynamicspi) {
         tftPrint(1, "MHz", 310, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
-        tftPrint(-1, myLanguage[language][206], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][81], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
         if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][78]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 270, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
         else tftPrint(1, String(spispeed * 10, DEC), 270, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       }
@@ -503,7 +503,7 @@ void BuildMenu() {
       tftPrint(-1, myLanguage[language][98], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][78], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][77], 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][210], 8, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][85], 8, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
 
       tftPrint(1, myLanguage[language][0], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       tftPrint(1, "%", 310, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
@@ -577,7 +577,7 @@ void BuildMenu() {
       tftPrint(-1, myLanguage[language][65], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][90], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][100], 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][207], 8, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][82], 8, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
 
       tftPrint(1, "MHz", 310, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(1, String(ConverterSet, DEC), 270, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
@@ -604,7 +604,7 @@ void BuildMenu() {
         case FM_BAND_ALL: tftPrint(1, myLanguage[language][105] + String(",") + myLanguage[language][106], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
         case FM_BAND_OIRT: tftPrint(1, myLanguage[language][106], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
         case FM_BAND_FM: tftPrint(1, myLanguage[language][105], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case FM_BAND_NONE: tftPrint(1, myLanguage[language][208], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case FM_BAND_NONE: tftPrint(1, myLanguage[language][83], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
       }
       tftPrint(1, String(fmscansens), 310, ITEM10 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       break;
@@ -619,7 +619,7 @@ void BuildMenu() {
       tftPrint(-1, myLanguage[language][187], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][198], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][169], 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][207], 8, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][82], 8, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
 
       if (softmuteam) tftPrint(1, myLanguage[language][42], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (amnb != 0) tftPrint(1, "%", 310, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
@@ -637,7 +637,7 @@ void BuildMenu() {
         case AM_BAND_LW: tftPrint(1, myLanguage[language][102], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
         case AM_BAND_MW: tftPrint(1, myLanguage[language][103], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
         case AM_BAND_SW: tftPrint(1, myLanguage[language][104], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case AM_BAND_NONE: tftPrint(1, myLanguage[language][208], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        case AM_BAND_NONE: tftPrint(1, myLanguage[language][83], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
       }
 
       if (showSWMIBand) tftPrint(1, myLanguage[language][42], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
@@ -980,7 +980,7 @@ void MenuUp() {
             break;
 
           case ITEM3:
-            if (tot != 0) tftPrint(-1, myLanguage[language][205], 170, 118, BackgroundColor, BackgroundColor, 28);
+            if (tot != 0) tftPrint(-1, myLanguage[language][80], 170, 118, BackgroundColor, BackgroundColor, 28);
             if (tot != 0) tftPrint(1, String(tot), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             switch (tot) {
               case 0: tot = 15; break;
@@ -989,7 +989,7 @@ void MenuUp() {
               case 60: tot = 90; break;
               default: tot = 0; break;
             }
-            if (tot != 0) tftPrint(-1, myLanguage[language][205], 170, 118, ActiveColor, ActiveColorSmooth, 28);
+            if (tot != 0) tftPrint(-1, myLanguage[language][80], 170, 118, ActiveColor, ActiveColorSmooth, 28);
             if (tot != 0) tftPrint(1, String(tot), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
@@ -1356,7 +1356,7 @@ void MenuUp() {
               case FM_BAND_ALL: tftPrint(0, myLanguage[language][105] + String(",") + myLanguage[language][106], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case FM_BAND_OIRT: tftPrint(0, myLanguage[language][106], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case FM_BAND_FM: tftPrint(0, myLanguage[language][105], 155, 118, BackgroundColor, BackgroundColor, 28); break;
-              case FM_BAND_NONE: tftPrint(0, myLanguage[language][208], 155, 118, BackgroundColor, BackgroundColor, 28); break;
+              case FM_BAND_NONE: tftPrint(0, myLanguage[language][83], 155, 118, BackgroundColor, BackgroundColor, 28); break;
             }
 
             bandFM++;
@@ -1366,7 +1366,7 @@ void MenuUp() {
               case FM_BAND_ALL: tftPrint(0, myLanguage[language][105] + String(",") + myLanguage[language][106], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
               case FM_BAND_OIRT: tftPrint(0, myLanguage[language][106], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
               case FM_BAND_FM: tftPrint(0, myLanguage[language][105], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
-              case FM_BAND_NONE: tftPrint(0, myLanguage[language][208], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case FM_BAND_NONE: tftPrint(0, myLanguage[language][83], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
             }
             break;
 
@@ -1417,7 +1417,7 @@ void MenuUp() {
               case AM_BAND_LW: tftPrint(0, myLanguage[language][102], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case AM_BAND_MW: tftPrint(0, myLanguage[language][103], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case AM_BAND_SW: tftPrint(0, myLanguage[language][104], 155, 118, BackgroundColor, BackgroundColor, 28); break;
-              case AM_BAND_NONE: tftPrint(0, myLanguage[language][208], 155, 118, BackgroundColor, BackgroundColor, 28); break;
+              case AM_BAND_NONE: tftPrint(0, myLanguage[language][83], 155, 118, BackgroundColor, BackgroundColor, 28); break;
             }
 
             bandAM++;
@@ -1431,7 +1431,7 @@ void MenuUp() {
               case AM_BAND_LW: tftPrint(0, myLanguage[language][102], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
               case AM_BAND_MW: tftPrint(0, myLanguage[language][103], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
               case AM_BAND_SW: tftPrint(0, myLanguage[language][104], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
-              case AM_BAND_NONE: tftPrint(0, myLanguage[language][208], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case AM_BAND_NONE: tftPrint(0, myLanguage[language][83], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
             }
             break;
 
@@ -1571,7 +1571,7 @@ void MenuDown() {
             break;
 
           case ITEM3:
-            if (tot != 0) tftPrint(-1, myLanguage[language][205], 170, 118, BackgroundColor, BackgroundColor, 28);
+            if (tot != 0) tftPrint(-1, myLanguage[language][80], 170, 118, BackgroundColor, BackgroundColor, 28);
             if (tot != 0) tftPrint(1, String(tot), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             switch (tot) {
               case 15: tot = 0; break;
@@ -1580,7 +1580,7 @@ void MenuDown() {
               case 90: tot = 60; break;
               default: tot = 90; break;
             }
-            if (tot != 0) tftPrint(-1, myLanguage[language][205], 170, 118, ActiveColor, ActiveColorSmooth, 28);
+            if (tot != 0) tftPrint(-1, myLanguage[language][80], 170, 118, ActiveColor, ActiveColorSmooth, 28);
             if (tot != 0) tftPrint(1, String(tot), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
@@ -1947,7 +1947,7 @@ void MenuDown() {
               case FM_BAND_ALL: tftPrint(0, myLanguage[language][105] + String(",") + myLanguage[language][106], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case FM_BAND_OIRT: tftPrint(0, myLanguage[language][106], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case FM_BAND_FM: tftPrint(0, myLanguage[language][105], 155, 118, BackgroundColor, BackgroundColor, 28); break;
-              case FM_BAND_NONE: tftPrint(0, myLanguage[language][208], 155, 118, BackgroundColor, BackgroundColor, 28); break;
+              case FM_BAND_NONE: tftPrint(0, myLanguage[language][83], 155, 118, BackgroundColor, BackgroundColor, 28); break;
             }
 
             bandFM--;
@@ -1957,7 +1957,7 @@ void MenuDown() {
               case FM_BAND_ALL: tftPrint(0, myLanguage[language][105] + String(",") + myLanguage[language][106], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
               case FM_BAND_OIRT: tftPrint(0, myLanguage[language][106], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
               case FM_BAND_FM: tftPrint(0, myLanguage[language][105], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
-              case FM_BAND_NONE: tftPrint(0, myLanguage[language][208], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case FM_BAND_NONE: tftPrint(0, myLanguage[language][83], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
             }
             break;
 
@@ -2008,7 +2008,7 @@ void MenuDown() {
               case AM_BAND_LW: tftPrint(0, myLanguage[language][102], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case AM_BAND_MW: tftPrint(0, myLanguage[language][103], 155, 118, BackgroundColor, BackgroundColor, 28); break;
               case AM_BAND_SW: tftPrint(0, myLanguage[language][104], 155, 118, BackgroundColor, BackgroundColor, 28); break;
-              case AM_BAND_NONE: tftPrint(0, myLanguage[language][208], 155, 118, BackgroundColor, BackgroundColor, 28); break;
+              case AM_BAND_NONE: tftPrint(0, myLanguage[language][83], 155, 118, BackgroundColor, BackgroundColor, 28); break;
             }
 
             bandAM--;
@@ -2022,7 +2022,7 @@ void MenuDown() {
               case AM_BAND_LW: tftPrint(0, myLanguage[language][102], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
               case AM_BAND_MW: tftPrint(0, myLanguage[language][103], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
               case AM_BAND_SW: tftPrint(0, myLanguage[language][104], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
-              case AM_BAND_NONE: tftPrint(0, myLanguage[language][208], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case AM_BAND_NONE: tftPrint(0, myLanguage[language][83], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
             }
             break;
 
@@ -2224,7 +2224,7 @@ void DoMenu() {
 
           case ITEM3:
             Infoboxprint(myLanguage[language][75]);
-            if (tot != 0) tftPrint(-1, myLanguage[language][205], 170, 118, ActiveColor, ActiveColorSmooth, 28);
+            if (tot != 0) tftPrint(-1, myLanguage[language][80], 170, 118, ActiveColor, ActiveColorSmooth, 28);
             if (tot != 0) tftPrint(1, String(tot), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
@@ -2234,7 +2234,7 @@ void DoMenu() {
             break;
 
           case ITEM5:
-            Infoboxprint(myLanguage[language][206]);
+            Infoboxprint(myLanguage[language][81]);
             tftPrint(-1, "MHz", 170, 118, ActiveColor, ActiveColorSmooth, 28);
             if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][78]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(spispeed * 10 , DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
@@ -2346,7 +2346,7 @@ void DoMenu() {
             break;
 
           case ITEM10:
-            Infoboxprint(myLanguage[language][210]);
+            Infoboxprint(myLanguage[language][85]);
             tftPrint(0, FreqFont[freqfont], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
         }
@@ -2473,12 +2473,12 @@ void DoMenu() {
               case FM_BAND_ALL: tftPrint(0, myLanguage[language][105] + String(",") + myLanguage[language][106], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
               case FM_BAND_OIRT: tftPrint(0, myLanguage[language][106], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
               case FM_BAND_FM: tftPrint(0, myLanguage[language][105], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
-              case FM_BAND_NONE: tftPrint(0, myLanguage[language][208], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case FM_BAND_NONE: tftPrint(0, myLanguage[language][83], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
             }
             break;
 
           case ITEM10:
-            Infoboxprint(myLanguage[language][207]);
+            Infoboxprint(myLanguage[language][82]);
             tftPrint (1, String(fmscansens), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
         }
@@ -2513,7 +2513,7 @@ void DoMenu() {
               case AM_BAND_LW: tftPrint(0, myLanguage[language][102], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
               case AM_BAND_MW: tftPrint(0, myLanguage[language][103], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
               case AM_BAND_SW: tftPrint(0, myLanguage[language][104], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
-              case AM_BAND_NONE: tftPrint(0, myLanguage[language][208], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
+              case AM_BAND_NONE: tftPrint(0, myLanguage[language][83], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); break;
             }
             break;
 
@@ -2546,7 +2546,7 @@ void DoMenu() {
             break;
 
           case ITEM10:
-            Infoboxprint(myLanguage[language][207]);
+            Infoboxprint(myLanguage[language][82]);
             tftPrint (1, String(amscansens), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
         }
