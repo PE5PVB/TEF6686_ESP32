@@ -1809,12 +1809,12 @@ void doStereoToggle() {
     StereoToggle = false;
   } else {
     if (!screenmute) {
-      tft.drawSmoothCircle(71, 15, 10, BackgroundColor, BackgroundColor);
-      tft.drawSmoothCircle(71, 15, 9, BackgroundColor, BackgroundColor);
       tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
       tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
       tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
       tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
+      tft.drawSmoothCircle(71, 15, 10, BackgroundColor, BackgroundColor);
+      tft.drawSmoothCircle(71, 15, 9, BackgroundColor, BackgroundColor);
     }
     radio.setMono(false);
     Stereostatusold = false;

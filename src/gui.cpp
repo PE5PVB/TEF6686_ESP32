@@ -21,7 +21,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BackgroundColor = TFT_BLACK;
       ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
-	  FreqColor = TFT_YELLOW;
+      FreqColor = TFT_YELLOW;
       FreqColorSmooth = 0x2120;
       SignificantColor = TFT_RED;
       SignificantColorSmooth = 0x2000;
@@ -47,7 +47,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       GreyoutColor = 0x2A08;
       BackgroundColor = TFT_BLACK;
       FreqColor = 0x0F3F;
-      FreqColorSmooth = 0x0105;	  
+      FreqColorSmooth = 0x0105;
       ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
       SignificantColor = TFT_RED;
@@ -74,7 +74,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       GreyoutColor = 0x4A69;
       BackgroundColor = TFT_BLACK;
       FreqColor = 0xF8C3;
-      FreqColorSmooth = 0x3800;	  
+      FreqColorSmooth = 0x3800;
       ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
       SignificantColor = TFT_GREEN;
@@ -101,7 +101,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       GreyoutColor = 0x4A69;
       BackgroundColor = TFT_BLACK;
       FreqColor = TFT_WHITE;
-      FreqColorSmooth = TFT_BLACK;	  
+      FreqColorSmooth = TFT_BLACK;
       ActiveColor = TFT_WHITE;
       ActiveColorSmooth = TFT_BLACK;
       SignificantColor = TFT_RED;
@@ -128,7 +128,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       GreyoutColor = 0x5140;
       BackgroundColor = 0x0806;
       FreqColor = TFT_ORANGE;
-      FreqColorSmooth = 0x2965;	  
+      FreqColorSmooth = 0x2965;
       ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
       SignificantColor = TFT_RED;
@@ -155,7 +155,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       GreyoutColor = 0x4A69;
       BackgroundColor = TFT_BLACK;
       FreqColor = TFT_GREEN;
-      FreqColorSmooth = 0x0200;	  
+      FreqColorSmooth = 0x0200;
       ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
       SignificantColor = TFT_RED;
@@ -182,7 +182,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       GreyoutColor = 0x38C5;
       BackgroundColor = TFT_BLACK;
       FreqColor = 0xF3D5;
-      FreqColorSmooth = 0x3008;	  
+      FreqColorSmooth = 0x3008;
       ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
       SignificantColor = TFT_RED;
@@ -209,7 +209,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       GreyoutColor = 0x9492;
       BackgroundColor = 0xDFFC;
       FreqColor = TFT_BLACK;
-      FreqColorSmooth = TFT_WHITE;	  
+      FreqColorSmooth = TFT_WHITE;
       ActiveColor = TFT_BLACK;
       ActiveColorSmooth = 0xDFFC;
       SignificantColor = TFT_RED;
@@ -236,7 +236,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       GreyoutColor = 0x6247;
       BackgroundColor = TFT_BLACK;
       FreqColor = 0xF980;
-      FreqColorSmooth = 0x3080;	  
+      FreqColorSmooth = 0x3080;
       ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
       SignificantColor = TFT_RED;
@@ -263,7 +263,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       GreyoutColor = 0x420C;
       BackgroundColor = TFT_BLACK;
       FreqColor = 0x01FF;
-      FreqColorSmooth = 0x0006;	  
+      FreqColorSmooth = 0x0006;
       ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
       SignificantColor = TFT_RED;
@@ -290,7 +290,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       GreyoutColor = 0x49AC;
       BackgroundColor = TFT_BLACK;
       FreqColor = 0x881F;
-      FreqColorSmooth = 0x2007;	  
+      FreqColorSmooth = 0x2007;
       ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
       SignificantColor = TFT_RED;
@@ -308,8 +308,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BatteryValueColor = 0xD01F;
       BatteryValueColorSmooth = 0x400A;
       break;
-	  
-	  case 11:  // GoldBrite
+
+    case 11:  // GoldBrite
       PrimaryColor = TFT_YELLOW;
       PrimaryColorSmooth = 0x2120;
       SecondaryColor = TFT_SKYBLUE;
@@ -319,7 +319,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BackgroundColor = TFT_BLACK;
       ActiveColor = TFT_WHITE;
       ActiveColorSmooth = 0x18E3;
-	  FreqColor = TFT_WHITE;
+      FreqColor = TFT_WHITE;
       FreqColorSmooth = 0x18E3;
       SignificantColor = TFT_RED;
       SignificantColorSmooth = 0x2000;
@@ -424,7 +424,7 @@ void BuildMenu() {
     case MAINSETTINGS:
       tftPrint(-1, myLanguage[language][108], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][107], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
-	  tftPrint(-1, myLanguage[language][75], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][75], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
 
       switch (hardwaremodel) {
         case BASE_ILI9341: tftPrint(1, myLanguage[language][109], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
@@ -434,7 +434,7 @@ void BuildMenu() {
 
       if (touchrotating) tftPrint(1, myLanguage[language][42], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (tot != 0) tftPrint(1, String(tot), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-	  if (tot != 0) tftPrint(1, myLanguage[language][205], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (tot != 0) tftPrint(1, myLanguage[language][205], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (dynamicspi) {
         tftPrint(1, "MHz", 310, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
         tftPrint(-1, myLanguage[language][206], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
@@ -476,7 +476,7 @@ void BuildMenu() {
       tftPrint(-1, myLanguage[language][74], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][173], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][98], 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
-	  tftPrint(-1, myLanguage[language][210], 8, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][210], 8, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
 
       tftPrint(1, myLanguage[language][0], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       tftPrint(1, "%", 310, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
@@ -501,7 +501,7 @@ void BuildMenu() {
       }
 
       tftPrint(1, unitString[unit], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-	  tftPrint(1, FreqFont[freqfont], 310, ITEM10 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      tftPrint(1, FreqFont[freqfont], 310, ITEM10 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       break;
 
     case RDSSETTINGS:
@@ -707,15 +707,16 @@ void BuildAdvancedRDS() {
 
     tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, 28);
 
-    tft.drawCircle(66, 15, 10, GreyoutColor);
-    tft.drawCircle(66, 15, 9, GreyoutColor);
-    tft.drawCircle(76, 15, 10, GreyoutColor);
-    tft.drawCircle(76, 15, 9, GreyoutColor);
     tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
 
     if (!StereoToggle) {
-      tft.drawCircle(71, 15, 10, SecondaryColor);
-      tft.drawCircle(71, 15, 9, SecondaryColor);
+      tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
+      tft.drawSmoothCircle(71, 15, 9, SecondaryColor, SecondaryColorSmooth);
+    } else {
+      tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
+      tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
+      tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
+      tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
     }
 
     tftPrint(-1, "TP", 2, 51, GreyoutColor, BackgroundColor, 16);
@@ -846,14 +847,15 @@ void BuildDisplay() {
     tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
     if (band > BAND_GAP) tftPrint(0, "EQ", 303, 59, GreyoutColor, BackgroundColor, 16);
 
-    tft.drawCircle(66, 15, 10, GreyoutColor);
-    tft.drawCircle(66, 15, 9, GreyoutColor);
-    tft.drawCircle(76, 15, 10, GreyoutColor);
-    tft.drawCircle(76, 15, 9, GreyoutColor);
     tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
     if (!StereoToggle) {
-      tft.drawCircle(71, 15, 10, SecondaryColor);
-      tft.drawCircle(71, 15, 9, SecondaryColor);
+      tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
+      tft.drawSmoothCircle(71, 15, 9, SecondaryColor, SecondaryColorSmooth);
+    } else {
+      tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
+      tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
+      tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
+      tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
     }
 
     if (bandforbidden) bandColor = GreyoutColor; else bandColor = PrimaryColor;
@@ -959,7 +961,7 @@ void MenuUp() {
             if (tot != 0) tftPrint(-1, myLanguage[language][205], 170, 118, ActiveColor, ActiveColorSmooth, 28);
             if (tot != 0) tftPrint(1, String(tot), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
-			
+
           case ITEM4:
             if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][78]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             else tftPrint(1, String(spispeed * 10, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
@@ -1143,7 +1145,7 @@ void MenuUp() {
             freqfont ++;
             if (freqfont > 4) freqfont = 0;
             tftPrint(0, String(FreqFont[freqfont]), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
-            break;			
+            break;
         }
         break;
 
@@ -1543,8 +1545,8 @@ void MenuDown() {
             if (tot != 0) tftPrint(-1, myLanguage[language][205], 170, 118, ActiveColor, ActiveColorSmooth, 28);
             if (tot != 0) tftPrint(1, String(tot), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
-			
-		  case ITEM4:
+
+          case ITEM4:
             if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][78]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             else tftPrint(1, String(spispeed * 10, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
 
@@ -1722,13 +1724,13 @@ void MenuDown() {
             if (unit > 2) unit = 2;
             tftPrint(0, String(unitString[unit]), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
-			
+
           case ITEM10:
             tftPrint(0, String(FreqFont[freqfont]), 155, 118, BackgroundColor, BackgroundColor, 28);
             freqfont --;
             if (freqfont > 4) freqfont = 4;
             tftPrint(0, String(FreqFont[freqfont]), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
-            break;				
+            break;
         }
         break;
 
@@ -2180,7 +2182,7 @@ void DoMenu() {
             if (tot != 0) tftPrint(-1, myLanguage[language][205], 170, 118, ActiveColor, ActiveColorSmooth, 28);
             if (tot != 0) tftPrint(1, String(tot), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
-		
+
           case ITEM4:
             Infoboxprint(myLanguage[language][206]);
             tftPrint(-1, "MHz", 170, 118, ActiveColor, ActiveColorSmooth, 28);
@@ -2296,8 +2298,8 @@ void DoMenu() {
           case ITEM10:
             Infoboxprint(myLanguage[language][210]);
             tftPrint(0, FreqFont[freqfont], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
-            break;			
-		}
+            break;
+        }
         break;
 
       case RDSSETTINGS:
