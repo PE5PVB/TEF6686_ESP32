@@ -804,10 +804,10 @@ void ShowAFEON() {
         xPos --;
         rttickerhold = millis();
       }
-      if (xPos < -tft.textWidth(String(myLanguage[language][93]) + "  -  " + String(myLanguage[language][204]) + ": " + AIDString) + (charWidth * 14)) xPos = 0;
+      if (xPos < -tft.textWidth(String(myLanguage[language][93]) + "  -  " + String(myLanguage[language][79]) + ": " + AIDString) + (charWidth * 14)) xPos = 0;
       RadiotextSprite.fillSprite(BackgroundColor);
       RadiotextSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-      RadiotextSprite.drawString(String(myLanguage[language][93]) + "  -  " + String(myLanguage[language][204]) + ": " + AIDString, xPos, 2);
+      RadiotextSprite.drawString(String(myLanguage[language][93]) + "  -  " + String(myLanguage[language][79]) + ": " + AIDString, xPos, 2);
       RadiotextSprite.pushSprite(5, 220);
     }
   }
