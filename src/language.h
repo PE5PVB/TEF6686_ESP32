@@ -1494,7 +1494,7 @@ static const char* const myLanguage[18][211] = {
     "Scanempfindlichkeit", // 207
     "KEINE", // 208
     "Softwareversion", // 209
-	"Frequency font" // 210 ***	
+	"Frequenz-Schriftart" // 210 ***	
   },
 
   { "Český", // Czech
