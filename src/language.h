@@ -642,7 +642,7 @@ static const char* const myLanguage[18][211] = {
     "Czułość skanowania", // 207
     "BRAK", // 208
     "Wersja oprogramowania", // 209 
-	"Frequency font" // 210	***
+	"Czcionka częstotliwości" // 210	***
   },
 
   { "Hrvatski", // Croatian
