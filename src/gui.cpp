@@ -732,6 +732,7 @@ void BuildAdvancedRDS() {
     tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, 28);
 
     tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
+	tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
 
     if (!StereoToggle) {
       tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
@@ -872,6 +873,8 @@ void BuildDisplay() {
     if (band > BAND_GAP) tftPrint(0, "EQ", 303, 59, GreyoutColor, BackgroundColor, 16);
 
     tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
+	tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+	
     if (!StereoToggle) {
       tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
       tft.drawSmoothCircle(71, 15, 9, SecondaryColor, SecondaryColorSmooth);
