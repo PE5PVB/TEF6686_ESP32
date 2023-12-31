@@ -2011,17 +2011,17 @@ void ModeButtonPress() {
 
 void ShowStepSize() {
   if (!advancedRDS) {
+    tft.fillRect(191, 38, 15, 4, GreyoutColor);
     tft.fillRect(222, 38, 15, 4, GreyoutColor);
-    tft.fillRect(193, 38, 15, 4, GreyoutColor);
-    if (band < BAND_GAP) tft.fillRect(144, 38, 15, 4, GreyoutColor); else tft.fillRect(162, 38, 15, 4, GreyoutColor);
-    if (band < BAND_GAP) tft.fillRect(110, 38, 15, 4, GreyoutColor); else if (band != BAND_LW && band != BAND_MW) tft.fillRect(130, 38, 15, 4, GreyoutColor);
+    if (band < BAND_GAP) tft.fillRect(113, 38, 15, 4, GreyoutColor); else if (band != BAND_LW && band != BAND_MW) tft.fillRect(129, 38, 15, 4, GreyoutColor);
+    if (band < BAND_GAP) tft.fillRect(144, 38, 15, 4, GreyoutColor); else tft.fillRect(159, 38, 15, 4, GreyoutColor);
     if (stepsize == 1) tft.fillRect(222, 38, 15, 4, InsignificantColor);
-    if (stepsize == 2) tft.fillRect(193, 38, 15, 4, InsignificantColor);
+    if (stepsize == 2) tft.fillRect(191, 38, 15, 4, InsignificantColor);
     if (stepsize == 3) {
-      if (band < BAND_GAP) tft.fillRect(144, 38, 15, 4, InsignificantColor); else tft.fillRect(162, 38, 15, 4, InsignificantColor);
+      if (band < BAND_GAP) tft.fillRect(144, 38, 15, 4, InsignificantColor); else tft.fillRect(159, 38, 15, 4, InsignificantColor);
     }
     if (stepsize == 4) {
-      if (band < BAND_GAP) tft.fillRect(110, 38, 15, 4, InsignificantColor); else tft.fillRect(130, 38, 15, 4, InsignificantColor);
+      if (band < BAND_GAP) tft.fillRect(113, 38, 15, 4, InsignificantColor); else tft.fillRect(129, 38, 15, 4, InsignificantColor);
     }
   }
 }
