@@ -1274,7 +1274,7 @@ void TEF6686::readRDS(byte showrdserrors)
               rds.hour = ((rds.rdsD >> 12) & 0x0f);
               rds.hour += ((rds.rdsC <<  4) & 0x0010);
               rds.offset = ((bitRead(rds.rdsD, 5) ? -rds.rdsD & 0x3f : rds.rdsD & 0x3f) / 2);
-              rds.hour += rds.offset;
+              if (bitRead(rds.rdsD, 5) & 0x3f) rds.hour -= rds.offset; else rds.hour += rds.offset;
               rds.hour = (((byte)rds.hour + 24) % 24);
             }
             if (((rds.rdsD >> 6) & 0x3f) < 60) rds.minute = (rds.rdsD >> 6) & 0x3f;
