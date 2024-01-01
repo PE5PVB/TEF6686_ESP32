@@ -141,6 +141,8 @@ extern int PrimaryColor;
 extern int PrimaryColorSmooth;
 extern int RDSColor;
 extern int RDSColorSmooth;
+extern int RDSDropoutColor;
+extern int RDSDropoutColorSmooth;
 extern int rssiold;
 extern int SecondaryColor;
 extern int SecondaryColorSmooth;

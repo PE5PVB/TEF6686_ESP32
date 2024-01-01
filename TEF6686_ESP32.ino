@@ -228,6 +228,8 @@ int PrimaryColor;
 int PrimaryColorSmooth;
 int RDSColor;
 int RDSColorSmooth;
+int RDSDropoutColor;
+int RDSDropoutColorSmooth;
 int SignificantColor;
 int SignificantColorSmooth;
 int StereoColor;
