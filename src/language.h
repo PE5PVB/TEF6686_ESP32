@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 // *** means the text is the same as in English
-static const char* const myLanguage[18][211] = {
+static const char* const myLanguage[18][205] = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -209,7 +209,8 @@ static const char* const myLanguage[18][211] = {
     "Small", // 200
     "Large", // 201
     "All", // 202
-    "Fast PS" // 203
+    "Fast PS", // 203
+	"Default" // 204
   },
 
   { "Nederlands", // Dutch
@@ -415,7 +416,8 @@ static const char* const myLanguage[18][211] = {
     "Laag", // 200
     "Middel", // 201
     "Alles", // 202
-    "Snelle PS" // 203
+    "Snelle PS", // 203
+	"Standaard" // 204	
   },
 
   { "Polski", // Polish
@@ -621,7 +623,8 @@ static const char* const myLanguage[18][211] = {
     "Małe", // 200
     "Duże", // 201
     "Wszystkie", // 202
-    "Szybki PS" // 203
+    "Szybki PS", // 203
+	"Default" // 204	
   },
 
   { "Hrvatski", // Croatian
@@ -827,7 +830,8 @@ static const char* const myLanguage[18][211] = {
     "Malo", // 200
     "Veliko", // 201
     "Sve", // 202
-    "Brzi PS" // 203
+    "Brzi PS", // 203
+	"Default" // 204	
   },
 
   { "Ελληνικά", // Greek
@@ -1033,7 +1037,8 @@ static const char* const myLanguage[18][211] = {
     "Μικρό", // 200
     "Μεγάλο", // 201
     "Όλα", // 202
-    "Γρήγορο PS" // 203
+    "Γρήγορο PS", // 203
+	"Default" // 204	
   },
 
   { "Română", // Romanian
@@ -1239,7 +1244,8 @@ static const char* const myLanguage[18][211] = {
     "Mic", // 200
     "Mare", // 201
     "Toate", // 202
-    "PS rapid" // 203
+    "PS rapid", // 203
+	"Default" // 204	
   },
 
   { "Deutsch", // German
@@ -1445,7 +1451,8 @@ static const char* const myLanguage[18][211] = {
     "Wenig", // 200
     "Viel", // 201
     "Maximal", // 202
-    "Schnelles PS" // 203
+    "Schnelles PS", // 203
+	"Default" // 204	
   },
 
   { "Český", // Czech
@@ -1651,7 +1658,8 @@ static const char* const myLanguage[18][211] = {
     "Malý", // 200
     "Velký", // 201
     "Vše", // 202
-    "Rychlé načtení PS" // 203
+    "Rychlé načtení PS", // 203
+	"Default" // 204	
   },
 
   { "Slovenský", // Slovak
@@ -1857,7 +1865,8 @@ static const char* const myLanguage[18][211] = {
     "Malý", // 200
     "Veľký", // 201
     "Všetko", // 202
-    "Rýchle načítanie PS" // 203
+    "Rýchle načítanie PS", // 203
+	"Default" // 204	
   },
 
   { "Français", // French
@@ -2063,7 +2072,8 @@ static const char* const myLanguage[18][211] = {
     "Petites", // 200
     "Grosses", // 201
     "Toutes", // 202
-    "PS rapide" // 203
+    "PS rapide", // 203
+	"Default" // 204	
   },
 
   { "Български", // Bulgarian
@@ -2269,7 +2279,8 @@ static const char* const myLanguage[18][211] = {
     "Small", // 200 ***
     "Large", // 201 ***
     "Всички", // 202
-    "Fast PS" // 203 ***
+    "Fast PS", // 203 ***
+	"Default" // 204	
   },
 
   { "Русский", // Russian
@@ -2475,7 +2486,8 @@ static const char* const myLanguage[18][211] = {
     "Мало", // 200
     "Больше", // 201
     "Все", // 202
-    "Быстрый PS" // 203
+    "Быстрый PS", // 203
+	"Default" // 204	
   },
 
   { "Українська", // Ukranian
@@ -2681,7 +2693,8 @@ static const char* const myLanguage[18][211] = {
     "Мало", // 200
     "Багато", // 201
     "Усе", // 202
-    "Швидкий PS" // 203
+    "Швидкий PS", // 203
+	"Default" // 204	
   },
 
   { "Italiano", // Italian
@@ -2887,7 +2900,8 @@ static const char* const myLanguage[18][211] = {
     "Piccolo", // 200 ***
     "Grande", // 201 ***
     "Tutto", // 202 ***
-    "PS veloce" // 203 ***
+    "PS veloce", // 203 ***
+	"Default" // 204	
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3093,7 +3107,8 @@ static const char* const myLanguage[18][211] = {
     "少量", // 200
     "大量", // 201
     "全部", // 202
-    "快速 PS" // 203
+    "快速 PS", // 203
+	"Default" // 204	
   },
 
   { "Norsk", // Norwegian
@@ -3299,7 +3314,8 @@ static const char* const myLanguage[18][211] = {
     "Lite", // 200
     "Mye", // 201
     "Alt", // 202
-    "Rask PS" // 203
+    "Rask PS", // 203
+	"Default" // 204	
   },
 
   { "Español", // Spanish
@@ -3505,7 +3521,8 @@ static const char* const myLanguage[18][211] = {
     "Pequeño", // 200
     "Grande", // 201
     "Todo", // 202
-    "PS rápido" // 203
+    "PS rápido", // 203
+	"Default" // 204	
   },
 
   { "Português", // Portuguese
@@ -3711,7 +3728,8 @@ static const char* const myLanguage[18][211] = {
     "Pequeno", // 200
     "Grande", // 201
     "Tudo", // 202
-    "PS rápido" // 203
+    "PS rápido", // 203
+	"Default" // 204	
   }
 };
 #endif

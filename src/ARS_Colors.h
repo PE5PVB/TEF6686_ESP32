@@ -1,0 +1,43 @@
+//MAIN COLORS							/*  RGB 565 CODES */
+#define Black               0x0000      /*   0,   0,   0  */ 
+#define Blue                0x001F      /*   0,   0,  31  */
+#define Crimson             0xF8C3      /*   31,   6,  3  */
+#define Cyan                0x0F3F      /*    1,  57, 31  */
+#define Grey                0x7BEF      /*  15,  31,  15  */
+#define Darkgrey            0x39A7      /*   7,  13,   7  */
+#define Green               0x07E0      /*   0,  63,   0  */
+#define Indigo              0x881F      /*   17,  0,  31  */
+#define Ocean               0x01FF      /*    0,  15, 31  */
+#define Orange              0xFC00      /*   31,  32,  0  */
+#define Red                 0xF800      /*   31,   0,  0  */
+#define Sakura              0xF3D5      /*   30,  30, 21  */
+#define Turquoise           0x07FF      /*    0,  63, 31  */
+#define Skyblue             0x867D      /*   16,  51, 29  */
+#define Tangerine           0xF980      /*   31,  12,  0  */
+#define Teal                0x07F7      /*    0,  63, 23  */
+#define White               0xFFFF      /*   31,  63, 31  */
+#define Yellow              0xFFE0      /*   31,  63,  0  */
+//SMOOTH COLORS							/*  RGB 565 CODES */
+#define CrimsonSmooth       0x3800      /*    7,   0,  0  */
+#define CyanSmooth          0x0105      /*    0,   8,  5  */
+#define GreenSmooth         0x00C0      /*    0,   6,  0  */
+#define IndigoSmooth        0x3080      /*    4,   0,  7  */
+#define OceanSmooth         0x0006      /*    0,   0,  6  */
+#define OrangeSmooth        0x3165      /*    6,  11,  5  */
+#define RedSmooth           0x2000      /*    4,   0,  0  */
+#define SakuraSmooth        0x3008      /*    6,   0,  8  */
+#define SkyblueSmooth       0x10E4      /*    2,   7,  4  */
+#define TangerineSmooth     0x3080      /*    6,   4,  0  */
+#define TealSmooth          0x0144      /*    0,  10,  4  */
+#define WhiteSmooth         0x18E3      /*    3,   7,  3  */
+#define YellowSmooth        0x2120      /*    4,   9,  0  */
+//DARK COLORS							/*  RGB 565 CODES */
+#define CyanDark            0x5BAF      /*   11,  29, 15  */
+#define CrimsonDark         0x6A08      /*   13,  16,  8  */
+#define CyanGrey            0x2A08      /*    5,  16,  8  */
+#define PaleGrey            0x4A69      /*    9,  19,  9  */
+#define PureGrey            0x7BCF      /*   15,  30, 15  */
+#define CrimsonDarkSmooth   0x30E3      /*    6,   7,  3  */
+#define CyanDarkSmooth      0x29E8      /*    5,  15,  8  */
+#define CyanFrame           0x01E9      /*    0,  15,  9  */
+#define CrimsonDarkBW       0xFBEF      /*   31,  31, 15  */
