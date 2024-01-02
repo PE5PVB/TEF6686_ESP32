@@ -63,6 +63,8 @@ extern int InsignificantColor;
 extern int InsignificantColorSmooth;
 extern int PrimaryColor;
 extern int PrimaryColorSmooth;
+extern int RDSColor;
+extern int RDSColorSmooth;
 extern int RDSDropoutColor;
 extern int RDSDropoutColorSmooth;
 extern int SecondaryColor;

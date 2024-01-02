@@ -105,6 +105,91 @@
 #define SW_MI_BAND_120M     120
 #define SW_MI_BAND_160M     160
 
+//MAIN COLORS						  /* RGB 565 CODES */
+#define Black               0x0000    /*  0,  0,  0 */ 
+#define Blue                0x001F    /*  0,  0, 31 */
+#define Cabbage             0x07F6    /*  0, 63, 22 */
+#define Coral               0xFBEF    /* 31, 31, 15 */
+#define Crimson             0xF8C3    /* 31,  6,  3 */
+#define Cyan                0x0F3F    /*  1, 57, 31 */
+#define Cherry              0xF00A    /* 30,  0, 10 */
+#define Grey                0x7BEF    /* 15, 31, 15 */
+#define Darkgrey            0x39A7    /*  7, 13,  7 */
+#define Deepsky             0x051F    /*  0, 40, 31 */
+#define Green               0x07E0    /*  0, 63,  0 */
+#define Indigo              0x881F    /* 17,  0, 31 */
+#define Maroon              0x5140    /* 10, 10,  0 */
+#define Ocean               0x01FF    /*  0, 15, 31 */
+#define Orange              0xFC00    /* 31, 32,  0 */
+#define Purple              0xAA1C    /* 21, 16, 28 */
+#define Red                 0xF800    /* 31,  0,  0 */
+#define Sakura              0xF3D5    /* 30, 30, 21 */
+#define Turquoise           0x07FF    /*  0, 63, 31 */
+#define Skyblue             0x867D    /* 16, 51, 29 */
+#define Tangerine           0xF980    /* 31, 12,  0 */
+#define Teal                0x07F7    /*  0, 63, 23 */
+#define Violet              0xD01F    /* 26,  0, 31 */
+#define Watermelon          0xFA8D    /* 21, 20, 13 */
+#define White               0xFFFF    /* 31, 63, 31 */
+#define Yellow              0xFFE0    /* 31, 63,  0 */
+#define Yolk                0xED20    /* 29, 41,  0 */
+//SMOOTH COLORS
+#define CabbageSmooth       0x0184    /*  0, 12,  4 */
+#define CoralSmooth         0x4124    /*  8,  9,  4 */
+#define CrimsonSmooth       0x3800    /*  7,  0,  0 */
+#define CherrySmooth        0x3800    /*  5,  0,  2 */
+#define CyanSmooth          0x0105    /* 0,   8,  5 */
+#define DeepskySmooth       0x0106    /*  0,  8,  6 */
+#define GreenSmooth         0x00C0    /*  0,  6,  0 */
+#define IndigoSmooth        0x3080    /*  4,  0,  7 */
+#define OceanSmooth         0x0006    /*  0,  0,  6 */
+#define MaroonSmooth        0x3002    /*  6,  0,  2 */
+#define OrangeSmooth        0x3165    /*  6, 11,  5 */
+#define PurpleSmooth        0x2887    /*  5,  4,  7 */
+#define RedSmooth           0x2000    /*  4,  0,  0 */
+#define SakuraSmooth        0x3008    /*  6,  0,  8 */
+#define SkyblueSmooth       0x10E4    /*  2,  7,  4 */
+#define TangerineSmooth     0x3080    /*  6,  4,  0 */
+#define TealSmooth          0x0144    /*  0, 10,  4 */
+#define VioletSmooth        0x400A    /*  8,  0, 10 */
+#define WatermelonSmooth    0x3083    /*  6,  4,  3 */
+#define WhiteSmooth         0x18E3    /*  3,  7,  3 */
+#define YellowSmooth        0x2120    /*  4,  9,  0 */
+#define YolkSmooth          0x3940    /*  7, 10,  0 */
+//BACKGROUND/FRAME/GREY COLORS
+#define Blackberry          0x38C5    /*  7,  6,  5 */
+#define Chocolate           0x38A1    /* 27, 63, 28 */
+#define Copper              0x9B8D    /* 19, 28, 13 */
+#define CopperSmooth        0x5207    /*  6, 13,  8 */
+#define Cornblue            0x420C    /*  8, 16, 12 */
+#define Cove                0x73F4    /* 14, 31, 20 */
+#define CoveSmooth          0x31A8    /*  6, 13,  8 */
+#define CrimsonDark         0x6A08    /* 13, 16,  8 */
+#define CrimsonDarkSmooth   0x30E3    /*  6,  7,  3 */
+#define CyanDark            0x5BAF    /* 11, 29, 15 */
+#define CyanDarkSmooth      0x29E8    /*  5, 15,  8 */
+#define CyanFrame           0x01E9    /*  0, 15,  9 */
+#define CyanGrey            0x2A08    /*  5, 16,  8 */
+#define Dallas              0x6A86    /* 13, 20,  6 */
+#define DallasSmooth        0x3123    /*  6,  9,  3 */
+#define Electric            0x6016    /* 12,  0, 22 */
+#define GreenDark           0x0200    /*  0, 16,  0 */
+#define GreenGrey           0x2965    /*  5, 11,  5 */
+#define Honeydew            0xDFFC    /* 27, 63, 28 */
+#define Laurel              0x748E    /* 14, 36, 14 */
+#define LaurelSmooth        0x3206    /*  6, 16,  6 */
+#define Logan               0x9C96    /* 19, 36, 22 */
+#define LoganSmooth         0x41C8    /*  8, 14,  8 */
+#define Meteorite           0x49AC    /*  9, 13, 12 */
+#define Navy                0x0010    /*  0,  0, 16 */
+#define PaleGrey            0x4A69    /*  9, 19,  9 */
+#define Prussian            0x0806    /*  1,  0,  6 */
+#define PureGrey            0x7BCF    /* 15, 30, 15 */
+#define SakuraGrey          0x9B90    /* 19, 28, 16 */
+#define SakuraGreySmooth    0x3946    /*  7, 10,  6 */
+#define Spice               0x6247    /* 12, 18,  7 */
+#define Tyrian              0x3845    /*  7,  2,  5 */
+
 // EEPROM index defines
 #define EE_PRESETS_CNT              99
 #define EE_CHECKBYTE_VALUE          2 // 0 ~ 255,add new entry, change for new value
@@ -199,7 +284,7 @@
 
 static const char* const unitString[] = {"dBμV", "dBf", "dBm"};
 static const char* const FreqFont[] = {"Classic", "Roubenstil", "Motoya", "Aura2", "Comic"};
-static const char* const Theme[] = {"Essence", "Cyan", "Crimson", "Monochrome", "Volcano", "Dendro", "Sakura", "Whiteout", "Tangerine", "Ocean", "Indigo", "GoldBrite"};
+static const char* const Theme[] = {"Essence", "Cyan", "Crimson", "Monochrome", "Volcano", "Dendro", "Sakura", "Whiteout", "Tangerine", "Ocean", "Indigo", "Maroon", "GoldBrite"};
 static const char* const Skin[] = {"Essential"};
 
 // FM band: before BAND_GAP; AM band: after BAND_GAP
