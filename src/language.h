@@ -3315,7 +3315,7 @@ static const char* const myLanguage[18][205] = {
     "Mye", // 201
     "Alt", // 202
     "Rask PS", // 203
-	"Default" // 204	
+	"Standard" // 204	
   },
 
   { "Español", // Spanish
