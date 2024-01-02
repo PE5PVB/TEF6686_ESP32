@@ -138,14 +138,14 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       break;
     case 4:  // Volcano theme
       PrimaryColor = Orange;
-      PrimaryColorSmooth = GreenGrey;
+      PrimaryColorSmooth = OrangeSmooth;
       SecondaryColor = Tangerine;
       SecondaryColorSmooth = TangerineSmooth;
       FrameColor = GreenGrey;
       GreyoutColor = Maroon;
       BackgroundColor = Prussian;
       FreqColor = Orange;
-      FreqColorSmooth = GreenGrey;
+      FreqColorSmooth = OrangeSmooth;
       ActiveColor = White;
       ActiveColorSmooth = WhiteSmooth;
       SignificantColor = Red;
@@ -155,7 +155,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       StereoColor = Orange;
       StereoColorSmooth = CyanSmooth;
       RDSColor = Orange;
-      RDSColorSmooth = White;
+      RDSColorSmooth = OrangeSmooth;
       RDSDropoutColor = Dallas;
       RDSDropoutColorSmooth = DallasSmooth;
       BarSignificantColor = Red;

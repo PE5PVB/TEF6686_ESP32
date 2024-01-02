@@ -105,7 +105,7 @@
 #define SW_MI_BAND_120M     120
 #define SW_MI_BAND_160M     160
 
-//MAIN COLORS						  /* RGB 565 CODES */
+//MAIN COLORS                      /* RGB 565 CODES */
 #define Black               0x0000    /*  0,  0,  0 */ 
 #define Blue                0x001F    /*  0,  0, 31 */
 #define Cabbage             0x07F6    /*  0, 63, 22 */
@@ -138,12 +138,12 @@
 #define CoralSmooth         0x4124    /*  8,  9,  4 */
 #define CrimsonSmooth       0x3800    /*  7,  0,  0 */
 #define CherrySmooth        0x3800    /*  5,  0,  2 */
-#define CyanSmooth          0x0105    /* 0,   8,  5 */
+#define CyanSmooth          0x0105    /*  0,  8,  5 */
 #define DeepskySmooth       0x0106    /*  0,  8,  6 */
 #define GreenSmooth         0x00C0    /*  0,  6,  0 */
 #define IndigoSmooth        0x3080    /*  4,  0,  7 */
 #define OceanSmooth         0x0006    /*  0,  0,  6 */
-#define MaroonSmooth        0x3002    /*  6,  0,  2 */
+#define MaroonSmooth        0x2001    /*  4,  0,  1 */
 #define OrangeSmooth        0x3165    /*  6, 11,  5 */
 #define PurpleSmooth        0x2887    /*  5,  4,  7 */
 #define RedSmooth           0x2000    /*  4,  0,  0 */
