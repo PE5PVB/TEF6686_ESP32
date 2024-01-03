@@ -385,9 +385,9 @@ void readRds() {
       XDRGTKRDS += String(((radio.rds.rdsD) >> 4) & 0xF, HEX) + String((radio.rds.rdsD) & 0xF, HEX);
 
       uint8_t erroutput = 0;
-      erroutput |= (radio.rds.rdsErr >> 8) & B00110000 >> 4;
-      erroutput |= (radio.rds.rdsErr >> 8) & B00001100;
-      erroutput |= (radio.rds.rdsErr >> 8) & B00000011 << 4;
+      erroutput |= ((radio.rds.rdsErr >> 8) & B00110000) >> 4;
+      erroutput |= ((radio.rds.rdsErr >> 8) & B00001100);
+      erroutput |= ((radio.rds.rdsErr >> 8) & B00000011) << 4;
 
       XDRGTKRDS += String((erroutput >> 4) & 0xF, HEX);
       XDRGTKRDS += String(erroutput & 0xF, HEX);
