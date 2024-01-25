@@ -687,38 +687,38 @@ static const char* const myLanguage[18][205] = {
     "SPOJENO!", // 57
     "IP klijenta StationList", // 58
     "Prikaži valnu duljinu KV-a", // 59
-    "RDS filter", // 60 ***
-    "Show PI errors", // 61 ***
-    "Prikaži squelch", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
+    "RDS filter", // 60
+    "Prikaži PI greške", // 61
+    "Prikaži squelch", // 62
     "Mjerač modulacije", // 63
     "AM prigušivač šuma", // 64
     "FM prigušivač šuma", // 65
     "Zadane postavke učitane", // 66
     "Audio izlaz", // 67
-    "Allow tuning\nduring screensaver", // 68 ***
+    "Omogući podešavanje\n tijekom čuvara zaslona", // 68
     "Invertiraj boju zaslona", // 69
     "O softveru", // 70
     "Glavni izvorni kod:", // 71
     "Suradnici:", // 72
     "Nepoznato", // 73
-    "Screensaver options", // 74 ***
-    "Time-out timer", // 75 ***
+    "Opcije čuvara zaslona", // 74
+    "Time-out timer", // 75
     "Zaslon isključiti", // 76
     "Tema dizajna", // 77
     "Skin", // 78 ***
     "Otkrivene aplikacije", // 79
-    "Min.", // 80 ***
-    "Dynamic SPI speed", // 81 ***
-    "Scan sensitivity", // 82
-    "NONE", // 83 represents: AM/FM bands unavailable(please delete this note after translation）
-    "Software version", // 84
-    "Frequency font" // 85 ***
+    "Min.", // 80
+    "Dinamička SPI brzina", // 81
+    "Osjetljivost skeniranja", // 82
+    "NEMA", // 83
+    "Verzija softvera", // 84
+    "Font frekvencije" // 85
     "NIJE MOGUĆE", // 86
     "AF nedostupan", // 87
     "EON nedostupan", // 88
     "RT+ nedostupan", // 89
     "FM min korak", // 90
-    "Screensaver", // 91 ***
+    "Čuvar zaslona", // 91
     "Sek", // 92
     "PRITISNITE BAND ZA IZLAZ", // 93
     "1% svjetlina", // 94
@@ -729,18 +729,18 @@ static const char* const myLanguage[18][205] = {
     "Koristi AF:", // 99
     "FM opseg:", // 100
     "AM opseg:", // 101
-    "LW", // 102 ***
-    "MW", // 103 ***
-    "SW", // 104 ***
-    "FM", // 105 ***
-    "OIRT", // 106 ***
-    "Rotating while screen off", // 107 ***
+    "LW", // 102 
+    "MW", // 103
+    "SW", // 104 
+    "FM", // 105 
+    "OIRT", // 106 
+    "Okretanje dok je zaslon isključen", // 107
     "Selektor modela", // 108
-    "Base (ILI9341)", // 109 ***
-    "Portable (ILI9341)", // 110 ***
-    "Portable touch (ILI9341)", // 111 ***
+    "Base (ILI9341)", // 109
+    "Portable (ILI9341)", // 110
+    "Portable touch (ILI9341)", // 111
     "Naslov", // 112
-    "Album", // 113 ***
+    "Album", // 113
     "Pjesma", // 114
     "Izvođač", // 115
     "Kompozicija", // 116
@@ -753,7 +753,7 @@ static const char* const myLanguage[18][205] = {
     "Vijesti", // 123
     "Lokalne vijesti", // 124
     "Burza", // 125
-    "Sport", // 126 ***
+    "Sport", // 126 
     "Lutrija", // 127
     "Horoskop", // 128
     "Savjet dana", // 129
@@ -761,11 +761,11 @@ static const char* const myLanguage[18][205] = {
     "Događanja", // 131
     "Scena", // 132
     "Kino", // 133
-    "TV", // 134 ***
+    "TV", // 134
     "Datum/vrijeme", // 135
     "Vremenska prognoza", // 136
     "Promet", // 137
-    "Alarm", // 138 ***
+    "Alarm", // 138 
     "Reklama", // 139
     "Web stranica", // 140
     "Ostalo", // 141
@@ -779,15 +779,15 @@ static const char* const myLanguage[18][205] = {
     "Frekvencija", // 149
     "Web stranica", // 150
     "Potkanal", // 151
-    "Hotline", // 152 ***
+    "Hotline", // 152 
     "Telefon studija", // 153
     "Telefon", // 154
-    "SMS studio", // 155 ***
-    "SMS", // 156 ***
-    "Email hotline", // 157 ***
+    "SMS studio", // 155 
+    "SMS", // 156 
+    "Email hotline", // 157 
     "Email studija", // 158
-    "Email", // 159 ***
-    "Chat", // 160 ***
+    "Email", // 159 
+    "Chat", // 160 
     "Chat centar", // 161
     "Pitanje za glasanje", // 162
     "Centar za glasanje", // 163
@@ -795,11 +795,11 @@ static const char* const myLanguage[18][205] = {
     "Ugovoreni sastanak", // 165
     "Identifikator", // 166
     "Kupnja", // 167
-    "Get data", // 168 ***
-    "MW default stepsize", // 169 ***
-    "Tangerine", // 170 ***
-    "Ocean", // 171 ***
-    "Indigo", // 172 ***
+    "Primi podatke", // 168
+    "MW zadana veličina koraka", // 169
+    "Tangerine", // 170 
+    "Ocean", // 171 
+    "Indigo", // 172 
     "Postavke za bateriju", // 173
     "Prikaži napon", // 174
     "Prikaži postotak", // 175
@@ -819,19 +819,19 @@ static const char* const myLanguage[18][205] = {
     "GLAVNO", // 189
     "ZVUK", // 190
     "ZASLON", // 191
-    "RDS", // 192 ***
-    "FM", // 193 ***
-    "AM", // 194 ***
+    "RDS", // 192 
+    "FM", // 193 
+    "AM", // 194 
     "SPOJI", // 195
     "Autom. sortiranje AF-a", // 196
-    "Stationlist ID", // 197 ***
+    "Stationlist ID", // 197 
     "AM ATT", // 198
-    "FM deemphasis", // 199 ***
+    "FM deemphasis", // 199 
     "Malo", // 200
     "Veliko", // 201
     "Sve", // 202
     "Brzi PS", // 203
-	"Default" // 204	
+	"Zadano" // 204	
   },
 
   { "Ελληνικά", // Greek
