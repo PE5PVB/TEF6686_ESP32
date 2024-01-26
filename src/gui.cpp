@@ -228,7 +228,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BWAutoColor = Cherry;
       BWAutoColorSmooth = CherrySmooth;
       BatteryValueColor = Cherry;
-      BatteryValueColorSmooth = CherrySmooth;	  
+      BatteryValueColorSmooth = CherrySmooth;
       break;
     case 7:  // Whiteout theme
       PrimaryColor = Black;
@@ -463,6 +463,7 @@ void BuildAFScreen() {
     afmethodBold = false;
     PIold = " ";
     PSold = " ";
+    xPos = 0;
     for (byte i = 0; i < 20; i++) {
       mappedfreqold[i] = 0;
       mappedfreqold2[i] = 0;
@@ -854,6 +855,10 @@ void BuildAdvancedRDS() {
   dropout = false;
   rdsreset = true;
   ShowMemoryPos();
+  xPos = 0;
+  xPos2 = 0;
+  xPos3 = 0;
+  xPos4 = 0;
 }
 
 void BuildDisplay() {
@@ -983,6 +988,7 @@ void BuildDisplay() {
   stationStateold = " ";
   BWreset = true;
   dropout = false;
+  xPos = 0;
   if (band < BAND_GAP) tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, 28); else tftPrint(-1, "kHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
 }
 
