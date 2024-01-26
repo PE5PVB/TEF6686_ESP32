@@ -659,7 +659,7 @@ static const char* const myLanguage[18][205] = {
     "Svjetlina zaslona", // 29
     "Isključeno", // 30
     "Zaslon je isključen!", // 31
-    "Da biste uključili zaslon, poništite kvadratić RF+", // 32
+    "Da biste uključili zaslon poništite kvadratić RF+", // 32
     "ISK.", // 33
     "SKENIRANJE...", // 34
     "Prijemnik nije pronađen", // 35
@@ -712,7 +712,7 @@ static const char* const myLanguage[18][205] = {
     "Osjetljivost skeniranja", // 82
     "NEMA", // 83
     "Verzija softvera", // 84
-    "Font frekvencije" // 85
+    "Font frekvencije", // 85
     "NIJE MOGUĆE", // 86
     "AF nedostupan", // 87
     "EON nedostupan", // 88
