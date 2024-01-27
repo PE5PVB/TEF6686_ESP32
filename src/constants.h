@@ -110,7 +110,7 @@
 #define SW_MI_BAND_160M     160
 
 //MAIN COLORS                      /* RGB 565 CODES */
-#define Black               0x0000    /*  0,  0,  0 */ 
+#define Black               0x0000    /*  0,  0,  0 */
 #define Blue                0x001F    /*  0,  0, 31 */
 #define Cabbage             0x07F6    /*  0, 63, 22 */
 #define Coral               0xFBEF    /* 31, 31, 15 */

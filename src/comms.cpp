@@ -352,7 +352,7 @@ void XDRGTKRoutine() {
       case 'T':
         unsigned int freqtemp;
         freqtemp = atoi(buff + 1);
-		if (BAND_FM) freqtemp -= ConverterSet * 1000;
+        if (BAND_FM) freqtemp -= ConverterSet * 1000;
         if (seek) seek = false;
         if (freqtemp >= LWLowEdgeSet && freqtemp <= LWHighEdgeSet) {
           frequency_LW = freqtemp;
@@ -574,7 +574,7 @@ void XDRGTKRoutine() {
       DataPrint("Sm");
     }
   }
-  DataPrint(String(((SStatus * 100) + 10875) / 1000) + "." + String(((SStatus * 100) + 10875) / 100 % 10) + ", " + String(WAM / 10) + ", " + String(CN) + "\n");
+  DataPrint(String(((SStatus * 100) + 10875) / 1000) + "." + String(((SStatus * 100) + 10875) / 100 % 10) + "," + String(WAM / 10) + "," + String(CN) + "\n\n");
 }
 
 void passwordcrypt() {
@@ -617,4 +617,3 @@ void tryWiFi() {
     Udp.stop();
     WiFi.mode(WIFI_OFF);
   }
-}

@@ -403,24 +403,9 @@ void readRds() {
     }
 
     if ((RDSstatus && XDRGTKUSB) || (RDSstatus && XDRGTKTCP)) {
-
-      uint8_t piError = radio.rds.rdsErr >> 14;
-      if (piError < 3) {
-        uint8_t piState = radio.rds.piBuffer.add(radio.rds.rdsA, piError);
-
-        if (piState != RdsPiBuffer::STATE_INVALID) {
-          DataPrint ("P");
-          DataPrint (String(((radio.rds.rdsA >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsA >> 8) & 0xF, HEX));
-          DataPrint (String(((radio.rds.rdsA) >> 4) & 0xF, HEX) + String((radio.rds.rdsA) & 0xF, HEX));
-          while (piState != 0) {
-            DataPrint("?");
-            piState--;
-          }
-          DataPrint ("\n");
-        }
-      }
-
       XDRGTKRDS = "R";
+      XDRGTKRDS += String(((radio.rds.rdsA >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsA >> 8) & 0xF, HEX);
+      XDRGTKRDS += String(((radio.rds.rdsA) >> 4) & 0xF, HEX) + String((radio.rds.rdsA) & 0xF, HEX);
       XDRGTKRDS += String(((radio.rds.rdsB >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsB >> 8) & 0xF, HEX);
       XDRGTKRDS += String(((radio.rds.rdsB) >> 4) & 0xF, HEX) + String((radio.rds.rdsB) & 0xF, HEX);
       XDRGTKRDS += String(((radio.rds.rdsC >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsC >> 8) & 0xF, HEX);
@@ -438,6 +423,21 @@ void readRds() {
       XDRGTKRDS += "\n";
 
       if (XDRGTKRDS != XDRGTKRDSold) {
+        uint8_t piError = radio.rds.rdsErr >> 14;
+        if (piError < 3) {
+          uint8_t piState = radio.rds.piBuffer.add(radio.rds.rdsA, piError);
+
+          if (piState != RdsPiBuffer::STATE_INVALID) {
+            DataPrint ("P");
+            DataPrint (String(((radio.rds.rdsA >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsA >> 8) & 0xF, HEX));
+            DataPrint (String(((radio.rds.rdsA) >> 4) & 0xF, HEX) + String((radio.rds.rdsA) & 0xF, HEX));
+            while (piState != 0) {
+              DataPrint("?");
+              piState--;
+            }
+            DataPrint ("\n");
+          }
+        }
         DataPrint(XDRGTKRDS);
         XDRGTKRDSold = XDRGTKRDS;
       }
