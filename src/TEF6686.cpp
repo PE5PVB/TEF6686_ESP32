@@ -132,6 +132,7 @@ void TEF6686::init(byte TEF) {
     delay(50);
 
     xtalADC = analogRead(15);
+	Serial.println(xtalADC);
     if (xtalADC > XTAL_0V_ADC && xtalADC < XTAL_0V_ADC + XTAL_ADC_TOL) {
       Tuner_Init(tuner_init_tab9216);
       log_v("XTAL : 9.216M");
@@ -141,7 +142,7 @@ void TEF6686::init(byte TEF) {
     } else if (xtalADC > XTAL_2V_ADC - XTAL_ADC_TOL && xtalADC < XTAL_2V_ADC + XTAL_ADC_TOL) {
       Tuner_Init(tuner_init_tab55000);
       log_v("XTAL : 55M");
-    } else if (xtalADC > XTAL_2V_ADC + XTAL_ADC_TOL) {
+    } else {
       Tuner_Init(tuner_init_tab4000);
       log_v("XTAL : 4M");
     }

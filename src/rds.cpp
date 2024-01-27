@@ -429,8 +429,10 @@ void readRds() {
 
           if (piState != RdsPiBuffer::STATE_INVALID) {
             DataPrint ("P");
-            DataPrint (String(((radio.rds.rdsA >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsA >> 8) & 0xF, HEX));
-            DataPrint (String(((radio.rds.rdsA) >> 4) & 0xF, HEX) + String((radio.rds.rdsA) & 0xF, HEX));
+			String PIcodeToSend;
+			PIcodeToSend = String(((radio.rds.rdsA >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsA >> 8) & 0xF, HEX) + String(((radio.rds.rdsA) >> 4) & 0xF, HEX) + String((radio.rds.rdsA) & 0xF, HEX);
+			PIcodeToSend.toUpperCase();
+            DataPrint (PIcodeToSend);
             while (piState != 0) {
               DataPrint("?");
               piState--;
@@ -438,6 +440,7 @@ void readRds() {
             DataPrint ("\n");
           }
         }
+		XDRGTKRDS.toUpperCase();
         DataPrint(XDRGTKRDS);
         XDRGTKRDSold = XDRGTKRDS;
       }
