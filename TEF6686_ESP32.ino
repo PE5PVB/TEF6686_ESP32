@@ -234,7 +234,6 @@ int SignificantColorSmooth;
 int StereoColor;
 int StereoColorSmooth;
 int SquelchShow;
-int SquelchShowold;
 int rotary;
 int rssi;
 int rssiold = 200;
@@ -2778,14 +2777,13 @@ void ShowModLevel() {
 }
 
 void doSquelch() {
+  if (!XDRGTKUSB && !XDRGTKTCP && usesquelch) Squelch = analogRead(PIN_POT) / 4 - 100;
+  if (unit == 0) SquelchShow = Squelch / 10;
+  if (unit == 1) SquelchShow = ((Squelch * 100) + 10875) / 1000;
+  if (unit == 2) SquelchShow = round((float(Squelch) / 10.0 - 10.0 * log10(75) - 90.0) * 10.0) / 10;
+  if (Squelch > 920) Squelch = 920;
+
   if (!XDRGTKUSB && !XDRGTKTCP && usesquelch) {
-    Squelch = analogRead(PIN_POT) / 4 - 100;
-    if (unit == 0) SquelchShow = Squelch / 10;
-    if (unit == 1) SquelchShow = ((Squelch * 100) + 10875) / 1000;
-    if (unit == 2) SquelchShow = round((float(Squelch) / 10.0 - 10.0 * log10(75) - 90.0) * 10.0) / 10;
-
-    if (Squelch > 920) Squelch = 920;
-
     if (!screenmute && usesquelch && !advancedRDS && !afscreen) {
       if (!menu && (Squelch > Squelchold + 2 || Squelch < Squelchold - 2)) {
         SquelchSprite.fillSprite(BackgroundColor);
@@ -2798,7 +2796,6 @@ void doSquelch() {
         } else {
           SquelchSprite.drawString(String(SquelchShow), 0, 0);
         }
-        SquelchShowold = SquelchShow;
         if (Squelch != Squelchold) SquelchSprite.pushSprite(235, 145);
       }
       Squelchold = Squelch;
@@ -2842,7 +2839,6 @@ void doSquelch() {
           }
           if (Squelch != Squelchold) SquelchSprite.pushSprite(235, 145);
           Squelchold = Squelch;
-          SquelchShowold = SquelchShow;
         }
       }
     }
