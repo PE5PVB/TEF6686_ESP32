@@ -3,6 +3,7 @@
 #include <Arduino.h>
 #include <TimeLib.h>                // https://github.com/PaulStoffregen/Time
 #include "SPIFFS.h"
+#include "constants.h"
 
 unsigned long rdstimer = 0;
 unsigned long bitStartTime = 0;
@@ -123,12 +124,27 @@ uint16_t TEF6686::TestAF() {
 
 void TEF6686::init(byte TEF) {
   uint8_t bootstatus;
+  int xtalADC = 0;
   Tuner_I2C_Init();
   devTEF_APPL_Get_Operation_Status(&bootstatus);
   if (bootstatus == 0) {
     Tuner_Patch(TEF);
     delay(50);
-    if (digitalRead(15) == LOW) Tuner_Init(tuner_init_tab9216); else Tuner_Init(tuner_init_tab4000);
+
+    xtalADC = analogRead(15);
+    if (xtalADC > XTAL_0V_ADC && xtalADC < XTAL_0V_ADC + XTAL_ADC_TOL) {
+      Tuner_Init(tuner_init_tab9216);
+      log_v("XTAL : 9.216M");
+    } else if (xtalADC > XTAL_1V_ADC - XTAL_ADC_TOL && xtalADC < XTAL_1V_ADC + XTAL_ADC_TOL) {
+      Tuner_Init(tuner_init_tab12000);
+      log_v("XTAL : 12M");
+    } else if (xtalADC > XTAL_2V_ADC - XTAL_ADC_TOL && xtalADC < XTAL_2V_ADC + XTAL_ADC_TOL) {
+      Tuner_Init(tuner_init_tab55000);
+      log_v("XTAL : 55M");
+    } else if (xtalADC > XTAL_2V_ADC + XTAL_ADC_TOL) {
+      Tuner_Init(tuner_init_tab4000);
+      log_v("XTAL : 4M");
+    }
     power(1);
     Tuner_Init(tuner_init_tab);
   }

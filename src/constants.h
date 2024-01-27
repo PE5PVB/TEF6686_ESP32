@@ -23,6 +23,10 @@
 #define BATTERY_LOW_VALUE          3.0
 #define BATTERY_FULL_VALUE         4.2
 
+#define XTAL_0V_ADC               0
+#define XTAL_1V_ADC               1050
+#define XTAL_2V_ADC               2250
+#define XTAL_ADC_TOL              300
 
 #define LANGUAGE_CHS               14
 
