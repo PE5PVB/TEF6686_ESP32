@@ -341,7 +341,7 @@ void XDRGTKRoutine() {
             SelectBand();
           }
           DataPrint("M0\n");
-          DataPrint("T" + String(frequency * 10) + "\n");
+          DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
           radio.SetFreq(frequency);
           radio.clearRDS(fullsearchrds);
           RDSstatus = false;
@@ -352,6 +352,7 @@ void XDRGTKRoutine() {
       case 'T':
         unsigned int freqtemp;
         freqtemp = atoi(buff + 1);
+		if (BAND_FM) freqtemp -= ConverterSet * 1000;
         if (seek) seek = false;
         if (freqtemp >= LWLowEdgeSet && freqtemp <= LWHighEdgeSet) {
           frequency_LW = freqtemp;
@@ -396,7 +397,8 @@ void XDRGTKRoutine() {
           radio.SetFreq(frequency);
           DataPrint("M0\n");
         }
-        if (band == BAND_FM) DataPrint("T" + String(frequency * 10) + "\n"); else DataPrint("T" + String(frequency_AM) + "\n");
+        if (band == BAND_FM) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n"); else DataPrint("T" + String(frequency_AM) + "\n");
+
         ShowFreq(0);
         radio.clearRDS(fullsearchrds);
         RDSstatus = false;

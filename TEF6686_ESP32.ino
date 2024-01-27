@@ -771,7 +771,7 @@ void loop() {
           afmethodBold = true;
           radio.clearRDS(fullsearchrds);
         }
-        if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String(frequency * 10));
+        if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String((frequency + ConverterSet * 100) * 10));
         store = true;
       }
     }
@@ -788,7 +788,7 @@ void loop() {
             afmethodBold = true;
             radio.clearRDS(fullsearchrds);
           }
-          if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String(frequency * 10));
+          if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String((frequency + ConverterSet * 100) * 10));
           store = true;
         }
       }
@@ -804,7 +804,7 @@ void loop() {
               afmethodBold = true;
               radio.clearRDS(fullsearchrds);
             }
-            if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String(frequency * 10));
+            if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String((frequency + ConverterSet * 100) * 10));
             store = true;
           }
         }

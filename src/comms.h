@@ -82,6 +82,7 @@ extern uint16_t USN;
 extern uint16_t WAM;
 extern uint8_t buff_pos;
 extern int8_t CN;
+extern unsigned int ConverterSet;
 extern unsigned int freq_scan;
 extern unsigned int frequency;
 extern unsigned int frequency_OIRT;
