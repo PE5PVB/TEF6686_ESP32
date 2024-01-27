@@ -9,6 +9,8 @@
 extern const unsigned char tuner_init_tab[] PROGMEM;
 extern const unsigned char tuner_init_tab9216[] PROGMEM;
 extern const unsigned char tuner_init_tab4000[] PROGMEM;
+extern const unsigned char tuner_init_tab12000[] PROGMEM;
+extern const unsigned char tuner_init_tab55000[] PROGMEM;
 
 enum RDS_GROUPS {
   RDS_GROUP_0A,  RDS_GROUP_0B,  RDS_GROUP_1A,  RDS_GROUP_1B,  RDS_GROUP_2A,  RDS_GROUP_2B,  RDS_GROUP_3A,  RDS_GROUP_3B,
