@@ -120,6 +120,7 @@ void Communication() {
           }
           XDRGTKTCP = true;
           RemoteClient.print("o1,0\n");
+          RemoteClient.print("G" + String(!EQset) + String(!iMSset) + "\n");
           store = true;
         } else {
           RemoteClient.print("a0\n");
@@ -156,7 +157,7 @@ void Communication() {
           band = BAND_FM;
           SelectBand();
         }
-        Serial.print("OK\nT" + String(frequency * 10) + "\n");
+        Serial.print("OK\nT" + String(frequency * 10) + "\nG" + String(!EQset) + String(!iMSset) + "\n");
         XDRGTKUSB = true;
       }
     }
@@ -278,35 +279,27 @@ void XDRGTKRoutine() {
         byte offsetg;
         offsetg = atol(buff + 1);
         if (offsetg == 0) {
-          MuteScreen(0);
-          LowLevelSet = EEPROM.readInt(EE_BYTE_LOWLEVELSET);
-          softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
-          softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
-          radio.setSoftmuteFM(softmutefm);
-          radio.setSoftmuteAM(softmuteam);
+          iMSset = 1;
+          EQset = 1;
           DataPrint("G00\n");
         }
         if (offsetg == 10) {
-          MuteScreen(1);
-          LowLevelSet = EEPROM.readInt(EE_BYTE_LOWLEVELSET);
-          softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
-          softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
-          radio.setSoftmuteFM(softmutefm);
-          radio.setSoftmuteAM(softmuteam);
+          iMSset = 1;
+          EQset = 0;
           DataPrint("G10\n");
         }
         if (offsetg == 1) {
-          MuteScreen(0);
-          radio.setSoftmuteFM(1);
-          radio.setSoftmuteAM(1);
+          iMSset = 0;
+          EQset = 1;
           DataPrint("G01\n");
         }
         if (offsetg == 11) {
-          MuteScreen(1);
-          radio.setSoftmuteFM(1);
-          radio.setSoftmuteAM(1);
+          iMSset = 0;
+          EQset = 0;
           DataPrint("G11\n");
         }
+        updateiMS();
+        updateEQ();
         break;
 
       case 'M':
@@ -532,27 +525,39 @@ void XDRGTKRoutine() {
         iMSEQX = atol(buff + 1);
         switch (iMSEQX) {
           case 0:
-            iMSset = 1;
-            EQset = 1;
-            iMSEQ = 2;
+            MuteScreen(0);
+            LowLevelSet = EEPROM.readInt(EE_BYTE_LOWLEVELSET);
+            softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
+            softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
+            radio.setSoftmuteFM(softmutefm);
+            radio.setSoftmuteAM(softmuteam);
             break;
 
           case 1:
-            iMSset = 0;
-            EQset = 1;
-            iMSEQ = 3;
+            MuteScreen(1);
+            LowLevelSet = EEPROM.readInt(EE_BYTE_LOWLEVELSET);
+            softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
+            softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
+            radio.setSoftmuteFM(softmutefm);
+            radio.setSoftmuteAM(softmuteam);
             break;
 
           case 2:
-            iMSset = 1;
-            EQset = 0;
-            iMSEQ = 4;
+            MuteScreen(0);
+            LowLevelSet = EEPROM.readInt(EE_BYTE_LOWLEVELSET);
+            softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
+            softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
+            radio.setSoftmuteFM(1);
+            radio.setSoftmuteAM(1);
             break;
 
           case 3:
-            iMSset = 0;
-            EQset = 0;
-            iMSEQ = 1;
+            MuteScreen(1);
+            LowLevelSet = EEPROM.readInt(EE_BYTE_LOWLEVELSET);
+            softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
+            softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
+            radio.setSoftmuteFM(1);
+            radio.setSoftmuteAM(1);
             break;
         }
         updateiMS();

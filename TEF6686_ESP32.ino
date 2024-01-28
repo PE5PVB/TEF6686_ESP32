@@ -2216,6 +2216,7 @@ void ButtonPress() {
           EEPROM.writeByte(EE_BYTE_IMSSET, iMSset);
           EEPROM.writeByte(EE_BYTE_EQSET, EQset);
           EEPROM.commit();
+          if (XDRGTKUSB || XDRGTKTCP) DataPrint("G" + String(!EQset) + String(!iMSset) + "\n");
         } else {
           if (band == BAND_SW && tunemode != TUNE_MEM) {
             nowToggleSWMIBand = !nowToggleSWMIBand;
