@@ -624,7 +624,7 @@ static const char* const myLanguage[18][205] = {
     "Duże", // 201
     "Wszystkie", // 202
     "Szybki PS", // 203
-	"Default" // 204	
+	"Domyślny" // 204	
   },
 
   { "Hrvatski", // Croatian
