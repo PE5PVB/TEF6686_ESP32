@@ -210,7 +210,7 @@ static const char* const myLanguage[18][205] = {
     "Large", // 201
     "All", // 202
     "Fast PS", // 203
-	"Default" // 204
+    "Default" // 204
   },
 
   { "Nederlands", // Dutch
@@ -417,7 +417,7 @@ static const char* const myLanguage[18][205] = {
     "Middel", // 201
     "Alles", // 202
     "Snelle PS", // 203
-	"Standaard" // 204	
+    "Standaard" // 204
   },
 
   { "Polski", // Polish
@@ -624,7 +624,7 @@ static const char* const myLanguage[18][205] = {
     "Duże", // 201
     "Wszystkie", // 202
     "Szybki PS", // 203
-	"Default" // 204	
+    "Default" // 204
   },
 
   { "Hrvatski", // Croatian
@@ -729,11 +729,11 @@ static const char* const myLanguage[18][205] = {
     "Koristi AF:", // 99
     "FM opseg:", // 100
     "AM opseg:", // 101
-    "LW", // 102 
+    "LW", // 102
     "MW", // 103
-    "SW", // 104 
-    "FM", // 105 
-    "OIRT", // 106 
+    "SW", // 104
+    "FM", // 105
+    "OIRT", // 106
     "Okretanje dok je zaslon isključen", // 107
     "Selektor modela", // 108
     "Base (ILI9341)", // 109
@@ -753,7 +753,7 @@ static const char* const myLanguage[18][205] = {
     "Vijesti", // 123
     "Lokalne vijesti", // 124
     "Burza", // 125
-    "Sport", // 126 
+    "Sport", // 126
     "Lutrija", // 127
     "Horoskop", // 128
     "Savjet dana", // 129
@@ -765,7 +765,7 @@ static const char* const myLanguage[18][205] = {
     "Datum/vrijeme", // 135
     "Vremenska prognoza", // 136
     "Promet", // 137
-    "Alarm", // 138 
+    "Alarm", // 138
     "Reklama", // 139
     "Web stranica", // 140
     "Ostalo", // 141
@@ -779,15 +779,15 @@ static const char* const myLanguage[18][205] = {
     "Frekvencija", // 149
     "Web stranica", // 150
     "Potkanal", // 151
-    "Hotline", // 152 
+    "Hotline", // 152
     "Telefon studija", // 153
     "Telefon", // 154
-    "SMS studio", // 155 
-    "SMS", // 156 
-    "Email hotline", // 157 
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email hotline", // 157
     "Email studija", // 158
-    "Email", // 159 
-    "Chat", // 160 
+    "Email", // 159
+    "Chat", // 160
     "Chat centar", // 161
     "Pitanje za glasanje", // 162
     "Centar za glasanje", // 163
@@ -797,9 +797,9 @@ static const char* const myLanguage[18][205] = {
     "Kupnja", // 167
     "Primi podatke", // 168
     "MW zadana veličina koraka", // 169
-    "Tangerine", // 170 
-    "Ocean", // 171 
-    "Indigo", // 172 
+    "Tangerine", // 170
+    "Ocean", // 171
+    "Indigo", // 172
     "Postavke za bateriju", // 173
     "Prikaži napon", // 174
     "Prikaži postotak", // 175
@@ -819,19 +819,19 @@ static const char* const myLanguage[18][205] = {
     "GLAVNO", // 189
     "ZVUK", // 190
     "ZASLON", // 191
-    "RDS", // 192 
-    "FM", // 193 
-    "AM", // 194 
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
     "SPOJI", // 195
     "Autom. sortiranje AF-a", // 196
-    "Stationlist ID", // 197 
+    "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemphasis", // 199 
+    "FM deemphasis", // 199
     "Malo", // 200
     "Veliko", // 201
     "Sve", // 202
     "Brzi PS", // 203
-	"Zadano" // 204	
+    "Zadano" // 204
   },
 
   { "Ελληνικά", // Greek
@@ -1038,214 +1038,214 @@ static const char* const myLanguage[18][205] = {
     "Μεγάλο", // 201
     "Όλα", // 202
     "Γρήγορο PS", // 203
-	"Default" // 204	
+    "Default" // 204
   },
 
   { "Română", // Romanian
-    "Sens rotire schimbat", // 1
-    "Eliberaţi butonul", // 2
-    "Ecran inversat", // 3
-    "Calibraţi S-metrul analog", // 4
-    "Eliberaţi butonul cand terminaţi", // 5
-    "Encoderul setat pe Optic", // 6
-    "Encoderul setat pe Standard", // 7
-    "Receptor FM/AM ", // 8
-    "Nu există Tuner !", // 9
-    "Volum:", // 10
-    "Convertor:", // 11
-    "Limita inferioară a benzii:", // 12
-    "Limita superioară a benzii:", // 13
-    "FM decalaj nivel RF:", // 14
-    "Prag ptr. Stereo :", // 15
-    "Limită tăiere înalte:", // 16
-    "Prag tăiere înalte:", // 17
-    "Prag tăiere joase:", // 18
-    "Contrast:", // 19
-    "Setează volum", // 20
-    "Setează decalaj convertor", // 21
-    "Setează marginea de jos a benzii", // 22
-    "Setează marginea de sus a benzii", // 23
-    "Setează nivel decalaj", // 24
-    "Setează prag separare Stereo", // 25
-    "Setează limita de sus înalte", // 26
-    "Setează prag tăiere înalte", // 27
-    "Setează pragul nivelului de jos", // 28
-    "Setează luminozitatea ecran", // 29
+    "Directia rotirii schimbata", // 1
+    "Eliberati butonul", // 2
+    "Display rasturnat", // 3
+    "Calibrati instrumentul analog", // 4
+    "Eliberati butonul la gata", // 5
+    "encoderul setat pe optic", // 6
+    "encoderul setat pe standard", // 7
+    "FM/AM receptor", // 8
+    "Lipsa: !Tuner!", // 9
+    "Volum", // 10
+    "Convertor", // 11
+    "Marginea de jos a benzii", // 12
+    "Marginea de sus a benzii", // 13
+    "FM RF Nivel offset", // 14
+    "Pragul ptr Stereo", // 15
+    "Limita taiere inalte", // 16
+    "Prag taiere inalte", // 17
+    "Prag nivel joase", // 18
+    "Contrast", // 19
+    "Setare volum", // 20
+    "Setare decalaj convertor", // 21
+    "Setarea limitei de jos a benzii", // 22
+    "Setarea limitei de sus a benzii", // 23
+    "Setare nivel decalaj", // 24
+    "Setarea pragului sep. Stereo ", // 25
+    "Setare taiere frecv, inalte ", // 26
+    "Setare prag taiere inalte", // 27
+    "Setarea pragului joase", // 28
+    "Setare luminozitate display", // 29
     "Oprit", // 30
-    "Ecran oprit", // 31
-    "Pentru pornire debifați RF+", // 32
-    "OPRIT", // 33
-    "Scanare...", // 34
-    "Tunerul nu este detectat", // 35
-    "Versiune Tuner: v", // 36
-    "Vă rog restartați radioul", // 37
-    "Arată erorile RDS", // 38
-    "Limbă", // 39
-    "Alege Limba", // 40
-    "Apasă MODE ptr salvare și ieșire", // 41
+    "Ecran blocat!", // 31
+    "ptr deblocare debifati RF+ box", // 32
+    "Oprit", // 33
+    "SCANEZ...", // 34
+    "Tunerul nu este prezent", // 35
+    "Versiune Tuner set: v", // 36
+    "Restartati tunerul", // 37
+    "Arata erorile RDS", // 38
+    "Limba", // 39
+    "Alegeti Limba", // 40
+    "Apasati MODE ptr MEMORARE si iesire", // 41
     "Pornit", // 42
-    "FM fără sonor", // 43
-    "AM fără sonor", // 44
-    "Sunet la marginea benzii", // 45
+    "lipsa zgomot FM", // 43
+    "lipsa zgomot AM", // 44
+    "Beep la capatul benzii", // 45
     "Regiune", // 46
     "Europa", // 47
     "America", // 48
-    "Arată evidențiat in RDS", // 49
+    "Afiseaza subliniere in RDS", // 49
     "Mod USB", // 50
     "Wi-Fi activ", // 51
     "Configurare Wi-Fi", // 52
     "Conectare la: ", // 53
-    "Către configurare Wi-Fi", // 54
-    "Se conectează Wi-Fi", // 55
-    "EȘUAT!", // 56
-    "CONECTARE!", // 57
-    "Listă rețele IP", // 58
-    "Arată lungimea de undă SW", // 59
+    "ptr configurare Wi-Fi", // 54
+    "Incerc conectarea la Wi-Fi", // 55
+    "Fara succes!", // 56
+    "Conectat!", // 57
+    "Lista adrese IP", // 58
+    "Arat? lungimea de unda SW", // 59
     "Filtru RDS", // 60
-    "Arată erorile PI", // 61
-    "Arată limitatorul", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
-    "Măsurare modulație", // 63
-    "Eliminare zgomot AM", // 64
-    "Eliminare zgomot FM", // 65
-    "Incărcare valori implicite", // 66
-    "Ieșire audio ", // 67
-    "Reglare cu economizor ecran pornit", // 68
-    "Arată culorile inversate", // 69
-    "Despre soft", // 70
-    "Despre cod:", // 71
+    "Arata erorile PI", // 61
+    "foloseste squelch", // 62
+    "Contor modulatie", // 63
+    "Eliminator de zgomot AM", // 64
+    "Eliminator de zgomot FM", // 65
+    "Revenire setari implicite", // 66
+    "iesire Audio", // 67
+    "Permite reglarea in timpul screensaverului", // 68
+    "Ecran inversat", // 69
+    "Despresoftware", // 70
+    "cod principal:", // 71
     "Contribuitori:", // 72
     "Necunoscut", // 73
-    "Opțiuni economizor ecran", // 74
-    "Intervalul de timp", // 75
+    "Optiuni Screensaver", // 74
+    "Pauza temporizator", // 75
     "Ecran oprit", // 76
-    "Teme", // 77
-    "Skin", // 78 ***
-    "Identificare aplicații", // 79
-    "Min.", // 80 ***
-    "Dynamic SPI speed", // 81 ***
-    "Scan sensitivity", // 82
-    "NONE", // 83 represents: AM/FM bands unavailable(please delete this note after translation）
-    "Software version", // 84
-    "Frequency font", // 85 ***
-    "Nu este posibil", // 86
-    "Fără AF disponibil", // 87
-    "Fără EON disponibil", // 88
-    "Fără RT+ disponibil", // 89
-    "Pasul FM minim", // 90
-    "Economizor ecran", // 91
-    "Sec", // 92 ***
-    "APASĂ BAND PENTRU IEȘIRE", // 93
-    "1% luminozitate", // 94
-    "25% luminozitate", // 95
-    "50% luminozitate", // 96
-    "AM compensare nivel RF:", // 97
-    "Unitate masură semnal:", // 98
-    "Folosește AF:", // 99
-    "Alege banda FM:", // 100
-    "Alege banda AM:", // 101
-    "LW", // 102 ***
-    "MW", // 103 ***
-    "SW", // 104 ***
-    "FM", // 105 ***
-    "OIRT", // 106 ***
-    "Rotire cand ecranul este oprit", // 107
-    "Model ecran", // 108
-    "Bază (ILI9341)", // 109
+    "Tema", // 77
+    "Mod vizualizare", // 78
+    "Aplicatii detectate", // 79
+    "Min.", // 80
+    "Viteza SPI dinamica", // 81
+    "Sensibilitatea scanarii", // 82
+    "NICI UNUL", // 83
+    " versiune Software", // 84
+    "Font Frecventa", // 85
+    "Nu se poate", // 86
+    "AF nu este disponibil", // 87
+    "EON nu este disponibil", // 88
+    "RT+ nu este disponibil", // 89
+    "Marime pasi FM", // 90
+    "Screensaver", // 91
+    "Sec", // 92
+    "Apasati BAND pentru inchidere", // 93
+    "luminozitate 1%", // 94
+    "luminozitate 25%", // 95
+    "luminozitate 50%", // 96
+    "Decalaj de nivel AM RF", // 97
+    "unitati S-metru", // 98
+    "folosesti AF", // 99
+    "Selectare banda FM", // 100
+    "Selectare banda AM", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT", // 106
+    "Rotire timp ce ecranul este oprit", // 107
+    " selectare Model", // 108
+    "Baza (ILI9341)", // 109
     "Portabil (ILI9341)", // 110
-    "Portabil tactil (ILI9341)", // 111
+    "Portabil touch (ILI9341)", // 111
     "Titlu", // 112
-    "Album", // 113 ***
-    "Piesă", // 114
-    "Artist", // 115 ***
-    "Compoziție", // 116
-    "Deplasare", // 117
-    "Dirijor", // 118
+    "Album", // 113
+    "Banda", // 114
+    "Artist", // 115
+    "Compozitie", // 116
+    "Miscare", // 117
+    "Dirijir", // 118
     "Compozitor", // 119
-    "Banda", // 120
-    "Comentariu", // 121
-    "Genuri", // 122
+    "Formatia", // 120
+    "Comentarii", // 121
+    "Gen", // 122
     "Stiri", // 123
-    "Stiri locale", // 124
-    "PiataBursiera", // 125
-    "Sport", // 126 ***
-    "Loterie", // 127
+    "Stiri Locale", // 124
+    "Bursa de Valori", // 125
+    "Sport", // 126
+    "Loto", // 127
     "Horoscop", // 128
-    "Cotidian", // 129
+    "Info zilnice", // 129
     "Sanatate", // 130
-    "Concurs", // 131
-    "Scene", // 132 ***
-    "Cinema", // 133 ***
-    "TV", // 134 ***
-    "Data/timp", // 135
+    "Evenimente", // 131
+    "Teatru", // 132
+    "Cinema", // 133
+    "TV", // 134
+    "Data/ora", // 135
     "Meteo", // 136
     "Trafic", // 137
     "Alarma", // 138
-    "Avertisment", // 139
-    "Website", // 140 ***
-    "Altceva", // 141
-    "Scurt PS", // 142
-    "Lung PS", // 143
+    "Reclamet", // 139
+    "Website", // 140
+    "Altele", // 141
+    "PS scurt", // 142
+    "PS lung", // 143
     "Acum", // 144
-    "Urmatorul", // 145
-    "Part", // 146 ***
-    "Host", // 147 ***
-    "Editor", // 148 ***
+    "Urmeaza", // 145
+    "Parte", // 146
+    "Gazda", // 147
+    "Editor", // 148
     "Frecventa", // 149
-    "Prima pagina", // 150
-    "Subchannel", // 151 ***
-    "Hotline", // 152 ***
-    "Studio phone", // 153 ***
-    "Phone", // 154 ***
-    "SMS studio", // 155 ***
-    "SMS", // 156 ***
-    "Email hotline", // 157 ***
-    "Email studio", // 158 ***
-    "Email", // 159 ***
-    "Chat", // 160 ***
-    "Chat centre", // 161 ***
-    "Vote question", // 162 ***
-    "Vote centre", // 163 ***
-    "Place", // 164 ***
-    "Appointment", // 165 ***
-    "Identifier", // 166 ***
-    "Purchase", // 167 ***
-    "Get data", // 168 ***
-    "MW default stepsize", // 169 ***
-    "Tangerine", // 170 ***
-    "Ocean", // 171 ***
-    "Indigo", // 172 ***
-    "Opțiuni baterie", // 173
-    "Arată voltajul", // 174
-    "Arată procentele", // 175
-    "Stocare RT", // 176
-    "Setarile principale", // 177
-    "Setări audio", // 178
-    "Setări ecran", // 179
-    "Setări RDS", // 180
-    "Setări FM", // 181
-    "Setări AM", // 182
+    "Pagina start", // 150
+    "Sub canal", // 151
+    "Linia fierbinte", // 152
+    "Telefon Studio", // 153
+    "Telefon", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email Linie fierbinte", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Discutii", // 160
+    "Centru discutii", // 161
+    "Intrebare la vot", // 162
+    "Centru votare", // 163
+    "Loc", // 164
+    "Intalnire", // 165
+    "Identificare", // 166
+    "Cumpara", // 167
+    "Preiau date", // 168
+    "pasi MW impliciti", // 169
+    "Tangerine", // 170
+    "Ocean", // 171
+    "Indigo", // 172
+    "Optiuni Baterie", // 173
+    "Arata tensiunea", // 174
+    "Arata procente", // 175
+    "portiune RT", // 176
+    "Setari de baza", // 177
+    "Setari Audio", // 178
+    "Setari ecran", // 179
+    "Setari RDS", // 180
+    "Setari FM", // 181
+    "Setari AM ", // 182
     "Conectivitate", // 183
-    "Apasă MODE pentru ieșire", // 184
-    "AM detectare CoChannelDet", // 185
-    "Sensibilitate CoChannelDet", // 186
-    "Pragul AM CoChannelDet", // 187
-    "CoChannelDet opus", // 188
+    "Apasa MODE ptr revenire", // 184
+    "Detector CoChannel", // 185
+    "Detectie in sensibilitate CoChannel ", // 186
+    "Detectie prag CoChannel", // 187
+    "Detector in contor CoChannel", // 188
     "PRINCIPAL", // 189
-    "AUDIO", // 190 ***
+    "AUDIO", // 190
     "ECRAN", // 191
-    "RDS", // 192 ***
-    "FM", // 193 ***
-    "AM", // 194 ***
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
     "CONECTARE", // 195
-    "Sortare auto AF", // 196
-    "Listă rețele ID", // 197
-    "AM ATT", // 198
-    "Deaccentuare FM", // 199
+    "Sortare automata AF", // 196
+    "ID Lista posturi", // 197
+    " AGC AM", // 198
+    "FM deemphasis", // 199
     "Mic", // 200
     "Mare", // 201
-    "Toate", // 202
+    "Tot", // 202
     "PS rapid", // 203
-	"Default" // 204	
+    "Mod implicit" // 204
   },
 
   { "Deutsch", // German
@@ -1452,7 +1452,7 @@ static const char* const myLanguage[18][205] = {
     "Viel", // 201
     "Maximal", // 202
     "Schnelles PS", // 203
-	"Default" // 204	
+    "Default" // 204
   },
 
   { "Český", // Czech
@@ -1659,7 +1659,7 @@ static const char* const myLanguage[18][205] = {
     "Velký", // 201
     "Vše", // 202
     "Rychlé načtení PS", // 203
-	"Default" // 204	
+    "Default" // 204
   },
 
   { "Slovenský", // Slovak
@@ -1866,7 +1866,7 @@ static const char* const myLanguage[18][205] = {
     "Veľký", // 201
     "Všetko", // 202
     "Rýchle načítanie PS", // 203
-	"Default" // 204	
+    "Default" // 204
   },
 
   { "Français", // French
@@ -2073,7 +2073,7 @@ static const char* const myLanguage[18][205] = {
     "Grosses", // 201
     "Toutes", // 202
     "PS rapide", // 203
-	"Default" // 204	
+    "Default" // 204
   },
 
   { "Български", // Bulgarian
@@ -2280,7 +2280,7 @@ static const char* const myLanguage[18][205] = {
     "Large", // 201 ***
     "Всички", // 202
     "Fast PS", // 203 ***
-	"Default" // 204	
+    "Default" // 204
   },
 
   { "Русский", // Russian
@@ -2487,7 +2487,7 @@ static const char* const myLanguage[18][205] = {
     "Больше", // 201
     "Все", // 202
     "Быстрый PS", // 203
-	"Default" // 204	
+    "Default" // 204
   },
 
   { "Українська", // Ukranian
@@ -2694,7 +2694,7 @@ static const char* const myLanguage[18][205] = {
     "Багато", // 201
     "Усе", // 202
     "Швидкий PS", // 203
-	"Default" // 204	
+    "Default" // 204
   },
 
   { "Italiano", // Italian
@@ -2901,7 +2901,7 @@ static const char* const myLanguage[18][205] = {
     "Grande", // 201 ***
     "Tutto", // 202 ***
     "PS veloce", // 203 ***
-	"Default" // 204	
+    "Default" // 204
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3108,7 +3108,7 @@ static const char* const myLanguage[18][205] = {
     "大量", // 201
     "全部", // 202
     "快速 PS", // 203
-	"Default" // 204	
+    "Default" // 204
   },
 
   { "Norsk", // Norwegian
@@ -3315,7 +3315,7 @@ static const char* const myLanguage[18][205] = {
     "Mye", // 201
     "Alt", // 202
     "Rask PS", // 203
-	"Standard" // 204	
+    "Standard" // 204
   },
 
   { "Español", // Spanish
@@ -3522,7 +3522,7 @@ static const char* const myLanguage[18][205] = {
     "Grande", // 201
     "Todo", // 202
     "PS rápido", // 203
-	"Default" // 204	
+    "Default" // 204
   },
 
   { "Português", // Portuguese
@@ -3729,7 +3729,7 @@ static const char* const myLanguage[18][205] = {
     "Grande", // 201
     "Tudo", // 202
     "PS rápido", // 203
-	"Default" // 204	
+    "Default" // 204
   }
 };
 #endif
