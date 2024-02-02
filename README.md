@@ -26,7 +26,7 @@ You can also contribute your own code using [Pull Requests](https://github.com/P
 You are using our software and you found a difficulty? Please create new [issue](https://github.com/PE5PVB/TEF6686_ESP32/issues) and describe your problem.
 
 We also would like to invite you to join our Discord community where we share our ideas and help each other with some issues.\
-[<img alt="Join the TEF6686 Discord community!" src="https://i.imgur.com/BYqhuLI.png">](https://discord.gg/ZAVNdS74mC)  
+[<img alt="Join the TEF6686 Discord community!" src="https://i.imgur.com/lI9Tuxf.png" height="120">](https://discord.gg/ZAVNdS74mC)  
 
 Special thanks to all [contributors](https://github.com/PE5PVB/TEF6686_ESP32/graphs/contributors). You are awesome! ❤️
 ## License
