@@ -1813,12 +1813,12 @@ void doStereoToggle() {
     StereoToggle = false;
   } else {
     if (!screenmute) {
+      tft.drawSmoothCircle(71, 15, 10, BackgroundColor, BackgroundColor);
+      tft.drawSmoothCircle(71, 15, 9, BackgroundColor, BackgroundColor);
       tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
       tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
       tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
       tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
-      tft.drawSmoothCircle(71, 15, 10, BackgroundColor, BackgroundColor);
-      tft.drawSmoothCircle(71, 15, 9, BackgroundColor, BackgroundColor);
     }
     radio.setMono(false);
     Stereostatusold = false;
@@ -2415,8 +2415,24 @@ void DoMemoryPosTune() {
   ShowFreq(0);
 
   if (band == BAND_FM || band == BAND_OIRT) {
-    if (memoryms[memorypos]) StereoToggle = false; else StereoToggle = true;
-    doStereoToggle();
+    StereoToggle = memoryms[memorypos];
+    if (!StereoToggle) {
+      Stereostatusold = false;
+      tft.drawSmoothCircle(66, 15, 10, BackgroundColor, BackgroundColor);
+      tft.drawSmoothCircle(66, 15, 9, BackgroundColor, BackgroundColor);
+      tft.drawSmoothCircle(76, 15, 10, BackgroundColor, BackgroundColor);
+      tft.drawSmoothCircle(76, 15, 9, BackgroundColor, BackgroundColor);
+      tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
+      tft.drawSmoothCircle(71, 15, 9, SecondaryColor, SecondaryColorSmooth);
+    } else {
+      Stereostatusold = false;
+      tft.drawSmoothCircle(71, 15, 10, BackgroundColor, BackgroundColor);
+      tft.drawSmoothCircle(71, 15, 9, BackgroundColor, BackgroundColor);
+      tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
+      tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
+      tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
+      tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
+    }
   }
 
   BWset = memorybw[memorypos];
@@ -2607,7 +2623,7 @@ void ShowRDSLogo(bool RDSstatus) {
 
 void ShowStereoStatus() {
   if (StereoToggle) {
-    if (band < BAND_GAP) Stereostatus = radio.getStereoStatus(); else Stereostatus = 0;
+    if (band < BAND_GAP) Stereostatus = radio.getStereoStatus(); else Stereostatus = false;
     if (Stereostatus != Stereostatusold) {
       if (Stereostatus && !screenmute) {
         tft.drawSmoothCircle(66, 15, 10, StereoColor, StereoColorSmooth);
