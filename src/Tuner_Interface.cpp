@@ -167,6 +167,7 @@ void Tuner_Patch(byte TEF) {
 
 void Tuner_I2C_Init() {
   Wire.begin();
+  Wire.setClock(400000);
   delay(5);
 }
 

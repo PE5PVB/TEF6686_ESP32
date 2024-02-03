@@ -288,8 +288,8 @@ void showECC() {
 }
 
 void readRds() {
-  radio.readRDS(showrdserrors);
   if (band < BAND_GAP) {
+	radio.readRDS(showrdserrors);
     RDSstatus = radio.rds.hasRDS;
     ShowRDSLogo(RDSstatus);
     if (!screenmute && !afscreen) {

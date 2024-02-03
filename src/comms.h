@@ -75,6 +75,8 @@ extern IPAddress remoteip;
 extern String cryptedpassword;
 extern String salt;
 extern String saltkey;
+extern String StereoStatusCommand;
+extern String StereoStatusCommandold;
 extern String XDRGTK_key;
 extern uint16_t BW;
 extern uint16_t MStatus;
@@ -101,6 +103,7 @@ extern unsigned int scanner_step;
 extern unsigned int SWHighEdgeSet;
 extern unsigned int SWLowEdgeSet;
 extern unsigned long aftimer;
+extern unsigned long signalstatustimer;
 
 extern TFT_eSPI tft;
 extern TEF6686 radio;
