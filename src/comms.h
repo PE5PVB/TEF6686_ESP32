@@ -35,7 +35,7 @@ extern bool wificonnected;
 extern bool XDRGTKdata;
 extern bool XDRGTKTCP;
 extern bool XDRGTKUSB;
-extern bool XDRMute;
+extern bool XDRGTKMuteScreen;
 extern bool XDRMute;
 extern byte band;
 extern byte BWset;

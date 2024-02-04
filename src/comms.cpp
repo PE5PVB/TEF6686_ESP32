@@ -119,6 +119,7 @@ void Communication() {
             SelectBand();
           }
           XDRGTKTCP = true;
+          if (XDRGTKMuteScreen) MuteScreen(1);
           RemoteClient.print("o1,0\n");
           RemoteClient.print("G" + String(!EQset) + String(!iMSset) + "\n");
           store = true;
@@ -159,6 +160,7 @@ void Communication() {
         }
         Serial.print("OK\nT" + String(frequency * 10) + "\nG" + String(!EQset) + String(!iMSset) + "\n");
         XDRGTKUSB = true;
+        if (XDRGTKMuteScreen) MuteScreen(1);
       }
     }
 
@@ -500,6 +502,7 @@ void XDRGTKRoutine() {
 
       case 'x':
         DataPrint("OK\nT" + String(frequency * 10) + "\n");
+        if (XDRGTKMuteScreen) MuteScreen(1);
         break;
 
       case 'X':
@@ -517,6 +520,7 @@ void XDRGTKRoutine() {
         radio.setSoftmuteFM(softmutefm);
         radio.setSoftmuteAM(softmuteam);
         if (!usesquelch) radio.setUnMute();
+        if (XDRGTKMuteScreen) MuteScreen(0);
         break;
 
       case 'Z':
@@ -524,19 +528,19 @@ void XDRGTKRoutine() {
         ANT = atol(buff + 1);
         switch (ANT) {
           case 0:
-			// Antenna A
+            // Antenna A
             break;
 
           case 1:
-			// Antenna B
+            // Antenna B
             break;
 
           case 2:
-			// Antenna C
+            // Antenna C
             break;
 
           case 3:
-			// Antenna D
+            // Antenna D
             break;
         }
         DataPrint("Z" + String(ANT) + "\n");

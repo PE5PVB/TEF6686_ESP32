@@ -8,7 +8,7 @@
 
 
 byte menuitem;
-byte items[8] = {8, static_cast<byte>(dynamicspi ? 5 : 4), 7, 10, 9, 10, 10, 5};
+byte items[8] = {8, static_cast<byte>(dynamicspi ? 5 : 4), 7, 10, 9, 10, 10, 6};
 
 void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
   switch (CurrentTheme) {
@@ -714,12 +714,14 @@ void BuildMenu() {
       tftPrint(-1, myLanguage[language][52], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][58], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, myLanguage[language][197], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, myLanguage[language][205], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
 
       if (USBmode) tftPrint(1, "RDS Spy", 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, "XDRGTK", 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (wifi) tftPrint(1, myLanguage[language][42], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       tftPrint(1, ">", 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (wifi) tftPrint(1, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, "-", 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       tftPrint(1, String(stationlistid, DEC), 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+      if (XDRGTKMuteScreen) tftPrint(1, myLanguage[language][42], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       break;
 
   }
@@ -1577,6 +1579,12 @@ void MenuUp() {
             if (stationlistid > 10) stationlistid = 1;
             tftPrint(0, String(stationlistid, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
+
+          case ITEM6:
+            if (XDRGTKMuteScreen) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
+            if (XDRGTKMuteScreen) XDRGTKMuteScreen = false; else XDRGTKMuteScreen = true;
+            if (XDRGTKMuteScreen) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
         }
         break;
     }
@@ -2168,6 +2176,12 @@ void MenuDown() {
             if (stationlistid == 0) stationlistid = 10;
             tftPrint(0, String(stationlistid, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
+
+          case ITEM6:
+            if (XDRGTKMuteScreen) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
+            if (XDRGTKMuteScreen) XDRGTKMuteScreen = false; else XDRGTKMuteScreen = true;
+            if (XDRGTKMuteScreen) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
         }
         break;
     }
@@ -2663,6 +2677,11 @@ void DoMenu() {
           case ITEM5:
             Infoboxprint(myLanguage[language][197]);
             tftPrint(0, String(stationlistid, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+            break;
+
+          case ITEM6:
+            Infoboxprint(myLanguage[language][205]);
+            if (XDRGTKMuteScreen) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
         }
         break;

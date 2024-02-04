@@ -105,6 +105,7 @@ bool TAold;
 bool TPold;
 bool tuned;
 bool USBmode = 1;
+bool XDRGTKMuteScreen;
 bool wifi;
 bool wificonnected;
 bool XDRGTKdata;
@@ -462,6 +463,7 @@ void setup() {
   fmscansens = EEPROM.readByte(EE_BYTE_FMSCANSENS);
   freqfont = EEPROM.readByte(EE_BYTE_FREQFONT);
   CurrentSkin = EEPROM.readByte(EE_BYTE_SKIN);
+  XDRGTKMuteScreen = EEPROM.readByte(EE_BYTE_XDRGTKMUTE);
 
   if (spispeed == SPI_SPEED_DEFAULT) tft.setSPISpeed(SPI_FREQUENCY / 1000000); else tft.setSPISpeed(spispeed * 10);
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;
@@ -743,7 +745,7 @@ void setup() {
 
 void loop() {
   Communication();
-  
+
   if (tot != 0) {
     unsigned long totprobe = tot * 60000;
     if (millis() >= tottimer + totprobe) deepSleep();
@@ -1949,6 +1951,7 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_FMSCANSENS, fmscansens);
         EEPROM.writeByte(EE_BYTE_FREQFONT, freqfont);
         EEPROM.writeByte(EE_BYTE_SKIN, CurrentSkin);
+        EEPROM.writeByte(EE_BYTE_XDRGTKMUTE, XDRGTKMuteScreen);
         EEPROM.commit();
         if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
         if (!usesquelch) radio.setUnMute();
@@ -3601,6 +3604,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_FMSCANSENS, 4);
   EEPROM.writeByte(EE_BYTE_FREQFONT, 3);
   EEPROM.writeByte(EE_BYTE_SKIN, 0);
+  EEPROM.writeByte(EE_BYTE_XDRGTKMUTE, 0);
   EEPROM.commit();
 }
 
