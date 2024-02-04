@@ -1042,8 +1042,8 @@ static const char* const myLanguage[18][206] = {
     "Μεγάλο", // 201
     "Όλα", // 202
     "Γρήγορο PS", // 203
-    "Default", // 204
-    "Mute screen on\nXDRGTK connection" // 205
+    "Προεπιλογή", // 204
+    "Μαύρη οθόνη σε\nσύνδεση XDRGTK" // 205
   },
 
   { "Română", // Romanian
@@ -2082,8 +2082,8 @@ static const char* const myLanguage[18][206] = {
     "Grosses", // 201
     "Toutes", // 202
     "PS rapide", // 203
-    "Default", // 204
-    "Mute screen on\nXDRGTK connection" // 205
+    "Défaut", // 204
+    "Écran muet sur\nla connexion XDRGTK" // 205
   },
 
   { "Български", // Bulgarian
@@ -3538,8 +3538,8 @@ static const char* const myLanguage[18][206] = {
     "Grande", // 201
     "Todo", // 202
     "PS rápido", // 203
-    "Default", // 204
-    "Mute screen on\nXDRGTK connection" // 205
+    "Por defecto", // 204
+    "Pantalla de mudo\nen la conexión XDRGTK" // 205
   },
 
   { "Português", // Portuguese
@@ -3746,8 +3746,8 @@ static const char* const myLanguage[18][206] = {
     "Grande", // 201
     "Tudo", // 202
     "PS rápido", // 203
-    "Default", // 204
-    "Mute screen on\nXDRGTK connection" // 205
+    "Predefinição", // 204
+    "Tela mudo na\nconexão XDRGTK" // 205
   }
 };
 #endif
