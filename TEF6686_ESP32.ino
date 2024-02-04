@@ -742,6 +742,8 @@ void setup() {
 }
 
 void loop() {
+  Communication();
+  
   if (tot != 0) {
     unsigned long totprobe = tot * 60000;
     if (millis() >= tottimer + totprobe) deepSleep();
@@ -757,9 +759,7 @@ void loop() {
       attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
       attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
     }
-
     rdsflagreset = false;
-    Communication();
   }
 
   if (!menu && !afscreen) {
@@ -2454,31 +2454,41 @@ void ShowFreq(int mode) {
 
   detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A));
   detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B));
+
   if (band > BAND_GAP) {
     switch (band) {
       case BAND_LW: frequency_AM = frequency_LW; break;
       case BAND_MW: frequency_AM = frequency_MW; break;
       case BAND_SW: frequency_AM = frequency_SW; break;
     }
-    FrequencySprite.fillSprite(BackgroundColor);
-    FrequencySprite.setTextColor(FreqColor, FreqColorSmooth, false);
-    FrequencySprite.drawString(String(frequency_AM) + " ", 218, -6);
-    FrequencySprite.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
-    FrequencySprite.setTextDatum(TL_DATUM);
-    FrequencySprite.loadFont(FONT16);
+
+    if (!screenmute) {
+      FrequencySprite.fillSprite(BackgroundColor);
+      FrequencySprite.setTextColor(FreqColor, FreqColorSmooth, false);
+      FrequencySprite.drawString(String(frequency_AM) + " ", 218, -6);
+      FrequencySprite.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
+      FrequencySprite.setTextDatum(TL_DATUM);
+      FrequencySprite.loadFont(FONT16);
+    }
+
     if (band == BAND_SW && showSWMIBand) {
       DivdeSWMIBand();
       updateSWMIBand();
     }
-    if (!screenmute) FrequencySprite.pushSprite(46, 46);
-    FrequencySprite.setTextDatum(TR_DATUM);
-    switch (freqfont) {
-      case 0: FrequencySprite.loadFont(FREQFONT0); break;
-      case 1: FrequencySprite.loadFont(FREQFONT1); break;
-      case 2: FrequencySprite.loadFont(FREQFONT2); break;
-      case 3: FrequencySprite.loadFont(FREQFONT3); break;
-      case 4: FrequencySprite.loadFont(FREQFONT4); break;
+
+    if (!screenmute) {
+      FrequencySprite.pushSprite(46, 46);
+      FrequencySprite.setTextDatum(TR_DATUM);
+
+      switch (freqfont) {
+        case 0: FrequencySprite.loadFont(FREQFONT0); break;
+        case 1: FrequencySprite.loadFont(FREQFONT1); break;
+        case 2: FrequencySprite.loadFont(FREQFONT2); break;
+        case 3: FrequencySprite.loadFont(FREQFONT3); break;
+        case 4: FrequencySprite.loadFont(FREQFONT4); break;
+      }
     }
+
     freqold = frequency_AM;
   } else {
     unsigned int freq = 0;

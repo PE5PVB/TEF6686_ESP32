@@ -354,9 +354,9 @@ void XDRGTKRoutine() {
           if (band != BAND_LW) {
             band = BAND_LW;
             SelectBand();
+            DataPrint("M1\n");
           }
           radio.SetFreqAM(frequency_LW);
-          DataPrint("M1\n");
         }
         if (freqtemp >= MWLowEdgeSet && freqtemp <= MWHighEdgeSet) {
           frequency_AM = freqtemp;
@@ -365,9 +365,9 @@ void XDRGTKRoutine() {
           if (band != BAND_MW) {
             band = BAND_MW;
             SelectBand();
+            DataPrint("M1\n");
           }
           radio.SetFreqAM(frequency_MW);
-          DataPrint("M1\n");
         }
         if (freqtemp >= SWLowEdgeSet && freqtemp <= SWHighEdgeSet) {
           frequency_SW = freqtemp;
@@ -376,9 +376,9 @@ void XDRGTKRoutine() {
           if (band != BAND_SW) {
             band = BAND_SW;
             SelectBand();
+            DataPrint("M1\n");
           }
           radio.SetFreqAM(frequency_SW);
-          DataPrint("M1\n");
         }
         if (freqtemp >= FREQ_FM_START && freqtemp <= FREQ_FM_END) {
           frequency = freqtemp / 10;
@@ -386,9 +386,9 @@ void XDRGTKRoutine() {
           if (band != BAND_FM) {
             band = BAND_FM;
             SelectBand();
+            DataPrint("M0\n");
           }
           radio.SetFreq(frequency);
-          DataPrint("M0\n");
         }
         if (band == BAND_FM) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n"); else DataPrint("T" + String(frequency_AM) + "\n");
 
@@ -516,53 +516,30 @@ void XDRGTKRoutine() {
         radio.setVolume(VolSet);
         radio.setSoftmuteFM(softmutefm);
         radio.setSoftmuteAM(softmuteam);
-        if (screenmute) MuteScreen(0);
         if (!usesquelch) radio.setUnMute();
         break;
 
       case 'Z':
-        byte iMSEQX;
-        iMSEQX = atol(buff + 1);
-        switch (iMSEQX) {
+        byte ANT;
+        ANT = atol(buff + 1);
+        switch (ANT) {
           case 0:
-            MuteScreen(0);
-            LowLevelSet = EEPROM.readInt(EE_BYTE_LOWLEVELSET);
-            softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
-            softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
-            radio.setSoftmuteFM(softmutefm);
-            radio.setSoftmuteAM(softmuteam);
+			// Antenna A
             break;
 
           case 1:
-            MuteScreen(1);
-            LowLevelSet = EEPROM.readInt(EE_BYTE_LOWLEVELSET);
-            softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
-            softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
-            radio.setSoftmuteFM(softmutefm);
-            radio.setSoftmuteAM(softmuteam);
+			// Antenna B
             break;
 
           case 2:
-            MuteScreen(0);
-            LowLevelSet = EEPROM.readInt(EE_BYTE_LOWLEVELSET);
-            softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
-            softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
-            radio.setSoftmuteFM(1);
-            radio.setSoftmuteAM(1);
+			// Antenna C
             break;
 
           case 3:
-            MuteScreen(1);
-            LowLevelSet = EEPROM.readInt(EE_BYTE_LOWLEVELSET);
-            softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
-            softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
-            radio.setSoftmuteFM(1);
-            radio.setSoftmuteAM(1);
+			// Antenna D
             break;
         }
-        updateiMS();
-        updateEQ();
-        DataPrint("Z" + String(iMSEQX) + "\n");
+        DataPrint("Z" + String(ANT) + "\n");
         break;
     }
     XDRGTKdata = false;
