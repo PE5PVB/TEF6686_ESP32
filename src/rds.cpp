@@ -440,9 +440,9 @@ void readRds() {
             DataPrint ("\n");
           }
         }
+        XDRGTKRDSold = XDRGTKRDS;
         XDRGTKRDS.toUpperCase();
         DataPrint(XDRGTKRDS);
-        XDRGTKRDSold = XDRGTKRDS;
       }
     }
   }
