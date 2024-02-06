@@ -626,8 +626,8 @@ static const char* const myLanguage[18][206] = {
     "Duże", // 201
     "Wszystkie", // 202
     "Szybki PS", // 203
-    "Default", // 204
-    "Mute screen on\nXDRGTK connection" // 205
+    "Domyslny", // 204
+    "Wylacz ekran gdy\npołączony z XDR-GTK" // 205
   },
 
   { "Hrvatski", // Croatian
