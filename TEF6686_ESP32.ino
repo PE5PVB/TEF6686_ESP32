@@ -2527,6 +2527,7 @@ void ShowFreq(int mode) {
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
 
   rdsreset = true;
+  RDSstatus = false;
   licold = 254;
   ECCold = 253;
   afmethodBold = false;
