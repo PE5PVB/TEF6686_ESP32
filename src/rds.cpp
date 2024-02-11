@@ -446,6 +446,93 @@ void readRds() {
   }
 }
 
+void ShowErrors() {
+  uint8_t calc = 4;
+  if (!radio.rds.rdsAerror) calc--;
+  if (!radio.rds.rdsBerror) calc--;
+  if (!radio.rds.rdsCerror) calc--;
+  if (!radio.rds.rdsDerror) calc--;
+
+  SAvg3 = (((SAvg3 * 9) + 5) / 10) + calc;
+  calc = SAvg3 / 10;
+  if (!RDSstatus) calc = 4;
+  if (calc != rdsqualityold || BWreset) {
+    switch (calc) {
+      case 0:
+        tft.drawRect(205, (advancedRDS ? 78 : 190), 4, 18, SecondaryColor);
+        tft.fillRect(206, (advancedRDS ? 79 : 191), 2, 16, BarInsignificantColor);
+
+        tft.drawRect(199, (advancedRDS ? 82 : 194), 4, 14, SecondaryColor);
+        tft.fillRect(200, (advancedRDS ? 83 : 195), 2, 12, BarInsignificantColor);
+
+        tft.drawRect(193, (advancedRDS ? 86 : 198), 4, 10, SecondaryColor);
+        tft.fillRect(194, (advancedRDS ? 87 : 199), 2, 8, BarInsignificantColor);
+
+        tft.drawRect(187, (advancedRDS ? 90 : 202), 4, 6, SecondaryColor);
+        tft.fillRect(188, (advancedRDS ? 91 : 203), 2, 4, BarInsignificantColor);
+        break;
+
+      case 1:
+        tft.drawRect(205, (advancedRDS ? 78 : 190), 4, 18, GreyoutColor);
+        tft.fillRect(206, (advancedRDS ? 79 : 191), 2, 16, BackgroundColor);
+
+        tft.drawRect(199, (advancedRDS ? 82 : 194), 4, 14, SecondaryColor);
+        tft.fillRect(200, (advancedRDS ? 83 : 195), 2, 12, BarInsignificantColor);
+
+        tft.drawRect(193, (advancedRDS ? 86 : 198), 4, 10, SecondaryColor);
+        tft.fillRect(194, (advancedRDS ? 87 : 199), 2, 8, BarInsignificantColor);
+
+        tft.drawRect(187, (advancedRDS ? 90 : 202), 4, 6, SecondaryColor);
+        tft.fillRect(188, (advancedRDS ? 91 : 203), 2, 4, BarInsignificantColor);
+        break;
+
+      case 2:
+        tft.drawRect(205, (advancedRDS ? 78 : 190), 4, 18, GreyoutColor);
+        tft.fillRect(206, (advancedRDS ? 79 : 191), 2, 16, BackgroundColor);
+
+        tft.drawRect(199, (advancedRDS ? 82 : 194), 4, 14, GreyoutColor);
+        tft.fillRect(200, (advancedRDS ? 83 : 195), 2, 12, BackgroundColor);
+
+        tft.drawRect(193, (advancedRDS ? 86 : 198), 4, 10, SecondaryColor);
+        tft.fillRect(194, (advancedRDS ? 87 : 199), 2, 8, BarSignificantColor);
+
+        tft.drawRect(187, (advancedRDS ? 90 : 202), 4, 6, SecondaryColor);
+        tft.fillRect(188, (advancedRDS ? 91 : 203), 2, 4, BarSignificantColor);
+        break;
+
+      case 3:
+        tft.drawRect(205, (advancedRDS ? 78 : 190), 4, 18, GreyoutColor);
+        tft.fillRect(206, (advancedRDS ? 79 : 191), 2, 16, BackgroundColor);
+
+        tft.drawRect(199, (advancedRDS ? 82 : 194), 4, 14, GreyoutColor);
+        tft.fillRect(200, (advancedRDS ? 83 : 195), 2, 12, BackgroundColor);
+
+        tft.drawRect(193, (advancedRDS ? 86 : 198), 4, 10, GreyoutColor);
+        tft.fillRect(194, (advancedRDS ? 87 : 199), 2, 8, BackgroundColor);
+
+        tft.drawRect(187, (advancedRDS ? 90 : 202), 4, 6, SecondaryColor);
+        tft.fillRect(188, (advancedRDS ? 91 : 203), 2, 4, BarSignificantColor);
+        break;
+
+      case 4:
+        tft.drawRect(205, (advancedRDS ? 78 : 190), 4, 18, GreyoutColor);
+        tft.fillRect(206, (advancedRDS ? 79 : 191), 2, 16, BackgroundColor);
+
+        tft.drawRect(199, (advancedRDS ? 82 : 194), 4, 14, GreyoutColor);
+        tft.fillRect(200, (advancedRDS ? 83 : 195), 2, 12, BackgroundColor);
+
+        tft.drawRect(193, (advancedRDS ? 86 : 198), 4, 10, GreyoutColor);
+        tft.fillRect(194, (advancedRDS ? 87 : 199), 2, 8, BackgroundColor);
+
+        tft.drawRect(187, (advancedRDS ? 90 : 202), 4, 6, GreyoutColor);
+        tft.fillRect(188, (advancedRDS ? 91 : 203), 2, 4, BackgroundColor);
+        break;
+    }
+    rdsqualityold = calc;
+  }
+}
+
+
 void showPI() {
   if ((region == REGION_US && (String(radio.rds.picode) != PIold || radio.rds.stationIDtext != stationIDold || radio.rds.stationStatetext != stationStateold)) || (region != REGION_US && String(radio.rds.picode) != PIold)) {
     if (!afscreen && !radio.rds.rdsAerror && !radio.rds.rdsBerror && !radio.rds.rdsCerror && !radio.rds.rdsDerror && radio.rds.rdsA != radio.rds.correctPI && PIold.length() > 1) {

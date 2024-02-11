@@ -170,6 +170,7 @@ byte optenc;
 byte poweroptions;
 byte poweroptionsold;
 byte rdsblockold;
+byte rdsqualityold;
 byte region;
 byte rotarymode;
 byte touchrotating;
@@ -258,6 +259,7 @@ int xPos4;
 int16_t OStatus;
 int16_t SAvg;
 int16_t SAvg2;
+int16_t SAvg3;
 int16_t SStatus;
 int8_t LevelOffset;
 int8_t LowLevelSet;
@@ -989,11 +991,12 @@ void loop() {
 
 void GetData() {
   if (!afscreen) showCT();
-  if (band < BAND_GAP) ShowStereoStatus();
   if (band < BAND_GAP && !menu) {
     if (advancedRDS && !afscreen && !screenmute) ShowAdvancedRDS();
     if (afscreen && !screenmute) ShowAFEON();
-    if (!afscreen && !menu) {
+    if (!afscreen) {
+      ShowErrors();
+      ShowStereoStatus();
       showPTY();
       showECC();
       showRadioText();
