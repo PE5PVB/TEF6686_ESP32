@@ -130,6 +130,7 @@ byte batteryoptionsold;
 byte BWset;
 byte BWsetAM;
 byte BWsetFM;
+byte charwidth = 8;
 #ifdef CHINA_PORTABLE
 byte hardwaremodel = PORTABLE_ILI9341;
 #else
@@ -247,7 +248,6 @@ int Squelch;
 int Squelchold;
 int SStatusold;
 int Stereostatus;
-int TickerSpace = tft.textWidth("AA");
 int volume;
 int XDRBWset;
 int XDRBWsetold;
