@@ -3466,12 +3466,14 @@ void SetTunerPatch() {
     tft.fillScreen(BackgroundColor);
     analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
 
-    if (TEF == 0) tftPrint(0, myLanguage[language][35], 150, 78, ActiveColor, ActiveColorSmooth, 28); else tftPrint(0, myLanguage[language][36] + String(TEF), 150, 78, ActiveColor, ActiveColorSmooth, 28);
-    tftPrint(0, myLanguage[language][37], 150, 108, ActiveColor, ActiveColorSmooth, 28);
+    if (TEF == 0) {
+      tftPrint(0, myLanguage[language][35], 150, 78, ActiveColor, ActiveColorSmooth, 28);
+      for (;;);
+    }
     EEPROM.writeByte(EE_BYTE_TEF, TEF);
     EEPROM.commit();
-    while (true);
-    for (;;);
+    Tuner_Reset();
+    ESP.restart();
   }
 }
 
