@@ -129,7 +129,7 @@ void ShowAdvancedRDS() {
       if (xPos3 < -eonstringWidth) xPos3 = 0;
       if (xPos3 == 0) {
         if (millis() - eontickerhold >= 2000) {
-          xPos3 --;
+          if (radio.eon_counter != 0) xPos3 --; else xPos3 = 0;
           eontickerhold = millis();
         }
       } else {
@@ -142,7 +142,7 @@ void ShowAdvancedRDS() {
     RDSSprite.fillSprite(BackgroundColor);
     if (RDSstatus) RDSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RDSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
     RDSSprite.drawString(eonstring, xPos3, 2);
-    if (radio.rds.hasEON) RDSSprite.drawString(eonstring, xPos3 + eonstringWidth, 2);
+    if (radio.rds.hasEON && radio.eon_counter != 0) RDSSprite.drawString(eonstring, xPos3 + eonstringWidth, 2);
     RDSSprite.pushSprite(35, 172);
     eonticker = millis();
   }
@@ -449,17 +449,17 @@ void readRds() {
 void ShowErrors() {
   uint8_t calc = 4;
   if (RDSstatus && !rdsreset) {
-  if (!radio.rds.rdsAerror) calc--;
-  if (!radio.rds.rdsBerror) calc--;
-  if (!radio.rds.rdsCerror) calc--;
-  if (!radio.rds.rdsDerror) calc--;
+    if (!radio.rds.rdsAerror) calc--;
+    if (!radio.rds.rdsBerror) calc--;
+    if (!radio.rds.rdsCerror) calc--;
+    if (!radio.rds.rdsDerror) calc--;
 
-  SAvg3 = (((SAvg3 * 9) + 5) / 10) + calc;
-  calc = SAvg3 / 10;
+    SAvg3 = (((SAvg3 * 9) + 5) / 10) + calc;
+    calc = SAvg3 / 10;
   }
 
   rdsreset = false;
-  
+
   if (calc != rdsqualityold || BWreset) {
     switch (calc) {
       case 0:
