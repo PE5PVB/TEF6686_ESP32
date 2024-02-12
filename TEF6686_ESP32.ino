@@ -990,13 +990,16 @@ void loop() {
 }
 
 void GetData() {
-  if (!afscreen) showCT();
+  if (!afscreen) {
+    showCT();
+    ShowSignalLevel();
+  }
+
   if (band < BAND_GAP && !menu) {
     if (advancedRDS && !afscreen && !screenmute) ShowAdvancedRDS();
     if (afscreen && !screenmute) ShowAFEON();
     if (!afscreen) {
       ShowErrors();
-      ShowStereoStatus();
       showPTY();
       showECC();
       showRadioText();
@@ -1005,14 +1008,15 @@ void GetData() {
     showPI();
     showPS();
   }
+
   if (!screenmute) {
     ShowRSSI();
-    if (millis() >= tuningtimer + 200) ShowBattery();
     ShowOffset();
+    ShowStereoStatus();
     ShowBW();
     updateCodetect();
+    if (millis() >= tuningtimer + 200) ShowBattery();
   }
-  if (!afscreen) ShowSignalLevel();
 }
 
 void WakeToSleep(bool yes) {

@@ -551,14 +551,14 @@ void XDRGTKRoutine() {
 
   if (millis() >= signalstatustimer + 66) {
     if (band > BAND_GAP) {
-      DataPrint("Sm");
+      DataPrint("SM");
     } else {
       if (!StereoToggle) {
         DataPrint("SS");
       } else if (Stereostatus) {
         DataPrint("Ss");
       } else {
-        DataPrint("Sm");
+        DataPrint("SM");
       }
     }
 
