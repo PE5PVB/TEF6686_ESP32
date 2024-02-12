@@ -670,6 +670,7 @@ class TEF6686 {
     void setSoftmuteAM(uint8_t mode);
     void setMono(bool mono);
     bool getStereoStatus();
+	void setCoax(uint8_t mode);	
     void init(byte TEF);
     void clearRDS(bool fullsearchrds);
     void power(bool mode);

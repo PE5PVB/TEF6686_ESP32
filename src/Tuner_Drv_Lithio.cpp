@@ -298,3 +298,11 @@ bool devTEF_Radio_Set_I2S_Input(bool mode) {
     return devTEF_Set_Cmd(TEF_AUDIO, Cmd_Set_Input, 5, 0);
   }
 }
+
+bool devTEF_Radio_Set_GPIO(uint8_t mode) {
+  if (mode == 0) return devTEF_Set_Cmd(TEF_APPL, Cmd_Set_GPIO, 9, 0, 33, 2);
+  if (mode == 1) return devTEF_Set_Cmd(TEF_APPL, Cmd_Set_GPIO, 9, 0, 33, 3);
+  if (mode == 2) return devTEF_Set_Cmd(TEF_APPL, Cmd_Set_GPIO, 9, 0, 32, 2);
+  if (mode == 3) return devTEF_Set_Cmd(TEF_APPL, Cmd_Set_GPIO, 9, 0, 32, 3);
+  
+}

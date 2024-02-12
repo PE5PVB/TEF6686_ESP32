@@ -189,30 +189,29 @@ void Communication() {
 
 void XDRGTKRoutine() {
   if (XDRGTKUSB) {
-    if (Serial.available())
-    {
-      buff[buff_pos] = Serial.read();
-      if (buff[buff_pos] != '\n' && buff_pos != 16 - 1)
-      {
-        buff_pos++;
+    while (Serial.available() > 0) {
+      char c = Serial.read();
+      if (buff_pos < 16 && c != '\n') {
+        buff[buff_pos++] = c;
       } else {
-        buff[buff_pos] = 0;
+        buff[buff_pos] = '\0';
         buff_pos = 0;
         XDRGTKdata = true;
+        break;
       }
     }
   }
 
-  if (XDRGTKTCP) {
-    if (RemoteClient.available() > 0) {
-      buff[buff_pos] = RemoteClient.read();
-      if (buff[buff_pos] != '\n' && buff_pos != 16 - 1)
-      {
-        buff_pos++;
+  if (XDRGTKTCP && RemoteClient.available() > 0) {
+    while (RemoteClient.available() > 0) {
+      char c = RemoteClient.read();
+      if (buff_pos < 16 && c != '\n') {
+        buff[buff_pos++] = c;
       } else {
-        buff[buff_pos] = 0;
+        buff[buff_pos] = '\0';
         buff_pos = 0;
         XDRGTKdata = true;
+        break;
       }
     }
   }
@@ -393,7 +392,6 @@ void XDRGTKRoutine() {
           radio.SetFreq(frequency);
         }
         if (band == BAND_FM) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n"); else DataPrint("T" + String(frequency_AM) + "\n");
-
         ShowFreq(0);
         radio.clearRDS(fullsearchrds);
         RDSstatus = false;
@@ -528,11 +526,11 @@ void XDRGTKRoutine() {
         ANT = atol(buff + 1);
         switch (ANT) {
           case 0:
-            // Antenna A
+            if (BAND_FM || BAND_OIRT) radio.setCoax(2); else radio.setCoax(0);
             break;
 
           case 1:
-            // Antenna B
+            if (BAND_FM || BAND_OIRT) radio.setCoax(3); else radio.setCoax(1);
             break;
 
           case 2:

@@ -158,6 +158,11 @@ bool TEF6686::getIdentification(uint16_t &device, uint16_t &hw_version, uint16_t
   return sw_version;
 }
 
+void TEF6686::setCoax(uint8_t mode) {
+  devTEF_Radio_Set_GPIO(mode);
+}
+
+
 void TEF6686::power(bool mode) {
   devTEF_APPL_Set_OperationMode(mode);
   if (mode == 0) devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 1, 10000);

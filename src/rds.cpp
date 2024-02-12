@@ -448,7 +448,7 @@ void readRds() {
 
 void ShowErrors() {
   uint8_t calc = 4;
-  if (RDSstatus) {
+  if (RDSstatus && !rdsreset) {
   if (!radio.rds.rdsAerror) calc--;
   if (!radio.rds.rdsBerror) calc--;
   if (!radio.rds.rdsCerror) calc--;
@@ -457,6 +457,8 @@ void ShowErrors() {
   SAvg3 = (((SAvg3 * 9) + 5) / 10) + calc;
   calc = SAvg3 / 10;
   }
+
+  rdsreset = false;
   
   if (calc != rdsqualityold || BWreset) {
     switch (calc) {

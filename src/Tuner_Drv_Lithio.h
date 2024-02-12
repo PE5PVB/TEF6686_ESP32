@@ -56,6 +56,7 @@ typedef enum {
 
 typedef enum {
   Cmd_Set_OperationMode       =   1,
+  Cmd_Set_GPIO 				  =   3,  
   Cmd_Get_Operation_Status    = 128,
   Cmd_Get_Identification      = 130
 } TEF_APPL_COMMAND;
@@ -108,5 +109,5 @@ bool devTEF_Radio_Set_StHiBlend_Mph(uint8_t mode, uint16_t start, uint16_t slope
 bool devTEF_Radio_Set_NoisBlanker(uint8_t mode, uint16_t start);
 bool devTEF_Radio_Set_Wavegen(bool mode, int16_t amplitude, uint16_t freq);
 bool devTEF_Radio_Set_I2S_Input(bool mode);
-
+bool devTEF_Radio_Set_GPIO(uint8_t mode);
 #endif
