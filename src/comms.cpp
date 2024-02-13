@@ -549,18 +549,18 @@ void XDRGTKRoutine() {
 
   if (millis() >= signalstatustimer + 66) {
     if (band > BAND_GAP) {
-      DataPrint("SM");
+      DataPrint("Sm");
     } else {
       if (!StereoToggle) {
         DataPrint("SS");
       } else if (Stereostatus) {
         DataPrint("Ss");
       } else {
-        DataPrint("SM");
+        DataPrint("Sm");
       }
     }
 
-    DataPrint(String(((SStatus * 100) + 10875) / 1000) + "." + String(((SStatus * 100) + 10875) / 100 % 10) + "," + String(WAM / 10) + "," + String(CN) + "," + String(BW) + "\n\n");
+    DataPrint(String(((SStatus * 100) + 10875) / 1000) + "." + String(((SStatus * 100) + 10875) / 100 % 10) + "," + String(WAM / 10) + ",-1\n\n");
     signalstatustimer = millis();
   }
 }
