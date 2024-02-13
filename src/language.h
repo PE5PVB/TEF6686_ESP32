@@ -500,7 +500,7 @@ static const char* const myLanguage[18][206] = {
     "Wyłącznik czasowy", // 75
     "Wyłącz ekran", // 76
     "Motyw", // 77
-    "Skin", // 78 ***
+    "Skórka", // 78 ***
     "Wykryte aplikacje", // 79
     "Min.", // 80 ***
     "Dynam. prędkość SPI", // 81
@@ -592,9 +592,9 @@ static const char* const myLanguage[18][206] = {
     "Zakup", // 167
     "Pobierz dane", // 168
     "Domyślny krok MW", // 169
-    "Tangerine", // 170 ***
+    "Mandarynka", // 170 ***
     "Ocean", // 171 ***
-    "Indigo", // 172 ***
+    "Indygo", // 172 ***
     "Opcje baterii", // 173
     "Pokaż napięcie", // 174
     "Pokaż procent naład.", // 175
