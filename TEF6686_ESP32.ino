@@ -420,7 +420,7 @@ void setup() {
   LowLevelSet = EEPROM.readByte(EE_BYTE_LOWLEVELSET);
   memorypos = EEPROM.readByte(EE_BYTE_MEMORYPOS);
   region = EEPROM.readByte(EE_BYTE_REGION);
-  radio.rds.underscore = EEPROM.readByte(EE_BYTE_RDS_UNDERSCORE);
+  radio.underscore = EEPROM.readByte(EE_BYTE_RDS_UNDERSCORE);
   USBmode = EEPROM.readByte(EE_BYTE_USBMODE);
   wifi = EEPROM.readByte(EE_BYTE_WIFI);
   subnetclient = EEPROM.readByte(EE_BYTE_SUBNETCLIENT);
@@ -1919,7 +1919,7 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_SHOWRDSERRORS, showrdserrors);
         EEPROM.writeByte(EE_BYTE_LOWLEVELSET, LowLevelSet);
         EEPROM.writeByte(EE_BYTE_REGION, region);
-        EEPROM.writeByte(EE_BYTE_RDS_UNDERSCORE, radio.rds.underscore);
+        EEPROM.writeByte(EE_BYTE_RDS_UNDERSCORE, radio.underscore);
         EEPROM.writeByte(EE_BYTE_USBMODE, USBmode);
         EEPROM.writeByte(EE_BYTE_WIFI, wifi);
         EEPROM.writeByte(EE_BYTE_SUBNETCLIENT, subnetclient);

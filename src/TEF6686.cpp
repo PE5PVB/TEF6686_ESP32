@@ -1720,7 +1720,7 @@ String TEF6686::extractUTF8Substring(const String & utf8String, size_t start, si
     charIndex++;
   }
 
-  if (under && rds.underscore) {
+  if (under && underscore) {
     while (substring.length() < length) {
       substring += '_';
     }
@@ -1734,7 +1734,7 @@ void TEF6686::RDScharConverter(const char* input, wchar_t* output, size_t size, 
   for (size_t i = 0; i < size - 1; i++) {
     char currentChar = input[i];
     switch (currentChar) {
-      case 0x20: if (under && rds.underscore) output[i] = L'_'; else output[i] = L' '; break;
+      case 0x20: if (under && underscore) output[i] = L'_'; else output[i] = L' '; break;
       case 0x21 ... 0x5D: output[i] = static_cast<wchar_t>(currentChar); break;
       case 0x5E: output[i] = L'―'; break;
       case 0x5F: output[i] = L'_'; break;

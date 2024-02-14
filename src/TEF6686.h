@@ -610,7 +610,6 @@ typedef struct _rds_ {
   bool rtAB32;
   bool hasRDSplus;
   bool filter;
-  bool underscore;
   bool rdsreset;
   bool pierrors;
   bool sortaf;
@@ -670,7 +669,7 @@ class TEF6686 {
     void setSoftmuteAM(uint8_t mode);
     void setMono(bool mono);
     bool getStereoStatus();
-	void setCoax(uint8_t mode);	
+    void setCoax(uint8_t mode);
     void init(byte TEF);
     void clearRDS(bool fullsearchrds);
     void power(bool mode);
@@ -707,6 +706,7 @@ class TEF6686 {
     uint8_t rdsblock;
     bool mute;
     bool afmethodB;
+    bool underscore;
     byte af_updatecounter;
 
   private:
