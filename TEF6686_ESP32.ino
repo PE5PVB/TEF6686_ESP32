@@ -706,10 +706,12 @@ void setup() {
   radio.setVolume(VolSet);
   radio.setOffset(LevelOffset);
   radio.setAMOffset(AMLevelOffset);
+
   if (band > BAND_GAP) {
     radio.setAMCoChannel(amcodect, amcodectcount);
     radio.setAMAttenuation(amrfagc);
   }
+
   radio.setStereoLevel(StereoLevel);
   radio.setHighCutLevel(HighCutLevel);
   radio.setHighCutOffset(HighCutOffset);

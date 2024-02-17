@@ -699,7 +699,7 @@ void showRadioText() {
   if (!screenmute) {
     if (radio.rds.hasRT && radio.rds.stationText.length() > 0) {
       if (String(radio.rds.stationText + radio.rds.stationText32).length() != Radiotextlengthold) {
-        RadiotextWidth = String(radio.rds.stationText + " " + radio.rds.stationText32).length() * charwidth;
+        RadiotextWidth = (String(radio.rds.stationText + " " + radio.rds.stationText32).length() * charwidth) + 3 * charwidth;
         Radiotextlengthold = String(radio.rds.stationText + radio.rds.stationText32).length();
       }
       if (advancedRDS && radio.rds.stationText.length() < 20) {
