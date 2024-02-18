@@ -2620,8 +2620,7 @@ void ShowSignalLevel() {
         if (SStatusold / 10 != SStatusprint / 10) tftReplace(1, String(SStatusold / 10), String(SStatusprint / 10), 288, 105, FreqColor, FreqColorSmooth, 48);
         tftReplace(1, "." + String(abs(SStatusold % 10)), "." + String(abs(SStatusprint % 10)), 310, 105, FreqColor, FreqColorSmooth, 28);
 
-        if (band < BAND_GAP) segments = (SStatus + 200) / 10; else segments = (SStatus + 200) / 10;
-
+        if (band < BAND_GAP) segments = map(SStatus/10, 5, 70, 0, 100); else segments = (SStatus + 200) / 10;
         tft.fillRect(16, 105, 2 * constrain(segments, 0, 54), 6, BarInsignificantColor);
         tft.fillRect(16 + 2 * 54, 105, 2 * (constrain(segments, 54, 94) - 54), 6, BarSignificantColor);
         tft.fillRect(16 + 2 * constrain(segments, 0, 94), 105, 2 * (94 - constrain(segments, 0, 94)), 6, GreyoutColor);
