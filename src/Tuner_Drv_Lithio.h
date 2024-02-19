@@ -84,6 +84,7 @@ void devTEF_Radio_Set_Stereo_Min(bool mode);
 void devTEF_Radio_Set_MphSuppression(bool mph);
 void devTEF_Radio_Set_ChannelEqualizer(bool eq);
 void devTEF_Radio_Set_RFAGC(uint16_t agc);
+void devTEF_Radio_Set_AMRFAGC(uint16_t agc);
 void devTEF_Radio_Set_Deemphasis(uint16_t timeconstant);
 void devTEF_Radio_Specials(uint16_t audio);
 void devTEF_APPL_Set_StereoImprovement(bool mode);

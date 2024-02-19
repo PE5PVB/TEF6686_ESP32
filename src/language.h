@@ -42,8 +42,8 @@ static const char* const myLanguage[18][206] = {
     "OFF", // 33
     "SCANNING...", // 34
     "Tuner not detected", // 35
-    "", // 36
-    "", // 37
+    "AM Antenna gain", // 36
+    "FM AGC", // 37
     "Show RDS errors", // 38
     "Language", // 39
     "Choose language", // 40
@@ -250,8 +250,8 @@ static const char* const myLanguage[18][206] = {
     "UIT", // 33
     "ZOEKEN...", // 34
     "Tuner niet herkend!", // 35
-    "", // 36
-    "", // 37
+    "AM antenne versterking", // 36
+    "FM AGC", // 37
     "Toon RDS fouten", // 38
     "Taal", // 39
     "Kies taal", // 40
@@ -458,8 +458,8 @@ static const char* const myLanguage[18][206] = {
     "WYŁ.", // 33
     "SKANOWANIE...", // 34
     "Nie wykryto tunera", // 35
-    "", // 36
-    "", // 37
+    "AM Antenna gain", // 36
+    "FM AGC", // 37
     "Pokaż błędy RDS", // 38
     "Język", // 39
     "Wybierz swój język", // 40
@@ -666,8 +666,8 @@ static const char* const myLanguage[18][206] = {
     "ISK.", // 33
     "SKENIRANJE...", // 34
     "Prijemnik nije pronađen", // 35
-    "", // 36
-    "", // 37
+    "AM Antenna gain", // 36
+    "FM AGC", // 37
     "Prikaži RDS pogreške", // 38
     "Jezik", // 39
     "Odaberite jezik", // 40
@@ -874,8 +874,8 @@ static const char* const myLanguage[18][206] = {
     "ΑΝΕΝ.", // 33
     "ΑΝΙΧΝΕΥΣΗ...", // 34
     "Το tuner δεν εντοπίστηκε", // 35
-    "", // 36
-    "", // 37
+    "AM Antenna gain", // 36
+    "FM AGC", // 37
     "Περιθώριο σφαλμάτων\nRDS", // 38
     "Γλώσσα", // 39
     "Επιλογή γλώσσας", // 40
@@ -1082,8 +1082,8 @@ static const char* const myLanguage[18][206] = {
     "Oprit", // 33
     "SCANEZ...", // 34
     "Tunerul nu este prezent", // 35
-    "", // 36
-    "", // 37
+    "AM Antenna gain", // 36
+    "FM AGC", // 37
     "Arata erorile RDS", // 38
     "Limba", // 39
     "Alegeti Limba", // 40
@@ -1244,7 +1244,7 @@ static const char* const myLanguage[18][206] = {
     "CONECTARE", // 195
     "Sortare automata AF", // 196
     "ID Lista posturi", // 197
-    " AGC AM", // 198
+    "AGC AM", // 198
     "FM deemphasis", // 199
     "Mic", // 200
     "Mare", // 201
@@ -1290,8 +1290,8 @@ static const char* const myLanguage[18][206] = {
     "AUS", // 33
     "SCANNE...", // 34
     "Tuner nicht erkannt", // 35
-    "", // 36
-    "", // 37
+    "AM Antenna gain", // 36
+    "FM AGC", // 37
     "Zeige RDS Fehler", // 38
     "Sprache", // 39
     "Sprache wählen", // 40
@@ -1498,8 +1498,8 @@ static const char* const myLanguage[18][206] = {
     "VYP", // 33
     "SKENUJI...", // 34
     "Tuner nedetekován", // 35
-    "", // 36
-    "", // 37
+    "AM Antenna gain", // 36
+    "FM AGC", // 37
     "Zobrazit chyby v RDS", // 38
     "Jazyk", // 39
     "Vyberte jazyk", // 40
@@ -1706,8 +1706,8 @@ static const char* const myLanguage[18][206] = {
     "VYP", // 33
     "SKENUJEM...", // 34
     "Tuner nedetekovaný", // 35
-    "", // 36
-    "", // 37
+    "AM Antenna gain", // 36
+    "FM AGC", // 37
     "Zobraziť chyby v RDS", // 38
     "Jazyk", // 39
     "Vyberte jazyk", // 40
@@ -1914,8 +1914,8 @@ static const char* const myLanguage[18][206] = {
     "FERMÉ", // 33
     "RECHERCHE...", // 34
     "Tuner non détecté", // 35
-    "", // 36
-    "", // 37
+    "AM Antenna gain", // 36
+    "FM AGC", // 37
     "Montrer les erreurs\nde décodage RDS", // 38
     "Langage", // 39
     "Choix de la langue", // 40
@@ -2122,8 +2122,8 @@ static const char* const myLanguage[18][206] = {
     "ИЗКЛ.", // 33
     "СКАНИРАНЕ", // 34
     "Тунерът не е разпознат!", // 35
-    "", // 36
-    "", // 37
+    "AM Antenna gain", // 36
+    "FM AGC", // 37
     "Показване на RDS грешки", // 38
     "Език", // 39
     "Изберете език", // 40
@@ -2330,8 +2330,8 @@ static const char* const myLanguage[18][206] = {
     "ВЫКЛ.", // 33
     "СКАНИРОВАНИЕ...", // 34
     "Тюнер не обнаружен", // 35
-    "", // 36
-    "", // 37
+    "AM Antenna gain", // 36
+    "FM AGC", // 37
     "Уровень ошибок RDS", // 38
     "Язык меню", // 39
     "Язык меню: ", // 40
@@ -2538,8 +2538,8 @@ static const char* const myLanguage[18][206] = {
     "ВИМКН.", // 33
     "СКАНУВАННЯ...", // 34
     "Тюнер не виявлено", // 35
-    "", // 36
-    "", // 37
+    "AM Antenna gain", // 36
+    "FM AGC", // 37
     "Показувати помилки RDS", // 38
     "Мова", // 39
     "Виберіть мову", // 40
@@ -2746,8 +2746,8 @@ static const char* const myLanguage[18][206] = {
     "OFF", // 33 ***
     "SCANSIONE...", // 34
     "Ricevitore non rilevato", // 35
-    "", // 36
-    "", // 37
+    "AM Antenna gain", // 36
+    "FM AGC", // 37
     "Mostra errori RDS", // 38
     "Lingua", // 39
     "Scegli la lingua", // 40
@@ -2954,8 +2954,8 @@ static const char* const myLanguage[18][206] = {
     "OFF", // 33 ***
     "搜索中...", // 34
     "未检测到收音芯片", // 35
-    "", // 36
-    "", // 37
+    "AM Antenna gain", // 36
+    "FM AGC", // 37
     "显示 RDS errors", // 38
     "语言", // 39
     "选择语言", // 40
@@ -3162,8 +3162,8 @@ static const char* const myLanguage[18][206] = {
     "AV", // 33
     "SKANNER...", // 34
     "Tuner ikke oppdaget", // 35
-    "", // 36
-    "", // 37
+    "AM Antenna gain", // 36
+    "FM AGC", // 37
     "Vis RDS-feil", // 38
     "Språk", // 39
     "Velg språk", // 40
@@ -3370,8 +3370,8 @@ static const char* const myLanguage[18][206] = {
     "APAGADO", // 33
     "ESCANEANDO...", // 34
     "Sintonizador no detectado", // 35
-    "", // 36
-    "", // 37
+    "AM Antenna gain", // 36
+    "FM AGC", // 37
     "Mostrar errores RDS", // 38
     "Idioma", // 39
     "Elegir idioma", // 40
@@ -3578,8 +3578,8 @@ static const char* const myLanguage[18][206] = {
     "DESATIVADO", // 33
     "ANALISANDO...", // 34
     "Sintonizador não detectado", // 35
-    "", // 36
-    "", // 37
+    "AM Antenna gain", // 36
+    "FM AGC", // 37
     "Mostrar erros RDS", // 38
     "Idioma", // 39
     "Escolha o idioma", // 40

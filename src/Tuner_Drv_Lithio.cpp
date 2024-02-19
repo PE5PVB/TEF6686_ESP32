@@ -140,6 +140,10 @@ void devTEF_Radio_Set_RFAGC(uint16_t agc) {
   devTEF_Set_Cmd(TEF_FM, Cmd_Set_RFAGC, 7, agc, 0);
 }
 
+void devTEF_Radio_Set_AMRFAGC(uint16_t agc) {
+  devTEF_Set_Cmd(TEF_AM, Cmd_Set_RFAGC, 7, agc, 0);
+}
+
 void devTEF_Radio_Set_Deemphasis(uint16_t timeconstant) {
   devTEF_Set_Cmd(TEF_FM, Cmd_Set_Deemphasis, 5, timeconstant);
 }

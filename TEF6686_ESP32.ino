@@ -116,6 +116,7 @@ byte af_counterold;
 byte aid_counterold;
 byte af;
 byte afpagenr;
+byte amagc;
 byte amnb;
 byte amscansens;
 byte audiomode;
@@ -144,6 +145,7 @@ byte displayflip;
 byte ECCold;
 byte eonptyold[20];
 byte EQset;
+byte fmagc;
 byte fmscansens;
 byte fmdefaultstepsize;
 byte fmnb;
@@ -151,7 +153,7 @@ byte fmdeemphasis;
 byte freqfont;
 byte amcodect;
 byte amcodectcount;
-byte amrfagc;
+byte amgain;
 byte freqoldcount;
 byte HighCutLevel;
 byte HighCutOffset;
@@ -450,7 +452,7 @@ void setup() {
   batteryoptions = EEPROM.readByte(EE_BYTE_BATTERY_OPTIONS);
   amcodect = EEPROM.readByte(EE_BYTE_AM_CO_DECT);
   amcodectcount = EEPROM.readByte(EE_BYTE_AM_CO_DECT_COUNT);
-  amrfagc = EEPROM.readByte(EE_BYTE_AM_RF_AGC);
+  amgain = EEPROM.readByte(EE_BYTE_AM_RF_GAIN);
   radio.rds.sortaf = EEPROM.readByte(EE_BYTE_SORTAF);
   stationlistid = EEPROM.readByte(EE_BYTE_STATIONLISTID);
   fmdeemphasis = EEPROM.readByte(EE_BYTE_FM_DEEMPHASIS);
@@ -466,6 +468,8 @@ void setup() {
   freqfont = EEPROM.readByte(EE_BYTE_FREQFONT);
   CurrentSkin = EEPROM.readByte(EE_BYTE_SKIN);
   XDRGTKMuteScreen = EEPROM.readByte(EE_BYTE_XDRGTKMUTE);
+  fmagc = EEPROM.readByte(EE_BYTE_FMAGC);
+  amagc = EEPROM.readByte(EE_BYTE_AMAGC);
 
   if (spispeed == SPI_SPEED_DEFAULT) tft.setSPISpeed(SPI_FREQUENCY / 1000000); else tft.setSPISpeed(spispeed * 10);
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;
@@ -709,7 +713,7 @@ void setup() {
 
   if (band > BAND_GAP) {
     radio.setAMCoChannel(amcodect, amcodectcount);
-    radio.setAMAttenuation(amrfagc);
+    radio.setAMAttenuation(amgain);
   }
 
   radio.setStereoLevel(StereoLevel);
@@ -725,6 +729,8 @@ void setup() {
   radio.setAudio(audiomode);
   radio.setDeemphasis(fmdeemphasis);
   radio.rds.region = region;
+  radio.setAGC(fmagc);
+  radio.setAMAGC(amagc);
   LowLevelInit = true;
 
   if (ConverterSet >= 200) {
@@ -1744,7 +1750,7 @@ void SelectBand() {
     LimitAMFrequency();
     if (!externaltune) CheckBandForbiddenAM();
     radio.SetFreqAM(frequency_AM);
-    radio.setAMAttenuation(amrfagc);
+    radio.setAMAttenuation(amgain);
     radio.setAMCoChannel(amcodect, amcodectcount);
     doBW();
     if (!screenmute) {
@@ -1948,7 +1954,7 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_BATTERY_OPTIONS, batteryoptions);
         EEPROM.writeByte(EE_BYTE_AM_CO_DECT, amcodect);
         EEPROM.writeByte(EE_BYTE_AM_CO_DECT_COUNT, amcodectcount);
-        EEPROM.writeByte(EE_BYTE_AM_RF_AGC, amrfagc);
+        EEPROM.writeByte(EE_BYTE_AM_RF_GAIN, amgain);
         EEPROM.writeByte(EE_BYTE_SORTAF, radio.rds.sortaf);
         EEPROM.writeByte(EE_BYTE_STATIONLISTID, stationlistid);
         EEPROM.writeByte(EE_BYTE_FM_DEEMPHASIS, fmdeemphasis);
@@ -1961,6 +1967,8 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_FREQFONT, freqfont);
         EEPROM.writeByte(EE_BYTE_SKIN, CurrentSkin);
         EEPROM.writeByte(EE_BYTE_XDRGTKMUTE, XDRGTKMuteScreen);
+        EEPROM.writeByte(EE_BYTE_FMAGC, fmagc);
+        EEPROM.writeByte(EE_BYTE_AMAGC, amagc);
         EEPROM.commit();
         if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
         if (!usesquelch) radio.setUnMute();
@@ -2620,7 +2628,7 @@ void ShowSignalLevel() {
         if (SStatusold / 10 != SStatusprint / 10) tftReplace(1, String(SStatusold / 10), String(SStatusprint / 10), 288, 105, FreqColor, FreqColorSmooth, 48);
         tftReplace(1, "." + String(abs(SStatusold % 10)), "." + String(abs(SStatusprint % 10)), 310, 105, FreqColor, FreqColorSmooth, 28);
 
-        if (band < BAND_GAP) segments = map(SStatus/10, 5, 70, 0, 100); else segments = (SStatus + 200) / 10;
+        if (band < BAND_GAP) segments = map(SStatus / 10, 5, 70, 0, 100); else segments = (SStatus + 200) / 10;
         tft.fillRect(16, 105, 2 * constrain(segments, 0, 54), 6, BarInsignificantColor);
         tft.fillRect(16 + 2 * 54, 105, 2 * (constrain(segments, 54, 94) - 54), 6, BarSignificantColor);
         tft.fillRect(16 + 2 * constrain(segments, 0, 94), 105, 2 * (94 - constrain(segments, 0, 94)), 6, GreyoutColor);
@@ -3599,7 +3607,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_BATTERY_OPTIONS, BATTERY_VALUE);
   EEPROM.writeByte(EE_BYTE_AM_CO_DECT, 100);
   EEPROM.writeByte(EE_BYTE_AM_CO_DECT_COUNT, 3);
-  EEPROM.writeByte(EE_BYTE_AM_RF_AGC, 0);
+  EEPROM.writeByte(EE_BYTE_AM_RF_GAIN, 0);
   EEPROM.writeByte(EE_BYTE_SORTAF, 1);
   EEPROM.writeByte(EE_BYTE_STATIONLISTID, 1);
   EEPROM.writeByte(EE_BYTE_FM_DEEMPHASIS, DEEMPHASIS_50);
@@ -3615,6 +3623,8 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_FREQFONT, 3);
   EEPROM.writeByte(EE_BYTE_SKIN, 0);
   EEPROM.writeByte(EE_BYTE_XDRGTKMUTE, 0);
+  EEPROM.writeByte(EE_BYTE_FMAGC, 92);
+  EEPROM.writeByte(EE_BYTE_AMAGC, 100);
   EEPROM.commit();
 }
 

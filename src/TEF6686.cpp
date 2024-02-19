@@ -254,10 +254,11 @@ void TEF6686::setUnMute() {
 }
 
 void TEF6686::setAGC(uint8_t agc) {
-  if (agc == 0) devTEF_Radio_Set_RFAGC(920);
-  if (agc == 1) devTEF_Radio_Set_RFAGC(900);
-  if (agc == 2) devTEF_Radio_Set_RFAGC(870);
-  if (agc == 3) devTEF_Radio_Set_RFAGC(840);
+  devTEF_Radio_Set_RFAGC(agc);
+}
+
+void TEF6686::setAMAGC(uint8_t agc) {
+  devTEF_Radio_Set_AMRFAGC(agc);
 }
 
 void TEF6686::setDeemphasis(uint8_t timeconstant) {

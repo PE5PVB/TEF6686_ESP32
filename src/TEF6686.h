@@ -674,6 +674,7 @@ class TEF6686 {
     void clearRDS(bool fullsearchrds);
     void power(bool mode);
     void setAGC(uint8_t agc);
+    void setAMAGC(uint8_t agc);
     void setiMS(bool mph);
     void setEQ(bool eq);
     void setDeemphasis(uint8_t timeconstant);
