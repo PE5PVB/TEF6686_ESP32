@@ -1007,7 +1007,7 @@ void GetData() {
     if (advancedRDS && !afscreen && !screenmute) ShowAdvancedRDS();
     if (afscreen && !screenmute) ShowAFEON();
     if (!afscreen) {
-      ShowErrors();
+      if (!screenmute) ShowErrors();
       showPTY();
       showECC();
       showRadioText();

@@ -587,11 +587,11 @@ void showPI() {
       PIold = radio.rds.picode;
       stationIDold = radio.rds.stationID;
       stationStateold = radio.rds.stationState;
-      if (wifi) {
-        Udp.beginPacket(remoteip, 9030);
-        Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";PI=" + String(radio.rds.picode, 4));
-        Udp.endPacket();
-      }
+    }
+    if (wifi) {
+      Udp.beginPacket(remoteip, 9030);
+      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";PI=" + String(radio.rds.picode, 4));
+      Udp.endPacket();
     }
   }
 }
