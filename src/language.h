@@ -2996,7 +2996,7 @@ static const char* const myLanguage[18][206] = {
     "倒计时关机", // 75
     "关闭屏幕", // 76
     "主题&颜色", // 77
-    "Skin", // 78 ***
+    "布局", // 78 ***
     "Detected applications", // 79 ***
     "分钟", // 80
     "调整SPI通讯速率", // 81
