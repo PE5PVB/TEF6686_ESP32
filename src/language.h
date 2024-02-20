@@ -2954,7 +2954,7 @@ static const char* const myLanguage[18][206] = {
     "OFF", // 33 ***
     "搜索中...", // 34
     "未检测到收音芯片", // 35
-    "AM Antenna gain", // 36
+    "AM 天线增益", // 36
     "FM AGC", // 37
     "显示 RDS errors", // 38
     "语言", // 39
@@ -3002,8 +3002,8 @@ static const char* const myLanguage[18][206] = {
     "调整SPI通讯速率", // 81
     "搜索灵敏度", // 82
     "不可用", // 83
-    "Software version", // 84
-    "Frequency font", // 85 ***
+    "固件版本", // 84
+    "频率字体", // 85 ***
     "不可用", // 86
     "AF 不可用", // 87
     "EON 不可用", // 88
@@ -3122,8 +3122,8 @@ static const char* const myLanguage[18][206] = {
     "大量", // 201
     "全部", // 202
     "快速 PS", // 203
-    "Default", // 204
-    "Mute screen on\nXDRGTK connection" // 205
+    "默认", // 204
+    "XDRGTK连接时锁屏" // 205
   },
 
   { "Norsk", // Norwegian
