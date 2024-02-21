@@ -874,7 +874,7 @@ static const char* const myLanguage[18][206] = {
     "ΑΝΕΝ.", // 33
     "ΑΝΙΧΝΕΥΣΗ...", // 34
     "Το tuner δεν εντοπίστηκε", // 35
-    "AM Antenna gain", // 36
+    "Κέρδος κεραίας AM", // 36
     "FM AGC", // 37
     "Περιθώριο σφαλμάτων\nRDS", // 38
     "Γλώσσα", // 39
@@ -1914,7 +1914,7 @@ static const char* const myLanguage[18][206] = {
     "FERMÉ", // 33
     "RECHERCHE...", // 34
     "Tuner non détecté", // 35
-    "AM Antenna gain", // 36
+    "Gain de l'antenne AM", // 36
     "FM AGC", // 37
     "Montrer les erreurs\nde décodage RDS", // 38
     "Langage", // 39
@@ -3370,7 +3370,7 @@ static const char* const myLanguage[18][206] = {
     "APAGADO", // 33
     "ESCANEANDO...", // 34
     "Sintonizador no detectado", // 35
-    "AM Antenna gain", // 36
+    "AM Ganancia de antena", // 36
     "FM AGC", // 37
     "Mostrar errores RDS", // 38
     "Idioma", // 39
@@ -3578,7 +3578,7 @@ static const char* const myLanguage[18][206] = {
     "DESATIVADO", // 33
     "ANALISANDO...", // 34
     "Sintonizador não detectado", // 35
-    "AM Antenna gain", // 36
+    "AM Ganho da antena", // 36
     "FM AGC", // 37
     "Mostrar erros RDS", // 38
     "Idioma", // 39
@@ -3620,7 +3620,7 @@ static const char* const myLanguage[18][206] = {
     "Temporizador de\ndesligamento", // 75
     "Desligar a tela", // 76
     "Tema", // 77
-    "Skin", // 78 ***
+    "Skin", // 78
     "Aplicativos detectados", // 79
     "Min.", // 80
     "Velocidade dinâmica\nde SPI", // 81
