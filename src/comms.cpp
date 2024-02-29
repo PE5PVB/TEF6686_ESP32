@@ -250,8 +250,12 @@ void XDRGTKRoutine() {
         DataPrint("C0\n");
         break;
 
-      case 'N':
-        doStereoToggle();
+      case 'B':
+        byte stmo;
+		stmo = atol(buff + 1);
+		DataPrint("B" + String(stmo) + "\n");
+		if (stmo == 0) StereoToggle = false; else StereoToggle = true;
+		doStereoToggle();
         break;
 
       case 'D':
@@ -504,7 +508,15 @@ void XDRGTKRoutine() {
         break;
 
       case 'x':
-        DataPrint("OK\nT" + String(frequency * 10) + "\n");
+        DataPrint("OK\n");
+		if (BAND_FM) {
+			DataPrint("T" + String(frequency + (ConverterSet * 100) * 10) + "\n");
+		} else if (BAND_OIRT) {
+			DataPrint("T" + String(frequency_OIRT * 10) + "\n");
+		} else {
+			DataPrint("T" + String(frequency_AM) + "\n");
+		}
+		if (StereoToggle) DataPrint("B0\n"); else DataPrint("B1\n");
         if (XDRGTKMuteScreen) MuteScreen(1);
         break;
 
@@ -557,7 +569,7 @@ void XDRGTKRoutine() {
       DataPrint("Sm");
     } else {
       if (!StereoToggle) {
-        DataPrint("SS");
+        DataPrint("SM");
       } else if (Stereostatus) {
         DataPrint("Ss");
       } else {

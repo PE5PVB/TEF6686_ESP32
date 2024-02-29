@@ -1017,10 +1017,11 @@ void GetData() {
     showPS();
   }
 
+  ShowStereoStatus();
+
   if (!screenmute) {
     ShowRSSI();
     ShowOffset();
-    ShowStereoStatus();
     ShowBW();
     updateCodetect();
     if (millis() >= tuningtimer + 200) ShowBattery();
