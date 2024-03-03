@@ -566,6 +566,7 @@ void setup() {
     case 2: FrequencySprite.loadFont(FREQFONT2); break;
     case 3: FrequencySprite.loadFont(FREQFONT3); break;
     case 4: FrequencySprite.loadFont(FREQFONT4); break;
+    case 5: FrequencySprite.loadFont(FREQFONT5); break;
   }
 
   if (language == LANGUAGE_CHS) {
@@ -1998,6 +1999,7 @@ void ModeButtonPress() {
           case 2: FrequencySprite.loadFont(FREQFONT2); break;
           case 3: FrequencySprite.loadFont(FREQFONT3); break;
           case 4: FrequencySprite.loadFont(FREQFONT4); break;
+          case 5: FrequencySprite.loadFont(FREQFONT5); break;
         }
 
         BuildDisplay();
@@ -2507,6 +2509,7 @@ void ShowFreq(int mode) {
         case 2: FrequencySprite.loadFont(FREQFONT2); break;
         case 3: FrequencySprite.loadFont(FREQFONT3); break;
         case 4: FrequencySprite.loadFont(FREQFONT4); break;
+        case 5: FrequencySprite.loadFont(FREQFONT5); break;
       }
     }
 
@@ -3688,6 +3691,7 @@ void tftPrint(int8_t offset, const String &text, int16_t x, int16_t y, int color
       case 2: selectedFont = FREQFONT2; break;
       case 3: selectedFont = FREQFONT3; break;
       case 4: selectedFont = FREQFONT4; break;
+      case 5: selectedFont = FREQFONT5; break;
     }
   }
 
