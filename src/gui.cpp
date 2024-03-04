@@ -523,8 +523,8 @@ void BuildMenu() {
       if (tot != 0) tftPrint(1, String(tot), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (tot != 0) tftPrint(1, myLanguage[language][80], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       if (usesquelch) tftPrint(1, myLanguage[language][42], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, "dB", 310, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(1, "dB", 310, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(1, "dBµV", 310, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(1, "dBµV", 310, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(1, String(fmagc, DEC), 270, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
       tftPrint(1, String(amagc, DEC), 270, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
 
@@ -2352,13 +2352,13 @@ void DoMenu() {
 
           case ITEM5:
             Infoboxprint(myLanguage[language][37]);
-            tftPrint(-1, "dB", 170, 118, ActiveColor, ActiveColorSmooth, 28);
+            tftPrint(-1, "dBµV", 170, 118, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(1, String(fmagc), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
           case ITEM6:
             Infoboxprint(myLanguage[language][198]);
-            tftPrint(-1, "dB", 170, 118, ActiveColor, ActiveColorSmooth, 28);
+            tftPrint(-1, "dBµV", 170, 118, ActiveColor, ActiveColorSmooth, 28);
             tftPrint(1, String(amagc), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             break;
 
