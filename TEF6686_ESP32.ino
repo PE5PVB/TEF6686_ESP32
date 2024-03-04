@@ -2571,11 +2571,11 @@ void ShowFreq(int mode) {
     if (!advancedRDS) {
       tft.fillCircle(314, 223, 2, GreyoutColor);
       tft.fillCircle(314, 234, 2, GreyoutColor);
-      RadiotextSprite.pushSprite(38, 220);
+      RadiotextSprite.pushSprite(36, 220);
     } else {
       tft.fillCircle(203, 223, 2, GreyoutColor);
       tft.fillCircle(203, 234, 2, GreyoutColor);
-      AdvRadiotextSprite.pushSprite(35, 220);
+      AdvRadiotextSprite.pushSprite(36, 220);
     }
     rdsflagreset = true;
   }

@@ -320,7 +320,7 @@ void readRds() {
             AdvRadiotextSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
             AdvRadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
             AdvRadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos + RadiotextWidth, 2);
-            AdvRadiotextSprite.pushSprite(35, 220);
+            AdvRadiotextSprite.pushSprite(36, 220);
           } else if (!advancedRDS && radio.rds.stationText.length() < 29) {
             xPos = 0;
             RadiotextSprite.fillSprite(BackgroundColor);
@@ -366,7 +366,7 @@ void readRds() {
             AdvRadiotextSprite.setTextColor(RDSColor, RDSColorSmooth, false);
             AdvRadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
             AdvRadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos + RadiotextWidth, 2);
-            AdvRadiotextSprite.pushSprite(35, 220);
+            AdvRadiotextSprite.pushSprite(36, 220);
           } else if (!advancedRDS && radio.rds.stationText.length() < 29) {
             xPos = 0;
             RadiotextSprite.fillSprite(BackgroundColor);
@@ -707,7 +707,7 @@ void showRadioText() {
         AdvRadiotextSprite.fillSprite(BackgroundColor);
         if (RDSstatus) AdvRadiotextSprite.setTextColor(RDSColor, RDSColorSmooth, false); else AdvRadiotextSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
         AdvRadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
-        AdvRadiotextSprite.pushSprite(35, 220);
+        AdvRadiotextSprite.pushSprite(36, 220);
       } else if (!advancedRDS && radio.rds.stationText.length() < 29) {
         xPos = 0;
         RadiotextSprite.fillSprite(BackgroundColor);
@@ -732,7 +732,7 @@ void showRadioText() {
             if (RDSstatus) AdvRadiotextSprite.setTextColor(RDSColor, RDSColorSmooth, false); else AdvRadiotextSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
             AdvRadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
             AdvRadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos + RadiotextWidth, 2);
-            AdvRadiotextSprite.pushSprite(35, 220);
+            AdvRadiotextSprite.pushSprite(36, 220);
           } else {
             RadiotextSprite.fillSprite(BackgroundColor);
             if (RDSstatus) RadiotextSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RadiotextSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
