@@ -137,11 +137,11 @@ void devTEF_Radio_Set_Stereo_Min(bool mode) {
 }
 
 void devTEF_Radio_Set_RFAGC(uint16_t agc) {
-  devTEF_Set_Cmd(TEF_FM, Cmd_Set_RFAGC, 7, agc, 0);
+  devTEF_Set_Cmd(TEF_FM, Cmd_Set_RFAGC, 7, agc * 10, 0);
 }
 
 void devTEF_Radio_Set_AMRFAGC(uint16_t agc) {
-  devTEF_Set_Cmd(TEF_AM, Cmd_Set_RFAGC, 7, agc, 0);
+  devTEF_Set_Cmd(TEF_AM, Cmd_Set_RFAGC, 7, agc * 10, 0);
 }
 
 void devTEF_Radio_Set_Deemphasis(uint16_t timeconstant) {
