@@ -3211,7 +3211,7 @@ static const char* const myLanguage[18][206] = {
     "Skannefølsomhet", // 82
     "INGEN", // 83
     "Programvareversjon", // 84
-    "Frequency font", // 85 ***
+    "Frekvens skrifttype", // 85 ***
     "IKKE MULIG", // 86
     "Ingen AF", // 87
     "Ingen EON", // 88
@@ -3331,7 +3331,7 @@ static const char* const myLanguage[18][206] = {
     "Alt", // 202
     "Rask PS", // 203
     "Standard", // 204
-    "Mute screen on\nXDRGTK connection" // 205
+    "Dempet skjerm på\nXDRGTK tilkobling" // 205
   },
 
   { "Español", // Spanish
