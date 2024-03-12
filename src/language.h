@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 // *** means the text is the same as in English
-static const char* const myLanguage[18][206] = {
+static const char* const myLanguage[18][206] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
