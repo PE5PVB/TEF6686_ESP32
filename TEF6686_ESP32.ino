@@ -18,6 +18,7 @@
 #include "src/TEF6686.h"
 #include "src/constants.h"
 #include "src/language.h"
+#include "src/graphics.h"
 #include "src/gui.h"
 #include "src/comms.h"
 #include "src/rds.h"
@@ -368,6 +369,8 @@ TFT_eSprite FrequencySprite = TFT_eSprite(&tft);
 TFT_eSprite AdvRadiotextSprite = TFT_eSprite(&tft);
 TFT_eSprite RDSSprite = TFT_eSprite(&tft);
 TFT_eSprite SquelchSprite = TFT_eSprite(&tft);
+TFT_eSprite FullLineSprite = TFT_eSprite(&tft);
+TFT_eSprite OneBigLineSprite = TFT_eSprite(&tft);
 
 WiFiConnect wc;
 WiFiServer Server(7373);
@@ -524,7 +527,7 @@ void setup() {
 
   tft.init();
   tft.initDMA();
-  
+
   doTheme();
   if (displayflip == 0) {
 #ifdef ARS
@@ -552,16 +555,10 @@ void setup() {
   tft.fillScreen(BackgroundColor);
 
   RadiotextSprite.createSprite(270, 19);
-  FrequencySprite.createSprite(200, 50);
-  AdvRadiotextSprite.createSprite(162, 19);
-  RDSSprite.createSprite(172, 19);
-  SquelchSprite.createSprite(47, 19);
-
   RadiotextSprite.setTextDatum(TL_DATUM);
+
+  FrequencySprite.createSprite(200, 50);
   FrequencySprite.setTextDatum(TR_DATUM);
-  AdvRadiotextSprite.setTextDatum(TL_DATUM);
-  RDSSprite.setTextDatum(TL_DATUM);
-  SquelchSprite.setTextDatum(TL_DATUM);
   switch (freqfont) {
     case 0: FrequencySprite.loadFont(FREQFONT0); break;
     case 1: FrequencySprite.loadFont(FREQFONT1); break;
@@ -571,16 +568,35 @@ void setup() {
     case 5: FrequencySprite.loadFont(FREQFONT5); break;
   }
 
+  AdvRadiotextSprite.createSprite(162, 19);
+  AdvRadiotextSprite.setTextDatum(TL_DATUM);
+
+  RDSSprite.createSprite(172, 19);
+  RDSSprite.setTextDatum(TL_DATUM);
+
+  SquelchSprite.createSprite(47, 19);
+  SquelchSprite.setTextDatum(TL_DATUM);
+
+  FullLineSprite.createSprite(308, 20);
+  FullLineSprite.setSwapBytes(true);
+
+  OneBigLineSprite.createSprite(270, 30);
+  OneBigLineSprite.setSwapBytes(true);
+
   if (language == LANGUAGE_CHS) {
     RadiotextSprite.loadFont(FONT16_CHS);
     AdvRadiotextSprite.loadFont(FONT16_CHS);
     RDSSprite.loadFont(FONT16_CHS);
     SquelchSprite.loadFont(FONT16_CHS);
+    FullLineSprite.loadFont(FONT16_CHS);
+    OneBigLineSprite.loadFont(FONT28_CHS);
   } else {
     RadiotextSprite.loadFont(FONT16);
     AdvRadiotextSprite.loadFont(FONT16);
     RDSSprite.loadFont(FONT16);
     SquelchSprite.loadFont(FONT16);
+    FullLineSprite.loadFont(FONT16);
+    OneBigLineSprite.loadFont(FONT28);
   }
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH) {
@@ -1989,11 +2005,13 @@ void ModeButtonPress() {
           AdvRadiotextSprite.loadFont(FONT16_CHS);
           RDSSprite.loadFont(FONT16_CHS);
           SquelchSprite.loadFont(FONT16_CHS);
+          FullLineSprite.loadFont(FONT16_CHS);
         } else {
           RadiotextSprite.loadFont(FONT16);
           AdvRadiotextSprite.loadFont(FONT16);
           RDSSprite.loadFont(FONT16);
           SquelchSprite.loadFont(FONT16);
+          FullLineSprite.loadFont(FONT16);
         }
         switch (freqfont) {
           case 0: FrequencySprite.loadFont(FREQFONT0); break;

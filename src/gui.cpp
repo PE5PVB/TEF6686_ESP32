@@ -430,307 +430,1117 @@ void BuildAFScreen() {
   }
   afscreen = true;
   advancedRDS = false;
-  if (CurrentSkin == 0) {
-    tft.fillScreen(BackgroundColor);
-    tft.drawRect(0, 0, 320, 240, FrameColor);
-    tft.drawLine(0, 30, 320, 30, FrameColor);
-    tft.drawLine(0, 199, 320, 199, FrameColor);
-    tft.drawLine(0, 218, 320, 218, FrameColor);
-    tft.drawLine(53, 30, 53, 0, FrameColor);
-    tft.drawLine(89, 30, 89, 0, FrameColor);
-    tft.drawLine(120, 30, 120, 0, FrameColor);
-    tft.drawLine(158, 30, 158, 0, FrameColor);
-    tft.drawLine(248, 30, 248, 0, FrameColor);
-    tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, 28);
-    tftPrint(0, myLanguage[language][93], 160, 222, ActiveColor, ActiveColorSmooth, 16);
-    if (afpagenr == 1) {
-      if (!radio.rds.hasAF) tftPrint(-1, myLanguage[language][87], 6, 48, PrimaryColor, PrimaryColorSmooth, 16);
-    } else if (afpagenr == 2) {
-      if (!radio.rds.hasEON) tftPrint(-1, myLanguage[language][88], 6, 48, PrimaryColor, PrimaryColorSmooth, 16);
-    }
-    RDSstatusold = false;
-    ShowFreq(0);
-    Stereostatusold = false;
-    haseonold = false;
-    hasafold = false;
-    BWreset = true;
-    SStatusold = 2000;
-    rssiold = 2000;
-    batteryold = 6;
-    batteryVold = 0;
-    vPerold = 0;
-    af_counterold = 254;
-    afmethodBold = false;
-    PIold = " ";
-    PSold = " ";
-    xPos = 0;
-    for (byte i = 0; i < 20; i++) {
-      mappedfreqold[i] = 0;
-      mappedfreqold2[i] = 0;
-      mappedfreqold3[i] = 0;
-      eonpicodeold[i][0] = '\0';
-      eonpsold[i] = "";
-      eonptyold[i] = 254;
-    }
-    for (byte i = 0; i < 20; i++) std::memset(eonpicodeold[i], '\0', sizeof(eonpicodeold[i]));
 
-    if (afpagenr == 1 && radio.rds.hasDABAF && radio.rds.dabaffreq != 0) tftPrint(1, "DAB: " + String(radio.rds.dabafchannel) + " (" + String(radio.rds.dabafeid) + ")", 166, 32, SecondaryColor, SecondaryColorSmooth, 16);
+  tft.fillScreen(BackgroundColor);
+  tft.drawRect(0, 0, 320, 240, FrameColor);
+  tft.drawLine(0, 30, 320, 30, FrameColor);
+  tft.drawLine(0, 199, 320, 199, FrameColor);
+  tft.drawLine(0, 218, 320, 218, FrameColor);
+  tft.drawLine(53, 30, 53, 0, FrameColor);
+  tft.drawLine(89, 30, 89, 0, FrameColor);
+  tft.drawLine(120, 30, 120, 0, FrameColor);
+  tft.drawLine(158, 30, 158, 0, FrameColor);
+  tft.drawLine(248, 30, 248, 0, FrameColor);
+  tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, 28);
+  tftPrint(0, myLanguage[language][93], 160, 222, ActiveColor, ActiveColorSmooth, 16);
+  if (afpagenr == 1) {
+    if (!radio.rds.hasAF) tftPrint(-1, myLanguage[language][87], 6, 48, PrimaryColor, PrimaryColorSmooth, 16);
+  } else if (afpagenr == 2) {
+    if (!radio.rds.hasEON) tftPrint(-1, myLanguage[language][88], 6, 48, PrimaryColor, PrimaryColorSmooth, 16);
   }
+  RDSstatusold = false;
+  ShowFreq(0);
+  Stereostatusold = false;
+  haseonold = false;
+  hasafold = false;
+  BWreset = true;
+  SStatusold = 2000;
+  rssiold = 2000;
+  batteryold = 6;
+  batteryVold = 0;
+  vPerold = 0;
+  af_counterold = 254;
+  afmethodBold = false;
+  PIold = " ";
+  PSold = " ";
+  xPos = 0;
+  for (byte i = 0; i < 20; i++) {
+    mappedfreqold[i] = 0;
+    mappedfreqold2[i] = 0;
+    mappedfreqold3[i] = 0;
+    eonpicodeold[i][0] = '\0';
+    eonpsold[i] = "";
+    eonptyold[i] = 254;
+  }
+  for (byte i = 0; i < 20; i++) std::memset(eonpicodeold[i], '\0', sizeof(eonpicodeold[i]));
 
+  if (afpagenr == 1 && radio.rds.hasDABAF && radio.rds.dabaffreq != 0) tftPrint(1, "DAB: " + String(radio.rds.dabafchannel) + " (" + String(radio.rds.dabafeid) + ")", 166, 32, SecondaryColor, SecondaryColorSmooth, 16);
+
+}
+
+void ShowOneLine(byte position, byte item, bool selected) {
+  FullLineSprite.pushImage (-8, -position - 2, 320, 240, configurationbackground);
+  if (selected) FullLineSprite.pushImage(0, 0, 304, 20, selector);
+
+  switch (item) {
+    case 0:
+      switch (menupage) {
+        case INDEX:
+          FullLineSprite.setTextDatum(TC_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][177], 152, 3);
+          break;
+
+        case MAINSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][108], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+
+          switch (hardwaremodel) {
+            case BASE_ILI9341: FullLineSprite.drawString(myLanguage[language][109], 298, 3); break;
+            case PORTABLE_ILI9341: FullLineSprite.drawString(myLanguage[language][110], 298, 3); break;
+            case PORTABLE_TOUCH_ILI9341: FullLineSprite.drawString(myLanguage[language][111], 298, 3); break;
+          }
+          break;
+
+        case AUDIOSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][20], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString("dB", 298, 3);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((VolSet > 0 ? "+" : "") + String(VolSet, DEC), 258, 3);
+          break;
+
+        case DISPLAYSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][39], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][0], 298, 3);
+          break;
+
+        case RDSSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][38], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+
+          switch (showrdserrors) {
+            case 0: FullLineSprite.drawString(myLanguage[language][30], 298, 3); break;
+            case 1: FullLineSprite.drawString(myLanguage[language][200], 298, 3); break;
+            case 2: FullLineSprite.drawString(myLanguage[language][201], 298, 3); break;
+            case 3: FullLineSprite.drawString(myLanguage[language][202], 298, 3); break;
+          }
+          break;
+
+        case FMSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][21], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString("MHz", 298, 3);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(ConverterSet, DEC), 258, 3);
+          break;
+
+        case AMSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][44], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((softmuteam ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          break;
+
+        case CONNECTIVITY:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][50], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((USBmode ? "RDS Spy" : "XDRGTK"), 298, 3);
+          break;
+      }
+      break;
+
+    case 1:
+      switch (menupage) {
+        case INDEX:
+          FullLineSprite.setTextDatum(TC_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][178], 152, 3);
+          break;
+
+        case MAINSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][107], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((touchrotating ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          break;
+
+        case AUDIOSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][45], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((edgebeep ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          break;
+
+        case DISPLAYSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][29], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(ContrastSet, DEC), 258, 3);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString("%", 298, 3);
+          break;
+
+        case RDSSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][46], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          if (region == REGION_EU) FullLineSprite.drawString(myLanguage[language][47], 298, 3);
+          if (region == REGION_US) FullLineSprite.drawString(myLanguage[language][48], 298, 3);
+          break;
+
+        case FMSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][22], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString("MHz", 298, 3);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 258, 3);
+          break;
+
+        case AMSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][64], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          if (amnb != 0) FullLineSprite.drawString(String(amnb, DEC), 258, 3);
+          if (amnb != 0) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString((amnb != 0 ? "%" : myLanguage[language][30]), 298, 3);
+          break;
+
+        case CONNECTIVITY:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][51] + (wifi ? " IP: " + String(WiFi.localIP().toString()) : ""), 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((wifi ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          break;
+      }
+      break;
+
+    case 2:
+      switch (menupage) {
+        case INDEX:
+          FullLineSprite.setTextDatum(TC_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][179], 152, 3);
+          break;
+
+        case MAINSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][75], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          if (tot != 0) FullLineSprite.drawString(String(tot), 258, 3);
+          if (tot != 0) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString((tot != 0 ? myLanguage[language][80] : myLanguage[language][30]), 298, 3);
+          break;
+
+        case AUDIOSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][67], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((audiomode ? "MPX" : "Stereo"), 298, 3);
+          break;
+
+        case DISPLAYSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][63], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((showmodulation ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          break;
+
+        case RDSSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][49], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((radio.underscore ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          break;
+
+        case FMSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][23], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString("MHz", 298, 3);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 258, 3);
+          break;
+
+        case AMSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][97], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString("dB", 298, 3);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((AMLevelOffset > 0 ? "+" : "") + String(AMLevelOffset, DEC), 258, 3);
+          break;
+
+        case CONNECTIVITY:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][52], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(">", 298, 3);
+          break;
+      }
+      break;
+
+    case 3:
+      switch (menupage) {
+        case INDEX:
+          FullLineSprite.setTextDatum(TC_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][180], 152, 3);
+          break;
+
+        case MAINSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][62], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((usesquelch ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          break;
+
+        case AUDIOSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][25], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          if (StereoLevel != 0) FullLineSprite.drawString(String(StereoLevel, DEC), 258, 3);
+          if (StereoLevel != 0) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString((StereoLevel != 0 ? "dBμV" : myLanguage[language][30]), 298, 3);
+          break;
+
+        case DISPLAYSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][91], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          if (screensaverset) FullLineSprite.drawString(String(screensaverOptions[screensaverset], DEC), 258, 3);
+          if (screensaverset) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString((screensaverset ? myLanguage[language][92] : myLanguage[language][30]), 298, 3);
+          break;
+
+        case RDSSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][60], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((radio.rds.filter ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          break;
+
+        case FMSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][24], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString("dB", 298, 3);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((LevelOffset > 0 ? "+" : "") + String(LevelOffset, DEC), 258, 3);
+          break;
+
+        case AMSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][101], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+
+          switch (bandAM) {
+            case AM_BAND_ALL: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 298, 3); break;
+            case AM_BAND_LW_MW: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103], 298, 3); break;
+            case AM_BAND_LW_SW: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104], 298, 3); break;
+            case AM_BAND_MW_SW: FullLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104], 298, 3); break;
+            case AM_BAND_LW: FullLineSprite.drawString(myLanguage[language][102], 298, 3); break;
+            case AM_BAND_MW: FullLineSprite.drawString(myLanguage[language][103], 298, 3); break;
+            case AM_BAND_SW: FullLineSprite.drawString(myLanguage[language][104], 298, 3); break;
+            case AM_BAND_NONE: FullLineSprite.drawString(myLanguage[language][83], 298, 3); break;
+          }
+          break;
+
+        case CONNECTIVITY:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][58], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((wifi ? String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC) : "-"), 298, 3);
+          break;
+      }
+      break;
+
+    case 4:
+      switch (menupage) {
+        case INDEX:
+          FullLineSprite.setTextDatum(TC_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][181], 152, 3);
+          break;
+
+        case MAINSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][37], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString("dBµV", 298, 3);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(fmagc, DEC), 258, 3);
+          break;
+
+        case AUDIOSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][26], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(HighCutLevel * 100, DEC), 258, 3);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString("Hz", 298, 3);
+          break;
+
+        case DISPLAYSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][74], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+
+          switch (poweroptions) {
+            case LCD_OFF: FullLineSprite.drawString(myLanguage[language][76], 298, 3); break;
+            case LCD_BRIGHTNESS_1_PERCENT: FullLineSprite.drawString(myLanguage[language][94], 298, 3); break;
+            case LCD_BRIGHTNESS_A_QUARTER: FullLineSprite.drawString(myLanguage[language][95], 298, 3); break;
+            case LCD_BRIGHTNESS_HALF: FullLineSprite.drawString(myLanguage[language][96], 298, 3); break;
+          }
+          break;
+
+        case RDSSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][61], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((radio.rds.pierrors ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          break;
+
+        case FMSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][28], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString("dBμV", 298, 3);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(LowLevelSet, DEC), 258, 3);
+          break;
+
+        case AMSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][59], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((showSWMIBand ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          break;
+
+        case CONNECTIVITY:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][197], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(stationlistid, DEC), 298, 3);
+          break;
+      }
+      break;
+
+    case 5:
+      switch (menupage) {
+        case INDEX:
+          FullLineSprite.setTextDatum(TC_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][182], 152, 3);
+          break;
+
+        case MAINSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][198], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString("dBµV", 298, 3);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(amagc, DEC), 258, 3);
+          break;
+
+        case AUDIOSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][27], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          if (HighCutOffset != 0) FullLineSprite.drawString(String(HighCutOffset, DEC), 258, 3);
+          if (HighCutOffset != 0) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString((HighCutOffset != 0 ? "dBμV" : myLanguage[language][30]), 298, 3);
+          break;
+
+        case DISPLAYSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][173], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+
+          switch (batteryoptions) {
+            case BATTERY_NONE: FullLineSprite.drawString(myLanguage[language][30], 298, 3); break;
+            case BATTERY_VALUE: FullLineSprite.drawString(myLanguage[language][174], 298, 3); break;
+            case BATTERY_PERCENT: FullLineSprite.drawString(myLanguage[language][175], 298, 3); break;
+          }
+          break;
+
+        case RDSSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][99], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+
+          switch (af) {
+            case 0: FullLineSprite.drawString(myLanguage[language][30], 298, 3); break;
+            case 1: FullLineSprite.drawString(String(myLanguage[language][42]) + "/ REG" + String(myLanguage[language][42]), 298, 3); break;
+            case 2: FullLineSprite.drawString(String(myLanguage[language][42]) + "/ REG" + String(myLanguage[language][30]), 298, 3); break;
+          }
+          break;
+
+        case FMSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][43], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((softmutefm ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          break;
+
+        case AMSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][185], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          if (amcodect != 0) FullLineSprite.drawString(String(amcodect, DEC), 258, 3);
+          if (amcodect != 0) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString((amcodect != 0 ? "%" : myLanguage[language][30]), 298, 3);
+          break;
+
+        case CONNECTIVITY:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][205], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((XDRGTKMuteScreen ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          break;
+      }
+      break;
+
+    case 6:
+      switch (menupage) {
+        case INDEX:
+          FullLineSprite.setTextDatum(TC_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][183], 152, 3);
+          break;
+
+        case MAINSETTINGS:
+          if (dynamicspi) {
+
+            FullLineSprite.setTextDatum(TL_DATUM);
+            FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            FullLineSprite.drawString(myLanguage[language][81], 6, 3);
+
+            FullLineSprite.setTextDatum(TR_DATUM);
+            FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            FullLineSprite.drawString("MHz", 298, 3);
+            FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            FullLineSprite.drawString((spispeed == SPI_SPEED_DEFAULT ? String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC) : String(spispeed * 10, DEC)), 258, 3);
+          }
+          break;
+
+        case AUDIOSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][199], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          if (fmdeemphasis != DEEMPHASIS_NONE) FullLineSprite.drawString(String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_75), DEC), 258, 3);
+          if (fmdeemphasis != DEEMPHASIS_NONE) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString((fmdeemphasis != DEEMPHASIS_NONE != 0 ? "μs" : myLanguage[language][30]), 298, 3);
+          break;
+
+        case DISPLAYSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][98], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(unitString[unit], 298, 3);
+          break;
+
+        case RDSSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][176], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((radio.rds.rtbuffer ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          break;
+
+        case FMSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][65], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          if (fmnb != 0) FullLineSprite.drawString(String(fmnb, DEC), 258, 3);
+          if (fmnb != 0) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString((fmnb != 0 ? "%" : myLanguage[language][30]), 298, 3);
+          break;
+
+        case AMSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][187], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(amcodectcount, DEC), 298, 3);
+          break;
+      }
+      break;
+
+    case 7:
+      switch (menupage) {
+        case INDEX:
+          FullLineSprite.setTextDatum(TC_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][70], 152, 3);
+          break;
+
+        case DISPLAYSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][78], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(Skin[CurrentSkin], 298, 3);
+          break;
+
+        case RDSSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][196], 6, 3);
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((radio.rds.sortaf ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          break;
+
+        case FMSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][90], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString("kHz", 298, 3);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+
+          switch (fmdefaultstepsize) {
+            case 0: FullLineSprite.drawString(String(FREQ_FM_STEP_50K * 10, DEC), 258, 3); break;
+            case 1: FullLineSprite.drawString(String(FREQ_FM_STEP_100K * 10, DEC), 258, 3); break;
+            case 2: FullLineSprite.drawString(String(FREQ_FM_STEP_200K * 10, DEC), 258, 3); break;
+          }
+          break;
+
+        case AMSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][36], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          if (amgain != 0) FullLineSprite.drawString(String(amgain, DEC), 258, 3);
+          if (amgain != 0) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString((amgain != 0 ? "dB" : myLanguage[language][30]), 298, 3);
+          break;
+      }
+      break;
+
+    case 8:
+      switch (menupage) {
+        case DISPLAYSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][77], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(Theme[CurrentTheme], 298, 3);
+          break;
+
+        case RDSSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][203], 6, 3);
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((radio.rds.fastps ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          break;
+
+        case FMSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][100], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+
+          switch (bandFM) {
+            case FM_BAND_ALL: FullLineSprite.drawString(myLanguage[language][105] + String(",") + myLanguage[language][106], 298, 3); break;
+            case FM_BAND_OIRT: FullLineSprite.drawString(myLanguage[language][106], 298, 3); break;
+            case FM_BAND_FM: FullLineSprite.drawString(myLanguage[language][105], 298, 3); break;
+            case FM_BAND_NONE: FullLineSprite.drawString(myLanguage[language][83], 298, 3); break;
+          }
+          break;
+
+        case AMSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][169], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((mwstepsize ? "10" : "9"), 258, 3);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString("kHz", 298, 3);
+          break;
+      }
+      break;
+
+    case 9:
+      switch (menupage) {
+        case INDEX:
+          FullLineSprite.setTextDatum(TC_DATUM);
+          FullLineSprite.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
+          FullLineSprite.drawString(String(myLanguage[language][84]) + " " + String(VERSION), 152, 3);
+          break;
+
+        case DISPLAYSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][85], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(FreqFont[freqfont], 298, 3);
+          break;
+
+        case FMSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][82], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(fmscansens), 298, 3);
+          break;
+
+        case AMSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(myLanguage[language][82], 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(amscansens), 298, 3);
+          break;
+      }
+      break;
+  }
+  FullLineSprite.pushSprite(8, 2 + position);
 }
 
 void BuildMenu() {
   advancedRDS = false;
-  tft.fillScreen(BackgroundColor);
-  tft.drawRect(0, 0, 320, 240, FrameColor);
-  tft.drawLine(0, 23, 320, 23, FrameColor);
-  if (!submenu) {
-    tftPrint(0, myLanguage[language][41], 160, 7, PrimaryColor, PrimaryColorSmooth, 16);
-  } else {
-    tftPrint(-1, myLanguage[language][184], 4, 7, PrimaryColor, PrimaryColorSmooth, 16);
-    tftPrint(1, myLanguage[language][189 + menupage - 1], 318, 7, ActiveColor, ActiveColorSmooth, 16);
+
+  switch (CurrentSkin) {
+    case 0:
+      tft.fillScreen(BackgroundColor);
+      tft.drawRect(0, 0, 320, 240, FrameColor);
+      tft.drawLine(0, 23, 320, 23, FrameColor);
+      tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, ActiveColor);
+      break;
+
+    case 1:
+      tft.pushImage (0, 0, 320, 240, configurationbackground);
+      ShowOneLine(ITEM1, 0, (menuoption == ITEM1 ? true : false));
+      ShowOneLine(ITEM2, 1, (menuoption == ITEM2 ? true : false));
+      ShowOneLine(ITEM3, 2, (menuoption == ITEM3 ? true : false));
+      ShowOneLine(ITEM4, 3, (menuoption == ITEM4 ? true : false));
+      ShowOneLine(ITEM5, 4, (menuoption == ITEM5 ? true : false));
+      ShowOneLine(ITEM6, 5, (menuoption == ITEM6 ? true : false));
+      ShowOneLine(ITEM7, 6, (menuoption == ITEM7 ? true : false));
+      ShowOneLine(ITEM8, 7, (menuoption == ITEM8 ? true : false));
+      ShowOneLine(ITEM9, 8, (menuoption == ITEM9 ? true : false));
+      ShowOneLine(ITEM10, 9, (menuoption == ITEM10 ? true : false));
+      break;
   }
-  tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, ActiveColor);
-  switch (menupage) {
-    case INDEX:
-      tftPrint(0, myLanguage[language][177], 160, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(0, myLanguage[language][178], 160, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(0, myLanguage[language][179], 160, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(0, myLanguage[language][180], 160, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(0, myLanguage[language][181], 160, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(0, myLanguage[language][182], 160, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(0, myLanguage[language][183], 160, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(0, myLanguage[language][70], 160, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(0, String(myLanguage[language][84]) + " " + String(VERSION), 160, ITEM10 + 6, SecondaryColor, SecondaryColorSmooth, 16);
-      break;
 
-    case MAINSETTINGS:
-      tftPrint(-1, myLanguage[language][108], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][107], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][75], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][62], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][37], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][198], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
+  if (!submenu) {
+    tftPrint(0, myLanguage[language][41], 160, 6, PrimaryColor, PrimaryColorSmooth, 16);
+  } else {
+    tftPrint(-1, myLanguage[language][184], 8, 6, PrimaryColor, PrimaryColorSmooth, 16);
+    tftPrint(1, myLanguage[language][189 + menupage - 1], 312, 6, ActiveColor, ActiveColorSmooth, 16);
+  }
+
+  if (CurrentSkin == 0) {
+    switch (menupage) {
+      case INDEX:
+        tftPrint(0, myLanguage[language][177], 160, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(0, myLanguage[language][178], 160, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(0, myLanguage[language][179], 160, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(0, myLanguage[language][180], 160, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(0, myLanguage[language][181], 160, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(0, myLanguage[language][182], 160, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(0, myLanguage[language][183], 160, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(0, myLanguage[language][70], 160, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(0, String(myLanguage[language][84]) + " " + String(VERSION), 160, ITEM10 + 6, SecondaryColor, SecondaryColorSmooth, 16);
+        break;
+
+      case MAINSETTINGS:
+        tftPrint(-1, myLanguage[language][108], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][107], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][75], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][62], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][37], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][198], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
 
 
-      switch (hardwaremodel) {
-        case BASE_ILI9341: tftPrint(1, myLanguage[language][109], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case PORTABLE_ILI9341: tftPrint(1, myLanguage[language][110 ], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case PORTABLE_TOUCH_ILI9341: tftPrint(1, myLanguage[language][111], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-      }
+        switch (hardwaremodel) {
+          case BASE_ILI9341: tftPrint(1, myLanguage[language][109], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case PORTABLE_ILI9341: tftPrint(1, myLanguage[language][110 ], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case PORTABLE_TOUCH_ILI9341: tftPrint(1, myLanguage[language][111], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        }
 
-      if (touchrotating) tftPrint(1, myLanguage[language][42], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (tot != 0) tftPrint(1, String(tot), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (tot != 0) tftPrint(1, myLanguage[language][80], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (usesquelch) tftPrint(1, myLanguage[language][42], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, "dBµV", 310, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(1, "dBµV", 310, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(1, String(fmagc, DEC), 270, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, String(amagc, DEC), 270, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (touchrotating) tftPrint(1, myLanguage[language][42], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (tot != 0) tftPrint(1, String(tot), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (tot != 0) tftPrint(1, myLanguage[language][80], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (usesquelch) tftPrint(1, myLanguage[language][42], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        tftPrint(1, "dBµV", 310, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(1, "dBµV", 310, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(1, String(fmagc, DEC), 270, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        tftPrint(1, String(amagc, DEC), 270, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
 
-      if (dynamicspi) {
-        tftPrint(1, "MHz", 310, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
-        tftPrint(-1, myLanguage[language][81], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
-        if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 270, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-        else tftPrint(1, String(spispeed * 10, DEC), 270, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      }
-      break;
+        if (dynamicspi) {
+          tftPrint(1, "MHz", 310, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
+          tftPrint(-1, myLanguage[language][81], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
+          if (spispeed == SPI_SPEED_DEFAULT) tftPrint(1,  String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC), 270, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+          else tftPrint(1, String(spispeed * 10, DEC), 270, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        }
+        break;
 
-    case AUDIOSETTINGS:
-      tftPrint(-1, myLanguage[language][20], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][45], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][67], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][25], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][26], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][27], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][199], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
+      case AUDIOSETTINGS:
+        tftPrint(-1, myLanguage[language][20], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][45], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][67], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][25], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][26], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][27], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][199], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
 
-      tftPrint(1, "dB", 310, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
-      if (VolSet > 0) tftPrint(1, "+" + String(VolSet, DEC), 270, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(VolSet, DEC), 270, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (edgebeep) tftPrint(1, myLanguage[language][42], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (audiomode) tftPrint(1, "MPX", 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, "Stereo", 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (StereoLevel != 0) tftPrint(1, "dBμV", 310, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
-      if (StereoLevel != 0) tftPrint(1, String(StereoLevel, DEC), 270, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (HighCutLevel != 0) tftPrint(1, "Hz", 310, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
-      if (HighCutLevel != 0) tftPrint(1, String(HighCutLevel * 100, DEC), 270, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (HighCutOffset != 0) tftPrint(1, "dBμV", 310, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
-      if (HighCutOffset != 0) tftPrint(1, String(HighCutOffset, DEC), 270, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(1, String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_75), DEC), 270, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(1, "μs", 310, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
-      break;
+        tftPrint(1, "dB", 310, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
+        if (VolSet > 0) tftPrint(1, "+" + String(VolSet, DEC), 270, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(VolSet, DEC), 270, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (edgebeep) tftPrint(1, myLanguage[language][42], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (audiomode) tftPrint(1, "MPX", 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, "Stereo", 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (StereoLevel != 0) tftPrint(1, "dBμV", 310, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
+        if (StereoLevel != 0) tftPrint(1, String(StereoLevel, DEC), 270, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (HighCutLevel != 0) tftPrint(1, "Hz", 310, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+        if (HighCutLevel != 0) tftPrint(1, String(HighCutLevel * 100, DEC), 270, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (HighCutOffset != 0) tftPrint(1, "dBμV", 310, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
+        if (HighCutOffset != 0) tftPrint(1, String(HighCutOffset, DEC), 270, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(1, String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_75), DEC), 270, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (fmdeemphasis != DEEMPHASIS_NONE) tftPrint(1, "μs", 310, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
+        break;
 
-    case DISPLAYSETTINGS:
-      tftPrint(-1, myLanguage[language][39], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][29], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][63], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][91], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][74], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][173], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][98], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][78], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][77], 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][85], 8, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
+      case DISPLAYSETTINGS:
+        tftPrint(-1, myLanguage[language][39], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][29], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][63], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][91], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][74], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][173], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][98], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][78], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][77], 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][85], 8, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
 
-      tftPrint(1, myLanguage[language][0], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, "%", 310, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(1, String(ContrastSet, DEC), 270, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        tftPrint(1, myLanguage[language][0], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        tftPrint(1, "%", 310, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(1, String(ContrastSet, DEC), 270, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
 
-      if (showmodulation) tftPrint(1, myLanguage[language][42], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (screensaverset) tftPrint(1, myLanguage[language][92], 310, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (screensaverset) tftPrint(1, String(screensaverOptions[screensaverset], DEC), 270, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (showmodulation) tftPrint(1, myLanguage[language][42], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (screensaverset) tftPrint(1, myLanguage[language][92], 310, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (screensaverset) tftPrint(1, String(screensaverOptions[screensaverset], DEC), 270, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
 
-      switch (poweroptions) {
-        case LCD_OFF: tftPrint(1, myLanguage[language][76], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case LCD_BRIGHTNESS_1_PERCENT: tftPrint(1, myLanguage[language][94], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case LCD_BRIGHTNESS_A_QUARTER: tftPrint(1, myLanguage[language][95], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case LCD_BRIGHTNESS_HALF: tftPrint(1, myLanguage[language][96], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-      }
+        switch (poweroptions) {
+          case LCD_OFF: tftPrint(1, myLanguage[language][76], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case LCD_BRIGHTNESS_1_PERCENT: tftPrint(1, myLanguage[language][94], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case LCD_BRIGHTNESS_A_QUARTER: tftPrint(1, myLanguage[language][95], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case LCD_BRIGHTNESS_HALF: tftPrint(1, myLanguage[language][96], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        }
 
-      switch (batteryoptions) {
-        case BATTERY_NONE: tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case BATTERY_VALUE: tftPrint(1, myLanguage[language][174], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case BATTERY_PERCENT: tftPrint(1, myLanguage[language][175], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-      }
+        switch (batteryoptions) {
+          case BATTERY_NONE: tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case BATTERY_VALUE: tftPrint(1, myLanguage[language][174], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case BATTERY_PERCENT: tftPrint(1, myLanguage[language][175], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        }
 
-      tftPrint(1, unitString[unit], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, Skin[CurrentSkin], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, Theme[CurrentTheme], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, FreqFont[freqfont], 310, ITEM10 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      break;
+        tftPrint(1, unitString[unit], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        tftPrint(1, Skin[CurrentSkin], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        tftPrint(1, Theme[CurrentTheme], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        tftPrint(1, FreqFont[freqfont], 310, ITEM10 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        break;
 
-    case RDSSETTINGS:
-      tftPrint(-1, myLanguage[language][38], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][46], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][49], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][60], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][61], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][99], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][176], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][196], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][203], 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
+      case RDSSETTINGS:
+        tftPrint(-1, myLanguage[language][38], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][46], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][49], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][60], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][61], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][99], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][176], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][196], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][203], 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
 
-      switch (showrdserrors) {
-        case 0: tftPrint(1, myLanguage[language][30], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case 1: tftPrint(1, myLanguage[language][200], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case 2: tftPrint(1, myLanguage[language][201], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case 3: tftPrint(1, myLanguage[language][202], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-      }
+        switch (showrdserrors) {
+          case 0: tftPrint(1, myLanguage[language][30], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case 1: tftPrint(1, myLanguage[language][200], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case 2: tftPrint(1, myLanguage[language][201], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case 3: tftPrint(1, myLanguage[language][202], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        }
 
-      if (region == REGION_EU) tftPrint(1, myLanguage[language][47], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (region == REGION_US) tftPrint(1, myLanguage[language][48], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (radio.underscore) tftPrint(1, myLanguage[language][42], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (radio.rds.filter) tftPrint(1, myLanguage[language][42], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (radio.rds.pierrors) tftPrint(1, myLanguage[language][42], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (region == REGION_EU) tftPrint(1, myLanguage[language][47], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (region == REGION_US) tftPrint(1, myLanguage[language][48], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (radio.underscore) tftPrint(1, myLanguage[language][42], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (radio.rds.filter) tftPrint(1, myLanguage[language][42], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (radio.rds.pierrors) tftPrint(1, myLanguage[language][42], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
 
-      switch (af) {
-        case 0: tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case 1: tftPrint(1, String(myLanguage[language][42]) + " / REG " + String(myLanguage[language][42]), 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case 2: tftPrint(1, String(myLanguage[language][42]) + " / REG " + String(myLanguage[language][30]), 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-      }
+        switch (af) {
+          case 0: tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case 1: tftPrint(1, String(myLanguage[language][42]) + " / REG " + String(myLanguage[language][42]), 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case 2: tftPrint(1, String(myLanguage[language][42]) + " / REG " + String(myLanguage[language][30]), 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        }
 
-      if (radio.rds.rtbuffer) tftPrint(1, myLanguage[language][42], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (radio.rds.sortaf) tftPrint(1, myLanguage[language][42], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (radio.rds.fastps) tftPrint(1, myLanguage[language][42], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      break;
+        if (radio.rds.rtbuffer) tftPrint(1, myLanguage[language][42], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (radio.rds.sortaf) tftPrint(1, myLanguage[language][42], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (radio.rds.fastps) tftPrint(1, myLanguage[language][42], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        break;
 
-    case FMSETTINGS:
-      tftPrint(-1, myLanguage[language][21], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][22], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][23], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][24], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][28], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][43], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][65], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][90], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][100], 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][82], 8, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
+      case FMSETTINGS:
+        tftPrint(-1, myLanguage[language][21], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][22], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][23], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][24], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][28], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][43], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][65], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][90], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][100], 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][82], 8, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
 
-      tftPrint(1, "MHz", 310, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(1, String(ConverterSet, DEC), 270, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, "MHz", 310, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(1, String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 270, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, "MHz", 310, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(1, String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, "dB", 310, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
-      if (LevelOffset > 0) tftPrint(1, "+" + String(LevelOffset, DEC), 270, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(LevelOffset, DEC), 270, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, "dBμV", 310, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(1, String(LowLevelSet, DEC), 270, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (softmutefm) tftPrint(1, myLanguage[language][42], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (fmnb != 0) tftPrint(1, "%", 310, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
-      if (fmnb != 0) tftPrint(1, String(fmnb, DEC), 270, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, "kHz", 310, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(1, "MHz", 310, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(1, String(ConverterSet, DEC), 270, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        tftPrint(1, "MHz", 310, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(1, String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 270, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        tftPrint(1, "MHz", 310, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(1, String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        tftPrint(1, "dB", 310, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
+        if (LevelOffset > 0) tftPrint(1, "+" + String(LevelOffset, DEC), 270, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(LevelOffset, DEC), 270, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        tftPrint(1, "dBμV", 310, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(1, String(LowLevelSet, DEC), 270, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (softmutefm) tftPrint(1, myLanguage[language][42], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (fmnb != 0) tftPrint(1, "%", 310, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
+        if (fmnb != 0) tftPrint(1, String(fmnb, DEC), 270, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        tftPrint(1, "kHz", 310, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
 
-      switch (fmdefaultstepsize) {
-        case 0: tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 270, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case 1: tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 270, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case 2: tftPrint(1, String(FREQ_FM_STEP_200K * 10, DEC), 270, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-      }
+        switch (fmdefaultstepsize) {
+          case 0: tftPrint(1, String(FREQ_FM_STEP_50K * 10, DEC), 270, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case 1: tftPrint(1, String(FREQ_FM_STEP_100K * 10, DEC), 270, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case 2: tftPrint(1, String(FREQ_FM_STEP_200K * 10, DEC), 270, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        }
 
-      switch (bandFM) {
-        case FM_BAND_ALL: tftPrint(1, myLanguage[language][105] + String(",") + myLanguage[language][106], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case FM_BAND_OIRT: tftPrint(1, myLanguage[language][106], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case FM_BAND_FM: tftPrint(1, myLanguage[language][105], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case FM_BAND_NONE: tftPrint(1, myLanguage[language][83], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-      }
-      tftPrint(1, String(fmscansens), 310, ITEM10 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      break;
+        switch (bandFM) {
+          case FM_BAND_ALL: tftPrint(1, myLanguage[language][105] + String(",") + myLanguage[language][106], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case FM_BAND_OIRT: tftPrint(1, myLanguage[language][106], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case FM_BAND_FM: tftPrint(1, myLanguage[language][105], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case FM_BAND_NONE: tftPrint(1, myLanguage[language][83], 310, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        }
+        tftPrint(1, String(fmscansens), 310, ITEM10 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        break;
 
-    case AMSETTINGS:
-      tftPrint(-1, myLanguage[language][44], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][64], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][97], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][101], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][59], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][185], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][187], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][36], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][169], 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][82], 8, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
+      case AMSETTINGS:
+        tftPrint(-1, myLanguage[language][44], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][64], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][97], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][101], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][59], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][185], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][187], 8, ITEM7 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][36], 8, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][169], 8, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][82], 8, ITEM10 + 6, ActiveColor, ActiveColorSmooth, 16);
 
-      if (softmuteam) tftPrint(1, myLanguage[language][42], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (amnb != 0) tftPrint(1, "%", 310, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
-      if (amnb != 0) tftPrint(1, String(amnb, DEC), 270, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, "dB", 310, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
-      if (AMLevelOffset > 0) tftPrint(1, "+" + String(AMLevelOffset, DEC), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(AMLevelOffset, DEC), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (amgain != 0) tftPrint(1, "dB", 310, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, "kHz", 310, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
+        if (softmuteam) tftPrint(1, myLanguage[language][42], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (amnb != 0) tftPrint(1, "%", 310, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
+        if (amnb != 0) tftPrint(1, String(amnb, DEC), 270, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        tftPrint(1, "dB", 310, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+        if (AMLevelOffset > 0) tftPrint(1, "+" + String(AMLevelOffset, DEC), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(AMLevelOffset, DEC), 270, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (amgain != 0) tftPrint(1, "dB", 310, ITEM8 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        tftPrint(1, "kHz", 310, ITEM9 + 6, ActiveColor, ActiveColorSmooth, 16);
 
-      switch (bandAM) {
-        case AM_BAND_ALL: tftPrint(1, myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case AM_BAND_LW_MW: tftPrint(1, myLanguage[language][102] + String(",") + myLanguage[language][103], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case AM_BAND_LW_SW: tftPrint(1, myLanguage[language][102] + String(",") + myLanguage[language][104], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case AM_BAND_MW_SW: tftPrint(1, myLanguage[language][103] + String(",") + myLanguage[language][104], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case AM_BAND_LW: tftPrint(1, myLanguage[language][102], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case AM_BAND_MW: tftPrint(1, myLanguage[language][103], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case AM_BAND_SW: tftPrint(1, myLanguage[language][104], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-        case AM_BAND_NONE: tftPrint(1, myLanguage[language][83], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
-      }
+        switch (bandAM) {
+          case AM_BAND_ALL: tftPrint(1, myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case AM_BAND_LW_MW: tftPrint(1, myLanguage[language][102] + String(",") + myLanguage[language][103], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case AM_BAND_LW_SW: tftPrint(1, myLanguage[language][102] + String(",") + myLanguage[language][104], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case AM_BAND_MW_SW: tftPrint(1, myLanguage[language][103] + String(",") + myLanguage[language][104], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case AM_BAND_LW: tftPrint(1, myLanguage[language][102], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case AM_BAND_MW: tftPrint(1, myLanguage[language][103], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case AM_BAND_SW: tftPrint(1, myLanguage[language][104], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+          case AM_BAND_NONE: tftPrint(1, myLanguage[language][83], 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); break;
+        }
 
-      if (showSWMIBand) tftPrint(1, myLanguage[language][42], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (amcodect != 0) tftPrint(1, "%", 310, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
-      if (amcodect != 0) tftPrint(1, String(amcodect, DEC), 270, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, String(amcodectcount, DEC), 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (amgain != 0) tftPrint(1, String(amgain, DEC), 270, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (mwstepsize) tftPrint(1, "10", 270, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, "9", 270, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, String(amscansens), 310, ITEM10 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      break;
+        if (showSWMIBand) tftPrint(1, myLanguage[language][42], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (amcodect != 0) tftPrint(1, "%", 310, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
+        if (amcodect != 0) tftPrint(1, String(amcodect, DEC), 270, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        tftPrint(1, String(amcodectcount, DEC), 310, ITEM7 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (amgain != 0) tftPrint(1, String(amgain, DEC), 270, ITEM8 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (mwstepsize) tftPrint(1, "10", 270, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, "9", 270, ITEM9 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        tftPrint(1, String(amscansens), 310, ITEM10 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        break;
 
-    case CONNECTIVITY:
-      tftPrint(-1, myLanguage[language][50], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
-      if (wifi) tftPrint(-1, String(myLanguage[language][51]) + " IP: " + String(WiFi.localIP().toString()), 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(-1, myLanguage[language][51], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][52], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][58], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][197], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, myLanguage[language][205], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
+      case CONNECTIVITY:
+        tftPrint(-1, myLanguage[language][50], 8, ITEM1 + 6, ActiveColor, ActiveColorSmooth, 16);
+        if (wifi) tftPrint(-1, String(myLanguage[language][51]) + " IP: " + String(WiFi.localIP().toString()), 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16); else tftPrint(-1, myLanguage[language][51], 8, ITEM2 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][52], 8, ITEM3 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][58], 8, ITEM4 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][197], 8, ITEM5 + 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, myLanguage[language][205], 8, ITEM6 + 6, ActiveColor, ActiveColorSmooth, 16);
 
-      if (USBmode) tftPrint(1, "RDS Spy", 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, "XDRGTK", 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (wifi) tftPrint(1, myLanguage[language][42], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, ">", 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (wifi) tftPrint(1, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, "-", 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(1, String(stationlistid, DEC), 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      if (XDRGTKMuteScreen) tftPrint(1, myLanguage[language][42], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
-      break;
+        if (USBmode) tftPrint(1, "RDS Spy", 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, "XDRGTK", 310, ITEM1 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (wifi) tftPrint(1, myLanguage[language][42], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM2 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        tftPrint(1, ">", 310, ITEM3 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (wifi) tftPrint(1, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, "-", 310, ITEM4 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        tftPrint(1, String(stationlistid, DEC), 310, ITEM5 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        if (XDRGTKMuteScreen) tftPrint(1, myLanguage[language][42], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, myLanguage[language][30], 310, ITEM6 + 6, PrimaryColor, PrimaryColorSmooth, 16);
+        break;
 
+    }
   }
   analogWrite(SMETERPIN, 0);
 }
@@ -741,91 +1551,90 @@ void BuildAdvancedRDS() {
   afpagenr = 1;
   advancedRDS = true;
   ScreensaverTimerSet(OFF);
-  if (CurrentSkin == 0) {
-    tft.fillScreen(BackgroundColor);
-    tft.drawRect(0, 0, 320, 240, FrameColor);
-    tft.drawLine(0, 30, 320, 30, FrameColor);
-    tft.drawLine(0, 68, 320, 68, FrameColor);
-    tft.drawLine(0, 104, 320, 104, FrameColor);
-    tft.drawLine(0, 126, 320, 126, FrameColor);
-    tft.drawLine(120, 30, 120, 0, FrameColor);
-    tft.drawLine(210, 30, 210, 240, FrameColor);
-    tft.drawLine(53, 30, 53, 0, FrameColor);
-    tft.drawLine(89, 30, 89, 0, FrameColor);
-    tft.drawLine(120, 30, 120, 0, FrameColor);
-    tft.drawLine(158, 30, 158, 0, FrameColor);
-    tft.drawLine(248, 30, 248, 0, FrameColor);
-    tft.drawLine(0, 140, 210, 140, FrameColor);
-    tft.drawLine(0, 166, 210, 166, FrameColor);
-    tft.drawLine(0, 193, 210, 193, FrameColor);
-    tft.drawLine(210, 191, 320, 191, FrameColor);
-    tft.drawLine(0, 217, 210, 217, FrameColor);
-    tft.drawRect(0, 0, 320, 240, FrameColor);
 
-    tftPrint(-1, "ERRORS", 3, 34, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(1, "MHz", 310, 35, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(1, unitString[unit], 310, 51, ActiveColor, ActiveColorSmooth, 16);
-    if (region == REGION_EU) tftPrint(-1, "PI", 216, 81, ActiveColor, ActiveColorSmooth, 16);
-    if (region == REGION_US) {
-      tftPrint(-1, "PI:", 216, 72, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, "ID:", 216, 89, ActiveColor, ActiveColorSmooth, 16);
-    }
-    tftPrint(-1, "PS", 3, 81, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "PTY", 3, 109, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "RT+", 3, 147, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "AF", 3, 199, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "EON", 3, 174, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "RT", 3, 222, ActiveColor, ActiveColorSmooth, 16);
+  tft.fillScreen(BackgroundColor);
+  tft.drawRect(0, 0, 320, 240, FrameColor);
+  tft.drawLine(0, 30, 320, 30, FrameColor);
+  tft.drawLine(0, 68, 320, 68, FrameColor);
+  tft.drawLine(0, 104, 320, 104, FrameColor);
+  tft.drawLine(0, 126, 320, 126, FrameColor);
+  tft.drawLine(120, 30, 120, 0, FrameColor);
+  tft.drawLine(210, 30, 210, 240, FrameColor);
+  tft.drawLine(53, 30, 53, 0, FrameColor);
+  tft.drawLine(89, 30, 89, 0, FrameColor);
+  tft.drawLine(120, 30, 120, 0, FrameColor);
+  tft.drawLine(158, 30, 158, 0, FrameColor);
+  tft.drawLine(248, 30, 248, 0, FrameColor);
+  tft.drawLine(0, 140, 210, 140, FrameColor);
+  tft.drawLine(0, 166, 210, 166, FrameColor);
+  tft.drawLine(0, 193, 210, 193, FrameColor);
+  tft.drawLine(210, 191, 320, 191, FrameColor);
+  tft.drawLine(0, 217, 210, 217, FrameColor);
+  tft.drawRect(0, 0, 320, 240, FrameColor);
 
-    tftPrint(-1, "A:", 66, 34, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "B:", 104, 34, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "C:", 142, 34, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "D:", 180, 34, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "ECC", 214, 193, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "LIC", 214, 208, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "PIN", 214, 223, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(1, "Dynamic PTY", 300, 130, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(1, "Artif. head", 300, 145, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(1, "Compressed", 300, 160, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(1, "Has stereo", 300, 175, ActiveColor, ActiveColorSmooth, 16);
-
-    tft.fillCircle(86, 41, 5, SignificantColor);
-    tft.fillCircle(124, 41, 5, SignificantColor);
-    tft.fillCircle(162, 41, 5, SignificantColor);
-    tft.fillCircle(200, 41, 5, SignificantColor);
-
-    tft.fillCircle(310, 137, 5, SignificantColor);
-    tft.fillCircle(310, 153, 5, SignificantColor);
-    tft.fillCircle(310, 168, 5, SignificantColor);
-    tft.fillCircle(310, 183, 5, SignificantColor);
-
-    for (int i = 0; i < 33; i++) tft.fillCircle((6 * i) + 10, 133, 2, GreyoutColor);
-
-    tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, 28);
-
-    tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
-    tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
-
-    if (!StereoToggle) {
-      tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
-      tft.drawSmoothCircle(71, 15, 9, SecondaryColor, SecondaryColorSmooth);
-    } else {
-      tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
-      tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
-      tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
-      tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
-    }
-
-    tftPrint(-1, "TP", 2, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "TA", 24, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "AF", 50, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "-B", 68, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "TMC", 88, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "RT+", 123, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "EON", 153, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "S", 185, 51, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "M", 196, 51, GreyoutColor, BackgroundColor, 16);
+  tftPrint(-1, "ERRORS", 3, 34, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(1, "MHz", 310, 35, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(1, unitString[unit], 310, 51, ActiveColor, ActiveColorSmooth, 16);
+  if (region == REGION_EU) tftPrint(-1, "PI", 216, 81, ActiveColor, ActiveColorSmooth, 16);
+  if (region == REGION_US) {
+    tftPrint(-1, "PI:", 216, 72, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "ID:", 216, 89, ActiveColor, ActiveColorSmooth, 16);
   }
+  tftPrint(-1, "PS", 3, 81, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "PTY", 3, 109, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "RT+", 3, 147, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "AF", 3, 199, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "EON", 3, 174, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "RT", 3, 222, ActiveColor, ActiveColorSmooth, 16);
+
+  tftPrint(-1, "A:", 66, 34, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "B:", 104, 34, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "C:", 142, 34, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "D:", 180, 34, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "ECC", 214, 193, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "LIC", 214, 208, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "PIN", 214, 223, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(1, "Dynamic PTY", 300, 130, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(1, "Artif. head", 300, 145, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(1, "Compressed", 300, 160, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(1, "Has stereo", 300, 175, ActiveColor, ActiveColorSmooth, 16);
+
+  tft.fillCircle(86, 41, 5, SignificantColor);
+  tft.fillCircle(124, 41, 5, SignificantColor);
+  tft.fillCircle(162, 41, 5, SignificantColor);
+  tft.fillCircle(200, 41, 5, SignificantColor);
+
+  tft.fillCircle(310, 137, 5, SignificantColor);
+  tft.fillCircle(310, 153, 5, SignificantColor);
+  tft.fillCircle(310, 168, 5, SignificantColor);
+  tft.fillCircle(310, 183, 5, SignificantColor);
+
+  for (int i = 0; i < 33; i++) tft.fillCircle((6 * i) + 10, 133, 2, GreyoutColor);
+
+  tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, 28);
+
+  tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
+  tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+
+  if (!StereoToggle) {
+    tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
+    tft.drawSmoothCircle(71, 15, 9, SecondaryColor, SecondaryColorSmooth);
+  } else {
+    tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
+    tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
+    tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
+    tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
+  }
+
+  tftPrint(-1, "TP", 2, 51, GreyoutColor, BackgroundColor, 16);
+  tftPrint(-1, "TA", 24, 51, GreyoutColor, BackgroundColor, 16);
+  tftPrint(-1, "AF", 50, 51, GreyoutColor, BackgroundColor, 16);
+  tftPrint(-1, "-B", 68, 51, GreyoutColor, BackgroundColor, 16);
+  tftPrint(-1, "TMC", 88, 51, GreyoutColor, BackgroundColor, 16);
+  tftPrint(-1, "RT+", 123, 51, GreyoutColor, BackgroundColor, 16);
+  tftPrint(-1, "EON", 153, 51, GreyoutColor, BackgroundColor, 16);
+  tftPrint(-1, "S", 185, 51, GreyoutColor, BackgroundColor, 16);
+  tftPrint(-1, "M", 196, 51, GreyoutColor, BackgroundColor, 16);
 
   RDSstatusold = false;
   ShowFreq(0);
@@ -874,102 +1683,102 @@ void BuildDisplay() {
   afscreen = false;
   advancedRDS = false;
   int bandColor;
-  if (CurrentSkin == 0) {
-    tft.fillScreen(BackgroundColor);
-    tft.drawRect(0, 0, 320, 240, FrameColor);
-    tft.drawLine(0, 30, 320, 30, FrameColor);
-    tft.drawLine(0, 100, 320, 100, FrameColor);
-    tft.drawLine(120, 30, 120, 0, FrameColor);
-    tft.drawLine(210, 100, 210, 217, FrameColor);
-    tft.drawLine(248, 30, 248, 0, FrameColor);
-    tft.drawLine(0, 160, 210, 160, FrameColor);
-    tft.drawLine(0, 180, 320, 180, FrameColor);
-    tft.drawLine(0, 217, 320, 217, FrameColor);
-    tft.drawLine(53, 30, 53, 0, FrameColor);
-    tft.drawLine(89, 30, 89, 0, FrameColor);
-    tft.drawLine(158, 30, 158, 0, FrameColor);
-    tft.drawLine(20, 114, 204, 114, TFT_DARKGREY);
-    if (!showmodulation) tft.drawLine(20, 143, 204, 143, GreyoutColor); else tft.drawLine(20, 143, 204, 143, TFT_DARKGREY);
-    for (byte segments = 0; segments < 94; segments++) {
-      if (segments > 54) {
-        if (((segments - 53) % 10) == 0) {
-          tft.fillRect(16 + (2 * segments), 112, 2, 2, BarSignificantColor);
-          if (!showmodulation) tft.fillRect(16 + (2 * segments), 141, 2, 2, GreyoutColor); else tft.fillRect(16 + (2 * segments), 141, 2, 2, BarSignificantColor);
-        }
-      } else {
-        if (((segments + 1) % 6) == 0) {
-          tft.fillRect(16 + (2 * segments), 112, 2, 2, BarInsignificantColor);
-          if (!showmodulation) tft.fillRect(16 + (2 * segments), 141, 2, 2, GreyoutColor); else tft.fillRect(16 + (2 * segments), 141, 2, 2, BarInsignificantColor);
-        }
+
+  tft.fillScreen(BackgroundColor);
+  tft.drawRect(0, 0, 320, 240, FrameColor);
+  tft.drawLine(0, 30, 320, 30, FrameColor);
+  tft.drawLine(0, 100, 320, 100, FrameColor);
+  tft.drawLine(120, 30, 120, 0, FrameColor);
+  tft.drawLine(210, 100, 210, 217, FrameColor);
+  tft.drawLine(248, 30, 248, 0, FrameColor);
+  tft.drawLine(0, 160, 210, 160, FrameColor);
+  tft.drawLine(0, 180, 320, 180, FrameColor);
+  tft.drawLine(0, 217, 320, 217, FrameColor);
+  tft.drawLine(53, 30, 53, 0, FrameColor);
+  tft.drawLine(89, 30, 89, 0, FrameColor);
+  tft.drawLine(158, 30, 158, 0, FrameColor);
+  tft.drawLine(20, 114, 204, 114, TFT_DARKGREY);
+  if (!showmodulation) tft.drawLine(20, 143, 204, 143, GreyoutColor); else tft.drawLine(20, 143, 204, 143, TFT_DARKGREY);
+  for (byte segments = 0; segments < 94; segments++) {
+    if (segments > 54) {
+      if (((segments - 53) % 10) == 0) {
+        tft.fillRect(16 + (2 * segments), 112, 2, 2, BarSignificantColor);
+        if (!showmodulation) tft.fillRect(16 + (2 * segments), 141, 2, 2, GreyoutColor); else tft.fillRect(16 + (2 * segments), 141, 2, 2, BarSignificantColor);
+      }
+    } else {
+      if (((segments + 1) % 6) == 0) {
+        tft.fillRect(16 + (2 * segments), 112, 2, 2, BarInsignificantColor);
+        if (!showmodulation) tft.fillRect(16 + (2 * segments), 141, 2, 2, GreyoutColor); else tft.fillRect(16 + (2 * segments), 141, 2, 2, BarInsignificantColor);
       }
     }
-    if (usesquelch) tftPrint(-1, "SQ:", 212, 145, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(1, "C/N", 270, 163, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "dB", 300, 163, ActiveColor, ActiveColorSmooth, 16);
-    if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
-    if (region == REGION_US) {
-      tftPrint(-1, "PI:", 212, 184, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, "ID:", 212, 201, ActiveColor, ActiveColorSmooth, 16);
-    }
-    tftPrint(-1, "PS:", 3, 193, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "RT:", 3, 221, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "PTY:", 3, 163, ActiveColor, ActiveColorSmooth, 16);
-
-    tftPrint(0, "S", 7, 101, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "1", 24, 115, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "3", 48, 115, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "5", 72, 115, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "7", 96, 115, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "9", 120, 115, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "+10", 134, 115, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "+30", 174, 115, ActiveColor, ActiveColorSmooth, 16);
-
-    if (!showmodulation) {
-      tftPrint(0, "M", 7, 128, GreyoutColor, BackgroundColor, 16);
-      tftPrint(-1, "10", 27, 144, GreyoutColor, BackgroundColor, 16);
-      tftPrint(-1, "30", 57, 144, GreyoutColor, BackgroundColor, 16);
-      tftPrint(-1, "50", 87, 144, GreyoutColor, BackgroundColor, 16);
-      tftPrint(-1, "70", 117, 144, GreyoutColor, BackgroundColor, 16);
-      tftPrint(-1, "100", 164, 144, GreyoutColor, BackgroundColor, 16);
-    } else {
-      tftPrint(0, "M", 7, 128, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, "10", 27, 144, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, "30", 57, 144, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, "50", 87, 144, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(-1, "70", 117, 144, ActiveColor, BackgroundColor, 16);
-      tftPrint(-1, "100", 164, 144, ActiveColor, ActiveColorSmooth, 16);
-    }
-
-    tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, 28);
-    tftPrint(-1, unitString[unit], 282, 145, ActiveColor, ActiveColorSmooth, 16);
-
-    tft.drawRoundRect(248, 56, 32, 20, 5, GreyoutColor);
-    if (band > BAND_GAP) tftPrint(0, "iMS", 265, 59, GreyoutColor, BackgroundColor, 16);
-    tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
-    if (band > BAND_GAP) tftPrint(0, "EQ", 303, 59, GreyoutColor, BackgroundColor, 16);
-
-    tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
-    tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
-
-    if (!StereoToggle) {
-      tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
-      tft.drawSmoothCircle(71, 15, 9, SecondaryColor, SecondaryColorSmooth);
-    } else {
-      tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
-      tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
-      tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
-      tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
-    }
-
-    if (bandforbidden) bandColor = GreyoutColor; else bandColor = PrimaryColor;
-    switch (band) {
-      case BAND_LW: tftPrint(-1, myLanguage[language][102], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
-      case BAND_MW: tftPrint(-1, myLanguage[language][103], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
-      case BAND_SW: tftPrint(-1, myLanguage[language][104], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
-      case BAND_FM: tftPrint(-1, myLanguage[language][105], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
-      case BAND_OIRT: tftPrint(-1, myLanguage[language][106], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
-    }
   }
+  if (usesquelch) tftPrint(-1, "SQ:", 212, 145, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(1, "C/N", 270, 163, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "dB", 300, 163, ActiveColor, ActiveColorSmooth, 16);
+  if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
+  if (region == REGION_US) {
+    tftPrint(-1, "PI:", 212, 184, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "ID:", 212, 201, ActiveColor, ActiveColorSmooth, 16);
+  }
+  tftPrint(-1, "PS:", 3, 193, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "RT:", 3, 221, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "PTY:", 3, 163, ActiveColor, ActiveColorSmooth, 16);
+
+  tftPrint(0, "S", 7, 101, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "1", 24, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "3", 48, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "5", 72, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "7", 96, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "9", 120, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "+10", 134, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "+30", 174, 115, ActiveColor, ActiveColorSmooth, 16);
+
+  if (!showmodulation) {
+    tftPrint(0, "M", 7, 128, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "10", 27, 144, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "30", 57, 144, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "50", 87, 144, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "70", 117, 144, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "100", 164, 144, GreyoutColor, BackgroundColor, 16);
+  } else {
+    tftPrint(0, "M", 7, 128, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "10", 27, 144, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "30", 57, 144, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "50", 87, 144, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "70", 117, 144, ActiveColor, BackgroundColor, 16);
+    tftPrint(-1, "100", 164, 144, ActiveColor, ActiveColorSmooth, 16);
+  }
+
+  tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, 28);
+  tftPrint(-1, unitString[unit], 282, 145, ActiveColor, ActiveColorSmooth, 16);
+
+  tft.drawRoundRect(248, 56, 32, 20, 5, GreyoutColor);
+  if (band > BAND_GAP) tftPrint(0, "iMS", 265, 59, GreyoutColor, BackgroundColor, 16);
+  tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
+  if (band > BAND_GAP) tftPrint(0, "EQ", 303, 59, GreyoutColor, BackgroundColor, 16);
+
+  tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
+  tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+
+  if (!StereoToggle) {
+    tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
+    tft.drawSmoothCircle(71, 15, 9, SecondaryColor, SecondaryColorSmooth);
+  } else {
+    tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
+    tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
+    tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
+    tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
+  }
+
+  if (bandforbidden) bandColor = GreyoutColor; else bandColor = PrimaryColor;
+  switch (band) {
+    case BAND_LW: tftPrint(-1, myLanguage[language][102], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
+    case BAND_MW: tftPrint(-1, myLanguage[language][103], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
+    case BAND_SW: tftPrint(-1, myLanguage[language][104], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
+    case BAND_FM: tftPrint(-1, myLanguage[language][105], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
+    case BAND_OIRT: tftPrint(-1, myLanguage[language][106], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
+  }
+
   RDSstatusold = false;
   Stereostatusold = false;
   LowLevelInit = true;
@@ -1003,7 +1812,11 @@ void BuildDisplay() {
 
 void MenuUp() {
   if (!menuopen) {
-    tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, BackgroundColor);
+    if (CurrentSkin == 0) {
+      tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, BackgroundColor);
+    } else if (CurrentSkin == 1) {
+      ShowOneLine(menuoption, menuitem, false);
+    }
     if (hardwaremodel == BASE_ILI9341) {
       menuoption += ITEM_GAP;
       menuitem++;
@@ -1023,7 +1836,12 @@ void MenuUp() {
         }
       }
     }
-    tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, ActiveColor);
+    if (CurrentSkin == 0) {
+      tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, ActiveColor);
+    } else if (CurrentSkin == 1) {
+      ShowOneLine(menuoption, menuitem, true);
+    }
+
   } else {
     switch (menupage) {
       case MAINSETTINGS:
@@ -1616,7 +2434,11 @@ void MenuUp() {
 
 void MenuDown() {
   if (!menuopen) {
-    tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, BackgroundColor);
+    if (CurrentSkin == 0) {
+      tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, BackgroundColor);
+    } else if (CurrentSkin == 1) {
+      ShowOneLine(menuoption, menuitem, false);
+    }
     if (hardwaremodel == BASE_ILI9341) {
       menuoption -= ITEM_GAP;
       menuitem--;
@@ -1636,7 +2458,11 @@ void MenuDown() {
         menuoption = ITEM1;
       }
     }
-    tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, ActiveColor);
+    if (CurrentSkin == 0) {
+      tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, ActiveColor);
+    } else if (CurrentSkin == 1) {
+      ShowOneLine(menuoption, menuitem, true);
+    }
   } else {
     switch (menupage) {
       case MAINSETTINGS:
@@ -2231,8 +3057,15 @@ void DoMenu() {
   if (!menuopen) {
     if (menupage != INDEX) {
       menuopen = true;
-      tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
-      tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
+      if (CurrentSkin == 0) {
+        tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
+        tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
+      } else if (CurrentSkin == 1) {
+        tft.pushImage (13, 30, 292, 170, popupbackground);
+        OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
+        OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+        OneBigLineSprite.setTextDatum(TC_DATUM);
+      }
     }
 
     switch (menupage) {

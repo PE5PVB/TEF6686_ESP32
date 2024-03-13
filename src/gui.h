@@ -6,6 +6,7 @@
 #include "TEF6686.h"
 #include "WiFiConnect.h"
 #include "WiFiConnectParam.h"
+#include "graphics.h"
 
 #define SMETERPIN       27
 #define CONTRASTPIN     2
@@ -183,6 +184,8 @@ extern TFT_eSPI tft;
 extern TEF6686 radio;
 extern WiFiConnect wc;
 extern TFT_eSprite MenuInfobox;
+extern TFT_eSprite FullLineSprite;
+extern TFT_eSprite OneBigLineSprite;
 
 void BuildAFScreen();
 void BuildMenu();
