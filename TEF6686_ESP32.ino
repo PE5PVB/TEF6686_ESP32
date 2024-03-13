@@ -523,6 +523,8 @@ void setup() {
   if (IsStationEmpty()) memoryposstatus = MEM_DARK; else memoryposstatus = MEM_NORMAL;
 
   tft.init();
+  tft.initDMA();
+  
   doTheme();
   if (displayflip == 0) {
 #ifdef ARS
