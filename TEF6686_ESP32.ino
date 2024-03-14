@@ -559,14 +559,6 @@ void setup() {
 
   FrequencySprite.createSprite(200, 50);
   FrequencySprite.setTextDatum(TR_DATUM);
-  switch (freqfont) {
-    case 0: FrequencySprite.loadFont(FREQFONT0); break;
-    case 1: FrequencySprite.loadFont(FREQFONT1); break;
-    case 2: FrequencySprite.loadFont(FREQFONT2); break;
-    case 3: FrequencySprite.loadFont(FREQFONT3); break;
-    case 4: FrequencySprite.loadFont(FREQFONT4); break;
-    case 5: FrequencySprite.loadFont(FREQFONT5); break;
-  }
 
   AdvRadiotextSprite.createSprite(162, 19);
   AdvRadiotextSprite.setTextDatum(TL_DATUM);
@@ -583,21 +575,7 @@ void setup() {
   OneBigLineSprite.createSprite(270, 30);
   OneBigLineSprite.setSwapBytes(true);
 
-  if (language == LANGUAGE_CHS) {
-    RadiotextSprite.loadFont(FONT16_CHS);
-    AdvRadiotextSprite.loadFont(FONT16_CHS);
-    RDSSprite.loadFont(FONT16_CHS);
-    SquelchSprite.loadFont(FONT16_CHS);
-    FullLineSprite.loadFont(FONT16_CHS);
-    OneBigLineSprite.loadFont(FONT28_CHS);
-  } else {
-    RadiotextSprite.loadFont(FONT16);
-    AdvRadiotextSprite.loadFont(FONT16);
-    RDSSprite.loadFont(FONT16);
-    SquelchSprite.loadFont(FONT16);
-    FullLineSprite.loadFont(FONT16);
-    OneBigLineSprite.loadFont(FONT28);
-  }
+  UpdateFonts();
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH) {
     if (rotarymode == 0) rotarymode = 1; else rotarymode = 0;
@@ -2000,28 +1978,7 @@ void ModeButtonPress() {
         RDSSprite.unloadFont();
         SquelchSprite.unloadFont();
         FrequencySprite.unloadFont();
-        if (language == LANGUAGE_CHS) {
-          RadiotextSprite.loadFont(FONT16_CHS);
-          AdvRadiotextSprite.loadFont(FONT16_CHS);
-          RDSSprite.loadFont(FONT16_CHS);
-          SquelchSprite.loadFont(FONT16_CHS);
-          FullLineSprite.loadFont(FONT16_CHS);
-        } else {
-          RadiotextSprite.loadFont(FONT16);
-          AdvRadiotextSprite.loadFont(FONT16);
-          RDSSprite.loadFont(FONT16);
-          SquelchSprite.loadFont(FONT16);
-          FullLineSprite.loadFont(FONT16);
-        }
-        switch (freqfont) {
-          case 0: FrequencySprite.loadFont(FREQFONT0); break;
-          case 1: FrequencySprite.loadFont(FREQFONT1); break;
-          case 2: FrequencySprite.loadFont(FREQFONT2); break;
-          case 3: FrequencySprite.loadFont(FREQFONT3); break;
-          case 4: FrequencySprite.loadFont(FREQFONT4); break;
-          case 5: FrequencySprite.loadFont(FREQFONT5); break;
-        }
-
+        UpdateFonts();
         BuildDisplay();
         ShowSignalLevel();
         ShowBW();
@@ -3743,4 +3700,31 @@ void deepSleep() {
   radio.power(1);
   esp_sleep_enable_ext0_wakeup(GPIO_NUM_34, LOW);
   esp_deep_sleep_start();
+}
+
+void UpdateFonts() {
+  if (language == LANGUAGE_CHS) {
+    RadiotextSprite.loadFont(FONT16_CHS);
+    AdvRadiotextSprite.loadFont(FONT16_CHS);
+    RDSSprite.loadFont(FONT16_CHS);
+    SquelchSprite.loadFont(FONT16_CHS);
+    FullLineSprite.loadFont(FONT16_CHS);
+    OneBigLineSprite.loadFont(FONT28_CHS);
+  } else {
+    RadiotextSprite.loadFont(FONT16);
+    AdvRadiotextSprite.loadFont(FONT16);
+    RDSSprite.loadFont(FONT16);
+    SquelchSprite.loadFont(FONT16);
+    FullLineSprite.loadFont(FONT16);
+    OneBigLineSprite.loadFont(FONT28);
+  }
+
+  switch (freqfont) {
+    case 0: FrequencySprite.loadFont(FREQFONT0); break;
+    case 1: FrequencySprite.loadFont(FREQFONT1); break;
+    case 2: FrequencySprite.loadFont(FREQFONT2); break;
+    case 3: FrequencySprite.loadFont(FREQFONT3); break;
+    case 4: FrequencySprite.loadFont(FREQFONT4); break;
+    case 5: FrequencySprite.loadFont(FREQFONT5); break;
+  }
 }
