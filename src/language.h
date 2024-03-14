@@ -835,7 +835,7 @@ static const char* const myLanguage[18][206] PROGMEM = {
     "Sve", // 202
     "Brzi PS", // 203
     "Zadano", // 204
-    "Mute screen on\nXDRGTK connection" // 205
+    "Isključi zaslon\ntijekom veze XDRGTK-om" // 205
   },
 
   { "Ελληνικά", // Greek
