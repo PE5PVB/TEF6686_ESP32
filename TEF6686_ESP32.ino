@@ -929,7 +929,7 @@ void loop() {
       change = false;
       if (SStatus > SStatusold || SStatus < SStatusold) {
         switch (CurrentSkin) {
-          case 0: SignalSprite.fillSprite(TFT_RED); break;
+          case 0: SignalSprite.fillSprite(BackgroundColor); break;
           case 1: SignalSprite.pushImage(-100 + 13, -149 + 30, 292, 170, popupbackground); break;
         }
 
