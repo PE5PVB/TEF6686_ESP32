@@ -366,11 +366,11 @@ ESP32Time rtc(0);
 
 TFT_eSprite RadiotextSprite = TFT_eSprite(&tft);
 TFT_eSprite FrequencySprite = TFT_eSprite(&tft);
-TFT_eSprite AdvRadiotextSprite = TFT_eSprite(&tft);
 TFT_eSprite RDSSprite = TFT_eSprite(&tft);
 TFT_eSprite SquelchSprite = TFT_eSprite(&tft);
 TFT_eSprite FullLineSprite = TFT_eSprite(&tft);
 TFT_eSprite OneBigLineSprite = TFT_eSprite(&tft);
+TFT_eSprite SignalSprite = TFT_eSprite(&tft);
 
 WiFiConnect wc;
 WiFiServer Server(7373);
@@ -560,9 +560,6 @@ void setup() {
   FrequencySprite.createSprite(200, 50);
   FrequencySprite.setTextDatum(TR_DATUM);
 
-  AdvRadiotextSprite.createSprite(162, 19);
-  AdvRadiotextSprite.setTextDatum(TL_DATUM);
-
   RDSSprite.createSprite(172, 19);
   RDSSprite.setTextDatum(TL_DATUM);
 
@@ -574,6 +571,11 @@ void setup() {
 
   OneBigLineSprite.createSprite(270, 30);
   OneBigLineSprite.setSwapBytes(true);
+
+  SignalSprite.createSprite(80, 48);
+  SignalSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+  SignalSprite.setTextDatum(TR_DATUM);
+  SignalSprite.setSwapBytes(true);
 
   UpdateFonts();
 
@@ -926,8 +928,18 @@ void loop() {
       lowsignaltimer = millis();
       change = false;
       if (SStatus > SStatusold || SStatus < SStatusold) {
-        if (SStatusold / 10 != SStatus / 10) tftReplace(1, String(SStatusold / 10), String(SStatus / 10), 140, 149, PrimaryColor, PrimaryColorSmooth, 48);
-        tftReplace(1, "." + String(abs(SStatusold % 10)), "." + String(abs(SStatus % 10)), 160, 149, PrimaryColor, PrimaryColorSmooth, 28);
+        switch (CurrentSkin) {
+          case 0: SignalSprite.fillSprite(TFT_RED); break;
+          case 1: SignalSprite.pushImage(-100 + 13, -149 + 30, 292, 170, popupbackground); break;
+        }
+
+        SignalSprite.loadFont(FONT48);
+        SignalSprite.drawString(String(SStatus / 10), 58, 0);
+        SignalSprite.unloadFont();
+        SignalSprite.loadFont(FONT28);
+        SignalSprite.drawString("." + String(abs(SStatus % 10)), 78, 0);
+        SignalSprite.unloadFont();
+        SignalSprite.pushSprite(100, 149);
         SStatusold = SStatus;
       }
     }
@@ -1974,7 +1986,6 @@ void ModeButtonPress() {
         if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
         if (USBmode) Serial.begin(19200); else Serial.begin(115200);
         RadiotextSprite.unloadFont();
-        AdvRadiotextSprite.unloadFont();
         RDSSprite.unloadFont();
         SquelchSprite.unloadFont();
         FrequencySprite.unloadFont();
@@ -2544,7 +2555,6 @@ void ShowFreq(int mode) {
   if (!rdsflagreset && !screenmute && !afscreen) {
     ShowRDSLogo(false);
     RadiotextSprite.fillSprite(BackgroundColor);
-    AdvRadiotextSprite.fillSprite(BackgroundColor);
     if (!advancedRDS) {
       tft.fillCircle(314, 223, 2, GreyoutColor);
       tft.fillCircle(314, 234, 2, GreyoutColor);
@@ -2552,7 +2562,7 @@ void ShowFreq(int mode) {
     } else {
       tft.fillCircle(203, 223, 2, GreyoutColor);
       tft.fillCircle(203, 234, 2, GreyoutColor);
-      AdvRadiotextSprite.pushSprite(36, 220);
+      RDSSprite.pushSprite(36, 220);
     }
     rdsflagreset = true;
   }
@@ -3609,7 +3619,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.commit();
 }
 
-void tftReplace(int8_t offset, const String &textold, const String &text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize) {
+void tftReplace(int8_t offset, const String & textold, const String & text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize) {
   const uint8_t *selectedFont = nullptr;
   if (language == LANGUAGE_CHS) {
     if (fontsize == 16) selectedFont = FONT16_CHS;
@@ -3651,7 +3661,7 @@ void tftReplace(int8_t offset, const String &textold, const String &text, int16_
   tft.drawString(modifiedText, x, y);
 }
 
-void tftPrint(int8_t offset, const String &text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize) {
+void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize) {
   const uint8_t *selectedFont = nullptr;
   if (language == LANGUAGE_CHS) {
     if (fontsize == 16) selectedFont = FONT16_CHS;
@@ -3705,14 +3715,12 @@ void deepSleep() {
 void UpdateFonts() {
   if (language == LANGUAGE_CHS) {
     RadiotextSprite.loadFont(FONT16_CHS);
-    AdvRadiotextSprite.loadFont(FONT16_CHS);
     RDSSprite.loadFont(FONT16_CHS);
     SquelchSprite.loadFont(FONT16_CHS);
     FullLineSprite.loadFont(FONT16_CHS);
     OneBigLineSprite.loadFont(FONT28_CHS);
   } else {
     RadiotextSprite.loadFont(FONT16);
-    AdvRadiotextSprite.loadFont(FONT16);
     RDSSprite.loadFont(FONT16);
     SquelchSprite.loadFont(FONT16);
     FullLineSprite.loadFont(FONT16);

@@ -2064,10 +2064,16 @@ void MenuUp() {
             break;
 
           case ITEM4:
-            if (LevelOffset > 0) tftPrint(1, "+" + String(LevelOffset, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, String(LevelOffset, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             LevelOffset++;
             if (LevelOffset > 15) LevelOffset = -25;
-            if (LevelOffset > 0) tftPrint(1, "+" + String(LevelOffset, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(LevelOffset, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.setTextDatum(TL_DATUM);
+            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            OneBigLineSprite.drawString("dBμV", 155, 0);
+            OneBigLineSprite.setTextDatum(TR_DATUM);
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            OneBigLineSprite.drawString((LevelOffset > 0 ? "+" : "") + String(LevelOffset, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             radio.setOffset(LevelOffset);
             change = true;
             break;
@@ -2195,15 +2201,15 @@ void MenuUp() {
             if (bandAM > AM_BAND_CNT - 1) bandAM = AM_BAND_ALL;
 
             switch (bandAM) {
-              case AM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104]), 135, 0); break;
+              case AM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
               case AM_BAND_LW_MW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103], 135, 0); break;
-                case AM_BAND_LW_SW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104], 135, 0); break;
-                  case AM_BAND_MW_SW: OneBigLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
-                    case AM_BAND_LW: OneBigLineSprite.drawString(myLanguage[language][102], 135, 0); break;
-                      case AM_BAND_MW: OneBigLineSprite.drawString(myLanguage[language][103], 135, 0); break;
-                        case AM_BAND_SW: OneBigLineSprite.drawString(myLanguage[language][104], 135, 0); break;
-                          case AM_BAND_NONE: OneBigLineSprite.drawString(myLanguage[language][83], 135, 0); break;
-                            }
+              case AM_BAND_LW_SW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104], 135, 0); break;
+              case AM_BAND_MW_SW: OneBigLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
+              case AM_BAND_LW: OneBigLineSprite.drawString(myLanguage[language][102], 135, 0); break;
+              case AM_BAND_MW: OneBigLineSprite.drawString(myLanguage[language][103], 135, 0); break;
+              case AM_BAND_SW: OneBigLineSprite.drawString(myLanguage[language][104], 135, 0); break;
+              case AM_BAND_NONE: OneBigLineSprite.drawString(myLanguage[language][83], 135, 0); break;
+            }
 
             OneBigLineSprite.pushSprite(24, 118);
             break;
@@ -2255,16 +2261,23 @@ void MenuUp() {
             break;
 
           case ITEM9:
-            if (mwstepsize) tftPrint (1, "10", 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint (1, "9", 155, 118, BackgroundColor, BackgroundColor, 28);
             if (mwstepsize) mwstepsize = false; else mwstepsize = true;
-            if (mwstepsize) tftPrint (1, "10", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint (1, "9", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.setTextDatum(TL_DATUM);
+            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            OneBigLineSprite.drawString("kHz", 155, 0);
+            OneBigLineSprite.setTextDatum(TR_DATUM);
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            OneBigLineSprite.drawString((mwstepsize ? "10" : "9"), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM10:
-            tftPrint(1, String(amscansens), 155, 118, BackgroundColor, BackgroundColor, 28);
             amscansens++;
             if (amscansens > 15) amscansens = 1;
-            tftPrint(1, String(amscansens), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.drawString(String(amscansens, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
         }
         break;
@@ -2272,35 +2285,40 @@ void MenuUp() {
       case CONNECTIVITY:
         switch (menuoption) {
           case ITEM1:
-            if (USBmode) tftPrint(0, "RDS Spy", 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, "XDRGTK", 155, 118, BackgroundColor, BackgroundColor, 28);
             if (USBmode) USBmode = false; else USBmode = true;
-            if (USBmode) tftPrint(0, "RDS Spy", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, "XDRGTK", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.drawString((USBmode ? "RDS Spy" : "XDRGTK"), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM2:
-            if (wifi) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (wifi) wifi = false; else wifi = true;
-            if (wifi) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.drawString((wifi ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM4:
-            tftPrint(0, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             subnetclient ++;
             if (subnetclient > 254) subnetclient = 1;
-            tftPrint(0, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.drawString(String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM5:
-            tftPrint(0, String(stationlistid, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             stationlistid ++;
             if (stationlistid > 10) stationlistid = 1;
-            tftPrint(0, String(stationlistid, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.drawString(String(stationlistid, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM6:
-            if (XDRGTKMuteScreen) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (XDRGTKMuteScreen) XDRGTKMuteScreen = false; else XDRGTKMuteScreen = true;
-            if (XDRGTKMuteScreen) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.drawString((XDRGTKMuteScreen ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
         }
         break;
@@ -2796,10 +2814,17 @@ void MenuDown() {
             break;
 
           case ITEM4:
-            if (LevelOffset > 0) tftPrint(1, "+" + String(LevelOffset, DEC), 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(1, String(LevelOffset, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             LevelOffset--;
             if (LevelOffset < -25) LevelOffset = 15;
-            if (LevelOffset > 0) tftPrint(1, "+" + String(LevelOffset, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(LevelOffset, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);                radio.setOffset(LevelOffset);
+
+            OneBigLineSprite.setTextDatum(TL_DATUM);
+            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            OneBigLineSprite.drawString("dBμV", 155, 0);
+            OneBigLineSprite.setTextDatum(TR_DATUM);
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            OneBigLineSprite.drawString((LevelOffset > 0 ? "+" : "") + String(LevelOffset, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            radio.setOffset(LevelOffset);
             change = true;
             break;
 
@@ -2926,15 +2951,15 @@ void MenuDown() {
             if (bandAM > AM_BAND_CNT) bandAM = AM_BAND_NONE;
 
             switch (bandAM) {
-              case AM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104]), 135, 0); break;
+              case AM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
               case AM_BAND_LW_MW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103], 135, 0); break;
-                case AM_BAND_LW_SW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104], 135, 0); break;
-                  case AM_BAND_MW_SW: OneBigLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
-                    case AM_BAND_LW: OneBigLineSprite.drawString(myLanguage[language][102], 135, 0); break;
-                      case AM_BAND_MW: OneBigLineSprite.drawString(myLanguage[language][103], 135, 0); break;
-                        case AM_BAND_SW: OneBigLineSprite.drawString(myLanguage[language][104], 135, 0); break;
-                          case AM_BAND_NONE: OneBigLineSprite.drawString(myLanguage[language][83], 135, 0); break;
-                            }
+              case AM_BAND_LW_SW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104], 135, 0); break;
+              case AM_BAND_MW_SW: OneBigLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
+              case AM_BAND_LW: OneBigLineSprite.drawString(myLanguage[language][102], 135, 0); break;
+              case AM_BAND_MW: OneBigLineSprite.drawString(myLanguage[language][103], 135, 0); break;
+              case AM_BAND_SW: OneBigLineSprite.drawString(myLanguage[language][104], 135, 0); break;
+              case AM_BAND_NONE: OneBigLineSprite.drawString(myLanguage[language][83], 135, 0); break;
+            }
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
@@ -2985,16 +3010,23 @@ void MenuDown() {
             break;
 
           case ITEM9:
-            if (mwstepsize) tftPrint (1, "10", 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint (1, "9", 155, 118, BackgroundColor, BackgroundColor, 28);
             if (mwstepsize) mwstepsize = false; else mwstepsize = true;
-            if (mwstepsize) tftPrint (1, "10", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint (1, "9", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.setTextDatum(TL_DATUM);
+            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            OneBigLineSprite.drawString("kHz", 155, 0);
+            OneBigLineSprite.setTextDatum(TR_DATUM);
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            OneBigLineSprite.drawString((mwstepsize ? "10" : "9"), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM10:
-            tftPrint(1, String(amscansens), 155, 118, BackgroundColor, BackgroundColor, 28);
             amscansens--;
             if (amscansens == 0) amscansens = 15;
-            tftPrint(1, String(amscansens), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.drawString(String(amscansens, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
         }
         break;
@@ -3002,35 +3034,40 @@ void MenuDown() {
       case CONNECTIVITY:
         switch (menuoption) {
           case ITEM1:
-            if (USBmode) tftPrint(0, "RDS Spy", 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, "XDRGTK", 155, 118, BackgroundColor, BackgroundColor, 28);
             if (USBmode) USBmode = false; else USBmode = true;
-            if (USBmode) tftPrint(0, "RDS Spy", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, "XDRGTK", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.drawString((USBmode ? "RDS Spy" : "XDRGTK"), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM2:
-            if (wifi) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (wifi) wifi = false; else wifi = true;
-            if (wifi) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.drawString((wifi ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM4:
-            tftPrint(0, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             subnetclient --;
             if (subnetclient < 1) subnetclient = 254;
-            tftPrint(0, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.drawString(String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM5:
-            tftPrint(0, String(stationlistid, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
             stationlistid --;
             if (stationlistid == 0) stationlistid = 10;
-            tftPrint(0, String(stationlistid, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.drawString(String(stationlistid, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM6:
-            if (XDRGTKMuteScreen) tftPrint(0, myLanguage[language][42], 155, 118, BackgroundColor, BackgroundColor, 28); else tftPrint(0, myLanguage[language][30], 155, 118, BackgroundColor, BackgroundColor, 28);
             if (XDRGTKMuteScreen) XDRGTKMuteScreen = false; else XDRGTKMuteScreen = true;
-            if (XDRGTKMuteScreen) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.drawString((XDRGTKMuteScreen ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
         }
         break;
@@ -3163,12 +3200,14 @@ void DoMenu() {
 
           case ITEM2:
             Infoboxprint(myLanguage[language][68]);
+
             OneBigLineSprite.drawString((touchrotating ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM3:
             Infoboxprint(myLanguage[language][75]);
+
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
 
@@ -3188,12 +3227,14 @@ void DoMenu() {
 
           case ITEM4:
             Infoboxprint(myLanguage[language][62]);
+
             OneBigLineSprite.drawString((usesquelch ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM5:
             Infoboxprint(myLanguage[language][37]);
+
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             OneBigLineSprite.drawString("dBµV", 155, 0);
@@ -3205,6 +3246,7 @@ void DoMenu() {
 
           case ITEM6:
             Infoboxprint(myLanguage[language][198]);
+
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             OneBigLineSprite.drawString("dBµV", 155, 0);
@@ -3214,9 +3256,9 @@ void DoMenu() {
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
-
           case ITEM7:
             Infoboxprint(myLanguage[language][81]);
+
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             OneBigLineSprite.drawString("MHz", 155, 0);
@@ -3232,6 +3274,7 @@ void DoMenu() {
         switch (menuoption) {
           case ITEM1:
             Infoboxprint(myLanguage[language][10]);
+
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             OneBigLineSprite.drawString("dB", 155, 0);
@@ -3244,18 +3287,21 @@ void DoMenu() {
 
           case ITEM2:
             Infoboxprint(myLanguage[language][45]);
+
             OneBigLineSprite.drawString((edgebeep ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM3:
             Infoboxprint(myLanguage[language][67]);
+
             OneBigLineSprite.drawString((audiomode ? "MPX" : "Stereo"), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM4:
             Infoboxprint(myLanguage[language][15]);
+
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             if (StereoLevel != 0) OneBigLineSprite.drawString("dBµV", 155, 0);
@@ -3267,6 +3313,7 @@ void DoMenu() {
 
           case ITEM5:
             Infoboxprint(myLanguage[language][16]);
+
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             OneBigLineSprite.drawString("Hz", 155, 0);
@@ -3278,6 +3325,7 @@ void DoMenu() {
 
           case ITEM6:
             Infoboxprint(myLanguage[language][17]);
+
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             if (HighCutOffset != 0) OneBigLineSprite.drawString("dBµV", 155, 0);
@@ -3289,6 +3337,7 @@ void DoMenu() {
 
           case ITEM7:
             Infoboxprint(myLanguage[language][199]);
+
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             if (fmdeemphasis != DEEMPHASIS_NONE) OneBigLineSprite.drawString("μs", 155, 0);
@@ -3304,6 +3353,7 @@ void DoMenu() {
         switch (menuoption) {
           case ITEM1:
             Infoboxprint(myLanguage[language][40]);
+
             OneBigLineSprite.drawString(myLanguage[language][0], 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
@@ -3322,6 +3372,7 @@ void DoMenu() {
 
           case ITEM3:
             Infoboxprint(myLanguage[language][63]);
+
             OneBigLineSprite.drawString((showmodulation ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
@@ -3340,6 +3391,7 @@ void DoMenu() {
 
           case ITEM5:
             Infoboxprint(myLanguage[language][74]);
+
             switch (poweroptions) {
               case LCD_OFF: OneBigLineSprite.drawString(myLanguage[language][76], 135, 0); break;
               case LCD_BRIGHTNESS_1_PERCENT: OneBigLineSprite.drawString(myLanguage[language][94], 135, 0); break;
@@ -3352,6 +3404,7 @@ void DoMenu() {
 
           case ITEM6:
             Infoboxprint(myLanguage[language][173]);
+
             switch (batteryoptions) {
               case BATTERY_NONE: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
               case BATTERY_VALUE: OneBigLineSprite.drawString(myLanguage[language][174], 135, 0); break;
@@ -3363,24 +3416,28 @@ void DoMenu() {
 
           case ITEM7:
             Infoboxprint(myLanguage[language][98]);
+
             OneBigLineSprite.drawString(unitString[unit], 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM8:
             Infoboxprint(myLanguage[language][78]);
+
             OneBigLineSprite.drawString(Skin[CurrentSkin], 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM9:
             Infoboxprint(myLanguage[language][77]);
+
             OneBigLineSprite.drawString(Theme[CurrentTheme], 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM10:
             Infoboxprint(myLanguage[language][85]);
+
             OneBigLineSprite.drawString(FreqFont[freqfont], 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
@@ -3391,6 +3448,7 @@ void DoMenu() {
         switch (menuoption) {
           case ITEM1:
             Infoboxprint(myLanguage[language][38]);
+
             switch (showrdserrors) {
               case 0: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
               case 1: OneBigLineSprite.drawString(myLanguage[language][200], 135, 0); break;
@@ -3402,6 +3460,7 @@ void DoMenu() {
 
           case ITEM2:
             Infoboxprint(myLanguage[language][46]);
+
             if (region == REGION_EU) OneBigLineSprite.drawString(myLanguage[language][47], 135, 0);
             if (region == REGION_US) OneBigLineSprite.drawString(myLanguage[language][48], 135, 0);
 
@@ -3417,18 +3476,21 @@ void DoMenu() {
 
           case ITEM4:
             Infoboxprint(myLanguage[language][60]);
+
             OneBigLineSprite.drawString((radio.rds.filter ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM5:
             Infoboxprint(myLanguage[language][61]);
+
             OneBigLineSprite.drawString((radio.rds.pierrors ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM6:
             Infoboxprint(myLanguage[language][99]);
+
             switch (af) {
               case 0: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
               case 1: OneBigLineSprite.drawString(String(myLanguage[language][42]) + " / REG " + String(myLanguage[language][42]), 135, 0); break;
@@ -3440,18 +3502,21 @@ void DoMenu() {
 
           case ITEM7:
             Infoboxprint(myLanguage[language][176]);
+
             OneBigLineSprite.drawString((radio.rds.rtbuffer ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM8:
             Infoboxprint(myLanguage[language][196]);
+
             OneBigLineSprite.drawString((radio.rds.sortaf ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM9:
             Infoboxprint(myLanguage[language][203]);
+
             OneBigLineSprite.drawString((radio.rds.fastps ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
@@ -3462,6 +3527,7 @@ void DoMenu() {
         switch (menuoption) {
           case ITEM1:
             Infoboxprint(myLanguage[language][11]);
+
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             OneBigLineSprite.drawString("MHz", 155, 0);
@@ -3473,6 +3539,7 @@ void DoMenu() {
 
           case ITEM2:
             Infoboxprint(myLanguage[language][12]);
+
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             OneBigLineSprite.drawString("MHz", 155, 0);
@@ -3484,6 +3551,7 @@ void DoMenu() {
 
           case ITEM3:
             Infoboxprint(myLanguage[language][13]);
+
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             OneBigLineSprite.drawString("MHz", 155, 0);
@@ -3495,9 +3563,15 @@ void DoMenu() {
 
           case ITEM4:
             Infoboxprint(myLanguage[language][14]);
-            tftPrint(-1, "dB", 170, 118, ActiveColor, ActiveColorSmooth, 28);
+
+            OneBigLineSprite.setTextDatum(TL_DATUM);
+            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            OneBigLineSprite.drawString("dBμV", 155, 0);
+            OneBigLineSprite.setTextDatum(TR_DATUM);
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            OneBigLineSprite.drawString((LevelOffset > 0 ? "+" : "") + String(LevelOffset, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             tftPrint(-1, "dBμV", 190, 165, ActiveColor, ActiveColorSmooth, 28);
-            if (LevelOffset > 0) tftPrint(1, "+" + String(LevelOffset, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(1, String(LevelOffset, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
             SStatusold = 2000;
             change = true;
             break;
@@ -3516,6 +3590,7 @@ void DoMenu() {
 
           case ITEM6:
             Infoboxprint(myLanguage[language][43]);
+
             OneBigLineSprite.drawString((softmutefm ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
@@ -3563,6 +3638,7 @@ void DoMenu() {
 
           case ITEM10:
             Infoboxprint(myLanguage[language][82]);
+
             OneBigLineSprite.drawString(String(fmscansens), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
@@ -3573,6 +3649,7 @@ void DoMenu() {
         switch (menuoption) {
           case ITEM1:
             Infoboxprint(myLanguage[language][44]);
+
             OneBigLineSprite.drawString((softmuteam ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
@@ -3605,26 +3682,28 @@ void DoMenu() {
             Infoboxprint(myLanguage[language][101]);
 
             switch (bandAM) {
-              case AM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104]), 135, 0); break;
+              case AM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
               case AM_BAND_LW_MW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103], 135, 0); break;
-                case AM_BAND_LW_SW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104], 135, 0); break;
-                  case AM_BAND_MW_SW: OneBigLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
-                    case AM_BAND_LW: OneBigLineSprite.drawString(myLanguage[language][102], 135, 0); break;
-                      case AM_BAND_MW: OneBigLineSprite.drawString(myLanguage[language][103], 135, 0); break;
-                        case AM_BAND_SW: OneBigLineSprite.drawString(myLanguage[language][104], 135, 0); break;
-                          case AM_BAND_NONE: OneBigLineSprite.drawString(myLanguage[language][83], 135, 0); break;
-                            }
+              case AM_BAND_LW_SW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104], 135, 0); break;
+              case AM_BAND_MW_SW: OneBigLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
+              case AM_BAND_LW: OneBigLineSprite.drawString(myLanguage[language][102], 135, 0); break;
+              case AM_BAND_MW: OneBigLineSprite.drawString(myLanguage[language][103], 135, 0); break;
+              case AM_BAND_SW: OneBigLineSprite.drawString(myLanguage[language][104], 135, 0); break;
+              case AM_BAND_NONE: OneBigLineSprite.drawString(myLanguage[language][83], 135, 0); break;
+            }
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM5:
             Infoboxprint(myLanguage[language][59]);
+
             OneBigLineSprite.drawString((showSWMIBand ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM6:
             Infoboxprint(myLanguage[language][186]);
+
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             if (amcodect != 0) OneBigLineSprite.drawString("%", 155, 0);
@@ -3636,12 +3715,14 @@ void DoMenu() {
 
           case ITEM7:
             Infoboxprint(myLanguage[language][188]);
+
             OneBigLineSprite.drawString(String(amcodectcount, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM8:
             Infoboxprint(myLanguage[language][36]);
+
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             if (amgain != 0) OneBigLineSprite.drawString("dB", 155, 0);
@@ -3653,13 +3734,21 @@ void DoMenu() {
 
           case ITEM9:
             Infoboxprint(myLanguage[language][169]);
-            tftPrint(-1, "kHz", 170, 118, ActiveColor, ActiveColorSmooth, 28);
-            if (mwstepsize) tftPrint (1, "10", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint (1, "9", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.setTextDatum(TL_DATUM);
+            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            OneBigLineSprite.drawString("kHz", 155, 0);
+            OneBigLineSprite.setTextDatum(TR_DATUM);
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            OneBigLineSprite.drawString((mwstepsize ? "10" : "9"), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM10:
             Infoboxprint(myLanguage[language][82]);
-            tftPrint (1, String(amscansens), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.drawString(String(amscansens, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
         }
         break;
@@ -3668,12 +3757,16 @@ void DoMenu() {
         switch (menuoption) {
           case ITEM1:
             Infoboxprint(myLanguage[language][50]);
-            if (USBmode) tftPrint(0, "RDS Spy", 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, "XDRGTK", 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.drawString((USBmode ? "RDS Spy" : "XDRGTK"), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM2:
             Infoboxprint(myLanguage[language][51]);
-            if (wifi) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.drawString((wifi ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM3: {
@@ -3701,7 +3794,9 @@ void DoMenu() {
           case ITEM4:
             if (wifi) {
               Infoboxprint(myLanguage[language][58]);
-              tftPrint(0, String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+              OneBigLineSprite.drawString(String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 135, 0);
+              OneBigLineSprite.pushSprite(24, 118);
             } else {
               menuopen = false;
               BuildMenu();
@@ -3710,12 +3805,16 @@ void DoMenu() {
 
           case ITEM5:
             Infoboxprint(myLanguage[language][197]);
-            tftPrint(0, String(stationlistid, DEC), 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.drawString(String(stationlistid, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM6:
             Infoboxprint(myLanguage[language][205]);
-            if (XDRGTKMuteScreen) tftPrint(0, myLanguage[language][42], 155, 118, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, myLanguage[language][30], 155, 118, PrimaryColor, PrimaryColorSmooth, 28);
+
+            OneBigLineSprite.drawString((XDRGTKMuteScreen ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
         }
         break;

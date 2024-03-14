@@ -118,7 +118,6 @@ extern TEF6686 radio;
 extern WiFiClient RemoteClient;
 extern WiFiUDP Udp;
 extern TFT_eSprite RadiotextSprite;
-extern TFT_eSprite AdvRadiotextSprite;
 extern TFT_eSprite RDSSprite;
 
 void ShowAdvancedRDS();
