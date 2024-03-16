@@ -3495,12 +3495,12 @@ void read_encoder() {
     if (encval > 3) {
       if (rotarymode) rotary = -1; else rotary = 1;
       encval = 0;
-    } else if (encval < -2) {
+    } else if (encval < -3) {
       if (rotarymode) rotary = 1; else rotary = -1;
       encval = 0;
     }
   } else {
-    if (encval > 3) {
+    if (encval > 2) {
       if (rotarymode) rotary = -1; else rotary = 1;
       encval = 0;
     } else if (encval < -2) {
