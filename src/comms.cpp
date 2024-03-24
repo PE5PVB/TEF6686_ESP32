@@ -252,10 +252,10 @@ void XDRGTKRoutine() {
 
       case 'B':
         byte stmo;
-		stmo = atol(buff + 1);
-		DataPrint("B" + String(stmo) + "\n");
-		if (stmo == 0) StereoToggle = false; else StereoToggle = true;
-		doStereoToggle();
+        stmo = atol(buff + 1);
+        DataPrint("B" + String(stmo) + "\n");
+        if (stmo == 0) StereoToggle = false; else StereoToggle = true;
+        doStereoToggle();
         break;
 
       case 'D':
@@ -490,6 +490,98 @@ void XDRGTKRoutine() {
         }
         break;
 
+      case 'W':
+        unsigned int bwtemp;
+        bwtemp = atoi(buff + 1);
+        switch (bwtemp) {
+          case 0:
+            BWset = 0;
+            doBW();
+            break;
+
+          case 56000:
+            BWset = 1;
+            doBW();
+            break;
+
+          case 64000:
+            BWset = 2;
+            doBW();
+            break;
+
+          case 72000:
+            BWset = 3;
+            doBW();
+            break;
+
+          case 84000:
+            BWset = 4;
+            doBW();
+            break;
+
+          case 97000:
+            BWset = 5;
+            doBW();
+            break;
+
+          case 114000:
+            BWset = 6;
+            doBW();
+            break;
+
+          case 133000:
+            BWset = 7;
+            doBW();
+            break;
+
+          case 151000:
+            BWset = 8;
+            doBW();
+            break;
+
+          case 168000:
+            BWset = 9;
+            doBW();
+            break;
+
+          case 184000:
+            BWset = 10;
+            doBW();
+            break;
+
+          case 200000:
+            BWset = 11;
+            doBW();
+            break;
+
+          case 217000:
+            BWset = 12;
+            doBW();
+            break;
+
+          case 236000:
+            BWset = 13;
+            doBW();
+            break;
+
+          case 254000:
+            BWset = 14;
+            doBW();
+            break;
+
+          case 287000:
+            BWset = 15;
+            doBW();
+            break;
+
+          case 311000:
+            BWset = 16;
+            doBW();
+            break;
+        }
+        DataPrint("W" + String(bwtemp) + "\n");
+        break;
+
       case 'Y':
         VolSet = atoi(buff + 1);
         if (VolSet == 0) {
@@ -509,14 +601,14 @@ void XDRGTKRoutine() {
 
       case 'x':
         DataPrint("OK\n");
-		if (BAND_FM) {
-			DataPrint("T" + String(frequency + (ConverterSet * 100) * 10) + "\n");
-		} else if (BAND_OIRT) {
-			DataPrint("T" + String(frequency_OIRT * 10) + "\n");
-		} else {
-			DataPrint("T" + String(frequency_AM) + "\n");
-		}
-		if (StereoToggle) DataPrint("B0\n"); else DataPrint("B1\n");
+        if (BAND_FM) {
+          DataPrint("T" + String(frequency + (ConverterSet * 100) * 10) + "\n");
+        } else if (BAND_OIRT) {
+          DataPrint("T" + String(frequency_OIRT * 10) + "\n");
+        } else {
+          DataPrint("T" + String(frequency_AM) + "\n");
+        }
+        if (StereoToggle) DataPrint("B0\n"); else DataPrint("B1\n");
         if (XDRGTKMuteScreen) MuteScreen(1);
         break;
 
