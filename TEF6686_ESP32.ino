@@ -2556,12 +2556,13 @@ void ShowFreq(int mode) {
 
   if (!rdsflagreset && !screenmute && !afscreen) {
     ShowRDSLogo(false);
-    RadiotextSprite.fillSprite(BackgroundColor);
     if (!advancedRDS) {
+      RadiotextSprite.fillSprite(BackgroundColor);
       tft.fillCircle(314, 223, 2, GreyoutColor);
       tft.fillCircle(314, 234, 2, GreyoutColor);
       RadiotextSprite.pushSprite(36, 220);
     } else {
+      RDSSprite.fillSprite(BackgroundColor);
       tft.fillCircle(203, 223, 2, GreyoutColor);
       tft.fillCircle(203, 234, 2, GreyoutColor);
       RDSSprite.pushSprite(36, 220);
