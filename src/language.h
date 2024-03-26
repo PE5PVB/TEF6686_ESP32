@@ -3273,9 +3273,9 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Bruk AF:", // 99
     "Velg FM Band:", // 100
     "Velg AM Band:", // 101
-    "LW", // 102 ***
-    "MW", // 103 ***
-    "SW", // 104 ***
+    "LB", // 102
+    "MB", // 103
+    "KB", // 104
     "FM", // 105 ***
     "OIRT", // 106 ***
     "Tune når skjerm av", // 107
@@ -3340,7 +3340,7 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Identifikator", // 166
     "Kjøp", // 167
     "Få data", // 168
-    "MW std. trinnstørrelse", // 169
+    "MB std. trinnstørrelse", // 169
     "Tangerine", // 170 ***
     "Ocean", // 171 ***
     "Indigo", // 172 ***
@@ -3377,9 +3377,9 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Rask PS", // 203
     "Standard", // 204
     "Dempet skjerm på\nXDRGTK tilkobling", // 205
-    "FMSI stereo improvement", // 206
-    "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!" // 208
+    "FMSI stereo forbedringt", // 206
+    "Kun tilgjengelig\npå TEF6687/6689!", // 207
+    "Funksjon ikke tilgjengelig\npå valgt skin!" // 208
   },
 
   { "Español", // Spanish
