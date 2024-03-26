@@ -68,6 +68,7 @@ bool dropout;
 bool dynamicPTYold;
 bool edgebeep;
 bool externaltune;
+bool fmsi;
 bool fullsearchrds;
 bool hasafold;
 bool hasCTold;
@@ -469,6 +470,7 @@ void setup() {
   XDRGTKMuteScreen = EEPROM.readByte(EE_BYTE_XDRGTKMUTE);
   fmagc = EEPROM.readByte(EE_BYTE_FMAGC);
   amagc = EEPROM.readByte(EE_BYTE_AMAGC);
+  fmsi = EEPROM.readByte(EE_BYTE_FMSI);
 
   if (spispeed == SPI_SPEED_DEFAULT) tft.setSPISpeed(SPI_FREQUENCY / 1000000); else tft.setSPISpeed(spispeed * 10);
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;
@@ -667,6 +669,7 @@ void setup() {
 
   if (lowByte(device) == 14) {
     fullsearchrds = false;
+    fmsi = false;
     tft.fillRect(152, 230, 16, 6, PrimaryColor);
     tftPrint(0, "TEF6686 Lithio", 160, 172, ActiveColor, ActiveColorSmooth, 28);
   } else if (lowByte(device) == 1) {
@@ -675,6 +678,7 @@ void setup() {
     tftPrint(0, "TEF6687 Lithio FMSI", 160, 172, ActiveColor, ActiveColorSmooth, 28);
   } else if (lowByte(device) == 9) {
     fullsearchrds = false;
+    fmsi = false;
     tft.fillRect(152, 230, 16, 6, PrimaryColor);
     tftPrint(0, "TEF6688 Lithio DR", 160, 172, ActiveColor, ActiveColorSmooth, 28);
   } else if (lowByte(device) == 3) {
@@ -726,6 +730,7 @@ void setup() {
   radio.rds.region = region;
   radio.setAGC(fmagc);
   radio.setAMAGC(amagc);
+  if (fmsi) radio.setFMSI(2); else radio.setFMSI(1);
   LowLevelInit = true;
 
   if (ConverterSet >= 200) {
@@ -1975,6 +1980,7 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_XDRGTKMUTE, XDRGTKMuteScreen);
         EEPROM.writeByte(EE_BYTE_FMAGC, fmagc);
         EEPROM.writeByte(EE_BYTE_AMAGC, amagc);
+        EEPROM.writeByte(EE_BYTE_FMSI, fmsi);
         EEPROM.commit();
         if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
         if (!usesquelch) radio.setUnMute();
@@ -3612,6 +3618,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_XDRGTKMUTE, 0);
   EEPROM.writeByte(EE_BYTE_FMAGC, 92);
   EEPROM.writeByte(EE_BYTE_AMAGC, 100);
+  EEPROM.writeByte(EE_BYTE_FMSI, 1);
   EEPROM.commit();
 }
 

@@ -196,9 +196,9 @@
 
 // EEPROM index defines
 #define EE_PRESETS_CNT              99
-#define EE_CHECKBYTE_VALUE          4 // 0 ~ 255,add new entry, change for new value
+#define EE_CHECKBYTE_VALUE          5 // 0 ~ 255,add new entry, change for new value
 
-#define EE_TOTAL_CNT                826
+#define EE_TOTAL_CNT                827
 #define EE_UINT16_FREQUENCY_FM      0
 #define EE_BYTE_VOLSET              4
 #define EE_BYTE_STEREO              5
@@ -281,10 +281,11 @@
 #define EE_BYTE_XDRGTKMUTE			126
 #define EE_BYTE_FMAGC				127
 #define EE_BYTE_AMAGC				128
-#define EE_PRESETS_BAND_START       129
-#define EE_PRESET_BW_START          229
-#define EE_PRESET_MS_START          329
-#define EE_PRESETS_START            429
+#define EE_BYTE_FMSI				129
+#define EE_PRESETS_BAND_START       130
+#define EE_PRESET_BW_START          230
+#define EE_PRESET_MS_START          330
+#define EE_PRESETS_START            430
 #define EE_PRESETS_FREQUENCY        0
 
 // End of EEPROM index defines

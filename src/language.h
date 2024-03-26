@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 // *** means the text is the same as in English
-static const char* const myLanguage[18][206] PROGMEM = {
+static const char* const myLanguage[18][208] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -211,7 +211,9 @@ static const char* const myLanguage[18][206] PROGMEM = {
     "All", // 202
     "Fast PS", // 203
     "Default", // 204
-    "Mute screen on\nXDRGTK connection" // 205
+    "Mute screen on\nXDRGTK connection", // 205
+    "FMSI stereo improvement", // 206
+    "Function only available\non TEF6687/6689!" // 207
   },
 
   { "Nederlands", // Dutch
@@ -419,7 +421,9 @@ static const char* const myLanguage[18][206] PROGMEM = {
     "Alles", // 202
     "Snelle PS", // 203
     "Standaard", // 204
-    "Scherm uit bij\nXDRGTK verbinding" // 205
+    "Scherm uit bij\nXDRGTK verbinding", // 205
+    "FMSI stereo verbetering", // 206
+    "Alleen beschikbaar op\nTEF6687/6689!" // 207
   },
 
   { "Polski", // Polish
@@ -627,7 +631,9 @@ static const char* const myLanguage[18][206] PROGMEM = {
     "Wszystkie", // 202
     "Szybki PS", // 203
     "Domyslny", // 204
-    "Wylacz ekran gdy\npołączony z XDR-GTK" // 205
+    "Wylacz ekran gdy\npołączony z XDR-GTK", // 205
+    "FMSI stereo improvement", // 206
+    "Function only available\non TEF6687/6689!" // 207
   },
 
   { "Hrvatski", // Croatian
@@ -835,7 +841,9 @@ static const char* const myLanguage[18][206] PROGMEM = {
     "Sve", // 202
     "Brzi PS", // 203
     "Zadano", // 204
-    "Isključi zaslon\ntijekom veze XDRGTK-om" // 205
+    "Isključi zaslon\ntijekom veze XDRGTK-om", // 205
+    "FMSI stereo improvement", // 206
+    "Function only available\non TEF6687/6689!" // 207
   },
 
   { "Ελληνικά", // Greek
@@ -1043,7 +1051,9 @@ static const char* const myLanguage[18][206] PROGMEM = {
     "Όλα", // 202
     "Γρήγορο PS", // 203
     "Προεπιλογή", // 204
-    "Μαύρη οθόνη σε\nσύνδεση XDRGTK" // 205
+    "Μαύρη οθόνη σε\nσύνδεση XDRGTK", // 205
+    "FMSI stereo improvement", // 206
+    "Function only available\non TEF6687/6689!" // 207
   },
 
   { "Română", // Romanian
@@ -1251,7 +1261,9 @@ static const char* const myLanguage[18][206] PROGMEM = {
     "Tot", // 202
     "PS rapid", // 203
     "Mod implicit", // 204
-    "Mute screen on\nXDRGTK connection" // 205
+    "Mute screen on\nXDRGTK connection", // 205
+    "FMSI stereo improvement", // 206
+    "Function only available\non TEF6687/6689!" // 207
   },
 
   { "Deutsch", // German
@@ -1459,7 +1471,9 @@ static const char* const myLanguage[18][206] PROGMEM = {
     "Maximal", // 202
     "Schnelles PS", // 203
     "Default", // 204
-    "Mute screen on\nXDRGTK connection" // 205
+    "Mute screen on\nXDRGTK connection", // 205
+    "FMSI stereo improvement", // 206
+    "Function only available\non TEF6687/6689!" // 207
   },
 
   { "Český", // Czech
@@ -1667,7 +1681,9 @@ static const char* const myLanguage[18][206] PROGMEM = {
     "Vše", // 202
     "Rychlé načtení PS", // 203
     "Default", // 204
-    "Mute screen on\nXDRGTK connection" // 205
+    "Mute screen on\nXDRGTK connection", // 205
+    "FMSI stereo improvement", // 206
+    "Function only available\non TEF6687/6689!" // 207
   },
 
   { "Slovenský", // Slovak
@@ -1875,7 +1891,9 @@ static const char* const myLanguage[18][206] PROGMEM = {
     "Všetko", // 202
     "Rýchle načítanie PS", // 203
     "Default", // 204
-    "Mute screen on\nXDRGTK connection" // 205
+    "Mute screen on\nXDRGTK connection", // 205
+    "FMSI stereo improvement", // 206
+    "Function only available\non TEF6687/6689!" // 207
   },
 
   { "Français", // French
@@ -2083,7 +2101,9 @@ static const char* const myLanguage[18][206] PROGMEM = {
     "Toutes", // 202
     "PS rapide", // 203
     "Défaut", // 204
-    "Écran muet sur\nla connexion XDRGTK" // 205
+    "Écran muet sur\nla connexion XDRGTK", // 205
+    "FMSI stereo improvement", // 206
+    "Function only available\non TEF6687/6689!" // 207
   },
 
   { "Български", // Bulgarian
@@ -2291,7 +2311,9 @@ static const char* const myLanguage[18][206] PROGMEM = {
     "Всички", // 202
     "Fast PS", // 203 ***
     "Default", // 204
-    "Mute screen on\nXDRGTK connection" // 205
+    "Mute screen on\nXDRGTK connection", // 205
+    "FMSI stereo improvement", // 206
+    "Function only available\non TEF6687/6689!" // 207
   },
 
   { "Русский", // Russian
@@ -2499,7 +2521,9 @@ static const char* const myLanguage[18][206] PROGMEM = {
     "Все", // 202
     "Быстрый PS", // 203
     "Default", // 204
-    "Mute screen on\nXDRGTK connection" // 205
+    "Mute screen on\nXDRGTK connection", // 205
+    "FMSI stereo improvement", // 206
+    "Function only available\non TEF6687/6689!" // 207
   },
 
   { "Українська", // Ukranian
@@ -2707,7 +2731,9 @@ static const char* const myLanguage[18][206] PROGMEM = {
     "Усе", // 202
     "Швидкий PS", // 203
     "Default", // 204
-    "Mute screen on\nXDRGTK connection" // 205
+    "Mute screen on\nXDRGTK connection", // 205
+    "FMSI stereo improvement", // 206
+    "Function only available\non TEF6687/6689!" // 207
   },
 
   { "Italiano", // Italian
@@ -2915,7 +2941,9 @@ static const char* const myLanguage[18][206] PROGMEM = {
     "Tutto", // 202 ***
     "PS veloce", // 203 ***
     "Default", // 204
-    "Mute screen on\nXDRGTK connection" // 205
+    "Mute screen on\nXDRGTK connection", // 205
+    "FMSI stereo improvement", // 206
+    "Function only available\non TEF6687/6689!" // 207
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3123,7 +3151,9 @@ static const char* const myLanguage[18][206] PROGMEM = {
     "全部", // 202
     "快速 PS", // 203
     "默认", // 204
-    "XDRGTK连接时锁屏" // 205
+    "XDRGTK连接时锁屏", // 205
+    "FMSI stereo improvement", // 206
+    "Function only available\non TEF6687/6689!" // 207
   },
 
   { "Norsk", // Norwegian
@@ -3331,7 +3361,9 @@ static const char* const myLanguage[18][206] PROGMEM = {
     "Alt", // 202
     "Rask PS", // 203
     "Standard", // 204
-    "Dempet skjerm på\nXDRGTK tilkobling" // 205
+    "Dempet skjerm på\nXDRGTK tilkobling", // 205
+    "FMSI stereo improvement", // 206
+    "Function only available\non TEF6687/6689!" // 207
   },
 
   { "Español", // Spanish
@@ -3539,7 +3571,9 @@ static const char* const myLanguage[18][206] PROGMEM = {
     "Todo", // 202
     "PS rápido", // 203
     "Por defecto", // 204
-    "Pantalla de mudo\nen la conexión XDRGTK" // 205
+    "Pantalla de mudo\nen la conexión XDRGTK", // 205
+    "FMSI stereo improvement", // 206
+    "Function only available\non TEF6687/6689!" // 207
   },
 
   { "Português", // Portuguese
@@ -3747,7 +3781,9 @@ static const char* const myLanguage[18][206] PROGMEM = {
     "Tudo", // 202
     "PS rápido", // 203
     "Predefinição", // 204
-    "Tela mudo na\nconexão XDRGTK" // 205
+    "Tela mudo na\nconexão XDRGTK", // 205
+    "FMSI stereo improvement", // 206
+    "Function only available\non TEF6687/6689!" // 207
   }
 };
 #endif

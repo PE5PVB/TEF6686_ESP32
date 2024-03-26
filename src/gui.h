@@ -40,6 +40,8 @@ extern bool dropout;
 extern bool dynamicPTYold;
 extern bool dynamicspi;
 extern bool edgebeep;
+extern bool fmsi;
+extern bool fullsearchrds;
 extern bool hasafold;
 extern bool haseonold;
 extern bool hasrtplusold;
