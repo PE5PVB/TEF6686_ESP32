@@ -3273,9 +3273,9 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Bruk AF:", // 99
     "Velg FM Band:", // 100
     "Velg AM Band:", // 101
-    "LB", // 102 ***
-    "MB", // 103 ***
-    "KB", // 104 ***
+    "LB", // 102
+    "MB", // 103
+    "KB", // 104
     "FM", // 105 ***
     "OIRT", // 106 ***
     "Tune når skjerm av", // 107
@@ -3378,8 +3378,8 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Standard", // 204
     "Dempet skjerm på\nXDRGTK tilkobling", // 205
     "FMSI stereo forbedringt", // 206
-    "Kun tilgjengelig\nmed TEF6687/6689!", // 207
-    "Funksjon ikke tilgjengelig\non valgt skin!" // 208
+    "Kun tilgjengelig\npå TEF6687/6689!", // 207
+    "Funksjon ikke tilgjengelig\npå valgt skin!" // 208
   },
 
   { "Español", // Spanish
