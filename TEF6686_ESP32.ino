@@ -82,6 +82,7 @@ bool menu;
 bool menuopen;
 bool mwstepsize;
 bool nobattery;
+bool optenc;
 bool rdsflagreset;
 bool rdsreset;
 bool RDSSPYTCP;
@@ -168,7 +169,6 @@ byte memoryposold;
 byte memoryposstatus;
 byte menupage;
 byte MSold;
-byte optenc;
 byte poweroptions;
 byte rdsblockold;
 byte rdsqualityold;
@@ -3497,7 +3497,7 @@ void read_encoder() {
   if (digitalRead(ROTARY_PIN_B)) old_AB |= 0x01;
   encval += enc_states[( old_AB & 0x0f )];
 
-  if (optenc == 1) {
+  if (optenc) {
     if (encval > 3) {
       if (rotarymode) rotary = -1; else rotary = 1;
       encval = 0;
@@ -3506,10 +3506,10 @@ void read_encoder() {
       encval = 0;
     }
   } else {
-    if (encval > 2) {
+    if (encval > 3) {
       if (rotarymode) rotary = -1; else rotary = 1;
       encval = 0;
-    } else if (encval < -2) {
+    } else if (encval < -3) {
       if (rotarymode) rotary = 1; else rotary = -1;
       encval = 0;
     }
