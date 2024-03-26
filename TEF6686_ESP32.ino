@@ -558,7 +558,7 @@ void setup() {
   FrequencySprite.createSprite(200, 50);
   FrequencySprite.setTextDatum(TR_DATUM);
 
-  RDSSprite.createSprite(172, 19);
+  RDSSprite.createSprite(165, 19);
   RDSSprite.setTextDatum(TL_DATUM);
 
   SquelchSprite.createSprite(47, 19);

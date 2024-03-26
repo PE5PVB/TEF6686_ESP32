@@ -417,6 +417,38 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BatteryValueColor = Teal;
       BatteryValueColorSmooth = Black;
       break;
+
+    case 13:  // New skin theme
+      PrimaryColor = Yellow;
+      PrimaryColorSmooth = YellowSmooth;
+      SecondaryColor = Skyblue;
+      SecondaryColorSmooth = SkyblueSmooth;
+      FrameColor = Blue;
+      GreyoutColor = Darkgrey;
+      BackgroundColor = Black;
+      ActiveColor = White;
+      ActiveColorSmooth = WhiteSmooth;
+      FreqColor = Yellow;
+      FreqColorSmooth = YellowSmooth;
+      SignificantColor = Red;
+      SignificantColorSmooth = RedSmooth;
+      InsignificantColor = Green;
+      InsignificantColorSmooth = GreenSmooth;
+      StereoColor = Red;
+      StereoColorSmooth = RedSmooth;
+      RDSColor = Yellow;
+      RDSColorSmooth = YellowSmooth;
+      RDSDropoutColor = Teal;
+      RDSDropoutColorSmooth = TealSmooth;
+      BarSignificantColor = Red;
+      BarInsignificantColor = Green;
+      ModBarSignificantColor = Red;
+      ModBarInsignificantColor = Green;
+      BWAutoColor = Teal;
+      BWAutoColorSmooth = TealSmooth;
+      BatteryValueColor = Teal;
+      BatteryValueColorSmooth = Black;
+      break;
   }
 }
 
@@ -1215,7 +1247,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(Theme[CurrentTheme], 298, 3);
+          if (CurrentSkin != 1) FullLineSprite.drawString(Theme[CurrentTheme], 298, 3);
           break;
 
         case RDSSETTINGS:
@@ -1929,12 +1961,17 @@ void MenuUp() {
             CurrentSkin ++;
             if (CurrentSkin > sizeof(Skin) / sizeof(Skin[0]) - 1) CurrentSkin = 0;
 
-            BuildMenu();
             if (CurrentSkin == 0) {
+              CurrentTheme = 0;
+              doTheme();
+              BuildMenu();
               tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
               tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
               OneBigLineSprite.fillSprite(BackgroundColor);
             } else if (CurrentSkin == 1) {
+              CurrentTheme = 13;
+              doTheme();
+              BuildMenu();
               tft.pushImage (13, 30, 292, 170, popupbackground);
               OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
               OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
@@ -1947,21 +1984,25 @@ void MenuUp() {
             break;
 
           case ITEM9:
-            CurrentTheme ++;
-            if (CurrentTheme > sizeof(Theme) / sizeof(Theme[0]) - 1) CurrentTheme = 0;
-            doTheme();
-            if (CurrentSkin == 0) {
-              tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
-              tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
-            } else if (CurrentSkin == 1) {
-              tft.pushImage (13, 30, 292, 170, popupbackground);
-              OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
+            if (CurrentSkin != 1) {
+              CurrentTheme ++;
+              if (CurrentTheme > sizeof(Theme) / sizeof(Theme[0]) - 1) CurrentTheme = 0;
+              doTheme();
+              if (CurrentSkin == 0) {
+                OneBigLineSprite.fillSprite(BackgroundColor);
+                tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
+                tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
+              } else if (CurrentSkin == 1) {
+                tft.pushImage (13, 30, 292, 170, popupbackground);
+                OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
+                OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+                OneBigLineSprite.setTextDatum(TC_DATUM);
+              }
+              Infoboxprint(myLanguage[language][77]);
               OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-              OneBigLineSprite.setTextDatum(TC_DATUM);
+              OneBigLineSprite.drawString(Theme[CurrentTheme], 135, 0);
+              OneBigLineSprite.pushSprite(24, 118);
             }
-            Infoboxprint(myLanguage[language][77]);
-            OneBigLineSprite.drawString(Theme[CurrentTheme], 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM10:
@@ -2690,12 +2731,17 @@ void MenuDown() {
             CurrentSkin --;
             if (CurrentSkin > sizeof(Skin) / sizeof(Skin[0]) - 1) CurrentSkin = sizeof(Skin) / sizeof(Skin[0]) - 1;
 
-            BuildMenu();
             if (CurrentSkin == 0) {
+              CurrentTheme = 0;
+              doTheme();
+              BuildMenu();
               OneBigLineSprite.fillSprite(BackgroundColor);
               tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
               tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
             } else if (CurrentSkin == 1) {
+              CurrentTheme = 13;
+              doTheme();
+              BuildMenu();
               tft.pushImage (13, 30, 292, 170, popupbackground);
               OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
               OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
@@ -2708,22 +2754,26 @@ void MenuDown() {
             break;
 
           case ITEM9:
-            CurrentTheme --;
-            if (CurrentTheme > sizeof(Theme) / sizeof(Theme[0]) - 1) CurrentTheme = sizeof(Theme) / sizeof(Theme[0]) - 1;
+            if (CurrentSkin != 1) {
+              CurrentTheme --;
+              if (CurrentTheme > sizeof(Theme) / sizeof(Theme[0]) - 1) CurrentTheme = sizeof(Theme) / sizeof(Theme[0]) - 1;
 
-            doTheme();
-            if (CurrentSkin == 0) {
-              tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
-              tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
-            } else if (CurrentSkin == 1) {
-              tft.pushImage (13, 30, 292, 170, popupbackground);
-              OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
+              doTheme();
+              if (CurrentSkin == 0) {
+                OneBigLineSprite.fillSprite(BackgroundColor);
+                tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
+                tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
+              } else if (CurrentSkin == 1) {
+                tft.pushImage (13, 30, 292, 170, popupbackground);
+                OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
+                OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+                OneBigLineSprite.setTextDatum(TC_DATUM);
+              }
+              Infoboxprint(myLanguage[language][77]);
               OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-              OneBigLineSprite.setTextDatum(TC_DATUM);
+              OneBigLineSprite.drawString(Theme[CurrentTheme], 135, 0);
+              OneBigLineSprite.pushSprite(24, 118);
             }
-            Infoboxprint(myLanguage[language][77]);
-            OneBigLineSprite.drawString(Theme[CurrentTheme], 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM10:
@@ -3489,9 +3539,13 @@ void DoMenu() {
             break;
 
           case ITEM9:
-            Infoboxprint(myLanguage[language][77]);
+            if (CurrentSkin != 1) {
+              Infoboxprint(myLanguage[language][77]);
 
-            OneBigLineSprite.drawString(Theme[CurrentTheme], 135, 0);
+              OneBigLineSprite.drawString(Theme[CurrentTheme], 135, 0);
+            } else {
+              Infoboxprint(myLanguage[language][208]);
+            }
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
