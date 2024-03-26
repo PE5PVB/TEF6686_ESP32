@@ -3476,7 +3476,7 @@ void SetTunerPatch() {
     tft.fillScreen(BackgroundColor);
     analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
 
-    if (TEF == 0) {
+    if (TEF != 102 && TEF != 205) {
       tftPrint(0, myLanguage[language][35], 150, 78, ActiveColor, ActiveColorSmooth, 28);
       for (;;);
     }
