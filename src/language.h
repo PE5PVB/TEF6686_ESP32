@@ -3362,8 +3362,8 @@ static const char* const myLanguage[18][208] PROGMEM = {
     "Rask PS", // 203
     "Standard", // 204
     "Dempet skjerm på\nXDRGTK tilkobling", // 205
-    "FMSI stereo improvement", // 206
-    "Function only available\non TEF6687/6689!" // 207
+    "FMSI stereo forbedring", // 206
+    "Kun tilgjengelig\nmed TEF6687/6689!" // 207
   },
 
   { "Español", // Spanish
