@@ -3258,9 +3258,9 @@ static const char* const myLanguage[18][208] PROGMEM = {
     "Bruk AF:", // 99
     "Velg FM Band:", // 100
     "Velg AM Band:", // 101
-    "LW", // 102 ***
-    "MW", // 103 ***
-    "SW", // 104 ***
+    "LB", // 102
+    "MB", // 103
+    "KB", // 104
     "FM", // 105 ***
     "OIRT", // 106 ***
     "Tune når skjerm av", // 107
