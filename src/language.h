@@ -1476,11 +1476,11 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Viel", // 201
     "Maximal", // 202
     "Schnelles PS", // 203
-    "Default", // 204
-    "Mute screen on\nXDRGTK connection", // 205
-    "FMSI stereo\nimprovement", // 206
-    "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!" // 208
+    "Standard", // 204
+    "Display aus bei\nXDRGTK-Verbindung", // 205
+    "FMSI Stereo-\nVerbesserung", // 206
+    "Funktion nur für\nTEF6687/6689 verfügbar!", // 207
+    "Funktion für ausgewählten\nSkin nicht verfügbar!" // 208
   },
 
   { "Český", // Czech
