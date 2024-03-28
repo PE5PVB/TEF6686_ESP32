@@ -1602,7 +1602,11 @@ void BuildDisplay() {
         case BAND_OIRT: tftPrint(1, myLanguage[language][106], 54, 29, bandColor, PrimaryColorSmooth, 16); break;
       }
 
+      tftPrint(-1, "PI:", 8, 104, ActiveColor, ActiveColorSmooth, 16);
       if (usesquelch) tftPrint(1, "SQ:", 268, 168, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(1, unitString[unit], 310, 102, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(1, "dB", 310, 128, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(1, "C/N", 266, 128, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, "kHz", 170, 99, ActiveColor, ActiveColorSmooth, 28);
       if (band < BAND_GAP) tftPrint(-1, "MHz", 262, 66, ActiveColor, ActiveColorSmooth, 28); else tftPrint(-1, "kHz", 262, 66, ActiveColor, ActiveColorSmooth, 28);
       break;
