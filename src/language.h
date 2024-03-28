@@ -2531,11 +2531,11 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Больше", // 201
     "Все", // 202
     "Быстрый PS", // 203
-    "Default", // 204
-    "Mute screen on\nXDRGTK connection", // 205
-    "FMSI stereo\nimprovement", // 206
-    "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!" // 208
+    "По умолчанию", // 204
+    "Погасить дисплей при\nподключении XDRGTK", // 205
+    "FMSI стерео\nулучшение", // 206
+    "Функция доступна только\nна TEF6687/6689!", // 207
+    "Функция недоступна\nна этом оформлении" // 208
   },
 
   { "Українська", // Ukranian
