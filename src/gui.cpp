@@ -1591,7 +1591,8 @@ void BuildDisplay() {
       break;
 
     case 1:
-      tft.pushImage (0, 0, 320, 240, mainbackground);
+      tft.pushImage (0, 0, 320, 240, skin1_mainbackground);
+      tft.pushImage (177, 3, 23, 23, skin1_clock);
 
       if (bandforbidden) bandColor = GreyoutColor; else bandColor = PrimaryColor;
       switch (band) {
@@ -1601,6 +1602,12 @@ void BuildDisplay() {
         case BAND_FM: tftPrint(1, myLanguage[language][105], 54, 29, bandColor, PrimaryColorSmooth, 16); break;
         case BAND_OIRT: tftPrint(1, myLanguage[language][106], 54, 29, bandColor, PrimaryColorSmooth, 16); break;
       }
+
+      if (band > BAND_GAP) {
+        tft.pushImage (260, 48, 32, 16, skin1_imsoff);
+        tft.pushImage (292, 48, 25, 16, skin1_eqoff);
+      }
+      tft.pushImage (136, 3, 36, 23, skin1_rdsoff);
 
       tftPrint(-1, "PI:", 8, 104, ActiveColor, ActiveColorSmooth, 16);
       if (usesquelch) tftPrint(1, "SQ:", 268, 168, ActiveColor, ActiveColorSmooth, 16);
