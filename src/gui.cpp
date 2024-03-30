@@ -419,16 +419,20 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       break;
 
     case 13:  // New skin theme
-      PrimaryColor = 0x053f;
-      PrimaryColorSmooth = 0x00e5;
-      SecondaryColor = Skyblue;
-      SecondaryColorSmooth = SkyblueSmooth;
-      FrameColor = Blue;
+      PrimaryColor = 0x3d7d;
+      PrimaryColorSmooth = 0x08e5;
+      SecondaryColor = 0x1a74;
+      SecondaryColorSmooth = 0x08c6;
+      FrameColor = 0x8c71;
       GreyoutColor = Darkgrey;
       BackgroundColor = Black;
+      BackgroundColor1 = 0x0004;
+      BackgroundColor2 = 0x0044;
+      BackgroundColor3 = 0x00a2;
+      BackgroundColor4 = 0x00c6;
       ActiveColor = White;
       ActiveColorSmooth = WhiteSmooth;
-      FreqColor = 0x0734;
+      FreqColor = 0x1ff7;
       FreqColorSmooth = 0x0082;
       SignificantColor = Red;
       SignificantColorSmooth = RedSmooth;
@@ -436,18 +440,16 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       InsignificantColorSmooth = GreenSmooth;
       StereoColor = Red;
       StereoColorSmooth = RedSmooth;
-      RDSColor = Yellow;
-      RDSColorSmooth = YellowSmooth;
-      RDSDropoutColor = Teal;
-      RDSDropoutColorSmooth = TealSmooth;
+      RDSColor = 0x2e65;
+      RDSColorSmooth = 0x09a1;
+      RDSDropoutColor = 0xa555;
+      RDSDropoutColorSmooth = 0x18e4;
       BarSignificantColor = Red;
-      BarInsignificantColor = Green;
-      ModBarSignificantColor = Red;
-      ModBarInsignificantColor = Green;
+      BarInsignificantColor = 0x3bfd;
       BWAutoColor = Teal;
       BWAutoColorSmooth = TealSmooth;
-      BatteryValueColor = Teal;
-      BatteryValueColorSmooth = Black;
+      BatteryValueColor = White;
+      BatteryValueColorSmooth = WhiteSmooth;
       break;
   }
 }
@@ -1486,6 +1488,8 @@ void BuildAdvancedRDS() {
 }
 
 void BuildDisplay() {
+  OneBigLineSprite.unloadFont();
+  FullLineSprite.unloadFont();
   afscreen = false;
   advancedRDS = false;
   int bandColor;
@@ -1592,7 +1596,6 @@ void BuildDisplay() {
 
     case 1:
       tft.pushImage (0, 0, 320, 240, skin1_mainbackground);
-      tft.pushImage (177, 3, 23, 23, skin1_clock);
 
       if (bandforbidden) bandColor = GreyoutColor; else bandColor = PrimaryColor;
       switch (band) {
@@ -1608,11 +1611,31 @@ void BuildDisplay() {
         tft.pushImage (292, 48, 25, 16, skin1_eqoff);
       }
       tft.pushImage (136, 3, 36, 23, skin1_rdsoff);
+      tft.pushImage (288, 151, 27, 16, skin1_rtplusoff);
+      tft.pushImage (210, 151, 17, 16, skin1_taoff);
+      tft.pushImage (230, 151, 21, 16, skin1_tpoff);
+      tft.pushImage (254, 151, 30, 16, skin1_eonoff);
+      tft.pushImage (212, 167, 18, 17, skin1_speechoff);
+      tft.pushImage (232, 167, 19, 17, skin1_musicoff);
 
+      for (byte segments = 0; segments < 11; segments++) {
+        if (segments > 6) {
+          tft.fillRect(180 + segments * 13, 220, 4, 4, BarSignificantColor);
+          tft.fillRect(20 + segments * 13, 220, 4, 4, BarSignificantColor);
+        } else {
+          tft.fillRect(180 + segments * 13, 220, 4, 4, BarInsignificantColor);
+          tft.fillRect(20 + segments * 13, 220, 4, 4, BarInsignificantColor);
+        }
+      }
+      tft.drawLine(178, 219, 313, 219, FrameColor);
+      tft.drawLine(18, 219, 153, 219, FrameColor);
+
+      tftPrint(-1, "S", 6, 214, PrimaryColor, PrimaryColorSmooth, 16);
+      tftPrint(-1, "M", 162, 214, PrimaryColor, PrimaryColorSmooth, 16);
       tftPrint(-1, "PI:", 8, 104, ActiveColor, ActiveColorSmooth, 16);
-      if (usesquelch) tftPrint(1, "SQ:", 268, 168, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(1, unitString[unit], 310, 102, ActiveColor, ActiveColorSmooth, 16);
-      tftPrint(1, "dB", 310, 128, ActiveColor, ActiveColorSmooth, 16);
+      if (usesquelch) tftPrint(1, "SQ:", 276, 168, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(1, unitString[unit], 312, 108, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(1, "dB", 312, 128, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(1, "C/N", 266, 128, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, "kHz", 170, 99, ActiveColor, ActiveColorSmooth, 28);
       if (band < BAND_GAP) tftPrint(-1, "MHz", 262, 66, ActiveColor, ActiveColorSmooth, 28); else tftPrint(-1, "kHz", 262, 66, ActiveColor, ActiveColorSmooth, 28);
@@ -1638,6 +1661,11 @@ void BuildDisplay() {
   batteryold = 6;
   batteryVold = 0;
   vPerold = 0;
+  hasrtplusold = false;
+  TAold = false;
+  TPold = false;
+  haseonold = false;
+  MSold = 0;
   rds_clockold = "";
   strcpy(programTypePrevious, "");
   PIold = " ";

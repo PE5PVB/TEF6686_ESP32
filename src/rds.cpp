@@ -300,13 +300,7 @@ void readRds() {
             if (advancedRDS) {
               tftPrint(0, PIold, 275, 75, RDSDropoutColor, RDSDropoutColorSmooth, 28);
             } else {
-              if (CurrentSkin == 1) PISprite.pushImage (-26, -98, 320, 240, skin1_mainbackground);
-              if (CurrentSkin == 1) PISprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false); else tftPrint(0, PIold, 275, 187, RDSDropoutColor, RDSDropoutColorSmooth, 28);
-
-              if (CurrentSkin == 1) {
-                PISprite.drawString(radio.rds.picode, 4, 1);
-                PISprite.pushSprite(26, 98);
-              }
+              if (CurrentSkin == 1) tftPrint(-1, PIold, 30, 99, RDSDropoutColor, RDSDropoutColorSmooth, 28); else tftPrint(0, PIold, 275, 187, RDSDropoutColor, RDSDropoutColorSmooth, 28);
             }
           }
 
@@ -331,14 +325,7 @@ void readRds() {
           if (advancedRDS) {
             tftPrint(-1, PTYold, 36, 109, RDSDropoutColor, RDSDropoutColorSmooth, 16);
           } else {
-            if (CurrentSkin == 1) {
-              PTYSprite.pushImage (-40, -130, 320, 240, skin1_mainbackground);
-              PTYSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-              PTYSprite.drawString(radio.rds.stationType, 65, 0);
-              PTYSprite.pushSprite(40, 130);
-            } else {
-              tftPrint(-1, PTYold, 36, 163, RDSDropoutColor, RDSDropoutColorSmooth, 16);
-            }
+            if (CurrentSkin == 1) tftPrint(0, PTYold, 105, 130, RDSDropoutColor, RDSDropoutColorSmooth, 16); else tftPrint(-1, PTYold, 36, 163, RDSDropoutColor, RDSDropoutColorSmooth, 16);
           }
           if (advancedRDS) {
             tft.fillCircle(86, 41, 5, SignificantColor);
@@ -346,36 +333,12 @@ void readRds() {
             tft.fillCircle(162, 41, 5, SignificantColor);
             tft.fillCircle(200, 41, 5, SignificantColor);
           }
-          /*
-                    if (advancedRDS && radio.rds.stationText.length() < 20) {
-                      xPos = 0;
-                      RDSSprite.fillSprite(BackgroundColor);
-                      RDSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-                      RDSSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
-                      RDSSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos + RadiotextWidth, 2);
-                      RDSSprite.pushSprite(36, 220);
-                    } else if (!advancedRDS && radio.rds.stationText.length() < 29) {
-                      xPos = 0;
-                      if (CurrentSkin == 1) RadiotextSprite.pushImage (-25, -188, 320, 240, skin1_mainbackground); else RadiotextSprite.fillSprite(BackgroundColor);
-                RadiotextSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-                      RadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
-                      RadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos + RadiotextWidth, 2);
-                      if (CurrentSkin == 1) RadiotextSprite.pushSprite(25, 188); else RadiotextSprite.pushSprite(36, 220);
-                    }
-          */
+
           if (radio.rds.hasCT) {
             if (advancedRDS) {
               tftPrint(1, rds_clock, 205, 109, RDSDropoutColor, RDSDropoutColorSmooth, 16);
             } else {
-              if (CurrentSkin == 1) {
-                CTBWSignalSprite.pushImage (-202, 0, 320, 240, skin1_mainbackground);
-                CTBWSignalSprite.setTextDatum(TL_DATUM);
-                CTBWSignalSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-                CTBWSignalSprite.drawString(rds_clock, 0, 8);
-                CTBWSignalSprite.pushSprite(202, 0);
-              } else {
-                tftPrint(1, rds_clock, 205, 163, RDSDropoutColor, RDSDropoutColorSmooth, 16);
-              }
+              if (CurrentSkin == 1) tftPrint(-1, rds_clock, 202, 8, RDSDropoutColor, RDSDropoutColorSmooth, 16); else tftPrint(1, rds_clock, 205, 163, RDSDropoutColor, RDSDropoutColorSmooth, 16);
             }
           }
           dropout = true;
@@ -386,14 +349,7 @@ void readRds() {
             if (advancedRDS) {
               tftPrint(0, PIold, 275, 75, RDSColor, RDSColorSmooth, 28);
             } else {
-              if (CurrentSkin == 1) PISprite.pushImage (-26, -98, 320, 240, skin1_mainbackground);
-              if (CurrentSkin == 1) PISprite.setTextColor(RDSColor, RDSColor, false); else tftPrint(0, PIold, 275, 187, RDSColor, RDSColor, 28);
-
-              if (CurrentSkin == 1) {
-                PISprite.drawString(radio.rds.picode, 4, 1);
-                PISprite.pushSprite(26, 98);
-              }
-
+              if (CurrentSkin == 1) tftPrint(-1, PIold, 30, 99, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, PIold, 275, 187, RDSColor, RDSColor, 28);
             }
           }
 
@@ -407,7 +363,7 @@ void readRds() {
           } else {
             if (CurrentSkin == 1) {
               PSSprite.pushImage (-8, -154, 320, 240, skin1_mainbackground);
-              PSSprite.setTextColor(RDSColor, RDSColorSmooth, false);
+              PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
               PSSprite.drawString(PSold, 84, 1);
               PSSprite.pushSprite(8, 154);
             } else {
@@ -417,14 +373,7 @@ void readRds() {
           if (advancedRDS) {
             tftPrint(-1, PTYold, 36, 109, RDSColor, RDSColorSmooth, 16);
           } else {
-            if (CurrentSkin == 1) {
-              PTYSprite.pushImage (-40, -130, 320, 240, skin1_mainbackground);
-              PTYSprite.setTextColor(RDSColor, RDSColorSmooth, false);
-              PTYSprite.drawString(radio.rds.stationType, 65, 0);
-              PTYSprite.pushSprite(40, 130);
-            } else {
-              tftPrint(-1, PTYold, 36, 163, RDSColor, RDSColorSmooth, 16);
-            }
+            if (CurrentSkin == 1) tftPrint(0, PTYold, 105, 130, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, PTYold, 36, 163, RDSColor, RDSColorSmooth, 16);
           }
           if (!advancedRDS) {
             if (CurrentSkin != 1) {
@@ -456,18 +405,51 @@ void readRds() {
             if (advancedRDS) {
               tftPrint(1, rds_clock, 205, 109, RDSColor, RDSColorSmooth, 16);
             } else {
-              if (CurrentSkin == 1) {
-                CTBWSignalSprite.pushImage (-202, 0, 320, 240, skin1_mainbackground);
-                CTBWSignalSprite.setTextDatum(TL_DATUM);
-                CTBWSignalSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-                CTBWSignalSprite.drawString(rds_clock, 0, 8);
-                CTBWSignalSprite.pushSprite(202, 0);
-              } else {
-                tftPrint(1, rds_clock, 205, 163, RDSColor, RDSColorSmooth, 16);
-              }
+              if (CurrentSkin == 1) tftPrint(-1, rds_clock, 202, 8, RDSColor, RDSColorSmooth, 16); else tftPrint(1, rds_clock, 205, 163, RDSColor, RDSColorSmooth, 16);
             }
           }
           dropout = false;
+        }
+      }
+      if (CurrentSkin == 1 && !advancedRDS) {
+        if (hasrtplusold != radio.rds.hasRDSplus) {
+          if (radio.rds.hasRDSplus) tft.pushImage (288, 151, 27, 16, skin1_rtpluson); else tft.pushImage (288, 151, 27, 16, skin1_rtplusoff);
+          hasrtplusold = radio.rds.hasRDSplus;
+        }
+
+        if (TAold != radio.rds.hasTA) {
+          if (radio.rds.hasTA) tft.pushImage (210, 151, 17, 16, skin1_taon); else tft.pushImage (210, 151, 17, 16, skin1_taoff);
+          TAold = radio.rds.hasTA;
+        }
+
+        if (TPold != radio.rds.hasTP) {
+          if (radio.rds.hasTP) tft.pushImage (230, 151, 21, 16, skin1_tpon); else tft.pushImage (230, 151, 21, 16, skin1_tpoff);
+          TPold = radio.rds.hasTP;
+        }
+
+        if (haseonold != radio.rds.hasEON) {
+          if (radio.rds.hasEON) tft.pushImage (254, 151, 30, 16, skin1_eonon); else tft.pushImage (254, 151, 30, 16, skin1_eonoff);
+          haseonold = radio.rds.hasEON;
+        }
+
+        if (MSold != radio.rds.MS) {
+          switch (radio.rds.MS) {
+            case 0:
+              tft.pushImage (212, 167, 18, 17, skin1_speechoff);
+              tft.pushImage (232, 167, 19, 17, skin1_musicoff);
+              break;
+
+            case 1:
+              tft.pushImage (212, 167, 18, 17, skin1_speechoff);
+              tft.pushImage (232, 167, 19, 17, skin1_musicon);
+              break;
+
+            case 2:
+              tft.pushImage (212, 167, 18, 17, skin1_speechon);
+              tft.pushImage (232, 167, 19, 17, skin1_musicoff);
+              break;
+          }
+          MSold = radio.rds.MS;
         }
       }
     }
@@ -632,46 +614,40 @@ void showPI() {
       if (advancedRDS) {
         if (region == REGION_EU) {
           if (!RDSstatus) {
-            tftReplace(0, PIold, radio.rds.picode, 275, 75, RDSDropoutColor, RDSDropoutColorSmooth, 28);
+            tftReplace(0, PIold, radio.rds.picode, 275, 75, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 28);
           } else {
-            tftReplace(0, PIold, radio.rds.picode, 275, 75, RDSColor, RDSColorSmooth, 28);
+            tftReplace(0, PIold, radio.rds.picode, 275, 75, RDSColor, RDSColorSmooth, BackgroundColor, 28);
           }
         }
         if (region == REGION_US) {
           if (!RDSstatus) {
-            if (String(radio.rds.picode) != PIold) tftReplace(-1, PIold, radio.rds.picode, 240, 72, RDSDropoutColor, RDSDropoutColorSmooth, 16);
-            tftReplace(-1, stationIDold, radio.rds.stationID, 240, 89, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+            if (String(radio.rds.picode) != PIold) tftReplace(-1, PIold, radio.rds.picode, 240, 72, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+            tftReplace(-1, stationIDold, radio.rds.stationID, 240, 89, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
           } else {
-            if (String(radio.rds.picode) != PIold) tftReplace(-1, PIold, radio.rds.picode, 240, 72, RDSColor, RDSColorSmooth, 16);
-            tftReplace(-1, stationIDold, radio.rds.stationID, 240, 89, RDSColor, RDSColorSmooth, 16);
+            if (String(radio.rds.picode) != PIold) tftReplace(-1, PIold, radio.rds.picode, 240, 72, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+            tftReplace(-1, stationIDold, radio.rds.stationID, 240, 89, RDSColor, RDSColorSmooth, BackgroundColor, 16);
           }
-          tftReplace(1, stationStateold, radio.rds.stationState, 318, 89, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+          tftReplace(1, stationStateold, radio.rds.stationState, 318, 89, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
         }
       } else if (afscreen) {
-        tftReplace(-1, PIold, radio.rds.picode, 30, 201, BWAutoColor, BWAutoColorSmooth, 16);
+        tftReplace(-1, PIold, radio.rds.picode, 30, 201, BWAutoColor, BWAutoColorSmooth, BackgroundColor, 16);
       } else {
         if (region == REGION_EU) {
-          if (CurrentSkin == 1) PISprite.pushImage (-26, -98, 320, 240, skin1_mainbackground);
           if (!RDSstatus) {
-            if (CurrentSkin == 1) PISprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false); else tftReplace(0, PIold, radio.rds.picode, 275, 187, RDSDropoutColor, RDSDropoutColorSmooth, 28);
+            if (CurrentSkin == 1) tftReplace(-1, PIold, radio.rds.picode, 30, 99, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor2, 28); else tftReplace(0, PIold, radio.rds.picode, 275, 187, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 28);
           } else {
-            if (CurrentSkin == 1) PISprite.setTextColor(RDSColor, RDSColorSmooth, false); else tftReplace(0, PIold, radio.rds.picode, 275, 187, RDSColor, RDSColorSmooth, 28);
-          }
-
-          if (CurrentSkin == 1) {
-            PISprite.drawString(radio.rds.picode, 4, 1);
-            PISprite.pushSprite(26, 98);
+            if (CurrentSkin == 1) tftReplace(-1, PIold, radio.rds.picode, 30, 99, PrimaryColor, PrimaryColorSmooth, BackgroundColor2, 28); else tftReplace(0, PIold, radio.rds.picode, 275, 187, RDSColor, RDSColorSmooth, BackgroundColor, 28);
           }
         }
         if (region == REGION_US) {
           if (!RDSstatus) {
-            if (String(radio.rds.picode) != PIold) tftReplace(-1, PIold, radio.rds.picode, 240, 184, RDSDropoutColor, RDSDropoutColorSmooth, 16);
-            tftReplace(-1, stationIDold, radio.rds.stationID, 240, 201, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+            if (String(radio.rds.picode) != PIold) tftReplace(-1, PIold, radio.rds.picode, 240, 184, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+            tftReplace(-1, stationIDold, radio.rds.stationID, 240, 201, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
           } else {
-            if (String(radio.rds.picode) != PIold) tftReplace(-1, PIold, radio.rds.picode, 240, 184, RDSColor, RDSColorSmooth, 16);
-            tftReplace(-1, stationIDold, radio.rds.stationID, 240, 201, RDSColor, RDSColorSmooth, 16);
+            if (String(radio.rds.picode) != PIold) tftReplace(-1, PIold, radio.rds.picode, 240, 184, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+            tftReplace(-1, stationIDold, radio.rds.stationID, 240, 201, RDSColor, RDSColorSmooth, BackgroundColor, 16);
           }
-          tftReplace(1, stationStateold, radio.rds.stationState, 318, 201, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+          tftReplace(1, stationStateold, radio.rds.stationState, 318, 201, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
         }
       }
       PIold = radio.rds.picode;
@@ -691,20 +667,15 @@ void showPTY() {
     if (!screenmute) {
       if (advancedRDS) {
         if (!RDSstatus) {
-          tftReplace(-1, PTYold, radio.rds.stationType, 36, 109, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+          tftReplace(-1, PTYold, radio.rds.stationType, 36, 109, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
         } else {
-          tftReplace(-1, PTYold, radio.rds.stationType, 36, 109, RDSColor, RDSColorSmooth, 16);
+          tftReplace(-1, PTYold, radio.rds.stationType, 36, 109, RDSColor, RDSColorSmooth, BackgroundColor, 16);
         }
       } else {
-        if (CurrentSkin == 1) PTYSprite.pushImage (-40, -130, 320, 240, skin1_mainbackground);
         if (!RDSstatus) {
-          if (CurrentSkin == 1) PTYSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false); else tftReplace(-1, PTYold, radio.rds.stationType, 36, 163, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+          if (CurrentSkin == 1) tftReplace(0, PTYold, radio.rds.stationType, 105, 130, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor4, 16); else tftReplace(-1, PTYold, radio.rds.stationType, 36, 163, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
         } else {
-          if (CurrentSkin == 1) PTYSprite.setTextColor(RDSColor, RDSColorSmooth, false); else tftReplace(-1, PTYold, radio.rds.stationType, 36, 163, RDSColor, RDSColorSmooth, 16);
-        }
-        if (CurrentSkin == 1) {
-          PTYSprite.drawString(radio.rds.stationType, 65, 0);
-          PTYSprite.pushSprite(40, 130);
+          if (CurrentSkin == 1) tftReplace(0, PTYold, radio.rds.stationType, 105, 130, PrimaryColor, PrimaryColorSmooth, BackgroundColor4, 16); else tftReplace(-1, PTYold, radio.rds.stationType, 36, 163, RDSColor, RDSColorSmooth, BackgroundColor, 16);
         }
       }
     }
@@ -724,12 +695,12 @@ void showPS() {
     if (!screenmute) {
       if (advancedRDS) {
         if (!RDSstatus) {
-          tftReplace(-1, PSold, radio.rds.stationName, 36, 75, RDSDropoutColor, RDSDropoutColorSmooth, 28);
+          tftReplace(-1, PSold, radio.rds.stationName, 36, 75, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 28);
         } else {
-          tftReplace(-1, PSold, radio.rds.stationName, 36, 75, RDSColor, RDSColorSmooth, 28);
+          tftReplace(-1, PSold, radio.rds.stationName, 36, 75, RDSColor, RDSColorSmooth, BackgroundColor, 28);
         }
       } else if (afscreen) {
-        tftReplace(0, PSold, radio.rds.stationName, 160, 201, BWAutoColor, BWAutoColorSmooth, 16);
+        tftReplace(0, PSold, radio.rds.stationName, 160, 201, BWAutoColor, BWAutoColorSmooth, BackgroundColor, 16);
       } else {
         if (!RDSstatus) {
           if (CurrentSkin == 1) {
@@ -738,16 +709,16 @@ void showPS() {
             PSSprite.drawString(radio.rds.stationName, 84, 1);
             PSSprite.pushSprite(8, 154);
           } else {
-            tftReplace(-1, PSold, radio.rds.stationName, 36, 187, RDSDropoutColor, RDSDropoutColorSmooth, 28);
+            tftReplace(-1, PSold, radio.rds.stationName, 36, 187, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 28);
           }
         } else {
           if (CurrentSkin == 1) {
             PSSprite.pushImage (-8, -154, 320, 240, skin1_mainbackground);
-            PSSprite.setTextColor(RDSColor, RDSColorSmooth, false);
+            PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             PSSprite.drawString(radio.rds.stationName, 84, 1);
             PSSprite.pushSprite(8, 154);
           } else {
-            tftReplace(-1, PSold, radio.rds.stationName, 36, 187, RDSColor, RDSColorSmooth, 28);
+            tftReplace(-1, PSold, radio.rds.stationName, 36, 187, RDSColor, RDSColorSmooth, BackgroundColor, 28);
           }
         }
       }
@@ -785,32 +756,16 @@ void showCT() {
         rtcset = true;
         rtc.setTime(0, radio.rds.minute, radio.rds.hour, radio.rds.day, radio.rds.month, radio.rds.year);
         if (advancedRDS) {
-          tftReplace(1, rds_clockold, rds_clock, 205, 109, RDSColor, RDSColorSmooth, 16);
+          tftReplace(1, rds_clockold, rds_clock, 205, 109, RDSColor, RDSColorSmooth, BackgroundColor, 16);
         } else {
-          if (CurrentSkin == 1) {
-            CTBWSignalSprite.pushImage (-202, 0, 320, 240, skin1_mainbackground);
-            CTBWSignalSprite.setTextDatum(TL_DATUM);
-            CTBWSignalSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            CTBWSignalSprite.drawString(rds_clock, 0, 8);
-            CTBWSignalSprite.pushSprite(202, 0);
-          } else {
-            tftReplace(1, rds_clockold, rds_clock, 205, 163, RDSColor, RDSColorSmooth, 16);
-          }
+          if (CurrentSkin == 1) tftReplace(-1, rds_clockold, rds_clock, 202, 8, ActiveColor, ActiveColorSmooth, BackgroundColor1, 16); else tftReplace(1, rds_clockold, rds_clock, 205, 163, RDSColor, RDSColorSmooth, BackgroundColor, 16);
         }
       } else {
         if (rtcset) {
           if (advancedRDS) {
-            tftReplace(1, rds_clockold, rds_clock, 205, 109, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+            tftReplace(1, rds_clockold, rds_clock, 205, 109, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
           } else {
-            if (CurrentSkin == 1) {
-              CTBWSignalSprite.pushImage (-202, 0, 320, 240, skin1_mainbackground);
-              CTBWSignalSprite.setTextDatum(TL_DATUM);
-              CTBWSignalSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-              CTBWSignalSprite.drawString(rds_clock, 0, 8);
-              CTBWSignalSprite.pushSprite(202, 0);
-            } else {
-              tftReplace(1, rds_clockold, rds_clock, 205, 163, RDSDropoutColor, RDSDropoutColorSmooth, 16);
-            }
+            if (CurrentSkin == 1) tftReplace(-1, rds_clockold, rds_clock, 202, 8, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor1, 16); else tftReplace(1, rds_clockold, rds_clock, 205, 163, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
           }
         } else {
           if (advancedRDS) {
@@ -818,8 +773,8 @@ void showCT() {
             tftPrint(1, rds_clock, 205, 109, BackgroundColor, BackgroundColor, 16);
           } else {
             if (CurrentSkin == 1) {
-              CTBWSignalSprite.pushImage (-202, 0, 320, 240, skin1_mainbackground);
-              CTBWSignalSprite.pushSprite(202, 0);
+              tftPrint(-1, rds_clockold, 202, 8, BackgroundColor1, BackgroundColor1, 16);
+              tftPrint(-1, rds_clock, 202, 8, BackgroundColor1, BackgroundColor1, 16);
             } else {
               tftPrint(1, rds_clockold, 205, 163, BackgroundColor, BackgroundColor, 16);
               tftPrint(1, rds_clock, 205, 163, BackgroundColor, BackgroundColor, 16);
@@ -1045,7 +1000,7 @@ void ShowAFEON() {
           if (radio.eon[i + y].tp) tft.fillCircle(276, 54 + (15 * i), 4, InsignificantColor); else tft.fillCircle(276, 54 + (15 * i), 4, BackgroundColor);
 
           if (radio.eon[i + y].pty != eonptyold[i + y]) {
-            tftReplace(0, String(eonptyold[i + y]), (radio.eon[i + y].pty < 32 ? String(radio.eon[i + y].pty) : " "), 304, 48 + (15 * i), RDSColor, RDSColorSmooth, 16);
+            tftReplace(0, String(eonptyold[i + y]), (radio.eon[i + y].pty < 32 ? String(radio.eon[i + y].pty) : " "), 304, 48 + (15 * i), RDSColor, RDSColorSmooth, BackgroundColor, 16);
             eonptyold[i + y] = radio.eon[i + y].pty;
           }
 

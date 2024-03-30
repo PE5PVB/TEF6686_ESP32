@@ -59,6 +59,9 @@ extern char programTypePrevious[18];
 extern int ActiveColor;
 extern int ActiveColorSmooth;
 extern int BackgroundColor;
+extern int BackgroundColor1;
+extern int BackgroundColor2;
+extern int BackgroundColor4;
 extern int BarSignificantColor;
 extern int BarInsignificantColor;
 extern int BWAutoColor;
@@ -123,9 +126,6 @@ extern WiFiUDP Udp;
 extern TFT_eSprite RadiotextSprite;
 extern TFT_eSprite RDSSprite;
 extern TFT_eSprite PSSprite;
-extern TFT_eSprite PISprite;
-extern TFT_eSprite PTYSprite;
-extern TFT_eSprite CTBWSignalSprite;
 
 void ShowAdvancedRDS();
 void readRds();
@@ -142,5 +142,5 @@ void ShowErrors();
 extern void ShowRDSLogo(bool RDSstatus);
 extern void DataPrint(String string);
 extern void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize);
-extern void tftReplace(int8_t offset, const String & textold, const String & text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize);
+extern void tftReplace(int8_t offset, const String & textold, const String & text, int16_t x, int16_t y, int color, int smoothcolor, int background, uint8_t fontsize);
 #endif
