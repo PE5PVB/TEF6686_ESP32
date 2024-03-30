@@ -3166,9 +3166,9 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "快速 PS", // 203
     "默认", // 204
     "XDRGTK连接时锁屏", // 205
-    "FMSI stereo\nimprovement", // 206
-    "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!" // 208
+    "FMSI\n立体声增强", // 206
+    "此功能仅限\nTEF6687/6689!", // 207
+    "此皮肤不支持该功能!" // 208
   },
 
   { "Norsk", // Norwegian
