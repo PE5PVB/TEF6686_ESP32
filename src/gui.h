@@ -127,6 +127,7 @@ extern int BackgroundColor1;
 extern int BackgroundColor2;
 extern int BackgroundColor3;
 extern int BackgroundColor4;
+extern int BackgroundColor5;
 extern int BarInsignificantColor;
 extern int BarSignificantColor;
 extern int BatteryValueColor;

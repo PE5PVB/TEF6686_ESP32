@@ -204,6 +204,7 @@ int BackgroundColor1;
 int BackgroundColor2;
 int BackgroundColor3;
 int BackgroundColor4;
+int BackgroundColor5;
 int BarSignificantColor;
 int BarInsignificantColor;
 int BatteryValueColor;
@@ -2088,17 +2089,17 @@ void ModeButtonPress() {
 void ShowStepSize() {
   if (!advancedRDS) {
     if (CurrentSkin == 1) {
-      tft.pushImage (194, 30, 22, 5, skin1_stepoff);
-      tft.pushImage (225, 30, 22, 5, skin1_stepoff);
-      if (band < BAND_GAP) tft.pushImage (116, 30, 22, 5, skin1_stepoff); else if (band != BAND_LW && band != BAND_MW) tft.pushImage (132, 30, 22, 5, skin1_stepoff);
-      if (band < BAND_GAP) tft.pushImage (147, 30, 22, 5, skin1_stepoff); else tft.pushImage (162, 30, 22, 5, skin1_stepoff);
-      if (stepsize == 1) tft.pushImage (225, 30, 22, 5, skin1_stepon);
-      if (stepsize == 2) tft.pushImage (194, 30, 22, 5, skin1_stepon);
+      tft.pushImage (196, 30, 22, 5, skin1_stepoff);
+      tft.pushImage (227, 30, 22, 5, skin1_stepoff);
+      if (band < BAND_GAP) tft.pushImage (118, 30, 22, 5, skin1_stepoff); else if (band != BAND_LW && band != BAND_MW) tft.pushImage (134, 30, 22, 5, skin1_stepoff);
+      if (band < BAND_GAP) tft.pushImage (149, 30, 22, 5, skin1_stepoff); else tft.pushImage (164, 30, 22, 5, skin1_stepoff);
+      if (stepsize == 1) tft.pushImage (227, 30, 22, 5, skin1_stepon);
+      if (stepsize == 2) tft.pushImage (196, 30, 22, 5, skin1_stepon);
       if (stepsize == 3) {
-        if (band < BAND_GAP) tft.pushImage (147, 30, 22, 5, skin1_stepon); else tft.pushImage (162, 30, 22, 5, skin1_stepon);
+        if (band < BAND_GAP) tft.pushImage (149, 30, 22, 5, skin1_stepon); else tft.pushImage (164, 30, 22, 5, skin1_stepon);
       }
       if (stepsize == 4) {
-        if (band < BAND_GAP) tft.pushImage (116, 30, 22, 5, skin1_stepon); else tft.pushImage (132, 30, 22, 5, skin1_stepon);
+        if (band < BAND_GAP) tft.pushImage (118, 30, 22, 5, skin1_stepon); else tft.pushImage (134, 30, 22, 5, skin1_stepon);
       }
     } else {
       tft.fillRect(191, 38, 15, 4, GreyoutColor);
@@ -2472,14 +2473,14 @@ void ShowMemoryPos() {
     if (advancedRDS) {
       tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 215, 36, SecondaryColor, SecondaryColorSmooth, BackgroundColor, 16);
     } else {
-      if (CurrentSkin == 1) tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 5, 29, memposcolor, memposcolorsmooth, BackgroundColor, 16); else tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 50, 32, memposcolor, memposcolorsmooth, BackgroundColor, 16);
+      if (CurrentSkin == 1) tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 5, 29, memposcolor, memposcolorsmooth, BackgroundColor5, 16); else tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 50, 32, memposcolor, memposcolorsmooth, BackgroundColor, 16);
     }
     memoryposold = memorypos;
   } else {
     if (advancedRDS) {
       tftPrint(-1, String(memorypos + 1), 215, 36, BackgroundColor, BackgroundColor, 16);
     } else {
-      if (CurrentSkin == 1) tftPrint(-1, String(memorypos + 1), 5, 29, BackgroundColor, BackgroundColor, 16); else tftPrint(-1, String(memorypos + 1), 50, 32, BackgroundColor, BackgroundColor, 16);
+      if (CurrentSkin == 1) tftPrint(-1, String(memorypos + 1), 5, 29, BackgroundColor5, BackgroundColor5, 16); else tftPrint(-1, String(memorypos + 1), 50, 32, BackgroundColor, BackgroundColor, 16);
     }
   }
 }
@@ -2572,7 +2573,7 @@ void ShowFreq(int mode) {
     }
 
     if (!screenmute) {
-      if (CurrentSkin == 1) FrequencySprite.pushImage (-55, -40, 320, 240, skin1_mainbackground); else FrequencySprite.fillSprite(BackgroundColor);
+      if (CurrentSkin == 1) FrequencySprite.pushImage (-57, -40, 320, 240, skin1_mainbackground); else FrequencySprite.fillSprite(BackgroundColor);
       FrequencySprite.setTextDatum(TR_DATUM);
       FrequencySprite.setTextColor(FreqColor, FreqColorSmooth, false);
       FrequencySprite.drawString(String(frequency_AM) + " ", 218, -6);
@@ -2585,7 +2586,7 @@ void ShowFreq(int mode) {
         updateSWMIBand();
       }
 
-      if (CurrentSkin == 1) FrequencySprite.pushSprite(55, 40); else FrequencySprite.pushSprite(46, 46);
+      if (CurrentSkin == 1) FrequencySprite.pushSprite(57, 40); else FrequencySprite.pushSprite(46, 46);
       FrequencySprite.setTextDatum(TR_DATUM);
 
       switch (freqfont) {
@@ -2684,7 +2685,7 @@ void ShowSignalLevel() {
           }
           if (tuned) {
             if (CurrentSkin == 1) {
-              if (CN == 0) tftPrint(-1, "--", 274, 128, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, String(CN), 274, 128, PrimaryColor, PrimaryColorSmooth, 16);
+              if (CN == 0) tftPrint(-1, "--", 274, 128, FreqColor, FreqColorSmooth, 16); else tftPrint(-1, String(CN), 274, 128, PrimaryColor, PrimaryColorSmooth, 16);
             } else {
               if (CN == 0) tftPrint(1, "--", 295, 163, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(CN), 295, 163, PrimaryColor, PrimaryColorSmooth, 16);
             }
@@ -2728,16 +2729,20 @@ void ShowSignalLevel() {
         tftReplace(1, String(SStatusold / 10) + "." + String(abs(SStatusold % 10)), String(SStatusprint / 10) + "." + String(abs(SStatusprint % 10)), 273, 51, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 16);
       } else {
         if (CurrentSkin == 1) {
-          if (SStatusold / 10 != SStatusprint / 10) tftReplace(1, String(SStatusold / 10), String(SStatusprint / 10), 262, 99, PrimaryColor, PrimaryColorSmooth, BackgroundColor2, 28);
-          tftReplace(-1, "." + String(abs(SStatusold % 10)), "." + String(abs(SStatusprint % 10)), 264, 99, PrimaryColor, PrimaryColorSmooth, BackgroundColor2, 16);
+          if (SStatusold / 10 != SStatusprint / 10) tftReplace(1, String(SStatusold / 10), String(SStatusprint / 10), 262, 99, FreqColor, FreqColorSmooth, BackgroundColor2, 28);
+          tftReplace(-1, "." + String(abs(SStatusold % 10)), "." + String(abs(SStatusprint % 10)), 264, 99, FreqColor, FreqColorSmooth, BackgroundColor2, 16);
 
-          if (band < BAND_GAP) segments = map(SStatus / 10, 5, 70, 0, 136); else map((SStatus + 200) / 10, 0, 120, 0, 136);
+          int SStatuscalc = SStatus;
+          if (SStatuscalc < 0) SStatuscalc = 0;
+          if (SStatuscalc > 700) SStatuscalc = 700;
+
+          if (band < BAND_GAP) segments = map(SStatuscalc / 10, 5, 70, 0, 136); else segments = map((SStatuscalc + 200) / 10, 0, 120, 0, 136);
           tft.fillRect(18, 213, 136, 6, GreyoutColor);
           if (segments > 100) {
             tft.fillRect(18, 213, 100, 6, BarInsignificantColor);
             tft.fillRect(18 + 100, 213, segments - 100, 6, BarSignificantColor);
           } else {
-            tft.fillRect(18, 213, segments, 6, BarInsignificantColor);
+            tft.fillRect(18, 213, segments, 6, FreqColor);
           }
         } else {
           if (SStatusold / 10 != SStatusprint / 10) tftReplace(1, String(SStatusold / 10), String(SStatusprint / 10), 288, 105, FreqColor, FreqColorSmooth, BackgroundColor, 48);
@@ -3016,7 +3021,7 @@ void ShowModLevel() {
       MStatusold = 1;
     }
     if (CurrentSkin == 1) {
-      segments = map(MStatus, 0, 120, 0, 136);
+      segments = map(MStatus, 0, 120, 0, 133);
 
       if (segments > peakholdold) {
         peakholdold = segments;
@@ -3031,11 +3036,10 @@ void ShowModLevel() {
         tft.fillRect(178, 213, segments, 6, BarInsignificantColor);
       }
 
-      int peakHoldPosition = map(peakholdold, 0, 132, 0, 136);
-      tft.fillRect(178 + peakHoldPosition, 213, 2, 6, (peakholdold > 80) ? BarSignificantColor : BarInsignificantColor);
+      tft.fillRect(178 + peakholdold, 213, 2, 6, (peakholdold > 80) ? BarSignificantColor : BarInsignificantColor);
 
       if (millis() - peakholdmillis >= 1000) {
-        tft.fillRect(178 + peakHoldPosition, 213, 2, 6, GreyoutColor);
+        tft.fillRect(178 + peakholdold, 213, 2, 6, GreyoutColor);
         peakholdold = segments;
         peakholdmillis = millis();
       }

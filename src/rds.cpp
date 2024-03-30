@@ -305,9 +305,21 @@ void readRds() {
           }
 
           if (region == REGION_US) {
-            if (advancedRDS) tftPrint(-1, PIold, 240, 72, RDSDropoutColor, RDSDropoutColorSmooth, 16); else tftPrint(-1, PIold, 240, 184, RDSDropoutColor, RDSDropoutColorSmooth, 16);
-            if (advancedRDS) tftPrint(-1, stationIDold, 240, 89, RDSDropoutColor, RDSDropoutColorSmooth, 16); else tftPrint(-1, stationIDold, 240, 201, RDSDropoutColor, RDSDropoutColorSmooth, 16);
-            if (advancedRDS) tftPrint(1, stationStateold, 318, 89, RDSDropoutColor, RDSDropoutColorSmooth, 16); else tftPrint(1, stationStateold, 318, 201, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+            if (advancedRDS) {
+              tftPrint(-1, PIold, 240, 72, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+              tftPrint(-1, stationIDold, 240, 89, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+              tftPrint(1, stationStateold, 318, 89, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+            } else {
+              if (CurrentSkin == 1) {
+                tftPrint(-1, PIold, 30, 97, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+                tftPrint(-1, stationIDold, 30, 111, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+                tftPrint(1, stationStateold, 108, 111, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+              } else {
+                tftPrint(-1, PIold, 240, 184, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+                tftPrint(-1, stationIDold, 240, 201, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+                tftPrint(1, stationStateold, 318, 201, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+              }
+            }
           }
 
           if (advancedRDS) {
@@ -349,13 +361,26 @@ void readRds() {
             if (advancedRDS) {
               tftPrint(0, PIold, 275, 75, RDSColor, RDSColorSmooth, 28);
             } else {
-              if (CurrentSkin == 1) tftPrint(-1, PIold, 30, 99, PrimaryColor, PrimaryColorSmooth, 28); else tftPrint(0, PIold, 275, 187, RDSColor, RDSColor, 28);
+              if (CurrentSkin == 1) tftPrint(-1, PIold, 30, 99, FreqColor, FreqColorSmooth, 28); else tftPrint(0, PIold, 275, 187, RDSColor, RDSColor, 28);
             }
           }
 
           if (region == REGION_US) {
-            if (advancedRDS) tftPrint(-1, PIold, 240, 72, RDSColor, RDSColorSmooth, 16); else tftPrint(-1, PIold, 240, 184, RDSColor, RDSColorSmooth, 16);
-            if (advancedRDS) tftPrint(-1, stationIDold, 240, 89, RDSColor, RDSColorSmooth, 16); else tftPrint(-1, stationIDold, 240, 201, RDSColor, RDSColorSmooth, 16);
+            if (advancedRDS) {
+              tftPrint(-1, PIold, 240, 72, RDSColor, RDSColorSmooth, 16);
+              tftPrint(-1, stationIDold, 240, 89, RDSColor, RDSColorSmooth, 16);
+              tftPrint(1, stationStateold, 318, 89, RDSColor, RDSColorSmooth, 16);
+            } else {
+              if (CurrentSkin == 1) {
+                tftPrint(-1, PIold, 30, 97, FreqColor, FreqColorSmooth, 16);
+                tftPrint(-1, stationIDold, 30, 111, FreqColor, FreqColorSmooth, 16);
+                tftPrint(1, stationStateold, 108, 111, FreqColor, FreqColorSmooth, 16);
+              } else {
+                tftPrint(-1, PIold, 240, 184, RDSColor, RDSColorSmooth, 16);
+                tftPrint(-1, stationIDold, 240, 201, RDSColor, RDSColorSmooth, 16);
+                tftPrint(1, stationStateold, 318, 201, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+              }
+            }
           }
 
           if (advancedRDS) {
@@ -363,7 +388,7 @@ void readRds() {
           } else {
             if (CurrentSkin == 1) {
               PSSprite.pushImage (-8, -154, 320, 240, skin1_mainbackground);
-              PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+              PSSprite.setTextColor(FreqColor, FreqColorSmooth, false);
               PSSprite.drawString(PSold, 84, 1);
               PSSprite.pushSprite(8, 154);
             } else {
@@ -622,12 +647,12 @@ void showPI() {
         if (region == REGION_US) {
           if (!RDSstatus) {
             if (String(radio.rds.picode) != PIold) tftReplace(-1, PIold, radio.rds.picode, 240, 72, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
-            tftReplace(-1, stationIDold, radio.rds.stationID, 240, 89, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+            tftReplace(-1, stationIDold, radio.rds.stationIDtext, 240, 89, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
           } else {
             if (String(radio.rds.picode) != PIold) tftReplace(-1, PIold, radio.rds.picode, 240, 72, RDSColor, RDSColorSmooth, BackgroundColor, 16);
-            tftReplace(-1, stationIDold, radio.rds.stationID, 240, 89, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+            tftReplace(-1, stationIDold, radio.rds.stationIDtext, 240, 89, RDSColor, RDSColorSmooth, BackgroundColor, 16);
           }
-          tftReplace(1, stationStateold, radio.rds.stationState, 318, 89, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+          tftReplace(1, stationStateold, radio.rds.stationStatetext, 318, 89, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
         }
       } else if (afscreen) {
         tftReplace(-1, PIold, radio.rds.picode, 30, 201, BWAutoColor, BWAutoColorSmooth, BackgroundColor, 16);
@@ -636,23 +661,37 @@ void showPI() {
           if (!RDSstatus) {
             if (CurrentSkin == 1) tftReplace(-1, PIold, radio.rds.picode, 30, 99, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor2, 28); else tftReplace(0, PIold, radio.rds.picode, 275, 187, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 28);
           } else {
-            if (CurrentSkin == 1) tftReplace(-1, PIold, radio.rds.picode, 30, 99, PrimaryColor, PrimaryColorSmooth, BackgroundColor2, 28); else tftReplace(0, PIold, radio.rds.picode, 275, 187, RDSColor, RDSColorSmooth, BackgroundColor, 28);
+            if (CurrentSkin == 1) tftReplace(-1, PIold, radio.rds.picode, 30, 99, FreqColor, FreqColorSmooth, BackgroundColor2, 28); else tftReplace(0, PIold, radio.rds.picode, 275, 187, RDSColor, RDSColorSmooth, BackgroundColor, 28);
           }
         }
         if (region == REGION_US) {
           if (!RDSstatus) {
-            if (String(radio.rds.picode) != PIold) tftReplace(-1, PIold, radio.rds.picode, 240, 184, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
-            tftReplace(-1, stationIDold, radio.rds.stationID, 240, 201, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+            if (String(radio.rds.picode) != PIold || radio.rds.stationIDtext != stationIDold) {
+              if (CurrentSkin == 1) {
+                tftReplace(-1, PIold, radio.rds.picode, 30, 97, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+                tftReplace(-1, stationIDold, radio.rds.stationIDtext, 30, 111, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+              } else {
+                tftReplace(-1, PIold, radio.rds.picode, 240, 184, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+                tftReplace(-1, stationIDold, radio.rds.stationIDtext, 240, 201, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+              }
+            }
           } else {
-            if (String(radio.rds.picode) != PIold) tftReplace(-1, PIold, radio.rds.picode, 240, 184, RDSColor, RDSColorSmooth, BackgroundColor, 16);
-            tftReplace(-1, stationIDold, radio.rds.stationID, 240, 201, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+            if (String(radio.rds.picode) != PIold || radio.rds.stationIDtext != stationIDold) {
+              if (CurrentSkin == 1) {
+                tftReplace(-1, PIold, radio.rds.picode, 30, 97, FreqColor, FreqColorSmooth, BackgroundColor, 16);
+                tftReplace(-1, stationIDold, radio.rds.stationIDtext, 30, 111, FreqColor, FreqColorSmooth, BackgroundColor, 16);
+              } else {
+                tftReplace(-1, PIold, radio.rds.picode, 240, 184, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+                tftReplace(-1, stationIDold, radio.rds.stationIDtext, 240, 201, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+              }
+            }
           }
-          tftReplace(1, stationStateold, radio.rds.stationState, 318, 201, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+          if (CurrentSkin == 1) tftReplace(1, stationStateold, radio.rds.stationStatetext, 108, 111, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16); else tftReplace(1, stationStateold, radio.rds.stationStatetext, 318, 201, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
         }
       }
       PIold = radio.rds.picode;
-      stationIDold = radio.rds.stationID;
-      stationStateold = radio.rds.stationState;
+      stationIDold = radio.rds.stationIDtext;
+      stationStateold = radio.rds.stationStatetext;
     }
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
@@ -714,7 +753,7 @@ void showPS() {
         } else {
           if (CurrentSkin == 1) {
             PSSprite.pushImage (-8, -154, 320, 240, skin1_mainbackground);
-            PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            PSSprite.setTextColor(FreqColor, FreqColorSmooth, false);
             PSSprite.drawString(radio.rds.stationName, 84, 1);
             PSSprite.pushSprite(8, 154);
           } else {

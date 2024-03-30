@@ -430,6 +430,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BackgroundColor2 = 0x0044;
       BackgroundColor3 = 0x00a2;
       BackgroundColor4 = 0x00c6;
+      BackgroundColor5 = 0x0001;
       ActiveColor = White;
       ActiveColorSmooth = WhiteSmooth;
       FreqColor = 0x1ff7;
@@ -1630,9 +1631,14 @@ void BuildDisplay() {
       tft.drawLine(178, 219, 313, 219, FrameColor);
       tft.drawLine(18, 219, 153, 219, FrameColor);
 
+      if (region == REGION_EU) tftPrint(-1, "PI:", 8, 104, ActiveColor, ActiveColorSmooth, 16);
+      if (region == REGION_US) {
+        tftPrint(-1, "PI:", 8, 97, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, "ID:", 8, 111, ActiveColor, ActiveColorSmooth, 16);
+      }
+
       tftPrint(-1, "S", 6, 214, PrimaryColor, PrimaryColorSmooth, 16);
       tftPrint(-1, "M", 162, 214, PrimaryColor, PrimaryColorSmooth, 16);
-      tftPrint(-1, "PI:", 8, 104, ActiveColor, ActiveColorSmooth, 16);
       if (usesquelch) tftPrint(1, "SQ:", 276, 168, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(1, unitString[unit], 312, 108, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(1, "dB", 312, 128, ActiveColor, ActiveColorSmooth, 16);

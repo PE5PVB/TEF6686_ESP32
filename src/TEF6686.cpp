@@ -575,11 +575,10 @@ void TEF6686::readRDS(byte showrdserrors)
           }
 
           if (faultyID) {
-            for (byte i = 0; i < 9; i++) {
-              rds.stationID[i] = ' ';
-            }
+            strcpy(rds.stationID, "Unknown");
+          } else {
+            rds.stationID[7] = '?';
           }
-          rds.stationID[7] = '?';
           rds.stationID[8] = '\0';
         }
         correctPIold = rds.correctPI;
