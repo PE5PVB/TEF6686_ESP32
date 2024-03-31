@@ -2089,17 +2089,17 @@ void ModeButtonPress() {
 void ShowStepSize() {
   if (!advancedRDS) {
     if (CurrentSkin == 1) {
-      tft.pushImage (196, 30, 22, 5, skin1_stepoff);
-      tft.pushImage (227, 30, 22, 5, skin1_stepoff);
-      if (band < BAND_GAP) tft.pushImage (118, 30, 22, 5, skin1_stepoff); else if (band != BAND_LW && band != BAND_MW) tft.pushImage (134, 30, 22, 5, skin1_stepoff);
-      if (band < BAND_GAP) tft.pushImage (149, 30, 22, 5, skin1_stepoff); else tft.pushImage (164, 30, 22, 5, skin1_stepoff);
-      if (stepsize == 1) tft.pushImage (227, 30, 22, 5, skin1_stepon);
-      if (stepsize == 2) tft.pushImage (196, 30, 22, 5, skin1_stepon);
+      tft.pushImage (198, 30, 22, 5, skin1_stepoff);
+      tft.pushImage (229, 30, 22, 5, skin1_stepoff);
+      if (band < BAND_GAP) tft.pushImage (120, 30, 22, 5, skin1_stepoff); else if (band != BAND_LW && band != BAND_MW) tft.pushImage (136, 30, 22, 5, skin1_stepoff);
+      if (band < BAND_GAP) tft.pushImage (151, 30, 22, 5, skin1_stepoff); else tft.pushImage (166, 30, 22, 5, skin1_stepoff);
+      if (stepsize == 1) tft.pushImage (229, 30, 22, 5, skin1_stepon);
+      if (stepsize == 2) tft.pushImage (198, 30, 22, 5, skin1_stepon);
       if (stepsize == 3) {
-        if (band < BAND_GAP) tft.pushImage (149, 30, 22, 5, skin1_stepon); else tft.pushImage (164, 30, 22, 5, skin1_stepon);
+        if (band < BAND_GAP) tft.pushImage (151, 30, 22, 5, skin1_stepon); else tft.pushImage (166, 30, 22, 5, skin1_stepon);
       }
       if (stepsize == 4) {
-        if (band < BAND_GAP) tft.pushImage (118, 30, 22, 5, skin1_stepon); else tft.pushImage (134, 30, 22, 5, skin1_stepon);
+        if (band < BAND_GAP) tft.pushImage (120, 30, 22, 5, skin1_stepon); else tft.pushImage (136, 30, 22, 5, skin1_stepon);
       }
     } else {
       tft.fillRect(191, 38, 15, 4, GreyoutColor);
@@ -2618,11 +2618,11 @@ void ShowFreq(int mode) {
           if (CurrentSkin == 1) FrequencySprite.pushImage (-55, -40, 320, 240, skin1_mainbackground); else FrequencySprite.fillSprite(BackgroundColor);
           FrequencySprite.setTextColor(FreqColor, FreqColorSmooth, false);
           FrequencySprite.drawString(String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100) + " ", 218, -6);
-          if (CurrentSkin == 1) FrequencySprite.pushSprite(55, 40); else FrequencySprite.pushSprite(46, 46);
+          if (CurrentSkin == 1) FrequencySprite.pushSprite(57, 40); else FrequencySprite.pushSprite(46, 46);
           freqold = freq;
         } else if (mode == 1) {
           if (CurrentSkin == 1) FrequencySprite.pushImage (-55, -40, 320, 240, skin1_mainbackground); else FrequencySprite.fillSprite(BackgroundColor);
-          if (CurrentSkin == 1) FrequencySprite.pushSprite(55, 40); else FrequencySprite.pushSprite(46, 46);
+          if (CurrentSkin == 1) FrequencySprite.pushSprite(57, 40); else FrequencySprite.pushSprite(46, 46);
         }
       }
     }
@@ -2740,7 +2740,7 @@ void ShowSignalLevel() {
           tft.fillRect(18, 213, 136, 6, GreyoutColor);
           if (segments > 100) {
             tft.fillRect(18, 213, 100, 6, BarInsignificantColor);
-            tft.fillRect(18 + 100, 213, segments - 100, 6, BarSignificantColor);
+            tft.fillRect(18 + 100, 213, segments - 100, 6, FreqColor);
           } else {
             tft.fillRect(18, 213, segments, 6, FreqColor);
           }

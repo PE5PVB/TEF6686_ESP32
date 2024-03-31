@@ -554,31 +554,31 @@ void ShowErrors() {
   if (calc != rdsqualityold || BWreset) {
     switch (calc) {
       case 0:
-        tft.drawRoundRect((!advancedRDS && CurrentSkin == 1 ? 199 : 205), (advancedRDS ? 74 : (CurrentSkin == 1 ? 155 : 186)), 4, 24, 2, BarInsignificantColor);
-        tft.fillRoundRect((!advancedRDS && CurrentSkin == 1 ? 200 : 206), (advancedRDS ? 75 : (CurrentSkin == 1 ? 156 : 187)), 2, 22, 2, BarInsignificantColor);
+        tft.drawRoundRect((!advancedRDS && CurrentSkin == 1 ? 199 : 205), (advancedRDS ? 74 : (CurrentSkin == 1 ? 155 : 186)), 4, 24, 2, (CurrentSkin == 1 && !advancedRDS ? FreqColor : BarInsignificantColor));
+        tft.fillRoundRect((!advancedRDS && CurrentSkin == 1 ? 200 : 206), (advancedRDS ? 75 : (CurrentSkin == 1 ? 156 : 187)), 2, 22, 2, (CurrentSkin == 1 && !advancedRDS ? FreqColor : BarInsignificantColor));
 
-        tft.drawRoundRect((!advancedRDS && CurrentSkin == 1 ? 193 : 199), (advancedRDS ? 79 : (CurrentSkin == 1 ? 160 : 191)), 4, 19, 2, BarInsignificantColor);
-        tft.fillRoundRect((!advancedRDS && CurrentSkin == 1 ? 194 : 200), (advancedRDS ? 80 : (CurrentSkin == 1 ? 161 : 192)), 2, 17, 2, BarInsignificantColor);
+        tft.drawRoundRect((!advancedRDS && CurrentSkin == 1 ? 193 : 199), (advancedRDS ? 79 : (CurrentSkin == 1 ? 160 : 191)), 4, 19, 2, (CurrentSkin == 1 && !advancedRDS ? FreqColor : BarInsignificantColor));
+        tft.fillRoundRect((!advancedRDS && CurrentSkin == 1 ? 194 : 200), (advancedRDS ? 80 : (CurrentSkin == 1 ? 161 : 192)), 2, 17, 2, (CurrentSkin == 1 && !advancedRDS ? FreqColor : BarInsignificantColor));
 
-        tft.drawRoundRect((!advancedRDS && CurrentSkin == 1 ? 187 : 193), (advancedRDS ? 84 : (CurrentSkin == 1 ? 165 : 196)), 4, 14, 2, BarInsignificantColor);
-        tft.fillRoundRect((!advancedRDS && CurrentSkin == 1 ? 188 : 194), (advancedRDS ? 85 : (CurrentSkin == 1 ? 166 : 197)), 2, 12, 2, BarInsignificantColor);
+        tft.drawRoundRect((!advancedRDS && CurrentSkin == 1 ? 187 : 193), (advancedRDS ? 84 : (CurrentSkin == 1 ? 165 : 196)), 4, 14, 2, (CurrentSkin == 1 && !advancedRDS ? FreqColor : BarInsignificantColor));
+        tft.fillRoundRect((!advancedRDS && CurrentSkin == 1 ? 188 : 194), (advancedRDS ? 85 : (CurrentSkin == 1 ? 166 : 197)), 2, 12, 2, (CurrentSkin == 1 && !advancedRDS ? FreqColor : BarInsignificantColor));
 
-        tft.drawRoundRect((!advancedRDS && CurrentSkin == 1 ? 181 : 187), (advancedRDS ? 89 : (CurrentSkin == 1 ? 170 : 201)), 4, 9, 2, BarInsignificantColor);
-        tft.fillRoundRect((!advancedRDS && CurrentSkin == 1 ? 182 : 188), (advancedRDS ? 90 : (CurrentSkin == 1 ? 171 : 202)), 2, 7, 2, BarInsignificantColor);
+        tft.drawRoundRect((!advancedRDS && CurrentSkin == 1 ? 181 : 187), (advancedRDS ? 89 : (CurrentSkin == 1 ? 170 : 201)), 4, 9, 2, (CurrentSkin == 1 && !advancedRDS ? FreqColor : BarInsignificantColor));
+        tft.fillRoundRect((!advancedRDS && CurrentSkin == 1 ? 182 : 188), (advancedRDS ? 90 : (CurrentSkin == 1 ? 171 : 202)), 2, 7, 2, (CurrentSkin == 1 && !advancedRDS ? FreqColor : BarInsignificantColor));
         break;
 
       case 1:
         tft.drawRoundRect((!advancedRDS && CurrentSkin == 1 ? 199 : 205), (advancedRDS ? 74 : (CurrentSkin == 1 ? 155 : 186)), 4, 24, 2, GreyoutColor);
         tft.fillRoundRect((!advancedRDS && CurrentSkin == 1 ? 200 : 206), (advancedRDS ? 75 : (CurrentSkin == 1 ? 156 : 187)), 2, 22, 2, BackgroundColor);
 
-        tft.drawRoundRect((!advancedRDS && CurrentSkin == 1 ? 193 : 199), (advancedRDS ? 79 : (CurrentSkin == 1 ? 160 : 191)), 4, 19, 2, BarInsignificantColor);
-        tft.fillRoundRect((!advancedRDS && CurrentSkin == 1 ? 194 : 200), (advancedRDS ? 80 : (CurrentSkin == 1 ? 161 : 192)), 2, 17, 2, BarInsignificantColor);
+        tft.drawRoundRect((!advancedRDS && CurrentSkin == 1 ? 193 : 199), (advancedRDS ? 79 : (CurrentSkin == 1 ? 160 : 191)), 4, 19, 2, (CurrentSkin == 1 && !advancedRDS ? FreqColor : BarInsignificantColor));
+        tft.fillRoundRect((!advancedRDS && CurrentSkin == 1 ? 194 : 200), (advancedRDS ? 80 : (CurrentSkin == 1 ? 161 : 192)), 2, 17, 2, (CurrentSkin == 1 && !advancedRDS ? FreqColor : BarInsignificantColor));
 
-        tft.drawRoundRect((!advancedRDS && CurrentSkin == 1 ? 187 : 193), (advancedRDS ? 84 : (CurrentSkin == 1 ? 165 : 196)), 4, 14, 2, BarInsignificantColor);
-        tft.fillRoundRect((!advancedRDS && CurrentSkin == 1 ? 188 : 194), (advancedRDS ? 85 : (CurrentSkin == 1 ? 166 : 197)), 2, 12, 2, BarInsignificantColor);
+        tft.drawRoundRect((!advancedRDS && CurrentSkin == 1 ? 187 : 193), (advancedRDS ? 84 : (CurrentSkin == 1 ? 165 : 196)), 4, 14, 2, (CurrentSkin == 1 && !advancedRDS ? FreqColor : BarInsignificantColor));
+        tft.fillRoundRect((!advancedRDS && CurrentSkin == 1 ? 188 : 194), (advancedRDS ? 85 : (CurrentSkin == 1 ? 166 : 197)), 2, 12, 2, (CurrentSkin == 1 && !advancedRDS ? FreqColor : BarInsignificantColor));
 
-        tft.drawRoundRect((!advancedRDS && CurrentSkin == 1 ? 181 : 187), (advancedRDS ? 89 : (CurrentSkin == 1 ? 170 : 201)), 4, 9, 2, BarInsignificantColor);
-        tft.fillRoundRect((!advancedRDS && CurrentSkin == 1 ? 182 : 188), (advancedRDS ? 90 : (CurrentSkin == 1 ? 171 : 202)), 2, 7, 2, BarInsignificantColor);
+        tft.drawRoundRect((!advancedRDS && CurrentSkin == 1 ? 181 : 187), (advancedRDS ? 89 : (CurrentSkin == 1 ? 170 : 201)), 4, 9, 2, (CurrentSkin == 1 && !advancedRDS ? FreqColor : BarInsignificantColor));
+        tft.fillRoundRect((!advancedRDS && CurrentSkin == 1 ? 182 : 188), (advancedRDS ? 90 : (CurrentSkin == 1 ? 171 : 202)), 2, 7, 2, (CurrentSkin == 1 && !advancedRDS ? FreqColor : BarInsignificantColor));
         break;
 
       case 2:
@@ -588,11 +588,11 @@ void ShowErrors() {
         tft.drawRoundRect((!advancedRDS && CurrentSkin == 1 ? 193 : 199), (advancedRDS ? 79 : (CurrentSkin == 1 ? 160 : 191)), 4, 19, 2, GreyoutColor);
         tft.fillRoundRect((!advancedRDS && CurrentSkin == 1 ? 194 : 200), (advancedRDS ? 80 : (CurrentSkin == 1 ? 161 : 192)), 2, 17, 2, BackgroundColor);
 
-        tft.drawRoundRect((!advancedRDS && CurrentSkin == 1 ? 187 : 193), (advancedRDS ? 84 : (CurrentSkin == 1 ? 165 : 196)), 4, 14, 2, BarSignificantColor);
-        tft.fillRoundRect((!advancedRDS && CurrentSkin == 1 ? 188 : 194), (advancedRDS ? 85 : (CurrentSkin == 1 ? 166 : 197)), 2, 12, 2, BarSignificantColor);
+        tft.drawRoundRect((!advancedRDS && CurrentSkin == 1 ? 187 : 193), (advancedRDS ? 84 : (CurrentSkin == 1 ? 165 : 196)), 4, 14, 2, (CurrentSkin == 1 && !advancedRDS ? FreqColor : BarInsignificantColor));
+        tft.fillRoundRect((!advancedRDS && CurrentSkin == 1 ? 188 : 194), (advancedRDS ? 85 : (CurrentSkin == 1 ? 166 : 197)), 2, 12, 2, (CurrentSkin == 1 && !advancedRDS ? FreqColor : BarInsignificantColor));
 
-        tft.drawRoundRect((!advancedRDS && CurrentSkin == 1 ? 181 : 187), (advancedRDS ? 89 : (CurrentSkin == 1 ? 170 : 201)), 4, 9, 2, BarSignificantColor);
-        tft.fillRoundRect((!advancedRDS && CurrentSkin == 1 ? 182 : 188), (advancedRDS ? 90 : (CurrentSkin == 1 ? 171 : 202)), 2, 7, 2, BarSignificantColor);
+        tft.drawRoundRect((!advancedRDS && CurrentSkin == 1 ? 181 : 187), (advancedRDS ? 89 : (CurrentSkin == 1 ? 170 : 201)), 4, 9, 2, (CurrentSkin == 1 && !advancedRDS ? FreqColor : BarInsignificantColor));
+        tft.fillRoundRect((!advancedRDS && CurrentSkin == 1 ? 182 : 188), (advancedRDS ? 90 : (CurrentSkin == 1 ? 171 : 202)), 2, 7, 2, (CurrentSkin == 1 && !advancedRDS ? FreqColor : BarInsignificantColor));
         break;
 
       case 3:
@@ -668,8 +668,8 @@ void showPI() {
           if (!RDSstatus) {
             if (String(radio.rds.picode) != PIold || radio.rds.stationIDtext != stationIDold) {
               if (CurrentSkin == 1) {
-                tftReplace(-1, PIold, radio.rds.picode, 30, 97, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
-                tftReplace(-1, stationIDold, radio.rds.stationIDtext, 30, 111, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+                tftReplace(-1, PIold, radio.rds.picode, 30, 97, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor2, 16);
+                tftReplace(-1, stationIDold, radio.rds.stationIDtext, 30, 111, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor2, 16);
               } else {
                 tftReplace(-1, PIold, radio.rds.picode, 240, 184, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
                 tftReplace(-1, stationIDold, radio.rds.stationIDtext, 240, 201, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
@@ -678,8 +678,8 @@ void showPI() {
           } else {
             if (String(radio.rds.picode) != PIold || radio.rds.stationIDtext != stationIDold) {
               if (CurrentSkin == 1) {
-                tftReplace(-1, PIold, radio.rds.picode, 30, 97, FreqColor, FreqColorSmooth, BackgroundColor, 16);
-                tftReplace(-1, stationIDold, radio.rds.stationIDtext, 30, 111, FreqColor, FreqColorSmooth, BackgroundColor, 16);
+                tftReplace(-1, PIold, radio.rds.picode, 30, 97, FreqColor, FreqColorSmooth, BackgroundColor2, 16);
+                tftReplace(-1, stationIDold, radio.rds.stationIDtext, 30, 111, FreqColor, FreqColorSmooth, BackgroundColor2, 16);
               } else {
                 tftReplace(-1, PIold, radio.rds.picode, 240, 184, RDSColor, RDSColorSmooth, BackgroundColor, 16);
                 tftReplace(-1, stationIDold, radio.rds.stationIDtext, 240, 201, RDSColor, RDSColorSmooth, BackgroundColor, 16);
