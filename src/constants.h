@@ -293,7 +293,7 @@
 static const char* const unitString[] = {"dBμV", "dBf", "dBm"};
 static const char* const FreqFont[] = {"Classic", "Roubenstil", "Motoya", "Aura2", "Comic", "Modern"};
 static const char* const Theme[] = {"Essence", "Cyan", "Crimson", "Monochrome", "Volcano", "Dendro", "Sakura", "Whiteout", "Tangerine", "Ocean", "Indigo", "Maroon", "GoldBrite"};
-static const char* const Skin[] = {"Essential", "Top Secret"};
+static const char* const Skin[] = {"Essential", "NightSky"};
 
 // FM band: before BAND_GAP; AM band: after BAND_GAP
 enum RADIO_BAND {
