@@ -1342,51 +1342,63 @@ void ToggleBand(byte nowBand) {
 }
 
 void BANDBUTTONPress() {
-  if (!usesquelch) radio.setUnMute();
-  if (afscreen) {
-    BuildAdvancedRDS();
+  if (memorystore) {
+    EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_START, EE_PRESETS_FREQUENCY);
+    EEPROM.commit();
+    memory[memorypos] = EE_PRESETS_FREQUENCY;
+    memorystore = false;
+    ShowTuneMode();
+    if (memoryposstatus == MEM_DARK || memoryposstatus == MEM_EXIST) {
+      memoryposstatus = MEM_NORMAL;
+      ShowMemoryPos();
+    }
   } else {
-    unsigned long counterold = millis();
-    unsigned long counter = millis();
-    if (!menu) {
-      while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
+    if (!usesquelch) radio.setUnMute();
+    if (afscreen) {
+      BuildAdvancedRDS();
+    } else {
+      unsigned long counterold = millis();
+      unsigned long counter = millis();
+      if (!menu) {
+        while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
 
-      if (counter - counterold < 1000) {
-        if (screensavertriggered) {
-          WakeToSleep(REVERSE);
-          return;
-        }
-
-        if (advancedRDS) {
-          BuildDisplay();
-          ScreensaverTimerReopen();
-        } else {
-          if (tunemode != TUNE_MEM) {
-            ToggleBand(band);
-            StoreFrequency();
-            SelectBand();
-            if (XDRGTKUSB || XDRGTKTCP) {
-              if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10)); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10)); else DataPrint("M1\nT" + String(frequency_AM));
-            }
+        if (counter - counterold < 1000) {
+          if (screensavertriggered) {
+            WakeToSleep(REVERSE);
+            return;
           }
-          ScreensaverTimerRestart();
-        }
-      } else {
-        if (screensavertriggered) {
-          WakeToSleep(REVERSE);
-          return;
-        }
 
-        if (band < BAND_GAP) {
-          if (advancedRDS && !seek) BuildAFScreen(); else BuildAdvancedRDS();
+          if (advancedRDS) {
+            BuildDisplay();
+            ScreensaverTimerReopen();
+          } else {
+            if (tunemode != TUNE_MEM) {
+              ToggleBand(band);
+              StoreFrequency();
+              SelectBand();
+              if (XDRGTKUSB || XDRGTKTCP) {
+                if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10)); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10)); else DataPrint("M1\nT" + String(frequency_AM));
+              }
+            }
+            ScreensaverTimerRestart();
+          }
         } else {
-          WakeToSleep(true);
+          if (screensavertriggered) {
+            WakeToSleep(REVERSE);
+            return;
+          }
+
+          if (band < BAND_GAP) {
+            if (advancedRDS && !seek) BuildAFScreen(); else BuildAdvancedRDS();
+          } else {
+            WakeToSleep(true);
+          }
         }
       }
     }
-    while (digitalRead(BANDBUTTON) == LOW) delay(50);
-    delay(100);
   }
+  while (digitalRead(BANDBUTTON) == LOW) delay(50);
+  delay(100);
 }
 
 void StoreFrequency() {
@@ -2358,6 +2370,15 @@ void KeyUp() {
           memorypos++;
           if (memorypos > EE_PRESETS_CNT - 1) memorypos = 0;
           if (!memorystore) {
+            while (IsStationEmpty()) {
+              memorypos++;
+              if (memorypos > EE_PRESETS_CNT - 1) {
+                memorypos = 0;
+                break;
+              }
+            }
+          }
+          if (!memorystore) {
             DoMemoryPosTune();
           } else {
             if (!IsStationEmpty()) memoryposstatus = MEM_EXIST;
@@ -2409,6 +2430,15 @@ void KeyDown() {
         case TUNE_MEM:
           memorypos--;
           if (memorypos > EE_PRESETS_CNT - 1) memorypos = EE_PRESETS_CNT - 1;
+          if (!memorystore) {
+            while (IsStationEmpty()) {
+              memorypos--;
+              if (memorypos > EE_PRESETS_CNT - 1) {
+                memorypos = EE_PRESETS_CNT - 1;
+                break;
+              }
+            }
+          }
           if (!memorystore) {
             DoMemoryPosTune();
           } else {
