@@ -797,14 +797,24 @@ void showCT() {
         if (advancedRDS) {
           tftReplace(1, rds_clockold, rds_clock, 205, 109, RDSColor, RDSColorSmooth, BackgroundColor, 16);
         } else {
-          if (CurrentSkin == 1) tftReplace(-1, rds_clockold, rds_clock, 202, 8, ActiveColor, ActiveColorSmooth, BackgroundColor1, 16); else tftReplace(1, rds_clockold, rds_clock, 205, 163, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+          if (CurrentSkin == 1) {
+            tftPrint(-1, "--:--", 202, 8, BackgroundColor1, BackgroundColor1, 16);
+            tftReplace(-1, rds_clockold, rds_clock, 202, 8, ActiveColor, ActiveColorSmooth, BackgroundColor1, 16);
+          } else {
+            tftReplace(1, rds_clockold, rds_clock, 205, 163, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+          }
         }
       } else {
         if (rtcset) {
           if (advancedRDS) {
             tftReplace(1, rds_clockold, rds_clock, 205, 109, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
           } else {
-            if (CurrentSkin == 1) tftReplace(-1, rds_clockold, rds_clock, 202, 8, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor1, 16); else tftReplace(1, rds_clockold, rds_clock, 205, 163, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+            if (CurrentSkin == 1) {
+              tftPrint(-1, "--:--", 202, 8, BackgroundColor1, BackgroundColor1, 16);
+              tftReplace(-1, rds_clockold, rds_clock, 202, 8, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor1, 16);
+            } else {
+              tftReplace(1, rds_clockold, rds_clock, 205, 163, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+            }
           }
         } else {
           if (advancedRDS) {
@@ -814,6 +824,7 @@ void showCT() {
             if (CurrentSkin == 1) {
               tftPrint(-1, rds_clockold, 202, 8, BackgroundColor1, BackgroundColor1, 16);
               tftPrint(-1, rds_clock, 202, 8, BackgroundColor1, BackgroundColor1, 16);
+              tftPrint(-1, "--:--", 202, 8, ActiveColor, ActiveColorSmooth, 16);
             } else {
               tftPrint(1, rds_clockold, 205, 163, BackgroundColor, BackgroundColor, 16);
               tftPrint(1, rds_clock, 205, 163, BackgroundColor, BackgroundColor, 16);

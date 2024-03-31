@@ -2736,11 +2736,11 @@ void ShowSignalLevel() {
           if (SStatuscalc < 0) SStatuscalc = 0;
           if (SStatuscalc > 700) SStatuscalc = 700;
 
-          if (band < BAND_GAP) segments = map(SStatuscalc / 10, 5, 70, 0, 136); else segments = map((SStatuscalc + 200) / 10, 0, 120, 0, 136);
+          if (band < BAND_GAP) segments = map(SStatuscalc / 10, 0, 70, 0, 136); else segments = map((SStatuscalc + 200) / 10, 0, 120, 0, 136);
           tft.fillRect(18, 213, 136, 6, GreyoutColor);
           if (segments > 100) {
-            tft.fillRect(18, 213, 100, 6, BarInsignificantColor);
-            tft.fillRect(18 + 100, 213, segments - 100, 6, FreqColor);
+            tft.fillRect(18, 213, 100, 6, FreqColor);
+            tft.fillRect(18 + 100, 213, segments - 100, 6, BarSignificantColor);
           } else {
             tft.fillRect(18, 213, segments, 6, FreqColor);
           }
@@ -2748,7 +2748,7 @@ void ShowSignalLevel() {
           if (SStatusold / 10 != SStatusprint / 10) tftReplace(1, String(SStatusold / 10), String(SStatusprint / 10), 288, 105, FreqColor, FreqColorSmooth, BackgroundColor, 48);
           tftReplace(1, "." + String(abs(SStatusold % 10)), "." + String(abs(SStatusprint % 10)), 310, 105, FreqColor, FreqColorSmooth, BackgroundColor, 28);
 
-          if (band < BAND_GAP) segments = map(SStatus / 10, 5, 70, 0, 100); else segments = (SStatus + 200) / 10;
+          if (band < BAND_GAP) segments = map(SStatus / 10, 0, 70, 0, 100); else segments = (SStatus + 200) / 10;
           tft.fillRect(16, 105, 2 * constrain(segments, 0, 54), 6, BarInsignificantColor);
           tft.fillRect(16 + 2 * 54, 105, 2 * (constrain(segments, 54, 94) - 54), 6, BarSignificantColor);
           tft.fillRect(16 + 2 * constrain(segments, 0, 94), 105, 2 * (94 - constrain(segments, 0, 94)), 6, GreyoutColor);
@@ -3015,6 +3015,7 @@ void ShowBW() {
 void ShowModLevel() {
   if (showmodulation) {
     int segments;
+    if (MStatus > 120) MStatus = 120;
 
     if (seek || SQ) {
       MStatus = 0;
