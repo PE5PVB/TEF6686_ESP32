@@ -3591,25 +3591,25 @@ void ShowRSSI() {
   if (rssiold != rssi) {
     rssiold = rssi;
     if (rssi == 0) {
-      if (CurrentSkin == 1) tft.pushImage (287, 3, 29, 23, skin1_wifi1); else tft.drawBitmap(250, 4, WiFi4, 25, 25, GreyoutColor);
+      if (CurrentSkin == 1 && !advancedRDS && !afscreen) tft.pushImage (287, 3, 29, 23, skin1_wifi1); else tft.drawBitmap(250, 4, WiFi4, 25, 25, GreyoutColor);
     } else if (rssi > -50 && rssi < 0) {
-      if (CurrentSkin == 1) tft.pushImage (287, 3, 29, 23, skin1_wifi4); else tft.drawBitmap(250, 4, WiFi4, 25, 25, PrimaryColor);
+      if (CurrentSkin == 1 && !advancedRDS && !afscreen) tft.pushImage (287, 3, 29, 23, skin1_wifi4); else tft.drawBitmap(250, 4, WiFi4, 25, 25, PrimaryColor);
     } else if (rssi > -60) {
-      if (CurrentSkin == 1) {
+      if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
         tft.pushImage (287, 3, 29, 23, skin1_wifi3);
       } else {
         tft.drawBitmap(250, 4, WiFi4, 25, 25, GreyoutColor);
         tft.drawBitmap(250, 4, WiFi3, 25, 25, PrimaryColor);
       }
     } else if (rssi > -70) {
-      if (CurrentSkin == 1) {
+      if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
         tft.pushImage (287, 3, 29, 23, skin1_wifi2);
       } else {
         tft.drawBitmap(250, 4, WiFi4, 25, 25, GreyoutColor);
         tft.drawBitmap(250, 4, WiFi2, 25, 25, PrimaryColor);
       }
     } else if (rssi < -70) {
-      if (CurrentSkin == 1) {
+      if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
         tft.pushImage (287, 3, 29, 23, skin1_wifi1);
       } else {
         tft.drawBitmap(250, 4, WiFi4, 25, 25, GreyoutColor);
