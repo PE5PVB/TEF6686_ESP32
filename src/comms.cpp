@@ -412,11 +412,12 @@ void XDRGTKRoutine() {
       case 'Q':
         Squelch = atoi(buff + 1);
         if (Squelch == -1) {
-          DataPrint("Q - 1\n");
+          DataPrint("Q-1\n");
         } else {
           Squelch *= 10;
-          DataPrint("Q\n");
+          DataPrint("Q");
           DataPrint(String(Squelch / 10));
+		  DataPrint("\n");
         }
         break;
 
