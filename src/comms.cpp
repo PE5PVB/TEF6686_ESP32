@@ -161,6 +161,101 @@ void Communication() {
         Serial.print("OK\nT" + String(frequency * 10) + "\nG" + String(!EQset) + String(!iMSset) + "\n");
         XDRGTKUSB = true;
         if (XDRGTKMuteScreen) MuteScreen(1);
+      } else if (data_str.charAt(0) == 's') {
+        Serial.print("r:0\n");
+        Serial.print("v:" + String(VERSION) + "\n");
+        Serial.print("m:" + String(EE_PRESETS_CNT) + "\n");
+        Serial.print("s:" + String(EE_PRESETS_FREQUENCY) + "\n");
+        Serial.print("o:" + String(ConverterSet) + "\n");
+        Serial.print("a:" + String(FREQ_LW_LOW_EDGE_MIN) + "," + String(FREQ_SW_END) + "\n");
+        Serial.print("f:" + String(FREQ_FM_START) + "," + String(FREQ_FM_END) + "\n");
+
+        for (byte x = 0; x < EE_PRESETS_CNT; x++) {
+          Serial.print(x + 1);
+          Serial.print(",");
+          Serial.print(memory[x]);
+          if (memoryband[x] == BAND_FM || memoryband[x] == BAND_OIRT) Serial.print("0");
+          Serial.print(",");
+          Serial.print(memorybw[x]);
+          Serial.print(",");
+          Serial.print(memoryms[x]);
+          Serial.print("\n");
+        }
+      } else if (data_str.startsWith("S")) {
+        byte mempos = 0;
+        byte memband = 0;
+        unsigned int memfreq = 0;
+        byte membw;
+        byte memms;
+        byte error = 0;
+        data_str.remove(0, 1);
+        int commaPos = data_str.indexOf(',');
+
+        if (commaPos != -1) {
+          mempos = data_str.substring(0, commaPos).toInt() - 1;
+
+          data_str.remove(0, commaPos + 1);
+          commaPos = data_str.indexOf(',');
+
+          if (commaPos != -1) {
+            memfreq = data_str.substring(0, commaPos).toInt();
+            data_str.remove(0, commaPos + 1);
+            commaPos = data_str.indexOf(',');
+
+            if (commaPos != -1) {
+              membw = data_str.substring(0, commaPos).toInt();
+              data_str.remove(0, commaPos + 1);
+
+              memms = data_str.toInt();
+
+              if (memfreq >= FREQ_LW_LOW_EDGE_MIN && memfreq <= FREQ_LW_HIGH_EDGE_MAX) {
+                memband = BAND_LW;
+              } else if (memfreq > FREQ_LW_HIGH_EDGE_MAX && memfreq <= FREQ_MW_HIGH_EDGE_MAX_10K) {
+                memband = BAND_MW;
+              } else if (memfreq > FREQ_MW_HIGH_EDGE_MAX_10K && memfreq <= FREQ_SW_END) {
+                memband = BAND_SW;
+              } else if (ConverterSet != 0 && memfreq >= FREQ_FM_OIRT_START * 10 && memfreq <= FREQ_FM_OIRT_END * 10) {
+                memband = BAND_OIRT;
+                memfreq /= 10;
+              } else if ((ConverterSet != 0 ? memfreq > FREQ_FM_OIRT_START * 10 : FREQ_FM_OIRT_END * 10) && memfreq <= FREQ_FM_END * 10) {
+                memband = BAND_FM;
+                memfreq /= 10;
+              } else if (memfreq == EE_PRESETS_FREQUENCY) {
+                memband = BAND_FM;
+              } else {
+                error |= (1 << 0);
+              }
+
+              if (mempos == 0 && memfreq == EE_PRESETS_FREQUENCY) error |= (1 << 4);
+
+              if (mempos >= EE_PRESETS_CNT) error |= (1 << 1);
+
+              if (memband != BAND_FM && memband != BAND_OIRT) {
+                if (membw < 1 || membw > 4) error |= (1 << 2);
+              } else if (membw > 16) {
+                error |= (1 << 2);
+              }
+
+              if (memms > 1) error |= (1 << 3);
+
+              if (error == 0) {
+                error |= (1 << 7);
+                memorypos = mempos;
+                memoryband[mempos] = memband;
+                memory[mempos] = memfreq;
+                memorybw[mempos] = membw;
+                memoryms[mempos] = memms;
+
+                EEPROM.writeByte(mempos + EE_PRESETS_BAND_START, memband);
+                EEPROM.writeByte(mempos + EE_PRESET_BW_START, membw);
+                EEPROM.writeByte(mempos + EE_PRESET_MS_START, memms);
+                EEPROM.writeUInt((mempos * 4) + EE_PRESETS_START, memfreq);
+                EEPROM.commit();
+              }
+              Serial.print("S:" + String(error, DEC) + "\n");
+            }
+          }
+        }
       }
     }
 
@@ -417,7 +512,7 @@ void XDRGTKRoutine() {
           Squelch *= 10;
           DataPrint("Q");
           DataPrint(String(Squelch / 10));
-		  DataPrint("\n");
+          DataPrint("\n");
         }
         break;
 
