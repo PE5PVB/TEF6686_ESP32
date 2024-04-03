@@ -90,7 +90,6 @@ bool RDSSPYUSB;
 bool RDSstatus;
 bool RDSstatusold;
 bool rdsstereoold;
-bool resetFontOnNextCall;
 bool rtcset;
 bool screenmute;
 bool screensavertriggered = false;
@@ -592,7 +591,7 @@ void setup() {
   PSSprite.loadFont(FONT28);
   PSSprite.setSwapBytes(true);
 
-  UpdateFonts();
+  UpdateFonts(0);
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH) {
     if (rotarymode == 0) rotarymode = 1; else rotarymode = 0;
@@ -1958,13 +1957,7 @@ void ModeButtonPress() {
             menuoption = ITEM1;
             menupage = INDEX;
             menuitem = 0;
-            if (language == LANGUAGE_CHS) {
-              FullLineSprite.loadFont(FONT16_CHS);
-              OneBigLineSprite.loadFont(FONT28_CHS);
-            } else {
-              FullLineSprite.loadFont(FONT16);
-              OneBigLineSprite.loadFont(FONT28);
-            }
+            UpdateFonts(1);
             BuildMenu();
             menu = true;
             ScreensaverTimerSet(OFF);
@@ -2059,11 +2052,10 @@ void ModeButtonPress() {
         Serial.end();
         if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
         if (USBmode) Serial.begin(19200); else Serial.begin(115200);
-        RadiotextSprite.unloadFont();
-        RDSSprite.unloadFont();
-        SquelchSprite.unloadFont();
-        FrequencySprite.unloadFont();
-        UpdateFonts();
+
+        UpdateFonts(0);
+        FullLineSprite.unloadFont();
+        OneBigLineSprite.unloadFont();
         BuildDisplay();
         ShowSignalLevel();
         ShowBW();
@@ -2604,20 +2596,6 @@ void ShowFreq(int mode) {
 
     if (!screenmute) {
       if (CurrentSkin == 1) FrequencySprite.pushImage (-57, -40, 320, 240, skin1_mainbackground); else FrequencySprite.fillSprite(BackgroundColor);
-      FrequencySprite.setTextDatum(TR_DATUM);
-      FrequencySprite.setTextColor(FreqColor, FreqColorSmooth, false);
-      FrequencySprite.drawString(String(frequency_AM) + " ", 218, -6);
-      FrequencySprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-      FrequencySprite.setTextDatum(TL_DATUM);
-      FrequencySprite.loadFont(FONT16);
-
-      if (band == BAND_SW && showSWMIBand) {
-        DivdeSWMIBand();
-        updateSWMIBand();
-      }
-
-      if (CurrentSkin == 1) FrequencySprite.pushSprite(57, 40); else FrequencySprite.pushSprite(46, 46);
-      FrequencySprite.setTextDatum(TR_DATUM);
 
       switch (freqfont) {
         case 0: FrequencySprite.loadFont(FREQFONT0); break;
@@ -2627,6 +2605,22 @@ void ShowFreq(int mode) {
         case 4: FrequencySprite.loadFont(FREQFONT4); break;
         case 5: FrequencySprite.loadFont(FREQFONT5); break;
       }
+
+      FrequencySprite.setTextDatum(TR_DATUM);
+      FrequencySprite.setTextColor(FreqColor, FreqColorSmooth, false);
+      FrequencySprite.drawString(String(frequency_AM) + " ", 218, -6);
+      FrequencySprite.unloadFont();
+      FrequencySprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+      FrequencySprite.setTextDatum(TL_DATUM);
+      FrequencySprite.loadFont(FONT16);
+
+      if (band == BAND_SW && showSWMIBand) {
+        DivdeSWMIBand();
+        updateSWMIBand();
+      }
+
+      FrequencySprite.unloadFont();
+      if (CurrentSkin == 1) FrequencySprite.pushSprite(57, 40); else FrequencySprite.pushSprite(46, 46);
     }
 
     freqold = frequency_AM;
@@ -2644,6 +2638,17 @@ void ShowFreq(int mode) {
         tftReplace(1, String(freqold / 100) + "." + (freqold % 100 < 10 ? "0" : "") + String(freqold % 100) + " MHz", String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100), 290, 201, BWAutoColor, BWAutoColorSmooth, BackgroundColor, 16);
         freqold = freq;
       } else {
+        switch (freqfont) {
+          case 0: FrequencySprite.loadFont(FREQFONT0); break;
+          case 1: FrequencySprite.loadFont(FREQFONT1); break;
+          case 2: FrequencySprite.loadFont(FREQFONT2); break;
+          case 3: FrequencySprite.loadFont(FREQFONT3); break;
+          case 4: FrequencySprite.loadFont(FREQFONT4); break;
+          case 5: FrequencySprite.loadFont(FREQFONT5); break;
+        }
+
+        FrequencySprite.setTextDatum(TR_DATUM);
+
         if (mode == 0) {
           if (CurrentSkin == 1) FrequencySprite.pushImage (-55, -40, 320, 240, skin1_mainbackground); else FrequencySprite.fillSprite(BackgroundColor);
           FrequencySprite.setTextColor(FreqColor, FreqColorSmooth, false);
@@ -2654,6 +2659,7 @@ void ShowFreq(int mode) {
           if (CurrentSkin == 1) FrequencySprite.pushImage (-55, -40, 320, 240, skin1_mainbackground); else FrequencySprite.fillSprite(BackgroundColor);
           if (CurrentSkin == 1) FrequencySprite.pushSprite(57, 40); else FrequencySprite.pushSprite(46, 46);
         }
+        FrequencySprite.unloadFont();
       }
     }
   }
@@ -3105,6 +3111,8 @@ void doSquelch() {
   if (unit == 2) SquelchShow = round((float(Squelch) / 10.0 - 10.0 * log10(75) - 90.0) * 10.0) / 10;
   if (Squelch > 920) Squelch = 920;
 
+  if (language == LANGUAGE_CHS) SquelchSprite.loadFont(FONT16_CHS); else SquelchSprite.loadFont(FONT16);
+
   if (!XDRGTKUSB && !XDRGTKTCP && usesquelch) {
     if (!screenmute && usesquelch && !advancedRDS && !afscreen) {
       if (!menu && (Squelch > Squelchold + 2 || Squelch < Squelchold - 2)) {
@@ -3254,6 +3262,7 @@ void doSquelch() {
       }
     }
   }
+  SquelchSprite.unloadFont();
 }
 
 void updateBW() {
@@ -4104,14 +4113,7 @@ void tftReplace(int8_t offset, const String & textold, const String & text, int1
   }
   if (fontsize == 48) selectedFont = FONT48;
 
-  if (currentFont != selectedFont || resetFontOnNextCall) {
-    if (currentFont != nullptr) tft.unloadFont();
-
-    tft.loadFont(selectedFont);
-    currentFont = selectedFont;
-    resetFontOnNextCall = false;
-  }
-
+  tft.loadFont(selectedFont);
   tft.setTextColor(background, background, false);
 
   switch (offset) {
@@ -4133,6 +4135,7 @@ void tftReplace(int8_t offset, const String & textold, const String & text, int1
   modifiedText.replace("\n", " ");
 
   tft.drawString(modifiedText, x, y);
+  tft.unloadFont();
 }
 
 void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize) {
@@ -4144,24 +4147,10 @@ void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int colo
     if (fontsize == 16) selectedFont = FONT16;
     if (fontsize == 28) selectedFont = FONT28;
   }
-  if (fontsize == 48) selectedFont = FONT48;
-  if (fontsize == 52) {
-    switch (freqfont) {
-      case 0: selectedFont = FREQFONT0; break;
-      case 1: selectedFont = FREQFONT1; break;
-      case 2: selectedFont = FREQFONT2; break;
-      case 3: selectedFont = FREQFONT3; break;
-      case 4: selectedFont = FREQFONT4; break;
-      case 5: selectedFont = FREQFONT5; break;
-    }
-  }
 
-  if (currentFont != selectedFont || resetFontOnNextCall) {
-    if (currentFont != nullptr) tft.unloadFont();
-    tft.loadFont(selectedFont);
-    currentFont = selectedFont;
-    resetFontOnNextCall = false;
-  }
+  if (fontsize == 48) selectedFont = FONT48;
+
+  tft.loadFont(selectedFont);
 
   tft.setTextColor(color, smoothcolor, (fontsize == 52 ? true : false));
 
@@ -4175,6 +4164,7 @@ void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int colo
   modifiedText.replace("\n", " ");
 
   tft.drawString(modifiedText, x, y, 1);
+  tft.unloadFont();
 }
 
 void deepSleep() {
@@ -4186,27 +4176,38 @@ void deepSleep() {
   esp_deep_sleep_start();
 }
 
-void UpdateFonts() {
-  if (language == LANGUAGE_CHS) {
-    RadiotextSprite.loadFont(FONT16_CHS);
-    RDSSprite.loadFont(FONT16_CHS);
-    SquelchSprite.loadFont(FONT16_CHS);
-    FullLineSprite.loadFont(FONT16_CHS);
-    OneBigLineSprite.loadFont(FONT28_CHS);
-  } else {
-    RadiotextSprite.loadFont(FONT16);
-    RDSSprite.loadFont(FONT16);
-    SquelchSprite.loadFont(FONT16);
-    FullLineSprite.loadFont(FONT16);
-    OneBigLineSprite.loadFont(FONT28);
-  }
+void UpdateFonts(bool mode) {
+  switch (mode) {
+    case 0:                                 // Use in radio mode
+      RadiotextSprite.unloadFont();
+      RDSSprite.unloadFont();
 
-  switch (freqfont) {
-    case 0: FrequencySprite.loadFont(FREQFONT0); break;
-    case 1: FrequencySprite.loadFont(FREQFONT1); break;
-    case 2: FrequencySprite.loadFont(FREQFONT2); break;
-    case 3: FrequencySprite.loadFont(FREQFONT3); break;
-    case 4: FrequencySprite.loadFont(FREQFONT4); break;
-    case 5: FrequencySprite.loadFont(FREQFONT5); break;
+      if (language == LANGUAGE_CHS) {
+        RadiotextSprite.loadFont(FONT16_CHS);
+        RDSSprite.loadFont(FONT16_CHS);
+      } else {
+        RadiotextSprite.loadFont(FONT16);
+        RDSSprite.loadFont(FONT16);
+      }
+      break;
+
+    case 1:                                 // Use in menu mode
+      FullLineSprite.unloadFont();
+      OneBigLineSprite.unloadFont();
+      if (language == LANGUAGE_CHS) {
+        FullLineSprite.loadFont(FONT16_CHS);
+        OneBigLineSprite.loadFont(FONT28_CHS);
+      } else {
+        FullLineSprite.loadFont(FONT16);
+        OneBigLineSprite.loadFont(FONT28);
+      }
+      break;
+
+    case 2:                                 // Unload all
+      FullLineSprite.unloadFont();
+      OneBigLineSprite.unloadFont();
+      RadiotextSprite.unloadFont();
+      RDSSprite.unloadFont();
+      break;
   }
 }

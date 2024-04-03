@@ -212,7 +212,7 @@ extern void updateiMS();
 extern void updateEQ();
 extern void doTheme();
 extern void tryWiFi();
-extern void UpdateFonts();
+extern void UpdateFonts(bool mode);
 extern void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize);
 
 #endif

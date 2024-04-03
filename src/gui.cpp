@@ -3940,6 +3940,7 @@ void DoMenu() {
               tftPrint(0, "http://192.168.4.1", 155, 174, PrimaryColor, PrimaryColorSmooth, 16);
               char key [9];
               XDRGTK_key.toCharArray(key, 9);
+			  UpdateFonts(3);
               WiFiConnectParam XDRGTK_key_text("Set XDRGTK Password: (max 8 characters)");
               WiFiConnectParam XDRGTK_key_input("XDRGTK_key", "Password", key, 9);
               wc.addParameter(&XDRGTK_key_text);
@@ -3948,6 +3949,7 @@ void DoMenu() {
               XDRGTK_key = XDRGTK_key_input.getValue();
               EEPROM.writeString(EE_STRING_XDRGTK_KEY, XDRGTK_key);
               EEPROM.commit();
+			  UpdateFonts(2);
               wifi = true;
               tryWiFi();
               delay(2000);
@@ -3992,7 +3994,7 @@ void DoMenu() {
       doTheme();
     }
     menuopen = false;
-    UpdateFonts();
+    UpdateFonts(1);
     BuildMenu();
   }
 }
