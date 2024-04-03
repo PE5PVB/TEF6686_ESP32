@@ -698,7 +698,7 @@ void XDRGTKRoutine() {
       case 'x':
         DataPrint("OK\n");
         if (BAND_FM) {
-          DataPrint("T" + String(frequency + (ConverterSet * 100) * 10) + "\n");
+          DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
         } else if (BAND_OIRT) {
           DataPrint("T" + String(frequency_OIRT * 10) + "\n");
         } else {
