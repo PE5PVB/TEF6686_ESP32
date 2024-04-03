@@ -1951,7 +1951,7 @@ void MenuUp() {
           case ITEM1:
             language ++;
             if (language == (sizeof (myLanguage) / sizeof (myLanguage[0]))) language = 0;
-
+            UpdateFonts(2);
             OneBigLineSprite.drawString(myLanguage[language][0], 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
@@ -2720,7 +2720,7 @@ void MenuDown() {
           case ITEM1:
             language --;
             if (language > (sizeof (myLanguage) / sizeof (myLanguage[0]))) language = (sizeof (myLanguage) / sizeof (myLanguage[0])) - 1;
-
+            UpdateFonts(2);
             OneBigLineSprite.drawString(myLanguage[language][0], 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
@@ -3940,7 +3940,7 @@ void DoMenu() {
               tftPrint(0, "http://192.168.4.1", 155, 174, PrimaryColor, PrimaryColorSmooth, 16);
               char key [9];
               XDRGTK_key.toCharArray(key, 9);
-			  UpdateFonts(3);
+              UpdateFonts(3);
               WiFiConnectParam XDRGTK_key_text("Set XDRGTK Password: (max 8 characters)");
               WiFiConnectParam XDRGTK_key_input("XDRGTK_key", "Password", key, 9);
               wc.addParameter(&XDRGTK_key_text);
@@ -3949,7 +3949,7 @@ void DoMenu() {
               XDRGTK_key = XDRGTK_key_input.getValue();
               EEPROM.writeString(EE_STRING_XDRGTK_KEY, XDRGTK_key);
               EEPROM.commit();
-			  UpdateFonts(2);
+              UpdateFonts(2);
               wifi = true;
               tryWiFi();
               delay(2000);
