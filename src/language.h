@@ -634,9 +634,9 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Szybki PS", // 203
     "Domyslny", // 204
     "Wylacz ekran gdy\npołączony z XDR-GTK", // 205
-    "FMSI stereo\nimprovement", // 206
-    "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!" // 208
+    "Ulepszenie \nstereo FMSI", // 206
+    "Funkcja dostępna tylko\nna TEF6687/6689!", // 207
+    "Funkcja niedostępna\nna wybranym motywie!" // 208
   },
 
   { "Hrvatski", // Croatian
