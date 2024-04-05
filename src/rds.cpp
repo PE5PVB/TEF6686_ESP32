@@ -300,7 +300,11 @@ void readRds() {
             if (advancedRDS) {
               tftPrint(0, PIold, 275, 75, RDSDropoutColor, RDSDropoutColorSmooth, 28);
             } else {
-              if (CurrentSkin == 1) tftPrint(-1, PIold, 30, 99, RDSDropoutColor, RDSDropoutColorSmooth, 28); else tftPrint(0, PIold, 275, 187, RDSDropoutColor, RDSDropoutColorSmooth, 28);
+              if (CurrentSkin == 1) {
+                tftPrint(-1, PIold, 30, 99, RDSDropoutColor, RDSDropoutColorSmooth, 28);
+              } else {
+                tftPrint(0, PIold, 275, 187, RDSDropoutColor, RDSDropoutColorSmooth, 28);
+              }
             }
           }
 
@@ -361,7 +365,11 @@ void readRds() {
             if (advancedRDS) {
               tftPrint(0, PIold, 275, 75, RDSColor, RDSColorSmooth, 28);
             } else {
-              if (CurrentSkin == 1) tftPrint(-1, PIold, 30, 99, FreqColor, FreqColorSmooth, 28); else tftPrint(0, PIold, 275, 187, RDSColor, RDSColor, 28);
+              if (CurrentSkin == 1) {
+                tftPrint(-1, PIold, 30, 99, FreqColor, FreqColorSmooth, 28);
+              } else {
+                tftPrint(0, PIold, 275, 187, RDSColor, RDSColorSmooth, 28);
+              }
             }
           }
 
@@ -398,7 +406,11 @@ void readRds() {
           if (advancedRDS) {
             tftPrint(-1, PTYold, 36, 109, RDSColor, RDSColorSmooth, 16);
           } else {
-            if (CurrentSkin == 1) tftPrint(0, PTYold, 105, 130, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, PTYold, 36, 163, RDSColor, RDSColorSmooth, 16);
+            if (CurrentSkin == 1) {
+              tftPrint(0, PTYold, 105, 130, PrimaryColor, PrimaryColorSmooth, 16);
+            } else {
+              tftPrint(-1, PTYold, 36, 163, RDSColor, RDSColorSmooth, 16);
+            }
           }
           if (!advancedRDS) {
             if (CurrentSkin != 1) {
@@ -430,7 +442,11 @@ void readRds() {
             if (advancedRDS) {
               tftPrint(1, rds_clock, 205, 109, RDSColor, RDSColorSmooth, 16);
             } else {
-              if (CurrentSkin == 1) tftPrint(-1, rds_clock, 202, 8, RDSColor, RDSColorSmooth, 16); else tftPrint(1, rds_clock, 205, 163, RDSColor, RDSColorSmooth, 16);
+              if (CurrentSkin == 1) {
+                tftPrint(-1, rds_clock, 202, 8, RDSColor, RDSColorSmooth, 16);
+              } else {
+                tftPrint(1, rds_clock, 205, 163, RDSColor, RDSColorSmooth, 16);
+              }
             }
           }
           dropout = false;
@@ -680,13 +696,14 @@ void showPI() {
               if (CurrentSkin == 1) {
                 tftReplace(-1, PIold, radio.rds.picode, 30, 97, FreqColor, FreqColorSmooth, BackgroundColor2, 16);
                 tftReplace(-1, stationIDold, radio.rds.stationIDtext, 30, 111, FreqColor, FreqColorSmooth, BackgroundColor2, 16);
+                tftReplace(1, stationStateold, radio.rds.stationStatetext, 108, 111, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
               } else {
                 tftReplace(-1, PIold, radio.rds.picode, 240, 184, RDSColor, RDSColorSmooth, BackgroundColor, 16);
                 tftReplace(-1, stationIDold, radio.rds.stationIDtext, 240, 201, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+                tftReplace(1, stationStateold, radio.rds.stationStatetext, 318, 201, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
               }
             }
           }
-          if (CurrentSkin == 1) tftReplace(1, stationStateold, radio.rds.stationStatetext, 108, 111, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16); else tftReplace(1, stationStateold, radio.rds.stationStatetext, 318, 201, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
         }
       }
       PIold = radio.rds.picode;
