@@ -1056,9 +1056,9 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Γρήγορο PS", // 203
     "Προεπιλογή", // 204
     "Μαύρη οθόνη σε\nσύνδεση XDRGTK", // 205
-    "FMSI stereo\nimprovement", // 206
-    "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!" // 208
+    "FMSI βελτίωση\nστερεοφωνικού ήχου", // 206
+    "Λειτουργία διαθέσιμη\nμόνο στα TEF6687/6689!", // 207
+    "Λειτουργία μη διαθέσιμη\nστην επιλεγμένη εμφάνιση!" // 208
   },
 
   { "Română", // Romanian
@@ -2111,9 +2111,9 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "PS rapide", // 203
     "Défaut", // 204
     "Écran muet sur\nla connexion XDRGTK", // 205
-    "FMSI stereo\nimprovement", // 206
-    "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!" // 208
+    "FMSI amélioration\ndu son stéréo", // 206
+    "Fonction disponible seulement\nsur TEF6687/6689!", // 207
+    "Fonction non disponible\nsur le skin sélectionné!" // 208
   },
 
   { "Български", // Bulgarian
@@ -3588,9 +3588,9 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "PS rápido", // 203
     "Por defecto", // 204
     "Pantalla de mudo\nen la conexión XDRGTK", // 205
-    "FMSI stereo\nimprovement", // 206
-    "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!" // 208
+    "FMSI mejora del\nsonido estéreo", // 206
+    "Función disponible solo\nen TEF6687/6689!", // 207
+    "Función no disponible\nsobre el skin seleccionado!" // 208
   },
 
   { "Português", // Portuguese
@@ -3799,9 +3799,9 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "PS rápido", // 203
     "Predefinição", // 204
     "Tela mudo na\nconexão XDRGTK", // 205
-    "FMSI stereo\nimprovement", // 206
+    "FMSI melhoria\ndo som estéreo", // 206
     "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!" // 208
+    "Função não disponível\nno skin selecionado!" // 208
   }
 };
 #endif
