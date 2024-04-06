@@ -76,7 +76,7 @@ bool haseonold;
 bool hasrtplusold;
 bool hastmcold;
 bool LowLevelInit;
-bool memoryms[EE_PRESETS_CNT];
+//bool memoryms[EE_PRESETS_CNT];
 bool memorystore;
 bool menu;
 bool menuopen;
@@ -161,8 +161,8 @@ byte iMSEQ;
 byte iMSset;
 byte language;
 byte licold;
-byte memoryband[EE_PRESETS_CNT];
-byte memorybw[EE_PRESETS_CNT];
+//byte memoryband[EE_PRESETS_CNT];
+//byte memorybw[EE_PRESETS_CNT];
 byte memorypos;
 byte memoryposold;
 byte memoryposstatus;
@@ -338,7 +338,7 @@ unsigned int LWLowEdgeSet;
 unsigned int mappedfreqold[20];
 unsigned int mappedfreqold2[20];
 unsigned int mappedfreqold3[20];
-unsigned int memory[EE_PRESETS_CNT];
+//unsigned int memory[EE_PRESETS_CNT];
 unsigned int MWHighEdgeSet;
 unsigned int MWLowEdgeSet;
 unsigned int scanner_end;
@@ -362,6 +362,7 @@ unsigned long tottimer;
 unsigned long tuningtimer;
 unsigned long udptimer;
 
+mem presets[EE_PRESETS_CNT];
 TEF6686 radio;
 ESP32Time rtc(0);
 
@@ -491,10 +492,10 @@ void setup() {
   LowEdgeOIRTSet = LowEdgeOIRTSet;
   HighEdgeOIRTSet = FREQ_FM_OIRT_END;
 
-  for (int i = 0; i < EE_PRESETS_CNT; i++) memoryband[i] = EEPROM.readByte(i + EE_PRESETS_BAND_START);
-  for (int i = 0; i < EE_PRESETS_CNT; i++) memory[i] = EEPROM.readUInt((i * 4) + EE_PRESETS_START);
-  for (int i = 0; i < EE_PRESETS_CNT; i++) memorybw[i] = EEPROM.readByte(i + EE_PRESET_BW_START);
-  for (int i = 0; i < EE_PRESETS_CNT; i++) memoryms[i] = EEPROM.readByte(i + EE_PRESET_MS_START);
+  for (int i = 0; i < EE_PRESETS_CNT; i++) presets[i].memoryband = EEPROM.readByte(i + EE_PRESETS_BAND_START);
+  for (int i = 0; i < EE_PRESETS_CNT; i++) presets[i].frequency = EEPROM.readUInt((i * 4) + EE_PRESETS_START);
+  for (int i = 0; i < EE_PRESETS_CNT; i++) presets[i].memorybw = EEPROM.readByte(i + EE_PRESET_BW_START);
+  for (int i = 0; i < EE_PRESETS_CNT; i++) presets[i].memoryms = EEPROM.readByte(i + EE_PRESET_MS_START);
 
   btStop();
 
@@ -1344,7 +1345,7 @@ void BANDBUTTONPress() {
   if (memorystore) {
     EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_START, EE_PRESETS_FREQUENCY);
     EEPROM.commit();
-    memory[memorypos] = EE_PRESETS_FREQUENCY;
+    presets[memorypos].frequency = EE_PRESETS_FREQUENCY;
     memorystore = false;
     ShowTuneMode();
     if (memoryposstatus == MEM_DARK || memoryposstatus == MEM_EXIST) {
@@ -2231,19 +2232,19 @@ void ButtonPress() {
           EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_START, frequency_SW);
         }
         EEPROM.commit();
-        memoryband[memorypos] = band;
-        memorybw[memorypos] = BWset;
-        memoryms[memorypos] = StereoToggle;
+        presets[memorypos].memoryband = band;
+        presets[memorypos].memorybw = BWset;
+        presets[memorypos].memoryms = StereoToggle;
         if (band == BAND_FM) {
-          memory[memorypos] = frequency;
+          presets[memorypos].frequency = frequency;
         } else if (band == BAND_OIRT) {
-          memory[memorypos] = frequency_OIRT;
+          presets[memorypos].frequency = frequency_OIRT;
         } else if (band == BAND_LW) {
-          memory[memorypos] = frequency_LW;
+          presets[memorypos].frequency = frequency_LW;
         } else if (band == BAND_MW) {
-          memory[memorypos] = frequency_MW;
+          presets[memorypos].frequency = frequency_MW;
         } else {
-          memory[memorypos] = frequency_SW;
+          presets[memorypos].frequency = frequency_SW;
         }
         ShowTuneMode();
         if (memoryposstatus == MEM_DARK || memoryposstatus == MEM_EXIST) {
@@ -2466,7 +2467,7 @@ void KeyDown() {
 }
 
 bool IsStationEmpty() {
-  if (memoryband[memorypos] == BAND_FM && memory[memorypos] == EE_PRESETS_FREQUENCY) {
+  if (presets[memorypos].memoryband == BAND_FM && presets[memorypos].frequency == EE_PRESETS_FREQUENCY) {
     return true;
   }
   return false;
@@ -2516,33 +2517,33 @@ void DoMemoryPosTune() {
     memoryposstatus = MEM_NORMAL;
   }
 
-  if (band != memoryband[memorypos]) {
-    band = memoryband[memorypos];
+  if (band != presets[memorypos].memoryband) {
+    band = presets[memorypos].memoryband;
     SelectBand();
   } else {
-    band = memoryband[memorypos];
+    band = presets[memorypos].memoryband;
   }
 
   if (band == BAND_FM) {
-    frequency = memory[memorypos];
+    frequency = presets[memorypos].frequency;
     radio.SetFreq(frequency);
   } else if (band == BAND_OIRT) {
-    frequency_OIRT = memory[memorypos];
+    frequency_OIRT = presets[memorypos].frequency;
     radio.SetFreq(frequency_OIRT);
   } else if (band == BAND_LW) {
-    frequency_LW = memory[memorypos];
+    frequency_LW = presets[memorypos].frequency;
     radio.SetFreqAM(frequency_LW);
   } else if (band == BAND_MW) {
-    frequency_MW = memory[memorypos];
+    frequency_MW = presets[memorypos].frequency;
     radio.SetFreqAM(frequency_MW);
   } else if (band == BAND_SW) {
-    frequency_SW = memory[memorypos];
+    frequency_SW = presets[memorypos].frequency;
     radio.SetFreqAM(frequency_SW);
   }
   ShowFreq(0);
 
   if (band == BAND_FM || band == BAND_OIRT) {
-    StereoToggle = memoryms[memorypos];
+    StereoToggle = presets[memorypos].memoryms;
     if (!StereoToggle) {
       Stereostatusold = false;
       if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
@@ -2570,7 +2571,7 @@ void DoMemoryPosTune() {
     }
   }
 
-  BWset = memorybw[memorypos];
+  BWset = presets[memorypos].memorybw;
   doBW();
   BWtune = true;
 

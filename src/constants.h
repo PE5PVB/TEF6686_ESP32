@@ -295,6 +295,16 @@ static const char* const FreqFont[] = {"Classic", "Roubenstil", "Motoya", "Aura2
 static const char* const Theme[] = {"Essence", "Cyan", "Crimson", "Monochrome", "Volcano", "Dendro", "Sakura", "Whiteout", "Tangerine", "Ocean", "Indigo", "Maroon", "GoldBrite"};
 static const char* const Skin[] = {"Essential", "NightSky"};
 
+// Memory channel database
+typedef struct {
+  byte          memorybw;
+  byte          memoryband;
+  bool          memoryms;
+  unsigned int  frequency;
+  char          RDSPI[5];
+  char          RDSPS[9];
+} mem;
+
 // FM band: before BAND_GAP; AM band: after BAND_GAP
 enum RADIO_BAND {
   BAND_OIRT = 0, BAND_FM, BAND_GAP, BAND_LW, BAND_MW, BAND_SW

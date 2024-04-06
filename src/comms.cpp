@@ -3,6 +3,8 @@
 #include "constants.h"
 #include <EEPROM.h>
 
+extern mem presets[];
+
 void Communication() {
   if (!menu) {
     if (wifi) {
@@ -173,12 +175,12 @@ void Communication() {
         for (byte x = 0; x < EE_PRESETS_CNT; x++) {
           Serial.print(x + 1);
           Serial.print(",");
-          Serial.print(memory[x]);
-          if (memoryband[x] == BAND_FM || memoryband[x] == BAND_OIRT) Serial.print("0");
+          Serial.print(presets[x].frequency);
+          if (presets[x].memoryband == BAND_FM || presets[x].memoryband == BAND_OIRT) Serial.print("0");
           Serial.print(",");
-          Serial.print(memorybw[x]);
+          Serial.print(presets[x].memorybw);
           Serial.print(",");
-          Serial.print(memoryms[x]);
+          Serial.print(presets[x].memoryms);
           Serial.print("\n");
         }
       } else if (data_str.startsWith("S")) {
@@ -241,10 +243,10 @@ void Communication() {
               if (error == 0) {
                 error |= (1 << 7);
                 memorypos = mempos;
-                memoryband[mempos] = memband;
-                memory[mempos] = memfreq;
-                memorybw[mempos] = membw;
-                memoryms[mempos] = memms;
+                presets[mempos].memoryband = memband;
+                presets[mempos].frequency = memfreq;
+                presets[mempos].memorybw = membw;
+                presets[mempos].memoryms = memms;
 
                 EEPROM.writeByte(mempos + EE_PRESETS_BAND_START, memband);
                 EEPROM.writeByte(mempos + EE_PRESET_BW_START, membw);
