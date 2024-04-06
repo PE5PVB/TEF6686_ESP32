@@ -76,8 +76,8 @@ bool haseonold;
 bool hasrtplusold;
 bool hastmcold;
 bool LowLevelInit;
-//bool memoryms[EE_PRESETS_CNT];
 bool memorystore;
+bool memtune;
 bool menu;
 bool menuopen;
 bool mwstepsize;
@@ -161,8 +161,6 @@ byte iMSEQ;
 byte iMSset;
 byte language;
 byte licold;
-//byte memoryband[EE_PRESETS_CNT];
-//byte memorybw[EE_PRESETS_CNT];
 byte memorypos;
 byte memoryposold;
 byte memoryposstatus;
@@ -338,7 +336,6 @@ unsigned int LWLowEdgeSet;
 unsigned int mappedfreqold[20];
 unsigned int mappedfreqold2[20];
 unsigned int mappedfreqold3[20];
-//unsigned int memory[EE_PRESETS_CNT];
 unsigned int MWHighEdgeSet;
 unsigned int MWLowEdgeSet;
 unsigned int scanner_end;
@@ -492,10 +489,19 @@ void setup() {
   LowEdgeOIRTSet = LowEdgeOIRTSet;
   HighEdgeOIRTSet = FREQ_FM_OIRT_END;
 
-  for (int i = 0; i < EE_PRESETS_CNT; i++) presets[i].memoryband = EEPROM.readByte(i + EE_PRESETS_BAND_START);
-  for (int i = 0; i < EE_PRESETS_CNT; i++) presets[i].frequency = EEPROM.readUInt((i * 4) + EE_PRESETS_START);
-  for (int i = 0; i < EE_PRESETS_CNT; i++) presets[i].memorybw = EEPROM.readByte(i + EE_PRESET_BW_START);
-  for (int i = 0; i < EE_PRESETS_CNT; i++) presets[i].memoryms = EEPROM.readByte(i + EE_PRESET_MS_START);
+  for (int i = 0; i < EE_PRESETS_CNT; i++) presets[i].band = EEPROM.readByte(i + EE_PRESETS_BAND_START);
+  for (int i = 0; i < EE_PRESETS_CNT; i++) presets[i].frequency = EEPROM.readUInt((i * 4) + EE_PRESETS_FREQUENCY_START);
+  for (int i = 0; i < EE_PRESETS_CNT; i++) presets[i].bw = EEPROM.readByte(i + EE_PRESET_BW_START);
+  for (int i = 0; i < EE_PRESETS_CNT; i++) presets[i].ms = EEPROM.readByte(i + EE_PRESET_MS_START);
+
+  for (int i = 0; i < EE_PRESETS_CNT; i++) {
+    for (int y = 0; y < 9; y++) {
+      presets[i].RDSPS[y] = EEPROM.readByte((i * 9) + y + EE_PRESETS_RDSPS_START);
+    }
+    for (int y = 0; y < 5; y++) {
+      presets[i].RDSPI[y] = EEPROM.readByte((i * 5) + y + EE_PRESETS_RDSPI_START);
+    }
+  }
 
   btStop();
 
@@ -756,6 +762,7 @@ void setup() {
   }
 
   SelectBand();
+  if (tunemode == TUNE_MEM) DoMemoryPosTune();
 
   setupmode = false;
   if (edgebeep) radio.tone(50, -5, 2000);
@@ -1343,7 +1350,7 @@ void ToggleBand(byte nowBand) {
 
 void BANDBUTTONPress() {
   if (memorystore) {
-    EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_START, EE_PRESETS_FREQUENCY);
+    EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, EE_PRESETS_FREQUENCY);
     EEPROM.commit();
     presets[memorypos].frequency = EE_PRESETS_FREQUENCY;
     memorystore = false;
@@ -2221,20 +2228,39 @@ void ButtonPress() {
         EEPROM.writeByte(memorypos + EE_PRESET_BW_START, BWset);
         EEPROM.writeByte(memorypos + EE_PRESET_MS_START, StereoToggle);
         if (band == BAND_FM) {
-          EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_START, frequency);
+          EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, frequency);
         } else if (band == BAND_OIRT) {
-          EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_START, frequency_OIRT);
+          EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, frequency_OIRT);
         } else if (band == BAND_LW) {
-          EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_START, frequency_LW);
+          EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, frequency_LW);
         } else if (band == BAND_MW) {
-          EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_START, frequency_MW);
+          EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, frequency_MW);
         } else {
-          EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_START, frequency_SW);
+          EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, frequency_SW);
         }
+
+        presets[memorypos].band = band;
+        presets[memorypos].bw = BWset;
+        presets[memorypos].ms = StereoToggle;
+
+        String stationName = radio.rds.stationName;
+        char stationNameCharArray[10];
+        char picodeArray[7];
+        stationName.toCharArray(stationNameCharArray, sizeof(stationNameCharArray));
+        memcpy(picodeArray, radio.rds.picode, sizeof(picodeArray));
+
+        for (int y = 0; y < 9; y++) {
+          presets[memorypos].RDSPS[y] = (y < strlen(stationNameCharArray)) ? stationNameCharArray[y] : '\0';
+          EEPROM.writeByte((memorypos * 9) + y + EE_PRESETS_RDSPS_START, presets[memorypos].RDSPS[y]);
+        }
+
+        for (int y = 0; y < 5; y++) {
+          presets[memorypos].RDSPI[y] = (y < sizeof(picodeArray)) ? picodeArray[y] : '\0';
+          EEPROM.writeByte((memorypos * 5) + y + EE_PRESETS_RDSPI_START, presets[memorypos].RDSPI[y]);
+        }
+
         EEPROM.commit();
-        presets[memorypos].memoryband = band;
-        presets[memorypos].memorybw = BWset;
-        presets[memorypos].memoryms = StereoToggle;
+
         if (band == BAND_FM) {
           presets[memorypos].frequency = frequency;
         } else if (band == BAND_OIRT) {
@@ -2381,6 +2407,7 @@ void KeyUp() {
           EEPROM.writeByte(EE_BYTE_MEMORYPOS, memorypos);
           EEPROM.commit();
           break;
+
         case TUNE_MI_BAND:
           if (showSWMIBand) {
             if (displayflip) {
@@ -2395,7 +2422,8 @@ void KeyUp() {
         if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n"); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n"); else DataPrint("M1\nT" + String(frequency_AM) + "\n");
       }
       if (!memorystore) {
-        radio.clearRDS(fullsearchrds);
+        if (!memtune) radio.clearRDS(fullsearchrds);
+        memtune = false;
         ShowFreq(0);
         store = true;
       }
@@ -2456,7 +2484,8 @@ void KeyDown() {
         if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n"); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n"); else DataPrint("M1\nT" + String(frequency_AM) + "\n");
       }
       if (!memorystore) {
-        radio.clearRDS(fullsearchrds);
+        if (!memtune) radio.clearRDS(fullsearchrds);
+        memtune = false;
         ShowFreq(0);
         store = true;
       }
@@ -2467,7 +2496,7 @@ void KeyDown() {
 }
 
 bool IsStationEmpty() {
-  if (presets[memorypos].memoryband == BAND_FM && presets[memorypos].frequency == EE_PRESETS_FREQUENCY) {
+  if (presets[memorypos].band == BAND_FM && presets[memorypos].frequency == EE_PRESETS_FREQUENCY) {
     return true;
   }
   return false;
@@ -2517,11 +2546,11 @@ void DoMemoryPosTune() {
     memoryposstatus = MEM_NORMAL;
   }
 
-  if (band != presets[memorypos].memoryband) {
-    band = presets[memorypos].memoryband;
+  if (band != presets[memorypos].band) {
+    band = presets[memorypos].band;
     SelectBand();
   } else {
-    band = presets[memorypos].memoryband;
+    band = presets[memorypos].band;
   }
 
   if (band == BAND_FM) {
@@ -2543,7 +2572,7 @@ void DoMemoryPosTune() {
   ShowFreq(0);
 
   if (band == BAND_FM || band == BAND_OIRT) {
-    StereoToggle = presets[memorypos].memoryms;
+    StereoToggle = presets[memorypos].ms;
     if (!StereoToggle) {
       Stereostatusold = false;
       if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
@@ -2571,10 +2600,26 @@ void DoMemoryPosTune() {
     }
   }
 
-  BWset = presets[memorypos].memorybw;
+  String stationText = "";
+  if (presets[memorypos].RDSPS[0] != '\0') {
+    for (int i = 0; i < 9; i++) stationText += presets[memorypos].RDSPS[i];
+  }
+
+  if (presets[memorypos].RDSPI[0] != '\0') {
+    for (int i = 0; i < 5; i++) {
+      radio.rds.picode[i] = presets[memorypos].RDSPI[i];
+    }
+    radio.rds.picode[6] = '\0';
+  } else {
+    radio.rds.picode[0] = '\0';
+  }
+
+  radio.rds.stationName = stationText;
+
+  BWset = presets[memorypos].bw;
   doBW();
   BWtune = true;
-
+  memtune = true;
 }
 
 void ShowFreq(int mode) {
@@ -4053,10 +4098,6 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_SHOWSWMIBAND, 1);
   EEPROM.writeByte(EE_BYTE_RDS_FILTER, 0);
   EEPROM.writeByte(EE_BYTE_RDS_PIERRORS, 0);
-  for (int i = 0; i < EE_PRESETS_CNT; i++) EEPROM.writeByte(i + EE_PRESETS_BAND_START, BAND_FM);
-  for (int i = 0; i < EE_PRESETS_CNT; i++) EEPROM.writeUInt((i * 4) + EE_PRESETS_START, EE_PRESETS_FREQUENCY);
-  for (int i = 0; i < EE_PRESETS_CNT; i++) EEPROM.writeByte(i + EE_PRESET_BW_START, 0);
-  for (int i = 0; i < EE_PRESETS_CNT; i++) EEPROM.writeByte(i + EE_PRESET_MS_START, 1);
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_LW, 180); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_LW, 164);
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, 540); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, 639);
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_SW, 1800); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_SW, 5000);
@@ -4100,6 +4141,22 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_FMAGC, 92);
   EEPROM.writeByte(EE_BYTE_AMAGC, 100);
   EEPROM.writeByte(EE_BYTE_FMSI, 1);
+
+  for (int i = 0; i < EE_PRESETS_CNT; i++) {
+    EEPROM.writeByte(i + EE_PRESETS_BAND_START, BAND_FM);
+    EEPROM.writeUInt((i * 4) + EE_PRESETS_FREQUENCY_START, EE_PRESETS_FREQUENCY);
+    EEPROM.writeByte(i + EE_PRESET_BW_START, 0);
+    EEPROM.writeByte(i + EE_PRESET_MS_START, 1);
+
+    for (int y = 0; y < 9; y++) {
+      EEPROM.writeByte((i * 9) + y + EE_PRESETS_RDSPS_START, '\0');
+    }
+
+    for (int y = 0; y < 5; y++) {
+      EEPROM.writeByte((i * 5) + y + EE_PRESETS_RDSPI_START, '\0');
+    }
+  }
+
   EEPROM.commit();
 }
 

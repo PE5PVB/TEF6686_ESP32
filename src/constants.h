@@ -198,7 +198,7 @@
 #define EE_PRESETS_CNT              99
 #define EE_CHECKBYTE_VALUE          5 // 0 ~ 255,add new entry, change for new value
 
-#define EE_TOTAL_CNT                827
+#define EE_TOTAL_CNT                2213
 #define EE_UINT16_FREQUENCY_FM      0
 #define EE_BYTE_VOLSET              4
 #define EE_BYTE_STEREO              5
@@ -285,7 +285,9 @@
 #define EE_PRESETS_BAND_START       130
 #define EE_PRESET_BW_START          230
 #define EE_PRESET_MS_START          330
-#define EE_PRESETS_START            430
+#define EE_PRESETS_FREQUENCY_START            430
+#define EE_PRESETS_RDSPI_START					826
+#define EE_PRESETS_RDSPS_START					1321
 #define EE_PRESETS_FREQUENCY        0
 
 // End of EEPROM index defines
@@ -297,9 +299,9 @@ static const char* const Skin[] = {"Essential", "NightSky"};
 
 // Memory channel database
 typedef struct {
-  byte          memorybw;
-  byte          memoryband;
-  bool          memoryms;
+  byte          bw;
+  byte          band;
+  bool          ms;
   unsigned int  frequency;
   char          RDSPI[5];
   char          RDSPS[9];

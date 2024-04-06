@@ -176,11 +176,15 @@ void Communication() {
           Serial.print(x + 1);
           Serial.print(",");
           Serial.print(presets[x].frequency);
-          if (presets[x].memoryband == BAND_FM || presets[x].memoryband == BAND_OIRT) Serial.print("0");
+          if (presets[x].band == BAND_FM || presets[x].band == BAND_OIRT) Serial.print("0");
           Serial.print(",");
-          Serial.print(presets[x].memorybw);
+          Serial.print(presets[x].bw);
           Serial.print(",");
-          Serial.print(presets[x].memoryms);
+          Serial.print(presets[x].ms);
+          Serial.print(",");
+          Serial.print(String(presets[x].RDSPI).substring(0, 4));
+          Serial.print(",");
+          Serial.print(String(presets[x].RDSPS).substring(0, 8));
           Serial.print("\n");
         }
       } else if (data_str.startsWith("S")) {
@@ -207,54 +211,85 @@ void Communication() {
             if (commaPos != -1) {
               membw = data_str.substring(0, commaPos).toInt();
               data_str.remove(0, commaPos + 1);
+              commaPos = data_str.indexOf(',');
 
-              memms = data_str.toInt();
+              if (commaPos != -1) {
+                memms = data_str.substring(0, commaPos).toInt();
+                data_str.remove(0, commaPos + 1);
+                commaPos = data_str.indexOf(',');
 
-              if (memfreq >= FREQ_LW_LOW_EDGE_MIN && memfreq <= FREQ_LW_HIGH_EDGE_MAX) {
-                memband = BAND_LW;
-              } else if (memfreq > FREQ_LW_HIGH_EDGE_MAX && memfreq <= FREQ_MW_HIGH_EDGE_MAX_10K) {
-                memband = BAND_MW;
-              } else if (memfreq > FREQ_MW_HIGH_EDGE_MAX_10K && memfreq <= FREQ_SW_END) {
-                memband = BAND_SW;
-              } else if (ConverterSet != 0 && memfreq >= FREQ_FM_OIRT_START * 10 && memfreq <= FREQ_FM_OIRT_END * 10) {
-                memband = BAND_OIRT;
-                memfreq /= 10;
-              } else if ((ConverterSet != 0 ? memfreq > FREQ_FM_OIRT_START * 10 : FREQ_FM_OIRT_END * 10) && memfreq <= FREQ_FM_END * 10) {
-                memband = BAND_FM;
-                memfreq /= 10;
-              } else if (memfreq == EE_PRESETS_FREQUENCY) {
-                memband = BAND_FM;
-              } else {
-                error |= (1 << 0);
+                if (commaPos != -1) {
+                  String rdsPiStr = data_str.substring(0, commaPos);
+                  char rdsPi[5];
+                  rdsPiStr.toCharArray(rdsPi, sizeof(rdsPi));
+                  data_str.remove(0, commaPos + 1);
+                  commaPos = data_str.indexOf(',');
+
+                  String rdsPs = data_str;
+
+
+                  if (memfreq >= FREQ_LW_LOW_EDGE_MIN && memfreq <= FREQ_LW_HIGH_EDGE_MAX) {
+                    memband = BAND_LW;
+                  } else if (memfreq > FREQ_LW_HIGH_EDGE_MAX && memfreq <= FREQ_MW_HIGH_EDGE_MAX_10K) {
+                    memband = BAND_MW;
+                  } else if (memfreq > FREQ_MW_HIGH_EDGE_MAX_10K && memfreq <= FREQ_SW_END) {
+                    memband = BAND_SW;
+                  } else if (ConverterSet != 0 && memfreq >= FREQ_FM_OIRT_START * 10 && memfreq <= FREQ_FM_OIRT_END * 10) {
+                    memband = BAND_OIRT;
+                    memfreq /= 10;
+                  } else if ((ConverterSet != 0 ? memfreq > FREQ_FM_OIRT_START * 10 : FREQ_FM_OIRT_END * 10) && memfreq <= FREQ_FM_END * 10) {
+                    memband = BAND_FM;
+                    memfreq /= 10;
+                  } else if (memfreq == EE_PRESETS_FREQUENCY) {
+                    memband = BAND_FM;
+                  } else {
+                    error |= (1 << 0);
+                  }
+
+                  if (mempos == 0 && memfreq == EE_PRESETS_FREQUENCY) error |= (1 << 4);
+
+                  if (mempos >= EE_PRESETS_CNT) error |= (1 << 1);
+
+                  if (memband != BAND_FM && memband != BAND_OIRT) {
+                    if (membw < 1 || membw > 4) error |= (1 << 2);
+                  } else if (membw > 16) {
+                    error |= (1 << 2);
+                  }
+
+                  if (memms > 1) error |= (1 << 3);
+
+                  if (error == 0) {
+                    error |= (1 << 7);
+                    memorypos = mempos;
+                    presets[mempos].band = memband;
+                    presets[mempos].frequency = memfreq;
+                    presets[mempos].bw = membw;
+                    presets[mempos].ms = memms;
+
+                    EEPROM.writeByte(mempos + EE_PRESETS_BAND_START, memband);
+                    EEPROM.writeByte(mempos + EE_PRESET_BW_START, membw);
+                    EEPROM.writeByte(mempos + EE_PRESET_MS_START, memms);
+                    EEPROM.writeUInt((mempos * 4) + EE_PRESETS_FREQUENCY_START, memfreq);
+
+                    for (int i = 0; i < 5; i++) {
+                      presets[mempos].RDSPI[i] = rdsPi[i];
+                      EEPROM.writeByte((mempos * 5) + i + EE_PRESETS_RDSPI_START, rdsPi[i]);
+                    }
+
+                    for (int i = 0; i < 9; i++) {
+                      if (i < rdsPs.length()) {
+                        presets[mempos].RDSPS[i] = rdsPs.charAt(i);
+                      } else {
+                        presets[mempos].RDSPS[i] = '\0';
+                      }
+                      EEPROM.writeByte((mempos * 9) + i + EE_PRESETS_RDSPS_START, presets[mempos].RDSPS[i]);
+                    }
+
+                    EEPROM.commit();
+                  }
+                  Serial.print("S:" + String(error, DEC) + "\n");
+                }
               }
-
-              if (mempos == 0 && memfreq == EE_PRESETS_FREQUENCY) error |= (1 << 4);
-
-              if (mempos >= EE_PRESETS_CNT) error |= (1 << 1);
-
-              if (memband != BAND_FM && memband != BAND_OIRT) {
-                if (membw < 1 || membw > 4) error |= (1 << 2);
-              } else if (membw > 16) {
-                error |= (1 << 2);
-              }
-
-              if (memms > 1) error |= (1 << 3);
-
-              if (error == 0) {
-                error |= (1 << 7);
-                memorypos = mempos;
-                presets[mempos].memoryband = memband;
-                presets[mempos].frequency = memfreq;
-                presets[mempos].memorybw = membw;
-                presets[mempos].memoryms = memms;
-
-                EEPROM.writeByte(mempos + EE_PRESETS_BAND_START, memband);
-                EEPROM.writeByte(mempos + EE_PRESET_BW_START, membw);
-                EEPROM.writeByte(mempos + EE_PRESET_MS_START, memms);
-                EEPROM.writeUInt((mempos * 4) + EE_PRESETS_START, memfreq);
-                EEPROM.commit();
-              }
-              Serial.print("S:" + String(error, DEC) + "\n");
             }
           }
         }
