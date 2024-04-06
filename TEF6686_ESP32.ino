@@ -1041,6 +1041,8 @@ void GetData() {
     ShowSignalLevel();
   }
 
+  if (!menu && (band < BAND_GAP || tunemode == TUNE_MEM)) showPS();
+
   if (band < BAND_GAP && !menu) {
     if (advancedRDS && !afscreen && !screenmute) ShowAdvancedRDS();
     if (afscreen && !screenmute) ShowAFEON();
@@ -1052,7 +1054,6 @@ void GetData() {
       if (millis() >= tuningtimer + 200) doAF();
     }
     showPI();
-    showPS();
   }
 
   ShowStereoStatus();
