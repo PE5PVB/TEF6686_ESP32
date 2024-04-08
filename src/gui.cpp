@@ -7,7 +7,8 @@
 #include <cstring>
 
 byte menuitem;
-byte items[8] = {8, static_cast<byte>(dynamicspi ? 9 : 8), 7, 10, 9, 10, 9, 6};
+byte items[9] = {9, static_cast<byte>(dynamicspi ? 9 : 8), 7, 10, 9, 10, 9, 6, 4};
+extern mem presets[];
 
 void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
   switch (CurrentTheme) {
@@ -617,6 +618,12 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString((USBmode ? "RDS Spy" : "XDRGTK"), 298, 3);
           break;
+
+        case DXMODE:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][212]), 6, 3);
+          break;
       }
       break;
 
@@ -704,6 +711,16 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString((wifi ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
           break;
+
+        case DXMODE:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][209]), 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(scanstart + 1, DEC), 298, 3);
+          break;
       }
       break;
 
@@ -790,6 +807,16 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString(">", 298, 3);
           break;
+
+        case DXMODE:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][210]), 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(scanstop + 1, DEC), 298, 3);
+          break;
       }
       break;
 
@@ -875,6 +902,18 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString((wifi ? String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC) : "-"), 298, 3);
+          break;
+
+        case DXMODE:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][211]), 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][92]), 298, 3);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(scanhold, DEC), 258, 3);
           break;
       }
       break;
@@ -1154,7 +1193,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case INDEX:
           FullLineSprite.setTextDatum(TC_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][70]), 152, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][213]), 152, 3);
           break;
 
         case MAINSETTINGS:
@@ -1190,7 +1229,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case RDSSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][196]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][215]), 6, 3);
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString((radio.rds.sortaf ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
@@ -1229,6 +1268,12 @@ void ShowOneLine(byte position, byte item, bool selected) {
 
     case 8:
       switch (menupage) {
+        case INDEX:
+          FullLineSprite.setTextDatum(TC_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][70]), 152, 3);
+          break;
+
         case MAINSETTINGS:
           if (dynamicspi) {
             FullLineSprite.setTextDatum(TL_DATUM);
@@ -2449,6 +2494,36 @@ void MenuUp() {
             break;
         }
         break;
+
+      case DXMODE:
+        switch (menuoption) {
+          case ITEM2:
+            scanstart++;
+            if (scanstart >= scanstop) scanstart = 0;
+            OneBigLineSprite.drawString(String(scanstart + 1, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM3:
+            scanstop++;
+            if (scanstop > EE_PRESETS_CNT - 1) scanstop = scanstart + 1;
+            OneBigLineSprite.drawString(String(scanstop + 1, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM4:
+            scanhold++;
+            if (scanhold > 30) scanhold = 1;
+            OneBigLineSprite.setTextDatum(TL_DATUM);
+            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            OneBigLineSprite.drawString(myLanguage[language][92], 155, 0);
+            OneBigLineSprite.setTextDatum(TR_DATUM);
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            OneBigLineSprite.drawString(String(scanhold, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+        }
+        break;
     }
   }
 }
@@ -3220,6 +3295,36 @@ void MenuDown() {
             break;
         }
         break;
+
+      case DXMODE:
+        switch (menuoption) {
+          case ITEM2:
+            scanstart--;
+            if (scanstart >= scanstop) scanstart = scanstop - 1;
+            OneBigLineSprite.drawString(String(scanstart + 1, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM3:
+            scanstop--;
+            if (scanstop <= scanstart) scanstop = EE_PRESETS_CNT - 1;
+            OneBigLineSprite.drawString(String(scanstop + 1, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM4:
+            scanhold--;
+            if (scanhold < 1) scanhold = 30;
+            OneBigLineSprite.setTextDatum(TL_DATUM);
+            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            OneBigLineSprite.drawString(myLanguage[language][92], 155, 0);
+            OneBigLineSprite.setTextDatum(TR_DATUM);
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            OneBigLineSprite.drawString(String(scanhold, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+        }
+        break;
     }
   }
 }
@@ -3306,6 +3411,14 @@ void DoMenu() {
             break;
 
           case ITEM8:
+            menupage = DXMODE;
+            menuoption = ITEM1;
+            menuitem = 0;
+            submenu = true;
+            BuildMenu();
+            break;
+
+          case ITEM9:
             menuopen = true;
             tft.drawRoundRect(10, 6, 300, 230, 5, ActiveColor);
             tft.fillRoundRect(12, 8, 296, 226, 5, BackgroundColor);
@@ -3689,7 +3802,7 @@ void DoMenu() {
             break;
 
           case ITEM8:
-            Infoboxprint(myLanguage[language][196]);
+            Infoboxprint(myLanguage[language][215]);
 
             OneBigLineSprite.drawString((radio.rds.sortaf ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -3984,6 +4097,53 @@ void DoMenu() {
             break;
         }
         break;
+
+      case DXMODE:
+        switch (menuoption) {
+          case ITEM1:
+            if (presets[scanstart].band == BAND_FM && presets[scanstart].frequency == EE_PRESETS_FREQUENCY) {
+              Infoboxprint(myLanguage[language][214]);
+              OneBigLineSprite.pushSprite(24, 118);
+            } else {
+              menuopen = false;
+              menu = false;
+              memorypos = scanstart;
+			  scanmodeold = tunemode;
+              tunemode = TUNE_MEM;
+              BuildDisplay();
+              DoMemoryPosTune();
+              scantimer = millis();
+              scandxmode = true;
+            }
+            break;
+
+          case ITEM2:
+            Infoboxprint(myLanguage[language][209]);
+
+            OneBigLineSprite.drawString(String(scanstart + 1), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM3:
+            Infoboxprint(myLanguage[language][210]);
+
+            OneBigLineSprite.drawString(String(scanstop + 1), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM4:
+            Infoboxprint(myLanguage[language][211]);
+
+            OneBigLineSprite.setTextDatum(TL_DATUM);
+            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            OneBigLineSprite.drawString(myLanguage[language][92], 155, 0);
+            OneBigLineSprite.setTextDatum(TR_DATUM);
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            OneBigLineSprite.drawString(String(scanhold, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+        }
+        break;
     }
   } else {
     if (menupage == CONNECTIVITY && menuoption == ITEM2) {
@@ -3993,7 +4153,11 @@ void DoMenu() {
     if (menupage == DISPLAYSETTINGS && menuoption == ITEM5) {
       doTheme();
     }
+
     menuopen = false;
+    if (scanstart >= scanstop) scanstart = scanstop - 1;
+    if (scanstop <= scanstart) scanstop = scanstart + 1;
+
     UpdateFonts(1);
     BuildMenu();
   }

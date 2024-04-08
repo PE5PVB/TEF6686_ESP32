@@ -23,10 +23,10 @@
 #define ITEM9     190
 #define ITEM10      210
 
-enum menupage {INDEX, MAINSETTINGS, AUDIOSETTINGS, DISPLAYSETTINGS, RDSSETTINGS, FMSETTINGS, AMSETTINGS, CONNECTIVITY};
+enum menupage {INDEX, MAINSETTINGS, AUDIOSETTINGS, DISPLAYSETTINGS, RDSSETTINGS, FMSETTINGS, AMSETTINGS, CONNECTIVITY, DXMODE};
 
 extern byte menuitem;
-extern byte items[8];
+extern byte items[9];
 
 extern bool advancedRDS;
 extern bool afmethodBold;
@@ -47,6 +47,7 @@ extern bool haseonold;
 extern bool hasrtplusold;
 extern bool hastmcold;
 extern bool LowLevelInit;
+extern bool menu;
 extern bool menuopen;
 extern bool mwstepsize;
 extern bool rdsreset;
@@ -54,6 +55,7 @@ extern bool RDSstatus;
 extern bool RDSstatusold;
 extern bool rdsstereoold;
 extern bool usesquelch;
+extern bool scandxmode;
 extern bool softmuteam;
 extern bool softmutefm;
 extern bool Stereostatusold;
@@ -94,12 +96,17 @@ extern byte HighCutLevel;
 extern byte HighCutOffset;
 extern byte language;
 extern byte licold;
+extern byte memorypos;
 extern byte menupage;
 extern byte MSold;
 extern byte poweroptions;
 extern byte eonptyold[20];
 extern byte rdsblockold;
 extern byte region;
+extern byte scanstart;
+extern byte scanstop;
+extern byte scanhold;
+extern byte scanmodeold;
 extern byte screensaverOptions[5];
 extern byte screensaverset;
 extern byte showmodulation;
@@ -113,6 +120,7 @@ extern byte submenu;
 extern byte subnetclient;
 extern byte tot;
 extern byte touchrotating;
+extern byte tunemode;
 extern byte unit;
 extern byte spispeed;
 extern char eonpicodeold[20][6];
@@ -181,6 +189,7 @@ extern unsigned int LowEdgeSet;
 extern unsigned int mappedfreqold[20];
 extern unsigned int mappedfreqold2[20];
 extern unsigned int mappedfreqold3[20];
+extern unsigned long scantimer;
 
 extern TFT_eSPI tft;
 extern TEF6686 radio;
@@ -212,6 +221,7 @@ extern void updateiMS();
 extern void updateEQ();
 extern void doTheme();
 extern void tryWiFi();
+extern void DoMemoryPosTune();
 extern void UpdateFonts(bool mode);
 extern void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize);
 

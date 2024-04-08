@@ -91,6 +91,7 @@ bool RDSstatus;
 bool RDSstatusold;
 bool rdsstereoold;
 bool rtcset;
+bool scandxmode;
 bool screenmute;
 bool screensavertriggered = false;
 bool seek;
@@ -172,6 +173,10 @@ byte rdsqualityold;
 byte region;
 byte rotarymode;
 byte touchrotating;
+byte scanstart;
+byte scanstop;
+byte scanhold;
+byte scanmodeold;
 byte screensaverOptions[5] = {0, 3, 10, 30, 60};
 byte screensaverset;
 byte showmodulation;
@@ -354,6 +359,7 @@ unsigned long rtplusticker;
 unsigned long rtplustickerhold;
 unsigned long rtticker;
 unsigned long rttickerhold;
+unsigned long scantimer;
 unsigned long signalstatustimer;
 unsigned long tottimer;
 unsigned long tuningtimer;
@@ -475,6 +481,9 @@ void setup() {
   fmagc = EEPROM.readByte(EE_BYTE_FMAGC);
   amagc = EEPROM.readByte(EE_BYTE_AMAGC);
   fmsi = EEPROM.readByte(EE_BYTE_FMSI);
+  scanstart = EEPROM.readByte(EE_BYTE_SCANSTART);
+  scanstop = EEPROM.readByte(EE_BYTE_SCANSTOP);
+  scanhold = EEPROM.readByte(EE_BYTE_SCANHOLD);
 
   if (spispeed == SPI_SPEED_DEFAULT) tft.setSPISpeed(SPI_FREQUENCY / 1000000); else tft.setSPISpeed(spispeed * 10);
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;
@@ -783,6 +792,21 @@ void loop() {
     if (millis() >= tottimer + totprobe) deepSleep();
   }
   if (digitalRead(BANDBUTTON) == LOW ) BANDBUTTONPress();
+
+  if (scandxmode && millis() >= scantimer + (scanhold * 1000)) {
+    memorypos++;
+    if (memorypos > scanstop) memorypos = scanstart;
+    while (IsStationEmpty()) {
+      memorypos++;
+      if (memorypos > scanstop) {
+        memorypos = scanstart;
+        break;
+      }
+    }
+    DoMemoryPosTune();
+    ShowMemoryPos();
+    scantimer = millis();
+  }
 
   if (millis() >= tuningtimer + 200) {
     if (store) {
@@ -1350,6 +1374,7 @@ void ToggleBand(byte nowBand) {
 }
 
 void BANDBUTTONPress() {
+  if (scandxmode) cancelDXScan();
   if (memorystore) {
     EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, EE_PRESETS_FREQUENCY);
     EEPROM.commit();
@@ -1855,6 +1880,7 @@ void SelectBand() {
 }
 
 void BWButtonPress() {
+  if (scandxmode) cancelDXScan();
   if (!usesquelch) radio.setUnMute();
   if (!menu) {
     seek = false;
@@ -1927,6 +1953,7 @@ void doStereoToggle() {
 }
 
 void ModeButtonPress() {
+  if (scandxmode) cancelDXScan();
   if (!usesquelch) radio.setUnMute();
   if (advancedRDS) {
     BuildDisplay();
@@ -1955,22 +1982,14 @@ void ModeButtonPress() {
           ScreensaverTimerRestart();
         }
       } else {
-        if (XDRGTKUSB || XDRGTKTCP) {
-          ShowFreq(1);
-          tftPrint(-1, myLanguage[language][86], 70, 68, ActiveColor, ActiveColorSmooth, 28);
-          delay(1000);
-          tftPrint(-1, myLanguage[language][86], 70, 68, BackgroundColor, BackgroundColor, 28);
-          ShowFreq(0);
-        } else {
-          if (!menu) {
-            menuoption = ITEM1;
-            menupage = INDEX;
-            menuitem = 0;
-            UpdateFonts(1);
-            BuildMenu();
-            menu = true;
-            ScreensaverTimerSet(OFF);
-          }
+        if (!menu) {
+          menuoption = ITEM1;
+          menupage = INDEX;
+          menuitem = 0;
+          UpdateFonts(1);
+          BuildMenu();
+          menu = true;
+          ScreensaverTimerSet(OFF);
         }
       }
     } else {
@@ -2055,6 +2074,9 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_FMAGC, fmagc);
         EEPROM.writeByte(EE_BYTE_AMAGC, amagc);
         EEPROM.writeByte(EE_BYTE_FMSI, fmsi);
+        EEPROM.writeByte(EE_BYTE_SCANSTART, scanstart);
+        EEPROM.writeByte(EE_BYTE_SCANSTOP, scanstop);
+        EEPROM.writeByte(EE_BYTE_SCANHOLD, scanhold);
         EEPROM.commit();
         if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
         if (!usesquelch) radio.setUnMute();
@@ -2212,6 +2234,7 @@ void RoundStep() {
 }
 
 void ButtonPress() {
+  if (scandxmode) cancelDXScan();
   if (!usesquelch) radio.setUnMute();
   if (advancedRDS) BuildDisplay();
   if (!menu) {
@@ -2372,6 +2395,7 @@ void ButtonPress() {
 }
 
 void KeyUp() {
+  if (scandxmode) cancelDXScan();
   rotary = 0;
   if (!afscreen) {
     if (!menu) {
@@ -2435,6 +2459,7 @@ void KeyUp() {
 }
 
 void KeyDown() {
+  if (scandxmode) cancelDXScan();
   rotary = 0;
   if (!afscreen) {
     if (!menu) {
@@ -4142,6 +4167,9 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_FMAGC, 92);
   EEPROM.writeByte(EE_BYTE_AMAGC, 100);
   EEPROM.writeByte(EE_BYTE_FMSI, 1);
+  EEPROM.writeByte(EE_BYTE_SCANSTART, 0);
+  EEPROM.writeByte(EE_BYTE_SCANSTOP, 9);
+  EEPROM.writeByte(EE_BYTE_SCANHOLD, 5);
 
   for (int i = 0; i < EE_PRESETS_CNT; i++) {
     EEPROM.writeByte(i + EE_PRESETS_BAND_START, BAND_FM);
@@ -4269,4 +4297,11 @@ void UpdateFonts(bool mode) {
       RDSSprite.unloadFont();
       break;
   }
+}
+
+void cancelDXScan() {
+  tunemode = scanmodeold;
+  scandxmode = false;
+  ShowTuneMode();
+  ShowMemoryPos();
 }

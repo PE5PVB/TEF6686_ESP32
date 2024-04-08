@@ -856,6 +856,7 @@ void showCT() {
 }
 
 void showRadioText() {
+//	radio.rds.stationText = "Jetzt in Ö1: Öffentlich-rechtlich auf Bewährung";
   if (!screenmute) {
     if (radio.rds.hasRT && radio.rds.stationText.length() > 0) {
       if (String(radio.rds.stationText + radio.rds.stationText32).length() != Radiotextlengthold) {

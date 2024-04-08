@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 // *** means the text is the same as in English
-static const char* const myLanguage[18][209] PROGMEM = {
+static const char* const myLanguage[18][216] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -202,7 +202,7 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "FM", // 193
     "AM", // 194
     "CONNECT", // 195
-    "Auto sort AF", // 196
+    "DX MODE", // 196
     "Stationlist ID", // 197
     "AM AGC", // 198
     "FM deemphasis", // 199
@@ -214,7 +214,14 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Mute screen on\nXDRGTK connection", // 205
     "FMSI stereo\nimprovement", // 206
     "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!" // 208
+    "Function not available\non selected skin!", // 208
+    "Begin scanning\nmemory channels", // 209
+    "Stop scanning\nmemory channels", // 210
+    "Wait time", // 211
+    "Start DX scanning", // 212
+    "FM DX Options", // 213
+    "Abort! The start channel\nis marked as skipped.", // 214
+    "Auto sort AF" // 215
   },
 
   { "Nederlands", // Dutch
@@ -413,7 +420,7 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "FM", // 193 ***
     "AM", // 194 ***
     "VERBIND", // 195
-    "Auto AF sorteren", // 196
+    "DX MODE", // 196
     "Stationlist ID", // 197 ***
     "AM AGC", // 198 ***
     "FM deemphasis", // 199 ***
@@ -425,7 +432,14 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Scherm uit bij\nXDRGTK verbinding", // 205
     "FMSI stereo\nverbetering", // 206
     "Alleen beschikbaar op\nTEF6687/6689!", // 207
-    "Niet beschikbaar op\ngekozen uiterlijk!" // 208
+    "Niet beschikbaar op\ngekozen uiterlijk!", // 208
+    "Begin zoeken\ngeheugenkanaal", // 209
+    "Eind zoeken\ngeheugenkanaal", // 210
+    "Wachttijd", // 211
+    "Start DX zoeken", // 212
+    "FM DX Opties", // 213
+    "Fout! Startkanaal is\ngemarkeerd als skip", // 214
+    "Auto AF sorteren" // 215
   },
 
   { "Polski", // Polish
@@ -624,7 +638,7 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "FM", // 193 ***
     "AM", // 194 ***
     "ŁĄCZNOŚĆ", // 195
-    "Automat. sortowanie AF", // 196
+    "DX MODE", // 196
     "Identyfikator Stationlist", // 197
     "Tłumik ant. AM", // 198
     "Deemfaza FM", // 199
@@ -636,7 +650,14 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Wylacz ekran gdy\npołączony z XDR-GTK", // 205
     "Ulepszenie \nstereo FMSI", // 206
     "Funkcja dostępna tylko\nna TEF6687/6689!", // 207
-    "Funkcja niedostępna\nna wybranym motywie!" // 208
+    "Funkcja niedostępna\nna wybranym motywie!", // 208
+    "Begin scanning\nmemory channels", // 209
+    "Stop scanning\nmemory channels", // 210
+    "Wait time", // 211
+    "Start DX scanning", // 212
+    "FM DX Options", // 213
+    "Abort! The start channel\nis marked as skipped.", // 214
+    "Automat. sortowanie AF" // 215
   },
 
   { "Hrvatski", // Croatian
@@ -835,7 +856,7 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "FM", // 193
     "AM", // 194
     "SPOJI", // 195
-    "Autom. sortiranje AF-a", // 196
+    "DX MODE", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
     "FM deemphasis", // 199
@@ -847,7 +868,14 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Isključi zaslon\ntijekom veze XDRGTK-om", // 205
     "FMSI stereo\nimprovement", // 206
     "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!" // 208
+    "Function not available\non selected skin!", // 208
+    "Begin scanning\nmemory channels", // 209
+    "Stop scanning\nmemory channels", // 210
+    "Wait time", // 211
+    "Start DX scanning", // 212
+    "FM DX Options", // 213
+    "Abort! The start channel\nis marked as skipped.", // 214
+    "Autom. sortiranje AF-a" // 215
   },
 
   { "Ελληνικά", // Greek
@@ -1046,7 +1074,7 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "FM", // 193
     "AM", // 194
     "ΣΥΝΔΕΣΗ", // 195
-    "Αυτόματη ταξινόμηση\nAF", // 196
+    "DX MODE", // 196
     "ID λίστας σταθμών", // 197
     "AM εξασθένιση", // 198
     "FM αποέμφαση", // 199
@@ -1058,7 +1086,14 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Μαύρη οθόνη σε\nσύνδεση XDRGTK", // 205
     "FMSI βελτίωση\nστερεοφωνικού ήχου", // 206
     "Λειτουργία διαθέσιμη\nμόνο στα TEF6687/6689!", // 207
-    "Λειτουργία μη διαθέσιμη\nστην επιλεγμένη εμφάνιση!" // 208
+    "Λειτουργία μη διαθέσιμη\nστην επιλεγμένη εμφάνιση!", // 208
+    "Begin scanning\nmemory channels", // 209
+    "Stop scanning\nmemory channels", // 210
+    "Wait time", // 211
+    "Start DX scanning", // 212
+    "FM DX Options", // 213
+    "Abort! The start channel\nis marked as skipped.", // 214
+    "Αυτόματη ταξινόμηση\nAF" // 215
   },
 
   { "Română", // Romanian
@@ -1257,7 +1292,7 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "FM", // 193
     "AM", // 194
     "CONECTARE", // 195
-    "Sortare automata AF", // 196
+    "DX MODE", // 196
     "ID Lista posturi", // 197
     "AGC AM", // 198
     "FM deemphasis", // 199
@@ -1269,7 +1304,14 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Mute screen on\nXDRGTK connection", // 205
     "FMSI stereo\nimprovement", // 206
     "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!" // 208
+    "Function not available\non selected skin!", // 208
+    "Begin scanning\nmemory channels", // 209
+    "Stop scanning\nmemory channels", // 210
+    "Wait time", // 211
+    "Start DX scanning", // 212
+    "FM DX Options", // 213
+    "Abort! The start channel\nis marked as skipped.", // 214
+    "Sortare automata AF" // 215
   },
 
   { "Deutsch", // German
@@ -1468,7 +1510,7 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "UKW", // 193
     "AM", // 194
     "NETZ", // 195
-    "AF Autosortierung", // 196
+    "DX MODE", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
     "Entzerrung auf UKW", // 199
@@ -1480,7 +1522,14 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Display aus bei\nXDRGTK-Verbindung", // 205
     "FMSI Stereo-\nVerbesserung", // 206
     "Funktion nur für\nTEF6687/6689 verfügbar!", // 207
-    "Funktion für ausgewählten\nSkin nicht verfügbar!" // 208
+    "Funktion für ausgewählten\nSkin nicht verfügbar!", // 208
+    "Begin scanning\nmemory channels", // 209
+    "Stop scanning\nmemory channels", // 210
+    "Wait time", // 211
+    "Start DX scanning", // 212
+    "FM DX Options", // 213
+    "Abort! The start channel\nis marked as skipped.", // 214
+    "AF Autosortierung" // 215
   },
 
   { "Český", // Czech
@@ -1679,7 +1728,7 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "FM", // 193 ***
     "AM", // 194 ***
     "PŘIPOJENÍ", // 195
-    "Auto řazení AF", // 196
+    "DX MODE", // 196
     "Stationlist ID", // 197 ***
     "AM ATT", // 198
     "FM deemphasis", // 199 ***
@@ -1691,7 +1740,14 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Mute screen on\nXDRGTK connection", // 205
     "FMSI stereo\nimprovement", // 206
     "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!" // 208
+    "Function not available\non selected skin!", // 208
+    "Begin scanning\nmemory channels", // 209
+    "Stop scanning\nmemory channels", // 210
+    "Wait time", // 211
+    "Start DX scanning", // 212
+    "FM DX Options", // 213
+    "Abort! The start channel\nis marked as skipped.", // 214
+    "Auto řazení AF" // 215
   },
 
   { "Slovenský", // Slovak
@@ -1890,7 +1946,7 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "FM", // 193 ***
     "AM", // 194 ***
     "PRIPOJENIE", // 195
-    "Auto radenie AF", // 196
+    "DX MODE", // 196
     "Stationlist ID", // 197 ***
     "AM ATT", // 198
     "FM deemphasis", // 199 ***
@@ -1902,7 +1958,14 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Mute screen on\nXDRGTK connection", // 205
     "FMSI stereo\nimprovement", // 206
     "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!" // 208
+    "Function not available\non selected skin!", // 208
+    "Begin scanning\nmemory channels", // 209
+    "Stop scanning\nmemory channels", // 210
+    "Wait time", // 211
+    "Start DX scanning", // 212
+    "FM DX Options", // 213
+    "Abort! The start channel\nis marked as skipped.", // 214
+    "Auto radenie AF" // 215
   },
 
   { "Français", // French
@@ -2101,7 +2164,7 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "FM", // 193
     "AM", // 194
     "CONNECTER", // 195
-    "Tri AF automatique", // 196
+    "DX MODE", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
     "FM déemphasie", // 199
@@ -2113,7 +2176,14 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Écran muet sur\nla connexion XDRGTK", // 205
     "FMSI amélioration\ndu son stéréo", // 206
     "Fonction disponible seulement\nsur TEF6687/6689!", // 207
-    "Fonction non disponible\nsur le skin sélectionné!" // 208
+    "Fonction non disponible\nsur le skin sélectionné!", // 208
+    "Begin scanning\nmemory channels", // 209
+    "Stop scanning\nmemory channels", // 210
+    "Wait time", // 211
+    "Start DX scanning", // 212
+    "FM DX Options", // 213
+    "Abort! The start channel\nis marked as skipped.", // 214
+    "Tri AF automatique" // 215
   },
 
   { "Български", // Bulgarian
@@ -2312,7 +2382,7 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "УКВ (FM)", // 193
     "СВ (AM)", // 194
     "ВРЪЗКА", // 195
-    "Auto sort AF", // 196 ***
+    "DX MODE", // 196
     "Stationlist Идентификатор", // 197
     "СВ атенюатор", // 198
     "FM deemphasis", // 199 ***
@@ -2324,7 +2394,14 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Mute screen on\nXDRGTK connection", // 205
     "FMSI stereo\nimprovement", // 206
     "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!" // 208
+    "Function not available\non selected skin!", // 208
+    "Begin scanning\nmemory channels", // 209
+    "Stop scanning\nmemory channels", // 210
+    "Wait time", // 211
+    "Start DX scanning", // 212
+    "FM DX Options", // 213
+    "Abort! The start channel\nis marked as skipped.", // 214
+    "Auto sort AF" // 215 ***
   },
 
   { "Русский", // Russian
@@ -2523,7 +2600,7 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "FM", // 193
     "AM", // 194
     "КОННЕКТ", // 195
-    "Сортировка AF-частот", // 196
+    "DX MODE", // 196
     "Stationlist ID", // 197
     "AM аттеньюатор", // 198
     "FM deemphasis", // 199
@@ -2535,7 +2612,14 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Погасить дисплей при\nподключении XDRGTK", // 205
     "FMSI стерео\nулучшение", // 206
     "Функция доступна только\nна TEF6687/6689!", // 207
-    "Функция недоступна\nна этом оформлении" // 208
+    "Функция недоступна\nна этом оформлении", // 208
+    "Begin scanning\nmemory channels", // 209
+    "Stop scanning\nmemory channels", // 210
+    "Wait time", // 211
+    "Start DX scanning", // 212
+    "FM DX Options", // 213
+    "Abort! The start channel\nis marked as skipped.", // 214
+    "Сортировка AF-частот" // 215
   },
 
   { "Українська", // Ukranian
@@ -2734,7 +2818,7 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "FM", // 193 ***
     "AM", // 194 ***
     "ПІДКЛЮЧЕННЯ", // 195
-    "Авто сорт. AF", // 196
+    "DX MODE", // 196
     "Stationlist ID", // 197 ***
     "AM ATT", // 198
     "FM deemphasis", // 199 ***
@@ -2746,7 +2830,14 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Mute screen on\nXDRGTK connection", // 205
     "FMSI stereo\nimprovement", // 206
     "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!" // 208
+    "Function not available\non selected skin!", // 208
+    "Begin scanning\nmemory channels", // 209
+    "Stop scanning\nmemory channels", // 210
+    "Wait time", // 211
+    "Start DX scanning", // 212
+    "FM DX Options", // 213
+    "Abort! The start channel\nis marked as skipped.", // 214
+    "Авто сорт. AF" // 215
   },
 
   { "Italiano", // Italian
@@ -2945,7 +3036,7 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "FM", // 193 ***
     "AM", // 194 ***
     "CONNETTI", // 195 ***
-    "Autoordinamento AF", // 196 ***
+    "DX MODE", // 196
     "ID Stationlist", // 197 ***
     "ATT AM", // 198
     "Deenfasi FM", // 199 ***
@@ -2957,7 +3048,14 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Mute screen on\nXDRGTK connection", // 205
     "FMSI stereo\nimprovement", // 206
     "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!" // 208
+    "Function not available\non selected skin!", // 208
+    "Begin scanning\nmemory channels", // 209
+    "Stop scanning\nmemory channels", // 210
+    "Wait time", // 211
+    "Start DX scanning", // 212
+    "FM DX Options", // 213
+    "Abort! The start channel\nis marked as skipped.", // 214
+    "Autoordinamento AF" // 215
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3156,7 +3254,7 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "FM 设置", // 193
     "AM 设置", // 194
     "连机模式", // 195
-    "自动排列AF", // 196
+    "DX MODE", // 196
     "Stationlist ID", // 197 ***
     "AM天线衰减", // 198
     "FM去加重", // 199
@@ -3168,7 +3266,14 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "XDRGTK连接时锁屏", // 205
     "FMSI\n立体声增强", // 206
     "此功能仅限\nTEF6687/6689!", // 207
-    "此皮肤不支持该功能!" // 208
+    "此皮肤不支持该功能!", // 208
+    "Begin scanning\nmemory channels", // 209
+    "Stop scanning\nmemory channels", // 210
+    "Wait time", // 211
+    "Start DX scanning", // 212
+    "FM DX Options", // 213
+    "Abort! The start channel\nis marked as skipped.", // 214
+    "自动排列AF" // 215
   },
 
   { "Norsk", // Norwegian
@@ -3367,7 +3472,7 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "FM", // 193 ***
     "AM", // 194 ***
     "TILKOBLE", // 195
-    "Auto sorterings AF", // 196
+    "DX MODE", // 196
     "Stationlist ID", // 197 ***
     "AM ATT", // 198
     "FM ettertrykkelse", // 199
@@ -3379,7 +3484,14 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Dempet skjerm på\nXDRGTK tilkobling", // 205
     "FMSI stereo forbedringt", // 206
     "Kun tilgjengelig\npå TEF6687/6689!", // 207
-    "Funksjon ikke tilgjengelig\npå valgt skin!" // 208
+    "Funksjon ikke tilgjengelig\npå valgt skin!", // 208
+    "Begin scanning\nmemory channels", // 209
+    "Stop scanning\nmemory channels", // 210
+    "Wait time", // 211
+    "Start DX scanning", // 212
+    "FM DX Options", // 213
+    "Abort! The start channel\nis marked as skipped.", // 214
+    "Auto sorterings AF" // 215
   },
 
   { "Español", // Spanish
@@ -3578,7 +3690,7 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "FM", // 193
     "AM", // 194
     "CONECTAR", // 195
-    "Orden automático de AF", // 196
+    "DX MODE", // 196
     "ID de lista de estaciones", // 197
     "Atenuación de AM", // 198
     "Despreocupación\nde FM", // 199
@@ -3590,7 +3702,14 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Pantalla de mudo\nen la conexión XDRGTK", // 205
     "FMSI mejora del\nsonido estéreo", // 206
     "Función disponible solo\nen TEF6687/6689!", // 207
-    "Función no disponible\nsobre el skin seleccionado!" // 208
+    "Función no disponible\nsobre el skin seleccionado!", // 208
+    "Begin scanning\nmemory channels", // 209
+    "Stop scanning\nmemory channels", // 210
+    "Wait time", // 211
+    "Start DX scanning", // 212
+    "FM DX Options", // 213
+    "Abort! The start channel\nis marked as skipped.", // 214
+    "Orden automático de AF" // 215
   },
 
   { "Português", // Portuguese
@@ -3789,7 +3908,7 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "FM", // 193
     "AM", // 194
     "CONECTAR", // 195
-    "Classificar AF\nautomaticamente", // 196
+    "DX MODE", // 196
     "ID da lista de estações", // 197
     "Atenuação AM", // 198
     "Desênfase FM", // 199
@@ -3801,7 +3920,14 @@ static const char* const myLanguage[18][209] PROGMEM = {
     "Tela mudo na\nconexão XDRGTK", // 205
     "FMSI melhoria\ndo som estéreo", // 206
     "Function only available\non TEF6687/6689!", // 207
-    "Função não disponível\nno skin selecionado!" // 208
+    "Função não disponível\nno skin selecionado!", // 208
+    "Begin scanning\nmemory channels", // 209
+    "Stop scanning\nmemory channels", // 210
+    "Wait time", // 211
+    "Start DX scanning", // 212
+    "FM DX Options", // 213
+    "Abort! The start channel\nis marked as skipped.", // 214
+    "Classificar AF\nautomaticamente" // 215
   }
 };
 #endif
