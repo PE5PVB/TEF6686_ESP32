@@ -92,6 +92,8 @@ bool RDSstatusold;
 bool rdsstereoold;
 bool rtcset;
 bool scandxmode;
+bool scanmem;
+bool scanmute;
 bool screenmute;
 bool screensavertriggered = false;
 bool seek;
@@ -173,6 +175,7 @@ byte rdsqualityold;
 byte region;
 byte rotarymode;
 byte touchrotating;
+byte scancancel;
 byte scanstart;
 byte scanstop;
 byte scanhold;
@@ -484,6 +487,9 @@ void setup() {
   scanstart = EEPROM.readByte(EE_BYTE_SCANSTART);
   scanstop = EEPROM.readByte(EE_BYTE_SCANSTOP);
   scanhold = EEPROM.readByte(EE_BYTE_SCANHOLD);
+  scanmem = EEPROM.readByte(EE_BYTE_SCANMEM);
+  scancancel = EEPROM.readByte(EE_BYTE_SCANCANCEL);
+  scanmute = EEPROM.readByte(EE_BYTE_SCANMUTE);
 
   if (spispeed == SPI_SPEED_DEFAULT) tft.setSPISpeed(SPI_FREQUENCY / 1000000); else tft.setSPISpeed(spispeed * 10);
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;
@@ -2077,6 +2083,9 @@ void ModeButtonPress() {
         EEPROM.writeByte(EE_BYTE_SCANSTART, scanstart);
         EEPROM.writeByte(EE_BYTE_SCANSTOP, scanstop);
         EEPROM.writeByte(EE_BYTE_SCANHOLD, scanhold);
+        EEPROM.writeByte(EE_BYTE_SCANMEM, scanmem);
+        EEPROM.writeByte(EE_BYTE_SCANCANCEL, scancancel);
+        EEPROM.writeByte(EE_BYTE_SCANMUTE, scanmute);
         EEPROM.commit();
         if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
         if (!usesquelch) radio.setUnMute();
@@ -4170,6 +4179,9 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_SCANSTART, 0);
   EEPROM.writeByte(EE_BYTE_SCANSTOP, 9);
   EEPROM.writeByte(EE_BYTE_SCANHOLD, 5);
+  EEPROM.writeByte(EE_BYTE_SCANMEM, 1);
+  EEPROM.writeByte(EE_BYTE_SCANCANCEL, 0);
+  EEPROM.writeByte(EE_BYTE_SCANMUTE, 0);
 
   for (int i = 0; i < EE_PRESETS_CNT; i++) {
     EEPROM.writeByte(i + EE_PRESETS_BAND_START, BAND_FM);

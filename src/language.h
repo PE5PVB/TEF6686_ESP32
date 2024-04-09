@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 // *** means the text is the same as in English
-static const char* const myLanguage[18][216] PROGMEM = {
+static const char* const myLanguage[18][223] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -221,7 +221,14 @@ static const char* const myLanguage[18][216] PROGMEM = {
     "Start DX scanning", // 212
     "FM DX Options", // 213
     "Abort! The start channel\nis marked as skipped.", // 214
-    "Auto sort AF" // 215
+    "Auto sort AF", // 215
+    "Memory channels", // 216
+    "Exclude", // 217
+    "Only", // 218
+    "Auto cancel scan", // 219
+    "Correct PI", // 220
+    "Signal", // 221
+    "Mute audio\nwhile scanning" // 222
   },
 
   { "Nederlands", // Dutch
@@ -439,7 +446,14 @@ static const char* const myLanguage[18][216] PROGMEM = {
     "Start DX zoeken", // 212
     "FM DX Opties", // 213
     "Fout! Startkanaal is\ngemarkeerd als skip", // 214
-    "Auto AF sorteren" // 215
+    "Auto AF sorteren", // 215
+    "Geheugenkanalen", // 216
+    "Uitsluiten", // 217
+    "Enkel", // 218
+    "Auto afbreken", // 219
+    "Correcte PI", // 220
+    "Signaal", // 221
+    "Geen geluid\ntijdens scannen" // 222
   },
 
   { "Polski", // Polish
@@ -657,7 +671,14 @@ static const char* const myLanguage[18][216] PROGMEM = {
     "Start DX scanning", // 212
     "FM DX Options", // 213
     "Abort! The start channel\nis marked as skipped.", // 214
-    "Automat. sortowanie AF" // 215
+    "Automat. sortowanie AF", // 215
+    "Memory channels", // 216
+    "Exclude", // 217
+    "Only", // 218
+    "Auto cancel scan", // 219
+    "Correct PI", // 220
+    "Signal", // 221
+    "Mute audio\nwhile scanning" // 222
   },
 
   { "Hrvatski", // Croatian
@@ -875,7 +896,14 @@ static const char* const myLanguage[18][216] PROGMEM = {
     "Start DX scanning", // 212
     "FM DX Options", // 213
     "Abort! The start channel\nis marked as skipped.", // 214
-    "Autom. sortiranje AF-a" // 215
+    "Autom. sortiranje AF-a", // 215
+    "Memory channels", // 216
+    "Exclude", // 217
+    "Only", // 218
+    "Auto cancel scan", // 219
+    "Correct PI", // 220
+    "Signal", // 221
+    "Mute audio\nwhile scanning" // 222
   },
 
   { "Ελληνικά", // Greek
@@ -1093,7 +1121,14 @@ static const char* const myLanguage[18][216] PROGMEM = {
     "Start DX scanning", // 212
     "FM DX Options", // 213
     "Abort! The start channel\nis marked as skipped.", // 214
-    "Αυτόματη ταξινόμηση\nAF" // 215
+    "Αυτόματη ταξινόμηση\nAF", // 215
+    "Memory channels", // 216
+    "Exclude", // 217
+    "Only", // 218
+    "Auto cancel scan", // 219
+    "Correct PI", // 220
+    "Signal", // 221
+    "Mute audio\nwhile scanning" // 222
   },
 
   { "Română", // Romanian
@@ -1311,7 +1346,14 @@ static const char* const myLanguage[18][216] PROGMEM = {
     "Start DX scanning", // 212
     "FM DX Options", // 213
     "Abort! The start channel\nis marked as skipped.", // 214
-    "Sortare automata AF" // 215
+    "Sortare automata AF", // 215
+    "Memory channels", // 216
+    "Exclude", // 217
+    "Only", // 218
+    "Auto cancel scan", // 219
+    "Correct PI", // 220
+    "Signal", // 221
+    "Mute audio\nwhile scanning" // 222
   },
 
   { "Deutsch", // German
@@ -1529,7 +1571,14 @@ static const char* const myLanguage[18][216] PROGMEM = {
     "Start DX scanning", // 212
     "FM DX Options", // 213
     "Abort! The start channel\nis marked as skipped.", // 214
-    "AF Autosortierung" // 215
+    "AF Autosortierung", // 215
+    "Memory channels", // 216
+    "Exclude", // 217
+    "Only", // 218
+    "Auto cancel scan", // 219
+    "Correct PI", // 220
+    "Signal", // 221
+    "Mute audio\nwhile scanning" // 222
   },
 
   { "Český", // Czech
@@ -1747,7 +1796,14 @@ static const char* const myLanguage[18][216] PROGMEM = {
     "Start DX scanning", // 212
     "FM DX Options", // 213
     "Abort! The start channel\nis marked as skipped.", // 214
-    "Auto řazení AF" // 215
+    "Auto řazení AF", // 215
+    "Memory channels", // 216
+    "Exclude", // 217
+    "Only", // 218
+    "Auto cancel scan", // 219
+    "Correct PI", // 220
+    "Signal", // 221
+    "Mute audio\nwhile scanning" // 222
   },
 
   { "Slovenský", // Slovak
@@ -1965,7 +2021,14 @@ static const char* const myLanguage[18][216] PROGMEM = {
     "Start DX scanning", // 212
     "FM DX Options", // 213
     "Abort! The start channel\nis marked as skipped.", // 214
-    "Auto radenie AF" // 215
+    "Auto radenie AF", // 215
+    "Memory channels", // 216
+    "Exclude", // 217
+    "Only", // 218
+    "Auto cancel scan", // 219
+    "Correct PI", // 220
+    "Signal", // 221
+    "Mute audio\nwhile scanning" // 222
   },
 
   { "Français", // French
@@ -2183,7 +2246,14 @@ static const char* const myLanguage[18][216] PROGMEM = {
     "Start DX scanning", // 212
     "FM DX Options", // 213
     "Abort! The start channel\nis marked as skipped.", // 214
-    "Tri AF automatique" // 215
+    "Tri AF automatique", // 215
+    "Memory channels", // 216
+    "Exclude", // 217
+    "Only", // 218
+    "Auto cancel scan", // 219
+    "Correct PI", // 220
+    "Signal", // 221
+    "Mute audio\nwhile scanning" // 222
   },
 
   { "Български", // Bulgarian
@@ -2401,7 +2471,14 @@ static const char* const myLanguage[18][216] PROGMEM = {
     "Start DX scanning", // 212
     "FM DX Options", // 213
     "Abort! The start channel\nis marked as skipped.", // 214
-    "Auto sort AF" // 215 ***
+    "Auto sort AF", // 215 ***
+    "Memory channels", // 216
+    "Exclude", // 217
+    "Only", // 218
+    "Auto cancel scan", // 219
+    "Correct PI", // 220
+    "Signal", // 221
+    "Mute audio\nwhile scanning" // 222
   },
 
   { "Русский", // Russian
@@ -2619,7 +2696,14 @@ static const char* const myLanguage[18][216] PROGMEM = {
     "Start DX scanning", // 212
     "FM DX Options", // 213
     "Abort! The start channel\nis marked as skipped.", // 214
-    "Сортировка AF-частот" // 215
+    "Сортировка AF-частот", // 215
+    "Memory channels", // 216
+    "Exclude", // 217
+    "Only", // 218
+    "Auto cancel scan", // 219
+    "Correct PI", // 220
+    "Signal", // 221
+    "Mute audio\nwhile scanning" // 222
   },
 
   { "Українська", // Ukranian
@@ -2837,7 +2921,14 @@ static const char* const myLanguage[18][216] PROGMEM = {
     "Start DX scanning", // 212
     "FM DX Options", // 213
     "Abort! The start channel\nis marked as skipped.", // 214
-    "Авто сорт. AF" // 215
+    "Авто сорт. AF", // 215
+    "Memory channels", // 216
+    "Exclude", // 217
+    "Only", // 218
+    "Auto cancel scan", // 219
+    "Correct PI", // 220
+    "Signal", // 221
+    "Mute audio\nwhile scanning" // 222
   },
 
   { "Italiano", // Italian
@@ -3055,7 +3146,14 @@ static const char* const myLanguage[18][216] PROGMEM = {
     "Start DX scanning", // 212
     "FM DX Options", // 213
     "Abort! The start channel\nis marked as skipped.", // 214
-    "Autoordinamento AF" // 215
+    "Autoordinamento AF", // 215
+    "Memory channels", // 216
+    "Exclude", // 217
+    "Only", // 218
+    "Auto cancel scan", // 219
+    "Correct PI", // 220
+    "Signal", // 221
+    "Mute audio\nwhile scanning" // 222
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3273,7 +3371,14 @@ static const char* const myLanguage[18][216] PROGMEM = {
     "Start DX scanning", // 212
     "FM DX Options", // 213
     "Abort! The start channel\nis marked as skipped.", // 214
-    "自动排列AF" // 215
+    "自动排列AF", // 215
+    "Memory channels", // 216
+    "Exclude", // 217
+    "Only", // 218
+    "Auto cancel scan", // 219
+    "Correct PI", // 220
+    "Signal", // 221
+    "Mute audio\nwhile scanning" // 222
   },
 
   { "Norsk", // Norwegian
@@ -3491,7 +3596,14 @@ static const char* const myLanguage[18][216] PROGMEM = {
     "Start DX scanning", // 212
     "FM DX Options", // 213
     "Abort! The start channel\nis marked as skipped.", // 214
-    "Auto sorterings AF" // 215
+    "Auto sorterings AF", // 215
+    "Memory channels", // 216
+    "Exclude", // 217
+    "Only", // 218
+    "Auto cancel scan", // 219
+    "Correct PI", // 220
+    "Signal", // 221
+    "Mute audio\nwhile scanning" // 222
   },
 
   { "Español", // Spanish
@@ -3709,7 +3821,14 @@ static const char* const myLanguage[18][216] PROGMEM = {
     "Start DX scanning", // 212
     "FM DX Options", // 213
     "Abort! The start channel\nis marked as skipped.", // 214
-    "Orden automático de AF" // 215
+    "Orden automático de AF", // 215
+    "Memory channels", // 216
+    "Exclude", // 217
+    "Only", // 218
+    "Auto cancel scan", // 219
+    "Correct PI", // 220
+    "Signal", // 221
+    "Mute audio\nwhile scanning" // 222
   },
 
   { "Português", // Portuguese
@@ -3927,7 +4046,14 @@ static const char* const myLanguage[18][216] PROGMEM = {
     "Start DX scanning", // 212
     "FM DX Options", // 213
     "Abort! The start channel\nis marked as skipped.", // 214
-    "Classificar AF\nautomaticamente" // 215
+    "Classificar AF\nautomaticamente", // 215
+    "Memory channels", // 216
+    "Exclude", // 217
+    "Only", // 218
+    "Auto cancel scan", // 219
+    "Correct PI", // 220
+    "Signal", // 221
+    "Mute audio\nwhile scanning" // 222
   }
 };
 #endif

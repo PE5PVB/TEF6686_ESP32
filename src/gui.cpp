@@ -7,7 +7,7 @@
 #include <cstring>
 
 byte menuitem;
-byte items[9] = {9, static_cast<byte>(dynamicspi ? 9 : 8), 7, 10, 9, 10, 9, 6, 4};
+byte items[9] = {9, static_cast<byte>(dynamicspi ? 9 : 8), 7, 10, 9, 10, 9, 6, 7};
 extern mem presets[];
 
 void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
@@ -1009,6 +1009,16 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString(String(stationlistid, DEC), 298, 3);
           break;
+
+        case DXMODE:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][216]), 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((scanmem ? myLanguage[language][218] : myLanguage[language][217]), 298, 3);
+          break;
       }
       break;
 
@@ -1103,6 +1113,20 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString((XDRGTKMuteScreen ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
           break;
+
+        case DXMODE:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][219]), 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          switch (scancancel) {
+            case OFF: FullLineSprite.drawString(myLanguage[language][30], 298, 3); break;
+            case CORRECTPI: FullLineSprite.drawString(myLanguage[language][220], 298, 3); break;
+            case SIGNAL: FullLineSprite.drawString(myLanguage[language][221], 298, 3); break;
+          }
+          break;
       }
       break;
 
@@ -1184,6 +1208,16 @@ void ShowOneLine(byte position, byte item, bool selected) {
           if (amgain != 0) FullLineSprite.drawString(String(amgain, DEC), 258, 3);
           if (amgain != 0) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
           FullLineSprite.drawString((amgain != 0 ? "dB" : myLanguage[language][30]), 298, 3);
+          break;
+
+        case DXMODE:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][222]), 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((scanmute ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
           break;
       }
       break;
@@ -2522,6 +2556,29 @@ void MenuUp() {
             OneBigLineSprite.drawString(String(scanhold, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
+
+          case ITEM5:
+            scanmem = !scanmem;
+            OneBigLineSprite.drawString((scanmem ? myLanguage[language][218] : myLanguage[language][217]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM6:
+            scancancel++;
+            if (scancancel > 2) scancancel = 0;
+            switch (scancancel) {
+              case OFF:  OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
+              case CORRECTPI: OneBigLineSprite.drawString(myLanguage[language][220], 135, 0); break;
+              case SIGNAL: OneBigLineSprite.drawString(myLanguage[language][221], 135, 0); break;
+            }
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM7:
+            scanmute = !scanmute;
+            OneBigLineSprite.drawString((scanmute ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
         }
         break;
     }
@@ -3323,6 +3380,29 @@ void MenuDown() {
             OneBigLineSprite.drawString(String(scanhold, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
+
+          case ITEM5:
+            scanmem = !scanmem;
+            OneBigLineSprite.drawString((scanmem ? myLanguage[language][218] : myLanguage[language][217]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM6:
+            scancancel--;
+            if (scancancel > 2) scancancel = 2;
+            switch (scancancel) {
+              case OFF:  OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
+              case CORRECTPI: OneBigLineSprite.drawString(myLanguage[language][220], 135, 0); break;
+              case SIGNAL: OneBigLineSprite.drawString(myLanguage[language][221], 135, 0); break;
+            }
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM7:
+            scanmute = !scanmute;
+            OneBigLineSprite.drawString((scanmute ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
         }
         break;
     }
@@ -4108,7 +4188,7 @@ void DoMenu() {
               menuopen = false;
               menu = false;
               memorypos = scanstart;
-			  scanmodeold = tunemode;
+              scanmodeold = tunemode;
               tunemode = TUNE_MEM;
               BuildDisplay();
               DoMemoryPosTune();
@@ -4140,6 +4220,31 @@ void DoMenu() {
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString(String(scanhold, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM5:
+            Infoboxprint(myLanguage[language][216]);
+
+            OneBigLineSprite.drawString((scanmem ? myLanguage[language][218] : myLanguage[language][217]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM6:
+            Infoboxprint(myLanguage[language][219]);
+
+            switch (scancancel) {
+              case OFF:  OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
+              case CORRECTPI: OneBigLineSprite.drawString(myLanguage[language][220], 135, 0); break;
+              case SIGNAL: OneBigLineSprite.drawString(myLanguage[language][221], 135, 0); break;
+            }
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM7:
+            Infoboxprint(myLanguage[language][222]);
+
+            OneBigLineSprite.drawString((scanmute ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }

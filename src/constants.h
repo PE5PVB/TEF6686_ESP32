@@ -198,7 +198,7 @@
 #define EE_PRESETS_CNT              99
 #define EE_CHECKBYTE_VALUE          6 // 0 ~ 255,add new entry, change for new value
 
-#define EE_TOTAL_CNT                2216
+#define EE_TOTAL_CNT                2219
 #define EE_UINT16_FREQUENCY_FM      0
 #define EE_BYTE_VOLSET              4
 #define EE_BYTE_STEREO              5
@@ -285,12 +285,15 @@
 #define EE_BYTE_SCANSTART           130
 #define EE_BYTE_SCANSTOP            131
 #define EE_BYTE_SCANHOLD            132
-#define EE_PRESETS_BAND_START       133
-#define EE_PRESET_BW_START          233
-#define EE_PRESET_MS_START          333
-#define EE_PRESETS_FREQUENCY_START  433
-#define EE_PRESETS_RDSPI_START      829   // 5 bytes
-#define EE_PRESETS_RDSPS_START      1324  // 9 bytes
+#define EE_BYTE_SCANMEM             133
+#define EE_BYTE_SCANCANCEL          134
+#define EE_BYTE_SCANMUTE            135
+#define EE_PRESETS_BAND_START       136
+#define EE_PRESET_BW_START          236
+#define EE_PRESET_MS_START          336
+#define EE_PRESETS_FREQUENCY_START  436
+#define EE_PRESETS_RDSPI_START      832   // 5 bytes
+#define EE_PRESETS_RDSPS_START      1327  // 9 bytes
 #define EE_PRESETS_FREQUENCY        0
 
 // End of EEPROM index defines
@@ -309,6 +312,10 @@ typedef struct {
   char          RDSPI[5];
   char          RDSPS[9];
 } mem;
+
+enum SCAN_CANCEL {
+  SCAN_CANCEL = OFF, CORRECTPI, SIGNAL
+};
 
 // FM band: before BAND_GAP; AM band: after BAND_GAP
 enum RADIO_BAND {
