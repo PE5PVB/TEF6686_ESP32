@@ -2537,6 +2537,17 @@ bool IsStationEmpty() {
   return false;
 }
 
+bool IsFrequencyUsed(unsigned int freq) {
+  bool result = false;
+  for (byte x = scanstart; x <= scanstop; x++) {
+    if (presets[x].frequency == freq) {
+      result = true;
+      break;
+    }
+  }
+  return result;
+}
+
 void ShowMemoryPos() {
   if (tunemode == TUNE_MEM) {
     int memposcolor = 0;
@@ -2635,18 +2646,23 @@ void DoMemoryPosTune() {
     }
   }
 
+  radio.clearRDS(fullsearchrds);
+
   String stationText = "";
   if (presets[memorypos].RDSPS[0] != '\0') {
-    for (int i = 0; i < 9; i++) stationText += presets[memorypos].RDSPS[i];
+    for (byte i = 0; i < 9; i++) stationText += presets[memorypos].RDSPS[i];
   }
 
   if (presets[memorypos].RDSPI[0] != '\0') {
-    for (int i = 0; i < 5; i++) {
+    for (byte i = 0; i < 5; i++) {
       radio.rds.picode[i] = presets[memorypos].RDSPI[i];
     }
     radio.rds.picode[6] = '\0';
+    RDSstatus = true;
   } else {
-    radio.rds.picode[0] = '\0';
+    for (byte i = 0; i < 6; i++) {
+      radio.rds.picode[i] = '\0';
+    }
   }
 
   radio.rds.stationName = stationText;
