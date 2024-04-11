@@ -68,6 +68,7 @@ bool dropout;
 bool dynamicPTYold;
 bool edgebeep;
 bool externaltune;
+bool flashing;
 bool fmsi;
 bool fullsearchrds;
 bool hasafold;
@@ -356,6 +357,7 @@ unsigned long aftickerhold;
 unsigned long aftimer;
 unsigned long eonticker;
 unsigned long eontickerhold;
+unsigned long flashingtimer;
 unsigned long lowsignaltimer;
 unsigned long peakholdmillis;
 unsigned long rtplusticker;
@@ -799,18 +801,50 @@ void loop() {
   }
   if (digitalRead(BANDBUTTON) == LOW ) BANDBUTTONPress();
 
-  if (scandxmode && millis() >= scantimer + (scanhold * 1000)) {
-    memorypos++;
-    if (memorypos > scanstop) memorypos = scanstart;
-    while (IsStationEmpty()) {
-      memorypos++;
-      if (memorypos > scanstop) {
-        memorypos = scanstart;
-        break;
-      }
+  if (scandxmode) {
+    switch (scancancel) {
+      case CORRECTPI: if (radio.rds.correctPI != 0) cancelDXScan(); break;
+      case SIGNAL: if (tuned) cancelDXScan(); break;
     }
-    DoMemoryPosTune();
-    ShowMemoryPos();
+
+    if (millis() >= flashingtimer + 500) {
+      flashing = !flashing;
+      if (flashing) {
+        if (CurrentSkin == 1) {
+          tft.pushImage (12, 76, 33, 15, skin1_memon);
+        } else {
+          tft.drawRoundRect(1, 79, 42, 20, 5, ActiveColor);
+          tftPrint(0, "MEM", 22, 82, ActiveColor, ActiveColorSmooth, 16);
+        }
+      } else {
+        if (CurrentSkin == 1) {
+          tft.pushImage (12, 76, 33, 15, skin1_memoff);
+        } else {
+          tft.drawRoundRect(1, 79, 42, 20, 5, GreyoutColor);
+          tftPrint(0, "MEM", 22, 82, GreyoutColor, BackgroundColor, 16);
+        }
+      }
+      flashingtimer = millis();
+    }
+  }
+
+  if (scandxmode && millis() >= scantimer + (scanhold * 1000)) {
+    if (scanmem) {
+      memorypos++;
+      if (memorypos > scanstop) memorypos = scanstart;
+      while (IsStationEmpty()) {
+        memorypos++;
+        if (memorypos > scanstop) {
+          memorypos = scanstart;
+          break;
+        }
+      }
+      DoMemoryPosTune();
+      ShowMemoryPos();
+    } else {
+      TuneUp();
+      ShowFreq(0);
+    }
     scantimer = millis();
   }
 
@@ -1380,57 +1414,63 @@ void ToggleBand(byte nowBand) {
 }
 
 void BANDBUTTONPress() {
-  if (scandxmode) cancelDXScan();
-  if (memorystore) {
-    EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, EE_PRESETS_FREQUENCY);
-    EEPROM.commit();
-    presets[memorypos].frequency = EE_PRESETS_FREQUENCY;
-    memorystore = false;
-    ShowTuneMode();
-    if (memoryposstatus == MEM_DARK || memoryposstatus == MEM_EXIST) {
-      memoryposstatus = MEM_NORMAL;
-      ShowMemoryPos();
-    }
+  if (scandxmode) {
+    cancelDXScan();
   } else {
-    if (!usesquelch) radio.setUnMute();
-    if (afscreen) {
-      BuildAdvancedRDS();
+    if (memorystore) {
+      EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, EE_PRESETS_FREQUENCY);
+      EEPROM.commit();
+      presets[memorypos].frequency = EE_PRESETS_FREQUENCY;
+      memorystore = false;
+      ShowTuneMode();
+      if (memoryposstatus == MEM_DARK || memoryposstatus == MEM_EXIST) {
+        memoryposstatus = MEM_NORMAL;
+        ShowMemoryPos();
+      }
     } else {
-      unsigned long counterold = millis();
-      unsigned long counter = millis();
-      if (!menu) {
-        while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
+      if (!usesquelch) radio.setUnMute();
+      if (afscreen) {
+        BuildAdvancedRDS();
+      } else {
+        unsigned long counterold = millis();
+        unsigned long counter = millis();
+        if (!menu) {
+          while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
 
-        if (counter - counterold < 1000) {
-          if (screensavertriggered) {
-            WakeToSleep(REVERSE);
-            return;
-          }
-
-          if (advancedRDS) {
-            BuildDisplay();
-            ScreensaverTimerReopen();
-          } else {
-            if (tunemode != TUNE_MEM) {
-              ToggleBand(band);
-              StoreFrequency();
-              SelectBand();
-              if (XDRGTKUSB || XDRGTKTCP) {
-                if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n"); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n"); else DataPrint("M1\nT" + String(frequency_AM) + "\n");
-              }
+          if (counter - counterold < 1000) {
+            if (screensavertriggered) {
+              WakeToSleep(REVERSE);
+              return;
             }
-            ScreensaverTimerRestart();
-          }
-        } else {
-          if (screensavertriggered) {
-            WakeToSleep(REVERSE);
-            return;
-          }
 
-          if (band < BAND_GAP) {
-            if (advancedRDS && !seek) BuildAFScreen(); else BuildAdvancedRDS();
+            if (advancedRDS) {
+              BuildDisplay();
+              ScreensaverTimerReopen();
+            } else {
+              if (tunemode != TUNE_MEM) {
+                ToggleBand(band);
+                StoreFrequency();
+                SelectBand();
+                if (XDRGTKUSB || XDRGTKTCP) {
+                  if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n"); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n"); else DataPrint("M1\nT" + String(frequency_AM) + "\n");
+                }
+              } else {
+                startFMDXScan();
+                return;
+              }
+              ScreensaverTimerRestart();
+            }
           } else {
-            WakeToSleep(true);
+            if (screensavertriggered) {
+              WakeToSleep(REVERSE);
+              return;
+            }
+
+            if (band < BAND_GAP) {
+              if (advancedRDS && !seek) BuildAFScreen(); else BuildAdvancedRDS();
+            } else {
+              WakeToSleep(true);
+            }
           }
         }
       }
@@ -1886,38 +1926,41 @@ void SelectBand() {
 }
 
 void BWButtonPress() {
-  if (scandxmode) cancelDXScan();
-  if (!usesquelch) radio.setUnMute();
-  if (!menu) {
-    seek = false;
-    if (!screenmute) {
-      if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-        tft.pushImage (106, 3, 27, 23, skin1_muteoff);
-      } else {
-        tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+  if (scandxmode) {
+    cancelDXScan();
+  } else {
+    if (!usesquelch) radio.setUnMute();
+    if (!menu) {
+      seek = false;
+      if (!screenmute) {
+        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
+          tft.pushImage (106, 3, 27, 23, skin1_muteoff);
+        } else {
+          tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+        }
       }
-    }
-    unsigned long counterold = millis();
-    unsigned long counter = millis();
-    while (digitalRead(BWBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
+      unsigned long counterold = millis();
+      unsigned long counter = millis();
+      while (digitalRead(BWBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
 
-    if (counter - counterold < 1000) {
-      if (band == BAND_FM || band == BAND_OIRT) {
-        doStereoToggle();
+      if (counter - counterold < 1000) {
+        if (band == BAND_FM || band == BAND_OIRT) {
+          doStereoToggle();
+        } else {
+          BWset++;
+          doBW();
+          BWtune = true;
+        }
       } else {
         BWset++;
         doBW();
         BWtune = true;
       }
-    } else {
-      BWset++;
-      doBW();
-      BWtune = true;
+      if (screensaverset) {
+        ScreensaverTimerRestart();
+      }
+      delay(100);
     }
-    if (screensaverset) {
-      ScreensaverTimerRestart();
-    }
-    delay(100);
   }
 }
 
@@ -1959,169 +2002,89 @@ void doStereoToggle() {
 }
 
 void ModeButtonPress() {
-  if (scandxmode) cancelDXScan();
-  if (!usesquelch) radio.setUnMute();
-  if (advancedRDS) {
-    BuildDisplay();
-    ScreensaverTimerReopen();
-  } else if (afscreen) {
-    if (afpagenr == 1) afpagenr = 2; else if (afpagenr == 2 && afpage) afpagenr = 3; else afpagenr = 1;
-    BuildAFScreen();
+  if (scandxmode) {
+    cancelDXScan();
   } else {
-    if (!menu) {
-      seek = false;
-      if (!screenmute) {
-        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-          tft.pushImage (106, 3, 27, 23, skin1_muteoff);
-        } else {
-          tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
-        }
-      }
-      memorystore = false;
-      unsigned long counterold = millis();
-      unsigned long counter = millis();
-      while (digitalRead(MODEBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
-
-      if (counter - counterold <= 1000) {
-        doTuneMode();
-        if (screensaverset) {
-          ScreensaverTimerRestart();
-        }
-      } else {
-        if (!menu) {
-          menuoption = ITEM1;
-          menupage = INDEX;
-          menuitem = 0;
-          UpdateFonts(1);
-          BuildMenu();
-          menu = true;
-          ScreensaverTimerSet(OFF);
-        }
-      }
+    if (!usesquelch) radio.setUnMute();
+    if (advancedRDS) {
+      BuildDisplay();
+      ScreensaverTimerReopen();
+    } else if (afscreen) {
+      if (afpagenr == 1) afpagenr = 2; else if (afpagenr == 2 && afpage) afpagenr = 3; else afpagenr = 1;
+      BuildAFScreen();
     } else {
-      if (menuopen && !submenu) {
-        ButtonPress();
-      } else if (!submenu) {
-        OStatusold = 1000;
-        Stereostatusold = false;
-        SStatusold = 2000;
-        BWOld = 0;
-        radio.clearRDS(fullsearchrds);
-        RDSstatus = false;
-        if (frequency % 10 != 0) {
-          if (fmdefaultstepsize == 1) Round100K(frequency); else Round50K(frequency);
-          EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, frequency);
-        }
-        radio.clearRDS(fullsearchrds);
-        CheckBandForbiddenFM();
-        CheckBandForbiddenAM();
-        menu = false;
-        menuopen = false;
-        LowLevelInit = true;
-        EEPROM.writeByte(EE_BYTE_VOLSET, VolSet);
-        EEPROM.writeUInt(EE_UINT16_CONVERTERSET, ConverterSet);
-        EEPROM.writeUInt(EE_UINT16_FMLOWEDGESET, LowEdgeSet);
-        EEPROM.writeUInt(EE_UINT16_FMHIGHEDGESET, HighEdgeSet);
-        EEPROM.writeByte(EE_BYTE_CONTRASTSET, ContrastSet);
-        EEPROM.writeByte(EE_BYTE_STEREOLEVEL, StereoLevel);
-        EEPROM.writeByte(EE_BYTE_BANDFM, bandFM);
-        EEPROM.writeByte(EE_BYTE_BANDAM, bandAM);
-        EEPROM.writeByte(EE_BYTE_HIGHCUTLEVEL, HighCutLevel);
-        EEPROM.writeByte(EE_BYTE_HIGHCUTOFFSET, HighCutOffset);
-        EEPROM.writeByte(EE_BYTE_LEVELOFFSET, LevelOffset);
-        EEPROM.writeByte(EE_BYTE_RTBUFFER, radio.rds.rtbuffer);
-        EEPROM.writeByte(EE_BYTE_EDGEBEEP, edgebeep);
-        EEPROM.writeByte(EE_BYTE_SOFTMUTEAM, softmuteam);
-        EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, softmutefm);
-        EEPROM.writeByte(EE_BYTE_LANGUAGE, language);
-        EEPROM.writeByte(EE_BYTE_SHOWRDSERRORS, showrdserrors);
-        EEPROM.writeByte(EE_BYTE_LOWLEVELSET, LowLevelSet);
-        EEPROM.writeByte(EE_BYTE_REGION, region);
-        EEPROM.writeByte(EE_BYTE_RDS_UNDERSCORE, radio.underscore);
-        EEPROM.writeByte(EE_BYTE_USBMODE, USBmode);
-        EEPROM.writeByte(EE_BYTE_WIFI, wifi);
-        EEPROM.writeByte(EE_BYTE_SUBNETCLIENT, subnetclient);
-        EEPROM.writeByte(EE_BYTE_SHOWSWMIBAND, showSWMIBand);
-        EEPROM.writeByte(EE_BYTE_RDS_FILTER, radio.rds.filter);
-        EEPROM.writeByte(EE_BYTE_RDS_PIERRORS, radio.rds.pierrors);
-        EEPROM.writeByte(EE_BYTE_USESQUELCH, usesquelch);
-        EEPROM.writeByte(EE_BYTE_SHOWMODULATION, showmodulation);
-        EEPROM.writeByte(EE_BYTE_AM_NB, amnb);
-        EEPROM.writeByte(EE_BYTE_FM_NB, fmnb);
-        EEPROM.writeByte(EE_BYTE_AUDIOMODE, audiomode);
-        EEPROM.writeByte(EE_BYTE_TOUCH_ROTATING, touchrotating);
-        EEPROM.writeUInt(EE_UINT16_LOWEDGEOIRTSET, LowEdgeOIRTSet);
-        EEPROM.writeUInt(EE_UINT16_HIGHEDGEOIRTSET, HighEdgeOIRTSet);
-        EEPROM.writeByte(EE_BYTE_HARDWARE_MODEL, hardwaremodel);
-        EEPROM.writeByte(EE_BYTE_POWEROPTIONS, poweroptions);
-        EEPROM.writeByte(EE_BYTE_CURRENTTHEME, CurrentTheme);
-        EEPROM.writeByte(EE_BYTE_FMDEFAULTSTEPSIZE, fmdefaultstepsize);
-        EEPROM.writeByte(EE_BYTE_SCREENSAVERSET, screensaverset);
-        EEPROM.writeInt(EE_INT16_AMLEVELOFFSET, AMLevelOffset);
-        EEPROM.writeByte(EE_BYTE_UNIT, unit);
-        EEPROM.writeByte(EE_BYTE_AF, af);
-        EEPROM.writeByte(EE_BYTE_STEREO, StereoToggle);
-        EEPROM.writeByte(EE_BYTE_BATTERY_OPTIONS, batteryoptions);
-        EEPROM.writeByte(EE_BYTE_AM_CO_DECT, amcodect);
-        EEPROM.writeByte(EE_BYTE_AM_CO_DECT_COUNT, amcodectcount);
-        EEPROM.writeByte(EE_BYTE_AM_RF_GAIN, amgain);
-        EEPROM.writeByte(EE_BYTE_SORTAF, radio.rds.sortaf);
-        EEPROM.writeByte(EE_BYTE_STATIONLISTID, stationlistid);
-        EEPROM.writeByte(EE_BYTE_FM_DEEMPHASIS, fmdeemphasis);
-        EEPROM.writeByte(EE_BYTE_FASTPS, radio.rds.fastps);
-        EEPROM.writeByte(EE_BYTE_TOT, tot);
-        EEPROM.writeByte(EE_BYTE_MWREGION, mwstepsize);
-        EEPROM.writeByte(EE_BYTE_SPISPEED, spispeed);
-        EEPROM.writeByte(EE_BYTE_AMSCANSENS, amscansens);
-        EEPROM.writeByte(EE_BYTE_FMSCANSENS, fmscansens);
-        EEPROM.writeByte(EE_BYTE_FREQFONT, freqfont);
-        EEPROM.writeByte(EE_BYTE_SKIN, CurrentSkin);
-        EEPROM.writeByte(EE_BYTE_XDRGTKMUTE, XDRGTKMuteScreen);
-        EEPROM.writeByte(EE_BYTE_FMAGC, fmagc);
-        EEPROM.writeByte(EE_BYTE_AMAGC, amagc);
-        EEPROM.writeByte(EE_BYTE_FMSI, fmsi);
-        EEPROM.writeByte(EE_BYTE_SCANSTART, scanstart);
-        EEPROM.writeByte(EE_BYTE_SCANSTOP, scanstop);
-        EEPROM.writeByte(EE_BYTE_SCANHOLD, scanhold);
-        EEPROM.writeByte(EE_BYTE_SCANMEM, scanmem);
-        EEPROM.writeByte(EE_BYTE_SCANCANCEL, scancancel);
-        EEPROM.writeByte(EE_BYTE_SCANMUTE, scanmute);
-        EEPROM.commit();
-        if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
-        if (!usesquelch) radio.setUnMute();
-        Serial.end();
-        if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
-        if (USBmode) Serial.begin(19200); else Serial.begin(115200);
-
-        UpdateFonts(0);
-        FullLineSprite.unloadFont();
-        OneBigLineSprite.unloadFont();
-        BuildDisplay();
-        ShowSignalLevel();
-        ShowBW();
-        MWLowEdgeSet = mwstepsize == false ? FREQ_MW_LOW_EDGE_MIN_9K : FREQ_MW_LOW_EDGE_MIN_10K;
-        MWHighEdgeSet = mwstepsize == false ? FREQ_MW_HIGH_EDGE_MAX_9K : FREQ_MW_HIGH_EDGE_MAX_10K;
-        doBandSelectionFM();
-        doBandSelectionAM();
-        ScreensaverTimerSet(screensaverOptions[screensaverset]);
-        if (screensaverset) ScreensaverTimerRestart();
-      } else {
-        if (submenu) {
-          if (menuopen) {
-            if (menupage == CONNECTIVITY && menuoption == ITEM2 && wifi) {
-              tryWiFi();
-              delay(2000);
-            }
-            if (menupage == DISPLAYSETTINGS && menuoption == ITEM5) {
-              doTheme();
-            }
-            menuopen = false;
+      if (!menu) {
+        seek = false;
+        if (!screenmute) {
+          if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
+            tft.pushImage (106, 3, 27, 23, skin1_muteoff);
+          } else {
+            tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
           }
-          submenu = false;
-          menuoption = ITEM1;
-          menupage = INDEX;
-          menuitem = 0;
-          BuildMenu();
+        }
+        memorystore = false;
+        unsigned long counterold = millis();
+        unsigned long counter = millis();
+        while (digitalRead(MODEBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
+
+        if (counter - counterold <= 1000) {
+          doTuneMode();
+          if (screensaverset) {
+            ScreensaverTimerRestart();
+          }
+        } else {
+          if (!menu) {
+            menuoption = ITEM1;
+            menupage = INDEX;
+            menuitem = 0;
+            UpdateFonts(1);
+            BuildMenu();
+            menu = true;
+            ScreensaverTimerSet(OFF);
+          }
+        }
+      } else {
+        if (menuopen && !submenu) {
+          ButtonPress();
+        } else if (!submenu) {
+          OStatusold = 1000;
+          Stereostatusold = false;
+          SStatusold = 2000;
+          BWOld = 0;
+          radio.clearRDS(fullsearchrds);
+          RDSstatus = false;
+          if (frequency % 10 != 0) {
+            if (fmdefaultstepsize == 1) Round100K(frequency); else Round50K(frequency);
+            EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, frequency);
+          }
+          CheckBandForbiddenFM();
+          CheckBandForbiddenAM();
+          if (!usesquelch) radio.setUnMute();
+          MWLowEdgeSet = mwstepsize == false ? FREQ_MW_LOW_EDGE_MIN_9K : FREQ_MW_LOW_EDGE_MIN_10K;
+          MWHighEdgeSet = mwstepsize == false ? FREQ_MW_HIGH_EDGE_MAX_9K : FREQ_MW_HIGH_EDGE_MAX_10K;
+          doBandSelectionFM();
+          doBandSelectionAM();
+          ScreensaverTimerSet(screensaverOptions[screensaverset]);
+          if (screensaverset) ScreensaverTimerRestart();
+          endMenu();
+        } else {
+          if (submenu) {
+            if (menuopen) {
+              if (menupage == CONNECTIVITY && menuoption == ITEM2 && wifi) {
+                tryWiFi();
+                delay(2000);
+              }
+              if (menupage == DISPLAYSETTINGS && menuoption == ITEM5) {
+                doTheme();
+              }
+              menuopen = false;
+            }
+            submenu = false;
+            menuoption = ITEM1;
+            menupage = INDEX;
+            menuitem = 0;
+            BuildMenu();
+          }
         }
       }
     }
@@ -2243,289 +2206,298 @@ void RoundStep() {
 }
 
 void ButtonPress() {
-  if (scandxmode) cancelDXScan();
-  if (!usesquelch) radio.setUnMute();
-  if (advancedRDS) BuildDisplay();
-  if (!menu) {
-    if (tunemode == TUNE_MEM) {
-      if (!memorystore) {
-        memorystore = true;
-        if (!IsStationEmpty()) memoryposstatus = MEM_EXIST;
-        else memoryposstatus = MEM_NORMAL;
-        ShowMemoryPos();
-
-        ShowTuneMode();
-      } else {
-        memorystore = false;
-        EEPROM.writeByte(memorypos + EE_PRESETS_BAND_START, band);
-        EEPROM.writeByte(memorypos + EE_PRESET_BW_START, BWset);
-        EEPROM.writeByte(memorypos + EE_PRESET_MS_START, StereoToggle);
-        if (band == BAND_FM) {
-          EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, frequency);
-        } else if (band == BAND_OIRT) {
-          EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, frequency_OIRT);
-        } else if (band == BAND_LW) {
-          EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, frequency_LW);
-        } else if (band == BAND_MW) {
-          EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, frequency_MW);
-        } else {
-          EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, frequency_SW);
-        }
-
-        presets[memorypos].band = band;
-        presets[memorypos].bw = BWset;
-        presets[memorypos].ms = StereoToggle;
-
-        String stationName = radio.rds.stationName;
-        char stationNameCharArray[10];
-        char picodeArray[7];
-        stationName.toCharArray(stationNameCharArray, sizeof(stationNameCharArray));
-        memcpy(picodeArray, radio.rds.picode, sizeof(picodeArray));
-
-        for (int y = 0; y < 9; y++) {
-          presets[memorypos].RDSPS[y] = (y < strlen(stationNameCharArray)) ? stationNameCharArray[y] : '\0';
-          EEPROM.writeByte((memorypos * 9) + y + EE_PRESETS_RDSPS_START, presets[memorypos].RDSPS[y]);
-        }
-
-        for (int y = 0; y < 5; y++) {
-          presets[memorypos].RDSPI[y] = (y < sizeof(picodeArray)) ? picodeArray[y] : '\0';
-          EEPROM.writeByte((memorypos * 5) + y + EE_PRESETS_RDSPI_START, presets[memorypos].RDSPI[y]);
-        }
-
-        EEPROM.commit();
-
-        if (band == BAND_FM) {
-          presets[memorypos].frequency = frequency;
-        } else if (band == BAND_OIRT) {
-          presets[memorypos].frequency = frequency_OIRT;
-        } else if (band == BAND_LW) {
-          presets[memorypos].frequency = frequency_LW;
-        } else if (band == BAND_MW) {
-          presets[memorypos].frequency = frequency_MW;
-        } else {
-          presets[memorypos].frequency = frequency_SW;
-        }
-        ShowTuneMode();
-        if (memoryposstatus == MEM_DARK || memoryposstatus == MEM_EXIST) {
-          memoryposstatus = MEM_NORMAL;
+  if (scandxmode) {
+    cancelDXScan();
+  } else {
+    if (!usesquelch) radio.setUnMute();
+    if (advancedRDS) BuildDisplay();
+    if (!menu) {
+      if (tunemode == TUNE_MEM) {
+        if (!memorystore) {
+          memorystore = true;
+          if (!IsStationEmpty()) memoryposstatus = MEM_EXIST;
+          else memoryposstatus = MEM_NORMAL;
           ShowMemoryPos();
+
+          ShowTuneMode();
+        } else {
+          memorystore = false;
+          EEPROM.writeByte(memorypos + EE_PRESETS_BAND_START, band);
+          EEPROM.writeByte(memorypos + EE_PRESET_BW_START, BWset);
+          EEPROM.writeByte(memorypos + EE_PRESET_MS_START, StereoToggle);
+          if (band == BAND_FM) {
+            EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, frequency);
+          } else if (band == BAND_OIRT) {
+            EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, frequency_OIRT);
+          } else if (band == BAND_LW) {
+            EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, frequency_LW);
+          } else if (band == BAND_MW) {
+            EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, frequency_MW);
+          } else {
+            EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, frequency_SW);
+          }
+
+          presets[memorypos].band = band;
+          presets[memorypos].bw = BWset;
+          presets[memorypos].ms = StereoToggle;
+
+          String stationName = radio.rds.stationName;
+          char stationNameCharArray[10];
+          char picodeArray[7];
+          stationName.toCharArray(stationNameCharArray, sizeof(stationNameCharArray));
+          memcpy(picodeArray, radio.rds.picode, sizeof(picodeArray));
+
+          for (int y = 0; y < 9; y++) {
+            presets[memorypos].RDSPS[y] = (y < strlen(stationNameCharArray)) ? stationNameCharArray[y] : '\0';
+            EEPROM.writeByte((memorypos * 9) + y + EE_PRESETS_RDSPS_START, presets[memorypos].RDSPS[y]);
+          }
+
+          for (int y = 0; y < 5; y++) {
+            presets[memorypos].RDSPI[y] = (y < sizeof(picodeArray)) ? picodeArray[y] : '\0';
+            EEPROM.writeByte((memorypos * 5) + y + EE_PRESETS_RDSPI_START, presets[memorypos].RDSPI[y]);
+          }
+
+          EEPROM.commit();
+
+          if (band == BAND_FM) {
+            presets[memorypos].frequency = frequency;
+          } else if (band == BAND_OIRT) {
+            presets[memorypos].frequency = frequency_OIRT;
+          } else if (band == BAND_LW) {
+            presets[memorypos].frequency = frequency_LW;
+          } else if (band == BAND_MW) {
+            presets[memorypos].frequency = frequency_MW;
+          } else {
+            presets[memorypos].frequency = frequency_SW;
+          }
+          ShowTuneMode();
+          if (memoryposstatus == MEM_DARK || memoryposstatus == MEM_EXIST) {
+            memoryposstatus = MEM_NORMAL;
+            ShowMemoryPos();
+          }
         }
+      } else {
+        seek = false;
+        if (!screenmute) {
+          if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
+            tft.pushImage (106, 3, 27, 23, skin1_muteoff);
+          } else {
+            tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+          }
+        }
+        unsigned long counterold = millis();
+        unsigned long counter = millis();
+        while (digitalRead(ROTARY_BUTTON) == LOW && counter - counterold <= 1000) counter = millis();
+
+        if (counter - counterold < 1000) {
+          if (tunemode == TUNE_MAN) {
+            stepsize++;
+            if (band == BAND_SW || band < BAND_GAP) {
+              if (stepsize > 4) stepsize = 0;
+            } else {
+              if (stepsize > 3) stepsize = 0;
+            }
+
+            if (!screenmute) ShowStepSize();
+
+            EEPROM.writeByte(EE_BYTE_STEPSIZE, stepsize);
+            EEPROM.commit();
+            if (stepsize == 0) {
+              RoundStep();
+              ShowFreq(0);
+            }
+          }
+        } else {
+          if (band < BAND_GAP) {
+            if (iMSEQ == 0) iMSEQ = 1;
+
+            if (iMSEQ == 4) {
+              iMSset = 0;
+              EQset = 0;
+              updateiMS();
+              updateEQ();
+              iMSEQ = 0;
+            }
+            if (iMSEQ == 3) {
+              iMSset = 1;
+              EQset = 0;
+              updateiMS();
+              updateEQ();
+              iMSEQ = 4;
+            }
+            if (iMSEQ == 2) {
+              iMSset = 0;
+              EQset = 1;
+              updateiMS();
+              updateEQ();
+              iMSEQ = 3;
+            }
+            if (iMSEQ == 1) {
+              iMSset = 1;
+              EQset = 1;
+              updateiMS();
+              updateEQ();
+              iMSEQ = 2;
+            }
+            EEPROM.writeByte(EE_BYTE_IMSSET, iMSset);
+            EEPROM.writeByte(EE_BYTE_EQSET, EQset);
+            EEPROM.commit();
+            if (XDRGTKUSB || XDRGTKTCP) DataPrint("G" + String(!EQset) + String(!iMSset) + "\n");
+          } else {
+            if (band == BAND_SW && tunemode != TUNE_MEM) {
+              nowToggleSWMIBand = !nowToggleSWMIBand;
+              tunemode = TUNE_MAN;
+              EEPROM.writeByte(EE_BYTE_BANDAUTOSW, nowToggleSWMIBand);
+              EEPROM.commit();
+              if (!screenmute) {
+                tftPrint(0, "AUTO", 22, 60, BackgroundColor, BackgroundColor, 16);
+                tftPrint(0, "BAND", 22, 60, BackgroundColor, BackgroundColor, 16);
+              }
+              doTuneMode();
+              ShowTuneMode();
+            }
+          }
+        }
+      }
+      if (screensaverset) {
+        ScreensaverTimerRestart();
       }
     } else {
-      seek = false;
-      if (!screenmute) {
-        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-          tft.pushImage (106, 3, 27, 23, skin1_muteoff);
-        } else {
-          tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
-        }
-      }
-      unsigned long counterold = millis();
-      unsigned long counter = millis();
-      while (digitalRead(ROTARY_BUTTON) == LOW && counter - counterold <= 1000) counter = millis();
-
-      if (counter - counterold < 1000) {
-        if (tunemode == TUNE_MAN) {
-          stepsize++;
-          if (band == BAND_SW || band < BAND_GAP) {
-            if (stepsize > 4) stepsize = 0;
-          } else {
-            if (stepsize > 3) stepsize = 0;
-          }
-
-          if (!screenmute) ShowStepSize();
-
-          EEPROM.writeByte(EE_BYTE_STEPSIZE, stepsize);
-          EEPROM.commit();
-          if (stepsize == 0) {
-            RoundStep();
-            ShowFreq(0);
-          }
-        }
-      } else {
-        if (band < BAND_GAP) {
-          if (iMSEQ == 0) iMSEQ = 1;
-
-          if (iMSEQ == 4) {
-            iMSset = 0;
-            EQset = 0;
-            updateiMS();
-            updateEQ();
-            iMSEQ = 0;
-          }
-          if (iMSEQ == 3) {
-            iMSset = 1;
-            EQset = 0;
-            updateiMS();
-            updateEQ();
-            iMSEQ = 4;
-          }
-          if (iMSEQ == 2) {
-            iMSset = 0;
-            EQset = 1;
-            updateiMS();
-            updateEQ();
-            iMSEQ = 3;
-          }
-          if (iMSEQ == 1) {
-            iMSset = 1;
-            EQset = 1;
-            updateiMS();
-            updateEQ();
-            iMSEQ = 2;
-          }
-          EEPROM.writeByte(EE_BYTE_IMSSET, iMSset);
-          EEPROM.writeByte(EE_BYTE_EQSET, EQset);
-          EEPROM.commit();
-          if (XDRGTKUSB || XDRGTKTCP) DataPrint("G" + String(!EQset) + String(!iMSset) + "\n");
-        } else {
-          if (band == BAND_SW && tunemode != TUNE_MEM) {
-            nowToggleSWMIBand = !nowToggleSWMIBand;
-            tunemode = TUNE_MAN;
-            EEPROM.writeByte(EE_BYTE_BANDAUTOSW, nowToggleSWMIBand);
-            EEPROM.commit();
-            if (!screenmute) {
-              tftPrint(0, "AUTO", 22, 60, BackgroundColor, BackgroundColor, 16);
-              tftPrint(0, "BAND", 22, 60, BackgroundColor, BackgroundColor, 16);
-            }
-            doTuneMode();
-            ShowTuneMode();
-          }
-        }
-      }
+      DoMenu();
     }
-    if (screensaverset) {
-      ScreensaverTimerRestart();
-    }
-  } else {
-    DoMenu();
   }
   while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
 }
 
 void KeyUp() {
-  if (scandxmode) cancelDXScan();
   rotary = 0;
-  if (!afscreen) {
-    if (!menu) {
-      switch (tunemode) {
-        case TUNE_MAN:
-          TuneUp();
-          break;
+  if (scandxmode) {
+    cancelDXScan();
+  } else {
+    if (!afscreen) {
+      if (!menu) {
+        switch (tunemode) {
+          case TUNE_MAN:
+            TuneUp();
+            break;
 
-        case TUNE_AUTO:
-          direction = true;
-          seek = true;
-          Seek(direction);
-          break;
+          case TUNE_AUTO:
+            direction = true;
+            seek = true;
+            Seek(direction);
+            break;
 
-        case TUNE_MEM:
-          memorypos++;
-          if (memorypos > EE_PRESETS_CNT - 1) memorypos = 0;
-          if (!memorystore) {
-            while (IsStationEmpty()) {
-              memorypos++;
-              if (memorypos > EE_PRESETS_CNT - 1) {
-                memorypos = 0;
-                break;
+          case TUNE_MEM:
+            memorypos++;
+            if (memorypos > EE_PRESETS_CNT - 1) memorypos = 0;
+            if (!memorystore) {
+              while (IsStationEmpty()) {
+                memorypos++;
+                if (memorypos > EE_PRESETS_CNT - 1) {
+                  memorypos = 0;
+                  break;
+                }
               }
             }
-          }
-          if (!memorystore) {
-            DoMemoryPosTune();
-          } else {
-            if (!IsStationEmpty()) memoryposstatus = MEM_EXIST;
-            else memoryposstatus = MEM_NORMAL;
-          }
-          ShowMemoryPos();
-          EEPROM.writeByte(EE_BYTE_MEMORYPOS, memorypos);
-          EEPROM.commit();
-          break;
-
-        case TUNE_MI_BAND:
-          if (showSWMIBand) {
-            if (displayflip) {
-              ToggleSWMIBand(true);
+            if (!memorystore) {
+              DoMemoryPosTune();
             } else {
-              ToggleSWMIBand(REVERSE);
+              if (!IsStationEmpty()) memoryposstatus = MEM_EXIST;
+              else memoryposstatus = MEM_NORMAL;
             }
-          }
-          break;
+            ShowMemoryPos();
+            EEPROM.writeByte(EE_BYTE_MEMORYPOS, memorypos);
+            EEPROM.commit();
+            break;
+
+          case TUNE_MI_BAND:
+            if (showSWMIBand) {
+              if (displayflip) {
+                ToggleSWMIBand(true);
+              } else {
+                ToggleSWMIBand(REVERSE);
+              }
+            }
+            break;
+        }
+        if (XDRGTKUSB || XDRGTKTCP) {
+          if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n"); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n"); else DataPrint("M1\nT" + String(frequency_AM) + "\n");
+        }
+        if (!memorystore) {
+          if (!memtune) radio.clearRDS(fullsearchrds);
+          memtune = false;
+          ShowFreq(0);
+          store = true;
+        }
+      } else {
+        MenuUp();
       }
-      if (XDRGTKUSB || XDRGTKTCP) {
-        if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n"); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n"); else DataPrint("M1\nT" + String(frequency_AM) + "\n");
-      }
-      if (!memorystore) {
-        if (!memtune) radio.clearRDS(fullsearchrds);
-        memtune = false;
-        ShowFreq(0);
-        store = true;
-      }
-    } else {
-      MenuUp();
     }
   }
 }
 
 void KeyDown() {
-  if (scandxmode) cancelDXScan();
   rotary = 0;
-  if (!afscreen) {
-    if (!menu) {
-      switch (tunemode) {
-        case TUNE_MAN:
-          TuneDown();
-          break;
+  if (scandxmode) {
+    cancelDXScan();
+  } else {
+    if (!afscreen) {
+      if (!menu) {
+        switch (tunemode) {
+          case TUNE_MAN:
+            TuneDown();
+            break;
 
-        case TUNE_AUTO:
-          direction = false;
-          seek = true;
-          Seek(direction);
-          break;
+          case TUNE_AUTO:
+            direction = false;
+            seek = true;
+            Seek(direction);
+            break;
 
-        case TUNE_MEM:
-          memorypos--;
-          if (memorypos > EE_PRESETS_CNT - 1) memorypos = EE_PRESETS_CNT - 1;
-          if (!memorystore) {
-            while (IsStationEmpty()) {
-              memorypos--;
-              if (memorypos > EE_PRESETS_CNT - 1) {
-                memorypos = EE_PRESETS_CNT - 1;
-                break;
+          case TUNE_MEM:
+            memorypos--;
+            if (memorypos > EE_PRESETS_CNT - 1) memorypos = EE_PRESETS_CNT - 1;
+            if (!memorystore) {
+              while (IsStationEmpty()) {
+                memorypos--;
+                if (memorypos > EE_PRESETS_CNT - 1) {
+                  memorypos = EE_PRESETS_CNT - 1;
+                  break;
+                }
               }
             }
-          }
-          if (!memorystore) {
-            DoMemoryPosTune();
-          } else {
-            if (!IsStationEmpty()) memoryposstatus = MEM_EXIST;
-            else memoryposstatus = MEM_NORMAL;
-          }
-          ShowMemoryPos();
-          EEPROM.writeByte(EE_BYTE_MEMORYPOS, memorypos);
-          EEPROM.commit();
-          break;
-        case TUNE_MI_BAND:
-          if (showSWMIBand) {
-            if (displayflip) {
-              ToggleSWMIBand(REVERSE);
+            if (!memorystore) {
+              DoMemoryPosTune();
             } else {
-              ToggleSWMIBand(true);
+              if (!IsStationEmpty()) memoryposstatus = MEM_EXIST;
+              else memoryposstatus = MEM_NORMAL;
             }
-          }
-          break;
+            ShowMemoryPos();
+            EEPROM.writeByte(EE_BYTE_MEMORYPOS, memorypos);
+            EEPROM.commit();
+            break;
+          case TUNE_MI_BAND:
+            if (showSWMIBand) {
+              if (displayflip) {
+                ToggleSWMIBand(REVERSE);
+              } else {
+                ToggleSWMIBand(true);
+              }
+            }
+            break;
+        }
+        if (XDRGTKUSB || XDRGTKTCP) {
+          if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n"); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n"); else DataPrint("M1\nT" + String(frequency_AM) + "\n");
+        }
+        if (!memorystore) {
+          if (!memtune) radio.clearRDS(fullsearchrds);
+          memtune = false;
+          ShowFreq(0);
+          store = true;
+        }
+      } else {
+        MenuDown();
       }
-      if (XDRGTKUSB || XDRGTKTCP) {
-        if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n"); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n"); else DataPrint("M1\nT" + String(frequency_AM) + "\n");
-      }
-      if (!memorystore) {
-        if (!memtune) radio.clearRDS(fullsearchrds);
-        memtune = false;
-        ShowFreq(0);
-        store = true;
-      }
-    } else {
-      MenuDown();
     }
   }
 }
@@ -2540,7 +2512,7 @@ bool IsStationEmpty() {
 bool IsFrequencyUsed(unsigned int freq) {
   bool result = false;
   for (byte x = scanstart; x <= scanstop; x++) {
-    if (presets[x].frequency == freq) {
+    if (presets[x].band == BAND_FM && presets[x].frequency == freq) {
       result = true;
       break;
     }
@@ -2647,6 +2619,8 @@ void DoMemoryPosTune() {
   }
 
   radio.clearRDS(fullsearchrds);
+  if (RDSSPYUSB) Serial.print("G:\r\nRESET-------\r\n\r\n");
+  if (RDSSPYTCP) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
 
   String stationText = "";
   if (presets[memorypos].RDSPS[0] != '\0') {
@@ -3210,7 +3184,7 @@ void doSquelch() {
 
   if (language == LANGUAGE_CHS) SquelchSprite.loadFont(FONT16_CHS); else SquelchSprite.loadFont(FONT16);
 
-  if (!XDRGTKUSB && !XDRGTKTCP && usesquelch) {
+  if (!XDRGTKUSB && !XDRGTKTCP && usesquelch && (!scandxmode || (scandxmode && !scanmute))) {
     if (!screenmute && usesquelch && !advancedRDS && !afscreen) {
       if (!menu && (Squelch > Squelchold + 2 || Squelch < Squelchold - 2)) {
         SquelchSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
@@ -3238,7 +3212,7 @@ void doSquelch() {
     }
   }
 
-  if ((XDRGTKUSB || XDRGTKTCP)) {
+  if ((XDRGTKUSB || XDRGTKTCP) && (!scandxmode || (scandxmode && !scanmute))) {
     if (!XDRMute) {
       if (Squelch != -1) {
         if (Squelch < SStatus || Squelch == -100 || Squelch == 0) {
@@ -3312,7 +3286,7 @@ void doSquelch() {
         }
       }
     }
-  } else if (usesquelch) {
+  } else if (usesquelch && (!scandxmode || (scandxmode && !scanmute))) {
     if (Squelch != 920) {
       if (Squelch < SStatus || Squelch == -100 || Squelch == 0) {
         if (!seek) radio.setUnMute();
@@ -3835,6 +3809,12 @@ void TuneUp() {
 
   if (band == BAND_FM) {
     frequency += temp;
+    if (scandxmode) {
+      while (IsFrequencyUsed(frequency)) {
+        frequency += temp;
+      }
+    }
+
     if (fmdefaultstepsize == 2 && stepsize == 0 && frequency == 8795) frequency = 8790;
     if (frequency >= (HighEdgeSet * 10) + 1) {
       frequency = LowEdgeSet * 10;
@@ -4332,4 +4312,125 @@ void cancelDXScan() {
   scandxmode = false;
   ShowTuneMode();
   ShowMemoryPos();
+}
+
+void endMenu() {
+  radio.clearRDS(fullsearchrds);
+  menu = false;
+  menuopen = false;
+  LowLevelInit = true;
+  EEPROM.writeByte(EE_BYTE_VOLSET, VolSet);
+  EEPROM.writeUInt(EE_UINT16_CONVERTERSET, ConverterSet);
+  EEPROM.writeUInt(EE_UINT16_FMLOWEDGESET, LowEdgeSet);
+  EEPROM.writeUInt(EE_UINT16_FMHIGHEDGESET, HighEdgeSet);
+  EEPROM.writeByte(EE_BYTE_CONTRASTSET, ContrastSet);
+  EEPROM.writeByte(EE_BYTE_STEREOLEVEL, StereoLevel);
+  EEPROM.writeByte(EE_BYTE_BANDFM, bandFM);
+  EEPROM.writeByte(EE_BYTE_BANDAM, bandAM);
+  EEPROM.writeByte(EE_BYTE_HIGHCUTLEVEL, HighCutLevel);
+  EEPROM.writeByte(EE_BYTE_HIGHCUTOFFSET, HighCutOffset);
+  EEPROM.writeByte(EE_BYTE_LEVELOFFSET, LevelOffset);
+  EEPROM.writeByte(EE_BYTE_RTBUFFER, radio.rds.rtbuffer);
+  EEPROM.writeByte(EE_BYTE_EDGEBEEP, edgebeep);
+  EEPROM.writeByte(EE_BYTE_SOFTMUTEAM, softmuteam);
+  EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, softmutefm);
+  EEPROM.writeByte(EE_BYTE_LANGUAGE, language);
+  EEPROM.writeByte(EE_BYTE_SHOWRDSERRORS, showrdserrors);
+  EEPROM.writeByte(EE_BYTE_LOWLEVELSET, LowLevelSet);
+  EEPROM.writeByte(EE_BYTE_REGION, region);
+  EEPROM.writeByte(EE_BYTE_RDS_UNDERSCORE, radio.underscore);
+  EEPROM.writeByte(EE_BYTE_USBMODE, USBmode);
+  EEPROM.writeByte(EE_BYTE_WIFI, wifi);
+  EEPROM.writeByte(EE_BYTE_SUBNETCLIENT, subnetclient);
+  EEPROM.writeByte(EE_BYTE_SHOWSWMIBAND, showSWMIBand);
+  EEPROM.writeByte(EE_BYTE_RDS_FILTER, radio.rds.filter);
+  EEPROM.writeByte(EE_BYTE_RDS_PIERRORS, radio.rds.pierrors);
+  EEPROM.writeByte(EE_BYTE_USESQUELCH, usesquelch);
+  EEPROM.writeByte(EE_BYTE_SHOWMODULATION, showmodulation);
+  EEPROM.writeByte(EE_BYTE_AM_NB, amnb);
+  EEPROM.writeByte(EE_BYTE_FM_NB, fmnb);
+  EEPROM.writeByte(EE_BYTE_AUDIOMODE, audiomode);
+  EEPROM.writeByte(EE_BYTE_TOUCH_ROTATING, touchrotating);
+  EEPROM.writeUInt(EE_UINT16_LOWEDGEOIRTSET, LowEdgeOIRTSet);
+  EEPROM.writeUInt(EE_UINT16_HIGHEDGEOIRTSET, HighEdgeOIRTSet);
+  EEPROM.writeByte(EE_BYTE_HARDWARE_MODEL, hardwaremodel);
+  EEPROM.writeByte(EE_BYTE_POWEROPTIONS, poweroptions);
+  EEPROM.writeByte(EE_BYTE_CURRENTTHEME, CurrentTheme);
+  EEPROM.writeByte(EE_BYTE_FMDEFAULTSTEPSIZE, fmdefaultstepsize);
+  EEPROM.writeByte(EE_BYTE_SCREENSAVERSET, screensaverset);
+  EEPROM.writeInt(EE_INT16_AMLEVELOFFSET, AMLevelOffset);
+  EEPROM.writeByte(EE_BYTE_UNIT, unit);
+  EEPROM.writeByte(EE_BYTE_AF, af);
+  EEPROM.writeByte(EE_BYTE_STEREO, StereoToggle);
+  EEPROM.writeByte(EE_BYTE_BATTERY_OPTIONS, batteryoptions);
+  EEPROM.writeByte(EE_BYTE_AM_CO_DECT, amcodect);
+  EEPROM.writeByte(EE_BYTE_AM_CO_DECT_COUNT, amcodectcount);
+  EEPROM.writeByte(EE_BYTE_AM_RF_GAIN, amgain);
+  EEPROM.writeByte(EE_BYTE_SORTAF, radio.rds.sortaf);
+  EEPROM.writeByte(EE_BYTE_STATIONLISTID, stationlistid);
+  EEPROM.writeByte(EE_BYTE_FM_DEEMPHASIS, fmdeemphasis);
+  EEPROM.writeByte(EE_BYTE_FASTPS, radio.rds.fastps);
+  EEPROM.writeByte(EE_BYTE_TOT, tot);
+  EEPROM.writeByte(EE_BYTE_MWREGION, mwstepsize);
+  EEPROM.writeByte(EE_BYTE_SPISPEED, spispeed);
+  EEPROM.writeByte(EE_BYTE_AMSCANSENS, amscansens);
+  EEPROM.writeByte(EE_BYTE_FMSCANSENS, fmscansens);
+  EEPROM.writeByte(EE_BYTE_FREQFONT, freqfont);
+  EEPROM.writeByte(EE_BYTE_SKIN, CurrentSkin);
+  EEPROM.writeByte(EE_BYTE_XDRGTKMUTE, XDRGTKMuteScreen);
+  EEPROM.writeByte(EE_BYTE_FMAGC, fmagc);
+  EEPROM.writeByte(EE_BYTE_AMAGC, amagc);
+  EEPROM.writeByte(EE_BYTE_FMSI, fmsi);
+  EEPROM.writeByte(EE_BYTE_SCANSTART, scanstart);
+  EEPROM.writeByte(EE_BYTE_SCANSTOP, scanstop);
+  EEPROM.writeByte(EE_BYTE_SCANHOLD, scanhold);
+  EEPROM.writeByte(EE_BYTE_SCANMEM, scanmem);
+  EEPROM.writeByte(EE_BYTE_SCANCANCEL, scancancel);
+  EEPROM.writeByte(EE_BYTE_SCANMUTE, scanmute);
+  EEPROM.commit();
+  if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
+  Serial.end();
+  if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
+  if (USBmode) Serial.begin(19200); else Serial.begin(115200);
+
+  UpdateFonts(0);
+  FullLineSprite.unloadFont();
+  OneBigLineSprite.unloadFont();
+  BuildDisplay();
+}
+
+void startFMDXScan() {
+  memorypos = scanstart;
+  scanmodeold = tunemode;
+  if (scanmem) {
+    tunemode = TUNE_MEM;
+    if (band != BAND_FM) {
+      band = BAND_FM;
+      SelectBand();
+    }
+    endMenu();
+    DoMemoryPosTune();
+  } else {
+    tunemode = TUNE_MAN;
+    if (band != BAND_FM) {
+      band = BAND_FM;
+      SelectBand();
+      endMenu();
+    }
+    endMenu();
+    TuneUp();
+    ShowFreq(0);
+  }
+  if (scanmute) {
+    radio.setMute();
+    if (CurrentSkin == 1) {
+      tft.pushImage (106, 3, 27, 23, skin1_muteon);
+    } else {
+      tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
+    }
+    SQ = true;
+    Squelchold = -2;
+  }
+  scantimer = millis();
+  scandxmode = true;
 }

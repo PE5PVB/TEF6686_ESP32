@@ -4185,15 +4185,7 @@ void DoMenu() {
               Infoboxprint(myLanguage[language][214]);
               OneBigLineSprite.pushSprite(24, 118);
             } else {
-              menuopen = false;
-              menu = false;
-              memorypos = scanstart;
-              scanmodeold = tunemode;
-              tunemode = TUNE_MEM;
-              BuildDisplay();
-              DoMemoryPosTune();
-              scantimer = millis();
-              scandxmode = true;
+              startFMDXScan();
             }
             break;
 
