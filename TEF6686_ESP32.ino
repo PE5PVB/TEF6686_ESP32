@@ -832,7 +832,7 @@ void loop() {
     if (scanmem) {
       memorypos++;
       if (memorypos > scanstop) memorypos = scanstart;
-      while (IsStationEmpty()) {
+      while (IsStationEmpty() || presets[memorypos].band != BAND_FM) {
         memorypos++;
         if (memorypos > scanstop) {
           memorypos = scanstart;
@@ -844,6 +844,7 @@ void loop() {
     } else {
       TuneUp();
       ShowFreq(0);
+      if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
     }
     scantimer = millis();
   }
@@ -2621,7 +2622,8 @@ void DoMemoryPosTune() {
   radio.clearRDS(fullsearchrds);
   if (RDSSPYUSB) Serial.print("G:\r\nRESET-------\r\n\r\n");
   if (RDSSPYTCP) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
-
+  if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
+  
   String stationText = "";
   if (presets[memorypos].RDSPS[0] != '\0') {
     for (byte i = 0; i < 9; i++) stationText += presets[memorypos].RDSPS[i];
@@ -3810,7 +3812,7 @@ void TuneUp() {
   if (band == BAND_FM) {
     frequency += temp;
     if (scandxmode) {
-      while (IsFrequencyUsed(frequency)) {
+      while (IsFrequencyUsed(frequency) || presets[memorypos].band != BAND_FM) {
         frequency += temp;
       }
     }
