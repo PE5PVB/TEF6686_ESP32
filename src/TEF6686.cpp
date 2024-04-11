@@ -399,10 +399,10 @@ void TEF6686::readRDS(byte showrdserrors)
     }
   }
 
-  rds.rdsAerror = (((rds.rdsErr >> 14) & 0x03) > 0);
-  rds.rdsBerror = (((rds.rdsErr >> 12) & 0x03) > 0);
-  rds.rdsCerror = (((rds.rdsErr >> 10) & 0x03) > 0);
-  rds.rdsDerror = (((rds.rdsErr >> 8) & 0x03) > 0);
+  rds.rdsAerror = (((rds.rdsErr >> 14) & 0x03) > 1);
+  rds.rdsBerror = (((rds.rdsErr >> 12) & 0x03) > 1);
+  rds.rdsCerror = (((rds.rdsErr >> 10) & 0x03) > 1);
+  rds.rdsDerror = (((rds.rdsErr >> 8) & 0x03) > 1);
 
   rdsAerrorThreshold = (((rds.rdsErr >> 14) & 0x03) > showrdserrors);
   rdsBerrorThreshold = (((rds.rdsErr >> 12) & 0x03) > showrdserrors);
