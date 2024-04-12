@@ -803,12 +803,6 @@ void loop() {
   if (digitalRead(BANDBUTTON) == LOW ) BANDBUTTONPress();
 
   if (scandxmode) {
-    if (screenmute) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
-    switch (scancancel) {
-      case CORRECTPI: if (radio.rds.correctPI != 0) cancelDXScan(); break;
-      case SIGNAL: if (USN < 250 && WAM < 250 && OStatus > -250 && OStatus < 250 && !SQ) cancelDXScan(); break;
-    }
-
     if (millis() >= flashingtimer + 500) {
       flashing = !flashing;
       if (flashing) {
@@ -827,6 +821,12 @@ void loop() {
         }
       }
       flashingtimer = millis();
+    }
+
+    radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+    switch (scancancel) {
+      case CORRECTPI: if (radio.rds.correctPI != 0) cancelDXScan(); break;
+      case SIGNAL: if (USN < 250 && WAM < 250 && OStatus > -250 && OStatus < 250) cancelDXScan(); break;
     }
   }
 
@@ -1458,6 +1458,7 @@ void BANDBUTTONPress() {
                   if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n"); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n"); else DataPrint("M1\nT" + String(frequency_AM) + "\n");
                 }
               } else {
+                scanmodeold = tunemode;
                 startFMDXScan();
                 return;
               }
@@ -2622,7 +2623,7 @@ void DoMemoryPosTune() {
   }
 
   radio.clearRDS(fullsearchrds);
-//  RDSstatus = false;
+  //  RDSstatus = false;
 
   if (RDSSPYUSB) Serial.print("G:\r\nRESET-------\r\n\r\n");
   if (RDSSPYTCP) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
@@ -4323,6 +4324,16 @@ void cancelDXScan() {
     } else {
       tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
     }
+
+    if (!flashing) {
+      if (CurrentSkin == 1) {
+        tft.pushImage (12, 76, 33, 15, skin1_memon);
+      } else {
+        tft.drawRoundRect(1, 79, 42, 20, 5, ActiveColor);
+        tftPrint(0, "MEM", 22, 82, ActiveColor, ActiveColorSmooth, 16);
+      }
+    }
+
     SQ = false;
     Squelchold = -2;
   }
