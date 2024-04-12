@@ -452,7 +452,7 @@ void readRds() {
           dropout = false;
         }
       }
-      if (CurrentSkin == 1 && !advancedRDS) {
+      if (CurrentSkin == 1 && !advancedRDS && !afscreen && !screenmute) {
         if (hasrtplusold != radio.rds.hasRDSplus) {
           if (radio.rds.hasRDSplus) tft.pushImage (288, 151, 27, 16, skin1_rtpluson); else tft.pushImage (288, 151, 27, 16, skin1_rtplusoff);
           hasrtplusold = radio.rds.hasRDSplus;
@@ -469,7 +469,7 @@ void readRds() {
         }
 
         if (haseonold != radio.rds.hasEON) {
-          if (radio.rds.hasEON) tft.pushImage (254, 151, 30, 16, skin1_eonon); else tft.pushImage (254, 151, 30, 16, skin1_eonoff);
+          if (radio.eon_counter > 0) tft.pushImage (254, 151, 30, 16, skin1_eonon); else tft.pushImage (254, 151, 30, 16, skin1_eonoff);
           haseonold = radio.rds.hasEON;
         }
 

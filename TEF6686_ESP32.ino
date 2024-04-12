@@ -4422,7 +4422,7 @@ void startFMDXScan() {
       band = BAND_FM;
       SelectBand();
     }
-    endMenu();
+    if (menu) endMenu();
     DoMemoryPosTune();
   } else {
     tunemode = TUNE_MAN;
@@ -4431,7 +4431,7 @@ void startFMDXScan() {
       SelectBand();
       endMenu();
     }
-    endMenu();
+    if (menu) endMenu();
     TuneUp();
     ShowFreq(0);
   }
