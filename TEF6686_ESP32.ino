@@ -78,6 +78,7 @@ bool hasrtplusold;
 bool hastmcold;
 bool LowLevelInit;
 bool memorystore;
+bool memreset;
 bool memtune;
 bool menu;
 bool menuopen;
@@ -2621,6 +2622,8 @@ void DoMemoryPosTune() {
   }
 
   radio.clearRDS(fullsearchrds);
+//  RDSstatus = false;
+
   if (RDSSPYUSB) Serial.print("G:\r\nRESET-------\r\n\r\n");
   if (RDSSPYTCP) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
   if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
@@ -2635,7 +2638,6 @@ void DoMemoryPosTune() {
       radio.rds.picode[i] = presets[memorypos].RDSPI[i];
     }
     radio.rds.picode[6] = '\0';
-    RDSstatus = true;
   } else {
     for (byte i = 0; i < 6; i++) {
       radio.rds.picode[i] = '\0';
@@ -2648,6 +2650,7 @@ void DoMemoryPosTune() {
   doBW();
   BWtune = true;
   memtune = true;
+  memreset = true;
 }
 
 void ShowFreq(int mode) {

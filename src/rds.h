@@ -25,6 +25,7 @@ extern bool hasCTold;
 extern bool haseonold;
 extern bool hasrtplusold;
 extern bool hastmcold;
+extern bool memreset;
 extern bool rdsreset;
 extern bool RDSSPYTCP;
 extern bool RDSSPYUSB;

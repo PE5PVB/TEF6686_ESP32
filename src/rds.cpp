@@ -360,7 +360,7 @@ void readRds() {
           dropout = true;
         }
       } else {
-        if (dropout) {
+        if (dropout || memreset) {
           if (region == REGION_EU) {
             if (advancedRDS) {
               tftPrint(0, PIold, 275, 75, RDSColor, RDSColorSmooth, 28);
@@ -450,6 +450,7 @@ void readRds() {
             }
           }
           dropout = false;
+          memreset = false;
         }
       }
       if (CurrentSkin == 1 && !advancedRDS && !afscreen && !screenmute) {
