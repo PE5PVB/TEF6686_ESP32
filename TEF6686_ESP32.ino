@@ -861,7 +861,7 @@ void loop() {
     rdsflagreset = false;
   }
 
-  if (!menu && !afscreen) {
+  if (!menu && !afscreen && !scandxmode) {
     if (af != 0 && dropout && millis() >= aftimer + 1000) {
       aftimer = millis();
       frequency = radio.TestAF();
