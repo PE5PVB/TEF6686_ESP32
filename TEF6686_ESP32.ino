@@ -2624,7 +2624,7 @@ void DoMemoryPosTune() {
   if (RDSSPYUSB) Serial.print("G:\r\nRESET-------\r\n\r\n");
   if (RDSSPYTCP) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
   if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
-  
+
   String stationText = "";
   if (presets[memorypos].RDSPS[0] != '\0') {
     for (byte i = 0; i < 9; i++) stationText += presets[memorypos].RDSPS[i];
@@ -4313,6 +4313,17 @@ void UpdateFonts(bool mode) {
 void cancelDXScan() {
   tunemode = scanmodeold;
   scandxmode = false;
+  if (scanmute) {
+    radio.setUnMute();
+    if (CurrentSkin == 1) {
+      tft.pushImage (106, 3, 27, 23, skin1_muteoff);
+    } else {
+      tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+    }
+    SQ = false;
+    Squelchold = -2;
+  }
+
   ShowTuneMode();
   ShowMemoryPos();
 }
