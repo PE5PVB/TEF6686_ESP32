@@ -802,9 +802,10 @@ void loop() {
   if (digitalRead(BANDBUTTON) == LOW ) BANDBUTTONPress();
 
   if (scandxmode) {
+    if (screenmute) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
     switch (scancancel) {
       case CORRECTPI: if (radio.rds.correctPI != 0) cancelDXScan(); break;
-      case SIGNAL: if (tuned) cancelDXScan(); break;
+      case SIGNAL: if (USN < 250 && WAM < 250 && OStatus > -250 && OStatus < 250 && !SQ) cancelDXScan(); break;
     }
 
     if (millis() >= flashingtimer + 500) {
