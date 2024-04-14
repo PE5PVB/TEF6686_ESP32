@@ -652,7 +652,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "FM", // 193 ***
     "AM", // 194 ***
     "ŁĄCZNOŚĆ", // 195
-    "DX MODE", // 196
+    "TRYB DX", // 196
     "Identyfikator Stationlist", // 197
     "Tłumik ant. AM", // 198
     "Deemfaza FM", // 199
@@ -664,21 +664,21 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Wylacz ekran gdy\npołączony z XDR-GTK", // 205
     "Ulepszenie \nstereo FMSI", // 206
     "Funkcja dostępna tylko\nna TEF6687/6689!", // 207
-    "Funkcja niedostępna\nna wybranym motywie!", // 208
-    "Begin scanning\nmemory channels", // 209
-    "Stop scanning\nmemory channels", // 210
-    "Wait time", // 211
-    "Start DX scanning", // 212
-    "FM DX Options", // 213
-    "Abort! The start channel\nis marked as skipped.", // 214
+    "Funkcja niedostępna\nz wybranym motywem!", // 208
+    "Początkowy kanał", // 209
+    "Końcowy kanał", // 210
+    "Czas oczekiwania", // 211
+    "Rozpocznij skanowanie DX", // 212
+    "Opcje FM DX", // 213
+    "Błąd! Początkowy kanał\njest pominięty.", // 214
     "Automat. sortowanie AF", // 215
-    "Memory channels", // 216
-    "Exclude", // 217
-    "Only", // 218
-    "Auto cancel scan", // 219
-    "Correct PI", // 220
-    "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Kanały pamięci", // 216
+    "Wyklucz", // 217
+    "Tylko", // 218
+    "Automatyczne\nanulowanie skanowania", // 219
+    "Poprawne PI", // 220
+    "Sygnał", // 221
+    "Wycisz dźwięk\npodczas skanowania" // 222
   },
 
   { "Hrvatski", // Croatian
