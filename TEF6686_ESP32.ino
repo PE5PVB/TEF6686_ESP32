@@ -803,6 +803,27 @@ void loop() {
   if (digitalRead(BANDBUTTON) == LOW ) BANDBUTTONPress();
 
   if (scandxmode) {
+    if (millis() >= scantimer + (scanhold * 1000)) {
+      if (scanmem) {
+        memorypos++;
+        if (memorypos > scanstop) memorypos = scanstart;
+        while (IsStationEmpty() || presets[memorypos].band != BAND_FM) {
+          memorypos++;
+          if (memorypos > scanstop) {
+            memorypos = scanstart;
+            break;
+          }
+        }
+        DoMemoryPosTune();
+        ShowMemoryPos();
+      } else {
+        TuneUp();
+        ShowFreq(0);
+        if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
+      }
+      scantimer = millis();
+    }
+
     if (millis() >= flashingtimer + 500) {
       flashing = !flashing;
       if (flashing) {
@@ -828,27 +849,6 @@ void loop() {
       case CORRECTPI: if (radio.rds.correctPI != 0) cancelDXScan(); break;
       case SIGNAL: if (USN < 250 && WAM < 250 && OStatus > -250 && OStatus < 250) cancelDXScan(); break;
     }
-  }
-
-  if (scandxmode && millis() >= scantimer + (scanhold * 1000)) {
-    if (scanmem) {
-      memorypos++;
-      if (memorypos > scanstop) memorypos = scanstart;
-      while (IsStationEmpty() || presets[memorypos].band != BAND_FM) {
-        memorypos++;
-        if (memorypos > scanstop) {
-          memorypos = scanstart;
-          break;
-        }
-      }
-      DoMemoryPosTune();
-      ShowMemoryPos();
-    } else {
-      TuneUp();
-      ShowFreq(0);
-      if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
-    }
-    scantimer = millis();
   }
 
   if (millis() >= tuningtimer + 200) {
