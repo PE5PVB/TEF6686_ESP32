@@ -491,7 +491,14 @@ void setup() {
   scancancel = EEPROM.readByte(EE_BYTE_SCANCANCEL);
   scanmute = EEPROM.readByte(EE_BYTE_SCANMUTE);
 
-  if (spispeed == SPI_SPEED_DEFAULT) tft.setSPISpeed(SPI_FREQUENCY / 1000000); else tft.setSPISpeed(spispeed * 10);
+  if (spispeed == SPI_SPEED_DEFAULT) {
+    tft.setSPISpeed(SPI_FREQUENCY / 1000000);
+  } else if (spispeed == 7) {
+    setAutoSpeedSPI();
+  } else {
+    tft.setSPISpeed(spispeed * 10);
+  }
+
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX;
   MWLowEdgeSet = mwstepsize == false ? FREQ_MW_LOW_EDGE_MIN_9K : FREQ_MW_LOW_EDGE_MIN_10K;
@@ -2658,6 +2665,7 @@ void ShowFreq(int mode) {
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
 
+  setAutoSpeedSPI();
   rdsreset = true;
   licold = 254;
   ECCold = 253;
@@ -4059,4 +4067,51 @@ void startFMDXScan() {
   }
   scantimer = millis();
   scandxmode = true;
+}
+
+void setAutoSpeedSPI() {
+  switch (frequency / 10) {
+    case 875 ... 877: tft.setSPISpeed(28); break;
+    case 878 ... 881: tft.setSPISpeed(24); break;
+    case 882 ... 892: tft.setSPISpeed(42); break;
+    case 893 ... 899: tft.setSPISpeed(31); break;
+    case 900 ... 904: tft.setSPISpeed(12); break;
+    case 905 ... 906: tft.setSPISpeed(16); break;
+    case 907 ... 910: tft.setSPISpeed(11); break;
+    case 911 ... 916: tft.setSPISpeed(15); break;
+    case 917 ... 921: tft.setSPISpeed(24); break;
+    case 922 ... 928: tft.setSPISpeed(13); break;
+    case 929: tft.setSPISpeed(11); break;
+    case 930 ... 932: tft.setSPISpeed(13); break;
+    case 933 ... 939: tft.setSPISpeed(18); break;
+    case 940 ... 941: tft.setSPISpeed(12); break;
+    case 942: tft.setSPISpeed(17); break;
+    case 943 ... 949: tft.setSPISpeed(15); break;
+    case 950: tft.setSPISpeed(19); break;
+    case 951: tft.setSPISpeed(15); break;
+    case 952 ... 960: tft.setSPISpeed(22); break;
+    case 961 ... 965: tft.setSPISpeed(15); break;
+    case 966 ... 973: tft.setSPISpeed(22); break;
+    case 974 ... 979: tft.setSPISpeed(17); break;
+    case 980 ... 982: tft.setSPISpeed(20); break;
+    case 983 ... 987: tft.setSPISpeed(18); break;
+    case 988 ... 993: tft.setSPISpeed(11); break;
+    case 994 ... 996: tft.setSPISpeed(18); break;
+    case 997 ... 1005: tft.setSPISpeed(11); break;
+    case 1006: tft.setSPISpeed(13); break;
+    case 1007 ... 1011: tft.setSPISpeed(11); break;
+    case 1012 ... 1016: tft.setSPISpeed(18); break;
+    case 1017 ... 1026: tft.setSPISpeed(13); break;
+    case 1027 ... 1035: tft.setSPISpeed(23); break;
+    case 1036 ... 1038: tft.setSPISpeed(15); break;
+    case 1039 ... 1042: tft.setSPISpeed(12); break;
+    case 1043 ... 1047: tft.setSPISpeed(23); break;
+    case 1048 ... 1050: tft.setSPISpeed(28); break;
+    case 1051 ... 1062: tft.setSPISpeed(15); break;
+    case 1063 ... 1068: tft.setSPISpeed(18); break;
+    case 1069 ... 1074: tft.setSPISpeed(14); break;
+    case 1075: tft.setSPISpeed(17); break;
+    case 1076 ... 1080: tft.setSPISpeed(15); break;
+    default: tft.setSPISpeed(30); break;
+  }
 }

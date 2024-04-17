@@ -229,4 +229,5 @@ extern void startFMDXScan();
 extern void DoMemoryPosTune();
 extern void UpdateFonts(bool mode);
 extern void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize);
+extern void setAutoSpeedSPI();
 #endif

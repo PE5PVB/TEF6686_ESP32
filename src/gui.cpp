@@ -1274,7 +1274,11 @@ void ShowOneLine(byte position, byte item, bool selected) {
             FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             FullLineSprite.drawString("MHz", 298, 3);
             FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            FullLineSprite.drawString((spispeed == SPI_SPEED_DEFAULT ? String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC) : String(spispeed * 10, DEC)), 258, 3);
+            if (spispeed == 7) {
+              FullLineSprite.drawString(myLanguage[language][86], 258, 3);
+            } else {
+              FullLineSprite.drawString((spispeed == SPI_SPEED_DEFAULT ? String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC) : String(spispeed * 10, DEC)), 258, 3);
+            }
           }
           break;
 
@@ -1805,10 +1809,20 @@ void MenuUp() {
             OneBigLineSprite.drawString("MHz", 155, 0);
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString((spispeed == SPI_SPEED_DEFAULT ? String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC) : String(spispeed * 10, DEC)), 140, 0);
+            if (spispeed == 7) {
+              OneBigLineSprite.drawString(myLanguage[language][86], 140, 0);
+            } else {
+              OneBigLineSprite.drawString((spispeed == SPI_SPEED_DEFAULT ? String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC) : String(spispeed * 10, DEC)), 140, 0);
+            }
             OneBigLineSprite.pushSprite(24, 118);
 
-            if (spispeed == SPI_SPEED_DEFAULT) tft.setSPISpeed(SPI_FREQUENCY / 1000000); else tft.setSPISpeed(spispeed * 10);
+            if (spispeed == SPI_SPEED_DEFAULT) {
+              tft.setSPISpeed(SPI_FREQUENCY / 1000000);
+            } else if (spispeed == 7) {
+              setAutoSpeedSPI();
+            } else {
+              tft.setSPISpeed(spispeed * 10);
+            }
             break;
         }
         break;
@@ -2596,10 +2610,20 @@ void MenuDown() {
             OneBigLineSprite.drawString("MHz", 155, 0);
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString((spispeed == SPI_SPEED_DEFAULT ? String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC) : String(spispeed * 10, DEC)), 140, 0);
+            if (spispeed == 7) {
+              OneBigLineSprite.drawString(myLanguage[language][86], 140, 0);
+            } else {
+              OneBigLineSprite.drawString((spispeed == SPI_SPEED_DEFAULT ? String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC) : String(spispeed * 10, DEC)), 140, 0);
+            }
             OneBigLineSprite.pushSprite(24, 118);
 
-            if (spispeed == SPI_SPEED_DEFAULT) tft.setSPISpeed(SPI_FREQUENCY / 1000000); else tft.setSPISpeed(spispeed * 10);
+            if (spispeed == SPI_SPEED_DEFAULT) {
+              tft.setSPISpeed(SPI_FREQUENCY / 1000000);
+            } else if (spispeed == 7) {
+              setAutoSpeedSPI();
+            } else {
+              tft.setSPISpeed(spispeed * 10);
+            }
             break;
 
         }
@@ -3452,7 +3476,11 @@ void DoMenu() {
             OneBigLineSprite.drawString("MHz", 155, 0);
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString((spispeed == SPI_SPEED_DEFAULT ? String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC) : String(spispeed * 10, DEC)), 140, 0);
+            if (spispeed == 7) {
+              OneBigLineSprite.drawString(myLanguage[language][86], 140, 0);
+            } else {
+              OneBigLineSprite.drawString((spispeed == SPI_SPEED_DEFAULT ? String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC) : String(spispeed * 10, DEC)), 140, 0);
+            }
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }

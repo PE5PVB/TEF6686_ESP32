@@ -92,7 +92,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "NONE", // 83
     "Software version", // 84
     "Frequency font", // 85
-    "NOT POSSIBLE", // 86
+    "Auto", // 86
     "No AF available", // 87
     "No EON available", // 88
     "No RT+ available", // 89
@@ -317,7 +317,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Geen", // 83
     "Software versie", // 84
     "Frequentie font", // 85
-    "NIET MOGELIJK", // 86
+    "Auto", // 86
     "Geen AF data", // 87
     "Geen EON data", // 88
     "Geen RT+ data", // 89
@@ -542,7 +542,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "BRAK", // 83
     "Wersja oprogramowania", // 84
     "Czcionka częstotliwości", // 85
-    "NIEMOŻLIWE", // 86
+    "Auto", // 86
     "AF niedostępny", // 87
     "EON niedostępny", // 88
     "RT+ niedostępny", // 89
@@ -767,7 +767,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "NEMA", // 83
     "Verzija softvera", // 84
     "Font frekvencije", // 85
-    "NIJE MOGUĆE", // 86
+    "Auto", // 86
     "AF nedostupan", // 87
     "EON nedostupan", // 88
     "RT+ nedostupan", // 89
@@ -992,7 +992,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "KAMIA", // 83
     "Έκδοση λογισμικού", // 84
     "Γραμματοσειρά\nσυχνότητας", // 85
-    "ΜΗ ΔΥΝΑΤΟ", // 86
+    "Auto", // 86
     "Μη διαθέσιμο AF", // 87
     "Μη διαθέσιμο EON", // 88
     "Μη διαθέσιμο RT+", // 89
@@ -1217,7 +1217,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "NICI UNUL", // 83
     " versiune Software", // 84
     "Font Frecventa", // 85
-    "Nu se poate", // 86
+    "Auto", // 86
     "AF nu este disponibil", // 87
     "EON nu este disponibil", // 88
     "RT+ nu este disponibil", // 89
@@ -1442,7 +1442,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "KEINE", // 83
     "Softwareversion", // 84
     "Frequenz-Schriftart", // 85 ***
-    "NICHT MÖGLICH", // 86
+    "Auto", // 86
     "Keine AF verfügbar", // 87
     "Kein EON verfügbar", // 88
     "Kein RT+ verfügbar", // 89
@@ -1667,7 +1667,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "NONE", // 83 represents: AM/FM bands unavailable(please delete this note after translation）
     "Software version", // 84
     "Frequency font", // 85 ***
-    "ODPOJTE USB", // 86
+    "Auto", // 86
     "AF nedostupné", // 87
     "EON nedostupný", // 88
     "RT+ nedostupný", // 89
@@ -1892,7 +1892,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "NONE", // 83 represents: AM/FM bands unavailable(please delete this note after translation）
     "Software version", // 84
     "Frequency font", // 85 ***
-    "ODPOJTE USB", // 86
+    "Auto", // 86
     "AF nedostupné", // 87
     "EON nedostupný", // 88
     "RT+ nedostupný", // 89
@@ -2117,7 +2117,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "AUCUNE", // 83
     "Version de logiciel", // 84
     "Police de fréquence", // 85 ***
-    "IMPOSSIBLE", // 86
+    "Auto", // 86
     "AF indisponible", // 87
     "EON indisponible", // 88
     "RT+ indisponible", // 89
@@ -2342,7 +2342,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "NONE", // 83 represents: AM/FM bands unavailable(please delete this note after translation）
     "Software version", // 84
     "Frequency font", // 85 ***
-    "НЕ Е ВЪЗМОЖНО", // 86
+    "Auto", // 86
     "AF опцията не е налична", // 87
     "EON опцията не е налична", // 88
     "RT+ опцията не е налична", // 89
@@ -2567,7 +2567,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Не использовать AM", // 83
     "Версия прошивки -", // 84
     "Шрифт индикации частоты", // 85 ***
-    "НЕВОЗМОЖНО", // 86
+    "Auto", // 86
     "Нет данных", // 87
     "Нет данных", // 88
     "Нет данных", // 89
@@ -2792,7 +2792,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "NONE", // 83 represents: AM/FM bands unavailable(please delete this note after translation）
     "Версія ПО", // 84
     "Frequency font", // 85 ***
-    "НЕ МОЖЛИВО", // 86
+    "Auto", // 86
     "Немає доступних AF", // 87
     "Немає доступного EON", // 88
     "Немає доступного RT+", // 89
@@ -3017,7 +3017,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "NONE", // 83 represents: AM/FM bands unavailable(please delete this note after translation）
     "Software version", // 84
     "Frequency font", // 85 ***
-    "IMPOSSIBILE", // 86
+    "Auto", // 86
     "AF non disponibile", // 87
     "EON non disponibile", // 88
     "RT + non disponibile", // 89
@@ -3242,7 +3242,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "不可用", // 83
     "固件版本", // 84
     "频率字体", // 85 ***
-    "不可用", // 86
+    "Auto", // 86
     "AF 不可用", // 87
     "EON 不可用", // 88
     "RT+ 不可用", // 89
@@ -3467,7 +3467,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "INGEN", // 83
     "Programvareversjon", // 84
     "Frekvens skrifttype", // 85 ***
-    "IKKE MULIG", // 86
+    "Auto", // 86
     "Ingen AF", // 87
     "Ingen EON", // 88
     "Ingen RT+", // 89
@@ -3692,7 +3692,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "NINGUNA", // 83
     "Versión del software", // 84
     "Fundición de frecuencia", // 85 ***
-    "NO ES POSIBLE", // 86
+    "Auto", // 86
     "No AF disponible", // 87
     "No EON disponible", // 88
     "No RT+ disponible", // 89
@@ -3917,7 +3917,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "NENHUM", // 83
     "Versão do software", // 84
     "Fonte de frequência", // 85 ***
-    "NÃO POSSÍVEL", // 86
+    "Auto", // 86
     "AF não disponível", // 87
     "EON não disponível", // 88
     "RT+ não disponível", // 89
