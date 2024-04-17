@@ -575,7 +575,7 @@ typedef struct _rds_ {
   char stationState[3];
   char dabafeid[5];
   char dabafchannel[4];
-  uint16_t hour, minute, day, month, year, rdsA, rdsB, rdsC, rdsD, rdsErr, rdsStat, correctPI, rdsplusTag1, rdsplusTag2;
+  uint16_t hour, minute, day, month, year, rdsA, rdsB, rdsC, rdsD, rdsErr, rdsAF, rdsBF, rdsCF, rdsDF, rdsErrF, rdsStat, correctPI, rdsplusTag1, rdsplusTag2;
   uint16_t aid[10];
   uint32_t dabaffreq;
   byte aid_counter;

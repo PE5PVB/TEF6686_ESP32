@@ -412,10 +412,10 @@ void readRds() {
 
     if ((RDSstatus && RDSSPYUSB) || (RDSstatus && RDSSPYTCP)) {
       RDSSPYRDS = "G:\r\n";
-      if (radio.rds.rdsAerror) RDSSPYRDS += "----"; else RDSSPYRDS += String(((radio.rds.rdsA >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsA >> 8) & 0xF, HEX) + String(((radio.rds.rdsA) >> 4) & 0xF, HEX) + String((radio.rds.rdsA) & 0xF, HEX);
-      if (radio.rds.rdsBerror) RDSSPYRDS += "----"; else RDSSPYRDS += String(((radio.rds.rdsB >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsB >> 8) & 0xF, HEX) + String(((radio.rds.rdsB) >> 4) & 0xF, HEX) + String((radio.rds.rdsB) & 0xF, HEX);
-      if (radio.rds.rdsCerror) RDSSPYRDS += "----"; else RDSSPYRDS += String(((radio.rds.rdsC >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsC >> 8) & 0xF, HEX) + String(((radio.rds.rdsC) >> 4) & 0xF, HEX) + String((radio.rds.rdsC) & 0xF, HEX);
-      if (radio.rds.rdsDerror) RDSSPYRDS += "----"; else RDSSPYRDS += String(((radio.rds.rdsD >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsD >> 8) & 0xF, HEX) + String(((radio.rds.rdsD) >> 4) & 0xF, HEX) + String((radio.rds.rdsD) & 0xF, HEX);
+      if (radio.rds.rdsAerror) RDSSPYRDS += "----"; else RDSSPYRDS += String(((radio.rds.rdsAF >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsAF >> 8) & 0xF, HEX) + String(((radio.rds.rdsAF) >> 4) & 0xF, HEX) + String((radio.rds.rdsAF) & 0xF, HEX);
+      if (radio.rds.rdsBerror) RDSSPYRDS += "----"; else RDSSPYRDS += String(((radio.rds.rdsBF >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsBF >> 8) & 0xF, HEX) + String(((radio.rds.rdsBF) >> 4) & 0xF, HEX) + String((radio.rds.rdsBF) & 0xF, HEX);
+      if (radio.rds.rdsCerror) RDSSPYRDS += "----"; else RDSSPYRDS += String(((radio.rds.rdsCF >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsCF >> 8) & 0xF, HEX) + String(((radio.rds.rdsCF) >> 4) & 0xF, HEX) + String((radio.rds.rdsCF) & 0xF, HEX);
+      if (radio.rds.rdsDerror) RDSSPYRDS += "----"; else RDSSPYRDS += String(((radio.rds.rdsDF >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsDF >> 8) & 0xF, HEX) + String(((radio.rds.rdsDF) >> 4) & 0xF, HEX) + String((radio.rds.rdsDF) & 0xF, HEX);
       RDSSPYRDS += "\r\n\r\n";
 
       if (RDSSPYRDS != RDSSPYRDSold) {
@@ -426,31 +426,31 @@ void readRds() {
 
     if ((RDSstatus && XDRGTKUSB) || (RDSstatus && XDRGTKTCP)) {
       XDRGTKRDS = "R";
-      XDRGTKRDS += String(((radio.rds.rdsB >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsB >> 8) & 0xF, HEX);
-      XDRGTKRDS += String(((radio.rds.rdsB) >> 4) & 0xF, HEX) + String((radio.rds.rdsB) & 0xF, HEX);
-      XDRGTKRDS += String(((radio.rds.rdsC >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsC >> 8) & 0xF, HEX);
-      XDRGTKRDS += String(((radio.rds.rdsC) >> 4) & 0xF, HEX) + String((radio.rds.rdsC) & 0xF, HEX);
-      XDRGTKRDS += String(((radio.rds.rdsD >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsD >> 8) & 0xF, HEX);
-      XDRGTKRDS += String(((radio.rds.rdsD) >> 4) & 0xF, HEX) + String((radio.rds.rdsD) & 0xF, HEX);
+      XDRGTKRDS += String(((radio.rds.rdsBF >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsBF >> 8) & 0xF, HEX);
+      XDRGTKRDS += String(((radio.rds.rdsBF) >> 4) & 0xF, HEX) + String((radio.rds.rdsBF) & 0xF, HEX);
+      XDRGTKRDS += String(((radio.rds.rdsCF >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsCF >> 8) & 0xF, HEX);
+      XDRGTKRDS += String(((radio.rds.rdsCF) >> 4) & 0xF, HEX) + String((radio.rds.rdsCF) & 0xF, HEX);
+      XDRGTKRDS += String(((radio.rds.rdsDF >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsDF >> 8) & 0xF, HEX);
+      XDRGTKRDS += String(((radio.rds.rdsDF) >> 4) & 0xF, HEX) + String((radio.rds.rdsDF) & 0xF, HEX);
 
       uint8_t erroutput = 0;
-      erroutput |= ((radio.rds.rdsErr >> 8) & B00110000) >> 4;
-      erroutput |= ((radio.rds.rdsErr >> 8) & B00001100);
-      erroutput |= ((radio.rds.rdsErr >> 8) & B00000011) << 4;
+      erroutput |= ((radio.rds.rdsErrF >> 8) & B00110000) >> 4;
+      erroutput |= ((radio.rds.rdsErrF >> 8) & B00001100);
+      erroutput |= ((radio.rds.rdsErrF >> 8) & B00000011) << 4;
 
       XDRGTKRDS += String((erroutput >> 4) & 0xF, HEX);
       XDRGTKRDS += String(erroutput & 0xF, HEX);
       XDRGTKRDS += "\n";
 
       if (XDRGTKRDS != XDRGTKRDSold) {
-        uint8_t piError = radio.rds.rdsErr >> 14;
+        uint8_t piError = radio.rds.rdsErrF >> 14;
         if (piError < 3) {
-          uint8_t piState = radio.rds.piBuffer.add(radio.rds.rdsA, piError);
+          uint8_t piState = radio.rds.piBuffer.add(radio.rds.rdsAF, piError);
 
           if (piState != RdsPiBuffer::STATE_INVALID) {
             DataPrint ("P");
             String PIcodeToSend;
-            PIcodeToSend = String(((radio.rds.rdsA >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsA >> 8) & 0xF, HEX) + String(((radio.rds.rdsA) >> 4) & 0xF, HEX) + String((radio.rds.rdsA) & 0xF, HEX);
+            PIcodeToSend = String(((radio.rds.rdsAF >> 8) >> 4) & 0xF, HEX) + String((radio.rds.rdsAF >> 8) & 0xF, HEX) + String(((radio.rds.rdsAF) >> 4) & 0xF, HEX) + String((radio.rds.rdsAF) & 0xF, HEX);
             PIcodeToSend.toUpperCase();
             DataPrint (PIcodeToSend);
             while (piState != 0) {

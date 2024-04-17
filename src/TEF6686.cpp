@@ -378,7 +378,8 @@ void TEF6686::readRDS(byte showrdserrors)
   if (rds.filter) {
     devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
   } else {
-    if (millis() >= rdstimer + 87) {
+    devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsAF, &rds.rdsBF, &rds.rdsCF, &rds.rdsDF, &rds.rdsErrF);
+	if (millis() >= rdstimer + 87) {
       rdstimer += 87;
       devTEF_Radio_Get_RDS_Data(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
 
@@ -399,10 +400,10 @@ void TEF6686::readRDS(byte showrdserrors)
     }
   }
 
-  rds.rdsAerror = (((rds.rdsErr >> 14) & 0x03) > 2);
-  rds.rdsBerror = (((rds.rdsErr >> 12) & 0x03) > 2);
-  rds.rdsCerror = (((rds.rdsErr >> 10) & 0x03) > 2);
-  rds.rdsDerror = (((rds.rdsErr >> 8) & 0x03) > 2);
+  rds.rdsAerror = (((rds.rdsErrF >> 14) & 0x03) > 2);
+  rds.rdsBerror = (((rds.rdsErrF >> 12) & 0x03) > 2);
+  rds.rdsCerror = (((rds.rdsErrF >> 10) & 0x03) > 2);
+  rds.rdsDerror = (((rds.rdsErrF >> 8) & 0x03) > 2);
 
   rdsAerrorThreshold = (((rds.rdsErr >> 14) & 0x03) > showrdserrors);
   rdsBerrorThreshold = (((rds.rdsErr >> 12) & 0x03) > showrdserrors);
