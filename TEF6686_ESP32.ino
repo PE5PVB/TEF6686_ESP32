@@ -820,16 +820,17 @@ void loop() {
       if (flashing) {
         tft.drawRoundRect(1, 79, 42, 20, 5, ActiveColor);
         tftPrint(0, "MEM", 22, 82, ActiveColor, ActiveColorSmooth, 16);
+      } else {
         tft.drawRoundRect(1, 79, 42, 20, 5, GreyoutColor);
         tftPrint(0, "MEM", 22, 82, GreyoutColor, BackgroundColor, 16);
       }
       flashingtimer = millis();
     }
-
+    delay(50);
     radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
     switch (scancancel) {
       case CORRECTPI: if (radio.rds.correctPI != 0) cancelDXScan(); break;
-      case SIGNAL: if (USN < 250 && WAM < 250 && OStatus > -250 && OStatus < 250) cancelDXScan(); break;
+      case SIGNAL: if ((USN < fmscansens * 30) && (WAM < 230) && (OStatus < 80 && OStatus > -80)) cancelDXScan(); break;
     }
   }
 
