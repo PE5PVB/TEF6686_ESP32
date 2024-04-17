@@ -372,10 +372,9 @@ bool TEF6686::getStatusAM(int16_t &level, uint16_t &noise, uint16_t &cochannel, 
   return snr;
 }
 
-void TEF6686::readRDS(byte showrdserrors)
-{
+void TEF6686::readRDS(byte showrdserrors) {
   uint8_t offset;
-  if (rds.filter) {
+  if (rds.filter || ps_process) {
     devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
   } else {
     if (millis() >= rdstimer + 87) {
@@ -405,10 +404,10 @@ void TEF6686::readRDS(byte showrdserrors)
   rdsDerrorThreshold = (((rds.rdsErr >> 8) & 0x03) > showrdserrors);
 
   if (bitRead(rds.rdsStat, 9)) {                                                                  // We have all data to decode... let's go...
-    rds.rdsAerror = (((rds.rdsErr >> 14) & 0x03) > 2);
-    rds.rdsBerror = (((rds.rdsErr >> 12) & 0x03) > 2);
-    rds.rdsCerror = (((rds.rdsErr >> 10) & 0x03) > 2);
-    rds.rdsDerror = (((rds.rdsErr >> 8) & 0x03) > 2);
+    rds.rdsAerror = (((rds.rdsErr >> 14) & 0x03) > 1);
+    rds.rdsBerror = (((rds.rdsErr >> 12) & 0x03) > 1);
+    rds.rdsCerror = (((rds.rdsErr >> 10) & 0x03) > 1);
+    rds.rdsDerror = (((rds.rdsErr >> 8) & 0x03) > 1);
 
     //PI decoder
     if (!rdsAerrorThreshold && afreset) {
