@@ -2565,6 +2565,7 @@ void DoMemoryPosTune() {
   BWtune = true;
   memtune = true;
   memreset = true;
+  dropout = true;
 }
 
 void ShowFreq(int mode) {
