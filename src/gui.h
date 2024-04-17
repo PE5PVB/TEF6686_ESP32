@@ -6,22 +6,21 @@
 #include "TEF6686.h"
 #include "WiFiConnect.h"
 #include "WiFiConnectParam.h"
-#include "graphics.h"
 
 #define SMETERPIN       27
 #define CONTRASTPIN     2
 
-#define ITEM_GAP    20
-#define ITEM1     30
-#define ITEM2     50
-#define ITEM3     70
-#define ITEM4     90
-#define ITEM5     110
-#define ITEM6     130
-#define ITEM7     150
-#define ITEM8     170
-#define ITEM9     190
-#define ITEM10      210
+#define ITEM_GAP        20
+#define ITEM1           30
+#define ITEM2           50
+#define ITEM3           70
+#define ITEM4           90
+#define ITEM5           110
+#define ITEM6           130
+#define ITEM7           150
+#define ITEM8           170
+#define ITEM9           190
+#define ITEM10          210
 
 enum menupage {INDEX, MAINSETTINGS, AUDIOSETTINGS, DISPLAYSETTINGS, RDSSETTINGS, FMSETTINGS, AMSETTINGS, CONNECTIVITY, DXMODE};
 
@@ -230,5 +229,4 @@ extern void startFMDXScan();
 extern void DoMemoryPosTune();
 extern void UpdateFonts(bool mode);
 extern void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize);
-
 #endif

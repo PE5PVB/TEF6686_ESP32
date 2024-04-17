@@ -18,7 +18,6 @@
 #include "src/TEF6686.h"
 #include "src/constants.h"
 #include "src/language.h"
-#include "src/graphics.h"
 #include "src/gui.h"
 #include "src/comms.h"
 #include "src/rds.h"
@@ -382,8 +381,6 @@ TFT_eSprite SquelchSprite = TFT_eSprite(&tft);
 TFT_eSprite FullLineSprite = TFT_eSprite(&tft);
 TFT_eSprite OneBigLineSprite = TFT_eSprite(&tft);
 TFT_eSprite SignalSprite = TFT_eSprite(&tft);
-TFT_eSprite PSSprite = TFT_eSprite(&tft);
-TFT_eSprite VUSprite = TFT_eSprite(&tft);
 
 WiFiConnect wc;
 WiFiServer Server(7373);
@@ -557,7 +554,6 @@ void setup() {
   tft.init();
   tft.initDMA();
 
-  if (CurrentSkin == 1) CurrentTheme = 13;
   doTheme();
 
   if (displayflip == 0) {
@@ -610,11 +606,6 @@ void setup() {
   SignalSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
   SignalSprite.setTextDatum(TR_DATUM);
   SignalSprite.setSwapBytes(true);
-
-  PSSprite.createSprite(168, 30);
-  PSSprite.setTextDatum(TC_DATUM);
-  PSSprite.loadFont(FONT28);
-  PSSprite.setSwapBytes(true);
 
   UpdateFonts(0);
 
@@ -827,19 +818,10 @@ void loop() {
     if (millis() >= flashingtimer + 500) {
       flashing = !flashing;
       if (flashing) {
-        if (CurrentSkin == 1) {
-          tft.pushImage (12, 76, 33, 15, skin1_memon);
-        } else {
-          tft.drawRoundRect(1, 79, 42, 20, 5, ActiveColor);
-          tftPrint(0, "MEM", 22, 82, ActiveColor, ActiveColorSmooth, 16);
-        }
-      } else {
-        if (CurrentSkin == 1) {
-          tft.pushImage (12, 76, 33, 15, skin1_memoff);
-        } else {
-          tft.drawRoundRect(1, 79, 42, 20, 5, GreyoutColor);
-          tftPrint(0, "MEM", 22, 82, GreyoutColor, BackgroundColor, 16);
-        }
+        tft.drawRoundRect(1, 79, 42, 20, 5, ActiveColor);
+        tftPrint(0, "MEM", 22, 82, ActiveColor, ActiveColorSmooth, 16);
+        tft.drawRoundRect(1, 79, 42, 20, 5, GreyoutColor);
+        tftPrint(0, "MEM", 22, 82, GreyoutColor, BackgroundColor, 16);
       }
       flashingtimer = millis();
     }
@@ -919,32 +901,30 @@ void loop() {
 
   if ((SStatus / 10 > LowLevelSet) && !LowLevelInit && !menu && band < BAND_GAP) {
     if (!screenmute && !advancedRDS && !afscreen) {
-      if (CurrentSkin != 1) {
-        if (showmodulation) {
-          tftPrint(-1, "10", 27, 144, ActiveColor, ActiveColorSmooth, 16);
-          tftPrint(-1, "30", 57, 144, ActiveColor, ActiveColorSmooth, 16);
-          tftPrint(-1, "50", 87, 144, ActiveColor, ActiveColorSmooth, 16);
-          tftPrint(-1, "70", 117, 144, ActiveColor, ActiveColorSmooth, 16);
-          tftPrint(-1, "100", 164, 144, ActiveColor, ActiveColorSmooth, 16);
-          tftPrint(0, "M", 7, 128, ActiveColor, ActiveColorSmooth, 16);
-          for (byte segments = 0; segments < 94; segments++) {
-            if (segments > 54) {
-              if (((segments - 53) % 10) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, BarSignificantColor);
-            } else {
-              if (((segments + 1) % 6) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, ModBarInsignificantColor);
-            }
+      if (showmodulation) {
+        tftPrint(-1, "10", 27, 144, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, "30", 57, 144, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, "50", 87, 144, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, "70", 117, 144, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, "100", 164, 144, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(0, "M", 7, 128, ActiveColor, ActiveColorSmooth, 16);
+        for (byte segments = 0; segments < 94; segments++) {
+          if (segments > 54) {
+            if (((segments - 53) % 10) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, BarSignificantColor);
+          } else {
+            if (((segments + 1) % 6) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, ModBarInsignificantColor);
           }
         }
-        if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
-        if (region == REGION_US) {
-          tftPrint(-1, "PI:", 212, 184, ActiveColor, ActiveColorSmooth, 16);
-          tftPrint(-1, "ID:", 212, 201, ActiveColor, ActiveColorSmooth, 16);
-        }
-        tftPrint(-1, "PS:", 3, 193, ActiveColor, ActiveColorSmooth, 16);
-        tftPrint(-1, "RT:", 3, 221, ActiveColor, ActiveColorSmooth, 16);
-        tftPrint(-1, "PTY:", 3, 163, ActiveColor, ActiveColorSmooth, 16);
-        if (!showmodulation) tft.drawLine(20, 143, 204, 143, GreyoutColor); else tft.drawLine(20, 143, 204, 143, TFT_DARKGREY);
       }
+      if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
+      if (region == REGION_US) {
+        tftPrint(-1, "PI:", 212, 184, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, "ID:", 212, 201, ActiveColor, ActiveColorSmooth, 16);
+      }
+      tftPrint(-1, "PS:", 3, 193, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, "RT:", 3, 221, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, "PTY:", 3, 163, ActiveColor, ActiveColorSmooth, 16);
+      if (!showmodulation) tft.drawLine(20, 143, 204, 143, GreyoutColor); else tft.drawLine(20, 143, 204, 143, TFT_DARKGREY);
     }
     LowLevelInit = true;
   }
@@ -952,36 +932,32 @@ void loop() {
   if ((SStatus / 10 <= LowLevelSet) && band < BAND_GAP) {
     if (LowLevelInit && !menu) {
       if (!screenmute && !afscreen && !advancedRDS) {
-        if (CurrentSkin != 1) {
-          for (byte segments = 0; segments < 94; segments++) {
-            if (segments > 54) {
-              if (((segments - 53) % 10) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, GreyoutColor);
-            } else {
-              if (((segments + 1) % 6) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, GreyoutColor);
-            }
+        for (byte segments = 0; segments < 94; segments++) {
+          if (segments > 54) {
+            if (((segments - 53) % 10) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, GreyoutColor);
+          } else {
+            if (((segments + 1) % 6) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, GreyoutColor);
           }
-          if (showmodulation) {
-            tftPrint(-1, "10", 27, 144, GreyoutColor, BackgroundColor, 16);
-            tftPrint(-1, "30", 57, 144, GreyoutColor, BackgroundColor, 16);
-            tftPrint(-1, "50", 87, 144, GreyoutColor, BackgroundColor, 16);
-            tftPrint(-1, "70", 117, 144, GreyoutColor, BackgroundColor, 16);
-            tftPrint(-1, "100", 164, 144, GreyoutColor, BackgroundColor, 16);
-            tftPrint(0, "M", 7, 128, GreyoutColor, BackgroundColor, 16);
-            tft.fillRect(16, 133, 188, 6, GreyoutColor);
-          }
-          if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
-          if (region == REGION_US) {
-            tftPrint(-1, "PI:", 212, 184, GreyoutColor, BackgroundColor, 16);
-            tftPrint(-1, "ID:", 212, 201, GreyoutColor, BackgroundColor, 16);
-          }
-          tftPrint(-1, "PS:", 3, 193, GreyoutColor, BackgroundColor, 16);
-          tftPrint(-1, "RT:", 3, 221, GreyoutColor, BackgroundColor, 16);
-          tftPrint(-1, "PTY:", 3, 163, GreyoutColor, BackgroundColor, 16);
-          tft.drawLine(20, 143, 204, 143, GreyoutColor);
-          tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
-        } else {
-          tft.pushImage (136, 3, 36, 23, skin1_rdsoff);
         }
+        if (showmodulation) {
+          tftPrint(-1, "10", 27, 144, GreyoutColor, BackgroundColor, 16);
+          tftPrint(-1, "30", 57, 144, GreyoutColor, BackgroundColor, 16);
+          tftPrint(-1, "50", 87, 144, GreyoutColor, BackgroundColor, 16);
+          tftPrint(-1, "70", 117, 144, GreyoutColor, BackgroundColor, 16);
+          tftPrint(-1, "100", 164, 144, GreyoutColor, BackgroundColor, 16);
+          tftPrint(0, "M", 7, 128, GreyoutColor, BackgroundColor, 16);
+          tft.fillRect(16, 133, 188, 6, GreyoutColor);
+        }
+        if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
+        if (region == REGION_US) {
+          tftPrint(-1, "PI:", 212, 184, GreyoutColor, BackgroundColor, 16);
+          tftPrint(-1, "ID:", 212, 201, GreyoutColor, BackgroundColor, 16);
+        }
+        tftPrint(-1, "PS:", 3, 193, GreyoutColor, BackgroundColor, 16);
+        tftPrint(-1, "RT:", 3, 221, GreyoutColor, BackgroundColor, 16);
+        tftPrint(-1, "PTY:", 3, 163, GreyoutColor, BackgroundColor, 16);
+        tft.drawLine(20, 143, 204, 143, GreyoutColor);
+        tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
       }
       LowLevelInit = false;
     }
@@ -1024,11 +1000,7 @@ void loop() {
       lowsignaltimer = millis();
       change = false;
       if (SStatus > SStatusold || SStatus < SStatusold) {
-        switch (CurrentSkin) {
-          case 0: SignalSprite.fillSprite(BackgroundColor); break;
-          case 1: SignalSprite.pushImage(-100 + 13, -149 + 30, 292, 170, popupbackground); break;
-        }
-
+        SignalSprite.fillSprite(BackgroundColor);
         SignalSprite.loadFont(FONT48);
         SignalSprite.drawString(String(SStatus / 10), 58, 0);
         SignalSprite.unloadFont();
@@ -1865,13 +1837,7 @@ void ToggleSWMIBand(bool frequencyup) {
 void SelectBand() {
   if (band > BAND_GAP) {
     seek = false;
-    if (!screenmute) {
-      if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-        tft.pushImage (106, 3, 27, 23, skin1_muteoff);
-      } else {
-        tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
-      }
-    }
+    if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
     if (tunemode == TUNE_MI_BAND && band != BAND_SW) tunemode = TUNE_MAN;
     BWreset = true;
     BWset = BWsetAM;
@@ -1888,26 +1854,20 @@ void SelectBand() {
     doBW();
     if (!screenmute) {
       BuildDisplay();
-      if (CurrentSkin != 1) {
-        if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
-        if (region == REGION_US) {
-          tftPrint(-1, "PI:", 212, 184, GreyoutColor, BackgroundColor, 16);
-          tftPrint(-1, "ID:", 212, 201, GreyoutColor, BackgroundColor, 16);
-        }
-
-        tftPrint(-1, "PS:", 3, 193, GreyoutColor, BackgroundColor, 16);
-        tftPrint(-1, "RT:", 3, 221, GreyoutColor, BackgroundColor, 16);
-        tftPrint(-1, "PTY:", 3, 163, GreyoutColor, BackgroundColor, 16);
-        tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
-        tft.drawRoundRect(248, 56, 32, 20, 5, GreyoutColor);
-        tftPrint(0, "iMS", 265, 59, GreyoutColor, BackgroundColor, 16);
-        tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
-        tftPrint(0, "EQ", 303, 59, GreyoutColor, BackgroundColor, 16);
-      } else {
-        tft.pushImage (260, 48, 32, 16, skin1_imsoff);
-        tft.pushImage (292, 48, 25, 16, skin1_eqoff);
-        tft.pushImage (136, 3, 36, 23, skin1_rdsoff);
+      if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
+      if (region == REGION_US) {
+        tftPrint(-1, "PI:", 212, 184, GreyoutColor, BackgroundColor, 16);
+        tftPrint(-1, "ID:", 212, 201, GreyoutColor, BackgroundColor, 16);
       }
+
+      tftPrint(-1, "PS:", 3, 193, GreyoutColor, BackgroundColor, 16);
+      tftPrint(-1, "RT:", 3, 221, GreyoutColor, BackgroundColor, 16);
+      tftPrint(-1, "PTY:", 3, 163, GreyoutColor, BackgroundColor, 16);
+      tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
+      tft.drawRoundRect(248, 56, 32, 20, 5, GreyoutColor);
+      tftPrint(0, "iMS", 265, 59, GreyoutColor, BackgroundColor, 16);
+      tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
+      tftPrint(0, "EQ", 303, 59, GreyoutColor, BackgroundColor, 16);
     }
   } else {
     if (tunemode == TUNE_MI_BAND) tunemode = TUNE_MAN;
@@ -1936,13 +1896,7 @@ void BWButtonPress() {
     if (!usesquelch) radio.setUnMute();
     if (!menu) {
       seek = false;
-      if (!screenmute) {
-        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-          tft.pushImage (106, 3, 27, 23, skin1_muteoff);
-        } else {
-          tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
-        }
-      }
+      if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
       unsigned long counterold = millis();
       unsigned long counter = millis();
       while (digitalRead(BWBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
@@ -1971,31 +1925,23 @@ void BWButtonPress() {
 void doStereoToggle() {
   if (StereoToggle) {
     if (!screenmute) {
-      if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-        tft.pushImage (67, 3, 34, 23, skin1_mono);
-      } else {
-        tft.drawSmoothCircle(66, 15, 10, BackgroundColor, BackgroundColor);
-        tft.drawSmoothCircle(66, 15, 9, BackgroundColor, BackgroundColor);
-        tft.drawSmoothCircle(76, 15, 10, BackgroundColor, BackgroundColor);
-        tft.drawSmoothCircle(76, 15, 9, BackgroundColor, BackgroundColor);
-        tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
-        tft.drawSmoothCircle(71, 15, 9, SecondaryColor, SecondaryColorSmooth);
-      }
+      tft.drawSmoothCircle(66, 15, 10, BackgroundColor, BackgroundColor);
+      tft.drawSmoothCircle(66, 15, 9, BackgroundColor, BackgroundColor);
+      tft.drawSmoothCircle(76, 15, 10, BackgroundColor, BackgroundColor);
+      tft.drawSmoothCircle(76, 15, 9, BackgroundColor, BackgroundColor);
+      tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
+      tft.drawSmoothCircle(71, 15, 9, SecondaryColor, SecondaryColorSmooth);
     }
     radio.setMono(true);
     StereoToggle = false;
   } else {
     if (!screenmute) {
-      if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-        tft.pushImage (67, 3, 34, 23, skin1_stereooff);
-      } else {
-        tft.drawSmoothCircle(71, 15, 10, BackgroundColor, BackgroundColor);
-        tft.drawSmoothCircle(71, 15, 9, BackgroundColor, BackgroundColor);
-        tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
-        tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
-        tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
-        tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
-      }
+      tft.drawSmoothCircle(71, 15, 10, BackgroundColor, BackgroundColor);
+      tft.drawSmoothCircle(71, 15, 9, BackgroundColor, BackgroundColor);
+      tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
+      tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
+      tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
+      tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
     }
     radio.setMono(false);
     Stereostatusold = false;
@@ -2020,11 +1966,7 @@ void ModeButtonPress() {
       if (!menu) {
         seek = false;
         if (!screenmute) {
-          if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-            tft.pushImage (106, 3, 27, 23, skin1_muteoff);
-          } else {
-            tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
-          }
+          tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
         }
         memorystore = false;
         unsigned long counterold = millis();
@@ -2099,32 +2041,17 @@ void ModeButtonPress() {
 
 void ShowStepSize() {
   if (!advancedRDS) {
-    if (CurrentSkin == 1) {
-      tft.pushImage (198, 30, 22, 5, skin1_stepoff);
-      tft.pushImage (229, 30, 22, 5, skin1_stepoff);
-      if (band < BAND_GAP) tft.pushImage (120, 30, 22, 5, skin1_stepoff); else if (band != BAND_LW && band != BAND_MW) tft.pushImage (136, 30, 22, 5, skin1_stepoff);
-      if (band < BAND_GAP) tft.pushImage (151, 30, 22, 5, skin1_stepoff); else tft.pushImage (166, 30, 22, 5, skin1_stepoff);
-      if (stepsize == 1) tft.pushImage (229, 30, 22, 5, skin1_stepon);
-      if (stepsize == 2) tft.pushImage (198, 30, 22, 5, skin1_stepon);
-      if (stepsize == 3) {
-        if (band < BAND_GAP) tft.pushImage (151, 30, 22, 5, skin1_stepon); else tft.pushImage (166, 30, 22, 5, skin1_stepon);
-      }
-      if (stepsize == 4) {
-        if (band < BAND_GAP) tft.pushImage (120, 30, 22, 5, skin1_stepon); else tft.pushImage (136, 30, 22, 5, skin1_stepon);
-      }
-    } else {
-      tft.fillRect(191, 38, 15, 4, GreyoutColor);
-      tft.fillRect(222, 38, 15, 4, GreyoutColor);
-      if (band < BAND_GAP) tft.fillRect(113, 38, 15, 4, GreyoutColor); else if (band != BAND_LW && band != BAND_MW) tft.fillRect(129, 38, 15, 4, GreyoutColor);
-      if (band < BAND_GAP) tft.fillRect(144, 38, 15, 4, GreyoutColor); else tft.fillRect(159, 38, 15, 4, GreyoutColor);
-      if (stepsize == 1) tft.fillRect(222, 38, 15, 4, InsignificantColor);
-      if (stepsize == 2) tft.fillRect(191, 38, 15, 4, InsignificantColor);
-      if (stepsize == 3) {
-        if (band < BAND_GAP) tft.fillRect(144, 38, 15, 4, InsignificantColor); else tft.fillRect(159, 38, 15, 4, InsignificantColor);
-      }
-      if (stepsize == 4) {
-        if (band < BAND_GAP) tft.fillRect(113, 38, 15, 4, InsignificantColor); else tft.fillRect(129, 38, 15, 4, InsignificantColor);
-      }
+    tft.fillRect(191, 38, 15, 4, GreyoutColor);
+    tft.fillRect(222, 38, 15, 4, GreyoutColor);
+    if (band < BAND_GAP) tft.fillRect(113, 38, 15, 4, GreyoutColor); else if (band != BAND_LW && band != BAND_MW) tft.fillRect(129, 38, 15, 4, GreyoutColor);
+    if (band < BAND_GAP) tft.fillRect(144, 38, 15, 4, GreyoutColor); else tft.fillRect(159, 38, 15, 4, GreyoutColor);
+    if (stepsize == 1) tft.fillRect(222, 38, 15, 4, InsignificantColor);
+    if (stepsize == 2) tft.fillRect(191, 38, 15, 4, InsignificantColor);
+    if (stepsize == 3) {
+      if (band < BAND_GAP) tft.fillRect(144, 38, 15, 4, InsignificantColor); else tft.fillRect(159, 38, 15, 4, InsignificantColor);
+    }
+    if (stepsize == 4) {
+      if (band < BAND_GAP) tft.fillRect(113, 38, 15, 4, InsignificantColor); else tft.fillRect(129, 38, 15, 4, InsignificantColor);
     }
   }
 }
@@ -2282,13 +2209,7 @@ void ButtonPress() {
         }
       } else {
         seek = false;
-        if (!screenmute) {
-          if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-            tft.pushImage (106, 3, 27, 23, skin1_muteoff);
-          } else {
-            tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
-          }
-        }
+        if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
         unsigned long counterold = millis();
         unsigned long counter = millis();
         while (digitalRead(ROTARY_BUTTON) == LOW && counter - counterold <= 1000) counter = millis();
@@ -2547,14 +2468,14 @@ void ShowMemoryPos() {
     if (advancedRDS) {
       tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 215, 36, SecondaryColor, SecondaryColorSmooth, BackgroundColor, 16);
     } else {
-      if (CurrentSkin == 1) tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 5, 29, memposcolor, memposcolorsmooth, BackgroundColor5, 16); else tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 50, 32, memposcolor, memposcolorsmooth, BackgroundColor, 16);
+      tftReplace(-1, String(memoryposold + 1), String(memorypos + 1), 50, 32, memposcolor, memposcolorsmooth, BackgroundColor, 16);
     }
     memoryposold = memorypos;
   } else {
     if (advancedRDS) {
       tftPrint(-1, String(memorypos + 1), 215, 36, BackgroundColor, BackgroundColor, 16);
     } else {
-      if (CurrentSkin == 1) tftPrint(-1, String(memorypos + 1), 5, 29, BackgroundColor5, BackgroundColor5, 16); else tftPrint(-1, String(memorypos + 1), 50, 32, BackgroundColor, BackgroundColor, 16);
+      tftPrint(-1, String(memorypos + 1), 50, 32, BackgroundColor, BackgroundColor, 16);
     }
   }
 }
@@ -2597,33 +2518,24 @@ void DoMemoryPosTune() {
     StereoToggle = presets[memorypos].ms;
     if (!StereoToggle) {
       Stereostatusold = false;
-      if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-        tft.pushImage (67, 3, 34, 23, skin1_mono);
-      } else {
-        tft.drawSmoothCircle(66, 15, 10, BackgroundColor, BackgroundColor);
-        tft.drawSmoothCircle(66, 15, 9, BackgroundColor, BackgroundColor);
-        tft.drawSmoothCircle(76, 15, 10, BackgroundColor, BackgroundColor);
-        tft.drawSmoothCircle(76, 15, 9, BackgroundColor, BackgroundColor);
-        tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
-        tft.drawSmoothCircle(71, 15, 9, SecondaryColor, SecondaryColorSmooth);
-      }
+      tft.drawSmoothCircle(66, 15, 10, BackgroundColor, BackgroundColor);
+      tft.drawSmoothCircle(66, 15, 9, BackgroundColor, BackgroundColor);
+      tft.drawSmoothCircle(76, 15, 10, BackgroundColor, BackgroundColor);
+      tft.drawSmoothCircle(76, 15, 9, BackgroundColor, BackgroundColor);
+      tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
+      tft.drawSmoothCircle(71, 15, 9, SecondaryColor, SecondaryColorSmooth);
     } else {
       Stereostatusold = false;
-      if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-        tft.pushImage (67, 3, 34, 23, skin1_stereooff);
-      } else {
-        tft.drawSmoothCircle(71, 15, 10, BackgroundColor, BackgroundColor);
-        tft.drawSmoothCircle(71, 15, 9, BackgroundColor, BackgroundColor);
-        tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
-        tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
-        tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
-        tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
-      }
+      tft.drawSmoothCircle(71, 15, 10, BackgroundColor, BackgroundColor);
+      tft.drawSmoothCircle(71, 15, 9, BackgroundColor, BackgroundColor);
+      tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
+      tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
+      tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
+      tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
     }
   }
 
   radio.clearRDS(fullsearchrds);
-  //  RDSstatus = false;
 
   if (RDSSPYUSB) Serial.print("G:\r\nRESET-------\r\n\r\n");
   if (RDSSPYTCP) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
@@ -2673,7 +2585,7 @@ void ShowFreq(int mode) {
     }
 
     if (!screenmute) {
-      if (CurrentSkin == 1) FrequencySprite.pushImage (-57, -40, 320, 240, skin1_mainbackground); else FrequencySprite.fillSprite(BackgroundColor);
+      FrequencySprite.fillSprite(BackgroundColor);
 
       switch (freqfont) {
         case 0: FrequencySprite.loadFont(FREQFONT0); break;
@@ -2698,7 +2610,7 @@ void ShowFreq(int mode) {
       }
 
       FrequencySprite.unloadFont();
-      if (CurrentSkin == 1) FrequencySprite.pushSprite(57, 40); else FrequencySprite.pushSprite(46, 46);
+      FrequencySprite.pushSprite(46, 46);
     }
 
     freqold = frequency_AM;
@@ -2728,14 +2640,14 @@ void ShowFreq(int mode) {
         FrequencySprite.setTextDatum(TR_DATUM);
 
         if (mode == 0) {
-          if (CurrentSkin == 1) FrequencySprite.pushImage (-55, -40, 320, 240, skin1_mainbackground); else FrequencySprite.fillSprite(BackgroundColor);
+          FrequencySprite.fillSprite(BackgroundColor);
           FrequencySprite.setTextColor(FreqColor, FreqColorSmooth, false);
           FrequencySprite.drawString(String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100) + " ", 218, -6);
-          if (CurrentSkin == 1) FrequencySprite.pushSprite(57, 40); else FrequencySprite.pushSprite(46, 46);
+          FrequencySprite.pushSprite(46, 46);
           freqold = freq;
         } else if (mode == 1) {
-          if (CurrentSkin == 1) FrequencySprite.pushImage (-55, -40, 320, 240, skin1_mainbackground); else FrequencySprite.fillSprite(BackgroundColor);
-          if (CurrentSkin == 1) FrequencySprite.pushSprite(57, 40); else FrequencySprite.pushSprite(46, 46);
+          FrequencySprite.fillSprite(BackgroundColor);
+          FrequencySprite.pushSprite(46, 46);
         }
         FrequencySprite.unloadFont();
       }
@@ -2767,15 +2679,10 @@ void ShowFreq(int mode) {
   if (!rdsflagreset && !screenmute && !afscreen) {
     ShowRDSLogo(false);
     if (!advancedRDS) {
-      if (CurrentSkin == 1) {
-        RadiotextSprite.pushImage (-25, -188, 320, 240, skin1_mainbackground);
-        RadiotextSprite.pushSprite(25, 188);
-      } else {
-        RadiotextSprite.fillSprite(BackgroundColor);
-        RadiotextSprite.pushSprite(36, 220);
-        tft.fillCircle(314, 223, 2, GreyoutColor);
-        tft.fillCircle(314, 234, 2, GreyoutColor);
-      }
+      RadiotextSprite.fillSprite(BackgroundColor);
+      RadiotextSprite.pushSprite(36, 220);
+      tft.fillCircle(314, 223, 2, GreyoutColor);
+      tft.fillCircle(314, 234, 2, GreyoutColor);
     } else {
       RDSSprite.fillSprite(BackgroundColor);
       tft.fillCircle(203, 223, 2, GreyoutColor);
@@ -2792,20 +2699,12 @@ void ShowSignalLevel() {
       SNRupdatetimer = millis();
       if (!advancedRDS) {
         if (CN > (CNold + 1) || CN < (CNold - 1)) {
-          if (CurrentSkin == 1) {
-            if (CNold == 0) tftPrint(-1, "--", 274, 128, BackgroundColor2, BackgroundColor2, 16); else tftPrint(-1, String(CNold), 274, 128, BackgroundColor2, BackgroundColor2, 16);
-          } else {
-            if (CNold == 0) tftPrint(1, "--", 295, 163, BackgroundColor, BackgroundColor, 16); else tftPrint(1, String(CNold), 295, 163, BackgroundColor, BackgroundColor, 16);
-          }
+          if (CNold == 0) tftPrint(1, "--", 295, 163, BackgroundColor, BackgroundColor, 16); else tftPrint(1, String(CNold), 295, 163, BackgroundColor, BackgroundColor, 16);
           if (tuned) {
-            if (CurrentSkin == 1) {
-              if (CN == 0) tftPrint(-1, "--", 274, 128, FreqColor, FreqColorSmooth, 16); else tftPrint(-1, String(CN), 274, 128, PrimaryColor, PrimaryColorSmooth, 16);
-            } else {
-              if (CN == 0) tftPrint(1, "--", 295, 163, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(CN), 295, 163, PrimaryColor, PrimaryColorSmooth, 16);
-            }
+            if (CN == 0) tftPrint(1, "--", 295, 163, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(CN), 295, 163, PrimaryColor, PrimaryColorSmooth, 16);
             CNold = CN;
           } else {
-            if (CurrentSkin == 1) tftPrint(-1, "--", 274, 128, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, "--", 295, 163, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "--", 295, 163, PrimaryColor, PrimaryColorSmooth, 16);
             CNold = 0;
           }
         }
@@ -2842,31 +2741,13 @@ void ShowSignalLevel() {
       if (advancedRDS) {
         tftReplace(1, String(SStatusold / 10) + "." + String(abs(SStatusold % 10)), String(SStatusprint / 10) + "." + String(abs(SStatusprint % 10)), 273, 51, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 16);
       } else {
-        if (CurrentSkin == 1) {
-          if (SStatusold / 10 != SStatusprint / 10) tftReplace(1, String(SStatusold / 10), String(SStatusprint / 10), 262, 99, FreqColor, FreqColorSmooth, BackgroundColor2, 28);
-          tftReplace(-1, "." + String(abs(SStatusold % 10)), "." + String(abs(SStatusprint % 10)), 264, 99, FreqColor, FreqColorSmooth, BackgroundColor2, 16);
+        if (SStatusold / 10 != SStatusprint / 10) tftReplace(1, String(SStatusold / 10), String(SStatusprint / 10), 288, 105, FreqColor, FreqColorSmooth, BackgroundColor, 48);
+        tftReplace(1, "." + String(abs(SStatusold % 10)), "." + String(abs(SStatusprint % 10)), 310, 105, FreqColor, FreqColorSmooth, BackgroundColor, 28);
 
-          int SStatuscalc = SStatus;
-          if (SStatuscalc < 0) SStatuscalc = 0;
-          if (SStatuscalc > 700) SStatuscalc = 700;
-
-          if (band < BAND_GAP) segments = map(SStatuscalc / 10, 0, 70, 0, 136); else segments = map((SStatuscalc + 200) / 10, 0, 120, 0, 136);
-          tft.fillRect(18, 213, 136, 6, GreyoutColor);
-          if (segments > 100) {
-            tft.fillRect(18, 213, 100, 6, FreqColor);
-            tft.fillRect(18 + 100, 213, segments - 100, 6, BarSignificantColor);
-          } else {
-            tft.fillRect(18, 213, segments, 6, FreqColor);
-          }
-        } else {
-          if (SStatusold / 10 != SStatusprint / 10) tftReplace(1, String(SStatusold / 10), String(SStatusprint / 10), 288, 105, FreqColor, FreqColorSmooth, BackgroundColor, 48);
-          tftReplace(1, "." + String(abs(SStatusold % 10)), "." + String(abs(SStatusprint % 10)), 310, 105, FreqColor, FreqColorSmooth, BackgroundColor, 28);
-
-          if (band < BAND_GAP) segments = map(SStatus / 10, 0, 70, 0, 100); else segments = (SStatus + 200) / 10;
-          tft.fillRect(16, 105, 2 * constrain(segments, 0, 54), 6, BarInsignificantColor);
-          tft.fillRect(16 + 2 * 54, 105, 2 * (constrain(segments, 54, 94) - 54), 6, BarSignificantColor);
-          tft.fillRect(16 + 2 * constrain(segments, 0, 94), 105, 2 * (94 - constrain(segments, 0, 94)), 6, GreyoutColor);
-        }
+        if (band < BAND_GAP) segments = map(SStatus / 10, 0, 70, 0, 100); else segments = (SStatus + 200) / 10;
+        tft.fillRect(16, 105, 2 * constrain(segments, 0, 54), 6, BarInsignificantColor);
+        tft.fillRect(16 + 2 * 54, 105, 2 * (constrain(segments, 54, 94) - 54), 6, BarSignificantColor);
+        tft.fillRect(16 + 2 * constrain(segments, 0, 94), 105, 2 * (94 - constrain(segments, 0, 94)), 6, GreyoutColor);
       }
       SStatusold = SStatusprint;
     }
@@ -2883,17 +2764,9 @@ void ShowRDSLogo(bool RDSstatus) {
   if (!screenmute) {
     if (RDSstatus != RDSstatusold) {
       if (RDSstatus) {
-        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-          tft.pushImage (136, 3, 36, 23, skin1_rdson);
-        } else {
-          tft.drawBitmap(122, 5, RDSLogo, 35, 22, RDSColor);
-        }
+        tft.drawBitmap(122, 5, RDSLogo, 35, 22, RDSColor);
       } else {
-        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-          tft.pushImage (136, 3, 36, 23, skin1_rdsoff);
-        } else {
-          tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
-        }
+        tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
       }
     }
     RDSstatusold = RDSstatus;
@@ -2905,24 +2778,16 @@ void ShowStereoStatus() {
     if (band < BAND_GAP) Stereostatus = radio.getStereoStatus(); else Stereostatus = false;
     if (Stereostatus != Stereostatusold) {
       if (Stereostatus && !screenmute) {
-        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-          tft.pushImage (67, 3, 34, 23, skin1_stereoon);
-        } else {
-          tft.drawSmoothCircle(66, 15, 10, StereoColor, StereoColorSmooth);
-          tft.drawSmoothCircle(66, 15, 9, StereoColor, StereoColorSmooth);
-          tft.drawSmoothCircle(76, 15, 10, StereoColor, StereoColorSmooth);
-          tft.drawSmoothCircle(76, 15, 9, StereoColor, StereoColorSmooth);
-        }
+        tft.drawSmoothCircle(66, 15, 10, StereoColor, StereoColorSmooth);
+        tft.drawSmoothCircle(66, 15, 9, StereoColor, StereoColorSmooth);
+        tft.drawSmoothCircle(76, 15, 10, StereoColor, StereoColorSmooth);
+        tft.drawSmoothCircle(76, 15, 9, StereoColor, StereoColorSmooth);
       } else {
         if (!screenmute) {
-          if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-            tft.pushImage (67, 3, 34, 23, skin1_stereooff);
-          } else {
-            tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
-            tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
-            tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
-            tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
-          }
+          tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
+          tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
+          tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
+          tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
         }
       }
       Stereostatusold = Stereostatus;
@@ -2940,162 +2805,90 @@ void ShowOffset() {
 
     if (band < BAND_GAP) {
       if (OStatus < -500) {
-        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-          tft.pushImage (5, 3, 20, 23, skin1_tune_loff);
-          tft.pushImage (25, 3, 18, 23, skin1_tunedoff);
-          tft.pushImage (43, 3, 20, 23, skin1_tune_ron);
-        } else {
-          tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
-          tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
-          tft.fillCircle(26, 15, 3, GreyoutColor);
-          tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
-          tft.fillTriangle(42, 14, 50, 8, 50, 22, SignificantColor);
-        }
+        tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
+        tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
+        tft.fillCircle(26, 15, 3, GreyoutColor);
+        tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
+        tft.fillTriangle(42, 14, 50, 8, 50, 22, SignificantColor);
         tuned = false;
       } else if (OStatus < -250 && OStatus > -500) {
-        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-          tft.pushImage (5, 3, 20, 23, skin1_tune_loff);
-          tft.pushImage (25, 3, 18, 23, skin1_tunedoff);
-          tft.pushImage (43, 3, 20, 23, skin1_tune_ron);
-        } else {
-          tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
-          tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
-          tft.fillCircle(26, 15, 3, GreyoutColor);
-          tft.fillTriangle(32, 14, 40, 8, 40, 22, SignificantColor);
-          tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
-        }
+        tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
+        tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
+        tft.fillCircle(26, 15, 3, GreyoutColor);
+        tft.fillTriangle(32, 14, 40, 8, 40, 22, SignificantColor);
+        tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
         tuned = false;
       } else if (USN < 250 && WAM < 250 && OStatus > -250 && OStatus < 250 && !SQ) {
-        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-          tft.pushImage (5, 3, 20, 23, skin1_tune_loff);
-          tft.pushImage (25, 3, 18, 23, skin1_tunedon);
-          tft.pushImage (43, 3, 20, 23, skin1_tune_roff);
-        } else {
-          tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
-          tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
-          tft.fillCircle(26, 15, 3, InsignificantColor);
-          tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
-          tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
-        }
+        tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
+        tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
+        tft.fillCircle(26, 15, 3, InsignificantColor);
+        tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
+        tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
         tuned = true;
       } else if (OStatus > 250 && OStatus < 500) {
-        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-          tft.pushImage (5, 3, 20, 23, skin1_tune_lon);
-          tft.pushImage (25, 3, 18, 23, skin1_tunedoff);
-          tft.pushImage (43, 3, 20, 23, skin1_tune_roff);
-        } else {
-          tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
-          tft.fillTriangle(13, 8, 13, 22, 21, 14, SignificantColor);
-          tft.fillCircle(26, 15, 3, GreyoutColor);
-          tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
-          tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
-        }
+        tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
+        tft.fillTriangle(13, 8, 13, 22, 21, 14, SignificantColor);
+        tft.fillCircle(26, 15, 3, GreyoutColor);
+        tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
+        tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
         tuned = false;
       } else if (OStatus > 500) {
-        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-          tft.pushImage (5, 3, 20, 23, skin1_tune_lon);
-          tft.pushImage (25, 3, 18, 23, skin1_tunedoff);
-          tft.pushImage (43, 3, 20, 23, skin1_tune_roff);
-        } else {
-          tft.fillTriangle(3, 8, 3, 22, 11, 14, SignificantColor);
-          tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
-          tft.fillCircle(26, 15, 3, GreyoutColor);
-          tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
-          tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
-        }
+        tft.fillTriangle(3, 8, 3, 22, 11, 14, SignificantColor);
+        tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
+        tft.fillCircle(26, 15, 3, GreyoutColor);
+        tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
+        tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
         tuned = false;
       } else {
-        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-          tft.pushImage (5, 3, 20, 23, skin1_tune_loff);
-          tft.pushImage (25, 3, 18, 23, skin1_tunedoff);
-          tft.pushImage (43, 3, 20, 23, skin1_tune_roff);
-        } else {
-          tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
-          tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
-          tft.fillCircle(26, 15, 3, GreyoutColor);
-          tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
-          tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
-        }
+        tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
+        tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
+        tft.fillCircle(26, 15, 3, GreyoutColor);
+        tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
+        tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
         tuned = false;
       }
     } else {
       if (OStatus <= -3) {
-        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-          tft.pushImage (5, 3, 20, 23, skin1_tune_loff);
-          tft.pushImage (25, 3, 18, 23, skin1_tunedoff);
-          tft.pushImage (43, 3, 20, 23, skin1_tune_ron);
-        } else {
-          tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
-          tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
-          tft.fillCircle(26, 15, 3, GreyoutColor);
-          tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
-          tft.fillTriangle(42, 14, 50, 8, 50, 22, SignificantColor);
-        }
+        tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
+        tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
+        tft.fillCircle(26, 15, 3, GreyoutColor);
+        tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
+        tft.fillTriangle(42, 14, 50, 8, 50, 22, SignificantColor);
         tuned = false;
       } else if (OStatus < -2 && OStatus > -3) {
-        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-          tft.pushImage (5, 3, 20, 23, skin1_tune_loff);
-          tft.pushImage (25, 3, 18, 23, skin1_tunedoff);
-          tft.pushImage (43, 3, 20, 23, skin1_tune_ron);
-        } else {
-          tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
-          tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
-          tft.fillCircle(26, 15, 3, GreyoutColor);
-          tft.fillTriangle(32, 14, 40, 8, 40, 22, SignificantColor);
-          tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
-        }
+        tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
+        tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
+        tft.fillCircle(26, 15, 3, GreyoutColor);
+        tft.fillTriangle(32, 14, 40, 8, 40, 22, SignificantColor);
+        tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
         tuned = false;
       } else if (OStatus > -2 && OStatus < 2 && !SQ) {
-        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-          tft.pushImage (5, 3, 20, 23, skin1_tune_loff);
-          tft.pushImage (25, 3, 18, 23, skin1_tunedon);
-          tft.pushImage (43, 3, 20, 23, skin1_tune_roff);
-        } else {
-          tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
-          tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
-          tft.fillCircle(26, 15, 3, InsignificantColor);
-          tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
-          tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
-        }
+        tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
+        tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
+        tft.fillCircle(26, 15, 3, InsignificantColor);
+        tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
+        tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
         tuned = true;
       } else if (OStatus > 2 && OStatus < 3) {
-        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-          tft.pushImage (5, 3, 20, 23, skin1_tune_lon);
-          tft.pushImage (25, 3, 18, 23, skin1_tunedoff);
-          tft.pushImage (43, 3, 20, 23, skin1_tune_roff);
-        } else {
-          tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
-          tft.fillTriangle(13, 8, 13, 22, 21, 14, SignificantColor);
-          tft.fillCircle(26, 15, 3, GreyoutColor);
-          tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
-          tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
-        }
+        tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
+        tft.fillTriangle(13, 8, 13, 22, 21, 14, SignificantColor);
+        tft.fillCircle(26, 15, 3, GreyoutColor);
+        tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
+        tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
         tuned = false;
       } else if (OStatus >= 3) {
-        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-          tft.pushImage (5, 3, 20, 23, skin1_tune_lon);
-          tft.pushImage (25, 3, 18, 23, skin1_tunedoff);
-          tft.pushImage (43, 3, 20, 23, skin1_tune_roff);
-        } else {
-          tft.fillTriangle(3, 8, 3, 22, 11, 14, SignificantColor);
-          tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
-          tft.fillCircle(26, 15, 3, GreyoutColor);
-          tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
-          tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
-        }
+        tft.fillTriangle(3, 8, 3, 22, 11, 14, SignificantColor);
+        tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
+        tft.fillCircle(26, 15, 3, GreyoutColor);
+        tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
+        tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
         tuned = false;
       } else {
-        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-          tft.pushImage (5, 3, 20, 23, skin1_tune_loff);
-          tft.pushImage (25, 3, 18, 23, skin1_tunedoff);
-          tft.pushImage (43, 3, 20, 23, skin1_tune_roff);
-        } else {
-          tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
-          tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
-          tft.fillCircle(26, 15, 3, GreyoutColor);
-          tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
-          tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
-        }
+        tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
+        tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
+        tft.fillCircle(26, 15, 3, GreyoutColor);
+        tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
+        tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
         tuned = false;
       }
     }
@@ -3111,11 +2904,7 @@ void ShowBW() {
   }
 
   if (BW != BWOld || BWreset) {
-    if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-      if (BWset == 0) tftReplace(1, String (BWOld, DEC), String (BW, DEC), 164, 99, BWAutoColor, BWAutoColorSmooth, BackgroundColor3, 28); else tftReplace(1, String (BWOld, DEC), String (BW, DEC), 164, 99, PrimaryColor, PrimaryColorSmooth, BackgroundColor3, 28);
-    } else {
-      if (BWset == 0) tftReplace(1, String (BWOld, DEC), String (BW, DEC), 201, 4, BWAutoColor, BWAutoColorSmooth, BackgroundColor, 28); else tftReplace(1, String (BWOld, DEC), String (BW, DEC), 201, 4, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 28);
-    }
+    if (BWset == 0) tftReplace(1, String (BWOld, DEC), String (BW, DEC), 201, 4, BWAutoColor, BWAutoColorSmooth, BackgroundColor, 28); else tftReplace(1, String (BWOld, DEC), String (BW, DEC), 201, 4, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 28);
     BWOld = BW;
     BWreset = false;
     if (wifi) {
@@ -3135,49 +2924,24 @@ void ShowModLevel() {
       MStatus = 0;
       MStatusold = 1;
     }
-    if (CurrentSkin == 1) {
-      segments = map(MStatus, 0, 120, 0, 133);
+    segments = map(MStatus, 0, 120, 0, 94);
 
-      if (segments > peakholdold) {
-        peakholdold = segments;
-        peakholdmillis = millis();
-      }
+    if (segments > peakholdold) {
+      peakholdold = segments;
+      peakholdmillis = millis();
+    }
 
-      tft.fillRect(178, 213, 136, 6, GreyoutColor);
-      if (segments > 100) {
-        tft.fillRect(178, 213, 100, 6, BarInsignificantColor);
-        tft.fillRect(178 + 100, 213, segments - 100, 6, BarSignificantColor);
-      } else {
-        tft.fillRect(178, 213, segments, 6, BarInsignificantColor);
-      }
+    tft.fillRect(16, 133, 2 * constrain(segments, 0, 54), 6, ModBarInsignificantColor);
+    tft.fillRect(16 + 2 * 54, 133, 2 * (constrain(segments, 54, 94) - 54), 6, ModBarSignificantColor);
+    tft.fillRect(16 + 2 * constrain(segments, 0, 94), 133, 2 * (94 - constrain(segments, 0, 94)), 6, GreyoutColor);
 
-      tft.fillRect(178 + peakholdold, 213, 2, 6, (peakholdold > 80) ? BarSignificantColor : BarInsignificantColor);
+    int peakHoldPosition = 16 + 2 * constrain(peakholdold, 0, 94);
+    tft.fillRect(peakHoldPosition, 133, 2, 6, (MStatus > 80) ? ModBarSignificantColor : PrimaryColor);
 
-      if (millis() - peakholdmillis >= 1000) {
-        tft.fillRect(178 + peakholdold, 213, 2, 6, GreyoutColor);
-        peakholdold = segments;
-        peakholdmillis = millis();
-      }
-    } else {
-      segments = map(MStatus, 0, 120, 0, 94);
-
-      if (segments > peakholdold) {
-        peakholdold = segments;
-        peakholdmillis = millis();
-      }
-
-      tft.fillRect(16, 133, 2 * constrain(segments, 0, 54), 6, ModBarInsignificantColor);
-      tft.fillRect(16 + 2 * 54, 133, 2 * (constrain(segments, 54, 94) - 54), 6, ModBarSignificantColor);
-      tft.fillRect(16 + 2 * constrain(segments, 0, 94), 133, 2 * (94 - constrain(segments, 0, 94)), 6, GreyoutColor);
-
-      int peakHoldPosition = 16 + 2 * constrain(peakholdold, 0, 94);
-      tft.fillRect(peakHoldPosition, 133, 2, 6, (MStatus > 80) ? ModBarSignificantColor : PrimaryColor);
-
-      if (millis() - peakholdmillis >= 1000) {
-        tft.fillRect(peakHoldPosition, 133, 2, 6, GreyoutColor);
-        peakholdold = segments;
-        peakholdmillis = millis();
-      }
+    if (millis() - peakholdmillis >= 1000) {
+      tft.fillRect(peakHoldPosition, 133, 2, 6, GreyoutColor);
+      peakholdold = segments;
+      peakholdmillis = millis();
     }
   }
 }
@@ -3195,11 +2959,7 @@ void doSquelch() {
     if (!screenmute && usesquelch && !advancedRDS && !afscreen) {
       if (!menu && (Squelch > Squelchold + 2 || Squelch < Squelchold - 2)) {
         SquelchSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-        if (CurrentSkin == 1) {
-          SquelchSprite.pushImage (-278, -168, 320, 240, skin1_mainbackground);
-        } else {
-          SquelchSprite.fillSprite(BackgroundColor);
-        }
+        SquelchSprite.fillSprite(BackgroundColor);
         if (Squelch == -100) {
           SquelchSprite.drawString(String(myLanguage[language][33]), 0, 0);
         } else if (Squelch == 920) {
@@ -3208,11 +2968,7 @@ void doSquelch() {
           SquelchSprite.drawString(String(SquelchShow), 0, 0);
         }
         if (Squelch != Squelchold) {
-          if (CurrentSkin == 1) {
-            SquelchSprite.pushSprite(278, 168);
-          } else {
-            SquelchSprite.pushSprite(235, 145);
-          }
+          SquelchSprite.pushSprite(235, 145);
         }
       }
       Squelchold = Squelch;
@@ -3225,21 +2981,13 @@ void doSquelch() {
         if (Squelch < SStatus || Squelch == -100 || Squelch == 0) {
           if (!seek) radio.setUnMute();
           if (!screenmute && !seek) {
-            if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-              tft.pushImage (106, 3, 27, 23, skin1_muteoff);
-            } else {
-              tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
-            }
+            tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
           }
           SQ = false;
         } else {
           radio.setMute();
           if (!screenmute && !seek) {
-            if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-              tft.pushImage (106, 3, 27, 23, skin1_muteon);
-            } else {
-              tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
-            }
+            tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
           }
           SQ = true;
         }
@@ -3247,21 +2995,13 @@ void doSquelch() {
         if (Stereostatus) {
           radio.setUnMute();
           if (!screenmute && !seek) {
-            if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-              tft.pushImage (106, 3, 27, 23, skin1_muteoff);
-            } else {
-              tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
-            }
+            tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
           }
           SQ = false;
         } else {
           radio.setMute();
           if (!screenmute && !seek) {
-            if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-              tft.pushImage (106, 3, 27, 23, skin1_muteon);
-            } else {
-              tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
-            }
+            tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
           }
           SQ = true;
         }
@@ -3269,11 +3009,7 @@ void doSquelch() {
       if (!screenmute && usesquelch && !advancedRDS && !afscreen) {
         if (Squelch != Squelchold) {
           SquelchSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          if (CurrentSkin == 1) {
-            SquelchSprite.pushImage (-278, -168, 320, 240, skin1_mainbackground);
-          } else {
-            SquelchSprite.fillSprite(BackgroundColor);
-          }
+          SquelchSprite.fillSprite(BackgroundColor);
 
           if (Squelch == -1) {
             SquelchSprite.drawString("ST", 0, 0);
@@ -3283,11 +3019,7 @@ void doSquelch() {
             SquelchSprite.drawString(String(SquelchShow), 0, 0);
           }
           if (Squelch != Squelchold) {
-            if (CurrentSkin == 1) {
-              SquelchSprite.pushSprite(278, 168);
-            } else {
-              SquelchSprite.pushSprite(235, 145);
-            }
+            SquelchSprite.pushSprite(235, 145);
           }
           Squelchold = Squelch;
         }
@@ -3298,21 +3030,13 @@ void doSquelch() {
       if (Squelch < SStatus || Squelch == -100 || Squelch == 0) {
         if (!seek) radio.setUnMute();
         if (!screenmute && !seek) {
-          if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-            tft.pushImage (106, 3, 27, 23, skin1_muteoff);
-          } else {
-            tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
-          }
+          tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
         }
         SQ = false;
       } else {
         radio.setMute();
         if (!screenmute && !seek) {
-          if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-            tft.pushImage (106, 3, 27, 23, skin1_muteon);
-          } else {
-            tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
-          }
+          tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
         }
         SQ = true;
       }
@@ -3320,21 +3044,13 @@ void doSquelch() {
       if (Stereostatus) {
         if (!seek) radio.setUnMute();
         if (!screenmute && !seek) {
-          if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-            tft.pushImage (106, 3, 27, 23, skin1_muteoff);
-          } else {
-            tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
-          }
+          tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
         }
         SQ = false;
       } else {
         radio.setMute();
         if (!screenmute && !seek) {
-          if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-            tft.pushImage (106, 3, 27, 23, skin1_muteon);
-          } else {
-            tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
-          }
+          tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
         }
         SQ = true;
       }
@@ -3346,22 +3062,14 @@ void doSquelch() {
 void updateBW() {
   if (BWset == 0) {
     if (!screenmute && !advancedRDS && !afscreen) {
-      if (CurrentSkin == 1) {
-        tft.pushImage (260, 32, 57, 16, skin1_autobwon);
-      } else {
-        tft.drawRoundRect(248, 35, 71, 20, 5, ActiveColor);
-        tftPrint(0, "AUTO BW", 283, 38, ActiveColor, ActiveColorSmooth, 16);
-      }
+      tft.drawRoundRect(248, 35, 71, 20, 5, ActiveColor);
+      tftPrint(0, "AUTO BW", 283, 38, ActiveColor, ActiveColorSmooth, 16);
     }
     radio.setFMABandw();
   } else {
     if (!screenmute && !advancedRDS && !afscreen) {
-      if (CurrentSkin == 1) {
-        tft.pushImage (260, 32, 57, 16, skin1_autobwoff);
-      } else {
-        tft.drawRoundRect(248, 35, 71, 20, 5, GreyoutColor);
-        tftPrint(0, "AUTO BW", 283, 38, GreyoutColor, BackgroundColor, 16);
-      }
+      tft.drawRoundRect(248, 35, 71, 20, 5, GreyoutColor);
+      tftPrint(0, "AUTO BW", 283, 38, GreyoutColor, BackgroundColor, 16);
     }
   }
 }
@@ -3370,22 +3078,14 @@ void updateiMS() {
   if (band < BAND_GAP) {
     if (iMSset == 0) {
       if (!screenmute && !advancedRDS && !afscreen) {
-        if (CurrentSkin == 1) {
-          tft.pushImage (260, 48, 32, 16, skin1_imson);
-        } else {
-          tft.drawRoundRect(248, 56, 32, 20, 5, ActiveColor);
-          tftPrint(0, "iMS", 265, 59, ActiveColor, ActiveColorSmooth, 16);
-        }
+        tft.drawRoundRect(248, 56, 32, 20, 5, ActiveColor);
+        tftPrint(0, "iMS", 265, 59, ActiveColor, ActiveColorSmooth, 16);
       }
       radio.setiMS(1);
     } else {
       if (!screenmute && !advancedRDS && !afscreen) {
-        if (CurrentSkin == 1) {
-          tft.pushImage (260, 48, 32, 16, skin1_imsoff);
-        } else {
-          tft.drawRoundRect(248, 56, 32, 20, 5, GreyoutColor);
-          tftPrint(0, "iMS", 265, 59, GreyoutColor, BackgroundColor, 16);
-        }
+        tft.drawRoundRect(248, 56, 32, 20, 5, GreyoutColor);
+        tftPrint(0, "iMS", 265, 59, GreyoutColor, BackgroundColor, 16);
       }
       radio.setiMS(0);
     }
@@ -3396,22 +3096,14 @@ void updateEQ() {
   if (band < BAND_GAP) {
     if (EQset == 0) {
       if (!screenmute && !advancedRDS && !afscreen) {
-        if (CurrentSkin == 1) {
-          tft.pushImage (292, 48, 25, 16, skin1_eqon);
-        } else {
-          tft.drawRoundRect(286, 56, 32, 20, 5, ActiveColor);
-          tftPrint(0, "EQ", 303, 59, ActiveColor, ActiveColorSmooth, 16);
-        }
+        tft.drawRoundRect(286, 56, 32, 20, 5, ActiveColor);
+        tftPrint(0, "EQ", 303, 59, ActiveColor, ActiveColorSmooth, 16);
       }
       radio.setEQ(1);
     } else {
       if (!screenmute && !advancedRDS && !afscreen) {
-        if (CurrentSkin == 1) {
-          tft.pushImage (292, 48, 25, 16, skin1_eqoff);
-        } else {
-          tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
-          tftPrint(0, "EQ", 303, 59, GreyoutColor, BackgroundColor, 16);
-        }
+        tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
+        tftPrint(0, "EQ", 303, 59, GreyoutColor, BackgroundColor, 16);
       }
       radio.setEQ(0);
     }
@@ -3421,9 +3113,9 @@ void updateEQ() {
 void updateCodetect() {
   if (band > BAND_GAP) {
     if (WAM) {
-      if (CurrentSkin == 1) tftPrint(-1, "CO", 128, 106, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(-1, "CO", 50, 61, PrimaryColor, PrimaryColorSmooth, 16);
+      tftPrint(-1, "CO", 50, 61, PrimaryColor, PrimaryColorSmooth, 16);
     } else {
-      if (CurrentSkin == 1) tftPrint(-1, "CO", 128, 106, BackgroundColor3, BackgroundColor3, 16); else tftPrint(-1, "CO", 50, 61, BackgroundColor, BackgroundColor, 16);
+      tftPrint(-1, "CO", 50, 61, BackgroundColor, BackgroundColor, 16);
     }
   }
 }
@@ -3445,7 +3137,7 @@ void updateSWMIBand() {
     case SW_MI_BAND_90M:
     case SW_MI_BAND_120M:
     case SW_MI_BAND_160M:
-      if (CurrentSkin == 1) FrequencySprite.drawString(SWMIBandstring + " ", 6, 0); else FrequencySprite.drawString(SWMIBandstring + " ", 0, 0);
+      FrequencySprite.drawString(SWMIBandstring + " ", 0, 0);
       beepresetstart = true;
       if (edgebeep && beepresetstop) {
         EdgeBeeper();
@@ -3568,106 +3260,68 @@ void ShowTuneMode() {
     switch (tunemode) {
       case TUNE_MAN:
         if (band == BAND_SW && nowToggleSWMIBand) {
-          if (CurrentSkin == 1) {
-            tft.pushImage (12, 61, 33, 15, skin1_bandoff);
-          } else {
-            tftPrint(0, "AUTO", 22, 60, BackgroundColor, BackgroundColor, 16);
-            tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
-            tftPrint(0, "BAND", 22, 60, GreyoutColor, BackgroundColor, 16);
-          }
+          tftPrint(0, "AUTO", 22, 60, BackgroundColor, BackgroundColor, 16);
+          tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
+          tftPrint(0, "BAND", 22, 60, GreyoutColor, BackgroundColor, 16);
         } else {
-          if (CurrentSkin == 1) {
-            tft.pushImage (12, 61, 33, 15, skin1_autooff);
-          } else {
-            tftPrint(0, "BAND", 22, 60, BackgroundColor, BackgroundColor, 16);
-            tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
-            tftPrint(0, "AUTO", 22, 60, GreyoutColor, BackgroundColor, 16);
-          }
+          tftPrint(0, "BAND", 22, 60, BackgroundColor, BackgroundColor, 16);
+          tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
+          tftPrint(0, "AUTO", 22, 60, GreyoutColor, BackgroundColor, 16);
         }
 
-        if (CurrentSkin == 1) {
-          tft.pushImage (12, 46, 33, 15, skin1_manon);
-          tft.pushImage (12, 76, 33, 15, skin1_memoff);
-        } else {
-          tft.drawRoundRect(1, 35, 42, 20, 5, ActiveColor);
-          tftPrint(0, "MAN", 22, 38, ActiveColor, ActiveColorSmooth, 16);
+        tft.drawRoundRect(1, 35, 42, 20, 5, ActiveColor);
+        tftPrint(0, "MAN", 22, 38, ActiveColor, ActiveColorSmooth, 16);
 
-          tft.drawRoundRect(1, 79, 42, 20, 5, GreyoutColor);
-          tftPrint(0, "MEM", 22, 82, GreyoutColor, BackgroundColor, 16);
-        }
+        tft.drawRoundRect(1, 79, 42, 20, 5, GreyoutColor);
+        tftPrint(0, "MEM", 22, 82, GreyoutColor, BackgroundColor, 16);
         break;
 
       case TUNE_AUTO:
-        if (CurrentSkin == 1) {
-          tft.pushImage (12, 46, 33, 15, skin1_manoff);
-          tft.pushImage (12, 61, 33, 15, skin1_autoon);
-          tft.pushImage (12, 76, 33, 15, skin1_memoff);
-        } else {
-          tft.drawRoundRect(1, 57, 42, 20, 5, ActiveColor);
-          tftPrint(0, "AUTO", 22, 60, ActiveColor, ActiveColorSmooth, 16);
+        tft.drawRoundRect(1, 57, 42, 20, 5, ActiveColor);
+        tftPrint(0, "AUTO", 22, 60, ActiveColor, ActiveColorSmooth, 16);
 
-          tft.drawRoundRect(1, 35, 42, 20, 5, GreyoutColor);
-          tftPrint(0, "MAN", 22, 38, GreyoutColor, BackgroundColor, 16);
+        tft.drawRoundRect(1, 35, 42, 20, 5, GreyoutColor);
+        tftPrint(0, "MAN", 22, 38, GreyoutColor, BackgroundColor, 16);
 
-          tft.drawRoundRect(1, 79, 42, 20, 5, GreyoutColor);
-          tftPrint(0, "MEM", 22, 82, GreyoutColor, BackgroundColor, 16);
-        }
+        tft.drawRoundRect(1, 79, 42, 20, 5, GreyoutColor);
+        tftPrint(0, "MEM", 22, 82, GreyoutColor, BackgroundColor, 16);
         break;
 
       case TUNE_MEM:
         if (band == BAND_SW && nowToggleSWMIBand) {
-          if (CurrentSkin == 1) {
-            tft.pushImage (12, 61, 33, 15, skin1_bandoff);
-          } else {
-            tftPrint(0, "AUTO", 22, 60, BackgroundColor, BackgroundColor, 16);
+          tftPrint(0, "AUTO", 22, 60, BackgroundColor, BackgroundColor, 16);
 
-            tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
-            tftPrint(0, "BAND", 22, 60, GreyoutColor, BackgroundColor, 16);
-          }
+          tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
+          tftPrint(0, "BAND", 22, 60, GreyoutColor, BackgroundColor, 16);
         } else {
-          if (CurrentSkin == 1) {
-            tft.pushImage (12, 61, 33, 15, skin1_autooff);
-          } else {
-            tftPrint(0, "BAND", 22, 60, BackgroundColor, BackgroundColor, 16);
+          tftPrint(0, "BAND", 22, 60, BackgroundColor, BackgroundColor, 16);
 
-            tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
-            tftPrint(0, "AUTO", 22, 60, GreyoutColor, BackgroundColor, 16);
-          }
+          tft.drawRoundRect(1, 57, 42, 20, 5, GreyoutColor);
+          tftPrint(0, "AUTO", 22, 60, GreyoutColor, BackgroundColor, 16);
         }
 
-        if (CurrentSkin == 1) {
-          tft.pushImage (12, 46, 33, 15, skin1_manoff);
-          if (memorystore) tft.pushImage (12, 76, 33, 15, skin1_memred); else tft.pushImage (12, 76, 33, 15, skin1_memon);
-        } else {
-          tft.drawRoundRect(1, 35, 42, 20, 5, GreyoutColor);
-          tftPrint(0, "MAN", 22, 39, GreyoutColor, BackgroundColor, 16);
+        tft.drawRoundRect(1, 35, 42, 20, 5, GreyoutColor);
+        tftPrint(0, "MAN", 22, 39, GreyoutColor, BackgroundColor, 16);
 
-          if (memorystore) {
-            tft.drawRoundRect(1, 79, 42, 20, 5, SignificantColor);
-            tftPrint(0, "MEM", 22, 82, SignificantColor, SignificantColorSmooth, 16);
-          } else {
-            tft.drawRoundRect(1, 79, 42, 20, 5, ActiveColor);
-            tftPrint(0, "MEM", 22, 82, ActiveColor, ActiveColorSmooth, 16);
-          }
+        if (memorystore) {
+          tft.drawRoundRect(1, 79, 42, 20, 5, SignificantColor);
+          tftPrint(0, "MEM", 22, 82, SignificantColor, SignificantColorSmooth, 16);
+        } else {
+          tft.drawRoundRect(1, 79, 42, 20, 5, ActiveColor);
+          tftPrint(0, "MEM", 22, 82, ActiveColor, ActiveColorSmooth, 16);
         }
         break;
 
       case TUNE_MI_BAND:
-        if (CurrentSkin == 1) {
-          tft.pushImage (12, 61, 33, 15, skin1_bandon);
-          tft.pushImage (12, 46, 33, 15, skin1_manoff);
-          tft.pushImage (12, 76, 33, 15, skin1_memoff);
-        } else {
-          tft.drawRoundRect(1, 57, 42, 20, 5, ActiveColor);
-          tft.setTextColor(ActiveColor);
-          tftPrint(0, "BAND", 22, 60, ActiveColor, ActiveColorSmooth, 16);
+        tft.drawRoundRect(1, 57, 42, 20, 5, ActiveColor);
+        tft.setTextColor(ActiveColor);
+        tftPrint(0, "BAND", 22, 60, ActiveColor, ActiveColorSmooth, 16);
 
-          tft.drawRoundRect(1, 35, 42, 20, 5, GreyoutColor);
-          tftPrint(0, "MAN", 22, 38, GreyoutColor, BackgroundColor, 16);
+        tft.drawRoundRect(1, 35, 42, 20, 5, GreyoutColor);
+        tftPrint(0, "MAN", 22, 38, GreyoutColor, BackgroundColor, 16);
 
-          tft.drawRoundRect(1, 79, 42, 20, 5, GreyoutColor);
-          tftPrint(0, "MEM", 22, 82, GreyoutColor, BackgroundColor, 16);
-        }
+        tft.drawRoundRect(1, 79, 42, 20, 5, GreyoutColor);
+        tftPrint(0, "MEM", 22, 82, GreyoutColor, BackgroundColor, 16);
         break;
     }
   }
@@ -3678,30 +3332,18 @@ void ShowRSSI() {
   if (rssiold != rssi) {
     rssiold = rssi;
     if (rssi == 0) {
-      if (CurrentSkin == 1 && !advancedRDS && !afscreen) tft.pushImage (287, 3, 29, 23, skin1_wifi1); else tft.drawBitmap(250, 4, WiFi4, 25, 25, GreyoutColor);
+      tft.drawBitmap(250, 4, WiFi4, 25, 25, GreyoutColor);
     } else if (rssi > -50 && rssi < 0) {
-      if (CurrentSkin == 1 && !advancedRDS && !afscreen) tft.pushImage (287, 3, 29, 23, skin1_wifi4); else tft.drawBitmap(250, 4, WiFi4, 25, 25, PrimaryColor);
+      tft.drawBitmap(250, 4, WiFi4, 25, 25, PrimaryColor);
     } else if (rssi > -60) {
-      if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-        tft.pushImage (287, 3, 29, 23, skin1_wifi3);
-      } else {
-        tft.drawBitmap(250, 4, WiFi4, 25, 25, GreyoutColor);
-        tft.drawBitmap(250, 4, WiFi3, 25, 25, PrimaryColor);
-      }
+      tft.drawBitmap(250, 4, WiFi4, 25, 25, GreyoutColor);
+      tft.drawBitmap(250, 4, WiFi3, 25, 25, PrimaryColor);
     } else if (rssi > -70) {
-      if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-        tft.pushImage (287, 3, 29, 23, skin1_wifi2);
-      } else {
-        tft.drawBitmap(250, 4, WiFi4, 25, 25, GreyoutColor);
-        tft.drawBitmap(250, 4, WiFi2, 25, 25, PrimaryColor);
-      }
+      tft.drawBitmap(250, 4, WiFi4, 25, 25, GreyoutColor);
+      tft.drawBitmap(250, 4, WiFi2, 25, 25, PrimaryColor);
     } else if (rssi < -70) {
-      if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-        tft.pushImage (287, 3, 29, 23, skin1_wifi1);
-      } else {
-        tft.drawBitmap(250, 4, WiFi4, 25, 25, GreyoutColor);
-        tft.drawBitmap(250, 4, WiFi1, 25, 25, PrimaryColor);
-      }
+      tft.drawBitmap(250, 4, WiFi4, 25, 25, GreyoutColor);
+      tft.drawBitmap(250, 4, WiFi1, 25, 25, PrimaryColor);
     }
   }
 }
@@ -3720,36 +3362,22 @@ void ShowBattery() {
 
   if (batteryold != batteryprobe) {
     if (!wifi && batterydetect) {
-      if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-        switch (battery) {
-          case 0: tft.pushImage (241, 3, 43, 23, skin1_bat0); break;
-          case 1: tft.pushImage (241, 3, 43, 23, skin1_bat1); break;
-          case 2: tft.pushImage (241, 3, 43, 23, skin1_bat2); break;
-          case 3: tft.pushImage (241, 3, 43, 23, skin1_bat3); break;
-          case 4: tft.pushImage (241, 3, 43, 23, skin1_bat4); break;
-        }
+      if (battery == 0) {
+        tft.drawRoundRect(277, 6, 37, 20, 2, BarSignificantColor);
+        tft.fillRoundRect(313, 13, 4, 6, 2, BarSignificantColor);
       } else {
-        if (battery == 0) {
-          tft.drawRoundRect(277, 6, 37, 20, 2, BarSignificantColor);
-          tft.fillRoundRect(313, 13, 4, 6, 2, BarSignificantColor);
-        } else {
-          tft.drawRoundRect(277, 6, 37, 20, 2, ActiveColor);
-          tft.fillRoundRect(313, 13, 4, 6, 2, ActiveColor);
-        }
-        if (batteryoptions != BATTERY_VALUE && batteryoptions != BATTERY_PERCENT && battery != 0) {
-          tft.fillRoundRect(279, 8, (battery * 8) , 16, 2, BarInsignificantColor);
-        } else {
-          tft.fillRoundRect(279, 8, 33, 16, 2, BackgroundColor);
-        }
+        tft.drawRoundRect(277, 6, 37, 20, 2, ActiveColor);
+        tft.fillRoundRect(313, 13, 4, 6, 2, ActiveColor);
       }
-    } else {
-      if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-        tft.pushImage (241, 3, 43, 23, skin1_nobat);
+      if (batteryoptions != BATTERY_VALUE && batteryoptions != BATTERY_PERCENT && battery != 0) {
+        tft.fillRoundRect(279, 8, (battery * 8) , 16, 2, BarInsignificantColor);
       } else {
-        tft.drawRoundRect(277, 6, 37, 20, 2, GreyoutColor);
-        tft.fillRoundRect(313, 13, 4, 6, 2, GreyoutColor);
         tft.fillRoundRect(279, 8, 33, 16, 2, BackgroundColor);
       }
+    } else {
+      tft.drawRoundRect(277, 6, 37, 20, 2, GreyoutColor);
+      tft.fillRoundRect(313, 13, 4, 6, 2, GreyoutColor);
+      tft.fillRoundRect(279, 8, 33, 16, 2, BackgroundColor);
     }
     batteryold = batteryprobe;
     batteryVold = 0;
@@ -3761,10 +3389,10 @@ void ShowBattery() {
       float vPer = constrain((batteryV - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE), 0.0, 0.99) * 100;
 
       if (abs(batteryV - batteryVold) > 0.05 && batteryoptions == BATTERY_VALUE) {
-        tftPrint(-1, String(batteryV, 1) + "V", (CurrentSkin == 1 && !advancedRDS && !afscreen ? 247 : 279), (CurrentSkin == 1 && !advancedRDS && !afscreen ? 7 : 9), BatteryValueColor, BatteryValueColorSmooth, 16);
+        tftPrint(-1, String(batteryV, 1) + "V", 279, 9, BatteryValueColor, BatteryValueColorSmooth, 16);
         batteryVold = batteryV;
       } else if (int(vPer) != int(vPerold) && batteryoptions == BATTERY_PERCENT && abs(vPer - vPerold) > 0.5) {
-        tftPrint(-1, String(vPer, 0) + "%", (CurrentSkin == 1 && !advancedRDS && !afscreen ? 247 : 279), (CurrentSkin == 1 && !advancedRDS && !afscreen ? 7 : 9), BatteryValueColor, BatteryValueColorSmooth, 16);
+        tftPrint(-1, String(vPer, 0) + "%", 279, 9, BatteryValueColor, BatteryValueColorSmooth, 16);
         vPerold = vPer;
       }
     }
@@ -3957,20 +3585,12 @@ void EdgeBeeper() {
   if (radio.mute) {
     radio.setMute();
     if (!screenmute) {
-      if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-        tft.pushImage (106, 3, 27, 23, skin1_muteon);
-      } else {
-        tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
-      }
+      tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
     }
   } else {
     radio.setUnMute();
     if (!screenmute) {
-      if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-        tft.pushImage (106, 3, 27, 23, skin1_muteoff);
-      } else {
-        tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
-      }
+      tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
     }
   }
 }
@@ -3978,11 +3598,7 @@ void EdgeBeeper() {
 void Seek(bool mode) {
   radio.setMute();
   if (!screenmute) {
-    if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-      tft.pushImage (106, 3, 27, 23, skin1_muteon);
-    } else {
-      tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
-    }
+    tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
   }
   if (!mode) TuneDown(); else TuneUp();
   delay(50);
@@ -3997,11 +3613,7 @@ void Seek(bool mode) {
       seek = false;
       radio.setUnMute();
       if (!screenmute) {
-        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-          tft.pushImage (106, 3, 27, 23, skin1_muteoff);
-        } else {
-          tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
-        }
+        tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
       }
       store = true;
     } else {
@@ -4015,11 +3627,7 @@ void Seek(bool mode) {
       seek = false;
       radio.setUnMute();
       if (!screenmute) {
-        if (CurrentSkin == 1 && !advancedRDS && !afscreen) {
-          tft.pushImage (106, 3, 27, 23, skin1_muteoff);
-        } else {
-          tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
-        }
+        tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
       }
       store = true;
     } else {
@@ -4319,19 +3927,11 @@ void cancelDXScan() {
   scandxmode = false;
   if (scanmute) {
     radio.setUnMute();
-    if (CurrentSkin == 1) {
-      tft.pushImage (106, 3, 27, 23, skin1_muteoff);
-    } else {
-      tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
-    }
+    tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
 
     if (!flashing) {
-      if (CurrentSkin == 1) {
-        tft.pushImage (12, 76, 33, 15, skin1_memon);
-      } else {
-        tft.drawRoundRect(1, 79, 42, 20, 5, ActiveColor);
-        tftPrint(0, "MEM", 22, 82, ActiveColor, ActiveColorSmooth, 16);
-      }
+      tft.drawRoundRect(1, 79, 42, 20, 5, ActiveColor);
+      tftPrint(0, "MEM", 22, 82, ActiveColor, ActiveColorSmooth, 16);
     }
 
     SQ = false;
@@ -4451,11 +4051,7 @@ void startFMDXScan() {
   }
   if (scanmute) {
     radio.setMute();
-    if (CurrentSkin == 1) {
-      tft.pushImage (106, 3, 27, 23, skin1_muteon);
-    } else {
-      tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
-    }
+    tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
     SQ = true;
     Squelchold = -2;
   }
