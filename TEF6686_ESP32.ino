@@ -1992,6 +1992,7 @@ void ModeButtonPress() {
             menupage = INDEX;
             menuitem = 0;
             UpdateFonts(1);
+            if (spispeed == 7) tft.setSPISpeed(30);
             BuildMenu();
             menu = true;
             ScreensaverTimerSet(OFF);
@@ -2037,6 +2038,7 @@ void ModeButtonPress() {
             menuoption = ITEM1;
             menupage = INDEX;
             menuitem = 0;
+            if (spispeed == 7) tft.setSPISpeed(30);
             BuildMenu();
           }
         }
@@ -2665,7 +2667,7 @@ void ShowFreq(int mode) {
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
 
-  setAutoSpeedSPI();
+  if (spispeed == 7) setAutoSpeedSPI();
   rdsreset = true;
   licold = 254;
   ECCold = 253;
@@ -3957,6 +3959,10 @@ void endMenu() {
   menu = false;
   menuopen = false;
   LowLevelInit = true;
+  submenu = false;
+  menuoption = ITEM1;
+  menupage = INDEX;
+  menuitem = 0;
   EEPROM.writeByte(EE_BYTE_VOLSET, VolSet);
   EEPROM.writeUInt(EE_UINT16_CONVERTERSET, ConverterSet);
   EEPROM.writeUInt(EE_UINT16_FMLOWEDGESET, LowEdgeSet);
