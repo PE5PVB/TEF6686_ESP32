@@ -281,14 +281,14 @@ static const char* const ECCtext[] {
   "Virgin UK", // 176
   "Virgin USA", // 177
   "Afganist.", // 178
-  "AU C.T.", // 179
-  "AU N.S.W.", // 180
-  "AU Vict.", // 181
-  "AU Queen", // 182
-  "AU S. Au.", // 183
-  "AU W. Au.", // 184
-  "AU Tasma.", // 185
-  "AU N. T.", // 186
+  "Aus. ACT", // 179
+  "Aus. NSW", // 180
+  "Aus. VIC", // 181
+  "Aus. QLD", // 182
+  "Aus. SA", // 183
+  "Aus. WA", // 184
+  "Aus. TAS", // 185
+  "Aus. NT", // 186
   "Bhutan", // 187
   "Brunei D.", // 188
   "Cambodia", // 189
