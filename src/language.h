@@ -1112,23 +1112,23 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Γρήγορο PS", // 203
     "Προεπιλογή", // 204
     "Μαύρη οθόνη σε\nσύνδεση XDRGTK", // 205
-    "FMSI βελτίωση\nστερεοφωνικού ήχου", // 206
+    "FMSI βελτίωση\nήχου στέρεο", // 206
     "Λειτουργία διαθέσιμη\nμόνο στα TEF6687/6689!", // 207
-    "Λειτουργία μη διαθέσιμη\nστην επιλεγμένη εμφάνιση!", // 208
-    "Begin scanning\nmemory channels", // 209
-    "Stop scanning\nmemory channels", // 210
-    "Wait time", // 211
-    "Start DX scanning", // 212
-    "FM DX Options", // 213
-    "Abort! The start channel\nis marked as skipped.", // 214
+    "Λειτουργία μη διαθέσιμη\nσε αυτή την εμφάνιση!", // 208
+    "Εκκίνηση ανίχνευσης\nκαναλιών μνήμης", // 209
+    "Διακοπή ανίχνευσης\nκαναλιών μνήμης", // 210
+    "Χρόνος αναμονής", // 211
+    "Εκκίνηση DX ανίχνευσης", // 212
+    "Επιλογές FM DX", // 213
+    "Ματαίωση! Παράλειψη\nτου καναλιού εκκίνησης.", // 214
     "Αυτόματη ταξινόμηση\nAF", // 215
-    "Memory channels", // 216
-    "Exclude", // 217
-    "Only", // 218
-    "Auto cancel scan", // 219
-    "Correct PI", // 220
-    "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Κανάλια μνήμης", // 216
+    "Εξαίρεση", // 217
+    "Μόνο", // 218
+    "Αυτόματη ακύρωση\nανίχνευσης", // 219
+    "Σωστό PI", // 220
+    "Σήμα", // 221
+    "Σίγαση ήχου\nκατά την ανίχνευση" // 222
   },
 
   { "Română", // Romanian
@@ -2240,20 +2240,20 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "FMSI amélioration\ndu son stéréo", // 206
     "Fonction disponible seulement\nsur TEF6687/6689!", // 207
     "Fonction non disponible\nsur le skin sélectionné!", // 208
-    "Begin scanning\nmemory channels", // 209
-    "Stop scanning\nmemory channels", // 210
-    "Wait time", // 211
-    "Start DX scanning", // 212
-    "FM DX Options", // 213
-    "Abort! The start channel\nis marked as skipped.", // 214
+    "Commencez la scanne\ndes canaux de mémoire", // 209
+    "Arrêt de la scanne\ndes canaux de mémoire", // 210
+    "Temps d'attente", // 211
+    "Démarrer la scanne DX", // 212
+    "Options FM DX", // 213
+    "Avorter! Le canal de\ndémarrage est sauté.", // 214
     "Tri AF automatique", // 215
-    "Memory channels", // 216
-    "Exclude", // 217
-    "Only", // 218
-    "Auto cancel scan", // 219
-    "Correct PI", // 220
+    "Canaux de mémoire", // 216
+    "Exclure", // 217
+    "Seleument", // 218
+    "Annuler automatiquement", // 219
+    "PI Correct", // 220
     "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Audio muet lors\nde la numérisation" // 222
   },
 
   { "Български", // Bulgarian
@@ -3815,20 +3815,20 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "FMSI mejora del\nsonido estéreo", // 206
     "Función disponible solo\nen TEF6687/6689!", // 207
     "Función no disponible\nsobre el skin seleccionado!", // 208
-    "Begin scanning\nmemory channels", // 209
-    "Stop scanning\nmemory channels", // 210
-    "Wait time", // 211
-    "Start DX scanning", // 212
-    "FM DX Options", // 213
-    "Abort! The start channel\nis marked as skipped.", // 214
+    "Empiece a buscar\ncanales de memoria", // 209
+    "Deja de buscar\ncanales de memoria", // 210
+    "Tiempo de espera", // 211
+    "Comience a buscar DX", // 212
+    "Opciones FM DX", // 213
+    "¡Abortar! Se omite\nel canal de inicio.", // 214
     "Orden automático de AF", // 215
-    "Memory channels", // 216
-    "Exclude", // 217
-    "Only", // 218
-    "Auto cancel scan", // 219
-    "Correct PI", // 220
-    "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Canales memorizados", // 216
+    "Excluir", // 217
+    "Solo", // 218
+    "Cancelar automáticamente\nla búsqueda", // 219
+    "PI correcto", // 220
+    "Señal", // 221
+    "Audio mudo\nmientras busca" // 222
   },
 
   { "Português", // Portuguese
@@ -4040,20 +4040,20 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "FMSI melhoria\ndo som estéreo", // 206
     "Function only available\non TEF6687/6689!", // 207
     "Função não disponível\nno skin selecionado!", // 208
-    "Begin scanning\nmemory channels", // 209
-    "Stop scanning\nmemory channels", // 210
-    "Wait time", // 211
-    "Start DX scanning", // 212
-    "FM DX Options", // 213
-    "Abort! The start channel\nis marked as skipped.", // 214
+    "Comece a pesquisar\ncanais de memória", // 209
+    "Pare de pesquisar\ncanais de memória", // 210
+    "Tempo de espera", // 211
+    "Comece a pesquisar DX", // 212
+    "Opções FM DX", // 213
+    "Abortar! O canal\ninicial é ignorado.", // 214
     "Classificar AF\nautomaticamente", // 215
-    "Memory channels", // 216
-    "Exclude", // 217
-    "Only", // 218
-    "Auto cancel scan", // 219
-    "Correct PI", // 220
-    "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Canais memorizados", // 216
+    "Excluir", // 217
+    "Apenas", // 218
+    "Cancelar automatic.\na pesquisa", // 219
+    "PI correto", // 220
+    "Sinal", // 221
+    "Mudo áudio\nenquanto procura" // 222
   }
 };
 #endif
