@@ -1392,7 +1392,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "AUS", // 33
     "SCANNE...", // 34
     "Tuner nicht erkannt", // 35
-    "AM Antenna gain", // 36
+    "AM Antennengewinn", // 36
     "FM AGC", // 37
     "Zeige RDS Fehler", // 38
     "Sprache", // 39
@@ -1565,20 +1565,20 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "FMSI Stereo-\nVerbesserung", // 206
     "Funktion nur für\nTEF6687/6689 verfügbar!", // 207
     "Funktion für ausgewählten\nSkin nicht verfügbar!", // 208
-    "Begin scanning\nmemory channels", // 209
-    "Stop scanning\nmemory channels", // 210
-    "Wait time", // 211
-    "Start DX scanning", // 212
-    "FM DX Options", // 213
-    "Abort! The start channel\nis marked as skipped.", // 214
+    "Starte Scan mit\nSpeicherplatz", // 209
+    "Stoppe Scan mit\nSpeicherplatz", // 210
+    "Wartezeit", // 211
+    "Starte DX Scan", // 212
+    "FM DX Optionen", // 213
+    "Abbruch! Start-Speicherplatz\nist nicht belegt.", // 214
     "AF Autosortierung", // 215
-    "Memory channels", // 216
-    "Exclude", // 217
-    "Only", // 218
-    "Auto cancel scan", // 219
-    "Correct PI", // 220
+    "Speicherplätze scannen", // 216
+    "Nein", // 217
+    "Ja, ausschließlich", // 218
+    "Automatisches Scan-Ende", // 219
+    "Korrekter PI-Code", // 220
     "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Stumm beim Scannen" // 222
   },
 
   { "Český", // Czech
