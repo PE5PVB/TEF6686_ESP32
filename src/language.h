@@ -3365,7 +3365,6 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "FMSI\n立体声增强", // 206
     "此功能仅限\nTEF6687/6689!", // 207
     "此皮肤不支持该功能!", // 208
-    "Abort! The start channel\nis marked as skipped.", // 214
     "开始信道号", // 209
     "结尾信道号", // 210
     "扫描间隔", // 211
