@@ -3365,20 +3365,21 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "FMSI\n立体声增强", // 206
     "此功能仅限\nTEF6687/6689!", // 207
     "此皮肤不支持该功能!", // 208
-    "Begin scanning\nmemory channels", // 209
-    "Stop scanning\nmemory channels", // 210
-    "Wait time", // 211
-    "Start DX scanning", // 212
-    "FM DX Options", // 213
     "Abort! The start channel\nis marked as skipped.", // 214
+    "开始信道号", // 209
+    "结尾信道号", // 210
+    "扫描间隔", // 211
+    "立即开始DX扫描", // 212
+    "FMDX 选项", // 213
+    "终止!开始信道无电台!", // 214
     "自动排列AF", // 215
-    "Memory channels", // 216
-    "Exclude", // 217
-    "Only", // 218
-    "Auto cancel scan", // 219
-    "Correct PI", // 220
-    "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "信道扫描方式", // 216
+    "信道外频率", // 217
+    "仅信道", // 218
+    "扫频停台条件", // 219
+    "节目识别码正确", // 220
+    "信号超阈值", // 221
+    "扫描时静音" // 222
   },
 
   { "Norsk", // Norwegian
