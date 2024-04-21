@@ -426,8 +426,8 @@ void setup() {
   TEF = EEPROM.readByte(EE_BYTE_TEF);
   displayflip = EEPROM.readByte(EE_BYTE_DISPLAYFLIP);
   rotarymode = EEPROM.readByte(EE_BYTE_ROTARYMODE);
-  stepsize = EEPROM.readByte(EE_BYTE_STEPSIZE);
   tunemode = EEPROM.readByte(EE_BYTE_TUNEMODE);
+  if (tunemode == TUNE_MAN) stepsize = EEPROM.readByte(EE_BYTE_STEPSIZE); else stepsize = 0;
   optenc = EEPROM.readByte(EE_BYTE_OPTENC);
   iMSset = EEPROM.readByte(EE_BYTE_IMSSET);
   EQset = EEPROM.readByte(EE_BYTE_EQSET);
