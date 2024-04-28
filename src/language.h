@@ -3590,20 +3590,20 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "FMSI stereo forbedringt", // 206
     "Kun tilgjengelig\npå TEF6687/6689!", // 207
     "Funksjon ikke tilgjengelig\npå valgt skin!", // 208
-    "Begin scanning\nmemory channels", // 209
-    "Stop scanning\nmemory channels", // 210
-    "Wait time", // 211
-    "Start DX scanning", // 212
-    "FM DX Options", // 213
-    "Abort! The start channel\nis marked as skipped.", // 214
+    "Begynn å skanne\nminnekanaler", // 209
+    "Stopp skanning\nminnekanaler", // 210
+    "Ventetid", // 211
+    "Start DX-skanning", // 212
+    "FM DX-alternativer", // 213
+    "Avbryt! Startkanalen er\nmerket som hoppet over.", // 214
     "Auto sorterings AF", // 215
-    "Memory channels", // 216
-    "Exclude", // 217
-    "Only", // 218
-    "Auto cancel scan", // 219
-    "Correct PI", // 220
+    "Minnekanaler", // 216
+    "Utelukke", // 217
+    "Kun", // 218
+    "Avbryt skanning automatisk", // 219
+    "korrekt PI", // 220
     "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Demp lyden\nmens du skanner" // 222
   },
 
   { "Español", // Spanish
