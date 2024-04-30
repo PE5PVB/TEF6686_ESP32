@@ -35,7 +35,19 @@
 #define SMETERPIN       27
 
 // #define CHINA_PORTABLE      // uncomment for China Portable build (Simplified Chinese)
+#define DEEPELEC_DP_666     // uncomment for DEEPELEC Portable DP-666 build (Simplified Chinese)
 #define DYNAMIC_SPI_SPEED   // uncomment to enable dynamic SPI Speed https://github.com/ohmytime/TFT_eSPI_DynamicSpeed
+
+#ifdef DEEPELEC_DP_666
+#include "ExtensionIOXL9555.hpp"
+#endif
+
+#ifdef DEEPELEC_DP_666
+#define RTP_IRQ         33
+#define EXT_IO_SDA      32
+#define EXT_IO_SCL      14
+ExtensionIOXL9555 extIO;
+#endif
 
 #ifdef ARS
 TFT_eSPI tft = TFT_eSPI(320, 240);
@@ -137,7 +149,7 @@ byte BWset;
 byte BWsetAM;
 byte BWsetFM;
 byte charwidth = 8;
-#ifdef CHINA_PORTABLE
+#if defined(CHINA_PORTABLE) || defined(DEEPELEC_DP_666)
 byte hardwaremodel = PORTABLE_ILI9341;
 #else
 byte hardwaremodel = BASE_ILI9341;
@@ -585,6 +597,19 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
 
+#ifdef DEEPELEC_DP_666
+  bool extIO_dect = false;
+  // Device address 0x20~0x27
+  if (extIO.begin(Wire1, XL9555_SLAVE_ADDRESS0, EXT_IO_SDA, EXT_IO_SCL)) {
+    extIO_dect = true;
+    pinMode(RTP_IRQ, INPUT_PULLUP);
+    // Set PORT0 as input,mask = 0xFF = all pin input
+    extIO.configPort(ExtensionIOXL9555::PORT0, 0xFF);
+    // Set PORT1 as input,mask = 0xFF = all pin input
+    extIO.configPort(ExtensionIOXL9555::PORT1, 0xFF);
+  }
+#endif
+
   tft.setSwapBytes(true);
   tft.fillScreen(BackgroundColor);
 
@@ -678,6 +703,13 @@ void setup() {
   tft.fillScreen(BackgroundColor);
   tftPrint(0, myLanguage[language][8], 160, 3, PrimaryColor, PrimaryColorSmooth, 28);
   tftPrint(0, "Software " + String(VERSION), 160, 152, PrimaryColor, PrimaryColorSmooth, 16);
+
+#ifdef DEEPELEC_DP_666
+  if (extIO_dect)
+    tftPrint(-1, "EXT_IO OK!", 240, 152, PrimaryColor, PrimaryColorSmooth, 16);
+  else
+    tftPrint(-1, "EXT_IO ERR!", 240, 152, PrimaryColor, PrimaryColorSmooth, 16);
+#endif
 
   tft.fillRect(120, 230, 16, 6, GreyoutColor);
   tft.fillRect(152, 230, 16, 6, GreyoutColor);
@@ -1070,6 +1102,12 @@ void loop() {
     if (screensavertriggered && !touchrotating) WakeToSleep(REVERSE);
     if (!screenmute && !afscreen) BWButtonPress();
   }
+
+#ifdef DEEPELEC_DP_666
+  if (digitalRead(RTP_IRQ) == LOW) {
+    
+  }
+#endif
 
   if (screensaverset) {
     if (screensaver_IRQ)
@@ -3739,7 +3777,11 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_SHOWRDSERRORS, 1);
   EEPROM.writeByte(EE_BYTE_TEF, 0);
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 0); else EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 1);
+#ifdef DEEPELEC_DP_666
+  EEPROM.writeByte(EE_BYTE_ROTARYMODE, 1);
+#else
   EEPROM.writeByte(EE_BYTE_ROTARYMODE, 0);
+#endif
   EEPROM.writeByte(EE_BYTE_STEPSIZE, 0);
   EEPROM.writeByte(EE_BYTE_TUNEMODE, 0);
   EEPROM.writeByte(EE_BYTE_OPTENC, 0);
