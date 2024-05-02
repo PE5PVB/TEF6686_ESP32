@@ -802,7 +802,7 @@ void TEF6686::readRDS(byte showrdserrors) {
       case RDS_GROUP_1A:
       case RDS_GROUP_1B: {
           if (!rdsCerrorThreshold) {
-            if ((rds.rdsC & 0x1C00) == 0 && rdsblock == RDS_GROUP_1A) {                               // ECC code readout
+            if (((rds.rdsC >> 12) & 0x07) == 0 && rdsblock == RDS_GROUP_1A) {                               // ECC code readout
               rds.ECC = rds.rdsC & 0xff;
               rds.hasECC = true;
 
@@ -1116,7 +1116,7 @@ void TEF6686::readRDS(byte showrdserrors) {
               }
             }
 
-            if (rds.rdsC >> 12 == 3 && rdsblock == RDS_GROUP_1A) {                              // LIC code readout
+            if (((rds.rdsC >> 12) & 0x07) == 3 && rdsblock == RDS_GROUP_1A) {                              // LIC code readout
               rds.LIC = rds.rdsC & 0xff;
               rds.hasLIC = true;
               if (rds.LIC > 0 && rds.LIC < 128) rds.LICtext = LICtext[rds.LIC]; else rds.LICtext = "";
