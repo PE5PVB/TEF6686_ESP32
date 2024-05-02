@@ -649,18 +649,6 @@ void TEF6686::readRDS(byte showrdserrors) {
               }
 
               if (afinit) {
-                /* Debug info
-                  if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250) {
-                  Serial.print("#");
-                  Serial.print((rds.rdsC >> 8) - 224);
-                  Serial.print("\t");
-                  Serial.println((rds.rdsC & 0xFF) * 10 + 8750);
-                  } else {
-                  Serial.print((rds.rdsC >> 8) * 10 + 8750);
-                  Serial.print("\t");
-                  Serial.println((rds.rdsC & 0xFF) * 10 + 8750);
-                  }
-                */
                 if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == currentfreq && rds.hasAF) {
                   if (afmethodBtrigger) afmethodB = true;                                       // Check for AF method B
                   afmethodBprobe = true;
@@ -814,7 +802,7 @@ void TEF6686::readRDS(byte showrdserrors) {
       case RDS_GROUP_1A:
       case RDS_GROUP_1B: {
           if (!rdsCerrorThreshold) {
-            if (rds.rdsC >> 12 == 0 && rdsblock == RDS_GROUP_1A) {                               // ECC code readout
+            if ((rds.rdsC & 0x1C00) == 0 && rdsblock == RDS_GROUP_1A) {                               // ECC code readout
               rds.ECC = rds.rdsC & 0xff;
               rds.hasECC = true;
 
