@@ -2952,23 +2952,23 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Soglia di basso livello: ", // 18
     "Contrasto: ", // 19
     "Imposta volume", // 20
-    "Imp. offset conversione", // 21
-    "Imp. limite di banda inf.", // 22
-    "Imp. limite di banda sup.", // 23
-    "Imp. offset di livello", // 24
-    "Imp. soglia separaz. stereo", // 25
-    "Imp. frequenza taglio alti", // 26
-    "Imp. soglia taglio alti", // 27
-    "Imp. soglia di livello basso", // 28
-    "Imp. la luminosità del display", // 29
+    "Offset conversione", // 21
+    “Limite di banda inferiore”, // 22
+    “Limite di banda superiore”, // 23
+    “Offset di livello", // 24
+    “Soglia separazione stereo", // 25
+    “Frequenza taglio alti", // 26
+    “Soglia taglio alti", // 27
+    “Soglia di livello basso", // 28
+    “Luminosità schermo”, // 29
     "Off", // 30 ***
     "Schermo disattivato!", // 31
     "Deseleziona box RF+ per audio", // 32
     "OFF", // 33 ***
     "SCANSIONE...", // 34
     "Ricevitore non rilevato", // 35
-    "AM Antenna gain", // 36
-    "FM AGC", // 37
+    “Guadagno antenna AM", // 36
+    “AGC FM", // 37
     "Mostra errori RDS", // 38
     "Lingua", // 39
     "Scegli la lingua", // 40
@@ -2987,19 +2987,19 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Connetti a: ", // 53
     "per configurare il Wi-Fi", // 54
     "Connessione al Wi-Fi", // 55
-    "NON RIUSCITA. Wi-Fi inattivo", // 56
+    "NON RIUSCITA!”, // 56
     "CONNESSO!", // 57
     "IP per StationList", // 58
-    "Mostra banda SW in m.", // 59
+    "Mostra banda SW in m.“, // 59
     "Filtro RDS", // 60
     "Mostra errori PI", // 61
-    "Mostra squelch", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
+    “Utilizzare squelch", // 62 
     "Meter di modulazione", // 63
     "Soppressione rumore AM", // 64
     "Soppressione rumore FM", // 65
     "Predefiniti caricati", // 66
     "Uscita audio", // 67
-    "Consenti sintonia con salvaschermo", // 68
+    "Consenti sintonia\ncon salvaschermo", // 68
     "Inversione schermo", // 69
     "Info sul software", // 70
     "Codice principale:", // 71
@@ -3014,9 +3014,9 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Min.", // 80 ***
     "Velocità SPI Dinamico", // 81 ***
     "Sensibilità scansione", // 82
-    "NONE", // 83 represents: AM/FM bands unavailable(please delete this note after translation）
-    "Software version", // 84
-    "Frequency font", // 85 ***
+    “ASSENTE”, // 83 
+    “Versione Software", // 84
+    “Font frequenza”, // 85 ***
     "Auto", // 86
     "AF non disponibile", // 87
     "EON non disponibile", // 88
@@ -3038,7 +3038,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "SW", // 104 ***
     "FM", // 105 ***
     "OIRT", // 106 ***
-    "Rotazione a schermo spento", // 107 ***
+    "Rotazione con schermo spento", // 107 ***
     "Selezionare modello", // 108 ***
     "Base (ILI9341)", // 109 ***
     "Portatile (ILI9341)", // 110 ***
@@ -3100,7 +3100,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Identificatore", // 166 ***
     "Acquisto", // 167 ***
     "Ottieni dati", // 168 ***
-    "Passo di default MW", // 169 ***
+    "Passo di sintonia\nMW predefinito", // 169 ***
     "Tangerine", // 170 ***
     "Ocean", // 171 ***
     "Indigo", // 172 ***
@@ -3115,7 +3115,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Impostazioni FM", // 181 ***
     "Impostazioni AM", // 182 ***
     "Connettività", // 183 ***
-    "PREMI MODO PER CONFERMARE", // 184 ***
+    "PREMI MODO PER RITORNARE”, // 184 ***
     "CoChannelDet AM", // 185
     "Sensibilità CoChannelDet", // 186
     "Soglia CoChannelDet AM", // 187
@@ -3136,24 +3136,24 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Tutto", // 202 ***
     "PS veloce", // 203 ***
     "Default", // 204
-    "Mute screen on\nXDRGTK connection", // 205
-    "FMSI stereo\nimprovement", // 206
-    "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!", // 208
-    "Begin scanning\nmemory channels", // 209
-    "Stop scanning\nmemory channels", // 210
-    "Wait time", // 211
-    "Start DX scanning", // 212
-    "FM DX Options", // 213
-    "Abort! The start channel\nis marked as skipped.", // 214
+    “Spegni schermo se\nconnesso a XDRGTK", // 205
+    "FMSI miglioramento\nsuono stereofonico”, // 206
+    "Funzione disponibile\nsolo su TEF6687/6689!", // 207
+    "Funzione non disponibile\nsulla skin selezionata!”, // 208
+    “Avvio scansione\ncanali in memoria”, // 209
+    “Fine scansione\ncanali in memoria", // 210
+    “Tempo di attesa“, // 211
+    “Avvio scansione DX", // 212
+    “Opzioni FM DX", // 213
+    “Interrotto! Il canale di avvio\nviene saltato.”, // 214
     "Autoordinamento AF", // 215
-    "Memory channels", // 216
-    "Exclude", // 217
-    "Only", // 218
-    "Auto cancel scan", // 219
-    "Correct PI", // 220
-    "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    “Canali di memoria“, // 216
+    "Escludere”, // 217
+    “Solamente”, // 218
+    “Fine scansione automatica“, // 219
+    "PI corretto”, // 220
+    "Signale”, // 221
+    “Audio silenziato\ndurante scansione” // 222
   },
 
   { "Simplified Chinese", // Simplified Chinese
