@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 // *** means the text is the same as in English
-static const char* const myLanguage[18][223] PROGMEM = {
+static const char* const myLanguage[18][224] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -228,7 +228,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Auto cancel scan", // 219
     "Correct PI", // 220
     "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Mute audio\nwhile scanning", // 222
+    "AIR" // 223
   },
 
   { "Nederlands", // Dutch
@@ -453,7 +454,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Auto afbreken", // 219
     "Correcte PI", // 220
     "Signaal", // 221
-    "Geen geluid\ntijdens scannen" // 222
+    "Geen geluid\ntijdens scannen", // 222
+    "AIR" // 223
   },
 
   { "Polski", // Polish
@@ -678,7 +680,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Automatyczne\nanulowanie skanowania", // 219
     "Poprawne PI", // 220
     "Sygnał", // 221
-    "Wycisz dźwięk\npodczas skanowania" // 222
+    "Wycisz dźwięk\npodczas skanowania", // 222
+    "AIR" // 223
   },
 
   { "Hrvatski", // Croatian
@@ -903,7 +906,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Auto cancel scan", // 219
     "Correct PI", // 220
     "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Mute audio\nwhile scanning", // 222
+    "AIR" // 223
   },
 
   { "Ελληνικά", // Greek
@@ -1128,7 +1132,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Αυτόματη ακύρωση\nανίχνευσης", // 219
     "Σωστό PI", // 220
     "Σήμα", // 221
-    "Σίγαση ήχου\nκατά την ανίχνευση" // 222
+    "Σίγαση ήχου\nκατά την ανίχνευση", // 222
+    "AIR" // 223
   },
 
   { "Română", // Romanian
@@ -1353,7 +1358,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Auto cancel scan", // 219
     "Correct PI", // 220
     "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Mute audio\nwhile scanning", // 222
+    "AIR" // 223
   },
 
   { "Deutsch", // German
@@ -1578,7 +1584,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Automatisches Scan-Ende", // 219
     "Korrekter PI-Code", // 220
     "Signal", // 221
-    "Stumm beim Scannen" // 222
+    "Stumm beim Scannen", // 222
+    "AIR" // 223
   },
 
   { "Český", // Czech
@@ -1803,7 +1810,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Auto cancel scan", // 219
     "Correct PI", // 220
     "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Mute audio\nwhile scanning", // 222
+    "AIR" // 223
   },
 
   { "Slovenský", // Slovak
@@ -2028,7 +2036,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Auto cancel scan", // 219
     "Correct PI", // 220
     "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Mute audio\nwhile scanning", // 222
+    "AIR" // 223
   },
 
   { "Français", // French
@@ -2253,7 +2262,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Annuler automatiquement", // 219
     "PI Correct", // 220
     "Signal", // 221
-    "Audio muet lors\nde la numérisation" // 222
+    "Audio muet lors\nde la numérisation", // 222
+    "AIR" // 223
   },
 
   { "Български", // Bulgarian
@@ -2478,7 +2488,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Auto cancel scan", // 219
     "Correct PI", // 220
     "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Mute audio\nwhile scanning", // 222
+    "AIR" // 223
   },
 
   { "Русский", // Russian
@@ -2703,7 +2714,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Auto cancel scan", // 219
     "Correct PI", // 220
     "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Mute audio\nwhile scanning", // 222
+    "AIR" // 223
   },
 
   { "Українська", // Ukranian
@@ -2928,7 +2940,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Auto cancel scan", // 219
     "Correct PI", // 220
     "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Mute audio\nwhile scanning", // 222
+    "AIR" // 223
   },
 
   { "Italiano", // Italian
@@ -3153,7 +3166,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Fine scansione automatica", // 219
     "PI corretto", // 220
     "Signale", // 221
-    "Audio silenziato\ndurante scansione" // 222
+    "Audio silenziato\ndurante scansione", // 222
+    "AIR" // 223
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3378,7 +3392,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "扫频停台条件", // 219
     "节目识别码正确", // 220
     "信号超阈值", // 221
-    "扫描时静音" // 222
+    "扫描时静音", // 222
+    "AIR" // 223
   },
 
   { "Norsk", // Norwegian
@@ -3603,7 +3618,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Avbryt skanning automatisk", // 219
     "korrekt PI", // 220
     "Signal", // 221
-    "Demp lyden\nmens du skanner" // 222
+    "Demp lyden\nmens du skanner", // 222
+    "AIR" // 223
   },
 
   { "Español", // Spanish
@@ -3828,7 +3844,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Cancelar automáticamente\nla búsqueda", // 219
     "PI correcto", // 220
     "Señal", // 221
-    "Audio mudo\nmientras busca" // 222
+    "Audio mudo\nmientras busca", // 222
+    "AIR" // 223
   },
 
   { "Português", // Portuguese
@@ -4053,7 +4070,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Cancelar automatic.\na pesquisa", // 219
     "PI correto", // 220
     "Sinal", // 221
-    "Mudo áudio\nenquanto procura" // 222
+    "Mudo áudio\nenquanto procura", // 222
+    "AIR" // 223
   }
 };
 #endif
