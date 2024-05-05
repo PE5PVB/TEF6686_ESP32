@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 // *** means the text is the same as in English
-static const char* const myLanguage[18][223] PROGMEM = {
+static const char* const myLanguage[18][224] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -228,7 +228,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Auto cancel scan", // 219
     "Correct PI", // 220
     "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Mute audio\nwhile scanning", // 222
+    "AIR" // 223
   },
 
   { "Nederlands", // Dutch
@@ -453,7 +454,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Auto afbreken", // 219
     "Correcte PI", // 220
     "Signaal", // 221
-    "Geen geluid\ntijdens scannen" // 222
+    "Geen geluid\ntijdens scannen", // 222
+    "AIR" // 223
   },
 
   { "Polski", // Polish
@@ -678,7 +680,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Automatyczne\nanulowanie skanowania", // 219
     "Poprawne PI", // 220
     "Sygnał", // 221
-    "Wycisz dźwięk\npodczas skanowania" // 222
+    "Wycisz dźwięk\npodczas skanowania", // 222
+    "AIR" // 223
   },
 
   { "Hrvatski", // Croatian
@@ -903,7 +906,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Auto cancel scan", // 219
     "Correct PI", // 220
     "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Mute audio\nwhile scanning", // 222
+    "AIR" // 223
   },
 
   { "Ελληνικά", // Greek
@@ -1128,7 +1132,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Αυτόματη ακύρωση\nανίχνευσης", // 219
     "Σωστό PI", // 220
     "Σήμα", // 221
-    "Σίγαση ήχου\nκατά την ανίχνευση" // 222
+    "Σίγαση ήχου\nκατά την ανίχνευση", // 222
+    "AIR" // 223
   },
 
   { "Română", // Romanian
@@ -1353,7 +1358,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Auto cancel scan", // 219
     "Correct PI", // 220
     "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Mute audio\nwhile scanning", // 222
+    "AIR" // 223
   },
 
   { "Deutsch", // German
@@ -1578,7 +1584,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Automatisches Scan-Ende", // 219
     "Korrekter PI-Code", // 220
     "Signal", // 221
-    "Stumm beim Scannen" // 222
+    "Stumm beim Scannen", // 222
+    "AIR" // 223
   },
 
   { "Český", // Czech
@@ -1803,7 +1810,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Auto cancel scan", // 219
     "Correct PI", // 220
     "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Mute audio\nwhile scanning", // 222
+    "AIR" // 223
   },
 
   { "Slovenský", // Slovak
@@ -2028,7 +2036,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Auto cancel scan", // 219
     "Correct PI", // 220
     "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Mute audio\nwhile scanning", // 222
+    "AIR" // 223
   },
 
   { "Français", // French
@@ -2253,7 +2262,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Annuler automatiquement", // 219
     "PI Correct", // 220
     "Signal", // 221
-    "Audio muet lors\nde la numérisation" // 222
+    "Audio muet lors\nde la numérisation", // 222
+    "AIR" // 223
   },
 
   { "Български", // Bulgarian
@@ -2478,7 +2488,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Auto cancel scan", // 219
     "Correct PI", // 220
     "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Mute audio\nwhile scanning", // 222
+    "AIR" // 223
   },
 
   { "Русский", // Russian
@@ -2686,24 +2697,25 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Все", // 202
     "Быстрый PS", // 203
     "По умолчанию", // 204
-    "Погасить дисплей при\nподключении XDRGTK", // 205
+    "Гасить дисплей при\nработе с XDRGTK", // 205
     "FMSI стерео\nулучшение", // 206
-    "Функция доступна только\nна TEF6687/6689!", // 207
+    "Доступно только\nна TEF6687/6689", // 207
     "Функция недоступна\nна этом оформлении", // 208
-    "Begin scanning\nmemory channels", // 209
-    "Stop scanning\nmemory channels", // 210
-    "Wait time", // 211
-    "Start DX scanning", // 212
-    "FM DX Options", // 213
-    "Abort! The start channel\nis marked as skipped.", // 214
+    "Стартовый канал\nпамяти", // 209
+    "Конечный канал\nпамяти", // 210
+    "Время ожидания", // 211
+    "Начать DX-сканирование", // 212
+    "Настройки FM DX сканера", // 213
+    "Прервано! Стартовый канал\nпомечен для пропуска.", // 214
     "Сортировка AF-частот", // 215
-    "Memory channels", // 216
-    "Exclude", // 217
-    "Only", // 218
-    "Auto cancel scan", // 219
-    "Correct PI", // 220
-    "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Логика работы с \nканалами памяти", // 216
+    "Кроме", // 217
+    "Только", // 218
+    "Автоматическая отмена \nсканирования", // 219
+    "При корректном PI", // 220
+    "При наличии сигнала", // 221
+    "Отключать аудио\nпри сканировании", // 222
+    "AIR" // 223
   },
 
   { "Українська", // Ukranian
@@ -2928,7 +2940,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Auto cancel scan", // 219
     "Correct PI", // 220
     "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Mute audio\nwhile scanning", // 222
+    "AIR" // 223
   },
 
   { "Italiano", // Italian
@@ -2952,23 +2965,23 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Soglia di basso livello: ", // 18
     "Contrasto: ", // 19
     "Imposta volume", // 20
-    "Imp. offset conversione", // 21
-    "Imp. limite di banda inf.", // 22
-    "Imp. limite di banda sup.", // 23
-    "Imp. offset di livello", // 24
-    "Imp. soglia separaz. stereo", // 25
-    "Imp. frequenza taglio alti", // 26
-    "Imp. soglia taglio alti", // 27
-    "Imp. soglia di livello basso", // 28
-    "Imp. la luminosità del display", // 29
+    "Offset conversione", // 21
+    "Limite di banda inferiore", // 22
+    "Limite di banda superiore", // 23
+    "Offset di livello", // 24
+    "Soglia separazione stereo", // 25
+    "Frequenza taglio alti", // 26
+    "Soglia taglio alti", // 27
+    "Soglia di livello basso", // 28
+    "Luminosità schermo", // 29
     "Off", // 30 ***
     "Schermo disattivato!", // 31
     "Deseleziona box RF+ per audio", // 32
     "OFF", // 33 ***
     "SCANSIONE...", // 34
     "Ricevitore non rilevato", // 35
-    "AM Antenna gain", // 36
-    "FM AGC", // 37
+    "Guadagno antenna AM", // 36
+    "AGC FM", // 37
     "Mostra errori RDS", // 38
     "Lingua", // 39
     "Scegli la lingua", // 40
@@ -2987,19 +3000,19 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Connetti a: ", // 53
     "per configurare il Wi-Fi", // 54
     "Connessione al Wi-Fi", // 55
-    "NON RIUSCITA. Wi-Fi inattivo", // 56
+    "NON RIUSCITA!", // 56
     "CONNESSO!", // 57
     "IP per StationList", // 58
     "Mostra banda SW in m.", // 59
     "Filtro RDS", // 60
     "Mostra errori PI", // 61
-    "Mostra squelch", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
+    "Utilizzare squelch", // 62 
     "Meter di modulazione", // 63
     "Soppressione rumore AM", // 64
     "Soppressione rumore FM", // 65
     "Predefiniti caricati", // 66
     "Uscita audio", // 67
-    "Consenti sintonia con salvaschermo", // 68
+    "Consenti sintonia\ncon salvaschermo", // 68
     "Inversione schermo", // 69
     "Info sul software", // 70
     "Codice principale:", // 71
@@ -3014,9 +3027,9 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Min.", // 80 ***
     "Velocità SPI Dinamico", // 81 ***
     "Sensibilità scansione", // 82
-    "NONE", // 83 represents: AM/FM bands unavailable(please delete this note after translation）
-    "Software version", // 84
-    "Frequency font", // 85 ***
+    "ASSENTE", // 83 
+    "Versione Software", // 84
+    "Font frequenza", // 85 ***
     "Auto", // 86
     "AF non disponibile", // 87
     "EON non disponibile", // 88
@@ -3038,7 +3051,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "SW", // 104 ***
     "FM", // 105 ***
     "OIRT", // 106 ***
-    "Rotazione a schermo spento", // 107 ***
+    "Rotazione con schermo spento", // 107 ***
     "Selezionare modello", // 108 ***
     "Base (ILI9341)", // 109 ***
     "Portatile (ILI9341)", // 110 ***
@@ -3100,7 +3113,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Identificatore", // 166 ***
     "Acquisto", // 167 ***
     "Ottieni dati", // 168 ***
-    "Passo di default MW", // 169 ***
+    "Passo di sintonia\nMW predefinito", // 169 ***
     "Tangerine", // 170 ***
     "Ocean", // 171 ***
     "Indigo", // 172 ***
@@ -3115,7 +3128,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Impostazioni FM", // 181 ***
     "Impostazioni AM", // 182 ***
     "Connettività", // 183 ***
-    "PREMI MODO PER CONFERMARE", // 184 ***
+    "PREMI MODO PER RITORNARE", // 184 ***
     "CoChannelDet AM", // 185
     "Sensibilità CoChannelDet", // 186
     "Soglia CoChannelDet AM", // 187
@@ -3136,24 +3149,25 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Tutto", // 202 ***
     "PS veloce", // 203 ***
     "Default", // 204
-    "Mute screen on\nXDRGTK connection", // 205
-    "FMSI stereo\nimprovement", // 206
-    "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!", // 208
-    "Begin scanning\nmemory channels", // 209
-    "Stop scanning\nmemory channels", // 210
-    "Wait time", // 211
-    "Start DX scanning", // 212
-    "FM DX Options", // 213
-    "Abort! The start channel\nis marked as skipped.", // 214
+    "Spegni schermo se\nconnesso a XDRGTK", // 205
+    "FMSI miglioramento\nsuono stereofonico", // 206
+    "Funzione disponibile\nsolo su TEF6687/6689!", // 207
+    "Funzione non disponibile\nsulla skin selezionata!", // 208
+    "Avvio scansione\ncanali in memoria", // 209
+    "Fine scansione\ncanali in memoria", // 210
+    "Tempo di attesa", // 211
+    "Avvio scansione DX", // 212
+    "Opzioni FM DX", // 213
+    "Interrotto! Il canale di avvio\nviene saltato.", // 214
     "Autoordinamento AF", // 215
-    "Memory channels", // 216
-    "Exclude", // 217
-    "Only", // 218
-    "Auto cancel scan", // 219
-    "Correct PI", // 220
-    "Signal", // 221
-    "Mute audio\nwhile scanning" // 222
+    "Canali di memoria", // 216
+    "Escludere", // 217
+    "Solamente", // 218
+    "Fine scansione automatica", // 219
+    "PI corretto", // 220
+    "Signale", // 221
+    "Audio silenziato\ndurante scansione", // 222
+    "AIR" // 223
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3378,7 +3392,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "扫频停台条件", // 219
     "节目识别码正确", // 220
     "信号超阈值", // 221
-    "扫描时静音" // 222
+    "扫描时静音", // 222
+    "AIR" // 223
   },
 
   { "Norsk", // Norwegian
@@ -3603,7 +3618,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Avbryt skanning automatisk", // 219
     "korrekt PI", // 220
     "Signal", // 221
-    "Demp lyden\nmens du skanner" // 222
+    "Demp lyden\nmens du skanner", // 222
+    "AIR" // 223
   },
 
   { "Español", // Spanish
@@ -3828,7 +3844,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Cancelar automáticamente\nla búsqueda", // 219
     "PI correcto", // 220
     "Señal", // 221
-    "Audio mudo\nmientras busca" // 222
+    "Audio mudo\nmientras busca", // 222
+    "AIR" // 223
   },
 
   { "Português", // Portuguese
@@ -4053,7 +4070,8 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Cancelar automatic.\na pesquisa", // 219
     "PI correto", // 220
     "Sinal", // 221
-    "Mudo áudio\nenquanto procura" // 222
+    "Mudo áudio\nenquanto procura", // 222
+    "AIR" // 223
   }
 };
 #endif
