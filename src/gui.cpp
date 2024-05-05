@@ -1,7 +1,6 @@
 #include "gui.h"
 #include "language.h"
 #include "constants.h"
-#include "config.h"
 #include <WiFi.h>
 #include <Wire.h>
 #include <EEPROM.h>
@@ -1194,27 +1193,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-#ifdef HAS_AIR_BAND
-          switch (bandAM) {
-            case AM_BAND_ALL: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 298, 3); break;
-            case AM_BAND_LW_MW_SW: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 298, 3); break;
-            case AM_BAND_LW_MW_AIR: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][223], 298, 3); break;
-            case AM_BAND_LW_SW_AIR: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 298, 3); break;
-            case AM_BAND_MW_SW_AIR: FullLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 298, 3); break;
-            case AM_BAND_LW_MW: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103], 298, 3); break;
-            case AM_BAND_LW_SW: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104], 298, 3); break;
-            case AM_BAND_LW_AIR: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][223], 298, 3); break;
-            case AM_BAND_MW_SW: FullLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104], 298, 3); break;
-            case AM_BAND_MW_AIR: FullLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][223], 298, 3); break;
-            case AM_BAND_SW_AIR: FullLineSprite.drawString(myLanguage[language][104] + String(",") + myLanguage[language][223], 298, 3); break;
-            case AM_BAND_LW: FullLineSprite.drawString(myLanguage[language][102], 298, 3); break;
-            case AM_BAND_MW: FullLineSprite.drawString(myLanguage[language][103], 298, 3); break;
-            case AM_BAND_SW: FullLineSprite.drawString(myLanguage[language][104], 298, 3); break;
-            case AM_BAND_AIR: FullLineSprite.drawString(myLanguage[language][223], 298, 3); break;
-            case AM_BAND_NONE: FullLineSprite.drawString(myLanguage[language][83], 298, 3); break;
-          }
-          break;
-#else
+
           switch (bandAM) {
             case AM_BAND_ALL: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 298, 3); break;
             case AM_BAND_LW_MW: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103], 298, 3); break;
@@ -1225,8 +1204,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
             case AM_BAND_SW: FullLineSprite.drawString(myLanguage[language][104], 298, 3); break;
             case AM_BAND_NONE: FullLineSprite.drawString(myLanguage[language][83], 298, 3); break;
           }
-           break;
-#endif
+          break;
 
         case DISPLAYSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
@@ -1640,22 +1618,10 @@ void BuildDisplay() {
     case BAND_LW: tftPrint(-1, myLanguage[language][102], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
     case BAND_MW: tftPrint(-1, myLanguage[language][103], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
     case BAND_SW: tftPrint(-1, myLanguage[language][104], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
-#ifdef HAS_AIR_BAND
-    case BAND_AIR: tftPrint(-1, myLanguage[language][223], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
-#endif
     case BAND_FM: tftPrint(-1, myLanguage[language][105], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
     case BAND_OIRT: tftPrint(-1, myLanguage[language][106], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
   }
-  if (band < BAND_GAP) tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, 28); 
-  else {
-#ifdef HAS_AIR_BAND
-    if (band == AM_BAND_AIR) 
-      tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
-    else tftPrint(-1, "KHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
-#else
-      tftPrint(-1, "KHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
-#endif
-  }
+  if (band < BAND_GAP) tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, 28); else tftPrint(-1, "kHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
 
   RDSstatusold = false;
   Stereostatusold = false;
@@ -1819,26 +1785,7 @@ void MenuUp() {
           case ITEM8:
             bandAM++;
             if (bandAM > AM_BAND_CNT - 1) bandAM = AM_BAND_ALL;
-#ifdef HAS_AIR_BAND
-            switch (bandAM) {
-              case AM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104]+ String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_LW_MW_SW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
-              case AM_BAND_LW_MW_AIR: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_LW_SW_AIR: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_MW_SW_AIR: OneBigLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_LW_MW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103], 135, 0); break;
-              case AM_BAND_LW_SW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104], 135, 0); break;
-              case AM_BAND_LW_AIR: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_MW_SW: OneBigLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
-              case AM_BAND_MW_AIR: OneBigLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_SW_AIR: OneBigLineSprite.drawString(myLanguage[language][104] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_LW: OneBigLineSprite.drawString(myLanguage[language][102], 135, 0); break;
-              case AM_BAND_MW: OneBigLineSprite.drawString(myLanguage[language][103], 135, 0); break;
-              case AM_BAND_SW: OneBigLineSprite.drawString(myLanguage[language][104], 135, 0); break;
-              case AM_BAND_AIR: OneBigLineSprite.drawString(myLanguage[language][223], 135, 0); break;
-              case AM_BAND_NONE: OneBigLineSprite.drawString(myLanguage[language][83], 135, 0); break;
-            }
-#else
+
             switch (bandAM) {
               case AM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
               case AM_BAND_LW_MW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103], 135, 0); break;
@@ -1849,7 +1796,7 @@ void MenuUp() {
               case AM_BAND_SW: OneBigLineSprite.drawString(myLanguage[language][104], 135, 0); break;
               case AM_BAND_NONE: OneBigLineSprite.drawString(myLanguage[language][83], 135, 0); break;
             }
-#endif
+
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
@@ -2642,26 +2589,6 @@ void MenuDown() {
             bandAM--;
             if (bandAM > AM_BAND_CNT) bandAM = AM_BAND_NONE;
 
-#ifdef HAS_AIR_BAND
-            switch (bandAM) {
-              case AM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104]+ String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_LW_MW_SW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
-              case AM_BAND_LW_MW_AIR: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_LW_SW_AIR: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_MW_SW_AIR: OneBigLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_LW_MW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103], 135, 0); break;
-              case AM_BAND_LW_SW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104], 135, 0); break;
-              case AM_BAND_LW_AIR: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_MW_SW: OneBigLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
-              case AM_BAND_MW_AIR: OneBigLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_SW_AIR: OneBigLineSprite.drawString(myLanguage[language][104] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_LW: OneBigLineSprite.drawString(myLanguage[language][102], 135, 0); break;
-              case AM_BAND_MW: OneBigLineSprite.drawString(myLanguage[language][103], 135, 0); break;
-              case AM_BAND_SW: OneBigLineSprite.drawString(myLanguage[language][104], 135, 0); break;
-              case AM_BAND_AIR: OneBigLineSprite.drawString(myLanguage[language][223], 135, 0); break;
-              case AM_BAND_NONE: OneBigLineSprite.drawString(myLanguage[language][83], 135, 0); break;
-            }
-#else
             switch (bandAM) {
               case AM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
               case AM_BAND_LW_MW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103], 135, 0); break;
@@ -2672,8 +2599,6 @@ void MenuDown() {
               case AM_BAND_SW: OneBigLineSprite.drawString(myLanguage[language][104], 135, 0); break;
               case AM_BAND_NONE: OneBigLineSprite.drawString(myLanguage[language][83], 135, 0); break;
             }
-#endif
-
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
@@ -3176,7 +3101,6 @@ void MenuDown() {
 
             OneBigLineSprite.drawString((showSWMIBand ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
- 
             break;
 
           case ITEM5:
@@ -3531,26 +3455,6 @@ void DoMenu() {
           case ITEM8:
             Infoboxprint(myLanguage[language][101]);
 
-#ifdef HAS_AIR_BAND
-            switch (bandAM) {
-              case AM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104]+ String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_LW_MW_SW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
-              case AM_BAND_LW_MW_AIR: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_LW_SW_AIR: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_MW_SW_AIR: OneBigLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_LW_MW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103], 135, 0); break;
-              case AM_BAND_LW_SW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104], 135, 0); break;
-              case AM_BAND_LW_AIR: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_MW_SW: OneBigLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
-              case AM_BAND_MW_AIR: OneBigLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_SW_AIR: OneBigLineSprite.drawString(myLanguage[language][104] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_LW: OneBigLineSprite.drawString(myLanguage[language][102], 135, 0); break;
-              case AM_BAND_MW: OneBigLineSprite.drawString(myLanguage[language][103], 135, 0); break;
-              case AM_BAND_SW: OneBigLineSprite.drawString(myLanguage[language][104], 135, 0); break;
-              case AM_BAND_AIR: OneBigLineSprite.drawString(myLanguage[language][223], 135, 0); break;
-              case AM_BAND_NONE: OneBigLineSprite.drawString(myLanguage[language][83], 135, 0); break;
-            }
-#else
             switch (bandAM) {
               case AM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
               case AM_BAND_LW_MW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103], 135, 0); break;
@@ -3561,8 +3465,6 @@ void DoMenu() {
               case AM_BAND_SW: OneBigLineSprite.drawString(myLanguage[language][104], 135, 0); break;
               case AM_BAND_NONE: OneBigLineSprite.drawString(myLanguage[language][83], 135, 0); break;
             }
-#endif
-
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
