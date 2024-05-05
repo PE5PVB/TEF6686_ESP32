@@ -135,16 +135,16 @@ void TEF6686::init(byte TEF) {
 
     if (xtalADC < XTAL_0V_ADC + XTAL_ADC_TOL) {
       Tuner_Init(tuner_init_tab9216);
-      log_v("XTAL : 9.216M");
+      log_d("TEF668X XTAL : 9.216M");
     } else if (xtalADC > XTAL_1V_ADC - XTAL_ADC_TOL && xtalADC < XTAL_1V_ADC + XTAL_ADC_TOL) {
       Tuner_Init(tuner_init_tab12000);
-      log_v("XTAL : 12M");
+      log_d("TEF668X XTAL : 12M");
     } else if (xtalADC > XTAL_2V_ADC - XTAL_ADC_TOL && xtalADC < XTAL_2V_ADC + XTAL_ADC_TOL) {
       Tuner_Init(tuner_init_tab55000);
-      log_v("XTAL : 55M");
+      log_d("TEF668X XTAL : 55M");
     } else {
       Tuner_Init(tuner_init_tab4000);
-      log_v("XTAL : 4M");
+      log_d("TEF668X XTAL : 4M");
     }
     power(1);
     Tuner_Init(tuner_init_tab);
@@ -176,6 +176,10 @@ void TEF6686::SetFreq(uint16_t frequency) {
 
 void TEF6686::SetFreqAM(uint16_t frequency) {
   devTEF_Radio_Tune_AM (frequency);
+}
+
+void TEF6686::SetFreqAIR(uint16_t frequency) {
+  devTEF_Radio_Tune_AM (10700);
 }
 
 void TEF6686::setOffset(int8_t offset) {
