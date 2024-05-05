@@ -35,8 +35,6 @@
 #define STANDBYLED      19
 #define SMETERPIN       27
 
-
-#define DEEPELEC_DP_666     // uncomment for DEEPELEC Portable DP-666 build (Simplified Chinese)
 #define DYNAMIC_SPI_SPEED   // uncomment to enable dynamic SPI Speed https://github.com/ohmytime/TFT_eSPI_DynamicSpeed
 
 #ifdef DEEPELEC_DP_666
