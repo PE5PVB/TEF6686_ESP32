@@ -2953,22 +2953,22 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Contrasto: ", // 19
     "Imposta volume", // 20
     "Offset conversione", // 21
-    “Limite di banda inferiore”, // 22
-    “Limite di banda superiore”, // 23
-    “Offset di livello", // 24
-    “Soglia separazione stereo", // 25
-    “Frequenza taglio alti", // 26
-    “Soglia taglio alti", // 27
-    “Soglia di livello basso", // 28
-    “Luminosità schermo”, // 29
+    "Limite di banda inferiore", // 22
+    "Limite di banda superiore", // 23
+    "Offset di livello", // 24
+    "Soglia separazione stereo", // 25
+    "Frequenza taglio alti", // 26
+    "Soglia taglio alti", // 27
+    "Soglia di livello basso", // 28
+    "Luminosità schermo", // 29
     "Off", // 30 ***
     "Schermo disattivato!", // 31
     "Deseleziona box RF+ per audio", // 32
     "OFF", // 33 ***
     "SCANSIONE...", // 34
     "Ricevitore non rilevato", // 35
-    “Guadagno antenna AM", // 36
-    “AGC FM", // 37
+    "Guadagno antenna AM", // 36
+    "AGC FM", // 37
     "Mostra errori RDS", // 38
     "Lingua", // 39
     "Scegli la lingua", // 40
@@ -2987,13 +2987,13 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Connetti a: ", // 53
     "per configurare il Wi-Fi", // 54
     "Connessione al Wi-Fi", // 55
-    "NON RIUSCITA!”, // 56
+    "NON RIUSCITA!", // 56
     "CONNESSO!", // 57
     "IP per StationList", // 58
-    "Mostra banda SW in m.“, // 59
+    "Mostra banda SW in m.", // 59
     "Filtro RDS", // 60
     "Mostra errori PI", // 61
-    “Utilizzare squelch", // 62 
+    "Utilizzare squelch", // 62 
     "Meter di modulazione", // 63
     "Soppressione rumore AM", // 64
     "Soppressione rumore FM", // 65
@@ -3014,9 +3014,9 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Min.", // 80 ***
     "Velocità SPI Dinamico", // 81 ***
     "Sensibilità scansione", // 82
-    “ASSENTE”, // 83 
-    “Versione Software", // 84
-    “Font frequenza”, // 85 ***
+    "ASSENTE", // 83 
+    "Versione Software", // 84
+    "Font frequenza", // 85 ***
     "Auto", // 86
     "AF non disponibile", // 87
     "EON non disponibile", // 88
@@ -3115,7 +3115,7 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Impostazioni FM", // 181 ***
     "Impostazioni AM", // 182 ***
     "Connettività", // 183 ***
-    "PREMI MODO PER RITORNARE”, // 184 ***
+    "PREMI MODO PER RITORNARE", // 184 ***
     "CoChannelDet AM", // 185
     "Sensibilità CoChannelDet", // 186
     "Soglia CoChannelDet AM", // 187
@@ -3136,24 +3136,24 @@ static const char* const myLanguage[18][223] PROGMEM = {
     "Tutto", // 202 ***
     "PS veloce", // 203 ***
     "Default", // 204
-    “Spegni schermo se\nconnesso a XDRGTK", // 205
-    "FMSI miglioramento\nsuono stereofonico”, // 206
+    "Spegni schermo se\nconnesso a XDRGTK", // 205
+    "FMSI miglioramento\nsuono stereofonico", // 206
     "Funzione disponibile\nsolo su TEF6687/6689!", // 207
-    "Funzione non disponibile\nsulla skin selezionata!”, // 208
-    “Avvio scansione\ncanali in memoria”, // 209
-    “Fine scansione\ncanali in memoria", // 210
-    “Tempo di attesa“, // 211
-    “Avvio scansione DX", // 212
-    “Opzioni FM DX", // 213
-    “Interrotto! Il canale di avvio\nviene saltato.”, // 214
+    "Funzione non disponibile\nsulla skin selezionata!", // 208
+    "Avvio scansione\ncanali in memoria", // 209
+    "Fine scansione\ncanali in memoria", // 210
+    "Tempo di attesa", // 211
+    "Avvio scansione DX", // 212
+    "Opzioni FM DX", // 213
+    "Interrotto! Il canale di avvio\nviene saltato.", // 214
     "Autoordinamento AF", // 215
-    “Canali di memoria“, // 216
-    "Escludere”, // 217
-    “Solamente”, // 218
-    “Fine scansione automatica“, // 219
-    "PI corretto”, // 220
-    "Signale”, // 221
-    “Audio silenziato\ndurante scansione” // 222
+    "Canali di memoria", // 216
+    "Escludere", // 217
+    "Solamente", // 218
+    "Fine scansione automatica", // 219
+    "PI corretto", // 220
+    "Signale", // 221
+    "Audio silenziato\ndurante scansione" // 222
   },
 
   { "Simplified Chinese", // Simplified Chinese
