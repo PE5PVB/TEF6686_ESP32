@@ -2921,26 +2921,26 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Мало", // 200
     "Багато", // 201
     "Усе", // 202
-    "Швидкий PS", // 203
-    "Default", // 204
-    "Mute screen on\nXDRGTK connection", // 205
-    "FMSI stereo\nimprovement", // 206
-    "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!", // 208
-    "Begin scanning\nmemory channels", // 209
-    "Stop scanning\nmemory channels", // 210
-    "Wait time", // 211
-    "Start DX scanning", // 212
-    "FM DX Options", // 213
-    "Abort! The start channel\nis marked as skipped.", // 214
-    "Авто сорт. AF", // 215
-    "Memory channels", // 216
-    "Exclude", // 217
-    "Only", // 218
-    "Auto cancel scan", // 219
-    "Correct PI", // 220
-    "Signal", // 221
-    "Mute audio\nwhile scanning", // 222
+    "Швидкий PS", // 203 
+    "Стандартний", // 204
+    "Приглушення екрану\nпри підключенні XDRGTK", // 205
+    "Покращення стерео\nFMSI", // 206
+    "Функція доступна тільки\nна TEF6687/6689!", // 207
+    "Функція недоступна\nна вибраній шкірці!", // 208
+    "Початок сканування\nканалів пам'яті", // 209
+    "Зупинка сканування\nканалів пам'яті", // 210
+    "Час очікування", // 211
+    "Початок DX-сканування", // 212
+    "Опції FM DX", // 213
+    "Перервати! Початковий канал\nпозначений як пропущений.", // 214
+    "Автоматичне сортування AF", // 215
+    "Канали пам'яті", // 216
+    "Виключити", // 217
+    "Тільки", // 218
+    "Автоматичне скасування сканування", // 219
+    "Коректний PI", // 220
+    "Сигнал", // 221
+    "Приглушення аудіо\nпід час сканування", // 222
     "AIR" // 223
   },
 
