@@ -1412,7 +1412,6 @@ void BuildAdvancedRDS() {
   afpage = false;
   afpagenr = 1;
   advancedRDS = true;
-  ScreensaverTimerSet(OFF);
 
   tft.fillScreen(BackgroundColor);
   tft.drawRect(0, 0, 320, 240, FrameColor);
