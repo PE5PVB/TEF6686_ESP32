@@ -1116,7 +1116,9 @@ void loop() {
 
 #ifdef DEEPELEC_DP_666
   if (digitalRead(RTP_IRQ) == LOW) {
-    
+    // 读出 PORT0 PORT1
+    if (!screenmute && !menu && !advancedRDS && !afscreen)
+      ShowNumInput();
   }
 #endif
 
@@ -4409,4 +4411,8 @@ void setAutoSpeedSPI() {
     case 1076 ... 1080: tft.setSPISpeed(15); break;
     default: tft.setSPISpeed(30); break;
   }
+}
+
+void ShowNumInput() {
+
 }
