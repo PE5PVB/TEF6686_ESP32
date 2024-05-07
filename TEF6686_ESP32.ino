@@ -1087,7 +1087,7 @@ void loop() {
     if (screensaver_IRQ)
     {
       screensaver_IRQ = OFF;
-      if (!screensavertriggered && !advancedRDS && !menu) {
+      if (!screensavertriggered && !menu) {
         WakeToSleep(true);
       }
     }
@@ -1594,49 +1594,49 @@ void BANDBUTTONPress() {
       }
     } else {
       if (!usesquelch) radio.setUnMute();
-      if (afscreen) {
-        BuildAdvancedRDS();
-      } else {
-        unsigned long counterold = millis();
-        unsigned long counter = millis();
-        if (!menu) {
-          while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
+      unsigned long counterold = millis();
+      unsigned long counter = millis();
+      if (!menu) {
+        while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
 
-          if (counter - counterold < 1000) {
-            if (screensavertriggered) {
-              WakeToSleep(REVERSE);
-              return;
-            }
-
-            if (advancedRDS) {
-              BuildDisplay();
-              ScreensaverTimerReopen();
-            } else {
-              if (tunemode != TUNE_MEM) {
-                ToggleBand(band);
-                StoreFrequency();
-                SelectBand();
-                if (XDRGTKUSB || XDRGTKTCP) {
-                  if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n"); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n"); else DataPrint("M1\nT" + String(frequency_AM) + "\n");
-                }
-              } else {
-                scanmodeold = tunemode;
-                startFMDXScan();
-                return;
-              }
-              ScreensaverTimerRestart();
-            }
+        if (counter - counterold < 1000) {
+          if (screensavertriggered) {
+            WakeToSleep(REVERSE);
+            return;
+          }
+          if (afscreen) {
+            BuildAdvancedRDS();
+          } else if (advancedRDS) {
+            BuildDisplay();
+            ScreensaverTimerReopen();
           } else {
-            if (screensavertriggered) {
-              WakeToSleep(REVERSE);
+            if (tunemode != TUNE_MEM) {
+              ToggleBand(band);
+              StoreFrequency();
+              SelectBand();
+              if (XDRGTKUSB || XDRGTKTCP) {
+                if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n");
+                else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n");
+                else DataPrint("M1\nT" + String(frequency_AM) + "\n");
+              }
+            } else {
+              scanmodeold = tunemode;
+              startFMDXScan();
               return;
             }
+            ScreensaverTimerRestart();
+          }
+        } else {
+          if (screensavertriggered) {
+            WakeToSleep(REVERSE);
+            return;
+          }
 
-            if (band < BAND_GAP) {
-              if (advancedRDS && !seek) BuildAFScreen(); else BuildAdvancedRDS();
-            } else {
-              WakeToSleep(true);
-            }
+          if (band < BAND_GAP) {
+            if (advancedRDS && !seek) BuildAFScreen();
+            else BuildAdvancedRDS();
+          } else {
+            WakeToSleep(true);
           }
         }
       }
@@ -3945,7 +3945,13 @@ void MuteScreen(bool setting) {
     setupmode = true;
     tft.writecommand(0x11);
     analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
-    BuildDisplay();
+    if (band < BAND_GAP) {
+      if (afscreen) BuildAFScreen(); 
+      else if (advancedRDS) BuildAdvancedRDS();
+      else BuildDisplay();
+    } else {
+      BuildDisplay();
+    }
     setupmode = false;
   } else if (setting && !screenmute) {
     screenmute = true;
