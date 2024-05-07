@@ -82,7 +82,7 @@ void ShowAdvancedRDS() {
     hasafold = radio.rds.hasAF;
   }
 
-  if (millis() - afticker >= 15) {
+  if (millis() - afticker >= 5) {
     if (radio.rds.hasAF) {
       if (afstring.length() != afstringlengthold) {
         afstringWidth = afstring.length() * charwidth;
@@ -119,7 +119,7 @@ void ShowAdvancedRDS() {
     haseonold = radio.rds.hasEON;
   }
 
-  if (millis() - eonticker >= 15) {
+  if (millis() - eonticker >= 5) {
 
     if (radio.rds.hasEON) {
       if (eonstring.length() != eonstringlengthold) {
@@ -157,7 +157,7 @@ void ShowAdvancedRDS() {
     hasrtplusold = radio.rds.hasRDSplus;
   }
 
-  if (millis() - rtplusticker >= 15) {
+  if (millis() - rtplusticker >= 5) {
     if (radio.rds.hasRDSplus) {
       if (rtplusstring.length() != rtplusstringlengthold) {
         rtplusstringWidth = rtplusstring.length() * charwidth;
@@ -753,7 +753,7 @@ void showRadioText() {
         RadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
         RadiotextSprite.pushSprite(36, 220);
       } else {
-        if (millis() - rtticker >= 15) {
+        if (millis() - rtticker >= (advancedRDS ? 5 : 15)) {
           if (xPos == 0) {
             if (millis() - rttickerhold >= 1000) {
               xPos --;
