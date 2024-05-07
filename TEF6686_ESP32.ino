@@ -1116,9 +1116,11 @@ void loop() {
 
 #ifdef DEEPELEC_DP_666
   if (digitalRead(RTP_IRQ) == LOW) {
-    // 读出 PORT0 PORT1
+    int16_t temp;
+    temp = extIO.readPort(ExtensionIOXL9555::PORT1) & 0xFF;
+    temp = (temp << 8) | (extIO.readPort(ExtensionIOXL9555::PORT0) & 0xFF);
     if (!screenmute && !menu && !advancedRDS && !afscreen)
-      ShowNumInput();
+      ShowNumInput(temp);
   }
 #endif
 
@@ -4413,6 +4415,38 @@ void setAutoSpeedSPI() {
   }
 }
 
-void ShowNumInput() {
-
+#ifdef DEEPELEC_DP_666
+byte keyval[16] = {
+  2, 3, 127, 5, 6, 0, 9, 13, 8, 7, 4, 1, 0, 0, 0, 0
+};
+void ShowNumInput(int16_t port) {
+  int cnt = 0;
+  unsigned int key;
+  for (int i = 0; i < 16; i++) {
+    if ((port & 0x01) == 0) {
+      key = keyval[i];
+      cnt ++;
+    }
+    port >>= 1;
+  }
+  if (cnt == 1) {
+    switch (freqfont) {
+      case 0: FrequencySprite.loadFont(FREQFONT0); break;
+      case 1: FrequencySprite.loadFont(FREQFONT1); break;
+      case 2: FrequencySprite.loadFont(FREQFONT2); break;
+      case 3: FrequencySprite.loadFont(FREQFONT3); break;
+      case 4: FrequencySprite.loadFont(FREQFONT4); break;
+      case 5: FrequencySprite.loadFont(FREQFONT5); break;
+    }
+    
+    FrequencySprite.setTextDatum(TR_DATUM);
+    
+    FrequencySprite.fillSprite(BackgroundColor);
+    FrequencySprite.setTextColor(FreqColor, FreqColorSmooth, false);
+    FrequencySprite.drawString(String(key) + " ", 218, -6);
+    FrequencySprite.pushSprite(46, 46);
+    
+    FrequencySprite.unloadFont();
+  }
 }
+#endif
