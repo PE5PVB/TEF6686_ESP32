@@ -444,6 +444,30 @@ void XDRGTKRoutine() {
         updateEQ();
         break;
 
+      case 'H':
+        byte autosq_read;
+        autosq_read = atol(buff + 1);
+        if (autosq_read == 0) {
+          autosquelch = false;
+          DataPrint("H0\n");
+          if (!screenmute) {
+            if (!usesquelch) {
+              tftPrint(-1, "SQ:", 212, 145, BackgroundColor, BackgroundColor, 16);
+			  showAutoSquelch(0);
+            } else {
+              Squelch = -150;
+            }
+          }
+        } else {
+          autosquelch = true;
+          DataPrint("H1\n");
+          if (!screenmute) {
+            tftPrint(-1, "SQ:", 212, 145, ActiveColor, ActiveColorSmooth, 16);
+            showAutoSquelch(1);
+          }
+        }
+        break;
+
       case 'M':
         byte XDRband;
         XDRband = atol(buff + 1);

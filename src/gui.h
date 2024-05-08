@@ -32,6 +32,7 @@ extern bool afmethodBold;
 extern bool afpage;
 extern bool afscreen;
 extern bool artheadold;
+extern bool autosquelch;
 extern bool BWreset;
 extern bool change;
 extern bool compressedold;
@@ -230,4 +231,5 @@ extern void DoMemoryPosTune();
 extern void UpdateFonts(bool mode);
 extern void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize);
 extern void setAutoSpeedSPI();
+extern void showAutoSquelch(bool mode);
 #endif

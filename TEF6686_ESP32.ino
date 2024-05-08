@@ -55,6 +55,7 @@ bool afpage;
 bool afscreen;
 bool aftest;
 bool artheadold;
+bool autosquelch = true;
 bool batterydetect = true;
 bool beepresetstart;
 bool beepresetstop;
@@ -363,6 +364,7 @@ unsigned int SWLowEdgeSet;
 unsigned long afticker;
 unsigned long aftickerhold;
 unsigned long aftimer;
+unsigned long autosquelchtimer;
 unsigned long eonticker;
 unsigned long eontickerhold;
 unsigned long flashingtimer;
@@ -504,6 +506,7 @@ void setup() {
   scanmem = EEPROM.readByte(EE_BYTE_SCANMEM);
   scancancel = EEPROM.readByte(EE_BYTE_SCANCANCEL);
   scanmute = EEPROM.readByte(EE_BYTE_SCANMUTE);
+  autosquelch = EEPROM.readByte(EE_BYTE_AUTOSQUELCH);
 
   if (spispeed == SPI_SPEED_DEFAULT) {
     tft.setSPISpeed(SPI_FREQUENCY / 1000000);
@@ -2038,8 +2041,8 @@ void SelectBand() {
       case BAND_LW: freqold = frequency_LW; frequency_AM = frequency_LW; break;
       case BAND_MW: freqold = frequency_MW; frequency_AM = frequency_MW; break;
       case BAND_SW: freqold = frequency_SW; frequency_AM = frequency_SW; break;
-#ifdef HAS_AIR_BAND      
-      case BAND_AIR: freqold = frequency_AIR; frequency_AM = frequency_AIR;break;
+#ifdef HAS_AIR_BAND
+      case BAND_AIR: freqold = frequency_AIR; frequency_AM = frequency_AIR; break;
 #endif
     }
     LimitAMFrequency();
@@ -3178,38 +3181,136 @@ void ShowModLevel() {
   }
 }
 
+void showAutoSquelch(bool mode) {
+  if (language == LANGUAGE_CHS) SquelchSprite.loadFont(FONT16_CHS); else SquelchSprite.loadFont(FONT16);
+  if (mode) {
+    SquelchSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+  } else {
+    SquelchSprite.setTextColor(BackgroundColor, BackgroundColor, false);
+  }
+  SquelchSprite.fillSprite(BackgroundColor);
+  SquelchSprite.drawString(String(myLanguage[language][86]), 0, 0);
+  SquelchSprite.pushSprite(235, 145);
+}
+
 void doSquelch() {
-  if (!XDRGTKUSB && !XDRGTKTCP && usesquelch) Squelch = analogRead(PIN_POT) / 4 - 100;
+  if (!XDRGTKUSB && !XDRGTKTCP && usesquelch && !autosquelch) Squelch = analogRead(PIN_POT) / 4 - 100;
   if (unit == 0) SquelchShow = Squelch / 10;
   if (unit == 1) SquelchShow = ((Squelch * 100) + 10875) / 1000;
   if (unit == 2) SquelchShow = round((float(Squelch) / 10.0 - 10.0 * log10(75) - 90.0) * 10.0) / 10;
   if (Squelch > 920) Squelch = 920;
 
-  if (language == LANGUAGE_CHS) SquelchSprite.loadFont(FONT16_CHS); else SquelchSprite.loadFont(FONT16);
-
-  if (!XDRGTKUSB && !XDRGTKTCP && usesquelch && (!scandxmode || (scandxmode && !scanmute))) {
-    if (!screenmute && usesquelch && !advancedRDS && !afscreen) {
-      if (!menu && (Squelch > Squelchold + 2 || Squelch < Squelchold - 2)) {
-        SquelchSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-        SquelchSprite.fillSprite(BackgroundColor);
-        if (Squelch == -100) {
-          SquelchSprite.drawString(String(myLanguage[language][33]), 0, 0);
-        } else if (Squelch == 920) {
-          SquelchSprite.drawString("ST", 0, 0);
-        } else {
-          SquelchSprite.drawString(String(SquelchShow), 0, 0);
+  if (autosquelch) {
+    if (band < BAND_GAP) {
+      if ((USN < fmscansens * 30) && (WAM < 230) && (OStatus < 100 && OStatus > -100) && (!scandxmode || (scandxmode && !scanmute))) {
+        if (SQ || BWreset) {
+          if (!seek) radio.setUnMute();
+          if (!screenmute && !seek) {
+            tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+          }
+          autosquelchtimer = millis();
+          SQ = false;
         }
-        if (Squelch != Squelchold) {
-          SquelchSprite.pushSprite(235, 145);
+      } else {
+        if ((!SQ || BWreset) && (millis() >= autosquelchtimer + 1000)) {
+          radio.setMute();
+          if (!screenmute && !seek) {
+            tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
+          }
+          autosquelchtimer = millis();
+          SQ = true;
         }
       }
-      Squelchold = Squelch;
+    } else {
+      if ((USN < amscansens * 30) && (OStatus < 2 && OStatus > -2) && (!scandxmode || (scandxmode && !scanmute))) {
+        if (!seek) radio.setUnMute();
+        if (!screenmute && !seek) {
+          tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+        }
+        SQ = false;
+      } else {
+        radio.setMute();
+        if (!screenmute && !seek) {
+          tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
+        }
+        SQ = true;
+      }
     }
-  }
+  } else {
+    if (language == LANGUAGE_CHS) SquelchSprite.loadFont(FONT16_CHS); else SquelchSprite.loadFont(FONT16);
 
-  if ((XDRGTKUSB || XDRGTKTCP) && (!scandxmode || (scandxmode && !scanmute))) {
-    if (!XDRMute) {
-      if (Squelch != -1) {
+    if (!XDRGTKUSB && !XDRGTKTCP && usesquelch && (!scandxmode || (scandxmode && !scanmute))) {
+      if (!screenmute && usesquelch && !advancedRDS && !afscreen) {
+        if (!menu && (Squelch > Squelchold + 2 || Squelch < Squelchold - 2)) {
+          SquelchSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          SquelchSprite.fillSprite(BackgroundColor);
+          if (Squelch == -100) {
+            SquelchSprite.drawString(String(myLanguage[language][33]), 0, 0);
+          } else if (Squelch == 920) {
+            SquelchSprite.drawString("ST", 0, 0);
+          } else {
+            SquelchSprite.drawString(String(SquelchShow), 0, 0);
+          }
+          if (Squelch != Squelchold) {
+            SquelchSprite.pushSprite(235, 145);
+          }
+        }
+        Squelchold = Squelch;
+      }
+    }
+
+    if ((XDRGTKUSB || XDRGTKTCP) && (!scandxmode || (scandxmode && !scanmute))) {
+      if (!XDRMute) {
+        if (Squelch != -1) {
+          if (Squelch < SStatus || Squelch == -100 || Squelch == 0) {
+            if (!seek) radio.setUnMute();
+            if (!screenmute && !seek) {
+              tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+            }
+            SQ = false;
+          } else {
+            radio.setMute();
+            if (!screenmute && !seek) {
+              tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
+            }
+            SQ = true;
+          }
+        } else {
+          if (Stereostatus) {
+            radio.setUnMute();
+            if (!screenmute && !seek) {
+              tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+            }
+            SQ = false;
+          } else {
+            radio.setMute();
+            if (!screenmute && !seek) {
+              tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
+            }
+            SQ = true;
+          }
+        }
+        if (!screenmute && usesquelch && !advancedRDS && !afscreen) {
+          if (Squelch != Squelchold) {
+            SquelchSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            SquelchSprite.fillSprite(BackgroundColor);
+
+            if (Squelch == -1) {
+              SquelchSprite.drawString("ST", 0, 0);
+            } else if (Squelch == 0) {
+              SquelchSprite.drawString(String(myLanguage[language][33]), 0, 0);
+            } else {
+              SquelchSprite.drawString(String(SquelchShow), 0, 0);
+            }
+            if (Squelch != Squelchold) {
+              SquelchSprite.pushSprite(235, 145);
+            }
+            Squelchold = Squelch;
+          }
+        }
+      }
+    } else if (usesquelch && (!scandxmode || (scandxmode && !scanmute))) {
+      if (Squelch != 920) {
         if (Squelch < SStatus || Squelch == -100 || Squelch == 0) {
           if (!seek) radio.setUnMute();
           if (!screenmute && !seek) {
@@ -3225,7 +3326,7 @@ void doSquelch() {
         }
       } else {
         if (Stereostatus) {
-          radio.setUnMute();
+          if (!seek) radio.setUnMute();
           if (!screenmute && !seek) {
             tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
           }
@@ -3237,54 +3338,6 @@ void doSquelch() {
           }
           SQ = true;
         }
-      }
-      if (!screenmute && usesquelch && !advancedRDS && !afscreen) {
-        if (Squelch != Squelchold) {
-          SquelchSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          SquelchSprite.fillSprite(BackgroundColor);
-
-          if (Squelch == -1) {
-            SquelchSprite.drawString("ST", 0, 0);
-          } else if (Squelch == 0) {
-            SquelchSprite.drawString(String(myLanguage[language][33]), 0, 0);
-          } else {
-            SquelchSprite.drawString(String(SquelchShow), 0, 0);
-          }
-          if (Squelch != Squelchold) {
-            SquelchSprite.pushSprite(235, 145);
-          }
-          Squelchold = Squelch;
-        }
-      }
-    }
-  } else if (usesquelch && (!scandxmode || (scandxmode && !scanmute))) {
-    if (Squelch != 920) {
-      if (Squelch < SStatus || Squelch == -100 || Squelch == 0) {
-        if (!seek) radio.setUnMute();
-        if (!screenmute && !seek) {
-          tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
-        }
-        SQ = false;
-      } else {
-        radio.setMute();
-        if (!screenmute && !seek) {
-          tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
-        }
-        SQ = true;
-      }
-    } else {
-      if (Stereostatus) {
-        if (!seek) radio.setUnMute();
-        if (!screenmute && !seek) {
-          tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
-        }
-        SQ = false;
-      } else {
-        radio.setMute();
-        if (!screenmute && !seek) {
-          tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
-        }
-        SQ = true;
       }
     }
   }
@@ -3660,7 +3713,7 @@ void TuneUp() {
       }
 #ifdef HAS_AIR_BAND
       else if (frequency_AM < AIRHighEdgeSet && frequency_AM > AIRLowEdgeSet) {
-        
+
         if (airstepsize == 0) temp = FREQ_AIR_STEP_25K;
         else temp = FREQ_AIR_STEP_8K33;
       }
@@ -3946,7 +3999,7 @@ void MuteScreen(bool setting) {
     tft.writecommand(0x11);
     analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
     if (band < BAND_GAP) {
-      if (afscreen) BuildAFScreen(); 
+      if (afscreen) BuildAFScreen();
       else if (advancedRDS) BuildAdvancedRDS();
       else BuildDisplay();
     } else {
@@ -4056,6 +4109,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_SCANMEM, 1);
   EEPROM.writeByte(EE_BYTE_SCANCANCEL, 0);
   EEPROM.writeByte(EE_BYTE_SCANMUTE, 0);
+  EEPROM.writeByte(EE_BYTE_AUTOSQUELCH, 0);
 
   for (int i = 0; i < EE_PRESETS_CNT; i++) {
     EEPROM.writeByte(i + EE_PRESETS_BAND_START, BAND_FM);
@@ -4285,6 +4339,7 @@ void endMenu() {
   EEPROM.writeByte(EE_BYTE_SCANMEM, scanmem);
   EEPROM.writeByte(EE_BYTE_SCANCANCEL, scancancel);
   EEPROM.writeByte(EE_BYTE_SCANMUTE, scanmute);
+  EEPROM.writeByte(EE_BYTE_AUTOSQUELCH, autosquelch);
   EEPROM.commit();
   if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
   Serial.end();

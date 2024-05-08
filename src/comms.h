@@ -13,6 +13,7 @@
 extern bool advancedRDS;
 extern bool afscreen;
 extern bool aftest;
+extern bool autosquelch;
 extern bool BWreset;
 extern bool direction;
 extern bool externaltune;
@@ -132,5 +133,6 @@ extern void MuteScreen(bool setting);
 extern void updateiMS();
 extern void updateEQ();
 extern void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize);
+extern void showAutoSquelch(bool mode);
 
 #endif
