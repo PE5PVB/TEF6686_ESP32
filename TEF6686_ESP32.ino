@@ -4033,7 +4033,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_SOFTMUTEAM, 0);
   EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, 0);
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, 828);
-  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_LANGUAGE, 0); else EEPROM.writeByte(EE_BYTE_LANGUAGE, LANGUAGE_CHS);
+  EEPROM.writeByte(EE_BYTE_LANGUAGE, 0);
   EEPROM.writeByte(EE_BYTE_SHOWRDSERRORS, 1);
   EEPROM.writeByte(EE_BYTE_TEF, 0);
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 0); else EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 1);
