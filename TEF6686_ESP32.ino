@@ -3696,7 +3696,7 @@ void TuneUp() {
   unsigned int temp = 0;
   if (stepsize == 0) {
     if (band > BAND_GAP) {
-      if (frequency_AM < MWHighEdgeSet && frequency_AM > MWLowEdgeSet) {
+      if (frequency_AM <= MWHighEdgeSet && frequency_AM >= MWLowEdgeSet) {
         if (!mwstepsize) {
           temp = FREQ_MW_STEP_9K;
           frequency_AM = (frequency_AM / FREQ_MW_STEP_9K) * FREQ_MW_STEP_9K;
