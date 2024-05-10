@@ -3232,7 +3232,7 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "显示短波米波段", // 59
     "RDS 过滤器", // 60
     "显示 PI errors", // 61
-    "主画面显示SQ", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
+    "SQ静噪等级", // 62
     "主画面显示M表", // 63
     "AM 噪声消除", // 64
     "FM 噪声消除", // 65
@@ -3256,7 +3256,7 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "不可用", // 83
     "固件版本", // 84
     "频率字体", // 85 ***
-    "Auto", // 86
+    "自动", // 86
     "AF 不可用", // 87
     "EON 不可用", // 88
     "RT+ 不可用", // 89
@@ -3366,7 +3366,7 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "FM 设置", // 193
     "AM 设置", // 194
     "连机模式", // 195
-    "DX MODE", // 196
+    "FMDX 选项", // 196
     "Stationlist ID", // 197 ***
     "AM天线衰减", // 198
     "FM去加重", // 199
