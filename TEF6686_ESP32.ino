@@ -599,6 +599,9 @@ void setup() {
   pinMode(ROTARY_BUTTON, INPUT);
   pinMode(ROTARY_PIN_A, INPUT);
   pinMode(ROTARY_PIN_B, INPUT);
+  pinMode (STANDBYLED, OUTPUT);
+  digitalWrite(STANDBYLED, HIGH);
+
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
 
@@ -1154,8 +1157,6 @@ void WakeToSleep(bool yes) {
   } else {
     switch (poweroptions) {
       case LCD_OFF:
-        pinMode (STANDBYLED, OUTPUT);
-        digitalWrite(STANDBYLED, LOW);
         analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
         MuteScreen(0);
         screensavertriggered = false;
@@ -1165,8 +1166,6 @@ void WakeToSleep(bool yes) {
       case LCD_BRIGHTNESS_1_PERCENT:
       case LCD_BRIGHTNESS_A_QUARTER:
       case LCD_BRIGHTNESS_HALF:
-        pinMode (STANDBYLED, OUTPUT);
-        digitalWrite(STANDBYLED, LOW);
         analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
         MuteScreen(0);
         screensavertriggered = false;
@@ -1640,6 +1639,10 @@ void BANDBUTTONPress() {
             else BuildAdvancedRDS();
           } else {
             WakeToSleep(true);
+          }
+          while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 2500) counter = millis();
+          if (counter - counterold > 2499 && hardwaremodel == BASE_ILI9341) {
+            deepSleep();
           }
         }
       }
@@ -4196,6 +4199,8 @@ void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int colo
 
 void deepSleep() {
   analogWrite(SMETERPIN, 0);
+  pinMode (STANDBYLED, OUTPUT);
+  digitalWrite(STANDBYLED, LOW);
   MuteScreen(1);
   StoreFrequency();
   radio.power(1);
