@@ -792,7 +792,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((usesquelch ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          if (autosquelch) FullLineSprite.drawString(myLanguage[language][86], 298, 3); else FullLineSprite.drawString((usesquelch ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
           break;
 
         case AUDIOSETTINGS:
@@ -1225,7 +1225,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
             case AM_BAND_SW: FullLineSprite.drawString(myLanguage[language][104], 298, 3); break;
             case AM_BAND_NONE: FullLineSprite.drawString(myLanguage[language][83], 298, 3); break;
           }
-           break;
+          break;
 #endif
 
         case DISPLAYSETTINGS:
@@ -1576,7 +1576,7 @@ void BuildDisplay() {
       }
     }
   }
-  if (usesquelch) tftPrint(-1, "SQ:", 212, 145, ActiveColor, ActiveColorSmooth, 16);
+  if (usesquelch || autosquelch) tftPrint(-1, "SQ:", 212, 145, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(1, "C/N", 270, 163, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(-1, "dB", 300, 163, ActiveColor, ActiveColorSmooth, 16);
   if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
@@ -1645,16 +1645,18 @@ void BuildDisplay() {
     case BAND_FM: tftPrint(-1, myLanguage[language][105], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
     case BAND_OIRT: tftPrint(-1, myLanguage[language][106], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
   }
-  if (band < BAND_GAP) tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, 28); 
+  if (band < BAND_GAP) tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
   else {
 #ifdef HAS_AIR_BAND
-    if (band == AM_BAND_AIR) 
+    if (band == AM_BAND_AIR)
       tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
     else tftPrint(-1, "KHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
 #else
-      tftPrint(-1, "KHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
+    tftPrint(-1, "KHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
 #endif
   }
+
+  if (autosquelch) showAutoSquelch(1);
 
   RDSstatusold = false;
   Stereostatusold = false;
@@ -1771,8 +1773,16 @@ void MenuUp() {
             break;
 
           case ITEM4:
-            usesquelch = !usesquelch;
-            OneBigLineSprite.drawString((usesquelch ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            if (autosquelch && !usesquelch) {
+              usesquelch = true;
+              autosquelch = false;
+            } else if (usesquelch && !autosquelch) {
+              usesquelch = false;
+            } else {
+              autosquelch = true;
+            }
+
+            if (autosquelch) OneBigLineSprite.drawString(myLanguage[language][86], 135, 0); else OneBigLineSprite.drawString((usesquelch ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
@@ -1820,7 +1830,7 @@ void MenuUp() {
             if (bandAM > AM_BAND_CNT - 1) bandAM = AM_BAND_ALL;
 #ifdef HAS_AIR_BAND
             switch (bandAM) {
-              case AM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104]+ String(",") + myLanguage[language][223], 135, 0); break;
+              case AM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 135, 0); break;
               case AM_BAND_LW_MW_SW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
               case AM_BAND_LW_MW_AIR: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][223], 135, 0); break;
               case AM_BAND_LW_SW_AIR: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 135, 0); break;
@@ -2592,9 +2602,16 @@ void MenuDown() {
             break;
 
           case ITEM4:
-            usesquelch = !usesquelch;
+            if (autosquelch && !usesquelch) {
+              usesquelch = true;
+              autosquelch = false;
+            } else if (usesquelch && !autosquelch) {
+              usesquelch = false;
+            } else {
+              autosquelch = true;
+            }
 
-            OneBigLineSprite.drawString((usesquelch ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            if (autosquelch) OneBigLineSprite.drawString(myLanguage[language][86], 135, 0); else OneBigLineSprite.drawString((usesquelch ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
@@ -2643,7 +2660,7 @@ void MenuDown() {
 
 #ifdef HAS_AIR_BAND
             switch (bandAM) {
-              case AM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104]+ String(",") + myLanguage[language][223], 135, 0); break;
+              case AM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 135, 0); break;
               case AM_BAND_LW_MW_SW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
               case AM_BAND_LW_MW_AIR: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][223], 135, 0); break;
               case AM_BAND_LW_SW_AIR: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 135, 0); break;
@@ -3175,7 +3192,7 @@ void MenuDown() {
 
             OneBigLineSprite.drawString((showSWMIBand ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
- 
+
             break;
 
           case ITEM5:
@@ -3486,8 +3503,7 @@ void DoMenu() {
 
           case ITEM4:
             Infoboxprint(myLanguage[language][62]);
-
-            OneBigLineSprite.drawString((usesquelch ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            if (autosquelch) OneBigLineSprite.drawString(myLanguage[language][86], 135, 0); else OneBigLineSprite.drawString((usesquelch ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
@@ -3532,7 +3548,7 @@ void DoMenu() {
 
 #ifdef HAS_AIR_BAND
             switch (bandAM) {
-              case AM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104]+ String(",") + myLanguage[language][223], 135, 0); break;
+              case AM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 135, 0); break;
               case AM_BAND_LW_MW_SW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
               case AM_BAND_LW_MW_AIR: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][223], 135, 0); break;
               case AM_BAND_LW_SW_AIR: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 135, 0); break;

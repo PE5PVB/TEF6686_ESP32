@@ -209,9 +209,9 @@
 #define EE_CHECKBYTE_VALUE          10     // 0 ~ 255,add new entry, change for new value
 #define EE_PRESETS_FREQUENCY        0     // Default value when memory channel should be skipped!
 #ifdef HAS_AIR_BAND
-#define EE_TOTAL_CNT                2219  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                2220  // Total occupied eeprom bytes
 #else
-#define EE_TOTAL_CNT                2214  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                2215  // Total occupied eeprom bytes
 #endif
 
 #define EE_PRESETS_BAND_START       0     // 99 * 1 byte
@@ -310,9 +310,10 @@
 #define EE_BYTE_SCANMEM             2211
 #define EE_BYTE_SCANCANCEL          2212
 #define EE_BYTE_SCANMUTE            2213
+#define EE_BYTE_AUTOSQUELCH      2214
 #ifdef HAS_AIR_BAND
-#define EE_BYTE_AIRSTEPSIZE         2114
-#define EE_UINT16_FREQUENCY_AIR     2215
+#define EE_BYTE_AIRSTEPSIZE         2115
+#define EE_UINT16_FREQUENCY_AIR     2216
 #endif
 // End of EEPROM index defines
 
@@ -352,7 +353,7 @@ enum RADIO_AM_BAND_SELECTION {
 enum RADIO_AM_BAND_SELECTION {
   AM_BAND_ALL = 0,
   AM_BAND_LW_MW_SW, AM_BAND_LW_MW_AIR, AM_BAND_LW_SW_AIR, AM_BAND_MW_SW_AIR,
-  AM_BAND_LW_MW, AM_BAND_LW_SW, AM_BAND_LW_AIR, 
+  AM_BAND_LW_MW, AM_BAND_LW_SW, AM_BAND_LW_AIR,
   AM_BAND_MW_SW, AM_BAND_MW_AIR,
   AM_BAND_SW_AIR,
   AM_BAND_LW, AM_BAND_MW, AM_BAND_SW, AM_BAND_AIR, AM_BAND_NONE,
