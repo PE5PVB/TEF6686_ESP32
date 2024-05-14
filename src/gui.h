@@ -98,6 +98,7 @@ extern byte HighCutLevel;
 extern byte HighCutOffset;
 extern byte language;
 extern byte licold;
+extern byte longbandpress;
 extern byte memorypos;
 extern byte menupage;
 extern byte MSold;
