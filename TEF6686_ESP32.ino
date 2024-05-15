@@ -2728,24 +2728,24 @@ void DoMemoryPosTune() {
       radio.SetFreq(frequency);
       break;
     case BAND_OIRT:
-      frequency = presets[memorypos].frequency;
+      frequency_OIRT = presets[memorypos].frequency;
       radio.SetFreq(frequency_OIRT);
       break;
     case BAND_LW:
-      frequency = presets[memorypos].frequency;
+      frequency_LW = presets[memorypos].frequency;
       radio.SetFreq(frequency_LW);
       break;
     case BAND_MW:
-      frequency = presets[memorypos].frequency;
+      frequency_MW = presets[memorypos].frequency;
       radio.SetFreq(frequency_MW);
       break;
     case BAND_SW:
-      frequency = presets[memorypos].frequency;
+      frequency_SW = presets[memorypos].frequency;
       radio.SetFreq(frequency_SW);
       break;
 #ifdef HAS_AIR_BAND
     case BAND_AIR:
-      frequency = presets[memorypos].frequency;
+      frequency_AIR = presets[memorypos].frequency;
       // radio.SetFreq(frequency_AIR); // todo
       radio.SetFreqAM(10700); // todo
       break;
