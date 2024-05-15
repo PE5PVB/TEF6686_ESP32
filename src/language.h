@@ -1140,7 +1140,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Χρόνος αναμονής", // 211
     "Εκκίνηση DX ανίχνευσης", // 212
     "Επιλογές FM DX", // 213
-    "Ματαίωση! Παράλειψη\nτου καναλιού εκκίνησης.", // 214
+    "Ματαίωση! Λείπει\nτο κανάλι εκκίνησης.", // 214
     "Αυτόματη ταξινόμηση\nAF", // 215
     "Κανάλια μνήμης", // 216
     "Εξαίρεση", // 217
@@ -1150,10 +1150,10 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Σήμα", // 221
     "Σίγαση ήχου\nκατά την ανίχνευση", // 222
     "AIR", // 223
-    "5 sec. bandbutton press", // 224
-    "Power off", // 225
-    "Mute screen", // 226
-    "Disabled" // 227
+    "Πιέση πλήκτρου\nμπάντας 5 δευτ.", // 224
+    "Σβήσιμο", // 225
+    "Σβήσιμο οθόνης", // 226
+    "Ανενεργό" // 227
   },
 
   { "Română", // Romanian
@@ -2300,10 +2300,10 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Signal", // 221
     "Audio muet lors\nde la numérisation", // 222
     "AIR", // 223
-    "5 sec. bandbutton press", // 224
-    "Power off", // 225
-    "Mute screen", // 226
-    "Disabled" // 227
+    "Appui sur le bouton\nband 5 sec.", // 224
+    "Éteindre", // 225
+    "Écran muet", // 226
+    "Inactif" // 227
   },
 
   { "Български", // Bulgarian
@@ -3719,7 +3719,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Apagar", // 30
     "¡La pantalla está en silencio!", // 31
     "Para desactivar,\ndesmarque la casilla RF+", // 32
-    "APAGADO", // 33
+    "APAG.", // 33
     "ESCANEANDO...", // 34
     "Sintonizador no detectado", // 35
     "AM Ganancia de antena", // 36
@@ -3910,10 +3910,10 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Señal", // 221
     "Audio mudo\nmientras busca", // 222
     "AIR", // 223
-    "5 sec. bandbutton press", // 224
-    "Power off", // 225
-    "Mute screen", // 226
-    "Disabled" // 227
+    "Presione el botón\nband durante 5 seg.", // 224
+    "Apagado", // 225
+    "Pantalla silenciosa", // 226
+    "Inactivo" // 227
   },
 
   { "Português", // Portuguese
@@ -3949,7 +3949,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Desligado", // 30
     "A tela está silenciada!", // 31
     "Para desativar o silenciamento,\ndesmarque a caixa RF+", // 32
-    "DESATIVADO", // 33
+    "DESAT.", // 33
     "ANALISANDO...", // 34
     "Sintonizador não detectado", // 35
     "AM Ganho da antena", // 36
@@ -4140,10 +4140,10 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Sinal", // 221
     "Mudo áudio\nenquanto procura", // 222
     "AIR", // 223
-    "5 sec. bandbutton press", // 224
-    "Power off", // 225
-    "Mute screen", // 226
-    "Disabled" // 227
+    "Pressione o botão\nbanda por 5 seg.", // 224
+    "Desligar", // 225
+    "Silenciar tela", // 226
+    "Inativo" // 227
   }
 };
 #endif
