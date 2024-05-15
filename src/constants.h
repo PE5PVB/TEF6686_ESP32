@@ -209,9 +209,9 @@
 #define EE_CHECKBYTE_VALUE          10     // 0 ~ 255,add new entry, change for new value
 #define EE_PRESETS_FREQUENCY        0     // Default value when memory channel should be skipped!
 #ifdef HAS_AIR_BAND
-#define EE_TOTAL_CNT                2220  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                2221  // Total occupied eeprom bytes
 #else
-#define EE_TOTAL_CNT                2215  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                2216  // Total occupied eeprom bytes
 #endif
 
 #define EE_PRESETS_BAND_START       0     // 99 * 1 byte
@@ -310,10 +310,11 @@
 #define EE_BYTE_SCANMEM             2211
 #define EE_BYTE_SCANCANCEL          2212
 #define EE_BYTE_SCANMUTE            2213
-#define EE_BYTE_AUTOSQUELCH      2214
+#define EE_BYTE_AUTOSQUELCH         2214
+#define EE_BYTE_LONGBANDPRESS       2215
 #ifdef HAS_AIR_BAND
-#define EE_BYTE_AIRSTEPSIZE         2115
-#define EE_UINT16_FREQUENCY_AIR     2216
+#define EE_BYTE_AIRSTEPSIZE         2116
+#define EE_UINT16_FREQUENCY_AIR     2217
 #endif
 // End of EEPROM index defines
 
@@ -331,6 +332,10 @@ typedef struct {
   char          RDSPI[5];
   char          RDSPS[9];
 } mem;
+
+enum LONGBANDBUTTONPRESS {
+  STANDBY = 0, SCREENOFF
+};
 
 enum SCAN_CANCEL {
   SCAN_CANCEL = OFF, CORRECTPI, SIGNAL

@@ -8,7 +8,7 @@
 #include <cstring>
 
 byte menuitem;
-byte items[9] = {9, static_cast<byte>(dynamicspi ? 9 : 8), 7, 10, 9, 10, 9, 6, 7};
+byte items[9] = {9, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 9, 10, 9, 6, 7};
 extern mem presets[];
 
 void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
@@ -1287,20 +1287,16 @@ void ShowOneLine(byte position, byte item, bool selected) {
           break;
 
         case MAINSETTINGS:
-          if (dynamicspi) {
-            FullLineSprite.setTextDatum(TL_DATUM);
-            FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            FullLineSprite.drawString(removeNewline(myLanguage[language][81]), 6, 3);
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][224]), 6, 3);
 
-            FullLineSprite.setTextDatum(TR_DATUM);
-            FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            FullLineSprite.drawString("MHz", 298, 3);
-            FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            if (spispeed == 7) {
-              FullLineSprite.drawString(myLanguage[language][86], 258, 3);
-            } else {
-              FullLineSprite.drawString((spispeed == SPI_SPEED_DEFAULT ? String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC) : String(spispeed * 10, DEC)), 258, 3);
-            }
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          switch (longbandpress) {
+            case STANDBY: FullLineSprite.drawString(myLanguage[language][225], 298, 3); break;
+            case SCREENOFF: FullLineSprite.drawString(myLanguage[language][226], 298, 3); break;
+            default: FullLineSprite.drawString(myLanguage[language][227], 298, 3); break;
           }
           break;
 
@@ -1350,6 +1346,26 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextDatum(TC_DATUM);
           FullLineSprite.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
           FullLineSprite.drawString(removeNewline(String(myLanguage[language][84]) + " " + String(VERSION)), 152, 3);
+          break;
+
+        case MAINSETTINGS:
+          if (dynamicspi) {
+            FullLineSprite.setTextDatum(TL_DATUM);
+            FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            FullLineSprite.drawString(removeNewline(myLanguage[language][81]), 6, 3);
+
+            FullLineSprite.setTextDatum(TR_DATUM);
+
+            if (spispeed == 7) {
+              FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+              FullLineSprite.drawString(myLanguage[language][86], 298, 3);
+            } else {
+              FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+              FullLineSprite.drawString("MHz", 298, 3);
+              FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+              FullLineSprite.drawString((spispeed == SPI_SPEED_DEFAULT ? String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC) : String(spispeed * 10, DEC)), 258, 3);
+            }
+          }
           break;
 
         case DISPLAYSETTINGS:
@@ -1863,16 +1879,33 @@ void MenuUp() {
             break;
 
           case ITEM9:
+            longbandpress++;
+            if (longbandpress > 2) longbandpress = 0;
+
+            switch (longbandpress) {
+              case STANDBY: OneBigLineSprite.drawString(myLanguage[language][225], 135, 0); break;
+              case SCREENOFF: OneBigLineSprite.drawString(myLanguage[language][226], 135, 0); break;
+              default: OneBigLineSprite.drawString(myLanguage[language][227], 135, 0); break;
+            }
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM10:
             spispeed++;
             if (spispeed > SPI_SPEED_COUNT - 1) spispeed = 0;
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("MHz", 175, 0);
-            OneBigLineSprite.setTextDatum(TR_DATUM);
+            if (spispeed != 7) {
+              OneBigLineSprite.drawString("MHz", 175, 0);
+              OneBigLineSprite.setTextDatum(TR_DATUM);
+            } else {
+              OneBigLineSprite.setTextDatum(TC_DATUM);
+            }
+
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             if (spispeed == 7) {
-              OneBigLineSprite.drawString(myLanguage[language][86], 160, 0);
+              OneBigLineSprite.drawString(myLanguage[language][86], 135, 0);
             } else {
               OneBigLineSprite.drawString((spispeed == SPI_SPEED_DEFAULT ? String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC) : String(spispeed * 10, DEC)), 160, 0);
             }
@@ -2694,15 +2727,33 @@ void MenuDown() {
             break;
 
           case ITEM9:
+            longbandpress--;
+            if (longbandpress > 2) longbandpress = 2;
+
+            switch (longbandpress) {
+              case STANDBY: OneBigLineSprite.drawString(myLanguage[language][225], 135, 0); break;
+              case SCREENOFF: OneBigLineSprite.drawString(myLanguage[language][226], 135, 0); break;
+              default: OneBigLineSprite.drawString(myLanguage[language][227], 135, 0); break;
+            }
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+
+          case ITEM10:
             spispeed--;
             if (spispeed > SPI_SPEED_COUNT - 1) spispeed = SPI_SPEED_COUNT - 1;
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("MHz", 175, 0);
-            OneBigLineSprite.setTextDatum(TR_DATUM);
+            if (spispeed != 7) {
+              OneBigLineSprite.drawString("MHz", 175, 0);
+              OneBigLineSprite.setTextDatum(TR_DATUM);
+            } else {
+              OneBigLineSprite.setTextDatum(TC_DATUM);
+            }
+
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             if (spispeed == 7) {
-              OneBigLineSprite.drawString(myLanguage[language][86], 160, 0);
+              OneBigLineSprite.drawString(myLanguage[language][86], 135, 0);
             } else {
               OneBigLineSprite.drawString((spispeed == SPI_SPEED_DEFAULT ? String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC) : String(spispeed * 10, DEC)), 160, 0);
             }
@@ -3577,20 +3628,35 @@ void DoMenu() {
               case AM_BAND_NONE: OneBigLineSprite.drawString(myLanguage[language][83], 135, 0); break;
             }
 #endif
-
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM9:
+            Infoboxprint(myLanguage[language][224]);
+
+            switch (longbandpress) {
+              case STANDBY: OneBigLineSprite.drawString(myLanguage[language][225], 135, 0); break;
+              case SCREENOFF: OneBigLineSprite.drawString(myLanguage[language][226], 135, 0); break;
+              default: OneBigLineSprite.drawString(myLanguage[language][227], 135, 0); break;
+            }
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+
+          case ITEM10:
             Infoboxprint(myLanguage[language][81]);
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("MHz", 175, 0);
-            OneBigLineSprite.setTextDatum(TR_DATUM);
+            if (spispeed != 7) {
+              OneBigLineSprite.drawString("MHz", 175, 0);
+              OneBigLineSprite.setTextDatum(TR_DATUM);
+            } else {
+              OneBigLineSprite.setTextDatum(TC_DATUM);
+            }
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             if (spispeed == 7) {
-              OneBigLineSprite.drawString(myLanguage[language][86], 160, 0);
+              OneBigLineSprite.drawString(myLanguage[language][86], 135, 0);
             } else {
               OneBigLineSprite.drawString((spispeed == SPI_SPEED_DEFAULT ? String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC) : String(spispeed * 10, DEC)), 160, 0);
             }
