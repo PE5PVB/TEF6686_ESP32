@@ -3504,7 +3504,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Pip ved båndkant", // 45
     "Region", // 46 ***
     "Europa", // 47
-    "America", // 48 ***
+    "Amerika", // 48 ***
     "Vis understrek i RDS", // 49
     "USB modus", // 50
     "Wi-Fi aktiv", // 51
@@ -3679,11 +3679,11 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "korrekt PI", // 220
     "Signal", // 221
     "Demp lyden\nmens du skanner", // 222
-    "AIR", // 223
-    "5 sec. bandbutton press", // 224
-    "Power off", // 225
-    "Mute screen", // 226
-    "Disabled" // 227
+    "Flybånd", // 223
+    "Hold båndknappen\n i 5 sek", // 224
+    "Slå av radio", // 225
+    "Slå av skjerm", // 226
+    "Deaktivert" // 227
   },
 
   { "Español", // Spanish
