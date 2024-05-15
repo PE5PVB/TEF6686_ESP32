@@ -2733,15 +2733,15 @@ void DoMemoryPosTune() {
       break;
     case BAND_LW:
       frequency_LW = presets[memorypos].frequency;
-      radio.SetFreq(frequency_LW);
+      radio.SetFreqAM(frequency_LW);
       break;
     case BAND_MW:
       frequency_MW = presets[memorypos].frequency;
-      radio.SetFreq(frequency_MW);
+      radio.SetFreqAM(frequency_MW);
       break;
     case BAND_SW:
       frequency_SW = presets[memorypos].frequency;
-      radio.SetFreq(frequency_SW);
+      radio.SetFreqAM(frequency_SW);
       break;
 #ifdef HAS_AIR_BAND
     case BAND_AIR:
