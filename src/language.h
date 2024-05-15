@@ -3680,10 +3680,10 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Signal", // 221
     "Demp lyden\nmens du skanner", // 222
     "AIR", // 223
-    "5 sec. bandbutton press", // 224
-    "Power off", // 225
-    "Mute screen", // 226
-    "Disabled" // 227
+    "Hold båndknappen i 5 sek", // 224
+    "Slå av radio", // 225
+    "Slå av skjerm", // 226
+    "Deaktivert" // 227
   },
 
   { "Español", // Spanish
