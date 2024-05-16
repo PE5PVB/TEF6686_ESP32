@@ -3492,7 +3492,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "AV", // 33
     "SKANNER...", // 34
     "Tuner ikke oppdaget", // 35
-    "AM Antenna gain", // 36
+    "AM-antenneforsterkning", // 36
     "FM AGC", // 37
     "Vis RDS-feil", // 38
     "Språk", // 39
@@ -3504,7 +3504,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Pip ved båndkant", // 45
     "Region", // 46 ***
     "Europa", // 47
-    "Amerika", // 48 ***
+    "Amerika", // 48
     "Vis understrek i RDS", // 49
     "USB modus", // 50
     "Wi-Fi aktiv", // 51
@@ -3541,7 +3541,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Skannefølsomhet", // 82
     "INGEN", // 83
     "Programvareversjon", // 84
-    "Frekvens skrifttype", // 85 ***
+    "Frekvens skrifttype", // 85
     "Auto", // 86
     "Ingen AF", // 87
     "Ingen EON", // 88
@@ -3630,7 +3630,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Ocean", // 171 ***
     "Indigo", // 172 ***
     "Batterialternativer", // 173
-    "Vis batteriverdi", // 174
+    "Vis batterispenning", // 174
     "Vis batteriprosent", // 175
     "RT buffering", // 176 ***
     "Hovedinnstillinger", // 177
@@ -3652,9 +3652,9 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "FM", // 193 ***
     "AM", // 194 ***
     "TILKOBLE", // 195
-    "DX MODE", // 196
+    "DX MODUS", // 196
     "Stationlist ID", // 197 ***
-    "AM ATT", // 198
+    "AM AGC", // 198
     "FM ettertrykkelse", // 199
     "Lite", // 200
     "Mye", // 201
@@ -3662,7 +3662,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Rask PS", // 203
     "Standard", // 204
     "Dempet skjerm på\nXDRGTK tilkobling", // 205
-    "FMSI stereo forbedringt", // 206
+    "FMSI stereo forbedring", // 206
     "Kun tilgjengelig\npå TEF6687/6689!", // 207
     "Funksjon ikke tilgjengelig\npå valgt skin!", // 208
     "Begynn å skanne\nminnekanaler", // 209
@@ -3676,7 +3676,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Utelukke", // 217
     "Kun", // 218
     "Avbryt skanning automatisk", // 219
-    "korrekt PI", // 220
+    "Korrekt PI", // 220
     "Signal", // 221
     "Demp lyden\nmens du skanner", // 222
     "Flybånd", // 223
