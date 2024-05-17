@@ -322,7 +322,7 @@ void readRds() {
           PSSprite.drawString(PSold, 0, 0);
           if (!radio.rds.hasLongPS) {
             if (advancedRDS) {
-              PSSprite.pushSprite(36, 75);
+              PSSprite.pushSprite(36, 74);
             } else {
               PSSprite.pushSprite(36, 187);
             }
@@ -377,7 +377,7 @@ void readRds() {
           PSSprite.drawString(PSold, 0, 0);
           if (!radio.rds.hasLongPS) {
             if (advancedRDS) {
-              PSSprite.pushSprite(36, 75);
+              PSSprite.pushSprite(36, 74);
             } else {
               PSSprite.pushSprite(36, 187);
             }
@@ -710,7 +710,7 @@ void showPS() {
           if (!RDSstatus) PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false); else PSSprite.setTextColor(RDSColor, RDSColorSmooth, false);
           PSSprite.drawString(radio.rds.stationName, 0, 0);
         }
-        if (advancedRDS) PSSprite.pushSprite(36, 75); else PSSprite.pushSprite(36, 187);
+        if (advancedRDS) PSSprite.pushSprite(36, 74); else PSSprite.pushSprite(36, 187);
       }
     }
     PSold = radio.rds.stationName;
