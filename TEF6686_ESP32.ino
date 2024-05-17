@@ -614,35 +614,7 @@ void setup() {
   tft.setSwapBytes(true);
   tft.fillScreen(BackgroundColor);
 
-  RadiotextSprite.createSprite(270, 19);
-  RadiotextSprite.setTextDatum(TL_DATUM);
-  RadiotextSprite.setSwapBytes(true);
-
-  FrequencySprite.createSprite(200, 50);
-  FrequencySprite.setTextDatum(TR_DATUM);
-  FrequencySprite.setSwapBytes(true);
-
-  RDSSprite.createSprite(165, 19);
-  RDSSprite.setTextDatum(TL_DATUM);
-
-  PSSprite.createSprite(150, 30);
-  PSSprite.setTextDatum(TL_DATUM);
-
-  SquelchSprite.createSprite(47, 19);
-  SquelchSprite.setTextDatum(TL_DATUM);
-  SquelchSprite.setSwapBytes(true);
-
-  FullLineSprite.createSprite(308, 20);
-  FullLineSprite.setSwapBytes(true);
-
-  OneBigLineSprite.createSprite(270, 30);
-  OneBigLineSprite.setSwapBytes(true);
-
-  SignalSprite.createSprite(80, 48);
-  SignalSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-  SignalSprite.setTextDatum(TR_DATUM);
-  SignalSprite.setSwapBytes(true);
-
+  UpdateSprites(0);
   UpdateFonts(0);
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH) {
@@ -4227,11 +4199,58 @@ void deepSleep() {
   esp_deep_sleep_start();
 }
 
-void UpdateFonts(bool mode) {
+void UpdateSprites(bool mode) {
+  switch (mode) {
+    case 0:
+      RadiotextSprite.createSprite(270, 19);
+      RadiotextSprite.setTextDatum(TL_DATUM);
+      RadiotextSprite.setSwapBytes(true);
+
+      FrequencySprite.createSprite(200, 50);
+      FrequencySprite.setTextDatum(TR_DATUM);
+      FrequencySprite.setSwapBytes(true);
+
+      RDSSprite.createSprite(165, 19);
+      RDSSprite.setTextDatum(TL_DATUM);
+
+      PSSprite.createSprite(150, 30);
+      PSSprite.setTextDatum(TL_DATUM);
+
+      SquelchSprite.createSprite(47, 19);
+      SquelchSprite.setTextDatum(TL_DATUM);
+      SquelchSprite.setSwapBytes(true);
+
+      FullLineSprite.createSprite(308, 20);
+      FullLineSprite.setSwapBytes(true);
+
+      OneBigLineSprite.createSprite(270, 30);
+      OneBigLineSprite.setSwapBytes(true);
+
+      SignalSprite.createSprite(80, 48);
+      SignalSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+      SignalSprite.setTextDatum(TR_DATUM);
+      SignalSprite.setSwapBytes(true);
+      break;
+
+    case 1:
+      RadiotextSprite.deleteSprite();
+      FrequencySprite.deleteSprite();
+      RDSSprite.deleteSprite();
+      PSSprite.deleteSprite();
+      SquelchSprite.deleteSprite();
+      FullLineSprite.deleteSprite();
+      OneBigLineSprite.deleteSprite();
+      SignalSprite.deleteSprite();
+      break;
+  }
+}
+
+void UpdateFonts(byte mode) {
   switch (mode) {
     case 0:                                 // Use in radio mode
       RadiotextSprite.unloadFont();
       RDSSprite.unloadFont();
+      PSSprite.unloadFont();
 
       if (language == LANGUAGE_CHS) {
         RadiotextSprite.loadFont(FONT16_CHS);

@@ -460,7 +460,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Signaal", // 221
     "Geen geluid\ntijdens scannen", // 222
     "AIR", // 223
-    "5 sec. bandbutton ingedrukt", // 224
+    "5 sec.\nbandbutton ingedrukt", // 224
     "Uitschakelen", // 225
     "Scherm uit", // 226
     "Geen functie" // 227
