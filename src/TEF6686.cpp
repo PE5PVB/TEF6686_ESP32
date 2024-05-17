@@ -1517,11 +1517,19 @@ void TEF6686::readRDS(byte showrdserrors) {
             pslong_buffer[offset + 3] = rds.rdsD & 0xff;                                                  // Fourth character of segment
             pslong_buffer[32] = '\0';
 
+            byte endmarker = 32;
+            for (byte i = 0; i < 33; i++) {
+              if (pslong_buffer[i] == 0x0d) {
+                endmarker = i;
+                break;
+              }
+            }
+
             if (offset == 28 && (pslong_process || !rds.fastps)) {                                        // Last chars are received
               if (strcmp(pslong_buffer, pslong_buffer2) == 0) {                                           // When no difference between current and buffer, let's go...
                 RDScharConverter(pslong_buffer, PSLongtext, sizeof(PSLongtext) / sizeof(wchar_t), true);  // Convert 8 bit ASCII to 16 bit ASCII
                 String utf8String = convertToUTF8(PSLongtext);                                            // Convert RDS characterset to ASCII
-                rds.stationNameLong = extractUTF8Substring(utf8String, 0, 32, true);                      // Make sure PS Long does not exceed 32 characters
+                rds.stationNameLong = extractUTF8Substring(utf8String, 0, endmarker, true);                      // Make sure PS Long does not exceed 32 characters
               }
             }
 
@@ -1532,7 +1540,7 @@ void TEF6686::readRDS(byte showrdserrors) {
               if (offset == 16) packet3long = true;
               RDScharConverter(pslong_buffer, PSLongtext, sizeof(PSLongtext) / sizeof(wchar_t), true);    // Convert 8 bit ASCII to 16 bit ASCII
               String utf8String = convertToUTF8(PSLongtext);                                              // Convert RDS characterset to ASCII
-              rds.stationNameLong = extractUTF8Substring(utf8String, 0, 32, true);
+              rds.stationNameLong = extractUTF8Substring(utf8String, 0, endmarker, true);
               if (packet0long && packet1long && packet2long && packet3long) pslong_process = true;        // OK, we had one runs, now let's go the idle PS Long writing
             }
           }
