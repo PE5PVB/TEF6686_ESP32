@@ -1,7 +1,7 @@
 #ifndef LANGUAGE_H
 #define LANGUAGE_H
 
-#define VERSION "v2.10 RC1"
+#define VERSION "v2.10 RC2"
 
 // [number of languages][number of texts]
 // *** means the text is the same as in English
