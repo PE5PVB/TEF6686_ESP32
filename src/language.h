@@ -1610,10 +1610,10 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Signal", // 221
     "Stumm beim Scannen", // 222
     "AIR", // 223
-    "5 sec. bandbutton press", // 224
-    "Power off", // 225
-    "Mute screen", // 226
-    "Disabled" // 227
+    "5 Sek. BAND-Knopf drücken", // 224
+    "Ausschalten", // 225
+    "Bildschirmschoner", // 226
+    "Deaktiviert" // 227
   },
 
   { "Český", // Czech
