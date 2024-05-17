@@ -169,6 +169,7 @@ byte iMSEQ;
 byte iMSset;
 byte language;
 byte licold;
+byte longbandpress;
 byte memorypos;
 byte memoryposold;
 byte memoryposstatus;
@@ -511,6 +512,7 @@ void setup() {
   scancancel = EEPROM.readByte(EE_BYTE_SCANCANCEL);
   scanmute = EEPROM.readByte(EE_BYTE_SCANMUTE);
   autosquelch = EEPROM.readByte(EE_BYTE_AUTOSQUELCH);
+  longbandpress = EEPROM.readByte(EE_BYTE_LONGBANDPRESS);
 
   if (spispeed == SPI_SPEED_DEFAULT) {
     tft.setSPISpeed(SPI_FREQUENCY / 1000000);
@@ -1648,8 +1650,17 @@ void BANDBUTTONPress() {
             WakeToSleep(true);
           }
           while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 2500) counter = millis();
-          if (counter - counterold > 2499 && hardwaremodel == BASE_ILI9341) {
-            deepSleep();
+          if (counter - counterold > 2499) {
+            switch (longbandpress) {
+              case STANDBY:
+                deepSleep();
+                break;
+
+              case SCREENOFF:
+                screensavertriggered = true;
+                MuteScreen(1);
+                break;
+            }
           }
         }
       }
@@ -2724,24 +2735,24 @@ void DoMemoryPosTune() {
       radio.SetFreq(frequency);
       break;
     case BAND_OIRT:
-      frequency = presets[memorypos].frequency;
+      frequency_OIRT = presets[memorypos].frequency;
       radio.SetFreq(frequency_OIRT);
       break;
     case BAND_LW:
-      frequency = presets[memorypos].frequency;
-      radio.SetFreq(frequency_LW);
+      frequency_LW = presets[memorypos].frequency;
+      radio.SetFreqAM(frequency_LW);
       break;
     case BAND_MW:
-      frequency = presets[memorypos].frequency;
-      radio.SetFreq(frequency_MW);
+      frequency_MW = presets[memorypos].frequency;
+      radio.SetFreqAM(frequency_MW);
       break;
     case BAND_SW:
-      frequency = presets[memorypos].frequency;
-      radio.SetFreq(frequency_SW);
+      frequency_SW = presets[memorypos].frequency;
+      radio.SetFreqAM(frequency_SW);
       break;
 #ifdef HAS_AIR_BAND
     case BAND_AIR:
-      frequency = presets[memorypos].frequency;
+      frequency_AIR = presets[memorypos].frequency;
       // radio.SetFreq(frequency_AIR); // todo
       radio.SetFreqAM(10700); // todo
       break;
@@ -4120,6 +4131,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_SCANCANCEL, 0);
   EEPROM.writeByte(EE_BYTE_SCANMUTE, 0);
   EEPROM.writeByte(EE_BYTE_AUTOSQUELCH, 0);
+  EEPROM.writeByte(EE_BYTE_LONGBANDPRESS, 0);
 
   for (int i = 0; i < EE_PRESETS_CNT; i++) {
     EEPROM.writeByte(i + EE_PRESETS_BAND_START, BAND_FM);
@@ -4355,6 +4367,7 @@ void endMenu() {
   EEPROM.writeByte(EE_BYTE_SCANCANCEL, scancancel);
   EEPROM.writeByte(EE_BYTE_SCANMUTE, scanmute);
   EEPROM.writeByte(EE_BYTE_AUTOSQUELCH, autosquelch);
+  EEPROM.writeByte(EE_BYTE_LONGBANDPRESS, longbandpress);
   EEPROM.commit();
   if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
   Serial.end();

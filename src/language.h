@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 // *** means the text is the same as in English
-static const char* const myLanguage[18][224] PROGMEM = {
+static const char* const myLanguage[18][228] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -229,7 +229,11 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Correct PI", // 220
     "Signal", // 221
     "Mute audio\nwhile scanning", // 222
-    "AIR" // 223
+    "AIR", // 223
+    "5 sec. bandbutton press", // 224
+    "Power off", // 225
+    "Mute screen", // 226
+    "Disabled" // 227
   },
 
   { "Nederlands", // Dutch
@@ -455,7 +459,11 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Correcte PI", // 220
     "Signaal", // 221
     "Geen geluid\ntijdens scannen", // 222
-    "AIR" // 223
+    "AIR", // 223
+    "5 sec. bandbutton ingedrukt", // 224
+    "Uitschakelen", // 225
+    "Scherm uit", // 226
+    "Geen functie" // 227
   },
 
   { "Polski", // Polish
@@ -681,7 +689,11 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Poprawne PI", // 220
     "Sygnał", // 221
     "Wycisz dźwięk\npodczas skanowania", // 222
-    "AIR" // 223
+    "AIR", // 223
+    "5 sec. bandbutton press", // 224
+    "Power off", // 225
+    "Mute screen", // 226
+    "Disabled" // 227
   },
 
   { "Hrvatski", // Croatian
@@ -907,7 +919,11 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Correct PI", // 220
     "Signal", // 221
     "Mute audio\nwhile scanning", // 222
-    "AIR" // 223
+    "AIR", // 223
+    "5 sec. bandbutton press", // 224
+    "Power off", // 225
+    "Mute screen", // 226
+    "Disabled" // 227
   },
 
   { "Ελληνικά", // Greek
@@ -1124,7 +1140,7 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Χρόνος αναμονής", // 211
     "Εκκίνηση DX ανίχνευσης", // 212
     "Επιλογές FM DX", // 213
-    "Ματαίωση! Παράλειψη\nτου καναλιού εκκίνησης.", // 214
+    "Ματαίωση! Λείπει\nτο κανάλι εκκίνησης.", // 214
     "Αυτόματη ταξινόμηση\nAF", // 215
     "Κανάλια μνήμης", // 216
     "Εξαίρεση", // 217
@@ -1133,7 +1149,11 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Σωστό PI", // 220
     "Σήμα", // 221
     "Σίγαση ήχου\nκατά την ανίχνευση", // 222
-    "AIR" // 223
+    "AIR", // 223
+    "Πιέση πλήκτρου\nμπάντας 5 δευτ.", // 224
+    "Σβήσιμο", // 225
+    "Σβήσιμο οθόνης", // 226
+    "Ανενεργό" // 227
   },
 
   { "Română", // Romanian
@@ -1359,7 +1379,11 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Correct PI", // 220
     "Signal", // 221
     "Mute audio\nwhile scanning", // 222
-    "AIR" // 223
+    "AIR", // 223
+    "5 sec. bandbutton press", // 224
+    "Power off", // 225
+    "Mute screen", // 226
+    "Disabled" // 227
   },
 
   { "Deutsch", // German
@@ -1585,7 +1609,11 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Korrekter PI-Code", // 220
     "Signal", // 221
     "Stumm beim Scannen", // 222
-    "AIR" // 223
+    "AIR", // 223
+    "5 sec. bandbutton press", // 224
+    "Power off", // 225
+    "Mute screen", // 226
+    "Disabled" // 227
   },
 
   { "Český", // Czech
@@ -1811,7 +1839,11 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Correct PI", // 220
     "Signal", // 221
     "Mute audio\nwhile scanning", // 222
-    "AIR" // 223
+    "AIR", // 223
+    "5 sec. bandbutton press", // 224
+    "Power off", // 225
+    "Mute screen", // 226
+    "Disabled" // 227
   },
 
   { "Slovenský", // Slovak
@@ -2037,7 +2069,11 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Correct PI", // 220
     "Signal", // 221
     "Mute audio\nwhile scanning", // 222
-    "AIR" // 223
+    "AIR", // 223
+    "5 sec. bandbutton press", // 224
+    "Power off", // 225
+    "Mute screen", // 226
+    "Disabled" // 227
   },
 
   { "Français", // French
@@ -2263,7 +2299,11 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "PI Correct", // 220
     "Signal", // 221
     "Audio muet lors\nde la numérisation", // 222
-    "AIR" // 223
+    "AIR", // 223
+    "Appui sur le bouton\nband 5 sec.", // 224
+    "Éteindre", // 225
+    "Écran muet", // 226
+    "Inactif" // 227
   },
 
   { "Български", // Bulgarian
@@ -2489,7 +2529,11 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Correct PI", // 220
     "Signal", // 221
     "Mute audio\nwhile scanning", // 222
-    "AIR" // 223
+    "AIR", // 223
+    "5 sec. bandbutton press", // 224
+    "Power off", // 225
+    "Mute screen", // 226
+    "Disabled" // 227
   },
 
   { "Русский", // Russian
@@ -2715,7 +2759,11 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "При корректном PI", // 220
     "При наличии сигнала", // 221
     "Отключать аудио\nпри сканировании", // 222
-    "AIR" // 223
+    "AIR", // 223
+    "5 sec. bandbutton press", // 224
+    "Power off", // 225
+    "Mute screen", // 226
+    "Disabled" // 227
   },
 
   { "Українська", // Ukranian
@@ -2941,7 +2989,11 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Correct PI", // 220
     "Signal", // 221
     "Mute audio\nwhile scanning", // 222
-    "AIR" // 223
+    "AIR", // 223
+    "5 sec. bandbutton press", // 224
+    "Power off", // 225
+    "Mute screen", // 226
+    "Disabled" // 227
   },
 
   { "Italiano", // Italian
@@ -3006,7 +3058,7 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Mostra banda SW in m.", // 59
     "Filtro RDS", // 60
     "Mostra errori PI", // 61
-    "Utilizzare squelch", // 62 
+    "Utilizzare squelch", // 62
     "Meter di modulazione", // 63
     "Soppressione rumore AM", // 64
     "Soppressione rumore FM", // 65
@@ -3027,7 +3079,7 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Min.", // 80 ***
     "Velocità SPI Dinamico", // 81 ***
     "Sensibilità scansione", // 82
-    "ASSENTE", // 83 
+    "ASSENTE", // 83
     "Versione Software", // 84
     "Font frequenza", // 85 ***
     "Auto", // 86
@@ -3167,7 +3219,11 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "PI corretto", // 220
     "Signale", // 221
     "Audio silenziato\ndurante scansione", // 222
-    "AIR" // 223
+    "AIR", // 223
+    "5 sec. bandbutton press", // 224
+    "Power off", // 225
+    "Mute screen", // 226
+    "Disabled" // 227
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3393,7 +3449,11 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "节目识别码正确", // 220
     "信号超阈值", // 221
     "扫描时静音", // 222
-    "AIR" // 223
+    "AIR", // 223
+    "5 sec. bandbutton press", // 224
+    "Power off", // 225
+    "Mute screen", // 226
+    "Disabled" // 227
   },
 
   { "Norsk", // Norwegian
@@ -3432,7 +3492,7 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "AV", // 33
     "SKANNER...", // 34
     "Tuner ikke oppdaget", // 35
-    "AM Antenna gain", // 36
+    "AM-antenneforsterkning", // 36
     "FM AGC", // 37
     "Vis RDS-feil", // 38
     "Språk", // 39
@@ -3444,7 +3504,7 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Pip ved båndkant", // 45
     "Region", // 46 ***
     "Europa", // 47
-    "America", // 48 ***
+    "Amerika", // 48
     "Vis understrek i RDS", // 49
     "USB modus", // 50
     "Wi-Fi aktiv", // 51
@@ -3481,7 +3541,7 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Skannefølsomhet", // 82
     "INGEN", // 83
     "Programvareversjon", // 84
-    "Frekvens skrifttype", // 85 ***
+    "Frekvens skrifttype", // 85
     "Auto", // 86
     "Ingen AF", // 87
     "Ingen EON", // 88
@@ -3570,7 +3630,7 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Ocean", // 171 ***
     "Indigo", // 172 ***
     "Batterialternativer", // 173
-    "Vis batteriverdi", // 174
+    "Vis batterispenning", // 174
     "Vis batteriprosent", // 175
     "RT buffering", // 176 ***
     "Hovedinnstillinger", // 177
@@ -3592,9 +3652,9 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "FM", // 193 ***
     "AM", // 194 ***
     "TILKOBLE", // 195
-    "DX MODE", // 196
+    "DX MODUS", // 196
     "Stationlist ID", // 197 ***
-    "AM ATT", // 198
+    "AM AGC", // 198
     "FM ettertrykkelse", // 199
     "Lite", // 200
     "Mye", // 201
@@ -3602,7 +3662,7 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Rask PS", // 203
     "Standard", // 204
     "Dempet skjerm på\nXDRGTK tilkobling", // 205
-    "FMSI stereo forbedringt", // 206
+    "FMSI stereo forbedring", // 206
     "Kun tilgjengelig\npå TEF6687/6689!", // 207
     "Funksjon ikke tilgjengelig\npå valgt skin!", // 208
     "Begynn å skanne\nminnekanaler", // 209
@@ -3616,10 +3676,14 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Utelukke", // 217
     "Kun", // 218
     "Avbryt skanning automatisk", // 219
-    "korrekt PI", // 220
+    "Korrekt PI", // 220
     "Signal", // 221
     "Demp lyden\nmens du skanner", // 222
-    "AIR" // 223
+    "Flybånd", // 223
+    "Hold båndknappen\n i 5 sek", // 224
+    "Slå av radio", // 225
+    "Slå av skjerm", // 226
+    "Deaktivert" // 227
   },
 
   { "Español", // Spanish
@@ -3655,7 +3719,7 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Apagar", // 30
     "¡La pantalla está en silencio!", // 31
     "Para desactivar,\ndesmarque la casilla RF+", // 32
-    "APAGADO", // 33
+    "APAG.", // 33
     "ESCANEANDO...", // 34
     "Sintonizador no detectado", // 35
     "AM Ganancia de antena", // 36
@@ -3845,7 +3909,11 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "PI correcto", // 220
     "Señal", // 221
     "Audio mudo\nmientras busca", // 222
-    "AIR" // 223
+    "AIR", // 223
+    "Presione el botón\nband durante 5 seg.", // 224
+    "Apagado", // 225
+    "Pantalla silenciosa", // 226
+    "Inactivo" // 227
   },
 
   { "Português", // Portuguese
@@ -3881,7 +3949,7 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "Desligado", // 30
     "A tela está silenciada!", // 31
     "Para desativar o silenciamento,\ndesmarque a caixa RF+", // 32
-    "DESATIVADO", // 33
+    "DESAT.", // 33
     "ANALISANDO...", // 34
     "Sintonizador não detectado", // 35
     "AM Ganho da antena", // 36
@@ -4071,7 +4139,11 @@ static const char* const myLanguage[18][224] PROGMEM = {
     "PI correto", // 220
     "Sinal", // 221
     "Mudo áudio\nenquanto procura", // 222
-    "AIR" // 223
+    "AIR", // 223
+    "Pressione o botão\nbanda por 5 seg.", // 224
+    "Desligar", // 225
+    "Silenciar tela", // 226
+    "Inativo" // 227
   }
 };
 #endif
