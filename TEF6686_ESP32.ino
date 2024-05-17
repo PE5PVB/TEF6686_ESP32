@@ -1118,20 +1118,16 @@ void WakeToSleep(bool yes) {
     screensavertriggered = true;
     switch (poweroptions) {
       case LCD_OFF:
-        analogWrite(SMETERPIN, 0);
         MuteScreen(1);
         StoreFrequency();
         break;
       case LCD_BRIGHTNESS_1_PERCENT:
-        analogWrite(SMETERPIN, 0);
         analogWrite(CONTRASTPIN, 1 * 2 + 27);
         break;
       case LCD_BRIGHTNESS_A_QUARTER:
-        analogWrite(SMETERPIN, 0);
         analogWrite(CONTRASTPIN, MIN(ContrastSet, 25) * 2 + 27);
         break;
       case LCD_BRIGHTNESS_HALF:
-        analogWrite(SMETERPIN, 0);
         analogWrite(CONTRASTPIN, MIN(ContrastSet, 50) * 2 + 27);
         break;
     }
@@ -2118,7 +2114,8 @@ void BWButtonPress() {
         BWtune = true;
       }
       if (screensaverset) {
-        ScreensaverTimerRestart();
+        WakeToSleep(REVERSE);
+        return;
       }
       delay(100);
     }
@@ -2179,7 +2176,8 @@ void ModeButtonPress() {
         if (counter - counterold <= 1000) {
           doTuneMode();
           if (screensaverset) {
-            ScreensaverTimerRestart();
+            WakeToSleep(REVERSE);
+            return;
           }
         } else {
           if (!menu) {
