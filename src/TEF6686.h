@@ -568,10 +568,12 @@ typedef struct _rds_ {
   String ECCtext;
   String LICtext;
   String stationIDtext;
+  String stationNameLong;
   String stationStatetext;
   char stationType[18];
   char picode[7];
   char stationID[9];
+  char stationLongID[33];
   char stationState[3];
   char dabafeid[5];
   char dabafchannel[4];
@@ -598,6 +600,7 @@ typedef struct _rds_ {
   bool hasECC;
   bool hasLIC;
   bool hasDABAF;
+  bool hasLongPS;
   bool hasRT;
   bool hasTP;
   bool hasTA;
@@ -720,10 +723,13 @@ class TEF6686 {
     char ptyn_buffer[9];
     char eon_buffer[20][9];
     bool ps_process;
+    bool pslong_process;
     bool rt_process;
     char rt_buffer[65];
     char rt_buffer2[65];
     char rt_buffer32[33];
+    char pslong_buffer[33];
+    char pslong_buffer2[33];
     bool useRTPlus = true;
     bool ABold;
     bool afreset;
@@ -733,6 +739,7 @@ class TEF6686 {
     bool rtABold;
     bool rtAB32old;
     wchar_t PStext[9] = L"";
+    wchar_t PSLongtext[33] = L"";
     wchar_t EONPStext[20][9];
     wchar_t PTYNtext[9] = L"";
     char RDSplus1[45];
@@ -749,10 +756,7 @@ class TEF6686 {
     bool rdsBerrorThreshold;
     bool rdsCerrorThreshold;
     bool rdsDerrorThreshold;
-    bool packet0;
-    bool packet1;
-    bool packet2;
-    bool packet3;
+    bool packet0, packet1, packet2, packet3, packet0long, packet1long, packet2long, packet3long;
     bool afmethodBprobe;
     uint16_t rdsCold;
     uint8_t af_counterb;

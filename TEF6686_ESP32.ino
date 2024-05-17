@@ -271,6 +271,7 @@ int xPos;
 int xPos2;
 int xPos3;
 int xPos4;
+int xPos5;
 int16_t OStatus;
 int16_t SAvg;
 int16_t SAvg2;
@@ -370,6 +371,8 @@ unsigned long eontickerhold;
 unsigned long flashingtimer;
 unsigned long lowsignaltimer;
 unsigned long peakholdmillis;
+unsigned long pslongticker;
+unsigned long pslongtickerhold;
 unsigned long rtplusticker;
 unsigned long rtplustickerhold;
 unsigned long rtticker;
@@ -391,6 +394,7 @@ TFT_eSprite SquelchSprite = TFT_eSprite(&tft);
 TFT_eSprite FullLineSprite = TFT_eSprite(&tft);
 TFT_eSprite OneBigLineSprite = TFT_eSprite(&tft);
 TFT_eSprite SignalSprite = TFT_eSprite(&tft);
+TFT_eSprite PSSprite = TFT_eSprite(&tft);
 
 WiFiConnect wc;
 WiFiServer Server(7373);
@@ -618,6 +622,9 @@ void setup() {
 
   RDSSprite.createSprite(165, 19);
   RDSSprite.setTextDatum(TL_DATUM);
+
+  PSSprite.createSprite(150, 30);
+  PSSprite.setTextDatum(TL_DATUM);
 
   SquelchSprite.createSprite(47, 19);
   SquelchSprite.setTextDatum(TL_DATUM);
@@ -4217,9 +4224,11 @@ void UpdateFonts(bool mode) {
       if (language == LANGUAGE_CHS) {
         RadiotextSprite.loadFont(FONT16_CHS);
         RDSSprite.loadFont(FONT16_CHS);
+        PSSprite.loadFont(FONT28_CHS);
       } else {
         RadiotextSprite.loadFont(FONT16);
         RDSSprite.loadFont(FONT16);
+        PSSprite.loadFont(FONT28);
       }
       break;
 
@@ -4240,6 +4249,7 @@ void UpdateFonts(bool mode) {
       OneBigLineSprite.unloadFont();
       RadiotextSprite.unloadFont();
       RDSSprite.unloadFont();
+      PSSprite.unloadFont();
       break;
   }
 }
