@@ -3037,7 +3037,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Mostra errori RDS", // 38
     "Lingua", // 39
     "Scegli la lingua", // 40
-    "SALVA E ESCI: PREMI MODO”, // 41
+    "SALVA E ESCI: PREMI MODO", // 41
     "On", // 42 ***
     "Softmute FM", // 43 ***
     "Softmute AM", // 44 ***
@@ -3199,7 +3199,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Piccolo", // 200 ***
     "Grande", // 201 ***
     "Tutto", // 202 ***
-    "PS rapido”, // 203 ***
+    "PS rapido", // 203 ***
     "Default", // 204
     "Spegni schermo se\nconnesso a XDRGTK", // 205
     "FMSI audio stereofonico\nottimizzato", // 206
@@ -3210,20 +3210,20 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Tempo di attesa", // 211
     "Avvio scansione DX", // 212
     "Opzioni FM DX", // 213
-    "Stop! Canale di avvio\nimpost. su ignora”, // 214
+    "Stop! Canale di avvio\nimpost. su ignora", // 214
     "Autoordinamento AF", // 215
     "Canali in memoria", // 216
-    "Esclusi”, // 217
-    "Solamente”, // 218
-    “Uscita automatica scansione", // 219
+    "Esclusi", // 217
+    "Solamente", // 218
+    "Uscita automatica scansione", // 219
     "PI corretto", // 220
     "Segnale", // 221
     "Audio silenziato\ndurante scansione", // 222
     "AIR", // 223
-    “Pressione x 5 sec.\npulsante BANDA", // 224
-    “Spegnimento”, // 225
-    “Disattiva schermo“, // 226
-    “Funzione disabilitata” // 227
+    "Pressione x 5 sec.\npulsante BANDA", // 224
+    "Spegnimento", // 225
+    "Disattiva schermo", // 226
+    "Funzione disabilitata" // 227
   },
 
   { "Simplified Chinese", // Simplified Chinese

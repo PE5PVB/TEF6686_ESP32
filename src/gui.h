@@ -174,6 +174,7 @@ extern int xPos;
 extern int xPos2;
 extern int xPos3;
 extern int xPos4;
+extern int xPos5;
 extern int16_t SStatus;
 extern int8_t LevelOffset;
 extern int8_t LowLevelSet;
