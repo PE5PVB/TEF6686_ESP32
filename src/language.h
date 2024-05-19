@@ -1617,13 +1617,13 @@ static const char* const myLanguage[18][228] PROGMEM = {
   },
 
   { "Český", // Czech
-    "Směr enkóderu byl změněn", // 1
+    "Směr enkodéru byl změněn", // 1
     "Prosím, pusťte tlačítko", // 2
     "Obrazovka otočena", // 3
     "Kalibrace analog. měřiče", // 4
     "Po dokončení pusťte tlačítko", // 5
-    "enkóder nastaven na optický", // 6
-    "enkóder nastaven na standardní", // 7
+    "enkodér nastaven na optický", // 6
+    "enkodér nastaven na standardní", // 7
     "FM/AM přijímač", // 8
     "Tuner: !ŽÁDNÝ!", // 9
     "Hlasitost:", // 10
@@ -1632,42 +1632,42 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Vrch pásma:", // 13
     "FM Offset frekvence:", // 14
     "Práh pro stereo:", // 15
-    "Práh utlumeni:", // 16
-    "Práh zvuku:", // 17
-    "Práh nizkého signálu:", // 18
-    "Kontrast:", // 19
+    "Práh frekvence zvuku\nk utlumení:", // 16
+    "Práh signálu pro utlumení\nvysokých tónů:", // 17
+    "Práh nízkého signálu:", // 18
+    "Jas:", // 19
     "Hlasitost", // 20
     "Offset frekvence", // 21
     "Spodek pásma", // 22
     "Vrch pásma", // 23
     "Offset signálu", // 24
     "Práh pro stereo", // 25
-    "Práh utlumení", // 26
-    "Práh signálu pro utlumení", // 27
+    "Práh frekvence zvuku k utlumení", // 26
+    "Práh signálu pro utlumení vysokých tónů", // 27
     "Práh nízkého signálu", // 28
     "Jas", // 29
-    "Vyp", // 30
+    "Vyp.", // 30
     "Obrazovka je ztlumena!", // 31
     "Pro spuštění zrušte RF+", // 32
-    "VYP", // 33
+    "VYP.", // 33
     "SKENUJI...", // 34
     "Tuner nedetekován", // 35
-    "AM Antenna gain", // 36
+    "Zisk AM antény", // 36
     "FM AGC", // 37
     "Zobrazit chyby v RDS", // 38
     "Jazyk", // 39
     "Vyberte jazyk", // 40
     "ZMÁČKNĚTE MODE PRO ULOŽENÍ", // 41
-    "Zap", // 42
+    "Zap.", // 42
     "Softmute FM", // 43 ***
     "Softmute AM", // 44 ***
-    "Pípnutí na konci pásma", // 45
+    "Pípnout na konci pásma", // 45
     "Region", // 46 ***
     "Evropa", // 47
-    "America", // 48 ***
+    "Amerika", // 48 ***
     "Zobrazit podtržítka v RDS", // 49
-    "USB mód", // 50
-    "Wi-Fi active", // 51 ***
+    "Režim USB", // 50
+    "Wi-Fi aktivní", // 51 ***
     "Konfigurace Wi-Fi", // 52
     "Připojte se k: ", // 53
     "pro nakonfigurování Wi-Fi", // 54
@@ -1676,44 +1676,44 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "PŘIPOJENO!", // 57
     "Stationlist IP", // 58
     "Zobrazit SW pásmo", // 59
-    "RDS filter", // 60 ***
+    "RDS filtr", // 60 ***
     "Zobrazit chyby v PI", // 61
-    "Zobrazit squelch", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
+    "Použít squelch", // 62
     "Graf modulace", // 63
     "Tlumič šumu (AM)", // 64
     "Tlumič šumu (FM)", // 65
     "Výchozí hodnoty načteny", // 66
     "Zvukový výstup", // 67
-    "Povolit ladění přes šetřic", // 68
+    "Povolit ladění přes spořič", // 68
     "Invertování barev", // 69
-    "O softvéru", // 70
+    "O softwaru", // 70
     "Hlavní kód:", // 71
     "Přispěli:", // 72
     "Neznámý", // 73
-    "Nastavení šetřiče obrazovky", // 74
-    "Čas", // 75
+    "Nastavení spořiče obrazovky", // 74
+    "Časovač vypnutí", // 75
     "Vypnutí obrazovky", // 76
     "Vzhled", // 77
     "Skin", // 78 ***
     "Detekované aplikace", // 79
     "Min.", // 80 ***
-    "Dynamic SPI speed", // 81 ***
-    "Scan sensitivity", // 82
-    "NONE", // 83 represents: AM/FM bands unavailable(please delete this note after translation）
-    "Software version", // 84
-    "Frequency font", // 85 ***
+    "Dynamická rychlost SPI", // 81 ***
+    "Citlivost skenu", // 82
+    "Žádné", // 83
+    "Verze softwaru", // 84
+    "Font frekvence", // 85 ***
     "Auto", // 86
     "AF nedostupné", // 87
     "EON nedostupný", // 88
     "RT+ nedostupný", // 89
-    "Krokování FM", // 90
-    "Šetřič obrazovky", // 91
-    "Sekund", // 92
+    "Výchozí krok ladění FM", // 90
+    "Spořič obrazovky", // 91
+    "Sec.", // 92
     "ZMÁČKNĚTE BAND PRO ZAVŘENÍ", // 93
     "1% jas", // 94
     "25% jas", // 95
     "50% jas", // 96
-    "AM Offset signálu:", // 97
+    "AM offset signálu:", // 97
     "Jednotka signálu:", // 98
     "AF:", // 99
     "Zvolte FM pásmo:", // 100
@@ -1723,7 +1723,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "SW", // 104 ***
     "FM", // 105 ***
     "OIRT", // 106 ***
-    "Rotating while screen off", // 107 ***
+    "Ladění při vypnuté obrazovce", // 107 ***
     "Volba modelu", // 108
     "Základ (ILI9341)", // 109
     "Přenosný (ILI9341)", // 110
@@ -1785,14 +1785,14 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Identifier", // 166 ***
     "Purchase", // 167 ***
     "Get data", // 168 ***
-    "MW default stepsize", // 169 ***
+    "Výchozí krok ladění MW", // 169 ***
     "Tangerine", // 170 ***
     "Ocean", // 171 ***
     "Indigo", // 172 ***
-    "Nastavení baterie", // 173
+    "Úroveň nabití baterie", // 173
     "Zobrazit napětí", // 174
     "Zobrazit procenta", // 175
-    "RT načítaní", // 176
+    "RT buffering", // 176
     "Hlavní nastavení", // 177
     "Nastavení zvuku", // 178
     "Nastavení displeje", // 179
@@ -1811,39 +1811,39 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "RDS", // 192 ***
     "FM", // 193 ***
     "AM", // 194 ***
-    "PŘIPOJENÍ", // 195
-    "DX MODE", // 196
+    "KONEKTIVITA", // 195
+    "DX REŽIM", // 196
     "Stationlist ID", // 197 ***
     "AM ATT", // 198
-    "FM deemphasis", // 199 ***
-    "Malý", // 200
-    "Velký", // 201
+    "FM deemfáze", // 199 ***
+    "Malé", // 200
+    "Velké", // 201
     "Vše", // 202
     "Rychlé načtení PS", // 203
-    "Default", // 204
-    "Mute screen on\nXDRGTK connection", // 205
-    "FMSI stereo\nimprovement", // 206
-    "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!", // 208
-    "Begin scanning\nmemory channels", // 209
-    "Stop scanning\nmemory channels", // 210
-    "Wait time", // 211
-    "Start DX scanning", // 212
-    "FM DX Options", // 213
-    "Abort! The start channel\nis marked as skipped.", // 214
+    "Výchozí", // 204
+    "Vypnout displej při\nXDRGTK připojení", // 205
+    "FMSI stereo\nvylepšení", // 206
+    "Funkce dostupná pouze\nu TEF6687/6689!", // 207
+    "Funkce není dostupná\nu zvoleného skinu!", // 208
+    "Začít skenovat\nod předvolby č.", // 209
+    "Skončit skenování\nu předvolby č.", // 210
+    "Doba čekání", // 211
+    "Spustit DX skenování", // 212
+    "Nastavení FM DX", // 213
+    "Přerušeno! Začáteční předvolba\nje označena jako prázdná.", // 214
     "Auto řazení AF", // 215
-    "Memory channels", // 216
-    "Exclude", // 217
-    "Only", // 218
-    "Auto cancel scan", // 219
-    "Correct PI", // 220
-    "Signal", // 221
-    "Mute audio\nwhile scanning", // 222
+    "Předvolby paměti", // 216
+    "Vyloučit", // 217
+    "Pouze", // 218
+    "Automaticky zastavit skenování", // 219
+    "při načtení korektního PI", // 220
+    "při signálu", // 221
+    "Ztlumit zvuk\nběhem skenování", // 222
     "AIR", // 223
-    "5 sec. bandbutton press", // 224
-    "Power off", // 225
-    "Mute screen", // 226
-    "Disabled" // 227
+    "Při 5 sec. stisknutí tl. BAND", // 224
+    "Vypnout", // 225
+    "Vypnout displej", // 226
+    "Zakázáno" // 227
   },
 
   { "Slovenský", // Slovak
