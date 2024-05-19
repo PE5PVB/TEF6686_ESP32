@@ -3088,8 +3088,8 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "RT + non disponibile", // 89
     "Passo di sintonia predef. FM", // 90
     "Salvaschermo", // 91
-    "Secondi", // 92
-    "PREMI BAND PER CHIUDERE", // 93
+    "Sec.", // 92
+    "PREMI BANDA PER CHIUDERE", // 93
     "1% luminosità", // 94
     "25% di luminosità", // 95
     "50% di luminosità", // 96
@@ -3180,7 +3180,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Impostazioni FM", // 181 ***
     "Impostazioni AM", // 182 ***
     "Connettività", // 183 ***
-    "PREMI MODO PER RITORNARE", // 184 ***
+    "PREMI MODO PER CHIUDERE", // 184 ***
     "CoChannelDet AM", // 185
     "Sensibilità CoChannelDet", // 186
     "Soglia CoChannelDet AM", // 187
@@ -3192,7 +3192,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "FM", // 193 ***
     "AM", // 194 ***
     "CONNETTI", // 195 ***
-    "DX MODE", // 196
+    "MODO DX", // 196
     "ID Stationlist", // 197 ***
     "ATT AM", // 198
     "Deenfasi FM", // 199 ***
@@ -3202,15 +3202,15 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "PS rapido”, // 203 ***
     "Default", // 204
     "Spegni schermo se\nconnesso a XDRGTK", // 205
-    "FMSI miglioramento\nsuono stereofonico", // 206
+    "FMSI audio stereofonico\nottimizzato", // 206
     "Funzione disponibile\nsolo su TEF6687/6689!", // 207
-    "Funzione non disponibile\nsulla skin selezionata!", // 208
+    "Funzione non disponibile\nsu skin selezionata!", // 208
     "Avvio scansione\ncanale in memoria", // 209
     "Fine scansione\ncanale in memoria", // 210
     "Tempo di attesa", // 211
     "Avvio scansione DX", // 212
     "Opzioni FM DX", // 213
-    "Interrotto! Canale di avvio\nimpost. su ignora”, // 214
+    "Stop! Canale di avvio\nimpost. su ignora”, // 214
     "Autoordinamento AF", // 215
     "Canali in memoria", // 216
     "Esclusi”, // 217
@@ -3220,7 +3220,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Segnale", // 221
     "Audio silenziato\ndurante scansione", // 222
     "AIR", // 223
-    “pressione pulsante banda:\n5 sec.", // 224
+    “Pressione x 5 sec.\npulsante BANDA", // 224
     “Spegnimento”, // 225
     “Disattiva schermo“, // 226
     “Funzione disabilitata” // 227
