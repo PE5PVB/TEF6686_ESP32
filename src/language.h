@@ -690,10 +690,10 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Sygnał", // 221
     "Wycisz dźwięk\npodczas skanowania", // 222
     "AIR", // 223
-    "5 sec. bandbutton press", // 224
-    "Power off", // 225
-    "Mute screen", // 226
-    "Disabled" // 227
+    "5 sek. naciśnięcie przyc. BAND", // 224
+    "Wyłącz", // 225
+    "Wyłącz ekran", // 226
+    "Wyłączone" // 227
   },
 
   { "Hrvatski", // Croatian
@@ -3037,7 +3037,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Mostra errori RDS", // 38
     "Lingua", // 39
     "Scegli la lingua", // 40
-    "SALVA E ESCI: PREMI MODE", // 41
+    "SALVA E ESCI: PREMI MODO”, // 41
     "On", // 42 ***
     "Softmute FM", // 43 ***
     "Softmute AM", // 44 ***
@@ -3088,8 +3088,8 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "RT + non disponibile", // 89
     "Passo di sintonia predef. FM", // 90
     "Salvaschermo", // 91
-    "Secondi", // 92
-    "PREMI BAND PER CHIUDERE", // 93
+    "Sec.", // 92
+    "PREMI BANDA PER CHIUDERE", // 93
     "1% luminosità", // 94
     "25% di luminosità", // 95
     "50% di luminosità", // 96
@@ -3180,7 +3180,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Impostazioni FM", // 181 ***
     "Impostazioni AM", // 182 ***
     "Connettività", // 183 ***
-    "PREMI MODO PER RITORNARE", // 184 ***
+    "PREMI MODO PER CHIUDERE", // 184 ***
     "CoChannelDet AM", // 185
     "Sensibilità CoChannelDet", // 186
     "Soglia CoChannelDet AM", // 187
@@ -3192,38 +3192,38 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "FM", // 193 ***
     "AM", // 194 ***
     "CONNETTI", // 195 ***
-    "DX MODE", // 196
+    "MODO DX", // 196
     "ID Stationlist", // 197 ***
     "ATT AM", // 198
     "Deenfasi FM", // 199 ***
     "Piccolo", // 200 ***
     "Grande", // 201 ***
     "Tutto", // 202 ***
-    "PS veloce", // 203 ***
+    "PS rapido”, // 203 ***
     "Default", // 204
     "Spegni schermo se\nconnesso a XDRGTK", // 205
-    "FMSI miglioramento\nsuono stereofonico", // 206
+    "FMSI audio stereofonico\nottimizzato", // 206
     "Funzione disponibile\nsolo su TEF6687/6689!", // 207
-    "Funzione non disponibile\nsulla skin selezionata!", // 208
-    "Avvio scansione\ncanali in memoria", // 209
-    "Fine scansione\ncanali in memoria", // 210
+    "Funzione non disponibile\nsu skin selezionata!", // 208
+    "Avvio scansione\ncanale in memoria", // 209
+    "Fine scansione\ncanale in memoria", // 210
     "Tempo di attesa", // 211
     "Avvio scansione DX", // 212
     "Opzioni FM DX", // 213
-    "Interrotto! Il canale di avvio\nviene saltato.", // 214
+    "Stop! Canale di avvio\nimpost. su ignora”, // 214
     "Autoordinamento AF", // 215
-    "Canali di memoria", // 216
-    "Escludere", // 217
-    "Solamente", // 218
-    "Fine scansione automatica", // 219
+    "Canali in memoria", // 216
+    "Esclusi”, // 217
+    "Solamente”, // 218
+    “Uscita automatica scansione", // 219
     "PI corretto", // 220
-    "Signale", // 221
+    "Segnale", // 221
     "Audio silenziato\ndurante scansione", // 222
     "AIR", // 223
-    "5 sec. bandbutton press", // 224
-    "Power off", // 225
-    "Mute screen", // 226
-    "Disabled" // 227
+    “Pressione x 5 sec.\npulsante BANDA", // 224
+    “Spegnimento”, // 225
+    “Disattiva schermo“, // 226
+    “Funzione disabilitata” // 227
   },
 
   { "Simplified Chinese", // Simplified Chinese
