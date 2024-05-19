@@ -85,7 +85,7 @@ void ShowAdvancedRDS() {
   }
 
   if (millis() - afticker >= 5) {
-    if (radio.rds.hasAF) {
+    if (radio.rds.hasAF && afstring.length() > 30) {
       if (afstring.length() != afstringlengthold) {
         afstringWidth = afstring.length() * charwidth;
         afstringlengthold = afstring.length();
@@ -107,7 +107,7 @@ void ShowAdvancedRDS() {
     RDSSprite.fillSprite(BackgroundColor);
     if (RDSstatus) RDSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RDSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
     RDSSprite.drawString(afstring, xPos2, 2);
-    if (radio.rds.hasAF) RDSSprite.drawString(afstring, xPos2 + afstringWidth, 2);
+    if (radio.rds.hasAF && afstring.length() > 30) RDSSprite.drawString(afstring, xPos2 + afstringWidth, 2);
     RDSSprite.pushSprite(35, 197);
     afticker = millis();
   }
