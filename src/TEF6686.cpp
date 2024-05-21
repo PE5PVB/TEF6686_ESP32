@@ -1518,8 +1518,10 @@ void TEF6686::readRDS(byte showrdserrors) {
             pslong_buffer[32] = '\0';
 
             byte endmarker = 32;
+            bool foundendmarker = false;
             for (byte i = 0; i < 33; i++) {
               if (pslong_buffer[i] == 0x0d) {
+                foundendmarker = true;
                 endmarker = i;
                 break;
               }
@@ -1529,7 +1531,7 @@ void TEF6686::readRDS(byte showrdserrors) {
               if (strcmp(pslong_buffer, pslong_buffer2) == 0) {                                           // When no difference between current and buffer, let's go...
                 RDScharConverter(pslong_buffer, PSLongtext, sizeof(PSLongtext) / sizeof(wchar_t), true);  // Convert 8 bit ASCII to 16 bit ASCII
                 String utf8String = convertToUTF8(PSLongtext);                                            // Convert RDS characterset to ASCII
-                rds.stationNameLong = extractUTF8Substring(utf8String, 0, endmarker, true);                      // Make sure PS Long does not exceed 32 characters
+                rds.stationNameLong = extractUTF8Substring(utf8String, 0, endmarker, true);               // Make sure PS Long does not exceed 32 characters
               }
             }
 
@@ -1538,10 +1540,10 @@ void TEF6686::readRDS(byte showrdserrors) {
               if (offset == 4) packet1long = true;
               if (offset == 8) packet2long = true;
               if (offset == 16) packet3long = true;
-              RDScharConverter(pslong_buffer, PSLongtext, sizeof(PSLongtext) / sizeof(wchar_t), true);    // Convert 8 bit ASCII to 16 bit ASCII
-              String utf8String = convertToUTF8(PSLongtext);                                              // Convert RDS characterset to ASCII
+              RDScharConverter(pslong_buffer, PSLongtext, sizeof(PSLongtext) / sizeof(wchar_t), true);                        // Convert 8 bit ASCII to 16 bit ASCII
+              String utf8String = convertToUTF8(PSLongtext);                                                                  // Convert RDS characterset to ASCII
               rds.stationNameLong = extractUTF8Substring(utf8String, 0, endmarker, true);
-              if (packet0long && packet1long && packet2long && packet3long) pslong_process = true;        // OK, we had one runs, now let's go the idle PS Long writing
+              if ((packet0long && packet1long && packet2long && packet3long) || foundendmarker) pslong_process = true;        // OK, we had one runs, now let's go the idle PS Long writing
             }
           }
         }
