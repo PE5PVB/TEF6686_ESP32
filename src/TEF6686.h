@@ -718,6 +718,7 @@ class TEF6686 {
     void RDScharConverter(const char* input, wchar_t* output, size_t size, bool under);
     String convertToUTF8(const wchar_t* input);
     String extractUTF8Substring(const String& utf8String, size_t start, size_t length, bool under);
+    String trimTrailingSpaces(String str);
     char ps_buffer[9];
     char ps_buffer2[9];
     char ptyn_buffer[9];

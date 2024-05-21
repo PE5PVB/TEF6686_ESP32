@@ -1167,6 +1167,7 @@ void TEF6686::readRDS(byte showrdserrors) {
                 RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);    // Convert 8 bit ASCII to 16 bit ASCII
                 rds.stationText = convertToUTF8(RTtext);                                        // Convert RDS characterset to ASCII
                 rds.stationText = extractUTF8Substring(rds.stationText, 0, endmarker, true);    // Make sure RT does not exceed 64 characters
+                rds.stationText = trimTrailingSpaces(rds.stationText);                          // Trim empty spaces at the end
               }
 
               for (byte i = 0; i < 64; i++) {
@@ -1188,6 +1189,7 @@ void TEF6686::readRDS(byte showrdserrors) {
               RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);      // Convert 8 bit ASCII to 16 bit ASCII
               rds.stationText = convertToUTF8(RTtext);                                          // Convert RDS characterset to ASCII
               rds.stationText = extractUTF8Substring(rds.stationText, 0, endmarker, true);      // Make sure RT does not exceed 64 characters
+              rds.stationText = trimTrailingSpaces(rds.stationText);                            // Trim empty spaces at the end
             }
 
             for (int i = 0; i < 64; i++) rt_buffer2[i] = rt_buffer[i];
@@ -1224,6 +1226,7 @@ void TEF6686::readRDS(byte showrdserrors) {
             RDScharConverter(rt_buffer32, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);      // Convert 8 bit ASCII to 16 bit ASCII
             rds.stationText32 = convertToUTF8(RTtext);                                          // Convert RDS characterset to ASCII
             rds.stationText32 = extractUTF8Substring(rds.stationText32, 0, endmarker, true);    // Make sure RT does not exceed 32 characters
+            rds.stationText = trimTrailingSpaces(rds.stationText);                              // Trim empty spaces at the end
           }
         } break;
 
@@ -1925,4 +1928,10 @@ void TEF6686::RDScharConverter(const char* input, wchar_t* output, size_t size, 
     }
   }
   output[size - 1] = L'\0';
+}
+
+String TEF6686::trimTrailingSpaces(String str) {
+  int end = str.length() - 1;
+  while (end >= 0 && isspace(str[end])) end--;
+  return str.substring(0, end + 1);
 }
