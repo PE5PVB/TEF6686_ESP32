@@ -608,6 +608,7 @@ void TEF6686::readRDS(byte showrdserrors) {
 
             if (offset == 3 && (ps_process || !rds.fastps)) {                                   // Last chars are received
               if (strcmp(ps_buffer, ps_buffer2) == 0) {                                         // When no difference between current and buffer, let's go...
+                ps_process = true;
                 RDScharConverter(ps_buffer2, PStext, sizeof(PStext) / sizeof(wchar_t), true);   // Convert 8 bit ASCII to 16 bit ASCII
                 String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
                 rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);                 // Make sure PS does not exceed 8 characters
@@ -1152,10 +1153,10 @@ void TEF6686::readRDS(byte showrdserrors) {
               initab = false;
             }
 
-            byte endmarker = 64;
-            for (byte i = 0; i < endmarker; i++) {
+            byte endmarkerRT64 = 64;
+            for (byte i = 0; i < endmarkerRT64; i++) {
               if (rt_buffer[i] == 0x0d) {
-                endmarker = i;
+                endmarkerRT64 = i;
                 break;
               }
             }
@@ -1166,7 +1167,7 @@ void TEF6686::readRDS(byte showrdserrors) {
                 wchar_t RTtext[65] = L"";                                                       // Create 16 bit char buffer for Extended ASCII
                 RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);    // Convert 8 bit ASCII to 16 bit ASCII
                 rds.stationText = convertToUTF8(RTtext);                                        // Convert RDS characterset to ASCII
-                rds.stationText = extractUTF8Substring(rds.stationText, 0, endmarker, true);    // Make sure RT does not exceed 64 characters
+                rds.stationText = extractUTF8Substring(rds.stationText, 0, endmarkerRT64, true);// Make sure RT does not exceed 64 characters
                 rds.stationText = trimTrailingSpaces(rds.stationText);                          // Trim empty spaces at the end
               }
 
@@ -1188,7 +1189,7 @@ void TEF6686::readRDS(byte showrdserrors) {
               wchar_t RTtext[65] = L"";                                                         // Create 16 bit char buffer for Extended ASCII
               RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);      // Convert 8 bit ASCII to 16 bit ASCII
               rds.stationText = convertToUTF8(RTtext);                                          // Convert RDS characterset to ASCII
-              rds.stationText = extractUTF8Substring(rds.stationText, 0, endmarker, true);      // Make sure RT does not exceed 64 characters
+              rds.stationText = extractUTF8Substring(rds.stationText, 0, endmarkerRT64, true);  // Make sure RT does not exceed 64 characters
               rds.stationText = trimTrailingSpaces(rds.stationText);                            // Trim empty spaces at the end
             }
 
@@ -1214,10 +1215,10 @@ void TEF6686::readRDS(byte showrdserrors) {
             rt_buffer32[offset + 0] = rds.rdsD >> 8;                                            // First character of segment
             rt_buffer32[offset + 1] = rds.rdsD & 0xff;                                          // Second character of segment
 
-            byte endmarker = 32;
-            for (byte i = 0; i < endmarker; i++) {
+            byte endmarkerRT32 = 32;
+            for (byte i = 0; i < endmarkerRT32; i++) {
               if (rt_buffer[i] == 0x0d) {
-                endmarker = i;
+                endmarkerRT32 = i;
                 break;
               }
             }
@@ -1225,7 +1226,7 @@ void TEF6686::readRDS(byte showrdserrors) {
             wchar_t RTtext[33] = L"";                                                           // Create 16 bit char buffer for Extended ASCII
             RDScharConverter(rt_buffer32, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);      // Convert 8 bit ASCII to 16 bit ASCII
             rds.stationText32 = convertToUTF8(RTtext);                                          // Convert RDS characterset to ASCII
-            rds.stationText32 = extractUTF8Substring(rds.stationText32, 0, endmarker, true);    // Make sure RT does not exceed 32 characters
+            rds.stationText32 = extractUTF8Substring(rds.stationText32, 0, endmarkerRT32, true);// Make sure RT does not exceed 32 characters
             rds.stationText = trimTrailingSpaces(rds.stationText);                              // Trim empty spaces at the end
           }
         } break;
@@ -1505,7 +1506,7 @@ void TEF6686::readRDS(byte showrdserrors) {
 
       case RDS_GROUP_15A: {
           if (showrdserrors == 3 || (!rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold)) {
-            if (pslong_process) rds.hasLongPS = true;
+            if (pslong_process && rds.stationNameLong.length() > 0) rds.hasLongPS = true;
             offset = (rds.rdsB & 0xf) * 4;                                                                // Get Long PS character segment
 
             pslong_buffer2[offset + 0] = pslong_buffer[offset + 0];                                       // Copy PS long buffer
@@ -1520,21 +1521,22 @@ void TEF6686::readRDS(byte showrdserrors) {
             pslong_buffer[offset + 3] = rds.rdsD & 0xff;                                                  // Fourth character of segment
             pslong_buffer[32] = '\0';
 
-            byte endmarker = 32;
+            byte endmarkerLPS = 32;
             bool foundendmarker = false;
-            for (byte i = 0; i < 33; i++) {
+            for (byte i = 0; i < endmarkerLPS; i++) {
               if (pslong_buffer[i] == 0x0d) {
                 foundendmarker = true;
-                endmarker = i;
+                endmarkerLPS = i;
                 break;
               }
             }
 
-            if (offset == 28 && (pslong_process || !rds.fastps)) {                                        // Last chars are received
+            if ((offset == 28 || foundendmarker) && (pslong_process || !rds.fastps)) {                    // Last chars are received
               if (strcmp(pslong_buffer, pslong_buffer2) == 0) {                                           // When no difference between current and buffer, let's go...
+                pslong_process = true;
                 RDScharConverter(pslong_buffer, PSLongtext, sizeof(PSLongtext) / sizeof(wchar_t), true);  // Convert 8 bit ASCII to 16 bit ASCII
                 String utf8String = convertToUTF8(PSLongtext);                                            // Convert RDS characterset to ASCII
-                rds.stationNameLong = extractUTF8Substring(utf8String, 0, endmarker, true);               // Make sure PS Long does not exceed 32 characters
+                rds.stationNameLong = extractUTF8Substring(utf8String, 0, endmarkerLPS, true);            // Make sure PS Long does not exceed 32 characters
               }
             }
 
@@ -1545,7 +1547,7 @@ void TEF6686::readRDS(byte showrdserrors) {
               if (offset == 16) packet3long = true;
               RDScharConverter(pslong_buffer, PSLongtext, sizeof(PSLongtext) / sizeof(wchar_t), true);                        // Convert 8 bit ASCII to 16 bit ASCII
               String utf8String = convertToUTF8(PSLongtext);                                                                  // Convert RDS characterset to ASCII
-              rds.stationNameLong = extractUTF8Substring(utf8String, 0, endmarker, true);
+              rds.stationNameLong = extractUTF8Substring(utf8String, 0, endmarkerLPS, true);
               if ((packet0long && packet1long && packet2long && packet3long) || foundendmarker) pslong_process = true;        // OK, we had one runs, now let's go the idle PS Long writing
             }
           }
@@ -1588,6 +1590,7 @@ void TEF6686::clearRDS (bool fullsearchrds) {
   for (i = 0; i < 32; i++) {
     rt_buffer32[i] = 0x20;
     pslong_buffer[i] = 0x20;
+    pslong_buffer2[i] = 0x20;
     PSLongtext[i] = L'\0';
   }
   rt_buffer32[32] = 0;
