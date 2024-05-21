@@ -777,23 +777,23 @@ void showCT() {
 void showRadioText() {
   if (!screenmute) {
     if (radio.rds.hasRT && radio.rds.stationText.length() > 0) {
-      if (String(radio.rds.stationText + radio.rds.stationText32).length() != Radiotextlengthold) {
-        RadiotextWidth = (String(radio.rds.stationText + " " + radio.rds.stationText32).length() * charwidth) + 3 * charwidth;
-        Radiotextlengthold = String(radio.rds.stationText + radio.rds.stationText32).length();
+      if (String(radio.rds.stationText + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : "")).length() != Radiotextlengthold) {
+        RadiotextWidth = (String(radio.rds.stationText + " " + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : "")).length() * charwidth) + 3 * charwidth;
+        Radiotextlengthold = String(radio.rds.stationText + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : "")).length();
       }
       if (advancedRDS && radio.rds.stationText.length() < 20) {
         xPos = 0;
         RDSSprite.fillSprite(BackgroundColor);
         RadiotextSprite.setTextDatum(TL_DATUM);
         if (RDSstatus) RDSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RDSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-        RDSSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
+        RDSSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : ""), xPos, 2);
         RDSSprite.pushSprite(36, 220);
       } else if (!advancedRDS && radio.rds.stationText.length() < 29) {
         xPos = 0;
         RadiotextSprite.fillSprite(BackgroundColor);
         RadiotextSprite.setTextDatum(TL_DATUM);
         if (RDSstatus) RadiotextSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RadiotextSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-        RadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
+        RadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : ""), xPos, 2);
         RadiotextSprite.pushSprite(36, 220);
       } else {
         if (millis() - rtticker >= (advancedRDS ? 5 : 15)) {
@@ -812,14 +812,14 @@ void showRadioText() {
           if (advancedRDS) {
             RDSSprite.fillSprite(BackgroundColor);
             if (RDSstatus) RDSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RDSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-            RDSSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
-            RDSSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos + RadiotextWidth, 2);
+            RDSSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : ""), xPos, 2);
+            RDSSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : ""), xPos + RadiotextWidth, 2);
             RDSSprite.pushSprite(36, 220);
           } else {
             RadiotextSprite.fillSprite(BackgroundColor);
             if (RDSstatus) RadiotextSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RadiotextSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-            RadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
-            RadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos + RadiotextWidth, 2);
+            RadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : ""), xPos, 2);
+            RadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : ""), xPos + RadiotextWidth, 2);
             RadiotextSprite.pushSprite(36, 220);
           }
           rtticker = millis();

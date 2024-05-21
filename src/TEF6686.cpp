@@ -1260,7 +1260,13 @@ void TEF6686::readRDS(byte showrdserrors) {
 
             if (rds.rdsD == 0x0093) {                                                           // Check for DAB+ AF application
               rds.hasDABAF = true;                                                              // Set flag
-              DABAFblock = ((rds.rdsB & 0x1F) >> 1) * 2;                                        // Get RT+ Block
+              DABAFblock = ((rds.rdsB & 0x1F) >> 1) * 2;                                        // Get DAB AF Block
+            }
+
+            if (rds.rdsD == 0x6552) {                                                           // Check for Enhanced RT application
+              _hasEnhancedRT = true;                                                           // Set flag
+              eRTblock = ((rds.rdsB & 0x1F) >> 1) * 2;                                          // Get eRT block
+              eRTcoding = bitRead(rds.rdsC, 0);                                                 // 0 = UCS-2, 1 = UTF-8
             }
           }
         } break;
@@ -1375,6 +1381,34 @@ void TEF6686::readRDS(byte showrdserrors) {
             rds.RTContent2 = convertToUTF8(RTtext2);                                            // Convert RDS characterset to ASCII
             rds.RTContent2 = extractUTF8Substring(rds.RTContent2, 0, 44, false);                // Make sure RT does not exceed 32 characters
           }
+
+          // eRT decoding
+          if ((!rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold) && eRTblock == rdsblock && _hasEnhancedRT) {
+            offset = (rds.rdsB & 0x1f) * 4;
+            eRT_buffer[offset + 0] = rds.rdsC >> 8;                                             // First character of segment
+            eRT_buffer[offset + 1] = rds.rdsC & 0xff;                                           // Second character of segment
+            eRT_buffer[offset + 2] = rds.rdsD >> 8;                                             // Thirth character of segment
+            eRT_buffer[offset + 3] = rds.rdsD & 0xff;                                           // Fourth character of segment
+            eRT_buffer[127] = '\0';
+
+            byte endmarkereRT = 127;
+            bool foundendmarker = false;
+            for (byte i = 0; i < endmarkereRT; i++) {
+              if (eRT_buffer[i] == 0x0d) {
+                foundendmarker = true;
+                endmarkereRT = i;
+                break;
+              }
+            }
+
+            if (offset == 0 || foundendmarker) {
+              if (eRTcoding) rds.enhancedRTtext = eRT_buffer; else rds.enhancedRTtext = utf8ToUcs2String(eRT_buffer); // Convert to UTF-8 or UCS-2
+              rds.enhancedRTtext = trimTrailingSpaces(rds.enhancedRTtext);
+              if (rds.enhancedRTtext.length() > 0) rds.hasEnhancedRT = true;
+            }
+          }
+
+
           if (!rdsBerrorThreshold && rdsblock == 16 && (bitRead(rds.rdsB, 15))) rds.hasTMC = true;  // TMC flag
 
           if ((!rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold) && DABAFblock == rdsblock && rds.hasDABAF) {
@@ -1531,7 +1565,7 @@ void TEF6686::readRDS(byte showrdserrors) {
               }
             }
 
-            if ((offset == 28 || foundendmarker) && (pslong_process || !rds.fastps)) {                    // Last chars are received
+            if ((offset == 0 || foundendmarker) && (pslong_process || !rds.fastps)) {                    // Last chars are received
               if (strcmp(pslong_buffer, pslong_buffer2) == 0) {                                           // When no difference between current and buffer, let's go...
                 pslong_process = true;
                 RDScharConverter(pslong_buffer, PSLongtext, sizeof(PSLongtext) / sizeof(wchar_t), true);  // Convert 8 bit ASCII to 16 bit ASCII
@@ -1548,6 +1582,7 @@ void TEF6686::readRDS(byte showrdserrors) {
               RDScharConverter(pslong_buffer, PSLongtext, sizeof(PSLongtext) / sizeof(wchar_t), true);                        // Convert 8 bit ASCII to 16 bit ASCII
               String utf8String = convertToUTF8(PSLongtext);                                                                  // Convert RDS characterset to ASCII
               rds.stationNameLong = extractUTF8Substring(utf8String, 0, endmarkerLPS, true);
+              rds.stationNameLong = trimTrailingSpaces(rds.stationNameLong);
               if ((packet0long && packet1long && packet2long && packet3long) || foundendmarker) pslong_process = true;        // OK, we had one runs, now let's go the idle PS Long writing
             }
           }
@@ -1571,6 +1606,7 @@ void TEF6686::clearRDS (bool fullsearchrds) {
   rds.LICtext = "";
   rds.stationIDtext = "";
   rds.stationStatetext = "";
+  rds.enhancedRTtext = "";
 
   uint8_t i;
   for (i = 0; i < 8; i++) {
@@ -1586,6 +1622,9 @@ void TEF6686::clearRDS (bool fullsearchrds) {
 
   for (i = 0; i < 64; i++) rt_buffer[i] = 0x20;
   rt_buffer[64] = 0;
+
+  for (i = 0; i < 128; i++) eRT_buffer[i] = 0x20;
+  eRT_buffer[128] = '\0';
 
   for (i = 0; i < 32; i++) {
     rt_buffer32[i] = 0x20;
@@ -1675,6 +1714,7 @@ void TEF6686::clearRDS (bool fullsearchrds) {
   rds.hasLongPS = false;
   rds.hasRDSplus = false;
   rds.hasDABAF = false;
+  rds.hasEnhancedRT = false;
   rt_process = false;
   ps_process = false;
   pslong_process = false;
@@ -1712,6 +1752,7 @@ void TEF6686::clearRDS (bool fullsearchrds) {
   afmethodBtrigger = false;
   correctPIold = 0;
   af_number = 0;
+  _hasEnhancedRT = false;
 }
 
 void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {
@@ -1937,4 +1978,38 @@ String TEF6686::trimTrailingSpaces(String str) {
   int end = str.length() - 1;
   while (end >= 0 && isspace(str[end])) end--;
   return str.substring(0, end + 1);
+}
+
+String TEF6686::utf8ToUcs2String(const char* utf8) {
+  String ucs2;
+  while (*utf8) {
+    uint32_t codepoint = 0;
+    int extraBytes = 0;
+
+    if ((*utf8 & 0x80) == 0) {
+      codepoint = *utf8++;
+    } else if ((*utf8 & 0xE0) == 0xC0) {
+      codepoint = *utf8++ & 0x1F;
+      extraBytes = 1;
+    } else if ((*utf8 & 0xF0) == 0xE0) {
+      codepoint = *utf8++ & 0x0F;
+      extraBytes = 2;
+    } else if ((*utf8 & 0xF8) == 0xF0) {
+      codepoint = *utf8++ & 0x07;
+      extraBytes = 3;
+    } else {
+      continue;
+    }
+
+    for (int i = 0; i < extraBytes; i++) {
+      if ((*utf8 & 0xC0) != 0x80) break;
+      codepoint = (codepoint << 6) | (*utf8++ & 0x3F);
+    }
+
+    if (codepoint <= 0xFFFF) {
+      ucs2 += (char)(codepoint >> 8);  // High byte
+      ucs2 += (char)(codepoint & 0xFF); // Low byte
+    }
+  }
+  return ucs2;
 }
