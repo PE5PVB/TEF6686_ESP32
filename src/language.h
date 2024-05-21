@@ -1182,7 +1182,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Setarea limitei de sus a benzii", // 23
     "Setare nivel decalaj", // 24
     "Setarea pragului sep. Stereo ", // 25
-    "Setare tăiere frecv, înalte ", // 26
+    "Setare tăiere frecv. înalte ", // 26
     "Setare prag tăiere înalte", // 27
     "Setarea pragului la joase", // 28
     "Setare luminozitate ecran", // 29
@@ -1264,7 +1264,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "FM", // 105
     "OIRT", // 106
     "Rotire când ecranul este oprit", // 107
-    " selectare Model", // 108
+    "selectare Model", // 108
     "Bază (ILI9341)", // 109
     "Portabil (ILI9341)", // 110
     "Portabil touch (ILI9341)", // 111
@@ -1362,10 +1362,10 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "PS rapid", // 203
     "Mod implicit", // 204
     "Ecran oprit, conectat la XDRGTK", // 205
-    "FMSI stereo imbunătățit", // 206
+    "FMSI stereo îmbunătățit", // 206
     "Funcție activă doar la\nTEF6687/6689!", // 207
     "Funcție indisponibilă\nla acest skin!", // 208
-    "Scanare incepută\nmemorare posturi", // 209
+    "Scanare începută\nmemorare posturi", // 209
     "Scanare terminată\nmemorare posturi", // 210
     "Așteaptă", // 211
     "Începe scanarea DX", // 212
@@ -1378,9 +1378,9 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Auto oprire scanare", // 219
     "PI corect", // 220
     "Semnal", // 221
-    "Audio oprit\ncand scanează", // 222
+    "Audio oprit\ncând scanează", // 222
     "AIR", // 223
-    "Apasaă 5 sec. butonul bandă", // 224
+    "Apasă 5sec. butonul bandă", // 224
     "Oprit", // 225
     "Ecran oprit", // 226
     "Dezactivat" // 227
