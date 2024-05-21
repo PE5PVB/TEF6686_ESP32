@@ -804,7 +804,7 @@ void loop() {
       if (scanmem) {
         memorypos++;
         if (memorypos > scanstop) memorypos = scanstart;
-        while (IsStationEmpty() || presets[memorypos].band != BAND_FM) {
+        while (IsStationEmpty() || (presets[memorypos].band != BAND_FM && presets[memorypos].band != BAND_OIRT)) {
           memorypos++;
           if (memorypos > scanstop) {
             memorypos = scanstart;
