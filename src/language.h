@@ -1400,7 +1400,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Konverter:", // 11
     "Unteres Bandende:", // 12
     "Oberes Bandende:", // 13
-    "FM RF-Pegeloffset:", // 14
+    "UKW RF-Pegeloffset:", // 14
     "Stereotrennschwelle:", // 15
     "Tiefpass Eckfrequenz:", // 16
     "Tiefpass Schwelle:", // 17
@@ -1423,7 +1423,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "SCANNE...", // 34
     "Tuner nicht erkannt", // 35
     "AM Antennengewinn", // 36
-    "FM AGC", // 37
+    "UKW AGC", // 37
     "Zeige RDS Fehler", // 38
     "Sprache", // 39
     "Sprache wählen", // 40
@@ -1464,27 +1464,27 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Abschaltzeit", // 75
     "Bildschirm aus", // 76
     "Thema", // 77
-    "Skin", // 78 ***
+    "Oberfläche", // 78 ***
     "Erkannte Applikationen", // 79
     "Min.", // 80
-    "Dynamische \nSPI-Geschwindigkeit", // 81
+    "Dynamische \nSPI-Geschw.", // 81
     "Scanempfindlichkeit", // 82
     "KEINE", // 83
     "Softwareversion", // 84
-    "Frequenz-Schriftart", // 85 ***
+    "Frequenz-Schriftart", // 85 
     "Auto", // 86
     "Keine AF verfügbar", // 87
     "Kein EON verfügbar", // 88
     "Kein RT+ verfügbar", // 89
     "UKW\nStandard-Schrittweite", // 90
     "Bildschirmschoner", // 91
-    "Sek", // 92
+    "Sek.", // 92
     "ZUM SCHLIEßEN BAND DRÜCKEN", // 93
     "1% Helligkeit", // 94
     "25% Helligkeit", // 95
     "50% Helligkeit", // 96
     "RF Pegeloffset", // 97
-    "Einheit Signalpegel", // 98
+    "Einheit des Signalpegels", // 98
     "Verwende AF", // 99
     "Wähle UKW Band", // 100
     "Wähle AM Band", // 101
@@ -1581,7 +1581,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "RDS", // 192
     "UKW", // 193
     "AM", // 194
-    "NETZ", // 195
+    "NETZWERK", // 195
     "DX MODE", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
@@ -1599,7 +1599,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Stoppe Scan mit\nSpeicherplatz", // 210
     "Wartezeit", // 211
     "Starte DX Scan", // 212
-    "FM DX Optionen", // 213
+    "UKW DX Optionen", // 213
     "Abbruch! Start-Speicherplatz\nist nicht belegt.", // 214
     "AF Autosortierung", // 215
     "Speicherplätze scannen", // 216
