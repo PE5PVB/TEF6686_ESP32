@@ -1630,7 +1630,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Konvertor:", // 11
     "Spodek pásma:", // 12
     "Vrch pásma:", // 13
-    "FM Offset frekvence:", // 14
+    "FM Offset signálu:", // 14
     "Práh pro stereo:", // 15
     "Práh frekvence zvuku\nk utlumení:", // 16
     "Práh signálu pro utlumení\nvysokých tónů:", // 17
@@ -1643,7 +1643,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Offset signálu", // 24
     "Práh pro stereo", // 25
     "Práh frekvence zvuku k utlumení", // 26
-    "Práh signálu pro utlumení vysokých tónů", // 27
+    "Práh signálu pro utlumení výšek", // 27
     "Práh nízkého signálu", // 28
     "Jas", // 29
     "Vyp.", // 30
@@ -1690,16 +1690,16 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Hlavní kód:", // 71
     "Přispěli:", // 72
     "Neznámý", // 73
-    "Nastavení spořiče obrazovky", // 74
+    "Nastavení\nspořiče obrazovky", // 74
     "Časovač vypnutí", // 75
     "Vypnutí obrazovky", // 76
     "Vzhled", // 77
     "Skin", // 78 ***
     "Detekované aplikace", // 79
-    "Min.", // 80 ***
+    "minut", // 80 ***
     "Dynamická rychlost SPI", // 81 ***
     "Citlivost skenu", // 82
-    "Žádné", // 83
+    "žádné", // 83
     "Verze softwaru", // 84
     "Font frekvence", // 85 ***
     "Auto", // 86
@@ -1708,7 +1708,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "RT+ nedostupný", // 89
     "Výchozí krok ladění FM", // 90
     "Spořič obrazovky", // 91
-    "Sec.", // 92
+    "sec.", // 92
     "ZMÁČKNĚTE BAND PRO ZAVŘENÍ", // 93
     "1% jas", // 94
     "25% jas", // 95
@@ -1725,9 +1725,9 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "OIRT", // 106 ***
     "Ladění při vypnuté obrazovce", // 107 ***
     "Volba modelu", // 108
-    "Základ (ILI9341)", // 109
+    "Základní (ILI9341)", // 109
     "Přenosný (ILI9341)", // 110
-    "Přenosný - dotykový (ILI9341)", // 111
+    "Přenosný-dotykový(ILI9341)", // 111
     "Title", // 112 ***
     "Album", // 113 ***
     "Track", // 114 ***
@@ -1800,7 +1800,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Nastavení FM pásma", // 181
     "Nastavení AM pásma", // 182
     "Konektivita", // 183
-    "ZMÁČKNĚTE MODE PRO VRÁCENÍ", // 184
+    "ZMÁČKNĚTE MODE PRO NÁVRAT", // 184
     "AM CoChannelDet", // 185
     "Citlivost CoChannelDet", // 186
     "Práh AM CoChannelDet", // 187
@@ -1825,7 +1825,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "FMSI stereo\nvylepšení", // 206
     "Funkce dostupná pouze\nu TEF6687/6689!", // 207
     "Funkce není dostupná\nu zvoleného skinu!", // 208
-    "Začít skenovat\nod předvolby č.", // 209
+    "Začít skenování\nod předvolby č.", // 209
     "Skončit skenování\nu předvolby č.", // 210
     "Doba čekání", // 211
     "Spustit DX skenování", // 212
@@ -1835,12 +1835,12 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Předvolby paměti", // 216
     "Vyloučit", // 217
     "Pouze", // 218
-    "Automaticky zastavit skenování", // 219
-    "při načtení korektního PI", // 220
+    "Automaticky zastavit\nskenování", // 219
+    "po načtení PI", // 220
     "při signálu", // 221
     "Ztlumit zvuk\nběhem skenování", // 222
     "AIR", // 223
-    "Při 5 sec. stisknutí tl. BAND", // 224
+    "Po 5 sec. stisknutí\ntl. BAND", // 224
     "Vypnout", // 225
     "Vypnout displej", // 226
     "Zakázáno" // 227
