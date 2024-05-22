@@ -1402,7 +1402,7 @@ void TEF6686::readRDS(byte showrdserrors) {
             }
 
             if (offset == 0 || foundendmarker) {
-              if (eRTcoding) rds.enhancedRTtext = eRT_buffer; else rds.enhancedRTtext = utf8ToUcs2String(eRT_buffer); // Convert to UTF-8 or UCS-2
+              if (eRTcoding) rds.enhancedRTtext = eRT_buffer; else rds.enhancedRTtext = ucs2ToUtf8(eRT_buffer); // Convert to UTF-8 or UCS-2
               rds.enhancedRTtext = trimTrailingSpaces(rds.enhancedRTtext);
               if (rds.enhancedRTtext.length() > 0) rds.hasEnhancedRT = true;
             }
@@ -1980,36 +1980,27 @@ String TEF6686::trimTrailingSpaces(String str) {
   return str.substring(0, end + 1);
 }
 
-String TEF6686::utf8ToUcs2String(const char* utf8) {
-  String ucs2;
-  while (*utf8) {
-    uint32_t codepoint = 0;
-    int extraBytes = 0;
+String TEF6686::ucs2ToUtf8(const char* ucs2Input) {
+  String utf8Output;
 
-    if ((*utf8 & 0x80) == 0) {
-      codepoint = *utf8++;
-    } else if ((*utf8 & 0xE0) == 0xC0) {
-      codepoint = *utf8++ & 0x1F;
-      extraBytes = 1;
-    } else if ((*utf8 & 0xF0) == 0xE0) {
-      codepoint = *utf8++ & 0x0F;
-      extraBytes = 2;
-    } else if ((*utf8 & 0xF8) == 0xF0) {
-      codepoint = *utf8++ & 0x07;
-      extraBytes = 3;
+  size_t length = 0;
+  while (ucs2Input[length] != '\0' || ucs2Input[length + 1] != '\0') {
+    length += 2;
+  }
+
+  for (size_t i = 0; i < length; i += 2) {
+    uint16_t ucs2Char = ((uint8_t)ucs2Input[i] << 8) | (uint8_t)ucs2Input[i + 1];
+
+    if (ucs2Char <= 0x7F) {
+      utf8Output += (char)ucs2Char;
+    } else if (ucs2Char <= 0x7FF) {
+      utf8Output += (char)(0xC0 | (ucs2Char >> 6));
+      utf8Output += (char)(0x80 | (ucs2Char & 0x3F));
     } else {
-      continue;
-    }
-
-    for (int i = 0; i < extraBytes; i++) {
-      if ((*utf8 & 0xC0) != 0x80) break;
-      codepoint = (codepoint << 6) | (*utf8++ & 0x3F);
-    }
-
-    if (codepoint <= 0xFFFF) {
-      ucs2 += (char)(codepoint >> 8);  // High byte
-      ucs2 += (char)(codepoint & 0xFF); // Low byte
+      utf8Output += (char)(0xE0 | (ucs2Char >> 12));
+      utf8Output += (char)(0x80 | ((ucs2Char >> 6) & 0x3F));
+      utf8Output += (char)(0x80 | (ucs2Char & 0x3F));
     }
   }
-  return ucs2;
+  return utf8Output;
 }
