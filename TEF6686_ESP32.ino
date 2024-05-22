@@ -4398,7 +4398,7 @@ void endMenu() {
 }
 
 void startFMDXScan() {
-  memorypos = scanstart;
+  if (memorypos > scanstop || memorypos < scanstart) memorypos = scanstart;
   scanmodeold = tunemode;
   if (scanmem) {
     tunemode = TUNE_MEM;
