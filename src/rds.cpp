@@ -123,7 +123,7 @@ void ShowAdvancedRDS() {
 
   if (millis() - eonticker >= 5) {
 
-    if (radio.rds.hasEON) {
+    if (radio.rds.hasEON && eonstring.length() > 30) {
       if (eonstring.length() != eonstringlengthold) {
         eonstringWidth = eonstring.length() * charwidth;
         eonstringlengthold = eonstring.length();
@@ -144,7 +144,7 @@ void ShowAdvancedRDS() {
     RDSSprite.fillSprite(BackgroundColor);
     if (RDSstatus) RDSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RDSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
     RDSSprite.drawString(eonstring, xPos3, 2);
-    if (radio.rds.hasEON && radio.eon_counter != 0) RDSSprite.drawString(eonstring, xPos3 + eonstringWidth, 2);
+    if (radio.rds.hasEON && eonstring.length() > 30) RDSSprite.drawString(eonstring, xPos3 + eonstringWidth, 2);
     RDSSprite.pushSprite(35, 172);
     eonticker = millis();
   }
