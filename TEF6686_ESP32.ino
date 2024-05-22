@@ -2768,6 +2768,7 @@ void DoMemoryPosTune() {
       radio.rds.picode[i] = presets[memorypos].RDSPI[i];
     }
     radio.rds.picode[6] = '\0';
+    radio.rds.correctPI = (uint16_t)strtol(radio.rds.picode, NULL, 16);
   } else {
     for (byte i = 0; i < 6; i++) {
       radio.rds.picode[i] = '\0';
@@ -2781,7 +2782,6 @@ void DoMemoryPosTune() {
   BWtune = true;
   memtune = true;
   memreset = true;
-  dropout = true;
 }
 
 void ShowFreq(int mode) {
