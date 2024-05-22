@@ -3059,7 +3059,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Filtro RDS", // 60
     "Mostra errori PI", // 61
     "Utilizzare squelch", // 62
-    "Meter di modulazione", // 63
+    "Scala di modulazione", // 63
     "Soppressione rumore AM", // 64
     "Soppressione rumore FM", // 65
     "Predefiniti caricati", // 66
@@ -3071,7 +3071,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Collaboratori: ", // 72
     "Sconosciuto", // 73
     "Opzioni salvaschermo", // 74 ***
-    "Timer di time-out", // 75 ***
+    "Tempo di time-out", // 75 ***
     "Schermo spento", // 76
     "Motivo schermo", // 77
     "Skin", // 78 ***
@@ -3202,11 +3202,11 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "PS rapido", // 203 ***
     "Default", // 204
     "Spegni schermo se\nconnesso a XDRGTK", // 205
-    "FMSI audio stereofonico\nottimizzato", // 206
+    "FMSI audio stereofonico ottimizzato", // 206
     "Funzione disponibile\nsolo su TEF6687/6689!", // 207
     "Funzione non disponibile\nsu skin selezionata!", // 208
-    "Avvio scansione\ncanale in memoria", // 209
-    "Fine scansione\ncanale in memoria", // 210
+    "Avvio scansione = canale in memoria", // 209
+    "Fine scansione =  canale in memoria", // 210
     "Tempo di attesa", // 211
     "Avvio scansione DX", // 212
     "Opzioni FM DX", // 213
@@ -3218,12 +3218,12 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Uscita automatica scansione", // 219
     "PI corretto", // 220
     "Segnale", // 221
-    "Audio silenziato\ndurante scansione", // 222
+    "Audio silenziato durante scansione", // 222
     "AIR", // 223
-    "Pressione x 5 sec.\npulsante BANDA", // 224
-    "Spegnimento", // 225
-    "Disattiva schermo", // 226
-    "Funzione disabilitata" // 227
+    "Premi BANDA x 5 sec.", // 224
+    "Spegni radio", // 225
+    "Spegni schermo", // 226
+    "Non abilitata" // 227
   },
 
   { "Simplified Chinese", // Simplified Chinese
