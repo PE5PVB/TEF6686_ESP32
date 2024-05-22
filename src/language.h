@@ -1,7 +1,7 @@
 #ifndef LANGUAGE_H
 #define LANGUAGE_H
 
-#define VERSION "v2.10 RC3"
+#define VERSION "v2.10 RC4"
 
 // [number of languages][number of texts]
 // *** means the text is the same as in English
@@ -1157,23 +1157,23 @@ static const char* const myLanguage[18][228] PROGMEM = {
   },
 
   { "Română", // Romanian
-    "Directia rotirii schimbata", // 1
-    "Eliberati butonul", // 2
-    "Display rasturnat", // 3
-    "Calibrati instrumentul analog", // 4
-    "Eliberati butonul la gata", // 5
-    "encoderul setat pe optic", // 6
-    "encoderul setat pe standard", // 7
-    "FM/AM receptor", // 8
-    "Lipsa: !Tuner!", // 9
+    "Direcția rotirii schimbată", // 1
+    "Eliberați butonul", // 2
+    "Ecran întors", // 3
+    "Calibrați instrumentul analog", // 4
+    "Eliberați butonul când este gata", // 5
+    "encoderul setat optic", // 6
+    "encoderul setat standard", // 7
+    "Receptor FM/AM", // 8
+    "Lipsă: !Tuner!", // 9
     "Volum", // 10
     "Convertor", // 11
     "Marginea de jos a benzii", // 12
     "Marginea de sus a benzii", // 13
-    "FM RF Nivel offset", // 14
+    "Calibrare nivel RF FM", // 14
     "Pragul ptr Stereo", // 15
-    "Limita taiere inalte", // 16
-    "Prag taiere inalte", // 17
+    "Limită tăiere înalte", // 16
+    "Prag tăiere înalte", // 17
     "Prag nivel joase", // 18
     "Contrast", // 19
     "Setare volum", // 20
@@ -1182,80 +1182,80 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Setarea limitei de sus a benzii", // 23
     "Setare nivel decalaj", // 24
     "Setarea pragului sep. Stereo ", // 25
-    "Setare taiere frecv, inalte ", // 26
-    "Setare prag taiere inalte", // 27
-    "Setarea pragului joase", // 28
-    "Setare luminozitate display", // 29
+    "Setare tăiere frecv. înalte ", // 26
+    "Setare prag tăiere înalte", // 27
+    "Setarea pragului la joase", // 28
+    "Setare luminozitate ecran", // 29
     "Oprit", // 30
     "Ecran blocat!", // 31
-    "ptr deblocare debifati RF+ box", // 32
+    "ptr deblocare debifati RF+", // 32
     "Oprit", // 33
     "SCANEZ...", // 34
     "Tunerul nu este prezent", // 35
-    "AM Antenna gain", // 36
+    "Reglare nivel antenă AM", // 36
     "FM AGC", // 37
-    "Arata erorile RDS", // 38
-    "Limba", // 39
-    "Alegeti Limba", // 40
-    "Apasati MODE ptr MEMORARE si iesire", // 41
+    "Arată erorile RDS", // 38
+    "Limbă", // 39
+    "Alegeți Limba", // 40
+    "Apasați MODE ptr MEMORARE și ieșire", // 41
     "Pornit", // 42
-    "lipsa zgomot FM", // 43
-    "lipsa zgomot AM", // 44
-    "Beep la capatul benzii", // 45
+    "lipsă zgomot FM", // 43
+    "lipsă zgomot AM", // 44
+    "Beep la capătul benzii", // 45
     "Regiune", // 46
     "Europa", // 47
     "America", // 48
-    "Afiseaza subliniere in RDS", // 49
+    "Afișează subliniere la RDS", // 49
     "Mod USB", // 50
     "Wi-Fi activ", // 51
     "Configurare Wi-Fi", // 52
     "Conectare la: ", // 53
     "ptr configurare Wi-Fi", // 54
     "Incerc conectarea la Wi-Fi", // 55
-    "Fara succes!", // 56
+    "Fară succes!", // 56
     "Conectat!", // 57
-    "Lista adrese IP", // 58
-    "Arat? lungimea de unda SW", // 59
+    "Listă adrese IP", // 58
+    "Arată lungimea de undă SW", // 59
     "Filtru RDS", // 60
-    "Arata erorile PI", // 61
-    "foloseste squelch", // 62
-    "Contor modulatie", // 63
+    "Arată erorile PI", // 61
+    "folosește squelch", // 62
+    "Contor modulație", // 63
     "Eliminator de zgomot AM", // 64
     "Eliminator de zgomot FM", // 65
-    "Revenire setari implicite", // 66
-    "iesire Audio", // 67
-    "Permite reglarea in timpul screensaverului", // 68
+    "Revenire la setările de fabrică", // 66
+    "ieșire Audio", // 67
+    "Permite reglarea in timp ce ecranul este oprit", // 68
     "Ecran inversat", // 69
-    "Despresoftware", // 70
+    "Despre software", // 70
     "cod principal:", // 71
     "Contribuitori:", // 72
     "Necunoscut", // 73
-    "Optiuni Screensaver", // 74
-    "Pauza temporizator", // 75
+    "Opțiuni economizor ecran", // 74
+    "Pauză temporizator", // 75
     "Ecran oprit", // 76
-    "Tema", // 77
+    "Temă", // 77
     "Mod vizualizare", // 78
-    "Aplicatii detectate", // 79
+    "Aplicații detectate", // 79
     "Min.", // 80
-    "Viteza SPI dinamica", // 81
-    "Sensibilitatea scanarii", // 82
+    "Viteză SPI dinamică", // 81
+    "Sensibilitatea scanării", // 82
     "NICI UNUL", // 83
     " versiune Software", // 84
-    "Font Frecventa", // 85
+    "Font Frecvență", // 85
     "Auto", // 86
     "AF nu este disponibil", // 87
     "EON nu este disponibil", // 88
     "RT+ nu este disponibil", // 89
-    "Marime pasi FM", // 90
+    "Mărime pași FM", // 90
     "Screensaver", // 91
     "Sec", // 92
-    "Apasati BAND pentru inchidere", // 93
+    "Apăsați BAND pentru inchidere", // 93
     "luminozitate 1%", // 94
     "luminozitate 25%", // 95
     "luminozitate 50%", // 96
     "Decalaj de nivel AM RF", // 97
-    "unitati S-metru", // 98
-    "folosesti AF", // 99
+    "unitați S-metru", // 98
+    "folosești AF", // 99
     "Selectare banda FM", // 100
     "Selectare banda AM", // 101
     "LW", // 102
@@ -1263,30 +1263,30 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotire timp ce ecranul este oprit", // 107
-    " selectare Model", // 108
-    "Baza (ILI9341)", // 109
+    "Rotire când ecranul este oprit", // 107
+    "selectare Model", // 108
+    "Bază (ILI9341)", // 109
     "Portabil (ILI9341)", // 110
     "Portabil touch (ILI9341)", // 111
     "Titlu", // 112
     "Album", // 113
-    "Banda", // 114
+    "Bandă", // 114
     "Artist", // 115
-    "Compozitie", // 116
-    "Miscare", // 117
-    "Dirijir", // 118
+    "Compoziție", // 116
+    "Mișcare", // 117
+    "Dirijor", // 118
     "Compozitor", // 119
-    "Formatia", // 120
+    "Formație", // 120
     "Comentarii", // 121
     "Gen", // 122
-    "Stiri", // 123
-    "Stiri Locale", // 124
+    "Știri", // 123
+    "Știri Locale", // 124
     "Bursa de Valori", // 125
     "Sport", // 126
     "Loto", // 127
     "Horoscop", // 128
     "Info zilnice", // 129
-    "Sanatate", // 130
+    "Sănătate", // 130
     "Evenimente", // 131
     "Teatru", // 132
     "Cinema", // 133
@@ -1294,18 +1294,18 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Data/ora", // 135
     "Meteo", // 136
     "Trafic", // 137
-    "Alarma", // 138
-    "Reclamet", // 139
+    "Alarmă", // 138
+    "Reclame", // 139
     "Website", // 140
     "Altele", // 141
     "PS scurt", // 142
     "PS lung", // 143
     "Acum", // 144
-    "Urmeaza", // 145
+    "Urmează", // 145
     "Parte", // 146
-    "Gazda", // 147
+    "Gazdă", // 147
     "Editor", // 148
-    "Frecventa", // 149
+    "Frecvența", // 149
     "Pagina start", // 150
     "Sub canal", // 151
     "Linia fierbinte", // 152
@@ -1316,35 +1316,35 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Email Linie fierbinte", // 157
     "Email studio", // 158
     "Email", // 159
-    "Discutii", // 160
-    "Centru discutii", // 161
+    "Discuții", // 160
+    "Centru discuții", // 161
     "Intrebare la vot", // 162
     "Centru votare", // 163
     "Loc", // 164
-    "Intalnire", // 165
+    "Intâlnire", // 165
     "Identificare", // 166
-    "Cumpara", // 167
+    "Cumpără", // 167
     "Preiau date", // 168
-    "pasi MW impliciti", // 169
+    "pași MW impliciți", // 169
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
-    "Optiuni Baterie", // 173
-    "Arata tensiunea", // 174
-    "Arata procente", // 175
-    "portiune RT", // 176
-    "Setari de baza", // 177
-    "Setari Audio", // 178
-    "Setari ecran", // 179
-    "Setari RDS", // 180
-    "Setari FM", // 181
-    "Setari AM ", // 182
+    "Opțiuni Baterie", // 173
+    "Arată tensiunea", // 174
+    "Arată procente", // 175
+    "porțiune RT", // 176
+    "Setări de bază", // 177
+    "Setări Audio", // 178
+    "Setări ecran", // 179
+    "Setări RDS", // 180
+    "Setări FM", // 181
+    "Setări AM ", // 182
     "Conectivitate", // 183
-    "Apasa MODE ptr revenire", // 184
+    "Apasă MODE ptr revenire", // 184
     "Detector CoChannel", // 185
-    "Detectie in sensibilitate CoChannel ", // 186
-    "Detectie prag CoChannel", // 187
-    "Detector in contor CoChannel", // 188
+    "Detecție sensibilitate CoChannel ", // 186
+    "Detecție prag CoChannel", // 187
+    "Detector contor CoChannel", // 188
     "PRINCIPAL", // 189
     "AUDIO", // 190
     "ECRAN", // 191
@@ -1352,8 +1352,8 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "FM", // 193
     "AM", // 194
     "CONECTARE", // 195
-    "DX MODE", // 196
-    "ID Lista posturi", // 197
+    "MOD DX", // 196
+    "Listă ID posturi", // 197
     "AGC AM", // 198
     "FM deemphasis", // 199
     "Mic", // 200
@@ -1361,29 +1361,29 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Tot", // 202
     "PS rapid", // 203
     "Mod implicit", // 204
-    "Mute screen on\nXDRGTK connection", // 205
-    "FMSI stereo\nimprovement", // 206
-    "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!", // 208
-    "Begin scanning\nmemory channels", // 209
-    "Stop scanning\nmemory channels", // 210
-    "Wait time", // 211
-    "Start DX scanning", // 212
-    "FM DX Options", // 213
-    "Abort! The start channel\nis marked as skipped.", // 214
-    "Sortare automata AF", // 215
-    "Memory channels", // 216
+    "Ecran oprit, conectat la XDRGTK", // 205
+    "FMSI stereo îmbunătățit", // 206
+    "Funcție activă doar la\nTEF6687/6689!", // 207
+    "Funcție indisponibilă\nla acest skin!", // 208
+    "Scanare începută\nmemorare posturi", // 209
+    "Scanare terminată\nmemorare posturi", // 210
+    "Așteaptă", // 211
+    "Începe scanarea DX", // 212
+    "FM DX Opțiuni", // 213
+    "Terminat! Programul de pornire\neste ignorat.", // 214
+    "Sortare automată AF", // 215
+    "Memorare programe", // 216
     "Exclude", // 217
-    "Only", // 218
-    "Auto cancel scan", // 219
-    "Correct PI", // 220
-    "Signal", // 221
-    "Mute audio\nwhile scanning", // 222
+    "Doar", // 218
+    "Auto oprire scanare", // 219
+    "PI corect", // 220
+    "Semnal", // 221
+    "Audio oprit\ncând scanează", // 222
     "AIR", // 223
-    "5 sec. bandbutton press", // 224
-    "Power off", // 225
-    "Mute screen", // 226
-    "Disabled" // 227
+    "Apasă 5sec. butonul bandă", // 224
+    "Oprit", // 225
+    "Ecran oprit", // 226
+    "Dezactivat" // 227
   },
 
   { "Deutsch", // German

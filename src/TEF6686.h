@@ -570,6 +570,7 @@ typedef struct _rds_ {
   String stationIDtext;
   String stationNameLong;
   String stationStatetext;
+  String enhancedRTtext;
   char stationType[18];
   char picode[7];
   char stationID[9];
@@ -602,6 +603,7 @@ typedef struct _rds_ {
   bool hasDABAF;
   bool hasLongPS;
   bool hasRT;
+  bool hasEnhancedRT;
   bool hasTP;
   bool hasTA;
   bool hasEON;
@@ -718,12 +720,16 @@ class TEF6686 {
     void RDScharConverter(const char* input, wchar_t* output, size_t size, bool under);
     String convertToUTF8(const wchar_t* input);
     String extractUTF8Substring(const String& utf8String, size_t start, size_t length, bool under);
+    String trimTrailingSpaces(String str);
+	String eRTconverter(const wchar_t* input);
+	String utf8ToUcs2String(const char* utf8);
     char ps_buffer[9];
     char ps_buffer2[9];
     char ptyn_buffer[9];
     char eon_buffer[20][9];
     bool ps_process;
     bool pslong_process;
+	char eRT_buffer[129];
     bool rt_process;
     char rt_buffer[65];
     char rt_buffer2[65];
@@ -734,6 +740,7 @@ class TEF6686 {
     bool ABold;
     bool afreset;
     bool mpxmode;
+	bool _hasEnhancedRT;
     char stationTextBuffer[65];
     uint16_t piold;
     bool rtABold;
@@ -758,6 +765,7 @@ class TEF6686 {
     bool rdsDerrorThreshold;
     bool packet0, packet1, packet2, packet3, packet0long, packet1long, packet2long, packet3long;
     bool afmethodBprobe;
+	bool eRTcoding;
     uint16_t rdsCold;
     uint8_t af_counterb;
     uint8_t af_number;
@@ -766,6 +774,7 @@ class TEF6686 {
     uint16_t correctPIold;
     uint8_t rtplusblock;
     uint8_t DABAFblock;
+	uint8_t eRTblock;
     uint8_t doublecounter;
     uint16_t doubletestfreq;
 };
