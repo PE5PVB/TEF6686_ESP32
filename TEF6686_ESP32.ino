@@ -2764,9 +2764,11 @@ void DoMemoryPosTune() {
   }
 
   if (presets[memorypos].RDSPI[0] != '\0') {
-    for (byte i = 0; i < 5; i++) {
+    for (byte i = 0; i < 4; i++) {
       radio.rds.picode[i] = presets[memorypos].RDSPI[i];
     }
+    radio.rds.picode[4] = ' ';
+    radio.rds.picode[5] = ' ';
     radio.rds.picode[6] = '\0';
     radio.rds.correctPI = (uint16_t)strtol(radio.rds.picode, NULL, 16);
   } else {
