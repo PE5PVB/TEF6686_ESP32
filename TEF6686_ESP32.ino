@@ -2640,7 +2640,7 @@ bool IsStationEmpty() {
 bool IsFrequencyUsed(unsigned int freq) {
   bool result = false;
   for (byte x = scanstart; x <= scanstop; x++) {
-    if (presets[x].band == BAND_FM && presets[x].frequency == freq) {
+    if ((presets[x].band == BAND_FM || presets[x].band == BAND_OIRT) && presets[x].frequency == freq) {
       result = true;
       break;
     }
@@ -3745,6 +3745,11 @@ void TuneUp() {
     radio.SetFreq(frequency);
   } else if (band == BAND_OIRT) {
     frequency_OIRT += temp;
+    if (scandxmode) {
+      while (IsFrequencyUsed(frequency_OIRT)) {
+        frequency += temp;
+      }
+    }
     if (frequency_OIRT > HighEdgeOIRTSet) {
       frequency_OIRT = LowEdgeOIRTSet;
       if (edgebeep) EdgeBeeper();
@@ -4404,18 +4409,17 @@ void startFMDXScan() {
   scanmodeold = tunemode;
   if (scanmem) {
     tunemode = TUNE_MEM;
-    if (band != BAND_FM) {
-      band = BAND_FM;
+    if (band != presets[memorypos].band) {
+      band = presets[memorypos].band;
       SelectBand();
     }
     if (menu) endMenu();
     DoMemoryPosTune();
   } else {
     tunemode = TUNE_MAN;
-    if (band != BAND_FM) {
-      band = BAND_FM;
+    if (band != presets[memorypos].band) {
+      band = presets[memorypos].band;
       SelectBand();
-      endMenu();
     }
     if (menu) endMenu();
     TuneUp();
