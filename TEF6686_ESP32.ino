@@ -2035,7 +2035,7 @@ void SelectBand() {
 #endif
     }
     LimitAMFrequency();
-    if (!externaltune) CheckBandForbiddenAM();
+    if (!externaltune && tunemode != TUNE_MEM) CheckBandForbiddenAM();
 #ifdef HAS_AIR_BAND
     if (band == BAND_AIR) {
       radio.SetFreqAIR(10700);
@@ -2081,7 +2081,7 @@ void SelectBand() {
     BWreset = true;
     BWset = BWsetFM;
     freqold = frequency_AM;
-    if (!externaltune) CheckBandForbiddenFM();
+    if (!externaltune && tunemode != TUNE_MEM) CheckBandForbiddenFM();
     doBW();
     if (!screenmute) BuildDisplay();
   }
