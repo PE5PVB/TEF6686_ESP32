@@ -2080,12 +2080,12 @@ void SelectBand() {
     RTold = "";
     BWreset = true;
     BWset = BWsetFM;
-    radio.clearRDS(fullsearchrds);
     freqold = frequency_AM;
     if (!externaltune) CheckBandForbiddenFM();
     doBW();
     if (!screenmute) BuildDisplay();
   }
+  radio.clearRDS(fullsearchrds);
 }
 
 void BWButtonPress() {
