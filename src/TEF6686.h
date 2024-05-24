@@ -707,6 +707,7 @@ class TEF6686 {
     void setUnMute();
     void setVolume(int8_t volume);
     void tone(uint16_t time, int16_t amplitude, uint16_t frequency);
+    String trimTrailingSpaces(String str);	
     uint8_t af_counter;
     uint8_t eon_counter;
     uint8_t logbook_counter;
@@ -720,7 +721,6 @@ class TEF6686 {
     void RDScharConverter(const char* input, wchar_t* output, size_t size, bool under);
     String convertToUTF8(const wchar_t* input);
     String extractUTF8Substring(const String& utf8String, size_t start, size_t length, bool under);
-    String trimTrailingSpaces(String str);
     String eRTconverter(const wchar_t* input);
     String ucs2ToUtf8(const char* ucs2Input);
     char ps_buffer[9];

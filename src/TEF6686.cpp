@@ -1571,6 +1571,7 @@ void TEF6686::readRDS(byte showrdserrors) {
                 RDScharConverter(pslong_buffer, PSLongtext, sizeof(PSLongtext) / sizeof(wchar_t), true);  // Convert 8 bit ASCII to 16 bit ASCII
                 String utf8String = convertToUTF8(PSLongtext);                                            // Convert RDS characterset to ASCII
                 rds.stationNameLong = extractUTF8Substring(utf8String, 0, endmarkerLPS, true);            // Make sure PS Long does not exceed 32 characters
+				rds.stationNameLong = trimTrailingSpaces(rds.stationNameLong);
               }
             }
 

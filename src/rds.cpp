@@ -5,18 +5,18 @@
 #include "constants.h"
 #include <TimeLib.h>
 
-int Radiotextlengthold;
 int RadiotextWidth;
 int PSLongWidth;
-int AIDlengthold;
 int AIDWidth;
-int afstringlengthold;
 int afstringWidth;
-int eonstringlengthold;
 int eonstringWidth;
-int rtplusstringlengthold;
-int PSLonglengthold;
 int rtplusstringWidth;
+
+String afstringold;
+String eonstringold;
+String rtplusstringold;
+String stationNameLongOld;
+String AIDStringold;
 
 void ShowAdvancedRDS() {
   if (!dropout) {
@@ -76,7 +76,7 @@ void ShowAdvancedRDS() {
   }
 
   String afstring;
-  if (radio.rds.hasAF && radio.af_counter > 0) for (byte i = 0; i < radio.af_counter; i++) afstring += String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10) + (i == radio.af_counter - 1 ? "          " : " | "); else afstring = myLanguage[language][87];
+  if (radio.rds.hasAF && radio.af_counter > 0) for (byte i = 0; i < radio.af_counter; i++) afstring += String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10) + (i == radio.af_counter - 1 ? "        " : " | "); else afstring = myLanguage[language][87];
   if (hasafold != radio.rds.hasAF) {
     if (!screenmute) {
       if (radio.rds.hasAF) tftPrint(-1, "AF", 50, 51, RDSColor, RDSColorSmooth, 16); else tftPrint(-1, "AF", 50, 51, GreyoutColor, BackgroundColor, 16);
@@ -84,12 +84,19 @@ void ShowAdvancedRDS() {
     hasafold = radio.rds.hasAF;
   }
 
-  if (millis() - afticker >= 5) {
-    if (radio.rds.hasAF && afstring.length() > 30) {
-      if (afstring.length() != afstringlengthold) {
-        afstringWidth = afstring.length() * charwidth;
-        afstringlengthold = afstring.length();
-      }
+  if (afstring != afstringold) {
+    afstringWidth = RDSSprite.textWidth(afstring);
+    afstringold = afstring;
+  }
+
+  if (RDSSprite.textWidth(radio.trimTrailingSpaces(afstring)) < 165) {
+    xPos2 = 0;
+    RDSSprite.fillSprite(BackgroundColor);
+    if (RDSstatus) RDSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RDSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+    RDSSprite.drawString(afstring, xPos2, 2);
+    RDSSprite.pushSprite(35, 197);
+  } else {
+    if (millis() - afticker >= 5) {
       if (xPos2 < -afstringWidth) xPos2 = 0;
       if (xPos2 == 0) {
         if (millis() - aftickerhold >= 2000) {
@@ -100,20 +107,17 @@ void ShowAdvancedRDS() {
         xPos2 --;
         aftickerhold = millis();
       }
-    } else {
-      xPos2 = 0;
+      RDSSprite.fillSprite(BackgroundColor);
+      if (RDSstatus) RDSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RDSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+      RDSSprite.drawString(afstring, xPos2, 2);
+      RDSSprite.drawString(afstring, xPos2 + afstringWidth, 2);
+      RDSSprite.pushSprite(35, 197);
+      afticker = millis();
     }
-
-    RDSSprite.fillSprite(BackgroundColor);
-    if (RDSstatus) RDSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RDSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-    RDSSprite.drawString(afstring, xPos2, 2);
-    if (radio.rds.hasAF && afstring.length() > 30) RDSSprite.drawString(afstring, xPos2 + afstringWidth, 2);
-    RDSSprite.pushSprite(35, 197);
-    afticker = millis();
   }
 
   String eonstring;
-  if (radio.eon_counter > 0) for (byte i = 0; i < radio.eon_counter; i++) eonstring += String(radio.eon[i].picode) + (radio.eon[i].ps.length() > 0 ? String(": " + String(radio.eon[i].ps)) : "") + (radio.eon[i].mappedfreq > 0 ? String(" " + String(radio.eon[i].mappedfreq / 100) + "." + String((radio.eon[i].mappedfreq % 100) / 10))  : "") + (radio.eon[i].mappedfreq2 > 0 ? String(" / " + String(radio.eon[i].mappedfreq2 / 100) + "." + String((radio.eon[i].mappedfreq2 % 100) / 10))  : "") + (radio.eon[i].mappedfreq3 > 0 ? String(" /  " + String(radio.eon[i].mappedfreq3 / 100) + "." + String((radio.eon[i].mappedfreq3 % 100) / 10))  : "") + (i == radio.eon_counter - 1 ? "          " : " | "); else eonstring = myLanguage[language][88];
+  if (radio.eon_counter > 0) for (byte i = 0; i < radio.eon_counter; i++) eonstring += String(radio.eon[i].picode) + (radio.eon[i].ps.length() > 0 ? String(": " + String(radio.eon[i].ps)) : "") + (radio.eon[i].mappedfreq > 0 ? String(" " + String(radio.eon[i].mappedfreq / 100) + "." + String((radio.eon[i].mappedfreq % 100) / 10))  : "") + (radio.eon[i].mappedfreq2 > 0 ? String(" / " + String(radio.eon[i].mappedfreq2 / 100) + "." + String((radio.eon[i].mappedfreq2 % 100) / 10))  : "") + (radio.eon[i].mappedfreq3 > 0 ? String(" /  " + String(radio.eon[i].mappedfreq3 / 100) + "." + String((radio.eon[i].mappedfreq3 % 100) / 10))  : "") + (i == radio.eon_counter - 1 ? "        " : " | "); else eonstring = myLanguage[language][88];
   if (haseonold != radio.rds.hasEON) {
     if (!screenmute)  {
       if (radio.eon_counter > 0) tftPrint(-1, "EON", 153, 51, RDSColor, RDSColorSmooth, 16); else tftPrint(-1, "EON", 153, 51, GreyoutColor, BackgroundColor, 16);
@@ -121,37 +125,40 @@ void ShowAdvancedRDS() {
     haseonold = radio.rds.hasEON;
   }
 
-  if (millis() - eonticker >= 5) {
+  if (eonstring != eonstringold) {
+    eonstringWidth = RDSSprite.textWidth(eonstring);
+    eonstringold = eonstring;
+  }
 
-    if (radio.rds.hasEON && eonstring.length() > 30) {
-      if (eonstring.length() != eonstringlengthold) {
-        eonstringWidth = eonstring.length() * charwidth;
-        eonstringlengthold = eonstring.length();
-      }
+  if (eonstringWidth < 165) {
+    xPos3 = 0;
+    RDSSprite.fillSprite(BackgroundColor);
+    if (RDSstatus) RDSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RDSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+    RDSSprite.drawString(eonstring, xPos3, 2);
+    RDSSprite.pushSprite(35, 172);
+  } else {
+    if (millis() - eonticker >= 5) {
       if (xPos3 < -eonstringWidth) xPos3 = 0;
       if (xPos3 == 0) {
         if (millis() - eontickerhold >= 2000) {
-          if (radio.eon_counter != 0) xPos3 --; else xPos3 = 0;
+          xPos3 --;
           eontickerhold = millis();
         }
       } else {
         xPos3 --;
         eontickerhold = millis();
       }
-    } else {
-      xPos3 = 0;
+      RDSSprite.fillSprite(BackgroundColor);
+      if (RDSstatus) RDSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RDSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+      RDSSprite.drawString(eonstring, xPos3, 2);
+      RDSSprite.drawString(eonstring, xPos3 + eonstringWidth, 2);
+      RDSSprite.pushSprite(35, 172);
+      eonticker = millis();
     }
-    RDSSprite.fillSprite(BackgroundColor);
-    if (RDSstatus) RDSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RDSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-    RDSSprite.drawString(eonstring, xPos3, 2);
-    if (radio.rds.hasEON && eonstring.length() > 30) RDSSprite.drawString(eonstring, xPos3 + eonstringWidth, 2);
-    RDSSprite.pushSprite(35, 172);
-    eonticker = millis();
   }
 
-
   String rtplusstring;
-  if (radio.rds.hasRDSplus) rtplusstring = (radio.rds.rdsplusTag1 != 169 ? String(myLanguage[language][radio.rds.rdsplusTag1]) + ": " + String(radio.rds.RTContent1) : "") + (radio.rds.rdsplusTag2 != 169 ? " - " + String(myLanguage[language][radio.rds.rdsplusTag2]) + ": " + String(radio.rds.RTContent2) : "") + "         "; else rtplusstring = myLanguage[language][89];
+  if (radio.rds.hasRDSplus) rtplusstring = (radio.rds.rdsplusTag1 != 169 ? String(myLanguage[language][radio.rds.rdsplusTag1]) + ": " + String(radio.rds.RTContent1) : "") + (radio.rds.rdsplusTag2 != 169 ? " - " + String(myLanguage[language][radio.rds.rdsplusTag2]) + ": " + String(radio.rds.RTContent2) : "") + "        "; else rtplusstring = myLanguage[language][89];
   if (hasrtplusold != radio.rds.hasRDSplus) {
     if (!screenmute) {
       if (radio.rds.hasRDSplus) tftPrint(-1, "RT+", 123, 51, RDSColor, RDSColorSmooth, 16); else tftPrint(-1, "RT+", 123, 51, GreyoutColor, BackgroundColor, 16);
@@ -159,12 +166,19 @@ void ShowAdvancedRDS() {
     hasrtplusold = radio.rds.hasRDSplus;
   }
 
-  if (millis() - rtplusticker >= 5) {
-    if (radio.rds.hasRDSplus) {
-      if (rtplusstring.length() != rtplusstringlengthold) {
-        rtplusstringWidth = rtplusstring.length() * charwidth;
-        rtplusstringlengthold = rtplusstring.length();
-      }
+  if (rtplusstring != rtplusstringold) {
+    rtplusstringWidth = RDSSprite.textWidth(rtplusstring);
+    rtplusstringold = rtplusstring;
+  }
+
+  if (rtplusstringWidth < 165) {
+    xPos4 = 0;
+    RDSSprite.fillSprite(BackgroundColor);
+    if (RDSstatus) RDSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RDSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+    RDSSprite.drawString(rtplusstring, xPos4, 2);
+    RDSSprite.pushSprite(35, 146);
+  } else {
+    if (millis() - rtplusticker >= 5) {
       if (xPos4 < -rtplusstringWidth) xPos4 = 0;
       if (xPos4 == 0) {
         if (millis() - rtplustickerhold >= 2000) {
@@ -175,15 +189,13 @@ void ShowAdvancedRDS() {
         xPos4 --;
         rtplustickerhold = millis();
       }
-    } else {
-      xPos4 = 0;
+      RDSSprite.fillSprite(BackgroundColor);
+      if (RDSstatus) RDSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RDSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+      RDSSprite.drawString(rtplusstring, xPos4, 2);
+      RDSSprite.drawString(rtplusstring, xPos4 + rtplusstringWidth, 2);
+      RDSSprite.pushSprite(35, 146);
+      rtplusticker = millis();
     }
-    RDSSprite.fillSprite(BackgroundColor);
-    if (RDSstatus) RDSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RDSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-    RDSSprite.drawString(rtplusstring, xPos4, 2);
-    if (radio.rds.hasRDSplus) RDSSprite.drawString(rtplusstring, xPos4 + rtplusstringWidth, 2);
-    RDSSprite.pushSprite(35, 146);
-    rtplusticker = millis();
   }
 
   if (TPold != radio.rds.hasTP) {
@@ -675,34 +687,35 @@ void showPS() {
         tftReplace(0, PSold, radio.rds.stationName, 160, 201, BWAutoColor, BWAutoColorSmooth, BackgroundColor, 16);
       } else {
         if (radio.rds.hasLongPS) {
-          PSLongWidth = (String(radio.rds.stationNameLong + "    ").length() * (charwidth + 4));
-          PSLonglengthold = String(radio.rds.stationNameLong + "    ").length();
+          String stationNameLongString = String(radio.rds.stationNameLong) + "     ";
+          if (stationNameLongString != stationNameLongOld) {
+            PSLongWidth = PSSprite.textWidth(stationNameLongString);
+            stationNameLongOld = stationNameLongString;
+          }
 
-          if (millis() - pslongticker >= (advancedRDS ? 5 : 15)) {
-            if (xPos5 == 0) {
-              if (millis() - pslongtickerhold >= 1000) {
+          if (PSSprite.textWidth(radio.trimTrailingSpaces(radio.rds.stationNameLong)) < 150) {
+            xPos5 = 0;
+            PSSprite.fillSprite(BackgroundColor);
+            if (RDSstatus) PSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+            PSSprite.drawString(stationNameLongString, xPos5, 2);
+          } else {
+            if (millis() - pslongticker >= 5) {
+              if (xPos5 < -PSLongWidth) xPos5 = 0;
+              if (xPos5 == 0) {
+                if (millis() - pslongtickerhold >= 2000) {
+                  xPos5 --;
+                  pslongtickerhold = millis();
+                }
+              } else {
                 xPos5 --;
                 pslongtickerhold = millis();
               }
-            } else {
-              xPos5 --;
-              pslongtickerhold = millis();
-            }
-
-            PSSprite.setTextDatum(TL_DATUM);
-            if (xPos5 < -PSLongWidth) xPos5 = 0;
-            if (advancedRDS) {
               PSSprite.fillSprite(BackgroundColor);
               if (RDSstatus) PSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-              PSSprite.drawString(radio.rds.stationNameLong + "    " , xPos5, 0);
-              PSSprite.drawString(radio.rds.stationNameLong + "    " , xPos5 + PSLongWidth, 0);
-            } else {
-              PSSprite.fillSprite(BackgroundColor);
-              if (RDSstatus) PSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-              PSSprite.drawString(radio.rds.stationNameLong + "    " , xPos5, 0);
-              PSSprite.drawString(radio.rds.stationNameLong + "    " , xPos5 + PSLongWidth, 0);
+              PSSprite.drawString(stationNameLongString, xPos5, 2);
+              PSSprite.drawString(stationNameLongString, xPos5 + PSLongWidth, 2);
+              pslongticker = millis();
             }
-            pslongticker = millis();
           }
         } else {
           xPos5 = 0;
@@ -775,25 +788,23 @@ void showCT() {
 }
 
 void showRadioText() {
+  String RTString = String(radio.rds.stationText + " " + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : "") + "      ");
+
   if (!screenmute) {
     if (radio.rds.hasRT && radio.rds.stationText.length() > 0) {
-      if (String(radio.rds.stationText + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : "")).length() != Radiotextlengthold) {
-        RadiotextWidth = (String(radio.rds.stationText + " " + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : "")).length() * charwidth) + 3 * charwidth;
-        Radiotextlengthold = String(radio.rds.stationText + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : "")).length();
-      }
-      if (advancedRDS && radio.rds.stationText.length() < 20) {
+      if (advancedRDS && RDSSprite.textWidth(radio.trimTrailingSpaces(RTString)) < 165) {
         xPos = 0;
         RDSSprite.fillSprite(BackgroundColor);
-        RadiotextSprite.setTextDatum(TL_DATUM);
+        RDSSprite.setTextDatum(TL_DATUM);
         if (RDSstatus) RDSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RDSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-        RDSSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : ""), xPos, 2);
+        RDSSprite.drawString(RTString, xPos, 2);
         RDSSprite.pushSprite(36, 220);
-      } else if (!advancedRDS && radio.rds.stationText.length() < 29) {
+      } else if (!advancedRDS && RDSSprite.textWidth(radio.trimTrailingSpaces(RTString)) < 270) {
         xPos = 0;
         RadiotextSprite.fillSprite(BackgroundColor);
         RadiotextSprite.setTextDatum(TL_DATUM);
         if (RDSstatus) RadiotextSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RadiotextSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-        RadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : ""), xPos, 2);
+        RadiotextSprite.drawString(RTString, xPos, 2);
         RadiotextSprite.pushSprite(36, 220);
       } else {
         if (millis() - rtticker >= (advancedRDS ? 5 : 15)) {
@@ -807,19 +818,20 @@ void showRadioText() {
             rttickerhold = millis();
           }
 
-          RadiotextSprite.setTextDatum(TL_DATUM);
           if (xPos < -RadiotextWidth) xPos = 0;
           if (advancedRDS) {
             RDSSprite.fillSprite(BackgroundColor);
+            RDSSprite.setTextDatum(TL_DATUM);
             if (RDSstatus) RDSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RDSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-            RDSSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : ""), xPos, 2);
-            RDSSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : ""), xPos + RadiotextWidth, 2);
+            RDSSprite.drawString(RTString, xPos, 2);
+            RDSSprite.drawString(RTString, xPos + RadiotextWidth, 2);
             RDSSprite.pushSprite(36, 220);
           } else {
             RadiotextSprite.fillSprite(BackgroundColor);
+            RadiotextSprite.setTextDatum(TL_DATUM);
             if (RDSstatus) RadiotextSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RadiotextSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-            RadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : ""), xPos, 2);
-            RadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : ""), xPos + RadiotextWidth, 2);
+            RadiotextSprite.drawString(RTString, xPos, 2);
+            RadiotextSprite.drawString(RTString, xPos + RadiotextWidth, 2);
             RadiotextSprite.pushSprite(36, 220);
           }
           rtticker = millis();
@@ -847,8 +859,9 @@ void showRadioText() {
     }
   }
 
-  if (RTold != (radio.rds.stationText + " " + radio.rds.stationText32)) {
-    xPos = 0;
+  if (RTold != RTString) {
+    RadiotextWidth = (advancedRDS ? RDSSprite.textWidth(RTString) : RadiotextSprite.textWidth(RTString));
+
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
       Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";RT1=");
@@ -862,7 +875,7 @@ void showRadioText() {
       }
       Udp.endPacket();
     }
-    RTold = radio.rds.stationText + " " + radio.rds.stationText32;
+    RTold = RTString;
   }
 }
 
@@ -985,7 +998,7 @@ void ShowAFEON() {
 
     if (radio.rds.hasAID) {
       if (aid_counterold != radio.rds.aid_counter) {
-        AIDString = "";
+        String AIDStringTemp = "";
         char id[5];
 
         for (int y = 0; y < radio.rds.aid_counter; y++) {
@@ -1004,9 +1017,9 @@ void ShowAFEON() {
                 }
                 id[4] = '\0';
 
-                AIDString += String(id);
-                AIDString += ": ";
-                AIDString += oda_app_names[i];
+                AIDStringTemp += String(id);
+                AIDStringTemp += ": ";
+                AIDStringTemp += oda_app_names[i];
 
                 aidProcessed = true;
               }
@@ -1014,34 +1027,47 @@ void ShowAFEON() {
             }
           }
 
-          if (!AIDString.isEmpty() && y < radio.rds.aid_counter - 1 && aidProcessed) {
-            AIDString += " | ";
+          if (aidProcessed && y < radio.rds.aid_counter - 1) {
+            AIDStringTemp += " | ";
           }
         }
         aid_counterold = radio.rds.aid_counter;
-      }
 
-      if (AIDString.length() != AIDlengthold) {
-        AIDWidth = String(String(myLanguage[language][93]) + "  -  " + String(myLanguage[language][79]) + ": " + AIDString).length() * charwidth;
-        AIDlengthold = AIDString.length();
-      }
-
-      if (xPos < -AIDWidth) xPos = 0;
-      if (xPos == 0) {
-        if (millis() - rttickerhold >= 1000) {
-          xPos --;
-          rttickerhold = millis();
+        if (AIDStringTemp != AIDStringold) {
+          AIDString = String(myLanguage[language][93]) + "  -  " + String(myLanguage[language][79]) + ": " + AIDStringTemp + "       ";
+          AIDWidth = RadiotextSprite.textWidth(AIDString);
+          AIDStringold = AIDString;
         }
-      } else {
-        xPos --;
-        rttickerhold = millis();
       }
-      RadiotextSprite.fillSprite(BackgroundColor);
-      RadiotextSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-      RadiotextSprite.drawString(String(myLanguage[language][93]) + "  -  " + String(myLanguage[language][79]) + ": " + AIDString, xPos, 2);
-      RadiotextSprite.drawString(String(myLanguage[language][93]) + "  -  " + String(myLanguage[language][79]) + ": " + AIDString, xPos + AIDWidth, 2);
-      RadiotextSprite.pushSprite(5, 220);
+
+      if (RadiotextSprite.textWidth(radio.trimTrailingSpaces(AIDString)) < 270) {
+        xPos = 0;
+        RadiotextSprite.fillSprite(BackgroundColor);
+        RadiotextSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+        RadiotextSprite.drawString(AIDString, xPos, 2);
+        RadiotextSprite.pushSprite(5, 220);
+      } else {
+        if (millis() - rtticker >= 5) {
+          if (xPos < -AIDWidth) xPos = 0;
+          if (xPos == 0) {
+            if (millis() - rttickerhold >= 2000) {
+              xPos--;
+              rttickerhold = millis();
+            }
+          } else {
+            xPos--;
+            rttickerhold = millis();
+          }
+          RadiotextSprite.fillSprite(BackgroundColor);
+          RadiotextSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          RadiotextSprite.drawString(AIDString, xPos, 2);
+          RadiotextSprite.drawString(AIDString, xPos + AIDWidth, 2);
+          RadiotextSprite.pushSprite(5, 220);
+          rtticker = millis();
+        }
+      }
     }
   }
 }
+
 #pragma GCC diagnostic pop
