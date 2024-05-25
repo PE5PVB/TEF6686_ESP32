@@ -409,22 +409,6 @@ void readRds() {
             tft.fillCircle(203, 234, 2, GreyoutColor);
           }
 
-          if (advancedRDS && radio.rds.stationText.length() < 20) {
-            xPos = 0;
-            RDSSprite.fillSprite(BackgroundColor);
-            RDSSprite.setTextColor(RDSColor, RDSColorSmooth, false);
-            RDSSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
-            RDSSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos + RadiotextWidth, 2);
-            RDSSprite.pushSprite(36, 220);
-          } else if (!advancedRDS && radio.rds.stationText.length() < 29) {
-            xPos = 0;
-            RadiotextSprite.fillSprite(BackgroundColor);
-            RadiotextSprite.setTextColor(RDSColor, RDSColorSmooth, false);
-            RadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos, 2);
-            RadiotextSprite.drawString(radio.rds.stationText + " " + radio.rds.stationText32, xPos + RadiotextWidth, 2);
-            RadiotextSprite.pushSprite(36, 220);
-          }
-
           if (radio.rds.hasCT) {
             if (advancedRDS) {
               tftPrint(1, rds_clock, 205, 109, RDSColor, RDSColorSmooth, 16);
@@ -801,11 +785,11 @@ void showRadioText() {
         RDSSprite.pushSprite(36, 220);
       } else if (!advancedRDS && RDSSprite.textWidth(radio.trimTrailingSpaces(RTString)) < 270) {
         xPos = 0;
-        RadiotextSprite.fillSprite(BackgroundColor);
-        RadiotextSprite.setTextDatum(TL_DATUM);
-        if (RDSstatus) RadiotextSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RadiotextSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-        RadiotextSprite.drawString(RTString, xPos, 2);
-        RadiotextSprite.pushSprite(36, 220);
+        FullLineSprite.fillSprite(BackgroundColor);
+        FullLineSprite.setTextDatum(TL_DATUM);
+        if (RDSstatus) FullLineSprite.setTextColor(RDSColor, RDSColorSmooth, false); else FullLineSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+        FullLineSprite.drawString(RTString, xPos, 2);
+        FullLineSprite.pushSprite(36, 220);
       } else {
         if (millis() - rtticker >= (advancedRDS ? 5 : 15)) {
           if (xPos == 0) {
@@ -827,12 +811,12 @@ void showRadioText() {
             RDSSprite.drawString(RTString, xPos + RadiotextWidth, 2);
             RDSSprite.pushSprite(36, 220);
           } else {
-            RadiotextSprite.fillSprite(BackgroundColor);
-            RadiotextSprite.setTextDatum(TL_DATUM);
-            if (RDSstatus) RadiotextSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RadiotextSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-            RadiotextSprite.drawString(RTString, xPos, 2);
-            RadiotextSprite.drawString(RTString, xPos + RadiotextWidth, 2);
-            RadiotextSprite.pushSprite(36, 220);
+            FullLineSprite.fillSprite(BackgroundColor);
+            FullLineSprite.setTextDatum(TL_DATUM);
+            if (RDSstatus) FullLineSprite.setTextColor(RDSColor, RDSColorSmooth, false); else FullLineSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+            FullLineSprite.drawString(RTString, xPos, 2);
+            FullLineSprite.drawString(RTString, xPos + RadiotextWidth, 2);
+            FullLineSprite.pushSprite(36, 220);
           }
           rtticker = millis();
         }
@@ -860,7 +844,7 @@ void showRadioText() {
   }
 
   if (RTold != RTString) {
-    RadiotextWidth = (advancedRDS ? RDSSprite.textWidth(RTString) : RadiotextSprite.textWidth(RTString));
+    RadiotextWidth = (advancedRDS ? RDSSprite.textWidth(RTString) : FullLineSprite.textWidth(RTString));
 
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
@@ -884,11 +868,11 @@ void ShowAFEON() {
     if (radio.eon_counter > 9) {
       if (!afpage) {
         afpage = true;
-        tftPrint(1, String(afpagenr) + "/2", 315, 222, BackgroundColor, BackgroundColor, 16);
+        tftPrint(1, String(afpagenr) + "/2", 315, 201, BackgroundColor, BackgroundColor, 16);
       }
     }
 
-    if (afpage) tftPrint(1, String(afpagenr) + "/3", 315, 222, SecondaryColor, SecondaryColorSmooth, 16); else tftPrint(1, String(afpagenr) + "/2", 315, 222, SecondaryColor, SecondaryColorSmooth, 16);
+    if (afpage) tftPrint(1, String(afpagenr) + "/3", 315, 201, ActiveColor, ActiveColorSmooth, 16); else tftPrint(1, String(afpagenr) + "/2", 315, 201, ActiveColor, ActiveColorSmooth, 16);
 
     if (radio.rds.hasAF && afpagenr == 1) {
       if (!hasafold) {
@@ -1035,17 +1019,17 @@ void ShowAFEON() {
 
         if (AIDStringTemp != AIDStringold) {
           AIDString = String(myLanguage[language][93]) + "  -  " + String(myLanguage[language][79]) + ": " + AIDStringTemp + "       ";
-          AIDWidth = RadiotextSprite.textWidth(AIDString);
+          AIDWidth = FullLineSprite.textWidth(AIDString);
           AIDStringold = AIDString;
         }
       }
 
-      if (RadiotextSprite.textWidth(radio.trimTrailingSpaces(AIDString)) < 270) {
+      if (FullLineSprite.textWidth(radio.trimTrailingSpaces(AIDString)) < 270) {
         xPos = 0;
-        RadiotextSprite.fillSprite(BackgroundColor);
-        RadiotextSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-        RadiotextSprite.drawString(AIDString, xPos, 2);
-        RadiotextSprite.pushSprite(5, 220);
+        FullLineSprite.fillSprite(BackgroundColor);
+        FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+        FullLineSprite.drawString(AIDString, xPos, 2);
+        FullLineSprite.pushSprite(5, 220);
       } else {
         if (millis() - rtticker >= 5) {
           if (xPos < -AIDWidth) xPos = 0;
@@ -1058,11 +1042,11 @@ void ShowAFEON() {
             xPos--;
             rttickerhold = millis();
           }
-          RadiotextSprite.fillSprite(BackgroundColor);
-          RadiotextSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          RadiotextSprite.drawString(AIDString, xPos, 2);
-          RadiotextSprite.drawString(AIDString, xPos + AIDWidth, 2);
-          RadiotextSprite.pushSprite(5, 220);
+          FullLineSprite.fillSprite(BackgroundColor);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(AIDString, xPos, 2);
+          FullLineSprite.drawString(AIDString, xPos + AIDWidth, 2);
+          FullLineSprite.pushSprite(5, 220);
           rtticker = millis();
         }
       }

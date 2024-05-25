@@ -388,7 +388,6 @@ mem presets[EE_PRESETS_CNT];
 TEF6686 radio;
 ESP32Time rtc(0);
 
-TFT_eSprite RadiotextSprite = TFT_eSprite(&tft);
 TFT_eSprite FrequencySprite = TFT_eSprite(&tft);
 TFT_eSprite RDSSprite = TFT_eSprite(&tft);
 TFT_eSprite SquelchSprite = TFT_eSprite(&tft);
@@ -614,7 +613,31 @@ void setup() {
   tft.setSwapBytes(true);
   tft.fillScreen(BackgroundColor);
 
-  UpdateSprites(0);
+  FrequencySprite.createSprite(200, 50);
+  FrequencySprite.setTextDatum(TR_DATUM);
+  FrequencySprite.setSwapBytes(true);
+
+  RDSSprite.createSprite(165, 19);
+  RDSSprite.setTextDatum(TL_DATUM);
+
+  PSSprite.createSprite(150, 30);
+  PSSprite.setTextDatum(TL_DATUM);
+
+  SquelchSprite.createSprite(47, 19);
+  SquelchSprite.setTextDatum(TL_DATUM);
+  SquelchSprite.setSwapBytes(true);
+
+  FullLineSprite.createSprite(308, 19);
+  FullLineSprite.setSwapBytes(true);
+
+  OneBigLineSprite.createSprite(270, 30);
+  OneBigLineSprite.setSwapBytes(true);
+
+  SignalSprite.createSprite(80, 48);
+  SignalSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+  SignalSprite.setTextDatum(TR_DATUM);
+  SignalSprite.setSwapBytes(true);
+
   UpdateFonts(0);
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH) {
@@ -2184,7 +2207,6 @@ void ModeButtonPress() {
             menuoption = ITEM1;
             menupage = INDEX;
             menuitem = 0;
-            UpdateFonts(1);
             if (spispeed == 7) tft.setSPISpeed(30);
             BuildMenu();
             menu = true;
@@ -2907,15 +2929,15 @@ void ShowFreq(int mode) {
   if (!rdsflagreset && !screenmute && !afscreen) {
     ShowRDSLogo(false);
     if (!advancedRDS) {
-      RadiotextSprite.fillSprite(BackgroundColor);
-      RadiotextSprite.pushSprite(36, 220);
+      FullLineSprite.fillSprite(BackgroundColor);
+      FullLineSprite.pushSprite(36, 220);
       tft.fillCircle(314, 223, 2, GreyoutColor);
       tft.fillCircle(314, 234, 2, GreyoutColor);
     } else {
       RDSSprite.fillSprite(BackgroundColor);
+      RDSSprite.pushSprite(36, 220);
       tft.fillCircle(203, 223, 2, GreyoutColor);
       tft.fillCircle(203, 234, 2, GreyoutColor);
-      RDSSprite.pushSprite(36, 220);
     }
     rdsflagreset = true;
   }
@@ -4204,86 +4226,30 @@ void deepSleep() {
   esp_deep_sleep_start();
 }
 
-void UpdateSprites(bool mode) {
-  switch (mode) {
-    case 0:
-      RadiotextSprite.createSprite(270, 19);
-      RadiotextSprite.setTextDatum(TL_DATUM);
-      RadiotextSprite.setSwapBytes(true);
-
-      FrequencySprite.createSprite(200, 50);
-      FrequencySprite.setTextDatum(TR_DATUM);
-      FrequencySprite.setSwapBytes(true);
-
-      RDSSprite.createSprite(165, 19);
-      RDSSprite.setTextDatum(TL_DATUM);
-
-      PSSprite.createSprite(150, 30);
-      PSSprite.setTextDatum(TL_DATUM);
-
-      SquelchSprite.createSprite(47, 19);
-      SquelchSprite.setTextDatum(TL_DATUM);
-      SquelchSprite.setSwapBytes(true);
-
-      FullLineSprite.createSprite(308, 20);
-      FullLineSprite.setSwapBytes(true);
-
-      OneBigLineSprite.createSprite(270, 30);
-      OneBigLineSprite.setSwapBytes(true);
-
-      SignalSprite.createSprite(80, 48);
-      SignalSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-      SignalSprite.setTextDatum(TR_DATUM);
-      SignalSprite.setSwapBytes(true);
-      break;
-
-    case 1:
-      RadiotextSprite.deleteSprite();
-      FrequencySprite.deleteSprite();
-      RDSSprite.deleteSprite();
-      PSSprite.deleteSprite();
-      SquelchSprite.deleteSprite();
-      FullLineSprite.deleteSprite();
-      OneBigLineSprite.deleteSprite();
-      SignalSprite.deleteSprite();
-      break;
-  }
-}
-
 void UpdateFonts(byte mode) {
   switch (mode) {
     case 0:                                 // Use in radio mode
-      RadiotextSprite.unloadFont();
       RDSSprite.unloadFont();
       PSSprite.unloadFont();
-
-      if (language == LANGUAGE_CHS) {
-        RadiotextSprite.loadFont(FONT16_CHS);
-        RDSSprite.loadFont(FONT16_CHS);
-        PSSprite.loadFont(FONT28_CHS);
-      } else {
-        RadiotextSprite.loadFont(FONT16);
-        RDSSprite.loadFont(FONT16);
-        PSSprite.loadFont(FONT28);
-      }
-      break;
-
-    case 1:                                 // Use in menu mode
       FullLineSprite.unloadFont();
       OneBigLineSprite.unloadFont();
+
       if (language == LANGUAGE_CHS) {
+        RDSSprite.loadFont(FONT16_CHS);
+        PSSprite.loadFont(FONT28_CHS);
         FullLineSprite.loadFont(FONT16_CHS);
         OneBigLineSprite.loadFont(FONT28_CHS);
       } else {
+        RDSSprite.loadFont(FONT16);
+        PSSprite.loadFont(FONT28);
         FullLineSprite.loadFont(FONT16);
         OneBigLineSprite.loadFont(FONT28);
       }
       break;
 
-    case 2:                                 // Unload all
+    case 1:                                 // Unload all
       FullLineSprite.unloadFont();
       OneBigLineSprite.unloadFont();
-      RadiotextSprite.unloadFont();
       RDSSprite.unloadFont();
       PSSprite.unloadFont();
       break;
@@ -4398,9 +4364,6 @@ void endMenu() {
   if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
   if (USBmode) Serial.begin(19200); else Serial.begin(115200);
 
-  UpdateFonts(0);
-  FullLineSprite.unloadFont();
-  OneBigLineSprite.unloadFont();
   BuildDisplay();
 }
 

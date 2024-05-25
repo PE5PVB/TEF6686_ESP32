@@ -127,7 +127,7 @@ extern TFT_eSPI tft;
 extern TEF6686 radio;
 extern WiFiClient RemoteClient;
 extern WiFiUDP Udp;
-extern TFT_eSprite RadiotextSprite;
+extern TFT_eSprite FullLineSprite;
 extern TFT_eSprite RDSSprite;
 extern TFT_eSprite PSSprite;
 
