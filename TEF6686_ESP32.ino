@@ -3746,8 +3746,8 @@ void TuneUp() {
   } else if (band == BAND_OIRT) {
     frequency_OIRT += temp;
     if (scandxmode) {
-      while (IsFrequencyUsed(frequency_OIRT)) {
-        frequency += temp;
+      while (IsFrequencyUsed(frequency_OIRT) || presets[memorypos].band != BAND_OIRT) {
+        frequency_OIRT += temp;
       }
     }
     if (frequency_OIRT > HighEdgeOIRTSet) {
