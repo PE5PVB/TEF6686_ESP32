@@ -484,8 +484,8 @@ void BuildAFScreen() {
 }
 
 void ShowOneLine(byte position, byte item, bool selected) {
-	FullLineSprite.pushImage (-8, -(position + 2), 320, 240, configurationbackground);
-	if (selected) FullLineSprite.pushImage(0, 0, 304, 20, selector);
+  FullLineSprite.pushImage (-8, -(position + 2), 320, 240, configurationbackground);
+  if (selected) FullLineSprite.pushImage(0, 0, 304, 20, selector);
 
   switch (item) {
     case 0:
@@ -1736,7 +1736,7 @@ void MenuUp() {
         }
       }
     }
-	
+
     ShowOneLine(menuoption, menuitem, true);
   } else {
     OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
@@ -2559,7 +2559,7 @@ void MenuUp() {
 
 void MenuDown() {
   if (!menuopen) {
-	  ShowOneLine(menuoption, menuitem, false);
+    ShowOneLine(menuoption, menuitem, false);
 
     if (hardwaremodel == BASE_ILI9341) {
       menuoption -= ITEM_GAP;
@@ -3411,10 +3411,10 @@ void DoMenu() {
   if (!menuopen) {
     if (menupage != INDEX) {
       menuopen = true;
-		tft.pushImage (13, 30, 292, 170, popupbackground);
+      tft.pushImage (13, 30, 292, 170, popupbackground);
     }
 
-		OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
+    OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
 
     OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
     OneBigLineSprite.setTextDatum(TC_DATUM);
@@ -4166,7 +4166,7 @@ void DoMenu() {
               XDRGTK_key = XDRGTK_key_input.getValue();
               EEPROM.writeString(EE_STRING_XDRGTK_KEY, XDRGTK_key);
               EEPROM.commit();
-			  UpdateFonts(0);
+              UpdateFonts(0);
               wifi = true;
               tryWiFi();
               delay(2000);

@@ -527,10 +527,7 @@ void setup() {
   MWHighEdgeSet = mwstepsize == false ? FREQ_MW_HIGH_EDGE_MAX_9K : FREQ_MW_HIGH_EDGE_MAX_10K;
   SWLowEdgeSet = FREQ_SW_LOW_EDGE_MIN;
   SWHighEdgeSet = FREQ_SW_HIGH_EDGE_MAX;
-  if (LowEdgeOIRTSet < FREQ_FM_OIRT_START || LowEdgeOIRTSet > FREQ_FM_OIRT_END) LowEdgeOIRTSet = FREQ_FM_OIRT_START;
-  if (HighEdgeOIRTSet < FREQ_FM_OIRT_START || HighEdgeOIRTSet > FREQ_FM_OIRT_END) HighEdgeOIRTSet = FREQ_FM_OIRT_END;
-
-  LowEdgeOIRTSet = LowEdgeOIRTSet;
+  LowEdgeOIRTSet = FREQ_FM_OIRT_START;
   HighEdgeOIRTSet = FREQ_FM_OIRT_END;
 
   for (int i = 0; i < EE_PRESETS_CNT; i++) presets[i].band = EEPROM.readByte(i + EE_PRESETS_BAND_START);
@@ -547,14 +544,12 @@ void setup() {
     }
   }
 
-  btStop();
-
   if (USBmode) Serial.begin(19200); else Serial.begin(115200);
 
-  if (iMSset == 1 && EQset == 1) iMSEQ = 2;
-  if (iMSset == 0 && EQset == 1) iMSEQ = 3;
-  if (iMSset == 1 && EQset == 0) iMSEQ = 4;
-  if (iMSset == 0 && EQset == 0) iMSEQ = 1;
+  if (iMSset && EQset) iMSEQ = 2;
+  if (!iMSset && EQset) iMSEQ = 3;
+  if (iMSset && !EQset) iMSEQ = 4;
+  if (!iMSset && !EQset) iMSEQ = 1;
 
   switch (band) {
     case BAND_LW:
@@ -577,8 +572,6 @@ void setup() {
       }
       break;
   }
-
-  if (IsStationEmpty()) memoryposstatus = MEM_DARK; else memoryposstatus = MEM_NORMAL;
 
   tft.init();
   tft.initDMA();
@@ -799,17 +792,19 @@ void setup() {
     Wire.endTransmission();
   }
 
-  SelectBand();
   if (tunemode == TUNE_MEM) DoMemoryPosTune();
+  SelectBand();
 
   setupmode = false;
+
   if (edgebeep) radio.tone(50, -5, 2000);
-  radio.I2Sin(false);
   if (!usesquelch) radio.setUnMute();
+
   if (screensaverset) {
     ScreensaverTimerInit();
     ScreensaverTimerSet(screensaverOptions[screensaverset]);
   }
+
   tottimer = millis();
 }
 
@@ -820,7 +815,6 @@ void loop() {
     unsigned long totprobe = tot * 60000;
     if (millis() >= tottimer + totprobe) deepSleep();
   }
-  if (digitalRead(BANDBUTTON) == LOW ) BANDBUTTONPress();
 
   if (scandxmode) {
     if (millis() >= scantimer + (scanhold * 1000)) {
@@ -1071,6 +1065,12 @@ void loop() {
       if (BWtune) doBWtuneDown(); else KeyDown();
       if (screensaverset && !menu && !screensavertriggered) ScreensaverTimerRestart();
     }
+  }
+
+  if (digitalRead(BANDBUTTON) == LOW) {
+    tottimer = millis();
+    if (screensavertriggered && !touchrotating) WakeToSleep(REVERSE);
+    BANDBUTTONPress();
   }
 
   if (digitalRead(ROTARY_BUTTON) == LOW) {
