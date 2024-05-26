@@ -606,7 +606,7 @@ void TEF6686::readRDS(byte showrdserrors) {
             ps_buffer[(offset * 2)  + 1] = rds.rdsD & 0xFF;                                     // Second character of segment
             ps_buffer[8] = '\0';                                                                // Endmarker
 
-            if (ps_process) {
+            if (ps_process || !rds.fastps) {
               if (offset == 0) {
                 packet0 = true;
                 packet1 = false;
