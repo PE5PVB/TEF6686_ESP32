@@ -1164,11 +1164,24 @@ void TEF6686::readRDS(byte showrdserrors) {
             if (rds.rtAB != rtABold) {                                                          // Erase old RT, because of AB change
               initrt = false;
               if (rds.rtbuffer) {
-                wchar_t RTtext[65] = L"";                                                       // Create 16 bit char buffer for Extended ASCII
-                RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);    // Convert 8 bit ASCII to 16 bit ASCII
-                rds.stationText = convertToUTF8(RTtext);                                        // Convert RDS characterset to ASCII
-                rds.stationText = extractUTF8Substring(rds.stationText, 0, endmarkerRT64, true);// Make sure RT does not exceed 64 characters
-                rds.stationText = trimTrailingSpaces(rds.stationText);                          // Trim empty spaces at the end
+                char rt_buffer_temp[129];
+                bool found = false;
+                strcpy(rt_buffer_temp, rt_buffer);
+
+                for (int i = 0; i < 129; i++) {
+                  if (rt_buffer_temp[i] == 0x0D) {
+                    found = true;
+                  }
+                  if (found) {
+                    rt_buffer_temp[i] = '\0';
+                  }
+                }
+
+                wchar_t RTtext[65] = L"";                                                         // Create 16 bit char buffer for Extended ASCII
+                RDScharConverter(rt_buffer_temp, RTtext, sizeof(RTtext) / sizeof(wchar_t), true); // Convert 8 bit ASCII to 16 bit ASCII
+                rds.stationText = convertToUTF8(RTtext);                                          // Convert RDS characterset to ASCII
+                rds.stationText = extractUTF8Substring(rds.stationText, 0, endmarkerRT64, true);  // Make sure RT does not exceed 64 characters
+                rds.stationText = trimTrailingSpaces(rds.stationText);                            // Trim empty spaces at the end
               }
 
               for (byte i = 0; i < 64; i++) {
@@ -1186,8 +1199,21 @@ void TEF6686::readRDS(byte showrdserrors) {
 
 
             if (initrt || !rds.rtbuffer) {
+              char rt_buffer_temp[129];
+              bool found = false;
+              strcpy(rt_buffer_temp, rt_buffer);
+
+              for (int i = 0; i < 129; i++) {
+                if (rt_buffer_temp[i] == 0x0D) {
+                  found = true;
+                }
+                if (found) {
+                  rt_buffer_temp[i] = '\0';
+                }
+              }
+
               wchar_t RTtext[65] = L"";                                                         // Create 16 bit char buffer for Extended ASCII
-              RDScharConverter(rt_buffer, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);      // Convert 8 bit ASCII to 16 bit ASCII
+              RDScharConverter(rt_buffer_temp, RTtext, sizeof(RTtext) / sizeof(wchar_t), true); // Convert 8 bit ASCII to 16 bit ASCII
               rds.stationText = convertToUTF8(RTtext);                                          // Convert RDS characterset to ASCII
               rds.stationText = extractUTF8Substring(rds.stationText, 0, endmarkerRT64, true);  // Make sure RT does not exceed 64 characters
               rds.stationText = trimTrailingSpaces(rds.stationText);                            // Trim empty spaces at the end
@@ -1223,8 +1249,21 @@ void TEF6686::readRDS(byte showrdserrors) {
               }
             }
 
+            char rt_buffer_temp[129];
+            bool found = false;
+            strcpy(rt_buffer_temp, rt_buffer32);
+
+            for (int i = 0; i < 129; i++) {
+              if (rt_buffer_temp[i] == 0x0D) {
+                found = true;
+              }
+              if (found) {
+                rt_buffer_temp[i] = '\0';
+              }
+            }
+
             wchar_t RTtext[33] = L"";                                                           // Create 16 bit char buffer for Extended ASCII
-            RDScharConverter(rt_buffer32, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);      // Convert 8 bit ASCII to 16 bit ASCII
+            RDScharConverter(rt_buffer_temp, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);      // Convert 8 bit ASCII to 16 bit ASCII
             rds.stationText32 = convertToUTF8(RTtext);                                          // Convert RDS characterset to ASCII
             rds.stationText32 = extractUTF8Substring(rds.stationText32, 0, endmarkerRT32, true);// Make sure RT does not exceed 32 characters
             rds.stationText = trimTrailingSpaces(rds.stationText);                              // Trim empty spaces at the end
