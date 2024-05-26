@@ -237,7 +237,7 @@ void Communication() {
                   } else if (ConverterSet != 0 && memfreq >= FREQ_FM_OIRT_START * 10 && memfreq <= FREQ_FM_OIRT_END * 10) {
                     memband = BAND_OIRT;
                     memfreq /= 10;
-                  } else if ((ConverterSet != 0 ? memfreq > FREQ_FM_OIRT_START * 10 : FREQ_FM_OIRT_END * 10) && memfreq <= FREQ_FM_END * 10) {
+                  } else if ((ConverterSet != 0 && memfreq > FREQ_FM_OIRT_START * 10) || ((ConverterSet == 0 && memfreq > FREQ_FM_OIRT_END * 10) && memfreq <= FREQ_FM_END * 10)) {
                     memband = BAND_FM;
                     memfreq /= 10;
                   } else if (memfreq == EE_PRESETS_FREQUENCY) {
