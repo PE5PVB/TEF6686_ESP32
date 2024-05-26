@@ -644,6 +644,7 @@ typedef struct _eon_ {
   bool tp;
   bool taset;
   uint8_t pty;
+  bool packet0, packet1, packet2, packet3;
 } eon_;
 
 typedef struct _logbook_ {

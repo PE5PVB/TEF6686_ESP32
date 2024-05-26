@@ -60,11 +60,11 @@ void ShowAdvancedRDS() {
 
   if (licold != radio.rds.LIC || rdsreset) {
     if (!screenmute) {
-		if (radio.rds.hasLIC) LICString = (radio.rds.LICtext.length() == 0 ? myLanguage[language][73] : radio.rds.LICtext); else LICString = "N/A"; 
-		if (LICString != LIColdString) {
-      tftPrint(-1, "N/A", 242, 208, BackgroundColor, BackgroundColor, 16);
-      tftPrint(-1, LIColdString, 242, 208, BackgroundColor, BackgroundColor, 16);
-		}
+      if (radio.rds.hasLIC) LICString = (radio.rds.LICtext.length() == 0 ? myLanguage[language][73] : radio.rds.LICtext); else LICString = "N/A";
+      if (LICString != LIColdString) {
+        tftPrint(-1, "N/A", 242, 208, BackgroundColor, BackgroundColor, 16);
+        tftPrint(-1, LIColdString, 242, 208, BackgroundColor, BackgroundColor, 16);
+      }
       tftPrint(-1, LICString, 242, 208, RDSColor, RDSColorSmooth, 16);
       LIColdString = LICString;
       licold = radio.rds.LIC;
@@ -290,11 +290,11 @@ void showECC() {
   if (ECCold != radio.rds.ECC) {
     if (advancedRDS) {
       if (!screenmute) {
-		if (radio.rds.hasECC) ECCString = (radio.rds.ECCtext.length() == 0 ? myLanguage[language][73] : radio.rds.ECCtext); else ECCString = "N/A";
-		if (ECCString != ECColdString) {
-        tftPrint(-1, "N/A", 242, 193, BackgroundColor, BackgroundColor, 16);
-        tftPrint(-1, ECColdString, 242, 193, BackgroundColor, BackgroundColor, 16);
-		}
+        if (radio.rds.hasECC) ECCString = (radio.rds.ECCtext.length() == 0 ? myLanguage[language][73] : radio.rds.ECCtext); else ECCString = "N/A";
+        if (ECCString != ECColdString) {
+          tftPrint(-1, "N/A", 242, 193, BackgroundColor, BackgroundColor, 16);
+          tftPrint(-1, ECColdString, 242, 193, BackgroundColor, BackgroundColor, 16);
+        }
         tftPrint(-1, ECCString, 242, 193, RDSColor, RDSColorSmooth, 16);
       }
       ECColdString = ECCString;
