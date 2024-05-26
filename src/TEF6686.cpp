@@ -606,12 +606,28 @@ void TEF6686::readRDS(byte showrdserrors) {
             ps_buffer[(offset * 2)  + 1] = rds.rdsD & 0xFF;                                     // Second character of segment
             ps_buffer[8] = '\0';                                                                // Endmarker
 
-            if (offset == 3 && (ps_process || !rds.fastps)) {                                   // Last chars are received
+            if (ps_process) {
+              if (offset == 0) {
+                packet0 = true;
+                packet1 = false;
+                packet2 = false;
+                packet3 = false;
+              }
+              if (offset == 1) packet1 = true;
+              if (offset == 2) packet2 = true;
+              if (offset == 3) packet3 = true;
+            }
+
+            if (packet0 && packet1 && packet2 && packet3 && (ps_process || !rds.fastps)) {                                   // Last chars are received
               if (strcmp(ps_buffer, ps_buffer2) == 0) {                                         // When no difference between current and buffer, let's go...
                 ps_process = true;
                 RDScharConverter(ps_buffer2, PStext, sizeof(PStext) / sizeof(wchar_t), true);   // Convert 8 bit ASCII to 16 bit ASCII
                 String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
                 rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);                 // Make sure PS does not exceed 8 characters
+                for (byte x = 0; x < 8; x++) {
+                  ps_buffer[x] = '\0';
+                  ps_buffer2[x] = '\0';
+                }
               }
             }
 
