@@ -1495,13 +1495,13 @@ void BuildAdvancedRDS() {
   tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
 
   if (!StereoToggle) {
-    tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
-    tft.drawSmoothCircle(71, 15, 9, SecondaryColor, SecondaryColorSmooth);
+    tft.drawCircle(71, 15, 10, SecondaryColor);
+    tft.drawCircle(71, 15, 9, SecondaryColor);
   } else {
-    tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
-    tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
-    tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
-    tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
+    tft.drawCircle(66, 15, 10, GreyoutColor);
+    tft.drawCircle(66, 15, 9, GreyoutColor);
+    tft.drawCircle(76, 15, 10, GreyoutColor);
+    tft.drawCircle(76, 15, 9, GreyoutColor);
   }
 
   tftPrint(-1, "TP", 2, 51, GreyoutColor, BackgroundColor, 16);
@@ -1641,13 +1641,13 @@ void BuildDisplay() {
   tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
 
   if (!StereoToggle) {
-    tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
-    tft.drawSmoothCircle(71, 15, 9, SecondaryColor, SecondaryColorSmooth);
+    tft.drawCircle(71, 15, 10, SecondaryColor);
+    tft.drawCircle(71, 15, 9, SecondaryColor);
   } else {
-    tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
-    tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
-    tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
-    tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
+    tft.drawCircle(66, 15, 10, GreyoutColor);
+    tft.drawCircle(66, 15, 9, GreyoutColor);
+    tft.drawCircle(76, 15, 10, GreyoutColor);
+    tft.drawCircle(76, 15, 9, GreyoutColor);
   }
 
   if (bandforbidden) bandColor = GreyoutColor; else bandColor = PrimaryColor;
