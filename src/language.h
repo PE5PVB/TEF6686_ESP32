@@ -684,7 +684,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Automat. sortowanie AF", // 215
     "Kanały pamięci", // 216
     "Wyklucz", // 217
-    "Tylko", // 218
+    "Uwzględnij", // 218
     "Automatyczne\nanulowanie skanowania", // 219
     "Poprawne PI", // 220
     "Sygnał", // 221
