@@ -1121,7 +1121,7 @@ void TEF6686::readRDS(byte showrdserrors) {
               }
             }
 
-            if (((rds.rdsC >> 12) & 0x07) == 3 && rdsblock == RDS_GROUP_1A) {                              // LIC code readout
+            if (((rds.rdsC >> 12) & 0x07) == 3 && rdsblock == RDS_GROUP_1A) {                   // LIC code readout
               rds.LIC = rds.rdsC & 0xff;
               rds.hasLIC = true;
               if (rds.LIC > 0 && rds.LIC < 128) rds.LICtext = LICtext[rds.LIC]; else rds.LICtext = "";
@@ -1263,7 +1263,7 @@ void TEF6686::readRDS(byte showrdserrors) {
             }
 
             wchar_t RTtext[33] = L"";                                                           // Create 16 bit char buffer for Extended ASCII
-            RDScharConverter(rt_buffer_temp, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);      // Convert 8 bit ASCII to 16 bit ASCII
+            RDScharConverter(rt_buffer_temp, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);   // Convert 8 bit ASCII to 16 bit ASCII
             rds.stationText32 = convertToUTF8(RTtext);                                          // Convert RDS characterset to ASCII
             rds.stationText32 = extractUTF8Substring(rds.stationText32, 0, endmarkerRT32, true);// Make sure RT does not exceed 32 characters
             rds.stationText = trimTrailingSpaces(rds.stationText);                              // Trim empty spaces at the end
@@ -1303,7 +1303,7 @@ void TEF6686::readRDS(byte showrdserrors) {
             }
 
             if (rds.rdsD == 0x6552) {                                                           // Check for Enhanced RT application
-              _hasEnhancedRT = true;                                                           // Set flag
+              _hasEnhancedRT = true;                                                            // Set flag
               eRTblock = ((rds.rdsB & 0x1F) >> 1) * 2;                                          // Get eRT block
               eRTcoding = bitRead(rds.rdsC, 0);                                                 // 0 = UCS-2, 1 = UTF-8
             }
@@ -1512,13 +1512,17 @@ void TEF6686::readRDS(byte showrdserrors) {
             offset = rds.rdsB & 0x0F;  // Read offset
 
             if (offset < 4 && eon[eonIndex].pi == rds.rdsD) {
-              for (int j = 0; j < 9; j++) EONPStext[eonIndex][j] = '\0';                        // Clear buffer
               eon_buffer[eonIndex][(offset * 2)  + 0] = rds.rdsC >> 8;                          // First character of segment
               eon_buffer[eonIndex][(offset * 2)  + 1] = rds.rdsC & 0xFF;                        // Second character of segment
-              eon_buffer[eonIndex][(offset * 2)  + 2] = '\0';                                   // Endmarker of segment
             }
 
-            if (offset == 0) eon[eonIndex].packet0 = true;
+            if (offset == 0) {
+              eon[eonIndex].packet0 = true;
+              eon[eonIndex].packet1 = false;
+              eon[eonIndex].packet2 = false;
+              eon[eonIndex].packet3 = false;
+            }
+
             if (offset == 1) eon[eonIndex].packet1 = true;
             if (offset == 2) eon[eonIndex].packet2 = true;
             if (offset == 3) eon[eonIndex].packet3 = true;
@@ -1608,7 +1612,7 @@ void TEF6686::readRDS(byte showrdserrors) {
               }
             }
 
-            if ((offset == 0 || foundendmarker) && (pslong_process || !rds.fastps)) {                    // Last chars are received
+            if ((offset == 0 || foundendmarker) && (pslong_process || !rds.fastps)) {                     // Last chars are received
               if (strcmp(pslong_buffer, pslong_buffer2) == 0) {                                           // When no difference between current and buffer, let's go...
                 pslong_process = true;
                 RDScharConverter(pslong_buffer, PSLongtext, sizeof(PSLongtext) / sizeof(wchar_t), true);  // Convert 8 bit ASCII to 16 bit ASCII
