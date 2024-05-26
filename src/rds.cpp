@@ -653,22 +653,25 @@ void showPI() {
 
 void showPTY() {
   if (strcmp(radio.rds.stationType, programTypePrevious)) {
+    String PTYString = (radio.rds.region == 1 ? radio.rds.stationType : myLanguage[language][228 + radio.rds.stationTypeCode]);
+    if (radio.rds.stationTypeCode == 32) PTYString = "";
+
     if (!screenmute) {
       if (advancedRDS) {
         if (!RDSstatus) {
-          tftReplace(-1, PTYold, radio.rds.stationType, 36, 109, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+          tftReplace(-1, PTYold, PTYString, 36, 109, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
         } else {
-          tftReplace(-1, PTYold, radio.rds.stationType, 36, 109, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+          tftReplace(-1, PTYold, PTYString, 36, 109, RDSColor, RDSColorSmooth, BackgroundColor, 16);
         }
       } else {
         if (!RDSstatus) {
-          tftReplace(-1, PTYold, radio.rds.stationType, 36, 163, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+          tftReplace(-1, PTYold, PTYString, 36, 163, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
         } else {
-          tftReplace(-1, PTYold, radio.rds.stationType, 36, 163, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+          tftReplace(-1, PTYold, PTYString, 36, 163, RDSColor, RDSColorSmooth, BackgroundColor, 16);
         }
       }
     }
-    PTYold = radio.rds.stationType;
+    PTYold = PTYString;
 
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
