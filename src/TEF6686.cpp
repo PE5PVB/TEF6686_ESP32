@@ -1516,25 +1516,10 @@ void TEF6686::readRDS(byte showrdserrors) {
               eon_buffer[eonIndex][(offset * 2)  + 1] = rds.rdsC & 0xFF;                        // Second character of segment
             }
 
-            if (offset == 0) {
-              eon[eonIndex].packet0 = true;
-              eon[eonIndex].packet1 = false;
-              eon[eonIndex].packet2 = false;
-              eon[eonIndex].packet3 = false;
-            }
-
-            if (offset == 1) eon[eonIndex].packet1 = true;
-            if (offset == 2) eon[eonIndex].packet2 = true;
-            if (offset == 3) eon[eonIndex].packet3 = true;
-
-            if (eon[eonIndex].packet0 && eon[eonIndex].packet1 && eon[eonIndex].packet2 && eon[eonIndex].packet3 && eon[eonIndex].pi == rds.rdsD) {  // Last chars are received
+            if (eon[eonIndex].pi == rds.rdsD) {                                                                                   // Last chars are received
               RDScharConverter(eon_buffer[eonIndex], EONPStext[eonIndex], sizeof(EONPStext[eonIndex]) / sizeof(wchar_t), false);  // Convert 8 bit ASCII to 16 bit ASCII
               String utf8String = convertToUTF8(EONPStext[eonIndex]);                                                             // Convert RDS characterset to ASCII
               eon[eonIndex].ps = extractUTF8Substring(utf8String, 0, 8, false);                                                   // Make sure PS does not exceed 8 characters
-              eon[eonIndex].packet0 = false;
-              eon[eonIndex].packet1 = false;
-              eon[eonIndex].packet2 = false;
-              eon[eonIndex].packet3 = false;
             }
 
             if (offset == 13 && eon[eonIndex].pi == rds.rdsD) {

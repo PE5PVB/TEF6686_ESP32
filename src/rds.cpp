@@ -935,7 +935,7 @@ void ShowAFEON() {
         haseonold = true;
       }
 
-      if (millis() >= eonticker + 1000) {
+      if (millis() >= eonticker + 2000) {
         eonticker = millis();
         byte y = 0;
         if (afpagenr == 3) y = 10;
@@ -1102,7 +1102,7 @@ void ShowAFEON() {
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
           FullLineSprite.drawString(AIDString, xPos, 2);
           FullLineSprite.drawString(AIDString, xPos + AIDWidth, 2);
-          FullLineSprite.drawLine(283, 0, 283, 19, FrameColor);
+          FullLineSprite.drawLine(314, 0, 314, 19, FrameColor);
           FullLineSprite.pushSprite(5, 220);
           rtticker = millis();
         }
