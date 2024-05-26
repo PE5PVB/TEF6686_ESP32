@@ -1125,7 +1125,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           if (fmdeemphasis != DEEMPHASIS_NONE) FullLineSprite.drawString(String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_75), DEC), 258, 3);
           if (fmdeemphasis != DEEMPHASIS_NONE) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString((fmdeemphasis != DEEMPHASIS_NONE != 0 ? "μs" : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString(((fmdeemphasis != DEEMPHASIS_NONE) != 0 ? "μs" : myLanguage[language][30]), 298, 3);
           break;
 
         case DISPLAYSETTINGS:

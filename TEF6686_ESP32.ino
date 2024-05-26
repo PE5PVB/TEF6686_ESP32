@@ -1587,8 +1587,10 @@ void BANDBUTTONPress() {
     cancelDXScan();
   } else {
     if (memorystore) {
+      EEPROM.writeByte(memorypos + EE_PRESETS_BAND_START, BAND_FM);
       EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, EE_PRESETS_FREQUENCY);
       EEPROM.commit();
+      presets[memorypos].band = BAND_FM;
       presets[memorypos].frequency = EE_PRESETS_FREQUENCY;
       memorystore = false;
       ShowTuneMode();
