@@ -810,6 +810,15 @@ void showRadioText() {
         FullLineSprite.drawString(RTString, xPos, 2);
         FullLineSprite.fillRect(275, 0, 8, 19, BackgroundColor);
         FullLineSprite.drawLine(283, 0, 283, 19, FrameColor);
+        if (radio.rds.hasRT) {
+          if (radio.rds.rtAB) {
+            FullLineSprite.fillCircle(278, 3, 2, GreyoutColor);
+            FullLineSprite.fillCircle(278, 14, 2, InsignificantColor);
+          } else {
+            FullLineSprite.fillCircle(278, 3, 2, InsignificantColor);
+            FullLineSprite.fillCircle(278, 14, 2, GreyoutColor);
+          }
+        }
         FullLineSprite.pushSprite(36, 220);
       } else {
         if (millis() - rtticker >= (advancedRDS ? 5 : 15)) {
@@ -839,6 +848,15 @@ void showRadioText() {
             FullLineSprite.drawString(RTString, xPos + RadiotextWidth, 2);
             FullLineSprite.fillRect(275, 0, 8, 19, BackgroundColor);
             FullLineSprite.drawLine(283, 0, 283, 19, FrameColor);
+            if (radio.rds.hasRT) {
+              if (radio.rds.rtAB) {
+                FullLineSprite.fillCircle(278, 3, 2, GreyoutColor);
+                FullLineSprite.fillCircle(278, 14, 2, InsignificantColor);
+              } else {
+                FullLineSprite.fillCircle(278, 3, 2, InsignificantColor);
+                FullLineSprite.fillCircle(278, 14, 2, GreyoutColor);
+              }
+            }
             FullLineSprite.pushSprite(36, 220);
           }
           rtticker = millis();
@@ -846,23 +864,13 @@ void showRadioText() {
       }
     }
 
-    if (radio.rds.hasRT) {
-      if (!advancedRDS) {
-        if (radio.rds.rtAB) {
-          tft.fillCircle(314, 223, 2, GreyoutColor);
-          tft.fillCircle(314, 234, 2, InsignificantColor);
-        } else {
-          tft.fillCircle(314, 223, 2, InsignificantColor);
-          tft.fillCircle(314, 234, 2, GreyoutColor);
-        }
+    if (radio.rds.hasRT && advancedRDS) {
+      if (radio.rds.rtAB) {
+        tft.fillCircle(203, 223, 2, GreyoutColor);
+        tft.fillCircle(203, 234, 2, InsignificantColor);
       } else {
-        if (radio.rds.rtAB) {
-          tft.fillCircle(203, 223, 2, GreyoutColor);
-          tft.fillCircle(203, 234, 2, InsignificantColor);
-        } else {
-          tft.fillCircle(203, 223, 2, InsignificantColor);
-          tft.fillCircle(203, 234, 2, GreyoutColor);
-        }
+        tft.fillCircle(203, 223, 2, InsignificantColor);
+        tft.fillCircle(203, 234, 2, GreyoutColor);
       }
     }
   }
