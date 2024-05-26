@@ -67,6 +67,7 @@ extern int BarSignificantColor;
 extern int BarInsignificantColor;
 extern int BWAutoColor;
 extern int BWAutoColorSmooth;
+extern int FrameColor;
 extern int FreqColor;
 extern int FreqColorSmooth;
 extern int GreyoutColor;

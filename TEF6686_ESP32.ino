@@ -2934,6 +2934,7 @@ void ShowFreq(int mode) {
     ShowRDSLogo(false);
     if (!advancedRDS) {
       FullLineSprite.fillSprite(BackgroundColor);
+      FullLineSprite.drawLine(283, 0, 283, 19, FrameColor);
       FullLineSprite.pushSprite(36, 220);
       tft.fillCircle(314, 223, 2, GreyoutColor);
       tft.fillCircle(314, 234, 2, GreyoutColor);

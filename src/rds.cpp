@@ -805,6 +805,8 @@ void showRadioText() {
         FullLineSprite.setTextDatum(TL_DATUM);
         if (RDSstatus) FullLineSprite.setTextColor(RDSColor, RDSColorSmooth, false); else FullLineSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
         FullLineSprite.drawString(RTString, xPos, 2);
+        FullLineSprite.fillRect(275, 0, 8, 19, BackgroundColor);
+        FullLineSprite.drawLine(283, 0, 283, 19, FrameColor);
         FullLineSprite.pushSprite(36, 220);
       } else {
         if (millis() - rtticker >= (advancedRDS ? 5 : 15)) {
@@ -832,6 +834,8 @@ void showRadioText() {
             if (RDSstatus) FullLineSprite.setTextColor(RDSColor, RDSColorSmooth, false); else FullLineSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
             FullLineSprite.drawString(RTString, xPos, 2);
             FullLineSprite.drawString(RTString, xPos + RadiotextWidth, 2);
+            FullLineSprite.fillRect(275, 0, 8, 19, BackgroundColor);
+            FullLineSprite.drawLine(283, 0, 283, 19, FrameColor);
             FullLineSprite.pushSprite(36, 220);
           }
           rtticker = millis();
@@ -1077,6 +1081,7 @@ void ShowAFEON() {
         FullLineSprite.fillSprite(BackgroundColor);
         FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
         FullLineSprite.drawString(AIDString, xPos, 2);
+        FullLineSprite.drawLine(283, 0, 283, 19, FrameColor);
         FullLineSprite.pushSprite(5, 220);
       } else {
         if (millis() - rtticker >= 5) {
@@ -1094,6 +1099,7 @@ void ShowAFEON() {
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
           FullLineSprite.drawString(AIDString, xPos, 2);
           FullLineSprite.drawString(AIDString, xPos + AIDWidth, 2);
+          FullLineSprite.drawLine(283, 0, 283, 19, FrameColor);
           FullLineSprite.pushSprite(5, 220);
           rtticker = millis();
         }
