@@ -484,8 +484,14 @@ void BuildAFScreen() {
 }
 
 void ShowOneLine(byte position, byte item, bool selected) {
-  FullLineSprite.pushImage (-8, -(position + 2), 320, 240, configurationbackground);
-  if (selected) FullLineSprite.pushImage(0, 0, 304, 20, selector);
+  if (CurrentTheme == 7) FullLineSprite.pushImage (-8, -(position + 2), 320, 240, configurationbackgroundbw); else FullLineSprite.pushImage (-8, -(position + 2), 320, 240, configurationbackground);
+  if (selected) {
+    if (CurrentTheme == 7) {
+      FullLineSprite.pushImage(0, 0, 304, 20, selectorbw);
+    } else {
+      FullLineSprite.pushImage(0, 0, 304, 20, selector);
+    }
+  }
 
   switch (item) {
     case 0:
@@ -1401,7 +1407,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
 void BuildMenu() {
   advancedRDS = false;
 
-  tft.pushImage (0, 0, 320, 240, configurationbackground);
+  if (CurrentTheme == 7) tft.pushImage (0, 0, 320, 240, configurationbackgroundbw); else tft.pushImage (0, 0, 320, 240, configurationbackground);
 
   if (!submenu) {
     tftPrint(0, myLanguage[language][41], 160, 6, PrimaryColor, PrimaryColorSmooth, 16);
@@ -1739,7 +1745,7 @@ void MenuUp() {
 
     ShowOneLine(menuoption, menuitem, true);
   } else {
-    OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
+    if (CurrentTheme == 7) OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackgroundbw); else OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
     OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
     OneBigLineSprite.setTextDatum(TC_DATUM);
 
@@ -2583,7 +2589,7 @@ void MenuDown() {
 
     ShowOneLine(menuoption, menuitem, true);
   } else {
-    OneBigLineSprite.fillSprite(BackgroundColor);
+    if (CurrentTheme == 7) OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackgroundbw); else OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
 
     OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
     OneBigLineSprite.setTextDatum(TC_DATUM);
@@ -3411,10 +3417,10 @@ void DoMenu() {
   if (!menuopen) {
     if (menupage != INDEX) {
       menuopen = true;
-      tft.pushImage (13, 30, 292, 170, popupbackground);
+      if (CurrentTheme == 7) tft.pushImage (13, 30, 292, 170, popupbackgroundbw); else tft.pushImage (13, 30, 292, 170, popupbackground);
     }
 
-    OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
+    if (CurrentTheme == 7) OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackgroundbw); else OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
 
     OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
     OneBigLineSprite.setTextDatum(TC_DATUM);
