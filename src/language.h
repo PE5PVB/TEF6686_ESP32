@@ -780,7 +780,7 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Wyd. Społeczne", // 247
     "Religia", // 248
     "Telefon.Udział.", // 249
-    "Podróze", // 250
+    "Podróże", // 250
     "Czas Wolny", // 251
     "Muzyka Jazz", // 252
     "Muzyka Country", // 253
