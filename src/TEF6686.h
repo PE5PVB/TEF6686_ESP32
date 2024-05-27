@@ -582,7 +582,7 @@ typedef struct _rds_ {
   uint16_t aid[10];
   uint32_t dabaffreq;
   byte aid_counter;
-  byte fastps;  
+  byte fastps;
   int8_t offset;
   unsigned int ECC;
   unsigned int LIC;
@@ -760,11 +760,9 @@ class TEF6686 {
     bool initab;
     bool afinit;
     bool errorfreepi;
-    bool rdsAerrorThreshold;
-    bool rdsBerrorThreshold;
-    bool rdsCerrorThreshold;
-    bool rdsDerrorThreshold;
+    bool rdsAerrorThreshold, rdsBerrorThreshold, rdsCerrorThreshold, rdsDerrorThreshold;
     bool packet0, packet1, packet2, packet3, packet0long, packet1long, packet2long, packet3long;
+    uint16_t previous_rdsA, previous_rdsB, previous_rdsC, previous_rdsD;
     bool afmethodBprobe;
     bool eRTcoding;
     uint16_t rdsCold;
