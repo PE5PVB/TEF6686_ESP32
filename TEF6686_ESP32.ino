@@ -794,8 +794,8 @@ void setup() {
     Wire.endTransmission();
   }
 
-  if (tunemode == TUNE_MEM) DoMemoryPosTune();
   SelectBand();
+  if (tunemode == TUNE_MEM) DoMemoryPosTune();
 
   setupmode = false;
 
