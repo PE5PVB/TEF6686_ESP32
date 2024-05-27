@@ -1112,7 +1112,7 @@ void GetData() {
     ShowSignalLevel();
   }
 
-  if (!menu && (band < BAND_GAP || tunemode == TUNE_MEM)) showPS();
+  if (!menu) showPS();
 
   if (band < BAND_GAP && !menu) {
     if (advancedRDS && !afscreen && !screenmute) ShowAdvancedRDS();

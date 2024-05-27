@@ -723,7 +723,7 @@ void showPS() {
         } else {
           xPos5 = 0;
           PSSprite.fillSprite(BackgroundColor);
-          if (!RDSstatus) PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false); else PSSprite.setTextColor(RDSColor, RDSColorSmooth, false);
+          if (!RDSstatus || band > BAND_GAP) PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false); else PSSprite.setTextColor(RDSColor, RDSColorSmooth, false);
           PSSprite.drawString(radio.rds.stationName, 0, 0);
         }
         if (advancedRDS) PSSprite.pushSprite(36, 74); else PSSprite.pushSprite(36, 187);
