@@ -988,7 +988,7 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "FM", // 193
     "AM", // 194
     "SPOJI", // 195
-    "DX MODE", // 196
+    "DX NAČIN RADA", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
     "FM deemphasis", // 199
@@ -998,28 +998,28 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Brzi PS", // 203
     "Zadano", // 204
     "Isključi zaslon\ntijekom veze XDRGTK-om", // 205
-    "FMSI stereo\nimprovement", // 206
-    "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!", // 208
-    "Begin scanning\nmemory channels", // 209
-    "Stop scanning\nmemory channels", // 210
-    "Wait time", // 211
-    "Start DX scanning", // 212
-    "FM DX Options", // 213
-    "Abort! The start channel\nis marked as skipped.", // 214
+    "Poboljšanje\nFMSI stereo-a", // 206
+    "Funkcija dostupna samo\nna TEF6687/6689!", // 207
+    "Funkcija nije dostupna\na odabranoj temi dizajna!", // 208
+    "Pokreni skeniranje\nmemorijskih kanala", // 209
+    "Zaustavi skeniranje\nmemorijskih kanala", // 210
+    "Vrijeme čekanja", // 211
+    "Pokreni DX skeniranje", // 212
+    "FM DX opcije", // 213
+    "Prekid! Početni kanal je\noznačen kao preskočen.", // 214
     "Autom. sortiranje AF-a", // 215
-    "Memory channels", // 216
-    "Exclude", // 217
-    "Only", // 218
-    "Auto cancel scan", // 219
-    "Correct PI", // 220
+    "Memorijski kanali", // 216
+    "Isključeno", // 217
+    "Samo", // 218
+    "Autom. otkazivanje skeniranja", // 219
+    "Točan PI", // 220
     "Signal", // 221
-    "Mute audio\nwhile scanning", // 222
+    "Isključi zvuk\ntijekom skeniranja", // 222
     "AIR", // 223
-    "5 sec. bandbutton press", // 224
-    "Power off", // 225
-    "Mute screen", // 226
-    "Disabled", // 227
+    "Pritisnite tipku band 5 sekundi", // 224
+    "Isključivanje", // 225
+    "Isključi zaslon", // 226
+    "Onemogućeno", // 227
     "Neodređeno", // 228
     "Vijesti", // 229
     "Aktualno", // 230
