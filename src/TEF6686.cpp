@@ -606,7 +606,7 @@ void TEF6686::readRDS(byte showrdserrors) {
             ps_buffer[(offset * 2)  + 1] = rds.rdsD & 0xFF;                                     // Second character of segment
             ps_buffer[8] = '\0';                                                                // Endmarker
 
-            if (ps_process || !rds.fastps) {
+            if (ps_process || rds.fastps == 0) {
               if (offset == 0) {
                 packet0 = true;
                 packet1 = false;
@@ -618,7 +618,7 @@ void TEF6686::readRDS(byte showrdserrors) {
               if (offset == 3) packet3 = true;
             }
 
-            if (packet0 && packet1 && packet2 && packet3 && (ps_process || !rds.fastps)) {                                   // Last chars are received
+            if (packet0 && packet1 && packet2 && packet3 && (ps_process || rds.fastps == 0)) {  // Last chars are received
               if (strcmp(ps_buffer, ps_buffer2) == 0) {                                         // When no difference between current and buffer, let's go...
                 ps_process = true;
                 RDScharConverter(ps_buffer2, PStext, sizeof(PStext) / sizeof(wchar_t), true);   // Convert 8 bit ASCII to 16 bit ASCII
@@ -631,7 +631,7 @@ void TEF6686::readRDS(byte showrdserrors) {
               }
             }
 
-            if (!ps_process && rds.fastps) {                                                    // Let's get 2 runs of 8 PS characters fast and without refresh
+            if (!ps_process && rds.fastps > 0) {                                                // Let's get 2 runs of 8 PS characters fast and without refresh
               if (offset == 0) packet0 = true;
               if (offset == 1) packet1 = true;
               if (offset == 2) packet2 = true;
@@ -639,7 +639,7 @@ void TEF6686::readRDS(byte showrdserrors) {
               RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), true);      // Convert 8 bit ASCII to 16 bit ASCII
               String utf8String = convertToUTF8(PStext);                                        // Convert RDS characterset to ASCII
               rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);
-              if (packet0 && packet1 && packet2 && packet3) ps_process = true;                  // OK, we had one runs, now let's go the idle PS writing
+              if (packet0 && packet1 && packet2 && packet3 && rds.fastps < 2) ps_process = true;// OK, we had one runs, now let's go the idle PS writing
             }
 
             if (offset == 0) rds.hasDynamicPTY = bitRead(rds.rdsB, 2) & 0x1F;                   // Dynamic PTY flag

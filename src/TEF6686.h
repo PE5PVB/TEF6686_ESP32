@@ -582,6 +582,7 @@ typedef struct _rds_ {
   uint16_t aid[10];
   uint32_t dabaffreq;
   byte aid_counter;
+  byte fastps;  
   int8_t offset;
   unsigned int ECC;
   unsigned int LIC;
@@ -619,7 +620,6 @@ typedef struct _rds_ {
   bool rdsreset;
   bool pierrors;
   bool sortaf;
-  bool fastps;
   bool rtbuffer = true;
   bool afreg;
   RdsPiBuffer piBuffer;
