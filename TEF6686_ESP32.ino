@@ -2556,8 +2556,7 @@ void KeyUp() {
             if (!memorystore) {
               DoMemoryPosTune();
             } else {
-              if (!IsStationEmpty()) memoryposstatus = MEM_EXIST;
-              else memoryposstatus = MEM_NORMAL;
+              if (!IsStationEmpty()) memoryposstatus = MEM_EXIST; else memoryposstatus = MEM_DARK;
             }
             ShowMemoryPos();
             EEPROM.writeByte(EE_BYTE_MEMORYPOS, memorypos);
@@ -2623,8 +2622,7 @@ void KeyDown() {
             if (!memorystore) {
               DoMemoryPosTune();
             } else {
-              if (!IsStationEmpty()) memoryposstatus = MEM_EXIST;
-              else memoryposstatus = MEM_NORMAL;
+              if (!IsStationEmpty()) memoryposstatus = MEM_EXIST; else memoryposstatus = MEM_DARK;
             }
             ShowMemoryPos();
             EEPROM.writeByte(EE_BYTE_MEMORYPOS, memorypos);
@@ -2678,6 +2676,11 @@ void ShowMemoryPos() {
   if (tunemode == TUNE_MEM) {
     int memposcolor = 0;
     int memposcolorsmooth = 0;
+
+    if (!memorystore) {
+      if (IsStationEmpty()) memoryposstatus = MEM_DARK; else memoryposstatus = MEM_NORMAL;
+    }
+
     switch (memoryposstatus) {
       case MEM_DARK:
         memposcolor = InsignificantColor;
