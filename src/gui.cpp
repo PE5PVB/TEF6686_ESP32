@@ -484,7 +484,14 @@ void BuildAFScreen() {
 }
 
 void ShowOneLine(byte position, byte item, bool selected) {
-  FullLineSprite.fillSprite(BackgroundColor);
+  if (CurrentTheme == 7) FullLineSprite.pushImage (-8, -(position + 2), 320, 240, configurationbackgroundbw); else FullLineSprite.pushImage (-8, -(position + 2), 320, 240, configurationbackground);
+  if (selected) {
+    if (CurrentTheme == 7) {
+      FullLineSprite.pushImage(0, 0, 304, 20, selectorbw);
+    } else {
+      FullLineSprite.pushImage(0, 0, 304, 20, selector);
+    }
+  }
 
   switch (item) {
     case 0:
@@ -1124,7 +1131,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           if (fmdeemphasis != DEEMPHASIS_NONE) FullLineSprite.drawString(String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_75), DEC), 258, 3);
           if (fmdeemphasis != DEEMPHASIS_NONE) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString((fmdeemphasis != DEEMPHASIS_NONE != 0 ? "μs" : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString(((fmdeemphasis != DEEMPHASIS_NONE) != 0 ? "μs" : myLanguage[language][30]), 298, 3);
           break;
 
         case DISPLAYSETTINGS:
@@ -1400,9 +1407,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
 void BuildMenu() {
   advancedRDS = false;
 
-  tft.fillScreen(BackgroundColor);
-  tft.drawRect(0, 0, 320, 240, FrameColor);
-  tft.drawLine(0, 23, 320, 23, FrameColor);
+  if (CurrentTheme == 7) tft.pushImage (0, 0, 320, 240, configurationbackgroundbw); else tft.pushImage (0, 0, 320, 240, configurationbackground);
 
   if (!submenu) {
     tftPrint(0, myLanguage[language][41], 160, 6, PrimaryColor, PrimaryColorSmooth, 16);
@@ -1421,8 +1426,6 @@ void BuildMenu() {
   ShowOneLine(ITEM8, 7, (menuoption == ITEM8 ? true : false));
   ShowOneLine(ITEM9, 8, (menuoption == ITEM9 ? true : false));
   ShowOneLine(ITEM10, 9, (menuoption == ITEM10 ? true : false));
-
-  tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, ActiveColor);
 
   analogWrite(SMETERPIN, 0);
 }
@@ -1498,13 +1501,13 @@ void BuildAdvancedRDS() {
   tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
 
   if (!StereoToggle) {
-    tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
-    tft.drawSmoothCircle(71, 15, 9, SecondaryColor, SecondaryColorSmooth);
+    tft.drawCircle(71, 15, 10, SecondaryColor);
+    tft.drawCircle(71, 15, 9, SecondaryColor);
   } else {
-    tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
-    tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
-    tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
-    tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
+    tft.drawCircle(66, 15, 10, GreyoutColor);
+    tft.drawCircle(66, 15, 9, GreyoutColor);
+    tft.drawCircle(76, 15, 10, GreyoutColor);
+    tft.drawCircle(76, 15, 9, GreyoutColor);
   }
 
   tftPrint(-1, "TP", 2, 51, GreyoutColor, BackgroundColor, 16);
@@ -1562,8 +1565,6 @@ void BuildAdvancedRDS() {
 }
 
 void BuildDisplay() {
-  OneBigLineSprite.unloadFont();
-  FullLineSprite.unloadFont();
   afscreen = false;
   advancedRDS = false;
   int bandColor;
@@ -1646,13 +1647,13 @@ void BuildDisplay() {
   tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
 
   if (!StereoToggle) {
-    tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
-    tft.drawSmoothCircle(71, 15, 9, SecondaryColor, SecondaryColorSmooth);
+    tft.drawCircle(71, 15, 10, SecondaryColor);
+    tft.drawCircle(71, 15, 9, SecondaryColor);
   } else {
-    tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
-    tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
-    tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
-    tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
+    tft.drawCircle(66, 15, 10, GreyoutColor);
+    tft.drawCircle(66, 15, 9, GreyoutColor);
+    tft.drawCircle(76, 15, 10, GreyoutColor);
+    tft.drawCircle(76, 15, 9, GreyoutColor);
   }
 
   if (bandforbidden) bandColor = GreyoutColor; else bandColor = PrimaryColor;
@@ -1720,7 +1721,7 @@ void BuildDisplay() {
 
 void MenuUp() {
   if (!menuopen) {
-    tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, BackgroundColor);
+    ShowOneLine(menuoption, menuitem, false);
 
     if (hardwaremodel == BASE_ILI9341) {
       menuoption += ITEM_GAP;
@@ -1742,10 +1743,9 @@ void MenuUp() {
       }
     }
 
-    tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, ActiveColor);
+    ShowOneLine(menuoption, menuitem, true);
   } else {
-    OneBigLineSprite.fillSprite(BackgroundColor);
-
+    if (CurrentTheme == 7) OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackgroundbw); else OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
     OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
     OneBigLineSprite.setTextDatum(TC_DATUM);
 
@@ -2030,7 +2030,7 @@ void MenuUp() {
           case ITEM1:
             language ++;
             if (language == (sizeof (myLanguage) / sizeof (myLanguage[0]))) language = 0;
-            UpdateFonts(1);
+            UpdateFonts(0);
             OneBigLineSprite.drawString(myLanguage[language][0], 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
@@ -2565,7 +2565,7 @@ void MenuUp() {
 
 void MenuDown() {
   if (!menuopen) {
-    tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, BackgroundColor);
+    ShowOneLine(menuoption, menuitem, false);
 
     if (hardwaremodel == BASE_ILI9341) {
       menuoption -= ITEM_GAP;
@@ -2587,9 +2587,9 @@ void MenuDown() {
       }
     }
 
-    tft.drawRoundRect(3, menuoption + 3, 315, 21, 5, ActiveColor);
+    ShowOneLine(menuoption, menuitem, true);
   } else {
-    OneBigLineSprite.fillSprite(BackgroundColor);
+    if (CurrentTheme == 7) OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackgroundbw); else OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
 
     OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
     OneBigLineSprite.setTextDatum(TC_DATUM);
@@ -2877,7 +2877,7 @@ void MenuDown() {
           case ITEM1:
             language --;
             if (language > (sizeof (myLanguage) / sizeof (myLanguage[0]))) language = (sizeof (myLanguage) / sizeof (myLanguage[0])) - 1;
-            UpdateFonts(1);
+            UpdateFonts(0);
             OneBigLineSprite.drawString(myLanguage[language][0], 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
@@ -3417,10 +3417,10 @@ void DoMenu() {
   if (!menuopen) {
     if (menupage != INDEX) {
       menuopen = true;
-      tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
-      tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
+      if (CurrentTheme == 7) tft.pushImage (13, 30, 292, 170, popupbackgroundbw); else tft.pushImage (13, 30, 292, 170, popupbackground);
     }
-    OneBigLineSprite.fillSprite(BackgroundColor);
+
+    if (CurrentTheme == 7) OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackgroundbw); else OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
 
     OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
     OneBigLineSprite.setTextDatum(TC_DATUM);
@@ -4163,8 +4163,7 @@ void DoMenu() {
               tftPrint(0, "http://192.168.4.1", 155, 174, PrimaryColor, PrimaryColorSmooth, 16);
               char key [9];
               XDRGTK_key.toCharArray(key, 9);
-              UpdateFonts(2);
-              UpdateSprites(1);
+              UpdateFonts(1);
               WiFiConnectParam XDRGTK_key_text("Set XDRGTK Password: (max 8 characters)");
               WiFiConnectParam XDRGTK_key_input("XDRGTK_key", "Password", key, 9);
               wc.addParameter(&XDRGTK_key_text);
@@ -4173,8 +4172,7 @@ void DoMenu() {
               XDRGTK_key = XDRGTK_key_input.getValue();
               EEPROM.writeString(EE_STRING_XDRGTK_KEY, XDRGTK_key);
               EEPROM.commit();
-              UpdateSprites(0);
-              UpdateFonts(1);
+              UpdateFonts(0);
               wifi = true;
               tryWiFi();
               delay(2000);
@@ -4287,7 +4285,6 @@ void DoMenu() {
     if (scanstart >= scanstop) scanstart = scanstop - 1;
     if (scanstop <= scanstart) scanstop = scanstart + 1;
 
-    UpdateFonts(1);
     BuildMenu();
   }
 }

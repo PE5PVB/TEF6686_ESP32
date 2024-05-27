@@ -298,9 +298,11 @@ float batteryVold;
 IPAddress remoteip;
 String AIDString;
 String cryptedpassword;
-String ECColdtxt;
+String ECColdString;
+String ECCString;
 String eonpsold[20];
 String LIColdString;
+String LICString;
 String pinstringold;
 String PIold;
 String PSold;
@@ -399,7 +401,6 @@ mem presets[EE_PRESETS_CNT];
 TEF6686 radio;
 ESP32Time rtc(0);
 
-TFT_eSprite RadiotextSprite = TFT_eSprite(&tft);
 TFT_eSprite FrequencySprite = TFT_eSprite(&tft);
 TFT_eSprite RDSSprite = TFT_eSprite(&tft);
 TFT_eSprite SquelchSprite = TFT_eSprite(&tft);
@@ -539,10 +540,7 @@ void setup() {
   MWHighEdgeSet = mwstepsize == false ? FREQ_MW_HIGH_EDGE_MAX_9K : FREQ_MW_HIGH_EDGE_MAX_10K;
   SWLowEdgeSet = FREQ_SW_LOW_EDGE_MIN;
   SWHighEdgeSet = FREQ_SW_HIGH_EDGE_MAX;
-  if (LowEdgeOIRTSet < FREQ_FM_OIRT_START || LowEdgeOIRTSet > FREQ_FM_OIRT_END) LowEdgeOIRTSet = FREQ_FM_OIRT_START;
-  if (HighEdgeOIRTSet < FREQ_FM_OIRT_START || HighEdgeOIRTSet > FREQ_FM_OIRT_END) HighEdgeOIRTSet = FREQ_FM_OIRT_END;
-
-  LowEdgeOIRTSet = LowEdgeOIRTSet;
+  LowEdgeOIRTSet = FREQ_FM_OIRT_START;
   HighEdgeOIRTSet = FREQ_FM_OIRT_END;
 
   for (int i = 0; i < EE_PRESETS_CNT; i++) presets[i].band = EEPROM.readByte(i + EE_PRESETS_BAND_START);
@@ -559,14 +557,12 @@ void setup() {
     }
   }
 
-  btStop();
-
   if (USBmode) Serial.begin(19200); else Serial.begin(115200);
 
-  if (iMSset == 1 && EQset == 1) iMSEQ = 2;
-  if (iMSset == 0 && EQset == 1) iMSEQ = 3;
-  if (iMSset == 1 && EQset == 0) iMSEQ = 4;
-  if (iMSset == 0 && EQset == 0) iMSEQ = 1;
+  if (iMSset && EQset) iMSEQ = 2;
+  if (!iMSset && EQset) iMSEQ = 3;
+  if (iMSset && !EQset) iMSEQ = 4;
+  if (!iMSset && !EQset) iMSEQ = 1;
 
   switch (band) {
     case BAND_LW:
@@ -589,8 +585,6 @@ void setup() {
       }
       break;
   }
-
-  if (IsStationEmpty()) memoryposstatus = MEM_DARK; else memoryposstatus = MEM_NORMAL;
 
   tft.init();
   tft.initDMA();
@@ -638,7 +632,31 @@ void setup() {
   tft.setSwapBytes(true);
   tft.fillScreen(BackgroundColor);
 
-  UpdateSprites(0);
+  FrequencySprite.createSprite(200, 50);
+  FrequencySprite.setTextDatum(TR_DATUM);
+  FrequencySprite.setSwapBytes(true);
+
+  RDSSprite.createSprite(165, 19);
+  RDSSprite.setTextDatum(TL_DATUM);
+
+  PSSprite.createSprite(150, 30);
+  PSSprite.setTextDatum(TL_DATUM);
+
+  SquelchSprite.createSprite(47, 19);
+  SquelchSprite.setTextDatum(TL_DATUM);
+  SquelchSprite.setSwapBytes(true);
+
+  FullLineSprite.createSprite(308, 19);
+  FullLineSprite.setSwapBytes(true);
+
+  OneBigLineSprite.createSprite(270, 30);
+  OneBigLineSprite.setSwapBytes(true);
+
+  SignalSprite.createSprite(80, 48);
+  SignalSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+  SignalSprite.setTextDatum(TR_DATUM);
+  SignalSprite.setSwapBytes(true);
+
   UpdateFonts(0);
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH) {
@@ -807,17 +825,19 @@ void setup() {
     Wire.endTransmission();
   }
 
-  SelectBand();
   if (tunemode == TUNE_MEM) DoMemoryPosTune();
+  SelectBand();
 
   setupmode = false;
+
   if (edgebeep) radio.tone(50, -5, 2000);
-  radio.I2Sin(false);
   if (!usesquelch) radio.setUnMute();
+
   if (screensaverset) {
     ScreensaverTimerInit();
     ScreensaverTimerSet(screensaverOptions[screensaverset]);
   }
+
   tottimer = millis();
 }
 
@@ -828,7 +848,6 @@ void loop() {
     unsigned long totprobe = tot * 60000;
     if (millis() >= tottimer + totprobe) deepSleep();
   }
-  if (digitalRead(BANDBUTTON) == LOW ) BANDBUTTONPress();
 
   if (scandxmode) {
     if (millis() >= scantimer + (scanhold * 1000)) {
@@ -1079,6 +1098,12 @@ void loop() {
       if (BWtune) doBWtuneDown(); else KeyDown();
       if (screensaverset && !menu && !screensavertriggered) ScreensaverTimerRestart();
     }
+  }
+
+  if (digitalRead(BANDBUTTON) == LOW) {
+    tottimer = millis();
+    if (screensavertriggered && !touchrotating) WakeToSleep(REVERSE);
+    BANDBUTTONPress();
   }
 
   if (digitalRead(ROTARY_BUTTON) == LOW) {
@@ -1603,8 +1628,10 @@ void BANDBUTTONPress() {
     cancelDXScan();
   } else {
     if (memorystore) {
+      EEPROM.writeByte(memorypos + EE_PRESETS_BAND_START, BAND_FM);
       EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, EE_PRESETS_FREQUENCY);
       EEPROM.commit();
+      presets[memorypos].band = BAND_FM;
       presets[memorypos].frequency = EE_PRESETS_FREQUENCY;
       memorystore = false;
       ShowTuneMode();
@@ -2076,7 +2103,7 @@ void SelectBand() {
 #endif
     }
     LimitAMFrequency();
-    if (!externaltune) CheckBandForbiddenAM();
+    if (!externaltune && tunemode != TUNE_MEM) CheckBandForbiddenAM();
 #ifdef HAS_AIR_BAND
     if (band == BAND_AIR) {
       radio.SetFreqAIR(10700);
@@ -2121,12 +2148,12 @@ void SelectBand() {
     RTold = "";
     BWreset = true;
     BWset = BWsetFM;
-    radio.clearRDS(fullsearchrds);
     freqold = frequency_AM;
-    if (!externaltune) CheckBandForbiddenFM();
+    if (!externaltune && tunemode != TUNE_MEM) CheckBandForbiddenFM();
     doBW();
     if (!screenmute) BuildDisplay();
   }
+  radio.clearRDS(fullsearchrds);
 }
 
 void BWButtonPress() {
@@ -2166,23 +2193,23 @@ void BWButtonPress() {
 void doStereoToggle() {
   if (StereoToggle) {
     if (!screenmute) {
-      tft.drawSmoothCircle(66, 15, 10, BackgroundColor, BackgroundColor);
-      tft.drawSmoothCircle(66, 15, 9, BackgroundColor, BackgroundColor);
-      tft.drawSmoothCircle(76, 15, 10, BackgroundColor, BackgroundColor);
-      tft.drawSmoothCircle(76, 15, 9, BackgroundColor, BackgroundColor);
-      tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
-      tft.drawSmoothCircle(71, 15, 9, SecondaryColor, SecondaryColorSmooth);
+      tft.drawCircle(66, 15, 10, BackgroundColor);
+      tft.drawCircle(66, 15, 9, BackgroundColor);
+      tft.drawCircle(76, 15, 10, BackgroundColor);
+      tft.drawCircle(76, 15, 9, BackgroundColor);
+      tft.drawCircle(71, 15, 10, SecondaryColor);
+      tft.drawCircle(71, 15, 9, SecondaryColor);
     }
     radio.setMono(true);
     StereoToggle = false;
   } else {
     if (!screenmute) {
-      tft.drawSmoothCircle(71, 15, 10, BackgroundColor, BackgroundColor);
-      tft.drawSmoothCircle(71, 15, 9, BackgroundColor, BackgroundColor);
-      tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
-      tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
-      tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
-      tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
+      tft.drawCircle(71, 15, 10, BackgroundColor);
+      tft.drawCircle(71, 15, 9, BackgroundColor);
+      tft.drawCircle(66, 15, 10, GreyoutColor);
+      tft.drawCircle(66, 15, 9, GreyoutColor);
+      tft.drawCircle(76, 15, 10, GreyoutColor);
+      tft.drawCircle(76, 15, 9, GreyoutColor);
     }
     radio.setMono(false);
     Stereostatusold = false;
@@ -2225,7 +2252,6 @@ void ModeButtonPress() {
             menuoption = ITEM1;
             menupage = INDEX;
             menuitem = 0;
-            UpdateFonts(1);
             if (spispeed == 7) tft.setSPISpeed(30);
             BuildMenu();
             menu = true;
@@ -2681,7 +2707,7 @@ bool IsStationEmpty() {
 bool IsFrequencyUsed(unsigned int freq) {
   bool result = false;
   for (byte x = scanstart; x <= scanstop; x++) {
-    if (presets[x].band == BAND_FM && presets[x].frequency == freq) {
+    if ((presets[x].band == BAND_FM || presets[x].band == BAND_OIRT) && presets[x].frequency == freq) {
       result = true;
       break;
     }
@@ -2776,20 +2802,20 @@ void DoMemoryPosTune() {
     StereoToggle = presets[memorypos].ms;
     if (!StereoToggle) {
       Stereostatusold = false;
-      tft.drawSmoothCircle(66, 15, 10, BackgroundColor, BackgroundColor);
-      tft.drawSmoothCircle(66, 15, 9, BackgroundColor, BackgroundColor);
-      tft.drawSmoothCircle(76, 15, 10, BackgroundColor, BackgroundColor);
-      tft.drawSmoothCircle(76, 15, 9, BackgroundColor, BackgroundColor);
-      tft.drawSmoothCircle(71, 15, 10, SecondaryColor, SecondaryColorSmooth);
-      tft.drawSmoothCircle(71, 15, 9, SecondaryColor, SecondaryColorSmooth);
+      tft.drawCircle(66, 15, 10, BackgroundColor);
+      tft.drawCircle(66, 15, 9, BackgroundColor);
+      tft.drawCircle(76, 15, 10, BackgroundColor);
+      tft.drawCircle(76, 15, 9, BackgroundColor);
+      tft.drawCircle(71, 15, 10, SecondaryColor);
+      tft.drawCircle(71, 15, 9, SecondaryColor);
     } else {
       Stereostatusold = false;
-      tft.drawSmoothCircle(71, 15, 10, BackgroundColor, BackgroundColor);
-      tft.drawSmoothCircle(71, 15, 9, BackgroundColor, BackgroundColor);
-      tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
-      tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
-      tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
-      tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
+      tft.drawCircle(71, 15, 10, BackgroundColor);
+      tft.drawCircle(71, 15, 9, BackgroundColor);
+      tft.drawCircle(66, 15, 10, GreyoutColor);
+      tft.drawCircle(66, 15, 9, GreyoutColor);
+      tft.drawCircle(76, 15, 10, GreyoutColor);
+      tft.drawCircle(76, 15, 9, GreyoutColor);
     }
   }
 
@@ -2805,10 +2831,13 @@ void DoMemoryPosTune() {
   }
 
   if (presets[memorypos].RDSPI[0] != '\0') {
-    for (byte i = 0; i < 5; i++) {
+    for (byte i = 0; i < 4; i++) {
       radio.rds.picode[i] = presets[memorypos].RDSPI[i];
     }
+    radio.rds.picode[4] = ' ';
+    radio.rds.picode[5] = ' ';
     radio.rds.picode[6] = '\0';
+    radio.rds.correctPI = (uint16_t)strtol(radio.rds.picode, NULL, 16);
   } else {
     for (byte i = 0; i < 6; i++) {
       radio.rds.picode[i] = '\0';
@@ -2822,7 +2851,6 @@ void DoMemoryPosTune() {
   BWtune = true;
   memtune = true;
   memreset = true;
-  dropout = true;
 }
 
 void ShowFreq(int mode) {
@@ -2946,15 +2974,16 @@ void ShowFreq(int mode) {
   if (!rdsflagreset && !screenmute && !afscreen) {
     ShowRDSLogo(false);
     if (!advancedRDS) {
-      RadiotextSprite.fillSprite(BackgroundColor);
-      RadiotextSprite.pushSprite(36, 220);
+      FullLineSprite.fillSprite(BackgroundColor);
+      FullLineSprite.drawLine(283, 0, 283, 19, FrameColor);
+      FullLineSprite.pushSprite(36, 220);
       tft.fillCircle(314, 223, 2, GreyoutColor);
       tft.fillCircle(314, 234, 2, GreyoutColor);
     } else {
       RDSSprite.fillSprite(BackgroundColor);
+      RDSSprite.pushSprite(36, 220);
       tft.fillCircle(203, 223, 2, GreyoutColor);
       tft.fillCircle(203, 234, 2, GreyoutColor);
-      RDSSprite.pushSprite(36, 220);
     }
     rdsflagreset = true;
   }
@@ -3045,16 +3074,16 @@ void ShowStereoStatus() {
     if (band < BAND_GAP) Stereostatus = radio.getStereoStatus(); else Stereostatus = false;
     if (Stereostatus != Stereostatusold) {
       if (Stereostatus && !screenmute) {
-        tft.drawSmoothCircle(66, 15, 10, StereoColor, StereoColorSmooth);
-        tft.drawSmoothCircle(66, 15, 9, StereoColor, StereoColorSmooth);
-        tft.drawSmoothCircle(76, 15, 10, StereoColor, StereoColorSmooth);
-        tft.drawSmoothCircle(76, 15, 9, StereoColor, StereoColorSmooth);
+        tft.drawCircle(66, 15, 10, StereoColor);
+        tft.drawCircle(66, 15, 9, StereoColor);
+        tft.drawCircle(76, 15, 10, StereoColor);
+        tft.drawCircle(76, 15, 9, StereoColor);
       } else {
         if (!screenmute) {
-          tft.drawSmoothCircle(66, 15, 10, GreyoutColor, BackgroundColor);
-          tft.drawSmoothCircle(66, 15, 9, GreyoutColor, BackgroundColor);
-          tft.drawSmoothCircle(76, 15, 10, GreyoutColor, BackgroundColor);
-          tft.drawSmoothCircle(76, 15, 9, GreyoutColor, BackgroundColor);
+          tft.drawCircle(66, 15, 10, GreyoutColor);
+          tft.drawCircle(66, 15, 9, GreyoutColor);
+          tft.drawCircle(76, 15, 10, GreyoutColor);
+          tft.drawCircle(76, 15, 9, GreyoutColor);
         }
       }
       Stereostatusold = Stereostatus;
@@ -3784,6 +3813,11 @@ void TuneUp() {
     radio.SetFreq(frequency);
   } else if (band == BAND_OIRT) {
     frequency_OIRT += temp;
+    if (scandxmode) {
+      while (IsFrequencyUsed(frequency_OIRT) || presets[memorypos].band != BAND_OIRT) {
+        frequency_OIRT += temp;
+      }
+    }
     if (frequency_OIRT > HighEdgeOIRTSet) {
       frequency_OIRT = LowEdgeOIRTSet;
       if (edgebeep) EdgeBeeper();
@@ -4242,86 +4276,30 @@ void deepSleep() {
   esp_deep_sleep_start();
 }
 
-void UpdateSprites(bool mode) {
-  switch (mode) {
-    case 0:
-      RadiotextSprite.createSprite(270, 19);
-      RadiotextSprite.setTextDatum(TL_DATUM);
-      RadiotextSprite.setSwapBytes(true);
-
-      FrequencySprite.createSprite(200, 50);
-      FrequencySprite.setTextDatum(TR_DATUM);
-      FrequencySprite.setSwapBytes(true);
-
-      RDSSprite.createSprite(165, 19);
-      RDSSprite.setTextDatum(TL_DATUM);
-
-      PSSprite.createSprite(150, 30);
-      PSSprite.setTextDatum(TL_DATUM);
-
-      SquelchSprite.createSprite(47, 19);
-      SquelchSprite.setTextDatum(TL_DATUM);
-      SquelchSprite.setSwapBytes(true);
-
-      FullLineSprite.createSprite(308, 20);
-      FullLineSprite.setSwapBytes(true);
-
-      OneBigLineSprite.createSprite(270, 30);
-      OneBigLineSprite.setSwapBytes(true);
-
-      SignalSprite.createSprite(80, 48);
-      SignalSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-      SignalSprite.setTextDatum(TR_DATUM);
-      SignalSprite.setSwapBytes(true);
-      break;
-
-    case 1:
-      RadiotextSprite.deleteSprite();
-      FrequencySprite.deleteSprite();
-      RDSSprite.deleteSprite();
-      PSSprite.deleteSprite();
-      SquelchSprite.deleteSprite();
-      FullLineSprite.deleteSprite();
-      OneBigLineSprite.deleteSprite();
-      SignalSprite.deleteSprite();
-      break;
-  }
-}
-
 void UpdateFonts(byte mode) {
   switch (mode) {
     case 0:                                 // Use in radio mode
-      RadiotextSprite.unloadFont();
       RDSSprite.unloadFont();
       PSSprite.unloadFont();
-
-      if (language == LANGUAGE_CHS) {
-        RadiotextSprite.loadFont(FONT16_CHS);
-        RDSSprite.loadFont(FONT16_CHS);
-        PSSprite.loadFont(FONT28_CHS);
-      } else {
-        RadiotextSprite.loadFont(FONT16);
-        RDSSprite.loadFont(FONT16);
-        PSSprite.loadFont(FONT28);
-      }
-      break;
-
-    case 1:                                 // Use in menu mode
       FullLineSprite.unloadFont();
       OneBigLineSprite.unloadFont();
+
       if (language == LANGUAGE_CHS) {
+        RDSSprite.loadFont(FONT16_CHS);
+        PSSprite.loadFont(FONT28_CHS);
         FullLineSprite.loadFont(FONT16_CHS);
         OneBigLineSprite.loadFont(FONT28_CHS);
       } else {
+        RDSSprite.loadFont(FONT16);
+        PSSprite.loadFont(FONT28);
         FullLineSprite.loadFont(FONT16);
         OneBigLineSprite.loadFont(FONT28);
       }
       break;
 
-    case 2:                                 // Unload all
+    case 1:                                 // Unload all
       FullLineSprite.unloadFont();
       OneBigLineSprite.unloadFont();
-      RadiotextSprite.unloadFont();
       RDSSprite.unloadFont();
       PSSprite.unloadFont();
       break;
@@ -4436,29 +4414,25 @@ void endMenu() {
   if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
   if (USBmode) Serial.begin(19200); else Serial.begin(115200);
 
-  UpdateFonts(0);
-  FullLineSprite.unloadFont();
-  OneBigLineSprite.unloadFont();
   BuildDisplay();
 }
 
 void startFMDXScan() {
-  memorypos = scanstart;
+  if (memorypos > scanstop || memorypos < scanstart) memorypos = scanstart;
   scanmodeold = tunemode;
   if (scanmem) {
     tunemode = TUNE_MEM;
-    if (band != BAND_FM) {
-      band = BAND_FM;
+    if (band != presets[memorypos].band) {
+      band = presets[memorypos].band;
       SelectBand();
     }
     if (menu) endMenu();
     DoMemoryPosTune();
   } else {
     tunemode = TUNE_MAN;
-    if (band != BAND_FM) {
-      band = BAND_FM;
+    if (band != presets[memorypos].band) {
+      band = presets[memorypos].band;
       SelectBand();
-      endMenu();
     }
     if (menu) endMenu();
     TuneUp();

@@ -237,7 +237,7 @@ void Communication() {
                   } else if (ConverterSet != 0 && memfreq >= FREQ_FM_OIRT_START * 10 && memfreq <= FREQ_FM_OIRT_END * 10) {
                     memband = BAND_OIRT;
                     memfreq /= 10;
-                  } else if ((ConverterSet != 0 ? memfreq > FREQ_FM_OIRT_START * 10 : FREQ_FM_OIRT_END * 10) && memfreq <= FREQ_FM_END * 10) {
+                  } else if ((ConverterSet != 0 && memfreq > FREQ_FM_OIRT_START * 10) || ((ConverterSet == 0 && memfreq > FREQ_FM_OIRT_END * 10) && memfreq <= FREQ_FM_END * 10)) {
                     memband = BAND_FM;
                     memfreq /= 10;
                   } else if (memfreq == EE_PRESETS_FREQUENCY) {
@@ -257,6 +257,16 @@ void Communication() {
                   }
 
                   if (memms > 1) error |= (1 << 3);
+
+                  if (rdsPi[0] != '\0') {
+                    for (int i = 0; i < 4; i++) {
+                      char c = rdsPi[i];
+                      if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'))) {
+                        error |= (1 << 5);
+                        break;
+                      }
+                    }
+                  }
 
                   if (error == 0) {
                     error |= (1 << 7);
@@ -453,7 +463,7 @@ void XDRGTKRoutine() {
           if (!screenmute) {
             if (!usesquelch) {
               tftPrint(-1, "SQ:", 212, 145, BackgroundColor, BackgroundColor, 16);
-			  showAutoSquelch(0);
+              showAutoSquelch(0);
             } else {
               Squelch = -150;
             }

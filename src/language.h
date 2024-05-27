@@ -1,11 +1,11 @@
 #ifndef LANGUAGE_H
 #define LANGUAGE_H
 
-#define VERSION "v2.10 RC4"
+#define VERSION "v2.10 RC8"
 
 // [number of languages][number of texts]
 // *** means the text is the same as in English
-static const char* const myLanguage[18][228] PROGMEM = {
+static const char* const myLanguage[18][260] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -233,7 +233,39 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "5 sec. bandbutton press", // 224
     "Power off", // 225
     "Mute screen", // 226
-    "Disabled" // 227
+    "Disabled", // 227
+    "None", // 228
+    "News", // 229
+    "Current Affairs", // 230
+    "Information", // 231
+    "Sport", // 232
+    "Education", // 233
+    "Drama", // 234
+    "Culture", // 235
+    "Science", // 236
+    "Varied", // 237
+    "Pop Music", // 238
+    "Rock Music", // 239
+    "Easy Listening", // 240
+    "Light Classical", // 241
+    "Serious Classical", // 242
+    "Other Music", // 243
+    "Weather", // 244
+    "Finance", // 245
+    "Children's Progs", // 246
+    "Social Affairs", // 247
+    "Religion", // 248
+    "Phone-In", // 249
+    "Travel", // 250
+    "Leisure", // 251
+    "Jazz Music", // 252
+    "Country Music", // 253
+    "National Music", // 254
+    "Oldies Music", // 255
+    "Folk Music", // 256
+    "Documentary", // 257
+    "Alarm Test", // 258
+    "Alarm!!!" // 259
   },
 
   { "Nederlands", // Dutch
@@ -463,7 +495,39 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "5 sec.\nbandbutton ingedrukt", // 224
     "Uitschakelen", // 225
     "Scherm uit", // 226
-    "Geen functie" // 227
+    "Geen functie", // 227
+    "Niet gedefinieerd", // 228
+    "Nieuws", // 229
+    "Actualiteit", // 230
+    "Informatie", // 231
+    "Sport", // 232
+    "Educatie", // 233
+    "Drama", // 234
+    "Cultuur", // 235
+    "Wetenschap", // 236
+    "Varia", // 237
+    "Popmuziek", // 238
+    "Rockmuziek", // 239
+    "Melodie", // 240
+    "Licht klassiek", // 241
+    "Klassieke muziek", // 242
+    "Muziek", // 243
+    "Het weer", // 244
+    "Economie", // 245
+    "Voor kinderen", // 246
+    "Maatschappelijk", // 247
+    "Religie", // 248
+    "Doe mee !", // 249
+    "Reizen", // 250
+    "Vrije tijd", // 251
+    "Jazz", // 252
+    "Countrymuziek", // 253
+    "Nationale muziek", // 254
+    "Gouwe ouwe", // 255
+    "Volksmuziek", // 256
+    "Documentaires", // 257
+    "Alarmtest", // 258
+    "Alarm ! ALARM !" // 259
   },
 
   { "Polski", // Polish
@@ -684,7 +748,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Automat. sortowanie AF", // 215
     "Kanały pamięci", // 216
     "Wyklucz", // 217
-    "Tylko", // 218
+    "Uwzględnij", // 218
     "Automatyczne\nanulowanie skanowania", // 219
     "Poprawne PI", // 220
     "Sygnał", // 221
@@ -693,7 +757,39 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "5 sek. naciśnięcie przyc. BAND", // 224
     "Wyłącz", // 225
     "Wyłącz ekran", // 226
-    "Wyłączone" // 227
+    "Wyłączone", // 227
+    "Niezdefiniowany", // 228
+    "Wiadomości", // 229
+    "Wydarze. Bieżące", // 230
+    "Informacje", // 231
+    "Sport", // 232
+    "Edukacja", // 233
+    "Dramat", // 234
+    "Kultura", // 235
+    "Nauka", // 236
+    "Różne", // 237
+    "Muzyka Pop", // 238
+    "Muzyka Rock", // 239
+    "Muzyka Lekka", // 240
+    "Muz. Klas. Lekka", // 241
+    "Muz. Klas. Pow.", // 242
+    "Muzyka Inna", // 243
+    "Pogoda", // 244
+    "Finanse", // 245
+    "Prog. Dziecięce", // 246
+    "Wyd. Społeczne", // 247
+    "Religia", // 248
+    "Telefon.Udział.", // 249
+    "Podróze", // 250
+    "Czas Wolny", // 251
+    "Muzyka Jazz", // 252
+    "Muzyka Country", // 253
+    "Muzyka Narodowa", // 254
+    "Muz. Archiwalna", // 255
+    "Muzyka Ludowa", // 256
+    "Dokument", // 257
+    "Alarm Test", // 258
+    "Alarm" // 259
   },
 
   { "Hrvatski", // Croatian
@@ -923,7 +1019,39 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "5 sec. bandbutton press", // 224
     "Power off", // 225
     "Mute screen", // 226
-    "Disabled" // 227
+    "Disabled", // 227
+    "Neodređeno", // 228
+    "Vijesti", // 229
+    "Aktualno", // 230
+    "Obavijesti", // 231
+    "Sport", // 232
+    "Obrazovanje", // 233
+    "Drama", // 234
+    "Kultura", // 235
+    "Znanost", // 236
+    "Razno", // 237
+    "Pop glazba", // 238
+    "Rock glazba", // 239
+    "Zabavna glazba", // 240
+    "Lagana klasična", // 241
+    "Ozbiljna glazba", // 242
+    "Ostala glazba", // 243
+    "Vrijeme", // 244
+    "Financije", // 245
+    "Dječji program", // 246
+    "Društvena događ", // 247
+    "Religija", // 248
+    "Kontakt program", // 249
+    "Putovanja", // 250
+    "Slobodno vrijeme", // 251
+    "Jazz glazba", // 252
+    "Country glazba", // 253
+    "Domaća glazba", // 254
+    "Stari hitovi", // 255
+    "Narodna glazba", // 256
+    "Dokumentarno", // 257
+    "Testni alarm!", // 258
+    "Alarm !" // 259
   },
 
   { "Ελληνικά", // Greek
@@ -1153,7 +1281,39 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Πιέση πλήκτρου\nμπάντας 5 δευτ.", // 224
     "Σβήσιμο", // 225
     "Σβήσιμο οθόνης", // 226
-    "Ανενεργό" // 227
+    "Ανενεργό", // 227
+    "None", // 228
+    "News", // 229
+    "Current Affairs", // 230
+    "Information", // 231
+    "Sport", // 232
+    "Education", // 233
+    "Drama", // 234
+    "Culture", // 235
+    "Science", // 236
+    "Varied", // 237
+    "Pop Music", // 238
+    "Rock Music", // 239
+    "Easy Listening", // 240
+    "Light Classical", // 241
+    "Serious Classical", // 242
+    "Other Music", // 243
+    "Weather", // 244
+    "Finance", // 245
+    "Children's Progs", // 246
+    "Social Affairs", // 247
+    "Religion", // 248
+    "Phone-In", // 249
+    "Travel", // 250
+    "Leisure", // 251
+    "Jazz Music", // 252
+    "Country Music", // 253
+    "National Music", // 254
+    "Oldies Music", // 255
+    "Folk Music", // 256
+    "Documentary", // 257
+    "Alarm Test", // 258
+    "Alarm!!!" // 259
   },
 
   { "Română", // Romanian
@@ -1383,7 +1543,39 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Apasă 5sec. butonul bandă", // 224
     "Oprit", // 225
     "Ecran oprit", // 226
-    "Dezactivat" // 227
+    "Dezactivat", // 227
+    "Nedefinit", // 228
+    "Radiojurnal", // 229
+    "Actualităţi", // 230
+    "Informaţii", // 231
+    "Sport", // 232
+    "Educativ", // 233
+    "Teatru", // 234
+    "Cultural", // 235
+    "Ştiinţific", // 236
+    "Varietăţi", // 237
+    "Muzică pop", // 238
+    "Muzică rock", // 239
+    "Muzică uşoară", // 240
+    "Clasic Lejer", // 241
+    "Muzică Clasică", // 242
+    "Altă Muzică", // 243
+    "Meteo", // 244
+    "Econ Finanţe", // 245
+    "Copii", // 246
+    "Social", // 247
+    "Religie", // 248
+    "Phone-In", // 249
+    "Călătorii", // 250
+    "Timp Liber", // 251
+    "Muzică de Jazz", // 252
+    "Muzică Country", // 253
+    "Muz Roman", // 254
+    "Muzica Retro", // 255
+    "Muzică Populară", // 256
+    "Documentar", // 257
+    "Test Alarmă", // 258
+    "Alarmă !" // 259
   },
 
   { "Deutsch", // German
@@ -1400,7 +1592,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Konverter:", // 11
     "Unteres Bandende:", // 12
     "Oberes Bandende:", // 13
-    "FM RF-Pegeloffset:", // 14
+    "UKW RF-Pegeloffset:", // 14
     "Stereotrennschwelle:", // 15
     "Tiefpass Eckfrequenz:", // 16
     "Tiefpass Schwelle:", // 17
@@ -1423,7 +1615,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "SCANNE...", // 34
     "Tuner nicht erkannt", // 35
     "AM Antennengewinn", // 36
-    "FM AGC", // 37
+    "UKW AGC", // 37
     "Zeige RDS Fehler", // 38
     "Sprache", // 39
     "Sprache wählen", // 40
@@ -1464,27 +1656,27 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Abschaltzeit", // 75
     "Bildschirm aus", // 76
     "Thema", // 77
-    "Skin", // 78 ***
+    "Oberfläche", // 78 ***
     "Erkannte Applikationen", // 79
     "Min.", // 80
-    "Dynamische \nSPI-Geschwindigkeit", // 81
+    "Dynamische \nSPI-Geschw.", // 81
     "Scanempfindlichkeit", // 82
     "KEINE", // 83
     "Softwareversion", // 84
-    "Frequenz-Schriftart", // 85 ***
+    "Frequenz-Schriftart", // 85
     "Auto", // 86
     "Keine AF verfügbar", // 87
     "Kein EON verfügbar", // 88
     "Kein RT+ verfügbar", // 89
     "UKW\nStandard-Schrittweite", // 90
     "Bildschirmschoner", // 91
-    "Sek", // 92
+    "Sek.", // 92
     "ZUM SCHLIEßEN BAND DRÜCKEN", // 93
     "1% Helligkeit", // 94
     "25% Helligkeit", // 95
     "50% Helligkeit", // 96
     "RF Pegeloffset", // 97
-    "Einheit Signalpegel", // 98
+    "Einheit des Signalpegels", // 98
     "Verwende AF", // 99
     "Wähle UKW Band", // 100
     "Wähle AM Band", // 101
@@ -1581,7 +1773,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "RDS", // 192
     "UKW", // 193
     "AM", // 194
-    "NETZ", // 195
+    "NETZWERK", // 195
     "DX MODE", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
@@ -1599,7 +1791,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Stoppe Scan mit\nSpeicherplatz", // 210
     "Wartezeit", // 211
     "Starte DX Scan", // 212
-    "FM DX Optionen", // 213
+    "UKW DX Optionen", // 213
     "Abbruch! Start-Speicherplatz\nist nicht belegt.", // 214
     "AF Autosortierung", // 215
     "Speicherplätze scannen", // 216
@@ -1613,7 +1805,39 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "5 Sek. BAND-Knopf drücken", // 224
     "Ausschalten", // 225
     "Bildschirmschoner", // 226
-    "Deaktiviert" // 227
+    "Deaktiviert", // 227
+    "Nicht definiert", // 228
+    "Nachrichten", // 229
+    "Aktuelle Info", // 230
+    "Service Programm", // 231
+    "Sport", // 232
+    "Bildung", // 233
+    "Hörspiel + Lit", // 234
+    "Kultur+Gesellsch", // 235
+    "Wissenschaft", // 236
+    "Unterhaltung", // 237
+    "Pop Musik", // 238
+    "Rock Musik", // 239
+    "Unterhalt Musik", // 240
+    "Leichte Klassik", // 241
+    "Ernste Klassik", // 242
+    "Spezielle Musik", // 243
+    "Wetter", // 244
+    "Wirtschaft", // 245
+    "Kinderprogramm", // 246
+    "Soziales", // 247
+    "Religion", // 248
+    "Anrufsendung", // 249
+    "Reiseinformation", // 250
+    "Freizeit", // 251
+    "Jazz", // 252
+    "Country Musik", // 253
+    "Landesmusik", // 254
+    "Oldies Musik", // 255
+    "Folklore", // 256
+    "Feature", // 257
+    "Alarm Test", // 258
+    "Alarm! Alarm!" // 259
   },
 
   { "Český", // Czech
@@ -1630,7 +1854,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Konvertor:", // 11
     "Spodek pásma:", // 12
     "Vrch pásma:", // 13
-    "FM Offset frekvence:", // 14
+    "FM Offset signálu:", // 14
     "Práh pro stereo:", // 15
     "Práh frekvence zvuku\nk utlumení:", // 16
     "Práh signálu pro utlumení\nvysokých tónů:", // 17
@@ -1643,7 +1867,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Offset signálu", // 24
     "Práh pro stereo", // 25
     "Práh frekvence zvuku k utlumení", // 26
-    "Práh signálu pro utlumení vysokých tónů", // 27
+    "Práh signálu pro utlumení výšek", // 27
     "Práh nízkého signálu", // 28
     "Jas", // 29
     "Vyp.", // 30
@@ -1690,16 +1914,16 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Hlavní kód:", // 71
     "Přispěli:", // 72
     "Neznámý", // 73
-    "Nastavení spořiče obrazovky", // 74
+    "Nastavení\nspořiče obrazovky", // 74
     "Časovač vypnutí", // 75
     "Vypnutí obrazovky", // 76
     "Vzhled", // 77
     "Skin", // 78 ***
     "Detekované aplikace", // 79
-    "Min.", // 80 ***
+    "minut", // 80 ***
     "Dynamická rychlost SPI", // 81 ***
     "Citlivost skenu", // 82
-    "Žádné", // 83
+    "žádné", // 83
     "Verze softwaru", // 84
     "Font frekvence", // 85 ***
     "Auto", // 86
@@ -1708,7 +1932,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "RT+ nedostupný", // 89
     "Výchozí krok ladění FM", // 90
     "Spořič obrazovky", // 91
-    "Sec.", // 92
+    "sec.", // 92
     "ZMÁČKNĚTE BAND PRO ZAVŘENÍ", // 93
     "1% jas", // 94
     "25% jas", // 95
@@ -1725,9 +1949,9 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "OIRT", // 106 ***
     "Ladění při vypnuté obrazovce", // 107 ***
     "Volba modelu", // 108
-    "Základ (ILI9341)", // 109
+    "Základní (ILI9341)", // 109
     "Přenosný (ILI9341)", // 110
-    "Přenosný - dotykový (ILI9341)", // 111
+    "Přenosný-dotykový(ILI9341)", // 111
     "Title", // 112 ***
     "Album", // 113 ***
     "Track", // 114 ***
@@ -1800,7 +2024,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Nastavení FM pásma", // 181
     "Nastavení AM pásma", // 182
     "Konektivita", // 183
-    "ZMÁČKNĚTE MODE PRO VRÁCENÍ", // 184
+    "ZMÁČKNĚTE MODE PRO NÁVRAT", // 184
     "AM CoChannelDet", // 185
     "Citlivost CoChannelDet", // 186
     "Práh AM CoChannelDet", // 187
@@ -1825,7 +2049,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "FMSI stereo\nvylepšení", // 206
     "Funkce dostupná pouze\nu TEF6687/6689!", // 207
     "Funkce není dostupná\nu zvoleného skinu!", // 208
-    "Začít skenovat\nod předvolby č.", // 209
+    "Začít skenování\nod předvolby č.", // 209
     "Skončit skenování\nu předvolby č.", // 210
     "Doba čekání", // 211
     "Spustit DX skenování", // 212
@@ -1835,18 +2059,50 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Předvolby paměti", // 216
     "Vyloučit", // 217
     "Pouze", // 218
-    "Automaticky zastavit skenování", // 219
-    "při načtení korektního PI", // 220
+    "Automaticky zastavit\nskenování", // 219
+    "po načtení PI", // 220
     "při signálu", // 221
     "Ztlumit zvuk\nběhem skenování", // 222
     "AIR", // 223
-    "Při 5 sec. stisknutí tl. BAND", // 224
+    "Po 5 sec. stisknutí\ntl. BAND", // 224
     "Vypnout", // 225
     "Vypnout displej", // 226
-    "Zakázáno" // 227
+    "Zakázáno", // 227
+    "Nedefinovaný pr.", // 228
+    "Zpravy", // 229
+    "Publicistika", // 230
+    "Informace", // 231
+    "Sport", // 232
+    "Vzdelani", // 233
+    "Drama", // 234
+    "Kultura", // 235
+    "Veda", // 236
+    "Ruzne Zanry", // 237
+    "Popova Hudba", // 238
+    "Rockova Hudba", // 239
+    "Oddychova Hudba", // 240
+    "Klasicka Hudba", // 241
+    "Vazna Hudba", // 242
+    "Jina Hudba", // 243
+    "Pocasi", // 244
+    "Finance", // 245
+    "Detsky Program", // 246
+    "Spolecenska Tem.", // 247
+    "Nabozens. Temata", // 248
+    "Telefonaty", // 249
+    "Cestovani", // 250
+    "Zabava", // 251
+    "Jazzova Hudba", // 252
+    "Country Hudba", // 253
+    "Narodni Hudba", // 254
+    "Oldies Hudba", // 255
+    "Folkova Hudba", // 256
+    "Dokumenty", // 257
+    "Alarm Test", // 258
+    "Alarm – Alarm !" // 259
   },
 
-  { "Slovenský", // Slovak
+  { "SloveSlovenský", // Slovak
     "Smer enkóderu bol zmenený", // 1
     "Prosím, pusťte tlačidlo", // 2
     "Obrazovka otočená", // 3
@@ -2073,7 +2329,39 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "5 sec. bandbutton press", // 224
     "Power off", // 225
     "Mute screen", // 226
-    "Disabled" // 227
+    "Disabled", // 227
+    "None", // 228
+    "News", // 229
+    "Current Affairs", // 230
+    "Information", // 231
+    "Sport", // 232
+    "Education", // 233
+    "Drama", // 234
+    "Culture", // 235
+    "Science", // 236
+    "Varied", // 237
+    "Pop Music", // 238
+    "Rock Music", // 239
+    "Easy Listening", // 240
+    "Light Classical", // 241
+    "Serious Classical", // 242
+    "Other Music", // 243
+    "Weather", // 244
+    "Finance", // 245
+    "Children's Progs", // 246
+    "Social Affairs", // 247
+    "Religion", // 248
+    "Phone-In", // 249
+    "Travel", // 250
+    "Leisure", // 251
+    "Jazz Music", // 252
+    "Country Music", // 253
+    "National Music", // 254
+    "Oldies Music", // 255
+    "Folk Music", // 256
+    "Documentary", // 257
+    "Alarm Test", // 258
+    "Alarm!!!" // 259
   },
 
   { "Français", // French
@@ -2303,7 +2591,39 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Appui sur le bouton\nband 5 sec.", // 224
     "Éteindre", // 225
     "Écran muet", // 226
-    "Inactif" // 227
+    "Inactif", // 227
+    "Non défini", // 228
+    "Informations", // 229
+    "Magazine", // 230
+    "Info-Service", // 231
+    "Sport", // 232
+    "Educatif", // 233
+    "Fiction", // 234
+    "Culture", // 235
+    "Sciences", // 236
+    "Divertissement", // 237
+    "Musique Pop", // 238
+    "Musique Rock", // 239
+    "Chansons", // 240
+    "Classique Léger", // 241
+    "MusiqueClassique", // 242
+    "Autre Musique", // 243
+    "Météo", // 244
+    "Economie", // 245
+    "Enfants", // 246
+    "Société", // 247
+    "Religion", // 248
+    "Ligne ouverte", // 249
+    "Voyages", // 250
+    "Loisirs", // 251
+    "Jazz", // 252
+    "Country", // 253
+    "Chanson du pays", // 254
+    "Musique rétro", // 255
+    "Folklore", // 256
+    "Documentaire", // 257
+    "TEST", // 258
+    "Alerte !" // 259
   },
 
   { "Български", // Bulgarian
@@ -2533,7 +2853,39 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "5 sec. bandbutton press", // 224
     "Power off", // 225
     "Mute screen", // 226
-    "Disabled" // 227
+    "Disabled", // 227
+    "Без име", // 228
+    "Новини", // 229
+    "Актуално", // 230
+    "Информация", // 231
+    "Спорт", // 232
+    "Образование", // 233
+    "Радио театър", // 234
+    "Култура", // 235
+    "Наука", // 236
+    "Развлечение", // 237
+    "Поп музика", // 238
+    "Рок музика", // 239
+    "Музика за релакс", // 240
+    "Лека класика", // 241
+    "Класика", // 242
+    "Музика", // 243
+    "Времето", // 244
+    "Икономика", // 245
+    "За децата", // 246
+    "Общество", // 247
+    "Религия", // 248
+    "Открита линия", // 249
+    "Туризъм", // 250
+    "Свободно време", // 251
+    "Джаз", // 252
+    "Кънтри музика", // 253
+    "Българска музика", // 254
+    "Ретро музика", // 255
+    "Народна музика", // 256
+    "Документалистика", // 257
+    "Внимание тест", // 258
+    "Тревога!" // 259
   },
 
   { "Русский", // Russian
@@ -2763,7 +3115,39 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "5 сек. зажатия кнопки диапазона", // 224
     "Приемник выключен", // 225
     "Экран выключен", // 226
-    "Выключено" // 227
+    "Выключено", // 227
+    "Не определено", // 228
+    "Новости", // 229
+    "Аналитика", // 230
+    "Информация", // 231
+    "Спорт", // 232
+    "Образование", // 233
+    "Драма", // 234
+    "Культура", // 235
+    "Наука", // 236
+    "Развлечение", // 237
+    "Поп", // 238
+    "Рок", // 239
+    "Лёгкая музыка", // 240
+    "Лёгкая Класcика", // 241
+    "Класcика", // 242
+    "Музыка", // 243
+    "Погода", // 244
+    "Финансы", // 245
+    "Детское радио", // 246
+    "Общество", // 247
+    "Религия", // 248
+    "Открытая линия", // 249
+    "Туризм", // 250
+    "Досуг", // 251
+    "Джаз", // 252
+    "Музыка кантри", // 253
+    "Русская музыка", // 254
+    "Ретро", // 255
+    "Народная музыка", // 256
+    "Документалистика", // 257
+    "Внимание тест", // 258
+    "Тревога!" // 259
   },
 
   { "Українська", // Ukranian
@@ -2980,7 +3364,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Час очікування", // 211
     "Почати сканування DX", // 212
     "Параметри FM DX", // 213
-    "Припинити! Початковий канал\позначено як пропущений.", // 214
+    "Припинити! Початковий канал\nпозначено як пропущений.", // 214
     "Авто сорт. AF", // 215
     "Канали пам'яті", // 216
     "Виключити", // 217
@@ -2993,7 +3377,39 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "5 сек. затискання кнопки діапазону", // 224
     "Приймач вимкнений", // 225
     "Екран вимкнено", // 226
-    "Вимкнено" // 227
+    "Вимкнено", // 227
+    "None", // 228
+    "News", // 229
+    "Current Affairs", // 230
+    "Information", // 231
+    "Sport", // 232
+    "Education", // 233
+    "Drama", // 234
+    "Culture", // 235
+    "Science", // 236
+    "Varied", // 237
+    "Pop Music", // 238
+    "Rock Music", // 239
+    "Easy Listening", // 240
+    "Light Classical", // 241
+    "Serious Classical", // 242
+    "Other Music", // 243
+    "Weather", // 244
+    "Finance", // 245
+    "Children's Progs", // 246
+    "Social Affairs", // 247
+    "Religion", // 248
+    "Phone-In", // 249
+    "Travel", // 250
+    "Leisure", // 251
+    "Jazz Music", // 252
+    "Country Music", // 253
+    "National Music", // 254
+    "Oldies Music", // 255
+    "Folk Music", // 256
+    "Documentary", // 257
+    "Alarm Test", // 258
+    "Alarm!!!" // 259
   },
 
   { "Italiano", // Italian
@@ -3059,7 +3475,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Filtro RDS", // 60
     "Mostra errori PI", // 61
     "Utilizzare squelch", // 62
-    "Meter di modulazione", // 63
+    "Scala di modulazione", // 63
     "Soppressione rumore AM", // 64
     "Soppressione rumore FM", // 65
     "Predefiniti caricati", // 66
@@ -3071,7 +3487,7 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Collaboratori: ", // 72
     "Sconosciuto", // 73
     "Opzioni salvaschermo", // 74 ***
-    "Timer di time-out", // 75 ***
+    "Tempo di time-out", // 75 ***
     "Schermo spento", // 76
     "Motivo schermo", // 77
     "Skin", // 78 ***
@@ -3202,11 +3618,11 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "PS rapido", // 203 ***
     "Default", // 204
     "Spegni schermo se\nconnesso a XDRGTK", // 205
-    "FMSI audio stereofonico\nottimizzato", // 206
+    "FMSI audio stereofonico ottimizzato", // 206
     "Funzione disponibile\nsolo su TEF6687/6689!", // 207
     "Funzione non disponibile\nsu skin selezionata!", // 208
-    "Avvio scansione\ncanale in memoria", // 209
-    "Fine scansione\ncanale in memoria", // 210
+    "Avvio scansione = canale in memoria", // 209
+    "Fine scansione =  canale in memoria", // 210
     "Tempo di attesa", // 211
     "Avvio scansione DX", // 212
     "Opzioni FM DX", // 213
@@ -3218,12 +3634,44 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Uscita automatica scansione", // 219
     "PI corretto", // 220
     "Segnale", // 221
-    "Audio silenziato\ndurante scansione", // 222
+    "Audio silenziato durante scansione", // 222
     "AIR", // 223
-    "Pressione x 5 sec.\npulsante BANDA", // 224
-    "Spegnimento", // 225
-    "Disattiva schermo", // 226
-    "Funzione disabilitata" // 227
+    "Premi BANDA x 5 sec.", // 224
+    "Spegni radio", // 225
+    "Spegni schermo", // 226
+    "Non abilitata", // 227
+    "Non definito", // 228
+    "Notiziario", // 229
+    "Magazine", // 230
+    "Informazioni", // 231
+    "Sport", // 232
+    "Educazione", // 233
+    "Prosa", // 234
+    "Cultura", // 235
+    "Scienza", // 236
+    "Vari Generi", // 237
+    "Musica Pop", // 238
+    "Musica Rock", // 239
+    "Musica Leggera", // 240
+    "Classica Leggera", // 241
+    "Musica Classica", // 242
+    "Musica Varia", // 243
+    "Meteo", // 244
+    "Economia", // 245
+    "Ragazzi", // 246
+    "Società", // 247
+    "Religione", // 248
+    "Opinioni", // 249
+    "Viaggi e Turismo", // 250
+    "Svago", // 251
+    "Musica Jazz", // 252
+    "Musica Country", // 253
+    "Musica Italiana", // 254
+    "Revival", // 255
+    "Musica Folk", // 256
+    "Documentari", // 257
+    "Test Allarme", // 258
+    "!!Allarme!!" // 259
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3453,7 +3901,39 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "5 sec. bandbutton press", // 224
     "Power off", // 225
     "Mute screen", // 226
-    "Disabled" // 227
+    "Disabled", // 227
+    "None", // 228
+    "News", // 229
+    "Current Affairs", // 230
+    "Information", // 231
+    "Sport", // 232
+    "Education", // 233
+    "Drama", // 234
+    "Culture", // 235
+    "Science", // 236
+    "Varied", // 237
+    "Pop Music", // 238
+    "Rock Music", // 239
+    "Easy Listening", // 240
+    "Light Classical", // 241
+    "Serious Classical", // 242
+    "Other Music", // 243
+    "Weather", // 244
+    "Finance", // 245
+    "Children's Progs", // 246
+    "Social Affairs", // 247
+    "Religion", // 248
+    "Phone-In", // 249
+    "Travel", // 250
+    "Leisure", // 251
+    "Jazz Music", // 252
+    "Country Music", // 253
+    "National Music", // 254
+    "Oldies Music", // 255
+    "Folk Music", // 256
+    "Documentary", // 257
+    "Alarm Test", // 258
+    "Alarm!!!" // 259
   },
 
   { "Norsk", // Norwegian
@@ -3683,7 +4163,39 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Hold båndknappen\n i 5 sek", // 224
     "Slå av radio", // 225
     "Slå av skjerm", // 226
-    "Deaktivert" // 227
+    "Deaktivert", // 227
+    "Ikke definert", // 228
+    "Nyheter", // 229
+    "Aktuelt", // 230
+    "Informasjon", // 231
+    "Sport", // 232
+    "Undervisning", // 233
+    "Radioteater", // 234
+    "Kultur", // 235
+    "Vitenskap", // 236
+    "Underholdning", // 237
+    "Pop musikk", // 238
+    "Rock musikk", // 239
+    "Lett musikk", // 240
+    "Lett klassisk", // 241
+    "Klassisk musikk", // 242
+    "Diverse musikk", // 243
+    "Værmelding", // 244
+    "Økonomi", // 245
+    "Barneprogram", // 246
+    "Sosialprogram", // 247
+    "Religion", // 248
+    "Ring inn", // 249
+    "Reiseliv", // 250
+    "Fritid", // 251
+    "Jazz musikk", // 252
+    "Countrymusikk", // 253
+    "Nasjonal musikk", // 254
+    "Gammelpop", // 255
+    "Folkemusikk", // 256
+    "Dokumentar", // 257
+    "Alarm test", // 258
+    "Alarm!" // 259
   },
 
   { "Español", // Spanish
@@ -3913,7 +4425,39 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Presione el botón\nband durante 5 seg.", // 224
     "Apagado", // 225
     "Pantalla silenciosa", // 226
-    "Inactivo" // 227
+    "Inactivo", // 227
+    "No definido", // 228
+    "Noticias", // 229
+    "Magazine", // 230
+    "Información", // 231
+    "Deportes", // 232
+    "Educación", // 233
+    "Drama", // 234
+    "Cultura", // 235
+    "Ciencia", // 236
+    "Varios", // 237
+    "Música Pop", // 238
+    "Música Rock", // 239
+    "Grandes éxitos", // 240
+    "Música Ligera", // 241
+    "Música Clásica", // 242
+    "Música Varia", // 243
+    "Meteorología", // 244
+    "Economía", // 245
+    "Infancia", // 246
+    "Sociedad", // 247
+    "Religión", // 248
+    "Opinión – Oyentes", // 249
+    "Viajes", // 250
+    "Ocio", // 251
+    "Música Jazz", // 252
+    "Música Country", // 253
+    "Música Nacional", // 254
+    "Música de Ayer", // 255
+    "Música Folk", // 256
+    "Documental", // 257
+    "Prueba de Alarma", // 258
+    "¡ Alarma !" // 259
   },
 
   { "Português", // Portuguese
@@ -4143,7 +4687,39 @@ static const char* const myLanguage[18][228] PROGMEM = {
     "Pressione o botão\nbanda por 5 seg.", // 224
     "Desligar", // 225
     "Silenciar tela", // 226
-    "Inativo" // 227
+    "Inativo", // 227
+    "Não definido", // 228
+    "Notícias", // 229
+    "Actualidade", // 230
+    "Informação", // 231
+    "Desporto", // 232
+    "Educação", // 233
+    "Rádio – Teatro", // 234
+    "Cultura", // 235
+    "Ciência", // 236
+    "Variado", // 237
+    "Música Pop", // 238
+    "Música Rock", // 239
+    "Música Ligeira", // 240
+    "Clássica Ligeira", // 241
+    "Música Clássica", // 242
+    "Outras Músicas", // 243
+    "Meteorologia", // 244
+    "Economia", // 245
+    "Progr. Infantil", // 246
+    "Acontec. Social", // 247
+    "Religião", // 248
+    "Phone-In", // 249
+    "Viagens", // 250
+    "Lazer", // 251
+    "Música de Jazz", // 252
+    "Música Country", // 253
+    "Música Nacional", // 254
+    "Música Antiga", // 255
+    "Música Folk", // 256
+    "Documentário", // 257
+    "Teste de Alarme", // 258
+    "Alarme – Alarme !" // 259
   }
 };
 #endif
