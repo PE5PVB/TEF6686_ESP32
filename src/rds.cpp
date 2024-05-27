@@ -48,11 +48,11 @@ void ShowAdvancedRDS() {
 
   if (ptynold != radio.rds.PTYN || rdsreset) {
     if (!screenmute) {
-      if (ptynold != "PTYN N/A") {
+      if (ptynold != "PTYN N/A" || radio.rds.hasPTYN) {
         tftPrint(-1, "PTYN N/A", 216, 109, BackgroundColor, BackgroundColor, 16);
         tftPrint(-1, ptynold, 216, 109, BackgroundColor, BackgroundColor, 16);
       }
-      if (radio.rds.PTYN.length() == 0) radio.rds.PTYN = "PTYN N/A";
+      if (!radio.rds.hasPTYN) radio.rds.PTYN = "PTYN N/A";
       tftPrint(-1, String(radio.rds.PTYN), 216, 109, RDSColor, RDSColorSmooth, 16);
       ptynold = radio.rds.PTYN;
     }

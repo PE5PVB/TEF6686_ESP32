@@ -1372,6 +1372,7 @@ void TEF6686::readRDS(byte showrdserrors) {
               RDScharConverter(ptyn_buffer, PTYNtext, sizeof(PTYNtext) / sizeof(wchar_t), false); // Convert 8 bit ASCII to 16 bit ASCII
               String utf8String = convertToUTF8(PTYNtext);                                        // Convert RDS characterset to ASCII
               rds.PTYN = extractUTF8Substring(utf8String, 0, 8, false);                           // Make sure text is not longer than 8 chars
+              rds.hasPTYN = true;
             }
           }
         } break;
@@ -1761,6 +1762,7 @@ void TEF6686::clearRDS (bool fullsearchrds) {
   rds.hasCT = false;
   rds.hasTMC = false;
   rds.hasAID = false;
+  rds.hasPTYN = false;
   rds.hasLongPS = false;
   rds.hasRDSplus = false;
   rds.hasDABAF = false;

@@ -611,6 +611,7 @@ typedef struct _rds_ {
   bool hasTMC;
   bool hasAF;
   bool hasCT;
+  bool hasPTYN;
   bool rtAB;
   bool rtAB32;
   bool hasRDSplus;
@@ -707,7 +708,7 @@ class TEF6686 {
     void setUnMute();
     void setVolume(int8_t volume);
     void tone(uint16_t time, int16_t amplitude, uint16_t frequency);
-    String trimTrailingSpaces(String str);	
+    String trimTrailingSpaces(String str);
     uint8_t af_counter;
     uint8_t eon_counter;
     uint8_t logbook_counter;
