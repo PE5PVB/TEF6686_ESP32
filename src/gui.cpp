@@ -2256,7 +2256,7 @@ void MenuUp() {
 
           case ITEM2:
             LowEdgeSet ++;
-            if (LowEdgeSet > 1070) LowEdgeSet = 650;
+            if (LowEdgeSet > 1070) (TEF == 205 ? LowEdgeSet = 640 : LowEdgeSet = 650);
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -3111,7 +3111,7 @@ void MenuDown() {
 
           case ITEM2:
             LowEdgeSet -= 10;
-            if (LowEdgeSet < 650) LowEdgeSet = 1079;
+            if ((TEF == 205 ? LowEdgeSet < 640 : LowEdgeSet < 650)) LowEdgeSet = 1079;
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);

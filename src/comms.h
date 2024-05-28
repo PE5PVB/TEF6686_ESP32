@@ -46,6 +46,7 @@ extern byte iMSset;
 extern byte language;
 extern byte memorypos;
 extern byte subnetclient;
+extern byte TEF;
 extern char buff[16];
 extern int ActiveColor;
 extern int ActiveColorSmooth;

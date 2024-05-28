@@ -123,6 +123,7 @@ extern byte StereoLevel;
 extern byte StereoLevel;
 extern byte submenu;
 extern byte subnetclient;
+extern byte TEF;
 extern byte tot;
 extern byte touchrotating;
 extern byte tunemode;
