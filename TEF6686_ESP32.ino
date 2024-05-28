@@ -3559,7 +3559,6 @@ void doTuneMode() {
   }
   ShowTuneMode();
   ShowMemoryPos();
-  ShowFreq(0);
   EEPROM.writeByte(EE_BYTE_TUNEMODE, tunemode);
   EEPROM.commit();
 }
