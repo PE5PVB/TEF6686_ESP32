@@ -1327,7 +1327,12 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.drawString(removeNewline(myLanguage[language][203]), 6, 3);
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((radio.rds.fastps ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+
+          switch (radio.rds.fastps) {
+            case 0: FullLineSprite.drawString(myLanguage[language][30], 298, 3); break;
+            case 1: FullLineSprite.drawString(myLanguage[language][260], 298, 3); break;
+            case 2: FullLineSprite.drawString(myLanguage[language][261], 298, 3); break;
+          }
           break;
 
         case FMSETTINGS:
@@ -2212,9 +2217,15 @@ void MenuUp() {
             break;
 
           case ITEM9:
-            radio.rds.fastps = !radio.rds.fastps;
+            radio.rds.fastps++;
+            if (radio.rds.fastps > 2) radio.rds.fastps = 0;
 
-            OneBigLineSprite.drawString((radio.rds.fastps ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            switch (radio.rds.fastps) {
+              case 0: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
+              case 1: OneBigLineSprite.drawString(myLanguage[language][260], 135, 0); break;
+              case 2: OneBigLineSprite.drawString(myLanguage[language][261], 135, 0); break;
+            }
+
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }
@@ -3061,9 +3072,15 @@ void MenuDown() {
             break;
 
           case ITEM9:
-            radio.rds.fastps = !radio.rds.fastps;
+            radio.rds.fastps--;
+            if (radio.rds.fastps > 2) radio.rds.fastps = 2;
 
-            OneBigLineSprite.drawString((radio.rds.fastps ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            switch (radio.rds.fastps) {
+              case 0: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
+              case 1: OneBigLineSprite.drawString(myLanguage[language][260], 135, 0); break;
+              case 2: OneBigLineSprite.drawString(myLanguage[language][261], 135, 0); break;
+            }
+
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }
@@ -3921,7 +3938,12 @@ void DoMenu() {
           case ITEM9:
             Infoboxprint(myLanguage[language][203]);
 
-            OneBigLineSprite.drawString((radio.rds.fastps ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            switch (radio.rds.fastps) {
+              case 0: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
+              case 1: OneBigLineSprite.drawString(myLanguage[language][260], 135, 0); break;
+              case 2: OneBigLineSprite.drawString(myLanguage[language][261], 135, 0); break;
+            }
+
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }

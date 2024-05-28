@@ -1,11 +1,11 @@
 #ifndef LANGUAGE_H
 #define LANGUAGE_H
 
-#define VERSION "v2.10 RC8"
+#define VERSION "v2.10 RC9"
 
 // [number of languages][number of texts]
-// *** means the text is the same as in English
-static const char* const myLanguage[18][260] PROGMEM = {
+
+static const char* const myLanguage[18][262] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -265,7 +265,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Folk Music", // 256
     "Documentary", // 257
     "Alarm Test", // 258
-    "Alarm!!!" // 259
+    "Alarm!!!", // 259
+    "Initial", // 260
+    "Always" //261
   },
 
   { "Nederlands", // Dutch
@@ -278,8 +280,8 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "encoder ingesteld als standaard", // 7
     "FM/AM ontvanger", // 8
     "Tuner: !Geen!", // 9
-    "Volume", // 10 ***
-    "Converter", // 11 ***
+    "Volume", // 10
+    "Converter", // 11
     "Lage bandgrens", // 12
     "Hoge bandgrens", // 13
     "FM RF niveau afwijking", // 14
@@ -311,14 +313,14 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Kies taal", // 40
     "DRUK OP MODE OM AF TE SLUITEN", // 41
     "Aan", // 42
-    "Softmute FM", // 43 ***
-    "Softmute AM", // 44 ***
+    "Softmute FM", // 43
+    "Softmute AM", // 44
     "Piep op bandeinde", // 45
     "Regio", // 46
     "Europa", // 47
-    "Amerika", // 48 ***
+    "Amerika", // 48
     "Toon underscore in RDS", // 49
-    "USB mode", // 50 ***
+    "USB mode", // 50
     "Wi-Fi aktief", // 51
     "Configureer Wi-Fi", // 52
     "Verbind met: ", // 53
@@ -326,9 +328,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Verbinden met Wi-Fi...", // 55
     "MISLUKT!", // 56
     "VERBONDEN!", // 57
-    "Stationlist client IP", // 58 ***
+    "Stationlist client IP", // 58
     "Toon SW golflengte", // 59
-    "RDS filter", // 60 ***
+    "RDS filter", // 60
     "Toon PI fouten", // 61
     "Gebruik squelch", // 62
     "Modulatie meter", // 63
@@ -346,9 +348,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Auto uitschakelen", // 75
     "Scherm uit", // 76
     "Thema", // 77
-    "Uiterlijk", // 78 ***
+    "Uiterlijk", // 78
     "Gedetecteerde applicaties", // 79
-    "Min.", // 80 ***
+    "Min.", // 80
     "Dynamische\nSPI snelheid", // 81
     "Zoek gevoeligheid", // 82
     "Geen", // 83
@@ -370,65 +372,65 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Gebruik AF", // 99
     "Selecteer\nFM banden", // 100
     "Selecteer\nAM banden", // 101
-    "LW", // 102 ***
-    "MW", // 103 ***
-    "SW", // 104 ***
-    "FM", // 105 ***
-    "OIRT", // 106 ***
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT", // 106
     "Afstemmen tijdens\nschermbeveiliging", // 107
     "Model keuze", // 108
     "Basis (ILI9341)", // 109
-    "Portable (ILI9341)", // 110 ***
-    "Portable touch (ILI9341)", // 111 ***
+    "Portable (ILI9341)", // 110
+    "Portable touch (ILI9341)", // 111
     "Titel", // 112
-    "Album", // 113 ***
+    "Album", // 113
     "Nummer", // 114
     "Artiest", // 115
     "Compositie", // 116
     "Deel", // 117
     "Dirigent", // 118
     "Componist", // 119
-    "Band", // 120 ***
+    "Band", // 120
     "Opmerking", // 121
-    "Genre", // 122 ***
+    "Genre", // 122
     "Nieuws", // 123
     "Lokaal nieuws", // 124
     "Financiële beurs", // 125
-    "Sport", // 126 ***
+    "Sport", // 126
     "Loterij", // 127
     "Horoscoop", // 128
     "Dagelijkse grap", // 129
     "Gezondheid", // 130
     "Evenement", // 131
-    "Scene", // 132 ***
+    "Scene", // 132
     "Bioscoop", // 133
-    "TV", // 134 ***
+    "TV", // 134
     "Datum/tijd", // 135
     "Weer", // 136
     "Verkeer", // 137
-    "Alarm", // 138 ***
+    "Alarm", // 138
     "Advertentie", // 139
-    "Website", // 140 ***
+    "Website", // 140
     "Overige", // 141
     "Korte naam", // 142
     "Lange naam", // 143
     "Nu", // 144
     "Straks", // 145
     "Deel", // 146
-    "Host", // 147 ***
+    "Host", // 147
     "Regiseur", // 148
     "Frequentie", // 149
-    "Homepage", // 150 ***
+    "Homepage", // 150
     "Subkanaal", // 151
-    "Hotline", // 152 ***
+    "Hotline", // 152
     "Studio telefoon", // 153
     "Telefoon", // 154
-    "SMS studio", // 155 ***
-    "SMS", // 156 ***
-    "Email hotline", // 157 ***
-    "Email studio", // 158 ***
-    "Email", // 159 ***
-    "Chat", // 160 ***
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email hotline", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Chat", // 160
     "Chat centrum", // 161
     "Stemming", // 162
     "Stemcentrum", // 163
@@ -438,9 +440,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Aankoop", // 167
     "Verkrijg data", // 168
     "MW standaard\nstapgrootte", // 169
-    "Tangerine", // 170 ***
-    "Ocean", // 171 ***
-    "Indigo", // 172 ***
+    "Tangerine", // 170
+    "Ocean", // 171
+    "Indigo", // 172
     "Batterij weergave", // 173
     "Toon spanning", // 174
     "Toon percentage", // 175
@@ -460,14 +462,14 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "ALGEMEEN", // 189
     "GELUID", // 190
     "SCHERM", // 191
-    "RDS", // 192 ***
-    "FM", // 193 ***
-    "AM", // 194 ***
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
     "VERBIND", // 195
     "DX MODE", // 196
-    "Stationlist ID", // 197 ***
-    "AM AGC", // 198 ***
-    "FM deemphasis", // 199 ***
+    "Stationlist ID", // 197
+    "AM AGC", // 198
+    "FM deemphasis", // 199
     "Laag", // 200
     "Middel", // 201
     "Alles", // 202
@@ -527,7 +529,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Volksmuziek", // 256
     "Documentaires", // 257
     "Alarmtest", // 258
-    "Alarm ! ALARM !" // 259
+    "Alarm ! ALARM !", // 259
+    "Initieel", // 260
+    "Altijd" //261
   },
 
   { "Polski", // Polish
@@ -576,9 +580,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Łagodne wyciszanie FM", // 43
     "Łagodne wyciszanie AM", // 44
     "Beep na krawędzi pasma", // 45
-    "Region", // 46 ***
+    "Region", // 46
     "Europa", // 47
-    "Ameryka", // 48 ***
+    "Ameryka", // 48
     "Pokaż podkreślenia w RDS", // 49
     "Tryb USB", // 50
     "Wi-Fi aktywne", // 51
@@ -608,9 +612,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Wyłącznik czasowy", // 75
     "Wyłącz ekran", // 76
     "Motyw", // 77
-    "Skórka", // 78 ***
+    "Skórka", // 78
     "Wykryte aplikacje", // 79
-    "Min.", // 80 ***
+    "Min.", // 80
     "Dynam. prędkość SPI", // 81
     "Czułość skanowania", // 82
     "BRAK", // 83
@@ -632,18 +636,18 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Używaj AF", // 99
     "Wybierz pasmo FM", // 100
     "Wybierz pasmo AM", // 101
-    "LW", // 102 ***
-    "MW", // 103 ***
-    "SW", // 104 ***
-    "FM", // 105 ***
-    "OIRT", // 106 ***
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT", // 106
     "Stroj. gdy ekran wył.", // 107
     "Wybór modelu", // 108
     "Podstawowy (ILI9341)", // 109
     "Przenośny (ILI9341)", // 110
     "Przenoś. dotyk. (ILI9341)", // 111
     "Tytuł", // 112
-    "Album", // 113 ***
+    "Album", // 113
     "Ścieżka", // 114
     "Wykonawca", // 115
     "Kompozycja", // 116
@@ -656,7 +660,7 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Wiadomości", // 123
     "Lokalne wiadomości", // 124
     "Giełda", // 125
-    "Sport", // 126 ***
+    "Sport", // 126
     "Loteria", // 127
     "Horoskop", // 128
     "Codzienny zwrot", // 129
@@ -664,11 +668,11 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Wydarzenie", // 131
     "Scena", // 132
     "Kino", // 133
-    "TV", // 134 ***
+    "TV", // 134
     "Data/Godzina", // 135
     "Pogoda", // 136
     "Wiadom. drogowe", // 137
-    "Alarm", // 138 ***
+    "Alarm", // 138
     "Reklama", // 139
     "Strona internet.", // 140
     "Inne", // 141
@@ -686,10 +690,10 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Telefon do studia", // 153
     "Telefon", // 154
     "SMS do studia", // 155
-    "SMS", // 156 ***
+    "SMS", // 156
     "Email do gorącej linii", // 157
     "Email do studia", // 158
-    "Email", // 159 ***
+    "Email", // 159
     "Czat", // 160
     "Centrum czatu", // 161
     "Pytanie do głosowania", // 162
@@ -700,9 +704,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Zakup", // 167
     "Pobierz dane", // 168
     "Domyślny krok MW", // 169
-    "Mandarynka", // 170 ***
-    "Ocean", // 171 ***
-    "Indygo", // 172 ***
+    "Mandarynka", // 170
+    "Ocean", // 171
+    "Indygo", // 172
     "Opcje baterii", // 173
     "Pokaż napięcie", // 174
     "Pokaż procent naład.", // 175
@@ -722,9 +726,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "GŁÓWNE", // 189
     "DŹWIĘK", // 190
     "WYŚWIETLACZ", // 191
-    "RDS", // 192 ***
-    "FM", // 193 ***
-    "AM", // 194 ***
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
     "ŁĄCZNOŚĆ", // 195
     "TRYB DX", // 196
     "Identyfikator Stationlist", // 197
@@ -780,7 +784,7 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Wyd. Społeczne", // 247
     "Religia", // 248
     "Telefon.Udział.", // 249
-    "Podróze", // 250
+    "Podróże", // 250
     "Czas Wolny", // 251
     "Muzyka Jazz", // 252
     "Muzyka Country", // 253
@@ -789,7 +793,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Muzyka Ludowa", // 256
     "Dokument", // 257
     "Alarm Test", // 258
-    "Alarm" // 259
+    "Alarm", // 259
+    "Initial", // 260
+    "Always" //261
   },
 
   { "Hrvatski", // Croatian
@@ -835,8 +841,8 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Odaberite jezik", // 40
     "PRITISNITE MODE ZA IZLAZ I SPREMANJE", // 41
     "Uključeno", // 42
-    "Softmute FM", // 43 ***
-    "Softmute AM", // 44 ***
+    "Softmute FM", // 43
+    "Softmute AM", // 44
     "Beep na rubu frekv. opsega", // 45
     "Regija", // 46
     "Europa", // 47
@@ -870,7 +876,7 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Time-out timer", // 75
     "Zaslon isključiti", // 76
     "Tema dizajna", // 77
-    "Skin", // 78 ***
+    "Skin", // 78
     "Otkrivene aplikacije", // 79
     "Min.", // 80
     "Dinamička SPI brzina", // 81
@@ -988,7 +994,7 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "FM", // 193
     "AM", // 194
     "SPOJI", // 195
-    "DX MODE", // 196
+    "DX NAČIN RADA", // 196
     "Stationlist ID", // 197
     "AM ATT", // 198
     "FM deemphasis", // 199
@@ -998,28 +1004,28 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Brzi PS", // 203
     "Zadano", // 204
     "Isključi zaslon\ntijekom veze XDRGTK-om", // 205
-    "FMSI stereo\nimprovement", // 206
-    "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!", // 208
-    "Begin scanning\nmemory channels", // 209
-    "Stop scanning\nmemory channels", // 210
-    "Wait time", // 211
-    "Start DX scanning", // 212
-    "FM DX Options", // 213
-    "Abort! The start channel\nis marked as skipped.", // 214
+    "Poboljšanje\nFMSI stereo-a", // 206
+    "Funkcija dostupna samo\nna TEF6687/6689!", // 207
+    "Funkcija nije dostupna\na odabranoj temi dizajna!", // 208
+    "Pokreni skeniranje\nmemorijskih kanala", // 209
+    "Zaustavi skeniranje\nmemorijskih kanala", // 210
+    "Vrijeme čekanja", // 211
+    "Pokreni DX skeniranje", // 212
+    "FM DX opcije", // 213
+    "Prekid! Početni kanal je\noznačen kao preskočen.", // 214
     "Autom. sortiranje AF-a", // 215
-    "Memory channels", // 216
-    "Exclude", // 217
-    "Only", // 218
-    "Auto cancel scan", // 219
-    "Correct PI", // 220
+    "Memorijski kanali", // 216
+    "Isključeno", // 217
+    "Samo", // 218
+    "Autom. otkazivanje skeniranja", // 219
+    "Točan PI", // 220
     "Signal", // 221
-    "Mute audio\nwhile scanning", // 222
+    "Isključi zvuk\ntijekom skeniranja", // 222
     "AIR", // 223
-    "5 sec. bandbutton press", // 224
-    "Power off", // 225
-    "Mute screen", // 226
-    "Disabled", // 227
+    "Pritisnite tipku band 5 sekundi", // 224
+    "Isključivanje", // 225
+    "Isključi zaslon", // 226
+    "Onemogućeno", // 227
     "Neodređeno", // 228
     "Vijesti", // 229
     "Aktualno", // 230
@@ -1051,7 +1057,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Narodna glazba", // 256
     "Dokumentarno", // 257
     "Testni alarm!", // 258
-    "Alarm !" // 259
+    "Alarm !", // 259
+    "Initial", // 260
+    "Always" //261
   },
 
   { "Ελληνικά", // Greek
@@ -1132,7 +1140,7 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Χρονοδιακόπτης λήξης", // 75
     "Οθόνη σβηστή", // 76
     "Θέμα", // 77
-    "Γραφικό\nπεριβάλλον", // 78 ***
+    "Γραφικό\nπεριβάλλον", // 78
     "Εντοπισμένες εφαρμογές", // 79
     "Λεπτά", // 80
     "Δυναμική ταχύτητα\nSPI", // 81
@@ -1188,7 +1196,7 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Γεγονός", // 131
     "Σκηνή", // 132
     "Σινεμά", // 133
-    "TV", // 134 ***
+    "TV", // 134
     "Ημερομηνία/ώρα", // 135
     "Καιρός", // 136
     "Κυκλοφορία", // 137
@@ -1210,7 +1218,7 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Τηλ. στούντιο", // 153
     "Τηλέφωνο", // 154
     "SMS στούντιο", // 155
-    "SMS", // 156 ***
+    "SMS", // 156
     "Email επικοινωνίας", // 157
     "Email στούντιο", // 158
     "Email", // 159
@@ -1282,38 +1290,40 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Σβήσιμο", // 225
     "Σβήσιμο οθόνης", // 226
     "Ανενεργό", // 227
-    "None", // 228
-    "News", // 229
-    "Current Affairs", // 230
-    "Information", // 231
-    "Sport", // 232
-    "Education", // 233
-    "Drama", // 234
-    "Culture", // 235
-    "Science", // 236
-    "Varied", // 237
-    "Pop Music", // 238
-    "Rock Music", // 239
-    "Easy Listening", // 240
-    "Light Classical", // 241
-    "Serious Classical", // 242
-    "Other Music", // 243
-    "Weather", // 244
-    "Finance", // 245
-    "Children's Progs", // 246
-    "Social Affairs", // 247
-    "Religion", // 248
-    "Phone-In", // 249
-    "Travel", // 250
-    "Leisure", // 251
-    "Jazz Music", // 252
-    "Country Music", // 253
-    "National Music", // 254
-    "Oldies Music", // 255
-    "Folk Music", // 256
-    "Documentary", // 257
-    "Alarm Test", // 258
-    "Alarm!!!" // 259
+    "Κανένα", // 228
+    "Ειδήσεις", // 229
+    "Επικαιρότητα", // 230
+    "Πληροφόρηση", // 231
+    "Σπορ", // 232
+    "Εκπαίδευση", // 233
+    "Δράμα", // 234
+    "Πολιτισμός", // 235
+    "Επιστήμη", // 236
+    "Ποικίλο", // 237
+    "Ποπ μουσική", // 238
+    "Ροκ μουσική", // 239
+    "Εύκολη ακρόαση", // 240
+    "Ελαφρά κλασική", // 241
+    "Σοβαρή κλασική", // 242
+    "Άλλη μουσική", // 243
+    "Καιρός", // 244
+    "Οικονομικά", // 245
+    "Παιδικό πρόγραμμα", // 246
+    "Κοινωνικά", // 247
+    "Θρησκεία", // 248
+    "Τηλεφωνικά", // 249
+    "Ταξίδια", // 250
+    "Ελεύθερος χρόνος", // 251
+    "Τζαζ μουσική", // 252
+    "Κάντρι μουσική", // 253
+    "Εθνική μουσική", // 254
+    "Παλαιές επιτυχίες", // 255
+    "Παραδοσιακή μουσική", // 256
+    "Ντοκιμαντέρ", // 257
+    "Δοκιμή συναγερμού", // 258
+    "Συναγερμός!!!", // 259
+    "Initial", // 260
+    "Always" //261
   },
 
   { "Română", // Romanian
@@ -1575,7 +1585,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Muzică Populară", // 256
     "Documentar", // 257
     "Test Alarmă", // 258
-    "Alarmă !" // 259
+    "Alarmă !", // 259
+    "Initial", // 260
+    "Always" //261
   },
 
   { "Deutsch", // German
@@ -1656,7 +1668,7 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Abschaltzeit", // 75
     "Bildschirm aus", // 76
     "Thema", // 77
-    "Oberfläche", // 78 ***
+    "Oberfläche", // 78
     "Erkannte Applikationen", // 79
     "Min.", // 80
     "Dynamische \nSPI-Geschw.", // 81
@@ -1837,7 +1849,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Folklore", // 256
     "Feature", // 257
     "Alarm Test", // 258
-    "Alarm! Alarm!" // 259
+    "Alarm! Alarm!", // 259
+    "Initial", // 260
+    "Always" //261
   },
 
   { "Český", // Czech
@@ -1883,15 +1897,15 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Vyberte jazyk", // 40
     "ZMÁČKNĚTE MODE PRO ULOŽENÍ", // 41
     "Zap.", // 42
-    "Softmute FM", // 43 ***
-    "Softmute AM", // 44 ***
+    "Softmute FM", // 43
+    "Softmute AM", // 44
     "Pípnout na konci pásma", // 45
-    "Region", // 46 ***
+    "Region", // 46
     "Evropa", // 47
-    "Amerika", // 48 ***
+    "Amerika", // 48
     "Zobrazit podtržítka v RDS", // 49
     "Režim USB", // 50
-    "Wi-Fi aktivní", // 51 ***
+    "Wi-Fi aktivní", // 51
     "Konfigurace Wi-Fi", // 52
     "Připojte se k: ", // 53
     "pro nakonfigurování Wi-Fi", // 54
@@ -1900,7 +1914,7 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "PŘIPOJENO!", // 57
     "Stationlist IP", // 58
     "Zobrazit SW pásmo", // 59
-    "RDS filtr", // 60 ***
+    "RDS filtr", // 60
     "Zobrazit chyby v PI", // 61
     "Použít squelch", // 62
     "Graf modulace", // 63
@@ -1918,14 +1932,14 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Časovač vypnutí", // 75
     "Vypnutí obrazovky", // 76
     "Vzhled", // 77
-    "Skin", // 78 ***
+    "Skin", // 78
     "Detekované aplikace", // 79
-    "minut", // 80 ***
-    "Dynamická rychlost SPI", // 81 ***
+    "minut", // 80
+    "Dynamická rychlost SPI", // 81
     "Citlivost skenu", // 82
     "žádné", // 83
     "Verze softwaru", // 84
-    "Font frekvence", // 85 ***
+    "Font frekvence", // 85
     "Auto", // 86
     "AF nedostupné", // 87
     "EON nedostupný", // 88
@@ -1942,77 +1956,77 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "AF:", // 99
     "Zvolte FM pásmo:", // 100
     "Zvolte AM pásmo:", // 101
-    "LW", // 102 ***
-    "MW", // 103 ***
-    "SW", // 104 ***
-    "FM", // 105 ***
-    "OIRT", // 106 ***
-    "Ladění při vypnuté obrazovce", // 107 ***
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT", // 106
+    "Ladění při vypnuté obrazovce", // 107
     "Volba modelu", // 108
     "Základní (ILI9341)", // 109
     "Přenosný (ILI9341)", // 110
     "Přenosný-dotykový(ILI9341)", // 111
-    "Title", // 112 ***
-    "Album", // 113 ***
-    "Track", // 114 ***
-    "Artist", // 115 ***
-    "Composition", // 116 ***
-    "Movement", // 117 ***
-    "Conductor", // 118 ***
-    "Composer", // 119 ***
-    "Band", // 120 ***
-    "Comment", // 121 ***
-    "Genre", // 122 ***
-    "News", // 123 ***
-    "Local news", // 124 ***
-    "Stockmarket", // 125 ***
-    "Sport", // 126 ***
-    "Lottery", // 127 ***
-    "Horoscope", // 128 ***
-    "Daily Diversion", // 129 ***
-    "Health", // 130 ***
-    "Event", // 131 ***
-    "Scene", // 132 ***
-    "Cinema", // 133 ***
-    "TV", // 134 ***
-    "Date/time", // 135 ***
-    "Weather", // 136 ***
-    "Traffic", // 137 ***
-    "Alarm", // 138 ***
-    "Advertisement", // 139 ***
-    "Website", // 140 ***
-    "Other", // 141 ***
-    "Short PS", // 142 ***
-    "Long PS", // 143 ***
-    "Now", // 144 ***
-    "Next", // 145 ***
-    "Part", // 146 ***
-    "Host", // 147 ***
-    "Editor", // 148 ***
-    "Frequency", // 149 ***
-    "Homepage", // 150 ***
-    "Subchannel", // 151 ***
-    "Hotline", // 152 ***
-    "Studio phone", // 153 ***
-    "Phone", // 154 ***
-    "SMS studio", // 155 ***
-    "SMS", // 156 ***
-    "Email hotline", // 157 ***
-    "Email studio", // 158 ***
-    "Email", // 159 ***
-    "Chat", // 160 ***
-    "Chat centre", // 161 ***
-    "Vote question", // 162 ***
-    "Vote centre", // 163 ***
-    "Place", // 164 ***
-    "Appointment", // 165 ***
-    "Identifier", // 166 ***
-    "Purchase", // 167 ***
-    "Get data", // 168 ***
-    "Výchozí krok ladění MW", // 169 ***
-    "Tangerine", // 170 ***
-    "Ocean", // 171 ***
-    "Indigo", // 172 ***
+    "Title", // 112
+    "Album", // 113
+    "Track", // 114
+    "Artist", // 115
+    "Composition", // 116
+    "Movement", // 117
+    "Conductor", // 118
+    "Composer", // 119
+    "Band", // 120
+    "Comment", // 121
+    "Genre", // 122
+    "News", // 123
+    "Local news", // 124
+    "Stockmarket", // 125
+    "Sport", // 126
+    "Lottery", // 127
+    "Horoscope", // 128
+    "Daily Diversion", // 129
+    "Health", // 130
+    "Event", // 131
+    "Scene", // 132
+    "Cinema", // 133
+    "TV", // 134
+    "Date/time", // 135
+    "Weather", // 136
+    "Traffic", // 137
+    "Alarm", // 138
+    "Advertisement", // 139
+    "Website", // 140
+    "Other", // 141
+    "Short PS", // 142
+    "Long PS", // 143
+    "Now", // 144
+    "Next", // 145
+    "Part", // 146
+    "Host", // 147
+    "Editor", // 148
+    "Frequency", // 149
+    "Homepage", // 150
+    "Subchannel", // 151
+    "Hotline", // 152
+    "Studio phone", // 153
+    "Phone", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email hotline", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Chat", // 160
+    "Chat centre", // 161
+    "Vote question", // 162
+    "Vote centre", // 163
+    "Place", // 164
+    "Appointment", // 165
+    "Identifier", // 166
+    "Purchase", // 167
+    "Get data", // 168
+    "Výchozí krok ladění MW", // 169
+    "Tangerine", // 170
+    "Ocean", // 171
+    "Indigo", // 172
     "Úroveň nabití baterie", // 173
     "Zobrazit napětí", // 174
     "Zobrazit procenta", // 175
@@ -2032,14 +2046,14 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "HLAVNÍ", // 189
     "ZVUK", // 190
     "DISPLEJ", // 191
-    "RDS", // 192 ***
-    "FM", // 193 ***
-    "AM", // 194 ***
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
     "KONEKTIVITA", // 195
     "DX REŽIM", // 196
-    "Stationlist ID", // 197 ***
+    "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemfáze", // 199 ***
+    "FM deemfáze", // 199
     "Malé", // 200
     "Velké", // 201
     "Vše", // 202
@@ -2099,7 +2113,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Folkova Hudba", // 256
     "Dokumenty", // 257
     "Alarm Test", // 258
-    "Alarm – Alarm !" // 259
+    "Alarm – Alarm !", // 259
+    "Initial", // 260
+    "Always" //261
   },
 
   { "SloveSlovenský", // Slovak
@@ -2145,15 +2161,15 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Vyberte jazyk", // 40
     "STLAČTE MODE PRE ULOŽENIE", // 41
     "Zap", // 42
-    "Softmute FM", // 43 ***
-    "Softmute AM", // 44 ***
+    "Softmute FM", // 43
+    "Softmute AM", // 44
     "Pípnutie na konci pásma", // 45
-    "Region", // 46 ***
+    "Region", // 46
     "Európa", // 47
-    "America", // 48 ***
+    "America", // 48
     "Zobraziť podtržítka v RDS", // 49
     "USB mód", // 50
-    "Wi-Fi active", // 51 ***
+    "Wi-Fi active", // 51
     "Konfigurace Wi-Fi", // 52
     "Pripojte sa k: ", // 53
     "pre nakonfigurovánie Wi-Fi", // 54
@@ -2162,7 +2178,7 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "PRIPOJENÉ!", // 57
     "Stationlist IP", // 58
     "Zobraziť SW pásmo", // 59
-    "RDS filter", // 60 ***
+    "RDS filter", // 60
     "Zobraziť chyby v PI", // 61
     "Zobraziť squelch", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
     "Graf modulácie", // 63
@@ -2180,14 +2196,14 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Čas", // 75
     "Vypnutie obrazovky", // 76
     "Vzhľad", // 77
-    "Skin", // 78 ***
+    "Skin", // 78
     "Detegované aplikácie", // 79
-    "Min.", // 80 ***
-    "Dynamic SPI speed", // 81 ***
+    "Min.", // 80
+    "Dynamic SPI speed", // 81
     "Scan sensitivity", // 82
     "NONE", // 83 represents: AM/FM bands unavailable(please delete this note after translation）
     "Software version", // 84
-    "Frequency font", // 85 ***
+    "Frequency font", // 85
     "Auto", // 86
     "AF nedostupné", // 87
     "EON nedostupný", // 88
@@ -2204,77 +2220,77 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "AF:", // 99
     "Zvoľte FM pásmo:", // 100
     "Zvoľte AM pásmo:", // 101
-    "LW", // 102 ***
-    "MW", // 103 ***
-    "SW", // 104 ***
-    "FM", // 105 ***
-    "OIRT", // 106 ***
-    "Rotating while screen off", // 107 ***
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT", // 106
+    "Rotating while screen off", // 107
     "Voľba modelu", // 108
     "Základ (ILI9341)", // 109
     "Prenosný (ILI9341)", // 110
     "Prenosný - dotykový (ILI9341)", // 111
-    "Title", // 112 ***
-    "Album", // 113 ***
-    "Track", // 114 ***
-    "Artist", // 115 ***
-    "Composition", // 116 ***
-    "Movement", // 117 ***
-    "Conductor", // 118 ***
-    "Composer", // 119 ***
-    "Band", // 120 ***
-    "Comment", // 121 ***
-    "Genre", // 122 ***
-    "News", // 123 ***
-    "Local news", // 124 ***
-    "Stockmarket", // 125 ***
-    "Sport", // 126 ***
-    "Lottery", // 127 ***
-    "Horoscope", // 128 ***
-    "Daily Diversion", // 129 ***
-    "Health", // 130 ***
-    "Event", // 131 ***
-    "Scene", // 132 ***
-    "Cinema", // 133 ***
-    "TV", // 134 ***
-    "Date/time", // 135 ***
-    "Weather", // 136 ***
-    "Traffic", // 137 ***
-    "Alarm", // 138 ***
-    "Advertisement", // 139 ***
-    "Website", // 140 ***
-    "Other", // 141 ***
-    "Short PS", // 142 ***
-    "Long PS", // 143 ***
-    "Now", // 144 ***
-    "Next", // 145 ***
-    "Part", // 146 ***
-    "Host", // 147 ***
-    "Editor", // 148 ***
-    "Frequency", // 149 ***
-    "Homepage", // 150 ***
-    "Subchannel", // 151 ***
-    "Hotline", // 152 ***
-    "Studio phone", // 153 ***
-    "Phone", // 154 ***
-    "SMS studio", // 155 ***
-    "SMS", // 156 ***
-    "Email hotline", // 157 ***
-    "Email studio", // 158 ***
-    "Email", // 159 ***
-    "Chat", // 160 ***
-    "Chat centre", // 161 ***
-    "Vote question", // 162 ***
-    "Vote centre", // 163 ***
-    "Place", // 164 ***
-    "Appointment", // 165 ***
-    "Identifier", // 166 ***
-    "Purchase", // 167 ***
-    "Get data", // 168 ***
-    "MW default stepsize", // 169 ***
-    "Tangerine", // 170 ***
-    "Ocean", // 171 ***
-    "Indigo", // 172 ***
+    "Title", // 112
+    "Album", // 113
+    "Track", // 114
+    "Artist", // 115
+    "Composition", // 116
+    "Movement", // 117
+    "Conductor", // 118
+    "Composer", // 119
+    "Band", // 120
+    "Comment", // 121
+    "Genre", // 122
+    "News", // 123
+    "Local news", // 124
+    "Stockmarket", // 125
+    "Sport", // 126
+    "Lottery", // 127
+    "Horoscope", // 128
+    "Daily Diversion", // 129
+    "Health", // 130
+    "Event", // 131
+    "Scene", // 132
+    "Cinema", // 133
+    "TV", // 134
+    "Date/time", // 135
+    "Weather", // 136
+    "Traffic", // 137
+    "Alarm", // 138
+    "Advertisement", // 139
+    "Website", // 140
+    "Other", // 141
+    "Short PS", // 142
+    "Long PS", // 143
+    "Now", // 144
+    "Next", // 145
+    "Part", // 146
+    "Host", // 147
+    "Editor", // 148
+    "Frequency", // 149
+    "Homepage", // 150
+    "Subchannel", // 151
+    "Hotline", // 152
+    "Studio phone", // 153
+    "Phone", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email hotline", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Chat", // 160
+    "Chat centre", // 161
+    "Vote question", // 162
+    "Vote centre", // 163
+    "Place", // 164
+    "Appointment", // 165
+    "Identifier", // 166
+    "Purchase", // 167
+    "Get data", // 168
+    "MW default stepsize", // 169
+    "Tangerine", // 170
+    "Ocean", // 171
+    "Indigo", // 172
     "Nastavenia batérie", // 173
     "Zobraziť napätie", // 174
     "Zobraziť percentá", // 175
@@ -2294,14 +2310,14 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "HLAVNÝ", // 189
     "ZVUK", // 190
     "DISPLEJ", // 191
-    "RDS", // 192 ***
-    "FM", // 193 ***
-    "AM", // 194 ***
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
     "PRIPOJENIE", // 195
     "DX MODE", // 196
-    "Stationlist ID", // 197 ***
+    "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemphasis", // 199 ***
+    "FM deemphasis", // 199
     "Malý", // 200
     "Veľký", // 201
     "Všetko", // 202
@@ -2361,7 +2377,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Folk Music", // 256
     "Documentary", // 257
     "Alarm Test", // 258
-    "Alarm!!!" // 259
+    "Alarm!!!", // 259
+    "Initial", // 260
+    "Always" //261
   },
 
   { "Français", // French
@@ -2442,21 +2460,21 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Temporisateur", // 75
     "Affichage éteint", // 76
     "Thème", // 77
-    "Skin", // 78 ***
+    "Skin", // 78
     "Applications détectées", // 79
     "Min.", // 80
     "Vitesse SPI\ndynamique", // 81
     "Sensibilité\ndu scanne ", // 82
     "AUCUNE", // 83
     "Version de logiciel", // 84
-    "Police de fréquence", // 85 ***
+    "Police de fréquence", // 85
     "Auto", // 86
     "AF indisponible", // 87
     "EON indisponible", // 88
     "RT+ indisponible", // 89
     "Valeur du pas FM\npar défaut", // 90
     "Économiseur d'affichage", // 91
-    "Sec", // 92 ***
+    "Sec", // 92
     "APPUYEZ SUR BAND POUR FERMER", // 93
     "1% luminosité", // 94
     "25% luminosité", // 95
@@ -2623,7 +2641,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Folklore", // 256
     "Documentaire", // 257
     "TEST", // 258
-    "Alerte !" // 259
+    "Alerte !", // 259
+    "Initial", // 260
+    "Always" //261
   },
 
   { "Български", // Bulgarian
@@ -2700,18 +2720,18 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Главен код:", // 71
     "Сътрудници:", // 72
     "Неизвестно", // 73
-    "Screensaver options", // 74 ***
-    "Time-out timer", // 75 ***
+    "Screensaver options", // 74
+    "Time-out timer", // 75
     "Изключен дисплей", // 76
     "Тема", // 77
-    "Skin", // 78 ***
-    "Detected applications", // 79 ***
+    "Skin", // 78
+    "Detected applications", // 79
     "Мин.", // 80
-    "Dynamic SPI speed", // 81 ***
+    "Dynamic SPI speed", // 81
     "Scan sensitivity", // 82
     "NONE", // 83 represents: AM/FM bands unavailable(please delete this note after translation）
     "Software version", // 84
-    "Frequency font", // 85 ***
+    "Frequency font", // 85
     "Auto", // 86
     "AF опцията не е налична", // 87
     "EON опцията не е налична", // 88
@@ -2742,7 +2762,7 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Албум", // 113
     "Песен", // 114
     "Изпълнител", // 115
-    "Composition", // 116 ***
+    "Composition", // 116
     "Действие", // 117
     "Диригент", // 118
     "Композитор", // 119
@@ -2755,9 +2775,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Спорт", // 126
     "Лото", // 127
     "Хороскоп", // 128
-    "Daily Diversion", // 129 ***
+    "Daily Diversion", // 129
     "Здраве", // 130
-    "Event", // 131 ***
+    "Event", // 131
     "Сцена", // 132
     "Кино", // 133
     "ТВ", // 134
@@ -2767,50 +2787,50 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Аларма", // 138
     "Реклама", // 139
     "Уеб страница", // 140
-    "Other", // 141 ***
-    "Short PS", // 142 ***
-    "Long PS", // 143 ***
-    "Now", // 144 ***
+    "Other", // 141
+    "Short PS", // 142
+    "Long PS", // 143
+    "Now", // 144
     "Следващ", // 145
-    "Part", // 146 ***
-    "Host", // 147 ***
-    "Editor", // 148 ***
+    "Part", // 146
+    "Host", // 147
+    "Editor", // 148
     "Честота", // 149
     "Начална страница", // 150
-    "Subchannel", // 151 ***
+    "Subchannel", // 151
     "Гореща линия", // 152
     "Студиен тел", // 153
     "Телефон", // 154
-    "SMS studio", // 155 ***
-    "SMS", // 156 ***
+    "SMS studio", // 155
+    "SMS", // 156
     "Имейл гореща линия", // 157
     "Имейл до студиото", // 158
     "Имейл", // 159
     "Чат", // 160
     "Чат център", // 161
-    "Vote question", // 162 ***
-    "Vote centre", // 163 ***
-    "Place", // 164 ***
-    "Appointment", // 165 ***
+    "Vote question", // 162
+    "Vote centre", // 163
+    "Place", // 164
+    "Appointment", // 165
     "Идентификатор", // 166
     "Покупка", // 167
     "Получи данни", // 168
-    "MW default stepsize", // 169 ***
-    "Tangerine", // 170 ***
+    "MW default stepsize", // 169
+    "Tangerine", // 170
     "Океан", // 171
     "Индиго", // 172
-    "Battery options", // 173 ***
-    "Show voltage", // 174 ***
-    "Show percentage", // 175 ***
-    "RT buffering", // 176 ***
+    "Battery options", // 173
+    "Show voltage", // 174
+    "Show percentage", // 175
+    "RT buffering", // 176
     "Главни настройки", // 177
     "Аудио-настройка", // 178
     "Екран-настроийка", // 179
     "RDS настройки", // 180
     "FM настройки", // 181
     "AM/СВ настройки", // 182
-    "Connectivity", // 183 ***
-    "PRESS MODE TO RETURN", // 184 ***
+    "Connectivity", // 183
+    "PRESS MODE TO RETURN", // 184
     "AM CoChannelDet", // 185
     "CoChannelDet sensitivity", // 186
     "AM CoChannelDet threshold", // 187
@@ -2818,18 +2838,18 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "ГЛАВНО МЕНЮ", // 189
     "АУДИО", // 190
     "ЕКРАН", // 191
-    "RDS", // 192 ***
+    "RDS", // 192
     "УКВ (FM)", // 193
     "СВ (AM)", // 194
     "ВРЪЗКА", // 195
     "DX MODE", // 196
     "Stationlist Идентификатор", // 197
     "СВ атенюатор", // 198
-    "FM deemphasis", // 199 ***
-    "Small", // 200 ***
-    "Large", // 201 ***
+    "FM deemphasis", // 199
+    "Small", // 200
+    "Large", // 201
     "Всички", // 202
-    "Fast PS", // 203 ***
+    "Fast PS", // 203
     "Default", // 204
     "Mute screen on\nXDRGTK connection", // 205
     "FMSI stereo\nimprovement", // 206
@@ -2841,7 +2861,7 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Start DX scanning", // 212
     "FM DX Options", // 213
     "Abort! The start channel\nis marked as skipped.", // 214
-    "Auto sort AF", // 215 ***
+    "Auto sort AF", // 215
     "Memory channels", // 216
     "Exclude", // 217
     "Only", // 218
@@ -2885,7 +2905,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Народна музика", // 256
     "Документалистика", // 257
     "Внимание тест", // 258
-    "Тревога!" // 259
+    "Тревога!", // 259
+    "Initial", // 260
+    "Always" //261
   },
 
   { "Русский", // Russian
@@ -2966,14 +2988,14 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Глубокий сон", // 75
     "Погасить экран", // 76
     "Тема", // 77
-    "Вид (Skin)", // 78 ***
+    "Вид (Skin)", // 78
     "Обнаруженные приложения", // 79
     "мин.", // 80
-    "Частота шины дисплея SPI", // 81 ***
+    "Частота шины дисплея SPI", // 81
     "Чувствительность сканирования", // 82
     "Не использовать AM", // 83
     "Версия прошивки -", // 84
-    "Шрифт индикации частоты", // 85 ***
+    "Шрифт индикации частоты", // 85
     "Auto", // 86
     "Нет данных", // 87
     "Нет данных", // 88
@@ -3147,7 +3169,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Народная музыка", // 256
     "Документалистика", // 257
     "Внимание тест", // 258
-    "Тревога!" // 259
+    "Тревога!", // 259
+    "Initial", // 260
+    "Always" //261
   },
 
   { "Українська", // Ukranian
@@ -3228,14 +3252,14 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Таймер тайм-ауту", // 75
     "Екран вимкнено", // 76
     "Тема", // 77
-    "Skin", // 78 ***
+    "Skin", // 78
     "Виявлені програми", // 79
     "мін.", // 80
-    "Швидкість шини дисплея (SPI)", // 81 ***
+    "Швидкість шини дисплея (SPI)", // 81
     "Чутливість сканування", // 82
     "NONE", // 83 represents: AM/FM bands unavailable(please delete this note after translation）
     "Версія ПО", // 84
-    "Frequency font", // 85 ***
+    "Frequency font", // 85
     "Auto", // 86
     "Немає доступних AF", // 87
     "Немає доступного EON", // 88
@@ -3252,11 +3276,11 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Режим AF:", // 99
     "Виберіть FM-діапазон:", // 100
     "Виберіть AM-діапазон:", // 101
-    "LW", // 102 ***
-    "MW", // 103 ***
-    "SW", // 104 ***
-    "FM", // 105 ***
-    "OIRT", // 106 ***
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT", // 106
     "Обертання, коли екран вимкнено", // 107
     "Вибір моделі", // 108
     "Стандартний (ILI9341)", // 109
@@ -3306,10 +3330,10 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Телефон студії", // 153
     "Телефон", // 154
     "SMS студії", // 155
-    "SMS", // 156 ***
+    "SMS", // 156
     "Email гарячої лінії", // 157
     "Email студії", // 158
-    "Email", // 159 ***
+    "Email", // 159
     "Чат", // 160
     "Чат-центр", // 161
     "Питання голосування", // 162
@@ -3319,7 +3343,7 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Ідентифікатор", // 166
     "Покупка", // 167
     "Отримати дані", // 168
-    "MW default stepsize", // 169 ***
+    "MW default stepsize", // 169
     "Мандариновий", // 170
     "Океан", // 171
     "Індиго", // 172
@@ -3342,14 +3366,14 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "ОСНОВНОЇ", // 189
     "АУДІО", // 190
     "ДИСПЛЕЙ", // 191
-    "RDS", // 192 ***
-    "FM", // 193 ***
-    "AM", // 194 ***
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
     "ПІДКЛЮЧЕННЯ", // 195
     "DX MODE", // 196
-    "Stationlist ID", // 197 ***
+    "Stationlist ID", // 197
     "AM ATT", // 198
-    "FM deemphasis", // 199 ***
+    "FM deemphasis", // 199
     "Мало", // 200
     "Багато", // 201
     "Усе", // 202
@@ -3409,7 +3433,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Folk Music", // 256
     "Documentary", // 257
     "Alarm Test", // 258
-    "Alarm!!!" // 259
+    "Alarm!!!", // 259
+    "Initial", // 260
+    "Always" //261
   },
 
   { "Italiano", // Italian
@@ -3442,10 +3468,10 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Soglia taglio alti", // 27
     "Soglia di livello basso", // 28
     "Luminosità schermo", // 29
-    "Off", // 30 ***
+    "Off", // 30
     "Schermo disattivato!", // 31
     "Deseleziona box RF+ per audio", // 32
-    "OFF", // 33 ***
+    "OFF", // 33
     "SCANSIONE...", // 34
     "Ricevitore non rilevato", // 35
     "Guadagno antenna AM", // 36
@@ -3454,13 +3480,13 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Lingua", // 39
     "Scegli la lingua", // 40
     "SALVA E ESCI: PREMI MODO", // 41
-    "On", // 42 ***
-    "Softmute FM", // 43 ***
-    "Softmute AM", // 44 ***
+    "On", // 42
+    "Softmute FM", // 43
+    "Softmute AM", // 44
     "Beep sul limite di banda", // 45
     "Regione", // 46
     "Europa", // 47
-    "America", // 48 ***
+    "America", // 48
     "Mostra trattino basso in RDS", // 49
     "Modalità USB", // 50
     "Wi-Fi attivo", // 51
@@ -3486,18 +3512,18 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Codice principale:", // 71
     "Collaboratori: ", // 72
     "Sconosciuto", // 73
-    "Opzioni salvaschermo", // 74 ***
-    "Tempo di time-out", // 75 ***
+    "Opzioni salvaschermo", // 74
+    "Tempo di time-out", // 75
     "Schermo spento", // 76
     "Motivo schermo", // 77
-    "Skin", // 78 ***
-    "Applicazioni rilevate", // 79 ***
-    "Min.", // 80 ***
-    "Velocità SPI Dinamico", // 81 ***
+    "Skin", // 78
+    "Applicazioni rilevate", // 79
+    "Min.", // 80
+    "Velocità SPI Dinamico", // 81
     "Sensibilità scansione", // 82
     "ASSENTE", // 83
     "Versione Software", // 84
-    "Font frequenza", // 85 ***
+    "Font frequenza", // 85
     "Auto", // 86
     "AF non disponibile", // 87
     "EON non disponibile", // 88
@@ -3514,108 +3540,108 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Utilizzare AF:", // 99
     "Selezionare banda FM:", // 100
     "Selezionare banda AM:", // 101
-    "LW", // 102 ***
-    "MW", // 103 ***
-    "SW", // 104 ***
-    "FM", // 105 ***
-    "OIRT", // 106 ***
-    "Rotazione con schermo spento", // 107 ***
-    "Selezionare modello", // 108 ***
-    "Base (ILI9341)", // 109 ***
-    "Portatile (ILI9341)", // 110 ***
-    "Portatile touch (ILI9341)", // 111 ***
-    "Titolo", // 112 ***
-    "Album", // 113 ***
-    "Traccia", // 114 ***
-    "Artista", // 115 ***
-    "Composizione", // 116 ***
-    "Movimento", // 117 ***
-    "Direttore", // 118 ***
-    "Compositore", // 119 ***
-    "Band", // 120 ***
-    "Commento", // 121 ***
-    "Genere", // 122 ***
-    "Notizie", // 123 ***
-    "Notizie locali", // 124 ***
-    "Borsa", // 125 ***
-    "Sport", // 126 ***
-    "Lotterie", // 127 ***
-    "Oroscopo", // 128 ***
-    "Svago quotidiano", // 129 ***
-    "Salute", // 130 ***
-    "Eventi", // 131 ***
-    "Scena", // 132 ***
-    "Cinema", // 133 ***
-    "TV", // 134 ***
-    "Data/ora", // 135 ***
-    "Meteo", // 136 ***
-    "Traffico", // 137 ***
-    "Allerta", // 138 ***
-    "Pubblicità", // 139 ***
-    "Sito Web", // 140 ***
-    "Altro", // 141 ***
-    "PS breve", // 142 ***
-    "PS lungo", // 143 ***
-    "Adesso", // 144 ***
-    "Prossimo", // 145 ***
-    "Parte", // 146 ***
-    "Conduttore", // 147 ***
-    "Redattore", // 148 ***
-    "Frequenza", // 149 ***
-    "Homepage", // 150 ***
-    "Sottocanale", // 151 ***
-    "Telefono emergenze", // 152 ***
-    "Telefono studio", // 153 ***
-    "Telefono", // 154 ***
-    "SMS studio", // 155 ***
-    "SMS", // 156 ***
-    "Email emergenze", // 157 ***
-    "Email studio", // 158 ***
-    "Email", // 159 ***
-    "Chat", // 160 ***
-    "Centro Chat", // 161 ***
-    "Domanda votazione", // 162 ***
-    "Centro votazione", // 163 ***
-    "Luogo", // 164 ***
-    "Appuntamento", // 165 ***
-    "Identificatore", // 166 ***
-    "Acquisto", // 167 ***
-    "Ottieni dati", // 168 ***
-    "Passo di sintonia\nMW predefinito", // 169 ***
-    "Tangerine", // 170 ***
-    "Ocean", // 171 ***
-    "Indigo", // 172 ***
-    "Opzioni batteria", // 173 ***
-    "Mostra tensione", // 174 ***
-    "Mostra percentuale", // 175 ***
-    "Buffering RT", // 176 ***
-    "Impostazioni principali", // 177 ***
-    "Impostazioni audio", // 178 ***
-    "Impostazioni schermo", // 179 ***
-    "Impostazioni RDS", // 180 ***
-    "Impostazioni FM", // 181 ***
-    "Impostazioni AM", // 182 ***
-    "Connettività", // 183 ***
-    "PREMI MODO PER CHIUDERE", // 184 ***
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT", // 106
+    "Rotazione con schermo spento", // 107
+    "Selezionare modello", // 108
+    "Base (ILI9341)", // 109
+    "Portatile (ILI9341)", // 110
+    "Portatile touch (ILI9341)", // 111
+    "Titolo", // 112
+    "Album", // 113
+    "Traccia", // 114
+    "Artista", // 115
+    "Composizione", // 116
+    "Movimento", // 117
+    "Direttore", // 118
+    "Compositore", // 119
+    "Band", // 120
+    "Commento", // 121
+    "Genere", // 122
+    "Notizie", // 123
+    "Notizie locali", // 124
+    "Borsa", // 125
+    "Sport", // 126
+    "Lotterie", // 127
+    "Oroscopo", // 128
+    "Svago quotidiano", // 129
+    "Salute", // 130
+    "Eventi", // 131
+    "Scena", // 132
+    "Cinema", // 133
+    "TV", // 134
+    "Data/ora", // 135
+    "Meteo", // 136
+    "Traffico", // 137
+    "Allerta", // 138
+    "Pubblicità", // 139
+    "Sito Web", // 140
+    "Altro", // 141
+    "PS breve", // 142
+    "PS lungo", // 143
+    "Adesso", // 144
+    "Prossimo", // 145
+    "Parte", // 146
+    "Conduttore", // 147
+    "Redattore", // 148
+    "Frequenza", // 149
+    "Homepage", // 150
+    "Sottocanale", // 151
+    "Telefono emergenze", // 152
+    "Telefono studio", // 153
+    "Telefono", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email emergenze", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Chat", // 160
+    "Centro Chat", // 161
+    "Domanda votazione", // 162
+    "Centro votazione", // 163
+    "Luogo", // 164
+    "Appuntamento", // 165
+    "Identificatore", // 166
+    "Acquisto", // 167
+    "Ottieni dati", // 168
+    "Passo di sintonia\nMW predefinito", // 169
+    "Tangerine", // 170
+    "Ocean", // 171
+    "Indigo", // 172
+    "Opzioni batteria", // 173
+    "Mostra tensione", // 174
+    "Mostra percentuale", // 175
+    "Buffering RT", // 176
+    "Impostazioni principali", // 177
+    "Impostazioni audio", // 178
+    "Impostazioni schermo", // 179
+    "Impostazioni RDS", // 180
+    "Impostazioni FM", // 181
+    "Impostazioni AM", // 182
+    "Connettività", // 183
+    "PREMI MODO PER CHIUDERE", // 184
     "CoChannelDet AM", // 185
     "Sensibilità CoChannelDet", // 186
     "Soglia CoChannelDet AM", // 187
     "Contatore CoChannelDet", // 188
-    "PRINCIPALE", // 189 ***
-    "AUDIO", // 190 ***
-    "SCHERMO", // 191 ***
-    "RDS", // 192 ***
-    "FM", // 193 ***
-    "AM", // 194 ***
-    "CONNETTI", // 195 ***
+    "PRINCIPALE", // 189
+    "AUDIO", // 190
+    "SCHERMO", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "CONNETTI", // 195
     "MODO DX", // 196
-    "ID Stationlist", // 197 ***
+    "ID Stationlist", // 197
     "ATT AM", // 198
-    "Deenfasi FM", // 199 ***
-    "Piccolo", // 200 ***
-    "Grande", // 201 ***
-    "Tutto", // 202 ***
-    "PS rapido", // 203 ***
+    "Deenfasi FM", // 199
+    "Piccolo", // 200
+    "Grande", // 201
+    "Tutto", // 202
+    "PS rapido", // 203
     "Default", // 204
     "Spegni schermo se\nconnesso a XDRGTK", // 205
     "FMSI audio stereofonico ottimizzato", // 206
@@ -3671,7 +3697,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Musica Folk", // 256
     "Documentari", // 257
     "Test Allarme", // 258
-    "!!Allarme!!" // 259
+    "!!Allarme!!", // 259
+    "Initial", // 260
+    "Always" //261
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3707,7 +3735,7 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "关闭", // 30
     "屏幕静音!", // 31
     "点击RF+按钮解除静音", // 32
-    "OFF", // 33 ***
+    "OFF", // 33
     "搜索中...", // 34
     "未检测到收音芯片", // 35
     "AM 天线增益", // 36
@@ -3752,14 +3780,14 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "倒计时关机", // 75
     "关闭屏幕", // 76
     "主题&颜色", // 77
-    "布局", // 78 ***
-    "Detected applications", // 79 ***
+    "布局", // 78
+    "Detected applications", // 79
     "分钟", // 80
     "调整SPI通讯速率", // 81
     "搜索灵敏度", // 82
     "不可用", // 83
     "固件版本", // 84
-    "频率字体", // 85 ***
+    "频率字体", // 85
     "自动", // 86
     "AF 不可用", // 87
     "EON 不可用", // 88
@@ -3776,74 +3804,74 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "使用 AF", // 99
     "选择FM波段", // 100
     "选择AM波段", // 101
-    "LW", // 102 ***
-    "MW", // 103 ***
-    "SW", // 104 ***
-    "FM", // 105 ***
-    "OIRT", // 106 ***
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT", // 106
     "熄屏操作飞梭", // 107
     "硬件型号选择", // 108
     "原版(ILI9341)", // 109
     "便携版(ILI9341)", // 110
     "便携电阻触摸版(ILI9341)", // 111
-    "Title", // 112 ***
-    "Album", // 113 ***
-    "Track", // 114 ***
-    "Artist", // 115 ***
-    "Composition", // 116 ***
-    "Movement", // 117 ***
-    "Conductor", // 118 ***
-    "Composer", // 119 ***
-    "Band", // 120 ***
-    "Comment", // 121 ***
-    "Genre", // 122 ***
-    "News", // 123 ***
-    "Local news", // 124 ***
-    "Stockmarket", // 125 ***
-    "Sport", // 126 ***
-    "Lottery", // 127 ***
-    "Horoscope", // 128 ***
-    "Daily Diversion", // 129 ***
-    "Health", // 130 ***
-    "Event", // 131 ***
-    "Scene", // 132 ***
-    "Cinema", // 133 ***
-    "TV", // 134 ***
-    "Date/time", // 135 ***
-    "Weather", // 136 ***
-    "Traffic", // 137 ***
-    "Alarm", // 138 ***
-    "Advertisement", // 139 ***
-    "Website", // 140 ***
-    "Other", // 141 ***
-    "Short PS", // 142 ***
-    "Long PS", // 143 ***
-    "Now", // 144 ***
-    "Next", // 145 ***
-    "Part", // 146 ***
-    "Host", // 147 ***
-    "Editor", // 148 ***
-    "Frequency", // 149 ***
-    "Homepage", // 150 ***
-    "Subchannel", // 151 ***
-    "Hotline", // 152 ***
-    "Studio phone", // 153 ***
-    "Phone", // 154 ***
-    "SMS studio", // 155 ***
-    "SMS", // 156 ***
-    "Email hotline", // 157 ***
-    "Email studio", // 158 ***
-    "Email", // 159 ***
-    "Chat", // 160 ***
-    "Chat centre", // 161 ***
-    "Vote question", // 162 ***
-    "Vote centre", // 163 ***
-    "Place", // 164 ***
-    "Appointment", // 165 ***
-    "Identifier", // 166 ***
-    "Purchase", // 167 ***
-    "Get data", // 168 ***
-    "中波默认步进", // 169 ***
+    "Title", // 112
+    "Album", // 113
+    "Track", // 114
+    "Artist", // 115
+    "Composition", // 116
+    "Movement", // 117
+    "Conductor", // 118
+    "Composer", // 119
+    "Band", // 120
+    "Comment", // 121
+    "Genre", // 122
+    "News", // 123
+    "Local news", // 124
+    "Stockmarket", // 125
+    "Sport", // 126
+    "Lottery", // 127
+    "Horoscope", // 128
+    "Daily Diversion", // 129
+    "Health", // 130
+    "Event", // 131
+    "Scene", // 132
+    "Cinema", // 133
+    "TV", // 134
+    "Date/time", // 135
+    "Weather", // 136
+    "Traffic", // 137
+    "Alarm", // 138
+    "Advertisement", // 139
+    "Website", // 140
+    "Other", // 141
+    "Short PS", // 142
+    "Long PS", // 143
+    "Now", // 144
+    "Next", // 145
+    "Part", // 146
+    "Host", // 147
+    "Editor", // 148
+    "Frequency", // 149
+    "Homepage", // 150
+    "Subchannel", // 151
+    "Hotline", // 152
+    "Studio phone", // 153
+    "Phone", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email hotline", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Chat", // 160
+    "Chat centre", // 161
+    "Vote question", // 162
+    "Vote centre", // 163
+    "Place", // 164
+    "Appointment", // 165
+    "Identifier", // 166
+    "Purchase", // 167
+    "Get data", // 168
+    "中波默认步进", // 169
     "桔红", // 170
     "海之蓝", // 171
     "靛青", // 172
@@ -3871,7 +3899,7 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "AM 设置", // 194
     "连机模式", // 195
     "FMDX 选项", // 196
-    "Stationlist ID", // 197 ***
+    "Stationlist ID", // 197
     "AM天线衰减", // 198
     "FM去加重", // 199
     "少量", // 200
@@ -3933,7 +3961,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Folk Music", // 256
     "Documentary", // 257
     "Alarm Test", // 258
-    "Alarm!!!" // 259
+    "Alarm!!!", // 259
+    "Initial", // 260
+    "Always" //261
   },
 
   { "Norsk", // Norwegian
@@ -3979,10 +4009,10 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Velg språk", // 40
     "TRYKK MODE FOR Å LAGRE & AVSLUTTE", // 41
     "På", // 42
-    "Softmute FM", // 43 ***
-    "Softmute AM", // 44 ***
+    "Softmute FM", // 43
+    "Softmute AM", // 44
     "Pip ved båndkant", // 45
-    "Region", // 46 ***
+    "Region", // 46
     "Europa", // 47
     "Amerika", // 48
     "Vis understrek i RDS", // 49
@@ -3996,7 +4026,7 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "TILKOBLET!", // 57
     "Stationlist klient IP", // 58
     "Vis SW-bånd", // 59
-    "RDS filter", // 60 ***
+    "RDS filter", // 60
     "Vis PI feil", // 61
     "Bruk squelch", // 62
     "Modulasjonsmåler", // 63
@@ -4014,9 +4044,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Tidsavbruddstimer", // 75
     "Skjerm av", // 76
     "Tema", // 77
-    "Skin", // 78 ***
+    "Skin", // 78
     "Oppdaget applikasjoner", // 79
-    "Min.", // 80 ***
+    "Min.", // 80
     "Dynamisk SPI hastighet", // 81
     "Skannefølsomhet", // 82
     "INGEN", // 83
@@ -4041,40 +4071,40 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "LB", // 102
     "MB", // 103
     "KB", // 104
-    "FM", // 105 ***
-    "OIRT", // 106 ***
+    "FM", // 105
+    "OIRT", // 106
     "Tune når skjerm av", // 107
     "Velg Modell", // 108
-    "Base (ILI9341)", // 109 ***
+    "Base (ILI9341)", // 109
     "Bærbar (ILI9341)", // 110
     "Bærbar touch (ILI9341)", // 111
     "Titel", // 112
-    "Album", // 113 ***
+    "Album", // 113
     "Spor", // 114
-    "Artist", // 115 ***
+    "Artist", // 115
     "Komposisjon", // 116
     "Bevegelse", // 117
     "Dirigent", // 118
     "Komponist", // 119
-    "Band", // 120 ***
+    "Band", // 120
     "Kommentar", // 121
     "Sjanger", // 122
     "Nyheter", // 123
     "Lokale nyheter", // 124
     "Aksjemarked", // 125
-    "Sport", // 126 ***
+    "Sport", // 126
     "Lotteri", // 127
     "Horoskop", // 128
     "Daglig avledning", // 129
     "Helse", // 130
     "Begivenhet", // 131
-    "Scene", // 132 ***
+    "Scene", // 132
     "Kino", // 133
-    "TV", // 134 ***
+    "TV", // 134
     "Dato/tid", // 135
     "Vær", // 136
     "Trafikk", // 137
-    "Alarm", // 138 ***
+    "Alarm", // 138
     "Annonse", // 139
     "Nettsted", // 140
     "Annet", // 141
@@ -4088,15 +4118,15 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Frekvens", // 149
     "Hjemmeside", // 150
     "Underkanal", // 151
-    "Hotline", // 152 ***
+    "Hotline", // 152
     "Studio telefon", // 153
     "Telefon", // 154
-    "SMS studio", // 155 ***
-    "SMS", // 156 ***
+    "SMS studio", // 155
+    "SMS", // 156
     "E-post hotline", // 157
     "E-post studio", // 158
     "E-post", // 159
-    "Chat", // 160 ***
+    "Chat", // 160
     "Chattesenter", // 161
     "Stem spørsmål", // 162
     "Stemmesenter", // 163
@@ -4106,13 +4136,13 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Kjøp", // 167
     "Få data", // 168
     "MB std. trinnstørrelse", // 169
-    "Tangerine", // 170 ***
-    "Ocean", // 171 ***
-    "Indigo", // 172 ***
+    "Tangerine", // 170
+    "Ocean", // 171
+    "Indigo", // 172
     "Batterialternativer", // 173
     "Vis batterispenning", // 174
     "Vis batteriprosent", // 175
-    "RT buffering", // 176 ***
+    "RT buffering", // 176
     "Hovedinnstillinger", // 177
     "Lydinnstillinger", // 178
     "Skjerminnstillinger", // 179
@@ -4128,12 +4158,12 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "HOVED", // 189
     "LYD", // 190
     "SKJERM", // 191
-    "RDS", // 192 ***
-    "FM", // 193 ***
-    "AM", // 194 ***
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
     "TILKOBLE", // 195
     "DX MODUS", // 196
-    "Stationlist ID", // 197 ***
+    "Stationlist ID", // 197
     "AM AGC", // 198
     "FM ettertrykkelse", // 199
     "Lite", // 200
@@ -4195,7 +4225,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Folkemusikk", // 256
     "Dokumentar", // 257
     "Alarm test", // 258
-    "Alarm!" // 259
+    "Alarm!", // 259
+    "Initial", // 260
+    "Always" //261
   },
 
   { "Español", // Spanish
@@ -4276,14 +4308,14 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Temporizador de\ntiempo muerto", // 75
     "Apagar pantalla", // 76
     "Tema", // 77
-    "Skin", // 78 ***
+    "Skin", // 78
     "Aplicaciones detectadas", // 79
     "Min.", // 80
     "Velocidad de SPI", // 81
     "Sensibilidad\ndel escaneo", // 82
     "NINGUNA", // 83
     "Versión del software", // 84
-    "Fundición de frecuencia", // 85 ***
+    "Fundición de frecuencia", // 85
     "Auto", // 86
     "No AF disponible", // 87
     "No EON disponible", // 88
@@ -4367,7 +4399,7 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Identificador", // 166
     "Compra", // 167
     "Obtener datos", // 168
-    "Tamaño de paso\nAM predeterminado", // 169 ***
+    "Tamaño de paso\nAM predeterminado", // 169
     "Mandarina", // 170
     "Océano", // 171
     "Índigo", // 172
@@ -4457,7 +4489,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Música Folk", // 256
     "Documental", // 257
     "Prueba de Alarma", // 258
-    "¡ Alarma !" // 259
+    "¡ Alarma !", // 259
+    "Initial", // 260
+    "Always" //261
   },
 
   { "Português", // Portuguese
@@ -4545,7 +4579,7 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Sensibilidade\nda varredura", // 82
     "NENHUM", // 83
     "Versão do software", // 84
-    "Fonte de frequência", // 85 ***
+    "Fonte de frequência", // 85
     "Auto", // 86
     "AF não disponível", // 87
     "EON não disponível", // 88
@@ -4719,7 +4753,9 @@ static const char* const myLanguage[18][260] PROGMEM = {
     "Música Folk", // 256
     "Documentário", // 257
     "Teste de Alarme", // 258
-    "Alarme – Alarme !" // 259
+    "Alarme – Alarme !", // 259
+    "Initial", // 260
+    "Always" //261
   }
 };
 #endif

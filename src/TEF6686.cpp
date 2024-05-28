@@ -378,7 +378,7 @@ bool TEF6686::getStatusAM(int16_t &level, uint16_t &noise, uint16_t &cochannel, 
 
 void TEF6686::readRDS(byte showrdserrors) {
   uint8_t offset;
-  if (rds.filter || ps_process) {
+  if (rds.filter && ps_process) {
     devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
   } else {
     if (millis() >= rdstimer + 87) {
@@ -407,8 +407,8 @@ void TEF6686::readRDS(byte showrdserrors) {
   rdsCerrorThreshold = (((rds.rdsErr >> 10) & 0x03) > showrdserrors);
   rdsDerrorThreshold = (((rds.rdsErr >> 8) & 0x03) > showrdserrors);
 
-  if (bitRead(rds.rdsStat, 9)) {                                                                  // We have all data to decode... let's go...
-    rds.rdsAerror = (((rds.rdsErr >> 14) & 0x03) > 1);
+  if (bitRead(rds.rdsStat, 9) && (rds.rdsA != previous_rdsA || rds.rdsB != previous_rdsB || rds.rdsC != previous_rdsC || rds.rdsD != previous_rdsD)) {
+    rds.rdsAerror = (((rds.rdsErr >> 14) & 0x03) > 1);                                                                 // We have all data to decode... let's go...
     rds.rdsBerror = (((rds.rdsErr >> 12) & 0x03) > 1);
     rds.rdsCerror = (((rds.rdsErr >> 10) & 0x03) > 1);
     rds.rdsDerror = (((rds.rdsErr >> 8) & 0x03) > 1);
@@ -606,7 +606,7 @@ void TEF6686::readRDS(byte showrdserrors) {
             ps_buffer[(offset * 2)  + 1] = rds.rdsD & 0xFF;                                     // Second character of segment
             ps_buffer[8] = '\0';                                                                // Endmarker
 
-            if (ps_process || !rds.fastps) {
+            if (ps_process || rds.fastps == 0) {
               if (offset == 0) {
                 packet0 = true;
                 packet1 = false;
@@ -618,12 +618,12 @@ void TEF6686::readRDS(byte showrdserrors) {
               if (offset == 3) packet3 = true;
             }
 
-            if (packet0 && packet1 && packet2 && packet3 && (ps_process || !rds.fastps)) {                                   // Last chars are received
-              if (strcmp(ps_buffer, ps_buffer2) == 0) {                                         // When no difference between current and buffer, let's go...
+            if (packet0 && packet1 && packet2 && packet3 && (ps_process || (rds.fastps == 0 && rds.fastps != 2))) { // Last chars are received
+              if (strcmp(ps_buffer, ps_buffer2) == 0) {                                                             // When no difference between current and buffer, let's go...
                 ps_process = true;
-                RDScharConverter(ps_buffer2, PStext, sizeof(PStext) / sizeof(wchar_t), true);   // Convert 8 bit ASCII to 16 bit ASCII
-                String utf8String = convertToUTF8(PStext);                                      // Convert RDS characterset to ASCII
-                rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);                 // Make sure PS does not exceed 8 characters
+                RDScharConverter(ps_buffer2, PStext, sizeof(PStext) / sizeof(wchar_t), true);                       // Convert 8 bit ASCII to 16 bit ASCII
+                String utf8String = convertToUTF8(PStext);                                                          // Convert RDS characterset to ASCII
+                rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);                                     // Make sure PS does not exceed 8 characters
                 for (byte x = 0; x < 8; x++) {
                   ps_buffer[x] = '\0';
                   ps_buffer2[x] = '\0';
@@ -631,15 +631,15 @@ void TEF6686::readRDS(byte showrdserrors) {
               }
             }
 
-            if (!ps_process && rds.fastps) {                                                    // Let's get 2 runs of 8 PS characters fast and without refresh
+            if ((!ps_process && rds.fastps > 0 && rds.fastps != 2) || rds.fastps == 2) {                            // Let's get 2 runs of 8 PS characters fast and without refresh
               if (offset == 0) packet0 = true;
               if (offset == 1) packet1 = true;
               if (offset == 2) packet2 = true;
               if (offset == 3) packet3 = true;
-              RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), true);      // Convert 8 bit ASCII to 16 bit ASCII
-              String utf8String = convertToUTF8(PStext);                                        // Convert RDS characterset to ASCII
+              RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), true);                          // Convert 8 bit ASCII to 16 bit ASCII
+              String utf8String = convertToUTF8(PStext);                                                            // Convert RDS characterset to ASCII
               rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);
-              if (packet0 && packet1 && packet2 && packet3) ps_process = true;                  // OK, we had one runs, now let's go the idle PS writing
+              if (packet0 && packet1 && packet2 && packet3) ps_process = true;                                      // OK, we had one runs, now let's go the idle PS writing
             }
 
             if (offset == 0) rds.hasDynamicPTY = bitRead(rds.rdsB, 2) & 0x1F;                   // Dynamic PTY flag
@@ -1372,6 +1372,7 @@ void TEF6686::readRDS(byte showrdserrors) {
               RDScharConverter(ptyn_buffer, PTYNtext, sizeof(PTYNtext) / sizeof(wchar_t), false); // Convert 8 bit ASCII to 16 bit ASCII
               String utf8String = convertToUTF8(PTYNtext);                                        // Convert RDS characterset to ASCII
               rds.PTYN = extractUTF8Substring(utf8String, 0, 8, false);                           // Make sure text is not longer than 8 chars
+              rds.hasPTYN = true;
             }
           }
         } break;
@@ -1639,6 +1640,10 @@ void TEF6686::readRDS(byte showrdserrors) {
         }
         break;
     }
+    previous_rdsA = rds.rdsA;
+    previous_rdsB = rds.rdsB;
+    previous_rdsC = rds.rdsC;
+    previous_rdsD = rds.rdsD;
   }
 }
 
@@ -1761,6 +1766,7 @@ void TEF6686::clearRDS (bool fullsearchrds) {
   rds.hasCT = false;
   rds.hasTMC = false;
   rds.hasAID = false;
+  rds.hasPTYN = false;
   rds.hasLongPS = false;
   rds.hasRDSplus = false;
   rds.hasDABAF = false;

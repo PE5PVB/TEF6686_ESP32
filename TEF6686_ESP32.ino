@@ -825,8 +825,8 @@ void setup() {
     Wire.endTransmission();
   }
 
-  if (tunemode == TUNE_MEM) DoMemoryPosTune();
   SelectBand();
+  if (tunemode == TUNE_MEM) DoMemoryPosTune();
 
   setupmode = false;
 
@@ -1153,7 +1153,7 @@ void GetData() {
     ShowSignalLevel();
   }
 
-  if (!menu && (band < BAND_GAP || tunemode == TUNE_MEM)) showPS();
+  if (!menu) showPS();
 
   if (band < BAND_GAP && !menu) {
     if (advancedRDS && !afscreen && !screenmute) ShowAdvancedRDS();
@@ -2597,8 +2597,7 @@ void KeyUp() {
             if (!memorystore) {
               DoMemoryPosTune();
             } else {
-              if (!IsStationEmpty()) memoryposstatus = MEM_EXIST;
-              else memoryposstatus = MEM_NORMAL;
+              if (!IsStationEmpty()) memoryposstatus = MEM_EXIST; else memoryposstatus = MEM_DARK;
             }
             ShowMemoryPos();
             EEPROM.writeByte(EE_BYTE_MEMORYPOS, memorypos);
@@ -2664,8 +2663,7 @@ void KeyDown() {
             if (!memorystore) {
               DoMemoryPosTune();
             } else {
-              if (!IsStationEmpty()) memoryposstatus = MEM_EXIST;
-              else memoryposstatus = MEM_NORMAL;
+              if (!IsStationEmpty()) memoryposstatus = MEM_EXIST; else memoryposstatus = MEM_DARK;
             }
             ShowMemoryPos();
             EEPROM.writeByte(EE_BYTE_MEMORYPOS, memorypos);
@@ -2719,6 +2717,11 @@ void ShowMemoryPos() {
   if (tunemode == TUNE_MEM) {
     int memposcolor = 0;
     int memposcolorsmooth = 0;
+
+    if (!memorystore) {
+      if (IsStationEmpty()) memoryposstatus = MEM_DARK; else memoryposstatus = MEM_NORMAL;
+    }
+
     switch (memoryposstatus) {
       case MEM_DARK:
         memposcolor = InsignificantColor;
@@ -3597,7 +3600,6 @@ void doTuneMode() {
   }
   ShowTuneMode();
   ShowMemoryPos();
-  ShowFreq(0);
   EEPROM.writeByte(EE_BYTE_TUNEMODE, tunemode);
   EEPROM.commit();
 }
@@ -4122,7 +4124,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_WIFI, 0);
   EEPROM.writeByte(EE_BYTE_SUBNETCLIENT, 1);
   EEPROM.writeByte(EE_BYTE_SHOWSWMIBAND, 1);
-  EEPROM.writeByte(EE_BYTE_RDS_FILTER, 0);
+  EEPROM.writeByte(EE_BYTE_RDS_FILTER, 1);
   EEPROM.writeByte(EE_BYTE_RDS_PIERRORS, 0);
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_LW, 180); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_LW, 164);
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, 540); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, 639);
