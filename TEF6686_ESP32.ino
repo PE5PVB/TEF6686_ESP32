@@ -4080,7 +4080,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_WIFI, 0);
   EEPROM.writeByte(EE_BYTE_SUBNETCLIENT, 1);
   EEPROM.writeByte(EE_BYTE_SHOWSWMIBAND, 1);
-  EEPROM.writeByte(EE_BYTE_RDS_FILTER, 0);
+  EEPROM.writeByte(EE_BYTE_RDS_FILTER, 1);
   EEPROM.writeByte(EE_BYTE_RDS_PIERRORS, 0);
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_LW, 180); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_LW, 164);
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, 540); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, 639);
