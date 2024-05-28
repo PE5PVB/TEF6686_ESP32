@@ -1646,7 +1646,7 @@ void BuildDisplay() {
   tft.drawRoundRect(248, 56, 32, 20, 5, GreyoutColor);
   if (band > BAND_GAP) tftPrint(0, "iMS", 265, 59, GreyoutColor, BackgroundColor, 16);
   tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
-  if (band > BAND_GAP) tftPrint(0, "EQ", 303, 59, GreyoutColor, BackgroundColor, 16);
+  if (band > BAND_GAP) tftPrint(0, "EQ", 301, 59, GreyoutColor, BackgroundColor, 16);
 
   tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
   tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
