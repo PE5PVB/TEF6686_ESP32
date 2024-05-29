@@ -3730,7 +3730,7 @@ void TuneUp() {
       } else if (frequency_AM < MWLowEdgeSet) {
         temp = FREQ_MW_STEP_9K;
         frequency_AM = (frequency_AM / FREQ_MW_STEP_9K) * FREQ_MW_STEP_9K;
-      } else if (frequency_AM < SWHighEdgeSet && frequency_AM > SWLowEdgeSet) {
+      } else if (frequency_AM <= SWHighEdgeSet && frequency_AM >= SWLowEdgeSet) {
         temp = FREQ_SW_STEP_5K;
         frequency_AM = (frequency_AM / FREQ_SW_STEP_5K) * FREQ_SW_STEP_5K;
       }
@@ -3803,6 +3803,7 @@ void TuneUp() {
     frequency_MW = frequency_AM;
   } else if (band == BAND_SW) {
     frequency_AM += temp;
+    Serial.println(String(frequency_AM) + "\t" + String(SWHighEdgeSet) + "\t" + String(temp));
     if (frequency_AM > SWHighEdgeSet) {
       frequency_AM = SWLowEdgeSet;
       if (edgebeep) EdgeBeeper();
