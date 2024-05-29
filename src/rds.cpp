@@ -947,7 +947,27 @@ void ShowAFEON() {
         eonticker = millis();
         byte y = 0;
         if (afpagenr == 3) y = 10;
+
         for (byte i = 0; i < radio.eon_counter; i++) {
+          if (eonpicodeold[i + y] == NULL) {
+            strcpy(eonpicodeold[i + y], "");
+          }
+          if (eonpsold[i + y] == NULL) {
+            eonpsold[i + y] = "";
+          }
+          if (mappedfreqold[i + y] == NULL) {
+            mappedfreqold[i + y] = 0;
+          }
+          if (mappedfreqold2[i + y] == NULL) {
+            mappedfreqold2[i + y] = 0;
+          }
+          if (mappedfreqold3[i + y] == NULL) {
+            mappedfreqold3[i + y] = 0;
+          }
+          if (eonptyold[i + y] == NULL) {
+            eonptyold[i + y] = 0;
+          }
+
           if (strcmp(eonpicodeold[i + y], radio.eon[i + y].picode) != 0) {
             tftPrint(-1, eonpicodeold[i + y], 4, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
           }
@@ -1040,7 +1060,6 @@ void ShowAFEON() {
           if (i == 9) i = 254;
         }
       }
-
     }
 
     if (radio.rds.hasAID) {
