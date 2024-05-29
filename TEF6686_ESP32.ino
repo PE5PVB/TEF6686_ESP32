@@ -2351,12 +2351,19 @@ void RoundStep() {//todo air
     Round30K(frequency_OIRT);
     radio.SetFreq(frequency_OIRT);
   } else {
-    if (band == BAND_MW) {
+    if (band == BAND_LW) {
       unsigned int freq = frequency_AM / (mwstepsize == false ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K);
       frequency_AM = freq * (mwstepsize == false ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K);
+      frequency_LW = frequency_AM;
+      radio.SetFreqAM(frequency_AM);
+    } else if (band == BAND_MW) {
+      unsigned int freq = frequency_AM / (mwstepsize == false ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K);
+      frequency_AM = freq * (mwstepsize == false ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K);
+      frequency_MW = frequency_AM;
       radio.SetFreqAM(frequency_AM);
     } else if (band == BAND_SW) {
       Round5K(frequency_AM);
+      frequency_SW = frequency_AM;
       radio.SetFreqAM(frequency_AM);
     }
   }
