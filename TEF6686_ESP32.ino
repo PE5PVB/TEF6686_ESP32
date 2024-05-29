@@ -1666,6 +1666,14 @@ void BANDBUTTONPress() {
 }
 
 void StoreFrequency() {
+  switch (band) {
+    case BAND_LW: freqold = frequency_LW; frequency_AM = frequency_LW; break;
+    case BAND_MW: freqold = frequency_MW; frequency_AM = frequency_MW; break;
+    case BAND_SW: freqold = frequency_SW; frequency_AM = frequency_SW; break;
+#ifdef HAS_AIR_BAND
+    case BAND_AIR: freqold = frequency_AIR; frequency_AM = frequency_AIR; break;
+#endif
+  }
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, frequency);
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_OIRT, frequency_OIRT);
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, frequency_AM);
@@ -2353,16 +2361,9 @@ void RoundStep() {//todo air
     }
   }
 
-  while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
+  StoreFrequency();
 
-  if (band == BAND_FM) {
-    EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, frequency);
-  } else if (band == BAND_OIRT) {
-    EEPROM.writeUInt(EE_UINT16_FREQUENCY_OIRT, frequency_OIRT);
-  } else {
-    EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, frequency_AM);
-  }
-  EEPROM.commit();
+  while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
 }
 
 void ButtonPress() {
