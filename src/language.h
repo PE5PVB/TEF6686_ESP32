@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[18][262] PROGMEM = {
+static const char* const myLanguage[18][263] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -267,7 +267,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Alarm Test", // 258
     "Alarm!!!", // 259
     "Initial", // 260
-    "Always" //261
+    "Always", // 261
+    "Show clock" // 262
   },
 
   { "Nederlands", // Dutch
@@ -531,7 +532,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Alarmtest", // 258
     "Alarm ! ALARM !", // 259
     "Initieel", // 260
-    "Altijd" //261
+    "Altijd", //261
+    "Toon klok" // 262
   },
 
   { "Polski", // Polish
@@ -795,7 +797,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Alarm Test", // 258
     "Alarm", // 259
     "Początkowy", // 260
-    "Zawsze" // 261
+    "Zawsze", // 261
+    "Pokaż zegar" // 262
   },
 
   { "Hrvatski", // Croatian
@@ -1059,7 +1062,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Testni alarm!", // 258
     "Alarm !", // 259
     "Početno", // 260
-    "Uvijek" //261
+    "Uvijek", //261
+    "Prikaži sat" // 262
   },
 
   { "Ελληνικά", // Greek
@@ -1323,7 +1327,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Δοκιμή συναγερμού", // 258
     "Συναγερμός!!!", // 259
     "Αρχικό", // 260
-    "Πάντα" //261
+    "Πάντα", //261
+    "Εμφάνιση ρολογιού" // 262
   },
 
   { "Română", // Romanian
@@ -1587,7 +1592,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Test Alarmă", // 258
     "Alarmă !", // 259
     "Inițial", // 260
-    "Mereu" //261
+    "Mereu", //261
+    "Arată ceasul" // 262
   },
 
   { "Deutsch", // German
@@ -1851,7 +1857,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Alarm Test", // 258
     "Alarm! Alarm!", // 259
     "Anfänglich", // 260
-    "Immer" // 261
+    "Immer", // 261
+    "Uhr anzeigen" // 262
   },
 
   { "Český", // Czech
@@ -2115,7 +2122,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Alarm Test", // 258
     "Alarm – Alarm !", // 259
     "Počáteční", // 260
-    "Vždy" //261
+    "Vždy", //261
+    "Zobrazit hodiny" // 262
   },
 
   { "Magyar", // Hungarian
@@ -2379,7 +2387,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Riasztás Teszt", // 258
     "Riasztás!!!", // 259
     "Kezdeti", // 260
-    "Mindig" //261
+    "Mindig", //261
+    "Órát mutass" // 262
   },
 
   { "Français", // French
@@ -2643,7 +2652,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "TEST", // 258
     "Alerte !", // 259
     "Initial", // 260
-    "Toujours" // 261
+    "Toujours", // 261
+    "Afficher l'horloge" // 262
   },
 
   { "Български", // Bulgarian
@@ -2907,7 +2917,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Внимание тест", // 258
     "Тревога!", // 259
     "Начален", // 260
-    "Винаги" // 261
+    "Винаги", // 261
+    "Покажи часовника" // 262
   },
 
   { "Русский", // Russian
@@ -3171,7 +3182,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Внимание тест", // 258
     "Тревога!", // 259
     "Начальный", // 260
-    "Всегда" // 261
+    "Всегда", // 261
+    "Показать часы" // 262
   },
 
   { "Українська", // Ukranian
@@ -3435,7 +3447,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Alarm Test", // 258
     "Alarm!!!", // 259
     "Початковий", // 260
-    "Завжди" // 261
+    "Завжди", // 261
+    "Показати годинник" // 262
   },
 
   { "Italiano", // Italian
@@ -3699,7 +3712,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Test Allarme", // 258
     "!!Allarme!!", // 259
     "Iniziale", // 260
-    "Sempre" // 261
+    "Sempre", // 261
+    "Mostra l'orologio" // 262
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3963,7 +3977,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Alarm Test", // 258
     "Alarm!!!", // 259
     "初始", // 260
-    "始终" // 261
+    "始终", // 261
+    "显示时钟" // 262
   },
 
   { "Norsk", // Norwegian
@@ -4227,7 +4242,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Alarm test", // 258
     "Alarm!", // 259
     "Innledende", // 260
-    "Alltid" // 261
+    "Alltid", // 261
+    "Vis klokka" // 262
   },
 
   { "Español", // Spanish
@@ -4491,7 +4507,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Prueba de Alarma", // 258
     "¡ Alarma !", // 259
     "Inicial", // 260
-    "Siempre" // 261
+    "Siempre", // 261
+    "Mostrar reloj" // 262
   },
 
   { "Português", // Portuguese
@@ -4755,7 +4772,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Teste de Alarme", // 258
     "Alarme – Alarme !", // 259
     "Inicial", // 260
-    "Sempre" // 261
+    "Sempre", // 261
+    "Mostrar relógio" // 262
   }
 };
 #endif

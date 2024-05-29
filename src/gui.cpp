@@ -8,7 +8,7 @@
 #include <cstring>
 
 byte menuitem;
-byte items[9] = {9, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 9, 10, 9, 6, 7};
+byte items[9] = {9, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 6, 7};
 extern mem presets[];
 
 void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
@@ -1394,6 +1394,16 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.drawString(FreqFont[freqfont], 298, 3);
           break;
 
+        case RDSSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][262]), 6, 3);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((showclock ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          break;
+
         case FMSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -2226,6 +2236,13 @@ void MenuUp() {
               case 2: OneBigLineSprite.drawString(myLanguage[language][261], 135, 0); break;
             }
 
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM10:
+            showclock = !showclock;
+
+            OneBigLineSprite.drawString((showclock ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }
@@ -3081,6 +3098,13 @@ void MenuDown() {
               case 2: OneBigLineSprite.drawString(myLanguage[language][261], 135, 0); break;
             }
 
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM10:
+            showclock = !showclock;
+
+            OneBigLineSprite.drawString((showclock ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }
@@ -3944,6 +3968,13 @@ void DoMenu() {
               case 2: OneBigLineSprite.drawString(myLanguage[language][261], 135, 0); break;
             }
 
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM10:
+            Infoboxprint(myLanguage[language][262]);
+
+            OneBigLineSprite.drawString((showclock ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }

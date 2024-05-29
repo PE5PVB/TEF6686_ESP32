@@ -103,7 +103,7 @@ bool screenmute;
 bool screensavertriggered = false;
 bool seek;
 bool setupmode;
-byte showrdserrors;
+bool showclock;
 bool usesquelch;
 bool softmuteam;
 bool softmutefm;
@@ -189,6 +189,7 @@ byte scanmodeold;
 byte screensaverOptions[5] = {0, 3, 10, 30, 60};
 byte screensaverset;
 byte showmodulation;
+byte showrdserrors;
 byte showSWMIBand;
 byte submenu;
 byte stationlistid;
@@ -514,6 +515,7 @@ void setup() {
   scanmute = EEPROM.readByte(EE_BYTE_SCANMUTE);
   autosquelch = EEPROM.readByte(EE_BYTE_AUTOSQUELCH);
   longbandpress = EEPROM.readByte(EE_BYTE_LONGBANDPRESS);
+  showclock = EEPROM.readByte(EE_BYTE_SHOWCLOCK);
 
   if (spispeed == SPI_SPEED_DEFAULT) {
     tft.setSPISpeed(SPI_FREQUENCY / 1000000);
@@ -4147,6 +4149,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_SCANMUTE, 0);
   EEPROM.writeByte(EE_BYTE_AUTOSQUELCH, 0);
   EEPROM.writeByte(EE_BYTE_LONGBANDPRESS, 0);
+  EEPROM.writeByte(EE_BYTE_SHOWCLOCK, 1);
 
   for (int i = 0; i < EE_PRESETS_CNT; i++) {
     EEPROM.writeByte(i + EE_PRESETS_BAND_START, BAND_FM);
@@ -4374,6 +4377,7 @@ void endMenu() {
   EEPROM.writeByte(EE_BYTE_SCANMUTE, scanmute);
   EEPROM.writeByte(EE_BYTE_AUTOSQUELCH, autosquelch);
   EEPROM.writeByte(EE_BYTE_LONGBANDPRESS, longbandpress);
+  EEPROM.writeByte(EE_BYTE_SHOWCLOCK, showclock);
   EEPROM.commit();
   if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
   Serial.end();

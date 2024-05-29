@@ -748,7 +748,7 @@ void showPS() {
 }
 
 void showCT() {
-  if (!screenmute) {
+  if (!screenmute && showclock) {
     if (radio.rds.hasCT && !dropout) {
       rds_clock = ((radio.rds.hour < 10 ? "0" : "") + String(radio.rds.hour) + ":" + (radio.rds.minute < 10 ? "0" : "") + String(radio.rds.minute));
     } else if (!radio.rds.hasCT || dropout) {
