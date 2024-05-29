@@ -794,8 +794,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Dokument", // 257
     "Alarm Test", // 258
     "Alarm", // 259
-    "Initial", // 260
-    "Always" //261
+    "Początkowy", // 260
+    "Zawsze" // 261
   },
 
   { "Hrvatski", // Croatian
@@ -1058,8 +1058,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Dokumentarno", // 257
     "Testni alarm!", // 258
     "Alarm !", // 259
-    "Initial", // 260
-    "Always" //261
+    "Početno", // 260
+    "Uvijek" //261
   },
 
   { "Ελληνικά", // Greek
@@ -1322,8 +1322,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Ντοκιμαντέρ", // 257
     "Δοκιμή συναγερμού", // 258
     "Συναγερμός!!!", // 259
-    "Initial", // 260
-    "Always" //261
+    "Αρχικό", // 260
+    "Πάντα" //261
   },
 
   { "Română", // Romanian
@@ -1586,8 +1586,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Documentar", // 257
     "Test Alarmă", // 258
     "Alarmă !", // 259
-    "Initial", // 260
-    "Always" //261
+    "Inițial", // 260
+    "Mereu" //261
   },
 
   { "Deutsch", // German
@@ -1850,8 +1850,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Feature", // 257
     "Alarm Test", // 258
     "Alarm! Alarm!", // 259
-    "Initial", // 260
-    "Always" //261
+    "Anfänglich", // 260
+    "Immer" // 261
   },
 
   { "Český", // Czech
@@ -2114,8 +2114,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Dokumenty", // 257
     "Alarm Test", // 258
     "Alarm – Alarm !", // 259
-    "Initial", // 260
-    "Always" //261
+    "Počáteční", // 260
+    "Vždy" //261
   },
 
   { "SloveSlovenský", // Slovak
@@ -2643,7 +2643,7 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "TEST", // 258
     "Alerte !", // 259
     "Initial", // 260
-    "Always" //261
+    "Toujours" // 261
   },
 
   { "Български", // Bulgarian
@@ -2906,8 +2906,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Документалистика", // 257
     "Внимание тест", // 258
     "Тревога!", // 259
-    "Initial", // 260
-    "Always" //261
+    "Начален", // 260
+    "Винаги" // 261
   },
 
   { "Русский", // Russian
@@ -3170,8 +3170,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Документалистика", // 257
     "Внимание тест", // 258
     "Тревога!", // 259
-    "Initial", // 260
-    "Always" //261
+    "Начальный", // 260
+    "Всегда" // 261
   },
 
   { "Українська", // Ukranian
@@ -3434,8 +3434,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Documentary", // 257
     "Alarm Test", // 258
     "Alarm!!!", // 259
-    "Initial", // 260
-    "Always" //261
+    "Початковий", // 260
+    "Завжди" // 261
   },
 
   { "Italiano", // Italian
@@ -3698,8 +3698,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Documentari", // 257
     "Test Allarme", // 258
     "!!Allarme!!", // 259
-    "Initial", // 260
-    "Always" //261
+    "Iniziale", // 260
+    "Sempre" // 261
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3962,8 +3962,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Documentary", // 257
     "Alarm Test", // 258
     "Alarm!!!", // 259
-    "Initial", // 260
-    "Always" //261
+    "初始", // 260
+    "始终" // 261
   },
 
   { "Norsk", // Norwegian
@@ -4226,8 +4226,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Dokumentar", // 257
     "Alarm test", // 258
     "Alarm!", // 259
-    "Initial", // 260
-    "Always" //261
+    "Innledende", // 260
+    "Alltid" // 261
   },
 
   { "Español", // Spanish
@@ -4490,8 +4490,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Documental", // 257
     "Prueba de Alarma", // 258
     "¡ Alarma !", // 259
-    "Initial", // 260
-    "Always" //261
+    "Inicial", // 260
+    "Siempre" // 261
   },
 
   { "Português", // Portuguese
@@ -4754,8 +4754,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Documentário", // 257
     "Teste de Alarme", // 258
     "Alarme – Alarme !", // 259
-    "Initial", // 260
-    "Always" //261
+    "Inicial", // 260
+    "Sempre" // 261
   }
 };
 #endif

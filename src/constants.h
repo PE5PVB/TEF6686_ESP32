@@ -54,12 +54,12 @@
 #define FREQ_SW_LOW_EDGE_MAX        (FREQ_SW_160M_START)
 #define FREQ_SW_HIGH_EDGE_MIN       (FREQ_SW_11M_END)
 #define FREQ_SW_HIGH_EDGE_MAX       (FREQ_SW_END)
+
 #ifdef HAS_AIR_BAND
 #define FREQ_AIR_LOW_EDGE_MIN       108000
 #define FREQ_AIR_HIGH_EDGE_MIN      137000
 #endif
-#define FREQ_FM_START               65000
-#define FREQ_FM_END                 108000
+
 #define FREQ_FM_OIRT_START          6500   // use values of 1/10 * kHz
 #define FREQ_FM_OIRT_END            7400   // use values of 1/10 * kHz
 

@@ -22,7 +22,7 @@ void Communication() {
           String stlfreq = packet.substring(symPos + 5, packetSize);
           if (afscreen) BuildAdvancedRDS();
 
-          if ((stlfreq.toInt()) / 10000 > 6500 && (stlfreq.toInt()) / 10000 < 10800) {
+          if ((stlfreq.toInt()) / 10000 > (TEF == 205 ? 6400 : 6500) && (stlfreq.toInt()) / 10000 < 10800) {
             unsigned int tempfreq = (stlfreq.toInt()) / 10000;
             if (tempfreq >= FREQ_FM_OIRT_START && tempfreq <= FREQ_FM_OIRT_END) {
               if (band != BAND_OIRT) {
@@ -170,7 +170,7 @@ void Communication() {
         Serial.print("s:" + String(EE_PRESETS_FREQUENCY) + "\n");
         Serial.print("o:" + String(ConverterSet) + "\n");
         Serial.print("a:" + String(FREQ_LW_LOW_EDGE_MIN) + "," + String(FREQ_SW_END) + "\n");
-        Serial.print("f:" + String(FREQ_FM_START) + "," + String(FREQ_FM_END) + "\n");
+        Serial.print("f:" + String((TEF == 205 ? 64000 : 65000)) + "," + String(108000) + "\n");
 
         for (byte x = 0; x < EE_PRESETS_CNT; x++) {
           Serial.print(x + 1);
@@ -237,7 +237,7 @@ void Communication() {
                   } else if (ConverterSet != 0 && memfreq >= FREQ_FM_OIRT_START * 10 && memfreq <= FREQ_FM_OIRT_END * 10) {
                     memband = BAND_OIRT;
                     memfreq /= 10;
-                  } else if ((ConverterSet != 0 && memfreq > FREQ_FM_OIRT_START * 10) || ((ConverterSet == 0 && memfreq > FREQ_FM_OIRT_END * 10) && memfreq <= FREQ_FM_END * 10)) {
+                  } else if ((ConverterSet != 0 && memfreq > FREQ_FM_OIRT_START * 10) || ((ConverterSet == 0 && memfreq > FREQ_FM_OIRT_END * 10) && memfreq <= 108000 * 10)) {
                     memband = BAND_FM;
                     memfreq /= 10;
                   } else if (memfreq == EE_PRESETS_FREQUENCY) {
@@ -556,7 +556,7 @@ void XDRGTKRoutine() {
           }
           radio.SetFreqAM(frequency_SW);
         }
-        if (freqtemp >= FREQ_FM_START && freqtemp <= FREQ_FM_END) {
+        if (freqtemp >= (TEF == 205 ? 64000 : 65000) && freqtemp <= 108000) {
           frequency = freqtemp / 10;
           if (afscreen) BuildAdvancedRDS();
           if (band != BAND_FM) {

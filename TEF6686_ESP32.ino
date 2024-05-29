@@ -1057,7 +1057,7 @@ void loop() {
       lowsignaltimer = millis();
       change = false;
       if (SStatus > SStatusold || SStatus < SStatusold) {
-        SignalSprite.fillSprite(BackgroundColor);
+        if (CurrentTheme == 7) SignalSprite.pushImage(-87, -119, 292, 170, popupbackgroundbw); else SignalSprite.pushImage(-87, -119, 292, 170, popupbackground);
         SignalSprite.loadFont(FONT48);
         SignalSprite.drawString(String(SStatus / 10), 58, 0);
         SignalSprite.unloadFont();
@@ -2131,7 +2131,7 @@ void SelectBand() {
       tft.drawRoundRect(248, 56, 32, 20, 5, GreyoutColor);
       tftPrint(0, "iMS", 265, 59, GreyoutColor, BackgroundColor, 16);
       tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
-      tftPrint(0, "EQ", 303, 59, GreyoutColor, BackgroundColor, 16);
+      tftPrint(0, "EQ", 301, 59, GreyoutColor, BackgroundColor, 16);
       // todo
       // if (band == AM_BAND_AIR) tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
       // else tftPrint(-1, "KHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
@@ -3446,13 +3446,13 @@ void updateEQ() {
     if (EQset == 0) {
       if (!screenmute && !advancedRDS && !afscreen) {
         tft.drawRoundRect(286, 56, 32, 20, 5, ActiveColor);
-        tftPrint(0, "EQ", 303, 59, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(0, "EQ", 301, 59, ActiveColor, ActiveColorSmooth, 16);
       }
       radio.setEQ(1);
     } else {
       if (!screenmute && !advancedRDS && !afscreen) {
         tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
-        tftPrint(0, "EQ", 303, 59, GreyoutColor, BackgroundColor, 16);
+        tftPrint(0, "EQ", 301, 59, GreyoutColor, BackgroundColor, 16);
       }
       radio.setEQ(0);
     }
