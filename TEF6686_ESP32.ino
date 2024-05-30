@@ -4089,10 +4089,10 @@ void read_encoder() {
   encval += enc_states[( old_AB & 0x0f )];
 
   if (optenc) {
-    if (encval > 3) {
+    if (encval > 4) {
       if (rotarymode) rotary = -1; else rotary = 1;
       encval = 0;
-    } else if (encval < -3) {
+    } else if (encval < -4) {
       if (rotarymode) rotary = 1; else rotary = -1;
       encval = 0;
     }
