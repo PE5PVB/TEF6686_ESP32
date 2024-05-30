@@ -798,6 +798,7 @@ void setup() {
     Wire.endTransmission();
   }
 
+  BuildDisplay();
   SelectBand();
   if (tunemode == TUNE_MEM) DoMemoryPosTune();
 
@@ -2059,6 +2060,8 @@ void ToggleSWMIBand(bool frequencyup) {
 }
 
 void SelectBand() {
+  if (afscreen || advancedRDS) BuildDisplay();
+
   if (band > BAND_GAP) {
     seek = false;
     if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
@@ -2088,7 +2091,6 @@ void SelectBand() {
     radio.setAMCoChannel(amcodect, amcodectcount);
     doBW();
     if (!screenmute) {
-      BuildDisplay();
       if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
       if (region == REGION_US) {
         tftPrint(-1, "PI:", 212, 184, GreyoutColor, BackgroundColor, 16);
@@ -2103,6 +2105,7 @@ void SelectBand() {
       tftPrint(0, "iMS", 265, 59, GreyoutColor, BackgroundColor, 16);
       tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
       tftPrint(0, "EQ", 301, 59, GreyoutColor, BackgroundColor, 16);
+      tftReplace(-1, "MHz", "kHz", 258, 76, BackgroundColor, BackgroundColor, BackgroundColor, 28);
       // todo
       // if (band == AM_BAND_AIR) tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
       // else tftPrint(-1, "KHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
@@ -2122,9 +2125,54 @@ void SelectBand() {
     freqold = frequency_AM;
     if (!externaltune && tunemode != TUNE_MEM) CheckBandForbiddenFM();
     doBW();
-    if (!screenmute) BuildDisplay();
+    if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
+    if (region == REGION_US) {
+      tftPrint(-1, "PI:", 212, 184, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, "ID:", 212, 201, ActiveColor, ActiveColorSmooth, 16);
+    }
+    tftPrint(-1, "PS:", 3, 193, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "RT:", 3, 221, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "PTY:", 3, 163, ActiveColor, ActiveColorSmooth, 16);
+
+    tftReplace(-1, "kHz", "MHz", 258, 76, BackgroundColor, BackgroundColor, BackgroundColor, 28);
   }
+
   radio.clearRDS(fullsearchrds);
+  ShowFreq(0);
+
+  if (!screenmute) {
+    tft.fillRect(113, 38, 124, 4, BackgroundColor);
+    ShowErrors();
+    showPTY();
+    showRadioText();
+    showPI();
+    updateiMS();
+    updateEQ();
+    ShowTuneMode();
+    ShowStepSize();
+
+    tftPrint(-1, myLanguage[language][102], 70, 32, BackgroundColor, BackgroundColor, 16);
+    tftPrint(-1, myLanguage[language][103], 70, 32, BackgroundColor, BackgroundColor, 16);
+    tftPrint(-1, myLanguage[language][104], 70, 32, BackgroundColor, BackgroundColor, 16);
+    tftPrint(-1, myLanguage[language][105], 70, 32, BackgroundColor, BackgroundColor, 16);
+    tftPrint(-1, myLanguage[language][106], 70, 32, BackgroundColor, BackgroundColor, 16);
+
+#ifdef HAS_AIR_BAND
+    tftPrint(-1, myLanguage[language][223], 70, 32, BackgroundColor, BackgroundColor, 16);
+#endif
+
+    switch (band) {
+      case BAND_LW: tftPrint(-1, myLanguage[language][102], 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
+      case BAND_MW: tftPrint(-1, myLanguage[language][103], 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
+      case BAND_SW: tftPrint(-1, myLanguage[language][104], 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
+      case BAND_FM: tftPrint(-1, myLanguage[language][105], 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
+      case BAND_OIRT: tftPrint(-1, myLanguage[language][106], 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
+
+#ifdef HAS_AIR_BAND
+      case BAND_AIR: tftPrint(-1, myLanguage[language][223], 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
+#endif
+    }
+  }
 }
 
 void BWButtonPress() {

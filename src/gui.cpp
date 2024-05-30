@@ -1582,7 +1582,6 @@ void BuildAdvancedRDS() {
 void BuildDisplay() {
   afscreen = false;
   advancedRDS = false;
-  int bandColor;
 
   tft.fillScreen(BackgroundColor);
   tft.drawRect(0, 0, 320, 240, FrameColor);
@@ -1616,14 +1615,6 @@ void BuildDisplay() {
   if (usesquelch || autosquelch) tftPrint(-1, "SQ:", 212, 145, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(1, "C/N", 270, 163, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(-1, "dB", 300, 163, ActiveColor, ActiveColorSmooth, 16);
-  if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
-  if (region == REGION_US) {
-    tftPrint(-1, "PI:", 212, 184, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "ID:", 212, 201, ActiveColor, ActiveColorSmooth, 16);
-  }
-  tftPrint(-1, "PS:", 3, 193, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "RT:", 3, 221, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "PTY:", 3, 163, ActiveColor, ActiveColorSmooth, 16);
 
   tftPrint(0, "S", 7, 101, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(-1, "1", 24, 115, ActiveColor, ActiveColorSmooth, 16);
@@ -1653,11 +1644,6 @@ void BuildDisplay() {
   tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, 28);
   tftPrint(-1, unitString[unit], 282, 145, ActiveColor, ActiveColorSmooth, 16);
 
-  tft.drawRoundRect(248, 56, 32, 20, 5, GreyoutColor);
-  if (band > BAND_GAP) tftPrint(0, "iMS", 265, 59, GreyoutColor, BackgroundColor, 16);
-  tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
-  if (band > BAND_GAP) tftPrint(0, "EQ", 301, 59, GreyoutColor, BackgroundColor, 16);
-
   tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
   tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
 
@@ -1671,37 +1657,12 @@ void BuildDisplay() {
     tft.drawCircle(76, 15, 9, GreyoutColor);
   }
 
-  if (bandforbidden) bandColor = GreyoutColor; else bandColor = PrimaryColor;
-  switch (band) {
-    case BAND_LW: tftPrint(-1, myLanguage[language][102], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
-    case BAND_MW: tftPrint(-1, myLanguage[language][103], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
-    case BAND_SW: tftPrint(-1, myLanguage[language][104], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
-#ifdef HAS_AIR_BAND
-    case BAND_AIR: tftPrint(-1, myLanguage[language][223], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
-#endif
-    case BAND_FM: tftPrint(-1, myLanguage[language][105], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
-    case BAND_OIRT: tftPrint(-1, myLanguage[language][106], 70, 32, bandColor, PrimaryColorSmooth, 16); break;
-  }
-  if (band < BAND_GAP) tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
-  else {
-#ifdef HAS_AIR_BAND
-    if (band == AM_BAND_AIR)
-      tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
-    else tftPrint(-1, "KHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
-#else
-    tftPrint(-1, "KHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
-#endif
-  }
-
   if (autosquelch) showAutoSquelch(1);
 
   RDSstatusold = false;
   Stereostatusold = false;
   LowLevelInit = true;
-  ShowFreq(0);
-  ShowTuneMode();
   updateBW();
-  ShowStepSize();
   ShowMemoryPos();
   updateiMS();
   updateEQ();
