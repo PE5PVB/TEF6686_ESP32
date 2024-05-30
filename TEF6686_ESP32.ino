@@ -1076,28 +1076,44 @@ void loop() {
 
   if (digitalRead(BANDBUTTON) == LOW) {
     tottimer = millis();
-    if (screensavertriggered && !touchrotating) WakeToSleep(REVERSE);
-    BANDBUTTONPress();
+    if (screensavertriggered) {
+      WakeToSleep(REVERSE);
+      while (digitalRead(BANDBUTTON) == LOW);
+    } else {
+      BANDBUTTONPress();
+    }
   }
 
   if (digitalRead(ROTARY_BUTTON) == LOW) {
     tottimer = millis();
-    if (screensavertriggered && !touchrotating) WakeToSleep(REVERSE);
-    if (!afscreen) ButtonPress();
+    if (screensavertriggered) {
+      WakeToSleep(REVERSE);
+      while (digitalRead(ROTARY_BUTTON) == LOW);
+    } else {
+      if (!afscreen) ButtonPress();
+    }
   }
 
   if (digitalRead(MODEBUTTON) == LOW) {
     tottimer = millis();
-    if (screensavertriggered && !touchrotating) WakeToSleep(REVERSE);
-    if (!screenmute) ModeButtonPress();
+    if (screensavertriggered) {
+      WakeToSleep(REVERSE);
+      while (digitalRead(MODEBUTTON) == LOW);
+    } else {
+      if (!screenmute) ModeButtonPress();
+    }
   }
 
   if (digitalRead(BWBUTTON) == HIGH && BWtune) BWtune = false;
 
   if (digitalRead(BWBUTTON) == LOW && !BWtune) {
     tottimer = millis();
-    if (screensavertriggered && !touchrotating) WakeToSleep(REVERSE);
+    if (screensavertriggered) {
+      WakeToSleep(REVERSE);
+      while (digitalRead(BWBUTTON) == LOW);
+    } else {
     if (!screenmute && !afscreen) BWButtonPress();
+    }
   }
 
   if (screensaverset) {
@@ -1611,10 +1627,6 @@ void BANDBUTTONPress() {
         while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
 
         if (counter - counterold < 1000) {
-          if (screensavertriggered) {
-            WakeToSleep(REVERSE);
-            return;
-          }
           if (afscreen) {
             BuildAdvancedRDS();
           } else if (advancedRDS) {
@@ -1639,11 +1651,6 @@ void BANDBUTTONPress() {
             ScreensaverTimerRestart();
           }
         } else {
-          if (screensavertriggered) {
-            WakeToSleep(REVERSE);
-            return;
-          }
-
           if (band < BAND_GAP) {
             if (advancedRDS && !seek) BuildAFScreen();
             else BuildAdvancedRDS();
@@ -2201,10 +2208,6 @@ void BWButtonPress() {
         doBW();
         BWtune = true;
       }
-      if (screensaverset) {
-        WakeToSleep(REVERSE);
-        return;
-      }
       delay(100);
     }
   }
@@ -2264,10 +2267,6 @@ void ModeButtonPress() {
 
         if (counter - counterold <= 1000) {
           doTuneMode();
-          if (screensaverset) {
-            WakeToSleep(REVERSE);
-            return;
-          }
         } else {
           if (!menu) {
             menuoption = ITEM1;
@@ -4454,6 +4453,7 @@ void endMenu() {
 
   BuildDisplay();
   SelectBand();
+  ScreensaverTimerRestart();
 }
 
 void startFMDXScan() {
