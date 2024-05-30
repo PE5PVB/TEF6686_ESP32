@@ -3890,7 +3890,6 @@ void TuneUp() {
     frequency_MW = frequency_AM;
   } else if (band == BAND_SW) {
     frequency_AM += temp;
-    Serial.println(String(frequency_AM) + "\t" + String(SWHighEdgeSet) + "\t" + String(temp));
     if (frequency_AM > SWHighEdgeSet) {
       frequency_AM = SWLowEdgeSet;
       if (edgebeep) EdgeBeeper();
