@@ -2192,9 +2192,9 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Modulációmérő", // 63
     "AM Zajszűrő", // 64
     "FM Zajszűrő", // 65
-    "Alapértelmezettek betöltve", // 66
+    "Alapértelmezettek\nbetöltve", // 66
     "Audió kimenet", // 67
-    "Hangolás\nengedélyezése\nképernyővédő közben", // 68
+    "Hangolás\nképernyővédővel", // 68
     "Inverz kijelző", // 69
     "A szoftverről", // 70
     "Fő kód:", // 71
@@ -2217,7 +2217,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Nincs elérhető EON", // 88
     "Nincs elérhető RT+", // 89
     "FM alap. lépésköz", // 90
-    "Kijelzővédő", // 91
+    "Képernyővédő", // 91
     "Mp", // 92
     "BAND A BEZÁRÁSHOZ", // 93
     "1% fényerő", // 94
@@ -2233,7 +2233,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Forgatás kikapcsolt képernyővel", // 107
+    "Hangolás kikapcsolt képernyővel", // 107
     "Modellválasztó", // 108
     "Alap (ILI9341)", // 109
     "Hordozható (ILI9341)", // 110
@@ -2333,14 +2333,14 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Alap", // 204
     "Képernyő némítása\nXDRGTK kapcsolaton", // 205
     "FMSI sztereó\njavítás", // 206
-    "Funkció csak a\nTEF6687/6689\nkészülékeken érhető el!", // 207
-    "Funkció nem elérhető\na kiválasztott kinézetben!", // 208
-    "Memóriacsatornák\nkeresésének\nelkezdése", // 209
-    "Memóriacsatornák\nkeresésének\nbefejezése", // 210
+    "Funkció csak a\nTEF6687/6689-hez!", // 207
+    "Funkció nem elérhető\nebben a kinézetben!", // 208
+    "Memóriacsatornák\nkeresésének elkezdése", // 209
+    "Memóriacsatornák\nkeresésének befejezése", // 210
     "Várakozási idő", // 211
     "DX keresés indítása", // 212
     "FM DX Opciók", // 213
-    "Megszakítva!\nA kezdőcsatorna\nkihagyottnak van jelölve.", // 214
+    "Megszakítva! A kezdőcsatorna\nkihagyottnak van jelölve.", // 214
     "Auto AF rendezés", // 215
     "Memóriacsatornák", // 216
     "Kizárása", // 217
@@ -2387,7 +2387,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Riasztás Teszt", // 258
     "Riasztás!!!", // 259
     "Kezdeti", // 260
-    "Mindig" //261
+    "Mindig", //261
     "Óra mutatása" // 262
   },
 
