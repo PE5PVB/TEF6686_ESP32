@@ -2134,7 +2134,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Engedd el a gombot, ha kész", // 5
     "Kódoló optikaira állítva", // 6
     "Kódoló szabványosra állítva", // 7
-    "FM/AM vevő", // 8
+    "FM/AM vevőkészülék", // 8
     "Tuner: !Nincs!", // 9
     "Hangerő", // 10
     "Átalakító", // 11
@@ -2151,14 +2151,14 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Legkisebb sávszél", // 22
     "Legnagyobb sávszél", // 23
     "Szinteltolás", // 24
-    "Sztereó szep. küszöbérték", // 25
+    "Sztereó szétválasztás küszöbértéke", // 25
     "Magasak sarokfrekvenciája", // 26
     "Magasak küszöbértéke", // 27
     "Alacsony szint küszöbérték", // 28
     "Kijelző fényereje", // 29
     "Ki", // 30
     "Kijelző némítva!", // 31
-    "A némítás feloldásához jelöld\nki az RF+ pipát", // 32
+    "A némítás feloldásához\n jelöld ki az\nRF+ pipát", // 32
     "KI", // 33
     "KERESÉS...", // 34
     "Tuner nem észlelhető", // 35
@@ -2167,7 +2167,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "RDS hibák megjelenítése", // 38
     "Nyelv", // 39
     "Válassz nyelvet", // 40
-    "NYOMD MEG A MODE-OT A MENTÉSHEZ\nÉS A BEZÁRÁSHOZ", // 41
+    "MODE A MENTÉSHEZ\nÉS BEZÁRÁSHOZ", // 41
     "Be", // 42
     "FM halkítás", // 43
     "AM halkítás", // 44
@@ -2175,26 +2175,26 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Régió", // 46
     "Európa", // 47
     "Amerika", // 48
-    "Aláhúzások megjelenítése RDS-ben", // 49
+    "Aláhúzások megjelenítése\nRDS-ben", // 49
     "USB mód", // 50
-    "Wi-Fi aktív", // 51
+    "Wi-Fi", // 51
     "Wi-Fi beállítása", // 52
     "Csatlakozz ehhez: ", // 53
     "a Wi-Fi beállításához", // 54
-    "Wi-Fi kapcsolódási kísérlet", // 55
+    "Wi-Fi kapcsolódási\nkísérlet", // 55
     "SIKERTELEN!", // 56
     "CSATLAKOZVA!", // 57
     "Stationlist kliens IP", // 58
-    "SW hullámhossz megjelenítése", // 59
+    "SW hullámhossz\nmegjelenítése", // 59
     "RDS szűrő", // 60
     "PI hibák megjelenítése", // 61
-    "Zajzár használata", // 62
+    "Zajzár(SQ) használata", // 62
     "Modulációmérő", // 63
     "AM Zajszűrő", // 64
     "FM Zajszűrő", // 65
     "Alapértelmezettek betöltve", // 66
     "Audió kimenet", // 67
-    "Hangolás engedélyezése\nképernyővédő közben", // 68
+    "Hangolás\nengedélyezése\nképernyővédő közben", // 68
     "Inverz kijelző", // 69
     "A szoftverről", // 70
     "Fő kód:", // 71
@@ -2206,7 +2206,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Téma", // 77
     "Kinézet", // 78
     "Felismert alkalmazások", // 79
-    "Min.", // 80
+    "Perc", // 80
     "Dinamikus SPI sebesség", // 81
     "Keresés érzékenység", // 82
     "NINCS", // 83
@@ -2219,7 +2219,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "FM alap. lépésköz", // 90
     "Kijelzővédő", // 91
     "Mp", // 92
-    "NYOMD MEG A BAND-OT\nA BEZÁRÁSHOZ", // 93
+    "BAND A BEZÁRÁSHOZ", // 93
     "1% fényerő", // 94
     "25% fényerő", // 95
     "50% fényerő", // 96
@@ -2237,7 +2237,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Modellválasztó", // 108
     "Alap (ILI9341)", // 109
     "Hordozható (ILI9341)", // 110
-    "Hordozható érintős (ILI9341)", // 111
+    "Hord. érintős (ILI9341)", // 111
     "Cím", // 112
     "Album", // 113
     "Szám", // 114
@@ -2299,7 +2299,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Tangerin", // 170
     "Óceán", // 171
     "Indigó", // 172
-    "Akkumulátor opciók", // 173
+    "Akkumulátor jelzése", // 173
     "Feszültség mutatása", // 174
     "Százalék mutatása", // 175
     "RT pufferelés", // 176
@@ -2310,7 +2310,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "FM beállítások", // 181
     "AM beállítások", // 182
     "Csatlakoztathatóság", // 183
-    "NYOMD MEG A MODE-OT A\nVISSZALÉPÉSHEZ", // 184
+    "MODE A VISSZALÉPÉSHEZ", // 184
     "CoChannel Detektor", // 185
     "CoChannel Detektor\nérzékenység", // 186
     "CoChannel Detektor\nküszöbérték", // 187
@@ -2328,22 +2328,22 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "FM kihangolás", // 199
     "Kicsi", // 200
     "Nagy", // 201
-    "Összes", // 202
+    "Mind", // 202
     "Gyors PS", // 203
-    "Alapértelmezett", // 204
+    "Alap", // 204
     "Képernyő némítása\nXDRGTK kapcsolaton", // 205
     "FMSI sztereó\njavítás", // 206
-    "A funkció csak a TEF6687/6689\nkészülékeken érhető el!", // 207
-    "A funkció nem elérhető\na kiválasztott kinézetben!", // 208
-    "Memóriacsatornák keresésének\nelkezdése", // 209
-    "Memóriacsatornák keresésének\nbefejezése", // 210
+    "Funkció csak a\nTEF6687/6689\nkészülékeken érhető el!", // 207
+    "Funkció nem elérhető\na kiválasztott kinézetben!", // 208
+    "Memóriacsatornák keresésének elkezdése", // 209
+    "Memóriacsatornák keresésének befejezése", // 210
     "Várakozási idő", // 211
     "DX keresés indítása", // 212
     "FM DX Opciók", // 213
-    "Megszakítva! A kezdőcsatorna\nkihagyottnak van jelölve.", // 214
+    "Megszakítva!\nA kezdőcsatorna\nkihagyottnak van jelölve.", // 214
     "Auto AF rendezés", // 215
     "Memóriacsatornák", // 216
-    "Kizárás", // 217
+    "Kizárása", // 217
     "Csak", // 218
     "Auto keresés\nmegszakítása", // 219
     "Helyes PI", // 220
@@ -2353,7 +2353,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "5 mp. sávgombnyomás", // 224
     "Kikapcsolás", // 225
     "Képernyőnémítás", // 226
-    "Kikapcsolva", // 227
+    "Letiltva", // 227
     "Nincs", // 228
     "Hírek", // 229
     "Aktuális események", // 230
@@ -2387,8 +2387,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Riasztás Teszt", // 258
     "Riasztás!!!", // 259
     "Kezdeti", // 260
-    "Mindig", //261
-    "Órát mutass" // 262
+    "Mindig" //261
   },
 
   { "Français", // French
