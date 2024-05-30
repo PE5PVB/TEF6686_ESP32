@@ -1,7 +1,7 @@
 #ifndef LANGUAGE_H
 #define LANGUAGE_H
 
-#define VERSION "v2.10 RC10"
+#define VERSION "v2.10 RC11"
 
 // [number of languages][number of texts]
 
@@ -2335,8 +2335,8 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "FMSI sztereó\njavítás", // 206
     "Funkció csak a\nTEF6687/6689\nkészülékeken érhető el!", // 207
     "Funkció nem elérhető\na kiválasztott kinézetben!", // 208
-    "Memóriacsatornák keresésének elkezdése", // 209
-    "Memóriacsatornák keresésének befejezése", // 210
+    "Memóriacsatornák\nkeresésének\nelkezdése", // 209
+    "Memóriacsatornák\nkeresésének\nbefejezése", // 210
     "Várakozási idő", // 211
     "DX keresés indítása", // 212
     "FM DX Opciók", // 213
@@ -2388,6 +2388,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Riasztás!!!", // 259
     "Kezdeti", // 260
     "Mindig" //261
+    "Óra mutatása" // 262
   },
 
   { "Français", // French
