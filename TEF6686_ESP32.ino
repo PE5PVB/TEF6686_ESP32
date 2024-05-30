@@ -114,7 +114,7 @@ bool screenmute;
 bool screensavertriggered = false;
 bool seek;
 bool setupmode;
-byte showrdserrors;
+bool showclock;
 bool usesquelch;
 bool softmuteam;
 bool softmutefm;
@@ -200,6 +200,7 @@ byte scanmodeold;
 byte screensaverOptions[5] = {0, 3, 10, 30, 60};
 byte screensaverset;
 byte showmodulation;
+byte showrdserrors;
 byte showSWMIBand;
 byte submenu;
 byte stationlistid;
@@ -426,6 +427,8 @@ void setup() {
   gpio_set_drive_capability((gpio_num_t) 21, GPIO_DRIVE_CAP_0);
   gpio_set_drive_capability((gpio_num_t) 22, GPIO_DRIVE_CAP_0);
   gpio_set_drive_capability((gpio_num_t) 23, GPIO_DRIVE_CAP_0);
+  analogReadResolution(12);
+
   setupmode = true;
   EEPROM.begin(EE_TOTAL_CNT);
   if (EEPROM.readByte(EE_BYTE_CHECKBYTE) != EE_CHECKBYTE_VALUE) DefaultSettings(hardwaremodel);
@@ -525,6 +528,7 @@ void setup() {
   scanmute = EEPROM.readByte(EE_BYTE_SCANMUTE);
   autosquelch = EEPROM.readByte(EE_BYTE_AUTOSQUELCH);
   longbandpress = EEPROM.readByte(EE_BYTE_LONGBANDPRESS);
+  showclock = EEPROM.readByte(EE_BYTE_SHOWCLOCK);
 
   if (spispeed == SPI_SPEED_DEFAULT) {
     tft.setSPISpeed(SPI_FREQUENCY / 1000000);
@@ -825,6 +829,7 @@ void setup() {
     Wire.endTransmission();
   }
 
+  BuildDisplay();
   SelectBand();
   if (tunemode == TUNE_MEM) DoMemoryPosTune();
 
@@ -1102,28 +1107,44 @@ void loop() {
 
   if (digitalRead(BANDBUTTON) == LOW) {
     tottimer = millis();
-    if (screensavertriggered && !touchrotating) WakeToSleep(REVERSE);
-    BANDBUTTONPress();
+    if (screensavertriggered) {
+      WakeToSleep(REVERSE);
+      while (digitalRead(BANDBUTTON) == LOW);
+    } else {
+      BANDBUTTONPress();
+    }
   }
 
   if (digitalRead(ROTARY_BUTTON) == LOW) {
     tottimer = millis();
-    if (screensavertriggered && !touchrotating) WakeToSleep(REVERSE);
-    if (!afscreen) ButtonPress();
+    if (screensavertriggered) {
+      WakeToSleep(REVERSE);
+      while (digitalRead(ROTARY_BUTTON) == LOW);
+    } else {
+      if (!afscreen) ButtonPress();
+    }
   }
 
   if (digitalRead(MODEBUTTON) == LOW) {
     tottimer = millis();
-    if (screensavertriggered && !touchrotating) WakeToSleep(REVERSE);
-    if (!screenmute) ModeButtonPress();
+    if (screensavertriggered) {
+      WakeToSleep(REVERSE);
+      while (digitalRead(MODEBUTTON) == LOW);
+    } else {
+      if (!screenmute) ModeButtonPress();
+    }
   }
 
   if (digitalRead(BWBUTTON) == HIGH && BWtune) BWtune = false;
 
   if (digitalRead(BWBUTTON) == LOW && !BWtune) {
     tottimer = millis();
-    if (screensavertriggered && !touchrotating) WakeToSleep(REVERSE);
+    if (screensavertriggered) {
+      WakeToSleep(REVERSE);
+      while (digitalRead(BWBUTTON) == LOW);
+    } else {
     if (!screenmute && !afscreen) BWButtonPress();
+    }
   }
 
 #ifdef DEEPELEC_DP_666
@@ -1647,14 +1668,11 @@ void BANDBUTTONPress() {
         while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
 
         if (counter - counterold < 1000) {
-          if (screensavertriggered) {
-            WakeToSleep(REVERSE);
-            return;
-          }
           if (afscreen) {
             BuildAdvancedRDS();
           } else if (advancedRDS) {
             BuildDisplay();
+            SelectBand();
             ScreensaverTimerReopen();
           } else {
             if (tunemode != TUNE_MEM) {
@@ -1674,11 +1692,6 @@ void BANDBUTTONPress() {
             ScreensaverTimerRestart();
           }
         } else {
-          if (screensavertriggered) {
-            WakeToSleep(REVERSE);
-            return;
-          }
-
           if (band < BAND_GAP) {
             if (advancedRDS && !seek) BuildAFScreen();
             else BuildAdvancedRDS();
@@ -1707,6 +1720,14 @@ void BANDBUTTONPress() {
 }
 
 void StoreFrequency() {
+  switch (band) {
+    case BAND_LW: freqold = frequency_LW; frequency_AM = frequency_LW; break;
+    case BAND_MW: freqold = frequency_MW; frequency_AM = frequency_MW; break;
+    case BAND_SW: freqold = frequency_SW; frequency_AM = frequency_SW; break;
+#ifdef HAS_AIR_BAND
+    case BAND_AIR: freqold = frequency_AIR; frequency_AM = frequency_AIR; break;
+#endif
+  }
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, frequency);
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_OIRT, frequency_OIRT);
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, frequency_AM);
@@ -2088,6 +2109,8 @@ void ToggleSWMIBand(bool frequencyup) {
 }
 
 void SelectBand() {
+  if (afscreen || advancedRDS) BuildDisplay();
+
   if (band > BAND_GAP) {
     seek = false;
     if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
@@ -2117,7 +2140,6 @@ void SelectBand() {
     radio.setAMCoChannel(amcodect, amcodectcount);
     doBW();
     if (!screenmute) {
-      BuildDisplay();
       if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
       if (region == REGION_US) {
         tftPrint(-1, "PI:", 212, 184, GreyoutColor, BackgroundColor, 16);
@@ -2132,6 +2154,7 @@ void SelectBand() {
       tftPrint(0, "iMS", 265, 59, GreyoutColor, BackgroundColor, 16);
       tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
       tftPrint(0, "EQ", 301, 59, GreyoutColor, BackgroundColor, 16);
+      tftReplace(-1, "MHz", "kHz", 258, 76, ActiveColor, ActiveColorSmooth, BackgroundColor, 28);
       // todo
       // if (band == AM_BAND_AIR) tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
       // else tftPrint(-1, "KHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
@@ -2151,9 +2174,54 @@ void SelectBand() {
     freqold = frequency_AM;
     if (!externaltune && tunemode != TUNE_MEM) CheckBandForbiddenFM();
     doBW();
-    if (!screenmute) BuildDisplay();
+    if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
+    if (region == REGION_US) {
+      tftPrint(-1, "PI:", 212, 184, ActiveColor, ActiveColorSmooth, 16);
+      tftPrint(-1, "ID:", 212, 201, ActiveColor, ActiveColorSmooth, 16);
+    }
+    tftPrint(-1, "PS:", 3, 193, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "RT:", 3, 221, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "PTY:", 3, 163, ActiveColor, ActiveColorSmooth, 16);
+
+    tftReplace(-1, "kHz", "MHz", 258, 76, ActiveColor, ActiveColorSmooth, BackgroundColor, 28);
   }
+
   radio.clearRDS(fullsearchrds);
+  ShowFreq(0);
+
+  if (!screenmute) {
+    tft.fillRect(113, 38, 124, 4, BackgroundColor);
+    ShowErrors();
+    showPTY();
+    showRadioText();
+    showPI();
+    updateiMS();
+    updateEQ();
+    ShowTuneMode();
+    ShowStepSize();
+
+    tftPrint(-1, myLanguage[language][102], 70, 32, BackgroundColor, BackgroundColor, 16);
+    tftPrint(-1, myLanguage[language][103], 70, 32, BackgroundColor, BackgroundColor, 16);
+    tftPrint(-1, myLanguage[language][104], 70, 32, BackgroundColor, BackgroundColor, 16);
+    tftPrint(-1, myLanguage[language][105], 70, 32, BackgroundColor, BackgroundColor, 16);
+    tftPrint(-1, myLanguage[language][106], 70, 32, BackgroundColor, BackgroundColor, 16);
+
+#ifdef HAS_AIR_BAND
+    tftPrint(-1, myLanguage[language][223], 70, 32, BackgroundColor, BackgroundColor, 16);
+#endif
+
+    switch (band) {
+      case BAND_LW: tftPrint(-1, myLanguage[language][102], 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
+      case BAND_MW: tftPrint(-1, myLanguage[language][103], 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
+      case BAND_SW: tftPrint(-1, myLanguage[language][104], 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
+      case BAND_FM: tftPrint(-1, myLanguage[language][105], 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
+      case BAND_OIRT: tftPrint(-1, myLanguage[language][106], 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
+
+#ifdef HAS_AIR_BAND
+      case BAND_AIR: tftPrint(-1, myLanguage[language][223], 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
+#endif
+    }
+  }
 }
 
 void BWButtonPress() {
@@ -2180,10 +2248,6 @@ void BWButtonPress() {
         BWset++;
         doBW();
         BWtune = true;
-      }
-      if (screensaverset) {
-        WakeToSleep(REVERSE);
-        return;
       }
       delay(100);
     }
@@ -2226,6 +2290,7 @@ void ModeButtonPress() {
     if (!usesquelch) radio.setUnMute();
     if (advancedRDS) {
       BuildDisplay();
+      SelectBand();
       ScreensaverTimerReopen();
     } else if (afscreen) {
       if (afpagenr == 1) afpagenr = 2; else if (afpagenr == 2 && afpage) afpagenr = 3; else afpagenr = 1;
@@ -2243,10 +2308,6 @@ void ModeButtonPress() {
 
         if (counter - counterold <= 1000) {
           doTuneMode();
-          if (screensaverset) {
-            WakeToSleep(REVERSE);
-            return;
-          }
         } else {
           if (!menu) {
             menuoption = ITEM1;
@@ -2384,26 +2445,26 @@ void RoundStep() {//todo air
     Round30K(frequency_OIRT);
     radio.SetFreq(frequency_OIRT);
   } else {
-    if (band == BAND_MW) {
+    if (band == BAND_LW) {
       unsigned int freq = frequency_AM / (mwstepsize == false ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K);
       frequency_AM = freq * (mwstepsize == false ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K);
+      frequency_LW = frequency_AM;
+      radio.SetFreqAM(frequency_AM);
+    } else if (band == BAND_MW) {
+      unsigned int freq = frequency_AM / (mwstepsize == false ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K);
+      frequency_AM = freq * (mwstepsize == false ? FREQ_MW_STEP_9K : FREQ_MW_STEP_10K);
+      frequency_MW = frequency_AM;
       radio.SetFreqAM(frequency_AM);
     } else if (band == BAND_SW) {
       Round5K(frequency_AM);
+      frequency_SW = frequency_AM;
       radio.SetFreqAM(frequency_AM);
     }
   }
 
-  while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
+  StoreFrequency();
 
-  if (band == BAND_FM) {
-    EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, frequency);
-  } else if (band == BAND_OIRT) {
-    EEPROM.writeUInt(EE_UINT16_FREQUENCY_OIRT, frequency_OIRT);
-  } else {
-    EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, frequency_AM);
-  }
-  EEPROM.commit();
+  while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
 }
 
 void ButtonPress() {
@@ -2411,7 +2472,10 @@ void ButtonPress() {
     cancelDXScan();
   } else {
     if (!usesquelch) radio.setUnMute();
-    if (advancedRDS) BuildDisplay();
+    if (advancedRDS) {
+      BuildDisplay();
+      SelectBand();
+    }
     if (!menu) {
       if (tunemode == TUNE_MEM) {
         if (!memorystore) {
@@ -3698,14 +3762,22 @@ void ShowRSSI() {
 }
 
 void ShowBattery() {
+  static uint32_t batupdatetimer = 0;
+
   if (millis() >= batupdatetimer + TIMER_BAT_TIMER) {
     batupdatetimer = millis();
   } else {
     return;
   }
 
-  uint16_t v = 0;
-  if (!wifi) v = analogRead(BATTERY_PIN);
+  uint32_t adcSum = 0;
+  for (int i = 0; i < 16; i++) {
+    adcSum += analogRead(BATTERY_PIN);
+    delay(1);
+  }
+
+  int v = adcSum / 16;
+
   battery = map(constrain(v, BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, BAT_LEVEL_STAGE);
   byte batteryprobe = map(constrain(v, BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, 20);
 
@@ -3719,7 +3791,7 @@ void ShowBattery() {
         tft.fillRoundRect(313, 13, 4, 6, 2, ActiveColor);
       }
       if (batteryoptions != BATTERY_VALUE && batteryoptions != BATTERY_PERCENT && battery != 0) {
-        tft.fillRoundRect(279, 8, (battery * 8) , 16, 2, BarInsignificantColor);
+        tft.fillRoundRect(279, 8, (battery * 8), 16, 2, BarInsignificantColor);
       } else {
         tft.fillRoundRect(279, 8, 33, 16, 2, BackgroundColor);
       }
@@ -3732,9 +3804,8 @@ void ShowBattery() {
     batteryVold = 0;
     vPerold = 0;
 
-
     if (!wifi && batterydetect) {
-      float batteryV = constrain((((float)v / 4095.0) * 3.3 * (1100 / 1000.0) * 2.0), 0.0, 5.0);
+      float batteryV = constrain(v / 4095.0 * 3.3 * 2.0, 0.0, 5.0);
       float vPer = constrain((batteryV - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE), 0.0, 0.99) * 100;
 
       if (abs(batteryV - batteryVold) > 0.05 && batteryoptions == BATTERY_VALUE) {
@@ -3770,7 +3841,7 @@ void TuneUp() {
       } else if (frequency_AM < MWLowEdgeSet) {
         temp = FREQ_MW_STEP_9K;
         frequency_AM = (frequency_AM / FREQ_MW_STEP_9K) * FREQ_MW_STEP_9K;
-      } else if (frequency_AM < SWHighEdgeSet && frequency_AM > SWLowEdgeSet) {
+      } else if (frequency_AM <= SWHighEdgeSet && frequency_AM >= SWLowEdgeSet) {
         temp = FREQ_SW_STEP_5K;
         frequency_AM = (frequency_AM / FREQ_SW_STEP_5K) * FREQ_SW_STEP_5K;
       }
@@ -3843,6 +3914,7 @@ void TuneUp() {
     frequency_MW = frequency_AM;
   } else if (band == BAND_SW) {
     frequency_AM += temp;
+    Serial.println(String(frequency_AM) + "\t" + String(SWHighEdgeSet) + "\t" + String(temp));
     if (frequency_AM > SWHighEdgeSet) {
       frequency_AM = SWLowEdgeSet;
       if (edgebeep) EdgeBeeper();
@@ -4067,11 +4139,17 @@ void MuteScreen(bool setting) {
     tft.writecommand(0x11);
     analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
     if (band < BAND_GAP) {
-      if (afscreen) BuildAFScreen();
-      else if (advancedRDS) BuildAdvancedRDS();
-      else BuildDisplay();
+      if (afscreen) {
+        BuildAFScreen();
+      } else if (advancedRDS) {
+        BuildAdvancedRDS();
+      } else {
+        BuildDisplay();
+        SelectBand();
+      }
     } else {
       BuildDisplay();
+      SelectBand();
     }
     setupmode = false;
   } else if (setting && !screenmute) {
@@ -4183,6 +4261,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_SCANMUTE, 0);
   EEPROM.writeByte(EE_BYTE_AUTOSQUELCH, 0);
   EEPROM.writeByte(EE_BYTE_LONGBANDPRESS, 0);
+  EEPROM.writeByte(EE_BYTE_SHOWCLOCK, 1);
 
   for (int i = 0; i < EE_PRESETS_CNT; i++) {
     EEPROM.writeByte(i + EE_PRESETS_BAND_START, BAND_FM);
@@ -4410,6 +4489,7 @@ void endMenu() {
   EEPROM.writeByte(EE_BYTE_SCANMUTE, scanmute);
   EEPROM.writeByte(EE_BYTE_AUTOSQUELCH, autosquelch);
   EEPROM.writeByte(EE_BYTE_LONGBANDPRESS, longbandpress);
+  EEPROM.writeByte(EE_BYTE_SHOWCLOCK, showclock);
   EEPROM.commit();
   if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
   Serial.end();
@@ -4417,6 +4497,8 @@ void endMenu() {
   if (USBmode) Serial.begin(19200); else Serial.begin(115200);
 
   BuildDisplay();
+  SelectBand();
+  ScreensaverTimerRestart();
 }
 
 void startFMDXScan() {

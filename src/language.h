@@ -1,11 +1,11 @@
 #ifndef LANGUAGE_H
 #define LANGUAGE_H
 
-#define VERSION "v2.10 RC9"
+#define VERSION "v2.10 RC10"
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[18][262] PROGMEM = {
+static const char* const myLanguage[18][263] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -267,7 +267,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Alarm Test", // 258
     "Alarm!!!", // 259
     "Initial", // 260
-    "Always" //261
+    "Always", // 261
+    "Show clock" // 262
   },
 
   { "Nederlands", // Dutch
@@ -531,7 +532,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Alarmtest", // 258
     "Alarm ! ALARM !", // 259
     "Initieel", // 260
-    "Altijd" //261
+    "Altijd", //261
+    "Toon klok" // 262
   },
 
   { "Polski", // Polish
@@ -795,7 +797,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Alarm Test", // 258
     "Alarm", // 259
     "Początkowy", // 260
-    "Zawsze" // 261
+    "Zawsze", // 261
+    "Pokaż zegar" // 262
   },
 
   { "Hrvatski", // Croatian
@@ -1059,7 +1062,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Testni alarm!", // 258
     "Alarm !", // 259
     "Početno", // 260
-    "Uvijek" //261
+    "Uvijek", //261
+    "Prikaži sat" // 262
   },
 
   { "Ελληνικά", // Greek
@@ -1323,7 +1327,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Δοκιμή συναγερμού", // 258
     "Συναγερμός!!!", // 259
     "Αρχικό", // 260
-    "Πάντα" //261
+    "Πάντα", //261
+    "Εμφάνιση ρολογιού" // 262
   },
 
   { "Română", // Romanian
@@ -1587,7 +1592,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Test Alarmă", // 258
     "Alarmă !", // 259
     "Inițial", // 260
-    "Mereu" //261
+    "Mereu", //261
+    "Arată ceasul" // 262
   },
 
   { "Deutsch", // German
@@ -1851,7 +1857,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Alarm Test", // 258
     "Alarm! Alarm!", // 259
     "Anfänglich", // 260
-    "Immer" // 261
+    "Immer", // 261
+    "Uhr anzeigen" // 262
   },
 
   { "Český", // Czech
@@ -2115,271 +2122,272 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Alarm Test", // 258
     "Alarm – Alarm !", // 259
     "Počáteční", // 260
-    "Vždy" //261
+    "Vždy", //261
+    "Zobrazit hodiny" // 262
   },
 
-  { "SloveSlovenský", // Slovak
-    "Smer enkóderu bol zmenený", // 1
-    "Prosím, pusťte tlačidlo", // 2
-    "Obrazovka otočená", // 3
-    "Kalibrácia analog. merača", // 4
-    "Po dokončení pusťte tlačidlo", // 5
-    "enkóder nastavený na optický", // 6
-    "enkóder nastavený na štandardný", // 7
-    "FM/AM prijímač", // 8
-    "Tuner: !ŽIADNY!", // 9
-    "Hlasitosť:", // 10
-    "Konvertor:", // 11
-    "Spodok pásma:", // 12
-    "Vrch pásma:", // 13
-    "FM Offset frekvencie:", // 14
-    "Prah pre stereo:", // 15
-    "Prah utlmenia:", // 16
-    "Prah zvuku:", // 17
-    "Prah nizkeho signálu:", // 18
-    "Kontrast:", // 19
-    "Hlasitost", // 20
-    "Offset frekvencie", // 21
-    "Spodok pásma", // 22
-    "Vrch pásma", // 23
-    "Offset signálu", // 24
-    "Prah pro stereo", // 25
-    "Prah utlmenia", // 26
-    "Prah signálu pre utlmenie", // 27
-    "Prah nízkého signálu", // 28
-    "Jas", // 29
-    "Vyp", // 30
-    "Obrazovka je stlmená!", // 31
-    "Pre spustenie odčiarknite RF+", // 32
-    "VYP", // 33
-    "SKENUJEM...", // 34
-    "Tuner nedetekovaný", // 35
-    "AM Antenna gain", // 36
+  { "Magyar", // Hungarian
+    "Forgási irány megváltozott", // 1
+    "Engedd el a gombot", // 2
+    "Képernyő megfordítva", // 3
+    "Analóg mérő kalibrálása", // 4
+    "Engedd el a gombot, ha kész", // 5
+    "Kódoló optikaira állítva", // 6
+    "Kódoló szabványosra állítva", // 7
+    "FM/AM vevőkészülék", // 8
+    "Tuner: !Nincs!", // 9
+    "Hangerő", // 10
+    "Átalakító", // 11
+    "Legkisebb sávszél", // 12
+    "Legnagyobb sávszél", // 13
+    "FM RF szinteltolás", // 14
+    "Sztereó küszöbérték", // 15
+    "Magasak sarokja", // 16
+    "Magasak küszöbértéke", // 17
+    "Alacsonyak küszöbértéke", // 18
+    "Kontraszt", // 19
+    "Hangerő", // 20
+    "Átalakító eltolása", // 21
+    "Legkisebb sávszél", // 22
+    "Legnagyobb sávszél", // 23
+    "Szinteltolás", // 24
+    "Sztereó szétválasztás küszöbértéke", // 25
+    "Magasak sarokfrekvenciája", // 26
+    "Magasak küszöbértéke", // 27
+    "Alacsony szint küszöbérték", // 28
+    "Kijelző fényereje", // 29
+    "Ki", // 30
+    "Kijelző némítva!", // 31
+    "A némítás feloldásához\n jelöld ki az\nRF+ pipát", // 32
+    "KI", // 33
+    "KERESÉS...", // 34
+    "Tuner nem észlelhető", // 35
+    "AM Antenna érzékenység", // 36
     "FM AGC", // 37
-    "Zobraziť chyby v RDS", // 38
-    "Jazyk", // 39
-    "Vyberte jazyk", // 40
-    "STLAČTE MODE PRE ULOŽENIE", // 41
-    "Zap", // 42
-    "Softmute FM", // 43
-    "Softmute AM", // 44
-    "Pípnutie na konci pásma", // 45
-    "Region", // 46
+    "RDS hibák megjelenítése", // 38
+    "Nyelv", // 39
+    "Válassz nyelvet", // 40
+    "MODE A MENTÉSHEZ\nÉS BEZÁRÁSHOZ", // 41
+    "Be", // 42
+    "FM halkítás", // 43
+    "AM halkítás", // 44
+    "Sípszó a sáv szélén", // 45
+    "Régió", // 46
     "Európa", // 47
-    "America", // 48
-    "Zobraziť podtržítka v RDS", // 49
+    "Amerika", // 48
+    "Aláhúzások megjelenítése\nRDS-ben", // 49
     "USB mód", // 50
-    "Wi-Fi active", // 51
-    "Konfigurace Wi-Fi", // 52
-    "Pripojte sa k: ", // 53
-    "pre nakonfigurovánie Wi-Fi", // 54
-    "Wi-Fi pripojenie prebieha...", // 55
-    "NEPRIPOJENÉ!", // 56
-    "PRIPOJENÉ!", // 57
-    "Stationlist IP", // 58
-    "Zobraziť SW pásmo", // 59
-    "RDS filter", // 60
-    "Zobraziť chyby v PI", // 61
-    "Zobraziť squelch", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
-    "Graf modulácie", // 63
-    "Utlmenie šumu (AM)", // 64
-    "Utlmenie šumu (FM)", // 65
-    "Východzie hodnoty načítané", // 66
-    "Zvukový výstup", // 67
-    "Povolit ladenie počas šetriča", // 68
-    "Invertovanie farieb", // 69
-    "O softvéri", // 70
-    "Hlavný kód:", // 71
-    "Prispeli:", // 72
-    "Neznámy", // 73
-    "Nastavenia šetriča obrazovky", // 74
-    "Čas", // 75
-    "Vypnutie obrazovky", // 76
-    "Vzhľad", // 77
-    "Skin", // 78
-    "Detegované aplikácie", // 79
-    "Min.", // 80
-    "Dynamic SPI speed", // 81
-    "Scan sensitivity", // 82
-    "NONE", // 83 represents: AM/FM bands unavailable(please delete this note after translation）
-    "Software version", // 84
-    "Frequency font", // 85
+    "Wi-Fi", // 51
+    "Wi-Fi beállítása", // 52
+    "Csatlakozz ehhez: ", // 53
+    "a Wi-Fi beállításához", // 54
+    "Wi-Fi kapcsolódási\nkísérlet", // 55
+    "SIKERTELEN!", // 56
+    "CSATLAKOZVA!", // 57
+    "Stationlist kliens IP", // 58
+    "SW hullámhossz\nmegjelenítése", // 59
+    "RDS szűrő", // 60
+    "PI hibák megjelenítése", // 61
+    "Zajzár(SQ) használata", // 62
+    "Modulációmérő", // 63
+    "AM Zajszűrő", // 64
+    "FM Zajszűrő", // 65
+    "Alapértelmezettek betöltve", // 66
+    "Audió kimenet", // 67
+    "Hangolás\nengedélyezése\nképernyővédő közben", // 68
+    "Inverz kijelző", // 69
+    "A szoftverről", // 70
+    "Fő kód:", // 71
+    "Közreműködők:", // 72
+    "Ismeretlen", // 73
+    "Képernyővédő opciók", // 74
+    "Időtúllépés időzítő", // 75
+    "Kijelző ki", // 76
+    "Téma", // 77
+    "Kinézet", // 78
+    "Felismert alkalmazások", // 79
+    "Perc", // 80
+    "Dinamikus SPI sebesség", // 81
+    "Keresés érzékenység", // 82
+    "NINCS", // 83
+    "Szoftver verzió", // 84
+    "Frekvencia betűtípusa", // 85
     "Auto", // 86
-    "AF nedostupné", // 87
-    "EON nedostupný", // 88
-    "RT+ nedostupný", // 89
-    "Krokovanie FM", // 90
-    "Šetrič obrazovky", // 91
-    "Sekúnd", // 92
-    "STLAČTE BAND PRE UZAVRETIE", // 93
-    "1% jas", // 94
-    "25% jas", // 95
-    "50% jas", // 96
-    "AM Offset signálu:", // 97
-    "Jednotka signálu:", // 98
-    "AF:", // 99
-    "Zvoľte FM pásmo:", // 100
-    "Zvoľte AM pásmo:", // 101
+    "Nincs elérhető AF", // 87
+    "Nincs elérhető EON", // 88
+    "Nincs elérhető RT+", // 89
+    "FM alap. lépésköz", // 90
+    "Kijelzővédő", // 91
+    "Mp", // 92
+    "BAND A BEZÁRÁSHOZ", // 93
+    "1% fényerő", // 94
+    "25% fényerő", // 95
+    "50% fényerő", // 96
+    "AM RF szinteltolás", // 97
+    "Jelmérő egység", // 98
+    "AF használata", // 99
+    "FM sáv kiválasztása", // 100
+    "AM sáv kiválasztása", // 101
     "LW", // 102
     "MW", // 103
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotating while screen off", // 107
-    "Voľba modelu", // 108
-    "Základ (ILI9341)", // 109
-    "Prenosný (ILI9341)", // 110
-    "Prenosný - dotykový (ILI9341)", // 111
-    "Title", // 112
+    "Forgatás kikapcsolt képernyővel", // 107
+    "Modellválasztó", // 108
+    "Alap (ILI9341)", // 109
+    "Hordozható (ILI9341)", // 110
+    "Hord. érintős (ILI9341)", // 111
+    "Cím", // 112
     "Album", // 113
-    "Track", // 114
-    "Artist", // 115
-    "Composition", // 116
-    "Movement", // 117
-    "Conductor", // 118
-    "Composer", // 119
-    "Band", // 120
-    "Comment", // 121
-    "Genre", // 122
-    "News", // 123
-    "Local news", // 124
-    "Stockmarket", // 125
+    "Szám", // 114
+    "Előadó", // 115
+    "Kompozíció", // 116
+    "Tétel", // 117
+    "Karmester", // 118
+    "Zeneszerző", // 119
+    "Zenekar", // 120
+    "Megjegyzés", // 121
+    "Műfaj", // 122
+    "Hírek", // 123
+    "Helyi hírek", // 124
+    "Tőzsdepiac", // 125
     "Sport", // 126
-    "Lottery", // 127
-    "Horoscope", // 128
-    "Daily Diversion", // 129
-    "Health", // 130
-    "Event", // 131
-    "Scene", // 132
-    "Cinema", // 133
+    "Lottó", // 127
+    "Horoszkóp", // 128
+    "Napi kikapcsolódás", // 129
+    "Egészség", // 130
+    "Esemény", // 131
+    "Jelenet", // 132
+    "Mozi", // 133
     "TV", // 134
-    "Date/time", // 135
-    "Weather", // 136
-    "Traffic", // 137
-    "Alarm", // 138
-    "Advertisement", // 139
-    "Website", // 140
-    "Other", // 141
-    "Short PS", // 142
-    "Long PS", // 143
-    "Now", // 144
-    "Next", // 145
-    "Part", // 146
-    "Host", // 147
-    "Editor", // 148
-    "Frequency", // 149
-    "Homepage", // 150
-    "Subchannel", // 151
-    "Hotline", // 152
-    "Studio phone", // 153
-    "Phone", // 154
-    "SMS studio", // 155
+    "Dátum/idő", // 135
+    "Időjárás", // 136
+    "Közlekedés", // 137
+    "Riasztás", // 138
+    "Hirdetés", // 139
+    "Weboldal", // 140
+    "Egyéb", // 141
+    "Rövid PS", // 142
+    "Hosszú PS", // 143
+    "Most", // 144
+    "Következő", // 145
+    "Rész", // 146
+    "Házigazda", // 147
+    "Szerkesztő", // 148
+    "Frekvencia", // 149
+    "Kezdőlap", // 150
+    "Alcsatorna", // 151
+    "Forródrót", // 152
+    "Stúdió telefon", // 153
+    "Telefon", // 154
+    "Stúdió SMS", // 155
     "SMS", // 156
-    "Email hotline", // 157
-    "Email studio", // 158
+    "Email forródrót", // 157
+    "Stúdió Email", // 158
     "Email", // 159
-    "Chat", // 160
-    "Chat centre", // 161
-    "Vote question", // 162
-    "Vote centre", // 163
-    "Place", // 164
-    "Appointment", // 165
-    "Identifier", // 166
-    "Purchase", // 167
-    "Get data", // 168
-    "MW default stepsize", // 169
-    "Tangerine", // 170
-    "Ocean", // 171
-    "Indigo", // 172
-    "Nastavenia batérie", // 173
-    "Zobraziť napätie", // 174
-    "Zobraziť percentá", // 175
-    "RT načítanie", // 176
-    "Hlavné nastavenia", // 177
-    "Nastavenia zvuku", // 178
-    "Nastavenia displeja", // 179
-    "Nastavenia RDS", // 180
-    "Nastavenia FM pásma", // 181
-    "Nastavenia AM pásma", // 182
-    "Konektivita", // 183
-    "STĽACTE MODE PRE NÁVRAT", // 184
-    "AM CoChannelDet", // 185
-    "Citlivosť CoChannelDet", // 186
-    "Prah AM CoChannelDet", // 187
-    "CoChannelDet počítadlo", // 188
-    "HLAVNÝ", // 189
-    "ZVUK", // 190
-    "DISPLEJ", // 191
+    "Csevegés", // 160
+    "Csevegőközpont", // 161
+    "Szavazási kérdés", // 162
+    "Szavazóközpont", // 163
+    "Helyszín", // 164
+    "Találkozó", // 165
+    "Azonosító", // 166
+    "Vásárlás", // 167
+    "Adatok lekérése", // 168
+    "MW alap. lépésköz", // 169
+    "Tangerin", // 170
+    "Óceán", // 171
+    "Indigó", // 172
+    "Akkumulátor jelzése", // 173
+    "Feszültség mutatása", // 174
+    "Százalék mutatása", // 175
+    "RT pufferelés", // 176
+    "Fő beállítások", // 177
+    "Audió beállítások", // 178
+    "Kijelző beállítások", // 179
+    "RDS beállítások", // 180
+    "FM beállítások", // 181
+    "AM beállítások", // 182
+    "Csatlakoztathatóság", // 183
+    "MODE A VISSZALÉPÉSHEZ", // 184
+    "CoChannel Detektor", // 185
+    "CoChannel Detektor\nérzékenység", // 186
+    "CoChannel Detektor\nküszöbérték", // 187
+    "CoChannel Detektor\nszámláló", // 188
+    "FŐ", // 189
+    "AUDIÓ", // 190
+    "KIJELZŐ", // 191
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "PRIPOJENIE", // 195
-    "DX MODE", // 196
+    "CSATLAKOZÁS", // 195
+    "DX MÓD", // 196
     "Stationlist ID", // 197
-    "AM ATT", // 198
-    "FM deemphasis", // 199
-    "Malý", // 200
-    "Veľký", // 201
-    "Všetko", // 202
-    "Rýchle načítanie PS", // 203
-    "Default", // 204
-    "Mute screen on\nXDRGTK connection", // 205
-    "FMSI stereo\nimprovement", // 206
-    "Function only available\non TEF6687/6689!", // 207
-    "Function not available\non selected skin!", // 208
-    "Begin scanning\nmemory channels", // 209
-    "Stop scanning\nmemory channels", // 210
-    "Wait time", // 211
-    "Start DX scanning", // 212
-    "FM DX Options", // 213
-    "Abort! The start channel\nis marked as skipped.", // 214
-    "Auto radenie AF", // 215
-    "Memory channels", // 216
-    "Exclude", // 217
-    "Only", // 218
-    "Auto cancel scan", // 219
-    "Correct PI", // 220
-    "Signal", // 221
-    "Mute audio\nwhile scanning", // 222
+    "AM AGC", // 198
+    "FM kihangolás", // 199
+    "Kicsi", // 200
+    "Nagy", // 201
+    "Mind", // 202
+    "Gyors PS", // 203
+    "Alap", // 204
+    "Képernyő némítása\nXDRGTK kapcsolaton", // 205
+    "FMSI sztereó\njavítás", // 206
+    "Funkció csak a\nTEF6687/6689\nkészülékeken érhető el!", // 207
+    "Funkció nem elérhető\na kiválasztott kinézetben!", // 208
+    "Memóriacsatornák keresésének elkezdése", // 209
+    "Memóriacsatornák keresésének befejezése", // 210
+    "Várakozási idő", // 211
+    "DX keresés indítása", // 212
+    "FM DX Opciók", // 213
+    "Megszakítva!\nA kezdőcsatorna\nkihagyottnak van jelölve.", // 214
+    "Auto AF rendezés", // 215
+    "Memóriacsatornák", // 216
+    "Kizárása", // 217
+    "Csak", // 218
+    "Auto keresés\nmegszakítása", // 219
+    "Helyes PI", // 220
+    "Jelszint", // 221
+    "Hang némítása\nkeresés közben", // 222
     "AIR", // 223
-    "5 sec. bandbutton press", // 224
-    "Power off", // 225
-    "Mute screen", // 226
-    "Disabled", // 227
-    "None", // 228
-    "News", // 229
-    "Current Affairs", // 230
-    "Information", // 231
+    "5 mp. sávgombnyomás", // 224
+    "Kikapcsolás", // 225
+    "Képernyőnémítás", // 226
+    "Letiltva", // 227
+    "Nincs", // 228
+    "Hírek", // 229
+    "Aktuális események", // 230
+    "Információ", // 231
     "Sport", // 232
-    "Education", // 233
-    "Drama", // 234
-    "Culture", // 235
-    "Science", // 236
-    "Varied", // 237
-    "Pop Music", // 238
-    "Rock Music", // 239
-    "Easy Listening", // 240
-    "Light Classical", // 241
-    "Serious Classical", // 242
-    "Other Music", // 243
-    "Weather", // 244
-    "Finance", // 245
-    "Children's Progs", // 246
-    "Social Affairs", // 247
-    "Religion", // 248
-    "Phone-In", // 249
-    "Travel", // 250
-    "Leisure", // 251
-    "Jazz Music", // 252
-    "Country Music", // 253
-    "National Music", // 254
-    "Oldies Music", // 255
-    "Folk Music", // 256
-    "Documentary", // 257
-    "Alarm Test", // 258
-    "Alarm!!!", // 259
-    "Initial", // 260
-    "Always" //261
+    "Oktatás", // 233
+    "Dráma", // 234
+    "Kultúra", // 235
+    "Tudomány", // 236
+    "Változatos", // 237
+    "Pop Zene", // 238
+    "Rock Zene", // 239
+    "Könnyűzene", // 240
+    "Könnyű Klasszikus", // 241
+    "Komoly Klasszikus", // 242
+    "Egyéb Zene", // 243
+    "Időjárás", // 244
+    "Pénzügy", // 245
+    "Gyermekprogramok", // 246
+    "Társadalmi ügyek", // 247
+    "Vallás", // 248
+    "Betelefonálós", // 249
+    "Utazás", // 250
+    "Szabadidő", // 251
+    "Jazz Zene", // 252
+    "Country Zene", // 253
+    "Nemzeti Zene", // 254
+    "Régi Zene", // 255
+    "Népi Zene", // 256
+    "Dokumentumfilm", // 257
+    "Riasztás Teszt", // 258
+    "Riasztás!!!", // 259
+    "Kezdeti", // 260
+    "Mindig" //261
   },
 
   { "Français", // French
@@ -2643,7 +2651,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "TEST", // 258
     "Alerte !", // 259
     "Initial", // 260
-    "Toujours" // 261
+    "Toujours", // 261
+    "Afficher l'horloge" // 262
   },
 
   { "Български", // Bulgarian
@@ -2907,7 +2916,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Внимание тест", // 258
     "Тревога!", // 259
     "Начален", // 260
-    "Винаги" // 261
+    "Винаги", // 261
+    "Покажи часовника" // 262
   },
 
   { "Русский", // Russian
@@ -3171,7 +3181,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Внимание тест", // 258
     "Тревога!", // 259
     "Начальный", // 260
-    "Всегда" // 261
+    "Всегда", // 261
+    "Показать часы" // 262
   },
 
   { "Українська", // Ukranian
@@ -3435,7 +3446,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Alarm Test", // 258
     "Alarm!!!", // 259
     "Початковий", // 260
-    "Завжди" // 261
+    "Завжди", // 261
+    "Показати годинник" // 262
   },
 
   { "Italiano", // Italian
@@ -3699,7 +3711,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Test Allarme", // 258
     "!!Allarme!!", // 259
     "Iniziale", // 260
-    "Sempre" // 261
+    "Sempre", // 261
+    "Mostra l'orologio" // 262
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3963,7 +3976,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Alarm Test", // 258
     "Alarm!!!", // 259
     "初始", // 260
-    "始终" // 261
+    "始终", // 261
+    "显示时钟" // 262
   },
 
   { "Norsk", // Norwegian
@@ -4227,7 +4241,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Alarm test", // 258
     "Alarm!", // 259
     "Innledende", // 260
-    "Alltid" // 261
+    "Alltid", // 261
+    "Vis klokka" // 262
   },
 
   { "Español", // Spanish
@@ -4491,7 +4506,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Prueba de Alarma", // 258
     "¡ Alarma !", // 259
     "Inicial", // 260
-    "Siempre" // 261
+    "Siempre", // 261
+    "Mostrar reloj" // 262
   },
 
   { "Português", // Portuguese
@@ -4755,7 +4771,8 @@ static const char* const myLanguage[18][262] PROGMEM = {
     "Teste de Alarme", // 258
     "Alarme – Alarme !", // 259
     "Inicial", // 260
-    "Sempre" // 261
+    "Sempre", // 261
+    "Mostrar relógio" // 262
   }
 };
 #endif
