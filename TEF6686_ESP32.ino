@@ -1619,6 +1619,7 @@ void BANDBUTTONPress() {
             BuildAdvancedRDS();
           } else if (advancedRDS) {
             BuildDisplay();
+            SelectBand();
             ScreensaverTimerReopen();
           } else {
             if (tunemode != TUNE_MEM) {
@@ -2245,6 +2246,7 @@ void ModeButtonPress() {
     if (!usesquelch) radio.setUnMute();
     if (advancedRDS) {
       BuildDisplay();
+      SelectBand();
       ScreensaverTimerReopen();
     } else if (afscreen) {
       if (afpagenr == 1) afpagenr = 2; else if (afpagenr == 2 && afpage) afpagenr = 3; else afpagenr = 1;
@@ -2430,7 +2432,10 @@ void ButtonPress() {
     cancelDXScan();
   } else {
     if (!usesquelch) radio.setUnMute();
-    if (advancedRDS) BuildDisplay();
+    if (advancedRDS) {
+      BuildDisplay();
+      SelectBand();
+    }
     if (!menu) {
       if (tunemode == TUNE_MEM) {
         if (!memorystore) {
@@ -4094,11 +4099,17 @@ void MuteScreen(bool setting) {
     tft.writecommand(0x11);
     analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
     if (band < BAND_GAP) {
-      if (afscreen) BuildAFScreen();
-      else if (advancedRDS) BuildAdvancedRDS();
-      else BuildDisplay();
+      if (afscreen) {
+        BuildAFScreen();
+      } else if (advancedRDS) {
+        BuildAdvancedRDS();
+      } else {
+        BuildDisplay();
+        SelectBand();
+      }
     } else {
       BuildDisplay();
+      SelectBand();
     }
     setupmode = false;
   } else if (setting && !screenmute) {
@@ -4442,6 +4453,7 @@ void endMenu() {
   if (USBmode) Serial.begin(19200); else Serial.begin(115200);
 
   BuildDisplay();
+  SelectBand();
 }
 
 void startFMDXScan() {
