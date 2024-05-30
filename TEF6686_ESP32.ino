@@ -2106,7 +2106,7 @@ void SelectBand() {
       tftPrint(0, "iMS", 265, 59, GreyoutColor, BackgroundColor, 16);
       tft.drawRoundRect(286, 56, 32, 20, 5, GreyoutColor);
       tftPrint(0, "EQ", 301, 59, GreyoutColor, BackgroundColor, 16);
-      tftReplace(-1, "MHz", "kHz", 258, 76, BackgroundColor, BackgroundColor, BackgroundColor, 28);
+      tftReplace(-1, "MHz", "kHz", 258, 76, ActiveColor, ActiveColorSmooth, BackgroundColor, 28);
       // todo
       // if (band == AM_BAND_AIR) tftPrint(-1, "MHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
       // else tftPrint(-1, "KHz", 258, 76, ActiveColor, ActiveColorSmooth, 28);
@@ -2135,7 +2135,7 @@ void SelectBand() {
     tftPrint(-1, "RT:", 3, 221, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "PTY:", 3, 163, ActiveColor, ActiveColorSmooth, 16);
 
-    tftReplace(-1, "kHz", "MHz", 258, 76, BackgroundColor, BackgroundColor, BackgroundColor, 28);
+    tftReplace(-1, "kHz", "MHz", 258, 76, ActiveColor, ActiveColorSmooth, BackgroundColor, 28);
   }
 
   radio.clearRDS(fullsearchrds);
