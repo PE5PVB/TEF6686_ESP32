@@ -374,6 +374,14 @@ void XDRGTKRoutine() {
         }
         break;
 
+      case 'B':
+        byte stmo;
+        stmo = atol(buff + 1);
+        DataPrint("B" + String(stmo) + "\n");
+        if (stmo == 0) StereoToggle = false; else StereoToggle = true;
+        doStereoToggle();
+        break;
+
       case 'C':
         if (afscreen || advancedRDS) {
           BuildDisplay();
@@ -400,14 +408,6 @@ void XDRGTKRoutine() {
           ShowFreq(0);
         }
         DataPrint("C0\n");
-        break;
-
-      case 'B':
-        byte stmo;
-        stmo = atol(buff + 1);
-        DataPrint("B" + String(stmo) + "\n");
-        if (stmo == 0) StereoToggle = false; else StereoToggle = true;
-        doStereoToggle();
         break;
 
       case 'D':
@@ -486,6 +486,17 @@ void XDRGTKRoutine() {
             showAutoSquelch(1);
           }
         }
+        break;
+
+      case 'I':
+	  byte fmscansenstemp;
+        fmscansenstemp = atol(buff + 1);
+        if (fmscansenstemp > 0 && fmscansenstemp < 31) {
+			fmscansens = fmscansenstemp;
+			EEPROM.writeByte(EE_BYTE_FMSCANSENS, fmscansens);
+			EEPROM.commit();
+		}
+          DataPrint("I" + String(fmscansens) + "\n");
         break;
 
       case 'M':

@@ -2339,7 +2339,7 @@ void MenuUp() {
 
           case ITEM10:
             fmscansens++;
-            if (fmscansens > 15) fmscansens = 1;
+            if (fmscansens > 30) fmscansens = 1;
 
             OneBigLineSprite.drawString(String(fmscansens), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -2447,7 +2447,7 @@ void MenuUp() {
 
           case ITEM9:
             amscansens++;
-            if (amscansens > 15) amscansens = 1;
+            if (amscansens > 30) amscansens = 1;
 
             OneBigLineSprite.drawString(String(amscansens, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -3201,7 +3201,7 @@ void MenuDown() {
 
           case ITEM10:
             fmscansens--;
-            if (fmscansens == 0) fmscansens = 15;
+            if (fmscansens == 0) fmscansens = 30;
 
             OneBigLineSprite.drawString(String(fmscansens), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -3310,7 +3310,7 @@ void MenuDown() {
 
           case ITEM9:
             amscansens--;
-            if (amscansens == 0) amscansens = 15;
+            if (amscansens == 0) amscansens = 30;
 
             OneBigLineSprite.drawString(String(amscansens, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
