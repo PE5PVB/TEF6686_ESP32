@@ -45,6 +45,7 @@ extern byte iMSEQ;
 extern byte iMSset;
 extern byte language;
 extern byte memorypos;
+extern byte stepsize;
 extern byte subnetclient;
 extern byte TEF;
 extern char buff[16];
@@ -135,5 +136,6 @@ extern void updateiMS();
 extern void updateEQ();
 extern void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize);
 extern void showAutoSquelch(bool mode);
+extern void ShowStepSize();
 
 #endif

@@ -381,6 +381,12 @@ void XDRGTKRoutine() {
         }
         byte scanmethod;
         scanmethod = atol(buff + 1);
+
+        if (band < BAND_GAP) {
+          stepsize = 0;
+          ShowStepSize();
+        }
+
         if (scanmethod == 1) {
           DataPrint("C1\n");
           direction = false;
