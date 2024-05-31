@@ -2275,7 +2275,7 @@ void ModeButtonPress() {
             menuoption = ITEM1;
             menupage = INDEX;
             menuitem = 0;
-            if (spispeed == 7) tft.setSPISpeed(30);
+            if (spispeed == 7) tft.setSPISpeed(40);
             BuildMenu();
             menu = true;
             ScreensaverTimerSet(OFF);
@@ -2321,7 +2321,6 @@ void ModeButtonPress() {
             menuoption = ITEM1;
             menupage = INDEX;
             menuitem = 0;
-            if (spispeed == 7) tft.setSPISpeed(30);
             BuildMenu();
           }
         }
@@ -2780,6 +2779,8 @@ void ShowMemoryPos() {
 }
 
 void DoMemoryPosTune() {
+  if (spispeed == 7) tft.setSPISpeed(50);
+  
   // Process empty stations
   if (IsStationEmpty()) {
     memoryposstatus = MEM_DARK;
@@ -2824,8 +2825,6 @@ void DoMemoryPosTune() {
       break;
 #endif
   }
-
-  ShowFreq(0);
 
   if (band == BAND_FM || band == BAND_OIRT) {
     StereoToggle = presets[memorypos].ms;
@@ -2880,6 +2879,7 @@ void DoMemoryPosTune() {
   BWtune = true;
   memtune = true;
   memreset = true;
+  ShowFreq(0);
 }
 
 void ShowFreq(int mode) {
