@@ -489,14 +489,22 @@ void XDRGTKRoutine() {
         break;
 
       case 'I':
-	  byte fmscansenstemp;
+        byte fmscansenstemp;
         fmscansenstemp = atol(buff + 1);
         if (fmscansenstemp > 0 && fmscansenstemp < 31) {
-			fmscansens = fmscansenstemp;
-			EEPROM.writeByte(EE_BYTE_FMSCANSENS, fmscansens);
-			EEPROM.commit();
-		}
-          DataPrint("I" + String(fmscansens) + "\n");
+          fmscansens = fmscansenstemp;
+          EEPROM.writeByte(EE_BYTE_FMSCANSENS, fmscansens);
+          EEPROM.commit();
+        }
+        DataPrint("I" + String(fmscansens) + "\n");
+        break;
+
+      case 'J':
+        byte scandxtemp;
+        scandxtemp = atol(buff + 1);
+        if (scandxtemp == 0 && scandxmode) cancelDXScan();
+        if (scandxtemp == 1 && !scandxmode) startFMDXScan();
+        DataPrint("J" + String(scandxtemp) + "\n");
         break;
 
       case 'M':

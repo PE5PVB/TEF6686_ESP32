@@ -2780,7 +2780,7 @@ void ShowMemoryPos() {
 
 void DoMemoryPosTune() {
   if (spispeed == 7) tft.setSPISpeed(50);
-  
+
   // Process empty stations
   if (IsStationEmpty()) {
     memoryposstatus = MEM_DARK;
@@ -4376,6 +4376,7 @@ void cancelDXScan() {
 
   ShowTuneMode();
   ShowMemoryPos();
+  if (XDRGTKUSB || XDRGTKTCP) DataPrint("J0\n");
 }
 
 void endMenu() {
@@ -4473,8 +4474,11 @@ void endMenu() {
 }
 
 void startFMDXScan() {
+  if (afscreen || advancedRDS) BuildDisplay();
+
   if (memorypos > scanstop || memorypos < scanstart) memorypos = scanstart;
   scanmodeold = tunemode;
+
   if (scanmem) {
     tunemode = TUNE_MEM;
     if (band != presets[memorypos].band) {
@@ -4501,6 +4505,7 @@ void startFMDXScan() {
   }
   scantimer = millis();
   scandxmode = true;
+  if (XDRGTKUSB || XDRGTKTCP) DataPrint("J1\n");
 }
 
 void setAutoSpeedSPI() {
