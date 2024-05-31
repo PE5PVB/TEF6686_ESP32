@@ -2022,7 +2022,7 @@ void MenuUp() {
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString(String(ContrastSet, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
-            analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+            analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
             break;
 
           case ITEM3:
@@ -2882,7 +2882,7 @@ void MenuDown() {
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString(String(ContrastSet, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
-            analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+            analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
             break;
 
           case ITEM3:

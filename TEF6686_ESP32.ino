@@ -646,7 +646,7 @@ void setup() {
     if (rotarymode == 0) rotarymode = 1; else rotarymode = 0;
     EEPROM.writeByte(EE_BYTE_ROTARYMODE, rotarymode);
     EEPROM.commit();
-    analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+    analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
     tftPrint(0, myLanguage[language][1], 155, 70, ActiveColor, ActiveColorSmooth, 28);
     tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(BWBUTTON) == LOW) delay(50);
@@ -662,7 +662,7 @@ void setup() {
     }
     EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, displayflip);
     EEPROM.commit();
-    analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+    analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
     tftPrint(0, myLanguage[language][3], 155, 70, ActiveColor, ActiveColorSmooth, 28);
     tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(MODEBUTTON) == LOW) delay(50);
@@ -670,7 +670,7 @@ void setup() {
 
   if (digitalRead(BANDBUTTON) == LOW) {
     analogWrite(SMETERPIN, 511);
-    analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+    analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
     tftPrint(0, myLanguage[language][4], 155, 70, ActiveColor, ActiveColorSmooth, 28);
     tftPrint(0, myLanguage[language][5], 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(BANDBUTTON) == LOW) delay(50);
@@ -678,7 +678,7 @@ void setup() {
   }
 
   if (digitalRead(ROTARY_BUTTON) == LOW && digitalRead(BWBUTTON) == HIGH) {
-    analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+    analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
     if (optenc == 0) {
       optenc = 1;
       tftPrint(0, myLanguage[language][6], 155, 70, ActiveColor, ActiveColorSmooth, 28);
@@ -693,7 +693,7 @@ void setup() {
   }
 
   if (digitalRead(ROTARY_BUTTON) == LOW && digitalRead(BWBUTTON) == LOW) {
-    analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+    analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
     DefaultSettings(hardwaremodel);
     tftPrint(0, myLanguage[language][66], 155, 70, ActiveColor, ActiveColorSmooth, 28);
     tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
@@ -713,7 +713,7 @@ void setup() {
   tft.drawBitmap(130, 124, TEFLogo, 59, 23, ActiveColor);
 
   for (int x = 0; x <= ContrastSet; x++) {
-    analogWrite(CONTRASTPIN, x * 2 + 27);
+    analogWrite(CONTRASTPIN, map(x, 0, 100, 15, 255));
     delay(30);
   }
 
@@ -1171,19 +1171,18 @@ void WakeToSleep(bool yes) {
         StoreFrequency();
         break;
       case LCD_BRIGHTNESS_1_PERCENT:
-        analogWrite(CONTRASTPIN, 1 * 2 + 27);
+        analogWrite(CONTRASTPIN, map(ContrastSet / 100, 0, 100, 15, 255));
         break;
       case LCD_BRIGHTNESS_A_QUARTER:
-        analogWrite(CONTRASTPIN, MIN(ContrastSet, 25) * 2 + 27);
+        analogWrite(CONTRASTPIN, map(ContrastSet / 4, 0, 100, 15, 255));
         break;
       case LCD_BRIGHTNESS_HALF:
-        analogWrite(CONTRASTPIN, MIN(ContrastSet, 50) * 2 + 27);
+        analogWrite(CONTRASTPIN, map(ContrastSet / 2, 0, 100, 15, 255));
         break;
     }
   } else {
     switch (poweroptions) {
       case LCD_OFF:
-        analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
         MuteScreen(0);
         screensavertriggered = false;
         screensaver_IRQ = OFF;
@@ -1192,13 +1191,13 @@ void WakeToSleep(bool yes) {
       case LCD_BRIGHTNESS_1_PERCENT:
       case LCD_BRIGHTNESS_A_QUARTER:
       case LCD_BRIGHTNESS_HALF:
-        analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
         MuteScreen(0);
         screensavertriggered = false;
         screensaver_IRQ = OFF;
         ScreensaverTimerReopen();
         break;
     }
+    analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
   }
 }
 
@@ -4065,7 +4064,7 @@ void SetTunerPatch() {
     radio.getIdentification(device, hw, sw);
     TEF = highByte(hw) * 100 + highByte(sw);
     tft.fillScreen(BackgroundColor);
-    analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+    analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
 
     if (TEF != 102 && TEF != 205) {
       tftPrint(0, myLanguage[language][35], 150, 78, ActiveColor, ActiveColorSmooth, 28);
@@ -4113,7 +4112,7 @@ void MuteScreen(bool setting) {
     screenmute = false;
     setupmode = true;
     tft.writecommand(0x11);
-    analogWrite(CONTRASTPIN, ContrastSet * 2 + 27);
+    analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
     if (band < BAND_GAP) {
       if (afscreen) {
         BuildAFScreen();
