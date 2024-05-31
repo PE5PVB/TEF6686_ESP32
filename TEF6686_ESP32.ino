@@ -3298,7 +3298,8 @@ void showAutoSquelch(bool mode) {
 }
 
 void doSquelch() {
-  if (!XDRGTKUSB && !XDRGTKTCP && usesquelch && !autosquelch) Squelch = analogRead(PIN_POT) / 4 - 100;
+  if (!XDRGTKUSB && !XDRGTKTCP && usesquelch && !autosquelch) Squelch = map(analogRead(PIN_POT), 0, 4095, -100, 920);
+
   if (unit == 0) SquelchShow = Squelch / 10;
   if (unit == 1) SquelchShow = ((Squelch * 100) + 10875) / 1000;
   if (unit == 2) SquelchShow = round((float(Squelch) / 10.0 - 10.0 * log10(75) - 90.0) * 10.0) / 10;
