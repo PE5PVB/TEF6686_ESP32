@@ -238,6 +238,7 @@ int BWAutoColorSmooth;
 int BWOld;
 int bwupdatetimer;
 int DeEmphasis;
+int DisplayedSegments;
 int ForceMono;
 int FrameColor;
 int FreqColor;
@@ -385,6 +386,8 @@ unsigned long eonticker;
 unsigned long eontickerhold;
 unsigned long flashingtimer;
 unsigned long lowsignaltimer;
+unsigned long ModulationpreviousMillis;
+unsigned long ModulationpeakPreviousMillis;
 unsigned long peakholdmillis;
 unsigned long pslongticker;
 unsigned long pslongtickerhold;
@@ -1143,7 +1146,7 @@ void loop() {
       WakeToSleep(REVERSE);
       while (digitalRead(BWBUTTON) == LOW);
     } else {
-    if (!screenmute && !afscreen) BWButtonPress();
+      if (!screenmute && !afscreen) BWButtonPress();
     }
   }
 
@@ -3287,24 +3290,38 @@ void ShowModLevel() {
       MStatus = 0;
       MStatusold = 1;
     }
+
     segments = map(MStatus, 0, 120, 0, 94);
 
-    if (segments > peakholdold) {
-      peakholdold = segments;
+    if (segments < DisplayedSegments && (millis() - ModulationpreviousMillis >= 20)) {
+      DisplayedSegments = max(DisplayedSegments - 3, segments);
+      ModulationpreviousMillis = millis();
+    } else if (segments > DisplayedSegments) {
+      DisplayedSegments = segments;
+    }
+
+    if (DisplayedSegments > peakholdold) {
+      peakholdold = DisplayedSegments;
       peakholdmillis = millis();
     }
 
-    tft.fillRect(16, 133, 2 * constrain(segments, 0, 54), 6, ModBarInsignificantColor);
-    tft.fillRect(16 + 2 * 54, 133, 2 * (constrain(segments, 54, 94) - 54), 6, ModBarSignificantColor);
-    tft.fillRect(16 + 2 * constrain(segments, 0, 94), 133, 2 * (94 - constrain(segments, 0, 94)), 6, GreyoutColor);
+    if (millis() - peakholdmillis >= 1000) {
+      if (millis() - ModulationpeakPreviousMillis >= 20) {
+        peakholdold = max(peakholdold - 3, DisplayedSegments);
+        ModulationpeakPreviousMillis = millis();
+      }
+    }
+
+    tft.fillRect(16, 133, 2 * 94, 6, GreyoutColor);
+    tft.fillRect(16, 133, 2 * constrain(DisplayedSegments, 0, 54), 6, ModBarInsignificantColor);
+    tft.fillRect(16 + 2 * 54, 133, 2 * (constrain(DisplayedSegments, 54, 94) - 54), 6, ModBarSignificantColor);
+    tft.fillRect(16 + 2 * constrain(DisplayedSegments, 0, 94), 133, 2 * (94 - constrain(DisplayedSegments, 0, 94)), 6, GreyoutColor);
 
     int peakHoldPosition = 16 + 2 * constrain(peakholdold, 0, 94);
     tft.fillRect(peakHoldPosition, 133, 2, 6, (MStatus > 80) ? ModBarSignificantColor : PrimaryColor);
 
-    if (millis() - peakholdmillis >= 1000) {
+    if (millis() - peakholdmillis >= 1000 && peakholdold == DisplayedSegments) {
       tft.fillRect(peakHoldPosition, 133, 2, 6, GreyoutColor);
-      peakholdold = segments;
-      peakholdmillis = millis();
     }
   }
 }
@@ -3914,7 +3931,6 @@ void TuneUp() {
     frequency_MW = frequency_AM;
   } else if (band == BAND_SW) {
     frequency_AM += temp;
-    Serial.println(String(frequency_AM) + "\t" + String(SWHighEdgeSet) + "\t" + String(temp));
     if (frequency_AM > SWHighEdgeSet) {
       frequency_AM = SWLowEdgeSet;
       if (edgebeep) EdgeBeeper();
@@ -4114,10 +4130,10 @@ void read_encoder() {
   encval += enc_states[( old_AB & 0x0f )];
 
   if (optenc) {
-    if (encval > 3) {
+    if (encval > 4) {
       if (rotarymode) rotary = -1; else rotary = 1;
       encval = 0;
-    } else if (encval < -3) {
+    } else if (encval < -4) {
       if (rotarymode) rotary = 1; else rotary = -1;
       encval = 0;
     }

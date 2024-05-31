@@ -45,7 +45,7 @@
 #define FREQ_FM_STEP_200K           20
 
 #define FREQ_LW_LOW_EDGE_MIN        144
-#define FREQ_LW_HIGH_EDGE_MAX       519
+#define FREQ_LW_HIGH_EDGE_MAX       513
 #define FREQ_MW_LOW_EDGE_MIN_9K     522
 #define FREQ_MW_LOW_EDGE_MIN_10K    520
 #define FREQ_MW_HIGH_EDGE_MAX_9K    1791

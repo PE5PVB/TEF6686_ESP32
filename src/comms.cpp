@@ -49,6 +49,7 @@ void Communication() {
           if ((stlfreq.toInt()) / 1000 > 144 && (stlfreq.toInt()) / 1000 < 27000) {
             if (afscreen || advancedRDS) {
               BuildDisplay();
+              SelectBand();
               ScreensaverTimerReopen();
             }
             unsigned int tempfreq = (stlfreq.toInt()) / 1000;
@@ -374,7 +375,10 @@ void XDRGTKRoutine() {
         break;
 
       case 'C':
-        if (afscreen || advancedRDS) BuildDisplay();
+        if (afscreen || advancedRDS) {
+          BuildDisplay();
+          SelectBand();
+        }
         byte scanmethod;
         scanmethod = atol(buff + 1);
         if (scanmethod == 1) {
@@ -526,7 +530,10 @@ void XDRGTKRoutine() {
         if (freqtemp >= LWLowEdgeSet && freqtemp <= LWHighEdgeSet) {
           frequency_LW = freqtemp;
           frequency_AM = freqtemp;
-          if (afscreen || advancedRDS) BuildDisplay();
+          if (afscreen || advancedRDS) {
+            BuildDisplay();
+            SelectBand();
+          }
           if (band != BAND_LW) {
             band = BAND_LW;
             SelectBand();
@@ -537,7 +544,10 @@ void XDRGTKRoutine() {
         if (freqtemp >= MWLowEdgeSet && freqtemp <= MWHighEdgeSet) {
           frequency_AM = freqtemp;
           frequency_MW = freqtemp;
-          if (afscreen || advancedRDS) BuildDisplay();
+          if (afscreen || advancedRDS) {
+            BuildDisplay();
+            SelectBand();
+          }
           if (band != BAND_MW) {
             band = BAND_MW;
             SelectBand();
@@ -548,7 +558,10 @@ void XDRGTKRoutine() {
         if (freqtemp >= SWLowEdgeSet && freqtemp <= SWHighEdgeSet) {
           frequency_SW = freqtemp;
           frequency_AM = freqtemp;
-          if (afscreen || advancedRDS) BuildDisplay();
+          if (afscreen || advancedRDS) {
+            BuildDisplay();
+            SelectBand();
+          }
           if (band != BAND_SW) {
             band = BAND_SW;
             SelectBand();
@@ -652,6 +665,7 @@ void XDRGTKRoutine() {
           DataPrint("\n");
           radio.SetFreq(frequencyold);
           BuildDisplay();
+          SelectBand();
           radio.setFMABandw();
           BWset = 0;
         }
