@@ -1637,6 +1637,7 @@ void BANDBUTTONPress() {
           } else {
             if (tunemode != TUNE_MEM) {
               ToggleBand(band);
+              radio.clearRDS(fullsearchrds);
               StoreFrequency();
               SelectBand();
               if (XDRGTKUSB || XDRGTKTCP) {
@@ -2125,10 +2126,7 @@ void SelectBand() {
     delay(50);
     if (band == BAND_FM) radio.SetFreq(frequency);
     if (band == BAND_OIRT) radio.SetFreq(frequency_OIRT);
-    PIold = "";
-    PSold = "";
-    PTYold = "";
-    RTold = "";
+
     BWreset = true;
     BWset = BWsetFM;
     freqold = frequency_AM;
@@ -2844,8 +2842,6 @@ void DoMemoryPosTune() {
       tft.drawCircle(76, 15, 9, GreyoutColor);
     }
   }
-
-  radio.clearRDS(fullsearchrds);
 
   if (RDSSPYUSB) Serial.print("G:\r\nRESET-------\r\n\r\n");
   if (RDSSPYTCP) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
@@ -4015,6 +4011,7 @@ void Seek(bool mode) {
   }
   if (!mode) TuneDown(); else TuneUp();
   delay(50);
+
   ShowFreq(0);
   if (XDRGTKUSB || XDRGTKTCP) {
     if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n"); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n"); else DataPrint("M1\nT" + String(frequency_AM) + "\n");

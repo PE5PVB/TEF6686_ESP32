@@ -99,6 +99,8 @@ extern unsigned int frequency_AM;
 extern unsigned int frequency_MW;
 extern unsigned int frequency_SW;
 extern unsigned int frequencyold;
+extern unsigned int HighEdgeOIRTSet;
+extern unsigned int LowEdgeOIRTSet;
 extern unsigned int LWHighEdgeSet;
 extern unsigned int LWLowEdgeSet;
 extern unsigned int MWHighEdgeSet;

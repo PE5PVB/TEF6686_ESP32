@@ -550,9 +550,12 @@ void XDRGTKRoutine() {
       case 'T':
         unsigned int freqtemp;
         freqtemp = atoi(buff + 1);
+		
         if (BAND_FM) freqtemp -= ConverterSet * 1000;
         if (seek) seek = false;
-        if (freqtemp >= LWLowEdgeSet && freqtemp <= LWHighEdgeSet) {
+		radio.clearRDS(fullsearchrds);
+        
+		if (freqtemp >= LWLowEdgeSet && freqtemp <= LWHighEdgeSet) {
           frequency_LW = freqtemp;
           frequency_AM = freqtemp;
           if (afscreen || advancedRDS) {
@@ -565,8 +568,7 @@ void XDRGTKRoutine() {
             DataPrint("M1\n");
           }
           radio.SetFreqAM(frequency_LW);
-        }
-        if (freqtemp >= MWLowEdgeSet && freqtemp <= MWHighEdgeSet) {
+        } else if (freqtemp >= MWLowEdgeSet && freqtemp <= MWHighEdgeSet) {
           frequency_AM = freqtemp;
           frequency_MW = freqtemp;
           if (afscreen || advancedRDS) {
@@ -579,8 +581,7 @@ void XDRGTKRoutine() {
             DataPrint("M1\n");
           }
           radio.SetFreqAM(frequency_MW);
-        }
-        if (freqtemp >= SWLowEdgeSet && freqtemp <= SWHighEdgeSet) {
+        } else if (freqtemp >= SWLowEdgeSet && freqtemp <= SWHighEdgeSet) {
           frequency_SW = freqtemp;
           frequency_AM = freqtemp;
           if (afscreen || advancedRDS) {
@@ -593,20 +594,40 @@ void XDRGTKRoutine() {
             DataPrint("M1\n");
           }
           radio.SetFreqAM(frequency_SW);
-        }
-        if (freqtemp >= (TEF == 205 ? 64000 : 65000) && freqtemp <= 108000) {
+        } else if (freqtemp >= LowEdgeOIRTSet * 10 && freqtemp <= HighEdgeOIRTSet * 10) {
+          frequency_OIRT = freqtemp / 10;
+          if (afscreen || advancedRDS) {
+            BuildDisplay();
+            SelectBand();
+          }
+          if (band != BAND_OIRT) {
+            band = BAND_OIRT;
+            SelectBand();
+            DataPrint("M0\n");
+          }
+          radio.SetFreq(frequency_OIRT);
+        } else if (freqtemp >= (TEF == 205 ? 64000 : 65000) && freqtemp <= 108000) {
           frequency = freqtemp / 10;
-          if (afscreen) BuildAdvancedRDS();
+          if (afscreen || advancedRDS) {
+            BuildDisplay();
+            SelectBand();
+          }
           if (band != BAND_FM) {
             band = BAND_FM;
             SelectBand();
             DataPrint("M0\n");
           }
-          radio.SetFreq(frequency);
+		  radio.SetFreq(frequency);
         }
-        if (band == BAND_FM) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n"); else DataPrint("T" + String(frequency_AM) + "\n");
+
+        if (band == BAND_FM) {
+			DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n"); 
+		} else if (band == BAND_OIRT) {
+			DataPrint("T" + String(frequency_OIRT * 10) + "\n"); 
+		} else {
+			DataPrint("T" + String(frequency_AM) + "\n");
+		}
         ShowFreq(0);
-        radio.clearRDS(fullsearchrds);
         RDSstatus = false;
         store = true;
         aftest = true;
