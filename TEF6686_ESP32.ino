@@ -419,7 +419,6 @@ void setup() {
   gpio_set_drive_capability((gpio_num_t) 21, GPIO_DRIVE_CAP_0);
   gpio_set_drive_capability((gpio_num_t) 22, GPIO_DRIVE_CAP_0);
   gpio_set_drive_capability((gpio_num_t) 23, GPIO_DRIVE_CAP_0);
-  analogReadResolution(12);
 
   setupmode = true;
   EEPROM.begin(EE_TOTAL_CNT);
@@ -3298,6 +3297,8 @@ void showAutoSquelch(bool mode) {
 
 void doSquelch() {
   if (!XDRGTKUSB && !XDRGTKTCP && usesquelch && !autosquelch) Squelch = map(analogRead(PIN_POT), 0, 4095, -100, 920);
+  if (Squelch < - 800) Squelch = -100;
+  if (Squelch > 900) Squelch = 920;
 
   if (unit == 0) SquelchShow = Squelch / 10;
   if (unit == 1) SquelchShow = ((Squelch * 100) + 10875) / 1000;
@@ -3738,22 +3739,14 @@ void ShowRSSI() {
 }
 
 void ShowBattery() {
-  static uint32_t batupdatetimer = 0;
-
   if (millis() >= batupdatetimer + TIMER_BAT_TIMER) {
     batupdatetimer = millis();
   } else {
     return;
   }
 
-  uint32_t adcSum = 0;
-  for (int i = 0; i < 16; i++) {
-    adcSum += analogRead(BATTERY_PIN);
-    delay(1);
-  }
-
-  int v = adcSum / 16;
-
+  uint16_t v = 0;
+  if (!wifi) v = analogRead(BATTERY_PIN);
   battery = map(constrain(v, BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, BAT_LEVEL_STAGE);
   byte batteryprobe = map(constrain(v, BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, 20);
 
@@ -3767,7 +3760,7 @@ void ShowBattery() {
         tft.fillRoundRect(313, 13, 4, 6, 2, ActiveColor);
       }
       if (batteryoptions != BATTERY_VALUE && batteryoptions != BATTERY_PERCENT && battery != 0) {
-        tft.fillRoundRect(279, 8, (battery * 8), 16, 2, BarInsignificantColor);
+        tft.fillRoundRect(279, 8, (battery * 8) , 16, 2, BarInsignificantColor);
       } else {
         tft.fillRoundRect(279, 8, 33, 16, 2, BackgroundColor);
       }
@@ -3780,8 +3773,9 @@ void ShowBattery() {
     batteryVold = 0;
     vPerold = 0;
 
+
     if (!wifi && batterydetect) {
-      float batteryV = constrain(v / 4095.0 * 3.3 * 2.0, 0.0, 5.0);
+      float batteryV = constrain((((float)v / 4095.0) * 3.3 * (1100 / 1000.0) * 2.0), 0.0, 5.0);
       float vPer = constrain((batteryV - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE), 0.0, 0.99) * 100;
 
       if (abs(batteryV - batteryVold) > 0.05 && batteryoptions == BATTERY_VALUE) {
