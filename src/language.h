@@ -766,7 +766,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Wyłączone", // 227
     "Niezdefiniowany", // 228
     "Wiadomości", // 229
-    "Wydarze. Bieżące", // 230
+    "Sprawy bieżące", // 230
     "Informacje", // 231
     "Sport", // 232
     "Edukacja", // 233
@@ -776,23 +776,23 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Różne", // 237
     "Muzyka Pop", // 238
     "Muzyka Rock", // 239
-    "Muzyka Lekka", // 240
-    "Muz. Klas. Lekka", // 241
-    "Muz. Klas. Pow.", // 242
-    "Muzyka Inna", // 243
+    "Muzyka lekka", // 240
+    "Lekka muz. klas.", // 241
+    "Muz. klas. pow.", // 242
+    "Inna muzyka", // 243
     "Pogoda", // 244
     "Finanse", // 245
-    "Prog. Dziecięce", // 246
-    "Wyd. Społeczne", // 247
+    "Prog. dla dzieci", // 246
+    "Sprawy społeczne", // 247
     "Religia", // 248
     "Telefon.Udział.", // 249
     "Podróże", // 250
-    "Czas Wolny", // 251
+    "Czas wolny", // 251
     "Muzyka Jazz", // 252
     "Muzyka Country", // 253
-    "Muzyka Narodowa", // 254
-    "Muz. Archiwalna", // 255
-    "Muzyka Ludowa", // 256
+    "Muzyka narodowa", // 254
+    "Stare przeboje", // 255
+    "Muzyka ludowa", // 256
     "Dokument", // 257
     "Alarm Test", // 258
     "Alarm", // 259
