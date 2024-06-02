@@ -487,9 +487,9 @@ void ShowOneLine(byte position, byte item, bool selected) {
   if (CurrentTheme == 7) FullLineSprite.pushImage (-8, -(position + 2), 320, 240, configurationbackgroundbw); else FullLineSprite.pushImage (-8, -(position + 2), 320, 240, configurationbackground);
   if (selected) {
     if (CurrentTheme == 7) {
-      FullLineSprite.pushImage(0, 0, 304, 20, selectorbw);
+      FullLineSprite.pushImage(0, 0, 304, 19, selectorbw);
     } else {
-      FullLineSprite.pushImage(0, 0, 304, 20, selector);
+      FullLineSprite.pushImage(0, 0, 304, 19, selector);
     }
   }
 
@@ -499,98 +499,98 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case INDEX:
           FullLineSprite.setTextDatum(TC_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][177]), 152, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][177]), 152, 2);
           break;
 
         case MAINSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][108]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][108]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
 
           switch (hardwaremodel) {
-            case BASE_ILI9341: FullLineSprite.drawString(myLanguage[language][109], 298, 3); break;
-            case PORTABLE_ILI9341: FullLineSprite.drawString(myLanguage[language][110], 298, 3); break;
-            case PORTABLE_TOUCH_ILI9341: FullLineSprite.drawString(myLanguage[language][111], 298, 3); break;
+            case BASE_ILI9341: FullLineSprite.drawString(myLanguage[language][109], 298, 2); break;
+            case PORTABLE_ILI9341: FullLineSprite.drawString(myLanguage[language][110], 298, 2); break;
+            case PORTABLE_TOUCH_ILI9341: FullLineSprite.drawString(myLanguage[language][111], 298, 2); break;
           }
           break;
 
         case AUDIOSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][20]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][20]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("dB", 298, 3);
+          FullLineSprite.drawString("dB", 298, 2);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((VolSet > 0 ? "+" : "") + String(VolSet, DEC), 258, 3);
+          FullLineSprite.drawString((VolSet > 0 ? "+" : "") + String(VolSet, DEC), 258, 2);
           break;
 
         case DISPLAYSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][39]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][39]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(myLanguage[language][0], 298, 3);
+          FullLineSprite.drawString(myLanguage[language][0], 298, 2);
           break;
 
         case RDSSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][38]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][38]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
 
           switch (showrdserrors) {
-            case 0: FullLineSprite.drawString(myLanguage[language][30], 298, 3); break;
-            case 1: FullLineSprite.drawString(myLanguage[language][200], 298, 3); break;
-            case 2: FullLineSprite.drawString(myLanguage[language][201], 298, 3); break;
-            case 3: FullLineSprite.drawString(myLanguage[language][202], 298, 3); break;
+            case 0: FullLineSprite.drawString(myLanguage[language][30], 298, 2); break;
+            case 1: FullLineSprite.drawString(myLanguage[language][200], 298, 2); break;
+            case 2: FullLineSprite.drawString(myLanguage[language][201], 298, 2); break;
+            case 3: FullLineSprite.drawString(myLanguage[language][202], 298, 2); break;
           }
           break;
 
         case FMSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][21]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][21]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("MHz", 298, 3);
+          FullLineSprite.drawString("MHz", 298, 2);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(String(ConverterSet, DEC), 258, 3);
+          FullLineSprite.drawString(String(ConverterSet, DEC), 258, 2);
           break;
 
         case AMSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][44]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][44]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((softmuteam ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((softmuteam ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
 
         case CONNECTIVITY:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][50]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][50]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((USBmode ? "RDS Spy" : "XDRGTK"), 298, 3);
+          FullLineSprite.drawString((USBmode ? "RDS Spy" : "XDRGTK"), 298, 2);
           break;
 
         case DXMODE:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][212]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][212]), 6, 2);
           break;
       }
       break;
@@ -600,94 +600,94 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case INDEX:
           FullLineSprite.setTextDatum(TC_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][178]), 152, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][178]), 152, 2);
           break;
 
         case MAINSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][107]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][107]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((touchrotating ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((touchrotating ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
 
         case AUDIOSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][45]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][45]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((edgebeep ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((edgebeep ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
 
         case DISPLAYSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][29]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][29]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(String(ContrastSet, DEC), 258, 3);
+          FullLineSprite.drawString(String(ContrastSet, DEC), 258, 2);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("%", 298, 3);
+          FullLineSprite.drawString("%", 298, 2);
           break;
 
         case RDSSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][46]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][46]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          if (region == REGION_EU) FullLineSprite.drawString(myLanguage[language][47], 298, 3);
-          if (region == REGION_US) FullLineSprite.drawString(myLanguage[language][48], 298, 3);
+          if (region == REGION_EU) FullLineSprite.drawString(myLanguage[language][47], 298, 2);
+          if (region == REGION_US) FullLineSprite.drawString(myLanguage[language][48], 298, 2);
           break;
 
         case FMSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][22]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][22]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("MHz", 298, 3);
+          FullLineSprite.drawString("MHz", 298, 2);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 258, 3);
+          FullLineSprite.drawString(String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 258, 2);
           break;
 
         case AMSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][64]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][64]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          if (amnb != 0) FullLineSprite.drawString(String(amnb, DEC), 258, 3);
+          if (amnb != 0) FullLineSprite.drawString(String(amnb, DEC), 258, 2);
           if (amnb != 0) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString((amnb != 0 ? "%" : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((amnb != 0 ? "%" : myLanguage[language][30]), 298, 2);
           break;
 
         case CONNECTIVITY:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][51] + (wifi ? " IP: " + String(WiFi.localIP().toString()) : "")), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][51] + (wifi ? " IP: " + String(WiFi.localIP().toString()) : "")), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((wifi ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((wifi ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
 
         case DXMODE:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][209]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][209]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(String(scanstart + 1, DEC), 298, 3);
+          FullLineSprite.drawString(String(scanstart + 1, DEC), 298, 2);
           break;
       }
       break;
@@ -697,93 +697,93 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case INDEX:
           FullLineSprite.setTextDatum(TC_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][179]), 152, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][179]), 152, 2);
           break;
 
         case MAINSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][75]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][75]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          if (tot != 0) FullLineSprite.drawString(String(tot), 258, 3);
+          if (tot != 0) FullLineSprite.drawString(String(tot), 258, 2);
           if (tot != 0) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString((tot != 0 ? myLanguage[language][80] : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((tot != 0 ? myLanguage[language][80] : myLanguage[language][30]), 298, 2);
           break;
 
         case AUDIOSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][67]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][67]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((audiomode ? "MPX" : "Stereo"), 298, 3);
+          FullLineSprite.drawString((audiomode ? "MPX" : "Stereo"), 298, 2);
           break;
 
         case DISPLAYSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][63]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][63]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((showmodulation ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((showmodulation ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
 
         case RDSSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][49]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][49]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((radio.underscore ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((radio.underscore ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
 
         case FMSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][23]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][23]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("MHz", 298, 3);
+          FullLineSprite.drawString("MHz", 298, 2);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 258, 3);
+          FullLineSprite.drawString(String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 258, 2);
           break;
 
         case AMSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][97]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][97]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("dB", 298, 3);
+          FullLineSprite.drawString("dB", 298, 2);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((AMLevelOffset > 0 ? "+" : "") + String(AMLevelOffset, DEC), 258, 3);
+          FullLineSprite.drawString((AMLevelOffset > 0 ? "+" : "") + String(AMLevelOffset, DEC), 258, 2);
           break;
 
         case CONNECTIVITY:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][52]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][52]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(">", 298, 3);
+          FullLineSprite.drawString(">", 298, 2);
           break;
 
         case DXMODE:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][210]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][210]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(String(scanstop + 1, DEC), 298, 3);
+          FullLineSprite.drawString(String(scanstop + 1, DEC), 298, 2);
           break;
       }
       break;
@@ -793,95 +793,95 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case INDEX:
           FullLineSprite.setTextDatum(TC_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][180]), 152, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][180]), 152, 2);
           break;
 
         case MAINSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][62]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][62]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          if (autosquelch) FullLineSprite.drawString(myLanguage[language][86], 298, 3); else FullLineSprite.drawString((usesquelch ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          if (autosquelch) FullLineSprite.drawString(myLanguage[language][86], 298, 2); else FullLineSprite.drawString((usesquelch ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
 
         case AUDIOSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][25]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][25]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          if (StereoLevel != 0) FullLineSprite.drawString(String(StereoLevel, DEC), 258, 3);
+          if (StereoLevel != 0) FullLineSprite.drawString(String(StereoLevel, DEC), 258, 2);
           if (StereoLevel != 0) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString((StereoLevel != 0 ? "dBμV" : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((StereoLevel != 0 ? "dBμV" : myLanguage[language][30]), 298, 2);
           break;
 
         case DISPLAYSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][91]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][91]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          if (screensaverset) FullLineSprite.drawString(String(screensaverOptions[screensaverset], DEC), 258, 3);
+          if (screensaverset) FullLineSprite.drawString(String(screensaverOptions[screensaverset], DEC), 258, 2);
           if (screensaverset) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString((screensaverset ? myLanguage[language][92] : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((screensaverset ? myLanguage[language][92] : myLanguage[language][30]), 298, 2);
           break;
 
         case RDSSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][60]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][60]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((radio.rds.filter ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((radio.rds.filter ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
 
         case FMSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][24]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][24]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("dB", 298, 3);
+          FullLineSprite.drawString("dB", 298, 2);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((LevelOffset > 0 ? "+" : "") + String(LevelOffset, DEC), 258, 3);
+          FullLineSprite.drawString((LevelOffset > 0 ? "+" : "") + String(LevelOffset, DEC), 258, 2);
           break;
 
         case AMSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][59]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][59]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((showSWMIBand ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((showSWMIBand ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
 
         case CONNECTIVITY:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][58]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][58]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((wifi ? String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC) : "-"), 298, 3);
+          FullLineSprite.drawString((wifi ? String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC) : "-"), 298, 2);
           break;
 
         case DXMODE:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][211]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][211]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][92]), 298, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][92]), 298, 2);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(String(scanhold, DEC), 258, 3);
+          FullLineSprite.drawString(String(scanhold, DEC), 258, 2);
           break;
       }
       break;
@@ -891,101 +891,101 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case INDEX:
           FullLineSprite.setTextDatum(TC_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][181]), 152, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][181]), 152, 2);
           break;
 
         case MAINSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][37]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][37]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("dBµV", 298, 3);
+          FullLineSprite.drawString("dBµV", 298, 2);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(String(fmagc, DEC), 258, 3);
+          FullLineSprite.drawString(String(fmagc, DEC), 258, 2);
           break;
 
         case AUDIOSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][26]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][26]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(String(HighCutLevel * 100, DEC), 258, 3);
+          FullLineSprite.drawString(String(HighCutLevel * 100, DEC), 258, 2);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("Hz", 298, 3);
+          FullLineSprite.drawString("Hz", 298, 2);
           break;
 
         case DISPLAYSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][74]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][74]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
 
           switch (poweroptions) {
-            case LCD_OFF: FullLineSprite.drawString(myLanguage[language][76], 298, 3); break;
-            case LCD_BRIGHTNESS_1_PERCENT: FullLineSprite.drawString(myLanguage[language][94], 298, 3); break;
-            case LCD_BRIGHTNESS_A_QUARTER: FullLineSprite.drawString(myLanguage[language][95], 298, 3); break;
-            case LCD_BRIGHTNESS_HALF: FullLineSprite.drawString(myLanguage[language][96], 298, 3); break;
+            case LCD_OFF: FullLineSprite.drawString(myLanguage[language][76], 298, 2); break;
+            case LCD_BRIGHTNESS_1_PERCENT: FullLineSprite.drawString(myLanguage[language][94], 298, 2); break;
+            case LCD_BRIGHTNESS_A_QUARTER: FullLineSprite.drawString(myLanguage[language][95], 298, 2); break;
+            case LCD_BRIGHTNESS_HALF: FullLineSprite.drawString(myLanguage[language][96], 298, 2); break;
           }
           break;
 
         case RDSSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][61]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][61]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((radio.rds.pierrors ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((radio.rds.pierrors ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
 
         case FMSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][28]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][28]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("dBμV", 298, 3);
+          FullLineSprite.drawString("dBμV", 298, 2);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(String(LowLevelSet, DEC), 258, 3);
+          FullLineSprite.drawString(String(LowLevelSet, DEC), 258, 2);
           break;
 
         case AMSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][185]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][185]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          if (amcodect != 0) FullLineSprite.drawString(String(amcodect, DEC), 258, 3);
+          if (amcodect != 0) FullLineSprite.drawString(String(amcodect, DEC), 258, 2);
           if (amcodect != 0) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString((amcodect != 0 ? "%" : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((amcodect != 0 ? "%" : myLanguage[language][30]), 298, 2);
           break;
 
         case CONNECTIVITY:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][197]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][197]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(String(stationlistid, DEC), 298, 3);
+          FullLineSprite.drawString(String(stationlistid, DEC), 298, 2);
           break;
 
         case DXMODE:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][216]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][216]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((scanmem ? myLanguage[language][218] : myLanguage[language][217]), 298, 3);
+          FullLineSprite.drawString((scanmem ? myLanguage[language][218] : myLanguage[language][217]), 298, 2);
           break;
       }
       break;
@@ -995,104 +995,104 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case INDEX:
           FullLineSprite.setTextDatum(TC_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][182]), 152, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][182]), 152, 2);
           break;
 
         case MAINSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][198]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][198]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("dBµV", 298, 3);
+          FullLineSprite.drawString("dBµV", 298, 2);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(String(amagc, DEC), 258, 3);
+          FullLineSprite.drawString(String(amagc, DEC), 258, 2);
           break;
 
         case AUDIOSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][27]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][27]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          if (HighCutOffset != 0) FullLineSprite.drawString(String(HighCutOffset, DEC), 258, 3);
+          if (HighCutOffset != 0) FullLineSprite.drawString(String(HighCutOffset, DEC), 258, 2);
           if (HighCutOffset != 0) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString((HighCutOffset != 0 ? "dBμV" : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((HighCutOffset != 0 ? "dBμV" : myLanguage[language][30]), 298, 2);
           break;
 
         case DISPLAYSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][173]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][173]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
 
           switch (batteryoptions) {
-            case BATTERY_NONE: FullLineSprite.drawString(myLanguage[language][30], 298, 3); break;
-            case BATTERY_VALUE: FullLineSprite.drawString(myLanguage[language][174], 298, 3); break;
-            case BATTERY_PERCENT: FullLineSprite.drawString(myLanguage[language][175], 298, 3); break;
+            case BATTERY_NONE: FullLineSprite.drawString(myLanguage[language][30], 298, 2); break;
+            case BATTERY_VALUE: FullLineSprite.drawString(myLanguage[language][174], 298, 2); break;
+            case BATTERY_PERCENT: FullLineSprite.drawString(myLanguage[language][175], 298, 2); break;
           }
           break;
 
         case RDSSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][99]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][99]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
 
           switch (af) {
-            case 0: FullLineSprite.drawString(myLanguage[language][30], 298, 3); break;
-            case 1: FullLineSprite.drawString(String(myLanguage[language][42]) + " / REG " + String(myLanguage[language][42]), 298, 3); break;
-            case 2: FullLineSprite.drawString(String(myLanguage[language][42]) + " / REG " + String(myLanguage[language][30]), 298, 3); break;
+            case 0: FullLineSprite.drawString(myLanguage[language][30], 298, 2); break;
+            case 1: FullLineSprite.drawString(String(myLanguage[language][42]) + " / REG " + String(myLanguage[language][42]), 298, 2); break;
+            case 2: FullLineSprite.drawString(String(myLanguage[language][42]) + " / REG " + String(myLanguage[language][30]), 298, 2); break;
           }
           break;
 
         case FMSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][43]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][43]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((softmutefm ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((softmutefm ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
 
         case AMSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][187]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][187]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(String(amcodectcount, DEC), 298, 3);
+          FullLineSprite.drawString(String(amcodectcount, DEC), 298, 2);
           break;
 
         case CONNECTIVITY:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][205]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][205]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((XDRGTKMuteScreen ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((XDRGTKMuteScreen ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
 
         case DXMODE:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][219]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][219]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           switch (scancancel) {
-            case OFF: FullLineSprite.drawString(myLanguage[language][30], 298, 3); break;
-            case CORRECTPI: FullLineSprite.drawString(myLanguage[language][220], 298, 3); break;
-            case SIGNAL: FullLineSprite.drawString(myLanguage[language][221], 298, 3); break;
+            case OFF: FullLineSprite.drawString(myLanguage[language][30], 298, 2); break;
+            case CORRECTPI: FullLineSprite.drawString(myLanguage[language][220], 298, 2); break;
+            case SIGNAL: FullLineSprite.drawString(myLanguage[language][221], 298, 2); break;
           }
           break;
       }
@@ -1103,89 +1103,89 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case INDEX:
           FullLineSprite.setTextDatum(TC_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][183]), 152, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][183]), 152, 2);
           break;
 
         case MAINSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][100]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][100]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
 
           switch (bandFM) {
-            case FM_BAND_ALL: FullLineSprite.drawString(myLanguage[language][105] + String(",") + myLanguage[language][106], 298, 3); break;
-            case FM_BAND_OIRT: FullLineSprite.drawString(myLanguage[language][106], 298, 3); break;
-            case FM_BAND_FM: FullLineSprite.drawString(myLanguage[language][105], 298, 3); break;
-            case FM_BAND_NONE: FullLineSprite.drawString(myLanguage[language][83], 298, 3); break;
+            case FM_BAND_ALL: FullLineSprite.drawString(myLanguage[language][105] + String(",") + myLanguage[language][106], 298, 2); break;
+            case FM_BAND_OIRT: FullLineSprite.drawString(myLanguage[language][106], 298, 2); break;
+            case FM_BAND_FM: FullLineSprite.drawString(myLanguage[language][105], 298, 2); break;
+            case FM_BAND_NONE: FullLineSprite.drawString(myLanguage[language][83], 298, 2); break;
           }
           break;
 
         case AUDIOSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][199]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][199]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          if (fmdeemphasis != DEEMPHASIS_NONE) FullLineSprite.drawString(String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_75), DEC), 258, 3);
+          if (fmdeemphasis != DEEMPHASIS_NONE) FullLineSprite.drawString(String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_75), DEC), 258, 2);
           if (fmdeemphasis != DEEMPHASIS_NONE) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(((fmdeemphasis != DEEMPHASIS_NONE) != 0 ? "μs" : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString(((fmdeemphasis != DEEMPHASIS_NONE) != 0 ? "μs" : myLanguage[language][30]), 298, 2);
           break;
 
         case DISPLAYSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][98]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][98]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(unitString[unit], 298, 3);
+          FullLineSprite.drawString(unitString[unit], 298, 2);
           break;
 
         case RDSSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][176]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][176]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((radio.rds.rtbuffer ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((radio.rds.rtbuffer ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
 
         case FMSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][65]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][65]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          if (fmnb != 0) FullLineSprite.drawString(String(fmnb, DEC), 258, 3);
+          if (fmnb != 0) FullLineSprite.drawString(String(fmnb, DEC), 258, 2);
           if (fmnb != 0) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString((fmnb != 0 ? "%" : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((fmnb != 0 ? "%" : myLanguage[language][30]), 298, 2);
           break;
 
         case AMSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][36]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][36]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          if (amgain != 0) FullLineSprite.drawString(String(amgain, DEC), 258, 3);
+          if (amgain != 0) FullLineSprite.drawString(String(amgain, DEC), 258, 2);
           if (amgain != 0) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString((amgain != 0 ? "dB" : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((amgain != 0 ? "dB" : myLanguage[language][30]), 298, 2);
           break;
 
         case DXMODE:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][222]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][222]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((scanmute ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((scanmute ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
       }
       break;
@@ -1195,46 +1195,46 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case INDEX:
           FullLineSprite.setTextDatum(TC_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][213]), 152, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][213]), 152, 2);
           break;
 
         case MAINSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][101]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][101]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
 #ifdef HAS_AIR_BAND
           switch (bandAM) {
-            case AM_BAND_ALL: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 298, 3); break;
-            case AM_BAND_LW_MW_SW: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 298, 3); break;
-            case AM_BAND_LW_MW_AIR: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][223], 298, 3); break;
-            case AM_BAND_LW_SW_AIR: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 298, 3); break;
-            case AM_BAND_MW_SW_AIR: FullLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 298, 3); break;
-            case AM_BAND_LW_MW: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103], 298, 3); break;
-            case AM_BAND_LW_SW: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104], 298, 3); break;
-            case AM_BAND_LW_AIR: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][223], 298, 3); break;
-            case AM_BAND_MW_SW: FullLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104], 298, 3); break;
-            case AM_BAND_MW_AIR: FullLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][223], 298, 3); break;
-            case AM_BAND_SW_AIR: FullLineSprite.drawString(myLanguage[language][104] + String(",") + myLanguage[language][223], 298, 3); break;
-            case AM_BAND_LW: FullLineSprite.drawString(myLanguage[language][102], 298, 3); break;
-            case AM_BAND_MW: FullLineSprite.drawString(myLanguage[language][103], 298, 3); break;
-            case AM_BAND_SW: FullLineSprite.drawString(myLanguage[language][104], 298, 3); break;
-            case AM_BAND_AIR: FullLineSprite.drawString(myLanguage[language][223], 298, 3); break;
-            case AM_BAND_NONE: FullLineSprite.drawString(myLanguage[language][83], 298, 3); break;
+            case AM_BAND_ALL: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 298, 2); break;
+            case AM_BAND_LW_MW_SW: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 298, 2); break;
+            case AM_BAND_LW_MW_AIR: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][223], 298, 2); break;
+            case AM_BAND_LW_SW_AIR: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 298, 2); break;
+            case AM_BAND_MW_SW_AIR: FullLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 298, 2); break;
+            case AM_BAND_LW_MW: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103], 298, 2); break;
+            case AM_BAND_LW_SW: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104], 298, 2); break;
+            case AM_BAND_LW_AIR: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][223], 298, 2); break;
+            case AM_BAND_MW_SW: FullLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104], 298, 2); break;
+            case AM_BAND_MW_AIR: FullLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][223], 298, 2); break;
+            case AM_BAND_SW_AIR: FullLineSprite.drawString(myLanguage[language][104] + String(",") + myLanguage[language][223], 298, 2); break;
+            case AM_BAND_LW: FullLineSprite.drawString(myLanguage[language][102], 298, 2); break;
+            case AM_BAND_MW: FullLineSprite.drawString(myLanguage[language][103], 298, 2); break;
+            case AM_BAND_SW: FullLineSprite.drawString(myLanguage[language][104], 298, 2); break;
+            case AM_BAND_AIR: FullLineSprite.drawString(myLanguage[language][223], 298, 2); break;
+            case AM_BAND_NONE: FullLineSprite.drawString(myLanguage[language][83], 298, 2); break;
           }
           break;
 #else
           switch (bandAM) {
-            case AM_BAND_ALL: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 298, 3); break;
-            case AM_BAND_LW_MW: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103], 298, 3); break;
-            case AM_BAND_LW_SW: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104], 298, 3); break;
-            case AM_BAND_MW_SW: FullLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104], 298, 3); break;
-            case AM_BAND_LW: FullLineSprite.drawString(myLanguage[language][102], 298, 3); break;
-            case AM_BAND_MW: FullLineSprite.drawString(myLanguage[language][103], 298, 3); break;
-            case AM_BAND_SW: FullLineSprite.drawString(myLanguage[language][104], 298, 3); break;
-            case AM_BAND_NONE: FullLineSprite.drawString(myLanguage[language][83], 298, 3); break;
+            case AM_BAND_ALL: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 298, 2); break;
+            case AM_BAND_LW_MW: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103], 298, 2); break;
+            case AM_BAND_LW_SW: FullLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104], 298, 2); break;
+            case AM_BAND_MW_SW: FullLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104], 298, 2); break;
+            case AM_BAND_LW: FullLineSprite.drawString(myLanguage[language][102], 298, 2); break;
+            case AM_BAND_MW: FullLineSprite.drawString(myLanguage[language][103], 298, 2); break;
+            case AM_BAND_SW: FullLineSprite.drawString(myLanguage[language][104], 298, 2); break;
+            case AM_BAND_NONE: FullLineSprite.drawString(myLanguage[language][83], 298, 2); break;
           }
           break;
 #endif
@@ -1242,49 +1242,49 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case DISPLAYSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][78]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][78]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(Skin[CurrentSkin], 298, 3);
+          FullLineSprite.drawString(Skin[CurrentSkin], 298, 2);
           break;
 
         case RDSSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][215]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][215]), 6, 2);
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((radio.rds.sortaf ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((radio.rds.sortaf ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
 
         case FMSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][90]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][90]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("kHz", 298, 3);
+          FullLineSprite.drawString("kHz", 298, 2);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
 
           switch (fmdefaultstepsize) {
-            case 0: FullLineSprite.drawString(String(FREQ_FM_STEP_50K * 10, DEC), 258, 3); break;
-            case 1: FullLineSprite.drawString(String(FREQ_FM_STEP_100K * 10, DEC), 258, 3); break;
-            case 2: FullLineSprite.drawString(String(FREQ_FM_STEP_200K * 10, DEC), 258, 3); break;
+            case 0: FullLineSprite.drawString(String(FREQ_FM_STEP_50K * 10, DEC), 258, 2); break;
+            case 1: FullLineSprite.drawString(String(FREQ_FM_STEP_100K * 10, DEC), 258, 2); break;
+            case 2: FullLineSprite.drawString(String(FREQ_FM_STEP_200K * 10, DEC), 258, 2); break;
           }
           break;
 
         case AMSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][169]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][169]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((mwstepsize ? "10" : "9"), 258, 3);
+          FullLineSprite.drawString((mwstepsize ? "10" : "9"), 258, 2);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("kHz", 298, 3);
+          FullLineSprite.drawString("kHz", 298, 2);
           break;
       }
       break;
@@ -1294,64 +1294,64 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case INDEX:
           FullLineSprite.setTextDatum(TC_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][70]), 152, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][70]), 152, 2);
           break;
 
         case MAINSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][224]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][224]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           switch (longbandpress) {
-            case STANDBY: FullLineSprite.drawString(myLanguage[language][225], 298, 3); break;
-            case SCREENOFF: FullLineSprite.drawString(myLanguage[language][226], 298, 3); break;
-            default: FullLineSprite.drawString(myLanguage[language][227], 298, 3); break;
+            case STANDBY: FullLineSprite.drawString(myLanguage[language][225], 298, 2); break;
+            case SCREENOFF: FullLineSprite.drawString(myLanguage[language][226], 298, 2); break;
+            default: FullLineSprite.drawString(myLanguage[language][227], 298, 2); break;
           }
           break;
 
         case DISPLAYSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][77]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][77]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(Theme[CurrentTheme], 298, 3);
+          FullLineSprite.drawString(Theme[CurrentTheme], 298, 2);
           break;
 
         case RDSSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][203]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][203]), 6, 2);
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
 
           switch (radio.rds.fastps) {
-            case 0: FullLineSprite.drawString(myLanguage[language][30], 298, 3); break;
-            case 1: FullLineSprite.drawString(myLanguage[language][260], 298, 3); break;
-            case 2: FullLineSprite.drawString(myLanguage[language][261], 298, 3); break;
+            case 0: FullLineSprite.drawString(myLanguage[language][30], 298, 2); break;
+            case 1: FullLineSprite.drawString(myLanguage[language][260], 298, 2); break;
+            case 2: FullLineSprite.drawString(myLanguage[language][261], 298, 2); break;
           }
           break;
 
         case FMSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][206]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][206]), 6, 2);
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((fmsi ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((fmsi ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
 
         case AMSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][82]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][82]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(String(amscansens), 298, 3);
+          FullLineSprite.drawString(String(amscansens), 298, 2);
           break;
       }
       break;
@@ -1361,25 +1361,25 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case INDEX:
           FullLineSprite.setTextDatum(TC_DATUM);
           FullLineSprite.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(String(myLanguage[language][84]) + " " + String(VERSION)), 152, 3);
+          FullLineSprite.drawString(removeNewline(String(myLanguage[language][84]) + " " + String(VERSION)), 152, 2);
           break;
 
         case MAINSETTINGS:
           if (dynamicspi) {
             FullLineSprite.setTextDatum(TL_DATUM);
             FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            FullLineSprite.drawString(removeNewline(myLanguage[language][81]), 6, 3);
+            FullLineSprite.drawString(removeNewline(myLanguage[language][81]), 6, 2);
 
             FullLineSprite.setTextDatum(TR_DATUM);
 
             if (spispeed == 7) {
               FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-              FullLineSprite.drawString(myLanguage[language][86], 298, 3);
+              FullLineSprite.drawString(myLanguage[language][86], 298, 2);
             } else {
               FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-              FullLineSprite.drawString("MHz", 298, 3);
+              FullLineSprite.drawString("MHz", 298, 2);
               FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-              FullLineSprite.drawString((spispeed == SPI_SPEED_DEFAULT ? String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC) : String(spispeed * 10, DEC)), 258, 3);
+              FullLineSprite.drawString((spispeed == SPI_SPEED_DEFAULT ? String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC) : String(spispeed * 10, DEC)), 258, 2);
             }
           }
           break;
@@ -1387,31 +1387,31 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case DISPLAYSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][85]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][85]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(FreqFont[freqfont], 298, 3);
+          FullLineSprite.drawString(FreqFont[freqfont], 298, 2);
           break;
 
         case RDSSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][262]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][262]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((showclock ? myLanguage[language][42] : myLanguage[language][30]), 298, 3);
+          FullLineSprite.drawString((showclock ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
 
         case FMSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][82]), 6, 3);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][82]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(String(fmscansens), 298, 3);
+          FullLineSprite.drawString(String(fmscansens), 298, 2);
           break;
       }
       break;

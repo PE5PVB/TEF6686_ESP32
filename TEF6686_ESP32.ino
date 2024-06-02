@@ -76,6 +76,7 @@ bool hasCTold;
 bool haseonold;
 bool hasrtplusold;
 bool hastmcold;
+bool leave;
 bool LowLevelInit;
 bool memorystore;
 bool memreset;
@@ -1629,8 +1630,10 @@ void BANDBUTTONPress() {
 
         if (counter - counterold < 1000) {
           if (afscreen) {
+            leave = true;
             BuildAdvancedRDS();
           } else if (advancedRDS) {
+            leave = true;
             BuildDisplay();
             SelectBand();
             ScreensaverTimerReopen();
@@ -2124,8 +2127,8 @@ void SelectBand() {
     if (tunemode == TUNE_MI_BAND) tunemode = TUNE_MAN;
     radio.power(0);
     delay(50);
-    if (band == BAND_FM) radio.SetFreq(frequency);
-    if (band == BAND_OIRT) radio.SetFreq(frequency_OIRT);
+    if (!leave && band == BAND_FM) radio.SetFreq(frequency);
+    if (!leave && band == BAND_OIRT) radio.SetFreq(frequency_OIRT);
 
     BWreset = true;
     BWset = BWsetFM;
@@ -2144,7 +2147,7 @@ void SelectBand() {
     tftReplace(-1, "kHz", "MHz", 258, 76, ActiveColor, ActiveColorSmooth, BackgroundColor, 28);
   }
 
-  radio.clearRDS(fullsearchrds);
+  if (!leave) radio.clearRDS(fullsearchrds);
   ShowFreq(0);
 
   if (!screenmute) {
@@ -2180,6 +2183,7 @@ void SelectBand() {
 #endif
     }
   }
+  leave = false;
 }
 
 void BWButtonPress() {
@@ -4459,6 +4463,7 @@ void endMenu() {
   if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
   if (USBmode) Serial.begin(19200); else Serial.begin(115200);
 
+  leave = true;
   BuildDisplay();
   SelectBand();
   ScreensaverTimerRestart();
