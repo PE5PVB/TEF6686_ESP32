@@ -2125,10 +2125,13 @@ void SelectBand() {
     }
   } else {
     if (tunemode == TUNE_MI_BAND) tunemode = TUNE_MAN;
-    radio.power(0);
-    delay(50);
-    if (!leave && band == BAND_FM) radio.SetFreq(frequency);
-    if (!leave && band == BAND_OIRT) radio.SetFreq(frequency_OIRT);
+
+    if (!leave) {
+      radio.power(0);
+      delay(50);
+      if (band == BAND_FM) radio.SetFreq(frequency);
+      if (band == BAND_OIRT) radio.SetFreq(frequency_OIRT);
+    }
 
     BWreset = true;
     BWset = BWsetFM;
