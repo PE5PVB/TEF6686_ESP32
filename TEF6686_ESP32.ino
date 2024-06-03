@@ -1034,7 +1034,11 @@ void loop() {
       lowsignaltimer = millis();
       change = false;
       if (SStatus > SStatusold || SStatus < SStatusold) {
-        if (CurrentTheme == 7) SignalSprite.pushImage(-87, -119, 292, 170, popupbackgroundbw); else SignalSprite.pushImage(-87, -119, 292, 170, popupbackground);
+        switch (CurrentTheme) {
+          case 7: SignalSprite.pushImage(-87, -119, 292, 170, popupbackground_wo); break;
+          default: SignalSprite.pushImage(-87, -119, 292, 170, popupbackground); break;
+        }
+
         SignalSprite.loadFont(FONT48);
         SignalSprite.drawString(String(SStatus / 10), 58, 0);
         SignalSprite.unloadFont();

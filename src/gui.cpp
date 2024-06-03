@@ -484,12 +484,15 @@ void BuildAFScreen() {
 }
 
 void ShowOneLine(byte position, byte item, bool selected) {
-  if (CurrentTheme == 7) FullLineSprite.pushImage (-8, -(position + 2), 320, 240, configurationbackgroundbw); else FullLineSprite.pushImage (-8, -(position + 2), 320, 240, configurationbackground);
+  switch (CurrentTheme) {
+    case 7: FullLineSprite.pushImage (-8, -(position + 2), 320, 240, configurationbackground_wo); break;
+    default: FullLineSprite.pushImage (-8, -(position + 2), 320, 240, configurationbackground); break;
+  }
+
   if (selected) {
-    if (CurrentTheme == 7) {
-      FullLineSprite.pushImage(0, 0, 304, 19, selectorbw);
-    } else {
-      FullLineSprite.pushImage(0, 0, 304, 19, selector);
+    switch (CurrentTheme) {
+      case 7: FullLineSprite.pushImage(0, 0, 304, 19, selector_wo); break;
+      default: FullLineSprite.pushImage(0, 0, 304, 19, selector); break;
     }
   }
 
@@ -1422,7 +1425,10 @@ void ShowOneLine(byte position, byte item, bool selected) {
 void BuildMenu() {
   advancedRDS = false;
 
-  if (CurrentTheme == 7) tft.pushImage (0, 0, 320, 240, configurationbackgroundbw); else tft.pushImage (0, 0, 320, 240, configurationbackground);
+  switch (CurrentTheme) {
+    case 7: tft.pushImage (0, 0, 320, 240, configurationbackground_wo); break;
+    default: tft.pushImage (0, 0, 320, 240, configurationbackground); break;
+  }
 
   if (!submenu) {
     tftPrint(0, myLanguage[language][41], 160, 6, PrimaryColor, PrimaryColorSmooth, 16);
@@ -1721,7 +1727,11 @@ void MenuUp() {
 
     ShowOneLine(menuoption, menuitem, true);
   } else {
-    if (CurrentTheme == 7) OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackgroundbw); else OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
+    switch (CurrentTheme) {
+      case 7: OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground_wo); break;
+      default: OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground); break;
+    }
+
     OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
     OneBigLineSprite.setTextDatum(TC_DATUM);
 
@@ -2578,7 +2588,10 @@ void MenuDown() {
 
     ShowOneLine(menuoption, menuitem, true);
   } else {
-    if (CurrentTheme == 7) OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackgroundbw); else OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
+    switch (CurrentTheme) {
+      case 7: OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground_wo); break;
+      default: OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground); break;
+    }
 
     OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
     OneBigLineSprite.setTextDatum(TC_DATUM);
@@ -3419,10 +3432,16 @@ void DoMenu() {
   if (!menuopen) {
     if (menupage != INDEX) {
       menuopen = true;
-      if (CurrentTheme == 7) tft.pushImage (13, 30, 292, 170, popupbackgroundbw); else tft.pushImage (13, 30, 292, 170, popupbackground);
+      switch (CurrentTheme) {
+        case 7: tft.pushImage (13, 30, 292, 170, popupbackground_wo); break;
+        default: tft.pushImage (13, 30, 292, 170, popupbackground); break;
+      }
     }
 
-    if (CurrentTheme == 7) OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackgroundbw); else OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
+    switch (CurrentTheme) {
+      case 7: OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground_wo); break;
+      default: OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground); break;
+    }
 
     OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
     OneBigLineSprite.setTextDatum(TC_DATUM);
