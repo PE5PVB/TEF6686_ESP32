@@ -2788,7 +2788,7 @@ void ShowMemoryPos() {
 void DoMemoryPosTune() {
   if (spispeed == 7) tft.setSPISpeed(50);
   radio.clearRDS(fullsearchrds);
-  
+
   // Process empty stations
   if (IsStationEmpty()) {
     memoryposstatus = MEM_DARK;
@@ -3257,7 +3257,7 @@ void ShowModLevel() {
       MStatusold = 1;
     }
 
-    segments = map(MStatus, 0, 120, 0, 94);
+    segments = map(MStatus, 0, 120, 0, 93);
 
     if (segments < DisplayedSegments && (millis() - ModulationpreviousMillis >= 20)) {
       DisplayedSegments = max(DisplayedSegments - 3, segments);
@@ -3278,17 +3278,18 @@ void ShowModLevel() {
       }
     }
 
-    tft.fillRect(16, 133, 2 * 94, 6, GreyoutColor);
-    tft.fillRect(16, 133, 2 * constrain(DisplayedSegments, 0, 54), 6, ModBarInsignificantColor);
-    tft.fillRect(16 + 2 * 54, 133, 2 * (constrain(DisplayedSegments, 54, 94) - 54), 6, ModBarSignificantColor);
-    tft.fillRect(16 + 2 * constrain(DisplayedSegments, 0, 94), 133, 2 * (94 - constrain(DisplayedSegments, 0, 94)), 6, GreyoutColor);
+    tft.fillRect(16, 133, 2 * constrain(DisplayedSegments, 0, 53), 6, ModBarInsignificantColor);
 
-    int peakHoldPosition = 16 + 2 * constrain(peakholdold, 0, 94);
+    if (DisplayedSegments > 53) tft.fillRect(16 + 2 * 53, 133, 2 * (DisplayedSegments - 53), 6, ModBarSignificantColor);
+
+    int greyStart = 16 + 2 * DisplayedSegments;
+    int greyWidth = 2 * (94 - DisplayedSegments); // Calculate the remaining width correctly
+    tft.fillRect(greyStart, 133, greyWidth, 6, GreyoutColor);
+
+    int peakHoldPosition = 16 + 2 * constrain(peakholdold, 0, 93);
     tft.fillRect(peakHoldPosition, 133, 2, 6, (MStatus > 80) ? ModBarSignificantColor : PrimaryColor);
 
-    if (millis() - peakholdmillis >= 1000 && peakholdold == DisplayedSegments) {
-      tft.fillRect(peakHoldPosition, 133, 2, 6, GreyoutColor);
-    }
+    if (millis() - peakholdmillis >= 1000 && peakholdold <= DisplayedSegments) tft.fillRect(peakHoldPosition, 133, 2, 6, GreyoutColor);
   }
 }
 
