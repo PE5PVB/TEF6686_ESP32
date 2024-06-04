@@ -76,6 +76,7 @@ bool hasCTold;
 bool haseonold;
 bool hasrtplusold;
 bool hastmcold;
+bool initdxscan;
 bool leave;
 bool LowLevelInit;
 bool memorystore;
@@ -846,6 +847,7 @@ void loop() {
         if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
       }
       scantimer = millis();
+      initdxscan = false;
     }
 
     if (millis() >= flashingtimer + 500) {
@@ -861,9 +863,11 @@ void loop() {
     }
     delay(50);
     radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
-    switch (scancancel) {
-      case CORRECTPI: if (radio.rds.correctPI != 0) cancelDXScan(); break;
-      case SIGNAL: if ((USN < fmscansens * 30) && (WAM < 230) && (OStatus < 80 && OStatus > -80)) cancelDXScan(); break;
+    if (!initdxscan) {
+      switch (scancancel) {
+        case CORRECTPI: if (RDSstatus && radio.rds.correctPI != 0) cancelDXScan(); break;
+        case SIGNAL: if ((USN < fmscansens * 30) && (WAM < 230) && (OStatus < 80 && OStatus > -80)) cancelDXScan(); break;
+      }
     }
   }
 
@@ -4480,6 +4484,7 @@ void endMenu() {
 }
 
 void startFMDXScan() {
+  initdxscan = true;
   if (afscreen || advancedRDS) BuildDisplay();
 
   if (memorypos > scanstop || memorypos < scanstart) memorypos = scanstart;
