@@ -2787,7 +2787,8 @@ void ShowMemoryPos() {
 
 void DoMemoryPosTune() {
   if (spispeed == 7) tft.setSPISpeed(50);
-
+  radio.clearRDS(fullsearchrds);
+  
   // Process empty stations
   if (IsStationEmpty()) {
     memoryposstatus = MEM_DARK;
@@ -2884,6 +2885,7 @@ void DoMemoryPosTune() {
   BWtune = true;
   memtune = true;
   memreset = true;
+  rdsflagreset = false;
   ShowFreq(0);
 }
 
