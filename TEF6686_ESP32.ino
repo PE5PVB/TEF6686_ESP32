@@ -3705,7 +3705,7 @@ void ShowTuneMode() {
         }
 
         tft.drawRoundRect(1, 35, 42, 20, 5, GreyoutColor);
-        tftPrint(0, "MAN", 22, 39, GreyoutColor, BackgroundColor, 16);
+        tftPrint(0, "MAN", 22, 38, GreyoutColor, BackgroundColor, 16);
 
         if (memorystore) {
           tft.drawRoundRect(1, 79, 42, 20, 5, SignificantColor);
