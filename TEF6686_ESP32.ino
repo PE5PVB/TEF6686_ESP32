@@ -861,7 +861,7 @@ void loop() {
       }
       flashingtimer = millis();
     }
-    delay(50);
+    delay(100);
     radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
     if (!initdxscan) {
       switch (scancancel) {
