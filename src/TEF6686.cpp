@@ -1581,6 +1581,7 @@ void TEF6686::readRDS(byte showrdserrors) {
                   std::swap(eon[j].tp, eon[j + 1].tp);
                   std::swap(eon[j].taset, eon[j + 1].taset);
                   std::swap(eon_buffer[j], eon_buffer[j + 1]);
+                  std::swap(EONPStext[j], EONPStext[j + 1]);
                 }
               }
             }
