@@ -25,7 +25,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "High Cut corner", // 16
     "Highcut threshold", // 17
     "Low level threshold", // 18
-    "Contrast", // 19
+    "Brightness", // 19
     "Set volume", // 20
     "Set converter offset", // 21
     "Set low band edge", // 22
@@ -35,7 +35,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Set high cut corner frequency", // 26
     "Set High cut threshold", // 27
     "Set low level threshold", // 28
-    "Set Display brightness", // 29
+    "Set display brightness", // 29
     "Off", // 30
     "Screen is muted!", // 31
     "To unmute uncheck RF+ box", // 32
