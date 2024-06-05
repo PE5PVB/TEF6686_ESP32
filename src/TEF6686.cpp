@@ -21,7 +21,7 @@ void TEF6686::TestAFEON() {
   byte timing;
 
   if (af_counter != 0) {
-    devTEF_Audio_Set_Mute(1);
+    setMute();
     for (int x = 0; x < af_counter; x++) {
       timing = 0;
       devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 3, af[x].frequency);
@@ -49,7 +49,7 @@ void TEF6686::TestAFEON() {
     }
   }
   devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, currentfreq);
-  if (!mute) devTEF_Audio_Set_Mute(0);
+  if (!mute) setUnMute();
 }
 
 uint16_t TEF6686::TestAF() {
