@@ -10,6 +10,7 @@
 byte menuitem;
 byte items[9] = {9, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 6, 7};
 extern mem presets[];
+bool setWiFiConnectParam = false;
 
 void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
   switch (CurrentTheme) {
@@ -4199,8 +4200,11 @@ void DoMenu() {
               UpdateFonts(1);
               WiFiConnectParam XDRGTK_key_text("Set XDRGTK Password: (max 8 characters)");
               WiFiConnectParam XDRGTK_key_input("XDRGTK_key", "Password", key, 9);
-              wc.addParameter(&XDRGTK_key_text);
-              wc.addParameter(&XDRGTK_key_input);
+              if (!setWiFiConnectParam) {
+                wc.addParameter(&XDRGTK_key_text);
+                wc.addParameter(&XDRGTK_key_input);
+                setWiFiConnectParam = true;
+              }
               wc.startConfigurationPortal(AP_WAIT);
               XDRGTK_key = XDRGTK_key_input.getValue();
               EEPROM.writeString(EE_STRING_XDRGTK_KEY, XDRGTK_key);
