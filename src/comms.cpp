@@ -470,6 +470,21 @@ void XDRGTKRoutine() {
         if (autosq_read == 0) {
           autosquelch = false;
           DataPrint("H0\n");
+        } else if (autosq_read == 1) {
+          autosquelch = true;
+          DataPrint("H1\n");
+        } else {
+          autosquelch = !autosquelch;
+        }
+
+        if (autosquelch) {
+          DataPrint("H1\n");
+          if (!screenmute) {
+            tftPrint(-1, "SQ:", 212, 145, ActiveColor, ActiveColorSmooth, 16);
+            showAutoSquelch(1);
+          }
+        } else {
+          DataPrint("H0\n");
           if (!screenmute) {
             if (!usesquelch) {
               tftPrint(-1, "SQ:", 212, 145, BackgroundColor, BackgroundColor, 16);
@@ -477,13 +492,6 @@ void XDRGTKRoutine() {
             } else {
               Squelch = -150;
             }
-          }
-        } else {
-          autosquelch = true;
-          DataPrint("H1\n");
-          if (!screenmute) {
-            tftPrint(-1, "SQ:", 212, 145, ActiveColor, ActiveColorSmooth, 16);
-            showAutoSquelch(1);
           }
         }
         break;
@@ -550,12 +558,12 @@ void XDRGTKRoutine() {
       case 'T':
         unsigned int freqtemp;
         freqtemp = atoi(buff + 1);
-		
+
         if (BAND_FM) freqtemp -= ConverterSet * 1000;
         if (seek) seek = false;
-		radio.clearRDS(fullsearchrds);
-        
-		if (freqtemp >= LWLowEdgeSet && freqtemp <= LWHighEdgeSet) {
+        radio.clearRDS(fullsearchrds);
+
+        if (freqtemp >= LWLowEdgeSet && freqtemp <= LWHighEdgeSet) {
           frequency_LW = freqtemp;
           frequency_AM = freqtemp;
           if (afscreen || advancedRDS) {
@@ -617,16 +625,16 @@ void XDRGTKRoutine() {
             SelectBand();
             DataPrint("M0\n");
           }
-		  radio.SetFreq(frequency);
+          radio.SetFreq(frequency);
         }
 
         if (band == BAND_FM) {
-			DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n"); 
-		} else if (band == BAND_OIRT) {
-			DataPrint("T" + String(frequency_OIRT * 10) + "\n"); 
-		} else {
-			DataPrint("T" + String(frequency_AM) + "\n");
-		}
+          DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
+        } else if (band == BAND_OIRT) {
+          DataPrint("T" + String(frequency_OIRT * 10) + "\n");
+        } else {
+          DataPrint("T" + String(frequency_AM) + "\n");
+        }
         ShowFreq(0);
         RDSstatus = false;
         store = true;
