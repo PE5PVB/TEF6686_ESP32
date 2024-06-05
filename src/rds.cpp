@@ -669,64 +669,68 @@ void showPTY() {
 
 void showPS() {
   if (radio.rds.stationName != PSold || radio.rds.hasLongPS) {
-    if (!screenmute) {
-      if (afscreen) {
-        tftReplace(0, PSold, radio.rds.stationName, 160, 201, BWAutoColor, BWAutoColorSmooth, BackgroundColor, 16);
-      } else {
-        if (radio.rds.hasLongPS) {
-          String stationNameLongString = String(radio.rds.stationNameLong) + "     ";
-          if (stationNameLongString != stationNameLongOld) {
-            PSLongWidth = PSSprite.textWidth(stationNameLongString);
-            stationNameLongOld = stationNameLongString;
-          }
+    if (afscreen) {
+      if (!screenmute) tftReplace(0, PSold, radio.rds.stationName, 160, 201, BWAutoColor, BWAutoColorSmooth, BackgroundColor, 16);
+    } else {
+      if (radio.rds.hasLongPS) {
+        String stationNameLongString = String(radio.rds.stationNameLong) + "     ";
+        if (stationNameLongString != stationNameLongOld) {
+          PSLongWidth = PSSprite.textWidth(stationNameLongString);
+          stationNameLongOld = stationNameLongString;
+        }
 
-          if (PSSprite.textWidth(radio.trimTrailingSpaces(radio.rds.stationNameLong)) < 150) {
-            xPos5 = 0;
-            PSSprite.fillSprite(BackgroundColor);
-            if (RDSstatus) PSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-            PSSprite.drawString(stationNameLongString, xPos5, 2);
-          } else {
-            if (millis() - pslongticker >= 5) {
-              if (xPos5 < -PSLongWidth) xPos5 = 0;
-              if (xPos5 == 0) {
-                if (millis() - pslongtickerhold >= 2000) {
-                  xPos5 --;
-                  pslongtickerhold = millis();
-                }
-              } else {
+        if (PSSprite.textWidth(radio.trimTrailingSpaces(radio.rds.stationNameLong)) < 150) {
+          xPos5 = 0;
+          PSSprite.fillSprite(BackgroundColor);
+          if (RDSstatus) PSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+          PSSprite.drawString(stationNameLongString, xPos5, 2);
+        } else {
+          if (millis() - pslongticker >= 5) {
+            if (xPos5 < -PSLongWidth) xPos5 = 0;
+            if (xPos5 == 0) {
+              if (millis() - pslongtickerhold >= 2000) {
                 xPos5 --;
                 pslongtickerhold = millis();
               }
-              PSSprite.fillSprite(BackgroundColor);
-              if (RDSstatus) PSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-              PSSprite.drawString(stationNameLongString, xPos5, 2);
-              PSSprite.drawString(stationNameLongString, xPos5 + PSLongWidth, 2);
-              pslongticker = millis();
+            } else {
+              xPos5 --;
+              pslongtickerhold = millis();
             }
+            PSSprite.fillSprite(BackgroundColor);
+            if (RDSstatus) PSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+            PSSprite.drawString(stationNameLongString, xPos5, 2);
+            PSSprite.drawString(stationNameLongString, xPos5 + PSLongWidth, 2);
+            pslongticker = millis();
           }
-        } else {
-          xPos5 = 0;
-          PSSprite.fillSprite(BackgroundColor);
-          if (!RDSstatus || band > BAND_GAP) PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false); else PSSprite.setTextColor(RDSColor, RDSColorSmooth, false);
-          PSSprite.drawString(radio.rds.stationName, 0, 0);
         }
-        if (advancedRDS) PSSprite.pushSprite(36, 74); else PSSprite.pushSprite(36, 187);
+      } else {
+        xPos5 = 0;
+        PSSprite.fillSprite(BackgroundColor);
+        if (!RDSstatus || band > BAND_GAP) PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false); else PSSprite.setTextColor(RDSColor, RDSColorSmooth, false);
+        PSSprite.drawString(radio.rds.stationName, 0, 0);
       }
-    }
-    PSold = radio.rds.stationName;
+      if (!screenmute) {
+        if (advancedRDS) {
+          PSSprite.pushSprite(36, 74);
+        } else {
+          PSSprite.pushSprite(36, 187);
+        }
+      }
 
-    if (wifi && PSold != radio.rds.stationName) {
-      Udp.beginPacket(remoteip, 9030);
-      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";PS=");
-      char PShex[9];
-      radio.rds.stationName.toCharArray(PShex, 9);
-      for (int i = 0; i < 8; i++)
-      {
-        if (PShex[i] < 0x10) Udp.print("0");
-        if (PShex[i] == 0x20) PShex[i] =  '_';
-        Udp.print(String(PShex[i], HEX));
+      if (wifi && radio.rds.stationName.length() > 0 && PSold != radio.rds.stationName) {
+        Udp.beginPacket(remoteip, 9030);
+        Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";PS=");
+        char PShex[9];
+        radio.rds.stationName.toCharArray(PShex, 9);
+        for (int i = 0; i < 8; i++)
+        {
+          if (PShex[i] < 0x10) Udp.print("0");
+          if (PShex[i] == 0x20) PShex[i] =  '_';
+          Udp.print(String(PShex[i], HEX));
+        }
+        Udp.endPacket();
       }
-      Udp.endPacket();
+      PSold = radio.rds.stationName;
     }
   }
 }
