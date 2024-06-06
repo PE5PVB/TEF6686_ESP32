@@ -673,7 +673,6 @@ void TEF6686::readRDS(byte showrdserrors) {
                 if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == currentfreq && rds.hasAF) {
                   if (afmethodBtrigger) afmethodB = true;                                       // Check for AF method B
                   afmethodBprobe = true;
-                  af_updatecounter++;
                   af_counterb = (rds.rdsC >> 8) - 224;
                   af_number = (rds.rdsC >> 8) - 224;
                   af_counterbcheck = 1;
