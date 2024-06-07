@@ -885,7 +885,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
           FullLineSprite.drawString(removeNewline(myLanguage[language][92]), 298, 2);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(String(scanhold, DEC), 258, 2);
+          FullLineSprite.drawString((scanhold == 0 ? "0.5" : String(scanhold, DEC)), 258, 2);
           break;
       }
       break;
@@ -2525,13 +2525,13 @@ void MenuUp() {
 
           case ITEM4:
             scanhold++;
-            if (scanhold > 30) scanhold = 1;
+            if (scanhold > 30) scanhold = 0;
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             OneBigLineSprite.drawString(myLanguage[language][92], 155, 0);
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString(String(scanhold, DEC), 135, 0);
+            OneBigLineSprite.drawString((scanhold == 0 ? "0.5" : String(scanhold, DEC)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
@@ -3391,13 +3391,13 @@ void MenuDown() {
 
           case ITEM4:
             scanhold--;
-            if (scanhold < 1) scanhold = 30;
+            if (scanhold > 30) scanhold = 30;
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             OneBigLineSprite.drawString(myLanguage[language][92], 155, 0);
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString(String(scanhold, DEC), 135, 0);
+            OneBigLineSprite.drawString((scanhold == 0 ? "0.5" : String(scanhold, DEC)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
@@ -4278,7 +4278,7 @@ void DoMenu() {
             OneBigLineSprite.drawString(myLanguage[language][92], 155, 0);
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString(String(scanhold, DEC), 135, 0);
+            OneBigLineSprite.drawString((scanhold == 0 ? "0.5" : String(scanhold, DEC)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 

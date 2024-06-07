@@ -828,7 +828,7 @@ void loop() {
   }
 
   if (scandxmode) {
-    if (millis() >= scantimer + (scanhold * 1000)) {
+    if (millis() >= scantimer + (scanhold == 0 ? 500 : (scanhold * 1000))) {
       if (scanmem) {
         memorypos++;
         if (memorypos > scanstop) memorypos = scanstart;
