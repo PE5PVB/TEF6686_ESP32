@@ -1616,6 +1616,8 @@ void ToggleBand(byte nowBand) {
 }
 
 void BANDBUTTONPress() {
+  if (seek) radio.setUnMute();
+  seek = false;
   if (scandxmode) {
     cancelDXScan();
   } else {
@@ -2086,7 +2088,6 @@ void SelectBand() {
   if (afscreen || advancedRDS) BuildDisplay();
 
   if (band > BAND_GAP) {
-    seek = false;
     if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
     if (tunemode == TUNE_MI_BAND && band != BAND_SW) tunemode = TUNE_MAN;
     BWreset = true;
@@ -2200,12 +2201,13 @@ void SelectBand() {
 }
 
 void BWButtonPress() {
+  if (seek) radio.setUnMute();
+  seek = false;
   if (scandxmode) {
     cancelDXScan();
   } else {
     if (!usesquelch) radio.setUnMute();
     if (!menu) {
-      seek = false;
       if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
       unsigned long counterold = millis();
       unsigned long counter = millis();
@@ -2259,6 +2261,8 @@ void doStereoToggle() {
 }
 
 void ModeButtonPress() {
+  if (seek) radio.setUnMute();
+  seek = false;
   if (scandxmode) {
     cancelDXScan();
   } else {
@@ -2272,7 +2276,6 @@ void ModeButtonPress() {
       BuildAFScreen();
     } else {
       if (!menu) {
-        seek = false;
         if (!screenmute) {
           tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
         }
@@ -2442,6 +2445,8 @@ void RoundStep() {//todo air
 }
 
 void ButtonPress() {
+  if (seek) radio.setUnMute();
+  seek = false;
   if (scandxmode) {
     cancelDXScan();
   } else {
@@ -2466,7 +2471,6 @@ void ButtonPress() {
           EEPROM.writeByte(memorypos + EE_PRESET_MS_START, StereoToggle);
           if (band == BAND_FM) {//todo air
             EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, frequency);
-            Serial.println(frequency);
           } else if (band == BAND_OIRT) {
             EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, frequency_OIRT);
           } else if (band == BAND_LW) {
@@ -2517,7 +2521,6 @@ void ButtonPress() {
           }
         }
       } else {
-        seek = false;
         if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
         unsigned long counterold = millis();
         unsigned long counter = millis();
