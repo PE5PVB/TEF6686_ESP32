@@ -895,6 +895,7 @@ void loop() {
           radio.clearRDS(fullsearchrds);
         }
         if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
+        if (!screenmute) freqold = frequency;
         store = true;
       }
     }
