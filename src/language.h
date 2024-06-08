@@ -1374,8 +1374,8 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Alegeți Limba", // 40
     "Apasați MODE ptr MEMORARE și ieșire", // 41
     "Pornit", // 42
-    "lipsă zgomot FM", // 43
-    "lipsă zgomot AM", // 44
+    "Lipsă zgomot FM", // 43
+    "Lipsă zgomot AM", // 44
     "Beep la capătul benzii", // 45
     "Regiune", // 46
     "Europa", // 47
@@ -1385,7 +1385,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Wi-Fi activ", // 51
     "Configurare Wi-Fi", // 52
     "Conectare la: ", // 53
-    "ptr configurare Wi-Fi", // 54
+    "Ptr configurare Wi-Fi", // 54
     "Incerc conectarea la Wi-Fi", // 55
     "Fară succes!", // 56
     "Conectat!", // 57
@@ -1393,16 +1393,16 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Arată lungimea de undă SW", // 59
     "Filtru RDS", // 60
     "Arată erorile PI", // 61
-    "folosește squelch", // 62
+    "Folosește squelch", // 62
     "Contor modulație", // 63
     "Eliminator de zgomot AM", // 64
     "Eliminator de zgomot FM", // 65
     "Revenire la setările de fabrică", // 66
-    "ieșire Audio", // 67
+    "Ieșire Audio", // 67
     "Permite reglarea in timp ce ecranul este oprit", // 68
     "Ecran inversat", // 69
     "Despre software", // 70
-    "cod principal:", // 71
+    "Cod principal:", // 71
     "Contribuitori:", // 72
     "Necunoscut", // 73
     "Opțiuni economizor ecran", // 74
@@ -1415,7 +1415,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Viteză SPI dinamică", // 81
     "Sensibilitatea scanării", // 82
     "NICI UNUL", // 83
-    " versiune Software", // 84
+    "Versiune Software", // 84
     "Font Frecvență", // 85
     "Auto", // 86
     "AF nu este disponibil", // 87
@@ -1425,12 +1425,12 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Screensaver", // 91
     "Sec", // 92
     "Apăsați BAND pentru inchidere", // 93
-    "luminozitate 1%", // 94
-    "luminozitate 25%", // 95
-    "luminozitate 50%", // 96
+    "Luminozitate 1%", // 94
+    "Luminozitate 25%", // 95
+    "Luminozitate 50%", // 96
     "Decalaj de nivel AM RF", // 97
-    "unitați S-metru", // 98
-    "folosești AF", // 99
+    "Unitați S-metru", // 98
+    "Folosești AF", // 99
     "Selectare banda FM", // 100
     "Selectare banda AM", // 101
     "LW", // 102
@@ -1439,7 +1439,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "FM", // 105
     "OIRT", // 106
     "Rotire când ecranul este oprit", // 107
-    "selectare Model", // 108
+    "Selectare Model", // 108
     "Bază (ILI9341)", // 109
     "Portabil (ILI9341)", // 110
     "Portabil touch (ILI9341)", // 111
@@ -1500,14 +1500,14 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Identificare", // 166
     "Cumpără", // 167
     "Preiau date", // 168
-    "pași MW impliciți", // 169
+    "Pași MW impliciți", // 169
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
     "Opțiuni Baterie", // 173
     "Arată tensiunea", // 174
     "Arată procente", // 175
-    "porțiune RT", // 176
+    "Porțiune RT", // 176
     "Setări de bază", // 177
     "Setări Audio", // 178
     "Setări ecran", // 179
@@ -2090,34 +2090,34 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Vypnout displej", // 226
     "Zakázáno", // 227
     "Nedefinovaný pr.", // 228
-    "Zpravy", // 229
+    "Zprávy", // 229
     "Publicistika", // 230
     "Informace", // 231
     "Sport", // 232
-    "Vzdelani", // 233
+    "Vzdělání", // 233
     "Drama", // 234
     "Kultura", // 235
-    "Veda", // 236
-    "Ruzne Zanry", // 237
-    "Popova Hudba", // 238
-    "Rockova Hudba", // 239
-    "Oddychova Hudba", // 240
-    "Klasicka Hudba", // 241
-    "Vazna Hudba", // 242
-    "Jina Hudba", // 243
-    "Pocasi", // 244
+    "Věda", // 236
+    "Různé žánry", // 237
+    "Popová hudba", // 238
+    "Rocková hudba", // 239
+    "Oddychová hudba", // 240
+    "Klasická hudba", // 241
+    "Vážná hudba", // 242
+    "Jiná hudba", // 243
+    "Počasí", // 244
     "Finance", // 245
-    "Detsky Program", // 246
-    "Spolecenska Tem.", // 247
-    "Nabozens. Temata", // 248
-    "Telefonaty", // 249
-    "Cestovani", // 250
-    "Zabava", // 251
-    "Jazzova Hudba", // 252
-    "Country Hudba", // 253
-    "Narodni Hudba", // 254
-    "Oldies Hudba", // 255
-    "Folkova Hudba", // 256
+    "Dětský program", // 246
+    "Společenská tém.", // 247
+    "Naboženství", // 248
+    "Telefonáty", // 249
+    "Cestování", // 250
+    "Zábava", // 251
+    "Jazzová hudba", // 252
+    "Country hudba", // 253
+    "Národní hudba", // 254
+    "Oldies hudba", // 255
+    "Folková hudba", // 256
     "Dokumenty", // 257
     "Alarm Test", // 258
     "Alarm – Alarm !", // 259
