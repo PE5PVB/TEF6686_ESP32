@@ -21,7 +21,7 @@ void TEF6686::TestAFEON() {
   byte timing;
 
   if (af_counter != 0) {
-    devTEF_Audio_Set_Mute(1);
+    setMute();
     for (int x = 0; x < af_counter; x++) {
       timing = 0;
       devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 3, af[x].frequency);
@@ -49,7 +49,7 @@ void TEF6686::TestAFEON() {
     }
   }
   devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, currentfreq);
-  if (!mute) devTEF_Audio_Set_Mute(0);
+  if (!mute) setUnMute();
 }
 
 uint16_t TEF6686::TestAF() {
@@ -673,7 +673,6 @@ void TEF6686::readRDS(byte showrdserrors) {
                 if ((rds.rdsC >> 8) > 224 && (rds.rdsC >> 8) < 250 && ((rds.rdsC & 0xFF) * 10 + 8750) == currentfreq && rds.hasAF) {
                   if (afmethodBtrigger) afmethodB = true;                                       // Check for AF method B
                   afmethodBprobe = true;
-                  af_updatecounter++;
                   af_counterb = (rds.rdsC >> 8) - 224;
                   af_number = (rds.rdsC >> 8) - 224;
                   af_counterbcheck = 1;
@@ -1581,6 +1580,7 @@ void TEF6686::readRDS(byte showrdserrors) {
                   std::swap(eon[j].tp, eon[j + 1].tp);
                   std::swap(eon[j].taset, eon[j + 1].taset);
                   std::swap(eon_buffer[j], eon_buffer[j + 1]);
+                  std::swap(EONPStext[j], EONPStext[j + 1]);
                 }
               }
             }

@@ -87,6 +87,8 @@ bool hasCTold;
 bool haseonold;
 bool hasrtplusold;
 bool hastmcold;
+bool initdxscan;
+bool leave;
 bool LowLevelInit;
 bool memorystore;
 bool memreset;
@@ -430,7 +432,6 @@ void setup() {
   gpio_set_drive_capability((gpio_num_t) 21, GPIO_DRIVE_CAP_0);
   gpio_set_drive_capability((gpio_num_t) 22, GPIO_DRIVE_CAP_0);
   gpio_set_drive_capability((gpio_num_t) 23, GPIO_DRIVE_CAP_0);
-  analogReadResolution(12);
 
   setupmode = true;
   EEPROM.begin(EE_TOTAL_CNT);
@@ -858,7 +859,7 @@ void loop() {
   }
 
   if (scandxmode) {
-    if (millis() >= scantimer + (scanhold * 1000)) {
+    if (millis() >= scantimer + (scanhold == 0 ? 500 : (scanhold * 1000))) {
       if (scanmem) {
         memorypos++;
         if (memorypos > scanstop) memorypos = scanstart;
@@ -877,6 +878,7 @@ void loop() {
         if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
       }
       scantimer = millis();
+      initdxscan = false;
     }
 
     if (millis() >= flashingtimer + 500) {
@@ -890,11 +892,13 @@ void loop() {
       }
       flashingtimer = millis();
     }
-    delay(50);
+    delay(100);
     radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
-    switch (scancancel) {
-      case CORRECTPI: if (radio.rds.correctPI != 0) cancelDXScan(); break;
-      case SIGNAL: if ((USN < fmscansens * 30) && (WAM < 230) && (OStatus < 80 && OStatus > -80)) cancelDXScan(); break;
+    if (!initdxscan) {
+      switch (scancancel) {
+        case CORRECTPI: if (RDSstatus && radio.rds.correctPI != 0) cancelDXScan(); break;
+        case SIGNAL: if ((USN < fmscansens * 30) && (WAM < 230) && (OStatus < 80 && OStatus > -80)) cancelDXScan(); break;
+      }
     }
   }
 
@@ -1065,7 +1069,11 @@ void loop() {
       lowsignaltimer = millis();
       change = false;
       if (SStatus > SStatusold || SStatus < SStatusold) {
-        if (CurrentTheme == 7) SignalSprite.pushImage(-87, -119, 292, 170, popupbackgroundbw); else SignalSprite.pushImage(-87, -119, 292, 170, popupbackground);
+        switch (CurrentTheme) {
+          case 7: SignalSprite.pushImage(-87, -119, 292, 170, popupbackground_wo); break;
+          default: SignalSprite.pushImage(-87, -119, 292, 170, popupbackground); break;
+        }
+
         SignalSprite.loadFont(FONT48);
         SignalSprite.drawString(String(SStatus / 10), 58, 0);
         SignalSprite.unloadFont();
@@ -1671,14 +1679,17 @@ void BANDBUTTONPress() {
 
         if (counter - counterold < 1000) {
           if (afscreen) {
+            leave = true;
             BuildAdvancedRDS();
           } else if (advancedRDS) {
+            leave = true;
             BuildDisplay();
             SelectBand();
             ScreensaverTimerReopen();
           } else {
             if (tunemode != TUNE_MEM) {
               ToggleBand(band);
+              radio.clearRDS(fullsearchrds);
               StoreFrequency();
               SelectBand();
               if (XDRGTKUSB || XDRGTKTCP) {
@@ -2163,14 +2174,14 @@ void SelectBand() {
     }
   } else {
     if (tunemode == TUNE_MI_BAND) tunemode = TUNE_MAN;
-    radio.power(0);
-    delay(50);
-    if (band == BAND_FM) radio.SetFreq(frequency);
-    if (band == BAND_OIRT) radio.SetFreq(frequency_OIRT);
-    PIold = "";
-    PSold = "";
-    PTYold = "";
-    RTold = "";
+
+    if (!leave) {
+      radio.power(0);
+      delay(50);
+      if (band == BAND_FM) radio.SetFreq(frequency);
+      if (band == BAND_OIRT) radio.SetFreq(frequency_OIRT);
+    }
+
     BWreset = true;
     BWset = BWsetFM;
     freqold = frequency_AM;
@@ -2188,7 +2199,7 @@ void SelectBand() {
     tftReplace(-1, "kHz", "MHz", 258, 76, ActiveColor, ActiveColorSmooth, BackgroundColor, 28);
   }
 
-  radio.clearRDS(fullsearchrds);
+  if (!leave) radio.clearRDS(fullsearchrds);
   ShowFreq(0);
 
   if (!screenmute) {
@@ -2224,6 +2235,7 @@ void SelectBand() {
 #endif
     }
   }
+  leave = false;
 }
 
 void BWButtonPress() {
@@ -2820,6 +2832,7 @@ void ShowMemoryPos() {
 
 void DoMemoryPosTune() {
   if (spispeed == 7) tft.setSPISpeed(50);
+  radio.clearRDS(fullsearchrds);
 
   // Process empty stations
   if (IsStationEmpty()) {
@@ -2887,8 +2900,6 @@ void DoMemoryPosTune() {
     }
   }
 
-  radio.clearRDS(fullsearchrds);
-
   if (RDSSPYUSB) Serial.print("G:\r\nRESET-------\r\n\r\n");
   if (RDSSPYTCP) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
   if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
@@ -2919,6 +2930,7 @@ void DoMemoryPosTune() {
   BWtune = true;
   memtune = true;
   memreset = true;
+  rdsflagreset = false;
   ShowFreq(0);
 }
 
@@ -3290,7 +3302,7 @@ void ShowModLevel() {
       MStatusold = 1;
     }
 
-    segments = map(MStatus, 0, 120, 0, 94);
+    segments = map(MStatus, 0, 120, 0, 93);
 
     if (segments < DisplayedSegments && (millis() - ModulationpreviousMillis >= 20)) {
       DisplayedSegments = max(DisplayedSegments - 3, segments);
@@ -3311,17 +3323,18 @@ void ShowModLevel() {
       }
     }
 
-    tft.fillRect(16, 133, 2 * 94, 6, GreyoutColor);
-    tft.fillRect(16, 133, 2 * constrain(DisplayedSegments, 0, 54), 6, ModBarInsignificantColor);
-    tft.fillRect(16 + 2 * 54, 133, 2 * (constrain(DisplayedSegments, 54, 94) - 54), 6, ModBarSignificantColor);
-    tft.fillRect(16 + 2 * constrain(DisplayedSegments, 0, 94), 133, 2 * (94 - constrain(DisplayedSegments, 0, 94)), 6, GreyoutColor);
+    tft.fillRect(16, 133, 2 * constrain(DisplayedSegments, 0, 53), 6, ModBarInsignificantColor);
 
-    int peakHoldPosition = 16 + 2 * constrain(peakholdold, 0, 94);
+    if (DisplayedSegments > 53) tft.fillRect(16 + 2 * 53, 133, 2 * (DisplayedSegments - 53), 6, ModBarSignificantColor);
+
+    int greyStart = 16 + 2 * DisplayedSegments;
+    int greyWidth = 2 * (94 - DisplayedSegments); // Calculate the remaining width correctly
+    tft.fillRect(greyStart, 133, greyWidth, 6, GreyoutColor);
+
+    int peakHoldPosition = 16 + 2 * constrain(peakholdold, 0, 93);
     tft.fillRect(peakHoldPosition, 133, 2, 6, (MStatus > 80) ? ModBarSignificantColor : PrimaryColor);
 
-    if (millis() - peakholdmillis >= 1000 && peakholdold == DisplayedSegments) {
-      tft.fillRect(peakHoldPosition, 133, 2, 6, GreyoutColor);
-    }
+    if (millis() - peakholdmillis >= 1000 && peakholdold <= DisplayedSegments) tft.fillRect(peakHoldPosition, 133, 2, 6, GreyoutColor);
   }
 }
 
@@ -3339,6 +3352,8 @@ void showAutoSquelch(bool mode) {
 
 void doSquelch() {
   if (!XDRGTKUSB && !XDRGTKTCP && usesquelch && !autosquelch) Squelch = map(analogRead(PIN_POT), 0, 4095, -100, 920);
+  if (Squelch < - 800) Squelch = -100;
+  if (Squelch > 900) Squelch = 920;
 
   if (unit == 0) SquelchShow = Squelch / 10;
   if (unit == 1) SquelchShow = ((Squelch * 100) + 10875) / 1000;
@@ -3731,7 +3746,7 @@ void ShowTuneMode() {
         }
 
         tft.drawRoundRect(1, 35, 42, 20, 5, GreyoutColor);
-        tftPrint(0, "MAN", 22, 39, GreyoutColor, BackgroundColor, 16);
+        tftPrint(0, "MAN", 22, 38, GreyoutColor, BackgroundColor, 16);
 
         if (memorystore) {
           tft.drawRoundRect(1, 79, 42, 20, 5, SignificantColor);
@@ -3779,22 +3794,14 @@ void ShowRSSI() {
 }
 
 void ShowBattery() {
-  static uint32_t batupdatetimer = 0;
-
   if (millis() >= batupdatetimer + TIMER_BAT_TIMER) {
     batupdatetimer = millis();
   } else {
     return;
   }
 
-  uint32_t adcSum = 0;
-  for (int i = 0; i < 16; i++) {
-    adcSum += analogRead(BATTERY_PIN);
-    delay(1);
-  }
-
-  int v = adcSum / 16;
-
+  uint16_t v = 0;
+  if (!wifi) v = analogRead(BATTERY_PIN);
   battery = map(constrain(v, BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, BAT_LEVEL_STAGE);
   byte batteryprobe = map(constrain(v, BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, 20);
 
@@ -3808,7 +3815,7 @@ void ShowBattery() {
         tft.fillRoundRect(313, 13, 4, 6, 2, ActiveColor);
       }
       if (batteryoptions != BATTERY_VALUE && batteryoptions != BATTERY_PERCENT && battery != 0) {
-        tft.fillRoundRect(279, 8, (battery * 8), 16, 2, BarInsignificantColor);
+        tft.fillRoundRect(279, 8, (battery * 8) , 16, 2, BarInsignificantColor);
       } else {
         tft.fillRoundRect(279, 8, 33, 16, 2, BackgroundColor);
       }
@@ -3821,8 +3828,9 @@ void ShowBattery() {
     batteryVold = 0;
     vPerold = 0;
 
+
     if (!wifi && batterydetect) {
-      float batteryV = constrain(v / 4095.0 * 3.3 * 2.0, 0.0, 5.0);
+      float batteryV = constrain((((float)v / 4095.0) * 3.3 * (1100 / 1000.0) * 2.0), 0.0, 5.0);
       float vPer = constrain((batteryV - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE), 0.0, 0.99) * 100;
 
       if (abs(batteryV - batteryVold) > 0.05 && batteryoptions == BATTERY_VALUE) {
@@ -4062,6 +4070,7 @@ void Seek(bool mode) {
   }
   if (!mode) TuneDown(); else TuneUp();
   delay(50);
+
   ShowFreq(0);
   if (XDRGTKUSB || XDRGTKTCP) {
     if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n"); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n"); else DataPrint("M1\nT" + String(frequency_AM) + "\n");
@@ -4513,12 +4522,14 @@ void endMenu() {
   if (wifi) remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
   if (USBmode) Serial.begin(19200); else Serial.begin(115200);
 
+  leave = true;
   BuildDisplay();
   SelectBand();
   ScreensaverTimerRestart();
 }
 
 void startFMDXScan() {
+  initdxscan = true;
   if (afscreen || advancedRDS) BuildDisplay();
 
   if (memorypos > scanstop || memorypos < scanstart) memorypos = scanstart;

@@ -1,7 +1,7 @@
 #ifndef LANGUAGE_H
 #define LANGUAGE_H
 
-#define VERSION "v2.10 RC12"
+#define VERSION "v2.10 RC14"
 
 // [number of languages][number of texts]
 
@@ -25,7 +25,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "High Cut corner", // 16
     "Highcut threshold", // 17
     "Low level threshold", // 18
-    "Contrast", // 19
+    "Brightness", // 19
     "Set volume", // 20
     "Set converter offset", // 21
     "Set low band edge", // 22
@@ -35,7 +35,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Set high cut corner frequency", // 26
     "Set High cut threshold", // 27
     "Set low level threshold", // 28
-    "Set Display brightness", // 29
+    "Set display brightness", // 29
     "Off", // 30
     "Screen is muted!", // 31
     "To unmute uncheck RF+ box", // 32
@@ -766,7 +766,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Wyłączone", // 227
     "Niezdefiniowany", // 228
     "Wiadomości", // 229
-    "Wydarze. Bieżące", // 230
+    "Sprawy bieżące", // 230
     "Informacje", // 231
     "Sport", // 232
     "Edukacja", // 233
@@ -776,23 +776,23 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Różne", // 237
     "Muzyka Pop", // 238
     "Muzyka Rock", // 239
-    "Muzyka Lekka", // 240
-    "Muz. Klas. Lekka", // 241
-    "Muz. Klas. Pow.", // 242
-    "Muzyka Inna", // 243
+    "Muzyka lekka", // 240
+    "Lekka muz. klas.", // 241
+    "Muz. klas. pow.", // 242
+    "Inna muzyka", // 243
     "Pogoda", // 244
     "Finanse", // 245
-    "Prog. Dziecięce", // 246
-    "Wyd. Społeczne", // 247
+    "Prog. dla dzieci", // 246
+    "Sprawy społeczne", // 247
     "Religia", // 248
     "Telefon.Udział.", // 249
     "Podróże", // 250
-    "Czas Wolny", // 251
+    "Czas wolny", // 251
     "Muzyka Jazz", // 252
     "Muzyka Country", // 253
-    "Muzyka Narodowa", // 254
-    "Muz. Archiwalna", // 255
-    "Muzyka Ludowa", // 256
+    "Muzyka narodowa", // 254
+    "Stare przeboje", // 255
+    "Muzyka ludowa", // 256
     "Dokument", // 257
     "Alarm Test", // 258
     "Alarm", // 259
@@ -3158,16 +3158,16 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Драма", // 234
     "Культура", // 235
     "Наука", // 236
-    "Развлечение", // 237
-    "Поп", // 238
-    "Рок", // 239
+    "Разное", // 237
+    "Поп музыка", // 238
+    "Рок Музыка", // 239
     "Лёгкая музыка", // 240
-    "Лёгкая Класcика", // 241
-    "Класcика", // 242
-    "Музыка", // 243
+    "Легкая классика", // 241
+    "Классика", // 242
+    "Другая музыка", // 243
     "Погода", // 244
     "Финансы", // 245
-    "Детское радио", // 246
+    "Детские программы", // 246
     "Общество", // 247
     "Религия", // 248
     "Открытая линия", // 249
@@ -3175,8 +3175,8 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Досуг", // 251
     "Джаз", // 252
     "Музыка кантри", // 253
-    "Русская музыка", // 254
-    "Ретро", // 255
+    "Национальная музыка", // 254
+    "Музыка ретро", // 255
     "Народная музыка", // 256
     "Документалистика", // 257
     "Внимание тест", // 258

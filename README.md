@@ -17,6 +17,8 @@ More information: https://www.pe5pvb.nl/tef6686/
 - [About the software & features](https://github.com/PE5PVB/TEF6686_ESP32/wiki)
 - [Getting started](https://github.com/PE5PVB/TEF6686_ESP32/wiki#getting-started)
 - [How to install the software](https://github.com/PE5PVB/TEF6686_ESP32/wiki/Installing-the-software)
+- [How to use memory channels](https://github.com/PE5PVB/TEF6686_ESP32/wiki/How-to-use-memory-channels)
+- [How to use the FM DX scanner](https://github.com/PE5PVB/TEF6686_ESP32/wiki/How-to-use-the-FM-DX-scanner)
 - [Menu options explained](https://github.com/PE5PVB/TEF6686_ESP32/wiki/Menu-options-explained)
 
 ## Contributing

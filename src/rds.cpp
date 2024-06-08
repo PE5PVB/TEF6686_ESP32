@@ -5,6 +5,7 @@
 #include "constants.h"
 #include <TimeLib.h>
 
+bool rtABold;
 int RadiotextWidth;
 int PSLongWidth;
 int AIDWidth;
@@ -512,79 +513,62 @@ void ShowErrors() {
   if (calc != rdsqualityold || BWreset) {
     switch (calc) {
       case 0:
-        tft.drawRoundRect(205, (advancedRDS ? 74 : 186), 4, 24, 2, BarInsignificantColor);
-        tft.fillRoundRect(206, (advancedRDS ? 75 : 186), 2, 24, 2, BarInsignificantColor);
-
-        tft.drawRoundRect(199, (advancedRDS ? 79 : 191), 4, 19, 2, BarInsignificantColor);
-        tft.fillRoundRect(200, (advancedRDS ? 80 : 191), 2, 19, 2, BarInsignificantColor);
-
-        tft.drawRoundRect(193, (advancedRDS ? 84 : 196), 4, 14, 2, BarInsignificantColor);
-        tft.fillRoundRect(194, (advancedRDS ? 85 : 196), 2, 14, 2, BarInsignificantColor);
-
-        tft.drawRoundRect(187, (advancedRDS ? 89 : 201), 4, 9, 2, BarInsignificantColor);
-        tft.fillRoundRect(188, (advancedRDS ? 90 : 201), 2, 9, 2, BarInsignificantColor);
+        tft.fillRoundRect(205, (advancedRDS ? 74 : 186), 4, 26, 2, BarInsignificantColor);
+        tft.fillRoundRect(199, (advancedRDS ? 80 : 192), 4, 20, 2, BarInsignificantColor);
+        tft.fillRoundRect(193, (advancedRDS ? 86 : 198), 4, 14, 2, BarInsignificantColor);
+        tft.fillRoundRect(187, (advancedRDS ? 92 : 204), 4, 8, 2, BarInsignificantColor);
         break;
 
       case 1:
-        tft.fillRoundRect(206, (advancedRDS ? 75 : 186), 2, 24, 2, BackgroundColor);
-        tft.drawRoundRect(205, (advancedRDS ? 74 : 186), 4, 24, 2, GreyoutColor);
+        tft.fillRoundRect(205, (advancedRDS ? 74 : 186), 4, 26, 2, BackgroundColor);
+        tft.drawRoundRect(205, (advancedRDS ? 74 : 186), 4, 26, 2, GreyoutColor);
 
-        tft.drawRoundRect(199, (advancedRDS ? 79 : 191), 4, 19, 2, BarInsignificantColor);
-        tft.fillRoundRect(200, (advancedRDS ? 80 : 191), 2, 19, 2, BarInsignificantColor);
-
-        tft.drawRoundRect(193, (advancedRDS ? 84 : 196), 4, 14, 2, BarInsignificantColor);
-        tft.fillRoundRect(194, (advancedRDS ? 85 : 196), 2, 14, 2, BarInsignificantColor);
-
-        tft.drawRoundRect(187, (advancedRDS ? 89 : 201), 4, 9, 2, BarInsignificantColor);
-        tft.fillRoundRect(188, (advancedRDS ? 90 : 201), 2, 9, 2, BarInsignificantColor);
+        tft.fillRoundRect(199, (advancedRDS ? 80 : 192), 4, 20, 2, BarInsignificantColor);
+        tft.fillRoundRect(193, (advancedRDS ? 86 : 198), 4, 14, 2, BarInsignificantColor);
+        tft.fillRoundRect(187, (advancedRDS ? 92 : 204), 4, 8, 2, BarInsignificantColor);
         break;
 
       case 2:
-        tft.fillRoundRect(206, (advancedRDS ? 75 : 186), 2, 24, 2, BackgroundColor);
-        tft.drawRoundRect(205, (advancedRDS ? 74 : 186), 4, 24, 2, GreyoutColor);
+        tft.fillRoundRect(205, (advancedRDS ? 74 : 186), 4, 26, 2, BackgroundColor);
+        tft.drawRoundRect(205, (advancedRDS ? 74 : 186), 4, 26, 2, GreyoutColor);
 
-        tft.fillRoundRect(200, (advancedRDS ? 80 : 191), 2, 19, 2, BackgroundColor);
-        tft.drawRoundRect(199, (advancedRDS ? 79 : 191), 4, 19, 2, GreyoutColor);
+        tft.fillRoundRect(199, (advancedRDS ? 80 : 192), 4, 20, 2, BackgroundColor);
+        tft.drawRoundRect(199, (advancedRDS ? 80 : 192), 4, 20, 2, GreyoutColor);
 
-        tft.drawRoundRect(193, (advancedRDS ? 84 : 196), 4, 14, 2, BarSignificantColor);
-        tft.fillRoundRect(194, (advancedRDS ? 85 : 196), 2, 14, 2, BarSignificantColor);
-
-        tft.drawRoundRect(187, (advancedRDS ? 89 : 201), 4, 9, 2, BarSignificantColor);
-        tft.fillRoundRect(188, (advancedRDS ? 90 : 201), 2, 9, 2, BarSignificantColor);
+        tft.fillRoundRect(193, (advancedRDS ? 86 : 198), 4, 14, 2, BarSignificantColor);
+        tft.fillRoundRect(187, (advancedRDS ? 92 : 204), 4, 8, 2, BarSignificantColor);
         break;
 
       case 3:
-        tft.fillRoundRect(206, (advancedRDS ? 75 : 186), 2, 24, 2, BackgroundColor);
-        tft.drawRoundRect(205, (advancedRDS ? 74 : 186), 4, 24, 2, GreyoutColor);
+        tft.fillRoundRect(205, (advancedRDS ? 74 : 186), 4, 26, 2, BackgroundColor);
+        tft.drawRoundRect(205, (advancedRDS ? 74 : 186), 4, 26, 2, GreyoutColor);
 
-        tft.fillRoundRect(200, (advancedRDS ? 80 : 191), 2, 19, 2, BackgroundColor);
-        tft.drawRoundRect(199, (advancedRDS ? 79 : 191), 4, 19, 2, GreyoutColor);
+        tft.fillRoundRect(199, (advancedRDS ? 80 : 192), 4, 20, 2, BackgroundColor);
+        tft.drawRoundRect(199, (advancedRDS ? 80 : 192), 4, 20, 2, GreyoutColor);
 
-        tft.fillRoundRect(194, (advancedRDS ? 85 : 196), 2, 14, 2, BackgroundColor);
-        tft.drawRoundRect(193, (advancedRDS ? 84 : 196), 4, 14, 2, GreyoutColor);
+        tft.fillRoundRect(193, (advancedRDS ? 86 : 198), 4, 14, 2, BackgroundColor);
+        tft.drawRoundRect(193, (advancedRDS ? 86 : 198), 4, 14, 2, GreyoutColor);
 
-        tft.drawRoundRect(187, (advancedRDS ? 89 : 201), 4, 9, 2, BarSignificantColor);
-        tft.fillRoundRect(188, (advancedRDS ? 90 : 201), 2, 9, 2, BarSignificantColor);
+        tft.fillRoundRect(187, (advancedRDS ? 92 : 204), 4, 8, 2, BarSignificantColor);
         break;
 
       case 4:
-        tft.fillRoundRect(206, (advancedRDS ? 75 : 186), 2, 24, 2, BackgroundColor);
-        tft.drawRoundRect(205, (advancedRDS ? 74 : 186), 4, 24, 2, GreyoutColor);
+        tft.fillRoundRect(205, (advancedRDS ? 74 : 186), 4, 26, 2, BackgroundColor);
+        tft.drawRoundRect(205, (advancedRDS ? 74 : 186), 4, 26, 2, GreyoutColor);
 
-        tft.fillRoundRect(200, (advancedRDS ? 80 : 191), 2, 19, 2, BackgroundColor);
-        tft.drawRoundRect(199, (advancedRDS ? 79 : 191), 4, 19, 2, GreyoutColor);
+        tft.fillRoundRect(199, (advancedRDS ? 80 : 192), 4, 20, 2, BackgroundColor);
+        tft.drawRoundRect(199, (advancedRDS ? 80 : 192), 4, 20, 2, GreyoutColor);
 
-        tft.fillRoundRect(194, (advancedRDS ? 85 : 196), 2, 14, 2, BackgroundColor);
-        tft.drawRoundRect(193, (advancedRDS ? 84 : 196), 4, 14, 2, GreyoutColor);
+        tft.fillRoundRect(193, (advancedRDS ? 86 : 198), 4, 14, 2, BackgroundColor);
+        tft.drawRoundRect(193, (advancedRDS ? 86 : 198), 4, 14, 2, GreyoutColor);
 
-        tft.fillRoundRect(188, (advancedRDS ? 90 : 201), 2, 9, 2, BackgroundColor);
-        tft.drawRoundRect(187, (advancedRDS ? 89 : 201), 4, 9, 2, GreyoutColor);
+        tft.fillRoundRect(187, (advancedRDS ? 92 : 204), 4, 8, 2, BackgroundColor);
+        tft.drawRoundRect(187, (advancedRDS ? 92 : 204), 4, 8, 2, GreyoutColor);
         break;
     }
     rdsqualityold = calc;
   }
 }
-
 
 void showPI() {
   if ((region == REGION_US && (String(radio.rds.picode) != PIold || radio.rds.stationIDtext != stationIDold || radio.rds.stationStatetext != stationStateold)) || (region != REGION_US && String(radio.rds.picode) != PIold)) {
@@ -685,64 +669,68 @@ void showPTY() {
 
 void showPS() {
   if (radio.rds.stationName != PSold || radio.rds.hasLongPS) {
-    if (!screenmute) {
-      if (afscreen) {
-        tftReplace(0, PSold, radio.rds.stationName, 160, 201, BWAutoColor, BWAutoColorSmooth, BackgroundColor, 16);
-      } else {
-        if (radio.rds.hasLongPS) {
-          String stationNameLongString = String(radio.rds.stationNameLong) + "     ";
-          if (stationNameLongString != stationNameLongOld) {
-            PSLongWidth = PSSprite.textWidth(stationNameLongString);
-            stationNameLongOld = stationNameLongString;
-          }
+    if (afscreen) {
+      if (!screenmute) tftReplace(0, PSold, radio.rds.stationName, 160, 201, BWAutoColor, BWAutoColorSmooth, BackgroundColor, 16);
+    } else {
+      if (radio.rds.hasLongPS) {
+        String stationNameLongString = String(radio.rds.stationNameLong) + "     ";
+        if (stationNameLongString != stationNameLongOld) {
+          PSLongWidth = PSSprite.textWidth(stationNameLongString);
+          stationNameLongOld = stationNameLongString;
+        }
 
-          if (PSSprite.textWidth(radio.trimTrailingSpaces(radio.rds.stationNameLong)) < 150) {
-            xPos5 = 0;
-            PSSprite.fillSprite(BackgroundColor);
-            if (RDSstatus) PSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-            PSSprite.drawString(stationNameLongString, xPos5, 2);
-          } else {
-            if (millis() - pslongticker >= 5) {
-              if (xPos5 < -PSLongWidth) xPos5 = 0;
-              if (xPos5 == 0) {
-                if (millis() - pslongtickerhold >= 2000) {
-                  xPos5 --;
-                  pslongtickerhold = millis();
-                }
-              } else {
+        if (PSSprite.textWidth(radio.trimTrailingSpaces(radio.rds.stationNameLong)) < 150) {
+          xPos5 = 0;
+          PSSprite.fillSprite(BackgroundColor);
+          if (RDSstatus) PSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+          PSSprite.drawString(stationNameLongString, xPos5, 2);
+        } else {
+          if (millis() - pslongticker >= 5) {
+            if (xPos5 < -PSLongWidth) xPos5 = 0;
+            if (xPos5 == 0) {
+              if (millis() - pslongtickerhold >= 2000) {
                 xPos5 --;
                 pslongtickerhold = millis();
               }
-              PSSprite.fillSprite(BackgroundColor);
-              if (RDSstatus) PSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-              PSSprite.drawString(stationNameLongString, xPos5, 2);
-              PSSprite.drawString(stationNameLongString, xPos5 + PSLongWidth, 2);
-              pslongticker = millis();
+            } else {
+              xPos5 --;
+              pslongtickerhold = millis();
             }
+            PSSprite.fillSprite(BackgroundColor);
+            if (RDSstatus) PSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+            PSSprite.drawString(stationNameLongString, xPos5, 2);
+            PSSprite.drawString(stationNameLongString, xPos5 + PSLongWidth, 2);
+            pslongticker = millis();
           }
-        } else {
-          xPos5 = 0;
-          PSSprite.fillSprite(BackgroundColor);
-          if (!RDSstatus || band > BAND_GAP) PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false); else PSSprite.setTextColor(RDSColor, RDSColorSmooth, false);
-          PSSprite.drawString(radio.rds.stationName, 0, 0);
         }
-        if (advancedRDS) PSSprite.pushSprite(36, 74); else PSSprite.pushSprite(36, 187);
+      } else {
+        xPos5 = 0;
+        PSSprite.fillSprite(BackgroundColor);
+        if (!RDSstatus || band > BAND_GAP) PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false); else PSSprite.setTextColor(RDSColor, RDSColorSmooth, false);
+        PSSprite.drawString(radio.rds.stationName, 0, 0);
       }
-    }
-    PSold = radio.rds.stationName;
+      if (!screenmute) {
+        if (advancedRDS) {
+          PSSprite.pushSprite(36, 74);
+        } else {
+          PSSprite.pushSprite(36, 187);
+        }
+      }
 
-    if (wifi && PSold != radio.rds.stationName) {
-      Udp.beginPacket(remoteip, 9030);
-      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";PS=");
-      char PShex[9];
-      radio.rds.stationName.toCharArray(PShex, 9);
-      for (int i = 0; i < 8; i++)
-      {
-        if (PShex[i] < 0x10) Udp.print("0");
-        if (PShex[i] == 0x20) PShex[i] =  '_';
-        Udp.print(String(PShex[i], HEX));
+      if (wifi && radio.rds.stationName.length() > 0 && PSold != radio.rds.stationName) {
+        Udp.beginPacket(remoteip, 9030);
+        Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";PS=");
+        char PShex[9];
+        radio.rds.stationName.toCharArray(PShex, 9);
+        for (int i = 0; i < 8; i++)
+        {
+          if (PShex[i] < 0x10) Udp.print("0");
+          if (PShex[i] == 0x20) PShex[i] =  '_';
+          Udp.print(String(PShex[i], HEX));
+        }
+        Udp.endPacket();
       }
-      Udp.endPacket();
+      PSold = radio.rds.stationName;
     }
   }
 }
@@ -793,69 +781,63 @@ void showCT() {
 void showRadioText() {
   String RTString = String(radio.rds.stationText + " " + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : "") + "      ");
 
+  if (radio.rds.hasRT && radio.rds.rtAB != rtABold) {
+    xPos = 0;
+    rttickerhold = millis();
+    rtABold = radio.rds.rtAB;
+  }
+
   if (!screenmute) {
     if (radio.rds.hasRT && radio.rds.stationText.length() > 0) {
       if (advancedRDS && RDSSprite.textWidth(radio.trimTrailingSpaces(RTString)) < 165) {
         xPos = 0;
         RDSSprite.fillSprite(BackgroundColor);
         RDSSprite.setTextDatum(TL_DATUM);
-        if (RDSstatus) RDSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RDSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+        RDSSprite.setTextColor(RDSstatus ? RDSColor : RDSDropoutColor, RDSstatus ? RDSColorSmooth : RDSDropoutColorSmooth, false);
         RDSSprite.drawString(RTString, xPos, 2);
         RDSSprite.pushSprite(36, 220);
       } else if (!advancedRDS && RDSSprite.textWidth(radio.trimTrailingSpaces(RTString)) < 270) {
         xPos = 0;
         FullLineSprite.fillSprite(BackgroundColor);
         FullLineSprite.setTextDatum(TL_DATUM);
-        if (RDSstatus) FullLineSprite.setTextColor(RDSColor, RDSColorSmooth, false); else FullLineSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+        FullLineSprite.setTextColor(RDSstatus ? RDSColor : RDSDropoutColor, RDSstatus ? RDSColorSmooth : RDSDropoutColorSmooth, false);
         FullLineSprite.drawString(RTString, xPos, 2);
         FullLineSprite.fillRect(275, 0, 8, 19, BackgroundColor);
         FullLineSprite.drawLine(283, 0, 283, 19, FrameColor);
         if (radio.rds.hasRT) {
-          if (radio.rds.rtAB) {
-            FullLineSprite.fillCircle(278, 3, 2, GreyoutColor);
-            FullLineSprite.fillCircle(278, 14, 2, InsignificantColor);
-          } else {
-            FullLineSprite.fillCircle(278, 3, 2, InsignificantColor);
-            FullLineSprite.fillCircle(278, 14, 2, GreyoutColor);
-          }
+          FullLineSprite.fillCircle(278, 3, 2, radio.rds.rtAB ? GreyoutColor : InsignificantColor);
+          FullLineSprite.fillCircle(278, 14, 2, radio.rds.rtAB ? InsignificantColor : GreyoutColor);
         }
         FullLineSprite.pushSprite(36, 220);
       } else {
         if (millis() - rtticker >= (advancedRDS ? 5 : 15)) {
-          if (xPos == 0) {
-            if (millis() - rttickerhold >= 1000) {
-              xPos --;
-              rttickerhold = millis();
-            }
+          if (xPos == 0 && millis() - rttickerhold < 1000) {
+            // Do nothing, just wait
           } else {
-            xPos --;
-            rttickerhold = millis();
+            xPos--;
+            rttickerhold = millis();  // Update hold time only when xPos changes
           }
 
           if (xPos < -RadiotextWidth) xPos = 0;
+
           if (advancedRDS) {
             RDSSprite.fillSprite(BackgroundColor);
             RDSSprite.setTextDatum(TL_DATUM);
-            if (RDSstatus) RDSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else RDSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+            RDSSprite.setTextColor(RDSstatus ? RDSColor : RDSDropoutColor, RDSstatus ? RDSColorSmooth : RDSDropoutColorSmooth, false);
             RDSSprite.drawString(RTString, xPos, 2);
             RDSSprite.drawString(RTString, xPos + RadiotextWidth, 2);
             RDSSprite.pushSprite(36, 220);
           } else {
             FullLineSprite.fillSprite(BackgroundColor);
             FullLineSprite.setTextDatum(TL_DATUM);
-            if (RDSstatus) FullLineSprite.setTextColor(RDSColor, RDSColorSmooth, false); else FullLineSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+            FullLineSprite.setTextColor(RDSstatus ? RDSColor : RDSDropoutColor, RDSstatus ? RDSColorSmooth : RDSDropoutColorSmooth, false);
             FullLineSprite.drawString(RTString, xPos, 2);
             FullLineSprite.drawString(RTString, xPos + RadiotextWidth, 2);
             FullLineSprite.fillRect(275, 0, 8, 19, BackgroundColor);
             FullLineSprite.drawLine(283, 0, 283, 19, FrameColor);
             if (radio.rds.hasRT) {
-              if (radio.rds.rtAB) {
-                FullLineSprite.fillCircle(278, 3, 2, GreyoutColor);
-                FullLineSprite.fillCircle(278, 14, 2, InsignificantColor);
-              } else {
-                FullLineSprite.fillCircle(278, 3, 2, InsignificantColor);
-                FullLineSprite.fillCircle(278, 14, 2, GreyoutColor);
-              }
+              FullLineSprite.fillCircle(278, 3, 2, radio.rds.rtAB ? GreyoutColor : InsignificantColor);
+              FullLineSprite.fillCircle(278, 14, 2, radio.rds.rtAB ? InsignificantColor : GreyoutColor);
             }
             FullLineSprite.pushSprite(36, 220);
           }
@@ -865,13 +847,8 @@ void showRadioText() {
     }
 
     if (radio.rds.hasRT && advancedRDS) {
-      if (radio.rds.rtAB) {
-        tft.fillCircle(203, 223, 2, GreyoutColor);
-        tft.fillCircle(203, 234, 2, InsignificantColor);
-      } else {
-        tft.fillCircle(203, 223, 2, InsignificantColor);
-        tft.fillCircle(203, 234, 2, GreyoutColor);
-      }
+      tft.fillCircle(203, 223, 2, radio.rds.rtAB ? GreyoutColor : InsignificantColor);
+      tft.fillCircle(203, 234, 2, radio.rds.rtAB ? InsignificantColor : GreyoutColor);
     }
   }
 
@@ -883,8 +860,7 @@ void showRadioText() {
       Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";RT1=");
       char RThex[65];
       radio.rds.stationText.toCharArray(RThex, 65);
-      for (int i = 0; i < 64; i++)
-      {
+      for (int i = 0; i < 64; i++) {
         if (RThex[i] < 0x10) Udp.print("0");
         if (RThex[i] == ' ') RThex[i] =  '_';
         Udp.print(String(RThex[i], HEX));
