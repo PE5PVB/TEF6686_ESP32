@@ -104,6 +104,7 @@ bool scanmute;
 bool screenmute;
 bool screensavertriggered = false;
 bool seek;
+bool seekinit;
 bool setupmode;
 bool showclock;
 bool usesquelch;
@@ -2465,6 +2466,7 @@ void ButtonPress() {
           EEPROM.writeByte(memorypos + EE_PRESET_MS_START, StereoToggle);
           if (band == BAND_FM) {//todo air
             EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, frequency);
+            Serial.println(frequency);
           } else if (band == BAND_OIRT) {
             EEPROM.writeUInt((memorypos * 4) + EE_PRESETS_FREQUENCY_START, frequency_OIRT);
           } else if (band == BAND_LW) {
@@ -2616,6 +2618,7 @@ void KeyUp() {
           case TUNE_AUTO:
             direction = true;
             seek = true;
+            seekinit = true;
             Seek(direction);
             break;
 
@@ -2682,6 +2685,7 @@ void KeyDown() {
           case TUNE_AUTO:
             direction = false;
             seek = true;
+            seekinit = true;
             Seek(direction);
             break;
 
@@ -3638,11 +3642,6 @@ void doTuneMode() {
       } else {
         tunemode = TUNE_AUTO;
       }
-      if (stepsize != 0) {
-        stepsize = 0;
-        RoundStep();
-        ShowStepSize();
-      }
       break;
 
     case TUNE_MI_BAND:
@@ -4025,6 +4024,15 @@ void EdgeBeeper() {
 
 void Seek(bool mode) {
   radio.setMute();
+  if (seekinit) {
+    if (stepsize != 0) {
+      stepsize = 0;
+      RoundStep();
+      ShowStepSize();
+    }
+    seekinit = false;
+  }
+
   if (!screenmute) {
     tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
   }
