@@ -3474,14 +3474,14 @@ void doSquelch() {
 void updateBW() {//todo air
   if (BWset == 0) {
     if (!screenmute && !advancedRDS && !afscreen) {
-      tft.drawRoundRect(248, 35, 71, 20, 5, ActiveColor);
-      tftPrint(0, "AUTO BW", 283, 38, ActiveColor, ActiveColorSmooth, 16);
+      tft.drawRoundRect(247, 35, 71, 20, 5, ActiveColor);
+      tftPrint(0, "AUTO BW", 282, 38, ActiveColor, ActiveColorSmooth, 16);
     }
     radio.setFMABandw();
   } else {
     if (!screenmute && !advancedRDS && !afscreen) {
-      tft.drawRoundRect(248, 35, 71, 20, 5, GreyoutColor);
-      tftPrint(0, "AUTO BW", 283, 38, GreyoutColor, BackgroundColor, 16);
+      tft.drawRoundRect(247, 35, 71, 20, 5, GreyoutColor);
+      tftPrint(0, "AUTO BW", 282, 38, GreyoutColor, BackgroundColor, 16);
     }
   }
 }
