@@ -49,7 +49,7 @@ void TEF6686::TestAFEON() {
     }
   }
   devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, currentfreq);
-  if (!mute) setUnMute();
+  setUnMute();
 }
 
 uint16_t TEF6686::TestAF() {
