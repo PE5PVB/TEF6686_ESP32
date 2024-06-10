@@ -3301,12 +3301,12 @@ void ShowModLevel() {
       }
     }
 
-    tft.fillRect(16, 133, 2 * constrain(DisplayedSegments, 0, 53), 6, ModBarInsignificantColor);
+    tft.fillRect(16, 133, 2 * constrain(DisplayedSegments, 0, 54), 6, ModBarInsignificantColor);
 
-    if (DisplayedSegments > 53) tft.fillRect(16 + 2 * 53, 133, 2 * (DisplayedSegments - 53), 6, ModBarSignificantColor);
+    if (DisplayedSegments > 54) tft.fillRect(16 + 2 * 54, 133, 2 * (DisplayedSegments - 54), 6, ModBarSignificantColor);
 
     int greyStart = 16 + 2 * DisplayedSegments;
-    int greyWidth = 2 * (94 - DisplayedSegments); // Calculate the remaining width correctly
+    int greyWidth = 2 * (94 - DisplayedSegments);
     tft.fillRect(greyStart, 133, greyWidth, 6, GreyoutColor);
 
     int peakHoldPosition = 16 + 2 * constrain(peakholdold, 0, 93);
