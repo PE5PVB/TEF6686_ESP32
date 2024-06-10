@@ -730,8 +730,8 @@ void showPS() {
         }
         Udp.endPacket();
       }
-      PSold = radio.rds.stationName;
     }
+    PSold = radio.rds.stationName;
   }
 }
 
