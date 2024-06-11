@@ -515,6 +515,17 @@ void XDRGTKRoutine() {
         DataPrint("J" + String(scandxtemp) + "\n");
         break;
 
+      case 'K':
+        byte scanholdtemp;
+        scanholdtemp = atol(buff + 1);
+        if (scanholdtemp < 31) {
+          scanhold = scanholdtemp;
+          EEPROM.writeByte(EE_BYTE_SCANHOLD, scanhold);
+          EEPROM.commit();
+        }
+        DataPrint("K" + String(scanhold) + "\n");
+        break;
+
       case 'M':
         byte XDRband;
         XDRband = atol(buff + 1);

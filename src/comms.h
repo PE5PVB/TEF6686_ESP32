@@ -47,6 +47,7 @@ extern byte iMSEQ;
 extern byte iMSset;
 extern byte language;
 extern byte memorypos;
+extern byte scanhold;
 extern byte stepsize;
 extern byte subnetclient;
 extern byte TEF;
