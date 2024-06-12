@@ -4507,6 +4507,7 @@ void endMenu() {
 }
 
 void startFMDXScan() {
+  menu = false;
   initdxscan = true;
   if (afscreen || advancedRDS) BuildDisplay();
 
