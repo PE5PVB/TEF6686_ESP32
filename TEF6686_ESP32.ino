@@ -4507,8 +4507,9 @@ void endMenu() {
 }
 
 void startFMDXScan() {
-  menu = false;
   initdxscan = true;
+
+  if (menu) endMenu();
   if (afscreen || advancedRDS) BuildDisplay();
 
   if (memorypos > scanstop || memorypos < scanstart) memorypos = scanstart;
@@ -4520,7 +4521,6 @@ void startFMDXScan() {
       band = presets[memorypos].band;
       SelectBand();
     }
-    if (menu) endMenu();
     DoMemoryPosTune();
   } else {
     tunemode = TUNE_MAN;
@@ -4528,7 +4528,6 @@ void startFMDXScan() {
       band = presets[memorypos].band;
       SelectBand();
     }
-    if (menu) endMenu();
     TuneUp();
     ShowFreq(0);
   }
@@ -4540,6 +4539,7 @@ void startFMDXScan() {
   }
   scantimer = millis();
   scandxmode = true;
+  ShowTuneMode();
   if (XDRGTKUSB || XDRGTKTCP) DataPrint("J1\n");
 }
 
