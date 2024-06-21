@@ -4143,6 +4143,7 @@ void MuteScreen(bool setting) {
   if (!setting && screenmute) {
     screenmute = false;
     setupmode = true;
+    leave = true;
     tft.writecommand(0x11);
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
     if (band < BAND_GAP) {
