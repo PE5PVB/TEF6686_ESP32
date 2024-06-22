@@ -68,6 +68,7 @@ bool dropout;
 bool dynamicPTYold;
 bool edgebeep;
 bool externaltune;
+bool findMemoryAF;
 bool flashing;
 bool fmsi;
 bool fullsearchrds;
@@ -603,6 +604,7 @@ void setup() {
 #endif
   }
 
+  pinMode(BANDBUTTON, INPUT);
   pinMode(MODEBUTTON, INPUT);
   pinMode(BWBUTTON, INPUT);
   pinMode(ROTARY_BUTTON, INPUT);
@@ -887,7 +889,51 @@ void loop() {
   if (!menu && !afscreen && !scandxmode) {
     if (af != 0 && dropout && millis() >= aftimer + 1000) {
       aftimer = millis();
-      frequency = radio.TestAF();
+      if (radio.af_counter == 0) {
+        if (findMemoryAF && radio.rds.correctPI != 0) {
+          radio.setMute();
+          tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
+          SQ = true;
+          if (!screenmute) {
+            if (advancedRDS) {
+              tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
+              tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
+              tftPrint(0, myLanguage[language][34], 160, 100, ActiveColor, ActiveColorSmooth, 28);
+            } else {
+              ShowFreq(1);
+            }
+          }
+
+          for (int x = 8750; x <= 10800; x += 10) {
+            if (rotary != 0 || digitalRead(BANDBUTTON) == LOW || digitalRead(MODEBUTTON) == LOW || digitalRead(BWBUTTON) == LOW || digitalRead(ROTARY_BUTTON) == LOW) break;
+            radio.SetFreq(x);
+            unsigned long millisold = millis();
+            while (millis() - millisold < 187) {
+              if (!screenmute && !advancedRDS) ShowModLevel();
+            }
+            if (radio.rds.correctPI == radio.getBlockA()) {
+              frequency = x;
+              break;
+            }
+          }
+
+          if (!screenmute) {
+            if (advancedRDS) {
+              leave = true;
+              BuildAdvancedRDS();
+            } else {
+              ShowFreq(0);
+            }
+          }
+
+          radio.setUnMute();
+          SQ = false;
+          tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+        }
+        findMemoryAF = false;
+      } else {
+        frequency = radio.TestAF();
+      }
       if (freqold != frequency) {
         ShowFreq(0);
         dropout = true;
@@ -895,13 +941,13 @@ void loop() {
           afmethodBold = true;
           radio.clearRDS(fullsearchrds);
         }
-        if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
-        if (screenmute) {
-          freqold = frequency;
-          dropout = false;
-        }
-        store = true;
       }
+      if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
+      if (screenmute) {
+        freqold = frequency;
+        dropout = false;
+      }
+      store = true;
     }
 
     if (band == BAND_FM && af != 0 && radio.rds.correctPI != 0) {
@@ -2909,6 +2955,7 @@ void DoMemoryPosTune() {
   memtune = true;
   memreset = true;
   rdsflagreset = false;
+  findMemoryAF = true;
   ShowFreq(0);
 }
 
@@ -3001,6 +3048,7 @@ void ShowFreq(int mode) {
         } else if (mode == 1) {
           FrequencySprite.fillSprite(BackgroundColor);
           FrequencySprite.pushSprite(46, 46);
+          tftPrint(0, myLanguage[language][34], 146, 58, ActiveColor, ActiveColorSmooth, 28);
         }
         FrequencySprite.unloadFont();
       }

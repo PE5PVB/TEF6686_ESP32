@@ -9,6 +9,13 @@ unsigned long rdstimer = 0;
 unsigned long bitStartTime = 0;
 bool lastBitState = false;
 
+uint16_t TEF6686::getBlockA(void) {
+  uint16_t blockA, dummy;
+  devTEF_Radio_Get_RDS_Status(&dummy, &blockA, &dummy, &dummy, &dummy, &dummy);
+  return blockA;
+}
+
+
 void TEF6686::TestAFEON() {
   uint16_t status;
   uint16_t dummy1;
@@ -31,7 +38,7 @@ void TEF6686::TestAFEON() {
       }
       if (afoffset > -125 || afoffset < 125) {
         devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, af[x].frequency);
-        delay(200);
+        delay(187);
         devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
 
         if (rds.rdsStat & (1 << 9)) {
@@ -97,7 +104,7 @@ uint16_t TEF6686::TestAF() {
 
     if (af_counter != 0 && af[highestIndex].afvalid && af[highestIndex].score > (currentlevel - currentusn - currentwam) && (af[highestIndex].score - (currentlevel - currentusn - currentwam)) >= 70) {
       devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, af[highestIndex].frequency);
-      delay(200);
+      delay(187);
       devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
       if (rds.rdsStat & (1 << 9)) {
         if ((afmethodB && rds.afreg ? (((rds.rdsA >> 8) & 0xF) > 2 && ((rds.correctPI >> 8) & 0xF) > 2 && ((rds.rdsA >> 12) & 0xF) == ((rds.correctPI >> 12) & 0xF) && (rds.rdsA & 0xFF) == (rds.correctPI & 0xFF)) || rds.rdsA == rds.correctPI : rds.rdsA == rds.correctPI)) {
