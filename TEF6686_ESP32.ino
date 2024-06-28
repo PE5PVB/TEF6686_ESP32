@@ -4,9 +4,9 @@
 #include <EEPROM.h>
 #include <Wire.h>
 #include <math.h>
-#include <ESP32Time.h>              // https://github.com/fbiego/ESP32Time
-#include <TFT_eSPI.h>               // https://github.com/ohmytime/TFT_eSPI_DynamicSpeed (Modified version)
-#include <Hash.h>                   // https://github.com/bbx10/Hash_tng
+#include <ESP32Time.h>              // https://github.com/fbiego/ESP32Time/archive/refs/heads/main.zip
+#include <TFT_eSPI.h>               // https://github.com/ohmytime/TFT_eSPI_DynamicSpeed/archive/refs/heads/master.zip (please then edit the User_Setup.h as described in the Wiki)
+#include <Hash.h>                   // https://github.com/bbx10/Hash_tng/archive/refs/heads/master.zip
 #include "src/WiFiConnect.h"
 #include "src/WiFiConnectParam.h"
 #include "src/FONT16.h"
@@ -79,6 +79,7 @@ bool dropout;
 bool dynamicPTYold;
 bool edgebeep;
 bool externaltune;
+bool findMemoryAF;
 bool flashing;
 bool fmsi;
 bool fullsearchrds;
@@ -115,6 +116,7 @@ bool scanmute;
 bool screenmute;
 bool screensavertriggered = false;
 bool seek;
+bool seekinit;
 bool setupmode;
 bool showclock;
 bool usesquelch;
@@ -613,6 +615,7 @@ void setup() {
 #endif
   }
 
+  pinMode(BANDBUTTON, INPUT);
   pinMode(MODEBUTTON, INPUT);
   pinMode(BWBUTTON, INPUT);
   pinMode(ROTARY_BUTTON, INPUT);
@@ -917,7 +920,51 @@ void loop() {
   if (!menu && !afscreen && !scandxmode) {
     if (af != 0 && dropout && millis() >= aftimer + 1000) {
       aftimer = millis();
-      frequency = radio.TestAF();
+      if (radio.af_counter == 0) {
+        if (findMemoryAF && radio.rds.correctPI != 0) {
+          radio.setMute();
+          tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
+          SQ = true;
+          if (!screenmute) {
+            if (advancedRDS) {
+              tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
+              tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
+              tftPrint(0, myLanguage[language][34], 160, 100, ActiveColor, ActiveColorSmooth, 28);
+            } else {
+              ShowFreq(1);
+            }
+          }
+
+          for (int x = 8750; x <= 10800; x += 10) {
+            if (rotary != 0 || digitalRead(BANDBUTTON) == LOW || digitalRead(MODEBUTTON) == LOW || digitalRead(BWBUTTON) == LOW || digitalRead(ROTARY_BUTTON) == LOW) break;
+            radio.SetFreq(x);
+            unsigned long millisold = millis();
+            while (millis() - millisold < 187) {
+              if (!screenmute && !advancedRDS) ShowModLevel();
+            }
+            if (radio.rds.correctPI == radio.getBlockA()) {
+              frequency = x;
+              break;
+            }
+          }
+
+          if (!screenmute) {
+            if (advancedRDS) {
+              leave = true;
+              BuildAdvancedRDS();
+            } else {
+              ShowFreq(0);
+            }
+          }
+
+          radio.setUnMute();
+          SQ = false;
+          tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+        }
+        findMemoryAF = false;
+      } else {
+        frequency = radio.TestAF();
+      }
       if (freqold != frequency) {
         ShowFreq(0);
         dropout = true;
@@ -925,9 +972,13 @@ void loop() {
           afmethodBold = true;
           radio.clearRDS(fullsearchrds);
         }
-        if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
-        store = true;
       }
+      if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
+      if (screenmute) {
+        freqold = frequency;
+        dropout = false;
+      }
+      store = true;
     }
 
     if (band == BAND_FM && af != 0 && radio.rds.correctPI != 0) {
@@ -943,6 +994,10 @@ void loop() {
             radio.clearRDS(fullsearchrds);
           }
           if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
+          if (screenmute) {
+            freqold = frequency;
+            dropout = false;
+          }
           store = true;
         }
       }
@@ -960,6 +1015,10 @@ void loop() {
             }
             if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
             store = true;
+            if (screenmute) {
+              freqold = frequency;
+              dropout = false;
+            }
           }
         }
       }
@@ -1655,6 +1714,8 @@ void ToggleBand(byte nowBand) {
 }
 
 void BANDBUTTONPress() {
+  if (seek) radio.setUnMute();
+  seek = false;
   if (scandxmode) {
     cancelDXScan();
   } else {
@@ -2125,7 +2186,6 @@ void SelectBand() {
   if (afscreen || advancedRDS) BuildDisplay();
 
   if (band > BAND_GAP) {
-    seek = false;
     if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
     if (tunemode == TUNE_MI_BAND && band != BAND_SW) tunemode = TUNE_MAN;
     BWreset = true;
@@ -2239,12 +2299,13 @@ void SelectBand() {
 }
 
 void BWButtonPress() {
+  if (seek) radio.setUnMute();
+  seek = false;
   if (scandxmode) {
     cancelDXScan();
   } else {
     if (!usesquelch) radio.setUnMute();
     if (!menu) {
-      seek = false;
       if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
       unsigned long counterold = millis();
       unsigned long counter = millis();
@@ -2298,6 +2359,8 @@ void doStereoToggle() {
 }
 
 void ModeButtonPress() {
+  if (seek) radio.setUnMute();
+  seek = false;
   if (scandxmode) {
     cancelDXScan();
   } else {
@@ -2311,7 +2374,6 @@ void ModeButtonPress() {
       BuildAFScreen();
     } else {
       if (!menu) {
-        seek = false;
         if (!screenmute) {
           tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
         }
@@ -2481,6 +2543,8 @@ void RoundStep() {//todo air
 }
 
 void ButtonPress() {
+  if (seek) radio.setUnMute();
+  seek = false;
   if (scandxmode) {
     cancelDXScan();
   } else {
@@ -2555,7 +2619,6 @@ void ButtonPress() {
           }
         }
       } else {
-        seek = false;
         if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
         unsigned long counterold = millis();
         unsigned long counter = millis();
@@ -2656,6 +2719,7 @@ void KeyUp() {
           case TUNE_AUTO:
             direction = true;
             seek = true;
+            seekinit = true;
             Seek(direction);
             break;
 
@@ -2722,6 +2786,7 @@ void KeyDown() {
           case TUNE_AUTO:
             direction = false;
             seek = true;
+            seekinit = true;
             Seek(direction);
             break;
 
@@ -2931,6 +2996,7 @@ void DoMemoryPosTune() {
   memtune = true;
   memreset = true;
   rdsflagreset = false;
+  findMemoryAF = true;
   ShowFreq(0);
 }
 
@@ -3023,6 +3089,7 @@ void ShowFreq(int mode) {
         } else if (mode == 1) {
           FrequencySprite.fillSprite(BackgroundColor);
           FrequencySprite.pushSprite(46, 46);
+          tftPrint(0, myLanguage[language][34], 146, 58, ActiveColor, ActiveColorSmooth, 28);
         }
         FrequencySprite.unloadFont();
       }
@@ -3042,11 +3109,11 @@ void ShowFreq(int mode) {
   if (wifi) {
     Udp.beginPacket(remoteip, 9030);
     if (band == BAND_FM) {
-      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";freq=" + String(frequency) + "0000");
+      Udp.print("from=TEF_tuner_" + String(stationlistid, DEC) + ";freq=" + String(frequency) + "0000");
     } else if (band == BAND_OIRT) {
-      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";freq=" + String(frequency_OIRT) + "0000");
+      Udp.print("from=TEF_tuner_" + String(stationlistid, DEC) + ";freq=" + String(frequency_OIRT) + "0000");
     } else {
-      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";freq=" + String(frequency_AM) + "000");
+      Udp.print("from=TEF_tuner_" + String(stationlistid, DEC) + ";freq=" + String(frequency_AM) + "000");
     }
     Udp.endPacket();
   }
@@ -3132,7 +3199,7 @@ void ShowSignalLevel() {
   if (wifi && millis() >= udptimer + 2000) {
     udptimer = millis();
     Udp.beginPacket(remoteip, 9030);
-    Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";RcvLevel=" + String(SStatus / 10));
+    Udp.print("from=TEF_tuner_" + String(stationlistid, DEC) + ";RcvLevel=" + String(SStatus / 10));
     Udp.endPacket();
   }
 }
@@ -3286,7 +3353,7 @@ void ShowBW() {
     BWreset = false;
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
-      Udp.print("from=TEF_tuner " + String(stationlistid, DEC) + ";bandwidth=" + String(BW * 1000));
+      Udp.print("from=TEF_tuner_" + String(stationlistid, DEC) + ";bandwidth=" + String(BW * 1000));
       Udp.endPacket();
     }
   }
@@ -3323,12 +3390,12 @@ void ShowModLevel() {
       }
     }
 
-    tft.fillRect(16, 133, 2 * constrain(DisplayedSegments, 0, 53), 6, ModBarInsignificantColor);
+    tft.fillRect(16, 133, 2 * constrain(DisplayedSegments, 0, 54), 6, ModBarInsignificantColor);
 
-    if (DisplayedSegments > 53) tft.fillRect(16 + 2 * 53, 133, 2 * (DisplayedSegments - 53), 6, ModBarSignificantColor);
+    if (DisplayedSegments > 54) tft.fillRect(16 + 2 * 54, 133, 2 * (DisplayedSegments - 54), 6, ModBarSignificantColor);
 
     int greyStart = 16 + 2 * DisplayedSegments;
-    int greyWidth = 2 * (94 - DisplayedSegments); // Calculate the remaining width correctly
+    int greyWidth = 2 * (94 - DisplayedSegments);
     tft.fillRect(greyStart, 133, greyWidth, 6, GreyoutColor);
 
     int peakHoldPosition = 16 + 2 * constrain(peakholdold, 0, 93);
@@ -3507,14 +3574,14 @@ void doSquelch() {
 void updateBW() {//todo air
   if (BWset == 0) {
     if (!screenmute && !advancedRDS && !afscreen) {
-      tft.drawRoundRect(248, 35, 71, 20, 5, ActiveColor);
-      tftPrint(0, "AUTO BW", 283, 38, ActiveColor, ActiveColorSmooth, 16);
+      tft.drawRoundRect(247, 35, 71, 20, 5, ActiveColor);
+      tftPrint(0, "AUTO BW", 282, 38, ActiveColor, ActiveColorSmooth, 16);
     }
     radio.setFMABandw();
   } else {
     if (!screenmute && !advancedRDS && !afscreen) {
-      tft.drawRoundRect(248, 35, 71, 20, 5, GreyoutColor);
-      tftPrint(0, "AUTO BW", 283, 38, GreyoutColor, BackgroundColor, 16);
+      tft.drawRoundRect(247, 35, 71, 20, 5, GreyoutColor);
+      tftPrint(0, "AUTO BW", 282, 38, GreyoutColor, BackgroundColor, 16);
     }
   }
 }
@@ -3677,11 +3744,6 @@ void doTuneMode() {
         }
       } else {
         tunemode = TUNE_AUTO;
-      }
-      if (stepsize != 0) {
-        stepsize = 0;
-        RoundStep();
-        ShowStepSize();
       }
       break;
 
@@ -4065,6 +4127,15 @@ void EdgeBeeper() {
 
 void Seek(bool mode) {
   radio.setMute();
+  if (seekinit) {
+    if (stepsize != 0) {
+      stepsize = 0;
+      RoundStep();
+      ShowStepSize();
+    }
+    seekinit = false;
+  }
+
   if (!screenmute) {
     tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
   }
@@ -4161,6 +4232,7 @@ void MuteScreen(bool setting) {
   if (!setting && screenmute) {
     screenmute = false;
     setupmode = true;
+    leave = true;
     tft.writecommand(0x11);
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
     if (band < BAND_GAP) {
@@ -4530,6 +4602,8 @@ void endMenu() {
 
 void startFMDXScan() {
   initdxscan = true;
+
+  if (menu) endMenu();
   if (afscreen || advancedRDS) BuildDisplay();
 
   if (memorypos > scanstop || memorypos < scanstart) memorypos = scanstart;
@@ -4541,7 +4615,6 @@ void startFMDXScan() {
       band = presets[memorypos].band;
       SelectBand();
     }
-    if (menu) endMenu();
     DoMemoryPosTune();
   } else {
     tunemode = TUNE_MAN;
@@ -4549,7 +4622,6 @@ void startFMDXScan() {
       band = presets[memorypos].band;
       SelectBand();
     }
-    if (menu) endMenu();
     TuneUp();
     ShowFreq(0);
   }
@@ -4561,6 +4633,7 @@ void startFMDXScan() {
   }
   scantimer = millis();
   scandxmode = true;
+  ShowTuneMode();
   if (XDRGTKUSB || XDRGTKTCP) DataPrint("J1\n");
 }
 
