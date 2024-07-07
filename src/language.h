@@ -1,7 +1,7 @@
 #ifndef LANGUAGE_H
 #define LANGUAGE_H
 
-#define VERSION "v2.11"
+#define VERSION "v2.11.1"
 
 // [number of languages][number of texts]
 
@@ -2955,7 +2955,7 @@ static const char* const myLanguage[18][263] PROGMEM = {
     "Экран отключен!", // 31
     "Чтобы включить звук, снимите флажок RF+", // 32
     "ВЫКЛ.", // 33
-    "СКАНИРОВАНИЕ...", // 34
+    "СКАНИРОВАНИЕ", // 34
     "Тюнер не обнаружен", // 35
     "AM Antenna gain", // 36
     "FM AGC", // 37

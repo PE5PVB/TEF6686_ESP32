@@ -935,6 +935,7 @@ void loop() {
             }
           }
 
+          bool foundmemaf = false;
           for (int x = 8750; x <= 10800; x += 10) {
             if (rotary != 0 || digitalRead(BANDBUTTON) == LOW || digitalRead(MODEBUTTON) == LOW || digitalRead(BWBUTTON) == LOW || digitalRead(ROTARY_BUTTON) == LOW) break;
             radio.SetFreq(x);
@@ -944,8 +945,14 @@ void loop() {
             }
             if (radio.rds.correctPI == radio.getBlockA()) {
               frequency = x;
+              foundmemaf = true;
               break;
             }
+          }
+
+          if (!foundmemaf) {
+            frequency = freqold;
+            radio.SetFreq(frequency);
           }
 
           if (!screenmute) {

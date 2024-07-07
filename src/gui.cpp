@@ -1790,7 +1790,9 @@ void MenuUp() {
               autosquelch = false;
             } else if (usesquelch && !autosquelch) {
               usesquelch = false;
+              autosquelch = false;
             } else {
+              usesquelch = false;
               autosquelch = true;
             }
 
@@ -2652,7 +2654,9 @@ void MenuDown() {
               autosquelch = false;
             } else if (usesquelch && !autosquelch) {
               usesquelch = false;
+              autosquelch = false;
             } else {
+              usesquelch = false;
               autosquelch = true;
             }
 
