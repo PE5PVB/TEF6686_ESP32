@@ -37,15 +37,8 @@
 
 #define DYNAMIC_SPI_SPEED   // uncomment to enable dynamic SPI Speed https://github.com/ohmytime/TFT_eSPI_DynamicSpeed
 
-#ifdef DEEPELEC_DP_666
-#include "ExtensionIOXL9555.hpp"
-#endif
-
-#ifdef DEEPELEC_DP_666
-#define RTP_IRQ         33
-#define EXT_IO_SDA      32
-#define EXT_IO_SCL      14
-ExtensionIOXL9555 extIO;
+#ifdef DEEPELEC_DP_66X
+#define EXT_IRQ         14
 #endif
 
 #ifdef ARS
@@ -156,7 +149,7 @@ byte BWset;
 byte BWsetAM;
 byte BWsetFM;
 byte charwidth = 8;
-#if defined(CHINA_PORTABLE) || defined(DEEPELEC_DP_666)
+#if defined(CHINA_PORTABLE) || defined(DEEPELEC_DP_66X)
 byte hardwaremodel = PORTABLE_ILI9341;
 #else
 byte hardwaremodel = BASE_ILI9341;
@@ -627,17 +620,8 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
 
-#ifdef DEEPELEC_DP_666
-  bool extIO_dect = false;
-  // Device address 0x20~0x27
-  if (extIO.begin(Wire1, XL9555_SLAVE_ADDRESS0, EXT_IO_SDA, EXT_IO_SCL)) {
-    extIO_dect = true;
-    pinMode(RTP_IRQ, INPUT_PULLUP);
-    // Set PORT0 as input,mask = 0xFF = all pin input
-    extIO.configPort(ExtensionIOXL9555::PORT0, 0xFF);
-    // Set PORT1 as input,mask = 0xFF = all pin input
-    extIO.configPort(ExtensionIOXL9555::PORT1, 0xFF);
-  }
+#ifdef DEEPELEC_DP_66X
+  pinMode(EXT_IRQ, INPUT_PULLUP);
 #endif
 
   tft.setSwapBytes(true);
@@ -733,13 +717,6 @@ void setup() {
   tftPrint(0, myLanguage[language][8], 160, 3, PrimaryColor, PrimaryColorSmooth, 28);
   tftPrint(0, "Software " + String(VERSION), 160, 152, PrimaryColor, PrimaryColorSmooth, 16);
 
-#ifdef DEEPELEC_DP_666
-  if (extIO_dect)
-    tftPrint(-1, "EXT_IO OK!", 240, 152, PrimaryColor, PrimaryColorSmooth, 16);
-  else
-    tftPrint(-1, "EXT_IO ERR!", 240, 152, PrimaryColor, PrimaryColorSmooth, 16);
-#endif
-
   tft.fillRect(120, 230, 16, 6, GreyoutColor);
   tft.fillRect(152, 230, 16, 6, GreyoutColor);
   tft.fillRect(184, 230, 16, 6, GreyoutColor);
@@ -790,6 +767,20 @@ void setup() {
     for (;;);
   }
   tftPrint(0, "Patch: v" + String(TEF), 160, 202, ActiveColor, ActiveColorSmooth, 28);
+
+#ifdef DEEPELEC_DP_66X
+  bool extIO_dect = false;
+  // Device address 0x20
+  // Set PORT0/PORT1 as input
+  Wire.beginTransmission(0x20);
+  Wire.write(0x06);
+  Wire.write(0xFF);
+  Wire.write(0xFF);
+  if (Wire.endTransmission() == 0) {
+    extIO_dect = true;
+    tftPrint(-1, "HW:DP-666", 240, 152, PrimaryColor, PrimaryColorSmooth, 16);
+  }
+#endif
 
   if (analogRead(BATTERY_PIN) < 200) batterydetect = false;
 
@@ -1224,13 +1215,19 @@ void loop() {
     }
   }
 
-#ifdef DEEPELEC_DP_666
-  if (digitalRead(RTP_IRQ) == LOW) {
-    int16_t temp;
-    temp = extIO.readPort(ExtensionIOXL9555::PORT1) & 0xFF;
-    temp = (temp << 8) | (extIO.readPort(ExtensionIOXL9555::PORT0) & 0xFF);
-    if (!screenmute && !menu && !advancedRDS && !afscreen)
-      ShowNumInput(temp);
+#ifdef DEEPELEC_DP_66X
+  if (digitalRead(EXT_IRQ) == LOW) {
+    int16_t temp = 1;
+    Wire.beginTransmission(0x20);
+    Wire.write(0x00);
+    Wire.endTransmission();
+    Wire.requestFrom(0x20, 2);
+    if (Wire.available() == 2) {
+      temp = Wire.read() & 0xFF;
+      temp |= (Wire.read() & 0xFF) * 256;
+      if (!screenmute && !menu && !advancedRDS && !afscreen)
+        ShowNumInput(temp);
+    }
   }
 #endif
 
@@ -4287,7 +4284,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_SHOWRDSERRORS, 1);
   EEPROM.writeByte(EE_BYTE_TEF, 0);
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 0); else EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 1);
-#ifdef DEEPELEC_DP_666
+#ifdef DEEPELEC_DP_66X
   EEPROM.writeByte(EE_BYTE_ROTARYMODE, 1);
 #else
   EEPROM.writeByte(EE_BYTE_ROTARYMODE, 0);
@@ -4691,7 +4688,7 @@ void setAutoSpeedSPI() {
   }
 }
 
-#ifdef DEEPELEC_DP_666
+#ifdef DEEPELEC_DP_66X
 byte keyval[16] = {
   2, 3, 127, 5, 6, 0, 9, 13, 8, 7, 4, 1, 0, 0, 0, 0
 };
