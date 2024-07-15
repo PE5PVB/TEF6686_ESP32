@@ -865,8 +865,8 @@ void XDRGTKRoutine() {
         XDRMute = false;
         radio.setUnMute();
         if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
-        VolSet = EEPROM.readInt(EE_BYTE_VOLSET);
-        LowLevelSet = EEPROM.readInt(EE_BYTE_LOWLEVELSET);
+        VolSet = EEPROM.readByte(EE_BYTE_VOLSET);
+        LowLevelSet = EEPROM.readByte(EE_BYTE_LOWLEVELSET);
         softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
         softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
         radio.setVolume(VolSet);
