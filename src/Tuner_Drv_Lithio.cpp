@@ -44,7 +44,7 @@ void devTEF_Radio_Tune_AM (uint16_t frequency) {
 }
 
 void devTEF_Radio_Set_Bandwidth(uint8_t mode, uint16_t bandwidth) {
-  devTEF_Set_Cmd(TEF_FM, Cmd_Set_Bandwidth, 15, mode, bandwidth, 1000, 1000, 560, 3110);
+  devTEF_Set_Cmd(TEF_FM, Cmd_Set_Bandwidth, 7, mode, bandwidth);
 }
 
 void devTEF_Radio_Set_BandwidthAM(uint8_t mode, uint16_t bandwidth) {
