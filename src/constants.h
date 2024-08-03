@@ -209,9 +209,9 @@
 #define EE_CHECKBYTE_VALUE          10     // 0 ~ 255,add new entry, change for new value
 #define EE_PRESETS_FREQUENCY        0     // Default value when memory channel should be skipped!
 #ifdef HAS_AIR_BAND
-#define EE_TOTAL_CNT                2222  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                2223  // Total occupied eeprom bytes
 #else
-#define EE_TOTAL_CNT                2217  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                2218  // Total occupied eeprom bytes
 #endif
 
 #define EE_PRESETS_BAND_START       0     // 99 * 1 byte
@@ -312,10 +312,11 @@
 #define EE_BYTE_SCANMUTE            2213
 #define EE_BYTE_AUTOSQUELCH         2214
 #define EE_BYTE_LONGBANDPRESS       2215
-#define EE_BYTE_SHOWCLOCK      2216
+#define EE_BYTE_SHOWCLOCK           2216
+#define EE_BYTE_SHOWLONGPS          2217
 #ifdef HAS_AIR_BAND
-#define EE_BYTE_AIRSTEPSIZE         2117
-#define EE_UINT16_FREQUENCY_AIR     2218
+#define EE_BYTE_AIRSTEPSIZE         2118
+#define EE_UINT16_FREQUENCY_AIR     2219
 #endif
 // End of EEPROM index defines
 

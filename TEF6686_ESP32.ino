@@ -108,6 +108,7 @@ bool seek;
 bool seekinit;
 bool setupmode;
 bool showclock;
+bool showlongps;
 bool usesquelch;
 bool softmuteam;
 bool softmutefm;
@@ -524,6 +525,7 @@ void setup() {
   autosquelch = EEPROM.readByte(EE_BYTE_AUTOSQUELCH);
   longbandpress = EEPROM.readByte(EE_BYTE_LONGBANDPRESS);
   showclock = EEPROM.readByte(EE_BYTE_SHOWCLOCK);
+  showlongps = EEPROM.readByte(EE_BYTE_SHOWLONGPS);
 
   if (spispeed == SPI_SPEED_DEFAULT) {
     tft.setSPISpeed(SPI_FREQUENCY / 1000000);
@@ -4321,6 +4323,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_AUTOSQUELCH, 0);
   EEPROM.writeByte(EE_BYTE_LONGBANDPRESS, 0);
   EEPROM.writeByte(EE_BYTE_SHOWCLOCK, 1);
+  EEPROM.writeByte(EE_BYTE_SHOWLONGPS, 1);
 
   for (int i = 0; i < EE_PRESETS_CNT; i++) {
     EEPROM.writeByte(i + EE_PRESETS_BAND_START, BAND_FM);
@@ -4550,6 +4553,7 @@ void endMenu() {
   EEPROM.writeByte(EE_BYTE_AUTOSQUELCH, autosquelch);
   EEPROM.writeByte(EE_BYTE_LONGBANDPRESS, longbandpress);
   EEPROM.writeByte(EE_BYTE_SHOWCLOCK, showclock);
+  EEPROM.writeByte(EE_BYTE_SHOWLONGPS, showlongps);
   EEPROM.commit();
   if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
   Serial.end();

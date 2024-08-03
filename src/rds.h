@@ -35,6 +35,7 @@ extern bool rtcset;
 extern bool screenmute;
 extern bool setupmode;
 extern bool showclock;
+extern bool showlongps;
 extern bool TAold;
 extern bool TPold;
 extern bool wifi;

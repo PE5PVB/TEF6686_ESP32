@@ -60,6 +60,7 @@ extern bool scandxmode;
 extern bool scanmem;
 extern bool scanmute;
 extern bool showclock;
+extern bool showlongps;
 extern bool softmuteam;
 extern bool softmutefm;
 extern bool Stereostatusold;

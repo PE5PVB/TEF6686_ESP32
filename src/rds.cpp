@@ -668,11 +668,11 @@ void showPTY() {
 }
 
 void showPS() {
-  if (radio.rds.stationName != PSold || radio.rds.hasLongPS) {
+  if (radio.rds.stationName != PSold || (radio.rds.hasLongPS && showlongps)) {
     if (afscreen) {
       if (!screenmute) tftReplace(0, PSold, radio.rds.stationName, 160, 201, BWAutoColor, BWAutoColorSmooth, BackgroundColor, 16);
     } else {
-      if (radio.rds.hasLongPS) {
+      if (radio.rds.hasLongPS && showlongps) {
         String stationNameLongString = String(radio.rds.stationNameLong) + "     ";
         if (stationNameLongString != stationNameLongOld) {
           PSLongWidth = PSSprite.textWidth(stationNameLongString);

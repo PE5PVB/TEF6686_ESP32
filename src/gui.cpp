@@ -1246,11 +1246,11 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case DISPLAYSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][78]), 6, 2);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][262]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(Skin[CurrentSkin], 298, 2);
+          FullLineSprite.drawString((showclock ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
 
         case RDSSETTINGS:
@@ -1401,11 +1401,10 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case RDSSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][262]), 6, 2);
-
+          FullLineSprite.drawString(removeNewline(myLanguage[language][263]), 6, 2);
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((showclock ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
+          FullLineSprite.drawString((showlongps ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
 
         case FMSETTINGS:
@@ -2093,15 +2092,9 @@ void MenuUp() {
             break;
 
           case ITEM8:
-            CurrentSkin ++;
-            if (CurrentSkin > sizeof(Skin) / sizeof(Skin[0]) - 1) CurrentSkin = 0;
-            BuildMenu();
-            tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
-            tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
-            OneBigLineSprite.fillSprite(BackgroundColor);
+            showclock = !showclock;
 
-            Infoboxprint(myLanguage[language][78]);
-            OneBigLineSprite.drawString(Skin[CurrentSkin], 135, 0);
+            OneBigLineSprite.drawString((showclock ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
@@ -2214,9 +2207,9 @@ void MenuUp() {
             break;
 
           case ITEM10:
-            showclock = !showclock;
+            showlongps = !showlongps;
 
-            OneBigLineSprite.drawString((showclock ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.drawString((showlongps ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }
@@ -2959,15 +2952,9 @@ void MenuDown() {
             break;
 
           case ITEM8:
-            CurrentSkin --;
-            if (CurrentSkin > sizeof(Skin) / sizeof(Skin[0]) - 1) CurrentSkin = sizeof(Skin) / sizeof(Skin[0]) - 1;
-            BuildMenu();
-            OneBigLineSprite.fillSprite(BackgroundColor);
-            tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
-            tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
+            showclock = !showclock;
 
-            Infoboxprint(myLanguage[language][78]);
-            OneBigLineSprite.drawString(Skin[CurrentSkin], 135, 0);
+            OneBigLineSprite.drawString((showclock ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
@@ -3081,9 +3068,9 @@ void MenuDown() {
             break;
 
           case ITEM10:
-            showclock = !showclock;
+            showlongps = !showlongps;
 
-            OneBigLineSprite.drawString((showclock ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.drawString((showlongps ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }
@@ -3852,9 +3839,9 @@ void DoMenu() {
             break;
 
           case ITEM8:
-            Infoboxprint(myLanguage[language][78]);
+            Infoboxprint(myLanguage[language][262]);
 
-            OneBigLineSprite.drawString(Skin[CurrentSkin], 135, 0);
+            OneBigLineSprite.drawString((showclock ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
@@ -3957,9 +3944,9 @@ void DoMenu() {
             break;
 
           case ITEM10:
-            Infoboxprint(myLanguage[language][262]);
+            Infoboxprint(myLanguage[language][263]);
 
-            OneBigLineSprite.drawString((showclock ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.drawString((showlongps ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }
