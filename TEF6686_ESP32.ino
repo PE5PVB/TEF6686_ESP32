@@ -892,7 +892,7 @@ void loop() {
     if (af != 0 && dropout && millis() >= aftimer + 1000) {
       aftimer = millis();
       if (radio.af_counter == 0) {
-        if (findMemoryAF && radio.rds.correctPI != 0) {
+        if (findMemoryAF && radio.rds.correctPI != 0 && tunemode == TUNE_MEM) {
           radio.setMute();
           tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
           SQ = true;
