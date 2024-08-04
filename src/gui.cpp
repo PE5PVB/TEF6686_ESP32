@@ -1035,7 +1035,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case AUTOMEM:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][266]), 6, 2);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][267]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
