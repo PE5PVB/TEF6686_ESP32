@@ -23,10 +23,10 @@
 #define ITEM9           190
 #define ITEM10          210
 
-enum menupage {INDEX, MAINSETTINGS, AUDIOSETTINGS, DISPLAYSETTINGS, RDSSETTINGS, FMSETTINGS, AMSETTINGS, CONNECTIVITY, DXMODE};
+enum menupage {INDEX, MAINSETTINGS, AUDIOSETTINGS, DISPLAYSETTINGS, RDSSETTINGS, FMSETTINGS, AMSETTINGS, CONNECTIVITY, DXMODE, AUTOMEM};
 
 extern byte menuitem;
-extern byte items[9];
+extern byte items[10];
 
 extern bool advancedRDS;
 extern bool afmethodBold;
@@ -103,6 +103,9 @@ extern byte language;
 extern byte licold;
 extern byte longbandpress;
 extern byte memorypos;
+extern byte mempionly;
+extern byte memstartpos;
+extern byte memstoppos;
 extern byte menupage;
 extern byte MSold;
 extern byte poweroptions;
@@ -198,6 +201,8 @@ extern unsigned int LowEdgeSet;
 extern unsigned int mappedfreqold[20];
 extern unsigned int mappedfreqold2[20];
 extern unsigned int mappedfreqold3[20];
+extern unsigned int memstartfreq;
+extern unsigned int memstopfreq;
 extern unsigned long scantimer;
 
 extern TFT_eSPI tft;
@@ -238,4 +243,5 @@ extern void UpdateFonts(byte mode);
 extern void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize);
 extern void setAutoSpeedSPI();
 extern void showAutoSquelch(bool mode);
+extern uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, uint8_t stopmem, bool pisearch);
 #endif

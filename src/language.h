@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[18][264] PROGMEM = {
+static const char* const myLanguage[18][276] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -203,7 +203,7 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "AM", // 194
     "CONNECT", // 195
     "DX MODE", // 196
-    "Stationlist ID", // 197
+    "AUTO MEM", // 197
     "AM AGC", // 198
     "FM deemphasis", // 199
     "Small", // 200
@@ -269,7 +269,19 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "Initial", // 260
     "Always", // 261
     "Show clock", // 262
-    "Show long PS" // 263
+    "Show long PS", // 263
+    "Start frequency", // 264
+    "Stop frequency", // 265
+    "Start memory channel", // 266
+    "Stop memory channel", // 267
+    "Only store with RDS", // 268
+    "Start auto memory", // 269
+    "Auto memory", // 270
+    "Stationlist ID", // 271
+    "Found", // 272
+    "Abort! Out of memorychannels", // 273
+    "Abort! User pressed button", // 274
+    "Scan finished without errors" // 275
   },
 
   { "Nederlands", // Dutch
@@ -469,7 +481,7 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "AM", // 194
     "VERBIND", // 195
     "DX MODE", // 196
-    "Stationlist ID", // 197
+    "AUTO MEM", // 197
     "AM AGC", // 198
     "FM deemphasis", // 199
     "Laag", // 200
@@ -535,7 +547,19 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "Initieel", // 260
     "Altijd", //261
     "Toon klok", // 262
-    "Toon long PS" // 263
+    "Toon long PS", // 263
+    "Start frequentie", // 264
+    "Stop frequentie", // 265
+    "Start geheugen\nkanaal", // 266
+    "Stop geheugen\nkanaal", // 267
+    "Alleen met\nRDS opslaan", // 268
+    "Start auto\ngeheugen kanaal", // 269
+    "Auto geheugen kanaal", // 270
+    "Stationlist ID", // 271
+    "Gevonden", // 272
+    "Afgebroken! Geheugen vol", // 273
+    "Afgebroken! Knop ingedrukt", // 274
+    "Zoeken zonder fouten voltooid" // 275
   },
 
   { "Polski", // Polish
@@ -735,7 +759,7 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "AM", // 194
     "ŁĄCZNOŚĆ", // 195
     "TRYB DX", // 196
-    "Identyfikator Stationlist", // 197
+    "AUTO MEM", // 197
     "Tłumik ant. AM", // 198
     "Deemfaza FM", // 199
     "Małe", // 200
@@ -801,7 +825,19 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "Początkowy", // 260
     "Zawsze", // 261
     "Pokaż zegar", // 262
-    "Show long PS" // 263
+    "Show long PS", // 263
+    "Start frequency", // 264
+    "Stop frequency", // 265
+    "Start memory channel", // 266
+    "Stop memory channel", // 267
+    "Only store with RDS", // 268
+    "Start auto memory", // 269
+    "Auto memory", // 270
+    "Identyfikator Stationlist", // 271
+    "Found", // 272
+    "Abort! Out of memorychannels", // 273
+    "Abort! User pressed button", // 274
+    "Scan finished without errors" // 275
   },
 
   { "Hrvatski", // Croatian
@@ -1001,7 +1037,7 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "AM", // 194
     "SPOJI", // 195
     "DX NAČIN RADA", // 196
-    "Stationlist ID", // 197
+    "AUTO MEM", // 197
     "AM ATT", // 198
     "FM deemphasis", // 199
     "Malo", // 200
@@ -1067,7 +1103,19 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "Početno", // 260
     "Uvijek", //261
     "Prikaži sat", // 262
-    "Show long PS" // 263
+    "Show long PS", // 263
+    "Start frequency", // 264
+    "Stop frequency", // 265
+    "Start memory channel", // 266
+    "Stop memory channel", // 267
+    "Only store with RDS", // 268
+    "Start auto memory", // 269
+    "Auto memory", // 270
+    "Stationlist ID", // 271
+    "Found", // 272
+    "Abort! Out of memorychannels", // 273
+    "Abort! User pressed button", // 274
+    "Scan finished without errors" // 275
   },
 
   { "Ελληνικά", // Greek
@@ -1267,7 +1315,7 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "AM", // 194
     "ΣΥΝΔΕΣΗ", // 195
     "DX MODE", // 196
-    "ID λίστας σταθμών", // 197
+    "AUTO MEM", // 197
     "AM εξασθένιση", // 198
     "FM αποέμφαση", // 199
     "Μικρό", // 200
@@ -1333,7 +1381,19 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "Αρχικό", // 260
     "Πάντα", //261
     "Εμφάνιση ρολογιού", // 262
-    "Show long PS" // 263
+    "Show long PS", // 263
+    "Start frequency", // 264
+    "Stop frequency", // 265
+    "Start memory channel", // 266
+    "Stop memory channel", // 267
+    "Only store with RDS", // 268
+    "Start auto memory", // 269
+    "Auto memory", // 270
+    "ID λίστας σταθμών", // 271
+    "Found", // 272
+    "Abort! Out of memorychannels", // 273
+    "Abort! User pressed button", // 274
+    "Scan finished without errors" // 275
   },
 
   { "Română", // Romanian
@@ -1533,7 +1593,7 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "AM", // 194
     "CONECTARE", // 195
     "MOD DX", // 196
-    "Listă ID posturi", // 197
+    "AUTO MEM", // 197
     "AGC AM", // 198
     "FM deemphasis", // 199
     "Mic", // 200
@@ -1599,7 +1659,19 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "Inițial", // 260
     "Mereu", //261
     "Arată ceasul", // 262
-    "Show long PS" // 263
+    "Show long PS", // 263
+    "Start frequency", // 264
+    "Stop frequency", // 265
+    "Start memory channel", // 266
+    "Stop memory channel", // 267
+    "Only store with RDS", // 268
+    "Start auto memory", // 269
+    "Auto memory", // 270
+    "Listă ID posturi", // 271
+    "Found", // 272
+    "Abort! Out of memorychannels", // 273
+    "Abort! User pressed button", // 274
+    "Scan finished without errors" // 275
   },
 
   { "Deutsch", // German
@@ -1799,7 +1871,7 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "AM", // 194
     "NETZWERK", // 195
     "DX MODE", // 196
-    "Stationlist ID", // 197
+    "AUTO MEM", // 197
     "AM ATT", // 198
     "Entzerrung auf UKW", // 199
     "Wenig", // 200
@@ -1865,7 +1937,19 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "Anfänglich", // 260
     "Immer", // 261
     "Uhr anzeigen", // 262
-    "Show long PS" // 263
+    "Show long PS", // 263
+    "Start frequency", // 264
+    "Stop frequency", // 265
+    "Start memory channel", // 266
+    "Stop memory channel", // 267
+    "Only store with RDS", // 268
+    "Start auto memory", // 269
+    "Auto memory", // 270
+    "Stationlist ID", // 271
+    "Found", // 272
+    "Abort! Out of memorychannels", // 273
+    "Abort! User pressed button", // 274
+    "Scan finished without errors" // 275
   },
 
   { "Český", // Czech
@@ -2065,7 +2149,7 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "AM", // 194
     "KONEKTIVITA", // 195
     "DX REŽIM", // 196
-    "Stationlist ID", // 197
+    "AUTO MEM", // 197
     "AM ATT", // 198
     "FM deemfáze", // 199
     "Malé", // 200
@@ -2131,7 +2215,19 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "Počáteční", // 260
     "Vždy", //261
     "Zobrazit hodiny", // 262
-    "Show long PS" // 263
+    "Show long PS", // 263
+    "Start frequency", // 264
+    "Stop frequency", // 265
+    "Start memory channel", // 266
+    "Stop memory channel", // 267
+    "Only store with RDS", // 268
+    "Start auto memory", // 269
+    "Auto memory", // 270
+    "Stationlist ID", // 271
+    "Found", // 272
+    "Abort! Out of memorychannels", // 273
+    "Abort! User pressed button", // 274
+    "Scan finished without errors" // 275
   },
 
   { "Magyar", // Hungarian
@@ -2331,7 +2427,7 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "AM", // 194
     "CSATLAKOZÁS", // 195
     "DX MÓD", // 196
-    "Stationlist ID", // 197
+    "AUTO MEM", // 197
     "AM AGC", // 198
     "FM kihangolás", // 199
     "Kicsi", // 200
@@ -2397,7 +2493,19 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "Kezdeti", // 260
     "Mindig", //261
     "Óra mutatása", // 262
-    "Show long PS" // 263
+    "Show long PS", // 263
+    "Start frequency", // 264
+    "Stop frequency", // 265
+    "Start memory channel", // 266
+    "Stop memory channel", // 267
+    "Only store with RDS", // 268
+    "Start auto memory", // 269
+    "Auto memory", // 270
+    "Stationlist ID", // 271
+    "Found", // 272
+    "Abort! Out of memorychannels", // 273
+    "Abort! User pressed button", // 274
+    "Scan finished without errors" // 275
   },
 
   { "Français", // French
@@ -2597,7 +2705,7 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "AM", // 194
     "CONNECTER", // 195
     "DX MODE", // 196
-    "Stationlist ID", // 197
+    "AUTO MEM", // 197
     "AM ATT", // 198
     "FM déemphasie", // 199
     "Petites", // 200
@@ -2663,7 +2771,19 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "Initial", // 260
     "Toujours", // 261
     "Afficher l'horloge", // 262
-    "Show long PS" // 263
+    "Show long PS", // 263
+    "Start frequency", // 264
+    "Stop frequency", // 265
+    "Start memory channel", // 266
+    "Stop memory channel", // 267
+    "Only store with RDS", // 268
+    "Start auto memory", // 269
+    "Auto memory", // 270
+    "Stationlist ID", // 271
+    "Found", // 272
+    "Abort! Out of memorychannels", // 273
+    "Abort! User pressed button", // 274
+    "Scan finished without errors" // 275
   },
 
   { "Български", // Bulgarian
@@ -2863,7 +2983,7 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "СВ (AM)", // 194
     "ВРЪЗКА", // 195
     "DX MODE", // 196
-    "Stationlist Идентификатор", // 197
+    "AUTO MEM", // 197
     "СВ атенюатор", // 198
     "FM deemphasis", // 199
     "Small", // 200
@@ -2929,7 +3049,19 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "Начален", // 260
     "Винаги", // 261
     "Покажи часовника", // 262
-    "Show long PS" // 263
+    "Show long PS", // 263
+    "Start frequency", // 264
+    "Stop frequency", // 265
+    "Start memory channel", // 266
+    "Stop memory channel", // 267
+    "Only store with RDS", // 268
+    "Start auto memory", // 269
+    "Auto memory", // 270
+    "Stationlist Идентификатор", // 271
+    "Found", // 272
+    "Abort! Out of memorychannels", // 273
+    "Abort! User pressed button", // 274
+    "Scan finished without errors" // 275
   },
 
   { "Русский", // Russian
@@ -3129,7 +3261,7 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "AM", // 194
     "КОННЕКТ", // 195
     "DX MODE", // 196
-    "Stationlist ID", // 197
+    "AUTO MEM", // 197
     "AM аттеньюатор", // 198
     "FM deemphasis", // 199
     "Мало", // 200
@@ -3195,7 +3327,19 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "Начальный", // 260
     "Всегда", // 261
     "Показать часы", // 262
-    "Show long PS" // 263
+    "Show long PS", // 263
+    "Start frequency", // 264
+    "Stop frequency", // 265
+    "Start memory channel", // 266
+    "Stop memory channel", // 267
+    "Only store with RDS", // 268
+    "Start auto memory", // 269
+    "Auto memory", // 270
+    "Stationlist Идентификатор", // 271
+    "Found", // 272
+    "Abort! Out of memorychannels", // 273
+    "Abort! User pressed button", // 274
+    "Scan finished without errors" // 275
   },
 
   { "Українська", // Ukranian
@@ -3395,7 +3539,7 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "AM", // 194
     "ПІДКЛЮЧЕННЯ", // 195
     "DX MODE", // 196
-    "Stationlist ID", // 197
+    "AUTO MEM", // 197
     "AM ATT", // 198
     "FM deemphasis", // 199
     "Мало", // 200
@@ -3461,7 +3605,19 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "Початковий", // 260
     "Завжди", // 261
     "Показати годинник", // 262
-    "Show long PS" // 263
+    "Show long PS", // 263
+    "Start frequency", // 264
+    "Stop frequency", // 265
+    "Start memory channel", // 266
+    "Stop memory channel", // 267
+    "Only store with RDS", // 268
+    "Start auto memory", // 269
+    "Auto memory", // 270
+    "Stationlist ID", // 271
+    "Found", // 272
+    "Abort! Out of memorychannels", // 273
+    "Abort! User pressed button", // 274
+    "Scan finished without errors" // 275
   },
 
   { "Italiano", // Italian
@@ -3661,7 +3817,7 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "AM", // 194
     "CONNETTI", // 195
     "MODO DX", // 196
-    "ID Stationlist", // 197
+    "AUTO MEM", // 197
     "ATT AM", // 198
     "Deenfasi FM", // 199
     "Piccolo", // 200
@@ -3727,7 +3883,19 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "Iniziale", // 260
     "Sempre", // 261
     "Mostra l'orologio", // 262
-    "Show long PS" // 263
+    "Show long PS", // 263
+    "Start frequency", // 264
+    "Stop frequency", // 265
+    "Start memory channel", // 266
+    "Stop memory channel", // 267
+    "Only store with RDS", // 268
+    "Start auto memory", // 269
+    "Auto memory", // 270
+    "ID Stationlist", // 271
+    "Found", // 272
+    "Abort! Out of memorychannels", // 273
+    "Abort! User pressed button", // 274
+    "Scan finished without errors" // 275
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -3927,7 +4095,7 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "AM 设置", // 194
     "连机模式", // 195
     "FMDX 选项", // 196
-    "Stationlist ID", // 197
+    "AUTO MEM", // 197
     "AM天线衰减", // 198
     "FM去加重", // 199
     "少量", // 200
@@ -3993,7 +4161,19 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "初始", // 260
     "始终", // 261
     "显示时钟", // 262
-    "Show long PS" // 263
+    "Show long PS", // 263
+    "Start frequency", // 264
+    "Stop frequency", // 265
+    "Start memory channel", // 266
+    "Stop memory channel", // 267
+    "Only store with RDS", // 268
+    "Start auto memory", // 269
+    "Auto memory", // 270
+    "Stationlist ID", // 271
+    "Found", // 272
+    "Abort! Out of memorychannels", // 273
+    "Abort! User pressed button", // 274
+    "Scan finished without errors" // 275
   },
 
   { "Norsk", // Norwegian
@@ -4193,7 +4373,7 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "AM", // 194
     "TILKOBLE", // 195
     "DX MODUS", // 196
-    "Stationlist ID", // 197
+    "AUTO MEM", // 197
     "AM AGC", // 198
     "FM ettertrykkelse", // 199
     "Lite", // 200
@@ -4259,7 +4439,19 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "Innledende", // 260
     "Alltid", // 261
     "Vis klokka", // 262
-    "Show long PS" // 263
+    "Show long PS", // 263
+    "Start frequency", // 264
+    "Stop frequency", // 265
+    "Start memory channel", // 266
+    "Stop memory channel", // 267
+    "Only store with RDS", // 268
+    "Start auto memory", // 269
+    "Auto memory", // 270
+    "Stationlist ID", // 271
+    "Found", // 272
+    "Abort! Out of memorychannels", // 273
+    "Abort! User pressed button", // 274
+    "Scan finished without errors" // 275
   },
 
   { "Español", // Spanish
@@ -4459,7 +4651,7 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "AM", // 194
     "CONECTAR", // 195
     "DX MODE", // 196
-    "ID de lista de estaciones", // 197
+    "AUTO MEM", // 197
     "Atenuación de AM", // 198
     "Despreocupación\nde FM", // 199
     "Pequeño", // 200
@@ -4525,7 +4717,19 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "Inicial", // 260
     "Siempre", // 261
     "Mostrar reloj", // 262
-    "Show long PS" // 263
+    "Show long PS", // 263
+    "Start frequency", // 264
+    "Stop frequency", // 265
+    "Start memory channel", // 266
+    "Stop memory channel", // 267
+    "Only store with RDS", // 268
+    "Start auto memory", // 269
+    "Auto memory", // 270
+    "Stationlist ID", // 271
+    "Found", // 272
+    "Abort! Out of memorychannels", // 273
+    "Abort! User pressed button", // 274
+    "Scan finished without errors" // 275
   },
 
   { "Português", // Portuguese
@@ -4725,7 +4929,7 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "AM", // 194
     "CONECTAR", // 195
     "DX MODE", // 196
-    "ID da lista de estações", // 197
+    "AUTO MEM", // 197
     "Atenuação AM", // 198
     "Desênfase FM", // 199
     "Pequeno", // 200
@@ -4791,7 +4995,19 @@ static const char* const myLanguage[18][264] PROGMEM = {
     "Inicial", // 260
     "Sempre", // 261
     "Mostrar relógio", // 262
-    "Show long PS" // 263
+    "Show long PS", // 263
+    "Start frequency", // 264
+    "Stop frequency", // 265
+    "Start memory channel", // 266
+    "Stop memory channel", // 267
+    "Only store with RDS", // 268
+    "Start auto memory", // 269
+    "Auto memory", // 270
+    "ID da lista de estações", // 271
+    "Found", // 272
+    "Abort! Out of memorychannels", // 273
+    "Abort! User pressed button", // 274
+    "Scan finished without errors" // 275
   }
 };
 #endif

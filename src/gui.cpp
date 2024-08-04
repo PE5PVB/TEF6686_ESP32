@@ -8,7 +8,7 @@
 #include <cstring>
 
 byte menuitem;
-byte items[9] = {9, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 6, 7};
+byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 6, 7, 6};
 extern mem presets[];
 bool setWiFiConnectParam = false;
 
@@ -596,6 +596,12 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
           FullLineSprite.drawString(removeNewline(myLanguage[language][212]), 6, 2);
           break;
+
+        case AUTOMEM:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][269]), 6, 2);
+          break;
       }
       break;
 
@@ -693,6 +699,18 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString(String(scanstart + 1, DEC), 298, 2);
           break;
+
+        case AUTOMEM:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][264]), 6, 2);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString("MHz", 298, 2);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(memstartfreq / 10 + ConverterSet, DEC) + "." + String(memstartfreq % 10 + ConverterSet, DEC), 258, 2);
+          break;
       }
       break;
 
@@ -788,6 +806,18 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString(String(scanstop + 1, DEC), 298, 2);
+          break;
+
+        case AUTOMEM:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][265]), 6, 2);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString("MHz", 298, 2);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(memstopfreq / 10 + ConverterSet, DEC) + "." + String(memstopfreq % 10 + ConverterSet, DEC), 258, 2);
           break;
       }
       break;
@@ -887,6 +917,16 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString((scanhold == 0 ? "0.5" : String(scanhold, DEC)), 258, 2);
           break;
+
+        case AUTOMEM:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][266]), 6, 2);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(memstartpos + 1, DEC), 298, 2);
+          break;
       }
       break;
 
@@ -975,7 +1015,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case CONNECTIVITY:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][197]), 6, 2);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][271]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
@@ -990,6 +1030,16 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString((scanmem ? myLanguage[language][218] : myLanguage[language][217]), 298, 2);
+          break;
+
+        case AUTOMEM:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][266]), 6, 2);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(memstoppos + 1, DEC), 298, 2);
           break;
       }
       break;
@@ -1098,6 +1148,16 @@ void ShowOneLine(byte position, byte item, bool selected) {
             case CORRECTPI: FullLineSprite.drawString(myLanguage[language][220], 298, 2); break;
             case SIGNAL: FullLineSprite.drawString(myLanguage[language][221], 298, 2); break;
           }
+          break;
+
+        case AUTOMEM:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][268]), 6, 2);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((mempionly ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
       }
       break;
@@ -1298,7 +1358,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case INDEX:
           FullLineSprite.setTextDatum(TC_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][70]), 152, 2);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][270]), 152, 2);
           break;
 
         case MAINSETTINGS:
@@ -1364,8 +1424,8 @@ void ShowOneLine(byte position, byte item, bool selected) {
       switch (menupage) {
         case INDEX:
           FullLineSprite.setTextDatum(TC_DATUM);
-          FullLineSprite.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(String(myLanguage[language][84]) + " " + String(VERSION)), 152, 2);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][70]), 152, 2);
           break;
 
         case MAINSETTINGS:
@@ -2554,6 +2614,57 @@ void MenuUp() {
             break;
         }
         break;
+
+      case AUTOMEM:
+        switch (menuoption) {
+          case ITEM2:
+            memstartfreq ++;
+            if (memstartfreq > 1070) (TEF == 205 ? memstartfreq = 640 : memstartfreq = 650);
+
+            OneBigLineSprite.setTextDatum(TL_DATUM);
+            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            OneBigLineSprite.drawString("MHz", 155, 0);
+            OneBigLineSprite.setTextDatum(TR_DATUM);
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            OneBigLineSprite.drawString(String(memstartfreq / 10 + ConverterSet, DEC) + "." + String(memstartfreq % 10 + ConverterSet, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM3:
+            memstopfreq ++;
+            if (memstopfreq > 1080) memstopfreq = 660;
+
+            OneBigLineSprite.setTextDatum(TL_DATUM);
+            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            OneBigLineSprite.drawString("MHz", 155, 0);
+            OneBigLineSprite.setTextDatum(TR_DATUM);
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            OneBigLineSprite.drawString(String(memstopfreq / 10 + ConverterSet, DEC) + "." + String(memstopfreq % 10 + ConverterSet, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM4:
+            memstartpos++;
+            if (memstartpos >= memstoppos) memstartpos = 0;
+            OneBigLineSprite.drawString(String(memstartpos + 1, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM5:
+            memstoppos++;
+            if (memstoppos > EE_PRESETS_CNT - 1) memstoppos = memstartpos + 1;
+            OneBigLineSprite.drawString(String(memstoppos + 1, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM6:
+            mempionly = !mempionly;
+
+            OneBigLineSprite.drawString((mempionly ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+        }
+        break;
     }
   }
 }
@@ -3416,6 +3527,57 @@ void MenuDown() {
             break;
         }
         break;
+
+      case AUTOMEM:
+        switch (menuoption) {
+          case ITEM2:
+            memstartfreq -= 10;
+            if ((TEF == 205 ? memstartfreq < 640 : memstartfreq < 650)) memstartfreq = 1079;
+
+            OneBigLineSprite.setTextDatum(TL_DATUM);
+            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            OneBigLineSprite.drawString("MHz", 155, 0);
+            OneBigLineSprite.setTextDatum(TR_DATUM);
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            OneBigLineSprite.drawString(String(memstartfreq / 10 + ConverterSet, DEC) + "." + String(memstartfreq % 10 + ConverterSet, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM3:
+            memstopfreq -= 10;
+            if (memstopfreq < 660) memstopfreq = 1080;
+
+            OneBigLineSprite.setTextDatum(TL_DATUM);
+            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            OneBigLineSprite.drawString("MHz", 155, 0);
+            OneBigLineSprite.setTextDatum(TR_DATUM);
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            OneBigLineSprite.drawString(String(memstopfreq / 10 + ConverterSet, DEC) + "." + String(memstopfreq % 10 + ConverterSet, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM4:
+            memstartpos--;
+            if (memstartpos >= memstoppos) memstartpos = scanstop - 1;
+            OneBigLineSprite.drawString(String(memstartpos + 1, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM5:
+            memstoppos--;
+            if (memstoppos <= memstartpos) memstoppos = EE_PRESETS_CNT - 1;
+            OneBigLineSprite.drawString(String(memstoppos + 1, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM6:
+            mempionly = !mempionly;
+
+            OneBigLineSprite.drawString((mempionly ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+        }
+        break;
     }
   }
 }
@@ -3506,6 +3668,14 @@ void DoMenu() {
             break;
 
           case ITEM9:
+            menupage = AUTOMEM;
+            menuoption = ITEM1;
+            menuitem = 0;
+            submenu = true;
+            BuildMenu();
+            break;
+
+          case ITEM10:
             menuopen = true;
             tft.drawRoundRect(10, 6, 300, 230, 5, ActiveColor);
             tft.fillRoundRect(12, 8, 296, 226, 5, BackgroundColor);
@@ -4221,7 +4391,7 @@ void DoMenu() {
             break;
 
           case ITEM5:
-            Infoboxprint(myLanguage[language][197]);
+            Infoboxprint(myLanguage[language][271]);
 
             OneBigLineSprite.drawString(String(stationlistid, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4295,6 +4465,72 @@ void DoMenu() {
             Infoboxprint(myLanguage[language][222]);
 
             OneBigLineSprite.drawString((scanmute ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+        }
+        break;
+
+      case AUTOMEM:
+        switch (menuoption) {
+          case ITEM1:
+            Infoboxprint(myLanguage[language][270]);
+            switch (doAutoMemory(memstartfreq, memstopfreq, memstartpos, memstoppos, mempionly)) {
+              case 0:
+                tftPrint(0, myLanguage[language][275], 160, 175, ActiveColor, ActiveColorSmooth, 16);
+                break;
+
+              case 1:
+                tftPrint(0, myLanguage[language][273], 160, 175, ActiveColor, ActiveColorSmooth, 16);
+                break;
+
+              case 2:
+                tftPrint(0, myLanguage[language][274], 160, 175, ActiveColor, ActiveColorSmooth, 16);
+                break;
+            }
+            break;
+
+          case ITEM2:
+            Infoboxprint(myLanguage[language][264]);
+
+            OneBigLineSprite.setTextDatum(TL_DATUM);
+            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            OneBigLineSprite.drawString("MHz", 155, 0);
+            OneBigLineSprite.setTextDatum(TR_DATUM);
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            OneBigLineSprite.drawString(String(memstartfreq / 10 + ConverterSet, DEC) + "." + String(memstartfreq % 10 + ConverterSet, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM3:
+            Infoboxprint(myLanguage[language][265]);
+
+            OneBigLineSprite.setTextDatum(TL_DATUM);
+            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            OneBigLineSprite.drawString("MHz", 155, 0);
+            OneBigLineSprite.setTextDatum(TR_DATUM);
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            OneBigLineSprite.drawString(String(memstopfreq / 10 + ConverterSet, DEC) + "." + String(memstopfreq % 10 + ConverterSet, DEC), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM4:
+            Infoboxprint(myLanguage[language][266]);
+
+            OneBigLineSprite.drawString(String(memstartpos + 1), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM5:
+            Infoboxprint(myLanguage[language][267]);
+
+            OneBigLineSprite.drawString(String(memstoppos + 1), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM6:
+            Infoboxprint(myLanguage[language][268]);
+
+            OneBigLineSprite.drawString((mempionly ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }
