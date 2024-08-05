@@ -1401,7 +1401,7 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Βρέθηκαν", // 272
     "Ματαίωση! Τα κανάλια\nμνήμης εξαντλήθηκαν", // 273
     "Ματαίωση! Πιέση\nπλήκτρου χρήστη", // 274
-    "Η ανίχνευση ολοκληρώθηκε\nχωρίς σφάλματα" // 275
+    "Η ανίχνευση ολοκληρώθηκε\nχωρίς σφάλματα", // 275
     "Εκκαθάριση καναλιών μνήμης", // 276
     "εγινε εκκαθάριση" // 277
   },
@@ -2801,7 +2801,7 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Trouvé", // 272
     "Abandonner! Plus\nde canaux de mémoire", // 273
     "Abandonner! Bouton\nappuyé par l'user", // 274
-    "Analyse terminée\nsans erreurs" // 275
+    "Analyse terminée\nsans erreurs", // 275
     "Effacer les canaux\nde mémoire", // 276
     "effacé" // 277
   },
@@ -4761,7 +4761,7 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Encontrado", // 272
     "¡Abortar! Sin canales\nde memoria disponibles", // 273
     "¡Abortar! Usuario\npresionó el botón", // 274
-    "Escaneo finalizado\nsin errores" // 275
+    "Escaneo finalizado\nsin errores", // 275
     "Borrar canales\nde memoria", // 276
     "borrado" // 277
   },
@@ -5041,7 +5041,7 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Encontrado", // 272
     "Abortar! Sem canais\nde memória disponíveis", // 273
     "Abortar! Usuário\npressionou o botão", // 274
-    "Verificação concluída\nsem erros" // 275
+    "Verificação concluída\nsem erros", // 275
     "Limpar canais\nde memória", // 276
     "limpo" // 277
   }
