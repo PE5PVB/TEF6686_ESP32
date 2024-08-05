@@ -868,8 +868,8 @@ void loop() {
     if (millis() >= flashingtimer + 500) {
       flashing = !flashing;
       if (flashing) {
-        tft.fillRoundRect(1, 79, 42, 20, 5, ActiveColor);
-        tftPrint(0, "MEM", 22, 82, BackgroundColor, ActiveColor, 16);
+        tft.fillRoundRect(1, 79, 42, 20, 5, SecondaryColor);
+        tftPrint(0, "MEM", 22, 82, BackgroundColor, SecondaryColor, 16);
       } else {
         tft.fillRoundRect(1, 79, 42, 20, 5, GreyoutColor);
         tftPrint(0, "MEM", 22, 82, BackgroundColor, GreyoutColor, 16);
@@ -3507,8 +3507,8 @@ void doSquelch() {
 void updateBW() {//todo air
   if (BWset == 0) {
     if (!screenmute && !advancedRDS && !afscreen) {
-      tft.fillRoundRect(247, 35, 71, 20, 5, ActiveColor);
-      tftPrint(0, "AUTO BW", 282, 38, BackgroundColor, ActiveColor, 16);
+      tft.fillRoundRect(247, 35, 71, 20, 5, SecondaryColor);
+      tftPrint(0, "AUTO BW", 282, 38, BackgroundColor, SecondaryColor, 16);
     }
     radio.setFMABandw();
   } else {
@@ -3523,8 +3523,8 @@ void updateiMS() {
   if (band < BAND_GAP) {
     if (iMSset == 0) {
       if (!screenmute && !advancedRDS && !afscreen) {
-        tft.fillRoundRect(248, 56, 32, 20, 5, ActiveColor);
-        tftPrint(0, "iMS", 265, 59, BackgroundColor, ActiveColor, 16);
+        tft.fillRoundRect(248, 56, 32, 20, 5, SecondaryColor);
+        tftPrint(0, "iMS", 265, 59, BackgroundColor, SecondaryColor, 16);
       }
       radio.setiMS(1);
     } else {
@@ -3541,8 +3541,8 @@ void updateEQ() {
   if (band < BAND_GAP) {
     if (EQset == 0) {
       if (!screenmute && !advancedRDS && !afscreen) {
-        tft.fillRoundRect(286, 56, 32, 20, 5, ActiveColor);
-        tftPrint(0, "EQ", 301, 59, BackgroundColor, ActiveColor, 16);
+        tft.fillRoundRect(286, 56, 32, 20, 5, SecondaryColor);
+        tftPrint(0, "EQ", 301, 59, BackgroundColor, SecondaryColor, 16);
       }
       radio.setEQ(1);
     } else {
@@ -3709,16 +3709,16 @@ void ShowTuneMode() {
           tftPrint(0, "AUTO", 22, 60, BackgroundColor, GreyoutColor, 16);
         }
 
-        tft.fillRoundRect(1, 35, 42, 20, 5, ActiveColor);
-        tftPrint(0, "MAN", 22, 38, BackgroundColor, ActiveColor, 16);
+        tft.fillRoundRect(1, 35, 42, 20, 5, SecondaryColor);
+        tftPrint(0, "MAN", 22, 38, BackgroundColor, SecondaryColor, 16);
 
         tft.fillRoundRect(1, 79, 42, 20, 5, GreyoutColor);
         tftPrint(0, "MEM", 22, 82, BackgroundColor, GreyoutColor, 16);
         break;
 
       case TUNE_AUTO:
-        tft.fillRoundRect(1, 57, 42, 20, 5, ActiveColor);
-        tftPrint(0, "AUTO", 22, 60, BackgroundColor, ActiveColor, 16);
+        tft.fillRoundRect(1, 57, 42, 20, 5, SecondaryColor);
+        tftPrint(0, "AUTO", 22, 60, BackgroundColor, SecondaryColor, 16);
 
         tft.fillRoundRect(1, 35, 42, 20, 5, GreyoutColor);
         tftPrint(0, "MAN", 22, 38, BackgroundColor, GreyoutColor, 16);
@@ -3747,14 +3747,14 @@ void ShowTuneMode() {
           tft.fillRoundRect(1, 79, 42, 20, 5, SignificantColor);
           tftPrint(0, "MEM", 22, 82, BackgroundColor, SignificantColor, 16);
         } else {
-          tft.fillRoundRect(1, 79, 42, 20, 5, ActiveColor);
-          tftPrint(0, "MEM", 22, 82, BackgroundColor, ActiveColor, 16);
+          tft.fillRoundRect(1, 79, 42, 20, 5, SecondaryColor);
+          tftPrint(0, "MEM", 22, 82, BackgroundColor, SecondaryColor, 16);
         }
         break;
 
       case TUNE_MI_BAND:
-        tft.fillRoundRect(1, 57, 42, 20, 5, ActiveColor);
-        tftPrint(0, "BAND", 22, 60, BackgroundColor, ActiveColor, 16);
+        tft.fillRoundRect(1, 57, 42, 20, 5, SecondaryColor);
+        tftPrint(0, "BAND", 22, 60, BackgroundColor, SecondaryColor, 16);
 
         tft.fillRoundRect(1, 35, 42, 20, 5, GreyoutColor);
         tftPrint(0, "MAN", 22, 38, BackgroundColor, GreyoutColor, 16);
@@ -4426,8 +4426,8 @@ void cancelDXScan() {
     tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
 
     if (!flashing) {
-      tft.fillRoundRect(1, 79, 42, 20, 5, ActiveColor);
-      tftPrint(0, "MEM", 22, 82, BackgroundColor, ActiveColor, 16);
+      tft.fillRoundRect(1, 79, 42, 20, 5, SecondaryColor);
+      tftPrint(0, "MEM", 22, 82, BackgroundColor, SecondaryColor, 16);
     }
 
     SQ = false;
@@ -4639,8 +4639,8 @@ uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, ui
   band = BAND_FM;
   tunemode = TUNE_MAN;
 
-  tft.drawRect(65, 109, 190, 8, FrameColor);
-  tft.fillRect(66, 110, 188, 6, GreyoutColor);
+  tft.drawRect(59, 109, 202, 8, FrameColor);
+  tft.fillRect(60, 110, 200, 6, GreyoutColor);
   tftPrint(1, myLanguage[language][272], 120, 155, ActiveColor, ActiveColorSmooth, 16);
 
   for (frequency = startfreq * 10; frequency <= stopfreq * 10; frequency += 10) {
@@ -4697,7 +4697,7 @@ uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, ui
       SquelchSprite.drawString(String(counter), 0, 0);
       SquelchSprite.pushSprite(200, 155);
 
-      tft.fillRect(66, 110, 2 * constrain(percent, 0, 94), 6, BarInsignificantColor);
+      tft.fillRect(60, 110, 2 * percent, 6, BarInsignificantColor);
 
       percentold = percent;
     }
