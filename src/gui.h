@@ -244,4 +244,5 @@ extern void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, i
 extern void setAutoSpeedSPI();
 extern void showAutoSquelch(bool mode);
 extern uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, uint8_t stopmem, bool pisearch);
+extern void ClearMemoryRange(uint8_t start, uint8_t stop);
 #endif

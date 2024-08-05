@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[18][276] PROGMEM = {
+static const char* const myLanguage[18][278] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -281,7 +281,9 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Found", // 272
     "Abort! Out of memorychannels", // 273
     "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Scan finished without errors", // 275
+    "Clear memory channels", // 276
+    "cleared" // 277
   },
 
   { "Nederlands", // Dutch
@@ -559,7 +561,9 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Gevonden", // 272
     "Afgebroken! Geheugen vol", // 273
     "Afgebroken! Knop ingedrukt", // 274
-    "Zoeken zonder fouten voltooid" // 275
+    "Zoeken zonder fouten voltooid", // 275
+    "Wis geheugenkanalen", // 276
+    "gewist" // 277
   },
 
   { "Polski", // Polish
@@ -837,7 +841,9 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Found", // 272
     "Abort! Out of memorychannels", // 273
     "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Scan finished without errors", // 275
+    "Clear memory channels", // 276
+    "cleared" // 277
   },
 
   { "Hrvatski", // Croatian
@@ -1115,7 +1121,9 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Found", // 272
     "Abort! Out of memorychannels", // 273
     "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Scan finished without errors", // 275
+    "Clear memory channels", // 276
+    "cleared" // 277
   },
 
   { "Ελληνικά", // Greek
@@ -1393,7 +1401,9 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Found", // 272
     "Abort! Out of memorychannels", // 273
     "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Scan finished without errors", // 275
+    "Clear memory channels", // 276
+    "cleared" // 277
   },
 
   { "Română", // Romanian
@@ -1671,7 +1681,9 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Found", // 272
     "Abort! Out of memorychannels", // 273
     "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Scan finished without errors", // 275
+    "Clear memory channels", // 276
+    "cleared" // 277
   },
 
   { "Deutsch", // German
@@ -1949,7 +1961,9 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Found", // 272
     "Abort! Out of memorychannels", // 273
     "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Scan finished without errors", // 275
+    "Clear memory channels", // 276
+    "cleared" // 277
   },
 
   { "Český", // Czech
@@ -2227,7 +2241,9 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Found", // 272
     "Abort! Out of memorychannels", // 273
     "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Scan finished without errors", // 275
+    "Clear memory channels", // 276
+    "cleared" // 277
   },
 
   { "Magyar", // Hungarian
@@ -2505,7 +2521,9 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Found", // 272
     "Abort! Out of memorychannels", // 273
     "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Scan finished without errors", // 275
+    "Clear memory channels", // 276
+    "cleared" // 277
   },
 
   { "Français", // French
@@ -2783,7 +2801,9 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Found", // 272
     "Abort! Out of memorychannels", // 273
     "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Scan finished without errors", // 275
+    "Clear memory channels", // 276
+    "cleared" // 277
   },
 
   { "Български", // Bulgarian
@@ -3061,7 +3081,9 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Found", // 272
     "Abort! Out of memorychannels", // 273
     "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Scan finished without errors", // 275
+    "Clear memory channels", // 276
+    "cleared" // 277
   },
 
   { "Русский", // Russian
@@ -3339,7 +3361,9 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Found", // 272
     "Abort! Out of memorychannels", // 273
     "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Scan finished without errors", // 275
+    "Clear memory channels", // 276
+    "cleared" // 277
   },
 
   { "Українська", // Ukranian
@@ -3617,7 +3641,9 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Found", // 272
     "Abort! Out of memorychannels", // 273
     "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Scan finished without errors", // 275
+    "Clear memory channels", // 276
+    "cleared" // 277
   },
 
   { "Italiano", // Italian
@@ -3895,7 +3921,9 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Found", // 272
     "Abort! Out of memorychannels", // 273
     "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Scan finished without errors", // 275
+    "Clear memory channels", // 276
+    "cleared" // 277
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4173,7 +4201,9 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Found", // 272
     "Abort! Out of memorychannels", // 273
     "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Scan finished without errors", // 275
+    "Clear memory channels", // 276
+    "cleared" // 277
   },
 
   { "Norsk", // Norwegian
@@ -4451,7 +4481,9 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Found", // 272
     "Abort! Out of memorychannels", // 273
     "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Scan finished without errors", // 275
+    "Clear memory channels", // 276
+    "cleared" // 277
   },
 
   { "Español", // Spanish
@@ -4729,7 +4761,9 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Found", // 272
     "Abort! Out of memorychannels", // 273
     "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Scan finished without errors", // 275
+    "Clear memory channels", // 276
+    "cleared" // 277
   },
 
   { "Português", // Portuguese
@@ -5007,7 +5041,9 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Found", // 272
     "Abort! Out of memorychannels", // 273
     "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Scan finished without errors", // 275
+    "Clear memory channels", // 276
+    "cleared" // 277
   }
 };
 #endif

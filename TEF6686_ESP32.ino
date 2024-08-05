@@ -4644,8 +4644,6 @@ uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, ui
   tft.fillRect(66, 110, 188, 6, GreyoutColor);
   tftPrint(1, myLanguage[language][272], 120, 155, ActiveColor, ActiveColorSmooth, 16);
 
-  while (digitalRead(ROTARY_BUTTON)) delay(50);
-
   for (frequency = startfreq * 10; frequency <= stopfreq * 10; frequency += 10) {
     if (stopScanning) {
       break;
@@ -4704,8 +4702,8 @@ uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, ui
 
       percentold = percent;
     }
-    if (digitalRead(ROTARY_BUTTON) == LOW) {
-      while (digitalRead(ROTARY_BUTTON)) delay(50);
+    if (digitalRead(MODEBUTTON) == LOW) {
+      while (digitalRead(MODEBUTTON)) delay(50);
       error = 2;
       stopScanning = true;
       break;
@@ -4769,5 +4767,15 @@ void StoreMemoryPos(uint8_t _pos) {
     presets[_pos].frequency = frequency_MW;
   } else {
     presets[_pos].frequency = frequency_SW;
+  }
+}
+
+void ClearMemoryRange(uint8_t start, uint8_t stop) {
+  for (uint8_t pos = start; pos <= stop; pos++) {
+    EEPROM.writeByte(pos + EE_PRESETS_BAND_START, BAND_FM);
+    EEPROM.writeUInt((pos * 4) + EE_PRESETS_FREQUENCY_START, EE_PRESETS_FREQUENCY);
+    EEPROM.commit();
+    presets[pos].band = BAND_FM;
+    presets[pos].frequency = EE_PRESETS_FREQUENCY;
   }
 }
