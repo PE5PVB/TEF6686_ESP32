@@ -1217,16 +1217,14 @@ void loop() {
 
 #ifdef DEEPELEC_DP_66X
   if (digitalRead(EXT_IRQ) == LOW) {
-    int16_t temp = 1;
-    Wire.beginTransmission(0x20);
-    Wire.write(0x00);
-    Wire.endTransmission();
-    Wire.requestFrom(0x20, 2);
-    if (Wire.available() == 2) {
-      temp = Wire.read() & 0xFF;
-      temp |= (Wire.read() & 0xFF) * 256;
+    int num;
+    num = GetNumInput();
+    if (num != -1) 
+    {
       if (!screenmute && !menu && !advancedRDS && !afscreen)
-        ShowNumInput(temp);
+      {
+        ShowNumInput(num);
+      }
     }
   }
 #endif
@@ -4692,34 +4690,55 @@ void setAutoSpeedSPI() {
 byte keyval[16] = {
   2, 3, 127, 5, 6, 0, 9, 13, 8, 7, 4, 1, 0, 0, 0, 0
 };
-void ShowNumInput(int16_t port) {
+
+int GetNumInput(void)
+{
+  int16_t temp;
   int cnt = 0;
-  unsigned int key;
-  for (int i = 0; i < 16; i++) {
-    if ((port & 0x01) == 0) {
-      key = keyval[i];
-      cnt ++;
+  unsigned int num;
+
+  Wire.beginTransmission(0x20);
+  Wire.write(0x00);
+  Wire.endTransmission();
+  Wire.requestFrom(0x20, 2);
+
+  if (Wire.available() == 2) 
+  {
+    temp = Wire.read() & 0xFF;
+    temp |= (Wire.read() & 0xFF) * 256;
+    for (int i = 0; i < 16; i++) {
+      if ((temp & 0x01) == 0)
+      {
+        num = keyval[i];
+        cnt ++;
+      }
+      temp >>= 1;
     }
-    port >>= 1;
+    if (cnt == 1)
+      return num;
   }
-  if (cnt == 1) {
-    switch (freqfont) {
-      case 0: FrequencySprite.loadFont(FREQFONT0); break;
-      case 1: FrequencySprite.loadFont(FREQFONT1); break;
-      case 2: FrequencySprite.loadFont(FREQFONT2); break;
-      case 3: FrequencySprite.loadFont(FREQFONT3); break;
-      case 4: FrequencySprite.loadFont(FREQFONT4); break;
-      case 5: FrequencySprite.loadFont(FREQFONT5); break;
-    }
-    
-    FrequencySprite.setTextDatum(TR_DATUM);
-    
-    FrequencySprite.fillSprite(BackgroundColor);
-    FrequencySprite.setTextColor(FreqColor, FreqColorSmooth, false);
-    FrequencySprite.drawString(String(key) + " ", 218, -6);
-    FrequencySprite.pushSprite(46, 46);
-    
-    FrequencySprite.unloadFont();
+
+  return -1;
+}
+
+void ShowNumInput(int val)
+{
+  switch (freqfont) {
+    case 0: FrequencySprite.loadFont(FREQFONT0); break;
+    case 1: FrequencySprite.loadFont(FREQFONT1); break;
+    case 2: FrequencySprite.loadFont(FREQFONT2); break;
+    case 3: FrequencySprite.loadFont(FREQFONT3); break;
+    case 4: FrequencySprite.loadFont(FREQFONT4); break;
+    case 5: FrequencySprite.loadFont(FREQFONT5); break;
   }
+  
+  FrequencySprite.setTextDatum(TR_DATUM);
+  
+  FrequencySprite.fillSprite(BackgroundColor);
+  FrequencySprite.setTextColor(FreqColor, FreqColorSmooth, false);
+  FrequencySprite.drawString(String(val) + " ", 218, -6);
+  FrequencySprite.pushSprite(46, 46);
+  
+  FrequencySprite.unloadFont();
 }
 #endif
