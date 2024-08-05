@@ -43,12 +43,12 @@ void devTEF_Radio_Tune_AM (uint16_t frequency) {
   devTEF_Set_Cmd(TEF_AM, Cmd_Tune_To, 7, 1, frequency);
 }
 
-void devTEF_Radio_Set_Bandwidth(uint8_t mode, uint16_t bandwidth, uint16_t control_sensitivity, uint16_t low_level_sensitivity) {
-  devTEF_Set_Cmd(TEF_FM, Cmd_Set_Bandwidth, 11, mode, bandwidth, control_sensitivity, low_level_sensitivity);
+void devTEF_Radio_Set_Bandwidth(uint8_t mode, uint16_t bandwidth) {
+  devTEF_Set_Cmd(TEF_FM, Cmd_Set_Bandwidth, 7, mode, bandwidth);
 }
 
-void devTEF_Radio_Set_BandwidthAM(uint8_t mode, uint16_t bandwidth, uint16_t control_sensitivity, uint16_t low_level_sensitivity) {
-  devTEF_Set_Cmd(TEF_AM, Cmd_Set_Bandwidth, 7, mode, bandwidth, control_sensitivity, low_level_sensitivity);
+void devTEF_Radio_Set_BandwidthAM(uint8_t mode, uint16_t bandwidth) {
+  devTEF_Set_Cmd(TEF_AM, Cmd_Set_Bandwidth, 7, mode, bandwidth);
 }
 
 void devTEF_Radio_Set_Noiseblanker_AM(uint8_t mode, uint16_t start) {
