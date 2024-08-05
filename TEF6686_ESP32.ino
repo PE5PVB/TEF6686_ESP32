@@ -638,7 +638,7 @@ void setup() {
   RDSSprite.createSprite(165, 19);
   RDSSprite.setTextDatum(TL_DATUM);
 
-  PSSprite.createSprite(150, 30);
+  PSSprite.createSprite(150, 32);
   PSSprite.setTextDatum(TL_DATUM);
 
   SquelchSprite.createSprite(47, 19);
