@@ -1381,19 +1381,19 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Αρχικό", // 260
     "Πάντα", //261
     "Εμφάνιση ρολογιού", // 262
-    "Show long PS", // 263
-    "Start frequency", // 264
-    "Stop frequency", // 265
-    "Start memory channel", // 266
-    "Stop memory channel", // 267
-    "Only store with RDS", // 268
-    "Start auto memory", // 269
-    "Auto memory", // 270
+    "Εμφάνιση μεγάλου PS", // 263
+    "Συχνότητα εκκίνησης", // 264
+    "Τελική συχνότητα", // 265
+    "Αρχικό κανάλι μνήμης", // 266
+    "Τελικό κανάλι μνήμης", // 267
+    "Αποθήκευση μόνο\nμε RDS", // 268
+    "Εκκίνηση αυτόματης μνήμης", // 269
+    "Αυτόματη μνήμη", // 270
     "ID λίστας σταθμών", // 271
-    "Found", // 272
-    "Abort! Out of memorychannels", // 273
-    "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Βρέθηκαν", // 272
+    "Ματαίωση! Τα κανάλια\nμνήμης εξαντλήθηκαν", // 273
+    "Ματαίωση! Πιέση\nπλήκτρου χρήστη", // 274
+    "Η ανίχνευση ολοκληρώθηκε\nχωρίς σφάλματα" // 275
   },
 
   { "Română", // Romanian
@@ -2771,19 +2771,19 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Initial", // 260
     "Toujours", // 261
     "Afficher l'horloge", // 262
-    "Show long PS", // 263
-    "Start frequency", // 264
-    "Stop frequency", // 265
-    "Start memory channel", // 266
-    "Stop memory channel", // 267
-    "Only store with RDS", // 268
-    "Start auto memory", // 269
-    "Auto memory", // 270
-    "Stationlist ID", // 271
-    "Found", // 272
-    "Abort! Out of memorychannels", // 273
-    "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Afficher PS long", // 263
+    "Fréquence de début", // 264
+    "Fréquence de fin", // 265
+    "Commencer canal\nde mémoire", // 266
+    "Arrêter canal\nde mémoire", // 267
+    "Seulement stocker\navec RDS", // 268
+    "Commencer mémoire\nautomatique", // 269
+    "Mémoire automatique", // 270
+    "ID de la liste\ndes stations", // 271
+    "Trouvé", // 272
+    "Abandonner! Plus\nde canaux de mémoire", // 273
+    "Abandonner! Bouton\nappuyé par l'user", // 274
+    "Analyse terminée\nsans erreurs" // 275
   },
 
   { "Български", // Bulgarian
@@ -4717,19 +4717,20 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Inicial", // 260
     "Siempre", // 261
     "Mostrar reloj", // 262
-    "Show long PS", // 263
-    "Start frequency", // 264
-    "Stop frequency", // 265
-    "Start memory channel", // 266
-    "Stop memory channel", // 267
-    "Only store with RDS", // 268
-    "Start auto memory", // 269
-    "Auto memory", // 270
-    "Stationlist ID", // 271
-    "Found", // 272
-    "Abort! Out of memorychannels", // 273
-    "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Mostrar PS largo", // 263
+    "Iniciar frecuencia", // 264
+    "Detener frecuencia", // 265
+    "Iniciar canal\nde memoria", // 266
+    "Detener canal\nde memoria", // 267
+    "Solo almacenar\ncon RDS", // 268
+    "Iniciar memoria automática", // 269
+    "Memoria automática", // 270
+    "ID de la lista\nde estaciones", // 271
+    "Encontrado", // 272
+    "¡Abortar! Sin canales\nde memoria disponibles", // 273
+    "¡Abortar! Usuario\npresionó el botón", // 274
+    "Escaneo finalizado\nsin errores" // 275
+
   },
 
   { "Português", // Portuguese
@@ -4995,19 +4996,20 @@ static const char* const myLanguage[18][276] PROGMEM = {
     "Inicial", // 260
     "Sempre", // 261
     "Mostrar relógio", // 262
-    "Show long PS", // 263
-    "Start frequency", // 264
-    "Stop frequency", // 265
-    "Start memory channel", // 266
-    "Stop memory channel", // 267
-    "Only store with RDS", // 268
-    "Start auto memory", // 269
-    "Auto memory", // 270
+    "Mostrar PS longo", // 263
+    "Iniciar frequência", // 264
+    "Parar frequência", // 265
+    "Iniciar canal de memória", // 266
+    "Parar canal de memória", // 267
+    "Somente armazenar\ncom RDS", // 268
+    "Iniciar memória automática", // 269
+    "Memória automática", // 270
     "ID da lista de estações", // 271
-    "Found", // 272
-    "Abort! Out of memorychannels", // 273
-    "Abort! User pressed button", // 274
-    "Scan finished without errors" // 275
+    "Encontrado", // 272
+    "Abortar! Sem canais\nde memória disponíveis", // 273
+    "Abortar! Usuário\npressionou o botão", // 274
+    "Verificação concluída\nsem erros" // 275
+
   }
 };
 #endif
