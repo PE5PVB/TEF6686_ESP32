@@ -8,7 +8,7 @@
 #include <cstring>
 
 byte menuitem;
-byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 6, 7, 6};
+byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 6, 7, 7};
 extern mem presets[];
 bool setWiFiConnectParam = false;
 
@@ -1250,6 +1250,12 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString((scanmute ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
+          break;
+
+        case AUTOMEM:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][276]), 6, 2);
           break;
       }
       break;
@@ -4532,6 +4538,21 @@ void DoMenu() {
 
             OneBigLineSprite.drawString((mempionly ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM7:
+            Infoboxprint(myLanguage[language][276]);
+
+            ClearMemoryRange(memstartpos, memstoppos);
+            OneBigLineSprite.drawString(myLanguage[language][216], 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+
+            switch (CurrentTheme) {
+              case 7: OneBigLineSprite.pushImage(-11, -118, 292, 170, popupbackground_wo); break;
+              default: OneBigLineSprite.pushImage(-11, -118, 292, 170, popupbackground); break;
+            }
+            OneBigLineSprite.drawString(String(memstartpos + 1) + " - " + String(memstoppos + 1) + " " + String(myLanguage[language][277]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 148);
             break;
         }
         break;
