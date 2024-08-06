@@ -1231,12 +1231,12 @@ void loop() {
 #ifdef DEEPELEC_DP_66X
   if (digitalRead(EXT_IRQ) == LOW) {
     int num;
-    num = GetNumInput();
+    num = GetNum();
     if (num != -1) 
     {
       if (!screenmute && !menu && !advancedRDS && !afscreen)
       {
-        ShowNumInput(num);
+        NumpadProcess(num);
       }
     }
   }
@@ -4813,11 +4813,11 @@ void StoreMemoryPos(uint8_t _pos) {
 }
 
 #ifdef DEEPELEC_DP_66X
-byte keyval[16] = {
+byte numval[16] = {
   2, 3, 127, 5, 6, 0, 9, 13, 8, 7, 4, 1, 0, 0, 0, 0
 };
 
-int GetNumInput(void)
+int GetNum(void)
 {
   int16_t temp;
   int cnt = 0;
@@ -4835,7 +4835,7 @@ int GetNumInput(void)
     for (int i = 0; i < 16; i++) {
       if ((temp & 0x01) == 0)
       {
-        num = keyval[i];
+        num = numval[i];
         cnt ++;
       }
       temp >>= 1;
@@ -4847,7 +4847,7 @@ int GetNumInput(void)
   return -1;
 }
 
-void ShowNumInput(int val)
+void ShowNum(int val)
 {
   switch (freqfont) {
     case 0: FrequencySprite.loadFont(FREQFONT0); break;
@@ -4866,5 +4866,96 @@ void ShowNumInput(int val)
   FrequencySprite.pushSprite(46, 46);
   
   FrequencySprite.unloadFont();
+}
+
+void TuneFreq(int temp)
+{
+  aftest = true;
+  aftimer = millis();
+
+  if (band == BAND_FM) {
+    while (temp < (LowEdgeSet * 10)) temp = temp*10;
+    if (temp > (HighEdgeSet * 10)) {
+      if (edgebeep) EdgeBeeper();
+    } else {
+      frequency = temp;
+    }
+    radio.SetFreq(frequency);
+  } 
+  else if (band == BAND_OIRT) {
+    while (temp < (LowEdgeOIRTSet * 10)) temp = temp*10;
+    if (temp > HighEdgeOIRTSet) {
+      if (edgebeep) EdgeBeeper();
+    } else {
+      frequency_OIRT = temp;
+    }
+    radio.SetFreq(frequency_OIRT);
+  } 
+  else if (band == BAND_LW) {
+    while (temp < LWLowEdgeSet) temp = temp*10;
+    if (temp > LWHighEdgeSet) {
+      if (edgebeep) EdgeBeeper();
+    } else {
+      frequency_AM = temp;
+    }
+    radio.SetFreqAM(frequency_AM);
+    frequency_LW = frequency_AM;
+  } 
+  else if (band == BAND_MW) {
+    while (temp < MWLowEdgeSet) temp = temp*10;
+    if (temp > MWHighEdgeSet) {
+      if (edgebeep) EdgeBeeper();
+    } else {
+      frequency_AM = temp;
+    }
+    radio.SetFreqAM(frequency_AM);
+    frequency_MW = frequency_AM;
+  } 
+  else if (band == BAND_SW) {
+    while (temp < SWLowEdgeSet) temp = temp*10;
+    if (temp > SWHighEdgeSet) {
+      if (edgebeep) EdgeBeeper();
+    } else {
+      frequency_AM = temp;
+    }
+    radio.SetFreqAM(frequency_AM);
+    frequency_SW = frequency_AM;
+  }
+
+  radio.clearRDS(fullsearchrds);
+  if (RDSSPYUSB) Serial.print("G:\r\nRESET-------\r\n\r\n");
+  if (RDSSPYTCP) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
+}
+
+void NumpadProcess(int num)
+{
+  static bool input_mode = false;
+  static int freq_in = 0;
+
+  if (scandxmode) {
+    if (num == 127) {      // DX
+      cancelDXScan();
+    }
+  } else {
+    if (num == 127) {      // DX
+      startFMDXScan();
+    }
+    else if (num == 13) {  // Enter
+      if (freq_in != 0) {
+        TuneFreq(freq_in);
+        if (XDRGTKUSB || XDRGTKTCP) {
+          if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n"); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n"); else DataPrint("M1\nT" + String(frequency_AM) + "\n");
+        }
+        ShowFreq(0);
+      }
+      freq_in = 0;
+    }
+    else {                 // Num
+      if (freq_in/10000 == 0) {
+        freq_in = freq_in*10 + num;
+      }
+      ShowNum(freq_in);
+    }
+  }
 }
 #endif
