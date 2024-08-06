@@ -1415,10 +1415,10 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "Ματαίωση! Πιέση\nπλήκτρου χρήστη", // 274
     "Η ανίχνευση ολοκληρώθηκε\nχωρίς σφάλματα", // 275
     "Εκκαθάριση καναλιών μνήμης", // 276
-    "εγινε εκκαθάριση", // 277
-    "Prevent double PI", // 278
-    "Range", // 279
-    "Full" // 280
+    "έγινε εκκαθάριση", // 277
+    "Αποφυγή διπλού PI", // 278
+    "Εύρος", // 279
+    "Πλήρης" // 280
   },
 
   { "Română", // Romanian
@@ -2831,9 +2831,10 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "Analyse terminée\nsans erreurs", // 275
     "Effacer les canaux\nde mémoire", // 276
     "effacé", // 277
-    "Prevent double PI", // 278
-    "Range", // 279
-    "Full" // 280
+    "Prévenir double PI", // 278
+    "Plage", // 279
+    "Complet" // 280
+
   },
 
   { "Български", // Bulgarian
@@ -4812,9 +4813,10 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "Escaneo finalizado\nsin errores", // 275
     "Borrar canales\nde memoria", // 276
     "borrado", // 277
-    "Prevent double PI", // 278
-    "Range", // 279
-    "Full" // 280
+    "Prevenir doble PI", // 278
+    "Rango", // 279
+    "Completo" // 280
+
   },
 
   { "Português", // Portuguese
@@ -5095,9 +5097,10 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "Verificação concluída\nsem erros", // 275
     "Limpar canais\nde memória", // 276
     "limpo", // 277
-    "Prevent double PI", // 278
-    "Range", // 279
-    "Full" // 280
+    "Prevenir PI duplo", // 278
+    "Intervalo", // 279
+    "Completo" // 280
+
   }
 };
 #endif
