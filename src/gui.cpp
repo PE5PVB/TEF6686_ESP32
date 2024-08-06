@@ -8,7 +8,7 @@
 #include <cstring>
 
 byte menuitem;
-byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 6, 7, 7};
+byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 6, 8, 9};
 extern mem presets[];
 bool setWiFiConnectParam = false;
 
@@ -1255,7 +1255,16 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case AUTOMEM:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][276]), 6, 2);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][278]), 6, 2);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+
+          switch (memdoublepi) {
+            case MEMPI_OFF: FullLineSprite.drawString(myLanguage[language][30], 298, 2); break;
+            case MEMPI_RANGE: FullLineSprite.drawString(myLanguage[language][279], 298, 2); break;
+            default: FullLineSprite.drawString(myLanguage[language][280], 298, 2); break;
+          }
           break;
       }
       break;
@@ -1356,6 +1365,26 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
           FullLineSprite.drawString("kHz", 298, 2);
           break;
+
+        case DXMODE:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][82]), 6, 2);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(fmscansens), 298, 2);
+          break;
+
+        case AUTOMEM:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][82]), 6, 2);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString(String(fmscansens), 298, 2);
+          break;
       }
       break;
 
@@ -1422,6 +1451,12 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString(String(amscansens), 298, 2);
+          break;
+
+        case AUTOMEM:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][276]), 6, 2);
           break;
       }
       break;
@@ -2618,6 +2653,14 @@ void MenuUp() {
             OneBigLineSprite.drawString((scanmute ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
+
+          case ITEM8:
+            fmscansens++;
+            if (fmscansens > 30) fmscansens = 1;
+
+            OneBigLineSprite.drawString(String(fmscansens), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
         }
         break;
 
@@ -2667,6 +2710,26 @@ void MenuUp() {
             mempionly = !mempionly;
 
             OneBigLineSprite.drawString((mempionly ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM7:
+            memdoublepi++;
+            if (memdoublepi > 2) memdoublepi = 0;
+
+            switch (memdoublepi) {
+              case MEMPI_OFF: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
+              case MEMPI_RANGE: OneBigLineSprite.drawString(myLanguage[language][279], 135, 0); break;
+              default: OneBigLineSprite.drawString(myLanguage[language][280], 135, 0); break;
+            }
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM8:
+            fmscansens++;
+            if (fmscansens > 30) fmscansens = 1;
+
+            OneBigLineSprite.drawString(String(fmscansens), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }
@@ -3531,6 +3594,14 @@ void MenuDown() {
             OneBigLineSprite.drawString((scanmute ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
+
+          case ITEM8:
+            fmscansens--;
+            if (fmscansens == 0) fmscansens = 30;
+
+            OneBigLineSprite.drawString(String(fmscansens), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
         }
         break;
 
@@ -3580,6 +3651,26 @@ void MenuDown() {
             mempionly = !mempionly;
 
             OneBigLineSprite.drawString((mempionly ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM7:
+            memdoublepi--;
+            if (memdoublepi > 2) memdoublepi = 2;
+
+            switch (memdoublepi) {
+              case MEMPI_OFF: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
+              case MEMPI_RANGE: OneBigLineSprite.drawString(myLanguage[language][279], 135, 0); break;
+              default: OneBigLineSprite.drawString(myLanguage[language][280], 135, 0); break;
+            }
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM8:
+            fmscansens--;
+            if (fmscansens == 0) fmscansens = 30;
+
+            OneBigLineSprite.drawString(String(fmscansens), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }
@@ -4473,6 +4564,13 @@ void DoMenu() {
             OneBigLineSprite.drawString((scanmute ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
+
+          case ITEM8:
+            Infoboxprint(myLanguage[language][82]);
+
+            OneBigLineSprite.drawString(String(fmscansens), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
         }
         break;
 
@@ -4480,7 +4578,7 @@ void DoMenu() {
         switch (menuoption) {
           case ITEM1:
             Infoboxprint(myLanguage[language][270]);
-            switch (doAutoMemory(memstartfreq, memstopfreq, memstartpos, memstoppos, mempionly)) {
+            switch (doAutoMemory(memstartfreq, memstopfreq, memstartpos, memstoppos, mempionly, memdoublepi)) {
               case 0:
                 tftPrint(0, myLanguage[language][275], 160, 175, ActiveColor, ActiveColorSmooth, 16);
                 break;
@@ -4541,6 +4639,24 @@ void DoMenu() {
             break;
 
           case ITEM7:
+            Infoboxprint(myLanguage[language][278]);
+
+            switch (memdoublepi) {
+              case MEMPI_OFF: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
+              case MEMPI_RANGE: OneBigLineSprite.drawString(myLanguage[language][279], 135, 0); break;
+              default: OneBigLineSprite.drawString(myLanguage[language][280], 135, 0); break;
+            }
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM8:
+            Infoboxprint(myLanguage[language][82]);
+
+            OneBigLineSprite.drawString(String(fmscansens), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM9:
             Infoboxprint(myLanguage[language][276]);
 
             ClearMemoryRange(memstartpos, memstoppos);

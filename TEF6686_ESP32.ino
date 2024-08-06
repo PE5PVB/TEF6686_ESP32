@@ -175,6 +175,7 @@ byte iMSset;
 byte language;
 byte licold;
 byte longbandpress;
+byte memdoublepi;
 byte memorypos;
 byte memoryposold;
 byte memoryposstatus;
@@ -536,6 +537,7 @@ void setup() {
   memstartpos = EEPROM.readByte(EE_BYTE_MEMSTARTPOS);
   memstoppos = EEPROM.readByte(EE_BYTE_MEMSTOPPOS);
   mempionly = EEPROM.readByte(EE_BYTE_MEMPIONLY);
+  memdoublepi = EEPROM.readByte(EE_BYTE_MEMDOUBLEPI);
 
   if (spispeed == SPI_SPEED_DEFAULT) {
     tft.setSPISpeed(SPI_FREQUENCY / 1000000);
@@ -4293,6 +4295,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_MEMSTARTPOS, 1);
   EEPROM.writeByte(EE_BYTE_MEMSTOPPOS, 10);
   EEPROM.writeByte(EE_BYTE_MEMPIONLY, 1);
+  EEPROM.writeByte(EE_BYTE_MEMDOUBLEPI, 0);
 
   for (int i = 0; i < EE_PRESETS_CNT; i++) {
     EEPROM.writeByte(i + EE_PRESETS_BAND_START, BAND_FM);
@@ -4528,6 +4531,7 @@ void endMenu() {
   EEPROM.writeByte(EE_BYTE_MEMSTARTPOS, memstartpos);
   EEPROM.writeByte(EE_BYTE_MEMSTOPPOS, memstoppos);
   EEPROM.writeByte(EE_BYTE_MEMPIONLY, mempionly);
+  EEPROM.writeByte(EE_BYTE_MEMDOUBLEPI, memdoublepi);
   EEPROM.commit();
   if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
   Serial.end();
@@ -4624,7 +4628,7 @@ void setAutoSpeedSPI() {
   }
 }
 
-uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, uint8_t stopmem, bool rdsonly) {
+uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, uint8_t stopmem, bool rdsonly, uint8_t doublepi) {
   uint8_t error = 0;
   uint8_t counter = 0;
   uint16_t _current = frequency;
@@ -4633,6 +4637,7 @@ uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, ui
   uint8_t percent = 0;
   uint8_t percentold = 0;
   bool stopScanning = false;
+  bool dostore = false;
 
   radio.setMute();
   radio.power(0);
@@ -4660,7 +4665,22 @@ uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, ui
         delay(50);
         radio.readRDS(showrdserrors);
       }
-      if ((rdsonly && radio.rds.hasRDS) || !rdsonly) {
+
+      dostore = true;
+      if (doublepi != 0) {
+        for (byte x = (doublepi == 1 ? startmem : 0); x <= (doublepi == 1 ? stopmem : EE_PRESETS_CNT - 1); x++) {
+          if (presets[memorypos].RDSPI[0] != '\0') {
+            for (byte i = 0; i < 4; i++) {
+              if (presets[memorypos].RDSPI[i] != radio.rds.picode[i]) {
+                dostore = false;
+                break;
+              }
+            }
+          }
+        }
+      }
+
+      if (((rdsonly && radio.rds.hasRDS) || !rdsonly) && dostore) {
         StoreMemoryPos(startmem);
         counter ++;
         startmem++;
@@ -4669,6 +4689,7 @@ uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, ui
           stopScanning = true;
           break;
         }
+        dostore = false;
       }
     }
 
