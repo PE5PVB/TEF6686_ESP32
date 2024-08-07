@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[18][278] PROGMEM = {
+static const char* const myLanguage[18][281] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -283,7 +283,10 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Abort! User pressed button", // 274
     "Scan finished without errors", // 275
     "Clear memory channels", // 276
-    "cleared" // 277
+    "cleared", // 277
+    "Prevent double PI", // 278
+    "Range", // 279
+    "Full" // 280
   },
 
   { "Nederlands", // Dutch
@@ -563,7 +566,10 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Afgebroken! Knop ingedrukt", // 274
     "Zoeken zonder fouten voltooid", // 275
     "Wis geheugenkanalen", // 276
-    "gewist" // 277
+    "gewist", // 277
+    "Voorkom dubbele PI", // 278
+    "Bereik", // 279
+    "Volledig" // 280
   },
 
   { "Polski", // Polish
@@ -843,7 +849,10 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Abort! User pressed button", // 274
     "Scan finished without errors", // 275
     "Clear memory channels", // 276
-    "cleared" // 277
+    "cleared", // 277
+    "Prevent double PI", // 278
+    "Range", // 279
+    "Full" // 280
   },
 
   { "Hrvatski", // Croatian
@@ -1123,7 +1132,10 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Abort! User pressed button", // 274
     "Scan finished without errors", // 275
     "Clear memory channels", // 276
-    "cleared" // 277
+    "cleared", // 277
+    "Prevent double PI", // 278
+    "Range", // 279
+    "Full" // 280
   },
 
   { "Ελληνικά", // Greek
@@ -1403,7 +1415,10 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Ματαίωση! Πιέση\nπλήκτρου χρήστη", // 274
     "Η ανίχνευση ολοκληρώθηκε\nχωρίς σφάλματα", // 275
     "Εκκαθάριση καναλιών μνήμης", // 276
-    "εγινε εκκαθάριση" // 277
+    "έγινε εκκαθάριση", // 277
+    "Αποφυγή διπλού PI", // 278
+    "Εύρος", // 279
+    "Πλήρης" // 280
   },
 
   { "Română", // Romanian
@@ -1683,7 +1698,10 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Abort! User pressed button", // 274
     "Scan finished without errors", // 275
     "Clear memory channels", // 276
-    "cleared" // 277
+    "cleared", // 277
+    "Prevent double PI", // 278
+    "Range", // 279
+    "Full" // 280
   },
 
   { "Deutsch", // German
@@ -1963,7 +1981,10 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Abort! User pressed button", // 274
     "Scan finished without errors", // 275
     "Clear memory channels", // 276
-    "cleared" // 277
+    "cleared", // 277
+    "Prevent double PI", // 278
+    "Range", // 279
+    "Full" // 280
   },
 
   { "Český", // Czech
@@ -2243,7 +2264,10 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Abort! User pressed button", // 274
     "Scan finished without errors", // 275
     "Clear memory channels", // 276
-    "cleared" // 277
+    "cleared", // 277
+    "Prevent double PI", // 278
+    "Range", // 279
+    "Full" // 280
   },
 
   { "Magyar", // Hungarian
@@ -2523,7 +2547,10 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Abort! User pressed button", // 274
     "Scan finished without errors", // 275
     "Clear memory channels", // 276
-    "cleared" // 277
+    "cleared", // 277
+    "Prevent double PI", // 278
+    "Range", // 279
+    "Full" // 280
   },
 
   { "Français", // French
@@ -2803,7 +2830,11 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Abandonner! Bouton\nappuyé par l'user", // 274
     "Analyse terminée\nsans erreurs", // 275
     "Effacer les canaux\nde mémoire", // 276
-    "effacé" // 277
+    "effacé", // 277
+    "Prévenir double PI", // 278
+    "Plage", // 279
+    "Complet" // 280
+
   },
 
   { "Български", // Bulgarian
@@ -3083,7 +3114,10 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Abort! User pressed button", // 274
     "Scan finished without errors", // 275
     "Clear memory channels", // 276
-    "cleared" // 277
+    "cleared", // 277
+    "Prevent double PI", // 278
+    "Range", // 279
+    "Full" // 280
   },
 
   { "Русский", // Russian
@@ -3363,7 +3397,10 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Abort! User pressed button", // 274
     "Scan finished without errors", // 275
     "Clear memory channels", // 276
-    "cleared" // 277
+    "cleared", // 277
+    "Prevent double PI", // 278
+    "Range", // 279
+    "Full" // 280
   },
 
   { "Українська", // Ukranian
@@ -3643,7 +3680,10 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Abort! User pressed button", // 274
     "Scan finished without errors", // 275
     "Clear memory channels", // 276
-    "cleared" // 277
+    "cleared", // 277
+    "Prevent double PI", // 278
+    "Range", // 279
+    "Full" // 280
   },
 
   { "Italiano", // Italian
@@ -3923,7 +3963,10 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Abort! User pressed button", // 274
     "Scan finished without errors", // 275
     "Clear memory channels", // 276
-    "cleared" // 277
+    "cleared", // 277
+    "Prevent double PI", // 278
+    "Range", // 279
+    "Full" // 280
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4203,7 +4246,10 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Abort! User pressed button", // 274
     "Scan finished without errors", // 275
     "Clear memory channels", // 276
-    "cleared" // 277
+    "cleared", // 277
+    "Prevent double PI", // 278
+    "Range", // 279
+    "Full" // 280
   },
 
   { "Norsk", // Norwegian
@@ -4483,7 +4529,10 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Abort! User pressed button", // 274
     "Scan finished without errors", // 275
     "Clear memory channels", // 276
-    "cleared" // 277
+    "cleared", // 277
+    "Prevent double PI", // 278
+    "Range", // 279
+    "Full" // 280
   },
 
   { "Español", // Spanish
@@ -4763,7 +4812,11 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "¡Abortar! Usuario\npresionó el botón", // 274
     "Escaneo finalizado\nsin errores", // 275
     "Borrar canales\nde memoria", // 276
-    "borrado" // 277
+    "borrado", // 277
+    "Prevenir doble PI", // 278
+    "Rango", // 279
+    "Completo" // 280
+
   },
 
   { "Português", // Portuguese
@@ -5043,7 +5096,11 @@ static const char* const myLanguage[18][278] PROGMEM = {
     "Abortar! Usuário\npressionou o botão", // 274
     "Verificação concluída\nsem erros", // 275
     "Limpar canais\nde memória", // 276
-    "limpo" // 277
+    "limpo", // 277
+    "Prevenir PI duplo", // 278
+    "Intervalo", // 279
+    "Completo" // 280
+
   }
 };
 #endif
