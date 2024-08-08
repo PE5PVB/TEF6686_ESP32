@@ -122,13 +122,13 @@
 //MAIN COLORS                      /* RGB 565 CODES */
 #define Black               0x0000    /*  0,  0,  0 */
 #define Blue                0x001F    /*  0,  0, 31 */
-#define Cabbage             0x07F6    /*  0, 63, 22 */
+#define Cabbage             0x06D0    /*  0, 54, 16 */
 #define Coral               0xFBEF    /* 31, 31, 15 */
 #define Crimson             0xF8C3    /* 31,  6,  3 */
 #define Cyan                0x0F3F    /*  1, 57, 31 */
 #define Cherry              0xF00A    /* 30,  0, 10 */
 #define Grey                0x7BEF    /* 15, 31, 15 */
-#define Darkgrey            0x39A7    /*  7, 13,  7 */
+#define Darkgrey            0x1082    /*  2,  4,  2 */
 #define Deepsky             0x051F    /*  0, 40, 31 */
 #define Green               0x07E0    /*  0, 63,  0 */
 #define Indigo              0x881F    /* 17,  0, 31 */
