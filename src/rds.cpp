@@ -368,9 +368,9 @@ void readRds() {
 
           if (radio.rds.hasCT) {
             if (advancedRDS) {
-              tftPrint(1, rds_clock, 205, 109, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+              tftPrint(1, rds_clock, 208, 109, RDSDropoutColor, RDSDropoutColorSmooth, 16);
             } else {
-              tftPrint(1, rds_clock, 205, 163, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+              tftPrint(1, rds_clock, 208, 163, RDSDropoutColor, RDSDropoutColorSmooth, 16);
             }
           }
           dropout = true;
@@ -425,9 +425,9 @@ void readRds() {
 
           if (radio.rds.hasCT) {
             if (advancedRDS) {
-              tftPrint(1, rds_clock, 205, 109, RDSColor, RDSColorSmooth, 16);
+              tftPrint(1, rds_clock, 208, 109, RDSColor, RDSColorSmooth, 16);
             } else {
-              tftPrint(1, rds_clock, 205, 163, RDSColor, RDSColorSmooth, 16);
+              tftPrint(1, rds_clock, 208, 163, RDSColor, RDSColorSmooth, 16);
             }
           }
           dropout = false;
@@ -751,24 +751,24 @@ void showCT() {
         rtcset = true;
         rtc.setTime(0, radio.rds.minute, radio.rds.hour, radio.rds.day, radio.rds.month, radio.rds.year);
         if (advancedRDS) {
-          tftReplace(1, rds_clockold, rds_clock, 205, 109, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+          tftReplace(1, rds_clockold, rds_clock, 208, 109, RDSColor, RDSColorSmooth, BackgroundColor, 16);
         } else {
-          tftReplace(1, rds_clockold, rds_clock, 205, 163, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+          tftReplace(1, rds_clockold, rds_clock, 208, 163, RDSColor, RDSColorSmooth, BackgroundColor, 16);
         }
       } else {
         if (rtcset) {
           if (advancedRDS) {
-            tftReplace(1, rds_clockold, rds_clock, 205, 109, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+            tftReplace(1, rds_clockold, rds_clock, 208, 109, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
           } else {
-            tftReplace(1, rds_clockold, rds_clock, 205, 163, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+            tftReplace(1, rds_clockold, rds_clock, 208, 163, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
           }
         } else {
           if (advancedRDS) {
-            tftPrint(1, rds_clockold, 205, 109, BackgroundColor, BackgroundColor, 16);
-            tftPrint(1, rds_clock, 205, 109, BackgroundColor, BackgroundColor, 16);
+            tftPrint(1, rds_clockold, 208, 109, BackgroundColor, BackgroundColor, 16);
+            tftPrint(1, rds_clock, 208, 109, BackgroundColor, BackgroundColor, 16);
           } else {
-            tftPrint(1, rds_clockold, 205, 163, BackgroundColor, BackgroundColor, 16);
-            tftPrint(1, rds_clock, 205, 163, BackgroundColor, BackgroundColor, 16);
+            tftPrint(1, rds_clockold, 208, 163, BackgroundColor, BackgroundColor, 16);
+            tftPrint(1, rds_clock, 208, 163, BackgroundColor, BackgroundColor, 16);
           }
         }
       }
