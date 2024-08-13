@@ -235,7 +235,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
     case 7:  // Whiteout theme
       PrimaryColor = Black;
       PrimaryColorSmooth = White;
-      SecondaryColor = Grey;
+      SecondaryColor = Darkgrey;
       SecondaryColorSmooth = White;
       FrameColor = Darkgrey;
       GreyoutColor = PureGrey;

@@ -1407,14 +1407,14 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "Αρχικό κανάλι μνήμης", // 266
     "Τελικό κανάλι μνήμης", // 267
     "Αποθήκευση μόνο\nμε RDS", // 268
-    "Εκκίνηση αυτόματης μνήμης", // 269
+    "Εκκίνηση\nαυτόματης μνήμης", // 269
     "Αυτόματη μνήμη", // 270
     "ID λίστας σταθμών", // 271
     "Βρέθηκαν", // 272
     "Ματαίωση! Τα κανάλια\nμνήμης εξαντλήθηκαν", // 273
     "Ματαίωση! Πιέση\nπλήκτρου χρήστη", // 274
     "Η ανίχνευση ολοκληρώθηκε\nχωρίς σφάλματα", // 275
-    "Εκκαθάριση καναλιών μνήμης", // 276
+    "Εκκαθάριση\nκαναλιών μνήμης", // 276
     "έγινε εκκαθάριση", // 277
     "Αποφυγή διπλού PI", // 278
     "Εύρος", // 279
@@ -4804,7 +4804,7 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "Iniciar canal\nde memoria", // 266
     "Detener canal\nde memoria", // 267
     "Solo almacenar\ncon RDS", // 268
-    "Iniciar memoria automática", // 269
+    "Iniciar memoria\nautomática", // 269
     "Memoria automática", // 270
     "ID de la lista\nde estaciones", // 271
     "Encontrado", // 272
@@ -5085,7 +5085,7 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "Mostrar PS longo", // 263
     "Iniciar frequência", // 264
     "Parar frequência", // 265
-    "Iniciar canal de memória", // 266
+    "Iniciar canal\nde memória", // 266
     "Parar canal de memória", // 267
     "Somente armazenar\ncom RDS", // 268
     "Iniciar memória automática", // 269
