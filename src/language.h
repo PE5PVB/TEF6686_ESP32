@@ -835,24 +835,24 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "Początkowy", // 260
     "Zawsze", // 261
     "Pokaż zegar", // 262
-    "Show long PS", // 263
-    "Start frequency", // 264
-    "Stop frequency", // 265
-    "Start memory channel", // 266
-    "Stop memory channel", // 267
-    "Only store with RDS", // 268
-    "Start auto memory", // 269
-    "Auto memory", // 270
+    "Pokaż długi PS", // 263
+    "Częstotliwość początkowa", // 264
+    "Częstotliwość końcowa", // 265
+    "Początkowy kanał pamięci", // 266
+    "Końcowy kanał pamięci", // 267
+    "Zapisuj tylko z RDS", // 268
+    "Rozpocznij auto zapamiętywanie", // 269
+    "Auto zapamiętywanie", // 270
     "Identyfikator Stationlist", // 271
-    "Found", // 272
-    "Abort! Out of memorychannels", // 273
-    "Abort! User pressed button", // 274
-    "Scan finished without errors", // 275
-    "Clear memory channels", // 276
-    "cleared", // 277
-    "Prevent double PI", // 278
-    "Range", // 279
-    "Full" // 280
+    "Znaleziono", // 272
+    "Przerywam! Brak wolnych kanałów", // 273
+    "Przerywam! Naciśnięto przycisk", // 274
+    "Skanowanie zakończone pomyślnie", // 275
+    "Wyczyść kanały pamięci", // 276
+    "wyczyszczono", // 277
+    "Unikaj podwójnego PI", // 278
+    "Zakres", // 279
+    "Pełne" // 280
   },
 
   { "Hrvatski", // Croatian
