@@ -111,7 +111,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
     case 3:  // Monochrome theme
       PrimaryColor = White;
       PrimaryColorSmooth = Black;
-      SecondaryColor = PureGrey;
+      // SecondaryColor = PureGrey;
+      SecondaryColor = White;
       SecondaryColorSmooth = Black;
       FrameColor = GreenGrey;
       GreyoutColor = PaleGrey;
