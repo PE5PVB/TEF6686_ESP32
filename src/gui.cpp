@@ -20,7 +20,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       SecondaryColor = Skyblue;
       SecondaryColorSmooth = SkyblueSmooth;
       FrameColor = Blue;
-      GreyoutColor = Darkgrey;
+      // GreyoutColor = Darkgrey;
+      GreyoutColor = Lightgrey;
       BackgroundColor = Black;
       ActiveColor = White;
       ActiveColorSmooth = WhiteSmooth;
@@ -395,7 +396,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       SecondaryColor = Skyblue;
       SecondaryColorSmooth = SkyblueSmooth;
       FrameColor = Blue;
-      GreyoutColor = Darkgrey;
+      // GreyoutColor = Darkgrey;
+      GreyoutColor = Lightgrey;
       BackgroundColor = Black;
       ActiveColor = White;
       ActiveColorSmooth = WhiteSmooth;

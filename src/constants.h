@@ -147,6 +147,7 @@
 #define White               0xFFFF    /* 31, 63, 31 */
 #define Yellow              0xFFE0    /* 31, 63,  0 */
 #define Yolk                0xED20    /* 29, 41,  0 */
+#define Lightgrey           0x39A7    /*  7, 13,  7 */
 //SMOOTH COLORS
 #define CabbageSmooth       0x0184    /*  0, 12,  4 */
 #define CoralSmooth         0x4124    /*  8,  9,  4 */
