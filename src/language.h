@@ -3895,14 +3895,14 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "FMSI audio stereofonico ottimizzato", // 206
     "Funzione disponibile\nsolo su TEF6687/6689!", // 207
     "Funzione non disponibile\nsu skin selezionata!", // 208
-    "Avvio scansione = canale in memoria", // 209
-    "Fine scansione =  canale in memoria", // 210
+    "Avvio scansione = pos. in memoria", // 209
+    "Fine scansione =  pos. in memoria", // 210
     "Tempo di attesa", // 211
     "Avvio scansione DX", // 212
     "Opzioni FM DX", // 213
-    "Stop! Canale di avvio\nimpost. su ignora", // 214
+    "Fine! Canale di avvio\nimpost. su ignora", // 214
     "Autoordinamento AF", // 215
-    "Canali in memoria", // 216
+    "Posizioni in memoria", // 216
     "Esclusi", // 217
     "Solamente", // 218
     "Uscita automatica scansione", // 219
@@ -3949,24 +3949,24 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "Iniziale", // 260
     "Sempre", // 261
     "Mostra l'orologio", // 262
-    "Show long PS", // 263
-    "Start frequency", // 264
-    "Stop frequency", // 265
-    "Start memory channel", // 266
-    "Stop memory channel", // 267
-    "Only store with RDS", // 268
-    "Start auto memory", // 269
-    "Auto memory", // 270
+    "Mostra PS lungo", // 263
+    "Frequenza iniziale", // 264
+    "Frequenza finale", // 265
+    "Pos. memoria iniziale", // 266
+    "Pos. memoria finale", // 267
+    "Memorizza solo con RDS", // 268
+    "Avvia ricerca automatica", // 269
+    "Ricerca automatica", // 270
     "ID Stationlist", // 271
-    "Found", // 272
-    "Abort! Out of memorychannels", // 273
-    "Abort! User pressed button", // 274
-    "Scan finished without errors", // 275
-    "Clear memory channels", // 276
-    "cleared", // 277
-    "Prevent double PI", // 278
-    "Range", // 279
-    "Full" // 280
+    "Trovate", // 272
+    "Fine! Memorie esaurite", // 273
+    "Fine! Pulsante Mode premuto", // 274
+    "Scansione terminata senza errori", // 275
+    "Pos. in memoria cancellate", // 276
+    "Cancellate", // 277
+    "Evita PI duplicati", // 278
+    "Intervallo", // 279
+    "Piene" // 280
   },
 
   { "Simplified Chinese", // Simplified Chinese
