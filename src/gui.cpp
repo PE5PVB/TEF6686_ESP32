@@ -4455,17 +4455,33 @@ void DoMenu() {
               tftPrint(0, "http://192.168.4.1", 155, 174, PrimaryColor, PrimaryColorSmooth, 16);
               char key [9];
               XDRGTK_key.toCharArray(key, 9);
+              char rabbitearsuser [9];
+              RabbitearsUser.toCharArray(rabbitearsuser, 9);
+              char rabbitearspw [9];
+              RabbitearsPassword.toCharArray(rabbitearspw, 9);
               UpdateFonts(1);
               WiFiConnectParam XDRGTK_key_text("Set XDRGTK Password: (max 8 characters)");
               WiFiConnectParam XDRGTK_key_input("XDRGTK_key", "Password", key, 9);
+              WiFiConnectParam RabbitearsUser_text("Set rabbitears.info live bandscan user ID");
+              WiFiConnectParam RabbitearsUser_input("RabbitearsUser", "ID", rabbitearsuser, 9);
+              WiFiConnectParam RabbitearsPassword_text("Set rabbitears.info password");
+              WiFiConnectParam RabbitearsPassword_input("RabbitearsPassword", "Password", rabbitearspw, 9);
               if (!setWiFiConnectParam) {
                 wc.addParameter(&XDRGTK_key_text);
                 wc.addParameter(&XDRGTK_key_input);
+                wc.addParameter(&RabbitearsUser_text);
+                wc.addParameter(&RabbitearsUser_input);
+                wc.addParameter(&RabbitearsPassword_text);
+                wc.addParameter(&RabbitearsPassword_input);
                 setWiFiConnectParam = true;
               }
               wc.startConfigurationPortal(AP_WAIT);
               XDRGTK_key = XDRGTK_key_input.getValue();
+              RabbitearsUser = RabbitearsUser_input.getValue();
+              RabbitearsPassword = RabbitearsPassword_input.getValue();
               EEPROM.writeString(EE_STRING_XDRGTK_KEY, XDRGTK_key);
+              EEPROM.writeString(EE_STRING_RABBITEARSUSER, RabbitearsUser);
+              EEPROM.writeString(EE_STRING_RABBITEARSPASSWORD, RabbitearsPassword);
               EEPROM.commit();
               UpdateFonts(0);
               wifi = true;
