@@ -4974,7 +4974,12 @@ void NumpadProcess(int num)
         if (XDRGTKUSB || XDRGTKTCP) {
           if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n"); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n"); else DataPrint("M1\nT" + String(frequency_AM) + "\n");
         }
-        ShowFreq(0);
+        if (!memorystore) {
+          if (!memtune) radio.clearRDS(fullsearchrds);
+          memtune = false;
+          ShowFreq(0);
+          store = true;
+        }
       }
       freq_in = 0;
     }
