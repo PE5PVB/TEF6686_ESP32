@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[18][281] PROGMEM = {
+static const char* const myLanguage[18][282] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -286,7 +286,8 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "cleared", // 277
     "Prevent double PI", // 278
     "Range", // 279
-    "Full" // 280
+    "Full", // 280
+    "Wait time on\nsignal only" // 281
   },
 
   { "Nederlands", // Dutch
@@ -569,7 +570,8 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "gewist", // 277
     "Voorkom dubbele PI", // 278
     "Bereik", // 279
-    "Volledig" // 280
+    "Volledig", // 280
+    "Wachttijd alleen\nbij signaal" // 281
   },
 
   { "Polski", // Polish
@@ -852,7 +854,8 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "wyczyszczono", // 277
     "Unikaj podwójnego PI", // 278
     "Zakres", // 279
-    "Pełne" // 280
+    "Pełne", // 280
+    "Wait time on\nsignal only" // 281
   },
 
   { "Hrvatski", // Croatian
@@ -1135,7 +1138,8 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "cleared", // 277
     "Prevent double PI", // 278
     "Range", // 279
-    "Full" // 280
+    "Full", // 280
+    "Wait time on\nsignal only" // 281
   },
 
   { "Ελληνικά", // Greek
@@ -1418,7 +1422,8 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "έγινε εκκαθάριση", // 277
     "Αποφυγή διπλού PI", // 278
     "Εύρος", // 279
-    "Πλήρης" // 280
+    "Πλήρης", // 280
+    "Wait time on\nsignal only" // 281
   },
 
   { "Română", // Romanian
@@ -1701,7 +1706,8 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "cleared", // 277
     "Prevent double PI", // 278
     "Range", // 279
-    "Full" // 280
+    "Full", // 280
+    "Wait time on\nsignal only" // 281
   },
 
   { "Deutsch", // German
@@ -1984,7 +1990,8 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "cleared", // 277
     "Prevent double PI", // 278
     "Range", // 279
-    "Full" // 280
+    "Full", // 280
+    "Wait time on\nsignal only" // 281
   },
 
   { "Český", // Czech
@@ -2267,7 +2274,8 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "cleared", // 277
     "Prevent double PI", // 278
     "Range", // 279
-    "Full" // 280
+    "Full", // 280
+    "Wait time on\nsignal only" // 281
   },
 
   { "Magyar", // Hungarian
@@ -2550,7 +2558,8 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "cleared", // 277
     "Prevent double PI", // 278
     "Range", // 279
-    "Full" // 280
+    "Full", // 280
+    "Wait time on\nsignal only" // 281
   },
 
   { "Français", // French
@@ -2833,7 +2842,8 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "effacé", // 277
     "Prévenir double PI", // 278
     "Plage", // 279
-    "Complet" // 280
+    "Complet", // 280
+    "Wait time on\nsignal only" // 281
 
   },
 
@@ -3117,7 +3127,8 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "cleared", // 277
     "Prevent double PI", // 278
     "Range", // 279
-    "Full" // 280
+    "Full", // 280
+    "Wait time on\nsignal only" // 281
   },
 
   { "Русский", // Russian
@@ -3400,7 +3411,8 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "cleared", // 277
     "Prevent double PI", // 278
     "Range", // 279
-    "Full" // 280
+    "Full", // 280
+    "Wait time on\nsignal only" // 281
   },
 
   { "Українська", // Ukranian
@@ -3683,7 +3695,8 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "cleared", // 277
     "Prevent double PI", // 278
     "Range", // 279
-    "Full" // 280
+    "Full", // 280
+    "Wait time on\nsignal only" // 281
   },
 
   { "Italiano", // Italian
@@ -3966,7 +3979,8 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "Cancellate", // 277
     "Evita PI duplicati", // 278
     "Intervallo", // 279
-    "Piene" // 280
+    "Piene", // 280
+    "Wait time on\nsignal only" // 281
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4249,7 +4263,8 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "cleared", // 277
     "Prevent double PI", // 278
     "Range", // 279
-    "Full" // 280
+    "Full", // 280
+    "Wait time on\nsignal only" // 281
   },
 
   { "Norsk", // Norwegian
@@ -4532,7 +4547,8 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "cleared", // 277
     "Prevent double PI", // 278
     "Range", // 279
-    "Full" // 280
+    "Full", // 280
+    "Wait time on\nsignal only" // 281
   },
 
   { "Español", // Spanish
@@ -4815,7 +4831,8 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "borrado", // 277
     "Prevenir doble PI", // 278
     "Rango", // 279
-    "Completo" // 280
+    "Completo", // 280
+    "Wait time on\nsignal only" // 281
 
   },
 
@@ -5099,8 +5116,8 @@ static const char* const myLanguage[18][281] PROGMEM = {
     "limpo", // 277
     "Prevenir PI duplo", // 278
     "Intervalo", // 279
-    "Completo" // 280
-
+    "Completo", // 280
+    "Wait time on\nsignal only" // 281
   }
 };
 #endif

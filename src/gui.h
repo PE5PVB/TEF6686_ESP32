@@ -57,6 +57,7 @@ extern bool RDSstatusold;
 extern bool rdsstereoold;
 extern bool usesquelch;
 extern bool scandxmode;
+extern bool scanholdonsignal;
 extern bool scanmem;
 extern bool scanmute;
 extern bool showclock;

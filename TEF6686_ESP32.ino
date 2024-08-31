@@ -101,6 +101,7 @@ bool RDSstatusold;
 bool rdsstereoold;
 bool rtcset;
 bool scandxmode;
+bool scanholdonsignal;
 bool scanmem;
 bool scanmute;
 bool screenmute;
@@ -545,6 +546,7 @@ void setup() {
   memstoppos = EEPROM.readByte(EE_BYTE_MEMSTOPPOS);
   mempionly = EEPROM.readByte(EE_BYTE_MEMPIONLY);
   memdoublepi = EEPROM.readByte(EE_BYTE_MEMDOUBLEPI);
+  scanholdonsignal = EEPROM.readByte(EE_BYTE_WAITONLYONSIGNAL);
 
   if (spispeed == SPI_SPEED_DEFAULT) {
     tft.setSPISpeed(SPI_FREQUENCY / 1000000);
@@ -852,7 +854,12 @@ void loop() {
   }
 
   if (scandxmode) {
-    if (millis() >= scantimer + (scanhold == 0 ? 500 : (scanhold * 1000))) {
+    unsigned long waitTime = (scanhold == 0) ? 500 : (scanhold * 1000);
+    bool signalCondition = (USN < fmscansens * 30) && (WAM < 230) && (OStatus < 80) && (OStatus > -80);
+    bool bypassMillisCheck = scanholdonsignal && !signalCondition;
+    bool shouldScan = bypassMillisCheck || (!bypassMillisCheck && (millis() >= scantimer + waitTime));
+
+    if (shouldScan) {
       if (scanmem) {
         memorypos++;
         if (memorypos > scanstop) memorypos = scanstart;
@@ -885,19 +892,26 @@ void loop() {
       }
       flashingtimer = millis();
     }
+
     delay(100);
     radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
-    if (RabbitearsUser.length() && RabbitearsPassword.length() && region == REGION_US && radio.rds.correctPI != 0 && frequency >= 8810 && frequency <= 10790 && !(frequency % 10) && ((frequency/10) % 2)) {
+
+    if (RabbitearsUser.length() && RabbitearsPassword.length() && region == REGION_US && radio.rds.correctPI != 0 && frequency >= 8810 && frequency <= 10790 && !(frequency % 10) && ((frequency / 10) % 2)) {
       byte i = (frequency / 10 - 881) / 2;
       if (!rabbitearspi[i]) {
         rabbitearspi[i] = radio.rds.correctPI;
-        rtc.getTime("%FT%TZ").toCharArray(rabbitearstime[i],21); // ISO8601 format like 2024-08-24T12:52:00Z
+        rtc.getTime("%FT%TZ").toCharArray(rabbitearstime[i], 21);
       }
     }
+
     if (!initdxscan) {
       switch (scancancel) {
-        case CORRECTPI: if (RDSstatus && radio.rds.correctPI != 0) cancelDXScan(); break;
-        case SIGNAL: if ((USN < fmscansens * 30) && (WAM < 230) && (OStatus < 80 && OStatus > -80)) cancelDXScan(); break;
+        case CORRECTPI:
+          if (RDSstatus && radio.rds.correctPI != 0) cancelDXScan();
+          break;
+        case SIGNAL:
+          if (signalCondition) cancelDXScan();
+          break;
       }
     }
   }
@@ -3917,7 +3931,7 @@ void TuneUp() {
       if (scandxmode && RabbitearsUser.length() && RabbitearsPassword.length()) {
         byte i = 0;
         bool hasreport = false;
-        for(i=0; i<100; i++) {
+        for (i = 0; i < 100; i++) {
           if (rabbitearspi[i]) {
             hasreport = true;
             break;
@@ -3925,7 +3939,7 @@ void TuneUp() {
         }
         if (hasreport) {
           rabbitearssend();
-          for (i=0; i< 100; i++) {
+          for (i = 0; i < 100; i++) {
             rabbitearspi[i] = 0;
           }
         }
@@ -4328,6 +4342,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_MEMSTOPPOS, 10);
   EEPROM.writeByte(EE_BYTE_MEMPIONLY, 1);
   EEPROM.writeByte(EE_BYTE_MEMDOUBLEPI, 0);
+  EEPROM.writeByte(EE_BYTE_WAITONLYONSIGNAL, 1);
 
   for (int i = 0; i < EE_PRESETS_CNT; i++) {
     EEPROM.writeByte(i + EE_PRESETS_BAND_START, BAND_FM);
@@ -4564,6 +4579,7 @@ void endMenu() {
   EEPROM.writeByte(EE_BYTE_MEMSTOPPOS, memstoppos);
   EEPROM.writeByte(EE_BYTE_MEMPIONLY, mempionly);
   EEPROM.writeByte(EE_BYTE_MEMDOUBLEPI, memdoublepi);
+  EEPROM.writeByte(EE_BYTE_WAITONLYONSIGNAL, scanholdonsignal);
   EEPROM.commit();
   if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
   Serial.end();
@@ -4578,7 +4594,7 @@ void endMenu() {
 
 void startFMDXScan() {
   initdxscan = true;
-  for(byte i=0; i<100; i++) {
+  for (byte i = 0; i < 100; i++) {
     rabbitearspi[i] = 0;
     rabbitearstime[i][0] = 0;
   }
@@ -4618,7 +4634,7 @@ void startFMDXScan() {
 }
 
 void rabbitearssend () {
-  if(WiFi.status() != WL_CONNECTED) return;
+  if (WiFi.status() != WL_CONNECTED) return;
   String RabbitearsURL = "http://rabbitears.info/tvdx/fm_spot";
   WiFiClient RabbitearsClient;
   HTTPClient http;
@@ -4629,10 +4645,10 @@ void rabbitearssend () {
   json += RabbitearsPassword;
   json += String("\",");
   json += String("\"signal\":{");
-  for (i=0; i <100; i++) {
+  for (i = 0; i < 100; i++) {
     if (rabbitearspi[i]) {
       json += String("\"");
-      json += String((i*2+881)*100000);
+      json += String((i * 2 + 881) * 100000);
       json += String("\":{\"time\":\"");
       json += String(rabbitearstime[i]);
       json += String("\",\"pi_code\":");
@@ -4640,9 +4656,9 @@ void rabbitearssend () {
       json += String("},");
     }
   }
-  json.remove(json.length()-1); // remove trailing comma
+  json.remove(json.length() - 1); // remove trailing comma
   json += String("}}");
-  http.begin(RabbitearsClient,RabbitearsURL.c_str());
+  http.begin(RabbitearsClient, RabbitearsURL.c_str());
   http.addHeader("Content-Type", "application/json");
   http.POST(json);
   http.end();

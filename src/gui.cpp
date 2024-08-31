@@ -8,7 +8,7 @@
 #include <cstring>
 
 byte menuitem;
-byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 6, 8, 9};
+byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 6, 9, 9};
 extern mem presets[];
 bool setWiFiConnectParam = false;
 
@@ -1453,6 +1453,15 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.drawString(String(amscansens), 298, 2);
           break;
 
+        case DXMODE:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][281]), 6, 2);
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((scanholdonsignal ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
+          break;
+
         case AUTOMEM:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -2661,6 +2670,13 @@ void MenuUp() {
             OneBigLineSprite.drawString(String(fmscansens), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
+
+          case ITEM9:
+            scanholdonsignal = !scanholdonsignal;
+
+            OneBigLineSprite.drawString((scanholdonsignal ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
         }
         break;
 
@@ -3600,6 +3616,13 @@ void MenuDown() {
             if (fmscansens == 0) fmscansens = 30;
 
             OneBigLineSprite.drawString(String(fmscansens), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM9:
+            scanholdonsignal = !scanholdonsignal;
+
+            OneBigLineSprite.drawString((scanholdonsignal ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }
@@ -4585,6 +4608,13 @@ void DoMenu() {
             Infoboxprint(myLanguage[language][82]);
 
             OneBigLineSprite.drawString(String(fmscansens), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM9:
+            Infoboxprint(myLanguage[language][281]);
+
+            OneBigLineSprite.drawString((scanholdonsignal ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }
