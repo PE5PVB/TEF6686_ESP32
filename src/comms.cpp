@@ -141,6 +141,7 @@ void Communication() {
         String freq = data_str.substring(0, symPos);
         freq = freq.substring(0, freq.length() - 1);
         frequency = freq.toInt();
+        if (scandxmode) cancelDXScan();
         radio.SetFreq(frequency);
         radio.clearRDS(fullsearchrds);
         if (band != BAND_FM) {
