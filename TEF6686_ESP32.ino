@@ -861,6 +861,7 @@ void loop() {
     bool shouldScan = bypassMillisCheck || (!bypassMillisCheck && (millis() >= scantimer + waitTime));
 
     if (shouldScan) {
+      if (scanmute && scanholdonsignal) radio.setMute();
       scanholdflag = false;
       if (scanmem) {
         memorypos++;
@@ -881,6 +882,8 @@ void loop() {
       }
       scantimer = millis();
       initdxscan = false;
+    } else {
+      if (scanmute && scanholdonsignal) radio.setUnMute();
     }
 
     if (millis() >= flashingtimer + 500) {
