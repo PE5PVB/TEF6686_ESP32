@@ -1,6 +1,7 @@
 #include "soc/soc.h"
 #include "soc/rtc_cntl_reg.h"
 #include <WiFiClient.h>
+#include <HTTPClient.h>
 #include <EEPROM.h>
 #include <Wire.h>
 #include <math.h>
@@ -214,6 +215,7 @@ byte spispeed;
 char buff[16];
 char eonpicodeold[20][6];
 char programTypePrevious[18];
+char rabbitearstime[100][21];
 const uint8_t* currentFont = nullptr;
 float vPerold;
 int ActiveColor;
@@ -308,6 +310,8 @@ String PIold;
 String PSold;
 String ptynold = " ";
 String PTYold;
+String RabbitearsPassword;
+String RabbitearsUser;
 String rds_clock;
 String rds_clockold;
 String RDSSPYRDS;
@@ -326,6 +330,7 @@ String XDRGTKRDS;
 String XDRGTKRDSold;
 uint16_t BW;
 uint16_t MStatus;
+uint16_t rabbitearspi[100]; // first is for 88.1, 2nd 88.3, etc. to 107.9 MHz
 uint16_t SWMIBandPos;
 uint16_t SWMIBandPosold;
 uint16_t USN;
@@ -481,6 +486,8 @@ void setup() {
   frequency_AIR = EEPROM.readUInt(EE_UINT16_FREQUENCY_AIR);
 #endif
   XDRGTK_key = EEPROM.readString(EE_STRING_XDRGTK_KEY);
+  RabbitearsUser = EEPROM.readString(EE_STRING_RABBITEARSUSER);
+  RabbitearsPassword = EEPROM.readString(EE_STRING_RABBITEARSPASSWORD);
   usesquelch = EEPROM.readByte(EE_BYTE_USESQUELCH);
   showmodulation = EEPROM.readByte(EE_BYTE_SHOWMODULATION);
   amnb = EEPROM.readByte(EE_BYTE_AM_NB);
@@ -880,6 +887,13 @@ void loop() {
     }
     delay(100);
     radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+    if (RabbitearsUser.length() && RabbitearsPassword.length() && region == REGION_US && radio.rds.correctPI != 0 && frequency >= 8810 && frequency <= 10790 && !(frequency % 10) && ((frequency/10) % 2)) {
+      byte i = (frequency / 10 - 881) / 2;
+      if (!rabbitearspi[i]) {
+        rabbitearspi[i] = radio.rds.correctPI;
+        rtc.getTime("%FT%TZ").toCharArray(rabbitearstime[i],21); // ISO8601 format like 2024-08-24T12:52:00Z
+      }
+    }
     if (!initdxscan) {
       switch (scancancel) {
         case CORRECTPI: if (RDSstatus && radio.rds.correctPI != 0) cancelDXScan(); break;
@@ -3900,6 +3914,22 @@ void TuneUp() {
 
     if (fmdefaultstepsize == 2 && stepsize == 0 && frequency == 8795) frequency = 8790;
     if (frequency >= (HighEdgeSet * 10) + 1) {
+      if (scandxmode && RabbitearsUser.length() && RabbitearsPassword.length()) {
+        byte i = 0;
+        bool hasreport = false;
+        for(i=0; i<100; i++) {
+          if (rabbitearspi[i]) {
+            hasreport = true;
+            break;
+          }
+        }
+        if (hasreport) {
+          rabbitearssend();
+          for (i=0; i< 100; i++) {
+            rabbitearspi[i] = 0;
+          }
+        }
+      }
       frequency = LowEdgeSet * 10;
       if (fmdefaultstepsize == 2 && stepsize == 0 && frequency == 8750) frequency = 8775;
       if (edgebeep) EdgeBeeper();
@@ -4238,6 +4268,8 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_AIR, 135350);
 #endif
   EEPROM.writeString(EE_STRING_XDRGTK_KEY, "password");
+  EEPROM.writeString(EE_STRING_RABBITEARSUSER, "");
+  EEPROM.writeString(EE_STRING_RABBITEARSPASSWORD, "");
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_USESQUELCH, 1); else EEPROM.writeByte(EE_BYTE_USESQUELCH, 0);
   EEPROM.writeByte(EE_BYTE_SHOWMODULATION, 1);
   EEPROM.writeByte(EE_BYTE_AM_NB, 0);
@@ -4546,6 +4578,10 @@ void endMenu() {
 
 void startFMDXScan() {
   initdxscan = true;
+  for(byte i=0; i<100; i++) {
+    rabbitearspi[i] = 0;
+    rabbitearstime[i][0] = 0;
+  }
 
   if (menu) endMenu();
   if (afscreen || advancedRDS) BuildDisplay();
@@ -4579,6 +4615,37 @@ void startFMDXScan() {
   scandxmode = true;
   ShowTuneMode();
   if (XDRGTKUSB || XDRGTKTCP) DataPrint("J1\n");
+}
+
+void rabbitearssend () {
+  if(WiFi.status() != WL_CONNECTED) return;
+  String RabbitearsURL = "http://rabbitears.info/tvdx/fm_spot";
+  WiFiClient RabbitearsClient;
+  HTTPClient http;
+  byte i;
+  String json = String("{\"tuner_key\":\"");
+  json += RabbitearsUser;
+  json += String("\",\"password\":\"");
+  json += RabbitearsPassword;
+  json += String("\",");
+  json += String("\"signal\":{");
+  for (i=0; i <100; i++) {
+    if (rabbitearspi[i]) {
+      json += String("\"");
+      json += String((i*2+881)*100000);
+      json += String("\":{\"time\":\"");
+      json += String(rabbitearstime[i]);
+      json += String("\",\"pi_code\":");
+      json += String(rabbitearspi[i]);
+      json += String("},");
+    }
+  }
+  json.remove(json.length()-1); // remove trailing comma
+  json += String("}}");
+  http.begin(RabbitearsClient,RabbitearsURL.c_str());
+  http.addHeader("Content-Type", "application/json");
+  http.POST(json);
+  http.end();
 }
 
 void setAutoSpeedSPI() {
