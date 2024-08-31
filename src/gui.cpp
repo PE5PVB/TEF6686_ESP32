@@ -20,7 +20,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       SecondaryColor = Skyblue;
       SecondaryColorSmooth = SkyblueSmooth;
       FrameColor = Blue;
-      GreyoutColor = Darkgrey;
+      GreyoutColor = BlackOlive;
       BackgroundColor = Black;
       ActiveColor = White;
       ActiveColorSmooth = WhiteSmooth;
@@ -395,7 +395,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       SecondaryColor = Skyblue;
       SecondaryColorSmooth = SkyblueSmooth;
       FrameColor = Blue;
-      GreyoutColor = Darkgrey;
+      GreyoutColor = BlackOlive;
       BackgroundColor = Black;
       ActiveColor = White;
       ActiveColorSmooth = WhiteSmooth;
@@ -419,6 +419,38 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BWAutoColorSmooth = TealSmooth;
       BatteryValueColor = Teal;
       BatteryValueColorSmooth = Black;
+      break;
+
+    case 13:  // Bubblegum
+      PrimaryColor = Cyan;
+      PrimaryColorSmooth = CyanSmooth;
+      SecondaryColor = Cherry;
+      SecondaryColorSmooth = CherrySmooth;
+      FrameColor = Electric;
+      GreyoutColor = Meteorite;
+      BackgroundColor = EerieBlack;
+      ActiveColor = White;
+      ActiveColorSmooth = WhiteSmooth;
+      FreqColor = Pink;
+      FreqColorSmooth = PinkSmooth;
+      SignificantColor = Purple;
+      SignificantColorSmooth = PurpleSmooth;
+      InsignificantColor = Cherry;
+      InsignificantColorSmooth = CherrySmooth;
+      StereoColor = Cherry;
+      StereoColorSmooth = CherrySmooth;
+      RDSColor = Teal;
+      RDSColorSmooth = TealSmooth;
+      RDSDropoutColor = Logan;
+      RDSDropoutColorSmooth = LoganSmooth;
+      BarSignificantColor = Coral;
+      BarInsignificantColor = Teal;
+      ModBarSignificantColor = Sakura;
+      ModBarInsignificantColor = Skyblue;
+      BWAutoColor = Violet;
+      BWAutoColorSmooth = VioletSmooth;
+      BatteryValueColor = Turquoise;
+      BatteryValueColorSmooth = CyanDarkSmooth;
       break;
   }
 }
@@ -1712,9 +1744,9 @@ void BuildDisplay() {
   tft.drawLine(53, 30, 53, 0, FrameColor);
   tft.drawLine(89, 30, 89, 0, FrameColor);
   tft.drawLine(158, 30, 158, 0, FrameColor);
-  tft.drawLine(20, 114, 204, 114, TFT_DARKGREY);
+  tft.drawLine(20, 114, 204, 114, Darkgrey);
 
-  if (!showmodulation) tft.drawLine(20, 143, 204, 143, GreyoutColor); else tft.drawLine(20, 143, 204, 143, TFT_DARKGREY);
+  if (!showmodulation) tft.drawLine(20, 143, 204, 143, GreyoutColor); else tft.drawLine(20, 143, 204, 143, Darkgrey);
   for (byte segments = 0; segments < 94; segments++) {
     if (segments > 54) {
       if (((segments - 53) % 10) == 0) {

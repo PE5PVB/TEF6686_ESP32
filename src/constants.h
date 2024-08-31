@@ -121,20 +121,22 @@
 
 //MAIN COLORS                      /* RGB 565 CODES */
 #define Black               0x0000    /*  0,  0,  0 */
+#define BlackOlive          0x39E7    /*  7, 15,  7 */
 #define Blue                0x001F    /*  0,  0, 31 */
 #define Cabbage             0x06D0    /*  0, 54, 16 */
 #define Coral               0xFBEF    /* 31, 31, 15 */
 #define Crimson             0xF8C3    /* 31,  6,  3 */
 #define Cyan                0x0F3F    /*  1, 57, 31 */
 #define Cherry              0xF00A    /* 30,  0, 10 */
-#define Grey                0x7BEF    /* 15, 31, 15 */
 #define Darkgrey            0x1082    /*  2,  4,  2 */
 #define Deepsky             0x051F    /*  0, 40, 31 */
 #define Green               0x07E0    /*  0, 63,  0 */
+#define Grey                0x7BEF    /* 15, 31, 15 */
 #define Indigo              0x881F    /* 17,  0, 31 */
 #define Maroon              0x5140    /* 10, 10,  0 */
 #define Ocean               0x01FF    /*  0, 15, 31 */
 #define Orange              0xFC00    /* 31, 32,  0 */
+#define Pink                0xFDBF    /* 31, 45, 31 */
 #define Purple              0xAA1C    /* 21, 16, 28 */
 #define Red                 0xF800    /* 31,  0,  0 */
 #define Sakura              0xF3D5    /* 30, 30, 21 */
@@ -159,6 +161,7 @@
 #define OceanSmooth         0x0006    /*  0,  0,  6 */
 #define MaroonSmooth        0x2001    /*  4,  0,  1 */
 #define OrangeSmooth        0x3165    /*  6, 11,  5 */
+#define PinkSmooth          0x620C    /* 12, 16, 12 */
 #define PurpleSmooth        0x2887    /*  5,  4,  7 */
 #define RedSmooth           0x2000    /*  4,  0,  0 */
 #define SakuraSmooth        0x3008    /*  6,  0,  8 */
@@ -186,6 +189,7 @@
 #define CyanGrey            0x2A08    /*  5, 16,  8 */
 #define Dallas              0x6A86    /* 13, 20,  6 */
 #define DallasSmooth        0x3123    /*  6,  9,  3 */
+#define EerieBlack          0x1825    /*  3,  1,  5 */
 #define Electric            0x6016    /* 12,  0, 22 */
 #define GreenDark           0x0200    /*  0, 16,  0 */
 #define GreenGrey           0x2965    /*  5, 11,  5 */
@@ -331,7 +335,7 @@
 
 static const char* const unitString[] = {"dBμV", "dBf", "dBm"};
 static const char* const FreqFont[] = {"Classic", "Roubenstil", "Motoya", "Aura2", "Comic", "Modern"};
-static const char* const Theme[] = {"Essence", "Cyan", "Crimson", "Monochrome", "Volcano", "Dendro", "Sakura", "Whiteout", "Tangerine", "Ocean", "Indigo", "Maroon", "GoldBrite"};
+static const char* const Theme[] = {"Essence", "Cyan", "Crimson", "Monochrome", "Volcano", "Dendro", "Sakura", "Whiteout", "Tangerine", "Ocean", "Indigo", "Maroon", "GoldBrite", "Bubblegum"};
 static const char* const Skin[] = {"Essential"};
 
 // Memory channel database
