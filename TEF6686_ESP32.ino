@@ -4752,9 +4752,9 @@ uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, ui
       dostore = true;
       if (doublepi != 0) {
         for (byte x = (doublepi == 1 ? startmem : 0); x <= (doublepi == 1 ? stopmem : EE_PRESETS_CNT - 1); x++) {
-          if (presets[memorypos].RDSPI[0] != '\0') {
+          if (presets[x].RDSPI[0] != '\0') {
             for (byte i = 0; i < 4; i++) {
-              if (presets[memorypos].RDSPI[i] != radio.rds.picode[i]) {
+              if (presets[x].RDSPI[i] != radio.rds.picode[i]) {
                 dostore = false;
                 break;
               }
@@ -4877,6 +4877,19 @@ void ClearMemoryRange(uint8_t start, uint8_t stop) {
   for (uint8_t pos = start; pos <= stop; pos++) {
     EEPROM.writeByte(pos + EE_PRESETS_BAND_START, BAND_FM);
     EEPROM.writeUInt((pos * 4) + EE_PRESETS_FREQUENCY_START, EE_PRESETS_FREQUENCY);
+    EEPROM.writeByte(pos + EE_PRESET_BW_START, 0);
+    EEPROM.writeByte(pos + EE_PRESET_MS_START, 1);
+
+    for (int y = 0; y < 9; y++) {
+      EEPROM.writeByte((pos * 9) + y + EE_PRESETS_RDSPS_START, '\0');
+      presets[pos].RDSPS[y] = '\0';
+    }
+
+    for (int y = 0; y < 5; y++) {
+      EEPROM.writeByte((pos * 5) + y + EE_PRESETS_RDSPI_START, '\0');
+      presets[pos].RDSPI[y] = '\0';
+    }
+
     EEPROM.commit();
     presets[pos].band = BAND_FM;
     presets[pos].frequency = EE_PRESETS_FREQUENCY;
