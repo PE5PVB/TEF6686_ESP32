@@ -895,7 +895,7 @@ void loop() {
       flashingtimer = millis();
     }
 
-    delay(100);
+    if (!scanholdflag) delay(100);
     radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
 
     if (RabbitearsUser.length() && RabbitearsPassword.length() && region == REGION_US && radio.rds.correctPI != 0 && frequency >= 8810 && frequency <= 10790 && !(frequency % 10) && ((frequency / 10) % 2)) {
