@@ -101,6 +101,7 @@ bool RDSstatusold;
 bool rdsstereoold;
 bool rtcset;
 bool scandxmode;
+bool scanholdflag;
 bool scanholdonsignal;
 bool scanmem;
 bool scanmute;
@@ -855,11 +856,12 @@ void loop() {
 
   if (scandxmode) {
     unsigned long waitTime = (scanhold == 0) ? 500 : (scanhold * 1000);
-    bool signalCondition = (USN < fmscansens * 30) && (WAM < 230) && (OStatus < 80) && (OStatus > -80);
-    bool bypassMillisCheck = scanholdonsignal && !signalCondition;
+    if (!scanholdflag) scanholdflag = (USN < fmscansens * 30) && (WAM < 230) && (OStatus < 80) && (OStatus > -80);
+    bool bypassMillisCheck = scanholdonsignal && !scanholdflag;
     bool shouldScan = bypassMillisCheck || (!bypassMillisCheck && (millis() >= scantimer + waitTime));
 
     if (shouldScan) {
+      scanholdflag = false;
       if (scanmem) {
         memorypos++;
         if (memorypos > scanstop) memorypos = scanstart;
@@ -910,7 +912,7 @@ void loop() {
           if (RDSstatus && radio.rds.correctPI != 0) cancelDXScan();
           break;
         case SIGNAL:
-          if (signalCondition) cancelDXScan();
+          if (scanhold) cancelDXScan();
           break;
       }
     }
@@ -4594,6 +4596,7 @@ void endMenu() {
 
 void startFMDXScan() {
   initdxscan = true;
+  scanholdflag = false;
   for (byte i = 0; i < 100; i++) {
     rabbitearspi[i] = 0;
     rabbitearstime[i][0] = 0;
