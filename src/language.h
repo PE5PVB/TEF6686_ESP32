@@ -1,7 +1,7 @@
 #ifndef LANGUAGE_H
 #define LANGUAGE_H
 
-#define VERSION "v2.11.4"
+#define VERSION "v2.11.5"
 
 // [number of languages][number of texts]
 
