@@ -4759,11 +4759,18 @@ uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, ui
       if (doublepi != 0) {
         for (byte x = (doublepi == 1 ? startmem : 0); x <= (doublepi == 1 ? stopmem : EE_PRESETS_CNT - 1); x++) {
           if (presets[x].RDSPI[0] != '\0') {
+            bool allMatch = true;
+
             for (byte i = 0; i < 4; i++) {
               if (presets[x].RDSPI[i] != radio.rds.picode[i]) {
-                dostore = false;
+                allMatch = false;
                 break;
               }
+            }
+
+            if (allMatch) {
+              dostore = false;
+              break;
             }
           }
         }
