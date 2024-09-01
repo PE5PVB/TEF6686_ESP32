@@ -1075,7 +1075,7 @@ void loop() {
       tftPrint(-1, "PS:", 3, 193, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, "RT:", 3, 221, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, "PTY:", 3, 163, ActiveColor, ActiveColorSmooth, 16);
-      if (!showmodulation) tft.drawLine(20, 143, 204, 143, GreyoutColor); else tft.drawLine(20, 143, 204, 143, TFT_DARKGREY);
+      if (!showmodulation) tft.drawLine(20, 143, 204, 143, GreyoutColor); else tft.drawLine(20, 143, 204, 143, Darkgrey);
     }
     LowLevelInit = true;
   }
