@@ -1423,7 +1423,7 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Αποφυγή διπλού PI", // 278
     "Εύρος", // 279
     "Πλήρης", // 280
-    "Wait time on\nsignal only" // 281
+    "Αναμονή μόνο σε\nυπάρξη σήματος" // 281
   },
 
   { "Română", // Romanian
@@ -2843,7 +2843,7 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Prévenir double PI", // 278
     "Plage", // 279
     "Complet", // 280
-    "Wait time on\nsignal only" // 281
+    "Attendre que lorsque\nle signal existe" // 281
 
   },
 
@@ -4832,7 +4832,7 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Prevenir doble PI", // 278
     "Rango", // 279
     "Completo", // 280
-    "Wait time on\nsignal only" // 281
+    "Tiempo de espera\ncuando la señal" // 281
 
   },
 
@@ -5117,7 +5117,7 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Prevenir PI duplo", // 278
     "Intervalo", // 279
     "Completo", // 280
-    "Wait time on\nsignal only" // 281
+    "Espera tempo apenas\nquando sinal" // 281
   }
 };
 #endif
