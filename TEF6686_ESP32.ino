@@ -1275,7 +1275,7 @@ void loop() {
   if (digitalRead(EXT_IRQ) == LOW) {
     int num;
     num = GetNum();
-    if (num != -1) 
+    if (num != -1)
     {
       if (!screenmute && !menu && !advancedRDS && !afscreen)
       {
@@ -4768,6 +4768,7 @@ void setAutoSpeedSPI() {
 uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, uint8_t stopmem, bool rdsonly, uint8_t doublepi) {
   uint8_t error = 0;
   uint8_t counter = 0;
+  uint8_t rangestart = startmem;
   uint16_t _current = frequency;
   uint16_t totalIterations = (stopfreq - startfreq) + 1;
   uint16_t currentIteration = 0;
@@ -4805,7 +4806,7 @@ uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, ui
 
       dostore = true;
       if (doublepi != 0) {
-        for (byte x = (doublepi == 1 ? startmem : 0); x <= (doublepi == 1 ? stopmem : EE_PRESETS_CNT - 1); x++) {
+        for (byte x = (doublepi == 1 ? rangestart : 0); x <= (doublepi == 1 ? stopmem : EE_PRESETS_CNT - 1); x++) {
           if (presets[x].RDSPI[0] != '\0') {
             bool allMatch = true;
 
@@ -4962,8 +4963,7 @@ byte numval[16] = {
   2, 3, 127, 5, 6, 0, 9, 13, 8, 7, 4, 1, 0, 0, 0, 0
 };
 
-int GetNum(void)
-{
+int GetNum(void) {
   int16_t temp;
   int cnt = 0;
   unsigned int num;
@@ -4973,13 +4973,11 @@ int GetNum(void)
   Wire.endTransmission();
   Wire.requestFrom(0x20, 2);
 
-  if (Wire.available() == 2) 
-  {
+  if (Wire.available() == 2) {
     temp = Wire.read() & 0xFF;
     temp |= (Wire.read() & 0xFF) * 256;
     for (int i = 0; i < 16; i++) {
-      if ((temp & 0x01) == 0)
-      {
+      if ((temp & 0x01) == 0) {
         num = numval[i];
         cnt ++;
       }
@@ -4992,8 +4990,7 @@ int GetNum(void)
   return -1;
 }
 
-void ShowNum(int val)
-{
+void ShowNum(int val) {
   switch (freqfont) {
     case 0: FrequencySprite.loadFont(FREQFONT0); break;
     case 1: FrequencySprite.loadFont(FREQFONT1); break;
@@ -5002,42 +4999,39 @@ void ShowNum(int val)
     case 4: FrequencySprite.loadFont(FREQFONT4); break;
     case 5: FrequencySprite.loadFont(FREQFONT5); break;
   }
-  
+
   FrequencySprite.setTextDatum(TR_DATUM);
-  
+
   FrequencySprite.fillSprite(BackgroundColor);
   FrequencySprite.setTextColor(FreqColor, FreqColorSmooth, false);
   FrequencySprite.drawString(String(val) + " ", 218, -6);
   FrequencySprite.pushSprite(46, 46);
-  
+
   FrequencySprite.unloadFont();
 }
 
-void TuneFreq(int temp)
-{
+void TuneFreq(int temp) {
   aftest = true;
   aftimer = millis();
 
   if (band == BAND_FM) {
-    while (temp < (LowEdgeSet * 10)) temp = temp*10;
+    while (temp < (LowEdgeSet * 10)) temp = temp * 10;
     if (temp > (HighEdgeSet * 10)) {
       if (edgebeep) EdgeBeeper();
     } else {
       frequency = temp;
     }
     radio.SetFreq(frequency);
-  } 
-  else if (band == BAND_OIRT) {
-    while (temp < (LowEdgeOIRTSet * 10)) temp = temp*10;
+  } else if (band == BAND_OIRT) {
+    while (temp < (LowEdgeOIRTSet * 10)) temp = temp * 10;
     if (temp > HighEdgeOIRTSet) {
       if (edgebeep) EdgeBeeper();
     } else {
       frequency_OIRT = temp;
     }
     radio.SetFreq(frequency_OIRT);
-  } 
-  else if (band == BAND_LW) {
-    while (temp < LWLowEdgeSet) temp = temp*10;
+  } else if (band == BAND_LW) {
+    while (temp < LWLowEdgeSet) temp = temp * 10;
     if (temp > LWHighEdgeSet) {
       if (edgebeep) EdgeBeeper();
     } else {
@@ -5045,9 +5039,8 @@ void TuneFreq(int temp)
     }
     radio.SetFreqAM(frequency_AM);
     frequency_LW = frequency_AM;
-  } 
-  else if (band == BAND_MW) {
-    while (temp < MWLowEdgeSet) temp = temp*10;
+  } else if (band == BAND_MW) {
+    while (temp < MWLowEdgeSet) temp = temp * 10;
     if (temp > MWHighEdgeSet) {
       if (edgebeep) EdgeBeeper();
     } else {
@@ -5055,9 +5048,8 @@ void TuneFreq(int temp)
     }
     radio.SetFreqAM(frequency_AM);
     frequency_MW = frequency_AM;
-  } 
-  else if (band == BAND_SW) {
-    while (temp < SWLowEdgeSet) temp = temp*10;
+  } else if (band == BAND_SW) {
+    while (temp < SWLowEdgeSet) temp = temp * 10;
     if (temp > SWHighEdgeSet) {
       if (edgebeep) EdgeBeeper();
     } else {
@@ -5072,20 +5064,16 @@ void TuneFreq(int temp)
   if (RDSSPYTCP) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
 }
 
-void NumpadProcess(int num)
-{
+void NumpadProcess(int num) {
   static bool input_mode = false;
   static int freq_in = 0;
 
   if (scandxmode) {
-    if (num == 127) {      // DX
-      cancelDXScan();
-    }
+    if (num == 127) cancelDXScan();
   } else {
-    if (num == 127) {      // DX
+    if (num == 127) {
       startFMDXScan();
-    }
-    else if (num == 13) {  // Enter
+    } else if (num == 13) {
       if (freq_in != 0) {
         TuneFreq(freq_in);
         if (XDRGTKUSB || XDRGTKTCP) {
@@ -5099,10 +5087,9 @@ void NumpadProcess(int num)
         }
       }
       freq_in = 0;
-    }
-    else {                 // Num
-      if (freq_in/10000 == 0) {
-        freq_in = freq_in*10 + num;
+    } else {
+      if (freq_in / 10000 == 0) {
+        freq_in = freq_in * 10 + num;
       }
       ShowNum(freq_in);
     }
