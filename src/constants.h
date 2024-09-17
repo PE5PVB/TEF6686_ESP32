@@ -121,20 +121,22 @@
 
 //MAIN COLORS                      /* RGB 565 CODES */
 #define Black               0x0000    /*  0,  0,  0 */
+#define BlackOlive          0x39E7    /*  7, 15,  7 */
 #define Blue                0x001F    /*  0,  0, 31 */
 #define Cabbage             0x06D0    /*  0, 54, 16 */
 #define Coral               0xFBEF    /* 31, 31, 15 */
 #define Crimson             0xF8C3    /* 31,  6,  3 */
 #define Cyan                0x0F3F    /*  1, 57, 31 */
 #define Cherry              0xF00A    /* 30,  0, 10 */
-#define Grey                0x7BEF    /* 15, 31, 15 */
 #define Darkgrey            0x1082    /*  2,  4,  2 */
 #define Deepsky             0x051F    /*  0, 40, 31 */
 #define Green               0x07E0    /*  0, 63,  0 */
+#define Grey                0x7BEF    /* 15, 31, 15 */
 #define Indigo              0x881F    /* 17,  0, 31 */
 #define Maroon              0x5140    /* 10, 10,  0 */
 #define Ocean               0x01FF    /*  0, 15, 31 */
 #define Orange              0xFC00    /* 31, 32,  0 */
+#define Pink                0xFDBF    /* 31, 45, 31 */
 #define Purple              0xAA1C    /* 21, 16, 28 */
 #define Red                 0xF800    /* 31,  0,  0 */
 #define Sakura              0xF3D5    /* 30, 30, 21 */
@@ -160,6 +162,7 @@
 #define OceanSmooth         0x0006    /*  0,  0,  6 */
 #define MaroonSmooth        0x2001    /*  4,  0,  1 */
 #define OrangeSmooth        0x3165    /*  6, 11,  5 */
+#define PinkSmooth          0x620C    /* 12, 16, 12 */
 #define PurpleSmooth        0x2887    /*  5,  4,  7 */
 #define RedSmooth           0x2000    /*  4,  0,  0 */
 #define SakuraSmooth        0x3008    /*  6,  0,  8 */
@@ -187,6 +190,7 @@
 #define CyanGrey            0x2A08    /*  5, 16,  8 */
 #define Dallas              0x6A86    /* 13, 20,  6 */
 #define DallasSmooth        0x3123    /*  6,  9,  3 */
+#define EerieBlack          0x1825    /*  3,  1,  5 */
 #define Electric            0x6016    /* 12,  0, 22 */
 #define GreenDark           0x0200    /*  0, 16,  0 */
 #define GreenGrey           0x2965    /*  5, 11,  5 */
@@ -206,130 +210,133 @@
 #define Tyrian              0x3845    /*  7,  2,  5 */
 
 // EEPROM index defines
-#define EE_PRESETS_CNT              99    // When set > 99 change the complete EEPROM adressing!
-#define EE_CHECKBYTE_VALUE          10     // 0 ~ 255,add new entry, change for new value
-#define EE_PRESETS_FREQUENCY        0     // Default value when memory channel should be skipped!
+#define EE_PRESETS_CNT                99    // When set > 99 change the complete EEPROM adressing!
+#define EE_CHECKBYTE_VALUE            10     // 0 ~ 255,add new entry, change for new value
+#define EE_PRESETS_FREQUENCY          0     // Default value when memory channel should be skipped!
 #ifdef HAS_AIR_BAND
-#define EE_TOTAL_CNT                2236  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                  2259  // Total occupied eeprom bytes
 #else
-#define EE_TOTAL_CNT                2230  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                  2254  // Total occupied eeprom bytes
 #endif
 
-#define EE_PRESETS_BAND_START       0     // 99 * 1 byte
-#define EE_PRESET_BW_START          99    // 99 * 1 byte
-#define EE_PRESET_MS_START          198   // 99 * 1 byte
-#define EE_PRESETS_FREQUENCY_START  297   // 99 * 4 bytes
-#define EE_PRESETS_RDSPI_START      693   // 99 * 5 bytes
-#define EE_PRESETS_RDSPS_START      1188  // 99 * 9 bytes
+#define EE_PRESETS_BAND_START         0     // 99 * 1 byte
+#define EE_PRESET_BW_START            99    // 99 * 1 byte
+#define EE_PRESET_MS_START            198   // 99 * 1 byte
+#define EE_PRESETS_FREQUENCY_START    297   // 99 * 4 bytes
+#define EE_PRESETS_RDSPI_START        693   // 99 * 5 bytes
+#define EE_PRESETS_RDSPS_START        1188  // 99 * 9 bytes
 
-#define EE_UINT16_FREQUENCY_FM      2079
-#define EE_BYTE_VOLSET              2083
-#define EE_BYTE_STEREO              2084
-#define EE_BYTE_BANDFM              2085
-#define EE_BYTE_BANDAM              2086
-#define EE_UINT16_CONVERTERSET      2087
-#define EE_UINT16_FMLOWEDGESET      2091
-#define EE_UINT16_FMHIGHEDGESET     2095
-#define EE_BYTE_CONTRASTSET         2099
-#define EE_BYTE_STEREOLEVEL         2100
-#define EE_BYTE_HIGHCUTLEVEL        2101
-#define EE_BYTE_HIGHCUTOFFSET       2102
-#define EE_BYTE_LEVELOFFSET         2103
-#define EE_BYTE_RTBUFFER            2104
-#define EE_BYTE_SORTAF              2105
-#define EE_BYTE_STATIONLISTID       2106
-#define EE_BYTE_EDGEBEEP            2107
-#define EE_BYTE_SOFTMUTEAM          2108
-#define EE_BYTE_SOFTMUTEFM          2109
-#define EE_UINT16_FREQUENCY_AM      2110
-#define EE_BYTE_LANGUAGE            2114
-#define EE_BYTE_SHOWRDSERRORS       2115
-#define EE_BYTE_TEF                 2116
-#define EE_BYTE_DISPLAYFLIP         2117
-#define EE_BYTE_ROTARYMODE          2118
-#define EE_BYTE_STEPSIZE            2119
-#define EE_BYTE_TUNEMODE            2120
-#define EE_BYTE_OPTENC              2121
-#define EE_BYTE_CHECKBYTE           2122
-#define EE_BYTE_IMSSET              2123
-#define EE_BYTE_EQSET               2124
-#define EE_BYTE_BAND                2125
-#define EE_BYTE_LOWLEVELSET         2126
-#define EE_BYTE_BWSET_FM            2127
-#define EE_BYTE_BWSET_AM            2128
-#define EE_BYTE_BANDAUTOSW          2129
-#define EE_BYTE_MEMORYPOS           2130
-#define EE_BYTE_REGION              2131
-#define EE_BYTE_RDS_UNDERSCORE      2132
-#define EE_BYTE_USBMODE             2133
-#define EE_BYTE_WIFI                2134
-#define EE_BYTE_SUBNETCLIENT        2135
-#define EE_BYTE_SHOWSWMIBAND        2136
-#define EE_BYTE_RDS_FILTER          2137
-#define EE_BYTE_RDS_PIERRORS        2138
-#define EE_BYTE_USESQUELCH          2139
-#define EE_BYTE_SHOWMODULATION      2140
-#define EE_BYTE_AM_NB               2141
-#define EE_BYTE_FM_NB               2142
-#define EE_BYTE_AUDIOMODE           2143
-#define EE_BYTE_TOUCH_ROTATING      2144
-#define EE_BYTE_HARDWARE_MODEL      2145
-#define EE_BYTE_POWEROPTIONS        2146
-#define EE_BYTE_CURRENTTHEME        2147
-#define EE_BYTE_FMDEFAULTSTEPSIZE   2148
-#define EE_BYTE_SCREENSAVERSET      2149
-#define EE_BYTE_UNIT                2150
-#define EE_BYTE_AF                  2151
-#define EE_BYTE_BATTERY_OPTIONS     2152
-#define EE_BYTE_AM_CO_DECT          2153
-#define EE_BYTE_AM_CO_DECT_COUNT    2154
-#define EE_BYTE_AM_RF_GAIN          2155
-#define EE_BYTE_FM_DEEMPHASIS       2156
-#define EE_UINT16_FREQUENCY_LW      2157
-#define EE_UINT16_FREQUENCY_MW      2161
-#define EE_UINT16_FREQUENCY_SW      2165
-#define EE_UINT16_LOWEDGEOIRTSET    2169
-#define EE_UINT16_HIGHEDGEOIRTSET   2173
-#define EE_INT16_AMLEVELOFFSET      2177
-#define EE_UINT16_FREQUENCY_OIRT    2181
-#define EE_STRING_XDRGTK_KEY        2185  // 11 byte
-#define EE_BYTE_FASTPS              2196
-#define EE_BYTE_TOT                 2197
-#define EE_BYTE_MWREGION            2198
-#define EE_BYTE_SPISPEED            2199
-#define EE_BYTE_AMSCANSENS          2200
-#define EE_BYTE_FMSCANSENS          2201
-#define EE_BYTE_FREQFONT            2202
-#define EE_BYTE_SKIN                2203
-#define EE_BYTE_XDRGTKMUTE          2204
-#define EE_BYTE_FMAGC               2205
-#define EE_BYTE_AMAGC               2206
-#define EE_BYTE_FMSI                2207
-#define EE_BYTE_SCANSTART           2208
-#define EE_BYTE_SCANSTOP            2209
-#define EE_BYTE_SCANHOLD            2210
-#define EE_BYTE_SCANMEM             2211
-#define EE_BYTE_SCANCANCEL          2212
-#define EE_BYTE_SCANMUTE            2213
-#define EE_BYTE_AUTOSQUELCH         2214
-#define EE_BYTE_LONGBANDPRESS       2215
-#define EE_BYTE_SHOWCLOCK           2216
-#define EE_BYTE_SHOWLONGPS          2217
-#define EE_UINT16_MEMSTARTFREQ      2218
-#define EE_UINT16_MEMSTOPFREQ       2222
-#define EE_BYTE_MEMSTARTPOS         2226
-#define EE_BYTE_MEMSTOPPOS          2227
-#define EE_BYTE_MEMPIONLY           2228
-#define EE_BYTE_MEMDOUBLEPI         2229
+#define EE_UINT16_FREQUENCY_FM        2079
+#define EE_BYTE_VOLSET                2083
+#define EE_BYTE_STEREO                2084
+#define EE_BYTE_BANDFM                2085
+#define EE_BYTE_BANDAM                2086
+#define EE_UINT16_CONVERTERSET        2087
+#define EE_UINT16_FMLOWEDGESET        2091
+#define EE_UINT16_FMHIGHEDGESET       2095
+#define EE_BYTE_CONTRASTSET           2099
+#define EE_BYTE_STEREOLEVEL           2100
+#define EE_BYTE_HIGHCUTLEVEL          2101
+#define EE_BYTE_HIGHCUTOFFSET         2102
+#define EE_BYTE_LEVELOFFSET           2103
+#define EE_BYTE_RTBUFFER              2104
+#define EE_BYTE_SORTAF                2105
+#define EE_BYTE_STATIONLISTID         2106
+#define EE_BYTE_EDGEBEEP              2107
+#define EE_BYTE_SOFTMUTEAM            2108
+#define EE_BYTE_SOFTMUTEFM            2109
+#define EE_UINT16_FREQUENCY_AM        2110
+#define EE_BYTE_LANGUAGE              2114
+#define EE_BYTE_SHOWRDSERRORS         2115
+#define EE_BYTE_TEF                   2116
+#define EE_BYTE_DISPLAYFLIP           2117
+#define EE_BYTE_ROTARYMODE            2118
+#define EE_BYTE_STEPSIZE              2119
+#define EE_BYTE_TUNEMODE              2120
+#define EE_BYTE_OPTENC                2121
+#define EE_BYTE_CHECKBYTE             2122
+#define EE_BYTE_IMSSET                2123
+#define EE_BYTE_EQSET                 2124
+#define EE_BYTE_BAND                  2125
+#define EE_BYTE_LOWLEVELSET           2126
+#define EE_BYTE_BWSET_FM              2127
+#define EE_BYTE_BWSET_AM              2128
+#define EE_BYTE_BANDAUTOSW            2129
+#define EE_BYTE_MEMORYPOS             2130
+#define EE_BYTE_REGION                2131
+#define EE_BYTE_RDS_UNDERSCORE        2132
+#define EE_BYTE_USBMODE               2133
+#define EE_BYTE_WIFI                  2134
+#define EE_BYTE_SUBNETCLIENT          2135
+#define EE_BYTE_SHOWSWMIBAND          2136
+#define EE_BYTE_RDS_FILTER            2137
+#define EE_BYTE_RDS_PIERRORS          2138
+#define EE_BYTE_USESQUELCH            2139
+#define EE_BYTE_SHOWMODULATION        2140
+#define EE_BYTE_AM_NB                 2141
+#define EE_BYTE_FM_NB                 2142
+#define EE_BYTE_AUDIOMODE             2143
+#define EE_BYTE_TOUCH_ROTATING        2144
+#define EE_BYTE_HARDWARE_MODEL        2145
+#define EE_BYTE_POWEROPTIONS          2146
+#define EE_BYTE_CURRENTTHEME          2147
+#define EE_BYTE_FMDEFAULTSTEPSIZE     2148
+#define EE_BYTE_SCREENSAVERSET        2149
+#define EE_BYTE_UNIT                  2150
+#define EE_BYTE_AF                    2151
+#define EE_BYTE_BATTERY_OPTIONS       2152
+#define EE_BYTE_AM_CO_DECT            2153
+#define EE_BYTE_AM_CO_DECT_COUNT      2154
+#define EE_BYTE_AM_RF_GAIN            2155
+#define EE_BYTE_FM_DEEMPHASIS         2156
+#define EE_UINT16_FREQUENCY_LW        2157
+#define EE_UINT16_FREQUENCY_MW        2161
+#define EE_UINT16_FREQUENCY_SW        2165
+#define EE_UINT16_LOWEDGEOIRTSET      2169
+#define EE_UINT16_HIGHEDGEOIRTSET     2173
+#define EE_INT16_AMLEVELOFFSET        2177
+#define EE_UINT16_FREQUENCY_OIRT      2181
+#define EE_STRING_XDRGTK_KEY          2185  // 11 byte
+#define EE_BYTE_FASTPS                2196
+#define EE_BYTE_TOT                   2197
+#define EE_BYTE_MWREGION              2198
+#define EE_BYTE_SPISPEED              2199
+#define EE_BYTE_AMSCANSENS            2200
+#define EE_BYTE_FMSCANSENS            2201
+#define EE_BYTE_FREQFONT              2202
+#define EE_BYTE_SKIN                  2203
+#define EE_BYTE_XDRGTKMUTE            2204
+#define EE_BYTE_FMAGC                 2205
+#define EE_BYTE_AMAGC                 2206
+#define EE_BYTE_FMSI                  2207
+#define EE_BYTE_SCANSTART             2208
+#define EE_BYTE_SCANSTOP              2209
+#define EE_BYTE_SCANHOLD              2210
+#define EE_BYTE_SCANMEM               2211
+#define EE_BYTE_SCANCANCEL            2212
+#define EE_BYTE_SCANMUTE              2213
+#define EE_BYTE_AUTOSQUELCH           2214
+#define EE_BYTE_LONGBANDPRESS         2215
+#define EE_BYTE_SHOWCLOCK             2216
+#define EE_BYTE_SHOWLONGPS            2217
+#define EE_UINT16_MEMSTARTFREQ        2218
+#define EE_UINT16_MEMSTOPFREQ         2222
+#define EE_BYTE_MEMSTARTPOS           2226
+#define EE_BYTE_MEMSTOPPOS            2227
+#define EE_BYTE_MEMPIONLY             2228
+#define EE_BYTE_MEMDOUBLEPI           2229
+#define EE_STRING_RABBITEARSUSER      2230
+#define EE_STRING_RABBITEARSPASSWORD  2241
+#define EE_BYTE_WAITONLYONSIGNAL      2253
 #ifdef HAS_AIR_BAND
-#define EE_BYTE_AIRSTEPSIZE         2230
-#define EE_UINT16_FREQUENCY_AIR     2231
+#define EE_BYTE_AIRSTEPSIZE           2254
+#define EE_UINT16_FREQUENCY_AIR       2255
 #endif
 // End of EEPROM index defines
 
 static const char* const unitString[] = {"dBμV", "dBf", "dBm"};
 static const char* const FreqFont[] = {"Classic", "Roubenstil", "Motoya", "Aura2", "Comic", "Modern"};
-static const char* const Theme[] = {"Essence", "Cyan", "Crimson", "Monochrome", "Volcano", "Dendro", "Sakura", "Whiteout", "Tangerine", "Ocean", "Indigo", "Maroon", "GoldBrite"};
+static const char* const Theme[] = {"Essence", "Cyan", "Crimson", "Monochrome", "Volcano", "Dendro", "Sakura", "Whiteout", "Tangerine", "Ocean", "Indigo", "Maroon", "GoldBrite", "Bubblegum"};
 static const char* const Skin[] = {"Essential"};
 
 // Memory channel database
@@ -347,7 +354,7 @@ enum LONGBANDBUTTONPRESS {
 };
 
 enum AUTOMEMPIMODES {
-	MEMPI_OFF = 0, MEMPI_RANGE, MEMPI_FULL
+  MEMPI_OFF = 0, MEMPI_RANGE, MEMPI_FULL
 };
 
 enum SCAN_CANCEL {

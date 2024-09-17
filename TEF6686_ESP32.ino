@@ -1,6 +1,7 @@
 #include "soc/soc.h"
 #include "soc/rtc_cntl_reg.h"
 #include <WiFiClient.h>
+#include <HTTPClient.h>
 #include <EEPROM.h>
 #include <Wire.h>
 #include <math.h>
@@ -104,6 +105,8 @@ bool RDSstatusold;
 bool rdsstereoold;
 bool rtcset;
 bool scandxmode;
+bool scanholdflag;
+bool scanholdonsignal;
 bool scanmem;
 bool scanmute;
 bool screenmute;
@@ -218,6 +221,7 @@ byte spispeed;
 char buff[16];
 char eonpicodeold[20][6];
 char programTypePrevious[18];
+char rabbitearstime[100][21];
 const uint8_t* currentFont = nullptr;
 float vPerold;
 int ActiveColor;
@@ -312,6 +316,8 @@ String PIold;
 String PSold;
 String ptynold = " ";
 String PTYold;
+String RabbitearsPassword;
+String RabbitearsUser;
 String rds_clock;
 String rds_clockold;
 String RDSSPYRDS;
@@ -330,6 +336,7 @@ String XDRGTKRDS;
 String XDRGTKRDSold;
 uint16_t BW;
 uint16_t MStatus;
+uint16_t rabbitearspi[100]; // first is for 88.1, 2nd 88.3, etc. to 107.9 MHz
 uint16_t SWMIBandPos;
 uint16_t SWMIBandPosold;
 uint16_t USN;
@@ -485,6 +492,8 @@ void setup() {
   frequency_AIR = EEPROM.readUInt(EE_UINT16_FREQUENCY_AIR);
 #endif
   XDRGTK_key = EEPROM.readString(EE_STRING_XDRGTK_KEY);
+  RabbitearsUser = EEPROM.readString(EE_STRING_RABBITEARSUSER);
+  RabbitearsPassword = EEPROM.readString(EE_STRING_RABBITEARSPASSWORD);
   usesquelch = EEPROM.readByte(EE_BYTE_USESQUELCH);
   showmodulation = EEPROM.readByte(EE_BYTE_SHOWMODULATION);
   amnb = EEPROM.readByte(EE_BYTE_AM_NB);
@@ -542,6 +551,7 @@ void setup() {
   memstoppos = EEPROM.readByte(EE_BYTE_MEMSTOPPOS);
   mempionly = EEPROM.readByte(EE_BYTE_MEMPIONLY);
   memdoublepi = EEPROM.readByte(EE_BYTE_MEMDOUBLEPI);
+  scanholdonsignal = EEPROM.readByte(EE_BYTE_WAITONLYONSIGNAL);
 
   if (spispeed == SPI_SPEED_DEFAULT) {
     tft.setSPISpeed(SPI_FREQUENCY / 1000000);
@@ -867,7 +877,14 @@ void loop() {
   }
 
   if (scandxmode) {
-    if (millis() >= scantimer + (scanhold == 0 ? 500 : (scanhold * 1000))) {
+    unsigned long waitTime = (scanhold == 0) ? 500 : (scanhold * 1000);
+    if (!scanholdflag) scanholdflag = (USN < fmscansens * 30) && (WAM < 230) && (OStatus < 80) && (OStatus > -80);
+    bool bypassMillisCheck = scanholdonsignal && !scanholdflag;
+    bool shouldScan = bypassMillisCheck || (!bypassMillisCheck && (millis() >= scantimer + waitTime));
+
+    if (shouldScan) {
+      if (scanmute && scanholdonsignal) radio.setMute();
+      scanholdflag = false;
       if (scanmem) {
         memorypos++;
         if (memorypos > scanstop) memorypos = scanstart;
@@ -887,6 +904,8 @@ void loop() {
       }
       scantimer = millis();
       initdxscan = false;
+    } else {
+      if (scanmute && scanholdonsignal) radio.setUnMute();
     }
 
     if (millis() >= flashingtimer + 500) {
@@ -900,12 +919,26 @@ void loop() {
       }
       flashingtimer = millis();
     }
-    delay(100);
+
+    if (!scanholdflag) delay(100);
     radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+
+    if (RabbitearsUser.length() && RabbitearsPassword.length() && region == REGION_US && radio.rds.correctPI != 0 && frequency >= 8810 && frequency <= 10790 && !(frequency % 10) && ((frequency / 10) % 2)) {
+      byte i = (frequency / 10 - 881) / 2;
+      if (!rabbitearspi[i]) {
+        rabbitearspi[i] = radio.rds.correctPI;
+        rtc.getTime("%FT%TZ").toCharArray(rabbitearstime[i], 21);
+      }
+    }
+
     if (!initdxscan) {
       switch (scancancel) {
-        case CORRECTPI: if (RDSstatus && radio.rds.correctPI != 0) cancelDXScan(); break;
-        case SIGNAL: if ((USN < fmscansens * 30) && (WAM < 230) && (OStatus < 80 && OStatus > -80)) cancelDXScan(); break;
+        case CORRECTPI:
+          if (RDSstatus && radio.rds.correctPI != 0) cancelDXScan();
+          break;
+        case SIGNAL:
+          if (scanhold) cancelDXScan();
+          break;
       }
     }
   }
@@ -1064,7 +1097,7 @@ void loop() {
       tftPrint(-1, "PS:", 3, 193, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, "RT:", 3, 221, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, "PTY:", 3, 163, ActiveColor, ActiveColorSmooth, 16);
-      if (!showmodulation) tft.drawLine(20, 143, 204, 143, GreyoutColor); else tft.drawLine(20, 143, 204, 143, TFT_DARKGREY);
+      if (!showmodulation) tft.drawLine(20, 143, 204, 143, GreyoutColor); else tft.drawLine(20, 143, 204, 143, Darkgrey);
     }
     LowLevelInit = true;
   }
@@ -3936,6 +3969,22 @@ void TuneUp() {
 
     if (fmdefaultstepsize == 2 && stepsize == 0 && frequency == 8795) frequency = 8790;
     if (frequency >= (HighEdgeSet * 10) + 1) {
+      if (scandxmode && RabbitearsUser.length() && RabbitearsPassword.length()) {
+        byte i = 0;
+        bool hasreport = false;
+        for (i = 0; i < 100; i++) {
+          if (rabbitearspi[i]) {
+            hasreport = true;
+            break;
+          }
+        }
+        if (hasreport) {
+          rabbitearssend();
+          for (i = 0; i < 100; i++) {
+            rabbitearspi[i] = 0;
+          }
+        }
+      }
       frequency = LowEdgeSet * 10;
       if (fmdefaultstepsize == 2 && stepsize == 0 && frequency == 8750) frequency = 8775;
       if (edgebeep) EdgeBeeper();
@@ -4278,6 +4327,8 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_AIR, 135350);
 #endif
   EEPROM.writeString(EE_STRING_XDRGTK_KEY, "password");
+  EEPROM.writeString(EE_STRING_RABBITEARSUSER, "");
+  EEPROM.writeString(EE_STRING_RABBITEARSPASSWORD, "");
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_USESQUELCH, 1); else EEPROM.writeByte(EE_BYTE_USESQUELCH, 0);
   EEPROM.writeByte(EE_BYTE_SHOWMODULATION, 1);
   EEPROM.writeByte(EE_BYTE_AM_NB, 0);
@@ -4336,6 +4387,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_MEMSTOPPOS, 10);
   EEPROM.writeByte(EE_BYTE_MEMPIONLY, 1);
   EEPROM.writeByte(EE_BYTE_MEMDOUBLEPI, 0);
+  EEPROM.writeByte(EE_BYTE_WAITONLYONSIGNAL, 1);
 
   for (int i = 0; i < EE_PRESETS_CNT; i++) {
     EEPROM.writeByte(i + EE_PRESETS_BAND_START, BAND_FM);
@@ -4572,6 +4624,7 @@ void endMenu() {
   EEPROM.writeByte(EE_BYTE_MEMSTOPPOS, memstoppos);
   EEPROM.writeByte(EE_BYTE_MEMPIONLY, mempionly);
   EEPROM.writeByte(EE_BYTE_MEMDOUBLEPI, memdoublepi);
+  EEPROM.writeByte(EE_BYTE_WAITONLYONSIGNAL, scanholdonsignal);
   EEPROM.commit();
   if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
   Serial.end();
@@ -4586,6 +4639,11 @@ void endMenu() {
 
 void startFMDXScan() {
   initdxscan = true;
+  scanholdflag = false;
+  for (byte i = 0; i < 100; i++) {
+    rabbitearspi[i] = 0;
+    rabbitearstime[i][0] = 0;
+  }
 
   if (menu) endMenu();
   if (afscreen || advancedRDS) BuildDisplay();
@@ -4619,6 +4677,37 @@ void startFMDXScan() {
   scandxmode = true;
   ShowTuneMode();
   if (XDRGTKUSB || XDRGTKTCP) DataPrint("J1\n");
+}
+
+void rabbitearssend () {
+  if (WiFi.status() != WL_CONNECTED) return;
+  String RabbitearsURL = "http://rabbitears.info/tvdx/fm_spot";
+  WiFiClient RabbitearsClient;
+  HTTPClient http;
+  byte i;
+  String json = String("{\"tuner_key\":\"");
+  json += RabbitearsUser;
+  json += String("\",\"password\":\"");
+  json += RabbitearsPassword;
+  json += String("\",");
+  json += String("\"signal\":{");
+  for (i = 0; i < 100; i++) {
+    if (rabbitearspi[i]) {
+      json += String("\"");
+      json += String((i * 2 + 881) * 100000);
+      json += String("\":{\"time\":\"");
+      json += String(rabbitearstime[i]);
+      json += String("\",\"pi_code\":");
+      json += String(rabbitearspi[i]);
+      json += String("},");
+    }
+  }
+  json.remove(json.length() - 1); // remove trailing comma
+  json += String("}}");
+  http.begin(RabbitearsClient, RabbitearsURL.c_str());
+  http.addHeader("Content-Type", "application/json");
+  http.POST(json);
+  http.end();
 }
 
 void setAutoSpeedSPI() {
@@ -4709,12 +4798,19 @@ uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, ui
       dostore = true;
       if (doublepi != 0) {
         for (byte x = (doublepi == 1 ? startmem : 0); x <= (doublepi == 1 ? stopmem : EE_PRESETS_CNT - 1); x++) {
-          if (presets[memorypos].RDSPI[0] != '\0') {
+          if (presets[x].RDSPI[0] != '\0') {
+            bool allMatch = true;
+
             for (byte i = 0; i < 4; i++) {
-              if (presets[memorypos].RDSPI[i] != radio.rds.picode[i]) {
-                dostore = false;
+              if (presets[x].RDSPI[i] != radio.rds.picode[i]) {
+                allMatch = false;
                 break;
               }
+            }
+
+            if (allMatch) {
+              dostore = false;
+              break;
             }
           }
         }
@@ -4834,6 +4930,19 @@ void ClearMemoryRange(uint8_t start, uint8_t stop) {
   for (uint8_t pos = start; pos <= stop; pos++) {
     EEPROM.writeByte(pos + EE_PRESETS_BAND_START, BAND_FM);
     EEPROM.writeUInt((pos * 4) + EE_PRESETS_FREQUENCY_START, EE_PRESETS_FREQUENCY);
+    EEPROM.writeByte(pos + EE_PRESET_BW_START, 0);
+    EEPROM.writeByte(pos + EE_PRESET_MS_START, 1);
+
+    for (int y = 0; y < 9; y++) {
+      EEPROM.writeByte((pos * 9) + y + EE_PRESETS_RDSPS_START, '\0');
+      presets[pos].RDSPS[y] = '\0';
+    }
+
+    for (int y = 0; y < 5; y++) {
+      EEPROM.writeByte((pos * 5) + y + EE_PRESETS_RDSPI_START, '\0');
+      presets[pos].RDSPI[y] = '\0';
+    }
+
     EEPROM.commit();
     presets[pos].band = BAND_FM;
     presets[pos].frequency = EE_PRESETS_FREQUENCY;

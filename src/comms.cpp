@@ -24,6 +24,7 @@ void Communication() {
 
           if ((stlfreq.toInt()) / 10000 > (TEF == 205 ? 6400 : 6500) && (stlfreq.toInt()) / 10000 < 10800) {
             unsigned int tempfreq = (stlfreq.toInt()) / 10000;
+            if (scandxmode) cancelDXScan();
             if (tempfreq >= FREQ_FM_OIRT_START && tempfreq <= FREQ_FM_OIRT_END) {
               if (band != BAND_OIRT) {
                 band = BAND_OIRT;
@@ -47,6 +48,7 @@ void Communication() {
           }
 
           if ((stlfreq.toInt()) / 1000 > 144 && (stlfreq.toInt()) / 1000 < 27000) {
+            if (scandxmode) cancelDXScan();
             if (afscreen || advancedRDS) {
               BuildDisplay();
               SelectBand();
@@ -139,6 +141,7 @@ void Communication() {
         String freq = data_str.substring(0, symPos);
         freq = freq.substring(0, freq.length() - 1);
         frequency = freq.toInt();
+        if (scandxmode) cancelDXScan();
         radio.SetFreq(frequency);
         radio.clearRDS(fullsearchrds);
         if (band != BAND_FM) {
@@ -314,6 +317,7 @@ void Communication() {
         String freq = data_str.substring(0, symPos);
         freq = freq.substring(0, freq.length() - 1);
         frequency = freq.toInt();
+        if (scandxmode) cancelDXScan();
         radio.SetFreq(frequency);
         if (afscreen) BuildAdvancedRDS();
         radio.clearRDS(fullsearchrds);
@@ -527,6 +531,7 @@ void XDRGTKRoutine() {
         break;
 
       case 'M':
+        if (scandxmode) cancelDXScan();
         byte XDRband;
         XDRband = atol(buff + 1);
         if (XDRband == 0) DataPrint("M0\n"); else DataPrint("M1\n");
@@ -567,6 +572,7 @@ void XDRGTKRoutine() {
         break;
 
       case 'T':
+        if (scandxmode) cancelDXScan();
         unsigned int freqtemp;
         freqtemp = atoi(buff + 1);
 
@@ -666,6 +672,7 @@ void XDRGTKRoutine() {
         break;
 
       case 'S':
+        if (scandxmode) cancelDXScan();
         if (buff[1] == 'a') {
           scanner_start = (atol(buff + 2) + 5) / 10;
         } else if (buff[1] == 'b') {

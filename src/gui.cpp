@@ -8,7 +8,7 @@
 #include <cstring>
 
 byte menuitem;
-byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 6, 8, 9};
+byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 6, 9, 9};
 extern mem presets[];
 bool setWiFiConnectParam = false;
 
@@ -20,8 +20,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       SecondaryColor = Skyblue;
       SecondaryColorSmooth = SkyblueSmooth;
       FrameColor = Blue;
-      // GreyoutColor = Darkgrey;
-      GreyoutColor = Lightgrey;
+      GreyoutColor = BlackOlive;
       BackgroundColor = Black;
       ActiveColor = White;
       ActiveColorSmooth = WhiteSmooth;
@@ -111,7 +110,6 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
     case 3:  // Monochrome theme
       PrimaryColor = White;
       PrimaryColorSmooth = Black;
-      // SecondaryColor = PureGrey;
       SecondaryColor = White;
       SecondaryColorSmooth = Black;
       FrameColor = GreenGrey;
@@ -129,7 +127,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       StereoColorSmooth = Black;
       RDSColor = White;
       RDSColorSmooth = Black;
-      RDSDropoutColor = PureGrey;
+      RDSDropoutColor = PaleGrey;
       RDSDropoutColorSmooth = Black;
       BarSignificantColor = Red;
       BarInsignificantColor = Green;
@@ -397,8 +395,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       SecondaryColor = Skyblue;
       SecondaryColorSmooth = SkyblueSmooth;
       FrameColor = Blue;
-      // GreyoutColor = Darkgrey;
-      GreyoutColor = Lightgrey;
+      GreyoutColor = BlackOlive;
       BackgroundColor = Black;
       ActiveColor = White;
       ActiveColorSmooth = WhiteSmooth;
@@ -422,6 +419,38 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BWAutoColorSmooth = TealSmooth;
       BatteryValueColor = Teal;
       BatteryValueColorSmooth = Black;
+      break;
+
+    case 13:  // Bubblegum
+      PrimaryColor = Cyan;
+      PrimaryColorSmooth = CyanSmooth;
+      SecondaryColor = Cherry;
+      SecondaryColorSmooth = CherrySmooth;
+      FrameColor = Electric;
+      GreyoutColor = Meteorite;
+      BackgroundColor = EerieBlack;
+      ActiveColor = White;
+      ActiveColorSmooth = WhiteSmooth;
+      FreqColor = Pink;
+      FreqColorSmooth = PinkSmooth;
+      SignificantColor = Purple;
+      SignificantColorSmooth = PurpleSmooth;
+      InsignificantColor = Cherry;
+      InsignificantColorSmooth = CherrySmooth;
+      StereoColor = Cherry;
+      StereoColorSmooth = CherrySmooth;
+      RDSColor = Teal;
+      RDSColorSmooth = TealSmooth;
+      RDSDropoutColor = Logan;
+      RDSDropoutColorSmooth = LoganSmooth;
+      BarSignificantColor = Coral;
+      BarInsignificantColor = Teal;
+      ModBarSignificantColor = Sakura;
+      ModBarInsignificantColor = Skyblue;
+      BWAutoColor = Violet;
+      BWAutoColorSmooth = VioletSmooth;
+      BatteryValueColor = Turquoise;
+      BatteryValueColorSmooth = CyanDarkSmooth;
       break;
   }
 }
@@ -1456,6 +1485,15 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.drawString(String(amscansens), 298, 2);
           break;
 
+        case DXMODE:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][281]), 6, 2);
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((scanholdonsignal ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
+          break;
+
         case AUTOMEM:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -1706,9 +1744,9 @@ void BuildDisplay() {
   tft.drawLine(53, 30, 53, 0, FrameColor);
   tft.drawLine(89, 30, 89, 0, FrameColor);
   tft.drawLine(158, 30, 158, 0, FrameColor);
-  tft.drawLine(20, 114, 204, 114, TFT_DARKGREY);
+  tft.drawLine(20, 114, 204, 114, Darkgrey);
 
-  if (!showmodulation) tft.drawLine(20, 143, 204, 143, GreyoutColor); else tft.drawLine(20, 143, 204, 143, TFT_DARKGREY);
+  if (!showmodulation) tft.drawLine(20, 143, 204, 143, GreyoutColor); else tft.drawLine(20, 143, 204, 143, Darkgrey);
   for (byte segments = 0; segments < 94; segments++) {
     if (segments > 54) {
       if (((segments - 53) % 10) == 0) {
@@ -2664,6 +2702,13 @@ void MenuUp() {
             OneBigLineSprite.drawString(String(fmscansens), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
+
+          case ITEM9:
+            scanholdonsignal = !scanholdonsignal;
+
+            OneBigLineSprite.drawString((scanholdonsignal ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
         }
         break;
 
@@ -3605,6 +3650,13 @@ void MenuDown() {
             OneBigLineSprite.drawString(String(fmscansens), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
+
+          case ITEM9:
+            scanholdonsignal = !scanholdonsignal;
+
+            OneBigLineSprite.drawString((scanholdonsignal ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
         }
         break;
 
@@ -3780,24 +3832,25 @@ void DoMenu() {
             tft.drawRoundRect(10, 6, 300, 230, 5, ActiveColor);
             tft.fillRoundRect(12, 8, 296, 226, 5, BackgroundColor);
             tftPrint(0, myLanguage[language][71], 155, 13, ActiveColor, ActiveColorSmooth, 28);
-            tftPrint(0, myLanguage[language][72], 155, 63, ActiveColor, ActiveColorSmooth, 28);
-            tftPrint(0, "PE5PVB", 155, 43, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "ohmytime", 145, 93, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "HyperDX", 145, 108, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "MCelliotG", 155, 93, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "andimik", 155, 108, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "DXHR05", 145, 123, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "NoobishSVK", 145, 138, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "yo2ldk", 155, 123, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "Justin_Peng(Portable)", 155, 138, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "Overland DX", 145, 153, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "elektronik232", 155, 153, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "KOTYA8", 145, 168, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "mrwish7", 155, 168, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "lxsxl", 145, 183, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "leryfm", 155, 183, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "marsel90-1", 145, 198, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "lawendel", 155, 198, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(0, myLanguage[language][72], 155, 55, ActiveColor, ActiveColorSmooth, 28);
+            tftPrint(0, "PE5PVB", 155, 38, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "ohmytime", 145, 80, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "HyperDX", 145, 95, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "MCelliotG", 155, 80, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "andimik", 155, 95, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "DXHR05", 145, 110, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "NoobishSVK", 145, 125, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "yo2ldk", 155, 110, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "Justin_Peng(Portable)", 155, 125, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "Overland DX", 145, 140, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "elektronik232", 155, 140, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "KOTYA8", 145, 155, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "mrwish7", 155, 155, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "lxsxl", 145, 170, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "leryfm", 155, 170, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "marsel90-1", 145, 185, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(-1, "lawendel", 155, 185, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "KB8U", 145, 200, PrimaryColor, PrimaryColorSmooth, 16);
             tftPrint(0, "github.com/PE5PVB/TEF6686_ESP32", 155, 215, ActiveColor, ActiveColorSmooth, 16);
             break;
         }
@@ -4458,17 +4511,33 @@ void DoMenu() {
               tftPrint(0, "http://192.168.4.1", 155, 174, PrimaryColor, PrimaryColorSmooth, 16);
               char key [9];
               XDRGTK_key.toCharArray(key, 9);
+              char rabbitearsuser [9];
+              RabbitearsUser.toCharArray(rabbitearsuser, 9);
+              char rabbitearspw [9];
+              RabbitearsPassword.toCharArray(rabbitearspw, 9);
               UpdateFonts(1);
               WiFiConnectParam XDRGTK_key_text("Set XDRGTK Password: (max 8 characters)");
               WiFiConnectParam XDRGTK_key_input("XDRGTK_key", "Password", key, 9);
+              WiFiConnectParam RabbitearsUser_text("Set rabbitears.info live bandscan user ID");
+              WiFiConnectParam RabbitearsUser_input("RabbitearsUser", "ID", rabbitearsuser, 9);
+              WiFiConnectParam RabbitearsPassword_text("Set rabbitears.info password");
+              WiFiConnectParam RabbitearsPassword_input("RabbitearsPassword", "Password", rabbitearspw, 9);
               if (!setWiFiConnectParam) {
                 wc.addParameter(&XDRGTK_key_text);
                 wc.addParameter(&XDRGTK_key_input);
+                wc.addParameter(&RabbitearsUser_text);
+                wc.addParameter(&RabbitearsUser_input);
+                wc.addParameter(&RabbitearsPassword_text);
+                wc.addParameter(&RabbitearsPassword_input);
                 setWiFiConnectParam = true;
               }
               wc.startConfigurationPortal(AP_WAIT);
               XDRGTK_key = XDRGTK_key_input.getValue();
+              RabbitearsUser = RabbitearsUser_input.getValue();
+              RabbitearsPassword = RabbitearsPassword_input.getValue();
               EEPROM.writeString(EE_STRING_XDRGTK_KEY, XDRGTK_key);
+              EEPROM.writeString(EE_STRING_RABBITEARSUSER, RabbitearsUser);
+              EEPROM.writeString(EE_STRING_RABBITEARSPASSWORD, RabbitearsPassword);
               EEPROM.commit();
               UpdateFonts(0);
               wifi = true;
@@ -4572,6 +4641,13 @@ void DoMenu() {
             Infoboxprint(myLanguage[language][82]);
 
             OneBigLineSprite.drawString(String(fmscansens), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM9:
+            Infoboxprint(myLanguage[language][281]);
+
+            OneBigLineSprite.drawString((scanholdonsignal ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }
