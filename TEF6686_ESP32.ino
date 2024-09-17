@@ -883,7 +883,11 @@ void loop() {
     bool shouldScan = bypassMillisCheck || (!bypassMillisCheck && (millis() >= scantimer + waitTime));
 
     if (shouldScan) {
-      if (scanmute && scanholdonsignal) radio.setMute();
+      if (scanmute && scanholdonsignal) {
+        radio.setMute();
+        if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
+        SQ = true;
+      }
       scanholdflag = false;
       if (scanmem) {
         memorypos++;
@@ -905,7 +909,11 @@ void loop() {
       scantimer = millis();
       initdxscan = false;
     } else {
-      if (scanmute && scanholdonsignal) radio.setUnMute();
+      if (scanmute && scanholdonsignal) {
+        radio.setUnMute();
+        SQ = false;
+        if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+      }
     }
 
     if (millis() >= flashingtimer + 500) {
