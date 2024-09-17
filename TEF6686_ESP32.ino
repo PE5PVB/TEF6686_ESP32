@@ -38,6 +38,10 @@
 
 #define DYNAMIC_SPI_SPEED   // uncomment to enable dynamic SPI Speed https://github.com/ohmytime/TFT_eSPI_DynamicSpeed
 
+#ifdef DEEPELEC_DP_66X
+#define EXT_IRQ         14
+#endif
+
 #ifdef ARS
 TFT_eSPI tft = TFT_eSPI(320, 240);
 #else
@@ -149,7 +153,7 @@ byte BWset;
 byte BWsetAM;
 byte BWsetFM;
 byte charwidth = 8;
-#ifdef CHINA_PORTABLE
+#if defined(CHINA_PORTABLE) || defined(DEEPELEC_DP_66X)
 byte hardwaremodel = PORTABLE_ILI9341;
 #else
 byte hardwaremodel = BASE_ILI9341;
@@ -640,6 +644,10 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
 
+#ifdef DEEPELEC_DP_66X
+  pinMode(EXT_IRQ, INPUT_PULLUP);
+#endif
+
   tft.setSwapBytes(true);
   tft.fillScreen(BackgroundColor);
 
@@ -783,6 +791,20 @@ void setup() {
     for (;;);
   }
   tftPrint(0, "Patch: v" + String(TEF), 160, 202, ActiveColor, ActiveColorSmooth, 28);
+
+#ifdef DEEPELEC_DP_66X
+  bool extIO_dect = false;
+  // Device address 0x20
+  // Set PORT0/PORT1 as input
+  Wire.beginTransmission(0x20);
+  Wire.write(0x06);
+  Wire.write(0xFF);
+  Wire.write(0xFF);
+  if (Wire.endTransmission() == 0) {
+    extIO_dect = true;
+    tftPrint(-1, "HW:DP-666", 240, 152, PrimaryColor, PrimaryColorSmooth, 16);
+  }
+#endif
 
   if (analogRead(BATTERY_PIN) < 200) batterydetect = false;
 
@@ -1240,6 +1262,20 @@ void loop() {
       if (!screenmute && !afscreen) BWButtonPress();
     }
   }
+
+#ifdef DEEPELEC_DP_66X
+  if (digitalRead(EXT_IRQ) == LOW) {
+    int num;
+    num = GetNum();
+    if (num != -1) 
+    {
+      if (!screenmute && !menu && !advancedRDS && !afscreen)
+      {
+        NumpadProcess(num);
+      }
+    }
+  }
+#endif
 
   if (screensaverset) {
     if (screensaver_IRQ)
@@ -4263,7 +4299,11 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_SHOWRDSERRORS, 1);
   EEPROM.writeByte(EE_BYTE_TEF, 0);
   if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 0); else EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 1);
+#ifdef DEEPELEC_DP_66X
+  EEPROM.writeByte(EE_BYTE_ROTARYMODE, 1);
+#else
   EEPROM.writeByte(EE_BYTE_ROTARYMODE, 0);
+#endif
   EEPROM.writeByte(EE_BYTE_STEPSIZE, 0);
   EEPROM.writeByte(EE_BYTE_TUNEMODE, 0);
   EEPROM.writeByte(EE_BYTE_OPTENC, 0);
@@ -4908,3 +4948,156 @@ void ClearMemoryRange(uint8_t start, uint8_t stop) {
     presets[pos].frequency = EE_PRESETS_FREQUENCY;
   }
 }
+
+#ifdef DEEPELEC_DP_66X
+byte numval[16] = {
+  2, 3, 127, 5, 6, 0, 9, 13, 8, 7, 4, 1, 0, 0, 0, 0
+};
+
+int GetNum(void)
+{
+  int16_t temp;
+  int cnt = 0;
+  unsigned int num;
+
+  Wire.beginTransmission(0x20);
+  Wire.write(0x00);
+  Wire.endTransmission();
+  Wire.requestFrom(0x20, 2);
+
+  if (Wire.available() == 2) 
+  {
+    temp = Wire.read() & 0xFF;
+    temp |= (Wire.read() & 0xFF) * 256;
+    for (int i = 0; i < 16; i++) {
+      if ((temp & 0x01) == 0)
+      {
+        num = numval[i];
+        cnt ++;
+      }
+      temp >>= 1;
+    }
+    if (cnt == 1)
+      return num;
+  }
+
+  return -1;
+}
+
+void ShowNum(int val)
+{
+  switch (freqfont) {
+    case 0: FrequencySprite.loadFont(FREQFONT0); break;
+    case 1: FrequencySprite.loadFont(FREQFONT1); break;
+    case 2: FrequencySprite.loadFont(FREQFONT2); break;
+    case 3: FrequencySprite.loadFont(FREQFONT3); break;
+    case 4: FrequencySprite.loadFont(FREQFONT4); break;
+    case 5: FrequencySprite.loadFont(FREQFONT5); break;
+  }
+  
+  FrequencySprite.setTextDatum(TR_DATUM);
+  
+  FrequencySprite.fillSprite(BackgroundColor);
+  FrequencySprite.setTextColor(FreqColor, FreqColorSmooth, false);
+  FrequencySprite.drawString(String(val) + " ", 218, -6);
+  FrequencySprite.pushSprite(46, 46);
+  
+  FrequencySprite.unloadFont();
+}
+
+void TuneFreq(int temp)
+{
+  aftest = true;
+  aftimer = millis();
+
+  if (band == BAND_FM) {
+    while (temp < (LowEdgeSet * 10)) temp = temp*10;
+    if (temp > (HighEdgeSet * 10)) {
+      if (edgebeep) EdgeBeeper();
+    } else {
+      frequency = temp;
+    }
+    radio.SetFreq(frequency);
+  } 
+  else if (band == BAND_OIRT) {
+    while (temp < (LowEdgeOIRTSet * 10)) temp = temp*10;
+    if (temp > HighEdgeOIRTSet) {
+      if (edgebeep) EdgeBeeper();
+    } else {
+      frequency_OIRT = temp;
+    }
+    radio.SetFreq(frequency_OIRT);
+  } 
+  else if (band == BAND_LW) {
+    while (temp < LWLowEdgeSet) temp = temp*10;
+    if (temp > LWHighEdgeSet) {
+      if (edgebeep) EdgeBeeper();
+    } else {
+      frequency_AM = temp;
+    }
+    radio.SetFreqAM(frequency_AM);
+    frequency_LW = frequency_AM;
+  } 
+  else if (band == BAND_MW) {
+    while (temp < MWLowEdgeSet) temp = temp*10;
+    if (temp > MWHighEdgeSet) {
+      if (edgebeep) EdgeBeeper();
+    } else {
+      frequency_AM = temp;
+    }
+    radio.SetFreqAM(frequency_AM);
+    frequency_MW = frequency_AM;
+  } 
+  else if (band == BAND_SW) {
+    while (temp < SWLowEdgeSet) temp = temp*10;
+    if (temp > SWHighEdgeSet) {
+      if (edgebeep) EdgeBeeper();
+    } else {
+      frequency_AM = temp;
+    }
+    radio.SetFreqAM(frequency_AM);
+    frequency_SW = frequency_AM;
+  }
+
+  radio.clearRDS(fullsearchrds);
+  if (RDSSPYUSB) Serial.print("G:\r\nRESET-------\r\n\r\n");
+  if (RDSSPYTCP) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
+}
+
+void NumpadProcess(int num)
+{
+  static bool input_mode = false;
+  static int freq_in = 0;
+
+  if (scandxmode) {
+    if (num == 127) {      // DX
+      cancelDXScan();
+    }
+  } else {
+    if (num == 127) {      // DX
+      startFMDXScan();
+    }
+    else if (num == 13) {  // Enter
+      if (freq_in != 0) {
+        TuneFreq(freq_in);
+        if (XDRGTKUSB || XDRGTKTCP) {
+          if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n"); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n"); else DataPrint("M1\nT" + String(frequency_AM) + "\n");
+        }
+        if (!memorystore) {
+          if (!memtune) radio.clearRDS(fullsearchrds);
+          memtune = false;
+          ShowFreq(0);
+          store = true;
+        }
+      }
+      freq_in = 0;
+    }
+    else {                 // Num
+      if (freq_in/10000 == 0) {
+        freq_in = freq_in*10 + num;
+      }
+      ShowNum(freq_in);
+    }
+  }
+}
+#endif
