@@ -5,6 +5,7 @@
 #include <EEPROM.h>
 #include <Wire.h>
 #include <math.h>
+#include <TimeLib.h>
 #include <ESP32Time.h>              // https://github.com/fbiego/ESP32Time/archive/refs/heads/main.zip
 #include <TFT_eSPI.h>               // https://github.com/ohmytime/TFT_eSPI_DynamicSpeed/archive/refs/heads/master.zip (please then edit the User_Setup.h as described in the Wiki)
 #include <Hash.h>                   // https://github.com/bbx10/Hash_tng/archive/refs/heads/master.zip
@@ -935,7 +936,9 @@ void loop() {
       byte i = (frequency / 10 - 881) / 2;
       if (!rabbitearspi[i]) {
         rabbitearspi[i] = radio.rds.correctPI;
-        rtc.getTime("%FT%TZ").toCharArray(rabbitearstime[i], 21);
+
+        const time_t epoch = rtc.getEpoch() + rtc.offset;
+        strftime(rabbitearstime[i], 21, "%FT%TZ", localtime(&epoch));
       }
     }
 

@@ -1339,6 +1339,8 @@ void TEF6686::readRDS(byte showrdserrors) {
             mjd = (rds.rdsB & 0x03);
             mjd <<= 15;
             mjd += ((rds.rdsC >> 1) & 0x7FFF);
+            uint16_t hour, minute, day, month, year;
+            int32_t timeoffset;
 
             long J, C, Y, M;
             J = mjd + 2400001 +  68569;
@@ -1348,20 +1350,42 @@ void TEF6686::readRDS(byte showrdserrors) {
             J = J - 1461 * Y / 4 + 31;
             M = 80 * (J + 0) / 2447;
 
-            if ((J - 2447 * M / 80) < 32) rds.day = J - 2447 * M / 80;
+            if ((J - 2447 * M / 80) < 32) day = J - 2447 * M / 80;
             J = M / 11;
 
-            if ((M +  2 - (12 * J)) < 13) rds.month = M +  2 - (12 * J);
-            if ((100 * (C - 49) + Y + J) > 2022) rds.year = 100 * (C - 49) + Y + J;
-            if ((((rds.rdsD >> 12) & 0x0f)) < 25) {
-              rds.hour = ((rds.rdsD >> 12) & 0x0f);
-              rds.hour += ((rds.rdsC <<  4) & 0x0010);
-              rds.offset = ((bitRead(rds.rdsD, 5) ? -rds.rdsD & 0x3f : rds.rdsD & 0x3f) / 2);
-              if (bitRead(rds.rdsD, 5) & 0x3f) rds.hour -= rds.offset; else rds.hour += rds.offset;
-              rds.hour = (((byte)rds.hour + 24) % 24);
+            if ((M +  2 - (12 * J)) < 13) month = M +  2 - (12 * J);
+            if ((100 * (C - 49) + Y + J) > 2022) year = 100 * (C - 49) + Y + J;
+
+            hour = ((rds.rdsD >> 12) & 0x000f);
+            hour += ((rds.rdsC << 4) & 0x0010);
+            timeoffset = rds.rdsD & 0x000f;
+            if (bitRead(rds.rdsD, 5)) timeoffset *= -1;
+            timeoffset *= 1800;
+            minute = (rds.rdsD & 0x0fc0) >> 6;
+            if (year < 2024 || hour > 23 || minute > 59 || timeoffset > 27900 || timeoffset < -27900) break;
+
+            struct tm tm;
+            tm.tm_year = year - 1900;
+            tm.tm_mon = month - 1;
+            tm.tm_mday = day;
+            tm.tm_hour = hour;
+            tm.tm_min = minute;
+            tm.tm_sec = 0;
+            tm.tm_isdst = -1;
+            time_t rdstime = mktime(&tm);
+            if (lastrdstime == 0) {
+              lastrdstime = rdstime;
+              lasttimeoffset = timeoffset;
             }
-            if (((rds.rdsD >> 6) & 0x3f) < 60) rds.minute = (rds.rdsD >> 6) & 0x3f;
-            rds.hasCT = true;
+            if (rdstime == lastrdstime + 60 && timeoffset == lasttimeoffset) {
+              rds.hasCT = true;
+              rds.time = rdstime;
+              rds.offset = timeoffset;
+            } else { 
+              rds.hasCT = false;
+            }
+            lastrdstime = rdstime;
+            lasttimeoffset = timeoffset;
           }
         } break;
 
