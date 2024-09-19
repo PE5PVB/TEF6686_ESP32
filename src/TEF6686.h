@@ -578,12 +578,13 @@ typedef struct _rds_ {
   char stationState[3];
   char dabafeid[5];
   char dabafchannel[4];
-  uint16_t hour, minute, day, month, year, rdsA, rdsB, rdsC, rdsD, rdsErr, rdsStat, correctPI, rdsplusTag1, rdsplusTag2;
+  uint16_t rdsA, rdsB, rdsC, rdsD, rdsErr, rdsStat, correctPI, rdsplusTag1, rdsplusTag2;
+  time_t time;
+  int32_t offset;
   uint16_t aid[10];
   uint32_t dabaffreq;
   byte aid_counter;
   byte fastps;
-  int8_t offset;
   unsigned int ECC;
   unsigned int LIC;
   byte pinMin;
@@ -777,5 +778,7 @@ class TEF6686 {
     uint8_t eRTblock;
     uint8_t doublecounter;
     uint16_t doubletestfreq;
+    time_t lastrdstime;
+    int32_t lasttimeoffset;
 };
 #endif

@@ -736,20 +736,23 @@ void showPS() {
 }
 
 void showCT() {
+  char str[6];
+  time_t t;
   if (!screenmute && showclock) {
     if (radio.rds.hasCT && !dropout) {
-      rds_clock = ((radio.rds.hour < 10 ? "0" : "") + String(radio.rds.hour) + ":" + (radio.rds.minute < 10 ? "0" : "") + String(radio.rds.minute));
+      t = radio.rds.time + radio.rds.offset;
     } else if (!radio.rds.hasCT || dropout) {
-      rds_clock = ((rtc.getHour(true) < 10 ? "0" : "") + String(rtc.getHour(true)) + ":" + (rtc.getMinute() < 10 ? "0" : "") + String(rtc.getMinute()));
+      t = rtc.getEpoch() + radio.rds.offset;
       if (dropout) {
-        radio.rds.hour = rtc.getHour(true);
-        radio.rds.minute = rtc.getMinute();
+        radio.rds.time = static_cast<time_t>(rtc.getEpoch());
       }
     }
+    strftime(str, 6, "%H:%M", localtime(&t));
+    rds_clock = String(str);
     if (rds_clock != rds_clockold || hasCTold != radio.rds.hasCT) {
       if (radio.rds.hasCT && RDSstatus) {
         rtcset = true;
-        rtc.setTime(0, radio.rds.minute, radio.rds.hour, radio.rds.day, radio.rds.month, radio.rds.year);
+        rtc.setTime(radio.rds.time);
         if (advancedRDS) {
           tftReplace(1, rds_clockold, rds_clock, 208, 109, RDSColor, RDSColorSmooth, BackgroundColor, 16);
         } else {
