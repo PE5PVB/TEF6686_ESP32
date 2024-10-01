@@ -772,7 +772,7 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "ŁĄCZNOŚĆ", // 195
     "TRYB DX", // 196
     "AUTO MEM", // 197
-    "Tłumik ant. AM", // 198
+    "AM AGC", // 198
     "Deemfaza FM", // 199
     "Małe", // 200
     "Duże", // 201
@@ -1056,7 +1056,7 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "SPOJI", // 195
     "DX NAČIN RADA", // 196
     "AUTO MEM", // 197
-    "AM ATT", // 198
+    "AM AGC", // 198
     "FM deemphasis", // 199
     "Malo", // 200
     "Veliko", // 201
@@ -1340,7 +1340,7 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "ΣΥΝΔΕΣΗ", // 195
     "DX MODE", // 196
     "ΑΥΤ. ΜΝΗΜΗ", // 197
-    "AM εξασθένιση", // 198
+    "AM AGC", // 198
     "FM αποέμφαση", // 199
     "Μικρό", // 200
     "Μεγάλο", // 201
@@ -1908,7 +1908,7 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "NETZWERK", // 195
     "DX MODE", // 196
     "AUTO MEM", // 197
-    "AM ATT", // 198
+    "AM AGC", // 198
     "Entzerrung auf UKW", // 199
     "Wenig", // 200
     "Viel", // 201
@@ -2192,7 +2192,7 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "KONEKTIVITA", // 195
     "DX REŽIM", // 196
     "AUTO MEM", // 197
-    "AM ATT", // 198
+    "AM AGC", // 198
     "FM deemfáze", // 199
     "Malé", // 200
     "Velké", // 201
@@ -2760,7 +2760,7 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "CONNECTER", // 195
     "DX MODE", // 196
     "AUTO MEM", // 197
-    "AM ATT", // 198
+    "AM AGC", // 198
     "FM déemphasie", // 199
     "Petites", // 200
     "Grosses", // 201
@@ -3045,7 +3045,7 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "ВРЪЗКА", // 195
     "DX MODE", // 196
     "AUTO MEM", // 197
-    "СВ атенюатор", // 198
+    "AM AGC", // 198
     "FM deemphasis", // 199
     "Small", // 200
     "Large", // 201
@@ -3329,7 +3329,7 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "КОННЕКТ", // 195
     "DX MODE", // 196
     "AUTO MEM", // 197
-    "AM аттеньюатор", // 198
+    "AM AGC", // 198
     "FM deemphasis", // 199
     "Мало", // 200
     "Больше", // 201
@@ -3613,7 +3613,7 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "ПІДКЛЮЧЕННЯ", // 195
     "DX MODE", // 196
     "AUTO MEM", // 197
-    "AM ATT", // 198
+    "AM AGC", // 198
     "FM deemphasis", // 199
     "Мало", // 200
     "Багато", // 201
@@ -3897,7 +3897,7 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "CONNETTI", // 195
     "MODO DX", // 196
     "AUTO MEM", // 197
-    "ATT AM", // 198
+    "AM AGC", // 198
     "Deenfasi FM", // 199
     "Piccolo", // 200
     "Grande", // 201
@@ -4181,7 +4181,7 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "连机模式", // 195
     "FMDX 选项", // 196
     "AUTO MEM", // 197
-    "AM天线衰减", // 198
+    "AM AGC", // 198
     "FM去加重", // 199
     "少量", // 200
     "大量", // 201
@@ -4749,7 +4749,7 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "CONECTAR", // 195
     "DX MODE", // 196
     "AUTO MEM", // 197
-    "Atenuación de AM", // 198
+    "AM AGC", // 198
     "Despreocupación\nde FM", // 199
     "Pequeño", // 200
     "Grande", // 201
@@ -5034,7 +5034,7 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "CONECTAR", // 195
     "DX MODE", // 196
     "AUTO MEM", // 197
-    "Atenuação AM", // 198
+    "AM AGC", // 198
     "Desênfase FM", // 199
     "Pequeno", // 200
     "Grande", // 201
