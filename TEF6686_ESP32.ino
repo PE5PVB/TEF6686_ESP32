@@ -3707,6 +3707,28 @@ void doBW() {
     }
     BWsetFM = BWset;
     EEPROM.writeByte(EE_BYTE_BWSET_FM, BWsetFM);
+
+    if (XDRGTKUSB || XDRGTKTCP) {
+      switch (BWset) {
+        case 0: DataPrint("W0\n"); break;
+        case 1: DataPrint("W56000\n"); break;
+        case 2: DataPrint("W64000\n"); break;
+        case 3: DataPrint("W72000\n"); break;
+        case 4: DataPrint("W84000\n"); break;
+        case 5: DataPrint("W97000\n"); break;
+        case 6: DataPrint("W114000\n"); break;
+        case 7: DataPrint("W133000\n"); break;
+        case 8: DataPrint("W151000\n"); break;
+        case 9: DataPrint("W168000\n"); break;
+        case 10: DataPrint("W184000\n"); break;
+        case 11: DataPrint("W200000\n"); break;
+        case 12: DataPrint("W217000\n"); break;
+        case 13: DataPrint("W236000\n"); break;
+        case 14: DataPrint("W254000\n"); break;
+        case 15: DataPrint("W287000\n"); break;
+        case 16: DataPrint("W311000\n"); break;
+      }
+    }
   } else {
     if (BWset > 4) BWset = 1;
 
