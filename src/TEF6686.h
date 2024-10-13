@@ -726,6 +726,7 @@ class TEF6686 {
     String extractUTF8Substring(const String& utf8String, size_t start, size_t length, bool under);
     String eRTconverter(const wchar_t* input);
     String ucs2ToUtf8(const char* ucs2Input);
+    String PSLongtext;
     char ps_buffer[9];
     char ps_buffer2[9];
     char ptyn_buffer[9];
@@ -749,7 +750,6 @@ class TEF6686 {
     bool rtABold;
     bool rtAB32old;
     wchar_t PStext[9] = L"";
-    wchar_t PSLongtext[33] = L"";
     wchar_t EONPStext[20][9];
     wchar_t PTYNtext[9] = L"";
     char RDSplus1[45];

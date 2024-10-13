@@ -1381,7 +1381,7 @@ void TEF6686::readRDS(byte showrdserrors) {
               rds.hasCT = true;
               rds.time = rdstime;
               rds.offset = timeoffset;
-            } else { 
+            } else {
               rds.hasCT = false;
             }
             lastrdstime = rdstime;
@@ -1649,9 +1649,8 @@ void TEF6686::readRDS(byte showrdserrors) {
             if ((offset == 0 || foundendmarker) && (pslong_process || !rds.fastps)) {                     // Last chars are received
               if (strcmp(pslong_buffer, pslong_buffer2) == 0) {                                           // When no difference between current and buffer, let's go...
                 pslong_process = true;
-                RDScharConverter(pslong_buffer, PSLongtext, sizeof(PSLongtext) / sizeof(wchar_t), true);  // Convert 8 bit ASCII to 16 bit ASCII
-                String utf8String = convertToUTF8(PSLongtext);                                            // Convert RDS characterset to ASCII
-                rds.stationNameLong = extractUTF8Substring(utf8String, 0, endmarkerLPS, true);            // Make sure PS Long does not exceed 32 characters
+                PSLongtext = pslong_buffer;
+                rds.stationNameLong = extractUTF8Substring(pslong_buffer, 0, endmarkerLPS, true);         // Make sure PS Long does not exceed 32 characters
                 rds.stationNameLong = trimTrailingSpaces(rds.stationNameLong);
               }
             }
@@ -1661,9 +1660,8 @@ void TEF6686::readRDS(byte showrdserrors) {
               if (offset == 4) packet1long = true;
               if (offset == 8) packet2long = true;
               if (offset == 16) packet3long = true;
-              RDScharConverter(pslong_buffer, PSLongtext, sizeof(PSLongtext) / sizeof(wchar_t), true);                        // Convert 8 bit ASCII to 16 bit ASCII
-              String utf8String = convertToUTF8(PSLongtext);                                                                  // Convert RDS characterset to ASCII
-              rds.stationNameLong = extractUTF8Substring(utf8String, 0, endmarkerLPS, true);
+              PSLongtext = pslong_buffer;
+              rds.stationNameLong = extractUTF8Substring(pslong_buffer, 0, endmarkerLPS, true);
               rds.stationNameLong = trimTrailingSpaces(rds.stationNameLong);
               if ((packet0long && packet1long && packet2long && packet3long) || foundendmarker) pslong_process = true;        // OK, we had one runs, now let's go the idle PS Long writing
             }
@@ -1693,6 +1691,7 @@ void TEF6686::clearRDS (bool fullsearchrds) {
   rds.stationIDtext = "";
   rds.stationStatetext = "";
   rds.enhancedRTtext = "";
+  PSLongtext = "";
 
   uint8_t i;
   for (i = 0; i < 8; i++) {
@@ -1716,11 +1715,11 @@ void TEF6686::clearRDS (bool fullsearchrds) {
     rt_buffer32[i] = 0x20;
     pslong_buffer[i] = 0x20;
     pslong_buffer2[i] = 0x20;
-    PSLongtext[i] = L'\0';
+    //    PSLongtext[i] = L'\0';
   }
   rt_buffer32[32] = 0;
   pslong_buffer[32] = 0;
-  PSLongtext[32] = L'\0';
+  //  PSLongtext[32] = L'\0';
 
   for (i = 0; i < 17; i++) rds.stationType[i] = 0x20;
   rds.stationType[17] = 0;

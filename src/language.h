@@ -115,9 +115,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "OIRT", // 106
     "Rotating while screen off", // 107
     "Model selector", // 108
-    "Base (ILI9341)", // 109
-    "Portable (ILI9341)", // 110
-    "Portable touch (ILI9341)", // 111
+    "Base", // 109
+    "Portable", // 110
+    "Portable touch", // 111
     "Title", // 112
     "Album", // 113
     "Track", // 114
@@ -399,9 +399,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "OIRT", // 106
     "Afstemmen tijdens\nschermbeveiliging", // 107
     "Model keuze", // 108
-    "Basis (ILI9341)", // 109
-    "Portable (ILI9341)", // 110
-    "Portable touch (ILI9341)", // 111
+    "Basis", // 109
+    "Portable", // 110
+    "Portable touch", // 111
     "Titel", // 112
     "Album", // 113
     "Nummer", // 114
@@ -683,9 +683,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "OIRT", // 106
     "Stroj. gdy ekran wył.", // 107
     "Wybór modelu", // 108
-    "Podstawowy (ILI9341)", // 109
-    "Przenośny (ILI9341)", // 110
-    "Przenoś. dotyk. (ILI9341)", // 111
+    "Podstawowy", // 109
+    "Przenośny", // 110
+    "Przenoś. dotyk.", // 111
     "Tytuł", // 112
     "Album", // 113
     "Ścieżka", // 114
@@ -967,9 +967,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "OIRT", // 106
     "Okretanje dok je zaslon isključen", // 107
     "Selektor modela", // 108
-    "Base (ILI9341)", // 109
-    "Portable (ILI9341)", // 110
-    "Portable touch (ILI9341)", // 111
+    "Base", // 109
+    "Portable", // 110
+    "Portable touch", // 111
     "Naslov", // 112
     "Album", // 113
     "Pjesma", // 114
@@ -1251,9 +1251,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "OIRT", // 106
     "Περιστροφή με οθόνη\nσβηστή", // 107
     "Επιλογή μοντέλου", // 108
-    "Βασικό (ILI9341)", // 109
-    "Φορητό (ILI9341)", // 110
-    "Φορητό αφής (ILI9341)", // 111
+    "Βασικό", // 109
+    "Φορητό", // 110
+    "Φορητό αφής", // 111
     "Τίτλος", // 112
     "Άλμπουμ", // 113
     "Κομμάτι", // 114
@@ -1535,9 +1535,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "OIRT", // 106
     "Rotire când ecranul este oprit", // 107
     "Selectare Model", // 108
-    "Bază (ILI9341)", // 109
-    "Portabil (ILI9341)", // 110
-    "Portabil touch (ILI9341)", // 111
+    "Bază", // 109
+    "Portabil", // 110
+    "Portabil touch", // 111
     "Titlu", // 112
     "Album", // 113
     "Bandă", // 114
@@ -1819,9 +1819,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "OIRT", // 106
     "Tunen bei Bildschirm aus", // 107
     "Modell auswählen", // 108
-    "Basismodell (ILI9341)", // 109
-    "Portabel (ILI9341)", // 110
-    "Portabel Touch (ILI9341)", // 111
+    "Basismodell", // 109
+    "Portabel", // 110
+    "Portabel Touch", // 111
     "Titel", // 112
     "Album", // 113
     "Track", // 114
@@ -2103,8 +2103,8 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "OIRT", // 106
     "Ladění při vypnuté obrazovce", // 107
     "Volba modelu", // 108
-    "Základní (ILI9341)", // 109
-    "Přenosný (ILI9341)", // 110
+    "Základní", // 109
+    "Přenosný", // 110
     "Přenosný-dotykový(ILI9341)", // 111
     "Title", // 112
     "Album", // 113
@@ -2387,9 +2387,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "OIRT", // 106
     "Hangolás kikapcsolt képernyővel", // 107
     "Modellválasztó", // 108
-    "Alap (ILI9341)", // 109
-    "Hordozható (ILI9341)", // 110
-    "Hord. érintős (ILI9341)", // 111
+    "Alap", // 109
+    "Hordozható", // 110
+    "Hord. érintős", // 111
     "Cím", // 112
     "Album", // 113
     "Szám", // 114
@@ -2671,9 +2671,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "OIRT", // 106
     "Rotation lorsque\nl'écran est éteint", // 107
     "Sélecteur de modèle", // 108
-    "Base (ILI9341)", // 109
-    "Portable (ILI9341)", // 110
-    "Portable touche (ILI9341)", // 111
+    "Base", // 109
+    "Portable", // 110
+    "Portable touche", // 111
     "Titre", // 112
     "Album", // 113
     "Piste", // 114
@@ -2956,9 +2956,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "ОИРТ", // 106
     "Ротация при затъмнен екран", // 107
     "Избор на модел", // 108
-    "База (ILI9341)", // 109
-    "Портативен (ILI9341)", // 110
-    "Портативен сенз. екран (ILI9341)", // 111
+    "База", // 109
+    "Портативен", // 110
+    "Портативен сенз. екран", // 111
     "Заглавие", // 112
     "Албум", // 113
     "Песен", // 114
@@ -3240,9 +3240,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     " УКВ", // 106
     "Настройка при погашенном экране: ", // 107
     "Выбор модели", // 108
-    "Стандартный (ILI9341)", // 109
-    "Портативный (ILI9341)", // 110
-    "Сенсорный (ILI9341)", // 111
+    "Стандартный", // 109
+    "Портативный", // 110
+    "Сенсорный", // 111
     "Название", // 112
     "Альбом", // 113
     "Трек", // 114
@@ -3524,9 +3524,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "OIRT", // 106
     "Обертання, коли екран вимкнено", // 107
     "Вибір моделі", // 108
-    "Стандартний (ILI9341)", // 109
-    "Портативний (ILI9341)", // 110
-    "Портатив. сенсорний (ILI9341)", // 111
+    "Стандартний", // 109
+    "Портативний", // 110
+    "Портатив. сенсорний", // 111
     "Назва", // 112
     "Альбом", // 113
     "Трек", // 114
@@ -3808,9 +3808,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "OIRT", // 106
     "Rotazione con schermo spento", // 107
     "Selezionare modello", // 108
-    "Base (ILI9341)", // 109
-    "Portatile (ILI9341)", // 110
-    "Portatile touch (ILI9341)", // 111
+    "Base", // 109
+    "Portatile", // 110
+    "Portatile touch", // 111
     "Titolo", // 112
     "Album", // 113
     "Traccia", // 114
@@ -4376,9 +4376,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "OIRT", // 106
     "Tune når skjerm av", // 107
     "Velg Modell", // 108
-    "Base (ILI9341)", // 109
-    "Bærbar (ILI9341)", // 110
-    "Bærbar touch (ILI9341)", // 111
+    "Base", // 109
+    "Bærbar", // 110
+    "Bærbar touch", // 111
     "Titel", // 112
     "Album", // 113
     "Spor", // 114
@@ -4660,9 +4660,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "OIRT", // 106
     "Rotación con\npantalla apagada", // 107
     "Selector de modelo", // 108
-    "Base (ILI9341)", // 109
-    "Portátil (ILI9341)", // 110
-    "Táctil portátil (ILI9341)", // 111
+    "Base", // 109
+    "Portátil", // 110
+    "Táctil portátil", // 111
     "Título", // 112
     "Álbum", // 113
     "Pista", // 114
@@ -4945,9 +4945,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "OIRT", // 106
     "Rotativo enquanto a tela\nestá desligada", // 107
     "Seletor de modelo", // 108
-    "Básico (ILI9341)", // 109
-    "Portátil (ILI9341)", // 110
-    "Toque portátil (ILI9341)", // 111
+    "Básico", // 109
+    "Portátil", // 110
+    "Toque portátil", // 111
     "Título", // 112
     "Álbum", // 113
     "Faixa", // 114
