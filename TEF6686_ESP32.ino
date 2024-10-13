@@ -154,6 +154,7 @@ byte BWset;
 byte BWsetAM;
 byte BWsetFM;
 byte charwidth = 8;
+
 #if defined(CHINA_PORTABLE) || defined(DEEPELEC_DP_66X)
 byte hardwaremodel = PORTABLE_ILI9341;
 #else
@@ -646,6 +647,7 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
 
 #ifdef DEEPELEC_DP_66X
+  tft.invertDisplay(1);
   pinMode(EXT_IRQ, INPUT_PULLUP);
 #endif
 
