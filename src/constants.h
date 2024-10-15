@@ -213,9 +213,9 @@
 #define EE_CHECKBYTE_VALUE            10     // 0 ~ 255,add new entry, change for new value
 #define EE_PRESETS_FREQUENCY          0     // Default value when memory channel should be skipped!
 #ifdef HAS_AIR_BAND
-#define EE_TOTAL_CNT                  2259  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                  2279  // Total occupied eeprom bytes
 #else
-#define EE_TOTAL_CNT                  2254  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                  2274  // Total occupied eeprom bytes
 #endif
 
 #define EE_PRESETS_BAND_START         0     // 99 * 1 byte
@@ -327,9 +327,14 @@
 #define EE_STRING_RABBITEARSUSER      2230
 #define EE_STRING_RABBITEARSPASSWORD  2241
 #define EE_BYTE_WAITONLYONSIGNAL      2253
+#define EE_UINT16_CALTOUCH1           2254
+#define EE_UINT16_CALTOUCH2           2258
+#define EE_UINT16_CALTOUCH3           2262
+#define EE_UINT16_CALTOUCH4           2266
+#define EE_UINT16_CALTOUCH5           2270
 #ifdef HAS_AIR_BAND
-#define EE_BYTE_AIRSTEPSIZE           2254
-#define EE_UINT16_FREQUENCY_AIR       2255
+#define EE_BYTE_AIRSTEPSIZE           2274
+#define EE_UINT16_FREQUENCY_AIR       2275
 #endif
 // End of EEPROM index defines
 

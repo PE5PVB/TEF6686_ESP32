@@ -342,6 +342,7 @@ uint16_t MStatus;
 uint16_t rabbitearspi[100]; // first is for 88.1, 2nd 88.3, etc. to 107.9 MHz
 uint16_t SWMIBandPos;
 uint16_t SWMIBandPosold;
+uint16_t TouchCalData[5];
 uint16_t USN;
 uint16_t WAM;
 uint8_t buff_pos;
@@ -555,6 +556,11 @@ void setup() {
   mempionly = EEPROM.readByte(EE_BYTE_MEMPIONLY);
   memdoublepi = EEPROM.readByte(EE_BYTE_MEMDOUBLEPI);
   scanholdonsignal = EEPROM.readByte(EE_BYTE_WAITONLYONSIGNAL);
+  TouchCalData[0] = EEPROM.readUInt(EE_UINT16_CALTOUCH1);
+  TouchCalData[1] = EEPROM.readUInt(EE_UINT16_CALTOUCH2);
+  TouchCalData[2] = EEPROM.readUInt(EE_UINT16_CALTOUCH3);
+  TouchCalData[3] = EEPROM.readUInt(EE_UINT16_CALTOUCH4);
+  TouchCalData[4] = EEPROM.readUInt(EE_UINT16_CALTOUCH5);
 
   if (spispeed == SPI_SPEED_DEFAULT) {
     tft.setSPISpeed(SPI_FREQUENCY / 1000000);
@@ -682,7 +688,7 @@ void setup() {
 
   UpdateFonts(0);
 
-  if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH) {
+  if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH && digitalRead(MODEBUTTON) == HIGH && digitalRead(BANDBUTTON) == HIGH) {
     if (rotarymode == 0) rotarymode = 1; else rotarymode = 0;
     EEPROM.writeByte(EE_BYTE_ROTARYMODE, rotarymode);
     EEPROM.commit();
@@ -692,7 +698,7 @@ void setup() {
     while (digitalRead(BWBUTTON) == LOW) delay(50);
   }
 
-  if (digitalRead(MODEBUTTON) == LOW) {
+  if (digitalRead(BWBUTTON) == HIGH && digitalRead(ROTARY_BUTTON) == HIGH && digitalRead(MODEBUTTON) == LOW && digitalRead(BANDBUTTON) == HIGH) {
     if (displayflip == 0) {
       displayflip = 1;
       tft.setRotation(1);
@@ -708,7 +714,7 @@ void setup() {
     while (digitalRead(MODEBUTTON) == LOW) delay(50);
   }
 
-  if (digitalRead(BANDBUTTON) == LOW) {
+  if (digitalRead(BWBUTTON) == HIGH && digitalRead(ROTARY_BUTTON) == HIGH && digitalRead(MODEBUTTON) == HIGH && digitalRead(BANDBUTTON) == LOW) {
     analogWrite(SMETERPIN, 511);
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
     tftPrint(0, myLanguage[language][4], 155, 70, ActiveColor, ActiveColorSmooth, 28);
@@ -717,7 +723,7 @@ void setup() {
     analogWrite(SMETERPIN, 0);
   }
 
-  if (digitalRead(ROTARY_BUTTON) == LOW && digitalRead(BWBUTTON) == HIGH) {
+  if (digitalRead(BWBUTTON) == HIGH && digitalRead(ROTARY_BUTTON) == LOW && digitalRead(MODEBUTTON) == HIGH && digitalRead(BANDBUTTON) == HIGH) {
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
     if (optenc == 0) {
       optenc = 1;
@@ -732,7 +738,7 @@ void setup() {
     while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
   }
 
-  if (digitalRead(ROTARY_BUTTON) == LOW && digitalRead(BWBUTTON) == LOW) {
+  if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == LOW && digitalRead(MODEBUTTON) == HIGH && digitalRead(BANDBUTTON) == HIGH) {
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
     DefaultSettings(hardwaremodel);
     tftPrint(0, myLanguage[language][66], 155, 70, ActiveColor, ActiveColorSmooth, 28);
@@ -741,6 +747,20 @@ void setup() {
     ESP.restart();
   }
 
+  if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH && digitalRead(MODEBUTTON) == LOW && digitalRead(BANDBUTTON) == HIGH) {
+    analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
+    tftPrint(0, myLanguage[language][282], 155, 70, ActiveColor, ActiveColorSmooth, 28);
+    tftPrint(0, myLanguage[language][283], 155, 130, ActiveColor, ActiveColorSmooth, 28);
+    tft.calibrateTouch(TouchCalData, PrimaryColor, BackgroundColor, 30);
+    EEPROM.writeUInt(EE_UINT16_CALTOUCH1, TouchCalData[0]);
+    EEPROM.writeUInt(EE_UINT16_CALTOUCH2, TouchCalData[1]);
+    EEPROM.writeUInt(EE_UINT16_CALTOUCH3, TouchCalData[2]);
+    EEPROM.writeUInt(EE_UINT16_CALTOUCH4, TouchCalData[3]);
+    EEPROM.writeUInt(EE_UINT16_CALTOUCH5, TouchCalData[4]);
+    EEPROM.commit();
+  }
+
+  tft.setTouch(TouchCalData);
   tft.fillScreen(BackgroundColor);
   tftPrint(0, myLanguage[language][8], 160, 3, PrimaryColor, PrimaryColorSmooth, 28);
   tftPrint(0, "Software " + String(VERSION), 160, 152, PrimaryColor, PrimaryColorSmooth, 16);
@@ -4424,6 +4444,11 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_MEMPIONLY, 1);
   EEPROM.writeByte(EE_BYTE_MEMDOUBLEPI, 0);
   EEPROM.writeByte(EE_BYTE_WAITONLYONSIGNAL, 1);
+  EEPROM.writeUInt(EE_UINT16_CALTOUCH1, 300);
+  EEPROM.writeUInt(EE_UINT16_CALTOUCH2, 3450);
+  EEPROM.writeUInt(EE_UINT16_CALTOUCH3, 300);
+  EEPROM.writeUInt(EE_UINT16_CALTOUCH4, 3450);
+  EEPROM.writeUInt(EE_UINT16_CALTOUCH5, 3);
 
   for (int i = 0; i < EE_PRESETS_CNT; i++) {
     EEPROM.writeByte(i + EE_PRESETS_BAND_START, BAND_FM);

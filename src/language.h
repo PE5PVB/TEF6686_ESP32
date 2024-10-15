@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[18][282] PROGMEM = {
+static const char* const myLanguage[18][284] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -287,7 +287,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Prevent double PI", // 278
     "Range", // 279
     "Full", // 280
-    "Wait time on\nsignal only" // 281
+    "Wait time on\nsignal only", // 281
+    "Press highlighted corner", // 282
+    "To calibrate touchscreen" // 283
   },
 
   { "Nederlands", // Dutch
@@ -571,7 +573,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Voorkom dubbele PI", // 278
     "Bereik", // 279
     "Volledig", // 280
-    "Wachttijd alleen\nbij signaal" // 281
+    "Wachttijd alleen\nbij signaal", // 281
+    "Druk op aangegeven hoeken", // 282
+    "om scherm te calibreren" // 283
   },
 
   { "Polski", // Polish
@@ -855,7 +859,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Unikaj podwójnego PI", // 278
     "Zakres", // 279
     "Pełne", // 280
-    "Wait time on\nsignal only" // 281
+    "Wait time on\nsignal only", // 281
+    "Press highlighted corner", // 282
+    "To calibrate touchscreen" // 283
   },
 
   { "Hrvatski", // Croatian
@@ -1139,7 +1145,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Prevent double PI", // 278
     "Range", // 279
     "Full", // 280
-    "Wait time on\nsignal only" // 281
+    "Wait time on\nsignal only", // 281
+    "Press highlighted corner", // 282
+    "To calibrate touchscreen" // 283
   },
 
   { "Ελληνικά", // Greek
@@ -1423,7 +1431,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Αποφυγή διπλού PI", // 278
     "Εύρος", // 279
     "Πλήρης", // 280
-    "Αναμονή μόνο σε\nυπάρξη σήματος" // 281
+    "Αναμονή μόνο σε\nυπάρξη σήματος", // 281
+    "Press highlighted corner", // 282
+    "To calibrate touchscreen" // 283
   },
 
   { "Română", // Romanian
@@ -1707,7 +1717,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Prevent double PI", // 278
     "Range", // 279
     "Full", // 280
-    "Wait time on\nsignal only" // 281
+    "Wait time on\nsignal only", // 281
+    "Press highlighted corner", // 282
+    "To calibrate touchscreen" // 283
   },
 
   { "Deutsch", // German
@@ -1991,7 +2003,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Doppelte PI verhindern", // 278
     "Bereich", // 279
     "Voll", // 280
-    "Wartezeit nur wenn\nSignal vorhanden" // 281
+    "Wartezeit nur wenn\nSignal vorhanden", // 281
+    "Press highlighted corner", // 282
+    "To calibrate touchscreen" // 283
   },
 
   { "Český", // Czech
@@ -2275,7 +2289,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Prevent double PI", // 278
     "Range", // 279
     "Full", // 280
-    "Wait time on\nsignal only" // 281
+    "Wait time on\nsignal only", // 281
+    "Press highlighted corner", // 282
+    "To calibrate touchscreen" // 283
   },
 
   { "Magyar", // Hungarian
@@ -2559,7 +2575,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Prevent double PI", // 278
     "Range", // 279
     "Full", // 280
-    "Wait time on\nsignal only" // 281
+    "Wait time on\nsignal only", // 281
+    "Press highlighted corner", // 282
+    "To calibrate touchscreen" // 283
   },
 
   { "Français", // French
@@ -2843,7 +2861,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Prévenir double PI", // 278
     "Plage", // 279
     "Complet", // 280
-    "Attendre que lorsque\nle signal existe" // 281
+    "Attendre que lorsque\nle signal existe", // 281
+    "Press highlighted corner", // 282
+    "To calibrate touchscreen" // 283
 
   },
 
@@ -3128,7 +3148,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Prevent double PI", // 278
     "Range", // 279
     "Full", // 280
-    "Wait time on\nsignal only" // 281
+    "Wait time on\nsignal only", // 281
+    "Press highlighted corner", // 282
+    "To calibrate touchscreen" // 283
   },
 
   { "Русский", // Russian
@@ -3412,7 +3434,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Prevent double PI", // 278
     "Range", // 279
     "Full", // 280
-    "Wait time on\nsignal only" // 281
+    "Wait time on\nsignal only", // 281
+    "Press highlighted corner", // 282
+    "To calibrate touchscreen" // 283
   },
 
   { "Українська", // Ukranian
@@ -3696,7 +3720,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Prevent double PI", // 278
     "Range", // 279
     "Full", // 280
-    "Wait time on\nsignal only" // 281
+    "Wait time on\nsignal only", // 281
+    "Press highlighted corner", // 282
+    "To calibrate touchscreen" // 283
   },
 
   { "Italiano", // Italian
@@ -3980,7 +4006,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Evita PI duplicati", // 278
     "Intervallo", // 279
     "Piene", // 280
-    "Wait time on\nsignal only" // 281
+    "Wait time on\nsignal only", // 281
+    "Press highlighted corner", // 282
+    "To calibrate touchscreen" // 283
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4264,7 +4292,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Prevent double PI", // 278
     "Range", // 279
     "Full", // 280
-    "Wait time on\nsignal only" // 281
+    "Wait time on\nsignal only", // 281
+    "Press highlighted corner", // 282
+    "To calibrate touchscreen" // 283
   },
 
   { "Norsk", // Norwegian
@@ -4548,7 +4578,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Prevent double PI", // 278
     "Range", // 279
     "Full", // 280
-    "Wait time on\nsignal only" // 281
+    "Wait time on\nsignal only", // 281
+    "Press highlighted corner", // 282
+    "To calibrate touchscreen" // 283
   },
 
   { "Español", // Spanish
@@ -4832,7 +4864,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Prevenir doble PI", // 278
     "Rango", // 279
     "Completo", // 280
-    "Tiempo de espera\ncuando la señal" // 281
+    "Tiempo de espera\ncuando la señal", // 281
+    "Press highlighted corner", // 282
+    "To calibrate touchscreen" // 283
 
   },
 
@@ -5117,7 +5151,9 @@ static const char* const myLanguage[18][282] PROGMEM = {
     "Prevenir PI duplo", // 278
     "Intervalo", // 279
     "Completo", // 280
-    "Espera tempo apenas\nquando sinal" // 281
+    "Espera tempo apenas\nquando sinal", // 281
+    "Press highlighted corner", // 282
+    "To calibrate touchscreen" // 283
   }
 };
 #endif
