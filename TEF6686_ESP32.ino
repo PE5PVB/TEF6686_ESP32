@@ -37,6 +37,7 @@
 #define CONTRASTPIN     2
 #define STANDBYLED      19
 #define SMETERPIN       27
+#define TOUCHIRQ        33
 
 #define DYNAMIC_SPI_SPEED   // uncomment to enable dynamic SPI Speed https://github.com/ohmytime/TFT_eSPI_DynamicSpeed
 
@@ -127,6 +128,7 @@ bool StereoToggle;
 bool store;
 bool TAold;
 bool TPold;
+bool touch_detect;
 bool tuned;
 bool USBmode = 1;
 bool XDRGTKMuteScreen;
@@ -630,12 +632,16 @@ void setup() {
   if (displayflip == 0) {
 #ifdef ARS
     tft.setRotation(0);
+#elif defined(DEEPELEC_DP_66X)
+    tft.setRotation(1);
 #else
     tft.setRotation(3);
 #endif
   } else {
 #ifdef ARS
     tft.setRotation(2);
+#elif defined(DEEPELEC_DP_66X)
+    tft.setRotation(3);
 #else
     tft.setRotation(1);
 #endif
@@ -649,7 +655,9 @@ void setup() {
   pinMode(ROTARY_PIN_B, INPUT);
   pinMode (STANDBYLED, OUTPUT);
   digitalWrite(STANDBYLED, HIGH);
+  pinMode(TOUCHIRQ, INPUT);
 
+  attachInterrupt(digitalPinToInterrupt(TOUCHIRQ), Touch_IRQ_Handler, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
 
@@ -701,10 +709,22 @@ void setup() {
   if (digitalRead(BWBUTTON) == HIGH && digitalRead(ROTARY_BUTTON) == HIGH && digitalRead(MODEBUTTON) == LOW && digitalRead(BANDBUTTON) == HIGH) {
     if (displayflip == 0) {
       displayflip = 1;
+#ifdef ARS
+      tft.setRotation(2);
+#elif defined(DEEPELEC_DP_66X)
+      tft.setRotation(3);
+#else
       tft.setRotation(1);
+#endif
     } else {
       displayflip = 0;
+#ifdef ARS
+      tft.setRotation(0);
+#elif defined(DEEPELEC_DP_66X)
+      tft.setRotation(1);
+#else
       tft.setRotation(3);
+#endif
     }
     EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, displayflip);
     EEPROM.commit();
@@ -893,6 +913,18 @@ void setup() {
 }
 
 void loop() {
+  if (hardwaremodel == PORTABLE_TOUCH_ILI9341 && touch_detect) {
+    if (tft.getTouchRawZ() > 100) {
+      uint16_t x, y;
+      tft.getTouch(&x, &y);
+      if (x > 0 || y > 0) {
+        doTouchEvent(x, y);
+      }
+    }
+    delay(100);
+    touch_detect = false;
+  }
+
   Communication();
 
   if (tot != 0) {
@@ -1832,22 +1864,7 @@ void BANDBUTTONPress() {
             SelectBand();
             ScreensaverTimerReopen();
           } else {
-            if (tunemode != TUNE_MEM) {
-              ToggleBand(band);
-              radio.clearRDS(fullsearchrds);
-              StoreFrequency();
-              SelectBand();
-              if (XDRGTKUSB || XDRGTKTCP) {
-                if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n");
-                else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n");
-                else DataPrint("M1\nT" + String(frequency_AM) + "\n");
-              }
-            } else {
-              scanmodeold = tunemode;
-              startFMDXScan();
-              return;
-            }
-            ScreensaverTimerRestart();
+            doBandToggle();
           }
         } else {
           if (band < BAND_GAP) {
@@ -4937,6 +4954,25 @@ uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, ui
   return error;
 }
 
+void doBandToggle() {
+  if (tunemode != TUNE_MEM) {
+    ToggleBand(band);
+    radio.clearRDS(fullsearchrds);
+    StoreFrequency();
+    SelectBand();
+    if (XDRGTKUSB || XDRGTKTCP) {
+      if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n");
+      else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n");
+      else DataPrint("M1\nT" + String(frequency_AM) + "\n");
+    }
+  } else {
+    scanmodeold = tunemode;
+    startFMDXScan();
+    return;
+  }
+  ScreensaverTimerRestart();
+}
+
 void StoreMemoryPos(uint8_t _pos) {
   EEPROM.writeByte(_pos + EE_PRESETS_BAND_START, band);
   EEPROM.writeByte(_pos + EE_PRESET_BW_START, BWset);
@@ -5009,6 +5045,10 @@ void ClearMemoryRange(uint8_t start, uint8_t stop) {
     presets[pos].band = BAND_FM;
     presets[pos].frequency = EE_PRESETS_FREQUENCY;
   }
+}
+
+void Touch_IRQ_Handler() {
+  touch_detect = true;
 }
 
 #ifdef DEEPELEC_DP_66X
