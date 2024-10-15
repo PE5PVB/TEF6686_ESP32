@@ -24,6 +24,7 @@
 #include "src/gui.h"
 #include "src/comms.h"
 #include "src/rds.h"
+#include "src/touch.h"
 
 #define ROTARY_PIN_A    34
 #define ROTARY_PIN_B    36
