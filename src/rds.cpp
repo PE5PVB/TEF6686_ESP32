@@ -927,7 +927,15 @@ void ShowAFEON() {
         byte y = 0;
         if (afpagenr == 3) y = 10;
 
-        for (byte i = 0; i < radio.eon_counter; i++) {
+        byte eon_numbers;
+        if (afpagenr != 3) {
+          if (radio.eon_counter > 9) eon_numbers = 10; else eon_numbers = radio.eon_counter;
+        } else {
+          eon_numbers = radio.eon_counter - 10;
+        }
+
+
+        for (byte i = 0; i < eon_numbers; i++) {
           if (eonpicodeold[i + y] == nullptr) {
             strcpy(eonpicodeold[i + y], "");
           }
@@ -1014,7 +1022,7 @@ void ShowAFEON() {
           }
 
           if (radio.eon[i + y].pty > 0) {
-            tftPrint(1, String(radio.eon[i + y].pty), 304, 48 + (15 * i), RDSColor, RDSColorSmooth, 16);
+            if (radio.eon[i + y].pty != 254) tftPrint(1, String(radio.eon[i + y].pty), 304, 48 + (15 * i), RDSColor, RDSColorSmooth, 16);
             eonptyold[i + y] = radio.eon[i + y].pty;
           } else {
             tftPrint(-1, String(eonptyold[i + y]), 304, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
