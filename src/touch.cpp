@@ -13,7 +13,7 @@ void doTouchEvent(uint16_t x, uint16_t y) {
       if (x > 50 && x < 90 && y > 0 && y < 30 && band < BAND_GAP) {       // ---------------------
         doStereoToggle();                                                 // Stereo toggle
       } else if (x > 155 && x < 250 && y > 0 && y < 30) {
-        Serial.println("BW");
+        //
       }
     }
 
