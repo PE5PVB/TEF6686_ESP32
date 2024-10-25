@@ -10,9 +10,11 @@ void doTouchEvent(uint16_t x, uint16_t y) {
     cancelDXScan();
   } else {
     if (!menu) {                                                          // All pages except menu
-      if (x > 40 && x < 80 && y > 0 && y < 25 && band < BAND_GAP) {      // ---------------------
-        doStereoToggle();
-      }                                                                   // Stereo toggle
+      if (x > 50 && x < 90 && y > 0 && y < 30 && band < BAND_GAP) {       // ---------------------
+        doStereoToggle();                                                 // Stereo toggle
+      } else if (x > 155 && x < 250 && y > 0 && y < 30) {
+        Serial.println("BW");
+      }
     }
 
     if (!menu && !advancedRDS && !seek && !afscreen) {                    // Normal radio mode
