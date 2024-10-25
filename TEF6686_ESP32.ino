@@ -38,12 +38,10 @@
 #define STANDBYLED      19
 #define SMETERPIN       27
 #define TOUCHIRQ        33
+#define EXT_IRQ         14
 
 #define DYNAMIC_SPI_SPEED   // uncomment to enable dynamic SPI Speed https://github.com/ohmytime/TFT_eSPI_DynamicSpeed
 
-#ifdef DEEPELEC_DP_66X
-#define EXT_IRQ         14
-#endif
 
 #ifdef ARS
 TFT_eSPI tft = TFT_eSPI(320, 240);
@@ -86,6 +84,7 @@ bool haseonold;
 bool hasrtplusold;
 bool hastmcold;
 bool initdxscan;
+bool invertdisplay;
 bool leave;
 bool LowLevelInit;
 bool memorystore;
@@ -157,12 +156,7 @@ byte BWset;
 byte BWsetAM;
 byte BWsetFM;
 byte charwidth = 8;
-
-#if defined(CHINA_PORTABLE) || defined(DEEPELEC_DP_66X)
-byte hardwaremodel = PORTABLE_ILI9341;
-#else
-byte hardwaremodel = BASE_ILI9341;
-#endif
+byte hardwaremodel;
 byte ContrastSet;
 byte CurrentSkin;
 byte CurrentTheme;
@@ -450,7 +444,7 @@ void setup() {
 
   setupmode = true;
   EEPROM.begin(EE_TOTAL_CNT);
-  if (EEPROM.readByte(EE_BYTE_CHECKBYTE) != EE_CHECKBYTE_VALUE) DefaultSettings(hardwaremodel);
+  if (EEPROM.readByte(EE_BYTE_CHECKBYTE) != EE_CHECKBYTE_VALUE) DefaultSettings();
 
   frequency = EEPROM.readUInt(EE_UINT16_FREQUENCY_FM);
   frequency_OIRT = EEPROM.readUInt(EE_UINT16_FREQUENCY_OIRT);
@@ -563,6 +557,7 @@ void setup() {
   TouchCalData[2] = EEPROM.readUInt(EE_UINT16_CALTOUCH3);
   TouchCalData[3] = EEPROM.readUInt(EE_UINT16_CALTOUCH4);
   TouchCalData[4] = EEPROM.readUInt(EE_UINT16_CALTOUCH5);
+  invertdisplay = EEPROM.readByte(EE_BYTE_INVERTDISPLAY);
 
   if (spispeed == SPI_SPEED_DEFAULT) {
     tft.setSPISpeed(SPI_FREQUENCY / 1000000);
@@ -654,17 +649,13 @@ void setup() {
   pinMode(ROTARY_PIN_A, INPUT);
   pinMode(ROTARY_PIN_B, INPUT);
   pinMode (STANDBYLED, OUTPUT);
-  digitalWrite(STANDBYLED, HIGH);
   pinMode(TOUCHIRQ, INPUT);
+  pinMode(EXT_IRQ, INPUT_PULLUP);
+  digitalWrite(STANDBYLED, HIGH);
 
   attachInterrupt(digitalPinToInterrupt(TOUCHIRQ), Touch_IRQ_Handler, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
-
-#ifdef DEEPELEC_DP_66X
-  tft.invertDisplay(1);
-  pinMode(EXT_IRQ, INPUT_PULLUP);
-#endif
 
   tft.setSwapBytes(true);
   tft.fillScreen(BackgroundColor);
@@ -711,8 +702,6 @@ void setup() {
       displayflip = 1;
 #ifdef ARS
       tft.setRotation(2);
-#elif defined(DEEPELEC_DP_66X)
-      tft.setRotation(3);
 #else
       tft.setRotation(1);
 #endif
@@ -720,8 +709,6 @@ void setup() {
       displayflip = 0;
 #ifdef ARS
       tft.setRotation(0);
-#elif defined(DEEPELEC_DP_66X)
-      tft.setRotation(1);
 #else
       tft.setRotation(3);
 #endif
@@ -760,7 +747,7 @@ void setup() {
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == LOW && digitalRead(MODEBUTTON) == HIGH && digitalRead(BANDBUTTON) == HIGH) {
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
-    DefaultSettings(hardwaremodel);
+    DefaultSettings();
     tftPrint(0, myLanguage[language][66], 155, 70, ActiveColor, ActiveColorSmooth, 28);
     tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(ROTARY_BUTTON) == LOW && digitalRead(BWBUTTON) == LOW) delay(50);
@@ -780,6 +767,18 @@ void setup() {
     EEPROM.commit();
   }
 
+  if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH && digitalRead(MODEBUTTON) == HIGH && digitalRead(BANDBUTTON) == LOW) {
+    analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
+    tftPrint(0, myLanguage[language][284], 155, 70, ActiveColor, ActiveColorSmooth, 28);
+    tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
+    invertdisplay = !invertdisplay;
+    tft.invertDisplay(!invertdisplay);
+    while (digitalRead(BWBUTTON) == LOW && digitalRead(BANDBUTTON) == LOW) delay(50);
+    EEPROM.writeByte(EE_BYTE_INVERTDISPLAY, invertdisplay);
+    EEPROM.commit();
+  }
+
+  tft.invertDisplay(!invertdisplay);
   tft.setTouch(TouchCalData);
   tft.fillScreen(BackgroundColor);
   tftPrint(0, myLanguage[language][8], 160, 3, PrimaryColor, PrimaryColorSmooth, 28);
@@ -836,19 +835,11 @@ void setup() {
   }
   tftPrint(0, "Patch: v" + String(TEF), 160, 202, ActiveColor, ActiveColorSmooth, 28);
 
-#ifdef DEEPELEC_DP_66X
-  bool extIO_dect = false;
-  // Device address 0x20
-  // Set PORT0/PORT1 as input
   Wire.beginTransmission(0x20);
   Wire.write(0x06);
   Wire.write(0xFF);
   Wire.write(0xFF);
-  if (Wire.endTransmission() == 0) {
-    extIO_dect = true;
-    tftPrint(-1, "HW:DP-666", 240, 152, PrimaryColor, PrimaryColorSmooth, 16);
-  }
-#endif
+  Wire.endTransmission();
 
   if (analogRead(BATTERY_PIN) < 200) batterydetect = false;
 
@@ -1329,7 +1320,6 @@ void loop() {
     }
   }
 
-#ifdef DEEPELEC_DP_66X
   if (digitalRead(EXT_IRQ) == LOW) {
     int num;
     num = GetNum();
@@ -1341,7 +1331,6 @@ void loop() {
       }
     }
   }
-#endif
 
   if (screensaverset) {
     if (screensaver_IRQ)
@@ -4348,9 +4337,9 @@ void MuteScreen(bool setting) {
   }
 }
 
-void DefaultSettings(byte userhardwaremodel) {
+void DefaultSettings() {
   EEPROM.writeByte(EE_BYTE_CHECKBYTE, EE_CHECKBYTE_VALUE);
-  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, 10000); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, 8900);
+  EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, 10000);
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_OIRT, FREQ_FM_OIRT_START);
   EEPROM.writeByte(EE_BYTE_VOLSET, 0);
   EEPROM.writeUInt(EE_UINT16_CONVERTERSET, 0);
@@ -4358,7 +4347,7 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeUInt(EE_UINT16_FMHIGHEDGESET, 1080);
   EEPROM.writeByte(EE_BYTE_CONTRASTSET, 50);
   EEPROM.writeByte(EE_BYTE_STEREOLEVEL, 0);
-  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_BANDFM, FM_BAND_ALL); else EEPROM.writeByte(EE_BYTE_BANDFM, FM_BAND_FM);
+  EEPROM.writeByte(EE_BYTE_BANDFM, FM_BAND_ALL);
   EEPROM.writeByte(EE_BYTE_BANDAM, AM_BAND_ALL);
   EEPROM.writeByte(EE_BYTE_HIGHCUTLEVEL, 70);
   EEPROM.writeByte(EE_BYTE_HIGHCUTOFFSET, 0);
@@ -4371,12 +4360,6 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_LANGUAGE, 0);
   EEPROM.writeByte(EE_BYTE_SHOWRDSERRORS, 1);
   EEPROM.writeByte(EE_BYTE_TEF, 0);
-  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 0); else EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 1);
-#ifdef DEEPELEC_DP_66X
-  EEPROM.writeByte(EE_BYTE_ROTARYMODE, 1);
-#else
-  EEPROM.writeByte(EE_BYTE_ROTARYMODE, 0);
-#endif
   EEPROM.writeByte(EE_BYTE_STEPSIZE, 0);
   EEPROM.writeByte(EE_BYTE_TUNEMODE, 0);
   EEPROM.writeByte(EE_BYTE_OPTENC, 0);
@@ -4393,24 +4376,23 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeByte(EE_BYTE_SHOWSWMIBAND, 1);
   EEPROM.writeByte(EE_BYTE_RDS_FILTER, 1);
   EEPROM.writeByte(EE_BYTE_RDS_PIERRORS, 0);
-  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_LW, 180); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_LW, 164);
-  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, 540); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, 639);
-  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeUInt(EE_UINT16_FREQUENCY_SW, 1800); else EEPROM.writeUInt(EE_UINT16_FREQUENCY_SW, 5000);
+  EEPROM.writeUInt(EE_UINT16_FREQUENCY_LW, 180);
+  EEPROM.writeUInt(EE_UINT16_FREQUENCY_MW, 540);
+  EEPROM.writeUInt(EE_UINT16_FREQUENCY_SW, 1800);
 #ifdef HAS_AIR_BAND
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_AIR, 135350);
 #endif
   EEPROM.writeString(EE_STRING_XDRGTK_KEY, "password");
   EEPROM.writeString(EE_STRING_RABBITEARSUSER, "");
   EEPROM.writeString(EE_STRING_RABBITEARSPASSWORD, "");
-  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_USESQUELCH, 1); else EEPROM.writeByte(EE_BYTE_USESQUELCH, 0);
+  EEPROM.writeByte(EE_BYTE_USESQUELCH, 1);
   EEPROM.writeByte(EE_BYTE_SHOWMODULATION, 1);
   EEPROM.writeByte(EE_BYTE_AM_NB, 0);
   EEPROM.writeByte(EE_BYTE_FM_NB, 0);
   EEPROM.writeByte(EE_BYTE_AUDIOMODE, 0);
-  if (userhardwaremodel == BASE_ILI9341) EEPROM.writeByte(EE_BYTE_TOUCH_ROTATING, 0); else EEPROM.writeByte(EE_BYTE_TOUCH_ROTATING, 1);
+  EEPROM.writeByte(EE_BYTE_TOUCH_ROTATING, 0);
   EEPROM.writeUInt(EE_UINT16_LOWEDGEOIRTSET, 0);
   EEPROM.writeUInt(EE_UINT16_HIGHEDGEOIRTSET, 0);
-  EEPROM.writeByte(EE_BYTE_HARDWARE_MODEL, userhardwaremodel);
   EEPROM.writeByte(EE_BYTE_POWEROPTIONS, 1);
   EEPROM.writeByte(EE_BYTE_CURRENTTHEME, 0);
   EEPROM.writeByte(EE_BYTE_FMDEFAULTSTEPSIZE, 1);
@@ -4466,6 +4448,18 @@ void DefaultSettings(byte userhardwaremodel) {
   EEPROM.writeUInt(EE_UINT16_CALTOUCH3, 300);
   EEPROM.writeUInt(EE_UINT16_CALTOUCH4, 3450);
   EEPROM.writeUInt(EE_UINT16_CALTOUCH5, 3);
+
+#ifdef DEEPELEC_DP_66X
+  EEPROM.writeByte(EE_BYTE_ROTARYMODE, 1);
+  EEPROM.writeByte(EE_BYTE_INVERTDISPLAY, 0);
+  EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 0);
+  EEPROM.writeByte(EE_BYTE_HARDWARE_MODEL, PORTABLE_TOUCH_ILI9341);
+#else
+  EEPROM.writeByte(EE_BYTE_ROTARYMODE, 0);
+  EEPROM.writeByte(EE_BYTE_INVERTDISPLAY, 1);
+  EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 1);
+  EEPROM.writeByte(EE_BYTE_HARDWARE_MODEL, BASE_ILI9341);
+#endif
 
   for (int i = 0; i < EE_PRESETS_CNT; i++) {
     EEPROM.writeByte(i + EE_PRESETS_BAND_START, BAND_FM);
@@ -5051,7 +5045,6 @@ void Touch_IRQ_Handler() {
   touch_detect = true;
 }
 
-#ifdef DEEPELEC_DP_66X
 byte numval[16] = {
   2, 3, 127, 5, 6, 0, 9, 13, 8, 7, 4, 1, 0, 0, 0, 0
 };
@@ -5188,4 +5181,3 @@ void NumpadProcess(int num) {
     }
   }
 }
-#endif

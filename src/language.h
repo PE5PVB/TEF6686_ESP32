@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[18][284] PROGMEM = {
+static const char* const myLanguage[18][285] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -289,7 +289,8 @@ static const char* const myLanguage[18][284] PROGMEM = {
     "Full", // 280
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
-    "To calibrate touchscreen" // 283
+    "To calibrate touchscreen", // 283
+    "Screen inversion toggles" // 284
   },
 
   { "Nederlands", // Dutch
@@ -575,7 +576,8 @@ static const char* const myLanguage[18][284] PROGMEM = {
     "Volledig", // 280
     "Wachttijd alleen\nbij signaal", // 281
     "Druk op aangegeven hoeken", // 282
-    "om scherm te calibreren" // 283
+    "om scherm te calibreren", // 283
+    "Scherm inversie gewijzigd" // 284
   },
 
   { "Polski", // Polish
@@ -861,7 +863,8 @@ static const char* const myLanguage[18][284] PROGMEM = {
     "Pełne", // 280
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
-    "To calibrate touchscreen" // 283
+    "To calibrate touchscreen", // 283
+    "Screen inversion toggles" // 284
   },
 
   { "Hrvatski", // Croatian
@@ -1147,7 +1150,8 @@ static const char* const myLanguage[18][284] PROGMEM = {
     "Full", // 280
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
-    "To calibrate touchscreen" // 283
+    "To calibrate touchscreen", // 283
+    "Screen inversion toggles" // 284
   },
 
   { "Ελληνικά", // Greek
@@ -1433,7 +1437,8 @@ static const char* const myLanguage[18][284] PROGMEM = {
     "Πλήρης", // 280
     "Αναμονή μόνο σε\nυπάρξη σήματος", // 281
     "Press highlighted corner", // 282
-    "To calibrate touchscreen" // 283
+    "To calibrate touchscreen", // 283
+    "Screen inversion toggles" // 284
   },
 
   { "Română", // Romanian
@@ -1719,7 +1724,8 @@ static const char* const myLanguage[18][284] PROGMEM = {
     "Full", // 280
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
-    "To calibrate touchscreen" // 283
+    "To calibrate touchscreen", // 283
+    "Screen inversion toggles" // 284
   },
 
   { "Deutsch", // German
@@ -2005,7 +2011,8 @@ static const char* const myLanguage[18][284] PROGMEM = {
     "Voll", // 280
     "Wartezeit nur wenn\nSignal vorhanden", // 281
     "Press highlighted corner", // 282
-    "To calibrate touchscreen" // 283
+    "To calibrate touchscreen", // 283
+    "Screen inversion toggles" // 284
   },
 
   { "Český", // Czech
@@ -2291,7 +2298,8 @@ static const char* const myLanguage[18][284] PROGMEM = {
     "Full", // 280
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
-    "To calibrate touchscreen" // 283
+    "To calibrate touchscreen", // 283
+    "Screen inversion toggles" // 284
   },
 
   { "Magyar", // Hungarian
@@ -2577,7 +2585,8 @@ static const char* const myLanguage[18][284] PROGMEM = {
     "Full", // 280
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
-    "To calibrate touchscreen" // 283
+    "To calibrate touchscreen", // 283
+    "Screen inversion toggles" // 284
   },
 
   { "Français", // French
@@ -2863,7 +2872,8 @@ static const char* const myLanguage[18][284] PROGMEM = {
     "Complet", // 280
     "Attendre que lorsque\nle signal existe", // 281
     "Press highlighted corner", // 282
-    "To calibrate touchscreen" // 283
+    "To calibrate touchscreen", // 283
+    "Screen inversion toggles" // 284
 
   },
 
@@ -3150,7 +3160,8 @@ static const char* const myLanguage[18][284] PROGMEM = {
     "Full", // 280
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
-    "To calibrate touchscreen" // 283
+    "To calibrate touchscreen", // 283
+    "Screen inversion toggles" // 284
   },
 
   { "Русский", // Russian
@@ -3436,7 +3447,8 @@ static const char* const myLanguage[18][284] PROGMEM = {
     "Full", // 280
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
-    "To calibrate touchscreen" // 283
+    "To calibrate touchscreen", // 283
+    "Screen inversion toggles" // 284
   },
 
   { "Українська", // Ukranian
@@ -3722,7 +3734,8 @@ static const char* const myLanguage[18][284] PROGMEM = {
     "Full", // 280
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
-    "To calibrate touchscreen" // 283
+    "To calibrate touchscreen", // 283
+    "Screen inversion toggles" // 284
   },
 
   { "Italiano", // Italian
@@ -4008,7 +4021,8 @@ static const char* const myLanguage[18][284] PROGMEM = {
     "Piene", // 280
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
-    "To calibrate touchscreen" // 283
+    "To calibrate touchscreen", // 283
+    "Screen inversion toggles" // 284
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4294,7 +4308,8 @@ static const char* const myLanguage[18][284] PROGMEM = {
     "Full", // 280
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
-    "To calibrate touchscreen" // 283
+    "To calibrate touchscreen", // 283
+    "Screen inversion toggles" // 284
   },
 
   { "Norsk", // Norwegian
@@ -4580,7 +4595,8 @@ static const char* const myLanguage[18][284] PROGMEM = {
     "Full", // 280
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
-    "To calibrate touchscreen" // 283
+    "To calibrate touchscreen", // 283
+    "Screen inversion toggles" // 284
   },
 
   { "Español", // Spanish
@@ -4866,7 +4882,8 @@ static const char* const myLanguage[18][284] PROGMEM = {
     "Completo", // 280
     "Tiempo de espera\ncuando la señal", // 281
     "Press highlighted corner", // 282
-    "To calibrate touchscreen" // 283
+    "To calibrate touchscreen", // 283
+    "Screen inversion toggles" // 284
 
   },
 
@@ -5153,7 +5170,8 @@ static const char* const myLanguage[18][284] PROGMEM = {
     "Completo", // 280
     "Espera tempo apenas\nquando sinal", // 281
     "Press highlighted corner", // 282
-    "To calibrate touchscreen" // 283
+    "To calibrate touchscreen", // 283
+    "Screen inversion toggles" // 284
   }
 };
 #endif
