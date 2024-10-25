@@ -627,21 +627,19 @@ void setup() {
   if (displayflip == 0) {
 #ifdef ARS
     tft.setRotation(0);
-#elif defined(DEEPELEC_DP_66X)
-    tft.setRotation(1);
 #else
     tft.setRotation(3);
 #endif
   } else {
 #ifdef ARS
     tft.setRotation(2);
-#elif defined(DEEPELEC_DP_66X)
-    tft.setRotation(3);
 #else
     tft.setRotation(1);
 #endif
   }
 
+  tft.invertDisplay(!invertdisplay);
+  
   pinMode(BANDBUTTON, INPUT);
   pinMode(MODEBUTTON, INPUT);
   pinMode(BWBUTTON, INPUT);
@@ -778,7 +776,6 @@ void setup() {
     EEPROM.commit();
   }
 
-  tft.invertDisplay(!invertdisplay);
   tft.setTouch(TouchCalData);
   tft.fillScreen(BackgroundColor);
   tftPrint(0, myLanguage[language][8], 160, 3, PrimaryColor, PrimaryColorSmooth, 28);
@@ -4452,12 +4449,12 @@ void DefaultSettings() {
 #ifdef DEEPELEC_DP_66X
   EEPROM.writeByte(EE_BYTE_ROTARYMODE, 1);
   EEPROM.writeByte(EE_BYTE_INVERTDISPLAY, 0);
-  EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 0);
+  EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 1);
   EEPROM.writeByte(EE_BYTE_HARDWARE_MODEL, PORTABLE_TOUCH_ILI9341);
 #else
   EEPROM.writeByte(EE_BYTE_ROTARYMODE, 0);
   EEPROM.writeByte(EE_BYTE_INVERTDISPLAY, 1);
-  EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 1);
+  EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, 0);
   EEPROM.writeByte(EE_BYTE_HARDWARE_MODEL, BASE_ILI9341);
 #endif
 

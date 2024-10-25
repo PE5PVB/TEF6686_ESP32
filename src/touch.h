@@ -3,13 +3,16 @@
 
 #include <Arduino.h>
 #include <TFT_eSPI.h>
+#include "TEF6686.h"
 
 extern TFT_eSPI tft;
+extern TEF6686 radio;
 
 extern bool advancedRDS;
 extern bool afscreen;
 extern bool leave;
 extern bool menu;
+extern bool scandxmode;
 extern bool seek;
 extern byte band;
 
@@ -21,4 +24,6 @@ extern void SelectBand();
 extern void BuildAdvancedRDS();
 extern void doBandToggle();
 extern void doTuneMode();
+extern void doStereoToggle();
+extern void cancelDXScan();
 #endif
