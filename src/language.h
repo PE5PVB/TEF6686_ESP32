@@ -4019,10 +4019,10 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Evita PI duplicati", // 278
     "Intervallo", // 279
     "Piene", // 280
-    "Wait time on\nsignal only", // 281
-    "Press highlighted corner", // 282
-    "To calibrate touchscreen", // 283
-    "Screen inversion toggles" // 284
+    "Tempo di attesa\nsolo con segnale", // 281
+    "Premi l'angolo evidenziato", // 282
+    "Per calibrare lo schermo touch", // 283
+    "Inversione colore schermo" // 284
   },
 
   { "Simplified Chinese", // Simplified Chinese
