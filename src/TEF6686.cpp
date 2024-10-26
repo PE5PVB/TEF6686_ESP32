@@ -1362,7 +1362,7 @@ void TEF6686::readRDS(byte showrdserrors) {
             if (bitRead(rds.rdsD, 5)) timeoffset *= -1;
             timeoffset *= 1800;
             minute = (rds.rdsD & 0x0fc0) >> 6;
-            if (year < 2024 || hour > 23 || minute > 59 || timeoffset > 27900 || timeoffset < -27900) break;
+            if (year < 2024 || hour > 23 || minute > 59 || timeoffset > 55800 || timeoffset < -55800) break;
 
             struct tm tm;
             tm.tm_year = year - 1900;
