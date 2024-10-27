@@ -1436,9 +1436,9 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Εύρος", // 279
     "Πλήρης", // 280
     "Αναμονή μόνο σε\nυπάρξη σήματος", // 281
-    "Press highlighted corner", // 282
-    "To calibrate touchscreen", // 283
-    "Screen inversion toggles" // 284
+    "Πιέστε την\nεπισημασμένη γωνία", // 282
+    "Για βαθμονόμηση\nτης οθόνης αφής", // 283
+    "Εναλλαγή αναστροφής οθόνης" // 284
   },
 
   { "Română", // Romanian
@@ -2871,9 +2871,9 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Plage", // 279
     "Complet", // 280
     "Attendre que lorsque\nle signal existe", // 281
-    "Press highlighted corner", // 282
-    "To calibrate touchscreen", // 283
-    "Screen inversion toggles" // 284
+    "Appuyez sur l'angle\nmis en évidence", // 282
+    "Pour calibrer l'écran tactile", // 283
+    "Inversion d'affichage bascules" // 284
 
   },
 
@@ -4881,9 +4881,9 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Rango", // 279
     "Completo", // 280
     "Tiempo de espera\ncuando la señal", // 281
-    "Press highlighted corner", // 282
-    "To calibrate touchscreen", // 283
-    "Screen inversion toggles" // 284
+    "Presione en el\nángulo resaltado", // 282
+    "Para calibrar\nla pantalla táctil", // 283
+    "Cambio de reverso\nde la pantalla" // 284
 
   },
 
@@ -5169,9 +5169,9 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Intervalo", // 279
     "Completo", // 280
     "Espera tempo apenas\nquando sinal", // 281
-    "Press highlighted corner", // 282
-    "To calibrate touchscreen", // 283
-    "Screen inversion toggles" // 284
+    "Pressione o\ncanto inscrito", // 282
+    "Para calibração\nda tela de toque", // 283
+    "Alternar a inversão da tela" // 284
   }
 };
 #endif
