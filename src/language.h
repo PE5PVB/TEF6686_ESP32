@@ -861,10 +861,10 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Unikaj podwójnego PI", // 278
     "Zakres", // 279
     "Pełne", // 280
-    "Wait time on\nsignal only", // 281
-    "Press highlighted corner", // 282
-    "To calibrate touchscreen", // 283
-    "Screen inversion toggles" // 284
+    "Czekaj tylko gdy\nwykryto stację", // 281
+    "Naciśnij zaznaczony róg", // 282
+    "Aby skalibrować ekran", // 283
+    "Inwersja kolorów wyświetlacza" // 284
   },
 
   { "Hrvatski", // Croatian
