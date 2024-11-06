@@ -129,14 +129,15 @@ bool TAold;
 bool TPold;
 bool touch_detect;
 bool tuned;
-bool USBmode = 1;
-bool XDRGTKMuteScreen;
-bool wifi;
-bool wificonnected;
+bool USBmode;
 bool XDRGTKdata;
+bool XDRGTKMuteScreen;
 bool XDRGTKTCP;
 bool XDRGTKUSB;
 bool XDRMute;
+bool XDRScan;
+bool wifi;
+bool wificonnected;
 byte af_counterold;
 byte aid_counterold;
 byte af;
@@ -639,7 +640,7 @@ void setup() {
   }
 
   tft.invertDisplay(!invertdisplay);
-  
+
   pinMode(BANDBUTTON, INPUT);
   pinMode(MODEBUTTON, INPUT);
   pinMode(BWBUTTON, INPUT);
@@ -3734,7 +3735,7 @@ void doBW() {
     BWsetFM = BWset;
     EEPROM.writeByte(EE_BYTE_BWSET_FM, BWsetFM);
 
-    if (XDRGTKUSB || XDRGTKTCP) {
+    if ((XDRGTKUSB || XDRGTKTCP) && !XDRScan) {
       switch (BWset) {
         case 0: DataPrint("W0\n"); break;
         case 1: DataPrint("W56000\n"); break;

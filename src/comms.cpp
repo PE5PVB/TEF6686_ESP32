@@ -673,6 +673,7 @@ void XDRGTKRoutine() {
 
       case 'S':
         if (scandxmode) cancelDXScan();
+        XDRScan = true;
         if (buff[1] == 'a') {
           scanner_start = (atol(buff + 2) + 5) / 10;
         } else if (buff[1] == 'b') {
@@ -740,6 +741,7 @@ void XDRGTKRoutine() {
           SelectBand();
           radio.setFMABandw();
           BWset = 0;
+          XDRScan = false;
         }
         break;
 

@@ -38,6 +38,7 @@ extern bool XDRGTKdata;
 extern bool XDRGTKTCP;
 extern bool XDRGTKUSB;
 extern bool XDRGTKMuteScreen;
+extern bool XDRScan;
 extern bool XDRMute;
 extern byte band;
 extern byte BWset;
