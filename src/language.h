@@ -2010,9 +2010,9 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Bereich", // 279
     "Voll", // 280
     "Wartezeit nur wenn\nSignal vorhanden", // 281
-    "Press highlighted corner", // 282
-    "To calibrate touchscreen", // 283
-    "Screen inversion toggles" // 284
+    "Markierte Ecke drücken", // 282
+    "zum Kalibrieren des Touchscrees", // 283
+    "Bildschirmumkehrung umschalten" // 284
   },
 
   { "Český", // Czech
