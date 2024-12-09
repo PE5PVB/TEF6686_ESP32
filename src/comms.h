@@ -42,6 +42,7 @@ extern bool XDRScan;
 extern bool XDRMute;
 extern byte band;
 extern byte BWset;
+extern byte BWsetRecall;
 extern byte EQset;
 extern byte fmscansens;
 extern byte iMSEQ;

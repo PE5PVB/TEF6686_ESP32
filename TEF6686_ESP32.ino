@@ -156,6 +156,7 @@ byte batteryoptions;
 byte BWset;
 byte BWsetAM;
 byte BWsetFM;
+byte BWsetRecall;
 byte charwidth = 8;
 byte hardwaremodel;
 byte ContrastSet;

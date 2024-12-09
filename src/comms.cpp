@@ -673,75 +673,88 @@ void XDRGTKRoutine() {
 
       case 'S':
         if (scandxmode) cancelDXScan();
+        if (!XDRScan) BWsetRecall = BWset;
         XDRScan = true;
-        if (buff[1] == 'a') {
-          scanner_start = (atol(buff + 2) + 5) / 10;
-        } else if (buff[1] == 'b') {
-          scanner_end = (atol(buff + 2) + 5) / 10;
-        } else if (buff[1] == 'c') {
-          scanner_step = (atol(buff + 2) + 5) / 10;
-        } else if (buff[1] == 'f') {
-          scanner_filter = atol(buff + 2);
-        } else if (scanner_start > 0 && scanner_end > 0 && scanner_step > 0 && scanner_filter >= 0) {
-          frequencyold = frequency;
-          DataPrint("U");
-          if (scanner_filter < 0) {
-            BWset = 0;
-          } else if (scanner_filter == 0) {
-            BWset = 1;
-          } else if (scanner_filter == 26) {
-            BWset = 2;
-          } else if (scanner_filter == 1) {
-            BWset = 3;
-          } else if (scanner_filter == 28) {
-            BWset = 4;
-          } else if (scanner_filter == 29) {
-            BWset = 5;
-          } else if (scanner_filter == 3) {
-            BWset = 6;
-          } else if (scanner_filter == 4) {
-            BWset = 7;
-          } else if (scanner_filter == 5) {
-            BWset = 8;
-          } else if (scanner_filter == 7) {
-            BWset = 9;
-          } else if (scanner_filter == 8) {
-            BWset = 10;
-          } else if (scanner_filter == 9) {
-            BWset = 11;
-          } else if (scanner_filter == 10) {
-            BWset = 12;
-          } else if (scanner_filter == 11) {
-            BWset = 13;
-          } else if (scanner_filter == 12) {
-            BWset = 14;
-          } else if (scanner_filter == 13) {
-            BWset = 15;
-          } else if (scanner_filter == 15) {
-            BWset = 16;
-          }
-          doBW();
-          if (!screenmute) {
-            tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
-            tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
-            tftPrint(0, myLanguage[language][34], 160, 100, ActiveColor, ActiveColorSmooth, 28);
-          }
-          frequencyold = frequency;
-          for (freq_scan = scanner_start; freq_scan <= scanner_end; freq_scan += scanner_step) {
-            radio.SetFreq(freq_scan);
-            DataPrint(String(freq_scan * 10, DEC));
-            DataPrint(" = ");
-            if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN); else  radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
-            DataPrint(String((SStatus / 10) + 10, DEC));
-            DataPrint(", ");
-          }
-          DataPrint("\n");
-          radio.SetFreq(frequencyold);
-          BuildDisplay();
-          SelectBand();
-          radio.setFMABandw();
-          BWset = 0;
-          XDRScan = false;
+
+        switch (buff[1]) {
+          case 'a': scanner_start = (atol(buff + 2) + 5) / 10; break;
+          case 'b': scanner_end = (atol(buff + 2) + 5) / 10; return;
+          case 'c': scanner_step = (atol(buff + 2) + 5) / 10; break;
+          case 'f':
+            scanner_filter = atol(buff + 2);
+            switch (scanner_filter) {
+              case 0: BWset = 1; break;
+              case 26: BWset = 2; break;
+              case 1: BWset = 3; break;
+              case 28: BWset = 4; break;
+              case 29: BWset = 5; break;
+              case 3: BWset = 6; break;
+              case 4: BWset = 7; break;
+              case 5: BWset = 8; break;
+              case 7: BWset = 9; break;
+              case 8: BWset = 10; break;
+              case 9: BWset = 11; break;
+              case 10: BWset = 12; break;
+              case 11: BWset = 13; break;
+              case 12: BWset = 14; break;
+              case 13: BWset = 15; break;
+              case 15: BWset = 16; break;
+            }
+            doBW();
+            break;
+          case 'w':
+            unsigned int bwtemp;
+            bwtemp = atoi(buff + 2);
+            switch (bwtemp) {
+              case 0: BWset = 0; break;
+              case 56000: BWset = 1; break;
+              case 64000: BWset = 2; break;
+              case 72000: BWset = 3; break;
+              case 84000: BWset = 4; break;
+              case 97000: BWset = 5; break;
+              case 114000: BWset = 6; break;
+              case 133000: BWset = 7; break;
+              case 151000: BWset = 8; break;
+              case 168000: BWset = 9; break;
+              case 184000: BWset = 10; break;
+              case 200000: BWset = 11; break;
+              case 217000: BWset = 12; break;
+              case 236000: BWset = 13; break;
+              case 254000: BWset = 14; break;
+              case 287000: BWset = 15; break;
+              case 311000: BWset = 16; break;
+            }
+            doBW();
+            break;
+
+          case '\0':
+            if (!screenmute) {
+              tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
+              tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
+              tftPrint(0, myLanguage[language][34], 160, 100, ActiveColor, ActiveColorSmooth, 28);
+            }
+
+            DataPrint("U");
+            frequencyold = frequency;
+
+            for (freq_scan = scanner_start; freq_scan <= scanner_end; freq_scan += scanner_step) {
+              radio.SetFreq(freq_scan);
+              delay(5);
+              DataPrint(String(freq_scan * 10, DEC));
+              DataPrint(" = ");
+              if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN); else  radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+              DataPrint(String((SStatus / 10) + 10, DEC));
+              DataPrint(", ");
+            }
+            DataPrint("\n");
+
+            radio.SetFreq(frequencyold);
+            BuildDisplay();
+            SelectBand();
+            BWset = BWsetRecall;
+            doBW();
+            XDRScan = false;
+            break;
         }
         break;
 
@@ -749,91 +762,25 @@ void XDRGTKRoutine() {
         unsigned int bwtemp;
         bwtemp = atoi(buff + 1);
         switch (bwtemp) {
-          case 0:
-            BWset = 0;
-            doBW();
-            break;
-
-          case 56000:
-            BWset = 1;
-            doBW();
-            break;
-
-          case 64000:
-            BWset = 2;
-            doBW();
-            break;
-
-          case 72000:
-            BWset = 3;
-            doBW();
-            break;
-
-          case 84000:
-            BWset = 4;
-            doBW();
-            break;
-
-          case 97000:
-            BWset = 5;
-            doBW();
-            break;
-
-          case 114000:
-            BWset = 6;
-            doBW();
-            break;
-
-          case 133000:
-            BWset = 7;
-            doBW();
-            break;
-
-          case 151000:
-            BWset = 8;
-            doBW();
-            break;
-
-          case 168000:
-            BWset = 9;
-            doBW();
-            break;
-
-          case 184000:
-            BWset = 10;
-            doBW();
-            break;
-
-          case 200000:
-            BWset = 11;
-            doBW();
-            break;
-
-          case 217000:
-            BWset = 12;
-            doBW();
-            break;
-
-          case 236000:
-            BWset = 13;
-            doBW();
-            break;
-
-          case 254000:
-            BWset = 14;
-            doBW();
-            break;
-
-          case 287000:
-            BWset = 15;
-            doBW();
-            break;
-
-          case 311000:
-            BWset = 16;
-            doBW();
-            break;
+          case 0: BWset = 0; break;
+          case 56000: BWset = 1; break;
+          case 64000: BWset = 2; break;
+          case 72000: BWset = 3; break;
+          case 84000: BWset = 4; break;
+          case 97000: BWset = 5; break;
+          case 114000: BWset = 6; break;
+          case 133000: BWset = 7; break;
+          case 151000: BWset = 8; break;
+          case 168000: BWset = 9; break;
+          case 184000: BWset = 10; break;
+          case 200000: BWset = 11; break;
+          case 217000: BWset = 12; break;
+          case 236000: BWset = 13; break;
+          case 254000: BWset = 14; break;
+          case 287000: BWset = 15; break;
+          case 311000: BWset = 16; break;
         }
+        doBW();
         DataPrint("W" + String(bwtemp) + "\n");
         break;
 
