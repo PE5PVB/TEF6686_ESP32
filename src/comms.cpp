@@ -739,7 +739,7 @@ void XDRGTKRoutine() {
 
             for (freq_scan = scanner_start; freq_scan <= scanner_end; freq_scan += scanner_step) {
               radio.SetFreq(freq_scan);
-              delay(5);
+              delay(3);
               DataPrint(String(freq_scan * 10, DEC));
               DataPrint(" = ");
               if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN); else  radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
