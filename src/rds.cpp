@@ -974,51 +974,51 @@ void ShowAFEON() {
           }
 
           if (radio.eon[i + y].mappedfreq > 0) {
-            tftPrint(1, "MF", 156, 32, ActiveColor, ActiveColorSmooth, 16);
+            tftPrint(-1, "MF", 119, 32, ActiveColor, ActiveColorSmooth, 16);
 
             if (radio.eon[i + y].mappedfreq != mappedfreqold[i + y]) {
               char oldFreq[10];
               dtostrf(mappedfreqold[i + y] / 100.0, 5, 1, oldFreq);
-              tftPrint(-1, oldFreq, 156, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+              tftPrint(-1, oldFreq, 115, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
             }
             char newFreq[10];
             dtostrf(radio.eon[i + y].mappedfreq / 100.0, 5, 1, newFreq);
-            tftPrint(-1, newFreq, 156, 48 + (15 * i), RDSDropoutColor, RDSDropoutColorSmooth, 16);
+            tftPrint(-1, newFreq, 115, 48 + (15 * i), RDSDropoutColor, RDSDropoutColorSmooth, 16);
             mappedfreqold[i + y] = radio.eon[i + y].mappedfreq;
           } else {
-            tftPrint(-1, "", 156, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+            tftPrint(-1, "", 115, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
           }
 
           if (radio.eon[i + y].mappedfreq2 > 0) {
-            tftPrint(1, "MF2", 214, 32, ActiveColor, ActiveColorSmooth, 16);
+            tftPrint(-1, "MF2", 162, 32, ActiveColor, ActiveColorSmooth, 16);
 
             if (radio.eon[i + y].mappedfreq2 != mappedfreqold2[i + y]) {
               char oldFreq2[10];
               dtostrf(mappedfreqold2[i + y] / 100.0, 5, 1, oldFreq2);
-              tftPrint(-1, oldFreq2, 214, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+              tftPrint(-1, oldFreq2, 160, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
             }
             char newFreq2[10];
             dtostrf(radio.eon[i + y].mappedfreq2 / 100.0, 5, 1, newFreq2);
-            tftPrint(-1, newFreq2, 214, 48 + (15 * i), RDSDropoutColor, RDSDropoutColorSmooth, 16);
+            tftPrint(-1, newFreq2, 160, 48 + (15 * i), RDSDropoutColor, RDSDropoutColorSmooth, 16);
             mappedfreqold2[i + y] = radio.eon[i + y].mappedfreq2;
           } else {
-            tftPrint(-1, "", 214, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+            tftPrint(-1, "", 160, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
           }
 
           if (radio.eon[i + y].mappedfreq3 > 0) {
-            tftPrint(1, "MF3", 272, 32, ActiveColor, ActiveColorSmooth, 16);
+            tftPrint(-1, "MF3", 207, 32, ActiveColor, ActiveColorSmooth, 16);
 
             if (radio.eon[i + y].mappedfreq3 != mappedfreqold3[i + y]) {
               char oldFreq3[10];
               dtostrf(mappedfreqold3[i + y] / 100.0, 5, 1, oldFreq3);
-              tftPrint(-1, oldFreq3, 272, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+              tftPrint(-1, oldFreq3, 205, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
             }
             char newFreq3[10];
             dtostrf(radio.eon[i + y].mappedfreq3 / 100.0, 5, 1, newFreq3);
-            tftPrint(-1, newFreq3, 272, 48 + (15 * i), RDSDropoutColor, RDSDropoutColorSmooth, 16);
+            tftPrint(-1, newFreq3, 205, 48 + (15 * i), RDSDropoutColor, RDSDropoutColorSmooth, 16);
             mappedfreqold3[i + y] = radio.eon[i + y].mappedfreq3;
           } else {
-            tftPrint(-1, "", 272, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+            tftPrint(-1, "", 205, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
           }
 
           if (radio.eon[i + y].pty > 0) {
