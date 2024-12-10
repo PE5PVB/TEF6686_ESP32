@@ -3036,7 +3036,6 @@ void DoMemoryPosTune() {
 
   BWset = presets[memorypos].bw;
   doBW();
-  BWtune = true;
   memtune = true;
   memreset = true;
   rdsflagreset = false;
