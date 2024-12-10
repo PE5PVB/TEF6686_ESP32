@@ -2019,7 +2019,7 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Markierte Ecke drücken", // 282
     "zum Kalibrieren des Touchscrees", // 283
     "Bildschirmumkehrung umschalten", // 284
-    "Select Bandwidth" // 285
+    "Bandbreite wählen" // 285
   },
 
   { "Český", // Czech
