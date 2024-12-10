@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[18][285] PROGMEM = {
+static const char* const myLanguage[18][286] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -290,7 +290,8 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
     "To calibrate touchscreen", // 283
-    "Screen inversion toggles" // 284
+    "Screen inversion toggles", // 284
+    "Select Bandwidth" // 285
   },
 
   { "Nederlands", // Dutch
@@ -577,7 +578,8 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Wachttijd alleen\nbij signaal", // 281
     "Druk op aangegeven hoeken", // 282
     "om scherm te calibreren", // 283
-    "Scherm inversie gewijzigd" // 284
+    "Scherm inversie gewijzigd", // 284
+    "Selecteer bandbreedte" // 285
   },
 
   { "Polski", // Polish
@@ -864,7 +866,8 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Czekaj tylko gdy\nwykryto stację", // 281
     "Naciśnij zaznaczony róg", // 282
     "Aby skalibrować ekran", // 283
-    "Inwersja kolorów wyświetlacza" // 284
+    "Inwersja kolorów wyświetlacza", // 284
+    "Select Bandwidth" // 285
   },
 
   { "Hrvatski", // Croatian
@@ -1151,7 +1154,8 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
     "To calibrate touchscreen", // 283
-    "Screen inversion toggles" // 284
+    "Screen inversion toggles", // 284
+    "Select Bandwidth" // 285
   },
 
   { "Ελληνικά", // Greek
@@ -1438,7 +1442,8 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Αναμονή μόνο σε\nυπάρξη σήματος", // 281
     "Πιέστε την\nεπισημασμένη γωνία", // 282
     "Για βαθμονόμηση\nτης οθόνης αφής", // 283
-    "Εναλλαγή αναστροφής οθόνης" // 284
+    "Εναλλαγή αναστροφής οθόνης", // 284
+    "Select Bandwidth" // 285
   },
 
   { "Română", // Romanian
@@ -1725,7 +1730,8 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
     "To calibrate touchscreen", // 283
-    "Screen inversion toggles" // 284
+    "Screen inversion toggles", // 284
+    "Select Bandwidth" // 285
   },
 
   { "Deutsch", // German
@@ -2012,7 +2018,8 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Wartezeit nur wenn\nSignal vorhanden", // 281
     "Markierte Ecke drücken", // 282
     "zum Kalibrieren des Touchscrees", // 283
-    "Bildschirmumkehrung umschalten" // 284
+    "Bildschirmumkehrung umschalten", // 284
+    "Select Bandwidth" // 285
   },
 
   { "Český", // Czech
@@ -2299,7 +2306,8 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
     "To calibrate touchscreen", // 283
-    "Screen inversion toggles" // 284
+    "Screen inversion toggles", // 284
+    "Select Bandwidth" // 285
   },
 
   { "Magyar", // Hungarian
@@ -2586,7 +2594,8 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
     "To calibrate touchscreen", // 283
-    "Screen inversion toggles" // 284
+    "Screen inversion toggles", // 284
+    "Select Bandwidth" // 285
   },
 
   { "Français", // French
@@ -2873,8 +2882,8 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Attendre que lorsque\nle signal existe", // 281
     "Appuyez sur l'angle\nmis en évidence", // 282
     "Pour calibrer l'écran tactile", // 283
-    "Inversion d'affichage bascules" // 284
-
+    "Inversion d'affichage bascules", // 284
+    "Select Bandwidth" // 285
   },
 
   { "Български", // Bulgarian
@@ -3161,7 +3170,8 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
     "To calibrate touchscreen", // 283
-    "Screen inversion toggles" // 284
+    "Screen inversion toggles", // 284
+    "Select Bandwidth" // 285
   },
 
   { "Русский", // Russian
@@ -3448,7 +3458,8 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Время ожидания \nпри сигнале", // 281
     "Нажмите на подсвеченный угол", // 282
     "Калибровка тачскрина", // 283
-    "Переключение инверсии экрана" // 284
+    "Переключение инверсии экрана", // 284
+    "Select Bandwidth" // 285
   },
 
   { "Українська", // Ukranian
@@ -3735,7 +3746,8 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
     "To calibrate touchscreen", // 283
-    "Screen inversion toggles" // 284
+    "Screen inversion toggles", // 284
+    "Select Bandwidth" // 285
   },
 
   { "Italiano", // Italian
@@ -4022,7 +4034,8 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Tempo di attesa\nsolo con segnale", // 281
     "Premi l'angolo evidenziato", // 282
     "Per calibrare lo schermo touch", // 283
-    "Inversione colore schermo" // 284
+    "Inversione colore schermo", // 284
+    "Select Bandwidth" // 285
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4309,7 +4322,8 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
     "To calibrate touchscreen", // 283
-    "Screen inversion toggles" // 284
+    "Screen inversion toggles", // 284
+    "Select Bandwidth" // 285
   },
 
   { "Norsk", // Norwegian
@@ -4596,7 +4610,8 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
     "To calibrate touchscreen", // 283
-    "Screen inversion toggles" // 284
+    "Screen inversion toggles", // 284
+    "Select Bandwidth" // 285
   },
 
   { "Español", // Spanish
@@ -4883,8 +4898,8 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Tiempo de espera\ncuando la señal", // 281
     "Presione en el\nángulo resaltado", // 282
     "Para calibrar\nla pantalla táctil", // 283
-    "Cambio de reverso\nde la pantalla" // 284
-
+    "Cambio de reverso\nde la pantalla", // 284
+    "Select Bandwidth" // 285
   },
 
   { "Português", // Portuguese
@@ -5171,7 +5186,8 @@ static const char* const myLanguage[18][285] PROGMEM = {
     "Espera tempo apenas\nquando sinal", // 281
     "Pressione o\ncanto inscrito", // 282
     "Para calibração\nda tela de toque", // 283
-    "Alternar a inversão da tela" // 284
+    "Alternar a inversão da tela", // 284
+    "Select Bandwidth" // 285
   }
 };
 #endif

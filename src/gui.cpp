@@ -1564,8 +1564,30 @@ void ShowOneLine(byte position, byte item, bool selected) {
   FullLineSprite.pushSprite(8, 2 + position);
 }
 
+void BuildBWSelector() {
+  switch (CurrentTheme) {
+    case 7: tft.pushImage (0, 0, 320, 240, configurationbackground_wo); break;
+    default: tft.pushImage (0, 0, 320, 240, configurationbackground); break;
+  }
+  tftPrint(0, myLanguage[language][285], 160, 6, PrimaryColor, PrimaryColorSmooth, 16);
+
+  if (band < BAND_GAP) {
+    for (int x = 0; x < 16; x++) {
+      drawButton(BWButtonLabelsFM[x], x, (BWset == x + 1 ? true : false));
+    }
+    drawButton(BWButtonLabelsFM[16], 16, (BWset == 0 ? true : false));
+    drawButton("OK", 19, false);
+  } else {
+    for (int x = 0; x < 4; x++) {
+      drawButton(BWButtonLabelsAM[x], x, (BWset == x + 1 ? true : false));
+    }
+    drawButton("OK", 19, false);
+  }
+}
+
 void BuildMenu() {
   advancedRDS = false;
+  BWtune = false;
 
   switch (CurrentTheme) {
     case 7: tft.pushImage (0, 0, 320, 240, configurationbackground_wo); break;
@@ -1730,6 +1752,7 @@ void BuildAdvancedRDS() {
 void BuildDisplay() {
   afscreen = false;
   advancedRDS = false;
+  BWtune = false;
 
   tft.fillScreen(BackgroundColor);
   tft.drawRect(0, 0, 320, 240, FrameColor);
@@ -4807,4 +4830,30 @@ String removeNewline(String inputString) {
     }
   }
   return outputString;
+}
+
+void drawButton(const char* text, byte button_number, bool active) {
+  const int buttonWidth = 70;
+  const int buttonHeight = 30;
+  const int cornerRadius = 6;
+  const int spacingX = 10;
+  const int spacingY = 10;
+  const int numColumns = 4;
+  const int numRows = 5;
+
+  const int startX = 6;
+  const int startY = 35;
+
+  if (button_number >= numColumns * numRows) return;
+
+  int row = button_number / numColumns;
+  int col = button_number % numColumns;
+
+  int x = startX + col * (buttonWidth + spacingX);
+  int y = startY + row * (buttonHeight + spacingY);
+
+  tft.fillRoundRect(x, y, buttonWidth, buttonHeight, cornerRadius, (active ? InsignificantColor : FrameColor));
+  tft.drawRoundRect(x, y, buttonWidth, buttonHeight, cornerRadius, ActiveColor);
+
+  tftPrint(0, text, x + buttonWidth / 2, y + buttonHeight / 4, (active ? FrameColor : PrimaryColor), (active ? InsignificantColor : PrimaryColorSmooth), 16);
 }
