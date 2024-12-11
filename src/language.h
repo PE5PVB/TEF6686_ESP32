@@ -1443,7 +1443,7 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Πιέστε την\nεπισημασμένη γωνία", // 282
     "Για βαθμονόμηση\nτης οθόνης αφής", // 283
     "Εναλλαγή αναστροφής οθόνης", // 284
-    "Select Bandwidth" // 285
+    "Επιλογή εύρους μπάντας" // 285
   },
 
   { "Română", // Romanian
@@ -2883,7 +2883,7 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Appuyez sur l'angle\nmis en évidence", // 282
     "Pour calibrer l'écran tactile", // 283
     "Inversion d'affichage bascules", // 284
-    "Select Bandwidth" // 285
+    "Sélectionner la bande passante" // 285
   },
 
   { "Български", // Bulgarian
@@ -4899,7 +4899,7 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Presione en el\nángulo resaltado", // 282
     "Para calibrar\nla pantalla táctil", // 283
     "Cambio de reverso\nde la pantalla", // 284
-    "Select Bandwidth" // 285
+    "Seleccionar ancho de banda" // 285
   },
 
   { "Português", // Portuguese
@@ -5187,7 +5187,7 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Pressione o\ncanto inscrito", // 282
     "Para calibração\nda tela de toque", // 283
     "Alternar a inversão da tela", // 284
-    "Select Bandwidth" // 285
+    "Selecione largura de banda" // 285
   }
 };
 #endif
