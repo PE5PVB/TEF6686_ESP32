@@ -587,7 +587,6 @@ void ShowOneLine(byte position, byte item, bool selected) {
             case 0: FullLineSprite.drawString(myLanguage[language][30], 298, 2); break;
             case 1: FullLineSprite.drawString(myLanguage[language][200], 298, 2); break;
             case 2: FullLineSprite.drawString(myLanguage[language][201], 298, 2); break;
-            case 3: FullLineSprite.drawString(myLanguage[language][202], 298, 2); break;
           }
           break;
 
@@ -2290,13 +2289,12 @@ void MenuUp() {
         switch (menuoption) {
           case ITEM1:
             showrdserrors++;
-            if (showrdserrors > 3) showrdserrors = 0;
+            if (showrdserrors > 2) showrdserrors = 0;
 
             switch (showrdserrors) {
               case 0: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
               case 1: OneBigLineSprite.drawString(myLanguage[language][200], 135, 0); break;
               case 2: OneBigLineSprite.drawString(myLanguage[language][201], 135, 0); break;
-              case 3: OneBigLineSprite.drawString(myLanguage[language][202], 135, 0); break;
             }
             OneBigLineSprite.pushSprite(24, 118);
             break;
@@ -3237,13 +3235,12 @@ void MenuDown() {
         switch (menuoption) {
           case ITEM1:
             showrdserrors--;
-            if (showrdserrors > 3) showrdserrors = 3;
+            if (showrdserrors > 2) showrdserrors = 2;
 
             switch (showrdserrors) {
               case 0: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
               case 1: OneBigLineSprite.drawString(myLanguage[language][200], 135, 0); break;
               case 2: OneBigLineSprite.drawString(myLanguage[language][201], 135, 0); break;
-              case 3: OneBigLineSprite.drawString(myLanguage[language][202], 135, 0); break;
             }
             OneBigLineSprite.pushSprite(24, 118);
             break;
@@ -4216,7 +4213,6 @@ void DoMenu() {
               case 0: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
               case 1: OneBigLineSprite.drawString(myLanguage[language][200], 135, 0); break;
               case 2: OneBigLineSprite.drawString(myLanguage[language][201], 135, 0); break;
-              case 3: OneBigLineSprite.drawString(myLanguage[language][202], 135, 0); break;
             }
             OneBigLineSprite.pushSprite(24, 118);
             break;
