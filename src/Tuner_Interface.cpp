@@ -72,7 +72,6 @@ bool Tuner_WriteBuffer(unsigned char *buf, uint16_t len) {
   Wire.beginTransmission(0x64);
   for (uint16_t i = 0; i < len; i++) Wire.write(buf[i]);
   uint8_t r = Wire.endTransmission();
-  delay(2);
   return (r == 0) ? 1 : 0;
 }
 
@@ -173,6 +172,7 @@ void Tuner_Patch(byte TEF) {
 
 void Tuner_I2C_Init() {
   Wire.begin();
+  Wire.setClock(400000);
   delay(5);
 }
 
