@@ -867,7 +867,7 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Naciśnij zaznaczony róg", // 282
     "Aby skalibrować ekran", // 283
     "Inwersja kolorów wyświetlacza", // 284
-    "Select Bandwidth" // 285
+    "Wybierz szer. pasma" // 285
   },
 
   { "Hrvatski", // Croatian
