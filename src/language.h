@@ -4589,29 +4589,29 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Innledende", // 260
     "Alltid", // 261
     "Vis klokka", // 262
-    "Show long PS", // 263
-    "Start frequency", // 264
-    "Stop frequency", // 265
-    "Start memory channel", // 266
-    "Stop memory channel", // 267
-    "Only store with RDS", // 268
-    "Start auto memory", // 269
-    "Auto memory", // 270
+    "Vis lang PS", // 263
+    "Startfrekvens", // 264
+    "Stoppfrekvens", // 265
+    "Start minne kanal", // 266
+    "Stopp minne kanal", // 267
+    "Lagre kun med RDS", // 268
+    "Start automatisk minne", // 269
+    "Autominne", // 270
     "Stationlist ID", // 271
-    "Found", // 272
-    "Abort! Out of memorychannels", // 273
-    "Abort! User pressed button", // 274
-    "Scan finished without errors", // 275
-    "Clear memory channels", // 276
-    "cleared", // 277
-    "Prevent double PI", // 278
-    "Range", // 279
+    "Funnet", // 272
+    "Avbrutt! Tom for minnekanaler", // 273
+    "Avbrutt! Bruker trykket på knappen", // 274
+    "Skanning fullført uten feil", // 275
+    "Slett minnekanaler", // 276
+    "ryddet", // 277
+    "Forhindre dobbel PI", // 278
+    "Spekter", // 279
     "Full", // 280
-    "Wait time on\nsignal only", // 281
-    "Press highlighted corner", // 282
-    "To calibrate touchscreen", // 283
-    "Screen inversion toggles", // 284
-    "Select Bandwidth" // 285
+    "Kun ventetid\npå signal", // 281
+    "Trykk på det uthevede hjørnet", // 282
+    "For å kalibrere berøringsskjerm", // 283
+    "Veksle Skjerminversjon", // 284
+    "Velg Båndbredde" // 285
   },
 
   { "Español", // Spanish
