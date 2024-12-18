@@ -779,6 +779,7 @@ void setup() {
   }
 
   tft.setTouch(TouchCalData);
+
   tft.fillScreen(BackgroundColor);
   tftPrint(0, myLanguage[language][8], 160, 3, PrimaryColor, PrimaryColorSmooth, 28);
   tftPrint(0, "Software " + String(VERSION), 160, 152, PrimaryColor, PrimaryColorSmooth, 16);
@@ -1011,7 +1012,7 @@ void loop() {
     rdsflagreset = false;
   }
 
-  if (!menu && !afscreen && !scandxmode) {
+  if (!BWtune && !menu && !afscreen && !scandxmode) {
     if (af != 0 && dropout && millis() >= aftimer + 1000) {
       aftimer = millis();
       if (radio.af_counter == 0) {
@@ -1128,7 +1129,7 @@ void loop() {
 
   if (seek) Seek(direction);
 
-  if ((SStatus / 10 > LowLevelSet) && !LowLevelInit && !menu && band < BAND_GAP) {
+  if ((SStatus / 10 > LowLevelSet) && !LowLevelInit && !BWtune && !menu && band < BAND_GAP) {
     if (!screenmute && !advancedRDS && !afscreen) {
       if (showmodulation) {
         tftPrint(-1, "10", 27, 144, ActiveColor, ActiveColorSmooth, 16);
@@ -1159,7 +1160,7 @@ void loop() {
   }
 
   if ((SStatus / 10 <= LowLevelSet) && band < BAND_GAP) {
-    if (LowLevelInit && !menu) {
+    if (LowLevelInit && !BWtune && !menu) {
       if (!screenmute && !afscreen && !advancedRDS) {
         for (byte segments = 0; segments < 94; segments++) {
           if (segments > 54) {
@@ -1191,7 +1192,7 @@ void loop() {
       LowLevelInit = false;
     }
 
-    if (!menu && (screenmute || radio.rds.correctPI != 0)) readRds();
+    if (!BWtune && !menu && (screenmute || radio.rds.correctPI != 0)) readRds();
     if (millis() >= lowsignaltimer + 300) {
       lowsignaltimer = millis();
       if (af || (!screenmute || (screenmute && (XDRGTKTCP || XDRGTKUSB)))) {
@@ -1201,7 +1202,7 @@ void loop() {
           radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
         }
       }
-      if (!menu) {
+      if (!BWtune && !menu) {
         doSquelch();
         GetData();
       }
@@ -1215,7 +1216,7 @@ void loop() {
         radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
       }
     }
-    if (!menu) {
+    if (!BWtune && !menu) {
       doSquelch();
       if (millis() >= tuningtimer + 200) readRds();
       GetData();
@@ -1258,7 +1259,7 @@ void loop() {
       }
     } else {
       if (BWtune) doBWtuneUp(); else KeyUp();
-      if (screensaverset && !menu && !screensavertriggered) ScreensaverTimerRestart();
+      if (screensaverset && !BWtune && !menu && !screensavertriggered) ScreensaverTimerRestart();
     }
   }
 
@@ -1273,7 +1274,7 @@ void loop() {
       }
     } else {
       if (BWtune) doBWtuneDown(); else KeyDown();
-      if (screensaverset && !menu && !screensavertriggered) ScreensaverTimerRestart();
+      if (screensaverset && !BWtune && !menu && !screensavertriggered) ScreensaverTimerRestart();
     }
   }
 
@@ -1307,8 +1308,6 @@ void loop() {
     }
   }
 
-  if (digitalRead(BWBUTTON) == HIGH && BWtune) BWtune = false;
-
   if (digitalRead(BWBUTTON) == LOW && !BWtune) {
     tottimer = millis();
     if (screensavertriggered) {
@@ -1324,7 +1323,7 @@ void loop() {
     num = GetNum();
     if (num != -1)
     {
-      if (!screenmute && !menu && !advancedRDS && !afscreen)
+      if (!screenmute && !BWtune && !menu && !advancedRDS && !afscreen)
       {
         NumpadProcess(num);
       }
@@ -1335,7 +1334,7 @@ void loop() {
     if (screensaver_IRQ)
     {
       screensaver_IRQ = OFF;
-      if (!screensavertriggered && !menu) {
+      if (!screensavertriggered && !BWtune && !menu) {
         WakeToSleep(true);
       }
     }
@@ -1348,9 +1347,9 @@ void GetData() {
     ShowSignalLevel();
   }
 
-  if (!menu) showPS();
+  if (!BWtune && !menu) showPS();
 
-  if (band < BAND_GAP && !menu) {
+  if (band < BAND_GAP && !BWtune && !menu) {
     if (advancedRDS && !afscreen && !screenmute) ShowAdvancedRDS();
     if (afscreen && !screenmute) ShowAFEON();
     if (!afscreen) {
@@ -1839,7 +1838,7 @@ void BANDBUTTONPress() {
       if (!usesquelch) radio.setUnMute();
       unsigned long counterold = millis();
       unsigned long counter = millis();
-      if (!menu) {
+      if (!BWtune && !menu) {
         while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
 
         if (counter - counterold < 1000) {
@@ -2394,7 +2393,7 @@ void BWButtonPress() {
     cancelDXScan();
   } else {
     if (!usesquelch) radio.setUnMute();
-    if (!menu) {
+    if (!BWtune && !menu) {
       if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
       unsigned long counterold = millis();
       unsigned long counter = millis();
@@ -2404,13 +2403,11 @@ void BWButtonPress() {
         if (band == BAND_FM || band == BAND_OIRT) {
           doStereoToggle();
         } else {
-          BWset++;
-          doBW();
+          BuildBWSelector();
           BWtune = true;
         }
       } else {
-        BWset++;
-        doBW();
+        BuildBWSelector();
         BWtune = true;
       }
       delay(100);
@@ -2462,7 +2459,7 @@ void ModeButtonPress() {
       if (afpagenr == 1) afpagenr = 2; else if (afpagenr == 2 && afpage) afpagenr = 3; else afpagenr = 1;
       BuildAFScreen();
     } else {
-      if (!menu) {
+      if (!BWtune && !menu) {
         if (!screenmute) {
           tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
         }
@@ -2474,7 +2471,7 @@ void ModeButtonPress() {
         if (counter - counterold <= 1000) {
           doTuneMode();
         } else {
-          if (!menu) {
+          if (!BWtune && !menu) {
             menuoption = ITEM1;
             menupage = INDEX;
             menuitem = 0;
@@ -2642,7 +2639,7 @@ void ButtonPress() {
       BuildDisplay();
       SelectBand();
     }
-    if (!menu) {
+    if (!BWtune && !menu) {
       if (tunemode == TUNE_MEM) {
         if (!memorystore) {
           memorystore = true;
@@ -2741,7 +2738,11 @@ void ButtonPress() {
         ScreensaverTimerRestart();
       }
     } else {
-      DoMenu();
+      if (menu) DoMenu();
+      if (BWtune) {
+        BuildDisplay();
+        SelectBand();
+      }
     }
   }
   while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
@@ -2753,7 +2754,7 @@ void KeyUp() {
     cancelDXScan();
   } else {
     if (!afscreen) {
-      if (!menu) {
+      if (!BWtune && !menu) {
         switch (tunemode) {
           case TUNE_MAN:
             TuneUp();
@@ -2820,7 +2821,7 @@ void KeyDown() {
     cancelDXScan();
   } else {
     if (!afscreen) {
-      if (!menu) {
+      if (!BWtune && !menu) {
         switch (tunemode) {
           case TUNE_MAN:
             TuneDown();
@@ -3035,7 +3036,6 @@ void DoMemoryPosTune() {
 
   BWset = presets[memorypos].bw;
   doBW();
-  BWtune = true;
   memtune = true;
   memreset = true;
   rdsflagreset = false;
@@ -3511,7 +3511,7 @@ void doSquelch() {
 
     if (!XDRGTKUSB && !XDRGTKTCP && usesquelch && (!scandxmode || (scandxmode && !scanmute))) {
       if (!screenmute && usesquelch && !advancedRDS && !afscreen) {
-        if (!menu && (Squelch > Squelchold + 2 || Squelch < Squelchold - 2)) {
+        if (!BWtune && !menu && (Squelch > Squelchold + 2 || Squelch < Squelchold - 2)) {
           SquelchSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           SquelchSprite.fillSprite(BackgroundColor);
           if (Squelch == -100) {
@@ -3616,13 +3616,13 @@ void doSquelch() {
 
 void updateBW() {//todo air
   if (BWset == 0) {
-    if (!screenmute && !advancedRDS && !afscreen) {
+    if (!BWtune && !screenmute && !advancedRDS && !afscreen) {
       tft.fillRoundRect(248, 36, 69, 18, 2, SecondaryColor);
       tftPrint(0, "AUTO BW", 282, 38, BackgroundColor, SecondaryColor, 16);
     }
     radio.setFMABandw();
   } else {
-    if (!screenmute && !advancedRDS && !afscreen) {
+    if (!BWtune && !screenmute && !advancedRDS && !afscreen) {
       tft.fillRoundRect(248, 36, 69, 18, 2, GreyoutColor);
       tftPrint(0, "AUTO BW", 282, 38, BackgroundColor, GreyoutColor, 16);
     }
@@ -3776,26 +3776,35 @@ void doBW() {
 
 void doBWtuneDown() {
   rotary = 0;
-  BWset--;
   if (band < BAND_GAP) {
+    if (BWset == 0) drawButton(BWButtonLabelsFM[16], 16, false); else drawButton(BWButtonLabelsFM[BWset - 1], BWset - 1, false);
+    BWset--;
     if (BWset > 16) BWset = 16;
+    if (BWset == 0) drawButton(BWButtonLabelsFM[16], 16, true); else drawButton(BWButtonLabelsFM[BWset - 1], BWset - 1, true);
   } else {
+    drawButton(BWButtonLabelsAM[BWset - 1], BWset - 1, false);
+    BWset--;
     if (BWset == 0) BWset = 4;
+    drawButton(BWButtonLabelsAM[BWset - 1], BWset - 1, true);
   }
+
   doBW();
-  ShowBW();
 }
 
 void doBWtuneUp() {
   rotary = 0;
-  BWset++;
   if (band < BAND_GAP) {
+    if (BWset == 0) drawButton(BWButtonLabelsFM[16], 16, false); else drawButton(BWButtonLabelsFM[BWset - 1], BWset - 1, false);
+    BWset++;
     if (BWset > 16) BWset = 0;
+    if (BWset == 0) drawButton(BWButtonLabelsFM[16], 16, true); else drawButton(BWButtonLabelsFM[BWset - 1], BWset - 1, true);
   } else {
+    drawButton(BWButtonLabelsAM[BWset - 1], BWset - 1, false);
+    BWset++;
     if (BWset > 4) BWset = 1;
+    drawButton(BWButtonLabelsAM[BWset - 1], BWset - 1, true);
   }
   doBW();
-  ShowBW();
 }
 
 void doTuneMode() {

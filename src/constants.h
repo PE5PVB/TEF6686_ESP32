@@ -343,6 +343,8 @@ static const char* const unitString[] = {"dBμV", "dBf", "dBm"};
 static const char* const FreqFont[] = {"Classic", "Roubenstil", "Motoya", "Aura2", "Comic", "Modern"};
 static const char* const Theme[] = {"Essence", "Cyan", "Crimson", "Monochrome", "Volcano", "Dendro", "Sakura", "Whiteout", "Tangerine", "Ocean", "Indigo", "Queer", "GoldBrite", "Bubblegum"};
 static const char* const Skin[] = {"Essential"};
+static const char* BWButtonLabelsFM[] = {"56 kHz", "64 kHz", "72 kHz", "84 kHz", "97 kHz", "114 kHz", "133 kHz", "151 kHz", "168 kHz", "184 kHz", "200 kHz", "217 kHz", "236 kHz", "254 kHz", "287 kHz", "311 kHz", "Auto"};
+static const char* BWButtonLabelsAM[] = {"3 kHz", "4 kHz", "6 kHz", "8 kHz"};
 
 // Memory channel database
 typedef struct {
