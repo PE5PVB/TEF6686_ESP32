@@ -5166,7 +5166,14 @@ void NumpadProcess(int num) {
     if (num == 127) cancelDXScan();
   } else {
     if (num == 127) {
-      startFMDXScan();
+      menuoption = ITEM1;
+      menupage = DXMODE;
+      menuitem = 0;
+      if (spispeed == 7) tft.setSPISpeed(40);
+      submenu = true;
+      menu = true;
+      BuildMenu();
+      ScreensaverTimerSet(OFF);
     } else if (num == 13) {
       if (freq_in != 0) {
         TuneFreq(freq_in);
