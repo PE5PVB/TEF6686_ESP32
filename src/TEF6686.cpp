@@ -90,6 +90,7 @@ uint16_t TEF6686::TestAF() {
       }
       af[x].score = aflevel - afusn - afwam;
       if (afoffset < -125 || afoffset > 125) af[x].score = -32767;
+      delay(10);
     }
 
     int16_t highestValue = af[0].score;
