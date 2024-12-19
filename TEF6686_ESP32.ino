@@ -250,6 +250,7 @@ int ForceMono;
 int FrameColor;
 int FreqColor;
 int FreqColorSmooth;
+int freq_in = 0;
 int freqold;
 int GreyoutColor;
 int InsignificantColor;
@@ -398,6 +399,7 @@ unsigned long autosquelchtimer;
 unsigned long eonticker;
 unsigned long eontickerhold;
 unsigned long flashingtimer;
+unsigned long keypadtimer;
 unsigned long lowsignaltimer;
 unsigned long ModulationpreviousMillis;
 unsigned long ModulationpeakPreviousMillis;
@@ -923,6 +925,11 @@ void loop() {
     if (millis() >= tottimer + totprobe) deepSleep();
   }
 
+  if (freq_in != 0 && millis() >= keypadtimer + 2000) {
+    freq_in = 0;
+    ShowFreq(0);
+  }
+
   if (scandxmode) {
     unsigned long waitTime = (scanhold == 0) ? 500 : (scanhold * 1000);
     if (!scanholdflag) scanholdflag = (USN < fmscansens * 30) && (WAM < 230) && (OStatus < 80) && (OStatus > -80);
@@ -1054,6 +1061,7 @@ void loop() {
             if (advancedRDS) {
               leave = true;
               BuildAdvancedRDS();
+              freq_in = 0;
             } else {
               ShowFreq(0);
             }
@@ -1845,9 +1853,11 @@ void BANDBUTTONPress() {
           if (afscreen) {
             leave = true;
             BuildAdvancedRDS();
+            freq_in = 0;
           } else if (advancedRDS) {
             leave = true;
             BuildDisplay();
+            freq_in = 0;
             SelectBand();
             ScreensaverTimerReopen();
           } else {
@@ -1855,8 +1865,13 @@ void BANDBUTTONPress() {
           }
         } else {
           if (band < BAND_GAP) {
-            if (advancedRDS && !seek) BuildAFScreen();
-            else BuildAdvancedRDS();
+            if (advancedRDS && !seek) {
+              BuildAFScreen();
+              freq_in = 0;
+            } else {
+              BuildAdvancedRDS();
+              freq_in = 0;
+            }
           } else {
             WakeToSleep(true);
           }
@@ -2271,7 +2286,10 @@ void ToggleSWMIBand(bool frequencyup) {
 }
 
 void SelectBand() {
-  if (afscreen || advancedRDS) BuildDisplay();
+  if (afscreen || advancedRDS) {
+    BuildDisplay();
+    freq_in = 0;
+  }
 
   if (band > BAND_GAP) {
     if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
@@ -2404,10 +2422,12 @@ void BWButtonPress() {
           doStereoToggle();
         } else {
           BuildBWSelector();
+          freq_in = 0;
           BWtune = true;
         }
       } else {
         BuildBWSelector();
+        freq_in = 0;
         BWtune = true;
       }
       delay(100);
@@ -2453,11 +2473,13 @@ void ModeButtonPress() {
     if (!usesquelch) radio.setUnMute();
     if (advancedRDS) {
       BuildDisplay();
+      freq_in = 0;
       SelectBand();
       ScreensaverTimerReopen();
     } else if (afscreen) {
       if (afpagenr == 1) afpagenr = 2; else if (afpagenr == 2 && afpage) afpagenr = 3; else afpagenr = 1;
       BuildAFScreen();
+      freq_in = 0;
     } else {
       if (!BWtune && !menu) {
         if (!screenmute) {
@@ -2477,6 +2499,7 @@ void ModeButtonPress() {
             menuitem = 0;
             if (spispeed == 7) tft.setSPISpeed(40);
             BuildMenu();
+            freq_in = 0;
             menu = true;
             ScreensaverTimerSet(OFF);
           }
@@ -2522,6 +2545,7 @@ void ModeButtonPress() {
             menupage = INDEX;
             menuitem = 0;
             BuildMenu();
+            freq_in = 0;
           }
         }
       }
@@ -2637,6 +2661,7 @@ void ButtonPress() {
     if (!usesquelch) radio.setUnMute();
     if (advancedRDS) {
       BuildDisplay();
+      freq_in = 0;
       SelectBand();
     }
     if (!BWtune && !menu) {
@@ -2741,6 +2766,7 @@ void ButtonPress() {
       if (menu) DoMenu();
       if (BWtune) {
         BuildDisplay();
+        freq_in = 0;
         SelectBand();
       }
     }
@@ -4327,14 +4353,18 @@ void MuteScreen(bool setting) {
     if (band < BAND_GAP) {
       if (afscreen) {
         BuildAFScreen();
+        freq_in = 0;
       } else if (advancedRDS) {
         BuildAdvancedRDS();
+        freq_in = 0;
       } else {
         BuildDisplay();
+        freq_in = 0;
         SelectBand();
       }
     } else {
       BuildDisplay();
+      freq_in = 0;
       SelectBand();
     }
     setupmode = false;
@@ -4726,7 +4756,10 @@ void startFMDXScan() {
   }
 
   if (menu) endMenu();
-  if (afscreen || advancedRDS) BuildDisplay();
+  if (afscreen || advancedRDS) {
+    BuildDisplay();
+    freq_in = 0;
+  }
 
   if (memorypos > scanstop || memorypos < scanstart) memorypos = scanstart;
   scanmodeold = tunemode;
@@ -5068,6 +5101,7 @@ int GetNum(void) {
   Wire.requestFrom(0x20, 2);
 
   if (Wire.available() == 2) {
+    keypadtimer = millis();
     temp = Wire.read() & 0xFF;
     temp |= (Wire.read() & 0xFF) * 256;
     for (int i = 0; i < 16; i++) {
@@ -5097,7 +5131,7 @@ void ShowNum(int val) {
   FrequencySprite.setTextDatum(TR_DATUM);
 
   FrequencySprite.fillSprite(BackgroundColor);
-  FrequencySprite.setTextColor(FreqColor, FreqColorSmooth, false);
+  FrequencySprite.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
   FrequencySprite.drawString(String(val) + " ", 218, -6);
   FrequencySprite.pushSprite(46, 46);
 
@@ -5160,12 +5194,12 @@ void TuneFreq(int temp) {
 
 void NumpadProcess(int num) {
   static bool input_mode = false;
-  static int freq_in = 0;
 
   if (scandxmode) {
     if (num == 127) cancelDXScan();
   } else {
     if (num == 127) {
+      freq_in = 0;
       menuoption = ITEM1;
       menupage = DXMODE;
       menuitem = 0;
@@ -5186,6 +5220,8 @@ void NumpadProcess(int num) {
           ShowFreq(0);
           store = true;
         }
+      } else {
+        ShowFreq(0);
       }
       freq_in = 0;
     } else {
