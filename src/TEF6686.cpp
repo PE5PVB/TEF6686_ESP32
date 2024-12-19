@@ -84,13 +84,14 @@ uint16_t TEF6686::TestAF() {
     for (int x = 0; x < af_counter; x++) {
       timing = 0;
       devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 3, af[x].frequency);
+      delay(2);
       while (timing == 0 && !bitRead(timing, 15)) {
         devTEF_Radio_Get_Quality_Status(&status, &aflevel, &afusn, &afwam, &afoffset, &dummy1, &dummy2, &dummy3);
         timing = lowByte(status);
       }
+      delay(2);
       af[x].score = aflevel - afusn - afwam;
       if (afoffset < -125 || afoffset > 125) af[x].score = -32767;
-      delay(10);
     }
 
     int16_t highestValue = af[0].score;
