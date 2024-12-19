@@ -4219,6 +4219,7 @@ void TuneDown() {
     radio.SetFreqAM(frequency_AM);
     frequency_MW = frequency_AM;
   } else if (band == BAND_SW) {
+    if (rotaryaccelerate && rotarycounter > 2) temp *= 2;
     frequency_AM -= temp;
     if (frequency_AM < SWLowEdgeSet) {
       frequency_AM = SWHighEdgeSet;
