@@ -105,6 +105,7 @@ bool RDSSPYUSB;
 bool RDSstatus;
 bool RDSstatusold;
 bool rdsstereoold;
+bool rotaryaccelerate = true;
 bool rtcset;
 bool scandxmode;
 bool scanholdflag;
@@ -275,6 +276,8 @@ int StereoColor;
 int StereoColorSmooth;
 int SquelchShow;
 int rotary;
+int rotarycounter;
+int rotarycounteraccelerator;
 int rssi;
 int rssiold = 200;
 int scanner_filter;
@@ -410,6 +413,7 @@ unsigned long rtplusticker;
 unsigned long rtplustickerhold;
 unsigned long rtticker;
 unsigned long rttickerhold;
+unsigned long rotarytimer;
 unsigned long scantimer;
 unsigned long signalstatustimer;
 unsigned long tottimer;
@@ -1007,16 +1011,13 @@ void loop() {
     }
   }
 
-  if (millis() >= tuningtimer + 200) {
+  if (millis() >= tuningtimer + 200) rdsflagreset = false;
+
+  if (millis() >= tuningtimer + 2000) {
     if (store) {
-      detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A));
-      detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B));
       StoreFrequency();
       store = false;
-      attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
-      attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
     }
-    rdsflagreset = false;
   }
 
   if (!BWtune && !menu && !afscreen && !scandxmode) {
@@ -1267,6 +1268,10 @@ void loop() {
       }
     } else {
       if (BWtune) doBWtuneUp(); else KeyUp();
+      if (rotaryaccelerate && rotarycounter > 2 && !BWtune && !menu) {
+        for (int i = 0; i < rotarycounteraccelerator; i++) KeyUp();
+        rotarycounter = 0;
+      }
       if (screensaverset && !BWtune && !menu && !screensavertriggered) ScreensaverTimerRestart();
     }
   }
@@ -1282,6 +1287,10 @@ void loop() {
       }
     } else {
       if (BWtune) doBWtuneDown(); else KeyDown();
+      if (rotaryaccelerate && rotarycounter > 2 && !BWtune && !menu) {
+        for (int i = 0; i < rotarycounteraccelerator; i++) KeyDown();
+        rotarycounter = 0;
+      }
       if (screensaverset && !BWtune && !menu && !screensavertriggered) ScreensaverTimerRestart();
     }
   }
@@ -3077,9 +3086,6 @@ void ShowFreq(int mode) {
     }
   }
 
-  detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A));
-  detachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B));
-
   if (band > BAND_GAP) {
     switch (band) {
       case BAND_LW: frequency_AM = frequency_LW; break;
@@ -3164,8 +3170,6 @@ void ShowFreq(int mode) {
       }
     }
   }
-  attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_A), read_encoder, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(ROTARY_PIN_B), read_encoder, CHANGE);
 
   if (spispeed == 7) setAutoSpeedSPI();
   rdsreset = true;
@@ -4054,6 +4058,7 @@ void TuneUp() {
   if (stepsize == 2) temp = 10;
   if (stepsize == 3) temp = 100;
   if (stepsize == 4) temp = 1000;
+  if (rotaryaccelerate && rotarycounter > 2) temp *= 2;
 
   if (band == BAND_FM) {
     frequency += temp;
@@ -4115,6 +4120,7 @@ void TuneUp() {
     radio.SetFreqAM(frequency_AM);
     frequency_MW = frequency_AM;
   } else if (band == BAND_SW) {
+    if (rotaryaccelerate && rotarycounter > 2) temp *= 2;
     frequency_AM += temp;
     if (frequency_AM > SWHighEdgeSet) {
       frequency_AM = SWLowEdgeSet;
@@ -4176,6 +4182,7 @@ void TuneDown() {
   if (stepsize == 2) temp = 10;
   if (stepsize == 3) temp = 100;
   if (stepsize == 4) temp = 1000;
+  if (rotaryaccelerate && rotarycounter > 2) temp *= 2;
 
   if (band == BAND_FM) {
     frequency -= temp;
@@ -4314,15 +4321,22 @@ void SetTunerPatch() {
 }
 
 void read_encoder() {
+  if (!digitalRead(ROTARY_PIN_A) || !digitalRead(ROTARY_PIN_B)) {
+    if (millis() - rotarytimer >= 15) { rotarycounteraccelerator = 2; rotarycounter = 0; } // Steady fast
+    if (millis() - rotarytimer >= 30) { rotarycounteraccelerator = 4; rotarycounter = 0; }
+    if (millis() - rotarytimer >= 45) { rotarycounteraccelerator = 6; rotarycounter = 0; } // Quick flicks
+  }
+
   static uint8_t old_AB = 3;
   static int8_t encval = 0;
-  static const int8_t enc_states[]  = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
+  static const int8_t enc_states[] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
 
   old_AB <<= 2;
 
   if (digitalRead(ROTARY_PIN_A)) old_AB |= 0x02;
   if (digitalRead(ROTARY_PIN_B)) old_AB |= 0x01;
   encval += enc_states[( old_AB & 0x0f )];
+  if (!(255 - old_AB)) encval = 0; // Unstick -2 or 2
 
   if (optenc) {
     if (encval > 4) {
@@ -4335,9 +4349,13 @@ void read_encoder() {
   } else {
     if (encval > 3) {
       if (rotarymode) rotary = -1; else rotary = 1;
+      rotarycounter++;
+      rotarytimer = millis();
       encval = 0;
     } else if (encval < -3) {
       if (rotarymode) rotary = 1; else rotary = -1;
+      rotarycounter++;
+      rotarytimer = millis();
       encval = 0;
     }
   }
