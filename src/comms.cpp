@@ -728,6 +728,8 @@ void XDRGTKRoutine() {
             break;
 
           case '\0':
+            radio.setMute();
+            if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
             if (!screenmute) {
               tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
               tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
@@ -754,6 +756,11 @@ void XDRGTKRoutine() {
             BWset = BWsetRecall;
             doBW();
             XDRScan = false;
+            if (VolSet != 0) {
+              radio.setUnMute();
+              if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+              radio.setVolume(((VolSet * 10) - 40) / 10);
+            }
             break;
         }
         break;
