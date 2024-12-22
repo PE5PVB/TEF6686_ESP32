@@ -72,6 +72,7 @@ bool Tuner_WriteBuffer(unsigned char *buf, uint16_t len) {
   Wire.beginTransmission(0x64);
   for (uint16_t i = 0; i < len; i++) Wire.write(buf[i]);
   uint8_t r = Wire.endTransmission();
+  delayMicroseconds(100);
   return (r == 0) ? 1 : 0;
 }
 
