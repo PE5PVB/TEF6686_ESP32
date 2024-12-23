@@ -3,6 +3,8 @@
 #include "Tuner_Patch_Lithio_V205_p512.h"
 #include <Wire.h>
 
+bool Data_Accelerator = false;
+
 const unsigned char tuner_init_tab[] PROGMEM = {
   7, 0x20, 0x0B, 0x01, 0x03, 0x98, 0x00, 0x00,
   5, 0x20, 0x14, 0x01, 0x00, 0x00,
@@ -72,7 +74,7 @@ bool Tuner_WriteBuffer(unsigned char *buf, uint16_t len) {
   Wire.beginTransmission(0x64);
   for (uint16_t i = 0; i < len; i++) Wire.write(buf[i]);
   uint8_t r = Wire.endTransmission();
-  delayMicroseconds(100);
+  if (!Data_Accelerator) delay(2);
   return (r == 0) ? 1 : 0;
 }
 

@@ -15,6 +15,7 @@ extern bool afscreen;
 extern bool aftest;
 extern bool autosquelch;
 extern bool BWreset;
+extern bool Data_Accelerator;
 extern bool direction;
 extern bool externaltune;
 extern bool fullsearchrds;

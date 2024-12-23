@@ -6,7 +6,6 @@
 #include <Wire.h>
 #include <math.h>
 #include <TimeLib.h>
-#include <ESP32Time.h>              // https://github.com/fbiego/ESP32Time/archive/refs/heads/main.zip
 #include <TFT_eSPI.h>               // https://github.com/ohmytime/TFT_eSPI_DynamicSpeed/archive/refs/heads/master.zip (please then edit the User_Setup.h as described in the Wiki)
 #include <Hash.h>                   // https://github.com/bbx10/Hash_tng/archive/refs/heads/master.zip
 #include "src/WiFiConnect.h"
@@ -5212,9 +5211,7 @@ void TuneFreq(int temp) {
 }
 
 void NumpadProcess(int num) {
-  static bool input_mode = false;
-
-  if (scandxmode) {
+    if (scandxmode) {
     if (num == 127) cancelDXScan();
   } else {
     if (num == 127) {

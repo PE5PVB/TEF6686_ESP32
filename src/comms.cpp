@@ -675,6 +675,7 @@ void XDRGTKRoutine() {
         if (scandxmode) cancelDXScan();
         if (!XDRScan) BWsetRecall = BWset;
         XDRScan = true;
+		Data_Accelerator = true;
 
         switch (buff[1]) {
           case 'a': scanner_start = (atol(buff + 2) + 5) / 10; break;
@@ -763,6 +764,7 @@ void XDRGTKRoutine() {
             }
             break;
         }
+		Data_Accelerator = false;
         break;
 
       case 'W':
