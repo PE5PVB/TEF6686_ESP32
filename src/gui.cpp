@@ -1575,12 +1575,12 @@ void BuildBWSelector() {
       drawButton(BWButtonLabelsFM[x], x, (BWset == x + 1 ? true : false));
     }
     drawButton(BWButtonLabelsFM[16], 16, (BWset == 0 ? true : false));
-    drawButton("OK", 19, false);
+    if (hardwaremodel == PORTABLE_TOUCH_ILI9341) drawButton("OK", 19, false);
   } else {
     for (int x = 0; x < 4; x++) {
       drawButton(BWButtonLabelsAM[x], x, (BWset == x + 1 ? true : false));
     }
-    drawButton("OK", 19, false);
+    if (hardwaremodel == PORTABLE_TOUCH_ILI9341) drawButton("OK", 19, false);
   }
 }
 
@@ -3762,6 +3762,17 @@ void DoMenu() {
         case 7: tft.pushImage (13, 30, 292, 170, popupbackground_wo); break;
         default: tft.pushImage (13, 30, 292, 170, popupbackground); break;
       }
+      if (hardwaremodel == PORTABLE_TOUCH_ILI9341) {
+        tft.fillRoundRect(18, 150, 60, 40, 6, FrameColor);
+        tft.drawRoundRect(18, 150, 60, 40, 6, ActiveColor);
+        tft.fillRoundRect(240, 150, 60, 40, 6, FrameColor);
+        tft.drawRoundRect(240, 150, 60, 40, 6, ActiveColor);
+        tft.fillRoundRect(240, 40, 60, 40, 6, FrameColor);
+        tft.drawRoundRect(240, 40, 60, 40, 6, ActiveColor);
+        tftPrint(0, "-", 48, 156, ActiveColor, ActiveColorSmooth, 28);
+        tftPrint(0, "+", 270, 160, ActiveColor, ActiveColorSmooth, 28);
+        tftPrint(0, "OK", 270, 48, ActiveColor, ActiveColorSmooth, 28);
+      }
     }
 
     switch (CurrentTheme) {
@@ -4337,12 +4348,12 @@ void DoMenu() {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("dBμV", 155, 0);
+            OneBigLineSprite.drawString("dB", 155, 0);
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString((LevelOffset > 0 ? "+" : "") + String(LevelOffset, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
-            tftPrint(-1, "dBμV", 190, 165, ActiveColor, ActiveColorSmooth, 28);
+            tftPrint(-1, "dBμV", 179, 165, ActiveColor, ActiveColorSmooth, 28);
             SStatusold = 2000;
             change = true;
             break;

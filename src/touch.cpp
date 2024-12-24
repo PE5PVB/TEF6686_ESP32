@@ -9,6 +9,15 @@ void doTouchEvent(uint16_t x, uint16_t y) {
   if (scandxmode) {
     cancelDXScan();
   } else {
+    if (menu) {
+      if (menuopen) {
+        if (x > 18 && x < 78 && y > 150 && y < 190) KeyDown();
+        if (x > 240 && x < 300 && y > 150 && y < 190) KeyUp();
+        if (x > 240 && x < 300 && y > 40 && y < 80) ButtonPress();
+        return;
+      }
+    }
+	
     if (!menu && !BWtune) {                                               // All pages except menu
       if (x > 50 && x < 90 && y > 0 && y < 30 && band < BAND_GAP) {       // ---------------------
         doStereoToggle();                                                 // Stereo toggle

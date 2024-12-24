@@ -13,6 +13,7 @@ extern bool afscreen;
 extern bool BWtune;
 extern bool leave;
 extern bool menu;
+extern bool menuopen;
 extern bool scandxmode;
 extern bool seek;
 extern byte band;
@@ -31,4 +32,7 @@ extern void doStereoToggle();
 extern void cancelDXScan();
 extern void doBW();
 extern void drawButton(const char* text, byte button_number, bool active);
+extern void KeyDown();
+extern void KeyUp();
+extern void ButtonPress();
 #endif
