@@ -3757,7 +3757,7 @@ void MenuDown() {
 }
 
 void showMenuOpenTouchButtons() {
-  if (hardwaremodel == PORTABLE_TOUCH_ILI9341 && !((menupage == CONNECTIVITY && menuoption == ITEM3) || (menupage == AUTOMEM && menuoption == ITEM1) || (menupage == MAINSETTINGS && menuoption == ITEM1))) {
+  if (hardwaremodel == PORTABLE_TOUCH_ILI9341 && !((menupage == CONNECTIVITY && menuoption == ITEM3) || (menupage == AUTOMEM && (menuoption == ITEM1 || menuoption == ITEM9)) || (menupage == MAINSETTINGS && menuoption == ITEM1))) {
     tft.fillRoundRect(18, 154, 60, 40, 6, FrameColor);
     tft.drawRoundRect(18, 154, 60, 40, 6, ActiveColor);
     tft.fillRoundRect(240, 154, 60, 40, 6, FrameColor);
