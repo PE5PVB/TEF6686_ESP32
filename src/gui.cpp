@@ -2273,6 +2273,7 @@ void MenuUp() {
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString(Theme[CurrentTheme], 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
+            showMenuOpenTouchButtons();
             break;
 
           case ITEM10:
@@ -3219,6 +3220,7 @@ void MenuDown() {
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString(Theme[CurrentTheme], 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
+            showMenuOpenTouchButtons();
             break;
 
           case ITEM10:
@@ -3754,6 +3756,20 @@ void MenuDown() {
   }
 }
 
+void showMenuOpenTouchButtons() {
+  if (hardwaremodel == PORTABLE_TOUCH_ILI9341 && !((menupage == CONNECTIVITY && menuoption == ITEM3) || (menupage == AUTOMEM && menuoption == ITEM1) || (menupage == MAINSETTINGS && menuoption == ITEM1))) {
+    tft.fillRoundRect(18, 154, 60, 40, 6, FrameColor);
+    tft.drawRoundRect(18, 154, 60, 40, 6, ActiveColor);
+    tft.fillRoundRect(240, 154, 60, 40, 6, FrameColor);
+    tft.drawRoundRect(240, 154, 60, 40, 6, ActiveColor);
+    tft.fillRoundRect(240, 36, 60, 40, 6, FrameColor);
+    tft.drawRoundRect(240, 36, 60, 40, 6, ActiveColor);
+    tft.fillTriangle(52, 160, 52, 188, 38, 174, ActiveColor);
+    tft.fillTriangle(266, 160, 266, 188, 280, 174, ActiveColor);
+    tftPrint(0, "OK", 270, 44, ActiveColor, ActiveColorSmooth, 28);
+  }
+}
+
 void DoMenu() {
   if (!menuopen) {
     if (menupage != INDEX) {
@@ -3762,17 +3778,7 @@ void DoMenu() {
         case 7: tft.pushImage (13, 30, 292, 170, popupbackground_wo); break;
         default: tft.pushImage (13, 30, 292, 170, popupbackground); break;
       }
-      if (hardwaremodel == PORTABLE_TOUCH_ILI9341) {
-        tft.fillRoundRect(18, 150, 60, 40, 6, FrameColor);
-        tft.drawRoundRect(18, 150, 60, 40, 6, ActiveColor);
-        tft.fillRoundRect(240, 150, 60, 40, 6, FrameColor);
-        tft.drawRoundRect(240, 150, 60, 40, 6, ActiveColor);
-        tft.fillRoundRect(240, 40, 60, 40, 6, FrameColor);
-        tft.drawRoundRect(240, 40, 60, 40, 6, ActiveColor);
-        tftPrint(0, "-", 48, 156, ActiveColor, ActiveColorSmooth, 28);
-        tftPrint(0, "+", 270, 160, ActiveColor, ActiveColorSmooth, 28);
-        tftPrint(0, "OK", 270, 48, ActiveColor, ActiveColorSmooth, 28);
-      }
+      showMenuOpenTouchButtons();
     }
 
     switch (CurrentTheme) {

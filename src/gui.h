@@ -230,6 +230,7 @@ void doTheme();
 void Infoboxprint(const char* input);
 void drawButton(const char* text, byte button_number, bool active);
 String removeNewline(String inputString);
+void showMenuOpenTouchButtons();
 
 extern void ShowFreq(int mode);
 extern void ShowBandSelectionFM(bool notglanceview, bool normaldisplay);
