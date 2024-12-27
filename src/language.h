@@ -2573,29 +2573,29 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Kezdeti", // 260
     "Mindig", //261
     "Óra mutatása", // 262
-    "Show long PS", // 263
-    "Start frequency", // 264
-    "Stop frequency", // 265
-    "Start memory channel", // 266
-    "Stop memory channel", // 267
-    "Only store with RDS", // 268
-    "Start auto memory", // 269
-    "Auto memory", // 270
+    "Hosszú PS mutatása", // 263
+    "Indítási frekvencia", // 264
+    "Befejezési frekvencia", // 265
+    "Memóriacsatorna indítása", // 266
+    "Memóriacsatorna leállítása", // 267
+    "Csak RDS-el tárolja", // 268
+    "Auto memória indítása", // 269
+    "Auto memória", // 270
     "Stationlist ID", // 271
-    "Found", // 272
-    "Abort! Out of memorychannels", // 273
-    "Abort! User pressed button", // 274
-    "Scan finished without errors", // 275
-    "Clear memory channels", // 276
-    "cleared", // 277
-    "Prevent double PI", // 278
-    "Range", // 279
-    "Full", // 280
-    "Wait time on\nsignal only", // 281
-    "Press highlighted corner", // 282
-    "To calibrate touchscreen", // 283
-    "Screen inversion toggles", // 284
-    "Select Bandwidth" // 285
+    "Megtalálva", // 272
+    "Megszakítva! Nincs\nmemóriacsatorna", // 273
+    "Megszakítva! Felhasználó\nmegnyomta a gombot", // 274
+    "Szkennelés hiba\nnélkül befejeződött", // 275
+    "Memóriacsatornák törlése", // 276
+    "törölve", // 277
+    "Kettős PI megakadályozása", // 278
+    "Tartomány", // 279
+    "Teljes", // 280
+    "Várakozási idő\ncsak jel esetén", // 281
+    "Nyomd meg a kiemelt sarkot", // 282
+    "Érintőképernyő kalibrálásához", // 283
+    "Képernyő inverzió kapcsoló", // 284
+    "Sávszélesség választása" // 285
   },
 
   { "Français", // French
