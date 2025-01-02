@@ -11,23 +11,6 @@
 #define SMETERPIN       27
 #define CONTRASTPIN     2
 
-#define ITEM_GAP        20
-#define ITEM1           30
-#define ITEM2           50
-#define ITEM3           70
-#define ITEM4           90
-#define ITEM5           110
-#define ITEM6           130
-#define ITEM7           150
-#define ITEM8           170
-#define ITEM9           190
-#define ITEM10          210
-
-enum menupage {INDEX, MAINSETTINGS, AUDIOSETTINGS, DISPLAYSETTINGS, RDSSETTINGS, FMSETTINGS, AMSETTINGS, CONNECTIVITY, DXMODE, AUTOMEM};
-
-extern byte menuitem;
-extern byte items[10];
-
 extern bool advancedRDS;
 extern bool afmethodBold;
 extern bool afpage;
@@ -102,6 +85,7 @@ extern byte amgain;
 extern byte hardwaremodel;
 extern byte HighCutLevel;
 extern byte HighCutOffset;
+extern byte items[10];
 extern byte language;
 extern byte licold;
 extern byte longbandpress;
@@ -110,6 +94,7 @@ extern byte memdoublepi;
 extern byte mempionly;
 extern byte memstartpos;
 extern byte memstoppos;
+extern byte menuitem;
 extern byte menupage;
 extern byte MSold;
 extern byte poweroptions;
@@ -210,6 +195,7 @@ extern unsigned int mappedfreqold3[20];
 extern unsigned int memstartfreq;
 extern unsigned int memstopfreq;
 extern unsigned long scantimer;
+extern byte items[10];
 
 extern TFT_eSPI tft;
 extern TEF6686 radio;
@@ -217,6 +203,7 @@ extern WiFiConnect wc;
 extern TFT_eSprite MenuInfobox;
 extern TFT_eSprite FullLineSprite;
 extern TFT_eSprite OneBigLineSprite;
+extern TFT_eSprite PSSprite;
 
 void BuildAFScreen();
 void BuildMenu();
@@ -230,6 +217,7 @@ void doTheme();
 void Infoboxprint(const char* input);
 void drawButton(const char* text, byte button_number, bool active);
 String removeNewline(String inputString);
+String shortLine(String text);
 void showMenuOpenTouchButtons();
 
 extern void ShowFreq(int mode);

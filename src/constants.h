@@ -208,6 +208,18 @@
 #define Spice               0x6247    /* 12, 18,  7 */
 #define Tyrian              0x3845    /*  7,  2,  5 */
 
+#define ITEM_GAP        20
+#define ITEM1           30
+#define ITEM2           50
+#define ITEM3           70
+#define ITEM4           90
+#define ITEM5           110
+#define ITEM6           130
+#define ITEM7           150
+#define ITEM8           170
+#define ITEM9           190
+#define ITEM10          210
+
 // EEPROM index defines
 #define EE_PRESETS_CNT                99    // When set > 99 change the complete EEPROM adressing!
 #define EE_CHECKBYTE_VALUE            10     // 0 ~ 255,add new entry, change for new value
@@ -358,6 +370,9 @@ typedef struct {
 
 enum LONGBANDBUTTONPRESS {
   STANDBY = 0, SCREENOFF
+};
+
+enum menupage {INDEX, MAINSETTINGS, AUDIOSETTINGS, DISPLAYSETTINGS, RDSSETTINGS, FMSETTINGS, AMSETTINGS, CONNECTIVITY, DXMODE, AUTOMEM
 };
 
 enum AUTOMEMPIMODES {

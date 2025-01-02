@@ -178,6 +178,7 @@ byte amgain;
 byte freqoldcount;
 byte HighCutLevel;
 byte HighCutOffset;
+byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 6, 9, 9};
 byte iMSEQ;
 byte iMSset;
 byte language;
@@ -190,6 +191,7 @@ byte memoryposstatus;
 byte mempionly;
 byte memstartpos;
 byte memstoppos;
+byte menuitem;
 byte menupage;
 byte MSold;
 byte poweroptions;
@@ -674,6 +676,7 @@ void setup() {
 
   PSSprite.createSprite(150, 32);
   PSSprite.setTextDatum(TL_DATUM);
+  PSSprite.setSwapBytes(true);
 
   SquelchSprite.createSprite(47, 19);
   SquelchSprite.setTextDatum(TL_DATUM);
@@ -2506,6 +2509,8 @@ void ModeButtonPress() {
             menupage = INDEX;
             menuitem = 0;
             if (spispeed == 7) tft.setSPISpeed(40);
+            PSSprite.unloadFont();
+            if (language == LANGUAGE_CHS) PSSprite.loadFont(FONT16_CHS); else PSSprite.loadFont(FONT16);
             BuildMenu();
             freq_in = 0;
             menu = true;
@@ -2552,6 +2557,8 @@ void ModeButtonPress() {
             menuoption = ITEM1;
             menupage = INDEX;
             menuitem = 0;
+            PSSprite.unloadFont();
+            if (language == LANGUAGE_CHS) PSSprite.loadFont(FONT16_CHS); else PSSprite.loadFont(FONT16);
             BuildMenu();
             freq_in = 0;
           }
@@ -4322,9 +4329,18 @@ void SetTunerPatch() {
 
 void read_encoder() {
   if (!digitalRead(ROTARY_PIN_A) || !digitalRead(ROTARY_PIN_B)) {
-    if (millis() - rotarytimer >= 15) { rotarycounteraccelerator = 2; rotarycounter = 0; } // Steady fast
-    if (millis() - rotarytimer >= 30) { rotarycounteraccelerator = 4; rotarycounter = 0; }
-    if (millis() - rotarytimer >= 45) { rotarycounteraccelerator = 6; rotarycounter = 0; } // Quick flicks
+    if (millis() - rotarytimer >= 15) {
+      rotarycounteraccelerator = 2;  // Steady fast
+      rotarycounter = 0;
+    }
+    if (millis() - rotarytimer >= 30) {
+      rotarycounteraccelerator = 4;
+      rotarycounter = 0;
+    }
+    if (millis() - rotarytimer >= 45) {
+      rotarycounteraccelerator = 6;  // Quick flicks
+      rotarycounter = 0;
+    }
   }
 
   static uint8_t old_AB = 3;
@@ -4760,6 +4776,9 @@ void endMenu() {
   if (USBmode) Serial.begin(19200); else Serial.begin(115200);
 
   leave = true;
+  PSSprite.unloadFont();
+  if (language == LANGUAGE_CHS) PSSprite.loadFont(FONT28_CHS); else PSSprite.loadFont(FONT28);
+  PSSprite.setTextDatum(TL_DATUM);
   BuildDisplay();
   SelectBand();
   ScreensaverTimerRestart();
@@ -5211,7 +5230,7 @@ void TuneFreq(int temp) {
 }
 
 void NumpadProcess(int num) {
-    if (scandxmode) {
+  if (scandxmode) {
     if (num == 127) cancelDXScan();
   } else {
     if (num == 127) {
@@ -5222,6 +5241,8 @@ void NumpadProcess(int num) {
       if (spispeed == 7) tft.setSPISpeed(40);
       submenu = true;
       menu = true;
+      PSSprite.unloadFont();
+      if (language == LANGUAGE_CHS) PSSprite.loadFont(FONT16_CHS); else PSSprite.loadFont(FONT16);
       BuildMenu();
       ScreensaverTimerSet(OFF);
     } else if (num == 13) {

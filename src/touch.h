@@ -18,6 +18,10 @@ extern bool scandxmode;
 extern bool seek;
 extern byte band;
 extern byte BWset;
+extern byte menuitem;
+extern byte items[10];
+extern byte menupage;
+extern int menuoption;
 
 void doTouchEvent(uint16_t x, uint16_t y);
 
@@ -35,4 +39,6 @@ extern void drawButton(const char* text, byte button_number, bool active);
 extern void KeyDown();
 extern void KeyUp();
 extern void ButtonPress();
+extern void DoMenu();
+extern void ModeButtonPress();
 #endif

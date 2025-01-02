@@ -10,14 +10,85 @@ void doTouchEvent(uint16_t x, uint16_t y) {
     cancelDXScan();
   } else {
     if (menu) {
-      if (menuopen) {
-        if (x > 18 && x < 78 && y > 150 && y < 190) KeyDown();
+      if (x > 0 && x < 320 && y > 0 && y < 33) {
+        ModeButtonPress();
+        return;
+      }
+      if (menuopen) {                                                     // Menu navigation
+        if (x > 18 && x < 78 && y > 150 && y < 190) KeyDown();            // ---------------
         if (x > 240 && x < 300 && y > 150 && y < 190) KeyUp();
         if (x > 240 && x < 300 && y > 40 && y < 80) ButtonPress();
         return;
+      } else {
+        if (x > 8 && x < 158) {
+          if (y > 38 && y < 70) {
+            if (items[menupage] > 0) {
+              menuitem = 0;
+              menuoption = ITEM1;
+              DoMenu();
+            }
+          } else if (y > 78 && y < 110) {
+            if (items[menupage] > 1) {
+              menuitem = 1;
+              menuoption = ITEM2;
+              DoMenu();
+            }
+          } else if (y > 118 && y < 150) {
+            if (items[menupage] > 2) {
+              menuitem = 2;
+              menuoption = ITEM3;
+              DoMenu();
+            }
+          } else if (y > 158 && y < 190) {
+            if (items[menupage] > 3) {
+              menuitem = 3;
+              menuoption = ITEM4;
+              DoMenu();
+            }
+          } else if (y > 198 && y < 230) {
+            if (items[menupage] > 4) {
+              menuitem = 4;
+              menuoption = ITEM5;
+              DoMenu();
+            }
+          }
+        } else if (x > 163 && x < 313) {
+          if (y > 38 && y < 70) {
+            if (items[menupage] > 5) {
+              menuitem = 5;
+              menuoption = ITEM6;
+              DoMenu();
+            }
+          } else if (y > 78 && y < 110) {
+            if (items[menupage] > 6) {
+              menuitem = 6;
+              menuoption = ITEM7;
+              DoMenu();
+            }
+          } else if (y > 118 && y < 150) {
+            if (items[menupage] > 7) {
+              menuitem = 7;
+              menuoption = ITEM8;
+              DoMenu();
+            }
+          } else if (y > 158 && y < 190) {
+            if (items[menupage] > 8) {
+              menuitem = 8;
+              menuoption = ITEM9;
+              DoMenu();
+            }
+          } else if (y > 198 && y < 230) {
+            if (items[menupage] > 9) {
+              menuitem = 9;
+              menuoption = ITEM10;
+              DoMenu();
+            }
+          }
+        }
+        return;
       }
     }
-	
+
     if (!menu && !BWtune) {                                               // All pages except menu
       if (x > 50 && x < 90 && y > 0 && y < 30 && band < BAND_GAP) {       // ---------------------
         doStereoToggle();                                                 // Stereo toggle
