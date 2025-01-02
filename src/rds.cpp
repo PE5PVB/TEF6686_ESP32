@@ -12,12 +12,20 @@ int AIDWidth;
 int afstringWidth;
 int eonstringWidth;
 int rtplusstringWidth;
+int length12;
+int length34;
+int length56;
 
 String afstringold;
 String eonstringold;
 String rtplusstringold;
 String stationNameLongOld;
 String AIDStringold;
+
+bool ps12errorold;
+bool ps34errorold;
+bool ps56errorold;
+bool ps78errorold;
 
 void ShowAdvancedRDS() {
   if (!dropout) {
@@ -344,7 +352,10 @@ void readRds() {
           if (!radio.rds.hasLongPS) {
             PSSprite.fillSprite(BackgroundColor);
             PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-            PSSprite.drawString(PSold, 0, 2);
+            PSSprite.drawString(PSold.substring(0, 2), 0, 2);
+            PSSprite.drawString(PSold.substring(2, 4), length12, 2);
+            PSSprite.drawString(PSold.substring(4, 6), length34, 2);
+            PSSprite.drawString(PSold.substring(6, 8), length56, 2);
 
             if (advancedRDS) {
               PSSprite.pushSprite(36, 72);
@@ -399,8 +410,14 @@ void readRds() {
 
           if (!radio.rds.hasLongPS) {
             PSSprite.fillSprite(BackgroundColor);
-            PSSprite.setTextColor(RDSColor, RDSColorSmooth, false);
-            PSSprite.drawString(PSold, 0, 2);
+            PSSprite.setTextColor((radio.rds.ps12error ? RDSDropoutColor : RDSColor), (radio.rds.ps12error ? RDSDropoutColorSmooth : RDSColorSmooth), false);
+            PSSprite.drawString(PSold.substring(0, 2), 0, 2);
+            PSSprite.setTextColor((radio.rds.ps34error ? RDSDropoutColor : RDSColor), (radio.rds.ps12error ? RDSDropoutColorSmooth : RDSColorSmooth), false);
+            PSSprite.drawString(PSold.substring(2, 4), length12, 2);
+            PSSprite.setTextColor((radio.rds.ps56error ? RDSDropoutColor : RDSColor), (radio.rds.ps12error ? RDSDropoutColorSmooth : RDSColorSmooth), false);
+            PSSprite.drawString(PSold.substring(4, 6), length34, 2);
+            PSSprite.setTextColor((radio.rds.ps78error ? RDSDropoutColor : RDSColor), (radio.rds.ps12error ? RDSDropoutColorSmooth : RDSColorSmooth), false);
+            PSSprite.drawString(PSold.substring(6, 8), length56, 2);
 
             if (advancedRDS) {
               PSSprite.pushSprite(36, 72);
@@ -668,7 +685,7 @@ void showPTY() {
 }
 
 void showPS() {
-  if (radio.rds.stationName != PSold || (radio.rds.hasLongPS && showlongps)) {
+  if (radio.rds.stationName != PSold || (RDSstatus && (!radio.rds.hasLongPS && showlongps) && (ps12errorold != radio.rds.ps12error || ps34errorold != radio.rds.ps34error || ps56errorold != radio.rds.ps56error || ps78errorold != radio.rds.ps78error)) || (radio.rds.hasLongPS && showlongps)) {
     if (afscreen) {
       if (!screenmute) tftReplace(0, PSold, radio.rds.stationName, 160, 201, BWAutoColor, BWAutoColorSmooth, BackgroundColor, 16);
     } else {
@@ -706,8 +723,31 @@ void showPS() {
       } else {
         xPos5 = 0;
         PSSprite.fillSprite(BackgroundColor);
-        if (!RDSstatus || band > BAND_GAP) PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false); else PSSprite.setTextColor(RDSColor, RDSColorSmooth, false);
-        PSSprite.drawString(radio.rds.stationName, 0, 2);
+        length12 = PSSprite.textWidth(radio.rds.stationName.substring(0, 2));
+        length34 = PSSprite.textWidth(radio.rds.stationName.substring(2, 4)) + length12;
+        length56 = PSSprite.textWidth(radio.rds.stationName.substring(4, 6)) + length34;
+
+        if (!RDSstatus || band > BAND_GAP) {
+          PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+        } else {
+          PSSprite.setTextColor((radio.rds.ps12error ? RDSDropoutColor : RDSColor), (radio.rds.ps12error ? RDSDropoutColorSmooth : RDSColorSmooth), false);
+          PSSprite.drawString(radio.rds.stationName.substring(0, 2), 0, 2);
+          PSSprite.setTextColor((radio.rds.ps34error ? RDSDropoutColor : RDSColor), (radio.rds.ps12error ? RDSDropoutColorSmooth : RDSColorSmooth), false);
+          PSSprite.drawString(radio.rds.stationName.substring(2, 4), length12, 2);
+          PSSprite.setTextColor((radio.rds.ps56error ? RDSDropoutColor : RDSColor), (radio.rds.ps12error ? RDSDropoutColorSmooth : RDSColorSmooth), false);
+          PSSprite.drawString(radio.rds.stationName.substring(4, 6), length34, 2);
+          PSSprite.setTextColor((radio.rds.ps78error ? RDSDropoutColor : RDSColor), (radio.rds.ps12error ? RDSDropoutColorSmooth : RDSColorSmooth), false);
+          PSSprite.drawString(radio.rds.stationName.substring(6, 8), length56, 2);
+        }
+
+		if (PSold.substring(0, 2) != radio.rds.stationName.substring(0, 2)) ps12errorold = true;
+		if (PSold.substring(2, 4) != radio.rds.stationName.substring(2, 4)) ps34errorold = true;
+		if (PSold.substring(4, 6) != radio.rds.stationName.substring(4, 6)) ps56errorold = true;
+		if (PSold.substring(6, 8) != radio.rds.stationName.substring(6, 8)) ps78errorold = true;
+        if (ps12errorold && PSold.substring(0, 2) != radio.rds.stationName.substring(0, 2)) ps12errorold = radio.rds.ps12error;
+        if (ps34errorold && PSold.substring(2, 4) != radio.rds.stationName.substring(2, 4)) ps34errorold = radio.rds.ps34error;
+        if (ps56errorold && PSold.substring(4, 6) != radio.rds.stationName.substring(4, 6)) ps56errorold = radio.rds.ps56error;
+        if (ps78errorold && PSold.substring(6, 8) != radio.rds.stationName.substring(6, 8)) ps78errorold = radio.rds.ps78error;
       }
       if (!screenmute) {
         if (advancedRDS) {

@@ -602,8 +602,15 @@ void TEF6686::readRDS(byte showrdserrors) {
       case RDS_GROUP_0B:
         {
           //PS decoder
-          if (showrdserrors == 3 || (!rdsBerrorThreshold && !rdsDerrorThreshold)) {
+          if (showrdserrors == 3 || (!rdsBerrorThreshold && ((rds.rdsErr >> 8) & 0x03) < 3)) {
             offset = rds.rdsB & 0x03;                                                           // Let's get the character offset for PS
+
+			switch (offset) {
+				case 0: if (((rds.rdsErr >> 8) & 0x03) > 1) rds.ps12error = true; else rds.ps12error = false; break;
+				case 1: if (((rds.rdsErr >> 8) & 0x03) > 1) rds.ps34error = true; else rds.ps34error = false; break;
+				case 2: if (((rds.rdsErr >> 8) & 0x03) > 1) rds.ps56error = true; else rds.ps56error = false; break;
+				case 3: if (((rds.rdsErr >> 8) & 0x03) > 1) rds.ps78error = true; else rds.ps78error = false; break;
+			}
 
             ps_buffer2[(offset * 2) + 0] = ps_buffer[(offset * 2) + 0];                         // Make a copy of the PS buffer
             ps_buffer2[(offset * 2) + 1] = ps_buffer[(offset * 2) + 1];
@@ -1839,6 +1846,10 @@ void TEF6686::clearRDS (bool fullsearchrds) {
   correctPIold = 0;
   af_number = 0;
   _hasEnhancedRT = false;
+  rds.ps12error = true;
+  rds.ps34error = true;
+  rds.ps56error = true;
+  rds.ps78error = true;
 }
 
 void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {
