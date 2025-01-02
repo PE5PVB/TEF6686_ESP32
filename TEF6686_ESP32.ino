@@ -4637,12 +4637,12 @@ void UpdateFonts(byte mode) {
 
       if (language == LANGUAGE_CHS) {
         RDSSprite.loadFont(FONT16_CHS);
-        PSSprite.loadFont(FONT28_CHS);
+        if (menu) PSSprite.loadFont(FONT16_CHS); else PSSprite.loadFont(FONT28_CHS);
         FullLineSprite.loadFont(FONT16_CHS);
         OneBigLineSprite.loadFont(FONT28_CHS);
       } else {
         RDSSprite.loadFont(FONT16);
-        PSSprite.loadFont(FONT28);
+        if (menu) PSSprite.loadFont(FONT16); else PSSprite.loadFont(FONT28);
         FullLineSprite.loadFont(FONT16);
         OneBigLineSprite.loadFont(FONT28);
       }

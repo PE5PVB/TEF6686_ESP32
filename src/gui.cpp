@@ -4868,6 +4868,14 @@ void DoMenu() {
         default: tft.pushImage (13, 30, 292, 170, popupbackground); break;
       }
       showMenuOpenTouchButtons();
+
+      if (menupage == CONNECTIVITY && menuoption == ITEM3) {
+        switch (CurrentTheme) {
+          case 7: tft.pushImage (0, 0, 320, 240, configurationbackground_wo); break;
+          default: tft.pushImage (0, 0, 320, 240, configurationbackground); break;
+        }
+        tftPrint(0, myLanguage[language][189 + menupage - 1], 160, 6, ActiveColor, ActiveColorSmooth, 16);
+      }
     }
 
     switch (CurrentTheme) {
