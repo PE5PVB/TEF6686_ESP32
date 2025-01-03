@@ -2616,23 +2616,26 @@ void ShowOneButton(byte position, byte item, bool selected) {
 }
 
 void BuildBWSelector() {
+  BWsettemp = BWset;
   switch (CurrentTheme) {
     case 7: tft.pushImage (0, 0, 320, 240, configurationbackground_wo); break;
     default: tft.pushImage (0, 0, 320, 240, configurationbackground); break;
   }
   tftPrint(0, myLanguage[language][285], 160, 6, PrimaryColor, PrimaryColorSmooth, 16);
+  showBWSelector();
+}
 
+void showBWSelector() {
   if (band < BAND_GAP) {
-    for (int x = 0; x < 16; x++) {
-      drawButton(BWButtonLabelsFM[x], x, (BWset == x + 1 ? true : false));
-    }
-    drawButton(BWButtonLabelsFM[16], 16, (BWset == 0 ? true : false));
-    if (hardwaremodel == PORTABLE_TOUCH_ILI9341) drawButton("OK", 19, false);
+    for (int x = 0; x < 17; x++) drawButton(BWButtonLabelsFM[x], x, (BWset == x + 1 || (BWset == 0 && x == 16) ? true : false), false);
+    drawButton(BWButtonLabelsFM[17], 17, (!iMSset ? true : false), false);
+    drawButton(BWButtonLabelsFM[18], 18, (!EQset ? true : false), false);
+    drawButton(BWButtonLabelsFM[19], 19, false, false);
   } else {
     for (int x = 0; x < 4; x++) {
-      drawButton(BWButtonLabelsAM[x], x, (BWset == x + 1 ? true : false));
+      drawButton(BWButtonLabelsAM[x], x, (BWset == x + 1 ? true : false), false);
     }
-    if (hardwaremodel == PORTABLE_TOUCH_ILI9341) drawButton("OK", 19, false);
+    drawButton("OK", 19, false, false);
   }
 }
 
@@ -5952,7 +5955,7 @@ String removeNewline(String inputString) {
   return outputString;
 }
 
-void drawButton(const char* text, byte button_number, bool active) {
+void drawButton(const char* text, byte button_number, bool active, bool selected) {
   const int buttonWidth = 70;
   const int buttonHeight = 30;
   const int cornerRadius = 6;
@@ -5972,10 +5975,25 @@ void drawButton(const char* text, byte button_number, bool active) {
   int x = startX + col * (buttonWidth + spacingX);
   int y = startY + row * (buttonHeight + spacingY);
 
-  tft.fillRoundRect(x, y, buttonWidth, buttonHeight, cornerRadius, (active ? InsignificantColor : FrameColor));
-  tft.drawRoundRect(x, y, buttonWidth, buttonHeight, cornerRadius, ActiveColor);
+  // Draw the selection outline
+  if (selected) {
+    tft.drawRoundRect(x - 2, y - 2, buttonWidth + 4, buttonHeight + 4, cornerRadius + 2, ActiveColor);
+  } else {
+    tft.drawRoundRect(x - 2, y - 2, buttonWidth + 4, buttonHeight + 4, cornerRadius + 2, BackgroundColor);
+  }
 
-  tftPrint(0, text, x + buttonWidth / 2, y + buttonHeight / 4, (active ? FrameColor : PrimaryColor), (active ? InsignificantColor : PrimaryColorSmooth), 16);
+  // Draw the button fill
+  tft.fillRoundRect(x, y, buttonWidth, buttonHeight, cornerRadius, FrameColor);
+
+  // Draw the small line at the bottom (narrower, centered, and 3px up)
+  int lineHeight = 4;                         // Height of the bottom line
+  int lineWidth = (buttonWidth / 2) - 6;      // Half the button width, minus 6px
+  int lineX = x + (buttonWidth - lineWidth) / 2; // Center the line horizontally
+  int lineY = y + buttonHeight - lineHeight - 3; // Move the line 3px up
+  if (button_number != 19) tft.fillRect(lineX, lineY, lineWidth, lineHeight, (active ? InsignificantColor : GreyoutColor));
+
+  // Draw the button text
+  tftPrint(0, text, x + buttonWidth / 2, y + (buttonHeight / 4) - 2, PrimaryColor, PrimaryColorSmooth, 16);
 }
 
 String shortLine(String text) {

@@ -2,6 +2,7 @@
 #include "language.h"
 #include "constants.h"
 #include "config.h"
+#include <EEPROM.h>
 
 void doTouchEvent(uint16_t x, uint16_t y) {
   if (seek) radio.setUnMute();
@@ -132,23 +133,32 @@ void doTouchEvent(uint16_t x, uint16_t y) {
 
         if (y > 195 && y < 225) {
           if (x > 7 && x < 77) BWtemp = 0;
+          if (x > 87 && x < 157) iMSset = !iMSset;
+          if (x > 167 && x < 237) EQset = !EQset;
+          if (x > 87 && x < 237) {
+            if (!iMSset && !EQset) iMSEQ = 0;
+            if (iMSset && EQset) iMSEQ = 2;
+            if (!iMSset && EQset) iMSEQ = 3;
+            if (iMSset && !EQset) iMSEQ = 4;
+            EEPROM.writeByte(EE_BYTE_IMSSET, iMSset);
+            EEPROM.writeByte(EE_BYTE_EQSET, EQset);
+            EEPROM.commit();
+            updateiMS();
+            updateEQ();
+            if (XDRGTKUSB || XDRGTKTCP) DataPrint("G" + String(!EQset) + String(!iMSset) + "\n");
+          }
         }
       }
 
       if (y > 195 && y < 225 && x > 247 && x < 317) {
         leave = true;
+        if (BWtemp != 255) BWset = BWtemp;
+        doBW();
         BuildDisplay();
         SelectBand();
       } else {
-        if (band < BAND_GAP) {
-          if (BWset == 0) drawButton(BWButtonLabelsFM[16], 16, false); else drawButton(BWButtonLabelsFM[BWset - 1], BWset - 1, false);
-          BWset = BWtemp;
-          if (BWset == 0) drawButton(BWButtonLabelsFM[16], 16, true); else drawButton(BWButtonLabelsFM[BWset - 1], BWset - 1, true);
-        } else {
-          drawButton(BWButtonLabelsAM[BWset - 1], BWset - 1, false);
-          BWset = BWtemp;
-          drawButton(BWButtonLabelsAM[BWset - 1], BWset - 1, true);
-        }
+        if (BWtemp != 255) BWset = BWtemp;
+        showBWSelector();
         doBW();
       }
       return;

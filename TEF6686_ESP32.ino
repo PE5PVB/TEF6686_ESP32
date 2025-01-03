@@ -154,6 +154,7 @@ byte battery;
 byte batteryold;
 byte batteryoptions;
 byte BWset;
+byte BWsettemp;
 byte BWsetAM;
 byte BWsetFM;
 byte BWsetRecall;
@@ -2429,6 +2430,10 @@ void BWButtonPress() {
       while (digitalRead(BWBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
 
       if (counter - counterold < 1000) {
+        BuildBWSelector();
+        freq_in = 0;
+        BWtune = true;
+      } else {
         if (band == BAND_FM || band == BAND_OIRT) {
           doStereoToggle();
         } else {
@@ -2436,14 +2441,11 @@ void BWButtonPress() {
           freq_in = 0;
           BWtune = true;
         }
-      } else {
-        BuildBWSelector();
-        freq_in = 0;
-        BWtune = true;
       }
-      delay(100);
     }
   }
+  while (digitalRead(BWBUTTON) == LOW) delay(50);
+  delay(100);
 }
 
 void doStereoToggle() {
@@ -2732,9 +2734,30 @@ void ButtonPress() {
     } else {
       if (menu) DoMenu();
       if (BWtune) {
-        BuildDisplay();
-        freq_in = 0;
-        SelectBand();
+        if (BWsettemp == 18 || BWsettemp == 19) {
+          if (BWsettemp == 18) iMSset = !iMSset;
+          if (BWsettemp == 19) EQset = !EQset;
+          if (!iMSset && !EQset) iMSEQ = 0;
+          if (iMSset && EQset) iMSEQ = 2;
+          if (!iMSset && EQset) iMSEQ = 3;
+          if (iMSset && !EQset) iMSEQ = 4;
+          EEPROM.writeByte(EE_BYTE_IMSSET, iMSset);
+          EEPROM.writeByte(EE_BYTE_EQSET, EQset);
+          EEPROM.commit();
+          updateiMS();
+          updateEQ();
+          if (XDRGTKUSB || XDRGTKTCP) DataPrint("G" + String(!EQset) + String(!iMSset) + "\n");
+          showBWSelector();
+          drawButton(BWButtonLabelsFM[BWsettemp - 1], BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), true);
+        } else if (BWsettemp == 20) {
+          BuildDisplay();
+          freq_in = 0;
+          SelectBand();
+        } else {
+          doBW();
+          showBWSelector();
+          drawButton(BWButtonLabelsFM[BWsettemp - 1], BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), true);
+        }
       }
     }
   }
@@ -3620,13 +3643,13 @@ void updateBW() {//todo air
 void updateiMS() {
   if (band < BAND_GAP) {
     if (iMSset == 0) {
-      if (!screenmute && !advancedRDS && !afscreen) {
+      if (!screenmute && !advancedRDS && !afscreen && !BWtune) {
         tft.fillRoundRect(249, 57, 30, 18, 2, SecondaryColor);
         tftPrint(0, "iMS", 265, 59, BackgroundColor, SecondaryColor, 16);
       }
       radio.setiMS(1);
     } else {
-      if (!screenmute && !advancedRDS && !afscreen) {
+      if (!screenmute && !advancedRDS && !afscreen && !BWtune) {
         tft.fillRoundRect(249, 57, 30, 18, 2, GreyoutColor);
         tftPrint(0, "iMS", 265, 59, BackgroundColor, GreyoutColor, 16);
       }
@@ -3638,13 +3661,13 @@ void updateiMS() {
 void updateEQ() {
   if (band < BAND_GAP) {
     if (EQset == 0) {
-      if (!screenmute && !advancedRDS && !afscreen) {
+      if (!screenmute && !advancedRDS && !afscreen && !BWtune) {
         tft.fillRoundRect(287, 57, 30, 18, 2, SecondaryColor);
         tftPrint(0, "EQ", 301, 59, BackgroundColor, SecondaryColor, 16);
       }
       radio.setEQ(1);
     } else {
-      if (!screenmute && !advancedRDS && !afscreen) {
+      if (!screenmute && !advancedRDS && !afscreen && !BWtune) {
         tft.fillRoundRect(287, 57, 30, 18, 2, GreyoutColor);
         tftPrint(0, "EQ", 301, 59, BackgroundColor, GreyoutColor, 16);
       }
@@ -3700,6 +3723,8 @@ void updateSWMIBand() {
 }
 
 void doBW() {
+  if (BWtune) BWset = BWsettemp;
+
   if (band < BAND_GAP) {
     if (BWset > 16) BWset = 0;
 
@@ -3765,34 +3790,31 @@ void doBW() {
 void doBWtuneDown() {
   rotary = 0;
   if (band < BAND_GAP) {
-    if (BWset == 0) drawButton(BWButtonLabelsFM[16], 16, false); else drawButton(BWButtonLabelsFM[BWset - 1], BWset - 1, false);
-    BWset--;
-    if (BWset > 16) BWset = 16;
-    if (BWset == 0) drawButton(BWButtonLabelsFM[16], 16, true); else drawButton(BWButtonLabelsFM[BWset - 1], BWset - 1, true);
+    drawButton(BWButtonLabelsFM[BWsettemp - 1], BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), false);
+    BWsettemp--;
+    if (BWsettemp > 20) BWsettemp = 20;
+    drawButton(BWButtonLabelsFM[BWsettemp - 1], BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), true);
   } else {
-    drawButton(BWButtonLabelsAM[BWset - 1], BWset - 1, false);
-    BWset--;
-    if (BWset == 0) BWset = 4;
-    drawButton(BWButtonLabelsAM[BWset - 1], BWset - 1, true);
+    drawButton(BWButtonLabelsAM[BWsettemp - 1], BWsettemp - 1, (BWset == BWsettemp ? true : false), false);
+    BWsettemp--;
+    if (BWsettemp == 0) BWsettemp = 4;
+    drawButton(BWButtonLabelsAM[BWsettemp - 1], BWsettemp - 1, (BWset == BWsettemp ? true : false), true);
   }
-
-  doBW();
 }
 
 void doBWtuneUp() {
   rotary = 0;
   if (band < BAND_GAP) {
-    if (BWset == 0) drawButton(BWButtonLabelsFM[16], 16, false); else drawButton(BWButtonLabelsFM[BWset - 1], BWset - 1, false);
-    BWset++;
-    if (BWset > 16) BWset = 0;
-    if (BWset == 0) drawButton(BWButtonLabelsFM[16], 16, true); else drawButton(BWButtonLabelsFM[BWset - 1], BWset - 1, true);
+    drawButton(BWButtonLabelsFM[BWsettemp - 1], BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), false);
+    BWsettemp++;
+    if (BWsettemp > 20) BWsettemp = 0;
+    drawButton(BWButtonLabelsFM[BWsettemp - 1], BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), true);
   } else {
-    drawButton(BWButtonLabelsAM[BWset - 1], BWset - 1, false);
-    BWset++;
-    if (BWset > 4) BWset = 1;
-    drawButton(BWButtonLabelsAM[BWset - 1], BWset - 1, true);
+    drawButton(BWButtonLabelsAM[BWsettemp - 1], BWsettemp - 1, (BWset == BWsettemp ? true : false), false);
+    BWsettemp++;
+    if (BWsettemp > 4) BWsettemp = 1;
+    drawButton(BWButtonLabelsAM[BWsettemp - 1], BWsettemp - 1, (BWset == BWsettemp ? true : false), true);
   }
-  doBW();
 }
 
 void doTuneMode() {
