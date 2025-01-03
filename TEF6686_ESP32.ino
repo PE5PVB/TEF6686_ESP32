@@ -2723,55 +2723,7 @@ void ButtonPress() {
             }
           }
         } else {
-          if (band < BAND_GAP) {
-            if (iMSEQ == 0) iMSEQ = 1;
-
-            if (iMSEQ == 4) {
-              iMSset = 0;
-              EQset = 0;
-              updateiMS();
-              updateEQ();
-              iMSEQ = 0;
-            }
-            if (iMSEQ == 3) {
-              iMSset = 1;
-              EQset = 0;
-              updateiMS();
-              updateEQ();
-              iMSEQ = 4;
-            }
-            if (iMSEQ == 2) {
-              iMSset = 0;
-              EQset = 1;
-              updateiMS();
-              updateEQ();
-              iMSEQ = 3;
-            }
-            if (iMSEQ == 1) {
-              iMSset = 1;
-              EQset = 1;
-              updateiMS();
-              updateEQ();
-              iMSEQ = 2;
-            }
-            EEPROM.writeByte(EE_BYTE_IMSSET, iMSset);
-            EEPROM.writeByte(EE_BYTE_EQSET, EQset);
-            EEPROM.commit();
-            if (XDRGTKUSB || XDRGTKTCP) DataPrint("G" + String(!EQset) + String(!iMSset) + "\n");
-          } else {
-            if (band == BAND_SW && tunemode != TUNE_MEM) {
-              nowToggleSWMIBand = !nowToggleSWMIBand;
-              tunemode = TUNE_MAN;
-              EEPROM.writeByte(EE_BYTE_BANDAUTOSW, nowToggleSWMIBand);
-              EEPROM.commit();
-              if (!screenmute) {
-                tftPrint(0, "AUTO", 22, 60, BackgroundColor, BackgroundColor, 16);
-                tftPrint(0, "BAND", 22, 60, BackgroundColor, BackgroundColor, 16);
-              }
-              doTuneMode();
-              ShowTuneMode();
-            }
-          }
+          toggleiMSEQ();
         }
       }
       if (screensaverset) {
@@ -5266,6 +5218,58 @@ void NumpadProcess(int num) {
         freq_in = freq_in * 10 + num;
       }
       ShowNum(freq_in);
+    }
+  }
+}
+
+void toggleiMSEQ() {
+  if (band < BAND_GAP) {
+    if (iMSEQ == 0) iMSEQ = 1;
+
+    if (iMSEQ == 4) {
+      iMSset = 0;
+      EQset = 0;
+      updateiMS();
+      updateEQ();
+      iMSEQ = 0;
+    }
+    if (iMSEQ == 3) {
+      iMSset = 1;
+      EQset = 0;
+      updateiMS();
+      updateEQ();
+      iMSEQ = 4;
+    }
+    if (iMSEQ == 2) {
+      iMSset = 0;
+      EQset = 1;
+      updateiMS();
+      updateEQ();
+      iMSEQ = 3;
+    }
+    if (iMSEQ == 1) {
+      iMSset = 1;
+      EQset = 1;
+      updateiMS();
+      updateEQ();
+      iMSEQ = 2;
+    }
+    EEPROM.writeByte(EE_BYTE_IMSSET, iMSset);
+    EEPROM.writeByte(EE_BYTE_EQSET, EQset);
+    EEPROM.commit();
+    if (XDRGTKUSB || XDRGTKTCP) DataPrint("G" + String(!EQset) + String(!iMSset) + "\n");
+  } else {
+    if (band == BAND_SW && tunemode != TUNE_MEM) {
+      nowToggleSWMIBand = !nowToggleSWMIBand;
+      tunemode = TUNE_MAN;
+      EEPROM.writeByte(EE_BYTE_BANDAUTOSW, nowToggleSWMIBand);
+      EEPROM.commit();
+      if (!screenmute) {
+        tftPrint(0, "AUTO", 22, 60, BackgroundColor, BackgroundColor, 16);
+        tftPrint(0, "BAND", 22, 60, BackgroundColor, BackgroundColor, 16);
+      }
+      doTuneMode();
+      ShowTuneMode();
     }
   }
 }

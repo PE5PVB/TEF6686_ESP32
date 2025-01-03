@@ -165,6 +165,8 @@ void doTouchEvent(uint16_t x, uint16_t y) {
       } else if (x > 0 && x < 30 && y > 25 && y < 90) {
         doTuneMode();                                                     // Toggle tune mode
         return;
+      } else if (x > 250 && x < 320 && y > 50 && y < 80) {
+        toggleiMSEQ();                                                    // Toggle iMQ/EQ
       }
     }
 

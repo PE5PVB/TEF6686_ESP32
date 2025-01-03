@@ -41,4 +41,5 @@ extern void KeyUp();
 extern void ButtonPress();
 extern void DoMenu();
 extern void ModeButtonPress();
+extern void toggleiMSEQ();
 #endif
