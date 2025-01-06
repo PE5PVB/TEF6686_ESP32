@@ -2612,7 +2612,16 @@ void ShowOneButton(byte position, byte item, bool selected) {
       break;
   }
   PSSprite.pushSprite((position > ITEM5 ? 163 : 8), (position * 2) - 22 - (position > ITEM5 ? 200 : 0));
-  if (selected) tft.drawRect((position > ITEM5 ? 163 : 8), (position * 2) - 22 - (position > ITEM5 ? 200 : 0), 150, 32, (CurrentTheme == 7 ? Black : ActiveColor));
+  if (selected) {
+    tft.drawRect((position > ITEM5 ? 163 : 8),
+                 (position * 2) - 22 - (position > ITEM5 ? 200 : 0),
+                 150, 32,
+                 (CurrentTheme == 7 ? Black : ActiveColor));
+    tft.drawRect((position > ITEM5 ? 164 : 9),
+                 (position * 2) - 21 - (position > ITEM5 ? 200 : 0),
+                 148, 30,
+                 (CurrentTheme == 7 ? Black : ActiveColor));
+  }
 }
 
 void BuildBWSelector() {
