@@ -10,6 +10,7 @@ extern TEF6686 radio;
 
 extern bool advancedRDS;
 extern bool afscreen;
+extern bool bwtouchtune;
 extern bool BWtune;
 extern bool leave;
 extern bool menu;
@@ -20,6 +21,7 @@ extern bool XDRGTKTCP;
 extern bool XDRGTKUSB;
 extern byte band;
 extern byte BWset;
+extern byte BWtemp;
 extern byte EQset;
 extern byte iMSEQ;
 extern byte iMSset;

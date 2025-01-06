@@ -2614,13 +2614,9 @@ void ShowOneButton(byte position, byte item, bool selected) {
   PSSprite.pushSprite((position > ITEM5 ? 163 : 8), (position * 2) - 22 - (position > ITEM5 ? 200 : 0));
   if (selected) {
     tft.drawRect((position > ITEM5 ? 163 : 8),
-                 (position * 2) - 22 - (position > ITEM5 ? 200 : 0),
-                 150, 32,
-                 (CurrentTheme == 7 ? Black : ActiveColor));
+                 (position * 2) - 22 - (position > ITEM5 ? 200 : 0), 150, 32, PrimaryColor);
     tft.drawRect((position > ITEM5 ? 164 : 9),
-                 (position * 2) - 21 - (position > ITEM5 ? 200 : 0),
-                 148, 30,
-                 (CurrentTheme == 7 ? Black : ActiveColor));
+                 (position * 2) - 21 - (position > ITEM5 ? 200 : 0), 148, 30, PrimaryColor);
   }
 }
 
@@ -4863,11 +4859,17 @@ void showMenuOpenTouchButtons() {
     tft.drawRoundRect(18, 154, 60, 40, 6, ActiveColor);
     tft.fillRoundRect(240, 154, 60, 40, 6, FrameColor);
     tft.drawRoundRect(240, 154, 60, 40, 6, ActiveColor);
-    tft.fillRoundRect(240, 36, 60, 40, 6, FrameColor);
-    tft.drawRoundRect(240, 36, 60, 40, 6, ActiveColor);
     tft.fillTriangle(52, 160, 52, 188, 38, 174, (CurrentTheme == 7 ? White : ActiveColor));
     tft.fillTriangle(266, 160, 266, 188, 280, 174, (CurrentTheme == 7 ? White : ActiveColor));
-    tftPrint(0, "OK", 270, 44, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
+    if (menuoption == ITEM9) {
+      tft.fillRoundRect(240, 36, 60, 40, 6, FrameColor);
+      tft.drawRoundRect(240, 36, 60, 40, 6, ActiveColor);
+      tftPrint(0, "OK", 270, 44, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
+    } else {
+      tft.fillRoundRect(130, 154, 60, 40, 6, FrameColor);
+      tft.drawRoundRect(130, 154, 60, 40, 6, ActiveColor);
+      tftPrint(0, "OK", 160, 162, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
+    }
   }
 }
 
@@ -5473,9 +5475,6 @@ void DoMenu() {
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString((LevelOffset > 0 ? "+" : "") + String(LevelOffset, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
-            tftPrint(-1, "dBμV", 179, 165, ActiveColor, ActiveColorSmooth, 28);
-            SStatusold = 2000;
-            change = true;
             break;
 
           case ITEM5:
@@ -5967,7 +5966,6 @@ String removeNewline(String inputString) {
 void drawButton(const char* text, byte button_number, bool active, bool selected) {
   const int buttonWidth = 70;
   const int buttonHeight = 30;
-  const int cornerRadius = 6;
   const int spacingX = 10;
   const int spacingY = 10;
   const int numColumns = 4;
@@ -5986,13 +5984,17 @@ void drawButton(const char* text, byte button_number, bool active, bool selected
 
   // Draw the selection outline
   if (selected) {
-    tft.drawRoundRect(x - 2, y - 2, buttonWidth + 4, buttonHeight + 4, cornerRadius + 2, ActiveColor);
+    tft.drawRect(x - 2, y - 2, buttonWidth + 4, buttonHeight + 4, PrimaryColor);
+    tft.drawRect(x - 1, y - 1, buttonWidth + 2, buttonHeight + 2, PrimaryColor);
   } else {
-    tft.drawRoundRect(x - 2, y - 2, buttonWidth + 4, buttonHeight + 4, cornerRadius + 2, BackgroundColor);
+    tft.drawRect(x - 2, y - 2, buttonWidth + 4, buttonHeight + 4, BackgroundColor);
+    tft.drawRect(x - 1, y - 1, buttonWidth + 2, buttonHeight + 2, BackgroundColor);
   }
 
+
   // Draw the button fill
-  tft.fillRoundRect(x, y, buttonWidth, buttonHeight, cornerRadius, FrameColor);
+  tft.pushImage (x, y, 70, 30, (CurrentTheme == 7 ? bwselector_wo : bwselector));
+
 
   // Draw the small line at the bottom (narrower, centered, and 3px up)
   int lineHeight = 4;                         // Height of the bottom line
@@ -6002,15 +6004,22 @@ void drawButton(const char* text, byte button_number, bool active, bool selected
   if (button_number != 19) tft.fillRect(lineX, lineY, lineWidth, lineHeight, (active ? InsignificantColor : GreyoutColor));
 
   // Draw the button text
-  tftPrint(0, text, x + buttonWidth / 2, y + (buttonHeight / 4) - 2, PrimaryColor, PrimaryColorSmooth, 16);
+  tftPrint(0, text, x + buttonWidth / 2, y + (buttonHeight / 4) - 2, ActiveColor, ActiveColorSmooth, 16);
 }
 
 String shortLine(String text) {
-  if (PSSprite.textWidth(text) > 150) {
-    while (PSSprite.textWidth(text + "...") > 150 && text.length() > 0) {
-      text.remove(text.length() - 1);
+  String tempText = text;
+
+  if (PSSprite.textWidth(tempText + "...") > 155) { // Include "..." in width check
+    while (PSSprite.textWidth(tempText + "...") > 155 && tempText.length() > 0) {
+      // Safely remove the last UTF-8 character
+      int lastCharIndex = tempText.length() - 1;
+      while (lastCharIndex > 0 && (tempText[lastCharIndex] & 0xC0) == 0x80) {
+        lastCharIndex--; // Skip over continuation bytes
+      }
+      tempText = tempText.substring(0, lastCharIndex); // Remove last character
     }
-    text += "...";
+    text = tempText + "..."; // Add "..." to the truncated text
   }
   return text;
 }

@@ -65,6 +65,7 @@ bool batterydetect = true;
 bool beepresetstart;
 bool beepresetstop;
 bool BWreset;
+bool bwtouchtune;
 bool BWtune;
 bool change;
 bool compressedold;
@@ -158,6 +159,7 @@ byte BWsettemp;
 byte BWsetAM;
 byte BWsetFM;
 byte BWsetRecall;
+byte BWtemp;
 byte charwidth = 8;
 byte hardwaremodel;
 byte ContrastSet;
@@ -805,6 +807,8 @@ void setup() {
     delay(30);
   }
 
+  tft.fillRect(120, 230, 16, 6, PrimaryColor);
+
   TEF = EEPROM.readByte(EE_BYTE_TEF);
 
   if (TEF != 102 && TEF != 205) SetTunerPatch();
@@ -816,7 +820,6 @@ void setup() {
 
   radio.getIdentification(device, hw, sw);
   if (TEF != (highByte(hw) * 100 + highByte(sw))) SetTunerPatch();
-  tft.fillRect(120, 230, 16, 6, PrimaryColor);
 
   if (lowByte(device) == 14) {
     fullsearchrds = false;
@@ -1233,30 +1236,6 @@ void loop() {
       if (millis() >= tuningtimer + 200) readRds();
       GetData();
       if (!screenmute && !afscreen && !advancedRDS) ShowModLevel();
-    }
-  }
-
-  if (menu && menuopen && menupage == FMSETTINGS && menuoption == ITEM4) {
-    if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
-    if (millis() >= lowsignaltimer + 500 || change) {
-      lowsignaltimer = millis();
-      change = false;
-      if (SStatus > SStatusold || SStatus < SStatusold) {
-        switch (CurrentTheme) {
-          case 7: SignalSprite.pushImage(-87, -119, 292, 170, popupbackground_wo); break;
-          default: SignalSprite.pushImage(-87, -119, 292, 170, popupbackground); break;
-        }
-
-        SignalSprite.setTextDatum(TR_DATUM);
-        SignalSprite.loadFont(FONT48);
-        SignalSprite.drawString(String(SStatus / 10), 58, 0);
-        SignalSprite.unloadFont();
-        SignalSprite.loadFont(FONT28);
-        SignalSprite.drawString("." + String(abs(SStatus % 10)), 78, 0);
-        SignalSprite.unloadFont();
-        SignalSprite.pushSprite(100, 149);
-        SStatusold = SStatus;
-      }
     }
   }
 
@@ -2433,6 +2412,7 @@ void BWButtonPress() {
         BuildBWSelector();
         freq_in = 0;
         BWtune = true;
+        BWtemp = BWset;
       } else {
         if (band == BAND_FM || band == BAND_OIRT) {
           doStereoToggle();
@@ -3731,7 +3711,7 @@ void updateSWMIBand() {
 }
 
 void doBW() {
-  if (BWtune) BWset = BWsettemp;
+  if (BWtune && !bwtouchtune) BWset = BWsettemp;
 
   if (band < BAND_GAP) {
     if (BWset > 16) BWset = 0;

@@ -18,7 +18,7 @@ void doTouchEvent(uint16_t x, uint16_t y) {
       if (menuopen) {                                                     // Menu navigation
         if (x > 18 && x < 78 && y > 150 && y < 190) KeyDown();            // ---------------
         if (x > 240 && x < 300 && y > 150 && y < 190) KeyUp();
-        if (x > 240 && x < 300 && y > 40 && y < 80) ButtonPress();
+        if ((x > 240 && x < 300 && y > 40 && y < 80) || (x > 130 && x < 190 && y > 150 && y < 190)) ButtonPress();
         return;
       } else {
         if (x > 8 && x < 158) {
@@ -102,7 +102,6 @@ void doTouchEvent(uint16_t x, uint16_t y) {
     }
 
     if (BWtune) {                                                         // BW menu
-      byte BWtemp = 255;
       if (y > 35 && y < 65) {
         if (x > 7 && x < 77) BWtemp = 1;
         if (x > 87 && x < 157) BWtemp = 2;
@@ -152,14 +151,18 @@ void doTouchEvent(uint16_t x, uint16_t y) {
 
       if (y > 195 && y < 225 && x > 247 && x < 317) {
         leave = true;
-        if (BWtemp != 255) BWset = BWtemp;
+        bwtouchtune = true;
+        BWset = BWtemp;
         doBW();
         BuildDisplay();
         SelectBand();
+        bwtouchtune = false;
       } else {
-        if (BWtemp != 255) BWset = BWtemp;
+        bwtouchtune = true;
+        BWset = BWtemp;
         showBWSelector();
         doBW();
+        bwtouchtune = false;
       }
       return;
     }
