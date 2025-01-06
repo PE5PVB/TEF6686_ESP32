@@ -1753,7 +1753,7 @@ void ShowOneButton(byte position, byte item, bool selected) {
         case CONNECTIVITY:
           PSSprite.setTextDatum(TC_DATUM);
           PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString(shortLine(removeNewline(myLanguage[language][51] + (wifi ? " IP: " + String(WiFi.localIP().toString()) : ""))), 75, 1);
+          PSSprite.drawString(shortLine(removeNewline(wifi ? " IP: " + String(WiFi.localIP().toString()) : myLanguage[language][51])), 75, 1);
 
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           PSSprite.drawString((wifi ? myLanguage[language][42] : myLanguage[language][30]), 75, 15);
@@ -1980,7 +1980,7 @@ void ShowOneButton(byte position, byte item, bool selected) {
           PSSprite.drawString(shortLine(removeNewline(myLanguage[language][58])), 75, 1);
 
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          PSSprite.drawString((wifi ? String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC) : "-"), 75, 1);
+          PSSprite.drawString((wifi ? String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC) : "-"), 75, 15);
           break;
 
         case DXMODE:

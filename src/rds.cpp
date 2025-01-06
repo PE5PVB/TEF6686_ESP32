@@ -723,8 +723,8 @@ void showPS() {
       } else {
         xPos5 = 0;
         PSSprite.fillSprite(BackgroundColor);
-        length12 = PSSprite.textWidth(radio.rds.stationName.substring(0, 2)) - 2;
-        length34 = PSSprite.textWidth(radio.rds.stationName.substring(2, 4)) + length12 + 2;
+        length12 = PSSprite.textWidth(radio.rds.stationName.substring(0, 2));
+        length34 = PSSprite.textWidth(radio.rds.stationName.substring(2, 4)) + length12;
         length56 = PSSprite.textWidth(radio.rds.stationName.substring(4, 6)) + length34;
 
 		if (PSold.substring(0, 2) != radio.rds.stationName.substring(0, 2)) ps12errorold = true;
