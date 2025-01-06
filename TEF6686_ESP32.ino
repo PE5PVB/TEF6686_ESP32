@@ -2748,7 +2748,11 @@ void ButtonPress() {
           updateEQ();
           if (XDRGTKUSB || XDRGTKTCP) DataPrint("G" + String(!EQset) + String(!iMSset) + "\n");
           showBWSelector();
-          drawButton(BWButtonLabelsFM[BWsettemp - 1], BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), true);
+          if (band < BAND_GAP) {
+            drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsFM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), true);
+          } else {
+            drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsAM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), true);
+          }
         } else if (BWsettemp == 20) {
           BuildDisplay();
           freq_in = 0;
@@ -2756,7 +2760,11 @@ void ButtonPress() {
         } else {
           doBW();
           showBWSelector();
-          drawButton(BWButtonLabelsFM[BWsettemp - 1], BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), true);
+          if (band < BAND_GAP) {
+            drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsFM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), true);
+          } else {
+            drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsAM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), true);
+          }
         }
       }
     }
@@ -3790,30 +3798,30 @@ void doBW() {
 void doBWtuneDown() {
   rotary = 0;
   if (band < BAND_GAP) {
-    drawButton(BWButtonLabelsFM[BWsettemp - 1], BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), false);
+    drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsFM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), false);
     BWsettemp--;
-    if (BWsettemp > 20) BWsettemp = 20;
-    drawButton(BWButtonLabelsFM[BWsettemp - 1], BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), true);
+    if (BWsettemp > 20 || BWsettemp == 0) BWsettemp = 20;
+    drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsFM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), true);
   } else {
-    drawButton(BWButtonLabelsAM[BWsettemp - 1], BWsettemp - 1, (BWset == BWsettemp ? true : false), false);
+    drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsAM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp ? true : false), false);
     BWsettemp--;
-    if (BWsettemp == 0) BWsettemp = 4;
-    drawButton(BWButtonLabelsAM[BWsettemp - 1], BWsettemp - 1, (BWset == BWsettemp ? true : false), true);
+    if (BWsettemp > 4 && BWsettemp < 20) BWsettemp = 4; else if (BWsettemp == 0) BWsettemp = 20;
+    drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsAM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp ? true : false), true);
   }
 }
 
 void doBWtuneUp() {
   rotary = 0;
   if (band < BAND_GAP) {
-    drawButton(BWButtonLabelsFM[BWsettemp - 1], BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), false);
+    drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsFM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), false);
     BWsettemp++;
-    if (BWsettemp > 20) BWsettemp = 0;
-    drawButton(BWButtonLabelsFM[BWsettemp - 1], BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), true);
+    if (BWsettemp > 20) BWsettemp = 1;
+    drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsFM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), true);
   } else {
-    drawButton(BWButtonLabelsAM[BWsettemp - 1], BWsettemp - 1, (BWset == BWsettemp ? true : false), false);
+    drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsAM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp ? true : false), false);
     BWsettemp++;
-    if (BWsettemp > 4) BWsettemp = 1;
-    drawButton(BWButtonLabelsAM[BWsettemp - 1], BWsettemp - 1, (BWset == BWsettemp ? true : false), true);
+    if (BWsettemp > 4 && BWsettemp < 20) BWsettemp = 20; else if (BWsettemp > 20) BWsettemp = 1;
+    drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsAM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp ? true : false), true);
   }
 }
 

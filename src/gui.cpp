@@ -2630,7 +2630,7 @@ void showBWSelector() {
     for (int x = 0; x < 17; x++) drawButton(BWButtonLabelsFM[x], x, (BWset == x + 1 || (BWset == 0 && x == 16) ? true : false), false);
     drawButton(BWButtonLabelsFM[17], 17, (!iMSset ? true : false), false);
     drawButton(BWButtonLabelsFM[18], 18, (!EQset ? true : false), false);
-    drawButton(BWButtonLabelsFM[19], 19, false, false);
+    drawButton("OK", 19, false, false);
   } else {
     for (int x = 0; x < 4; x++) {
       drawButton(BWButtonLabelsAM[x], x, (BWset == x + 1 ? true : false), false);
