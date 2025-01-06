@@ -3231,8 +3231,8 @@ void ShowSignalLevel() {
         tftReplace(1, "." + String(abs(SStatusold % 10)), "." + String(abs(SStatusprint % 10)), 310, 105, FreqColor, FreqColorSmooth, BackgroundColor, 28);
 
         if (band < BAND_GAP) segments = map(SStatus / 10, 0, 70, 0, 100); else segments = (SStatus + 200) / 10;
-        tft.fillRect(16, 105, 2 * constrain(segments, 0, 54), 6, BarInsignificantColor);
-        tft.fillRect(16 + 2 * 54, 105, 2 * (constrain(segments, 54, 94) - 54), 6, BarSignificantColor);
+        tft.fillRect(16, 105, 2 * constrain(segments, 0, 63), 6, BarInsignificantColor);
+        tft.fillRect(16 + 2 * 63, 105, 2 * (constrain(segments, 63, 94) - 63), 6, BarSignificantColor);
         tft.fillRect(16 + 2 * constrain(segments, 0, 94), 105, 2 * (94 - constrain(segments, 0, 94)), 6, GreyoutColor);
       }
       SStatusold = SStatusprint;
@@ -3432,9 +3432,9 @@ void ShowModLevel() {
       }
     }
 
-    tft.fillRect(16, 133, 2 * constrain(DisplayedSegments, 0, 54), 6, ModBarInsignificantColor);
+    tft.fillRect(16, 133, 2 * constrain(DisplayedSegments, 0, 63), 6, ModBarInsignificantColor);
 
-    if (DisplayedSegments > 54) tft.fillRect(16 + 2 * 54, 133, 2 * (DisplayedSegments - 54), 6, ModBarSignificantColor);
+    if (DisplayedSegments > 63) tft.fillRect(16 + 2 * 63, 133, 2 * (DisplayedSegments - 63), 6, ModBarSignificantColor);
 
     int greyStart = 16 + 2 * DisplayedSegments;
     int greyWidth = 2 * (94 - DisplayedSegments);
