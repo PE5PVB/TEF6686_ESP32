@@ -2843,9 +2843,9 @@ void BuildDisplay() {
   tft.drawLine(53, 30, 53, 0, FrameColor);
   tft.drawLine(89, 30, 89, 0, FrameColor);
   tft.drawLine(158, 30, 158, 0, FrameColor);
-  tft.drawLine(20, 114, 204, 114, Darkgrey);
+  tft.drawLine(16, 114, 202, 114, ActiveColor);
 
-  if (!showmodulation) tft.drawLine(20, 143, 204, 143, GreyoutColor); else tft.drawLine(20, 143, 204, 143, Darkgrey);
+  if (!showmodulation) tft.drawLine(16, 143, 202, 143, GreyoutColor); else tft.drawLine(16, 143, 202, 143, ActiveColor);
   for (byte segments = 0; segments < 94; segments++) {
     if (segments > 54) {
       if (((segments - 53) % 10) == 0) {

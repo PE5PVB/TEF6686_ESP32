@@ -1196,7 +1196,7 @@ void loop() {
       tftPrint(-1, "PS:", 3, 193, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, "RT:", 3, 221, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, "PTY:", 3, 163, ActiveColor, ActiveColorSmooth, 16);
-      if (!showmodulation) tft.drawLine(20, 143, 204, 143, GreyoutColor); else tft.drawLine(20, 143, 204, 143, Darkgrey);
+      if (!showmodulation) tft.drawLine(16, 143, 203, 143, GreyoutColor); else tft.drawLine(16, 143, 203, 143, ActiveColor);
     }
     LowLevelInit = true;
   }
@@ -1228,7 +1228,7 @@ void loop() {
         tftPrint(-1, "PS:", 3, 193, GreyoutColor, BackgroundColor, 16);
         tftPrint(-1, "RT:", 3, 221, GreyoutColor, BackgroundColor, 16);
         tftPrint(-1, "PTY:", 3, 163, GreyoutColor, BackgroundColor, 16);
-        tft.drawLine(20, 143, 204, 143, GreyoutColor);
+        tft.drawLine(16, 143, 203, 143, GreyoutColor);
         tft.drawBitmap(122, 5, RDSLogo, 35, 22, GreyoutColor);
       }
       LowLevelInit = false;
