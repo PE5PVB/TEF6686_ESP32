@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[18][286] PROGMEM = {
+static const char* const myLanguage[18][290] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -291,7 +291,11 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Press highlighted corner", // 282
     "To calibrate touchscreen", // 283
     "Screen inversion toggles", // 284
-    "Select Bandwidth" // 285
+    "Select Bandwidth", // 285
+    "Your logbook", // 286
+    "Download logbook", // 287
+    "Logbook is empty", // 288
+    "Go to bottom" // 289
   },
 
   { "Nederlands", // Dutch
@@ -579,7 +583,11 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Druk op aangegeven hoeken", // 282
     "om scherm te calibreren", // 283
     "Scherm inversie gewijzigd", // 284
-    "Selecteer bandbreedte" // 285
+    "Selecteer bandbreedte", // 285
+    "Jouw logboek", // 286
+    "Download logboek", // 287
+    "Logboek is leeg", // 288
+    "Ga naar einde" // 289
   },
 
   { "Polski", // Polish
@@ -867,7 +875,11 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Naciśnij zaznaczony róg", // 282
     "Aby skalibrować ekran", // 283
     "Inwersja kolorów wyświetlacza", // 284
-    "Wybierz szer. pasma" // 285
+    "Wybierz szer. pasma", // 285
+    "Your logbook", // 286
+    "Download logbook", // 287
+    "Logbook is empty", // 288
+    "Go to bottom" // 289
   },
 
   { "Hrvatski", // Croatian
@@ -1155,7 +1167,11 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Press highlighted corner", // 282
     "To calibrate touchscreen", // 283
     "Screen inversion toggles", // 284
-    "Select Bandwidth" // 285
+    "Select Bandwidth", // 285
+    "Your logbook", // 286
+    "Download logbook", // 287
+    "Logbook is empty", // 288
+    "Go to bottom" // 289
   },
 
   { "Ελληνικά", // Greek
@@ -1443,7 +1459,11 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Πιέστε την\nεπισημασμένη γωνία", // 282
     "Για βαθμονόμηση\nτης οθόνης αφής", // 283
     "Εναλλαγή αναστροφής οθόνης", // 284
-    "Επιλογή εύρους μπάντας" // 285
+    "Επιλογή εύρους μπάντας", // 285
+    "Your logbook", // 286
+    "Download logbook", // 287
+    "Logbook is empty", // 288
+    "Go to bottom" // 289
   },
 
   { "Română", // Romanian
@@ -1731,7 +1751,11 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Press highlighted corner", // 282
     "To calibrate touchscreen", // 283
     "Screen inversion toggles", // 284
-    "Select Bandwidth" // 285
+    "Select Bandwidth", // 285
+    "Your logbook", // 286
+    "Download logbook", // 287
+    "Logbook is empty", // 288
+    "Go to bottom" // 289
   },
 
   { "Deutsch", // German
@@ -2019,7 +2043,11 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Markierte Ecke drücken", // 282
     "zum Kalibrieren des Touchscrees", // 283
     "Bildschirmumkehrung umschalten", // 284
-    "Bandbreite wählen" // 285
+    "Bandbreite wählen", // 285
+    "Your logbook", // 286
+    "Download logbook", // 287
+    "Logbook is empty", // 288
+    "Go to bottom" // 289
   },
 
   { "Český", // Czech
@@ -2307,7 +2335,11 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Press highlighted corner", // 282
     "To calibrate touchscreen", // 283
     "Screen inversion toggles", // 284
-    "Select Bandwidth" // 285
+    "Select Bandwidth", // 285
+    "Your logbook", // 286
+    "Download logbook", // 287
+    "Logbook is empty", // 288
+    "Go to bottom" // 289
   },
 
   { "Magyar", // Hungarian
@@ -2595,7 +2627,11 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Nyomd meg a kiemelt sarkot", // 282
     "Érintőképernyő kalibrálásához", // 283
     "Képernyő inverzió kapcsoló", // 284
-    "Sávszélesség választása" // 285
+    "Sávszélesség választása", // 285
+    "Your logbook", // 286
+    "Download logbook", // 287
+    "Logbook is empty", // 288
+    "Go to bottom" // 289
   },
 
   { "Français", // French
@@ -2883,7 +2919,11 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Appuyez sur l'angle\nmis en évidence", // 282
     "Pour calibrer l'écran tactile", // 283
     "Inversion d'affichage bascules", // 284
-    "Sélectionner la bande passante" // 285
+    "Sélectionner la bande passante", // 285
+    "Your logbook", // 286
+    "Download logbook", // 287
+    "Logbook is empty", // 288
+    "Go to bottom" // 289
   },
 
   { "Български", // Bulgarian
@@ -3171,7 +3211,11 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Press highlighted corner", // 282
     "To calibrate touchscreen", // 283
     "Screen inversion toggles", // 284
-    "Select Bandwidth" // 285
+    "Select Bandwidth", // 285
+    "Your logbook", // 286
+    "Download logbook", // 287
+    "Logbook is empty", // 288
+    "Go to bottom" // 289
   },
 
   { "Русский", // Russian
@@ -3459,7 +3503,11 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Нажмите на подсвеченный угол", // 282
     "Калибровка тачскрина", // 283
     "Переключение инверсии экрана", // 284
-    "Выбрать ширину полосы" // 285
+    "Выбрать ширину полосы", // 285
+    "Your logbook", // 286
+    "Download logbook", // 287
+    "Logbook is empty", // 288
+    "Go to bottom" // 289
   },
 
   { "Українська", // Ukranian
@@ -3747,7 +3795,11 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Press highlighted corner", // 282
     "To calibrate touchscreen", // 283
     "Screen inversion toggles", // 284
-    "Select Bandwidth" // 285
+    "Select Bandwidth", // 285
+    "Your logbook", // 286
+    "Download logbook", // 287
+    "Logbook is empty", // 288
+    "Go to bottom" // 289
   },
 
   { "Italiano", // Italian
@@ -4035,7 +4087,11 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Premi l'angolo evidenziato", // 282
     "Per calibrare lo schermo touch", // 283
     "Inversione colore schermo", // 284
-    "Select Bandwidth" // 285
+    "Select Bandwidth", // 285
+    "Your logbook", // 286
+    "Download logbook", // 287
+    "Logbook is empty", // 288
+    "Go to bottom" // 289
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4323,7 +4379,11 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Press highlighted corner", // 282
     "To calibrate touchscreen", // 283
     "Screen inversion toggles", // 284
-    "Select Bandwidth" // 285
+    "Select Bandwidth", // 285
+    "Your logbook", // 286
+    "Download logbook", // 287
+    "Logbook is empty", // 288
+    "Go to bottom" // 289
   },
 
   { "Norsk", // Norwegian
@@ -4611,7 +4671,11 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Trykk på det uthevede hjørnet", // 282
     "For å kalibrere berøringsskjerm", // 283
     "Veksle Skjerminversjon", // 284
-    "Velg Båndbredde" // 285
+    "Velg Båndbredde", // 285
+    "Your logbook", // 286
+    "Download logbook", // 287
+    "Logbook is empty", // 288
+    "Go to bottom" // 289
   },
 
   { "Español", // Spanish
@@ -4899,7 +4963,11 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Presione en el\nángulo resaltado", // 282
     "Para calibrar\nla pantalla táctil", // 283
     "Cambio de reverso\nde la pantalla", // 284
-    "Seleccionar ancho de banda" // 285
+    "Seleccionar ancho de banda", // 285
+    "Your logbook", // 286
+    "Download logbook", // 287
+    "Logbook is empty", // 288
+    "Go to bottom" // 289
   },
 
   { "Português", // Portuguese
@@ -5187,7 +5255,11 @@ static const char* const myLanguage[18][286] PROGMEM = {
     "Pressione o\ncanto inscrito", // 282
     "Para calibração\nda tela de toque", // 283
     "Alternar a inversão da tela", // 284
-    "Selecione largura de banda" // 285
+    "Selecione largura de banda", // 285
+    "Your logbook", // 286
+    "Download logbook", // 287
+    "Logbook is empty", // 288
+    "Go to bottom" // 289
   }
 };
 #endif

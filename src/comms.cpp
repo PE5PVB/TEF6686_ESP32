@@ -675,7 +675,7 @@ void XDRGTKRoutine() {
         if (scandxmode) cancelDXScan();
         if (!XDRScan) BWsetRecall = BWset;
         XDRScan = true;
-		Data_Accelerator = true;
+        Data_Accelerator = true;
 
         switch (buff[1]) {
           case 'a': scanner_start = (atol(buff + 2) + 5) / 10; break;
@@ -764,7 +764,7 @@ void XDRGTKRoutine() {
             }
             break;
         }
-		Data_Accelerator = false;
+        Data_Accelerator = false;
         break;
 
       case 'W':
@@ -909,11 +909,13 @@ void tryWiFi() {
     if (wc.autoConnect()) {
       Server.begin();
       Udp.begin(9031);
+      webserver.begin();
       remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
       if (!setupmode) tftPrint(0, myLanguage[language][57], 155, 128, InsignificantColor, InsignificantColorSmooth, 28);
     } else {
       if (!setupmode) tftPrint(0, myLanguage[language][56], 155, 128, SignificantColor, SignificantColorSmooth, 28);
       Server.end();
+      webserver.stop();
       Udp.stop();
       WiFi.mode(WIFI_OFF);
       wifi = false;

@@ -8,6 +8,8 @@
 #include <TimeLib.h>
 #include <TFT_eSPI.h>               // https://github.com/ohmytime/TFT_eSPI_DynamicSpeed/archive/refs/heads/master.zip (please then edit the User_Setup.h as described in the Wiki)
 #include <Hash.h>                   // https://github.com/bbx10/Hash_tng/archive/refs/heads/master.zip
+#include <WebServer.h>
+#include <SPIFFS.h>
 #include "src/WiFiConnect.h"
 #include "src/WiFiConnectParam.h"
 #include "src/FONT16.h"
@@ -442,6 +444,8 @@ WiFiConnect wc;
 WiFiServer Server(7373);
 WiFiClient RemoteClient;
 WiFiUDP Udp;
+WebServer webserver(80);
+
 hw_timer_t *timScreensaver = NULL;
 byte screensaver_IRQ = OFF;
 
@@ -636,6 +640,9 @@ void setup() {
   tft.init();
   tft.initDMA();
 
+  webserver.on("/", handleRoot);
+  webserver.on("/downloadCSV", HTTP_GET, handleDownloadCSV);
+
   doTheme();
 
   if (displayflip == 0) {
@@ -671,6 +678,9 @@ void setup() {
 
   tft.setSwapBytes(true);
   tft.fillScreen(BackgroundColor);
+
+  SPIFFS.begin();
+  if (!SPIFFS.exists("/logbook.csv")) handleCreateNewLogbook();
 
   FrequencySprite.createSprite(200, 50);
   FrequencySprite.setTextDatum(TR_DATUM);
@@ -918,6 +928,8 @@ void setup() {
 }
 
 void loop() {
+  if (wifi) webserver.handleClient();
+
   if (hardwaremodel == PORTABLE_TOUCH_ILI9341 && touch_detect) {
     if (tft.getTouchRawZ() > 100) {  // Check if the touch is active
       uint16_t x, y;
@@ -5296,5 +5308,280 @@ void toggleiMSEQ() {
       doTuneMode();
       ShowTuneMode();
     }
+  }
+}
+
+void handleRoot() {
+  // Attempt to open the CSV file stored in SPIFFS (File System)
+  fs::File file = SPIFFS.open("/logbook.csv", "r");
+  if (!file) {
+    // If the file could not be opened, send an error message to the browser
+    webserver.send(500, "text/plain", "Failed to open logbook");
+    return;  // Exit the function if the file cannot be opened
+  }
+
+  // Start building the HTML page to send to the browser
+  String html = "<!DOCTYPE html><html lang=\"en\"><head>";
+  html += "<meta charset=\"UTF-8\">";
+  html += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">";
+
+  // Add CSS styling for a modern, dark-themed look
+  html += "<style>";
+  html += "body {background-color: #1a1a1a; color: white; font-family: 'Arial', sans-serif; margin: 0; padding: 0;}";
+  html += "h1 {text-align: center; color: #ffffff; margin-top: 20px; font-size: 32px;}";  // Change the color to white
+  html += "img {display: block; margin: 0 auto; max-width: 100%; height: auto; padding-top: 20px;}";
+  html += "table {width: 90%; margin: 0 auto; border-collapse: collapse; border-radius: 8px; overflow: hidden;}";
+  html += "th {background-color: #333; color: white; padding: 12px; text-align: left; font-size: 18px;}";  // Keep header text color white
+  html += "td {background-color: #2a2a2a; color: white; padding: 10px; text-align: left; font-size: 16px;}";
+  html += "tr:nth-child(even) {background-color: #252525;}";
+  html += "tr:hover {background-color: #444; cursor: pointer;}";
+  html += "button {background-color: #ffcc00; color: black; border: none; padding: 12px 20px; font-size: 18px; cursor: pointer; border-radius: 5px; display: block; margin: 20px auto;}";
+  html += "button:hover {background-color: #ff9900;}";
+  html += "@media (max-width: 768px) { table {width: 100%;} th, td {font-size: 14px; padding: 8px;} }";
+  html += ".go-to-bottom {position: fixed; bottom: 30px; right: 30px; background-color: #ffcc00; color: black; border: none; padding: 12px 20px; font-size: 18px; cursor: pointer; border-radius: 5px; z-index: 100;}";  // Position the button at the bottom-right corner
+  html += "</style>";
+
+  html += "</head><body>";
+
+  // Add the logo image at the top of the page
+  html += "<img src=\"https://fmdx.org/img/logo.png\" alt=\"FMdx Logo\">";
+
+  // Add a header with a dynamic title from the language array (replace with actual language logic)
+  html += "<h1>" + String(myLanguage[language][286]) + "</h1>";
+
+  // Add the "Download CSV" button, which triggers a download action when clicked
+  html += "<button onclick=\"window.location.href='/downloadCSV'\">" + String(myLanguage[language][287]) + "</button>";
+
+  // Add "Go to Bottom" button
+  html += "<button class=\"go-to-bottom\" onclick=\"scrollToBottom()\">" + String(myLanguage[language][289]) + "</button>";
+
+  // Add JavaScript for scrolling to the bottom
+  html += "<script>";
+  html += "function scrollToBottom() {";
+  html += "  window.scrollTo(0, document.body.scrollHeight);";
+  html += "}";
+  html += "</script>";
+
+  // Start the HTML table to display CSV data
+  html += "<table>";
+
+  // Read and process the first line (header row) from the CSV file
+  String header = "";
+  if (file.available()) {
+    header = file.readStringUntil('\n'); // Read the first line containing the headers
+    html += "<tr>"; // Start the header row in the table
+    int startIndex = 0;
+
+    // Split the header line by commas and create table headers (<th>) for each column
+    while (startIndex < header.length()) {
+      int endIndex = header.indexOf(',', startIndex);
+      if (endIndex == -1) endIndex = header.length(); // Handle last column (no comma after it)
+      String column = header.substring(startIndex, endIndex); // Extract the column name
+      html += "<th>" + column + "</th>"; // Add the column as a table header
+      startIndex = endIndex + 1; // Move to the next column
+    }
+    html += "</tr>"; // End the header row
+  }
+
+  // Variable to track if there is any data in the CSV file
+  bool hasData = false;
+  int rowCount = 0; // Counter for rows, used for alternating row colors
+
+  // Process the remaining lines (data rows) in the CSV file
+  while (file.available()) {
+    String line = file.readStringUntil('\n'); // Read the next line (data row)
+    if (line.length() > 0) {
+      hasData = true;  // Mark that data rows are present
+      rowCount++; // Increment the row count
+      html += "<tr>"; // Start a new row in the table
+      int startIndex = 0;
+
+      // Split the line by commas and create table data cells (<td>) for each column
+      while (startIndex < line.length()) {
+        int endIndex = line.indexOf(',', startIndex);
+        if (endIndex == -1) endIndex = line.length(); // Handle the last column
+        String cell = line.substring(startIndex, endIndex); // Extract the cell data
+        html += "<td>" + cell + "</td>"; // Add the cell data to the table
+        startIndex = endIndex + 1; // Move to the next column
+      }
+      html += "</tr>"; // End the data row
+    }
+  }
+
+  file.close(); // Close the file after reading
+
+  // If no data rows were found, display a "No data available" message in the table
+  if (!hasData) {
+    html += "<tr><td colspan=\"100%\" style=\"text-align: center; color: red;\">" + String(myLanguage[language][288]) + "</td></tr>";
+  }
+
+  // End the HTML table and body
+  html += "</table>";
+  html += "</body></html>"; // End the HTML page
+
+  // Send the generated HTML content to the browser with a 200 OK response
+  webserver.send(200, "text/html", html);
+}
+
+void handleDownloadCSV() {
+  // Attempt to open the CSV file from SPIFFS in read mode
+  fs::File file = SPIFFS.open("/logbook.csv", "r");
+
+  // Check if the file was successfully opened
+  if (!file) {
+    // If the file could not be opened, send an error response
+    webserver.send(500, "text/plain", "Failed to open logbook for download");
+    return;  // Exit the function if the file cannot be opened
+  }
+
+  // Set the headers to specify that the response will be a CSV file for download
+  webserver.sendHeader("Content-Type", "text/csv");  // Set MIME type for CSV files
+  webserver.sendHeader("Content-Disposition", "attachment; filename=logbook.csv");  // Suggests the file name for download
+
+  // Stream the CSV file content directly to the browser
+  webserver.streamFile(file, "text/csv");
+
+  // Close the file after streaming the content to release resources
+  file.close();
+}
+
+bool handleCreateNewLogbook() {
+  // Check if the file "logbook.csv" already exists
+  if (SPIFFS.exists("/logbook.csv")) {
+    // If it exists, delete the file
+    if (!SPIFFS.remove("/logbook.csv")) {
+      // Return false if the file could not be deleted
+      return false;
+    }
+  }
+
+  // Create a new "logbook.csv" file in write mode
+  fs::File file = SPIFFS.open("/logbook.csv", "w");
+
+  // Check if the file was successfully created
+  if (!file) {
+    // Return false if file creation fails
+    return false;
+  }
+
+  // Write the header to the new CSV file
+  String header = "Date,Time,Frequency,PI code,Signal,PS,RadioText\n";
+  file.print(header); // Ensure that the header is written properly
+
+  // Make sure the data is written before closing the file
+  file.flush(); // Ensure that everything is written to the file
+  file.close(); // Close the file after writing
+
+  // Return true if the function runs without problems
+  return true;
+}
+
+bool addRowToCSV() {
+  // Check if there is enough free space in SPIFFS (150 bytes or more)
+  if (SPIFFS.totalBytes() - SPIFFS.usedBytes() < 150) {
+    return false;  // Return false if there is less than 150 bytes free
+  }
+
+  // Open the logbook.csv file in append mode
+  fs::File file = SPIFFS.open("/logbook.csv", "a");
+
+  // Check if the file could not be opened
+  if (!file) {
+    return false;  // Return false if the file can't be opened
+  }
+
+  // Get the current date and time from ESP32 (using the built-in time functions)
+  String currentDateTime = getCurrentDateTime();  // Get the current date and time
+
+  // If time is not available, replace with "-"
+  if (currentDateTime == "") {
+    currentDateTime = "-,-";  // Set both date and time to "-"
+  }
+
+  // Convert frequency to a string format (XX.XX MHz)
+  int freqInt = (int)frequency;  // Assuming frequency is already a float or double, cast it to int
+
+  // Apply the necessary conversion (if any) for frequency
+  int convertedFreq = (freqInt + ConverterSet * 100) / 100;
+  String frequencyFormatted = String(convertedFreq) + "." + ((freqInt + ConverterSet * 100) % 100 < 10 ? "0" : "") + String((freqInt + ConverterSet * 100) % 100) + " MHz";  // Add " MHz"
+
+  // Format the signal strength (xx.x with the correct unit)
+  int SStatusprint = 0;
+  if (unit == 0) SStatusprint = SStatus;
+  if (unit == 1) SStatusprint = ((SStatus * 100) + 10875) / 100;
+  if (unit == 2) SStatusprint = round((float(SStatus) / 10.0 - 10.0 * log10(75) - 90.0) * 10.0);
+
+  // Choose the correct unit suffix for signal based on the `unit` value
+  String signal = String(SStatusprint / 10) + "." + String(abs(SStatusprint % 10));
+  if (unit == 0) {
+    signal += " dBμV";  // Unit for unit == 0
+  } else if (unit == 1) {
+    signal += " dBf";   // Unit for unit == 1
+  } else if (unit == 2) {
+    signal += " dBm";   // Unit for unit == 2
+  }
+
+  // Format the RadioText with enhanced option if available
+  String radioText = String(radio.rds.stationText + " " + radio.rds.stationText32);
+  if (radio.rds.hasEnhancedRT) {
+    radioText += " eRT: " + String(radio.rds.enhancedRTtext);
+  }
+
+  // Replace commas in the station name and radioText just when adding to the row
+  String stationName = radio.rds.stationName;
+  String radioTextModified = radioText;
+
+  stationName.replace(",", " ");  // Temporarily replace commas in stationName
+  radioTextModified.replace(",", " ");  // Temporarily replace commas in radioText
+
+  // Create the row data, replacing stationIDtext with picode
+  String row = currentDateTime + "," + frequencyFormatted + "," + radio.rds.picode + "," + signal + "," + stationName + "," + radioTextModified + "\n";
+
+  // Write the row to the CSV file
+  if (file.print(row)) {
+    // Successfully wrote to the file
+    file.close();
+    return true;  // Return true when the row is successfully added
+  } else {
+    // Failed to write to the file
+    file.close();
+    return false;  // Return false if there was an issue writing
+  }
+}
+
+String getCurrentDateTime() {
+  // Check if time has been set
+  if (!rtcset) {
+    return "-,-";  // Return placeholder when time is not set
+  }
+
+  // Use the ESP32's time functions (assuming time is set correctly via RDS)
+  struct tm timeInfo;
+  if (!getLocalTime(&timeInfo)) {
+    return "-,-";  // Return placeholder if time is not available
+  }
+
+  // Format date-time based on the region
+  char buf[20];  // Buffer size for formatted date string
+
+  if (radio.rds.region == 1) {
+    // USA format: MM/DD/YYYY, HH:MM AM/PM
+    strftime(buf, sizeof(buf), "%m/%d/%Y", &timeInfo);  // MM/DD/YYYY format
+
+    // Format time in 12-hour format with AM/PM
+    int hour = timeInfo.tm_hour;
+    String ampm = (hour >= 12) ? "PM" : "AM";
+    if (hour == 0) hour = 12;  // Midnight case
+    else if (hour > 12) hour -= 12;  // Convert PM to 12-hour format
+
+    String timeWithAMPM = String(hour) + ":" + (timeInfo.tm_min < 10 ? "0" : "") + String(timeInfo.tm_min) + " " + ampm;
+
+    // Return final formatted date-time for USA
+    return String(buf) + "," + timeWithAMPM;
+  } else {
+    // European format: DD/MM/YYYY, HH:MM
+    strftime(buf, sizeof(buf), "%d-%m-%Y", &timeInfo);  // DD/MM/YYYY format
+    String timeEuropean = String(timeInfo.tm_hour) + ":" + (timeInfo.tm_min < 10 ? "0" : "") + String(timeInfo.tm_min); // Add leading 0 for minutes if necessary
+    return String(buf) + "," + timeEuropean;
   }
 }

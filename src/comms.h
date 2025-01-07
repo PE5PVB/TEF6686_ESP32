@@ -123,6 +123,7 @@ extern WiFiClient RemoteClient;
 extern WiFiUDP Udp;
 extern WiFiServer Server;
 extern WiFiConnect wc;
+extern WebServer webserver;
 
 void Communication();
 void XDRGTKRoutine();
