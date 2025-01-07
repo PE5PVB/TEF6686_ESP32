@@ -783,36 +783,78 @@ void showPS() {
 }
 
 void showCT() {
+  // Temporary string buffer for time formatting
   char str[6];
   time_t t;
+
+  // Check if screen is not muted and the clock should be displayed
   if (!screenmute && showclock) {
+
+    // If RDS CT (Clock Time) is available and no dropout, use RDS time
     if (radio.rds.hasCT && !dropout) {
       t = radio.rds.time + radio.rds.offset;
-    } else if (!radio.rds.hasCT || dropout) {
+    }
+    // If no RDS CT or there is a dropout, fall back to RTC time
+    else {
       t = rtc.getEpoch() + radio.rds.offset;
+
+      // Update RDS time in case of dropout
       if (dropout) {
         radio.rds.time = static_cast<time_t>(rtc.getEpoch());
       }
     }
-    strftime(str, 6, "%H:%M", localtime(&t));
-    rds_clock = String(str);
+
+    // Check if USA region, use 12-hour AM/PM format
+    if (radio.rds.region == 1) {
+      // Format time in 24-hour format first
+      strftime(str, sizeof(str), "%I:%M", localtime(&t));
+
+      // Manually determine AM/PM and add it
+      int hour = localtime(&t)->tm_hour;
+      String ampm = (hour >= 12) ? "PM" : "AM";
+
+      // Adjust the hour to 12-hour format, taking care of 12 AM and 12 PM
+      if (hour == 0) {
+        hour = 12;  // Midnight case
+      } else if (hour > 12) {
+        hour -= 12; // Convert PM to 12-hour format
+      }
+
+      // Construct the final time string manually
+      rds_clock = String(hour) + ":" + String(localtime(&t)->tm_min) + " " + ampm;
+    } else {
+      // For other regions, use 24-hour format
+      strftime(str, sizeof(str), "%H:%M", localtime(&t));
+      rds_clock = String(str);
+    }
+
+    // If the clock has changed or RDS CT status has changed, update the display
     if (rds_clock != rds_clockold || hasCTold != radio.rds.hasCT) {
+
+      // If RDS CT is available and RDS status is active, set RTC time
       if (radio.rds.hasCT && RDSstatus) {
         rtcset = true;
         rtc.setTime(radio.rds.time);
+
+        // Display the new time with different coordinates based on advancedRDS setting
         if (advancedRDS) {
           tftReplace(1, rds_clockold, rds_clock, 208, 109, RDSColor, RDSColorSmooth, BackgroundColor, 16);
         } else {
           tftReplace(1, rds_clockold, rds_clock, 208, 163, RDSColor, RDSColorSmooth, BackgroundColor, 16);
         }
-      } else {
+      }
+      // If no RDS CT available or status is inactive, handle dropout scenarios
+      else {
+        // If RTC was previously set, show dropout message
         if (rtcset) {
           if (advancedRDS) {
             tftReplace(1, rds_clockold, rds_clock, 208, 109, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
           } else {
             tftReplace(1, rds_clockold, rds_clock, 208, 163, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
           }
-        } else {
+        }
+        // If RTC is not set, just print the clock with no background (clear the display)
+        else {
           if (advancedRDS) {
             tftPrint(1, rds_clockold, 208, 109, BackgroundColor, BackgroundColor, 16);
             tftPrint(1, rds_clock, 208, 109, BackgroundColor, BackgroundColor, 16);
@@ -823,6 +865,8 @@ void showCT() {
         }
       }
     }
+
+    // Update the previous clock and RDS CT status to detect future changes
     rds_clockold = rds_clock;
     hasCTold = radio.rds.hasCT;
   }
