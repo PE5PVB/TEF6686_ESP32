@@ -5,7 +5,7 @@
 #include "constants.h"
 #include <TimeLib.h>
 
-int RadiotextWidth, PSLongWidth, AIDWidth, afstringWidth, eonstringWidth, rtplusstringWidth, length1, length2, length3, length4, length5, length6, length7;
+int RadiotextWidth, PSLongWidth, AIDWidth, afstringWidth, eonstringWidth, rtplusstringWidth, lengths[7];
 String afstringold, eonstringold, rtplusstringold, stationNameLongOld, AIDStringold;
 bool rtABold, ps12errorold, ps34errorold, ps56errorold, ps78errorold;
 
@@ -334,14 +334,7 @@ void readRds() {
           if (!radio.rds.hasLongPS) {
             PSSprite.fillSprite(BackgroundColor);
             PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
-            PSSprite.drawString(PSold.substring(0, 1), 0, 2);
-            PSSprite.drawString(PSold.substring(1, 2), length1, 2);
-            PSSprite.drawString(PSold.substring(2, 3), length2, 2);
-            PSSprite.drawString(PSold.substring(3, 4), length3, 2);
-            PSSprite.drawString(PSold.substring(4, 5), length4, 2);
-            PSSprite.drawString(PSold.substring(5, 6), length5, 2);
-            PSSprite.drawString(PSold.substring(6, 7), length6, 2);
-            PSSprite.drawString(PSold.substring(7, 8), length7, 2);
+            PSSprite.drawString(PSold, 0, 2);
 
             if (advancedRDS) {
               PSSprite.pushSprite(36, 72);
@@ -396,18 +389,18 @@ void readRds() {
 
           if (!radio.rds.hasLongPS) {
             PSSprite.fillSprite(BackgroundColor);
-            PSSprite.setTextColor((ps12errorold ? RDSDropoutColor : RDSColor), (radio.rds.ps12error ? RDSDropoutColorSmooth : RDSColorSmooth), false);
-            PSSprite.drawString(PSold.substring(0, 1), 0, 1);
-            PSSprite.drawString(PSold.substring(1, 2), length1, 2);
-            PSSprite.setTextColor((ps34errorold ? RDSDropoutColor : RDSColor), (radio.rds.ps12error ? RDSDropoutColorSmooth : RDSColorSmooth), false);
-            PSSprite.drawString(PSold.substring(2, 3), length2, 2);
-            PSSprite.drawString(PSold.substring(3, 4), length3, 2);
-            PSSprite.setTextColor((ps56errorold ? RDSDropoutColor : RDSColor), (radio.rds.ps12error ? RDSDropoutColorSmooth : RDSColorSmooth), false);
-            PSSprite.drawString(PSold.substring(4, 5), length4, 2);
-            PSSprite.drawString(PSold.substring(5, 6), length5, 2);
-            PSSprite.setTextColor((ps78errorold ? RDSDropoutColor : RDSColor), (radio.rds.ps12error ? RDSDropoutColorSmooth : RDSColorSmooth), false);
-            PSSprite.drawString(PSold.substring(6, 7), length6, 2);
-            PSSprite.drawString(PSold.substring(7, 8), length7, 2);
+            if (ps12errorold || ps34errorold || ps56errorold || ps78errorold) {
+              for (int i = 0; i < 7; i++) {
+                PSSprite.setTextColor((i < 2 && ps12errorold) || (i < 4 && ps34errorold) ||
+                                      (i < 6 && ps56errorold) || ps78errorold ?
+                                      RDSDropoutColor : RDSColor,
+                                      RDSColorSmooth, false);
+                PSSprite.drawString(radio.rds.stationName.substring(i, i + 1), i == 0 ? 0 : lengths[i - 1], 2);
+              }
+            } else {
+              PSSprite.setTextColor(RDSColor, RDSColorSmooth, false);
+              PSSprite.drawString(PSold, 0, 2);
+            }
 
             if (advancedRDS) {
               PSSprite.pushSprite(36, 72);
@@ -674,103 +667,117 @@ void showPTY() {
   }
 }
 
+// Function to display RDS station name (PS)
 void showPS() {
-  if ((RDSstatus && (radio.rds.stationName != PSold)) || (RDSstatus && !(ps12errorold == radio.rds.ps12error || ps34errorold == radio.rds.ps34error || ps56errorold == radio.rds.ps56error || ps78errorold == radio.rds.ps78error)) || (radio.rds.hasLongPS && showlongps)) {
+  // Check if station name or errors have changed, or long PS should be displayed
+  if ((radio.rds.stationName != PSold) ||
+      (RDSstatus && !(ps12errorold == radio.rds.ps12error ||
+                      ps34errorold == radio.rds.ps34error ||
+                      ps56errorold == radio.rds.ps56error ||
+                      ps78errorold == radio.rds.ps78error)) ||
+      (radio.rds.hasLongPS && showlongps)) {
+
+    // Handle AF screen update
     if (afscreen) {
-      if (!screenmute) tftReplace(0, PSold, radio.rds.stationName, 160, 201, BWAutoColor, BWAutoColorSmooth, BackgroundColor, 16);
+      if (!screenmute) {
+        tftReplace(0, PSold, radio.rds.stationName, 160, 201, BWAutoColor, BWAutoColorSmooth, BackgroundColor, 16);
+      }
     } else {
+      // Handle long PS display
       if (radio.rds.hasLongPS && showlongps) {
-        String stationNameLongString = String(radio.rds.stationNameLong) + "     ";
+        String stationNameLongString = String(radio.rds.stationNameLong) + "     "; // Add trailing spaces for scrolling
         if (stationNameLongString != stationNameLongOld) {
-          PSLongWidth = PSSprite.textWidth(stationNameLongString);
+          PSLongWidth = PSSprite.textWidth(stationNameLongString); // Measure new width
           stationNameLongOld = stationNameLongString;
         }
 
+        // Handle scrolling logic for long PS
         if (PSSprite.textWidth(radio.trimTrailingSpaces(radio.rds.stationNameLong)) < 150) {
           xPos5 = 0;
           PSSprite.fillSprite(BackgroundColor);
-          if (RDSstatus) PSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+          PSSprite.setTextColor(RDSstatus ? RDSColor : RDSDropoutColor, RDSstatus ? RDSColorSmooth : RDSDropoutColorSmooth, false);
           PSSprite.drawString(stationNameLongString, xPos5, 2);
         } else {
           if (millis() - pslongticker >= 5) {
-            if (xPos5 < -PSLongWidth) xPos5 = 0;
-            if (xPos5 == 0) {
-              if (millis() - pslongtickerhold >= 2000) {
-                xPos5 --;
-                pslongtickerhold = millis();
-              }
-            } else {
-              xPos5 --;
+            if (xPos5 < -PSLongWidth) xPos5 = 0; // Reset position if fully scrolled
+            if (xPos5 == 0 && millis() - pslongtickerhold >= 2000) {
+              xPos5--; // Hold position for 2 seconds before scrolling
               pslongtickerhold = millis();
+            } else {
+              xPos5--; // Scroll
             }
+            pslongticker = millis();
+
+            // Draw scrolling PS
             PSSprite.fillSprite(BackgroundColor);
-            if (RDSstatus) PSSprite.setTextColor(RDSColor, RDSColorSmooth, false); else PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+            PSSprite.setTextColor(RDSstatus ? RDSColor : RDSDropoutColor, RDSstatus ? RDSColorSmooth : RDSDropoutColorSmooth, false);
             PSSprite.drawString(stationNameLongString, xPos5, 2);
             PSSprite.drawString(stationNameLongString, xPos5 + PSLongWidth, 2);
-            pslongticker = millis();
           }
         }
       } else {
+        // Handle normal PS display
         xPos5 = 0;
         PSSprite.fillSprite(BackgroundColor);
-        length1 = PSSprite.textWidth(radio.rds.stationName.substring(0, 1));
-        length2 = PSSprite.textWidth(radio.rds.stationName.substring(1, 2)) + length1;
-        length3 = PSSprite.textWidth(radio.rds.stationName.substring(2, 3)) + length2;
-        length4 = PSSprite.textWidth(radio.rds.stationName.substring(3, 4)) + length3;
-        length5 = PSSprite.textWidth(radio.rds.stationName.substring(4, 5)) + length4;
-        length6 = PSSprite.textWidth(radio.rds.stationName.substring(5, 6)) + length5;
-        length7 = PSSprite.textWidth(radio.rds.stationName.substring(6, 7)) + length6;
 
+        // Calculate widths for individual characters (ensures proper spacing)
+        for (int i = 0; i < 7; i++) {
+          lengths[i] = PSSprite.textWidth(radio.rds.stationName.substring(0, i + 1));
+          if (i > 0 && lengths[i] <= lengths[i - 1]) {
+            lengths[i] = lengths[i - 1] + 23; // Ensure consistent spacing
+          }
+        }
+
+        // Update error states only when their respective flags are true
         if (ps12errorold) ps12errorold = radio.rds.ps12error;
         if (ps34errorold) ps34errorold = radio.rds.ps34error;
         if (ps56errorold) ps56errorold = radio.rds.ps56error;
         if (ps78errorold) ps78errorold = radio.rds.ps78error;
 
+        // Set text color based on RDS status and error state
         if (!RDSstatus || band > BAND_GAP) {
           PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
+          PSSprite.drawString(radio.rds.stationName, 0, 2);
+        } else if (ps12errorold || ps34errorold || ps56errorold || ps78errorold) {
+          for (int i = 0; i < 7; i++) {
+            PSSprite.setTextColor((i < 2 && ps12errorold) || (i < 4 && ps34errorold) ||
+                                  (i < 6 && ps56errorold) || ps78errorold ?
+                                  RDSDropoutColor : RDSColor,
+                                  RDSColorSmooth, false);
+            PSSprite.drawString(radio.rds.stationName.substring(i, i + 1), i == 0 ? 0 : lengths[i - 1], 2);
+          }
         } else {
-          PSSprite.setTextColor((ps12errorold ? RDSDropoutColor : RDSColor), (radio.rds.ps12error ? RDSDropoutColorSmooth : RDSColorSmooth), false);
-          PSSprite.drawString(radio.rds.stationName.substring(0, 1), 0, 2);
-          PSSprite.drawString(radio.rds.stationName.substring(1, 2), length1, 2);
-          PSSprite.setTextColor((ps34errorold ? RDSDropoutColor : RDSColor), (radio.rds.ps12error ? RDSDropoutColorSmooth : RDSColorSmooth), false);
-          PSSprite.drawString(radio.rds.stationName.substring(2, 3), length2, 2);
-          PSSprite.drawString(radio.rds.stationName.substring(3, 4), length3, 2);
-          PSSprite.setTextColor((ps56errorold ? RDSDropoutColor : RDSColor), (radio.rds.ps12error ? RDSDropoutColorSmooth : RDSColorSmooth), false);
-          PSSprite.drawString(radio.rds.stationName.substring(4, 5), length4, 2);
-          PSSprite.drawString(radio.rds.stationName.substring(5, 6), length5, 2);
-          PSSprite.setTextColor((ps78errorold ? RDSDropoutColor : RDSColor), (radio.rds.ps12error ? RDSDropoutColorSmooth : RDSColorSmooth), false);
-          PSSprite.drawString(radio.rds.stationName.substring(6, 7), length6, 2);
-          PSSprite.drawString(radio.rds.stationName.substring(7, 8), length7, 2);
+          PSSprite.setTextColor(RDSColor, RDSColorSmooth, false);
+          PSSprite.drawString(radio.rds.stationName, 0, 2);
         }
+
+        // Reset PS error flags if the station name changes
         if (PSold != radio.rds.stationName) {
-          ps12errorold = true;
-          ps34errorold = true;
-          ps56errorold = true;
-          ps78errorold = true;
-        }
-      }
-      if (!screenmute) {
-        if (advancedRDS) {
-          PSSprite.pushSprite(36, 72);
-        } else {
-          PSSprite.pushSprite(36, 185);
+          ps12errorold = ps34errorold = ps56errorold = ps78errorold = true;
         }
       }
 
+      // Push updated sprite to screen
+      if (!screenmute) {
+        PSSprite.pushSprite(36, advancedRDS ? 72 : 185);
+      }
+
+      // Handle WiFi update if PS has changed
       if (wifi && radio.rds.stationName.length() > 0 && PSold != radio.rds.stationName) {
         Udp.beginPacket(remoteip, 9030);
         Udp.print("from=TEF_tuner_" + String(stationlistid, DEC) + ";PS=");
         char PShex[9];
         radio.rds.stationName.toCharArray(PShex, 9);
-        for (int i = 0; i < 8; i++)
-        {
+        for (int i = 0; i < 8; i++) {
           if (PShex[i] < 0x10) Udp.print("0");
-          if (PShex[i] == 0x20) PShex[i] =  '_';
+          if (PShex[i] == 0x20) PShex[i] = '_';
           Udp.print(String(PShex[i], HEX));
         }
         Udp.endPacket();
       }
     }
+
+    // Save the updated station name
     PSold = radio.rds.stationName;
   }
 }

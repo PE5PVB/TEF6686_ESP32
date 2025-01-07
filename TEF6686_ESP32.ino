@@ -41,7 +41,6 @@
 
 #define DYNAMIC_SPI_SPEED   // uncomment to enable dynamic SPI Speed https://github.com/ohmytime/TFT_eSPI_DynamicSpeed
 
-
 #ifdef ARS
 TFT_eSPI tft = TFT_eSPI(320, 240);
 #else
