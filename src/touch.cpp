@@ -154,9 +154,16 @@ void doTouchEvent(uint16_t x, uint16_t y) {
         bwtouchtune = true;
         BWset = BWtemp;
         doBW();
-        BuildDisplay();
-        SelectBand();
+        BWtune = false;
         bwtouchtune = false;
+        if (advancedRDS) {
+          BuildAdvancedRDS();
+        } else if (afscreen) {
+          BuildAFScreen();
+        } else {
+          BuildDisplay();
+          SelectBand();
+        }
       } else {
         bwtouchtune = true;
         BWset = BWtemp;
@@ -184,11 +191,27 @@ void doTouchEvent(uint16_t x, uint16_t y) {
     }
 
     if (!BWtune && !menu && advancedRDS && !seek && !afscreen) {          // Advanced RDS mode
-      if (x > 0 && x < 320 && y > 180 && y < 240) {                       // -----------------
+      if (x > 0 && x < 320 && y > 120 && y < 170) {                       // -----------------
         leave = true;
         BuildDisplay();
         SelectBand();
         ScreensaverTimerReopen();                                         // Switch to normal radio view
+        return;
+      } else if (x > 0 && x < 320 && y > 180 && y < 240) {
+        BuildAFScreen();
+        return;
+      }
+    }
+
+    if (!BWtune && !menu && !advancedRDS && !seek && afscreen) {
+      if (x > 0 && x < 320 && y > 100 && y < 170) {
+        if (afpagenr == 1) afpagenr = 2; else if (afpagenr == 2 && afpage) afpagenr = 3; else afpagenr = 1;
+        BuildAFScreen();
+        return;
+      }
+      if (x > 0 && x < 320 && y > 180 && y < 240) {
+        leave = true;
+        BuildAdvancedRDS();
         return;
       }
     }

@@ -9,6 +9,7 @@ extern TFT_eSPI tft;
 extern TEF6686 radio;
 
 extern bool advancedRDS;
+extern bool afpage;
 extern bool afscreen;
 extern bool bwtouchtune;
 extern bool BWtune;
@@ -19,6 +20,7 @@ extern bool scandxmode;
 extern bool seek;
 extern bool XDRGTKTCP;
 extern bool XDRGTKUSB;
+extern byte afpagenr;
 extern byte band;
 extern byte BWset;
 extern byte BWtemp;
@@ -53,4 +55,6 @@ extern void showBWSelector();
 extern void updateiMS();
 extern void updateEQ();
 extern void DataPrint(String string);
+extern void BuildAFScreen();
+
 #endif
