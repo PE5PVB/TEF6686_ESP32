@@ -18,7 +18,10 @@ void doTouchEvent(uint16_t x, uint16_t y) {
       if (menuopen) {                                                     // Menu navigation
         if (x > 18 && x < 78 && y > 150 && y < 190) KeyDown();            // ---------------
         if (x > 240 && x < 300 && y > 150 && y < 190) KeyUp();
-        if ((x > 240 && x < 300 && y > 40 && y < 80) || (x > 130 && x < 190 && y > 150 && y < 190)) ButtonPress();
+        if ((x > 240 && x < 300 && y > 40 && y < 80) || (x > 130 && x < 190 && y > 150 && y < 190)) {
+          touchrepeat = false;
+          ButtonPress();
+        }
         return;
       } else {
         if (x > 8 && x < 158) {
@@ -86,6 +89,7 @@ void doTouchEvent(uint16_t x, uint16_t y) {
             }
           }
         }
+        touchrepeat = true;
         return;
       }
     }

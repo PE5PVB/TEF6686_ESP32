@@ -74,6 +74,7 @@ bool dynamicPTYold;
 bool edgebeep;
 bool externaltune;
 bool findMemoryAF;
+bool firstTouchHandled = false;
 bool flashing;
 bool fmsi;
 bool fullsearchrds;
@@ -127,6 +128,7 @@ bool StereoToggle;
 bool store;
 bool TAold;
 bool TPold;
+bool touchrepeat = false;
 bool touch_detect;
 bool tuned;
 bool USBmode;
@@ -406,6 +408,7 @@ unsigned long eonticker;
 unsigned long eontickerhold;
 unsigned long flashingtimer;
 unsigned long keypadtimer;
+unsigned long lastTouchTime = 0;
 unsigned long lowsignaltimer;
 unsigned long ModulationpreviousMillis;
 unsigned long ModulationpeakPreviousMillis;
@@ -916,15 +919,28 @@ void setup() {
 
 void loop() {
   if (hardwaremodel == PORTABLE_TOUCH_ILI9341 && touch_detect) {
-    if (tft.getTouchRawZ() > 100) {
+    if (tft.getTouchRawZ() > 100) {  // Check if the touch is active
       uint16_t x, y;
       tft.getTouch(&x, &y);
       if (x > 0 || y > 0) {
-        doTouchEvent(x, y);
+        if (!firstTouchHandled) {
+          // Handle the initial touch event immediately
+          doTouchEvent(x, y);
+          firstTouchHandled = true;  // Mark the first touch as handled
+          lastTouchTime = millis(); // Start tracking the time for the delay
+        } else if (touchrepeat) {
+          // Check if the initial 0.5-second delay has passed
+          if (millis() - lastTouchTime >= 500) {
+            // Repeat the touch action continuously without delay
+            doTouchEvent(x, y);
+          }
+        }
       }
+    } else {
+      // Touch has been released
+      firstTouchHandled = false;  // Reset the first touch flag
+      touch_detect = false;       // Reset the touch detection flag
     }
-    delay(100);
-    touch_detect = false;
   }
 
   Communication();

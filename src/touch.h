@@ -18,6 +18,7 @@ extern bool menu;
 extern bool menuopen;
 extern bool scandxmode;
 extern bool seek;
+extern bool touchrepeat;
 extern bool XDRGTKTCP;
 extern bool XDRGTKUSB;
 extern byte afpagenr;
