@@ -5926,6 +5926,11 @@ void DoMenu() {
             }
             OneBigLineSprite.drawString(String(memstartpos + 1) + " - " + String(memstoppos + 1) + " " + String(myLanguage[language][277]), 135, 0);
             OneBigLineSprite.pushSprite(24, 148);
+            if (hardwaremodel == PORTABLE_TOUCH_ILI9341) {
+              tft.fillRoundRect(240, 36, 60, 40, 6, FrameColor);
+              tft.drawRoundRect(240, 36, 60, 40, 6, ActiveColor);
+              tftPrint(0, "OK", 270, 44, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
+            }
             break;
         }
         break;
