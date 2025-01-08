@@ -307,6 +307,8 @@ void Communication() {
             }
           }
         }
+      } else if (data_str.startsWith("l") || data_str.startsWith("L")) {
+        printLogbookCSV();
       }
     }
 

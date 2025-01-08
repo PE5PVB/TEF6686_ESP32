@@ -148,5 +148,5 @@ extern void showAutoSquelch(bool mode);
 extern void ShowStepSize();
 extern void startFMDXScan();
 extern void cancelDXScan();
-
+extern void printLogbookCSV();
 #endif

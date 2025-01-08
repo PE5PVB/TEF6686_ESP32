@@ -184,7 +184,7 @@ byte amgain;
 byte freqoldcount;
 byte HighCutLevel;
 byte HighCutOffset;
-byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 6, 9, 9};
+byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 6, 10, 9};
 byte iMSEQ;
 byte iMSset;
 byte language;
@@ -642,6 +642,7 @@ void setup() {
 
   webserver.on("/", handleRoot);
   webserver.on("/downloadCSV", HTTP_GET, handleDownloadCSV);
+  webserver.on("/logo.png", handleLogo);
 
   doTheme();
 
@@ -2732,7 +2733,12 @@ void ButtonPress() {
             }
           }
         } else {
-          toggleiMSEQ();
+          if (band < BAND_GAP) {
+            if (addRowToCSV()) ShowFreq(2); else ShowFreq(3);
+            delay(200);
+            while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
+            ShowFreq(0);
+          }
         }
       }
       if (screensaverset) {
@@ -3150,17 +3156,32 @@ void ShowFreq(int mode) {
         }
 
         FrequencySprite.setTextDatum(TR_DATUM);
+        switch (mode) {
+          case 0:
+            FrequencySprite.fillSprite(BackgroundColor);
+            FrequencySprite.setTextColor(FreqColor, FreqColorSmooth, false);
+            FrequencySprite.drawString(String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100) + " ", 218, -6);
+            FrequencySprite.pushSprite(46, 46);
+            freqold = freq;
+            break;
 
-        if (mode == 0) {
-          FrequencySprite.fillSprite(BackgroundColor);
-          FrequencySprite.setTextColor(FreqColor, FreqColorSmooth, false);
-          FrequencySprite.drawString(String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100) + " ", 218, -6);
-          FrequencySprite.pushSprite(46, 46);
-          freqold = freq;
-        } else if (mode == 1) {
-          FrequencySprite.fillSprite(BackgroundColor);
-          FrequencySprite.pushSprite(46, 46);
-          tftPrint(0, myLanguage[language][34], 146, 58, ActiveColor, ActiveColorSmooth, 28);
+          case 1:
+            FrequencySprite.fillSprite(BackgroundColor);
+            FrequencySprite.pushSprite(46, 46);
+            tftPrint(0, myLanguage[language][34], 146, 58, ActiveColor, ActiveColorSmooth, 28);
+            break;
+
+          case 2:
+            FrequencySprite.fillSprite(BackgroundColor);
+            FrequencySprite.pushSprite(46, 46);
+            tftPrint(0, myLanguage[language][290], 146, 58, ActiveColor, ActiveColorSmooth, 28);
+            break;
+
+          case 3:
+            FrequencySprite.fillSprite(BackgroundColor);
+            FrequencySprite.pushSprite(46, 46);
+            tftPrint(0, myLanguage[language][291], 146, 58, ActiveColor, ActiveColorSmooth, 28);
+            break;
         }
         FrequencySprite.unloadFont();
       }
@@ -5328,23 +5349,23 @@ void handleRoot() {
   // Add CSS styling for a modern, dark-themed look
   html += "<style>";
   html += "body {background-color: #1a1a1a; color: white; font-family: 'Arial', sans-serif; margin: 0; padding: 0;}";
-  html += "h1 {text-align: center; color: #ffffff; margin-top: 20px; font-size: 32px;}";  // Change the color to white
+  html += "h1 {text-align: center; color: #ffffff; margin-top: 20px; font-size: 32px;}";
   html += "img {display: block; margin: 0 auto; max-width: 100%; height: auto; padding-top: 20px;}";
   html += "table {width: 90%; margin: 0 auto; border-collapse: collapse; border-radius: 8px; overflow: hidden;}";
-  html += "th {background-color: #333; color: white; padding: 12px; text-align: left; font-size: 18px;}";  // Keep header text color white
+  html += "th {background-color: #333; color: white; padding: 12px; text-align: left; font-size: 18px;}";
   html += "td {background-color: #2a2a2a; color: white; padding: 10px; text-align: left; font-size: 16px;}";
   html += "tr:nth-child(even) {background-color: #252525;}";
   html += "tr:hover {background-color: #444; cursor: pointer;}";
   html += "button {background-color: #ffcc00; color: black; border: none; padding: 12px 20px; font-size: 18px; cursor: pointer; border-radius: 5px; display: block; margin: 20px auto;}";
   html += "button:hover {background-color: #ff9900;}";
   html += "@media (max-width: 768px) { table {width: 100%;} th, td {font-size: 14px; padding: 8px;} }";
-  html += ".go-to-bottom {position: fixed; bottom: 30px; right: 30px; background-color: #ffcc00; color: black; border: none; padding: 12px 20px; font-size: 18px; cursor: pointer; border-radius: 5px; z-index: 100;}";  // Position the button at the bottom-right corner
+  html += ".go-to-bottom {position: fixed; bottom: 30px; right: 30px; background-color: #ffcc00; color: black; border: none; padding: 12px 20px; font-size: 18px; cursor: pointer; border-radius: 5px; z-index: 100;}";
   html += "</style>";
 
   html += "</head><body>";
 
-  // Add the logo image at the top of the page
-  html += "<img src=\"https://fmdx.org/img/logo.png\" alt=\"FMdx Logo\">";
+  // Add the logo image at the top of the page, served from SPIFFS
+  html += "<img src=\"/logo.png\" alt=\"FMdx Logo\">";
 
   // Add a header with a dynamic title from the language array (replace with actual language logic)
   html += "<h1>" + String(myLanguage[language][286]) + "</h1>";
@@ -5584,4 +5605,40 @@ String getCurrentDateTime() {
     String timeEuropean = String(timeInfo.tm_hour) + ":" + (timeInfo.tm_min < 10 ? "0" : "") + String(timeInfo.tm_min); // Add leading 0 for minutes if necessary
     return String(buf) + "," + timeEuropean;
   }
+}
+
+void handleLogo() {
+  fs::File file = SPIFFS.open("/logo.png", "r");
+  if (!file) {
+    webserver.send(404, "text/plain", "Logo not found");
+    return;
+  }
+  webserver.streamFile(file, "image/png");
+  file.close();
+}
+
+void printLogbookCSV() {
+  // Attempt to open the CSV file stored in SPIFFS
+  fs::File file = SPIFFS.open("/logbook.csv", "r");
+
+  // Check if the file was successfully opened
+  if (!file) {
+    Serial.println("Failed to open logbook!");
+    return;
+  }
+
+  // Print a message indicating the start of the file content
+  Serial.println("===== Start of logbook.csv =====");
+
+  // Read and print the contents of the file line by line
+  while (file.available()) {
+    String line = file.readStringUntil('\n');  // Read one line at a time
+    Serial.println(line);  // Print the line to the Serial Monitor
+  }
+
+  // Close the file after reading
+  file.close();
+
+  // Print a message indicating the end of the file content
+  Serial.println("===== End of logbook.csv =====");
 }

@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[18][290] PROGMEM = {
+static const char* const myLanguage[18][295] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -295,7 +295,12 @@ static const char* const myLanguage[18][290] PROGMEM = {
     "Your logbook", // 286
     "Download logbook", // 287
     "Logbook is empty", // 288
-    "Go to bottom" // 289
+    "Go to bottom", // 289
+    "Added to log", // 290
+    "Update failed!", // 291
+    "Clear logbook", // 292
+    "Logbook cleared", // 293
+    "Clear failed" // 294
   },
 
   { "Nederlands", // Dutch
@@ -587,7 +592,12 @@ static const char* const myLanguage[18][290] PROGMEM = {
     "Jouw logboek", // 286
     "Download logboek", // 287
     "Logboek is leeg", // 288
-    "Ga naar einde" // 289
+    "Ga naar einde", // 289
+    "Logboek update", // 290
+    "Log mislukt!", // 291
+    "Logboek legen", // 292
+    "Logboek geleegd", // 293
+    "Legen mislukt" // 294
   },
 
   { "Polski", // Polish
@@ -879,7 +889,12 @@ static const char* const myLanguage[18][290] PROGMEM = {
     "Your logbook", // 286
     "Download logbook", // 287
     "Logbook is empty", // 288
-    "Go to bottom" // 289
+    "Go to bottom", // 289
+    "Added to log", // 290
+    "Update failed!", // 291
+    "Clear logbook", // 292
+    "Logbook cleared", // 293
+    "Clear failed" // 294
   },
 
   { "Hrvatski", // Croatian
@@ -1171,7 +1186,12 @@ static const char* const myLanguage[18][290] PROGMEM = {
     "Your logbook", // 286
     "Download logbook", // 287
     "Logbook is empty", // 288
-    "Go to bottom" // 289
+    "Go to bottom", // 289
+    "Added to log", // 290
+    "Update failed!", // 291
+    "Clear logbook", // 292
+    "Logbook cleared", // 293
+    "Clear failed" // 294
   },
 
   { "Ελληνικά", // Greek
@@ -1463,7 +1483,12 @@ static const char* const myLanguage[18][290] PROGMEM = {
     "Your logbook", // 286
     "Download logbook", // 287
     "Logbook is empty", // 288
-    "Go to bottom" // 289
+    "Go to bottom", // 289
+    "Added to log", // 290
+    "Update failed!", // 291
+    "Clear logbook", // 292
+    "Logbook cleared", // 293
+    "Clear failed" // 294
   },
 
   { "Română", // Romanian
@@ -1755,7 +1780,12 @@ static const char* const myLanguage[18][290] PROGMEM = {
     "Your logbook", // 286
     "Download logbook", // 287
     "Logbook is empty", // 288
-    "Go to bottom" // 289
+    "Go to bottom", // 289
+    "Added to log", // 290
+    "Update failed!", // 291
+    "Clear logbook", // 292
+    "Logbook cleared", // 293
+    "Clear failed" // 294
   },
 
   { "Deutsch", // German
@@ -2047,7 +2077,12 @@ static const char* const myLanguage[18][290] PROGMEM = {
     "Your logbook", // 286
     "Download logbook", // 287
     "Logbook is empty", // 288
-    "Go to bottom" // 289
+    "Go to bottom", // 289
+    "Added to log", // 290
+    "Update failed!", // 291
+    "Clear logbook", // 292
+    "Logbook cleared", // 293
+    "Clear failed" // 294
   },
 
   { "Český", // Czech
@@ -2339,7 +2374,12 @@ static const char* const myLanguage[18][290] PROGMEM = {
     "Your logbook", // 286
     "Download logbook", // 287
     "Logbook is empty", // 288
-    "Go to bottom" // 289
+    "Go to bottom", // 289
+    "Added to log", // 290
+    "Update failed!", // 291
+    "Clear logbook", // 292
+    "Logbook cleared", // 293
+    "Clear failed" // 294
   },
 
   { "Magyar", // Hungarian
@@ -2631,7 +2671,12 @@ static const char* const myLanguage[18][290] PROGMEM = {
     "Your logbook", // 286
     "Download logbook", // 287
     "Logbook is empty", // 288
-    "Go to bottom" // 289
+    "Go to bottom", // 289
+    "Added to log", // 290
+    "Update failed!", // 291
+    "Clear logbook", // 292
+    "Logbook cleared", // 293
+    "Clear failed" // 294
   },
 
   { "Français", // French
@@ -2923,7 +2968,12 @@ static const char* const myLanguage[18][290] PROGMEM = {
     "Your logbook", // 286
     "Download logbook", // 287
     "Logbook is empty", // 288
-    "Go to bottom" // 289
+    "Go to bottom", // 289
+    "Added to log", // 290
+    "Update failed!", // 291
+    "Clear logbook", // 292
+    "Logbook cleared", // 293
+    "Clear failed" // 294
   },
 
   { "Български", // Bulgarian
@@ -3215,7 +3265,12 @@ static const char* const myLanguage[18][290] PROGMEM = {
     "Your logbook", // 286
     "Download logbook", // 287
     "Logbook is empty", // 288
-    "Go to bottom" // 289
+    "Go to bottom", // 289
+    "Added to log", // 290
+    "Update failed!", // 291
+    "Clear logbook", // 292
+    "Logbook cleared", // 293
+    "Clear failed" // 294
   },
 
   { "Русский", // Russian
@@ -3507,7 +3562,12 @@ static const char* const myLanguage[18][290] PROGMEM = {
     "Your logbook", // 286
     "Download logbook", // 287
     "Logbook is empty", // 288
-    "Go to bottom" // 289
+    "Go to bottom", // 289
+    "Added to log", // 290
+    "Update failed!", // 291
+    "Clear logbook", // 292
+    "Logbook cleared", // 293
+    "Clear failed" // 294
   },
 
   { "Українська", // Ukranian
@@ -3799,7 +3859,12 @@ static const char* const myLanguage[18][290] PROGMEM = {
     "Your logbook", // 286
     "Download logbook", // 287
     "Logbook is empty", // 288
-    "Go to bottom" // 289
+    "Go to bottom", // 289
+    "Added to log", // 290
+    "Update failed!", // 291
+    "Clear logbook", // 292
+    "Logbook cleared", // 293
+    "Clear failed" // 294
   },
 
   { "Italiano", // Italian
@@ -4091,7 +4156,12 @@ static const char* const myLanguage[18][290] PROGMEM = {
     "Your logbook", // 286
     "Download logbook", // 287
     "Logbook is empty", // 288
-    "Go to bottom" // 289
+    "Go to bottom", // 289
+    "Added to log", // 290
+    "Update failed!", // 291
+    "Clear logbook", // 292
+    "Logbook cleared", // 293
+    "Clear failed" // 294
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4383,7 +4453,12 @@ static const char* const myLanguage[18][290] PROGMEM = {
     "Your logbook", // 286
     "Download logbook", // 287
     "Logbook is empty", // 288
-    "Go to bottom" // 289
+    "Go to bottom", // 289
+    "Added to log", // 290
+    "Update failed!", // 291
+    "Clear logbook", // 292
+    "Logbook cleared", // 293
+    "Clear failed" // 294
   },
 
   { "Norsk", // Norwegian
@@ -4675,7 +4750,12 @@ static const char* const myLanguage[18][290] PROGMEM = {
     "Your logbook", // 286
     "Download logbook", // 287
     "Logbook is empty", // 288
-    "Go to bottom" // 289
+    "Go to bottom", // 289
+    "Added to log", // 290
+    "Update failed!", // 291
+    "Clear logbook", // 292
+    "Logbook cleared", // 293
+    "Clear failed" // 294
   },
 
   { "Español", // Spanish
@@ -4967,7 +5047,12 @@ static const char* const myLanguage[18][290] PROGMEM = {
     "Your logbook", // 286
     "Download logbook", // 287
     "Logbook is empty", // 288
-    "Go to bottom" // 289
+    "Go to bottom", // 289
+    "Added to log", // 290
+    "Update failed!", // 291
+    "Clear logbook", // 292
+    "Logbook cleared", // 293
+    "Clear failed" // 294
   },
 
   { "Português", // Portuguese
@@ -5259,7 +5344,12 @@ static const char* const myLanguage[18][290] PROGMEM = {
     "Your logbook", // 286
     "Download logbook", // 287
     "Logbook is empty", // 288
-    "Go to bottom" // 289
+    "Go to bottom", // 289
+    "Added to log", // 290
+    "Update failed!", // 291
+    "Clear logbook", // 292
+    "Logbook cleared", // 293
+    "Clear failed" // 294
   }
 };
 #endif

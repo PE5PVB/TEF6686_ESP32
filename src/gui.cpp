@@ -1555,6 +1555,12 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString(String(fmscansens), 298, 2);
           break;
+
+        case DXMODE:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][292]), 6, 2);
+          break;
       }
       break;
   }
@@ -2607,6 +2613,12 @@ void ShowOneButton(byte position, byte item, bool selected) {
 
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           PSSprite.drawString(String(fmscansens), 75, 15);
+          break;
+
+        case DXMODE:
+          PSSprite.setTextDatum(TC_DATUM);
+          PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          PSSprite.drawString(shortLine(removeNewline(myLanguage[language][292])), 75, 8);
           break;
       }
       break;
@@ -4854,14 +4866,14 @@ void MenuDown() {
 }
 
 void showMenuOpenTouchButtons() {
-  if (hardwaremodel == PORTABLE_TOUCH_ILI9341 && !((menupage == CONNECTIVITY && menuoption == ITEM3) || (menupage == AUTOMEM && (menuoption == ITEM1 || menuoption == ITEM9)) || (menupage == MAINSETTINGS && menuoption == ITEM1))) {
+  if (hardwaremodel == PORTABLE_TOUCH_ILI9341 && !((menupage == CONNECTIVITY && menuoption == ITEM3) || (menupage == AUTOMEM && (menuoption == ITEM1 || menuoption == ITEM9)) || (menupage == MAINSETTINGS && menuoption == ITEM1) || (menupage == DXMODE && menuoption == ITEM10))) {
     tft.fillRoundRect(18, 154, 60, 40, 6, FrameColor);
     tft.drawRoundRect(18, 154, 60, 40, 6, ActiveColor);
     tft.fillRoundRect(240, 154, 60, 40, 6, FrameColor);
     tft.drawRoundRect(240, 154, 60, 40, 6, ActiveColor);
     tft.fillTriangle(52, 160, 52, 188, 38, 174, (CurrentTheme == 7 ? White : ActiveColor));
     tft.fillTriangle(266, 160, 266, 188, 280, 174, (CurrentTheme == 7 ? White : ActiveColor));
-    if (menuoption == ITEM9) {
+    if (!submenu && menuoption == ITEM9) {
       tft.fillRoundRect(240, 36, 60, 40, 6, FrameColor);
       tft.drawRoundRect(240, 36, 60, 40, 6, ActiveColor);
       tftPrint(0, "OK", 270, 44, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
@@ -5798,6 +5810,18 @@ void DoMenu() {
 
             OneBigLineSprite.drawString((scanholdonsignal ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM10:
+            Infoboxprint(myLanguage[language][292]);
+            if (handleCreateNewLogbook()) OneBigLineSprite.drawString(myLanguage[language][293], 135, 0); else OneBigLineSprite.drawString(myLanguage[language][294], 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+
+            if (hardwaremodel == PORTABLE_TOUCH_ILI9341) {
+              tft.fillRoundRect(130, 154, 60, 40, 6, FrameColor);
+              tft.drawRoundRect(130, 154, 60, 40, 6, ActiveColor);
+              tftPrint(0, "OK", 160, 162, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
+            }
             break;
         }
         break;
