@@ -5342,29 +5342,30 @@ void toggleiMSEQ() {
 }
 
 void handleRoot() {
-  // Attempt to open the CSV file stored in SPIFFS (File System)
   fs::File file = SPIFFS.open("/logbook.csv", "r");
   if (!file) {
-    // If the file could not be opened, send an error message to the browser
     webserver.send(500, "text/plain", "Failed to open logbook");
-    return;  // Exit the function if the file cannot be opened
+    return;
   }
 
-  // Start building the HTML page to send to the browser
   String html = "<!DOCTYPE html><html lang=\"en\"><head>";
   html += "<meta charset=\"UTF-8\">";
   html += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">";
 
-  // Add CSS styling for a modern, dark-themed look
+  // Add CSS styling
   html += "<style>";
   html += "body {background-color: #1a1a1a; color: white; font-family: 'Arial', sans-serif; margin: 0; padding: 0;}";
   html += "h1 {text-align: center; color: #ffffff; margin-top: 20px; font-size: 32px;}";
-  html += "img {display: block; margin: 0 auto; max-width: 100%; height: auto; padding-top: 20px;}";
+  html += "img {display: block; margin: 0 auto; max-width: 100%; height: auto; padding-top: 20px; cursor: pointer;}";
   html += "table {width: 90%; margin: 0 auto; border-collapse: collapse; border-radius: 8px; overflow: hidden;}";
   html += "th {background-color: #333; color: white; padding: 12px; text-align: left; font-size: 18px;}";
   html += "td {background-color: #2a2a2a; color: white; padding: 10px; text-align: left; font-size: 16px;}";
   html += "tr:nth-child(even) {background-color: #252525;}";
-  html += "tr:hover {background-color: #444; cursor: pointer;}";
+
+  // Full row background highlight
+  html += "tr:hover {background-color: #ff6600 !important;}";  // Solid orange highlight on hover
+  html += "tr:hover td {background-color: #ff6600 !important;}"; // Ensure cells have the same highlight
+
   html += "button {background-color: #ffcc00; color: black; border: none; padding: 12px 20px; font-size: 18px; cursor: pointer; border-radius: 5px; display: block; margin: 20px auto;}";
   html += "button:hover {background-color: #ff9900;}";
   html += "@media (max-width: 768px) { table {width: 100%;} th, td {font-size: 14px; padding: 8px;} }";
@@ -5373,83 +5374,104 @@ void handleRoot() {
 
   html += "</head><body>";
 
-  // Add the logo image at the top of the page, served from SPIFFS
-  html += "<img src=\"/logo.png\" alt=\"FMdx Logo\">";
+  // Add logo as a clickable link
+  html += "<a href=\"https://fmdx.org/\" target=\"_blank\">";
+  html += "<img src=\"/logo.png\" alt=\"FMDX logo\">";
+  html += "</a>";
 
-  // Add a header with a dynamic title from the language array (replace with actual language logic)
   html += "<h1>" + String(myLanguage[language][286]) + "</h1>";
-
-  // Add the "Download CSV" button, which triggers a download action when clicked
   html += "<button onclick=\"window.location.href='/downloadCSV'\">" + String(myLanguage[language][287]) + "</button>";
-
-  // Add "Go to Bottom" button
   html += "<button class=\"go-to-bottom\" onclick=\"scrollToBottom()\">" + String(myLanguage[language][289]) + "</button>";
 
-  // Add JavaScript for scrolling to the bottom
+  // JavaScript for scrolling
   html += "<script>";
-  html += "function scrollToBottom() {";
-  html += "  window.scrollTo(0, document.body.scrollHeight);";
-  html += "}";
+  html += "function scrollToBottom() { window.scrollTo(0, document.body.scrollHeight); }";
   html += "</script>";
 
-  // Start the HTML table to display CSV data
   html += "<table>";
 
-  // Read and process the first line (header row) from the CSV file
   String header = "";
   if (file.available()) {
-    header = file.readStringUntil('\n'); // Read the first line containing the headers
-    html += "<tr>"; // Start the header row in the table
+    header = file.readStringUntil('\n');
+    html += "<tr>";
     int startIndex = 0;
 
-    // Split the header line by commas and create table headers (<th>) for each column
     while (startIndex < header.length()) {
       int endIndex = header.indexOf(',', startIndex);
-      if (endIndex == -1) endIndex = header.length(); // Handle last column (no comma after it)
-      String column = header.substring(startIndex, endIndex); // Extract the column name
-      html += "<th>" + column + "</th>"; // Add the column as a table header
-      startIndex = endIndex + 1; // Move to the next column
+      if (endIndex == -1) endIndex = header.length();
+      String column = header.substring(startIndex, endIndex);
+
+      html += "<th>" + column + "</th>";  // Removed sorting symbols
+
+      startIndex = endIndex + 1;
     }
-    html += "</tr>"; // End the header row
+    html += "</tr>";
   }
 
-  // Variable to track if there is any data in the CSV file
   bool hasData = false;
-  int rowCount = 0; // Counter for rows, used for alternating row colors
+  int piCodeIndex = -1, frequencyIndex = -1;
 
-  // Process the remaining lines (data rows) in the CSV file
+  // Identify column indices for PI code and Frequency
+  int startIndex = 0, columnIndex = 0;
+  while (startIndex < header.length()) {
+    int endIndex = header.indexOf(',', startIndex);
+    if (endIndex == -1) endIndex = header.length();
+    String column = header.substring(startIndex, endIndex);
+
+    if (column.equalsIgnoreCase("PI code")) piCodeIndex = columnIndex;
+    if (column.equalsIgnoreCase("Frequency")) frequencyIndex = columnIndex;
+
+    startIndex = endIndex + 1;
+    columnIndex++;
+  }
+
+  // Generate rows
   while (file.available()) {
-    String line = file.readStringUntil('\n'); // Read the next line (data row)
+    String line = file.readStringUntil('\n');
     if (line.length() > 0) {
-      hasData = true;  // Mark that data rows are present
-      rowCount++; // Increment the row count
-      html += "<tr>"; // Start a new row in the table
-      int startIndex = 0;
+      hasData = true;
+      html += "<tr>";
 
-      // Split the line by commas and create table data cells (<td>) for each column
+      String piCode = "", frequency = "";
+      startIndex = 0, columnIndex = 0;
+
       while (startIndex < line.length()) {
         int endIndex = line.indexOf(',', startIndex);
-        if (endIndex == -1) endIndex = line.length(); // Handle the last column
-        String cell = line.substring(startIndex, endIndex); // Extract the cell data
-        html += "<td>" + cell + "</td>"; // Add the cell data to the table
-        startIndex = endIndex + 1; // Move to the next column
+        if (endIndex == -1) endIndex = line.length();
+        String cell = line.substring(startIndex, endIndex);
+
+        // Extract PI code and Frequency
+        if (columnIndex == piCodeIndex) piCode = cell;
+        if (columnIndex == frequencyIndex) frequency = cell;
+
+        html += "<td>" + cell + "</td>";
+        startIndex = endIndex + 1;
+        columnIndex++;
       }
-      html += "</tr>"; // End the data row
+
+      // Remove " MHz" from Frequency
+      frequency.replace(" MHz", "");
+
+      // Make row clickable
+      html += "<script>";
+      html += "document.querySelector('tr:last-child').onclick = function() {";
+      html += "  window.open('https://maps.fmdx.org/#qth=&freq=" + frequency + "&findPi=" + piCode + "', '_blank');";
+      html += "};";
+      html += "</script>";
+
+      html += "</tr>";
     }
   }
 
-  file.close(); // Close the file after reading
+  file.close();
 
-  // If no data rows were found, display a "No data available" message in the table
   if (!hasData) {
     html += "<tr><td colspan=\"100%\" style=\"text-align: center; color: red;\">" + String(myLanguage[language][288]) + "</td></tr>";
   }
 
-  // End the HTML table and body
   html += "</table>";
-  html += "</body></html>"; // End the HTML page
+  html += "</body></html>";
 
-  // Send the generated HTML content to the browser with a 200 OK response
   webserver.send(200, "text/html", html);
 }
 
