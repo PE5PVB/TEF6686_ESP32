@@ -1,58 +1,84 @@
 #include "NTPupdate.h"
 
-// send an NTP request to the time server at the given address
+// Sends an NTP request packet to the specified server address
 void sendNTPpacket(IPAddress &address) {
-  byte packetBuffer[NTP_PACKET_SIZE];
-  // set all bytes in the buffer to 0
-  memset(packetBuffer, 0, NTP_PACKET_SIZE);
-  // Initialize values needed to form NTP request
-  // (see URL above for details on the packets)
-  packetBuffer[0] = 0b11100011;   // LI, Version, Mode
-  packetBuffer[1] = 0;     // Stratum, or type of clock
-  packetBuffer[2] = 6;     // Polling Interval
-  packetBuffer[3] = 0xEC;  // Peer Clock Precision
-  // 8 bytes of zero for Root Delay & Root Dispersion
+  byte packetBuffer[NTP_PACKET_SIZE] = {0}; // Initialize buffer with zeros
+
+  // Set NTP packet header fields as per NTP protocol
+  packetBuffer[0] = 0b11100011; // LI, Version, Mode
+  packetBuffer[2] = 6;          // Polling interval
+  packetBuffer[3] = 0xEC;       // Peer clock precision
+
+  // Root Delay & Root Dispersion fields
   packetBuffer[12] = 49;
   packetBuffer[13] = 0x4E;
   packetBuffer[14] = 49;
   packetBuffer[15] = 52;
-  // all NTP fields have been given values, now
-  // you can send a packet requesting a timestamp:
-  Udp.beginPacket(address, 123); //NTP requests are to port 123
+
+  // Send the NTP request to port 123 (NTP standard port)
+  Udp.beginPacket(address, 123);
   Udp.write(packetBuffer, NTP_PACKET_SIZE);
   Udp.endPacket();
 }
 
+// Retrieves the current time from an NTP server
 time_t getNtpTime() {
-  IPAddress ntpServerIP; // NTP server's ip address
+  IPAddress ntpServerIP;
   byte packetBuffer[NTP_PACKET_SIZE];
 
-  while (Udp.parsePacket() > 0) ; // discard any previously received packets
-  WiFi.hostByName(ntpServerName, ntpServerIP);
+  // Clear any previously received UDP packets
+  while (Udp.parsePacket() > 0);
+
+  // Resolve the NTP server's hostname to its IP address
+  if (!WiFi.hostByName(ntpServerName, ntpServerIP)) {
+    return 0; // Return 0 if hostname resolution fails
+  }
+
+  // Send an NTP request
   sendNTPpacket(ntpServerIP);
-  uint32_t beginWait = millis();
-  while (millis() - beginWait < 1500) {
-    int size = Udp.parsePacket();
-    if (size >= NTP_PACKET_SIZE) {
-      Udp.read(packetBuffer, NTP_PACKET_SIZE);  // read packet into the buffer
-      unsigned long secsSince1900;
-      // convert four bytes starting at location 40 to a long integer
-      secsSince1900 =  (unsigned long)packetBuffer[40] << 24;
-      secsSince1900 |= (unsigned long)packetBuffer[41] << 16;
-      secsSince1900 |= (unsigned long)packetBuffer[42] << 8;
-      secsSince1900 |= (unsigned long)packetBuffer[43];
+
+  // Wait for a response with a 1500ms timeout
+  uint32_t startWait = millis();
+  while (millis() - startWait < 1500) {
+    if (Udp.parsePacket() >= NTP_PACKET_SIZE) { // Check if a valid packet is received
+      Udp.read(packetBuffer, NTP_PACKET_SIZE);
+
+      // Extract "seconds since 1900" from the packet (bytes 40-43)
+      unsigned long secsSince1900 =
+        ((unsigned long)packetBuffer[40] << 24) |
+        ((unsigned long)packetBuffer[41] << 16) |
+        ((unsigned long)packetBuffer[42] << 8)  |
+        (unsigned long)packetBuffer[43];
+
+      // Convert to UNIX epoch time (seconds since 1970)
       return secsSince1900 - 2208988800UL;
     }
   }
-  return 0; // return 0 if unable to get the time
+
+  // Return 0 if no valid response is received
+  return 0;
 }
 
+// Updates the RTC with the time from an NTP server
 void NTPupdate() {
-  if (!wifi) { return; }
-  time_t time = getNtpTime();
-  if (time) {
-    rtc.setTime(time);
+  // Abort if Wi-Fi is not connected
+  if (!wifi) {
+    NTPupdated = false;
+    return;
+  }
+
+  // Retrieve the current time from the NTP server
+  time_t currentTime = getNtpTime();
+
+  if (currentTime) {
+    // Set the RTC if valid time is received
+    rtc.setTime(currentTime);
+    rtcset = true;
+    NTPupdated = true;
+    radio.rds.ctupdate = false;
+  } else {
+    // Indicate that the update failed
+    NTPupdated = false;
+    radio.rds.ctupdate = true;
   }
 }
-
-

@@ -912,6 +912,7 @@ void tryWiFi() {
       Server.begin();
       Udp.begin(9031);
       webserver.begin();
+      NTPupdate();
       remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
       if (!setupmode) tftPrint(0, myLanguage[language][57], 155, 128, InsignificantColor, InsignificantColorSmooth, 28);
     } else {

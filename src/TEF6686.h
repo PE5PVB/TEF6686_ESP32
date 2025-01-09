@@ -621,6 +621,7 @@ typedef struct _rds_ {
   bool filter;
   bool rdsreset;
   bool pierrors;
+  bool ctupdate = true;
   bool sortaf;
   bool rtbuffer = true;
   bool afreg;

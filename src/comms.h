@@ -149,4 +149,5 @@ extern void ShowStepSize();
 extern void startFMDXScan();
 extern void cancelDXScan();
 extern void printLogbookCSV();
+extern void NTPupdate();
 #endif

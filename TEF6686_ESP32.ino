@@ -10,6 +10,7 @@
 #include <Hash.h>                   // https://github.com/bbx10/Hash_tng/archive/refs/heads/master.zip
 #include <WebServer.h>
 #include <SPIFFS.h>
+#include "src/NTPupdate.h"
 #include "src/WiFiConnect.h"
 #include "src/WiFiConnectParam.h"
 #include "src/FONT16.h"
@@ -99,6 +100,7 @@ bool mwstepsize;
 bool airstepsize;
 #endif
 bool nobattery;
+bool NTPupdated;
 bool optenc;
 bool rdsflagreset;
 bool rdsreset;
@@ -200,6 +202,7 @@ byte memstoppos;
 byte menuitem;
 byte menupage;
 byte MSold;
+byte NTPoffset = 1;
 byte poweroptions;
 byte rdsblockold;
 byte rdsqualityold;
@@ -414,6 +417,7 @@ unsigned long lastTouchTime = 0;
 unsigned long lowsignaltimer;
 unsigned long ModulationpreviousMillis;
 unsigned long ModulationpeakPreviousMillis;
+unsigned long NTPtimer;
 unsigned long peakholdmillis;
 unsigned long pslongticker;
 unsigned long pslongtickerhold;
@@ -930,6 +934,11 @@ void setup() {
 
 void loop() {
   if (wifi) webserver.handleClient();
+
+  if (wifi && millis() >= NTPtimer + 1800000) {
+    NTPupdate();
+    NTPtimer = millis();
+  }
 
   if (hardwaremodel == PORTABLE_TOUCH_ILI9341 && touch_detect) {
     if (tft.getTouchRawZ() > 100) {  // Check if the touch is active
@@ -5571,43 +5580,43 @@ bool addRowToCSV() {
 }
 
 String getCurrentDateTime() {
-  // Check if time has been set
+  // Check if the RTC has been set
   if (!rtcset) {
-    return "-,-";  // Return placeholder when time is not set
+    return "-,-";  // Return placeholder when the RTC is not set
   }
 
-  // Use the ESP32's time functions (assuming time is set correctly via RDS)
+  // Use the ESP32's time functions to retrieve the current time
   struct tm timeInfo;
   if (!getLocalTime(&timeInfo)) {
-    return "-,-";  // Return placeholder if time is not available
+    return "-,-";  // Return placeholder if local time is unavailable
   }
 
   // Adjust timeInfo using the GMT offset
-  time_t currentEpoch = mktime(&timeInfo);  // Convert struct tm to time_t
-  currentEpoch += radio.rds.offset;        // Apply the offset (in seconds)
-  localtime_r(&currentEpoch, &timeInfo);   // Convert back to struct tm
+  time_t currentEpoch = mktime(&timeInfo);  // Convert struct tm to time_t format
+  currentEpoch += (NTPupdated ? NTPoffset * 3600 : radio.rds.offset); // Apply GMT offset if NTPupdated, else RDS offset
+  localtime_r(&currentEpoch, &timeInfo);   // Convert adjusted time back to struct tm format
 
-  // Format date-time based on the region
-  char buf[20];  // Buffer size for formatted date string
+  // Buffer for formatted date-time string
+  char buf[20];
 
   if (radio.rds.region == 1) {
     // USA format: MM/DD/YYYY, HH:MM AM/PM
-    strftime(buf, sizeof(buf), "%m/%d/%Y", &timeInfo);  // MM/DD/YYYY format
+    strftime(buf, sizeof(buf), "%m/%d/%Y", &timeInfo);  // Format as MM/DD/YYYY
 
     // Format time in 12-hour format with AM/PM
     int hour = timeInfo.tm_hour;
-    String ampm = (hour >= 12) ? "PM" : "AM";
-    if (hour == 0) hour = 12;  // Midnight case
-    else if (hour > 12) hour -= 12;  // Convert PM to 12-hour format
+    String ampm = (hour >= 12) ? "PM" : "AM";  // Determine AM or PM
+    if (hour == 0) hour = 12;  // Convert 0 hour to 12 AM
+    else if (hour > 12) hour -= 12;  // Convert to 12-hour format for PM
 
     String timeWithAMPM = String(hour) + ":" + (timeInfo.tm_min < 10 ? "0" : "") + String(timeInfo.tm_min) + " " + ampm;
 
-    // Return final formatted date-time for USA
+    // Return the final formatted date and time for the USA region
     return String(buf) + "," + timeWithAMPM;
   } else {
-    // European format: DD/MM/YYYY, HH:MM
-    strftime(buf, sizeof(buf), "%d-%m-%Y", &timeInfo);  // DD/MM/YYYY format
-    String timeEuropean = String(timeInfo.tm_hour) + ":" + (timeInfo.tm_min < 10 ? "0" : "") + String(timeInfo.tm_min); // Add leading 0 for minutes if necessary
+    // European format: DD-MM-YYYY, HH:MM
+    strftime(buf, sizeof(buf), "%d-%m-%Y", &timeInfo);  // Format as DD-MM-YYYY
+    String timeEuropean = String(timeInfo.tm_hour) + ":" + (timeInfo.tm_min < 10 ? "0" : "") + String(timeInfo.tm_min); // Format time with leading zero if needed
     return String(buf) + "," + timeEuropean;
   }
 }
