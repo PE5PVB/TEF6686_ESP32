@@ -5582,6 +5582,11 @@ String getCurrentDateTime() {
     return "-,-";  // Return placeholder if time is not available
   }
 
+  // Adjust timeInfo using the GMT offset
+  time_t currentEpoch = mktime(&timeInfo);  // Convert struct tm to time_t
+  currentEpoch += radio.rds.offset;        // Apply the offset (in seconds)
+  localtime_r(&currentEpoch, &timeInfo);   // Convert back to struct tm
+
   // Format date-time based on the region
   char buf[20];  // Buffer size for formatted date string
 
