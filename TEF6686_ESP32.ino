@@ -62,6 +62,8 @@ bool afpage;
 bool afscreen;
 bool aftest;
 bool artheadold;
+bool autolog;
+bool autologged;
 bool autosquelch = true;
 bool batterydetect = true;
 bool beepresetstart;
@@ -581,6 +583,7 @@ void setup() {
   TouchCalData[4] = EEPROM.readUInt(EE_UINT16_CALTOUCH5);
   invertdisplay = EEPROM.readByte(EE_BYTE_INVERTDISPLAY);
   NTPoffset = EEPROM.readByte(EE_BYTE_NTPOFFSET);
+  autolog = EEPROM.readByte(EE_BYTE_AUTOLOG);
 
   if (spispeed == SPI_SPEED_DEFAULT) {
     tft.setSPISpeed(SPI_FREQUENCY / 1000000);
@@ -1004,7 +1007,15 @@ void loop() {
         DoMemoryPosTune();
         ShowMemoryPos();
       } else {
+        if (!autologged && autolog && RDSstatus && radio.rds.correctPI != 0) {
+          if (addRowToCSV()) ShowFreq(2); else ShowFreq(3);
+          delay(200);
+          while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
+          ShowFreq(0);
+          autologged = true;
+        }
         TuneUp();
+        autologged = false;
         ShowFreq(0);
         if (XDRGTKUSB || XDRGTKTCP) DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
       }
@@ -4540,7 +4551,8 @@ void DefaultSettings() {
   EEPROM.writeUInt(EE_UINT16_CALTOUCH3, 300);
   EEPROM.writeUInt(EE_UINT16_CALTOUCH4, 3450);
   EEPROM.writeUInt(EE_UINT16_CALTOUCH5, 3);
-  EEPROM.writeByte(EE_BYTE_NTPOFFSET, 0);
+  EEPROM.writeByte(EE_BYTE_NTPOFFSET, 1);
+  EEPROM.writeByte(EE_BYTE_AUTOLOG, 1);
 
 #ifdef DEEPELEC_DP_66X
   EEPROM.writeByte(EE_BYTE_ROTARYMODE, 1);
@@ -4791,6 +4803,7 @@ void endMenu() {
   EEPROM.writeByte(EE_BYTE_MEMDOUBLEPI, memdoublepi);
   EEPROM.writeByte(EE_BYTE_WAITONLYONSIGNAL, scanholdonsignal);
   EEPROM.writeByte(EE_BYTE_NTPOFFSET, NTPoffset);
+  EEPROM.writeByte(EE_BYTE_AUTOLOG, autolog);
   EEPROM.commit();
   if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
   Serial.end();
@@ -4809,6 +4822,7 @@ void endMenu() {
 void startFMDXScan() {
   initdxscan = true;
   scanholdflag = false;
+  autologged = false;
   for (byte i = 0; i < 100; i++) {
     rabbitearspi[i] = 0;
     rabbitearstime[i][0] = 0;

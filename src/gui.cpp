@@ -1410,11 +1410,11 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case DXMODE:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(myLanguage[language][82]), 6, 2);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][296]), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(String(fmscansens), 298, 2);
+          FullLineSprite.drawString((autolog ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
           break;
 
         case AUTOMEM:
@@ -2489,10 +2489,10 @@ void ShowOneButton(byte position, byte item, bool selected) {
         case DXMODE:
           PSSprite.setTextDatum(TC_DATUM);
           PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString(shortLine(removeNewline(myLanguage[language][82])), 75, 1);
+          PSSprite.drawString(shortLine(removeNewline(myLanguage[language][296])), 75, 1);
 
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          PSSprite.drawString(String(fmscansens), 75, 15);
+          PSSprite.drawString((autolog ? myLanguage[language][42] : myLanguage[language][30]), 75, 15);
           break;
 
         case AUTOMEM:
@@ -3850,15 +3850,15 @@ void MenuUp() {
 
           case ITEM7:
             scanmute = !scanmute;
+
             OneBigLineSprite.drawString((scanmute ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM8:
-            fmscansens++;
-            if (fmscansens > 30) fmscansens = 1;
+            autolog = !autolog;
 
-            OneBigLineSprite.drawString(String(fmscansens), 135, 0);
+            OneBigLineSprite.drawString((autolog ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
@@ -4821,15 +4821,15 @@ void MenuDown() {
 
           case ITEM7:
             scanmute = !scanmute;
+
             OneBigLineSprite.drawString((scanmute ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM8:
-            fmscansens--;
-            if (fmscansens == 0) fmscansens = 30;
+            autolog = !autolog;
 
-            OneBigLineSprite.drawString(String(fmscansens), 135, 0);
+            OneBigLineSprite.drawString((autolog ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
@@ -5862,9 +5862,9 @@ void DoMenu() {
             break;
 
           case ITEM8:
-            Infoboxprint(myLanguage[language][82]);
+            Infoboxprint(myLanguage[language][296]);
 
-            OneBigLineSprite.drawString(String(fmscansens), 135, 0);
+            OneBigLineSprite.drawString((autolog ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
