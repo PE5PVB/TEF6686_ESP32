@@ -2086,16 +2086,16 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "zum Kalibrieren des Touchscrees", // 283
     "Bildschirmumkehrung umschalten", // 284
     "Bandbreite wählen", // 285
-    "Your logbook", // 286
-    "Download logbook", // 287
-    "Logbook is empty", // 288
-    "Go to bottom", // 289
-    "Added to log", // 290
-    "Update failed!", // 291
-    "Clear logbook", // 292
-    "Logbook cleared", // 293
-    "Clear failed", // 294
-    "Set NTP time offset", // 295
+    "Dein Logbuch", // 286
+    "Logbuch herunterladen", // 287
+    "Logbuch ist leer", // 288
+    "Nach unten gehen", // 289
+    "Zum Logbuch hinzugefügt", // 290
+    "Update fehlgeschlagen", // 291
+    "Logbuch löschen", // 292
+    "Logbuch gelöscht", // 293
+    "Löschen fehlgeschlagen", // 294
+    "NTP-Zeitversatz einstellen", // 295
     "Autologger" // 296
   },
 
