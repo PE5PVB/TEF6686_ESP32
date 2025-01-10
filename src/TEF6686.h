@@ -720,6 +720,7 @@ class TEF6686 {
     bool mute;
     bool afmethodB;
     bool underscore;
+    bool ps_process;
     byte af_updatecounter;
 
   private:
@@ -733,7 +734,6 @@ class TEF6686 {
     char ps_buffer2[9];
     char ptyn_buffer[9];
     char eon_buffer[20][9];
-    bool ps_process;
     bool pslong_process;
     char eRT_buffer[129];
     bool rt_process;

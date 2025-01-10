@@ -389,7 +389,7 @@ void readRds() {
 
           if (!radio.rds.hasLongPS) {
             PSSprite.fillSprite(BackgroundColor);
-            if (ps12errorold || ps34errorold || ps56errorold || ps78errorold) {
+            if ((ps12errorold || ps34errorold || ps56errorold || ps78errorold) && radio.ps_process) {
               for (int i = 0; i < 7; i++) {
                 PSSprite.setTextColor((i < 2 && ps12errorold) || (i < 4 && ps34errorold) ||
                                       (i < 6 && ps56errorold) || ps78errorold ?
@@ -667,7 +667,6 @@ void showPTY() {
   }
 }
 
-// Function to display RDS station name (PS)
 void showPS() {
   // Check if station name or errors have changed, or long PS should be displayed
   if ((radio.rds.stationName != PSold) ||
@@ -738,7 +737,7 @@ void showPS() {
         if (!RDSstatus || band > BAND_GAP) {
           PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
           PSSprite.drawString(radio.rds.stationName, 0, 2);
-        } else if (ps12errorold || ps34errorold || ps56errorold || ps78errorold) {
+        } else if ((ps12errorold || ps34errorold || ps56errorold || ps78errorold) && radio.ps_process) {
           for (int i = 0; i < 7; i++) {
             PSSprite.setTextColor((i < 2 && ps12errorold) || (i < 4 && ps34errorold) ||
                                   (i < 6 && ps56errorold) || ps78errorold ?
