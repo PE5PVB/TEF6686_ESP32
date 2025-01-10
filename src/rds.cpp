@@ -806,8 +806,6 @@ void showCT() {
 
   // Format the time based on region
   if (radio.rds.region == 1) { // USA region: 12-hour AM/PM format
-    strftime(str, sizeof(str), "%I:%M", localtime(&t));
-
     // Determine AM/PM and adjust hour format
     int hour = localtime(&t)->tm_hour;
     String ampm = (hour >= 12) ? "PM" : "AM";
@@ -817,7 +815,11 @@ void showCT() {
       hour -= 12; // Convert PM hours
     }
 
-    rds_clock = String(hour) + ":" + String(localtime(&t)->tm_min) + " " + ampm;
+    // Format the time string with leading zeros for minutes
+    char formattedTime[10];
+    sprintf(formattedTime, "%d:%02d %s", hour, localtime(&t)->tm_min, ampm.c_str());
+
+    rds_clock = String(formattedTime);
   } else { // Other regions: 24-hour format
     strftime(str, sizeof(str), "%H:%M", localtime(&t));
     rds_clock = String(str);
