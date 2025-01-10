@@ -225,9 +225,9 @@
 #define EE_CHECKBYTE_VALUE            10     // 0 ~ 255,add new entry, change for new value
 #define EE_PRESETS_FREQUENCY          0     // Default value when memory channel should be skipped!
 #ifdef HAS_AIR_BAND
-#define EE_TOTAL_CNT                  2280  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                  2281  // Total occupied eeprom bytes
 #else
-#define EE_TOTAL_CNT                  2275  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                  2276  // Total occupied eeprom bytes
 #endif
 
 #define EE_PRESETS_BAND_START         0     // 99 * 1 byte
@@ -345,9 +345,10 @@
 #define EE_UINT16_CALTOUCH4           2266
 #define EE_UINT16_CALTOUCH5           2270
 #define EE_BYTE_INVERTDISPLAY         2274
+#define EE_BYTE_NTPOFFSET        2275
 #ifdef HAS_AIR_BAND
-#define EE_BYTE_AIRSTEPSIZE           2275
-#define EE_UINT16_FREQUENCY_AIR       2276
+#define EE_BYTE_AIRSTEPSIZE           2276
+#define EE_UINT16_FREQUENCY_AIR       2277
 #endif
 // End of EEPROM index defines
 
@@ -373,7 +374,7 @@ enum LONGBANDBUTTONPRESS {
 };
 
 enum menupage {INDEX, MAINSETTINGS, AUDIOSETTINGS, DISPLAYSETTINGS, RDSSETTINGS, FMSETTINGS, AMSETTINGS, CONNECTIVITY, DXMODE, AUTOMEM
-};
+              };
 
 enum AUTOMEMPIMODES {
   MEMPI_OFF = 0, MEMPI_RANGE, MEMPI_FULL

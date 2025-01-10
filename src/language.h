@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[18][295] PROGMEM = {
+static const char* const myLanguage[18][296] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -300,7 +300,8 @@ static const char* const myLanguage[18][295] PROGMEM = {
     "Update failed!", // 291
     "Clear logbook", // 292
     "Logbook cleared", // 293
-    "Clear failed" // 294
+    "Clear failed", // 294
+    "Set NTP time offset" // 295
   },
 
   { "Nederlands", // Dutch
@@ -597,7 +598,8 @@ static const char* const myLanguage[18][295] PROGMEM = {
     "Log mislukt!", // 291
     "Logboek legen", // 292
     "Logboek geleegd", // 293
-    "Legen mislukt" // 294
+    "Legen mislukt", // 294
+    "NTP tijdverschil instellen" // 295
   },
 
   { "Polski", // Polish
@@ -894,7 +896,8 @@ static const char* const myLanguage[18][295] PROGMEM = {
     "Update failed!", // 291
     "Clear logbook", // 292
     "Logbook cleared", // 293
-    "Clear failed" // 294
+    "Clear failed", // 294
+    "Set NTP time offset" // 295
   },
 
   { "Hrvatski", // Croatian
@@ -1191,7 +1194,8 @@ static const char* const myLanguage[18][295] PROGMEM = {
     "Update failed!", // 291
     "Clear logbook", // 292
     "Logbook cleared", // 293
-    "Clear failed" // 294
+    "Clear failed", // 294
+    "Set NTP time offset" // 295
   },
 
   { "Ελληνικά", // Greek
@@ -1488,7 +1492,8 @@ static const char* const myLanguage[18][295] PROGMEM = {
     "Update failed!", // 291
     "Clear logbook", // 292
     "Logbook cleared", // 293
-    "Clear failed" // 294
+    "Clear failed", // 294
+    "Set NTP time offset" // 295
   },
 
   { "Română", // Romanian
@@ -1785,7 +1790,8 @@ static const char* const myLanguage[18][295] PROGMEM = {
     "Update failed!", // 291
     "Clear logbook", // 292
     "Logbook cleared", // 293
-    "Clear failed" // 294
+    "Clear failed", // 294
+    "Set NTP time offset" // 295
   },
 
   { "Deutsch", // German
@@ -2082,7 +2088,8 @@ static const char* const myLanguage[18][295] PROGMEM = {
     "Update failed!", // 291
     "Clear logbook", // 292
     "Logbook cleared", // 293
-    "Clear failed" // 294
+    "Clear failed", // 294
+    "Set NTP time offset" // 295
   },
 
   { "Český", // Czech
@@ -2379,7 +2386,8 @@ static const char* const myLanguage[18][295] PROGMEM = {
     "Update failed!", // 291
     "Clear logbook", // 292
     "Logbook cleared", // 293
-    "Clear failed" // 294
+    "Clear failed", // 294
+    "Set NTP time offset" // 295
   },
 
   { "Magyar", // Hungarian
@@ -2676,7 +2684,8 @@ static const char* const myLanguage[18][295] PROGMEM = {
     "Update failed!", // 291
     "Clear logbook", // 292
     "Logbook cleared", // 293
-    "Clear failed" // 294
+    "Clear failed", // 294
+    "Set NTP time offset" // 295
   },
 
   { "Français", // French
@@ -2973,7 +2982,8 @@ static const char* const myLanguage[18][295] PROGMEM = {
     "Update failed!", // 291
     "Clear logbook", // 292
     "Logbook cleared", // 293
-    "Clear failed" // 294
+    "Clear failed", // 294
+    "Set NTP time offset" // 295
   },
 
   { "Български", // Bulgarian
@@ -3270,7 +3280,8 @@ static const char* const myLanguage[18][295] PROGMEM = {
     "Update failed!", // 291
     "Clear logbook", // 292
     "Logbook cleared", // 293
-    "Clear failed" // 294
+    "Clear failed", // 294
+    "Set NTP time offset" // 295
   },
 
   { "Русский", // Russian
@@ -3567,7 +3578,8 @@ static const char* const myLanguage[18][295] PROGMEM = {
     "Update failed!", // 291
     "Clear logbook", // 292
     "Logbook cleared", // 293
-    "Clear failed" // 294
+    "Clear failed", // 294
+    "Set NTP time offset" // 295
   },
 
   { "Українська", // Ukranian
@@ -3864,7 +3876,8 @@ static const char* const myLanguage[18][295] PROGMEM = {
     "Update failed!", // 291
     "Clear logbook", // 292
     "Logbook cleared", // 293
-    "Clear failed" // 294
+    "Clear failed", // 294
+    "Set NTP time offset" // 295
   },
 
   { "Italiano", // Italian
@@ -4161,7 +4174,8 @@ static const char* const myLanguage[18][295] PROGMEM = {
     "Update failed!", // 291
     "Clear logbook", // 292
     "Logbook cleared", // 293
-    "Clear failed" // 294
+    "Clear failed", // 294
+    "Set NTP time offset" // 295
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4458,7 +4472,8 @@ static const char* const myLanguage[18][295] PROGMEM = {
     "Update failed!", // 291
     "Clear logbook", // 292
     "Logbook cleared", // 293
-    "Clear failed" // 294
+    "Clear failed", // 294
+    "Set NTP time offset" // 295
   },
 
   { "Norsk", // Norwegian
@@ -4755,7 +4770,8 @@ static const char* const myLanguage[18][295] PROGMEM = {
     "Update failed!", // 291
     "Clear logbook", // 292
     "Logbook cleared", // 293
-    "Clear failed" // 294
+    "Clear failed", // 294
+    "Set NTP time offset" // 295
   },
 
   { "Español", // Spanish
@@ -5052,7 +5068,8 @@ static const char* const myLanguage[18][295] PROGMEM = {
     "Update failed!", // 291
     "Clear logbook", // 292
     "Logbook cleared", // 293
-    "Clear failed" // 294
+    "Clear failed", // 294
+    "Set NTP time offset" // 295
   },
 
   { "Português", // Portuguese
@@ -5349,7 +5366,8 @@ static const char* const myLanguage[18][295] PROGMEM = {
     "Update failed!", // 291
     "Clear logbook", // 292
     "Logbook cleared", // 293
-    "Clear failed" // 294
+    "Clear failed", // 294
+    "Set NTP time offset" // 295
   }
 };
 #endif

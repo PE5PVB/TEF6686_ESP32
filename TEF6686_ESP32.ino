@@ -186,7 +186,7 @@ byte amgain;
 byte freqoldcount;
 byte HighCutLevel;
 byte HighCutOffset;
-byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 6, 10, 9};
+byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 7, 10, 9};
 byte iMSEQ;
 byte iMSset;
 byte language;
@@ -202,7 +202,6 @@ byte memstoppos;
 byte menuitem;
 byte menupage;
 byte MSold;
-byte NTPoffset = 1;
 byte poweroptions;
 byte rdsblockold;
 byte rdsqualityold;
@@ -314,6 +313,7 @@ int16_t SAvg3;
 int16_t SStatus;
 int8_t LevelOffset;
 int8_t LowLevelSet;
+int8_t NTPoffset;
 int8_t CN;
 int8_t CNold;
 int8_t VolSet;
@@ -580,6 +580,7 @@ void setup() {
   TouchCalData[3] = EEPROM.readUInt(EE_UINT16_CALTOUCH4);
   TouchCalData[4] = EEPROM.readUInt(EE_UINT16_CALTOUCH5);
   invertdisplay = EEPROM.readByte(EE_BYTE_INVERTDISPLAY);
+  NTPoffset = EEPROM.readByte(EE_BYTE_NTPOFFSET);
 
   if (spispeed == SPI_SPEED_DEFAULT) {
     tft.setSPISpeed(SPI_FREQUENCY / 1000000);
@@ -4539,6 +4540,7 @@ void DefaultSettings() {
   EEPROM.writeUInt(EE_UINT16_CALTOUCH3, 300);
   EEPROM.writeUInt(EE_UINT16_CALTOUCH4, 3450);
   EEPROM.writeUInt(EE_UINT16_CALTOUCH5, 3);
+  EEPROM.writeByte(EE_BYTE_NTPOFFSET, 0);
 
 #ifdef DEEPELEC_DP_66X
   EEPROM.writeByte(EE_BYTE_ROTARYMODE, 1);
@@ -4788,6 +4790,7 @@ void endMenu() {
   EEPROM.writeByte(EE_BYTE_MEMPIONLY, mempionly);
   EEPROM.writeByte(EE_BYTE_MEMDOUBLEPI, memdoublepi);
   EEPROM.writeByte(EE_BYTE_WAITONLYONSIGNAL, scanholdonsignal);
+  EEPROM.writeByte(EE_BYTE_NTPOFFSET, NTPoffset);
   EEPROM.commit();
   if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
   Serial.end();

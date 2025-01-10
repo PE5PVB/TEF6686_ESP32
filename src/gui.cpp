@@ -1271,6 +1271,18 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.drawString((amgain != 0 ? "dB" : myLanguage[language][30]), 298, 2);
           break;
 
+        case CONNECTIVITY:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][295]), 6, 2);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((NTPoffset > -1 ? "+" : "") + String(NTPoffset, DEC), 298, 2);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString("GMT", 258, 2);
+          break;
+
         case DXMODE:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -2337,6 +2349,19 @@ void ShowOneButton(byte position, byte item, bool selected) {
             PSSprite.setTextDatum(TL_DATUM);
             PSSprite.drawString("dB", 77, 15);
           }
+          break;
+
+        case CONNECTIVITY:
+          PSSprite.setTextDatum(TC_DATUM);
+          PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          PSSprite.drawString(shortLine(removeNewline(myLanguage[language][295])), 75, 1);
+
+          PSSprite.setTextDatum(TL_DATUM);
+          PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          PSSprite.drawString((NTPoffset > -1 ? "+" : "") + String(NTPoffset, DEC), 77, 15);
+          PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          PSSprite.setTextDatum(TR_DATUM);
+          PSSprite.drawString("GMT", 73, 15);
           break;
 
         case DXMODE:
@@ -3762,6 +3787,19 @@ void MenuUp() {
             OneBigLineSprite.drawString((XDRGTKMuteScreen ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
+
+          case ITEM7:
+            NTPoffset++;
+            if (NTPoffset > 12) NTPoffset = -12;
+
+            OneBigLineSprite.setTextDatum(TR_DATUM);
+            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            OneBigLineSprite.drawString("GMT", 135, 0);
+            OneBigLineSprite.setTextDatum(TL_DATUM);
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            OneBigLineSprite.drawString((NTPoffset > -1 ? "+" : "") + String(NTPoffset), 155, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
         }
         break;
 
@@ -4718,6 +4756,19 @@ void MenuDown() {
             XDRGTKMuteScreen = !XDRGTKMuteScreen;
 
             OneBigLineSprite.drawString((XDRGTKMuteScreen ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM7:
+            NTPoffset--;
+            if (NTPoffset < -12) NTPoffset = 12;
+
+            OneBigLineSprite.setTextDatum(TR_DATUM);
+            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            OneBigLineSprite.drawString("GMT", 135, 0);
+            OneBigLineSprite.setTextDatum(TL_DATUM);
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            OneBigLineSprite.drawString((NTPoffset > -1 ? "+" : "") + String(NTPoffset), 155, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }
@@ -5731,6 +5782,18 @@ void DoMenu() {
             Infoboxprint(myLanguage[language][205]);
 
             OneBigLineSprite.drawString((XDRGTKMuteScreen ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM7:
+            Infoboxprint(myLanguage[language][295]);
+
+            OneBigLineSprite.setTextDatum(TR_DATUM);
+            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            OneBigLineSprite.drawString("GMT", 135, 0);
+            OneBigLineSprite.setTextDatum(TL_DATUM);
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            OneBigLineSprite.drawString((NTPoffset > -1 ? "+" : "") + String(NTPoffset), 155, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }
