@@ -1488,17 +1488,17 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Για βαθμονόμηση\nτης οθόνης αφής", // 283
     "Εναλλαγή αναστροφής οθόνης", // 284
     "Επιλογή εύρους μπάντας", // 285
-    "Your logbook", // 286
-    "Download logbook", // 287
-    "Logbook is empty", // 288
-    "Go to bottom", // 289
-    "Added to log", // 290
-    "Update failed!", // 291
-    "Clear logbook", // 292
-    "Logbook cleared", // 293
-    "Clear failed", // 294
-    "Set NTP time offset", // 295
-    "Autologger" // 296
+    "Το βιβλίο καταγραφών σας", // 286
+    "Λήψη βιβλίου καταγραφών", // 287
+    "Το βιβλίο καταγραφών είναι άδειο", // 288
+    "Μετάβαση στον πάτο", // 289
+    "Προστέθηκε στις καταγραφές", // 290
+    "Η ενημέρωση απέτυχε!", // 291
+    "Εκκαθάριση βιβλίου\nκαταγραφών", // 292
+    "Έγινε εκκαθάριση\nτου βιβλίου", // 293
+    "Η εκκαθάριση απέτυχε", // 294
+    "Ολίσθηση ώρας NTP", // 295
+    "Αυτόματη καταγραφή" // 296
   },
 
   { "Română", // Romanian
@@ -2983,17 +2983,17 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Pour calibrer l'écran tactile", // 283
     "Inversion d'affichage bascules", // 284
     "Sélectionner la bande passante", // 285
-    "Your logbook", // 286
-    "Download logbook", // 287
-    "Logbook is empty", // 288
-    "Go to bottom", // 289
-    "Added to log", // 290
-    "Update failed!", // 291
-    "Clear logbook", // 292
-    "Logbook cleared", // 293
-    "Clear failed", // 294
-    "Set NTP time offset", // 295
-    "Autologger" // 296
+    "Votre journal de bord", // 286
+    "Télécharger le journal de bord", // 287
+    "Le journal de bord est vide", // 288
+    "Aller en bas", // 289
+    "Ajouté au journal", // 290
+    "Mise à jour échouée!", // 291
+    "Effacer le journal\nde bord", // 292
+    "Journal de bord\neffacé", // 293
+    "Échec de l'effacement", // 294
+    "Décalage horaire NTP", // 295
+    "Journal automatique" // 296
   },
 
   { "Български", // Bulgarian
@@ -5076,17 +5076,17 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Para calibrar\nla pantalla táctil", // 283
     "Cambio de reverso\nde la pantalla", // 284
     "Seleccionar ancho de banda", // 285
-    "Your logbook", // 286
-    "Download logbook", // 287
-    "Logbook is empty", // 288
-    "Go to bottom", // 289
-    "Added to log", // 290
-    "Update failed!", // 291
-    "Clear logbook", // 292
-    "Logbook cleared", // 293
-    "Clear failed", // 294
-    "Set NTP time offset", // 295
-    "Autologger" // 296
+    "Tu libro de registro", // 286
+    "Descargar libro de registro", // 287
+    "El libro de registro está vacío", // 288
+    "Ir al final", // 289
+    "Añadido al registro", // 290
+    "¡Actualización fallida!", // 291
+    "Borrar libro\nde registro", // 292
+    "Libro de registro\nborrado", // 293
+    "Error al borrar", // 294
+    "Desfase de tiempo NTP", // 295
+    "Registrador automático" // 296
   },
 
   { "Português", // Portuguese
@@ -5375,17 +5375,17 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Para calibração\nda tela de toque", // 283
     "Alternar a inversão da tela", // 284
     "Selecione largura de banda", // 285
-    "Your logbook", // 286
-    "Download logbook", // 287
-    "Logbook is empty", // 288
-    "Go to bottom", // 289
-    "Added to log", // 290
-    "Update failed!", // 291
-    "Clear logbook", // 292
-    "Logbook cleared", // 293
-    "Clear failed", // 294
-    "Set NTP time offset", // 295
-    "Autologger" // 296
+    "Seu livro de registro", // 286
+    "Baixar livro de registro", // 287
+    "O livro de registro está vazio", // 288
+    "Ir para o final", // 289
+    "Adicionado ao registro", // 290
+    "Falha na atualização!", // 291
+    "Limpar livro\nde registro", // 292
+    "Livro de registro\nlimpo", // 293
+    "Falha ao limpar", // 294
+    "Deslocamento de\ntempo NTP", // 295
+    "Registrador automático" // 296
   }
 };
 #endif
