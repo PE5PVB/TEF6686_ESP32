@@ -5371,18 +5371,16 @@ void handleRoot() {
   html += "h1 {text-align: center; color: #ffffff; margin-top: 20px; font-size: 32px;}";
   html += "img {display: block; margin: 0 auto; max-width: 100%; height: auto; padding-top: 20px; cursor: pointer;}";
   html += "table {width: 90%; margin: 0 auto; border-collapse: collapse; border-radius: 8px; overflow: hidden;}";
-  html += "th {background-color: #333; color: white; padding: 12px; text-align: left; font-size: 18px;}";
+  html += "th {background-color: #333; color: white; padding: 12px; text-align: left; font-size: 18px; cursor: pointer; position: relative;}";
   html += "td {background-color: #2a2a2a; color: white; padding: 10px; text-align: left; font-size: 16px;}";
   html += "tr:nth-child(even) {background-color: #252525;}";
-
-  // Full row background highlight
-  html += "tr:hover {background-color: #ff6600 !important;}";  // Solid orange highlight on hover
-  html += "tr:hover td {background-color: #ff6600 !important;}"; // Ensure cells have the same highlight
-
+  html += "tr:hover {background-color: #ff6600 !important;}";
+  html += "tr:hover td {background-color: #ff6600 !important;}";
   html += "button {background-color: #ffcc00; color: black; border: none; padding: 12px 20px; font-size: 18px; cursor: pointer; border-radius: 5px; display: block; margin: 20px auto;}";
   html += "button:hover {background-color: #ff9900;}";
   html += "@media (max-width: 768px) { table {width: 100%;} th, td {font-size: 14px; padding: 8px;} }";
   html += ".go-to-bottom {position: fixed; bottom: 30px; right: 30px; background-color: #ffcc00; color: black; border: none; padding: 12px 20px; font-size: 18px; cursor: pointer; border-radius: 5px; z-index: 100;}";
+  html += ".sort-icon {font-size: 18px; position: absolute; right: 10px; top: 50%; transform: translateY(-50%);}";
   html += "</style>";
 
   html += "</head><body>";
@@ -5396,27 +5394,70 @@ void handleRoot() {
   html += "<button onclick=\"window.location.href='/downloadCSV'\">" + String(myLanguage[language][287]) + "</button>";
   html += "<button class=\"go-to-bottom\" onclick=\"scrollToBottom()\">" + String(myLanguage[language][289]) + "</button>";
 
-  // JavaScript for scrolling
+  // JavaScript for scrolling and sorting
   html += "<script>";
   html += "function scrollToBottom() { window.scrollTo(0, document.body.scrollHeight); }";
+
+  // Sorting function with icons
+  html += "function sortTable(columnIndex) {";
+  html += "  var table = document.getElementById('logbookTable');";
+  html += "  var rows = Array.from(table.rows).slice(1);";  // Skip header row
+  html += "  var isAscending = table.rows[0].cells[columnIndex].classList.toggle('asc');";
+  html += "  var headerCells = table.rows[0].cells;";
+  html += "  for (var i = 0; i < headerCells.length; i++) {";
+  html += "    if (i !== columnIndex) { headerCells[i].classList.remove('asc', 'desc'); }";
+  html += "  }";
+  html += "  rows.sort(function(a, b) {";
+  html += "    var cellA = a.cells[columnIndex].textContent.trim();";
+  html += "    var cellB = b.cells[columnIndex].textContent.trim();";
+  html += "    if (isAscending) {";
+  html += "      return cellA > cellB ? 1 : (cellA < cellB ? -1 : 0);";
+  html += "    } else {";
+  html += "      return cellA < cellB ? 1 : (cellA > cellB ? -1 : 0);";
+  html += "    }";
+  html += "  });";
+  html += "  rows.forEach(function(row) { table.appendChild(row); });";  // Reorder rows";
+  html += "  updateSortIcons(columnIndex, isAscending);";  // Update sort icons after sorting
+  html += "}";
+
+  // Function to update the sort icons
+  html += "function updateSortIcons(columnIndex, isAscending) {";
+  html += "  var headers = document.querySelectorAll('th');";
+  html += "  for (var i = 0; i < headers.length; i++) {";
+  html += "    var icon = headers[i].querySelector('.sort-icon');";
+  html += "    if (icon) { icon.remove(); }";  // Remove old icon
+  html += "    if (i === columnIndex) {";
+  html += "      var newIcon = document.createElement('span');";
+  html += "      newIcon.className = 'sort-icon';";
+  html += "      newIcon.textContent = isAscending ? '↑' : '↓';";
+  html += "      headers[i].appendChild(newIcon);";
+  html += "    }";
+  html += "  }";
+  html += "}";
+
   html += "</script>";
 
-  html += "<table>";
+  html += "<table id=\"logbookTable\">";
 
   String header = "";
   if (file.available()) {
     header = file.readStringUntil('\n');
     html += "<tr>";
     int startIndex = 0;
+    int columnIndex = 0;
 
+    // Generate table headers with sorting functionality
     while (startIndex < header.length()) {
       int endIndex = header.indexOf(',', startIndex);
       if (endIndex == -1) endIndex = header.length();
       String column = header.substring(startIndex, endIndex);
 
-      html += "<th>" + column + "</th>";  // Removed sorting symbols
+      // Add clickable headers for sorting
+      html += "<th onclick=\"sortTable(" + String(columnIndex) + ")\">" + column;
+      html += "<span class=\"sort-icon\"></span></th>";  // Sorting icon placeholder
 
       startIndex = endIndex + 1;
+      columnIndex++;
     }
     html += "</tr>";
   }
