@@ -5728,6 +5728,10 @@ void DoMenu() {
               char rabbitearspw [9];
               RabbitearsPassword.toCharArray(rabbitearspw, 9);
               UpdateFonts(1);
+              if (wifi) {
+                wifi = false;
+                tryWiFi();
+              }
               WiFiConnectParam XDRGTK_key_text("Set XDRGTK Password: (max 8 characters)");
               WiFiConnectParam XDRGTK_key_input("XDRGTK_key", "Password", key, 9);
               WiFiConnectParam RabbitearsUser_text("Set rabbitears.info live bandscan user ID");

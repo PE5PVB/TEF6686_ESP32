@@ -150,4 +150,7 @@ extern void startFMDXScan();
 extern void cancelDXScan();
 extern void printLogbookCSV();
 extern void NTPupdate();
+extern void handleRoot();
+extern void handleDownloadCSV();
+extern void handleLogo();
 #endif

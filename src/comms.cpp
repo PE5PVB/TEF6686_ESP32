@@ -911,6 +911,9 @@ void tryWiFi() {
     if (wc.autoConnect()) {
       Server.begin();
       Udp.begin(9031);
+      webserver.on("/", handleRoot);
+      webserver.on("/downloadCSV", HTTP_GET, handleDownloadCSV);
+      webserver.on("/logo.png", handleLogo);
       webserver.begin();
       NTPupdate();
       remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
@@ -927,6 +930,7 @@ void tryWiFi() {
     }
   } else {
     Server.end();
+    webserver.stop();
     Udp.stop();
     WiFi.mode(WIFI_OFF);
   }

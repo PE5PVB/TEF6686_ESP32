@@ -648,10 +648,6 @@ void setup() {
   tft.init();
   tft.initDMA();
 
-  webserver.on("/", handleRoot);
-  webserver.on("/downloadCSV", HTTP_GET, handleDownloadCSV);
-  webserver.on("/logo.png", handleLogo);
-
   doTheme();
 
   if (displayflip == 0) {
