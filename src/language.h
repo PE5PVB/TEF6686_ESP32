@@ -3942,7 +3942,7 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Regione", // 46
     "Europa", // 47
     "America", // 48
-    "Mostra trattino basso in RDS", // 49
+    "Mostra trattino basso\nin RDS", // 49
     "Modalità USB", // 50
     "Wi-Fi attivo", // 51
     "Configura Wi-Fi", // 52
@@ -4110,7 +4110,7 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Fine! Canale di avvio\nimpost. su ignora", // 214
     "Autoordinamento AF", // 215
     "Posizioni in memoria", // 216
-    "Esclusi", // 217
+    "Escluse", // 217
     "Solamente", // 218
     "Uscita automatica scansione", // 219
     "PI corretto", // 220
@@ -4173,22 +4173,22 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Cancellate", // 277
     "Evita PI duplicati", // 278
     "Intervallo", // 279
-    "Piene", // 280
+    "Completo", // 280
     "Tempo di attesa\nsolo con segnale", // 281
     "Premi l'angolo evidenziato", // 282
     "Per calibrare lo schermo touch", // 283
     "Inversione colore schermo", // 284
-    "Select Bandwidth", // 285
-    "Your logbook", // 286
-    "Download logbook", // 287
-    "Logbook is empty", // 288
-    "Go to bottom", // 289
-    "Added to log", // 290
-    "Update failed!", // 291
-    "Clear logbook", // 292
-    "Logbook cleared", // 293
-    "Clear failed", // 294
-    "Set NTP time offset", // 295
+    "Selezionare larghezza di banda", // 285
+    "Il tuo logbook", // 286
+    "Scarica logbook", // 287
+    "Il logbook è vuoto", // 288
+    "Vai alla fine", // 289
+    "Aggiunto al log", // 290
+    "Aggiornamento non riuscito!", // 291
+    "Cancella logbook", // 292
+    "Logbook cancellato", // 293
+    "Cancellazione non riuscita", // 294
+    "Imposta offset orario NTP", // 295
     "Autologger" // 296
   },
 
