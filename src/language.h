@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[18][297] PROGMEM = {
+static const char* const myLanguage[18][298] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -302,7 +302,8 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Logbook cleared", // 293
     "Clear failed", // 294
     "Set NTP time offset", // 295
-    "Autologger" // 296
+    "Autologger", // 296
+    "Logbook full!" // 297
   },
 
   { "Nederlands", // Dutch
@@ -601,7 +602,8 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Logboek geleegd", // 293
     "Legen mislukt", // 294
     "NTP tijdverschil instellen", // 295
-    "Automatisch loggen" // 296
+    "Automatisch loggen", // 296
+    "Logboek vol!" // 297
   },
 
   { "Polski", // Polish
@@ -900,7 +902,8 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Logbook cleared", // 293
     "Clear failed", // 294
     "Set NTP time offset", // 295
-    "Autologger" // 296
+    "Autologger", // 296
+    "Logbook full!" // 297
   },
 
   { "Hrvatski", // Croatian
@@ -1199,7 +1202,8 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Logbook cleared", // 293
     "Clear failed", // 294
     "Set NTP time offset", // 295
-    "Autologger" // 296
+    "Autologger", // 296
+    "Logbook full!" // 297
   },
 
   { "Ελληνικά", // Greek
@@ -1498,7 +1502,8 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Έγινε εκκαθάριση\nτου βιβλίου", // 293
     "Η εκκαθάριση απέτυχε", // 294
     "Ολίσθηση ώρας NTP", // 295
-    "Αυτόματη καταγραφή" // 296
+    "Αυτόματη καταγραφή", // 296
+    "Logbook full!" // 297
   },
 
   { "Română", // Romanian
@@ -1797,7 +1802,8 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Logbook cleared", // 293
     "Clear failed", // 294
     "Set NTP time offset", // 295
-    "Autologger" // 296
+    "Autologger", // 296
+    "Logbook full!" // 297
   },
 
   { "Deutsch", // German
@@ -2096,7 +2102,8 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Logbuch gelöscht", // 293
     "Löschen fehlgeschlagen", // 294
     "NTP-Zeitversatz einstellen", // 295
-    "Autologger" // 296
+    "Autologger", // 296
+    "Logbook full!" // 297
   },
 
   { "Český", // Czech
@@ -2395,7 +2402,8 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Logbook cleared", // 293
     "Clear failed", // 294
     "Set NTP time offset", // 295
-    "Autologger" // 296
+    "Autologger", // 296
+    "Logbook full!" // 297
   },
 
   { "Magyar", // Hungarian
@@ -2694,7 +2702,8 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Logbook cleared", // 293
     "Clear failed", // 294
     "Set NTP time offset", // 295
-    "Autologger" // 296
+    "Autologger", // 296
+    "Logbook full!" // 297
   },
 
   { "Français", // French
@@ -2993,7 +3002,8 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Journal de bord\neffacé", // 293
     "Échec de l'effacement", // 294
     "Décalage horaire NTP", // 295
-    "Journal automatique" // 296
+    "Journal automatique", // 296
+    "Logbook full!" // 297
   },
 
   { "Български", // Bulgarian
@@ -3292,7 +3302,8 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Logbook cleared", // 293
     "Clear failed", // 294
     "Set NTP time offset", // 295
-    "Autologger" // 296
+    "Autologger", // 296
+    "Logbook full!" // 297
   },
 
   { "Русский", // Russian
@@ -3591,7 +3602,8 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Logbook cleared", // 293
     "Clear failed", // 294
     "Set NTP time offset", // 295
-    "Autologger" // 296
+    "Autologger", // 296
+    "Logbook full!" // 297
   },
 
   { "Українська", // Ukranian
@@ -3890,7 +3902,8 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Logbook cleared", // 293
     "Clear failed", // 294
     "Set NTP time offset", // 295
-    "Autologger" // 296
+    "Autologger", // 296
+    "Logbook full!" // 297
   },
 
   { "Italiano", // Italian
@@ -4189,7 +4202,8 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Logbook cancellato", // 293
     "Cancellazione non riuscita", // 294
     "Imposta offset orario NTP", // 295
-    "Autologger" // 296
+    "Autologger", // 296
+    "Logbook full!" // 297
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4488,7 +4502,8 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Logbook cleared", // 293
     "Clear failed", // 294
     "Set NTP time offset", // 295
-    "Autologger" // 296
+    "Autologger", // 296
+    "Logbook full!" // 297
   },
 
   { "Norsk", // Norwegian
@@ -4787,7 +4802,8 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Logbook cleared", // 293
     "Clear failed", // 294
     "Set NTP time offset", // 295
-    "Autologger" // 296
+    "Autologger", // 296
+    "Logbook full!" // 297
   },
 
   { "Español", // Spanish
@@ -5086,7 +5102,8 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Libro de registro\nborrado", // 293
     "Error al borrar", // 294
     "Desfase de tiempo NTP", // 295
-    "Registrador automático" // 296
+    "Registrador automático", // 296
+    "Logbook full!" // 297
   },
 
   { "Português", // Portuguese
@@ -5385,7 +5402,8 @@ static const char* const myLanguage[18][297] PROGMEM = {
     "Livro de registro\nlimpo", // 293
     "Falha ao limpar", // 294
     "Deslocamento de\ntempo NTP", // 295
-    "Registrador automático" // 296
+    "Registrador automático", // 296
+    "Logbook full!" // 297
   }
 };
 #endif

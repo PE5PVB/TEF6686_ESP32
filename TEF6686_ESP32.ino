@@ -1004,7 +1004,12 @@ void loop() {
         ShowMemoryPos();
       } else {
         if (!autologged && autolog && RDSstatus && radio.rds.correctPI != 0) {
-          if (addRowToCSV()) ShowFreq(2); else ShowFreq(3);
+          switch (addRowToCSV()) {
+            case 0: ShowFreq(2); break;
+            case 1: ShowFreq(3); break;
+            case 2: ShowFreq(4); break;
+          }
+
           delay(200);
           while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
           ShowFreq(0);
@@ -2751,7 +2756,11 @@ void ButtonPress() {
           }
         } else {
           if (band < BAND_GAP) {
-            if (addRowToCSV()) ShowFreq(2); else ShowFreq(3);
+            switch (addRowToCSV()) {
+              case 0: ShowFreq(2); break;
+              case 1: ShowFreq(3); break;
+              case 2: ShowFreq(4); break;
+            }
             delay(200);
             while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
             ShowFreq(0);
@@ -3199,6 +3208,13 @@ void ShowFreq(int mode) {
             FrequencySprite.pushSprite(46, 46);
             tftPrint(0, myLanguage[language][291], 146, 58, ActiveColor, ActiveColorSmooth, 28);
             break;
+
+          case 4:
+            FrequencySprite.fillSprite(BackgroundColor);
+            FrequencySprite.pushSprite(46, 46);
+            tftPrint(0, myLanguage[language][297], 146, 58, ActiveColor, ActiveColorSmooth, 28);
+            break;
+
         }
         FrequencySprite.unloadFont();
       }
@@ -5355,128 +5371,155 @@ void toggleiMSEQ() {
 }
 
 void handleRoot() {
-  // Open the logbook file
   fs::File file = SPIFFS.open("/logbook.csv", "r");
   if (!file) {
     webserver.send(500, "text/plain", "Failed to open logbook");
     return;
   }
 
-  // Build HTML response
   String html = "<!DOCTYPE html><html lang=\"en\"><head>";
   html += "<meta charset=\"UTF-8\">";
   html += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">";
+
+  // Add CSS styling
   html += "<style>";
   html += "body {background-color: rgb(32, 34, 40); color: white; font-family: 'Arial', sans-serif;}";
-  html += "h1 {text-align: center; margin-top: 20px; font-size: 32px;}";
+  html += "h1 {text-align: center; margin-top: 20px;font-size: 32px;}";
   html += "img {display: block; margin: 0 auto; max-width: 100%; height: auto; padding-top: 20px; cursor: pointer;}";
-  html += "table {width: 90%; max-width: 1500px; margin: 0 auto; border-radius: 15px; overflow: auto; padding: 20px; background-color: #2e5049; border: 0; border-collapse: separate; border-spacing: 0;}";
+  html += "table {width: 90%; max-width: 1500px; margin: 0 auto; border-radius: 15px; overflow: auto; padding: 20px; background-color: #2e5049; border: 0; border-collapse: separate !important; border-spacing: 0;}";
   html += "thead th {font-size: 18px; cursor: pointer; position: relative; user-select: none; background-color: #3c7f6a;}";
   html += "th, td {padding: 10px; text-align: center;}";
   html += "thead th:first-child, tbody th:first-child {border-radius: 15px 0 0 15px;}";
   html += "thead th:nth-last-of-type(1), tbody th:nth-last-of-type(1) {border-radius: 0 15px 15px 0;}";
   html += "tbody td:nth-child(3) {font-weight: 700;}";
   html += "tbody td:nth-child(5) {color: #ddd;}";
-  html += "tbody td:nth-child(6) {color: #5bd6ab; font-weight: bold;}";
-  html += "thead th:nth-child(2), thead th:nth-child(8) {width: 5%;} thead th:nth-child(1), thead th:nth-child(4) {width: 10%;} thead th:nth-child(3) {width: 15%;}";
-  html += "button {background-color: #4db691; font-family: 'Arial', sans-serif; border: 0; padding: 15px 20px; font-size: 14px; text-transform: uppercase; cursor: pointer; border-radius: 15px; font-weight: bold; color: rgb(32, 34, 40); display: block; margin: 20px auto; transition: 0.3s ease background-color;}";
+  html += "tbody td:nth-child(6) {color: #5bd6ab;font-weight: bold;}";
+  html += "thead th:nth-child(2), thead th:nth-child(8) {width: 5%;}thead th:nth-child(1), thead th:nth-child(4) {width: 10%;}thead th:nth-child(3) {width: 15%;}";
+  html += "button {background-color: #4db691;font-family: 'Arial', sans-serif;border: 0;padding: 15px 20px;font-size: 14px;text-transform: uppercase;cursor: pointer;border-radius: 15px;font-weight: bold;color: rgb(32, 34, 40);display: block;margin: 20px auto;transition: 0.3s ease background-color;}";
   html += "button:hover {background-color: #5bd6ab;}";
+  html += ".go-to-bottom {position: fixed;bottom: 30px;right: 30px;z-index: 100;}";
+  html += ".sort-icon {position: absolute;right: 10px;top: 50%;transform: translateY(-50%);color: #ccc;}";
+  html += "@media (max-width: 768px) {table {width: 100%;}th, td {font-size: 14px;padding: 8px;}}";
   html += "a { text-decoration:none };";
-  html += ".go-to-bottom {position: fixed; bottom: 30px; right: 30px; z-index: 100;}";
-  html += ".sort-icon {position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #ccc;}";
-  html += "@media (max-width: 768px) {table {width: 100%;} th, td {font-size: 14px; padding: 8px;}}";
-  html += "</style></head><body>";
+  html += "</style>";
+  html += "</head><body>";
+
+  // Add logo as a clickable link
   html += "<a href=\"https://fmdx.org/\" target=\"_blank\">";
   html += "<img src=\"/logo.png\" alt=\"FMDX website\">";
   html += "</a>";
+
   html += "<h1>" + String(myLanguage[language][286]) + "</h1>";
   html += "<button onclick=\"window.location.href='/downloadCSV'\">" + String(myLanguage[language][287]) + "</button>";
-  html += "<button class=\"go-to-bottom\" onclick=\"window.scrollTo(0, document.body.scrollHeight);\">" + String(myLanguage[language][289]) + "</button>";
+  html += "<button class=\"go-to-bottom\" onclick=\" window.scrollTo(0, document.body.scrollHeight);\">" + String(myLanguage[language][289]) + "</button>";
+
+  // Sorting function with icons
   html += "<script>";
   html += "function sortTable(columnIndex) {";
   html += "var table = document.getElementById('logbookTable');";
   html += "var rows = Array.from(table.rows).slice(1);";
   html += "var isAscending = table.rows[0].cells[columnIndex].classList.toggle('asc');";
-  html += "Array.from(table.rows[0].cells).forEach((th, index) => { if (index !== columnIndex) th.classList.remove('asc', 'desc'); });";
+  html += "Array.from(table.rows[0].cells).forEach((th, index) => {";
+  html += "if (index !== columnIndex) th.classList.remove('asc', 'desc');});";
   html += "rows.sort((a, b) => {";
   html += "var cellA = a.cells[columnIndex].textContent.trim();";
   html += "var cellB = b.cells[columnIndex].textContent.trim();";
   html += "return isAscending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);});";
   html += "rows.forEach(row => table.appendChild(row));";
   html += "updateSortIcons(columnIndex, isAscending);}";
+
+  // Function to update the sort icons
   html += "function updateSortIcons(columnIndex, isAscending) {";
   html += "document.querySelectorAll('th').forEach((th, index) => {";
   html += "th.querySelector('.sort-icon').textContent = '';";
-  html += "if (index === columnIndex) { th.querySelector('.sort-icon').textContent = isAscending ? '▲' : '▼';}});}";
+  html += "if (index === columnIndex) {";
+  html += "th.querySelector('.sort-icon').textContent = isAscending ? '▲' : '▼';}});}";
   html += "</script>";
 
-  // Generate table header and body
-  html += "<table id=\"logbookTable\"><thead><tr>";
-  String header = file.available() ? file.readStringUntil('\n') : "";
-  if (header.length() > 0) {
+  html += "<table id=\"logbookTable\"><thead>";
+
+  String header = "";
+  if (file.available()) {
+    header = file.readStringUntil('\n');
+    html += "<tr>";
     int startIndex = 0;
     int columnIndex = 0;
+
+    // Generate table headers with sorting functionality
     while (startIndex < header.length()) {
       int endIndex = header.indexOf(',', startIndex);
       if (endIndex == -1) endIndex = header.length();
       String column = header.substring(startIndex, endIndex);
+
+      // Add clickable headers for sorting
       html += "<th onclick=\"sortTable(" + String(columnIndex) + ")\">" + column;
-      html += "<span class=\"sort-icon\"></span></th>";
+      html += "<span class=\"sort-icon\"></span></th>";  // Sorting icon placeholder
+
       startIndex = endIndex + 1;
       columnIndex++;
     }
-    html += "<th></th></tr></thead><tbody>";
+    html += "<th></th></tr><thead><tbody>";
   }
 
-  // Generate table rows
   bool hasData = false;
-  int piCodeIndex = -1;
-  int frequencyIndex = -1;
-  int startIndex = 0;
-  int columnIndex = 0;
+  int piCodeIndex = -1, frequencyIndex = -1;
+
+  // Identify column indices for PI code and Frequency
+  int startIndex = 0, columnIndex = 0;
   while (startIndex < header.length()) {
     int endIndex = header.indexOf(',', startIndex);
     if (endIndex == -1) endIndex = header.length();
     String column = header.substring(startIndex, endIndex);
+
     if (column.equalsIgnoreCase("PI code")) piCodeIndex = columnIndex;
     if (column.equalsIgnoreCase("Frequency")) frequencyIndex = columnIndex;
+
     startIndex = endIndex + 1;
     columnIndex++;
   }
 
+  // Generate rows
   while (file.available()) {
     String line = file.readStringUntil('\n');
     if (line.length() > 0) {
       hasData = true;
       html += "<tr>";
-      String piCode = "";
-      String frequency = "";
-      startIndex = 0;
-      columnIndex = 0;
+
+      String piCode = "", frequency = "";
+      startIndex = 0, columnIndex = 0;
+
       while (startIndex < line.length()) {
         int endIndex = line.indexOf(',', startIndex);
         if (endIndex == -1) endIndex = line.length();
         String cell = line.substring(startIndex, endIndex);
+
+        // Extract PI code and Frequency
         if (columnIndex == piCodeIndex) piCode = cell;
         if (columnIndex == frequencyIndex) frequency = cell;
+
         html += "<td>" + cell + "</td>";
         startIndex = endIndex + 1;
         columnIndex++;
       }
+
+      // Remove " MHz" from Frequency
       frequency.replace(" MHz", "");
-      html += "<td><a href=\"https://maps.fmdx.org/#qth=&freq=" + frequency + "&findPi=" + piCode + "\" target=\"_blank\">🌐</a></td>";
+
+      // Make row clickable
+      html += "<td><a href =\"https://maps.fmdx.org/#qth=&freq=" + frequency + "&findPi=" + piCode + "\"target=\"_blank\">🌐</a></td>";
       html += "</tr>";
     }
   }
 
-  // Handle empty table case
   file.close();
+
   if (!hasData) {
     html += "<tr><td colspan=\"100%\" style=\"text-align: center; color: red;\">" + String(myLanguage[language][288]) + "</td></tr>";
   }
 
-  html += "</tbody></table>";
+  html += "</table>";
   html += "</body></html>";
+
   webserver.send(200, "text/html", html);
 }
 
@@ -5533,76 +5576,74 @@ bool handleCreateNewLogbook() {
   return true;
 }
 
-bool addRowToCSV() {
-  // Check if there is enough free space in SPIFFS (150 bytes or more)
+byte addRowToCSV() {
+  // Ensure there is at least 150 bytes of free space in SPIFFS before proceeding
   if (SPIFFS.totalBytes() - SPIFFS.usedBytes() < 150) {
-    return false;  // Return false if there is less than 150 bytes free
+    return 2;  // Return 2 if insufficient free space is available
   }
 
-  // Open the logbook.csv file in append mode
+  // Open the "logbook.csv" file in append mode
   fs::File file = SPIFFS.open("/logbook.csv", "a");
 
   // Check if the file could not be opened
   if (!file) {
-    return false;  // Return false if the file can't be opened
+    return 1;  // Return 1 if the file cannot be opened
   }
 
-  // Get the current date and time from ESP32 (using the built-in time functions)
-  String currentDateTime = getCurrentDateTime();  // Get the current date and time
+  // Fetch the current date and time as a string
+  String currentDateTime = getCurrentDateTime();
 
-  // If time is not available, replace with "-"
+  // Use a placeholder ("-,-") if the date and time could not be retrieved
   if (currentDateTime == "") {
-    currentDateTime = "-,-";  // Set both date and time to "-"
+    currentDateTime = "-,-";
   }
 
-  // Convert frequency to a string format (XX.XX MHz)
-  int freqInt = (int)frequency;  // Assuming frequency is already a float or double, cast it to int
+  // Prepare the frequency in a formatted string (e.g., "XX.XX MHz")
+  int freqInt = (int)frequency;  // Cast the frequency value to an integer
+  int convertedFreq = (freqInt + ConverterSet * 100) / 100;  // Apply necessary conversion
+  String frequencyFormatted = String(convertedFreq) + "." +
+                              ((freqInt + ConverterSet * 100) % 100 < 10 ? "0" : "") +
+                              String((freqInt + ConverterSet * 100) % 100) + " MHz";
 
-  // Apply the necessary conversion (if any) for frequency
-  int convertedFreq = (freqInt + ConverterSet * 100) / 100;
-  String frequencyFormatted = String(convertedFreq) + "." + ((freqInt + ConverterSet * 100) % 100 < 10 ? "0" : "") + String((freqInt + ConverterSet * 100) % 100) + " MHz";  // Add " MHz"
-
-  // Format the signal strength (xx.x with the correct unit)
+  // Calculate signal strength based on the selected unit
   int SStatusprint = 0;
-  if (unit == 0) SStatusprint = SStatus;
-  if (unit == 1) SStatusprint = ((SStatus * 100) + 10875) / 100;
-  if (unit == 2) SStatusprint = round((float(SStatus) / 10.0 - 10.0 * log10(75) - 90.0) * 10.0);
+  if (unit == 0) SStatusprint = SStatus;  // dBμV
+  if (unit == 1) SStatusprint = ((SStatus * 100) + 10875) / 100;  // dBf
+  if (unit == 2) SStatusprint = round((float(SStatus) / 10.0 - 10.0 * log10(75) - 90.0) * 10.0);  // dBm
 
-  // Choose the correct unit suffix for signal based on the `unit` value
+  // Format the signal strength with appropriate decimal places and unit
   String signal = String(SStatusprint / 10) + "." + String(abs(SStatusprint % 10));
-  if (unit == 0) {
-    signal += " dBμV";  // Unit for unit == 0
-  } else if (unit == 1) {
-    signal += " dBf";   // Unit for unit == 1
-  } else if (unit == 2) {
-    signal += " dBm";   // Unit for unit == 2
-  }
+  if (unit == 0) signal += " dBμV";
+  else if (unit == 1) signal += " dBf";
+  else if (unit == 2) signal += " dBm";
 
-  // Format the RadioText with enhanced option if available
+  // Prepare the radio text with station information, including enhanced options if available
   String radioText = String(radio.rds.stationText + " " + radio.rds.stationText32);
   if (radio.rds.hasEnhancedRT) {
     radioText += " eRT: " + String(radio.rds.enhancedRTtext);
   }
 
-  // Replace commas in the station name and radioText just when adding to the row
+  // Replace commas in the station name and radio text to avoid CSV conflicts
   String stationName = radio.rds.stationName;
   String radioTextModified = radioText;
+  stationName.replace(",", " ");  // Replace commas in station name
+  radioTextModified.replace(",", " ");  // Replace commas in radio text
 
-  stationName.replace(",", " ");  // Temporarily replace commas in stationName
-  radioTextModified.replace(",", " ");  // Temporarily replace commas in radioText
+  // Construct the CSV row data
+  String row = currentDateTime + "," +
+               frequencyFormatted + "," +
+               radio.rds.picode + "," +
+               signal + "," +
+               stationName + "," +
+               radioTextModified + "\n";
 
-  // Create the row data, replacing stationIDtext with picode
-  String row = currentDateTime + "," + frequencyFormatted + "," + radio.rds.picode + "," + signal + "," + stationName + "," + radioTextModified + "\n";
-
-  // Write the row to the CSV file
+  // Write the row to the file and close it
   if (file.print(row)) {
-    // Successfully wrote to the file
-    file.close();
-    return true;  // Return true when the row is successfully added
+    file.close();  // Successfully wrote to the file
+    return 0;  // Return 0 to indicate success
   } else {
-    // Failed to write to the file
-    file.close();
-    return false;  // Return false if there was an issue writing
+    file.close();  // Close the file if writing fails
+    return 1;  // Return 1 to indicate failure
   }
 }
 
