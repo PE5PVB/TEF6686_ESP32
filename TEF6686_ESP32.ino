@@ -5355,177 +5355,128 @@ void toggleiMSEQ() {
 }
 
 void handleRoot() {
+  // Open the logbook file
   fs::File file = SPIFFS.open("/logbook.csv", "r");
   if (!file) {
     webserver.send(500, "text/plain", "Failed to open logbook");
     return;
   }
 
+  // Build HTML response
   String html = "<!DOCTYPE html><html lang=\"en\"><head>";
   html += "<meta charset=\"UTF-8\">";
   html += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">";
-
-  // Add CSS styling
   html += "<style>";
-  html += "body {background-color: #1a1a1a; color: white; font-family: 'Arial', sans-serif; margin: 0; padding: 0;}";
-  html += "h1 {text-align: center; color: #ffffff; margin-top: 20px; font-size: 32px;}";
+  html += "body {background-color: rgb(32, 34, 40); color: white; font-family: 'Arial', sans-serif;}";
+  html += "h1 {text-align: center; margin-top: 20px; font-size: 32px;}";
   html += "img {display: block; margin: 0 auto; max-width: 100%; height: auto; padding-top: 20px; cursor: pointer;}";
-  html += "table {width: 90%; margin: 0 auto; border-collapse: collapse; border-radius: 8px; overflow: hidden;}";
-  html += "th {background-color: #333; color: white; padding: 12px; text-align: left; font-size: 18px; cursor: pointer; position: relative;}";
-  html += "td {background-color: #2a2a2a; color: white; padding: 10px; text-align: left; font-size: 16px;}";
-  html += "tr:nth-child(even) {background-color: #252525;}";
-  html += "tr:hover {background-color: #ff6600 !important;}";
-  html += "tr:hover td {background-color: #ff6600 !important;}";
-  html += "button {background-color: #ffcc00; color: black; border: none; padding: 12px 20px; font-size: 18px; cursor: pointer; border-radius: 5px; display: block; margin: 20px auto;}";
-  html += "button:hover {background-color: #ff9900;}";
-  html += "@media (max-width: 768px) { table {width: 100%;} th, td {font-size: 14px; padding: 8px;} }";
-  html += ".go-to-bottom {position: fixed; bottom: 30px; right: 30px; background-color: #ffcc00; color: black; border: none; padding: 12px 20px; font-size: 18px; cursor: pointer; border-radius: 5px; z-index: 100;}";
-  html += ".sort-icon {font-size: 18px; position: absolute; right: 10px; top: 50%; transform: translateY(-50%);}";
-  html += "</style>";
-
-  html += "</head><body>";
-
-  // Add logo as a clickable link
+  html += "table {width: 90%; max-width: 1500px; margin: 0 auto; border-radius: 15px; overflow: auto; padding: 20px; background-color: #2e5049; border: 0; border-collapse: separate; border-spacing: 0;}";
+  html += "thead th {font-size: 18px; cursor: pointer; position: relative; user-select: none; background-color: #3c7f6a;}";
+  html += "th, td {padding: 10px; text-align: center;}";
+  html += "thead th:first-child, tbody th:first-child {border-radius: 15px 0 0 15px;}";
+  html += "thead th:nth-last-of-type(1), tbody th:nth-last-of-type(1) {border-radius: 0 15px 15px 0;}";
+  html += "tbody td:nth-child(3) {font-weight: 700;}";
+  html += "tbody td:nth-child(5) {color: #ddd;}";
+  html += "tbody td:nth-child(6) {color: #5bd6ab; font-weight: bold;}";
+  html += "thead th:nth-child(2), thead th:nth-child(8) {width: 5%;} thead th:nth-child(1), thead th:nth-child(4) {width: 10%;} thead th:nth-child(3) {width: 15%;}";
+  html += "button {background-color: #4db691; font-family: 'Arial', sans-serif; border: 0; padding: 15px 20px; font-size: 14px; text-transform: uppercase; cursor: pointer; border-radius: 15px; font-weight: bold; color: rgb(32, 34, 40); display: block; margin: 20px auto; transition: 0.3s ease background-color;}";
+  html += "button:hover {background-color: #5bd6ab;}";
+  html += "a { text-decoration:none };";
+  html += ".go-to-bottom {position: fixed; bottom: 30px; right: 30px; z-index: 100;}";
+  html += ".sort-icon {position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #ccc;}";
+  html += "@media (max-width: 768px) {table {width: 100%;} th, td {font-size: 14px; padding: 8px;}}";
+  html += "</style></head><body>";
   html += "<a href=\"https://fmdx.org/\" target=\"_blank\">";
-  html += "<img src=\"/logo.png\" alt=\"FMDX logo\">";
+  html += "<img src=\"/logo.png\" alt=\"FMDX website\">";
   html += "</a>";
-
   html += "<h1>" + String(myLanguage[language][286]) + "</h1>";
   html += "<button onclick=\"window.location.href='/downloadCSV'\">" + String(myLanguage[language][287]) + "</button>";
-  html += "<button class=\"go-to-bottom\" onclick=\"scrollToBottom()\">" + String(myLanguage[language][289]) + "</button>";
-
-  // JavaScript for scrolling and sorting
+  html += "<button class=\"go-to-bottom\" onclick=\"window.scrollTo(0, document.body.scrollHeight);\">" + String(myLanguage[language][289]) + "</button>";
   html += "<script>";
-  html += "function scrollToBottom() { window.scrollTo(0, document.body.scrollHeight); }";
-
-  // Sorting function with icons
   html += "function sortTable(columnIndex) {";
-  html += "  var table = document.getElementById('logbookTable');";
-  html += "  var rows = Array.from(table.rows).slice(1);";  // Skip header row
-  html += "  var isAscending = table.rows[0].cells[columnIndex].classList.toggle('asc');";
-  html += "  var headerCells = table.rows[0].cells;";
-  html += "  for (var i = 0; i < headerCells.length; i++) {";
-  html += "    if (i !== columnIndex) { headerCells[i].classList.remove('asc', 'desc'); }";
-  html += "  }";
-  html += "  rows.sort(function(a, b) {";
-  html += "    var cellA = a.cells[columnIndex].textContent.trim();";
-  html += "    var cellB = b.cells[columnIndex].textContent.trim();";
-  html += "    if (isAscending) {";
-  html += "      return cellA > cellB ? 1 : (cellA < cellB ? -1 : 0);";
-  html += "    } else {";
-  html += "      return cellA < cellB ? 1 : (cellA > cellB ? -1 : 0);";
-  html += "    }";
-  html += "  });";
-  html += "  rows.forEach(function(row) { table.appendChild(row); });";  // Reorder rows";
-  html += "  updateSortIcons(columnIndex, isAscending);";  // Update sort icons after sorting
-  html += "}";
-
-  // Function to update the sort icons
+  html += "var table = document.getElementById('logbookTable');";
+  html += "var rows = Array.from(table.rows).slice(1);";
+  html += "var isAscending = table.rows[0].cells[columnIndex].classList.toggle('asc');";
+  html += "Array.from(table.rows[0].cells).forEach((th, index) => { if (index !== columnIndex) th.classList.remove('asc', 'desc'); });";
+  html += "rows.sort((a, b) => {";
+  html += "var cellA = a.cells[columnIndex].textContent.trim();";
+  html += "var cellB = b.cells[columnIndex].textContent.trim();";
+  html += "return isAscending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);});";
+  html += "rows.forEach(row => table.appendChild(row));";
+  html += "updateSortIcons(columnIndex, isAscending);}";
   html += "function updateSortIcons(columnIndex, isAscending) {";
-  html += "  var headers = document.querySelectorAll('th');";
-  html += "  for (var i = 0; i < headers.length; i++) {";
-  html += "    var icon = headers[i].querySelector('.sort-icon');";
-  html += "    if (icon) { icon.remove(); }";  // Remove old icon
-  html += "    if (i === columnIndex) {";
-  html += "      var newIcon = document.createElement('span');";
-  html += "      newIcon.className = 'sort-icon';";
-  html += "      newIcon.textContent = isAscending ? '↑' : '↓';";
-  html += "      headers[i].appendChild(newIcon);";
-  html += "    }";
-  html += "  }";
-  html += "}";
-
+  html += "document.querySelectorAll('th').forEach((th, index) => {";
+  html += "th.querySelector('.sort-icon').textContent = '';";
+  html += "if (index === columnIndex) { th.querySelector('.sort-icon').textContent = isAscending ? '▲' : '▼';}});}";
   html += "</script>";
 
-  html += "<table id=\"logbookTable\">";
-
-  String header = "";
-  if (file.available()) {
-    header = file.readStringUntil('\n');
-    html += "<tr>";
+  // Generate table header and body
+  html += "<table id=\"logbookTable\"><thead><tr>";
+  String header = file.available() ? file.readStringUntil('\n') : "";
+  if (header.length() > 0) {
     int startIndex = 0;
     int columnIndex = 0;
-
-    // Generate table headers with sorting functionality
     while (startIndex < header.length()) {
       int endIndex = header.indexOf(',', startIndex);
       if (endIndex == -1) endIndex = header.length();
       String column = header.substring(startIndex, endIndex);
-
-      // Add clickable headers for sorting
       html += "<th onclick=\"sortTable(" + String(columnIndex) + ")\">" + column;
-      html += "<span class=\"sort-icon\"></span></th>";  // Sorting icon placeholder
-
+      html += "<span class=\"sort-icon\"></span></th>";
       startIndex = endIndex + 1;
       columnIndex++;
     }
-    html += "</tr>";
+    html += "<th></th></tr></thead><tbody>";
   }
 
+  // Generate table rows
   bool hasData = false;
-  int piCodeIndex = -1, frequencyIndex = -1;
-
-  // Identify column indices for PI code and Frequency
-  int startIndex = 0, columnIndex = 0;
+  int piCodeIndex = -1;
+  int frequencyIndex = -1;
+  int startIndex = 0;
+  int columnIndex = 0;
   while (startIndex < header.length()) {
     int endIndex = header.indexOf(',', startIndex);
     if (endIndex == -1) endIndex = header.length();
     String column = header.substring(startIndex, endIndex);
-
     if (column.equalsIgnoreCase("PI code")) piCodeIndex = columnIndex;
     if (column.equalsIgnoreCase("Frequency")) frequencyIndex = columnIndex;
-
     startIndex = endIndex + 1;
     columnIndex++;
   }
 
-  // Generate rows
   while (file.available()) {
     String line = file.readStringUntil('\n');
     if (line.length() > 0) {
       hasData = true;
       html += "<tr>";
-
-      String piCode = "", frequency = "";
-      startIndex = 0, columnIndex = 0;
-
+      String piCode = "";
+      String frequency = "";
+      startIndex = 0;
+      columnIndex = 0;
       while (startIndex < line.length()) {
         int endIndex = line.indexOf(',', startIndex);
         if (endIndex == -1) endIndex = line.length();
         String cell = line.substring(startIndex, endIndex);
-
-        // Extract PI code and Frequency
         if (columnIndex == piCodeIndex) piCode = cell;
         if (columnIndex == frequencyIndex) frequency = cell;
-
         html += "<td>" + cell + "</td>";
         startIndex = endIndex + 1;
         columnIndex++;
       }
-
-      // Remove " MHz" from Frequency
       frequency.replace(" MHz", "");
-
-      // Make row clickable
-      html += "<script>";
-      html += "document.querySelector('tr:last-child').onclick = function() {";
-      html += "  window.open('https://maps.fmdx.org/#qth=&freq=" + frequency + "&findPi=" + piCode + "', '_blank');";
-      html += "};";
-      html += "</script>";
-
+      html += "<td><a href=\"https://maps.fmdx.org/#qth=&freq=" + frequency + "&findPi=" + piCode + "\" target=\"_blank\">🌐</a></td>";
       html += "</tr>";
     }
   }
 
+  // Handle empty table case
   file.close();
-
   if (!hasData) {
     html += "<tr><td colspan=\"100%\" style=\"text-align: center; color: red;\">" + String(myLanguage[language][288]) + "</td></tr>";
   }
 
-  html += "</table>";
+  html += "</tbody></table>";
   html += "</body></html>";
-
   webserver.send(200, "text/html", html);
 }
 
