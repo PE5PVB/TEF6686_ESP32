@@ -605,12 +605,12 @@ void TEF6686::readRDS(byte showrdserrors) {
           if (showrdserrors == 3 || (!rdsBerrorThreshold && (!rdsDerrorThreshold))) {
             offset = rds.rdsB & 0x03;                                                           // Let's get the character offset for PS
 
-			switch (offset) {
-				case 0: if (((rds.rdsErr >> 8) & 0x03) > 1) rds.ps12error = true; else rds.ps12error = false; break;
-				case 1: if (((rds.rdsErr >> 8) & 0x03) > 1) rds.ps34error = true; else rds.ps34error = false; break;
-				case 2: if (((rds.rdsErr >> 8) & 0x03) > 1) rds.ps56error = true; else rds.ps56error = false; break;
-				case 3: if (((rds.rdsErr >> 8) & 0x03) > 1) rds.ps78error = true; else rds.ps78error = false; break;
-			}
+            switch (offset) {
+              case 0: if (((rds.rdsErr >> 8) & 0x03) > 1) rds.ps12error = true; else rds.ps12error = false; break;
+              case 1: if (((rds.rdsErr >> 8) & 0x03) > 1) rds.ps34error = true; else rds.ps34error = false; break;
+              case 2: if (((rds.rdsErr >> 8) & 0x03) > 1) rds.ps56error = true; else rds.ps56error = false; break;
+              case 3: if (((rds.rdsErr >> 8) & 0x03) > 1) rds.ps78error = true; else rds.ps78error = false; break;
+            }
 
             ps_buffer2[(offset * 2) + 0] = ps_buffer[(offset * 2) + 0];                         // Make a copy of the PS buffer
             ps_buffer2[(offset * 2) + 1] = ps_buffer[(offset * 2) + 1];
@@ -1278,6 +1278,7 @@ void TEF6686::readRDS(byte showrdserrors) {
               }
             }
 
+
             char rt_buffer_temp[129];
             bool found = false;
             strcpy(rt_buffer_temp, rt_buffer32);
@@ -1295,7 +1296,7 @@ void TEF6686::readRDS(byte showrdserrors) {
             RDScharConverter(rt_buffer_temp, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);   // Convert 8 bit ASCII to 16 bit ASCII
             rds.stationText32 = convertToUTF8(RTtext);                                          // Convert RDS characterset to ASCII
             rds.stationText32 = extractUTF8Substring(rds.stationText32, 0, endmarkerRT32, true);// Make sure RT does not exceed 32 characters
-            rds.stationText = trimTrailingSpaces(rds.stationText);                              // Trim empty spaces at the end
+            rds.stationText32 = trimTrailingSpaces(rds.stationText32);                          // Trim empty spaces at the end
           }
         } break;
 

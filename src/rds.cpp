@@ -855,66 +855,99 @@ void showCT() {
 }
 
 void showRadioText() {
-  String RTString = String(radio.rds.stationText + " " + radio.rds.stationText32 + (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : "") + "      ");
+  // Build the radio text string
+  String RTString = String(
+                      radio.rds.stationText +
+                      (radio.rds.stationText.length() > 0 ? " " : "") +
+                      radio.rds.stationText32 +
+                      (radio.rds.hasEnhancedRT ? " eRT: " + String(radio.rds.enhancedRTtext) : "") +
+                      "      "
+                    );
 
+  // Check if RT has changed
   if (radio.rds.hasRT && radio.rds.rtAB != rtABold) {
-    xPos = 0;
-    rttickerhold = millis();
-    rtABold = radio.rds.rtAB;
+    xPos = 0; // Reset ticker position
+    rttickerhold = millis(); // Hold the ticker momentarily
+    rtABold = radio.rds.rtAB; // Update old AB status
   }
 
   if (!screenmute) {
-    if (radio.rds.hasRT && radio.rds.stationText.length() > 0) {
+    // Display RDS information if RT is available
+    if (radio.rds.hasRT &&
+        (radio.rds.stationText.length() > 0 || radio.rds.stationText32.length() > 0)) {
+
+      // Determine whether to use advanced RDS mode
       if (advancedRDS && RDSSprite.textWidth(radio.trimTrailingSpaces(RTString)) < 165) {
         xPos = 0;
         RDSSprite.fillSprite(BackgroundColor);
         RDSSprite.setTextDatum(TL_DATUM);
-        RDSSprite.setTextColor(RDSstatus ? RDSColor : RDSDropoutColor, RDSstatus ? RDSColorSmooth : RDSDropoutColorSmooth, false);
+        RDSSprite.setTextColor(
+          RDSstatus ? RDSColor : RDSDropoutColor,
+          RDSstatus ? RDSColorSmooth : RDSDropoutColorSmooth,
+          false
+        );
         RDSSprite.drawString(RTString, xPos, 2);
         RDSSprite.pushSprite(36, 220);
       } else if (!advancedRDS && RDSSprite.textWidth(radio.trimTrailingSpaces(RTString)) < 270) {
         xPos = 0;
         FullLineSprite.fillSprite(BackgroundColor);
         FullLineSprite.setTextDatum(TL_DATUM);
-        FullLineSprite.setTextColor(RDSstatus ? RDSColor : RDSDropoutColor, RDSstatus ? RDSColorSmooth : RDSDropoutColorSmooth, false);
+        FullLineSprite.setTextColor(
+          RDSstatus ? RDSColor : RDSDropoutColor,
+          RDSstatus ? RDSColorSmooth : RDSDropoutColorSmooth,
+          false
+        );
         FullLineSprite.drawString(RTString, xPos, 2);
         FullLineSprite.fillRect(275, 0, 8, 19, BackgroundColor);
         FullLineSprite.drawLine(283, 0, 283, 19, FrameColor);
+
         if (radio.rds.hasRT) {
           FullLineSprite.fillCircle(278, 3, 2, radio.rds.rtAB ? GreyoutColor : InsignificantColor);
           FullLineSprite.fillCircle(278, 14, 2, radio.rds.rtAB ? InsignificantColor : GreyoutColor);
         }
+
         FullLineSprite.pushSprite(36, 220);
       } else {
+        // Handle scrolling text
         if (millis() - rtticker >= (advancedRDS ? 5 : 15)) {
           if (xPos == 0 && millis() - rttickerhold < 1000) {
-            // Do nothing, just wait
+            // Wait for a moment before scrolling
           } else {
             xPos--;
-            rttickerhold = millis();  // Update hold time only when xPos changes
+            rttickerhold = millis(); // Update hold time only when xPos changes
           }
 
-          if (xPos < -RadiotextWidth) xPos = 0;
+          if (xPos < -RadiotextWidth) xPos = 0; // Reset position if scrolled off
 
           if (advancedRDS) {
             RDSSprite.fillSprite(BackgroundColor);
             RDSSprite.setTextDatum(TL_DATUM);
-            RDSSprite.setTextColor(RDSstatus ? RDSColor : RDSDropoutColor, RDSstatus ? RDSColorSmooth : RDSDropoutColorSmooth, false);
+            RDSSprite.setTextColor(
+              RDSstatus ? RDSColor : RDSDropoutColor,
+              RDSstatus ? RDSColorSmooth : RDSDropoutColorSmooth,
+              false
+            );
             RDSSprite.drawString(RTString, xPos, 2);
             RDSSprite.drawString(RTString, xPos + RadiotextWidth, 2);
             RDSSprite.pushSprite(36, 220);
           } else {
             FullLineSprite.fillSprite(BackgroundColor);
             FullLineSprite.setTextDatum(TL_DATUM);
-            FullLineSprite.setTextColor(RDSstatus ? RDSColor : RDSDropoutColor, RDSstatus ? RDSColorSmooth : RDSDropoutColorSmooth, false);
+            FullLineSprite.setTextColor(
+              RDSstatus ? RDSColor : RDSDropoutColor,
+              RDSstatus ? RDSColorSmooth : RDSDropoutColorSmooth,
+              false
+            );
             FullLineSprite.drawString(RTString, xPos, 2);
             FullLineSprite.drawString(RTString, xPos + RadiotextWidth, 2);
             FullLineSprite.fillRect(275, 0, 8, 19, BackgroundColor);
             FullLineSprite.drawLine(283, 0, 283, 19, FrameColor);
+
             if (radio.rds.hasRT) {
               FullLineSprite.fillCircle(278, 3, 2, radio.rds.rtAB ? GreyoutColor : InsignificantColor);
               FullLineSprite.fillCircle(278, 14, 2, radio.rds.rtAB ? InsignificantColor : GreyoutColor);
             }
+
             FullLineSprite.pushSprite(36, 220);
           }
           rtticker = millis();
@@ -922,27 +955,31 @@ void showRadioText() {
       }
     }
 
+    // Update small indicators for RT AB status
     if (radio.rds.hasRT && advancedRDS) {
       tft.fillCircle(203, 223, 2, radio.rds.rtAB ? GreyoutColor : InsignificantColor);
       tft.fillCircle(203, 234, 2, radio.rds.rtAB ? InsignificantColor : GreyoutColor);
     }
   }
 
+  // Update RTold and RadiotextWidth if the string has changed
   if (RTold != RTString) {
     RadiotextWidth = (advancedRDS ? RDSSprite.textWidth(RTString) : FullLineSprite.textWidth(RTString));
 
     if (wifi) {
       Udp.beginPacket(remoteip, 9030);
       Udp.print("from=TEF_tuner_" + String(stationlistid, DEC) + ";RT1=");
+
       char RThex[65];
       radio.rds.stationText.toCharArray(RThex, 65);
       for (int i = 0; i < 64; i++) {
         if (RThex[i] < 0x10) Udp.print("0");
-        if (RThex[i] == ' ') RThex[i] =  '_';
+        if (RThex[i] == ' ') RThex[i] = '_';
         Udp.print(String(RThex[i], HEX));
       }
       Udp.endPacket();
     }
+
     RTold = RTString;
   }
 }
