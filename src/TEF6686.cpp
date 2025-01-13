@@ -602,7 +602,7 @@ void TEF6686::readRDS(byte showrdserrors) {
       case RDS_GROUP_0B:
         {
           //PS decoder
-          if (showrdserrors == 3 || (!rdsBerrorThreshold && ((rds.rdsErr >> 8) & 0x03) < 3)) {
+          if (showrdserrors == 3 || (!rdsBerrorThreshold && (!rdsDerrorThreshold))) {
             offset = rds.rdsB & 0x03;                                                           // Let's get the character offset for PS
 
 			switch (offset) {
