@@ -892,18 +892,18 @@ static const char* const myLanguage[18][298] PROGMEM = {
     "Aby skalibrować ekran", // 283
     "Inwersja kolorów wyświetlacza", // 284
     "Wybierz szer. pasma", // 285
-    "Your logbook", // 286
-    "Download logbook", // 287
-    "Logbook is empty", // 288
-    "Go to bottom", // 289
-    "Added to log", // 290
-    "Update failed!", // 291
-    "Clear logbook", // 292
-    "Logbook cleared", // 293
-    "Clear failed", // 294
-    "Set NTP time offset", // 295
-    "Autologger", // 296
-    "Logbook full!" // 297
+    "Twój wykaz", // 286
+    "Pobierz wykaz", // 287
+    "Wykaz jest pusty", // 288
+    "Przejdź na dół", // 289
+    "Dodano do wykazu", // 290
+    "Bład aktualizacji!", // 291
+    "Wyczyść wykaz", // 292
+    "Wykaz wyczyszczony", // 293
+    "Błąd wyczyszczenia", // 294
+    "Ustaw odchyl. czasu NTP", // 295
+    "Autologowanie stacji", // 296
+    "Wykaz pełny!" // 297
   },
 
   { "Hrvatski", // Croatian
