@@ -4792,18 +4792,18 @@ static const char* const myLanguage[18][298] PROGMEM = {
     "For å kalibrere berøringsskjerm", // 283
     "Veksle Skjerminversjon", // 284
     "Velg Båndbredde", // 285
-    "Your logbook", // 286
-    "Download logbook", // 287
-    "Logbook is empty", // 288
-    "Go to bottom", // 289
-    "Added to log", // 290
-    "Update failed!", // 291
-    "Clear logbook", // 292
-    "Logbook cleared", // 293
-    "Clear failed", // 294
-    "Set NTP time offset", // 295
+    "Din loggbok", // 286
+    "Last ned loggbok", // 287
+    "Loggboken er tom", // 288
+    "Gå til bunnen", // 289
+    "Lagt til i loggen", // 290
+    "Oppdatering feilet!", // 291
+    "Tøm loggbok", // 292
+    "Loggbok tømt", // 293
+    "Slett mislyktes", // 294
+    "Angi NTP-tidsforskyvning", // 295
     "Autologger", // 296
-    "Logbook full!" // 297
+    "Loggbok full!" // 297
   },
 
   { "Español", // Spanish
