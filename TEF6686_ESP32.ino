@@ -394,6 +394,7 @@ unsigned int frequencyold;
 unsigned int HighEdgeOIRTSet;
 unsigned int HighEdgeSet;
 unsigned int LowEdgeOIRTSet;
+unsigned int logcounter;
 unsigned int LowEdgeSet;
 unsigned int LWHighEdgeSet;
 unsigned int LWLowEdgeSet;
@@ -588,6 +589,7 @@ void setup() {
   autolog = EEPROM.readByte(EE_BYTE_AUTOLOG);
   autoDST = EEPROM.readByte(EE_BYTE_AUTODST);
   clockampm = EEPROM.readByte(EE_BYTE_CLOCKAMPM);
+  logcounter = EEPROM.readUInt(EE_UINT16_LOGCOUNTER);
 
   if (spispeed == SPI_SPEED_DEFAULT) {
     tft.setSPISpeed(SPI_FREQUENCY / 1000000);
@@ -4600,6 +4602,8 @@ void DefaultSettings() {
   }
 
   EEPROM.commit();
+
+  handleCreateNewLogbook();
 }
 
 void tftReplace(int8_t offset, const String & textold, const String & text, int16_t x, int16_t y, int color, int smoothcolor, int background, uint8_t fontsize) {
@@ -5486,40 +5490,45 @@ void handleRoot() {
     columnIndex++;
   }
 
-  // Generate rows
-  while (file.available()) {
-    String line = file.readStringUntil('\n');
-    if (line.length() > 0) {
-      hasData = true;
-      html += "<tr>";
+  if (file.available()) hasData = true;
 
-      String piCode = "", frequency = "";
-      startIndex = 0, columnIndex = 0;
+  if (logcounter < 130) {
+    // Generate rows
+    while (file.available()) {
+      String line = file.readStringUntil('\n');
+      if (line.length() > 0) {
+        html += "<tr>";
 
-      while (startIndex < line.length()) {
-        int endIndex = line.indexOf(',', startIndex);
-        if (endIndex == -1) endIndex = line.length();
-        String cell = line.substring(startIndex, endIndex);
+        String piCode = "", frequency = "";
+        startIndex = 0, columnIndex = 0;
 
-        // Extract PI code and Frequency
-        if (columnIndex == piCodeIndex) piCode = cell;
-        if (columnIndex == frequencyIndex) frequency = cell;
+        while (startIndex < line.length()) {
+          int endIndex = line.indexOf(',', startIndex);
+          if (endIndex == -1) endIndex = line.length();
+          String cell = line.substring(startIndex, endIndex);
 
-        html += "<td>" + cell + "</td>";
-        startIndex = endIndex + 1;
-        columnIndex++;
+          // Extract PI code and Frequency
+          if (columnIndex == piCodeIndex) piCode = cell;
+          if (columnIndex == frequencyIndex) frequency = cell;
+
+          html += "<td>" + cell + "</td>";
+          startIndex = endIndex + 1;
+          columnIndex++;
+        }
+
+        // Remove " MHz" from Frequency
+        frequency.replace(" MHz", "");
+
+        // Make row clickable
+        html += "<td><a href =\"https://maps.fmdx.org/#qth=&freq=" + frequency + "&findPi=" + piCode + "\"target=\"_blank\">🌐</a></td>";
+        html += "</tr>";
       }
-
-      // Remove " MHz" from Frequency
-      frequency.replace(" MHz", "");
-
-      // Make row clickable
-      html += "<td><a href =\"https://maps.fmdx.org/#qth=&freq=" + frequency + "&findPi=" + piCode + "\"target=\"_blank\">🌐</a></td>";
-      html += "</tr>";
     }
-  }
 
-  file.close();
+    file.close();
+  } else {
+    html += "<tr><td colspan=\"100%\" style=\"text-align: center; color: red;\">" + String(myLanguage[language][300]) + "</td></tr>";
+  }
 
   if (!hasData) {
     html += "<tr><td colspan=\"100%\" style=\"text-align: center; color: red;\">" + String(myLanguage[language][288]) + "</td></tr>";
@@ -5580,13 +5589,17 @@ bool handleCreateNewLogbook() {
   file.flush(); // Ensure that everything is written to the file
   file.close(); // Close the file after writing
 
+
+  logcounter = 0; // Reset logcounter
+  EEPROM.writeUInt(EE_UINT16_LOGCOUNTER, logcounter);
+  EEPROM.commit();
   // Return true if the function runs without problems
   return true;
 }
 
 byte addRowToCSV() {
   // Ensure there is at least 150 bytes of free space in SPIFFS before proceeding
-  if (SPIFFS.totalBytes() - SPIFFS.usedBytes() < 150) {
+  if (SPIFFS.totalBytes() - SPIFFS.usedBytes() < 150 || logcounter > 1000) {
     return 2;  // Return 2 if insufficient free space is available
   }
 
@@ -5642,9 +5655,9 @@ byte addRowToCSV() {
   String TP;
   String Stereo;
   String pty;
-  if (radio.rds.hasTA) TA = "•"; else TA = "-";
-  if (radio.rds.hasTP) TP = "•"; else TP = "-";
-  if (radio.getStereoStatus())  Stereo = "•"; else Stereo = "-";
+  if (radio.rds.hasTA) TA = "•"; else TA = "";
+  if (radio.rds.hasTP) TP = "•"; else TP = "";
+  if (radio.getStereoStatus())  Stereo = "•"; else Stereo = "";
   pty = String(radio.rds.stationTypeCode);
 
   // Construct the CSV row data
@@ -5662,6 +5675,9 @@ byte addRowToCSV() {
   // Write the row to the file and close it
   if (file.print(row)) {
     file.close();  // Successfully wrote to the file
+    logcounter++;
+    EEPROM.writeUInt(EE_UINT16_LOGCOUNTER, logcounter);
+    EEPROM.commit();
     return 0;  // Return 0 to indicate success
   } else {
     file.close();  // Close the file if writing fails

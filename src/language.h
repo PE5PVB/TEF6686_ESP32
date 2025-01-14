@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[18][300] PROGMEM = {
+static const char* const myLanguage[18][301] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -305,7 +305,8 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Autologger", // 296
     "Logbook full!", // 297
     "Clock mode", // 298
-    "Auto DST on NTP time" // 299
+    "Auto DST on NTP time", // 299
+    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
   },
 
   { "Nederlands", // Dutch
@@ -607,7 +608,8 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Automatisch loggen", // 296
     "Logboek vol!", // 297
     "Klok methode", // 298
-    "Auto zomertijd\nop NTP tijd" // 299
+    "Auto zomertijd\nop NTP tijd", // 299
+    "Het logboek bevat meer dan 130 items, die de viewer niet kan verwerken. Download alstublieft het CSV-bestand om het te bekijken." // 300
   },
 
   { "Polski", // Polish
@@ -909,7 +911,8 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Autologowanie stacji", // 296
     "Wykaz pełny!", // 297
     "Tryb zegara", // 298
-    "Auto czas letni wg NTP" // 299
+    "Auto czas letni wg NTP", // 299
+    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
   },
 
   { "Hrvatski", // Croatian
@@ -1211,7 +1214,8 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Autologger", // 296
     "Logbook full!", // 297
     "Clock mode", // 298
-    "Auto DST on NTP time" // 299
+    "Auto DST on NTP time", // 299
+    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
   },
 
   { "Ελληνικά", // Greek
@@ -1513,7 +1517,8 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Αυτόματη καταγραφή", // 296
     "Βιβλίο γεμάτο!", // 297
     "Λειτουργία ρολογιού", // 298
-    "Αυτόματο DST\nσε ώρα NTP" // 299
+    "Αυτόματο DST\nσε ώρα NTP", // 299
+    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
   },
 
   { "Română", // Romanian
@@ -1815,7 +1820,8 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Autologger", // 296
     "Logbook full!", // 297
     "Clock mode", // 298
-    "Auto DST on NTP time" // 299
+    "Auto DST on NTP time", // 299
+    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
   },
 
   { "Deutsch", // German
@@ -2117,7 +2123,8 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Autologger", // 296
     "Logbook full!", // 297
     "Clock mode", // 298
-    "Auto DST on NTP time" // 299
+    "Auto DST on NTP time", // 299
+    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
   },
 
   { "Český", // Czech
@@ -2419,7 +2426,8 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Autologger", // 296
     "Logbook full!", // 297
     "Clock mode", // 298
-    "Auto DST on NTP time" // 299
+    "Auto DST on NTP time", // 299
+    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
   },
 
   { "Magyar", // Hungarian
@@ -2721,7 +2729,8 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Autologger", // 296
     "Logbook full!", // 297
     "Clock mode", // 298
-    "Auto DST on NTP time" // 299
+    "Auto DST on NTP time", // 299
+    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
   },
 
   { "Français", // French
@@ -3023,7 +3032,8 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Journal automatique", // 296
     "Journal de bord plein!", // 297
     "Mode horloge", // 298
-    "DST automatique\nsur l'heure NTP" // 299
+    "DST automatique\nsur l'heure NTP", // 299
+    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
   },
 
   { "Български", // Bulgarian
@@ -3325,7 +3335,8 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Autologger", // 296
     "Logbook full!", // 297
     "Clock mode", // 298
-    "Auto DST on NTP time" // 299
+    "Auto DST on NTP time", // 299
+    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
   },
 
   { "Русский", // Russian
@@ -3627,7 +3638,8 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Autologger", // 296
     "Logbook full!", // 297
     "Clock mode", // 298
-    "Auto DST on NTP time" // 299
+    "Auto DST on NTP time", // 299
+    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
   },
 
   { "Українська", // Ukranian
@@ -3929,7 +3941,8 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Autologger", // 296
     "Logbook full!", // 297
     "Clock mode", // 298
-    "Auto DST on NTP time" // 299
+    "Auto DST on NTP time", // 299
+    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
   },
 
   { "Italiano", // Italian
@@ -4231,7 +4244,8 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Autologger", // 296
     "Logbook full!", // 297
     "Clock mode", // 298
-    "Auto DST on NTP time" // 299
+    "Auto DST on NTP time", // 299
+    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4533,7 +4547,8 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Autologger", // 296
     "Logbook full!", // 297
     "Clock mode", // 298
-    "Auto DST on NTP time" // 299
+    "Auto DST on NTP time", // 299
+    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
   },
 
   { "Norsk", // Norwegian
@@ -4835,7 +4850,8 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Autologger", // 296
     "Loggbok full!", // 297
     "Klokkemodus", // 298
-    "Auto sommertid på NTP-tid" // 299
+    "Auto sommertid på NTP-tid", // 299
+    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
   },
 
   { "Español", // Spanish
@@ -5137,7 +5153,8 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Registrador automático", // 296
     "¡Libro lleno!", // 297
     "Modo reloj", // 298
-    "DST automático\nen hora NTP" // 299
+    "DST automático\nen hora NTP", // 299
+    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
   },
 
   { "Português", // Portuguese
@@ -5439,7 +5456,8 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Registrador automático", // 296
     "Livro cheio!", // 297
     "Modo de relógio", // 298
-    "DST automático\nno horário NTP" // 299
+    "DST automático\nno horário NTP", // 299
+    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
   }
 };
 #endif
