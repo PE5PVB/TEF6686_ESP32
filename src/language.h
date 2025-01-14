@@ -2108,7 +2108,7 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Logbuch herunterladen", // 287
     "Logbuch ist leer", // 288
     "Nach unten gehen", // 289
-    "Zum Logbuch hinzugefügt", // 290
+    "Log erstellt", // 290
     "Update fehlgeschlagen", // 291
     "Logbuch löschen", // 292
     "Logbuch gelöscht", // 293
