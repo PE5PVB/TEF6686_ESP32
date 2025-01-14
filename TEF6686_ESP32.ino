@@ -5573,7 +5573,7 @@ bool handleCreateNewLogbook() {
   }
 
   // Write the header to the new CSV file
-  String header = "Date,Time,Frequency,PI code,Signal,PS,RadioText\n";
+  String header = "Date,Time,Frequency,PI code,Signal,Stereo,TA,TP,PTY,PS,RadioText\n";
   file.print(header); // Ensure that the header is written properly
 
   // Make sure the data is written before closing the file
@@ -5637,11 +5637,25 @@ byte addRowToCSV() {
   stationName.replace(",", " ");  // Replace commas in station name
   radioTextModified.replace(",", " ");  // Replace commas in radio text
 
+  // Handle PTY, TA, TP and Stereo flag
+  String TA;
+  String TP;
+  String Stereo;
+  String pty;
+  if (radio.rds.hasTA) TA = "•"; else TA = "-";
+  if (radio.rds.hasTP) TP = "•"; else TP = "-";
+  if (radio.getStereoStatus())  Stereo = "•"; else Stereo = "-";
+  pty = String(radio.rds.stationTypeCode);
+
   // Construct the CSV row data
   String row = currentDateTime + "," +
                frequencyFormatted + "," +
                radio.rds.picode + "," +
                signal + "," +
+               Stereo + "," +
+               TA + "," +
+               TP + "," +
+               pty + "," +
                stationName + "," +
                radioTextModified + "\n";
 
