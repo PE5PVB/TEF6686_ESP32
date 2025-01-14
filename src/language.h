@@ -908,8 +908,8 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Ustaw odchyl. czasu NTP", // 295
     "Autologowanie stacji", // 296
     "Wykaz pełny!", // 297
-    "Clock mode", // 298
-    "Auto DST on NTP time" // 299
+    "Tryb zegara", // 298
+    "Auto czas letni wg NTP" // 299
   },
 
   { "Hrvatski", // Croatian
