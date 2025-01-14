@@ -5689,7 +5689,7 @@ String getCurrentDateTime() {
   char buf[20];
 
   if (clockampm) {
-    // USA format: MM/DD/YYYY, HH:MM AM/PM
+    // USA format: MM/DD/YYYY, HH:MM:SS AM/PM
     strftime(buf, sizeof(buf), "%m/%d/%Y", &timeInfo);  // Format as MM/DD/YYYY
 
     // Format time in 12-hour format with AM/PM
@@ -5698,14 +5698,14 @@ String getCurrentDateTime() {
     if (hour == 0) hour = 12;  // Convert 0 hour to 12 AM
     else if (hour > 12) hour -= 12;  // Convert to 12-hour format for PM
 
-    String timeWithAMPM = String(hour) + ":" + (timeInfo.tm_min < 10 ? "0" : "") + String(timeInfo.tm_min) + " " + ampm;
+    String timeWithAMPM = String(hour) + ":" + (timeInfo.tm_min < 10 ? "0" : "") + String(timeInfo.tm_min) + ":" + (timeInfo.tm_sec < 10 ? "0" : "") + String(timeInfo.tm_sec) + " " + ampm;
 
     // Return the final formatted date and time for the USA region
     return String(buf) + "," + timeWithAMPM;
   } else {
-    // European format: DD-MM-YYYY, HH:MM
+    // European format: DD-MM-YYYY, HH:MM:SS
     strftime(buf, sizeof(buf), "%d-%m-%Y", &timeInfo);  // Format as DD-MM-YYYY
-    String timeEuropean = String(timeInfo.tm_hour) + ":" + (timeInfo.tm_min < 10 ? "0" : "") + String(timeInfo.tm_min); // Format time with leading zero if needed
+    String timeEuropean = String(timeInfo.tm_hour) + ":" + (timeInfo.tm_min < 10 ? "0" : "") + String(timeInfo.tm_min) + ":" + (timeInfo.tm_sec < 10 ? "0" : "") + String(timeInfo.tm_sec); // Format time with leading zero if needed
     return String(buf) + "," + timeEuropean;
   }
 }
