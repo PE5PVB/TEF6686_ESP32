@@ -4834,8 +4834,8 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Angi NTP-tidsforskyvning", // 295
     "Autologger", // 296
     "Loggbok full!", // 297
-    "Clock mode", // 298
-    "Auto DST on NTP time" // 299
+    "Klokkemodus", // 298
+    "Auto sommertid på NTP-tid" // 299
   },
 
   { "Español", // Spanish
