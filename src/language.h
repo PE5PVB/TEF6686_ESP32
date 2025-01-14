@@ -1507,13 +1507,13 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Προστέθηκε στις καταγραφές", // 290
     "Η ενημέρωση απέτυχε!", // 291
     "Εκκαθάριση βιβλίου\nκαταγραφών", // 292
-    "Έγινε εκκαθάριση\nτου βιβλίου", // 293
-    "Η εκκαθάριση απέτυχε", // 294
+    "Εκκαθαρίστηκε", // 293
+    "Αποτυχία εκκαθάρισης", // 294
     "Ολίσθηση ώρας NTP", // 295
     "Αυτόματη καταγραφή", // 296
-    "Logbook full!", // 297
-    "Clock mode", // 298
-    "Auto DST on NTP time" // 299
+    "Βιβλίο γεμάτο!", // 297
+    "Λειτουργία ρολογιού", // 298
+    "Αυτόματο DST\nσε ώρα NTP" // 299
   },
 
   { "Română", // Romanian
@@ -3017,13 +3017,13 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Ajouté au journal", // 290
     "Mise à jour échouée!", // 291
     "Effacer le journal\nde bord", // 292
-    "Journal de bord\neffacé", // 293
-    "Échec de l'effacement", // 294
+    "Journal effacé", // 293
+    "Échec", // 294
     "Décalage horaire NTP", // 295
     "Journal automatique", // 296
-    "Logbook full!", // 297
-    "Clock mode", // 298
-    "Auto DST on NTP time" // 299
+    "Journal de bord plein!", // 297
+    "Mode horloge", // 298
+    "DST automatique\nsur l'heure NTP" // 299
   },
 
   { "Български", // Bulgarian
@@ -5131,13 +5131,13 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Añadido al registro", // 290
     "¡Actualización fallida!", // 291
     "Borrar libro\nde registro", // 292
-    "Libro de registro\nborrado", // 293
+    "Libro borrado", // 293
     "Error al borrar", // 294
     "Desfase de tiempo NTP", // 295
     "Registrador automático", // 296
-    "Logbook full!", // 297
-    "Clock mode", // 298
-    "Auto DST on NTP time" // 299
+    "¡Libro lleno!", // 297
+    "Modo reloj", // 298
+    "DST automático\nen hora NTP" // 299
   },
 
   { "Português", // Portuguese
@@ -5433,13 +5433,13 @@ static const char* const myLanguage[18][300] PROGMEM = {
     "Adicionado ao registro", // 290
     "Falha na atualização!", // 291
     "Limpar livro\nde registro", // 292
-    "Livro de registro\nlimpo", // 293
+    "Livro limpo", // 293
     "Falha ao limpar", // 294
     "Deslocamento de\ntempo NTP", // 295
     "Registrador automático", // 296
-    "Logbook full!", // 297
-    "Clock mode", // 298
-    "Auto DST on NTP time" // 299
+    "Livro cheio!", // 297
+    "Modo de relógio", // 298
+    "DST automático\nno horário NTP" // 299
   }
 };
 #endif
