@@ -1504,6 +1504,16 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.drawString(String(amscansens), 298, 2);
           break;
 
+        case CONNECTIVITY:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][298]), 6, 2);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((clockampm ? "12" : "24"), 298, 2);
+          break;
+
         case DXMODE:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -2585,6 +2595,15 @@ void ShowOneButton(byte position, byte item, bool selected) {
 
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           PSSprite.drawString(String(amscansens), 75, 15);
+          break;
+
+        case CONNECTIVITY:
+          PSSprite.setTextDatum(TC_DATUM);
+          PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          PSSprite.drawString(shortLine(removeNewline(myLanguage[language][298])), 75, 1);
+
+          PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          PSSprite.drawString((clockampm ? "12" : "24"), 75, 15);
           break;
 
         case DXMODE:
@@ -3826,6 +3845,13 @@ void MenuUp() {
             OneBigLineSprite.drawString((autoDST ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
+
+          case ITEM9:
+            clockampm = !clockampm;
+
+            OneBigLineSprite.drawString((clockampm ? "12" : "24"), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
         }
         break;
 
@@ -4802,6 +4828,13 @@ void MenuDown() {
             autoDST = !autoDST;
 
             OneBigLineSprite.drawString((autoDST ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM9:
+            clockampm = !clockampm;
+
+            OneBigLineSprite.drawString((clockampm ? "12" : "24"), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }
@@ -5838,6 +5871,13 @@ void DoMenu() {
             Infoboxprint(myLanguage[language][299]);
 
             OneBigLineSprite.drawString((autoDST ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM9:
+            Infoboxprint(myLanguage[language][298]);
+
+            OneBigLineSprite.drawString((clockampm ? "12" : "24"), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }

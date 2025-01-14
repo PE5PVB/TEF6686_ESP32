@@ -73,6 +73,7 @@ bool BWreset;
 bool bwtouchtune;
 bool BWtune;
 bool change;
+bool clockampm;
 bool compressedold;
 bool direction;
 bool dropout;
@@ -189,7 +190,7 @@ byte amgain;
 byte freqoldcount;
 byte HighCutLevel;
 byte HighCutOffset;
-byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 8, 10, 9};
+byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 9, 10, 9};
 byte iMSEQ;
 byte iMSset;
 byte language;
@@ -586,6 +587,7 @@ void setup() {
   NTPoffset = EEPROM.readByte(EE_BYTE_NTPOFFSET);
   autolog = EEPROM.readByte(EE_BYTE_AUTOLOG);
   autoDST = EEPROM.readByte(EE_BYTE_AUTODST);
+  clockampm = EEPROM.readByte(EE_BYTE_CLOCKAMPM);
 
   if (spispeed == SPI_SPEED_DEFAULT) {
     tft.setSPISpeed(SPI_FREQUENCY / 1000000);
@@ -4568,6 +4570,7 @@ void DefaultSettings() {
   EEPROM.writeByte(EE_BYTE_NTPOFFSET, 1);
   EEPROM.writeByte(EE_BYTE_AUTOLOG, 1);
   EEPROM.writeByte(EE_BYTE_AUTODST, 1);
+  EEPROM.writeByte(EE_BYTE_CLOCKAMPM, 0);
 
 #ifdef DEEPELEC_DP_66X
   EEPROM.writeByte(EE_BYTE_ROTARYMODE, 1);
@@ -4820,6 +4823,7 @@ void endMenu() {
   EEPROM.writeByte(EE_BYTE_NTPOFFSET, NTPoffset);
   EEPROM.writeByte(EE_BYTE_AUTOLOG, autolog);
   EEPROM.writeByte(EE_BYTE_AUTODST, autoDST);
+  EEPROM.writeByte(EE_BYTE_CLOCKAMPM, clockampm);
   EEPROM.commit();
   if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
   Serial.end();
@@ -5684,7 +5688,7 @@ String getCurrentDateTime() {
   // Buffer for formatted date-time string
   char buf[20];
 
-  if (radio.rds.region == 1) {
+  if (clockampm) {
     // USA format: MM/DD/YYYY, HH:MM AM/PM
     strftime(buf, sizeof(buf), "%m/%d/%Y", &timeInfo);  // Format as MM/DD/YYYY
 

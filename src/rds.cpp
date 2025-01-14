@@ -809,7 +809,7 @@ void showCT() {
   }
 
   // Format the time based on region
-  if (radio.rds.region == 1) { // USA region: 12-hour AM/PM format
+  if (clockampm) { // USA region: 12-hour AM/PM format
     // Determine AM/PM and adjust hour format
     int hour = localtime(&t)->tm_hour;
     String ampm = (hour >= 12) ? "PM" : "AM";

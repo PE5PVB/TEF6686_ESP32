@@ -22,6 +22,7 @@ extern bool autosquelch;
 extern bool BWreset;
 extern bool BWtune;
 extern bool change;
+extern bool clockampm;
 extern bool compressedold;
 extern bool dropout;
 extern bool dynamicPTYold;

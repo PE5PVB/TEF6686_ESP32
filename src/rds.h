@@ -18,6 +18,7 @@ extern bool artheadold;
 extern bool BWreset;
 extern bool compressedold;
 extern bool clearrds;
+extern bool clockampm;
 extern bool dropout;
 extern bool dynamicPTYold;
 extern bool fullsearchrds;
