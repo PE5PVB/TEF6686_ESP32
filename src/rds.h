@@ -13,6 +13,7 @@ extern bool afmethodBold;
 extern bool afpage;
 extern bool afscreen;
 extern bool aftest;
+extern bool autoDST;
 extern bool artheadold;
 extern bool BWreset;
 extern bool compressedold;
@@ -154,4 +155,5 @@ extern void ShowRDSLogo(bool RDSstatus);
 extern void DataPrint(String string);
 extern void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize);
 extern void tftReplace(int8_t offset, const String & textold, const String & text, int16_t x, int16_t y, int color, int smoothcolor, int background, uint8_t fontsize);
+extern bool isDST(time_t t);
 #endif

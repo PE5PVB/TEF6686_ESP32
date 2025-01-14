@@ -16,6 +16,7 @@ extern bool afmethodBold;
 extern bool afpage;
 extern bool afscreen;
 extern bool artheadold;
+extern bool autoDST;
 extern bool autolog;
 extern bool autosquelch;
 extern bool BWreset;

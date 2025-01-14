@@ -801,6 +801,11 @@ void showCT() {
   // Apply the GMT offset only if NTPupdated is true
   if (NTPupdated) {
     t += NTPoffset * 3600; // Convert offset from hours to seconds
+
+    // Apply DST adjustment if autoDST is enabled
+    if (autoDST && isDST(t)) {
+      t += 3600; // Add 1 hour for DST
+    }
   }
 
   // Format the time based on region

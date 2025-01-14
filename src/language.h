@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[18][298] PROGMEM = {
+static const char* const myLanguage[18][300] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -303,7 +303,9 @@ static const char* const myLanguage[18][298] PROGMEM = {
     "Clear failed", // 294
     "Set NTP time offset", // 295
     "Autologger", // 296
-    "Logbook full!" // 297
+    "Logbook full!", // 297
+    "Clock mode", // 298
+    "Auto DST on NTP time" // 299
   },
 
   { "Nederlands", // Dutch
@@ -601,9 +603,11 @@ static const char* const myLanguage[18][298] PROGMEM = {
     "Logboek legen", // 292
     "Logboek geleegd", // 293
     "Legen mislukt", // 294
-    "NTP tijdverschil instellen", // 295
+    "NTP tijdverschil\ninstellen", // 295
     "Automatisch loggen", // 296
-    "Logboek vol!" // 297
+    "Logboek vol!", // 297
+    "Klok methode", // 298
+    "Auto zomertijd\nop NTP tijd" // 299
   },
 
   { "Polski", // Polish
@@ -903,7 +907,9 @@ static const char* const myLanguage[18][298] PROGMEM = {
     "Błąd wyczyszczenia", // 294
     "Ustaw odchyl. czasu NTP", // 295
     "Autologowanie stacji", // 296
-    "Wykaz pełny!" // 297
+    "Wykaz pełny!", // 297
+    "Clock mode", // 298
+    "Auto DST on NTP time" // 299
   },
 
   { "Hrvatski", // Croatian
@@ -1203,7 +1209,9 @@ static const char* const myLanguage[18][298] PROGMEM = {
     "Clear failed", // 294
     "Set NTP time offset", // 295
     "Autologger", // 296
-    "Logbook full!" // 297
+    "Logbook full!", // 297
+    "Clock mode", // 298
+    "Auto DST on NTP time" // 299
   },
 
   { "Ελληνικά", // Greek
@@ -1503,7 +1511,9 @@ static const char* const myLanguage[18][298] PROGMEM = {
     "Η εκκαθάριση απέτυχε", // 294
     "Ολίσθηση ώρας NTP", // 295
     "Αυτόματη καταγραφή", // 296
-    "Logbook full!" // 297
+    "Logbook full!", // 297
+    "Clock mode", // 298
+    "Auto DST on NTP time" // 299
   },
 
   { "Română", // Romanian
@@ -1803,7 +1813,9 @@ static const char* const myLanguage[18][298] PROGMEM = {
     "Clear failed", // 294
     "Set NTP time offset", // 295
     "Autologger", // 296
-    "Logbook full!" // 297
+    "Logbook full!", // 297
+    "Clock mode", // 298
+    "Auto DST on NTP time" // 299
   },
 
   { "Deutsch", // German
@@ -2103,7 +2115,9 @@ static const char* const myLanguage[18][298] PROGMEM = {
     "Löschen fehlgeschlagen", // 294
     "NTP-Zeitversatz einstellen", // 295
     "Autologger", // 296
-    "Logbook full!" // 297
+    "Logbook full!", // 297
+    "Clock mode", // 298
+    "Auto DST on NTP time" // 299
   },
 
   { "Český", // Czech
@@ -2403,7 +2417,9 @@ static const char* const myLanguage[18][298] PROGMEM = {
     "Clear failed", // 294
     "Set NTP time offset", // 295
     "Autologger", // 296
-    "Logbook full!" // 297
+    "Logbook full!", // 297
+    "Clock mode", // 298
+    "Auto DST on NTP time" // 299
   },
 
   { "Magyar", // Hungarian
@@ -2703,7 +2719,9 @@ static const char* const myLanguage[18][298] PROGMEM = {
     "Clear failed", // 294
     "Set NTP time offset", // 295
     "Autologger", // 296
-    "Logbook full!" // 297
+    "Logbook full!", // 297
+    "Clock mode", // 298
+    "Auto DST on NTP time" // 299
   },
 
   { "Français", // French
@@ -3003,7 +3021,9 @@ static const char* const myLanguage[18][298] PROGMEM = {
     "Échec de l'effacement", // 294
     "Décalage horaire NTP", // 295
     "Journal automatique", // 296
-    "Logbook full!" // 297
+    "Logbook full!", // 297
+    "Clock mode", // 298
+    "Auto DST on NTP time" // 299
   },
 
   { "Български", // Bulgarian
@@ -3303,7 +3323,9 @@ static const char* const myLanguage[18][298] PROGMEM = {
     "Clear failed", // 294
     "Set NTP time offset", // 295
     "Autologger", // 296
-    "Logbook full!" // 297
+    "Logbook full!", // 297
+    "Clock mode", // 298
+    "Auto DST on NTP time" // 299
   },
 
   { "Русский", // Russian
@@ -3603,7 +3625,9 @@ static const char* const myLanguage[18][298] PROGMEM = {
     "Clear failed", // 294
     "Set NTP time offset", // 295
     "Autologger", // 296
-    "Logbook full!" // 297
+    "Logbook full!", // 297
+    "Clock mode", // 298
+    "Auto DST on NTP time" // 299
   },
 
   { "Українська", // Ukranian
@@ -3903,7 +3927,9 @@ static const char* const myLanguage[18][298] PROGMEM = {
     "Clear failed", // 294
     "Set NTP time offset", // 295
     "Autologger", // 296
-    "Logbook full!" // 297
+    "Logbook full!", // 297
+    "Clock mode", // 298
+    "Auto DST on NTP time" // 299
   },
 
   { "Italiano", // Italian
@@ -4203,7 +4229,9 @@ static const char* const myLanguage[18][298] PROGMEM = {
     "Cancellazione non riuscita", // 294
     "Imposta offset orario NTP", // 295
     "Autologger", // 296
-    "Logbook full!" // 297
+    "Logbook full!", // 297
+    "Clock mode", // 298
+    "Auto DST on NTP time" // 299
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4503,7 +4531,9 @@ static const char* const myLanguage[18][298] PROGMEM = {
     "Clear failed", // 294
     "Set NTP time offset", // 295
     "Autologger", // 296
-    "Logbook full!" // 297
+    "Logbook full!", // 297
+    "Clock mode", // 298
+    "Auto DST on NTP time" // 299
   },
 
   { "Norsk", // Norwegian
@@ -4803,7 +4833,9 @@ static const char* const myLanguage[18][298] PROGMEM = {
     "Slett mislyktes", // 294
     "Angi NTP-tidsforskyvning", // 295
     "Autologger", // 296
-    "Loggbok full!" // 297
+    "Loggbok full!", // 297
+    "Clock mode", // 298
+    "Auto DST on NTP time" // 299
   },
 
   { "Español", // Spanish
@@ -5103,7 +5135,9 @@ static const char* const myLanguage[18][298] PROGMEM = {
     "Error al borrar", // 294
     "Desfase de tiempo NTP", // 295
     "Registrador automático", // 296
-    "Logbook full!" // 297
+    "Logbook full!", // 297
+    "Clock mode", // 298
+    "Auto DST on NTP time" // 299
   },
 
   { "Português", // Portuguese
@@ -5403,7 +5437,9 @@ static const char* const myLanguage[18][298] PROGMEM = {
     "Falha ao limpar", // 294
     "Deslocamento de\ntempo NTP", // 295
     "Registrador automático", // 296
-    "Logbook full!" // 297
+    "Logbook full!", // 297
+    "Clock mode", // 298
+    "Auto DST on NTP time" // 299
   }
 };
 #endif

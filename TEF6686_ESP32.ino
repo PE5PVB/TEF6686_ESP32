@@ -62,6 +62,7 @@ bool afpage;
 bool afscreen;
 bool aftest;
 bool artheadold;
+bool autoDST;
 bool autolog;
 bool autologged;
 bool autosquelch = true;
@@ -188,7 +189,7 @@ byte amgain;
 byte freqoldcount;
 byte HighCutLevel;
 byte HighCutOffset;
-byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 7, 10, 9};
+byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 8, 10, 9};
 byte iMSEQ;
 byte iMSset;
 byte language;
@@ -584,6 +585,7 @@ void setup() {
   invertdisplay = EEPROM.readByte(EE_BYTE_INVERTDISPLAY);
   NTPoffset = EEPROM.readByte(EE_BYTE_NTPOFFSET);
   autolog = EEPROM.readByte(EE_BYTE_AUTOLOG);
+  autoDST = EEPROM.readByte(EE_BYTE_AUTODST);
 
   if (spispeed == SPI_SPEED_DEFAULT) {
     tft.setSPISpeed(SPI_FREQUENCY / 1000000);
@@ -4565,6 +4567,7 @@ void DefaultSettings() {
   EEPROM.writeUInt(EE_UINT16_CALTOUCH5, 3);
   EEPROM.writeByte(EE_BYTE_NTPOFFSET, 1);
   EEPROM.writeByte(EE_BYTE_AUTOLOG, 1);
+  EEPROM.writeByte(EE_BYTE_AUTODST, 1);
 
 #ifdef DEEPELEC_DP_66X
   EEPROM.writeByte(EE_BYTE_ROTARYMODE, 1);
@@ -4816,6 +4819,7 @@ void endMenu() {
   EEPROM.writeByte(EE_BYTE_WAITONLYONSIGNAL, scanholdonsignal);
   EEPROM.writeByte(EE_BYTE_NTPOFFSET, NTPoffset);
   EEPROM.writeByte(EE_BYTE_AUTOLOG, autolog);
+  EEPROM.writeByte(EE_BYTE_AUTODST, autoDST);
   EEPROM.commit();
   if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
   Serial.end();
@@ -5661,8 +5665,21 @@ String getCurrentDateTime() {
 
   // Adjust timeInfo using the GMT offset
   time_t currentEpoch = mktime(&timeInfo);  // Convert struct tm to time_t format
+
+  // Calculate GMT offset
   currentEpoch += (NTPupdated ? NTPoffset * 3600 : radio.rds.offset); // Apply GMT offset if NTPupdated, else RDS offset
-  localtime_r(&currentEpoch, &timeInfo);   // Convert adjusted time back to struct tm format
+
+  // Apply DST adjustment if NTPupdated and autoDST are true
+  if (NTPupdated && autoDST) {
+    struct tm tempTimeInfo;
+    localtime_r(&currentEpoch, &tempTimeInfo); // Convert to struct tm for DST calculation
+    if (isDST(mktime(&tempTimeInfo))) { // Check if DST is in effect
+      currentEpoch += 3600; // Add 1-hour DST offset
+    }
+  }
+
+  // Convert adjusted time back to struct tm format
+  localtime_r(&currentEpoch, &timeInfo);
 
   // Buffer for formatted date-time string
   char buf[20];
@@ -5687,6 +5704,39 @@ String getCurrentDateTime() {
     String timeEuropean = String(timeInfo.tm_hour) + ":" + (timeInfo.tm_min < 10 ? "0" : "") + String(timeInfo.tm_min); // Format time with leading zero if needed
     return String(buf) + "," + timeEuropean;
   }
+}
+
+bool isDST(time_t t) {
+  struct tm timeInfo;
+  localtime_r(&t, &timeInfo); // Convert time_t to struct tm
+
+  int month = timeInfo.tm_mon + 1; // tm_mon is 0-based, so add 1
+  int day = timeInfo.tm_mday;     // tm_mday is the day of the month
+  int hour = timeInfo.tm_hour;    // tm_hour is the hour of the day
+  int weekday = timeInfo.tm_wday; // tm_wday is the day of the week (0 = Sunday)
+
+  // DST starts last Sunday in March at 2:00 AM
+  if (month == 3) {
+    int lastSunday = 31 - ((weekday + 31 - day) % 7);
+    if (day > lastSunday || (day == lastSunday && hour >= 2)) {
+      return true;
+    }
+  }
+
+  // DST ends last Sunday in October at 3:00 AM
+  if (month == 10) {
+    int lastSunday = 31 - ((weekday + 31 - day) % 7);
+    if (day < lastSunday || (day == lastSunday && hour < 3)) {
+      return false;
+    }
+  }
+
+  // DST is active from April to September
+  if (month > 3 && month < 10) {
+    return true;
+  }
+
+  return false;
 }
 
 void handleLogo() {
