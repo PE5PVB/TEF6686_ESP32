@@ -2119,11 +2119,11 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "Logbuch löschen", // 292
     "Logbuch gelöscht", // 293
     "Löschen fehlgeschlagen", // 294
-    "NTP-Zeitversatz einstellen", // 295
+    "NTP-Zeitversatz\neinstellen", // 295
     "Automatisch loggen", // 296
     "Logbuch ist voll!", // 297
-    "Uhr-Modus", // 298
-    "Auto-Sommerzeit über NTP", // 299
+    "Uhrzeit-Modus", // 298
+    "Auto-Sommerzeit\nüber NTP", // 299
     "Das Logbuch enthält mehr als 130 Einträge, was der Viewer nicht verarbeiten kann. Bitte lade die CSV-Datei zum Verarbeiten herunter." // 300
   },
 
