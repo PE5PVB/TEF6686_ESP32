@@ -74,14 +74,14 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "FM Noise blanker", // 65
     "Defaults loaded", // 66
     "Audio output", // 67
-    "Allow tuning\nduring screensaver", // 68
+    "Allow tuning without\ndeactivating screensaver", // 68
     "Invert display", // 69
     "About software", // 70
     "Main code:", // 71
     "Contributors:", // 72
     "Unknown", // 73
     "Screensaver options", // 74
-    "Time-out timer", // 75
+    "Auto Power off", // 75
     "Screen off", // 76
     "Theme", // 77
     "Skin", // 78
@@ -113,7 +113,7 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotating while screen off", // 107
+    "Stop screen wake on tune", // 107
     "Model selector", // 108
     "Base", // 109
     "Portable", // 110
@@ -232,7 +232,7 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "AIR", // 223
     "5 sec. bandbutton press", // 224
     "Power off", // 225
-    "Mute screen", // 226
+    "Screen off", // 226
     "Disabled", // 227
     "None", // 228
     "News", // 229
