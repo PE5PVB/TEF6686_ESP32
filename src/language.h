@@ -2113,18 +2113,18 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "Dein Logbuch", // 286
     "Logbuch herunterladen", // 287
     "Logbuch ist leer", // 288
-    "Nach unten gehen", // 289
-    "Log erstellt", // 290
-    "Update fehlgeschlagen", // 291
+    "Zum Ende gehen", // 289
+    "Logbuch-Eintrag erstellt", // 290
+    "Log fehlgeschlagen", // 291
     "Logbuch löschen", // 292
     "Logbuch gelöscht", // 293
     "Löschen fehlgeschlagen", // 294
     "NTP-Zeitversatz einstellen", // 295
-    "Autologger", // 296
-    "Logbook full!", // 297
-    "Clock mode", // 298
-    "Auto DST on NTP time", // 299
-    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
+    "Automatisch loggen", // 296
+    "Logbuch ist voll!", // 297
+    "Uhr-Modus", // 298
+    "Auto-Sommerzeit über NTP", // 299
+    "Das Logbuch enthält mehr als 130 Einträge, was der Viewer nicht verarbeiten kann. Bitte lade die CSV-Datei zum Verarbeiten herunter." // 300
   },
 
    { "Čeština", // Czech
