@@ -4851,7 +4851,7 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "Loggbok full!", // 297
     "Klokkemodus", // 298
     "Auto sommertid på NTP-tid", // 299
-    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
+    "Loggboken inneholder over 130 oppføringer, som en ikke kan behandle. Last ned CSV-filen for å behandle den." // 300
   },
 
   { "Español", // Spanish
