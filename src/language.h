@@ -2127,7 +2127,7 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
   },
 
-  { "Český", // Czech
+   { "Čeština", // Czech
     "Směr enkodéru byl změněn", // 1
     "Prosím, pusťte tlačítko", // 2
     "Obrazovka otočena", // 3
@@ -2141,7 +2141,7 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "Konvertor:", // 11
     "Spodek pásma:", // 12
     "Vrch pásma:", // 13
-    "FM Offset signálu:", // 14
+    "FM offset signálu:", // 14
     "Práh pro stereo:", // 15
     "Práh frekvence zvuku\nk utlumení:", // 16
     "Práh signálu pro utlumení\nvysokých tónů:", // 17
@@ -2239,63 +2239,63 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "Základní", // 109
     "Přenosný", // 110
     "Přenosný-dotykový(ILI9341)", // 111
-    "Title", // 112
+    "Název", // 112
     "Album", // 113
-    "Track", // 114
-    "Artist", // 115
-    "Composition", // 116
-    "Movement", // 117
-    "Conductor", // 118
-    "Composer", // 119
-    "Band", // 120
-    "Comment", // 121
-    "Genre", // 122
-    "News", // 123
-    "Local news", // 124
-    "Stockmarket", // 125
+    "Stopa", // 114
+    "Interpret", // 115
+    "Kompozice", // 116
+    "Věta", // 117
+    "Dirigent", // 118
+    "Skladatel", // 119
+    "Kapela", // 120
+    "Komentář", // 121
+    "Žánr", // 122
+    "Zprávy", // 123
+    "Místní zprávy", // 124
+    "Burza", // 125
     "Sport", // 126
-    "Lottery", // 127
-    "Horoscope", // 128
-    "Daily Diversion", // 129
-    "Health", // 130
-    "Event", // 131
-    "Scene", // 132
-    "Cinema", // 133
-    "TV", // 134
-    "Date/time", // 135
-    "Weather", // 136
-    "Traffic", // 137
+    "Loterie", // 127
+    "Horoskop", // 128
+    "Každodenní zábava", // 129
+    "Zdraví", // 130
+    "Událost", // 131
+    "Scéna", // 132
+    "Kino", // 133
+    "Televize", // 134
+    "Datum/čas", // 135
+    "Počasí", // 136
+    "Doprava", // 137
     "Alarm", // 138
-    "Advertisement", // 139
-    "Website", // 140
-    "Other", // 141
+    "Reklama", // 139
+    "Webová stránka", // 140
+    "Ostatní", // 141
     "Short PS", // 142
     "Long PS", // 143
-    "Now", // 144
-    "Next", // 145
-    "Part", // 146
-    "Host", // 147
-    "Editor", // 148
-    "Frequency", // 149
-    "Homepage", // 150
-    "Subchannel", // 151
-    "Hotline", // 152
-    "Studio phone", // 153
-    "Phone", // 154
-    "SMS studio", // 155
+    "Nyní", // 144
+    "Následuje", // 145
+    "Část", // 146
+    "Moderátor", // 147
+    "Redaktor", // 148
+    "Frekvence", // 149
+    "Hlavní stránka", // 150
+    "Podkanál", // 151
+    "Horká linka", // 152
+    "Telefon do studia", // 153
+    "Telefon", // 154
+    "SMS do studia", // 155
     "SMS", // 156
-    "Email hotline", // 157
-    "Email studio", // 158
+    "Emailová hotline", // 157
+    "Email do studia", // 158
     "Email", // 159
     "Chat", // 160
-    "Chat centre", // 161
-    "Vote question", // 162
-    "Vote centre", // 163
-    "Place", // 164
-    "Appointment", // 165
-    "Identifier", // 166
-    "Purchase", // 167
-    "Get data", // 168
+    "Centrum chatu", // 161
+    "Hlasovací otázka", // 162
+    "Hlasovací centrum", // 163
+    "Místo", // 164
+    "Schůzka", // 165
+    "Identifikátor", // 166
+    "Nákup", // 167
+    "Získat data", // 168
     "Výchozí krok ladění MW", // 169
     "Tangerine", // 170
     "Ocean", // 171
@@ -2390,44 +2390,44 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "Počáteční", // 260
     "Vždy", //261
     "Zobrazit hodiny", // 262
-    "Show long PS", // 263
-    "Start frequency", // 264
-    "Stop frequency", // 265
-    "Start memory channel", // 266
-    "Stop memory channel", // 267
-    "Only store with RDS", // 268
-    "Start auto memory", // 269
-    "Auto memory", // 270
-    "Stationlist ID", // 271
-    "Found", // 272
-    "Abort! Out of memorychannels", // 273
-    "Abort! User pressed button", // 274
-    "Scan finished without errors", // 275
-    "Clear memory channels", // 276
-    "cleared", // 277
-    "Prevent double PI", // 278
-    "Range", // 279
-    "Full", // 280
-    "Wait time on\nsignal only", // 281
-    "Press highlighted corner", // 282
-    "To calibrate touchscreen", // 283
-    "Screen inversion toggles", // 284
-    "Select Bandwidth", // 285
-    "Your logbook", // 286
-    "Download logbook", // 287
-    "Logbook is empty", // 288
-    "Go to bottom", // 289
-    "Added to log", // 290
-    "Update failed!", // 291
-    "Clear logbook", // 292
-    "Logbook cleared", // 293
-    "Clear failed", // 294
-    "Set NTP time offset", // 295
-    "Autologger", // 296
-    "Logbook full!", // 297
-    "Clock mode", // 298
-    "Auto DST on NTP time", // 299
-    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
+    "Zobrazit long PS", // 263
+    "Počáteční frekvence", // 264
+    "Poslední frekvence", // 265
+    "Počáteční paměťový kanál", // 266
+    "Poslední paměťový kanál", // 267
+    "Ukládat jen s RDS", // 268
+    "Spustit automatickou paměť", // 269
+    "Automatická paměť", // 270
+    "ID seznamu stanic", // 271
+    "Nalezeno", // 272
+    "Přerušeno! Nedostatek paměťových kanálů", // 273
+    "Přerušeno! Uživatel stiskl tlačítko", // 274
+    "Skenování dokončen bez chyb", // 275
+    "Vymazat paměťové kanály", // 276
+    "vymazáno", // 277
+    "Zamezit dvojitému PI", // 278
+    "Rozsah", // 279
+    "Plný", // 280
+    "Čekací doba pouze na\nsignal", // 281
+    "Stiskněte zvýrazněný roh", // 282
+    "Pro kalibraci dotekové obrazovky", // 283
+    "Přepínání inverze obrazovky", // 284
+    "Vyberte šířku pásma", // 285
+    "Váš logbook", // 286
+    "Stáhnout logbook", // 287
+    "Logbook je prázdný", // 288
+    "Přejít na konec", // 289
+    "Přidáno do logu", // 290
+    "Aktualizace selhala!", // 291
+    "Vymazat logbook", // 292
+    "Logbook vymazán", // 293
+    "Vymazání se nezdařilo", // 294
+    "Nastavte časový posun NTP", // 295
+    "Automatický logger", // 296
+    "Logbook je plný!", // 297
+    "Režim hodin", // 298
+    "Automatický letní čas u NTP času", // 299
+    "Logbook obsahuje více než 130 položek, které prohlížeč nedokáže zpracovat. Pro zpracování všech položek si stáhněte CSV soubor." // 300
   },
 
   { "Magyar", // Hungarian
