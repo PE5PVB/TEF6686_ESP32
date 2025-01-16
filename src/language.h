@@ -912,7 +912,7 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "Wykaz pełny!", // 297
     "Tryb zegara", // 298
     "Auto czas letni wg NTP", // 299
-    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
+    "Wykaz zawiera ponad 130 wpisów, których przeglądarka nie może pokazać. Pobierz plik CSV, aby je przetworzyć." // 300
   },
 
   { "Hrvatski", // Croatian
