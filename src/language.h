@@ -1518,7 +1518,7 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "Βιβλίο γεμάτο!", // 297
     "Λειτουργία ρολογιού", // 298
     "Αυτόματο DST\nσε ώρα NTP", // 299
-    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
+    "Το βιβλίο περιέχει πάνω από 130 καταγραφές, και είναι αδύνατη η επεξεργασία τους από το χρήστη. Κάντε λήψη του αρχείου CSV για να το επεξεργαστείτε." // 300
   },
 
   { "Română", // Romanian
@@ -3033,7 +3033,7 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "Journal de bord plein!", // 297
     "Mode horloge", // 298
     "DST automatique\nsur l'heure NTP", // 299
-    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
+    "Le journal de bord contient plus de 130 entrées que le spectateur ne peut pas traiter. Télécharger le fichier CSV pour le traiter." // 300
   },
 
   { "Български", // Bulgarian
@@ -5154,7 +5154,7 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "¡Libro lleno!", // 297
     "Modo reloj", // 298
     "DST automático\nen hora NTP", // 299
-    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
+    "El libro de registro contiene más de 130 entradas que el visor no puede procesar. Descargue el archivo CSV para procesarlo." // 300
   },
 
   { "Português", // Portuguese
@@ -5457,7 +5457,7 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "Livro cheio!", // 297
     "Modo de relógio", // 298
     "DST automático\nno horário NTP", // 299
-    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 300
+    "O diário de bordo contém mais de 130 entradas que o espectador não consegue processar. Descarregue o ficheiro CSV para processá-lo." // 300
   }
 };
 #endif
