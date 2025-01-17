@@ -591,6 +591,7 @@ void setup() {
   clockampm = EEPROM.readByte(EE_BYTE_CLOCKAMPM);
   logcounter = EEPROM.readUInt(EE_UINT16_LOGCOUNTER);
 
+#ifdef DYNAMIC_SPI_SPEED
   if (spispeed == SPI_SPEED_DEFAULT) {
     tft.setSPISpeed(SPI_FREQUENCY / 1000000);
   } else if (spispeed == 7) {
@@ -598,6 +599,7 @@ void setup() {
   } else {
     tft.setSPISpeed(spispeed * 10);
   }
+#endif
 
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX;
@@ -2546,7 +2548,9 @@ void ModeButtonPress() {
             menuoption = ITEM1;
             menupage = INDEX;
             menuitem = 0;
+#ifdef DYNAMIC_SPI_SPEED
             if (spispeed == 7) tft.setSPISpeed(40);
+#endif
             PSSprite.unloadFont();
             if (language == LANGUAGE_CHS) PSSprite.loadFont(FONT16_CHS); else PSSprite.loadFont(FONT16);
             BuildMenu();
@@ -3009,7 +3013,9 @@ void ShowMemoryPos() {
 }
 
 void DoMemoryPosTune() {
+#ifdef DYNAMIC_SPI_SPEED
   if (spispeed == 7) tft.setSPISpeed(50);
+#endif
   radio.clearRDS(fullsearchrds);
 
   // Process empty stations
@@ -4921,6 +4927,7 @@ void rabbitearssend () {
 }
 
 void setAutoSpeedSPI() {
+#ifdef DYNAMIC_SPI_SPEED
   switch (frequency / 10) {
     case 875 ... 877: tft.setSPISpeed(28); break;
     case 878 ... 881: tft.setSPISpeed(24); break;
@@ -4965,6 +4972,7 @@ void setAutoSpeedSPI() {
     case 1076 ... 1080: tft.setSPISpeed(15); break;
     default: tft.setSPISpeed(30); break;
   }
+#endif
 }
 
 uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, uint8_t stopmem, bool rdsonly, uint8_t doublepi) {
@@ -5298,7 +5306,9 @@ void NumpadProcess(int num) {
       menuoption = ITEM1;
       menupage = DXMODE;
       menuitem = 0;
+#ifdef DYNAMIC_SPI_SPEED
       if (spispeed == 7) tft.setSPISpeed(40);
+#endif
       submenu = true;
       menu = true;
       PSSprite.unloadFont();

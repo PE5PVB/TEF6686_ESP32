@@ -3223,7 +3223,7 @@ void MenuUp() {
               OneBigLineSprite.drawString((spispeed == SPI_SPEED_DEFAULT ? String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC) : String(spispeed * 10, DEC)), 160, 0);
             }
             OneBigLineSprite.pushSprite(24, 118);
-
+#ifdef DYNAMIC_SPI_SPEED
             if (spispeed == SPI_SPEED_DEFAULT) {
               tft.setSPISpeed(SPI_FREQUENCY / 1000000);
             } else if (spispeed == 7) {
@@ -3231,6 +3231,7 @@ void MenuUp() {
             } else {
               tft.setSPISpeed(spispeed * 10);
             }
+#endif
             break;
         }
         break;
@@ -4206,7 +4207,7 @@ void MenuDown() {
               OneBigLineSprite.drawString((spispeed == SPI_SPEED_DEFAULT ? String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC) : String(spispeed * 10, DEC)), 160, 0);
             }
             OneBigLineSprite.pushSprite(24, 118);
-
+#ifdef DYNAMIC_SPI_SPEED
             if (spispeed == SPI_SPEED_DEFAULT) {
               tft.setSPISpeed(SPI_FREQUENCY / 1000000);
             } else if (spispeed == 7) {
@@ -4214,8 +4215,8 @@ void MenuDown() {
             } else {
               tft.setSPISpeed(spispeed * 10);
             }
+#endif
             break;
-
         }
         break;
 
