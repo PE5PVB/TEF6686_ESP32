@@ -1376,6 +1376,7 @@ void loop() {
   }
 
   if (digitalRead(EXT_IRQ) == LOW) {
+    if (screensavertriggered) WakeToSleep(REVERSE);
     int num;
     num = GetNum();
     if (num != -1)
@@ -4846,10 +4847,11 @@ void endMenu() {
   PSSprite.setTextDatum(TL_DATUM);
   BuildDisplay();
   SelectBand();
-  ScreensaverTimerRestart();
 }
 
 void startFMDXScan() {
+  ScreensaverTimerSet(screensaverOptions[screensaverset]);
+  if (screensaverset) ScreensaverTimerRestart();
   initdxscan = true;
   scanholdflag = false;
   autologged = false;
