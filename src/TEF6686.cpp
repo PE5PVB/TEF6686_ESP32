@@ -481,7 +481,7 @@ void TEF6686::readRDS(byte showrdserrors) {
       // USA Station callsign decoder
       if (ps_process && rds.correctPI != 0 && rds.region == 1 && correctPIold != rds.correctPI) {
         bool foundMatch = false;
-        File file;
+        fs::File file;
 
         if (SPIFFS.begin(true)) {
           delay(5);
