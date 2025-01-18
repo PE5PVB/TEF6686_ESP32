@@ -1293,7 +1293,7 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "Συνεργάτες:", // 72
     "Άγνωστο", // 73
     "Επιλογές προστασίας\nοθόνης", // 74
-    "Χρονοδιακόπτης λήξης", // 75
+    "Αυτόματο σβήσιμο", // 75
     "Οθόνη σβηστή", // 76
     "Θέμα", // 77
     "Γραφικό\nπεριβάλλον", // 78
@@ -1325,7 +1325,7 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Περιστροφή με οθόνη\nσβηστή", // 107
+    "Μη αφύπνιση\nκατά τον συντονισμό", // 107
     "Επιλογή μοντέλου", // 108
     "Βασικό", // 109
     "Φορητό", // 110
@@ -2801,14 +2801,14 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "Réducteur de bruit FM", // 65
     "Paramètres par défaut\nchargés", // 66
     "Sortie audio", // 67
-    "Réglage pendant\nl'économiseur d'écran", // 68
+    "Réglage sans\ndésactiver l'économiseur", // 68
     "Inverser l'affichage", // 69
     "À propos du logiciel", // 70
     "Code principal :", // 71
     "Contributeurs :", // 72
     "Inconnu", // 73
     "Options d'économiseur\nd'écran", // 74
-    "Temporisateur", // 75
+    "Arrêt automatique", // 75
     "Affichage éteint", // 76
     "Thème", // 77
     "Skin", // 78
@@ -2840,7 +2840,7 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotation lorsque\nl'écran est éteint", // 107
+    "Arrêter l'écran\nlors du réglage", // 107
     "Sélecteur de modèle", // 108
     "Base", // 109
     "Portable", // 110
@@ -2959,7 +2959,7 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "AIR", // 223
     "Appui sur le bouton\nband 5 sec.", // 224
     "Éteindre", // 225
-    "Écran muet", // 226
+    "Écran éteint", // 226
     "Inactif", // 227
     "Non défini", // 228
     "Informations", // 229
@@ -4922,14 +4922,14 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "Atenuador de\nruido FM", // 65
     "Carga de configuración\npredeterminada", // 66
     "Salida de audio", // 67
-    "Sintonización durante\nel protector", // 68
+    "Sintonización sin\ndesactivar el protector", // 68
     "Invertir pantalla", // 69
     "Acerca del software", // 70
     "Código principal:", // 71
     "Colaboradores:", // 72
     "Desconocido", // 73
     "Opciones de protector\nde pantalla", // 74
-    "Temporizador de\ntiempo muerto", // 75
+    "Apagado automático", // 75
     "Apagar pantalla", // 76
     "Tema", // 77
     "Skin", // 78
@@ -4961,7 +4961,7 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotación con\npantalla apagada", // 107
+    "Detener pantalla\nal sintonizar", // 107
     "Selector de modelo", // 108
     "Base", // 109
     "Portátil", // 110
@@ -5080,7 +5080,7 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "AIR", // 223
     "Presione el botón\nband durante 5 seg.", // 224
     "Apagado", // 225
-    "Pantalla silenciosa", // 226
+    "Apagar pantalla", // 226
     "Inactivo", // 227
     "No definido", // 228
     "Noticias", // 229
@@ -5225,14 +5225,14 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "Supressor de ruído FM", // 65
     "Padrões carregados", // 66
     "Saída de áudio", // 67
-    "Sintonização com\nproteção de tela", // 68
+    "Ajuste sem\ndesativar o protetor", // 68
     "Inverter a tela", // 69
     "Sobre o software", // 70
     "Código principal:", // 71
     "Contribuidores:", // 72
     "Desconhecido", // 73
     "Opções de proteção\nde tela", // 74
-    "Temporizador de\ndesligamento", // 75
+    "Desligamento automático", // 75
     "Desligar a tela", // 76
     "Tema", // 77
     "Skin", // 78
@@ -5264,7 +5264,7 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotativo enquanto a tela\nestá desligada", // 107
+    "Parar tela de despertar\nao sintonizar", // 107
     "Seletor de modelo", // 108
     "Básico", // 109
     "Portátil", // 110
@@ -5383,7 +5383,7 @@ static const char* const myLanguage[18][301] PROGMEM = {
     "AIR", // 223
     "Pressione o botão\nbanda por 5 seg.", // 224
     "Desligar", // 225
-    "Silenciar tela", // 226
+    "Tela desligado", // 226
     "Inativo", // 227
     "Não definido", // 228
     "Notícias", // 229
