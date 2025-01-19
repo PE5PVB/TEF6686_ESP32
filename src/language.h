@@ -189,7 +189,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "RDS settings", // 180
     "FM settings", // 181
     "AM settings", // 182
-    "Connectivity", // 183
+    "Connectivity & clock", // 183
     "PRESS MODE TO RETURN", // 184
     "CoChannel Detector", // 185
     "CoChannel Detector\nsensitivity", // 186
@@ -494,7 +494,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "RDS instellingen", // 180
     "FM instellingen", // 181
     "AM instellingen", // 182
-    "Connectiviteit", // 183
+    "Connectiviteit & klok", // 183
     "MODE OM TERUG TE GAAN", // 184
     "CoChannel Detectie", // 185
     "CoChannel Detectie\ngevoeligheid", // 186
@@ -1794,44 +1794,44 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Inițial", // 260
     "Mereu", //261
     "Arată ceasul", // 262
-    "Show long PS", // 263
-    "Start frequency", // 264
-    "Stop frequency", // 265
-    "Start memory channel", // 266
-    "Stop memory channel", // 267
-    "Only store with RDS", // 268
-    "Start auto memory", // 269
-    "Auto memory", // 270
+    "Arată PS extins", // 263
+    "Frecvenţă Start", // 264
+    "Frecvenţă Stop", // 265
+    "Start memorare de la", // 266
+    "Stop memorare la", // 267
+    "Memorare doar cu RDS", // 268
+    "Start auto memorare", // 269
+    "Auto memorare", // 270
     "Listă ID posturi", // 271
-    "Found", // 272
-    "Abort! Out of memorychannels", // 273
-    "Abort! User pressed button", // 274
-    "Scan finished without errors", // 275
-    "Clear memory channels", // 276
-    "cleared", // 277
-    "Prevent double PI", // 278
-    "Range", // 279
-    "Full", // 280
-    "Wait time on\nsignal only", // 281
-    "Press highlighted corner", // 282
-    "To calibrate touchscreen", // 283
-    "Screen inversion toggles", // 284
-    "Select Bandwidth", // 285
-    "Your logbook", // 286
-    "Download logbook", // 287
-    "Logbook is empty", // 288
-    "Go to bottom", // 289
-    "Added to log", // 290
-    "Update failed!", // 291
-    "Clear logbook", // 292
-    "Logbook cleared", // 293
-    "Clear failed", // 294
-    "Set NTP time offset", // 295
-    "Autologger", // 296
-    "Logbook full!", // 297
-    "Clock mode", // 298
-    "Auto DST on NTP time", // 299
-    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
+    "Gasit", // 272
+    "Anulat! Lipsa spaţiu memorare", // 273
+    "Anulat de catre utilizator!", // 274
+    "Scan finalizat fără erori", // 275
+    "Ştergeţi posturile memorate", // 276
+    "Şterse", // 277
+    "Fără PI duplicat", // 278
+    "Interval", // 279
+    "Complet", // 280
+    "Oprire la prezentă semnal", // 281
+    "Apăsaţi pe coltul indicat", // 282
+    "Calibrare ecran tactil", // 283
+    "Inversie ecran", // 284
+    "Selectaţi Bandwidth", // 285
+    "Jurnal recepţie", // 286
+    "Descărcare Jurnal", // 287
+    "Jurnal golit", // 288
+    "Spre capăt listă", // 289
+    "Adăugat la Jurnal", // 290
+    "Actualizare eșuată!", // 291
+    "Golire Jurnal", // 292
+    "Jurnal golit", // 293
+    "Golire eșuată", // 294
+    "Setare fus orar", // 295
+    "Auto Jurnal", // 296
+    "Jurnal plin!", // 297
+    "Mod ceas", // 298
+    "Auto DST in mod NTP", // 299
+    "Jurnalul conţine peste 130 înregistrări, acestea nu pot fi vizualizate. Vă rugam descărcaţi Jurnalul ca fișier CSV.", // 300
     "PI locked CT sync", // 301
     "Error! No RDS signal" // 302
   },
