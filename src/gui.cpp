@@ -1588,6 +1588,21 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.drawString(String(fmscansens), 298, 2);
           break;
 
+
+        case CONNECTIVITY:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(myLanguage[language][301]), 6, 2);
+
+          char PICT[5];
+          sprintf(PICT, "%04X", radio.rds.PICTlock);
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((radio.rds.PICTlock == 0 ? myLanguage[language][30] : myLanguage[language][42]), 298, 2);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString((radio.rds.PICTlock != 0 ? String(PICT) : ""), 258, 2);
+          break;
+
         case DXMODE:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -2677,6 +2692,29 @@ void ShowOneButton(byte position, byte item, bool selected) {
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           PSSprite.drawString(String(fmscansens), 75, 15);
           break;
+
+        case CONNECTIVITY:
+          PSSprite.setTextDatum(TC_DATUM);
+          PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          PSSprite.drawString(shortLine(removeNewline(myLanguage[language][301])), 75, 1);
+
+
+          if (radio.rds.PICTlock == 0) {
+            PSSprite.setTextDatum(TC_DATUM);
+            PSSprite.drawString(myLanguage[language][30], 75, 15);
+          } else {
+            char PICT[5];
+            sprintf(PICT, "%04X", radio.rds.PICTlock);
+
+            PSSprite.setTextDatum(TL_DATUM);
+            PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+            PSSprite.drawString(myLanguage[language][42], 77, 15);
+            PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+            PSSprite.setTextDatum(TR_DATUM);
+            PSSprite.drawString(String(PICT), 73, 15);
+          }
+          break;
+
 
         case DXMODE:
           PSSprite.setTextDatum(TC_DATUM);
@@ -3853,6 +3891,32 @@ void MenuUp() {
             OneBigLineSprite.drawString((clockampm ? "12" : "24"), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
+
+          case ITEM10:
+            char PICT[5];
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+
+            if (radio.rds.PICTlock != 0) {
+              OneBigLineSprite.setTextDatum(TC_DATUM);
+              OneBigLineSprite.drawString(myLanguage[language][30], 135, 0);
+              radio.rds.PICTlock = 0;
+            } else {
+              if (radio.rds.correctPI != 0) {
+                radio.rds.PICTlock = radio.rds.correctPI;
+                sprintf(PICT, "%04X", radio.rds.PICTlock);
+                OneBigLineSprite.setTextDatum(TR_DATUM);
+                OneBigLineSprite.drawString(myLanguage[language][42], 135, 0);
+                OneBigLineSprite.setTextDatum(TL_DATUM);
+                OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+                OneBigLineSprite.drawString(String(PICT), 155, 0);
+              } else {
+                OneBigLineSprite.setTextDatum(TC_DATUM);
+                OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+                OneBigLineSprite.drawString(myLanguage[language][302], 135, 0);
+              }
+            }
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
         }
         break;
 
@@ -4836,6 +4900,32 @@ void MenuDown() {
             clockampm = !clockampm;
 
             OneBigLineSprite.drawString((clockampm ? "12" : "24"), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
+
+          case ITEM10:
+            char PICT[5];
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+
+            if (radio.rds.PICTlock != 0) {
+              OneBigLineSprite.setTextDatum(TC_DATUM);
+              OneBigLineSprite.drawString(myLanguage[language][30], 135, 0);
+              radio.rds.PICTlock = 0;
+            } else {
+              if (radio.rds.correctPI != 0) {
+                radio.rds.PICTlock = radio.rds.correctPI;
+                sprintf(PICT, "%04X", radio.rds.PICTlock);
+                OneBigLineSprite.setTextDatum(TR_DATUM);
+                OneBigLineSprite.drawString(myLanguage[language][42], 135, 0);
+                OneBigLineSprite.setTextDatum(TL_DATUM);
+                OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+                OneBigLineSprite.drawString(String(PICT), 155, 0);
+              } else {
+                OneBigLineSprite.setTextDatum(TC_DATUM);
+                OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+                OneBigLineSprite.drawString(myLanguage[language][302], 135, 0);
+              }
+            }
             OneBigLineSprite.pushSprite(24, 118);
             break;
         }
@@ -5881,6 +5971,25 @@ void DoMenu() {
             OneBigLineSprite.drawString((clockampm ? "12" : "24"), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
+
+          case ITEM10:
+            Infoboxprint(myLanguage[language][301]);
+
+            char PICT[5];
+            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+
+            if (radio.rds.PICTlock == 0) {
+              OneBigLineSprite.setTextDatum(TC_DATUM);
+              OneBigLineSprite.drawString(myLanguage[language][30], 135, 0);
+            } else {
+              sprintf(PICT, "%04X", radio.rds.PICTlock);
+              OneBigLineSprite.setTextDatum(TR_DATUM);
+              OneBigLineSprite.drawString(myLanguage[language][42], 135, 0);
+              OneBigLineSprite.setTextDatum(TL_DATUM);
+              OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+              OneBigLineSprite.drawString(String(PICT), 155, 0);
+            }
+            OneBigLineSprite.pushSprite(24, 118);
         }
         break;
 

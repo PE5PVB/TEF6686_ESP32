@@ -191,7 +191,7 @@ byte amgain;
 byte freqoldcount;
 byte HighCutLevel;
 byte HighCutOffset;
-byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 9, 10, 9};
+byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 10, 10, 9};
 byte iMSEQ;
 byte iMSset;
 byte language;
@@ -591,6 +591,7 @@ void setup() {
   autoDST = EEPROM.readByte(EE_BYTE_AUTODST);
   clockampm = EEPROM.readByte(EE_BYTE_CLOCKAMPM);
   logcounter = EEPROM.readUInt(EE_UINT16_LOGCOUNTER);
+  radio.rds.PICTlock = EEPROM.readUInt(EE_UINT16_PICTLOCK);
 
 #ifdef DYNAMIC_SPI_SPEED
   if (spispeed == SPI_SPEED_DEFAULT) {
@@ -4581,6 +4582,7 @@ void DefaultSettings() {
   EEPROM.writeByte(EE_BYTE_AUTOLOG, 1);
   EEPROM.writeByte(EE_BYTE_AUTODST, 1);
   EEPROM.writeByte(EE_BYTE_CLOCKAMPM, 0);
+  EEPROM.writeUInt(EE_UINT16_PICTLOCK, 0);
 
 #ifdef DEEPELEC_DP_66X
   EEPROM.writeByte(EE_BYTE_ROTARYMODE, 1);
@@ -4836,6 +4838,7 @@ void endMenu() {
   EEPROM.writeByte(EE_BYTE_AUTOLOG, autolog);
   EEPROM.writeByte(EE_BYTE_AUTODST, autoDST);
   EEPROM.writeByte(EE_BYTE_CLOCKAMPM, clockampm);
+  EEPROM.writeUInt(EE_UINT16_PICTLOCK, radio.rds.PICTlock);
   EEPROM.commit();
   if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
   Serial.end();

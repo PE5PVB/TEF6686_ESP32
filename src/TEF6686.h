@@ -578,7 +578,7 @@ typedef struct _rds_ {
   char stationState[3];
   char dabafeid[5];
   char dabafchannel[4];
-  uint16_t rdsA, rdsB, rdsC, rdsD, rdsErr, rdsStat, correctPI, rdsplusTag1, rdsplusTag2;
+  uint16_t rdsA, rdsB, rdsC, rdsD, rdsErr, rdsStat, correctPI, rdsplusTag1, rdsplusTag2, PICTlock = 0;
   bool ps12error, ps34error, ps56error, ps78error;
   time_t time;
   int32_t offset;

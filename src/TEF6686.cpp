@@ -1341,7 +1341,7 @@ void TEF6686::readRDS(byte showrdserrors) {
         } break;
 
       case RDS_GROUP_4A: {
-          if (!rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold && rds.ctupdate) {
+          if (!rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold && rds.ctupdate && (rds.PICTlock == rds.rdsA || rds.PICTlock == 0)) {
             // CT
             uint32_t mjd;
             mjd = (rds.rdsB & 0x03);
