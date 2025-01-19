@@ -1,4 +1,4 @@
-#ifndef LANGUAGE_H
+ind#ifndef LANGUAGE_H
 #define LANGUAGE_H
 
 #define VERSION "v2.11.18"
@@ -2019,7 +2019,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "RDS Einstellungen", // 180
     "UKW Einstellungen", // 181
     "AM Einstellungen", // 182
-    "Netzwerk", // 183
+    "Verbindungen und Uhrzeit", // 183
     "DRÜCKE MODE FÜR ZURÜCK", // 184
     "Gleichkanalerkennung", // 185
     "Gleichkanalerkennung\nEmpfindlichkeit", // 186
@@ -2136,9 +2136,9 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Logbuch ist voll!", // 297
     "Uhrzeit-Modus", // 298
     "Auto-Sommerzeit\nüber NTP", // 299
-    "Das Logbuch enthält mehr als 130 Einträge, was der Viewer nicht verarbeiten kann. Bitte lade die CSV-Datei zum Verarbeiten herunter.", // 300
-    "Sync CT when PI is locked", // 301
-    "Error! No RDS signal" // 302
+    "Das Logbuch enthält mehr als 130 Einträge, was das Anzeigeprogramm nicht verarbeiten kann. Bitte lade die CSV-Datei zum Verarbeiten herunter.", // 300
+    "Synchronisiere CT bei bestimmten PI", // 301
+    "Fehler! Kein RDS-Signal" // 302
   },
 
   { "Čeština", // Czech
