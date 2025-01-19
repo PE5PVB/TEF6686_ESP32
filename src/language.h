@@ -2015,10 +2015,10 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "RT puffern", // 176
     "Haupteinstellungen", // 177
     "Audioeinstellungen", // 178
-    "Displayeinstellung", // 179
-    "RDS Einstellungen", // 180
-    "UKW Einstellungen", // 181
-    "AM Einstellungen", // 182
+    "Anzeigeeinstellungen", // 179
+    "RDS-Einstellungen", // 180
+    "UKW-Einstellungen", // 181
+    "AM-Einstellungen", // 182
     "Verbindungen und Uhrzeit", // 183
     "DRÜCKE MODE FÜR ZURÜCK", // 184
     "Gleichkanalerkennung", // 185
@@ -2031,7 +2031,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "RDS", // 192
     "UKW", // 193
     "AM", // 194
-    "NETZWERK", // 195
+    "VERB./UHR", // 195
     "DX MODE", // 196
     "AUTO MEM", // 197
     "AM AGC", // 198
@@ -2137,7 +2137,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Uhrzeit-Modus", // 298
     "Auto-Sommerzeit\nüber NTP", // 299
     "Das Logbuch enthält mehr als 130 Einträge, was das Anzeigeprogramm nicht verarbeiten kann. Bitte lade die CSV-Datei zum Verarbeiten herunter.", // 300
-    "Synchronisiere CT bei bestimmten PI", // 301
+    "Synchronisiere CT\nbei bestimmtem PI", // 301
     "Fehler! Kein RDS-Signal" // 302
   },
 
