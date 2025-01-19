@@ -2324,7 +2324,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Nastavení RDS", // 180
     "Nastavení FM pásma", // 181
     "Nastavení AM pásma", // 182
-    "Konektivita", // 183
+    "Konektivita a hodiny", // 183
     "ZMÁČKNĚTE MODE PRO NÁVRAT", // 184
     "AM CoChannelDet", // 185
     "Citlivost CoChannelDet", // 186
@@ -2442,8 +2442,8 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Režim hodin", // 298
     "Automatický letní čas u NTP času", // 299
     "Logbook obsahuje více než 130 položek, které prohlížeč nedokáže zpracovat. Pro zpracování všech položek si stáhněte CSV soubor.", // 300
-    "PI locked CT sync", // 301
-    "Error! No RDS signal" // 302
+    "Synchronizovat CT, když je PI uzamčeno", // 301
+    "Chyba! Žádný RDS signál" // 302
   },
 
   { "Magyar", // Hungarian
