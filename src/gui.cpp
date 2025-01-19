@@ -86,7 +86,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       FreqColorSmooth = CrimsonSmooth;
       ActiveColor = White;
       ActiveColorSmooth = WhiteSmooth;
-      SignificantColor = Green;
+      SignificantColor = Red;
       SignificantColorSmooth = RedSmooth;
       InsignificantColor = Green;
       InsignificantColorSmooth = GreenSmooth;
@@ -181,8 +181,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       ActiveColorSmooth = WhiteSmooth;
       SignificantColor = Red;
       SignificantColorSmooth = RedSmooth;
-      InsignificantColor = Green;
-      InsignificantColorSmooth = GreenSmooth;
+      InsignificantColor = Teal;
+      InsignificantColorSmooth = TealSmooth;
       StereoColor = Green;
       StereoColorSmooth = GreenDark;
       RDSColor = Green;
@@ -212,8 +212,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       ActiveColorSmooth = WhiteSmooth;
       SignificantColor = Red;
       SignificantColorSmooth = RedSmooth;
-      InsignificantColor = Green;
-      InsignificantColorSmooth = GreenSmooth;
+      InsignificantColor = Pink;
+      InsignificantColorSmooth = PinkSmooth;
       StereoColor = Sakura;
       StereoColorSmooth = SakuraSmooth;
       RDSColor = Sakura;
@@ -243,7 +243,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       ActiveColor = Black;
       ActiveColorSmooth = Honeydew;
       SignificantColor = Red;
-      SignificantColorSmooth = Honeydew;
+      SignificantColorSmooth = RedSmooth;
       InsignificantColor = Green;
       InsignificantColorSmooth = GreenSmooth;
       StereoColor = Black;
@@ -275,8 +275,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       ActiveColorSmooth = WhiteSmooth;
       SignificantColor = Red;
       SignificantColorSmooth = RedSmooth;
-      InsignificantColor = Green;
-      InsignificantColorSmooth = GreenSmooth;
+      InsignificantColor = Orange;
+      InsignificantColorSmooth = OrangeSmooth;
       StereoColor = Tangerine;
       StereoColorSmooth = IndigoSmooth;
       RDSColor = Tangerine;
@@ -337,8 +337,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       ActiveColorSmooth = WhiteSmooth;
       SignificantColor = Red;
       SignificantColorSmooth = RedSmooth;
-      InsignificantColor = Green;
-      InsignificantColorSmooth = GreenSmooth;
+      InsignificantColor = Purple;
+      InsignificantColorSmooth = PurpleSmooth;
       StereoColor = Indigo;
       StereoColorSmooth = IndigoSmooth;
       RDSColor = Indigo;
