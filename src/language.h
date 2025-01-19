@@ -189,7 +189,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "RDS settings", // 180
     "FM settings", // 181
     "AM settings", // 182
-    "Connectivity", // 183
+    "Connectivity & clock", // 183
     "PRESS MODE TO RETURN", // 184
     "CoChannel Detector", // 185
     "CoChannel Detector\nsensitivity", // 186
@@ -1409,7 +1409,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Ρυθμίσεις RDS", // 180
     "Ρυθμίσεις FM", // 181
     "Ρυθμίσεις AM", // 182
-    "Συνδεσιμότητα", // 183
+    "Συνδεσιμότητα & ρολόι", // 183
     "ΠΙΕΣΤΕ MODE ΓΙΑ ΕΠΙΣΤΡΟΦΗ", // 184
     "Εντοπισμός\nομοκαναλικού AM", // 185
     "Ευαισθησία\nομοκαναλικού AM", // 186
@@ -1527,8 +1527,8 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Λειτουργία ρολογιού", // 298
     "Αυτόματο DST\nσε ώρα NTP", // 299
     "Το βιβλίο περιέχει πάνω από 130 καταγραφές, και είναι αδύνατη η επεξεργασία τους από το χρήστη. Κάντε λήψη του αρχείου CSV για να το επεξεργαστείτε.", // 300
-    "PI locked CT sync", // 301
-    "Error! No RDS signal" // 302
+    "υγχρονισμός CT σε\nκλειδωμένο PI ", // 301
+    "Σφάλμα!\nΔεν υπάρχει σήμα RDS" // 302
   },
 
   { "Română", // Romanian
@@ -2934,7 +2934,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Paramètres RDS", // 180
     "Paramètres FM", // 181
     "Paramètres AM", // 182
-    "Connectivité", // 183
+    "Connectivité et horloge", // 183
     "APPUYEZ MODE POUR RETOURNER", // 184
     "AM CoChannelDet", // 185
     "CoChannelDet\nsensibilité", // 186
@@ -3052,8 +3052,8 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Mode horloge", // 298
     "DST automatique\nsur l'heure NTP", // 299
     "Le journal de bord contient plus de 130 entrées que le spectateur ne peut pas traiter. Télécharger le fichier CSV pour le traiter.", // 300
-    "PI locked CT sync", // 301
-    "Error! No RDS signal" // 302
+    "Synch CT sur\nPI verrouillé", // 301
+    "Erreur ! Pas de signal RDS" // 302
   },
 
   { "Български", // Bulgarian
@@ -5068,7 +5068,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Configuración de RDS", // 180
     "Configuración de FM", // 181
     "Configuración de AM", // 182
-    "Conectividad", // 183
+    "Conectividad y reloj", // 183
     "PRESIONE MODE PARA VOLVER", // 184
     "Detección de\nco-canal AM", // 185
     "Sensibilidad de\ndetección de co-canal", // 186
@@ -5186,8 +5186,8 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Modo reloj", // 298
     "DST automático\nen hora NTP", // 299
     "El libro de registro contiene más de 130 entradas que el visor no puede procesar. Descargue el archivo CSV para procesarlo.", // 300
-    "PI locked CT sync", // 301
-    "Error! No RDS signal" // 302
+    "Sync CT en\nPI bloqueado", // 301
+    "Error! No hay señal RDS" // 302
   },
 
   { "Português", // Portuguese
@@ -5373,7 +5373,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Configurações RDS", // 180
     "Configurações FM", // 181
     "Configurações AM", // 182
-    "Conectividade", // 183
+    "Conectividade e relógio", // 183
     "PRESSIONE MODO PARA VOLTAR", // 184
     "AM CoChannelDet", // 185
     "Sensibilidade do\nCoChannel Det", // 186
@@ -5491,8 +5491,8 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Modo de relógio", // 298
     "DST automático\nno horário NTP", // 299
     "O diário de bordo contém mais de 130 entradas que o espectador não consegue processar. Descarregue o ficheiro CSV para processá-lo.", // 300
-    "PI locked CT sync", // 301
-    "Error! No RDS signal" // 302
+    "Sincronizar CT\nno PI bloqueado", // 301
+    "Erro! Sem sinal RDS" // 302
   }
 };
 #endif
