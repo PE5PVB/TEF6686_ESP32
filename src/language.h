@@ -4882,8 +4882,8 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Klokkemodus", // 298
     "Auto sommertid på NTP-tid", // 299
     "Loggboken inneholder over 130 oppføringer, som en ikke kan behandle. Last ned CSV-filen for å behandle den.", // 300
-    "PI locked CT sync", // 301
-    "Error! No RDS signal" // 302
+    "PI-låst CT-synk", // 301
+    "Feil! Ingen RDS-signal" // 302
   },
 
   { "Español", // Spanish
