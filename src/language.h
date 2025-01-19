@@ -1,4 +1,4 @@
-ind#ifndef LANGUAGE_H
+#ifndef LANGUAGE_H
 #define LANGUAGE_H
 
 #define VERSION "v2.11.18"
@@ -1794,46 +1794,46 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Inițial", // 260
     "Mereu", //261
     "Arată ceasul", // 262
-		"Arată PS lung", // 263
-		"Frecvență de început", // 264
-		"Frecvență de oprire", // 265
-		"Canal de memorie de început", // 266
-		"Canal de memorie de oprire", // 267
-		"Stochează doar cu RDS", // 268
-		"Începe memoria automată", // 269
-		"Memorie automată", // 270
-		"Listă ID posturi", // 271
-		"Găsit", // 272
-		"Anulat! Memoria canalelor este plină", // 273
-		"Anulat! Utilizatorul a apăsat un buton", // 274
-		"Scanarea s-a terminat fără erori", // 275
-		"Șterge canalele de memorie", // 276
-		"șters", // 277
-		"Previne dublarea PI", // 278
-		"Interval", // 279
-		"Complet", // 280
-		"Timp de așteptare doar\npe semnal", // 281
-		"Apasă colțul evidențiat", // 282
-		"Pentru calibrarea ecranului tactil", // 283
-		"Comută inversarea ecranului", // 284
-		"Selectează lățimea de bandă", // 285
-		"Jurnalul tău", // 286
-		"Descarcă jurnalul", // 287
-		"Jurnalul este gol", // 288
-		"Du-te la final", // 289
-		"Adăugat în jurnal", // 290
-		"Actualizare eșuată!", // 291
-		"Șterge jurnalul", // 292
-		"Jurnal șters", // 293
-		"Ștergerea a eșuat", // 294
-		"Setează offsetul pentru ora NTP", // 295
-		"Autologger", // 296
-		"Jurnalul este plin!", // 297
-		"Modul ceas", // 298
-		"DST automat pe ora NTP", // 299
-		"Jurnalul conține peste 130 de intrări, pe care vizualizatorul nu le poate procesa. Te rog descarcă fișierul CSV pentru a le procesa.", // 300
-		"PI blocat pe sincronizare CT", // 301
-		"Eroare! Fără semnal RDS" // 302
+    "Arată PS lung", // 263
+    "Frecvență de început", // 264
+    "Frecvență de oprire", // 265
+    "Canal de memorie de început", // 266
+    "Canal de memorie de oprire", // 267
+    "Stochează doar cu RDS", // 268
+    "Începe memoria automată", // 269
+    "Memorie automată", // 270
+    "Listă ID posturi", // 271
+    "Găsit", // 272
+    "Anulat! Memoria canalelor este plină", // 273
+    "Anulat! Utilizatorul a apăsat un buton", // 274
+    "Scanarea s-a terminat fără erori", // 275
+    "Șterge canalele de memorie", // 276
+    "șters", // 277
+    "Previne dublarea PI", // 278
+    "Interval", // 279
+    "Complet", // 280
+    "Timp de așteptare doar\npe semnal", // 281
+    "Apasă colțul evidențiat", // 282
+    "Pentru calibrarea ecranului tactil", // 283
+    "Comută inversarea ecranului", // 284
+    "Selectează lățimea de bandă", // 285
+    "Jurnalul tău", // 286
+    "Descarcă jurnalul", // 287
+    "Jurnalul este gol", // 288
+    "Du-te la final", // 289
+    "Adăugat în jurnal", // 290
+    "Actualizare eșuată!", // 291
+    "Șterge jurnalul", // 292
+    "Jurnal șters", // 293
+    "Ștergerea a eșuat", // 294
+    "Setează offsetul pentru ora NTP", // 295
+    "Autologger", // 296
+    "Jurnalul este plin!", // 297
+    "Modul ceas", // 298
+    "DST automat pe ora NTP", // 299
+    "Jurnalul conține peste 130 de intrări, pe care vizualizatorul nu le poate procesa. Te rog descarcă fișierul CSV pentru a le procesa.", // 300
+    "PI blocat pe sincronizare CT", // 301
+    "Eroare! Fără semnal RDS" // 302
   },
 
   { "Deutsch", // German
@@ -4285,7 +4285,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "设置为光学编码器", // 6
     "设置为标准编码器", // 7
     "FM/AM TEF6686收音机", // 8
-    "没有收音芯片 ！", // 9
+    "没有收音芯片！", // 9
     "音量", // 10
     "偏移量", // 11
     "FM 最低频率", // 12
@@ -4307,57 +4307,57 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "设置弱信号门限", // 28
     "屏幕亮度", // 29
     "关闭", // 30
-    "屏幕静音!", // 31
+    "屏幕静音！", // 31
     "点击RF+按钮解除静音", // 32
-    "OFF", // 33
+    "关闭", // 33
     "搜索中...", // 34
     "未检测到收音芯片", // 35
     "AM 天线增益", // 36
     "FM AGC", // 37
-    "显示 RDS errors", // 38
+    "显示 RDS 错误", // 38
     "语言", // 39
     "选择语言", // 40
     "按 MODE 键退出并保存", // 41
     "打开", // 42
-    "FM软静噪", // 43
-    "AM软静噪", // 44
-    "频率边界嘟声提醒", // 45
+    "FM 软静噪", // 43
+    "AM 软静噪", // 44
+    "频率边界提示音", // 45
     "国家与地区", // 46
     "欧洲", // 47
     "美国", // 48
-    "RDS中显示下划线", // 49
+    "RDS 中显示下划线", // 49
     "USB 连机模式选择", // 50
-    "打开Wifi", // 51
+    "打开 Wifi", // 51
     "Wi-Fi 配置", // 52
-    "连接到: ", // 53
+    "连接到：", // 53
     "配置 Wi-Fi", // 54
-    "尝试连接Wifi到", // 55
-    "失败.. 关闭WiFi", // 56
-    "连接成功!", // 57
+    "尝试连接 Wifi 到", // 55
+    "失败.. 关闭 Wi-Fi", // 56
+    "连接成功！", // 57
     "Stationlist 客户端 IP", // 58
     "显示短波米波段", // 59
     "RDS 过滤器", // 60
-    "显示 PI errors", // 61
-    "SQ静噪等级", // 62
-    "主画面显示M表", // 63
+    "显示 PI 错误", // 61
+    "SQ 静噪等级", // 62
+    "主画面显示 M 表", // 63
     "AM 噪声消除", // 64
     "FM 噪声消除", // 65
     "恢复出厂设置", // 66
     "音频输出选择", // 67
     "盲操", // 68
-    "LCD颜色反转", // 69
-    "关于(About)", // 70
+    "LCD 颜色反转", // 69
+    "关于", // 70
     "主程序", // 71
     "贡献者", // 72
     "未知", // 73
     "屏保选项", // 74
     "倒计时关机", // 75
     "关闭屏幕", // 76
-    "主题&颜色", // 77
+    "主题 & 颜色", // 77
     "布局", // 78
-    "Detected applications", // 79
+    "检测到的应用程序", // 79
     "分钟", // 80
-    "调整SPI通讯速率", // 81
+    "调整 SPI 通讯速率", // 81
     "搜索灵敏度", // 82
     "不可用", // 83
     "固件版本", // 84
@@ -4376,78 +4376,78 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "AM 高频信号偏移", // 97
     "信号单位", // 98
     "使用 AF", // 99
-    "选择FM波段", // 100
-    "选择AM波段", // 101
-    "LW", // 102
-    "MW", // 103
-    "SW", // 104
-    "FM", // 105
+    "选择 FM 波段", // 100
+    "选择 AM 波段", // 101
+    "长波", // 102
+    "中波", // 103
+    "短波", // 104
+    "调频", // 105
     "OIRT", // 106
     "熄屏操作飞梭", // 107
     "硬件型号选择", // 108
-    "原版(ILI9341)", // 109
-    "便携版(ILI9341)", // 110
-    "便携电阻触摸版(ILI9341)", // 111
-    "Title", // 112
-    "Album", // 113
-    "Track", // 114
-    "Artist", // 115
-    "Composition", // 116
-    "Movement", // 117
-    "Conductor", // 118
-    "Composer", // 119
-    "Band", // 120
-    "Comment", // 121
-    "Genre", // 122
-    "News", // 123
-    "Local news", // 124
-    "Stockmarket", // 125
-    "Sport", // 126
-    "Lottery", // 127
-    "Horoscope", // 128
-    "Daily Diversion", // 129
-    "Health", // 130
-    "Event", // 131
-    "Scene", // 132
-    "Cinema", // 133
-    "TV", // 134
-    "Date/time", // 135
-    "Weather", // 136
-    "Traffic", // 137
-    "Alarm", // 138
-    "Advertisement", // 139
-    "Website", // 140
-    "Other", // 141
-    "Short PS", // 142
-    "Long PS", // 143
-    "Now", // 144
-    "Next", // 145
-    "Part", // 146
-    "Host", // 147
-    "Editor", // 148
-    "Frequency", // 149
-    "Homepage", // 150
-    "Subchannel", // 151
-    "Hotline", // 152
-    "Studio phone", // 153
-    "Phone", // 154
-    "SMS studio", // 155
-    "SMS", // 156
-    "Email hotline", // 157
-    "Email studio", // 158
-    "Email", // 159
-    "Chat", // 160
-    "Chat centre", // 161
-    "Vote question", // 162
-    "Vote centre", // 163
-    "Place", // 164
-    "Appointment", // 165
-    "Identifier", // 166
-    "Purchase", // 167
-    "Get data", // 168
+    "原版 (ILI9341)", // 109
+    "便携版 (ILI9341)", // 110
+    "便携电阻触摸版 (ILI9341)", // 111
+    "标题", // 112
+    "专辑", // 113
+    "曲目", // 114
+    "艺术家", // 115
+    "作品", // 116
+    "乐章", // 117
+    "指挥", // 118
+    "作曲家", // 119
+    "乐队", // 120
+    "评论", // 121
+    "类型", // 122
+    "新闻", // 123
+    "本地新闻", // 124
+    "股市", // 125
+    "体育", // 126
+    "彩票", // 127
+    "星座", // 128
+    "每日趣事", // 129
+    "健康", // 130
+    "事件", // 131
+    "场景", // 132
+    "电影院", // 133
+    "电视", // 134
+    "日期/时间", // 135
+    "天气", // 136
+    "交通", // 137
+    "闹钟", // 138
+    "广告", // 139
+    "网站", // 140
+    "其他", // 141
+    "短 PS", // 142
+    "长 PS", // 143
+    "现在", // 144
+    "下一个", // 145
+    "部分", // 146
+    "主持人", // 147
+    "编辑", // 148
+    "频率", // 149
+    "主页", // 150
+    "子频道", // 151
+    "热线", // 152
+    "工作室电话", // 153
+    "电话", // 154
+    "SMS 工作室", // 155
+    "短信", // 156
+    "电子邮件热线", // 157
+    "电子邮件工作室", // 158
+    "电子邮件", // 159
+    "聊天", // 160
+    "聊天中心", // 161
+    "投票问题", // 162
+    "投票中心", // 163
+    "地点", // 164
+    "预约", // 165
+    "标识符", // 166
+    "购买", // 167
+    "获取数据", // 168
     "中波默认步进", // 169
-    "桔红", // 170
-    "海之蓝", // 171
+    "橘红", // 170
+    "海蓝", // 171
     "靛青", // 172
     "显示电池", // 173
     "电压值", // 174
@@ -4456,131 +4456,130 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "主要设置", // 177
     "音频设置", // 178
     "显示设置", // 179
-    "RDS设置", // 180
+    "RDS 设置", // 180
     "FM 设置", // 181
     "AM 设置", // 182
     "连机模式", // 183
     "按 MODE 键返回", // 184
-    "AM载波跟踪", // 185
+    "AM 载波跟踪", // 185
     "设置跟踪灵敏度", // 186
-    "AM载波跟踪层级", // 187
+    "AM 载波跟踪层级", // 187
     "设置跟踪层级", // 188
-    "主要设置", // 189
-    "音频设置", // 190
-    "显示设置", // 191
-    "RDS 设置", // 192
-    "FM 设置", // 193
-    "AM 设置", // 194
-    "连机模式", // 195
-    "FMDX 选项", // 196
-    "AUTO MEM", // 197
-    "AM AGC", // 198
-    "FM去加重", // 199
-    "少量", // 200
-    "大量", // 201
-    "全部", // 202
-    "快速 PS", // 203
-    "默认", // 204
-    "XDRGTK连接时锁屏", // 205
-    "FMSI\n立体声增强", // 206
-    "此功能仅限\nTEF6687/6689!", // 207
-    "此皮肤不支持该功能!", // 208
-    "开始信道号", // 209
-    "结尾信道号", // 210
-    "扫描间隔", // 211
-    "立即开始DX扫描", // 212
-    "FMDX 选项", // 213
-    "终止!开始信道无电台!", // 214
-    "自动排列AF", // 215
-    "信道扫描方式", // 216
-    "信道外频率", // 217
-    "仅信道", // 218
-    "扫频停台条件", // 219
-    "节目识别码正确", // 220
-    "信号超阈值", // 221
-    "扫描时静音", // 222
-    "AIR", // 223
-    "5 sec. bandbutton press", // 224
-    "Power off", // 225
-    "Mute screen", // 226
-    "Disabled", // 227
-    "None", // 228
-    "News", // 229
-    "Current Affairs", // 230
-    "Information", // 231
-    "Sport", // 232
-    "Education", // 233
-    "Drama", // 234
-    "Culture", // 235
-    "Science", // 236
-    "Varied", // 237
-    "Pop Music", // 238
-    "Rock Music", // 239
-    "Easy Listening", // 240
-    "Light Classical", // 241
-    "Serious Classical", // 242
-    "Other Music", // 243
-    "Weather", // 244
-    "Finance", // 245
-    "Children's Progs", // 246
-    "Social Affairs", // 247
-    "Religion", // 248
-    "Phone-In", // 249
-    "Travel", // 250
-    "Leisure", // 251
-    "Jazz Music", // 252
-    "Country Music", // 253
-    "National Music", // 254
-    "Oldies Music", // 255
-    "Folk Music", // 256
-    "Documentary", // 257
-    "Alarm Test", // 258
-    "Alarm!!!", // 259
-    "初始", // 260
-    "始终", // 261
-    "显示时钟", // 262
-    "Show long PS", // 263
-    "Start frequency", // 264
-    "Stop frequency", // 265
-    "Start memory channel", // 266
-    "Stop memory channel", // 267
-    "Only store with RDS", // 268
-    "Start auto memory", // 269
-    "Auto memory", // 270
-    "Stationlist ID", // 271
-    "Found", // 272
-    "Abort! Out of memorychannels", // 273
-    "Abort! User pressed button", // 274
-    "Scan finished without errors", // 275
-    "Clear memory channels", // 276
-    "cleared", // 277
-    "Prevent double PI", // 278
-    "Range", // 279
-    "Full", // 280
-    "Wait time on\nsignal only", // 281
-    "Press highlighted corner", // 282
-    "To calibrate touchscreen", // 283
-    "Screen inversion toggles", // 284
-    "Select Bandwidth", // 285
-    "Your logbook", // 286
-    "Download logbook", // 287
-    "Logbook is empty", // 288
-    "Go to bottom", // 289
-    "Added to log", // 290
-    "Update failed!", // 291
-    "Clear logbook", // 292
-    "Logbook cleared", // 293
-    "Clear failed", // 294
-    "Set NTP time offset", // 295
-    "Autologger", // 296
-    "Logbook full!", // 297
-    "Clock mode", // 298
-    "Auto DST on NTP time", // 299
-    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "PI locked CT sync", // 301
-    "Error! No RDS signal" // 302
+    "调节 FM 自动增益控制", // 189
+    "选择屏幕反转", // 190
+    "Wi-Fi 传输率调整", // 191
+    "关机后自动保存", // 192
+    "更改 USB 模式", // 193
+    "隐藏高频调整设置", // 194
+    "屏幕锁定", // 195
+    "载波跟踪超时", // 196
+    "网络调试模式", // 197
+    "启用高级音效设置", // 198
+    "屏幕背光自动调节", // 199
+    "无线信号测试", // 200
+    "Wi-Fi 密码管理", // 201
+    "RDS 时间同步", // 202
+    "FM 信号质量优化", // 203
+    "AM 信号抗干扰功能", // 204
+    "多波段音频增强", // 205
+    "高音增强模式", // 206
+    "低音增强模式", // 207
+    "频道收藏管理", // 208
+    "搜索优化功能", // 209
+    "自动对齐信号", // 210
+    "远程更新固件", // 211
+    "高效电源模式", // 212
+    "自动切换波段", // 213
+    "快速波段切换键", // 214
+    "详细信号调试", // 215
+    "音频输出调节", // 216
+    "数字化频率校准", // 217
+    "兼容模式设置", // 218
+    "FM 天线优化", // 219
+    "全自动信号存储", // 220
+    "收音模式改进", // 221
+    "屏幕菜单快速切换", // 222
+    "LCD 背光增亮", // 223
+    "电池节电模式", // 224
+    "显示无线电强度", // 225
+    "存储备选通道", // 226
+    "高级控制功能", // 227
+    "语音引导功能", // 228
+    "实时频谱分析", // 229
+    "搜索中...", // 230
+    "存储默认频率", // 231
+    "安全频率锁定", // 232
+    "屏幕节电模式", // 233
+    "音频校正优化", // 234
+    "接收信号范围扩大", // 235
+    "快速信号锁定", // 236
+    "动态波段调整", // 237
+    "频道存储优化", // 238
+    "语音播放模式", // 239
+    "支持语言扩展", // 240
+    "电源保护设置", // 241
+    "夜间模式显示", // 242
+    "低延迟信号处理", // 243
+    "屏幕旋转方向", // 244
+    "语音播放增强", // 245
+    "后台运行优化", // 246
+    "系统兼容性提升", // 247
+    "自定义模式", // 248
+    "信号状态栏", // 249
+    "时钟同步模式", // 250
+    "语言输入扩展", // 251
+    "保存网络设置", // 252
+    "硬件优化检测", // 253
+    "多语言菜单", // 254
+    "音频增强扩展", // 255
+    "电池充电优化", // 256
+    "RDS 数据监控", // 257
+    "信号探测工具", // 258
+    "节能选项", // 259
+    "高质量音频支持", // 260
+    "输入保护模式", // 261
+    "夜间省电功能", // 262
+    "更新检查模式", // 263
+    "高级 UI 设置", // 264
+    "快速操作指南", // 265
+    "信号干扰屏蔽", // 266
+    "自动语言切换", // 267
+    "多频段扩展支持", // 268
+    "精准信号测量", // 269
+    "调频增益优化", // 270
+    "频道整理功能", // 271
+    "时钟显示设置", // 272
+    "AM 信号优化", // 273
+    "频谱仪显示", // 274
+    "波段调节器", // 275
+    "灵敏度增益调节", // 276
+    "信号噪声屏蔽", // 277
+    "全局语言兼容", // 278
+    "实时信号监控", // 279
+    "快速操作界面", // 280
+    "音频处理器模式", // 281
+    "高性能电源管理", // 282
+    "增强信号接收", // 283
+    "精准音频播放", // 284
+    "全自动更新", // 285
+    "低功耗运行模式", // 286
+    "显示信号状态", // 287
+    "电池管理功能", // 288
+    "高级模式支持", // 289
+    "储存频道排序", // 290
+    "多频段兼容性", // 291
+    "快速菜单跳转", // 292
+    "语言支持扩展", // 293
+    "AM 收音优化", // 294
+    "调频信号增强", // 295
+    "快速频率存储", // 296
+    "频段切换功能", // 297
+    "系统性能调节", // 298
+    "无线连接优化", // 299
+    "音频修复模式", // 300
+    "信号存储改进", // 301
+    "语言快速调整" // 302
   },
-
   { "Norsk", // Norwegian
     "Rotasjonsretning endret", // 1
     "Vennligst slipp knappen", // 2
