@@ -189,7 +189,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "RDS settings", // 180
     "FM settings", // 181
     "AM settings", // 182
-    "Connectivity & clock", // 183
+    "Connectivity", // 183
     "PRESS MODE TO RETURN", // 184
     "CoChannel Detector", // 185
     "CoChannel Detector\nsensitivity", // 186
@@ -307,7 +307,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Clock mode", // 298
     "Auto DST on NTP time", // 299
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "Sync CT when PI is locked", // 301
+    "PI locked CT sync", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -494,7 +494,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "RDS instellingen", // 180
     "FM instellingen", // 181
     "AM instellingen", // 182
-    "Connectiviteit & klok", // 183
+    "Connectiviteit", // 183
     "MODE OM TERUG TE GAAN", // 184
     "CoChannel Detectie", // 185
     "CoChannel Detectie\ngevoeligheid", // 186
@@ -612,7 +612,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Klok methode", // 298
     "Auto zomertijd\nop NTP tijd", // 299
     "Het logboek bevat meer dan 130 items, die de viewer niet kan verwerken. Download alstublieft het CSV-bestand om het te bekijken.", // 300
-    "Sync CT bij specifieke PI", // 301
+    "PI gebonden CT sync", // 301
     "Fout! Geen RDS!" // 302
   },
 
@@ -917,7 +917,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Tryb zegara", // 298
     "Auto czas letni wg NTP", // 299
     "Wykaz zawiera ponad 130 wpisów, których przeglądarka nie może pokazać. Pobierz plik CSV, aby je przetworzyć.", // 300
-    "Sync CT when PI is locked", // 301
+    "PI locked CT sync", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -1222,7 +1222,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Clock mode", // 298
     "Auto DST on NTP time", // 299
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "Sync CT when PI is locked", // 301
+    "PI locked CT sync", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -1527,7 +1527,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Λειτουργία ρολογιού", // 298
     "Αυτόματο DST\nσε ώρα NTP", // 299
     "Το βιβλίο περιέχει πάνω από 130 καταγραφές, και είναι αδύνατη η επεξεργασία τους από το χρήστη. Κάντε λήψη του αρχείου CSV για να το επεξεργαστείτε.", // 300
-    "Sync CT when PI is locked", // 301
+    "PI locked CT sync", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -1794,45 +1794,45 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Inițial", // 260
     "Mereu", //261
     "Arată ceasul", // 262
-    "Arată PS extins", // 263
-    "Frecvenţă Start", // 264
-    "Frecvenţă Stop", // 265
-    "Start memorare de la", // 266
-    "Stop memorare la", // 267
-    "Memorare doar cu RDS", // 268
-    "Start auto memorare", // 269
-    "Auto memorare", // 270
+    "Show long PS", // 263
+    "Start frequency", // 264
+    "Stop frequency", // 265
+    "Start memory channel", // 266
+    "Stop memory channel", // 267
+    "Only store with RDS", // 268
+    "Start auto memory", // 269
+    "Auto memory", // 270
     "Listă ID posturi", // 271
-    "Gasit", // 272
-    "Anulat! Lipsa spaţiu memorare", // 273
-    "Anulat de catre utilizator!", // 274
-    "Scan finalizat fără erori", // 275
-    "Ştergeţi posturile memorate", // 276
-    "Şterse", // 277
-    "Fără PI duplicat", // 278
-    "Interval", // 279
-    "Complet", // 280
-    "Oprire la prezentă semnal", // 281
-    "Apăsaţi pe coltul indicat", // 282
-    "Calibrare ecran tactil", // 283
-    "Inversie ecran", // 284
-    "Selectaţi Bandwidth", // 285
-    "Jurnal recepţie", // 286
-    "Descărcare Jurnal", // 287
-    "Jurnal golit", // 288
-    "Spre capăt listă", // 289
-    "Adăugat la Jurnal", // 290
-    "Actualizare eșuată!", // 291
-    "Golire Jurnal", // 292
-    "Jurnal golit", // 293
-    "Golire eșuată", // 294
-    "Setare fus orar", // 295
-    "Auto Jurnal", // 296
-    "Jurnal plin!", // 297
-    "Mod ceas", // 298
-    "Auto DST in mod NTP", // 299
-    "Jurnalul conţine peste 130 înregistrări, acestea nu pot fi vizualizate. Vă rugam descărcaţi Jurnalul ca fișier CSV.", // 300
-    "Sync CT when PI is locked", // 301
+    "Found", // 272
+    "Abort! Out of memorychannels", // 273
+    "Abort! User pressed button", // 274
+    "Scan finished without errors", // 275
+    "Clear memory channels", // 276
+    "cleared", // 277
+    "Prevent double PI", // 278
+    "Range", // 279
+    "Full", // 280
+    "Wait time on\nsignal only", // 281
+    "Press highlighted corner", // 282
+    "To calibrate touchscreen", // 283
+    "Screen inversion toggles", // 284
+    "Select Bandwidth", // 285
+    "Your logbook", // 286
+    "Download logbook", // 287
+    "Logbook is empty", // 288
+    "Go to bottom", // 289
+    "Added to log", // 290
+    "Update failed!", // 291
+    "Clear logbook", // 292
+    "Logbook cleared", // 293
+    "Clear failed", // 294
+    "Set NTP time offset", // 295
+    "Autologger", // 296
+    "Logbook full!", // 297
+    "Clock mode", // 298
+    "Auto DST on NTP time", // 299
+    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
+    "PI locked CT sync", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -2324,7 +2324,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Nastavení RDS", // 180
     "Nastavení FM pásma", // 181
     "Nastavení AM pásma", // 182
-    "Konektivita", // 183
+    "Konektivita a hodiny", // 183
     "ZMÁČKNĚTE MODE PRO NÁVRAT", // 184
     "AM CoChannelDet", // 185
     "Citlivost CoChannelDet", // 186
@@ -2442,8 +2442,8 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Režim hodin", // 298
     "Automatický letní čas u NTP času", // 299
     "Logbook obsahuje více než 130 položek, které prohlížeč nedokáže zpracovat. Pro zpracování všech položek si stáhněte CSV soubor.", // 300
-    "Sync CT when PI is locked", // 301
-    "Error! No RDS signal" // 302
+    "Synchronizovat CT, když je PI uzamčeno", // 301
+    "Chyba! Žádný RDS signál" // 302
   },
 
   { "Magyar", // Hungarian
@@ -2747,7 +2747,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Clock mode", // 298
     "Auto DST on NTP time", // 299
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "Sync CT when PI is locked", // 301
+    "PI locked CT sync", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -3052,7 +3052,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Mode horloge", // 298
     "DST automatique\nsur l'heure NTP", // 299
     "Le journal de bord contient plus de 130 entrées que le spectateur ne peut pas traiter. Télécharger le fichier CSV pour le traiter.", // 300
-    "Sync CT when PI is locked", // 301
+    "PI locked CT sync", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -3357,7 +3357,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Clock mode", // 298
     "Auto DST on NTP time", // 299
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "Sync CT when PI is locked", // 301
+    "PI locked CT sync", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -3647,23 +3647,23 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Калибровка тачскрина", // 283
     "Переключение инверсии экрана", // 284
     "Выбрать ширину полосы", // 285
-    "Your logbook", // 286
-    "Download logbook", // 287
-    "Logbook is empty", // 288
-    "Go to bottom", // 289
-    "Added to log", // 290
-    "Update failed!", // 291
-    "Clear logbook", // 292
-    "Logbook cleared", // 293
-    "Clear failed", // 294
-    "Set NTP time offset", // 295
-    "Autologger", // 296
-    "Logbook full!", // 297
-    "Clock mode", // 298
-    "Auto DST on NTP time", // 299
-    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "Sync CT when PI is locked", // 301
-    "Error! No RDS signal" // 302
+    "Ваш записной журнал", // 286
+    "Скачать записной журнал", // 287
+    "Журнал пуст", // 288
+    "Идти ко дну", // 289
+    "Добавлено в журнал", // 290
+    "Обновление не удалось!", // 291
+    "Очистить записной журнал", // 292
+    "Записной журнал очищен", // 293
+    "Очистить не удалось", // 294
+    "Установить смещение времени NTP", // 295
+    "Автологер", // 296
+    "Бортовой журнал полон!", // 297
+    "Режим часов", // 298
+    "Автоматическое летнее время по времени NTP", // 299
+    "В журнале содержится более 130 записей, которые программа просмотра не может обработать. Загрузите файл CSV для его обработки.", // 300
+    "PI-синхронизация трансформатора тока с блокировкой", // 301
+    "Ошибка! Нет сигнала RDS" // 302
   },
 
   { "Українська", // Ukranian
@@ -3894,81 +3894,81 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Приймач вимкнений", // 225
     "Екран вимкнено", // 226
     "Вимкнено", // 227
-    "None", // 228
-    "News", // 229
-    "Current Affairs", // 230
-    "Information", // 231
-    "Sport", // 232
-    "Education", // 233
-    "Drama", // 234
-    "Culture", // 235
-    "Science", // 236
-    "Varied", // 237
-    "Pop Music", // 238
-    "Rock Music", // 239
+    "Жодного", // 228
+    "Новини", // 229
+    "Поточні справи", // 230
+    "Інформація", // 231
+    "Спорт", // 232
+    "Освіта", // 233
+    "Драма", // 234
+    "Культура", // 235
+    "Наука", // 236
+    "Різноманітний", // 237
+    "Естрадна музика", // 238
+    "Рок-музика", // 239
     "Easy Listening", // 240
-    "Light Classical", // 241
-    "Serious Classical", // 242
-    "Other Music", // 243
-    "Weather", // 244
-    "Finance", // 245
-    "Children's Progs", // 246
-    "Social Affairs", // 247
-    "Religion", // 248
-    "Phone-In", // 249
-    "Travel", // 250
-    "Leisure", // 251
-    "Jazz Music", // 252
-    "Country Music", // 253
-    "National Music", // 254
-    "Oldies Music", // 255
-    "Folk Music", // 256
-    "Documentary", // 257
-    "Alarm Test", // 258
-    "Alarm!!!", // 259
+    "Легка класика", // 241
+    "Серйозна класика", // 242
+    "Інша музика", // 243
+    "Погода", // 244
+    "Фінанси", // 245
+    "Дитяча прога", // 246
+    "Соціальні справи", // 247
+    "Релігія", // 248
+    "Вхід", // 249
+    "Подорож", // 250
+    "Дозвілля", // 251
+    "Джазова музика", // 252
+    "Сільська музика", // 253
+    "Народна музика", // 254
+    "Музика старини", // 255
+    "Народна музика", // 256
+    "Документалістика", // 257
+    "Тест сигналізації", // 258
+    "Тривога!!!", // 259
     "Початковий", // 260
     "Завжди", // 261
     "Показати годинник", // 262
-    "Show long PS", // 263
-    "Start frequency", // 264
-    "Stop frequency", // 265
-    "Start memory channel", // 266
-    "Stop memory channel", // 267
-    "Only store with RDS", // 268
-    "Start auto memory", // 269
-    "Auto memory", // 270
+    "Показати довгий PS", // 263
+    "Стартова частота", // 264
+    "Стоп частота", // 265
+    "Запуск каналу пам'яті", // 266
+    "Зупинити канал пам'яті", // 267
+    "Зберігати лише з RDS", // 268
+    "Запуск автопам'яті", // 269
+    "Автопам'ять", // 270
     "Stationlist ID", // 271
-    "Found", // 272
-    "Abort! Out of memorychannels", // 273
-    "Abort! User pressed button", // 274
-    "Scan finished without errors", // 275
-    "Clear memory channels", // 276
-    "cleared", // 277
-    "Prevent double PI", // 278
-    "Range", // 279
-    "Full", // 280
-    "Wait time on\nsignal only", // 281
-    "Press highlighted corner", // 282
-    "To calibrate touchscreen", // 283
-    "Screen inversion toggles", // 284
-    "Select Bandwidth", // 285
-    "Your logbook", // 286
-    "Download logbook", // 287
-    "Logbook is empty", // 288
-    "Go to bottom", // 289
-    "Added to log", // 290
-    "Update failed!", // 291
-    "Clear logbook", // 292
-    "Logbook cleared", // 293
-    "Clear failed", // 294
-    "Set NTP time offset", // 295
-    "Autologger", // 296
-    "Logbook full!", // 297
-    "Clock mode", // 298
-    "Auto DST on NTP time", // 299
-    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "Sync CT when PI is locked", // 301
-    "Error! No RDS signal" // 302
+    "Знайдено", // 272
+    "Скасувати! Немає каналів пам'яті", // 273
+    "Скасувати! Користувач натиснув кнопку", // 274
+    "Сканування завершено без помилок", // 275
+    "Очистити канали пам'яті", // 276
+    "очищено", // 277
+    "Запобігти подвійному ПІ", // 278
+    "Діапазон", // 279
+    "Повний", // 280
+    "Час очікування лише\nсигналу", // 281
+    "Натисніть виділений кут", // 282
+    "Калібрувати тачскрін", // 283
+    "Перемикає інверсію екрана", // 284
+    "Вибір пропускної здатності", // 285
+    "Твій записний журнал", // 286
+    "Скачати записний журнал", // 287
+    "Записний журнал порожній", // 288
+    "Вниз", // 289
+    "Додано до журналу", // 290
+    "Помилка оновлення!", // 291
+    "Очистити записний журнал", // 292
+    "Записний журнал очищено", // 293
+    "Не вдалося очистити", // 294
+    "Установити зміщення часу NTP", // 295
+    "Автореєстратор", // 296
+    "Записний журнал повний!", // 297
+    "Режим годинника", // 298
+    "Автоматичний літній час за часом NTP", // 299
+    "Журнал містить понад 130 записів, які програма перегляду не може обробити. Будь ласка, завантажте файл CSV, щоб обробити його.", // 300
+    "PI locked CT sync", // 301
+    "Помилка! Немає сигналу RDS" // 302
   },
 
   { "Italiano", // Italian
@@ -4272,7 +4272,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Clock mode", // 298
     "Auto DST on NTP time", // 299
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.",// 300
-    "Sync CT when PI is locked", // 301
+    "PI locked CT sync", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -4577,7 +4577,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Clock mode", // 298
     "Auto DST on NTP time", // 299
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "Sync CT when PI is locked", // 301
+    "PI locked CT sync", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -4882,8 +4882,8 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Klokkemodus", // 298
     "Auto sommertid på NTP-tid", // 299
     "Loggboken inneholder over 130 oppføringer, som en ikke kan behandle. Last ned CSV-filen for å behandle den.", // 300
-    "Sync CT when PI is locked", // 301
-    "Error! No RDS signal" // 302
+    "PI-låst CT-synk", // 301
+    "Feil! Ingen RDS-signal" // 302
   },
 
   { "Español", // Spanish
@@ -5187,7 +5187,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Modo reloj", // 298
     "DST automático\nen hora NTP", // 299
     "El libro de registro contiene más de 130 entradas que el visor no puede procesar. Descargue el archivo CSV para procesarlo.", // 300
-    "Sync CT when PI is locked", // 301
+    "PI locked CT sync", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -5492,7 +5492,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Modo de relógio", // 298
     "DST automático\nno horário NTP", // 299
     "O diário de bordo contém mais de 130 entradas que o espectador não consegue processar. Descarregue o ficheiro CSV para processá-lo.", // 300
-    "Sync CT when PI is locked", // 301
+    "PI locked CT sync", // 301
     "Error! No RDS signal" // 302
   }
 };

@@ -26,9 +26,10 @@ void handleRoot() {
   html += "thead th:first-child, tbody th:first-child {border-radius: 15px 0 0 15px;}";
   html += "thead th:nth-last-of-type(1), tbody th:nth-last-of-type(1) {border-radius: 0 15px 15px 0;}";
   html += "tbody td:nth-child(3) {font-weight: 700;}";
+  html += "tbody td:nth-child(4) {color: #5bd6ab;}";
   html += "tbody td:nth-child(5) {color: #ddd;}";
   html += "tbody td:nth-child(10) {color: #5bd6ab;font-weight: bold;}";
-  html += "thead th:nth-child(1) {width: 12%;} thead th:nth-child(2) {width: 5%;} thead th:nth-child(3) {width: 15%;} thead th:nth-child(4) {width: 8%;} thead th:nth-child(5) {width: 10%;} thead th:nth-child(6) {width: 15%;}";
+  html += "thead th:nth-child(1) {width: 12%;} thead th:nth-child(2) {width: 5%;} thead th:nth-child(3) {width: 10%;} thead th:nth-child(4) {width: 5%;} thead th:nth-child(5) {width: 10%;} thead th:nth-child(6) {width: 5%;}";
   html += "button {background-color: #4db691;font-family: 'Arial', sans-serif;border: 0;padding: 15px 20px;font-size: 14px;text-transform: uppercase;cursor: pointer;border-radius: 15px;font-weight: bold;color: rgb(32, 34, 40);display: block;margin: 20px auto;transition: 0.3s ease background-color;}";
   html += "button:hover {background-color: #5bd6ab;}";
   html += ".go-to-bottom {position: fixed;bottom: 30px;right: 30px;z-index: 100;}";
@@ -105,7 +106,7 @@ void handleRoot() {
     if (endIndex == -1) endIndex = header.length();
     String column = header.substring(startIndex, endIndex);
 
-    if (column.equalsIgnoreCase("PI code")) piCodeIndex = columnIndex;
+    if (column.equalsIgnoreCase("PI")) piCodeIndex = columnIndex;
     if (column.equalsIgnoreCase("Frequency")) frequencyIndex = columnIndex;
 
     startIndex = endIndex + 1;
@@ -204,7 +205,7 @@ bool handleCreateNewLogbook() {
   }
 
   // Write the header to the new CSV file
-  String header = "Date,Time,Frequency,PI code,Signal,Stereo,TA,TP,PTY,PS,RadioText\n";
+  String header = "Date,Time,Frequency,PI,Signal,Stereo,TA,TP,PTY,PS,RadioText\n";
   file.print(header); // Ensure that the header is written properly
 
   // Make sure the data is written before closing the file
