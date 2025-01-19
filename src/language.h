@@ -307,7 +307,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Clock mode", // 298
     "Auto DST on NTP time", // 299
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "PI locked CT sync", // 301
+    "Sync CT when PI is locked", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -612,7 +612,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Klok methode", // 298
     "Auto zomertijd\nop NTP tijd", // 299
     "Het logboek bevat meer dan 130 items, die de viewer niet kan verwerken. Download alstublieft het CSV-bestand om het te bekijken.", // 300
-    "PI gebonden CT sync", // 301
+    "Sync CT bij specifieke PI", // 301
     "Fout! Geen RDS!" // 302
   },
 
@@ -917,7 +917,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Tryb zegara", // 298
     "Auto czas letni wg NTP", // 299
     "Wykaz zawiera ponad 130 wpisów, których przeglądarka nie może pokazać. Pobierz plik CSV, aby je przetworzyć.", // 300
-    "PI locked CT sync", // 301
+    "Sync CT when PI is locked", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -1222,7 +1222,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Clock mode", // 298
     "Auto DST on NTP time", // 299
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "PI locked CT sync", // 301
+    "Sync CT when PI is locked", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -1527,7 +1527,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Λειτουργία ρολογιού", // 298
     "Αυτόματο DST\nσε ώρα NTP", // 299
     "Το βιβλίο περιέχει πάνω από 130 καταγραφές, και είναι αδύνατη η επεξεργασία τους από το χρήστη. Κάντε λήψη του αρχείου CSV για να το επεξεργαστείτε.", // 300
-    "PI locked CT sync", // 301
+    "Sync CT when PI is locked", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -1832,7 +1832,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Mod ceas", // 298
     "Auto DST in mod NTP", // 299
     "Jurnalul conţine peste 130 înregistrări, acestea nu pot fi vizualizate. Vă rugam descărcaţi Jurnalul ca fișier CSV.", // 300
-    "PI locked CT sync", // 301
+    "Sync CT when PI is locked", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -2137,7 +2137,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Uhrzeit-Modus", // 298
     "Auto-Sommerzeit\nüber NTP", // 299
     "Das Logbuch enthält mehr als 130 Einträge, was der Viewer nicht verarbeiten kann. Bitte lade die CSV-Datei zum Verarbeiten herunter.", // 300
-    "PI locked CT sync", // 301
+    "Sync CT when PI is locked", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -2442,7 +2442,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Režim hodin", // 298
     "Automatický letní čas u NTP času", // 299
     "Logbook obsahuje více než 130 položek, které prohlížeč nedokáže zpracovat. Pro zpracování všech položek si stáhněte CSV soubor.", // 300
-    "PI locked CT sync", // 301
+    "Sync CT when PI is locked", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -2747,7 +2747,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Clock mode", // 298
     "Auto DST on NTP time", // 299
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "PI locked CT sync", // 301
+    "Sync CT when PI is locked", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -3052,7 +3052,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Mode horloge", // 298
     "DST automatique\nsur l'heure NTP", // 299
     "Le journal de bord contient plus de 130 entrées que le spectateur ne peut pas traiter. Télécharger le fichier CSV pour le traiter.", // 300
-    "PI locked CT sync", // 301
+    "Sync CT when PI is locked", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -3357,7 +3357,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Clock mode", // 298
     "Auto DST on NTP time", // 299
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "PI locked CT sync", // 301
+    "Sync CT when PI is locked", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -3662,7 +3662,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Clock mode", // 298
     "Auto DST on NTP time", // 299
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "PI locked CT sync", // 301
+    "Sync CT when PI is locked", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -3967,7 +3967,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Clock mode", // 298
     "Auto DST on NTP time", // 299
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "PI locked CT sync", // 301
+    "Sync CT when PI is locked", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -4272,7 +4272,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Clock mode", // 298
     "Auto DST on NTP time", // 299
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.",// 300
-    "PI locked CT sync", // 301
+    "Sync CT when PI is locked", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -4577,7 +4577,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Clock mode", // 298
     "Auto DST on NTP time", // 299
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "PI locked CT sync", // 301
+    "Sync CT when PI is locked", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -4882,7 +4882,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Klokkemodus", // 298
     "Auto sommertid på NTP-tid", // 299
     "Loggboken inneholder over 130 oppføringer, som en ikke kan behandle. Last ned CSV-filen for å behandle den.", // 300
-    "PI locked CT sync", // 301
+    "Sync CT when PI is locked", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -5187,7 +5187,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Modo reloj", // 298
     "DST automático\nen hora NTP", // 299
     "El libro de registro contiene más de 130 entradas que el visor no puede procesar. Descargue el archivo CSV para procesarlo.", // 300
-    "PI locked CT sync", // 301
+    "Sync CT when PI is locked", // 301
     "Error! No RDS signal" // 302
   },
 
@@ -5492,7 +5492,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Modo de relógio", // 298
     "DST automático\nno horário NTP", // 299
     "O diário de bordo contém mais de 130 entradas que o espectador não consegue processar. Descarregue o ficheiro CSV para processá-lo.", // 300
-    "PI locked CT sync", // 301
+    "Sync CT when PI is locked", // 301
     "Error! No RDS signal" // 302
   }
 };
