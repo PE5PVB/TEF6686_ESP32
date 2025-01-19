@@ -243,11 +243,12 @@ byte addRowToCSV() {
   }
 
   // Prepare the frequency in a formatted string (e.g., "XX.XX MHz")
-  int freqInt = (int)frequency;  // Cast the frequency value to an integer
-  int convertedFreq = (freqInt + ConverterSet * 100) / 100;  // Apply necessary conversion
+  int freqInt;
+  if (band == BAND_OIRT) freqInt = (int)frequency_OIRT; else freqInt = (int)frequency;  // Cast the frequency value to an integer
+  int convertedFreq = (freqInt + (band != BAND_OIRT ? ConverterSet * 100 : 0)) / 100; // Apply necessary conversion
   String frequencyFormatted = String(convertedFreq) + "." +
-                              ((freqInt + ConverterSet * 100) % 100 < 10 ? "0" : "") +
-                              String((freqInt + ConverterSet * 100) % 100) + " MHz";
+                              ((freqInt + (band != BAND_OIRT ? ConverterSet * 100 : 0)) % 100 < 10 ? "0" : "") +
+                              String((freqInt + (band != BAND_OIRT ? ConverterSet * 100 : 0)) % 100) + " MHz";
 
   // Calculate signal strength based on the selected unit
   int SStatusprint = 0;
