@@ -1794,46 +1794,46 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Inițial", // 260
     "Mereu", //261
     "Arată ceasul", // 262
-    "Show long PS", // 263
-    "Start frequency", // 264
-    "Stop frequency", // 265
-    "Start memory channel", // 266
-    "Stop memory channel", // 267
-    "Only store with RDS", // 268
-    "Start auto memory", // 269
-    "Auto memory", // 270
-    "Listă ID posturi", // 271
-    "Found", // 272
-    "Abort! Out of memorychannels", // 273
-    "Abort! User pressed button", // 274
-    "Scan finished without errors", // 275
-    "Clear memory channels", // 276
-    "cleared", // 277
-    "Prevent double PI", // 278
-    "Range", // 279
-    "Full", // 280
-    "Wait time on\nsignal only", // 281
-    "Press highlighted corner", // 282
-    "To calibrate touchscreen", // 283
-    "Screen inversion toggles", // 284
-    "Select Bandwidth", // 285
-    "Your logbook", // 286
-    "Download logbook", // 287
-    "Logbook is empty", // 288
-    "Go to bottom", // 289
-    "Added to log", // 290
-    "Update failed!", // 291
-    "Clear logbook", // 292
-    "Logbook cleared", // 293
-    "Clear failed", // 294
-    "Set NTP time offset", // 295
-    "Autologger", // 296
-    "Logbook full!", // 297
-    "Clock mode", // 298
-    "Auto DST on NTP time", // 299
-    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "PI locked CT sync", // 301
-    "Error! No RDS signal" // 302
+		"Arată PS lung", // 263
+		"Frecvență de început", // 264
+		"Frecvență de oprire", // 265
+		"Canal de memorie de început", // 266
+		"Canal de memorie de oprire", // 267
+		"Stochează doar cu RDS", // 268
+		"Începe memoria automată", // 269
+		"Memorie automată", // 270
+		"Listă ID posturi", // 271
+		"Găsit", // 272
+		"Anulat! Memoria canalelor este plină", // 273
+		"Anulat! Utilizatorul a apăsat un buton", // 274
+		"Scanarea s-a terminat fără erori", // 275
+		"Șterge canalele de memorie", // 276
+		"șters", // 277
+		"Previne dublarea PI", // 278
+		"Interval", // 279
+		"Complet", // 280
+		"Timp de așteptare doar\npe semnal", // 281
+		"Apasă colțul evidențiat", // 282
+		"Pentru calibrarea ecranului tactil", // 283
+		"Comută inversarea ecranului", // 284
+		"Selectează lățimea de bandă", // 285
+		"Jurnalul tău", // 286
+		"Descarcă jurnalul", // 287
+		"Jurnalul este gol", // 288
+		"Du-te la final", // 289
+		"Adăugat în jurnal", // 290
+		"Actualizare eșuată!", // 291
+		"Șterge jurnalul", // 292
+		"Jurnal șters", // 293
+		"Ștergerea a eșuat", // 294
+		"Setează offsetul pentru ora NTP", // 295
+		"Autologger", // 296
+		"Jurnalul este plin!", // 297
+		"Modul ceas", // 298
+		"DST automat pe ora NTP", // 299
+		"Jurnalul conține peste 130 de intrări, pe care vizualizatorul nu le poate procesa. Te rog descarcă fișierul CSV pentru a le procesa.", // 300
+		"PI blocat pe sincronizare CT", // 301
+		"Eroare! Fără semnal RDS" // 302
   },
 
   { "Deutsch", // German
