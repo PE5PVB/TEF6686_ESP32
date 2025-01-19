@@ -799,7 +799,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Ustawienia RDS", // 180
     "Ustawienia FM", // 181
     "Ustawienia AM", // 182
-    "Łączność", // 183
+    "Łączność i zegar", // 183
     "NACIŚNIJ MODE ABY WRÓCIĆ", // 184
     "Detek. międzykanałowy AM", // 185
     "Czułość detek. międzykanał.", // 186
@@ -917,8 +917,8 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Tryb zegara", // 298
     "Auto czas letni wg NTP", // 299
     "Wykaz zawiera ponad 130 wpisów, których przeglądarka nie może pokazać. Pobierz plik CSV, aby je przetworzyć.", // 300
-    "Sync CT when PI is locked", // 301
-    "Error! No RDS signal" // 302
+    "Synch. CT przy zablokowanym PI", // 301
+    "Błąd! Brak sygnału RDS" // 302
   },
 
   { "Hrvatski", // Croatian
