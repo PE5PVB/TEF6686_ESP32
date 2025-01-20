@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[18][303] PROGMEM = {
+static const char* const myLanguage[20][303] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -27,15 +27,15 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Low level threshold", // 18
     "Brightness", // 19
     "Set volume", // 20
-    "Set converter offset", // 21
-    "Set low band edge", // 22
-    "Set high band edge", // 23
-    "Set level offset", // 24
-    "Set Stereo sep. threshold", // 25
-    "Set high cut corner frequency", // 26
-    "Set High cut threshold", // 27
-    "Set low level threshold", // 28
-    "Set display brightness", // 29
+    "Converter offset", // 21
+    "Low band edge", // 22
+    "High band edge", // 23
+    "Level offset", // 24
+    "Stereo separation threshold", // 25
+    "High cut corner frequency", // 26
+    "High cut threshold", // 27
+    "Low level threshold", // 28
+    "Display brightness", // 29
     "Off", // 30
     "Screen is muted!", // 31
     "To unmute uncheck RF+ box", // 32
@@ -1528,7 +1528,7 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "Αυτόματο DST\nσε ώρα NTP", // 299
     "Το βιβλίο περιέχει πάνω από 130 καταγραφές, και είναι αδύνατη η επεξεργασία τους από το χρήστη. Κάντε λήψη του αρχείου CSV για να το επεξεργαστείτε.", // 300
     "Συγχρονισμός CT σε\nκλείδωμα PI ", // 301
-    "Σφάλμα! Χωρίς σήμα RDS" // 302
+    "Δεν υπάρχει σήμα RDS!" // 302
   },
 
   { "Română", // Romanian
@@ -5493,6 +5493,616 @@ static const char* const myLanguage[18][303] PROGMEM = {
     "O diário de bordo contém mais de 130 entradas que o espectador não consegue processar. Descarregue o ficheiro CSV para processá-lo.", // 300
     "Sincronizar CT\nno PI bloqueado", // 301
     "Erro! Sem sinal RDS" // 302
-  }
+  },
+
+  { "Srpski", // Serbian
+    "Smer rotacije promenjen", // 1
+    "Pustite dugme", // 2
+    "Ekran okrenut", // 3
+    "Kalibracija analognog\nmerača", // 4
+    "Pustite dugme\nkada budete spremni", // 5
+    "enkoder postavljen\nna optički", // 6
+    "enkoder postavljen\nna standard", // 7
+    "FM/AM prijemnik", // 8
+    "Tuner: !Nema!", // 9
+    "Jačina zvuka", // 10
+    "Konverter", // 11
+    "Donja ivica opsega", // 12
+    "Gornja ivica opsega", // 13
+    "FM RF nivo\npomeranja", // 14
+    "Stereo prag", // 15
+    "Visokopropusni kut", // 16
+    "Visokopropusni\nprag", // 17
+    "Prag za nizak\nnivo", // 18
+    "Osvetljenost", // 19
+    "Postavite jačinu zvuka", // 20
+    "Pomeranje konvertera", // 21
+    "Donja ivica opsega", // 22
+    "Gornja ivica opsega", // 23
+    "Pomeranje nivoa", // 24
+    "Stereo odvajanje prag", // 25
+    "Frekvencija\nvisokog rezanja", // 26
+    "Prag visokog rezanja", // 27
+    "Prag niskog nivoa", // 28
+    "Osvetljenost ekrana", // 29
+    "Isključeno", // 30
+    "Ekran je utišan!", // 31
+    "Ponovo uključite RF+ kutiju", // 32
+    "ISKLJUČENO", // 33
+    "SKENIRANJE...", // 34
+    "Tuner nije\ndetektovan", // 35
+    "AM antena\npojačanje", // 36
+    "FM AGC", // 37
+    "Prikazivanje RDS\ngrešaka", // 38
+    "Jezik", // 39
+    "Izaberite jezik", // 40
+    "PRITISNITE MODE DA IZLAZITE I SPASITE", // 41
+    "Uključeno", // 42
+    "Softmute FM", // 43
+    "Softmute AM", // 44
+    "Pucketanje na\nivici opsega", // 45
+    "Region", // 46
+    "Evropa", // 47
+    "Amerika", // 48
+    "Prikazivanje\ndonje crte u RDS", // 49
+    "USB mod", // 50
+    "Wi-Fi aktivan", // 51
+    "Konfiguriši Wi-Fi", // 52
+    "Povežite se sa: ", // 53
+    "da biste konfigurisali Wi-Fi", // 54
+    "Pokušavam da se\npovežem sa Wi-Fi", // 55
+    "NEUSPELO!", // 56
+    "POVEZANO!", // 57
+    "IP Stationlist klijent", // 58
+    "Prikazivanje SW\ntalasne dužine", // 59
+    "RDS filter", // 60
+    "Prikazivanje PI\ngrešaka", // 61
+    "Koristi šum", // 62
+    "Merač modulisanja", // 63
+    "AM Noise blanker", // 64
+    "FM Noise blanker", // 65
+    "Podrazumevana\npodešavanja učitana", // 66
+    "Audio izlaz", // 67
+    "Dozvoli podešavanje\nbez screensavera", // 68
+    "Invertuj ekran", // 69
+    "O softveru", // 70
+    "Glavni kod:", // 71
+    "Doprinosioci:", // 72
+    "Nepoznato", // 73
+    "Opcije screensavera", // 74
+    "Automatsko\nisključivanje", // 75
+    "Isključi ekran", // 76
+    "Tema", // 77
+    "Koža", // 78
+    "Detektovane aplikacije", // 79
+    "Min.", // 80
+    "Dinamička SPI\nbrzina", // 81
+    "Osetljivost\nskeniranja", // 82
+    "NIJE DOSTUPNO", // 83
+    "Verzija softvera", // 84
+    "Font za\nfrekvenciju", // 85
+    "Automatski", // 86
+    "Nema AF dostupnog", // 87
+    "Nema EON dostupnog", // 88
+    "Nema RT+ dostupnog", // 89
+    "FM podrazumevani\nkorak", // 90
+    "Screensaver", // 91
+    "Sek", // 92
+    "PRITISNITE BAND DA ZATVORITE", // 93
+    "1% osvetljenost", // 94
+    "25% osvetljenost", // 95
+    "50% osvetljenost", // 96
+    "AM RF nivo\npomeranja", // 97
+    "Jedinica\nsignalnog merača", // 98
+    "Koristi AF", // 99
+    "Izaberi FM\nopseg", // 100
+    "Izaberi AM\nopseg", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT", // 106
+    "Zaustavi buđenje ekrana", // 107
+    "Selector modela", // 108
+    "Baza", // 109
+    "Portabilno", // 110
+    "Portabilno dodirno", // 111
+    "Naslov", // 112
+    "Album", // 113
+    "Pesma", // 114
+    "Izvođač", // 115
+    "Kompozicija", // 116
+    "Pokret", // 117
+    "Dirigent", // 118
+    "Kompozitor", // 119
+    "Grupa", // 120
+    "Komentar", // 121
+    "Žanr", // 122
+    "Vesti", // 123
+    "Lokalne vesti", // 124
+    "Berza", // 125
+    "Sport", // 126
+    "Loterija", // 127
+    "Horoskop", // 128
+    "Dnevni odmor", // 129
+    "Zdravlje", // 130
+    "Događaj", // 131
+    "Scena", // 132
+    "Film", // 133
+    "TV", // 134
+    "Datum/vreme", // 135
+    "Vreme", // 136
+    "Saobraćaj", // 137
+    "Alarm", // 138
+    "Reklama", // 139
+    "Web sajt", // 140
+    "Ostalo", // 141
+    "Kratak PS", // 142
+    "Dug PS", // 143
+    "Sada", // 144
+    "Sledeće", // 145
+    "Deo", // 146
+    "Domaćin", // 147
+    "Uređivač", // 148
+    "Frekvencija", // 149
+    "Početna stranica", // 150
+    "Podkanal", // 151
+    "Vruća linija", // 152
+    "Studio telefon", // 153
+    "Telefon", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Email vruća linija", // 157
+    "Email studio", // 158
+    "Email", // 159
+    "Razgovor", // 160
+    "Razgovorni centar", // 161
+    "Pitanje za glasanje", // 162
+    "Centar za glasanje", // 163
+    "Mesto", // 164
+    "Sastanak", // 165
+    "Identifikator", // 166
+    "Kupovina", // 167
+    "Preuzmi podatke", // 168
+    "MW podrazumevani\nkorak", // 169
+    "Tangerine", // 170
+    "Okean", // 171
+    "Indigo", // 172
+    "Opcije baterije", // 173
+    "Prikazivanje napona", // 174
+    "Prikazivanje procenta", // 175
+    "RT keširanje", // 176
+    "Glavna podešavanja", // 177
+    "Audio podešavanja", // 178
+    "Podešavanja ekrana", // 179
+    "RDS podešavanja", // 180
+    "FM podešavanja", // 181
+    "AM podešavanja", // 182
+    "Povezivanje i sat", // 183
+    "PRITISNITE MODE DA SE VRATITE", // 184
+    "CoChannel Detektor", // 185
+    "CoChannel Detektor\nosetljivost", // 186
+    "CoChannel Detektor\nprag", // 187
+    "CoChannel Detektor\nbrojač", // 188
+    "GLAVNO", // 189
+    "AUDIO", // 190
+    "EKRAN", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "POVEZIVANJE", // 195
+    "DX MODE", // 196
+    "AUTO MEM", // 197
+    "AM AGC", // 198
+    "FM de-emfaza", // 199
+    "Malo", // 200
+    "Veliko", // 201
+    "Svi", // 202
+    "Brzi PS", // 203
+    "Podrazumevano", // 204
+    "Utišaj ekran na XDRGTK", // 205
+    "FMSI stereo\npoboljšanje", // 206
+    "Funkcija dostupna\nsamo na TEF6687/6689!", // 207
+    "Funkcija nije dostupna na koži!", // 208
+    "Počnite skeniranje kanala", // 209
+    "Zaustavite skeniranje kanala", // 210
+    "Vreme čekanja", // 211
+    "Pokrenite DX\nskeniranje", // 212
+    "FM DX Opcije", // 213
+    "Abort! Početni kanal preskočen", // 214
+    "Automatski sortiraj AF", // 215
+    "Memorijski kanali", // 216
+    "Isključi", // 217
+    "Samo", // 218
+    "Automatski otkaži skeniranje", // 219
+    "Ispravi PI", // 220
+    "Signal", // 221
+    "Utišaj zvuk\nu toku skeniranja", // 222
+    "ZRAK", // 223
+    "5 sekundi pritiska na dugme", // 224
+    "Isključivanje", // 225
+    "Isključi ekran", // 226
+    "Onemogućeno", // 227
+    "Nema", // 228
+    "Vesti", // 229
+    "Aktuelnosti", // 230
+    "Informacije", // 231
+    "Sport", // 232
+    "Obrazovanje", // 233
+    "Drama", // 234
+    "Kultura", // 235
+    "Nauka", // 236
+    "Raznovrsno", // 237
+    "Pop muzika", // 238
+    "Rock muzika", // 239
+    "Lagana muzika", // 240
+    "Laka klasična", // 241
+    "Seriozna klasična", // 242
+    "Ostala muzika", // 243
+    "Vreme", // 244
+    "Finansije", // 245
+    "Dečiji programi", // 246
+    "Socijalna pitanja", // 247
+    "Religija", // 248
+    "Telefon na liniji", // 249
+    "Putovanja", // 250
+    "Odmor", // 251
+    "Jazz muzika", // 252
+    "Country muzika", // 253
+    "Nacionalna muzika", // 254
+    "Stari hitovi", // 255
+    "Folk muzika", // 256
+    "Dokumentarni", // 257
+    "Test alarma", // 258
+    "Alarm!!!", // 259
+    "Početni", // 260
+    "Uvek", // 261
+    "Prikazivanje\nsata", // 262
+    "Prikazivanje\ndugog PS", // 263
+    "Početna frekvencija", // 264
+    "Krajnja frekvencija", // 265
+    "Početni memorijski\nkanal", // 266
+    "Krajnji memorijski\nkanal", // 267
+    "Samo sa RDS", // 268
+    "Pokreni automatsko\nmemorijsko pamćenje", // 269
+    "Automatsko memorisanje", // 270
+    "Stationlist ID", // 271
+    "Pronađeno", // 272
+    "Abort! Nedostaju kanali", // 273
+    "Abort! Korisnik je\npritisnuo dugme", // 274
+    "Skeniranje završeno\nbez grešaka", // 275
+    "Očisti memorijske\nkanale", // 276
+    "obrisano", // 277
+    "Prevencija duplog PI", // 278
+    "Opseg", // 279
+    "Puno", // 280
+    "Vreme čekanja na signal", // 281
+    "Pritisnite označeni\nugao", // 282
+    "Za kalibraciju\nekrana", // 283
+    "Ekran se prebacuje", // 284
+    "Izaberi širinu\nopsega", // 285
+    "Tvoj dnevnik", // 286
+    "Preuzmi dnevnik", // 287
+    "Dnevnik je prazan", // 288
+    "Idi do dna", // 289
+    "Dodano u dnevnik", // 290
+    "Ažuriranje nije\nuspelo!", // 291
+    "Očisti dnevnik", // 292
+    "Dnevnik očišćen", // 293
+    "Greška pri brisanju", // 294
+    "Postavite NTP\nvremenski offset", // 295
+    "Automatski logger", // 296
+    "Dnevnik je pun!", // 297
+    "Način rada sa\nsatom", // 298
+    "Auto DST na\nNTP vremenu", // 299
+    "Dnevnik sadrži više od 130 unosa, što viewer ne može obraditi. Preuzmite CSV fajl za obradu.", // 300
+    "PI zaključan\nCT sinhronizacija", // 301
+    "Nema RDS signala!" // 302
+  },
+  
+{  "Suomi", // Finnish
+    "Pyörimissuunta vaihtui", // 1
+    "Vapauta nappi", // 2
+    "Näyttö käännetty", // 3
+    "Kalibroi analoginen mittari", // 4
+    "Vapauta nappi,\nkun olet valmis", // 5
+    "Kooderi asetettu optiseksi", // 6
+    "Kooderi asetettu vakioksi", // 7
+    "FM/AM-vastaanotin", // 8
+    "Viritin: !Ei mikään!", // 9
+    "Äänenvoimakkuus", // 10
+    "Muunna", // 11
+    "Matala taajuusraja", // 12
+    "Korkea taajuusraja", // 13
+    "FM RF-tason poikkeama", // 14
+    "Stereokynnys", // 15
+    "Korkeataajuusleikkaus", // 16
+    "Korkeataajuuskynnys", // 17
+    "Matalatason kynnys", // 18
+    "Kirkkaus", // 19
+    "Aseta\näänenvoimakkuus", // 20
+    "Muunna poikkeama", // 21
+    "Matala taajuusraja", // 22
+    "Korkea taajuusraja", // 23
+    "Tason poikkeama", // 24
+    "Stereoseparaation kynnys", // 25
+    "Korkean leikkauksen\nkulma taajuus", // 26
+    "Korkean leikkauksen kynnys", // 27
+    "Matalan tason kynnys", // 28
+    "Näytön kirkkaus", // 29
+    "Pois", // 30
+    "Näyttö on mykistetty!", // 31
+    "Poista mykistys,\npoista RF+ ruutuun", // 32
+    "POIS", // 33
+    "SKANNOIDAAN...", // 34
+    "Virittintä ei havaittu", // 35
+    "AM-antennin vahvistus", // 36
+    "FM AGC", // 37
+    "Näytä RDS-virheet", // 38
+    "Kieli", // 39
+    "Valitse kieli", // 40
+    "PAINA MODE POISTUAKSESI JA TALLENTA", // 41
+    "Päällä", // 42
+    "Pehmeä mykistys FM", // 43
+    "Pehmeä mykistys AM", // 44
+    "Piipahdus taajuusrajan\nkohdalla", // 45
+    "Alue", // 46
+    "Eurooppa", // 47
+    "Amerikka", // 48
+    "Näytä alaviiva RDS:ssä", // 49
+    "USB-tila", // 50
+    "Wi-Fi aktiivinen", // 51
+    "Määritä Wi-Fi", // 52
+    "Yhdistä: ", // 53
+    "määrittää Wi-Fi", // 54
+    "Yritetään yhdistää Wi-Fi", // 55
+    "EPÄONNISTUI!", // 56
+    "YHDISTETTY!", // 57
+    "Asemalista asiakas-IP", // 58
+    "Näytä SW aallonpituus", // 59
+    "RDS-suodatin", // 60
+    "Näytä PI-virheet", // 61
+    "Käytä squelchia", // 62
+    "Modulaatiomittari", // 63
+    "AM-noise blanker", // 64
+    "FM-noise blanker", // 65
+    "Oletusarvot ladattu", // 66
+    "Ääniulostulo", // 67
+    "Viritys ilman\nruutusäästäjää", // 68
+    "Käännä näyttö", // 69
+    "Tietoja ohjelmistosta", // 70
+    "Pääkoodi:", // 71
+    "Avustajat:", // 72
+    "Tuntematon", // 73
+    "Näytönsäästäjän\nasetukset", // 74
+    "Automaattinen\nvirrankatkaisu", // 75
+    "Näyttö pois", // 76
+    "Teema", // 77
+    "Iho", // 78
+    "Havaitut sovellukset", // 79
+    "Min.", // 80
+    "Dynaaminen SPI-nopeus", // 81
+    "Skaanna herkkyys", // 82
+    "EI MITÄÄN", // 83
+    "Ohjelmistoversio", // 84
+    "Taajuusfontti", // 85
+    "Automaattinen", // 86
+    "Ei AF:ää saatavilla", // 87
+    "Ei EON:ia saatavilla", // 88
+    "Ei RT+:aa saatavilla", // 89
+    "FM oletusaskelkoon", // 90
+    "Näytönsäästäjä", // 91
+    "Sek", // 92
+    "PAINA BAND POISTUAKSESI", // 93
+    "1% kirkkaus", // 94
+    "25% kirkkaus", // 95
+    "50% kirkkaus", // 96
+    "AM RF-tason poikkeama", // 97
+    "Signaalimittari-yksikkö", // 98
+    "Käytä AF", // 99
+    "Valitse FM-taajuuskaista", // 100
+    "Valitse AM-taajuuskaista", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT", // 106
+    "Pysäytä näytön\nherääminen virityksessä", // 107
+    "Mallivalitsin", // 108
+    "Perusta", // 109
+    "Kannettava", // 110
+    "Kannettava kosketus", // 111
+    "Otsikko", // 112
+    "Albumi", // 113
+    "Kappale", // 114
+    "Esittäjä", // 115
+    "Sävellys", // 116
+    "Liike", // 117
+    "Kapellimestari", // 118
+    "Säveltäjä", // 119
+    "Bändi", // 120
+    "Kommentti", // 121
+    "Genre", // 122
+    "Uutiset", // 123
+    "Paikalliset uutiset", // 124
+    "Pörssi", // 125
+    "Urheilu", // 126
+    "Arvonta", // 127
+    "Horoskooppi", // 128
+    "Päivittäinen huvi", // 129
+    "Terveys", // 130
+    "Tapahtuma", // 131
+    "Kohtaus", // 132
+    "Elokuvateatteri", // 133
+    "TV", // 134
+    "Päivämäärä/aika", // 135
+    "Sää", // 136
+    "Liikenne", // 137
+    "Hälytys", // 138
+    "Mainos", // 139
+    "Verkkosivusto", // 140
+    "Muu", // 141
+    "Lyhyt PS", // 142
+    "Pitkä PS", // 143
+    "Nyt", // 144
+    "Seuraava", // 145
+    "Osa", // 146
+    "Isäntä", // 147
+    "Toimittaja", // 148
+    "Taajuus", // 149
+    "Etusivu", // 150
+    "Alikanava", // 151
+    "Puhelinlinja", // 152
+    "Studion puhelin", // 153
+    "Puhelin", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "Sähköposti linja", // 157
+    "Sähköposti studio", // 158
+    "Sähköposti", // 159
+    "Chat", // 160
+    "Chat-keskus", // 161
+    "Ääni kysymys", // 162
+    "Äänestyskeskus", // 163
+    "Paikka", // 164
+    "Tapaaminen", // 165
+    "Tunniste", // 166
+    "Osto", // 167
+    "Hae dataa", // 168
+    "MW oletusaskelkoon", // 169
+    "Tangeriini", // 170
+    "Meri", // 171
+    "Indigo", // 172
+    "Akkuasetukset", // 173
+    "Näytä jännite", // 174
+    "Näytä prosentti", // 175
+    "RT-puskurointi", // 176
+    "Pääasetukset", // 177
+    "Ääniasetukset", // 178
+    "Näyttöasetukset", // 179
+    "RDS asetukset", // 180
+    "FM asetukset", // 181
+    "AM asetukset", // 182
+    "Yhteydet & kello", // 183
+    "PAINA MODE PALATTAKSESI", // 184
+    "CoChannel-tunnistin", // 185
+    "CoChannel-tunnistin\nherkkyys", // 186
+    "CoChannel-tunnistin\nkynnys", // 187
+    "CoChannel-tunnistin\nlaskuri", // 188
+    "PÄÄ", // 189
+    "ÄÄNI", // 190
+    "NÄYTTÖ", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "YHTEYDET", // 195
+    "DX-MOODI", // 196
+    "AUTOMAATTINEN MUISTI", // 197
+    "AM AGC", // 198
+    "FM vähennys", // 199
+    "Pieni", // 200
+    "Suuri", // 201
+    "Kaikki", // 202
+    "Nopea PS", // 203
+    "Oletus", // 204
+    "Mykistä näyttö\nXDRGTK-yhteyden aikana", // 205
+    "FMSI stereo\nparannus", // 206
+    "Toiminto saatavilla\nvain TEF6687/6689!", // 207
+    "Toiminto ei saatavilla\nvalitulla iholla!", // 208
+    "Aloita skannaus\nmuistikanavat", // 209
+    "Pysäytä skannaus\nmuistikanavat", // 210
+    "Odota-aika", // 211
+    "Aloita DX-skannaus", // 212
+    "FM DX Asetukset", // 213
+    "Keskeytä! Alku taajuus\non merkitty ohitetuksi.", // 214
+    "Automaattinen\nlajittelu AF", // 215
+    "Muistikanavat", // 216
+    "Sulje", // 217
+    "Vain", // 218
+    "Automaattinen peruutus\nskannauksessa", // 219
+    "Korjaa PI", // 220
+    "Signaali", // 221
+    "Mykistä ääni\nskannauksen aikana", // 222
+    "ILMA", // 223
+    "5 sek bandin painallus", // 224
+    "Virta pois", // 225
+    "Näyttö pois", // 226
+    "Poistettu käytöstä", // 227
+    "Ei mikään", // 228
+    "Uutiset", // 229
+    "Ajankohtaiset asiat", // 230
+    "Tietoa", // 231
+    "Urheilu", // 232
+    "Koulutus", // 233
+    "Draama", // 234
+    "Kulttuuri", // 235
+    "Tiede", // 236
+    "Vaihtelevia", // 237
+    "Pop-musiikki", // 238
+    "Rock-musiikki", // 239
+    "Helppo kuuntelu", // 240
+    "Kevyt klassinen", // 241
+    "Vakava klassinen", // 242
+    "Muu musiikki", // 243
+    "Sää", // 244
+    "Rahoitus", // 245
+    "Lasten ohjelmat", // 246
+    "Sosiaaliset asiat", // 247
+    "Uskonto", // 248
+    "Puhelinlinja", // 249
+    "Matkailu", // 250
+    "Vapaa-aika", // 251
+    "Jazz-musiikki", // 252
+    "Country-musiikki", // 253
+    "Kansallinen musiikki", // 254
+    "Vanha musiikki", // 255
+    "Folk-musiikki", // 256
+    "Dokumentti", // 257
+    "Hälytyksen testi", // 258
+    "Hälytys!!!", // 259
+    "Alku", // 260
+    "Aina", // 261
+    "Näytä kello", // 262
+    "Näytä pitkä PS", // 263
+    "Aloita taajuus", // 264
+    "Pysäytä taajuus", // 265
+    "Aloita muistikanava", // 266
+    "Pysäytä muistikanava", // 267
+    "Tallenna vain\nRDS:n kanssa", // 268
+    "Aloita automaattinen\nmuisti", // 269
+    "Automaattinen muisti", // 270
+    "Asemalista ID", // 271
+    "Löydetty", // 272
+    "Keskeytä!\nMuistikanavat loppu", // 273
+    "Keskeytä!\nKäyttäjä painoi nappia", // 274
+    "Skaannaus valmis\nilman virheitä", // 275
+    "Tyhjennä muistikanavat", // 276
+    "tyhjennetty", // 277
+    "Estä tupla PI", // 278
+    "Alue", // 279
+    "Täysi", // 280
+    "Odota-aika\nsignaalilla vain", // 281
+    "Paina korostettua\nkulmaa", // 282
+    "Kalibroidaksesi\nkosketusnäyttö", // 283
+    "Näytön kääntö kytkee", // 284
+    "Valitse kaistanleveys", // 285
+    "Lokikirjasi", // 286
+    "Lataa lokikirja", // 287
+    "Lokikirja on tyhjä", // 288
+    "Mene alas", // 289
+    "Lisätty lokiin", // 290
+    "Päivitys\nepäonnistui!", // 291
+    "Tyhjennä lokikirja", // 292
+    "Lokikirja\ntyhjennetty", // 293
+    "Tyhjennys\nepäonnistui", // 294
+    "Aseta NTP-aikakorjaus", // 295
+    "Autoloki", // 296
+    "Lokikirja täynnä!", // 297
+    "Kellotila", // 298
+    "Automaattinen\nkesäaika NTP-aikaa", // 299
+    "Lokikirjassa on yli 130 merkintää, joita katselija ei voi käsitellä. Lataa CSV-tiedosto käsitelläksesi sen.", // 300
+    "PI lukittu\nCT synkronointi", // 301
+    "Ei RDS-signaalia!" // 302
+}
 };
 #endif
