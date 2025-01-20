@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[20][303] PROGMEM = {
+static const char* const myLanguage[21][303] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -5799,7 +5799,7 @@ static const char* const myLanguage[20][303] PROGMEM = {
     "PI zaključan\nCT sinhronizacija", // 301
     "Nema RDS signala!" // 302
   },
-  
+
 {  "Suomi", // Finnish
     "Pyörimissuunta vaihtui", // 1
     "Vapauta nappi", // 2
@@ -6103,6 +6103,311 @@ static const char* const myLanguage[20][303] PROGMEM = {
     "Lokikirjassa on yli 130 merkintää, joita katselija ei voi käsitellä. Lataa CSV-tiedosto käsitelläksesi sen.", // 300
     "PI lukittu\nCT synkronointi", // 301
     "Ei RDS-signaalia!" // 302
-}
+  },
+
+  { "Dansk", // Danish
+    "Rotationsretning ændret", // 1
+    "Slip knappen", // 2
+    "Skærm vendt", // 3
+    "Kalibrer analog måler", // 4
+    "Slip knappen når klar", // 5
+    "Encoder indstillet til optisk", // 6
+    "Encoder indstillet til standard", // 7
+    "FM/AM modtager", // 8
+    "Tuner: !Ingen!", // 9
+    "Volumen", // 10
+    "Konverter", // 11
+    "Lavbåndskant", // 12
+    "Højbåndskant", // 13
+    "FM RF niveau offset", // 14
+    "Stereotærskel", // 15
+    "Højfrekvensskæring\nhjørne", // 16
+    "Højfrekvensskæring\ntærskel", // 17
+    "Lavt niveau tærskel", // 18
+    "Lysstyrke", // 19
+    "Indstil volumen", // 20
+    "Converter offset", // 21
+    "Lavbåndskant", // 22
+    "Højbåndskant", // 23
+    "Niveau offset", // 24
+    "Stereoadskillelsestærskel", // 25
+    "Højfrekvensskæring\nfrekvens", // 26
+    "Højfrekvensskæring\ntærskel", // 27
+    "Lavt niveau tærskel", // 28
+    "Visningens lysstyrke", // 29
+    "Slukket", // 30
+    "Skærmen er dæmpet!", // 31
+    "For at ophæve dæmpning,\nfjern markering i RF+ boksen", // 32
+    "SLUKKET", // 33
+    "SCANNER...", // 34
+    "Tuner ikke registreret", // 35
+    "AM Antenneforstærkning", // 36
+    "FM AGC", // 37
+    "Vis RDS fejl", // 38
+    "Sprog", // 39
+    "Vælg sprog", // 40
+    "TRYK MODE FOR AT GEMME", // 41
+    "Tændt", // 42
+    "Blød dæmpning FM", // 43
+    "Blød dæmpning AM", // 44
+    "Beep ved båndkant", // 45
+    "Region", // 46
+    "Europa", // 47
+    "Amerika", // 48
+    "Vis understregning\ni RDS", // 49
+    "USB tilstand", // 50
+    "Wi-Fi aktiv", // 51
+    "Konfigurer Wi-Fi", // 52
+    "Forbind til: ", // 53
+    "for at konfigurere Wi-Fi", // 54
+    "Forsøger at forbinde Wi-Fi", // 55
+    "FEJLET!", // 56
+    "TILSLUTTET!", // 57
+    "Stationliste\nklient IP", // 58
+    "Vis SW bølgelængde", // 59
+    "RDS filter", // 60
+    "Vis PI fejl", // 61
+    "Brug squelch", // 62
+    "Modulationsmåler", // 63
+    "AM Støjfjerner", // 64
+    "FM Støjfjerner", // 65
+    "Standardindstillinger\nindlæst", // 66
+    "Lydudgang", // 67
+    "Tillad tuning uden\nat slå pauseskærm fra", // 68
+    "Inverter visning", // 69
+    "Om software", // 70
+    "Hovedkode:", // 71
+    "Bidragydere:", // 72
+    "Ukendt", // 73
+    "Pauseskærmindstillinger", // 74
+    "Auto sluk", // 75
+    "Skærm slukket", // 76
+    "Tema", // 77
+    "Hud", // 78
+    "Registrerede\napplikationer", // 79
+    "Min.", // 80
+    "Dynamisk SPI\nhastighed", // 81
+    "Scan følsomhed", // 82
+    "INGEN", // 83
+    "Software version", // 84
+    "Frekvens skrifttype", // 85
+    "Auto", // 86
+    "Ingen AF tilgængelig", // 87
+    "Ingen EON tilgængelig", // 88
+    "Ingen RT+ tilgængelig", // 89
+    "FM standard trin", // 90
+    "Pauseskærm", // 91
+    "Sek", // 92
+    "TRYK PÅ BÅND FOR AT LUKKE", // 93
+    "1% lysstyrke", // 94
+    "25% lysstyrke", // 95
+    "50% lysstyrke", // 96
+    "AM RF niveau offset", // 97
+    "Signal meter enhed", // 98
+    "Brug AF", // 99
+    "Vælg FM Bånd", // 100
+    "Vælg AM Bånd", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT", // 106
+    "Stop skærmvækning\nved tuning", // 107
+    "Modelvælger", // 108
+    "Basis", // 109
+    "Bærbar", // 110
+    "Bærbar touch", // 111
+    "Titel", // 112
+    "Album", // 113
+    "Nummer", // 114
+    "Kunstner", // 115
+    "Komposition", // 116
+    "Bevægelse", // 117
+    "Dirigent", // 118
+    "Komponist", // 119
+    "Bånd", // 120
+    "Kommentar", // 121
+    "Genre", // 122
+    "Nyheder", // 123
+    "Lokale nyheder", // 124
+    "Aktiemarked", // 125
+    "Sport", // 126
+    "Lotto", // 127
+    "Horoskop", // 128
+    "Daglig adspredelse", // 129
+    "Sundhed", // 130
+    "Begivenhed", // 131
+    "Scene", // 132
+    "Biograf", // 133
+    "TV", // 134
+    "Dato/tid", // 135
+    "Vejr", // 136
+    "Trafik", // 137
+    "Alarm", // 138
+    "Annonce", // 139
+    "Hjemmeside", // 140
+    "Andet", // 141
+    "Kort PS", // 142
+    "Længere PS", // 143
+    "Nu", // 144
+    "Næste", // 145
+    "Del", // 146
+    "Vært", // 147
+    "Redaktør", // 148
+    "Frekvens", // 149
+    "Hjemmeside", // 150
+    "Underkanal", // 151
+    "Hotline", // 152
+    "Studiotelefon", // 153
+    "Telefon", // 154
+    "SMS studie", // 155
+    "SMS", // 156
+    "E-mail hotline", // 157
+    "E-mail studie", // 158
+    "E-mail", // 159
+    "Chat", // 160
+    "Chatcenter", // 161
+    "Afstemning spørgsmål", // 162
+    "Afstemning center", // 163
+    "Sted", // 164
+    "Aftale", // 165
+    "Identifikator", // 166
+    "Køb", // 167
+    "Hent data", // 168
+    "MW standard trin", // 169
+    "Tangerine", // 170
+    "Hav", // 171
+    "Indigo", // 172
+    "Batteriindstillinger", // 173
+    "Vis spænding", // 174
+    "Vis procent", // 175
+    "RT buffering", // 176
+    "Hovedindstillinger", // 177
+    "Lydindstillinger", // 178
+    "Skærmindstillinger", // 179
+    "RDS indstillinger", // 180
+    "FM indstillinger", // 181
+    "AM indstillinger", // 182
+    "Tilslutning & ur", // 183
+    "TRYK MODE FOR AT VENDE TILBAGE", // 184
+    "Sammenkanal detektor", // 185
+    "Sammenkanal detektor\nfølsomhed", // 186
+    "Sammenkanal detektor\ntærskel", // 187
+    "Sammenkanal detektor\ntæller", // 188
+    "HOVED", // 189
+    "LYD", // 190
+    "SKÆRM", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "TILSLUT", // 195
+    "DX MODE", // 196
+    "AUTO MEM", // 197
+    "AM AGC", // 198
+    "FM deemphasis", // 199
+    "Lille", // 200
+    "Stor", // 201
+    "Alle", // 202
+    "Hurtig PS", // 203
+    "Standard", // 204
+    "Sluk skærm ved\nXDRGTK forbindelse", // 205
+    "FMSI stereo\nforbedring", // 206
+    "Funktion kun tilgængelig\npå TEF6687/6689!", // 207
+    "Funktion ikke tilgængelig\npå valgt hud!", // 208
+    "Begynd scanning\naf hukommelseskanaler", // 209
+    "Stop scanning\naf hukommelseskanaler", // 210
+    "Ventetid", // 211
+    "Start DX scanning", // 212
+    "FM DX Indstillinger", // 213
+    "Afbryd! Startkanal\ner sprunget over.", // 214
+    "Auto-sortering AF", // 215
+    "Hukommelseskanaler", // 216
+    "Udeluk", // 217
+    "Kun", // 218
+    "Auto annuller scan", // 219
+    "Korrekt PI", // 220
+    "Signal", // 221
+    "Lyd dæmpet\nunder scanning", // 222
+    "LUFT", // 223
+    "5 sek. båndknap tryk", // 224
+    "Sluk", // 225
+    "Skærm slukket", // 226
+    "Deaktiveret", // 227
+    "Ingen", // 228
+    "Nyheder", // 229
+    "Seneste nyt", // 230
+    "Oplysninger", // 231
+    "Sport", // 232
+    "Uddannelse", // 233
+    "Drama", // 234
+    "Kultur", // 235
+    "Videnskab", // 236
+    "Variabel", // 237
+    "Popmusik", // 238
+    "Rockmusik", // 239
+    "Nem lytning", // 240
+    "Lettelse klassisk", // 241
+    "Seriøs klassisk", // 242
+    "Anden musik", // 243
+    "Vejr", // 244
+    "Finans", // 245
+    "Børneprogrammer", // 246
+    "Sociale anliggender", // 247
+    "Religion", // 248
+    "Ring ind", // 249
+    "Rejse", // 250
+    "Fritid", // 251
+    "Jazzmusik", // 252
+    "Countrymusik", // 253
+    "National musik", // 254
+    "Gamle hits", // 255
+    "Folkemusik", // 256
+    "Dokumentar", // 257
+    "Alarm Test", // 258
+    "Alarm!!!", // 259
+    "Initial", // 260
+    "Altid", // 261
+    "Vis ur", // 262
+    "Vis lang PS", // 263
+    "Startfrekvens", // 264
+    "Stopfrekvens", // 265
+    "Start hukommelseskanal", // 266
+    "Stop hukommelseskanal", // 267
+    "Kun gem med RDS", // 268
+    "Start auto hukommelse", // 269
+    "Auto hukommelse", // 270
+    "Stationsliste ID", // 271
+    "Fundet", // 272
+    "Afbryd! Uden\nhukommelseskanaler", // 273
+    "Afbryd! Brugeren\ntrykkede på knap", // 274
+    "Scanning afsluttet uden fejl", // 275
+    "Ryd\nhukommelseskanaler", // 276
+    "ryddet", // 277
+    "Forhindre\ndobbelt PI", // 278
+    "Rækkevidde", // 279
+    "Fuld", // 280
+    "Ventetid på\nkun signal", // 281
+    "Tryk på det markerede hjørne", // 282
+    "For at kalibrere touchskærmen", // 283
+    "Skærminversion\nskifter", // 284
+    "Vælg båndbredde", // 285
+    "Din logbog", // 286
+    "Download logbog", // 287
+    "Logbog er tom", // 288
+    "Gå til bunden", // 289
+    "Tilføjet til log", // 290
+    "Opdatering\nmislykkedes!", // 291
+    "Ryd logbog", // 292
+    "Logbog ryddet", // 293
+    "Rydning mislykkedes", // 294
+    "Indstil NTP\ntidsforskel", // 295
+    "Autologger", // 296
+    "Logbog fuld!", // 297
+    "Urtilstand", // 298
+    "Auto DST på\nNTP tid", // 299
+    "Logbogen indeholder over 130 poster, som fremviseren ikke kan behandle. Download CSV-filen for at behandle den.", // 300
+    "PI låst CT sync", // 301
+    "Fejl! Ingen RDS signal" // 302
+  }
 };
 #endif
