@@ -28,8 +28,8 @@ void handleRoot() {
   html += "tbody td:nth-child(3) {font-weight: 700;}";
   html += "tbody td:nth-child(4) {color: #5bd6ab;}";
   html += "tbody td:nth-child(5) {color: #ddd;}";
-  html += "tbody td:nth-child(10) {color: #5bd6ab;font-weight: bold;}";
-  html += "thead th:nth-child(1) {width: 12%;} thead th:nth-child(2) {width: 5%;} thead th:nth-child(3) {width: 10%;} thead th:nth-child(4) {width: 5%;} thead th:nth-child(5) {width: 10%;} thead th:nth-child(6) {width: 5%;}";
+  html += "tbody td:nth-child(11) {color: #5bd6ab;font-weight: bold;}";
+  html += "thead th:nth-child(1) {width: 12%;} thead th:nth-child(2) {width: 5%;} thead th:nth-child(3) {width: 10%;} thead th:nth-child(4) {width: 5%;} thead th:nth-child(5) {width: 10%;} thead th:nth-child(6) {width: 5%;} thead th:nth-child(6) {width: 5%;}";
   html += "button {background-color: #4db691;font-family: 'Arial', sans-serif;border: 0;padding: 15px 20px;font-size: 14px;text-transform: uppercase;cursor: pointer;border-radius: 15px;font-weight: bold;color: rgb(32, 34, 40);display: block;margin: 20px auto;transition: 0.3s ease background-color;}";
   html += "button:hover {background-color: #5bd6ab;}";
   html += ".go-to-bottom {position: fixed;bottom: 30px;right: 30px;z-index: 100;}";
@@ -234,20 +234,19 @@ byte addRowToCSV() {
     return 1;  // Return 1 if the file cannot be opened
   }
 
-  // Fetch the current date and time as a string
-  String currentDateTime = getCurrentDateTime();
-
-  // Use a placeholder ("-,-") if the date and time could not be retrieved
-  if (currentDateTime == "") {
-    currentDateTime = "-,-";
+  // Fetch the current date and time
+  char currentDateTime[32] = "-,-";
+  String dateTimeString = getCurrentDateTime();
+  if (!dateTimeString.isEmpty()) {
+    strncpy(currentDateTime, dateTimeString.c_str(), sizeof(currentDateTime) - 1);
   }
 
-  // Prepare the frequency in a formatted string (e.g., "XX.XX MHz")
+  // Prepare the frequency in a formatted string
   int freqInt = (band == BAND_OIRT) ? (int)frequency_OIRT : (int)frequency;
   int adjustedFreq = freqInt + (band != BAND_OIRT ? ConverterSet * 100 : 0);
-  String frequencyFormatted = String(adjustedFreq / 100) + "." +
-                              ((adjustedFreq % 100 < 10) ? "0" : "") +
-                              String(adjustedFreq % 100) + " MHz";
+  char frequencyFormatted[16];
+  snprintf(frequencyFormatted, sizeof(frequencyFormatted), "%d.%02d MHz",
+           adjustedFreq / 100, adjustedFreq % 100);
 
   // Calculate signal strength based on the selected unit
   int SStatusPrint = 0;
@@ -255,39 +254,44 @@ byte addRowToCSV() {
   else if (unit == 1) SStatusPrint = ((SStatus * 100) + 10875) / 100;  // dBf
   else if (unit == 2) SStatusPrint = round((float(SStatus) / 10.0 - 10.0 * log10(75) - 90.0) * 10.0);  // dBm
 
-  // Format the signal strength with appropriate decimal places and unit
-  String signal = String(SStatusPrint / 10) + "." + String(abs(SStatusPrint % 10));
-  if (unit == 0) signal += " dBμV";
-  else if (unit == 1) signal += " dBf";
-  else if (unit == 2) signal += " dBm";
+  char signal[16];
+  snprintf(signal, sizeof(signal), "%d.%d %s",
+           SStatusPrint / 10, abs(SStatusPrint % 10),
+           (unit == 0) ? "dBμV" : (unit == 1) ? "dBf" : "dBm");
 
-  // Replace commas in the station name and radio text to avoid CSV conflicts
-  String stationName = radio.rds.stationName;
-  stationName.replace(",", " ");  // Replace commas in station name
+  // Replace commas in the station name to avoid CSV conflicts
+  char stationName[64] = "";
+  strncpy(stationName, radio.rds.stationName.c_str(), sizeof(stationName) - 1);
+  for (size_t i = 0; i < strlen(stationName); i++) {
+    if (stationName[i] == ',') {
+      stationName[i] = ' ';
+    }
+  }
 
   // Handle ECC, PTY, TA, TP, and Stereo flag
-  String TA = radio.rds.hasTA ? "•" : " ";
-  String TP = radio.rds.hasTP ? "•" : " ";
-  String Stereo = radio.getStereoStatus() ? "•" : " ";
-  String pty = String(radio.rds.stationTypeCode);
-  String ECC = "--";
+  char ECC[4] = "--";
   if (radio.rds.hasECC) {
-    char eccBuffer[3];  // Buffer to hold 2-digit hex value + null terminator
-    snprintf(eccBuffer, sizeof(eccBuffer), "%02X", radio.rds.ECC);  // Format ECC as uppercase 2-digit hex
-    ECC = String(eccBuffer);
+    snprintf(ECC, sizeof(ECC), "%02X", radio.rds.ECC);  // Format ECC as uppercase 2-digit hex
+  }
+
+  const char *TA = radio.rds.hasTA ? "•" : " ";
+  const char *TP = radio.rds.hasTP ? "•" : " ";
+  const char *Stereo = radio.getStereoStatus() ? "•" : " ";
+  char pty[4];
+  snprintf(pty, sizeof(pty), "%d", radio.rds.stationTypeCode);
+
+  // Extract the first 4 characters of `picode`
+  char piCode[5] = "0000";  // Initialize with a default value
+  if (strlen(radio.rds.picode) >= 4) {
+    strncpy(piCode, radio.rds.picode, 4);  // Copy the first 4 characters
+    piCode[4] = '\0';  // Ensure null termination
   }
 
   // Construct the CSV row data
-  String row = currentDateTime + "," +
-               frequencyFormatted + "," +
-               String(radio.rds.picode) + "," +
-               signal + "," +
-               Stereo + "," +
-               TA + "," +
-               TP + "," +
-               pty + "," +
-               ECC + "," +
-               stationName + "\n";
+  char row[256];
+  snprintf(row, sizeof(row), "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
+           currentDateTime, frequencyFormatted, piCode,
+           signal, Stereo, TA, TP, pty, ECC, stationName);
 
   // Write the row to the file and close it
   if (file.print(row)) {
