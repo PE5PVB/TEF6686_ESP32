@@ -57,5 +57,6 @@ extern void updateiMS();
 extern void updateEQ();
 extern void DataPrint(String string);
 extern void BuildAFScreen();
+extern void ShowFreq(int mode);
 
 #endif

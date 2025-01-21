@@ -1880,7 +1880,8 @@ void BANDBUTTONPress() {
   if (seek) radio.setUnMute();
   seek = false;
   if (scandxmode) {
-    cancelDXScan();
+    ShowFreq(5);
+    ShowFreq(0);
   } else {
     if (memorystore) {
       EEPROM.writeByte(memorypos + EE_PRESETS_BAND_START, BAND_FM);
@@ -2460,7 +2461,16 @@ void BWButtonPress() {
   if (seek) radio.setUnMute();
   seek = false;
   if (scandxmode) {
-    cancelDXScan();
+    unsigned long counterold = millis();
+    unsigned long counter = millis();
+    while (digitalRead(BWBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
+
+    if (counter - counterold < 1000) {
+      ShowFreq(5);
+      ShowFreq(0);
+    } else {
+      cancelDXScan();
+    }
   } else {
     if (!usesquelch) radio.setUnMute();
     if (!BWtune && !menu) {
@@ -2522,7 +2532,8 @@ void ModeButtonPress() {
   if (seek) radio.setUnMute();
   seek = false;
   if (scandxmode) {
-    cancelDXScan();
+    ShowFreq(5);
+    ShowFreq(0);
   } else {
     if (!usesquelch) radio.setUnMute();
     if (advancedRDS) {
@@ -2716,7 +2727,8 @@ void ButtonPress() {
   if (seek) radio.setUnMute();
   seek = false;
   if (scandxmode) {
-    cancelDXScan();
+    ShowFreq(5);
+    ShowFreq(0);
   } else {
     if (!usesquelch) radio.setUnMute();
     if (advancedRDS) {
@@ -2827,7 +2839,8 @@ void ButtonPress() {
 void KeyUp() {
   rotary = 0;
   if (scandxmode) {
-    cancelDXScan();
+    ShowFreq(5);
+    ShowFreq(0);
   } else {
     if (!afscreen) {
       if (!BWtune && !menu) {
@@ -2894,7 +2907,8 @@ void KeyUp() {
 void KeyDown() {
   rotary = 0;
   if (scandxmode) {
-    cancelDXScan();
+    ShowFreq(5);
+    ShowFreq(0);
   } else {
     if (!afscreen) {
       if (!BWtune && !menu) {
@@ -3221,15 +3235,21 @@ void ShowFreq(int mode) {
           case 3:
             FrequencySprite.fillSprite(BackgroundColor);
             FrequencySprite.pushSprite(46, 46);
-            tftPrint(0, myLanguage[language][291], 146, 58, ActiveColor, ActiveColorSmooth, 28);
+            tftPrint(0, myLanguage[language][291], 146, 58, ActiveColor, ActiveColorSmooth, 16);
             break;
 
           case 4:
             FrequencySprite.fillSprite(BackgroundColor);
             FrequencySprite.pushSprite(46, 46);
-            tftPrint(0, myLanguage[language][297], 146, 58, ActiveColor, ActiveColorSmooth, 28);
+            tftPrint(0, myLanguage[language][297], 146, 58, ActiveColor, ActiveColorSmooth, 16);
             break;
 
+          case 5:
+            FrequencySprite.fillSprite(BackgroundColor);
+            FrequencySprite.pushSprite(46, 46);
+            tftPrint(0, myLanguage[language][303], 146, 58, ActiveColor, ActiveColorSmooth, 16);
+            delay(400);
+            break;
         }
         FrequencySprite.unloadFont();
       }
@@ -5305,7 +5325,10 @@ void TuneFreq(int temp) {
 
 void NumpadProcess(int num) {
   if (scandxmode) {
-    if (num == 127) cancelDXScan();
+    if (num == 127) {
+      ShowFreq(5);
+      ShowFreq(0);
+    }
   } else {
     if (num == 127) {
       freq_in = 0;

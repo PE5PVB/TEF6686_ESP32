@@ -265,17 +265,17 @@ byte addRowToCSV() {
   String stationName = radio.rds.stationName;
   stationName.replace(",", " ");  // Replace commas in station name
 
-// Handle ECC, PTY, TA, TP, and Stereo flag
-String TA = radio.rds.hasTA ? "•" : " ";
-String TP = radio.rds.hasTP ? "•" : " ";
-String Stereo = radio.getStereoStatus() ? "•" : " ";
-String pty = String(radio.rds.stationTypeCode);
-String ECC = "--";
-if (radio.rds.hasECC) {
-  char eccBuffer[3];  // Buffer to hold 2-digit hex value + null terminator
-  snprintf(eccBuffer, sizeof(eccBuffer), "%02X", radio.rds.ECC);  // Format ECC as uppercase 2-digit hex
-  ECC = String(eccBuffer);
-}
+  // Handle ECC, PTY, TA, TP, and Stereo flag
+  String TA = radio.rds.hasTA ? "•" : " ";
+  String TP = radio.rds.hasTP ? "•" : " ";
+  String Stereo = radio.getStereoStatus() ? "•" : " ";
+  String pty = String(radio.rds.stationTypeCode);
+  String ECC = "--";
+  if (radio.rds.hasECC) {
+    char eccBuffer[3];  // Buffer to hold 2-digit hex value + null terminator
+    snprintf(eccBuffer, sizeof(eccBuffer), "%02X", radio.rds.ECC);  // Format ECC as uppercase 2-digit hex
+    ECC = String(eccBuffer);
+  }
 
   // Construct the CSV row data
   String row = currentDateTime + "," +

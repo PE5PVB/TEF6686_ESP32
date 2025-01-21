@@ -8,7 +8,8 @@ void doTouchEvent(uint16_t x, uint16_t y) {
   if (seek) radio.setUnMute();
   seek = false;
   if (scandxmode) {
-    cancelDXScan();
+    ShowFreq(5);
+    ShowFreq(0);
   } else {
     if (menu) {
       if (x > 0 && x < 320 && y > 0 && y < 33) {
