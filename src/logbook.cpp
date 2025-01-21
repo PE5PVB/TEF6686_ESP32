@@ -205,7 +205,7 @@ bool handleCreateNewLogbook() {
   }
 
   // Write the header to the new CSV file
-  String header = "Date,Time,Frequency,PI,Signal,Stereo,TA,TP,PTY,PS,RadioText\n";
+  String header = "Date,Time,Frequency,PI,Signal,Stereo,TA,TP,PTY,ECC,PS\n";
   file.print(header); // Ensure that the header is written properly
 
   // Make sure the data is written before closing the file
@@ -222,7 +222,7 @@ bool handleCreateNewLogbook() {
 
 byte addRowToCSV() {
   // Ensure there is at least 150 bytes of free space in SPIFFS before proceeding
-  if (SPIFFS.totalBytes() - SPIFFS.usedBytes() < 150 || logcounter > 1000) {
+  if (SPIFFS.totalBytes() - SPIFFS.usedBytes() < 150) {
     return 2;  // Return 2 if insufficient free space is available
   }
 
@@ -243,58 +243,51 @@ byte addRowToCSV() {
   }
 
   // Prepare the frequency in a formatted string (e.g., "XX.XX MHz")
-  int freqInt;
-  if (band == BAND_OIRT) freqInt = (int)frequency_OIRT; else freqInt = (int)frequency;  // Cast the frequency value to an integer
-  int convertedFreq = (freqInt + (band != BAND_OIRT ? ConverterSet * 100 : 0)) / 100; // Apply necessary conversion
-  String frequencyFormatted = String(convertedFreq) + "." +
-                              ((freqInt + (band != BAND_OIRT ? ConverterSet * 100 : 0)) % 100 < 10 ? "0" : "") +
-                              String((freqInt + (band != BAND_OIRT ? ConverterSet * 100 : 0)) % 100) + " MHz";
+  int freqInt = (band == BAND_OIRT) ? (int)frequency_OIRT : (int)frequency;
+  int adjustedFreq = freqInt + (band != BAND_OIRT ? ConverterSet * 100 : 0);
+  String frequencyFormatted = String(adjustedFreq / 100) + "." +
+                              ((adjustedFreq % 100 < 10) ? "0" : "") +
+                              String(adjustedFreq % 100) + " MHz";
 
   // Calculate signal strength based on the selected unit
-  int SStatusprint = 0;
-  if (unit == 0) SStatusprint = SStatus;  // dBμV
-  if (unit == 1) SStatusprint = ((SStatus * 100) + 10875) / 100;  // dBf
-  if (unit == 2) SStatusprint = round((float(SStatus) / 10.0 - 10.0 * log10(75) - 90.0) * 10.0);  // dBm
+  int SStatusPrint = 0;
+  if (unit == 0) SStatusPrint = SStatus;  // dBμV
+  else if (unit == 1) SStatusPrint = ((SStatus * 100) + 10875) / 100;  // dBf
+  else if (unit == 2) SStatusPrint = round((float(SStatus) / 10.0 - 10.0 * log10(75) - 90.0) * 10.0);  // dBm
 
   // Format the signal strength with appropriate decimal places and unit
-  String signal = String(SStatusprint / 10) + "." + String(abs(SStatusprint % 10));
+  String signal = String(SStatusPrint / 10) + "." + String(abs(SStatusPrint % 10));
   if (unit == 0) signal += " dBμV";
   else if (unit == 1) signal += " dBf";
   else if (unit == 2) signal += " dBm";
 
-  // Prepare the radio text with station information, including enhanced options if available
-  String radioText = String(radio.rds.stationText + " " + radio.rds.stationText32);
-  if (radio.rds.hasEnhancedRT) {
-    radioText += " eRT: " + String(radio.rds.enhancedRTtext);
-  }
-
   // Replace commas in the station name and radio text to avoid CSV conflicts
   String stationName = radio.rds.stationName;
-  String radioTextModified = radioText;
   stationName.replace(",", " ");  // Replace commas in station name
-  radioTextModified.replace(",", " ");  // Replace commas in radio text
 
-  // Handle PTY, TA, TP and Stereo flag
-  String TA;
-  String TP;
-  String Stereo;
-  String pty;
-  if (radio.rds.hasTA) TA = "•"; else TA = "";
-  if (radio.rds.hasTP) TP = "•"; else TP = "";
-  if (radio.getStereoStatus())  Stereo = "•"; else Stereo = "";
-  pty = String(radio.rds.stationTypeCode);
+// Handle ECC, PTY, TA, TP, and Stereo flag
+String TA = radio.rds.hasTA ? "•" : " ";
+String TP = radio.rds.hasTP ? "•" : " ";
+String Stereo = radio.getStereoStatus() ? "•" : " ";
+String pty = String(radio.rds.stationTypeCode);
+String ECC = "--";
+if (radio.rds.hasECC) {
+  char eccBuffer[3];  // Buffer to hold 2-digit hex value + null terminator
+  snprintf(eccBuffer, sizeof(eccBuffer), "%02X", radio.rds.ECC);  // Format ECC as uppercase 2-digit hex
+  ECC = String(eccBuffer);
+}
 
   // Construct the CSV row data
   String row = currentDateTime + "," +
                frequencyFormatted + "," +
-               radio.rds.picode + "," +
+               String(radio.rds.picode) + "," +
                signal + "," +
                Stereo + "," +
                TA + "," +
                TP + "," +
                pty + "," +
-               stationName + "," +
-               radioTextModified + "\n";
+               ECC + "," +
+               stationName + "\n";
 
   // Write the row to the file and close it
   if (file.print(row)) {
