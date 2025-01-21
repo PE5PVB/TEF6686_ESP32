@@ -5996,7 +5996,7 @@ void DoMenu() {
       case DXMODE:
         switch (menuoption) {
           case ITEM1:
-            if (presets[scanstart].band == BAND_FM && presets[scanstart].frequency == EE_PRESETS_FREQUENCY) {
+            if (presets[scanstart].band == BAND_FM && presets[scanstart].frequency == EE_PRESETS_FREQUENCY && scanmem) {
               Infoboxprint(myLanguage[language][214]);
               OneBigLineSprite.pushSprite(24, 118);
             } else {
