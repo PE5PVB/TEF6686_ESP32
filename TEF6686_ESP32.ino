@@ -3235,13 +3235,13 @@ void ShowFreq(int mode) {
           case 3:
             FrequencySprite.fillSprite(BackgroundColor);
             FrequencySprite.pushSprite(46, 46);
-            tftPrint(0, myLanguage[language][291], 146, 58, ActiveColor, ActiveColorSmooth, 16);
+            tftPrint(0, myLanguage[language][291], 146, 58, SignificantColor, SignificantColorSmooth, 16);
             break;
 
           case 4:
             FrequencySprite.fillSprite(BackgroundColor);
             FrequencySprite.pushSprite(46, 46);
-            tftPrint(0, myLanguage[language][297], 146, 58, ActiveColor, ActiveColorSmooth, 16);
+            tftPrint(0, myLanguage[language][297], 146, 58, SignificantColor, SignificantColorSmooth, 16);
             break;
 
           case 5:
