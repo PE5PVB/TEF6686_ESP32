@@ -719,7 +719,7 @@ class TEF6686 {
     uint8_t rdsblock;
     bool mute;
     bool afmethodB;
-    bool underscore;
+    byte underscore;
     bool ps_process;
     byte af_updatecounter;
 

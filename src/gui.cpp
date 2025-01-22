@@ -790,7 +790,11 @@ void ShowOneLine(byte position, byte item, bool selected) {
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((radio.underscore ? myLanguage[language][42] : myLanguage[language][30]), 298, 2);
+          switch (radio.underscore) {
+            case 0: FullLineSprite.drawString(myLanguage[language][30], 298, 2); break;
+            case 1: FullLineSprite.drawString(myLanguage[language][304], 298, 2); break;
+            case 2: FullLineSprite.drawString(myLanguage[language][42], 298, 2); break;
+          }
           break;
 
         case FMSETTINGS:
@@ -1885,7 +1889,11 @@ void ShowOneButton(byte position, byte item, bool selected) {
           PSSprite.drawString(shortLine(removeNewline(myLanguage[language][49])), 75, 1);
 
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          PSSprite.drawString((radio.underscore ? myLanguage[language][42] : myLanguage[language][30]), 75, 15);
+          switch (radio.underscore) {
+            case 0: PSSprite.drawString(myLanguage[language][30], 75, 15); break;
+            case 1: PSSprite.drawString(myLanguage[language][304], 75, 15); break;
+            case 2: PSSprite.drawString(myLanguage[language][42], 75, 15); break;
+          }
           break;
 
         case FMSETTINGS:
@@ -3511,9 +3519,14 @@ void MenuUp() {
             break;
 
           case ITEM3:
-            radio.underscore = !radio.underscore;
+            radio.underscore++;
+            if (radio.underscore > 2) radio.underscore = 0;
 
-            OneBigLineSprite.drawString((radio.underscore ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            switch (radio.underscore) {
+              case 0: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
+              case 1: OneBigLineSprite.drawString(myLanguage[language][304], 135, 0); break;
+              case 2: OneBigLineSprite.drawString(myLanguage[language][42], 135, 0); break;
+            }
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
@@ -4521,9 +4534,14 @@ void MenuDown() {
             break;
 
           case ITEM3:
-            radio.underscore = !radio.underscore;
+            radio.underscore--;
+            if (radio.underscore > 2) radio.underscore = 2;
 
-            OneBigLineSprite.drawString((radio.underscore ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            switch (radio.underscore) {
+              case 0: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
+              case 1: OneBigLineSprite.drawString(myLanguage[language][304], 135, 0); break;
+              case 2: OneBigLineSprite.drawString(myLanguage[language][42], 135, 0); break;
+            }
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
@@ -5582,7 +5600,11 @@ void DoMenu() {
           case ITEM3:
             Infoboxprint(myLanguage[language][49]);
 
-            OneBigLineSprite.drawString((radio.underscore ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
+            switch (radio.underscore) {
+              case 0: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
+              case 1: OneBigLineSprite.drawString(myLanguage[language][304], 135, 0); break;
+              case 2: OneBigLineSprite.drawString(myLanguage[language][42], 135, 0); break;
+            }
             OneBigLineSprite.pushSprite(24, 118);
             break;
 

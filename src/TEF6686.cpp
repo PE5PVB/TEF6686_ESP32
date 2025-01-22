@@ -635,9 +635,9 @@ void TEF6686::readRDS(byte showrdserrors) {
             if (packet0 && packet1 && packet2 && packet3 && (ps_process || (rds.fastps == 0 && rds.fastps != 2))) { // Last chars are received
               if (strcmp(ps_buffer, ps_buffer2) == 0) {                                                             // When no difference between current and buffer, let's go...
                 ps_process = true;
-                RDScharConverter(ps_buffer2, PStext, sizeof(PStext) / sizeof(wchar_t), true);                       // Convert 8 bit ASCII to 16 bit ASCII
+                RDScharConverter(ps_buffer2, PStext, sizeof(PStext) / sizeof(wchar_t), (underscore > 0 ? true : false));                       // Convert 8 bit ASCII to 16 bit ASCII
                 String utf8String = convertToUTF8(PStext);                                                          // Convert RDS characterset to ASCII
-                rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);                                     // Make sure PS does not exceed 8 characters
+                rds.stationName = extractUTF8Substring(utf8String, 0, 8, (underscore > 0 ? true : false));                                     // Make sure PS does not exceed 8 characters
                 for (byte x = 0; x < 8; x++) {
                   ps_buffer[x] = '\0';
                   ps_buffer2[x] = '\0';
@@ -650,9 +650,9 @@ void TEF6686::readRDS(byte showrdserrors) {
               if (offset == 1) packet1 = true;
               if (offset == 2) packet2 = true;
               if (offset == 3) packet3 = true;
-              RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), true);                          // Convert 8 bit ASCII to 16 bit ASCII
+              RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), (underscore > 0 ? true : false));                          // Convert 8 bit ASCII to 16 bit ASCII
               String utf8String = convertToUTF8(PStext);                                                            // Convert RDS characterset to ASCII
-              rds.stationName = extractUTF8Substring(utf8String, 0, 8, true);
+              rds.stationName = extractUTF8Substring(utf8String, 0, 8, (underscore > 0 ? true : false));
               if (packet0 && packet1 && packet2 && packet3) ps_process = true;                                      // OK, we had one runs, now let's go the idle PS writing
             }
 
@@ -1207,9 +1207,9 @@ void TEF6686::readRDS(byte showrdserrors) {
                 }
 
                 wchar_t RTtext[65] = L"";                                                         // Create 16 bit char buffer for Extended ASCII
-                RDScharConverter(rt_buffer_temp, RTtext, sizeof(RTtext) / sizeof(wchar_t), true); // Convert 8 bit ASCII to 16 bit ASCII
+                RDScharConverter(rt_buffer_temp, RTtext, sizeof(RTtext) / sizeof(wchar_t), (underscore > 1 ? true : false)); // Convert 8 bit ASCII to 16 bit ASCII
                 rds.stationText = convertToUTF8(RTtext);                                          // Convert RDS characterset to ASCII
-                rds.stationText = extractUTF8Substring(rds.stationText, 0, endmarkerRT64, true);  // Make sure RT does not exceed 64 characters
+                rds.stationText = extractUTF8Substring(rds.stationText, 0, endmarkerRT64, (underscore > 1 ? true : false));  // Make sure RT does not exceed 64 characters
                 rds.stationText = trimTrailingSpaces(rds.stationText);                            // Trim empty spaces at the end
               }
 
@@ -1242,9 +1242,9 @@ void TEF6686::readRDS(byte showrdserrors) {
               }
 
               wchar_t RTtext[65] = L"";                                                         // Create 16 bit char buffer for Extended ASCII
-              RDScharConverter(rt_buffer_temp, RTtext, sizeof(RTtext) / sizeof(wchar_t), true); // Convert 8 bit ASCII to 16 bit ASCII
+              RDScharConverter(rt_buffer_temp, RTtext, sizeof(RTtext) / sizeof(wchar_t), (underscore > 1 ? true : false)); // Convert 8 bit ASCII to 16 bit ASCII
               rds.stationText = convertToUTF8(RTtext);                                          // Convert RDS characterset to ASCII
-              rds.stationText = extractUTF8Substring(rds.stationText, 0, endmarkerRT64, true);  // Make sure RT does not exceed 64 characters
+              rds.stationText = extractUTF8Substring(rds.stationText, 0, endmarkerRT64, (underscore > 1 ? true : false));  // Make sure RT does not exceed 64 characters
               rds.stationText = trimTrailingSpaces(rds.stationText);                            // Trim empty spaces at the end
             }
 
@@ -1293,9 +1293,9 @@ void TEF6686::readRDS(byte showrdserrors) {
             }
 
             wchar_t RTtext[33] = L"";                                                           // Create 16 bit char buffer for Extended ASCII
-            RDScharConverter(rt_buffer_temp, RTtext, sizeof(RTtext) / sizeof(wchar_t), true);   // Convert 8 bit ASCII to 16 bit ASCII
+            RDScharConverter(rt_buffer_temp, RTtext, sizeof(RTtext) / sizeof(wchar_t), (underscore > 1 ? true : false));   // Convert 8 bit ASCII to 16 bit ASCII
             rds.stationText32 = convertToUTF8(RTtext);                                          // Convert RDS characterset to ASCII
-            rds.stationText32 = extractUTF8Substring(rds.stationText32, 0, endmarkerRT32, true);// Make sure RT does not exceed 32 characters
+            rds.stationText32 = extractUTF8Substring(rds.stationText32, 0, endmarkerRT32, (underscore > 1 ? true : false));// Make sure RT does not exceed 32 characters
             rds.stationText32 = trimTrailingSpaces(rds.stationText32);                          // Trim empty spaces at the end
           }
         } break;
@@ -1916,7 +1916,7 @@ String TEF6686::extractUTF8Substring(const String & utf8String, size_t start, si
     charIndex++;
   }
 
-  if (under && underscore) {
+  if (under) {
     while (substring.length() < length) {
       substring += '_';
     }
@@ -1930,8 +1930,8 @@ void TEF6686::RDScharConverter(const char* input, wchar_t* output, size_t size, 
   for (size_t i = 0; i < size - 1; i++) {
     char currentChar = input[i];
     switch (currentChar) {
-      case 0x0A: if (under && underscore) output[i] = L'_'; else output[i] = L' '; break;
-      case 0x20: if (under && underscore) output[i] = L'_'; else output[i] = L' '; break;
+      case 0x0A: if (under) output[i] = L'_'; else output[i] = L' '; break;
+      case 0x20: if (under) output[i] = L'_'; else output[i] = L' '; break;
       case 0x21 ... 0x5D: output[i] = static_cast<wchar_t>(currentChar); break;
       case 0x5E: output[i] = L'―'; break;
       case 0x5F: output[i] = L'_'; break;

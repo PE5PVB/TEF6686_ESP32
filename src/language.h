@@ -5,7 +5,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[21][304] PROGMEM = {
+static const char* const myLanguage[21][305] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -309,7 +309,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
     "PI locked CT sync", // 301
     "Error! No RDS signal", // 302
-    "Hold BW to stop" // 303
+    "Hold BW to stop", // 303
+    "PS Only" // 304
   },
 
   { "Nederlands", // Dutch
@@ -615,7 +616,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "Het logboek bevat meer dan 130 items, die de viewer niet kan verwerken. Download alstublieft het CSV-bestand om het te bekijken.", // 300
     "PI gebonden CT sync", // 301
     "Fout! Geen RDS!", // 302
-    "Stoppen: BW lang indrukken" // 303
+    "Stoppen: BW lang indrukken", // 303
+    "Alleen PS" // 304
   },
 
   { "Polski", // Polish
@@ -921,7 +923,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "Wykaz zawiera ponad 130 wpisów, których przeglądarka nie może pokazać. Pobierz plik CSV, aby je przetworzyć.", // 300
     "Synch. CT przy zablokowanym PI", // 301
     "Błąd! Brak sygnału RDS", // 302
-    "Hold BW to stop" // 303
+    "Hold BW to stop", // 303
+    "PS Only" // 304
   },
 
   { "Hrvatski", // Croatian
@@ -1227,7 +1230,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
     "PI locked CT sync", // 301
     "Error! No RDS signal", // 302
-    "Hold BW to stop" // 303
+    "Hold BW to stop", // 303
+    "PS Only" // 304
   },
 
   { "Ελληνικά", // Greek
@@ -1533,7 +1537,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "Το βιβλίο περιέχει πάνω από 130 καταγραφές, και είναι αδύνατη η επεξεργασία τους από το χρήστη. Κάντε λήψη του αρχείου CSV για να το επεξεργαστείτε.", // 300
     "Συγχρονισμός CT σε\nκλείδωμα PI ", // 301
     "Δεν υπάρχει σήμα RDS!", // 302
-    "Hold BW to stop" // 303
+    "Hold BW to stop", // 303
+    "PS Only" // 304
   },
 
   { "Română", // Romanian
@@ -1839,7 +1844,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "Jurnalul conține peste 130 de intrări, pe care vizualizatorul nu le poate procesa. Te rog descarcă fișierul CSV pentru a le procesa.", // 300
     "PI blocat pe sincronizare CT", // 301
     "Eroare! Fără semnal RDS", // 302
-    "Hold BW to stop" // 303
+    "Hold BW to stop", // 303
+    "PS Only" // 304
   },
 
   { "Deutsch", // German
@@ -2145,7 +2151,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "Das Logbuch enthält mehr als 130 Einträge, was das Anzeigeprogramm nicht verarbeiten kann. Bitte lade die CSV-Datei zum Verarbeiten herunter.", // 300
     "Synchronisiere CT\nbei bestimmtem PI", // 301
     "Fehler! Kein RDS-Signal", // 302
-    "Hold BW to stop" // 303
+    "Hold BW to stop", // 303
+    "PS Only" // 304
   },
 
   { "Čeština", // Czech
@@ -2451,7 +2458,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "Logbook obsahuje více než 130 položek, které prohlížeč nedokáže zpracovat. Pro zpracování všech položek si stáhněte CSV soubor.", // 300
     "Synchronizovat CT, když je PI uzamčeno", // 301
     "Chyba! Žádný RDS signál", // 302
-    "Hold BW to stop" // 303
+    "Hold BW to stop", // 303
+    "PS Only" // 304
   },
 
   { "Magyar", // Hungarian
@@ -2757,7 +2765,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
     "PI locked CT sync", // 301
     "Error! No RDS signal", // 302
-    "Hold BW to stop" // 303
+    "Hold BW to stop", // 303
+    "PS Only" // 304
   },
 
   { "Français", // French
@@ -3063,7 +3072,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "Le journal de bord contient plus de 130 entrées que le spectateur ne peut pas traiter. Télécharger le fichier CSV pour le traiter.", // 300
     "Synch CT sur\nPI verrouillé", // 301
     "Erreur ! Pas de signal RDS", // 302
-    "Hold BW to stop" // 303
+    "Hold BW to stop", // 303
+    "PS Only" // 304
   },
 
   { "Български", // Bulgarian
@@ -3369,7 +3379,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
     "PI locked CT sync", // 301
     "Error! No RDS signal", // 302
-    "Hold BW to stop" // 303
+    "Hold BW to stop", // 303
+    "PS Only" // 304
   },
 
   { "Русский", // Russian
@@ -3675,7 +3686,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "В журнале содержится более 130 записей, которые программа просмотра не может обработать. Загрузите файл CSV для его обработки.", // 300
     "PI-синхронизация трансформатора тока с блокировкой", // 301
     "Ошибка! Нет сигнала RDS", // 302
-    "Hold BW to stop" // 303
+    "Hold BW to stop", // 303
+    "PS Only" // 304
   },
 
   { "Українська", // Ukranian
@@ -3981,7 +3993,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "Журнал містить понад 130 записів, які програма перегляду не може обробити. Будь ласка, завантажте файл CSV, щоб обробити його.", // 300
     "PI locked CT sync", // 301
     "Помилка! Немає сигналу RDS", // 302
-    "Hold BW to stop" // 303
+    "Hold BW to stop", // 303
+    "PS Only" // 304
   },
 
   { "Italiano", // Italian
@@ -4287,7 +4300,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.",// 300
     "PI locked CT sync", // 301
     "Error! No RDS signal", // 302
-    "Hold BW to stop" // 303
+    "Hold BW to stop", // 303
+    "PS Only" // 304
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4593,7 +4607,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
     "PI locked CT sync", // 301
     "错误! 无RDS信号", // 302
-    "Hold BW to stop" // 303
+    "Hold BW to stop", // 303
+    "PS Only" // 304
   },
   { "Norsk", // Norwegian
     "Rotasjonsretning endret", // 1
@@ -4898,7 +4913,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "Loggboken inneholder over 130 oppføringer, som en ikke kan behandle. Last ned CSV-filen for å behandle den.", // 300
     "PI-låst CT-synk", // 301
     "Feil! Ingen RDS-signal", // 302
-    "Hold BW to stop" // 303
+    "Hold BW to stop", // 303
+    "PS Only" // 304
   },
 
   { "Español", // Spanish
@@ -5204,7 +5220,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "El libro de registro contiene más de 130 entradas que el visor no puede procesar. Descargue el archivo CSV para procesarlo.", // 300
     "Sync CT en\nPI bloqueado", // 301
     "Error! No hay señal RDS", // 302
-    "Hold BW to stop" // 303
+    "Hold BW to stop", // 303
+    "PS Only" // 304
   },
 
   { "Português", // Portuguese
@@ -5510,7 +5527,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "O diário de bordo contém mais de 130 entradas que o espectador não consegue processar. Descarregue o ficheiro CSV para processá-lo.", // 300
     "Sincronizar CT\nno PI bloqueado", // 301
     "Erro! Sem sinal RDS", // 302
-    "Hold BW to stop" // 303
+    "Hold BW to stop", // 303
+    "PS Only" // 304
   },
 
   { "Srpski", // Serbian
@@ -5816,7 +5834,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "Dnevnik sadrži više od 130 unosa, što viewer ne može obraditi. Preuzmite CSV fajl za obradu.", // 300
     "PI zaključan\nCT sinhronizacija", // 301
     "Nema RDS signala!", // 302
-    "Hold BW to stop" // 303
+    "Hold BW to stop", // 303
+    "PS Only" // 304
   },
 
   { "Suomi", // Finnish
@@ -6122,7 +6141,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "Lokikirjassa on yli 130 merkintää, joita katselija ei voi käsitellä. Lataa CSV-tiedosto käsitelläksesi sen.", // 300
     "PI lukittu\nCT synkronointi", // 301
     "Ei RDS-signaalia!", // 302
-    "Hold BW to stop" // 303
+    "Hold BW to stop", // 303
+    "PS Only" // 304
   },
 
   { "Dansk", // Danish
@@ -6428,7 +6448,8 @@ static const char* const myLanguage[21][304] PROGMEM = {
     "Logbogen indeholder over 130 poster, som fremviseren ikke kan behandle. Download CSV-filen for at behandle den.", // 300
     "PI låst CT sync", // 301
     "Fejl! Ingen RDS signal", // 302
-    "Hold BW to stop" // 303
+    "Hold BW to stop", // 303
+    "PS Only" // 304
   }
 };
 #endif
