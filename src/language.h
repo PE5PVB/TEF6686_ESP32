@@ -2748,25 +2748,25 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Érintőképernyő kalibrálásához", // 283
     "Képernyő inverzió kapcsoló", // 284
     "Sávszélesség választása", // 285
-    "Your logbook", // 286
-    "Download logbook", // 287
-    "Logbook is empty", // 288
-    "Go to bottom", // 289
-    "Added to log", // 290
-    "Update failed!", // 291
-    "Clear logbook", // 292
-    "Logbook cleared", // 293
-    "Clear failed", // 294
-    "Set NTP time offset", // 295
-    "Autologger", // 296
-    "Logbook full!", // 297
-    "Clock mode", // 298
-    "Auto DST on NTP time", // 299
-    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "PI locked CT sync", // 301
-    "Error! No RDS signal", // 302
-    "Hold BW to stop", // 303
-    "PS Only" // 304
+    "A logbookod", // 286
+    "Logbook letöltése", // 287
+    "A logbook üres", // 288
+    "Menj az aljára", // 289
+    "Hozzáadva a loghoz", // 290
+    "Frissítés sikertelen!", // 291
+    "Logbook törlése", // 292
+    "Logbook törölve", // 293
+    "Sikertelen törlés", // 294
+    "NTP időeltolás beállítása", // 295
+    "Auto logoló", // 296
+    "Logbook megtelt!", // 297
+    "Óra mód", // 298
+    "Auto nyári idő(DST)\nNTP idő szerint", // 299
+    "A napló több mint 130 bejegyzést tartalmaz, amelyeket a megtekintő nem tud feldolgozni. Kérlek, töltsd le a CSV fájlt a megtekintéshez.", // 300
+    "PI zárolt CT szinkronizálás", // 301
+    "Hiba! Nincs RDS jel", // 302
+    "Tartsd lenyomva a\nBW-t a megállításhoz", // 303
+    "Csak PS" // 304
   },
 
   { "Français", // French
