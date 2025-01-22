@@ -291,7 +291,8 @@ byte addRowToCSV() {
   char row[256];
   snprintf(row, sizeof(row), "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
            currentDateTime, frequencyFormatted, piCode,
-           signal, Stereo, TA, TP, pty, ECC, stationName);
+           signal, Stereo, TA, TP, pty, ECC,
+           stationName[0] != '\0' ? stationName : "");
 
   // Write the row to the file and close it
   if (file.print(row)) {
