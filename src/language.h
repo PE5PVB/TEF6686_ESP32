@@ -310,7 +310,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "PI locked CT sync", // 301
     "Error! No RDS signal", // 302
     "Hold BW to stop", // 303
-    "PS Only" // 304
+    "PS only" // 304
   },
 
   { "Nederlands", // Dutch
@@ -924,7 +924,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Synch. CT przy zablokowanym PI", // 301
     "Błąd! Brak sygnału RDS", // 302
     "Hold BW to stop", // 303
-    "PS Only" // 304
+    "PS only" // 304
   },
 
   { "Hrvatski", // Croatian
@@ -1231,7 +1231,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "PI locked CT sync", // 301
     "Error! No RDS signal", // 302
     "Hold BW to stop", // 303
-    "PS Only" // 304
+    "PS only" // 304
   },
 
   { "Ελληνικά", // Greek
@@ -1537,8 +1537,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Το βιβλίο περιέχει πάνω από 130 καταγραφές, και είναι αδύνατη η επεξεργασία τους από το χρήστη. Κάντε λήψη του αρχείου CSV για να το επεξεργαστείτε.", // 300
     "Συγχρονισμός CT σε\nκλείδωμα PI ", // 301
     "Δεν υπάρχει σήμα RDS!", // 302
-    "Hold BW to stop", // 303
-    "PS Only" // 304
+    "Σταμάτημα κρατώντας το BW", // 303
+    "Μόνο στο PS" // 304
   },
 
   { "Română", // Romanian
@@ -1845,7 +1845,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "PI blocat pe sincronizare CT", // 301
     "Eroare! Fără semnal RDS", // 302
     "Hold BW to stop", // 303
-    "PS Only" // 304
+    "PS only" // 304
   },
 
   { "Deutsch", // German
@@ -2152,7 +2152,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Synchronisiere CT\nbei bestimmtem PI", // 301
     "Fehler! Kein RDS-Signal", // 302
     "Hold BW to stop", // 303
-    "PS Only" // 304
+    "PS only" // 304
   },
 
   { "Čeština", // Czech
@@ -2459,7 +2459,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Synchronizovat CT, když je PI uzamčeno", // 301
     "Chyba! Žádný RDS signál", // 302
     "Hold BW to stop", // 303
-    "PS Only" // 304
+    "PS only" // 304
   },
 
   { "Magyar", // Hungarian
@@ -3072,8 +3072,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Le journal de bord contient plus de 130 entrées que le spectateur ne peut pas traiter. Télécharger le fichier CSV pour le traiter.", // 300
     "Synch CT sur\nPI verrouillé", // 301
     "Erreur ! Pas de signal RDS", // 302
-    "Hold BW to stop", // 303
-    "PS Only" // 304
+    "Tenez BW pour arrêter", // 303
+    "PS seulement" // 304
   },
 
   { "Български", // Bulgarian
@@ -3380,7 +3380,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "PI locked CT sync", // 301
     "Error! No RDS signal", // 302
     "Hold BW to stop", // 303
-    "PS Only" // 304
+    "PS only" // 304
   },
 
   { "Русский", // Russian
@@ -3687,7 +3687,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "PI-синхронизация трансформатора тока с блокировкой", // 301
     "Ошибка! Нет сигнала RDS", // 302
     "Hold BW to stop", // 303
-    "PS Only" // 304
+    "PS only" // 304
   },
 
   { "Українська", // Ukranian
@@ -3994,7 +3994,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "PI locked CT sync", // 301
     "Помилка! Немає сигналу RDS", // 302
     "Hold BW to stop", // 303
-    "PS Only" // 304
+    "PS only" // 304
   },
 
   { "Italiano", // Italian
@@ -4301,7 +4301,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "PI locked CT sync", // 301
     "Error! No RDS signal", // 302
     "Hold BW to stop", // 303
-    "PS Only" // 304
+    "PS only" // 304
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4608,7 +4608,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "PI locked CT sync", // 301
     "错误! 无RDS信号", // 302
     "Hold BW to stop", // 303
-    "PS Only" // 304
+    "PS only" // 304
   },
   { "Norsk", // Norwegian
     "Rotasjonsretning endret", // 1
@@ -4914,7 +4914,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "PI-låst CT-synk", // 301
     "Feil! Ingen RDS-signal", // 302
     "Hold BW to stop", // 303
-    "PS Only" // 304
+    "PS only" // 304
   },
 
   { "Español", // Spanish
@@ -5220,8 +5220,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "El libro de registro contiene más de 130 entradas que el visor no puede procesar. Descargue el archivo CSV para procesarlo.", // 300
     "Sync CT en\nPI bloqueado", // 301
     "Error! No hay señal RDS", // 302
-    "Hold BW to stop", // 303
-    "PS Only" // 304
+    "Mantén BW para parar", // 303
+    "PS solo" // 304
   },
 
   { "Português", // Portuguese
@@ -5527,8 +5527,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "O diário de bordo contém mais de 130 entradas que o espectador não consegue processar. Descarregue o ficheiro CSV para processá-lo.", // 300
     "Sincronizar CT\nno PI bloqueado", // 301
     "Erro! Sem sinal RDS", // 302
-    "Hold BW to stop", // 303
-    "PS Only" // 304
+    "Segure BW para parar", // 303
+    "PS apenas" // 304
   },
 
   { "Srpski", // Serbian
@@ -5834,8 +5834,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Dnevnik sadrži više od 130 unosa, što viewer ne može obraditi. Preuzmite CSV fajl za obradu.", // 300
     "PI zaključan\nCT sinhronizacija", // 301
     "Nema RDS signala!", // 302
-    "Hold BW to stop", // 303
-    "PS Only" // 304
+    "Drži BW da staneš", // 303
+    "PS samo" // 304
   },
 
   { "Suomi", // Finnish
@@ -6141,8 +6141,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Lokikirjassa on yli 130 merkintää, joita katselija ei voi käsitellä. Lataa CSV-tiedosto käsitelläksesi sen.", // 300
     "PI lukittu\nCT synkronointi", // 301
     "Ei RDS-signaalia!", // 302
-    "Hold BW to stop", // 303
-    "PS Only" // 304
+    "Paina BW pysäyttääksesi", // 303
+    "PS vain" // 304
   },
 
   { "Dansk", // Danish
@@ -6448,8 +6448,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Logbogen indeholder over 130 poster, som fremviseren ikke kan behandle. Download CSV-filen for at behandle den.", // 300
     "PI låst CT sync", // 301
     "Fejl! Ingen RDS signal", // 302
-    "Hold BW to stop", // 303
-    "PS Only" // 304
+    "Hold BW for at stoppe", // 303
+    "PS kun" // 304
   }
 };
 #endif
