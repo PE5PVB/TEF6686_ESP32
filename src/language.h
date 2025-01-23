@@ -2682,8 +2682,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Kizárása", // 217
     "Csak", // 218
     "Auto keresés\nmegszakítása", // 219
-    "Helyes PI", // 220
-    "Jelszint", // 221
+    "Helyes PI esetén", // 220
+    "Jel esetén", // 221
     "Hang némítása\nkeresés közben", // 222
     "AIR", // 223
     "5 mp. sávgombnyomás", // 224
@@ -2728,8 +2728,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Hosszú PS mutatása", // 263
     "Indítási frekvencia", // 264
     "Befejezési frekvencia", // 265
-    "Memóriacsatorna indítása", // 266
-    "Memóriacsatorna leállítása", // 267
+    "Memóriacsatorna\nindítása", // 266
+    "Memóriacsatorna\nleállítása", // 267
     "Csak RDS-el tárolja", // 268
     "Auto memória indítása", // 269
     "Auto memória", // 270
@@ -2740,7 +2740,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Szkennelés hiba\nnélkül befejeződött", // 275
     "Memóriacsatornák törlése", // 276
     "törölve", // 277
-    "Kettős PI megakadályozása", // 278
+    "Kettős PI\nmegakadályozása", // 278
     "Tartomány", // 279
     "Teljes", // 280
     "Várakozási idő\ncsak jel esetén", // 281
@@ -2763,7 +2763,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Óra mód", // 298
     "Auto nyári idő(DST)\nNTP idő szerint", // 299
     "A napló több mint 130 bejegyzést tartalmaz, amelyeket a megtekintő nem tud feldolgozni. Kérlek, töltsd le a CSV fájlt a megtekintéshez.", // 300
-    "PI zárolt CT szinkronizálás", // 301
+    "PI zárolt\nCT szinkronizálás", // 301
     "Hiba! Nincs RDS jel", // 302
     "Tartsd lenyomva a\nBW-t a megállításhoz", // 303
     "Csak PS" // 304
