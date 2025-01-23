@@ -4747,6 +4747,7 @@ void UpdateFonts(byte mode) {
 
 void cancelDXScan() {
   tunemode = scanmodeold;
+  memorypos = memoryposold;
   scandxmode = false;
   if (scanmute) {
     radio.setUnMute();
@@ -4893,6 +4894,7 @@ void startFMDXScan() {
     freq_in = 0;
   }
 
+  memoryposold = memorypos;
   if (memorypos > scanstop || memorypos < scanstart) memorypos = scanstart;
   scanmodeold = tunemode;
 
