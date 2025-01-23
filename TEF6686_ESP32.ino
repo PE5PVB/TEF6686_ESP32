@@ -1013,16 +1013,19 @@ void loop() {
         DoMemoryPosTune();
         ShowMemoryPos();
       } else {
-        if (!autologged && autolog && RDSstatus && radio.rds.correctPI != 0) {
-          switch (addRowToCSV()) {
-            case 0: ShowFreq(2); break;
-            case 1: ShowFreq(3); break;
-            case 2: ShowFreq(4); break;
-          }
+        if (!autologged && RDSstatus && radio.rds.correctPI != 0) {
+          if (autolog) {
+            switch (addRowToCSV()) {
+              case 0: ShowFreq(2); break;
+              case 1: ShowFreq(3); break;
+              case 2: ShowFreq(4); break;
+            }
 
-          delay(200);
-          while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
-          ShowFreq(0);
+            delay(200);
+            while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
+            ShowFreq(0);
+          }
+          if (wifi) sendUDPlog();
           autologged = true;
         }
         TuneUp();

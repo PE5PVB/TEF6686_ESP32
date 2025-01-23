@@ -21,9 +21,11 @@ extern unsigned int ConverterSet;
 extern unsigned int frequency;
 extern unsigned int frequency_OIRT;
 extern unsigned int logcounter;
+extern IPAddress remoteip;
 
 extern TEF6686 radio;
 extern WebServer webserver;
+extern WiFiUDP Udp;
 
 void handleRoot();
 void handleDownloadCSV();
@@ -33,5 +35,5 @@ String getCurrentDateTime();
 bool isDST(time_t t);
 void handleLogo();
 void printLogbookCSV();
-
+void sendUDPlog();
 #endif
