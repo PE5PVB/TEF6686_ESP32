@@ -2151,8 +2151,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Das Logbuch enthält mehr als 130 Einträge, was das Anzeigeprogramm nicht verarbeiten kann. Bitte lade die CSV-Datei zum Verarbeiten herunter.", // 300
     "Synchronisiere CT\nbei bestimmtem PI", // 301
     "Fehler! Kein RDS-Signal", // 302
-    "Hold BW to stop", // 303
-    "PS only" // 304
+    "Zum Stoppen BW lange drücken", // 303
+    "Nur für PS" // 304
   },
 
   { "Čeština", // Czech
