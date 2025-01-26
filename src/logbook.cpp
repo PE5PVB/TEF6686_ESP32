@@ -4,6 +4,8 @@
 #include <EEPROM.h>
 #include "language.h"
 
+String UDPlogold = "";
+
 void handleRoot() {
   fs::File file = SPIFFS.open("/logbook.csv", "r");
   if (!file) {
@@ -435,72 +437,112 @@ void printLogbookCSV() {
   Serial.println("===== End of logbook.csv =====");
 }
 
-void sendUDPlog() {
-  // Fetch the current date and time as a string
+void sendUDPlog(bool scanner_active) {
+  // Get the current date and time as a string
   String currentDateTime = getCurrentDateTime();
 
-  // Use a placeholder ("-,-") if the date and time could not be retrieved
+  // Use a placeholder if the date and time could not be retrieved
   if (currentDateTime == "") {
     currentDateTime = "-,-";
   }
 
-  // Prepare the frequency in a formatted string (e.g., "XX.XX MHz")
+  // Format the frequency, adjusting based on the band and converter settings
   int freqInt = (band == BAND_OIRT) ? (int)frequency_OIRT : (int)frequency;
   int adjustedFreq = freqInt + (band != BAND_OIRT ? ConverterSet * 100 : 0);
   String frequencyFormatted = String(adjustedFreq / 100) + "." +
                               ((adjustedFreq % 100 < 10) ? "0" : "") +
-                              String(adjustedFreq % 100) + " MHz";
+                              String(adjustedFreq % 100);
 
-  // Calculate signal strength based on the selected unit
+  // Calculate signal strength and format it with the selected unit
   int SStatusPrint = 0;
   if (unit == 0) SStatusPrint = SStatus;  // dBμV
   else if (unit == 1) SStatusPrint = ((SStatus * 100) + 10875) / 100;  // dBf
   else if (unit == 2) SStatusPrint = round((float(SStatus) / 10.0 - 10.0 * log10(75) - 90.0) * 10.0);  // dBm
 
-  // Format the signal strength with appropriate decimal places and unit
   String signal = String(SStatusPrint / 10) + "." + String(abs(SStatusPrint % 10));
   if (unit == 0) signal += " dBμV";
   else if (unit == 1) signal += " dBf";
   else if (unit == 2) signal += " dBm";
 
-  // Prepare the radio text with station information, including enhanced options if available
+  // Prepare the radio text with RDS station information and enhanced options
   String radioText = String(radio.rds.stationText + " " + radio.rds.stationText32);
   if (radio.rds.hasEnhancedRT) {
     radioText += " eRT: " + String(radio.rds.enhancedRTtext);
   }
 
-  // Replace commas in the station name and radio text to avoid CSV conflicts
+  // Replace commas in the station name and radio text to avoid conflicts in the CSV format
   String stationName = radio.rds.stationName;
+  stationName.replace(",", " ");
   String radioTextModified = radioText;
-  stationName.replace(",", " ");  // Replace commas in station name
-  radioTextModified.replace(",", " ");  // Replace commas in radio text
+  radioTextModified.replace(",", " ");
 
-  // Handle ECC, PTY, TA, TP, and Stereo flag
-  String TA = radio.rds.hasTA ? "•" : " ";
-  String TP = radio.rds.hasTP ? "•" : " ";
-  String Stereo = radio.getStereoStatus() ? "•" : " ";
-  String pty = String(radio.rds.stationTypeCode);
-  String ECC = "--";
+  // Extract and format ECC (Extended Country Code) if available
+  String ECC = "";
   if (radio.rds.hasECC) {
-    char eccBuffer[3];  // Buffer to hold 2-digit hex value + null terminator
-    snprintf(eccBuffer, sizeof(eccBuffer), "%02X", radio.rds.ECC);  // Format ECC as uppercase 2-digit hex
+    char eccBuffer[3];
+    snprintf(eccBuffer, sizeof(eccBuffer), "%02X", radio.rds.ECC);
     ECC = String(eccBuffer);
   }
 
-  // Construct the CSV row data
+  // Extract and format LIC (Language Identifier Code) if available
+  String LIC = "";
+  if (radio.rds.hasLIC) {
+    char licBuffer[3];
+    snprintf(licBuffer, sizeof(licBuffer), "%02X", radio.rds.LIC);
+    LIC = String(licBuffer);
+  }
+
+  // Format the list of Alternative Frequencies (AF) if available
+  String AF = "";
+  if (radio.rds.hasAF && radio.af_counter > 0) {
+    for (byte i = 0; i < radio.af_counter; i++) {
+      AF += String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10) + 
+            (i == radio.af_counter - 1 ? "" : ";");
+    }
+  }
+
+  // Format Enhanced Other Networks (EON) data if available
+  String EON = "";
+  if (radio.eon_counter > 0) {
+    for (byte i = 0; i < radio.eon_counter; i++) {
+      EON += String(radio.eon[i].picode) + 
+             (radio.eon[i].ps.length() > 0 ? String(";" + radio.eon[i].ps) : ";") +
+             (radio.eon[i].mappedfreq > 0 ? String(";" + String(radio.eon[i].mappedfreq / 100) + "." + String((radio.eon[i].mappedfreq % 100) / 10)) : ";") +
+             (radio.eon[i].mappedfreq2 > 0 ? String(";" + String(radio.eon[i].mappedfreq2 / 100) + "." + String((radio.eon[i].mappedfreq2 % 100) / 10)) : ";") +
+             (radio.eon[i].mappedfreq3 > 0 ? String(";" + String(radio.eon[i].mappedfreq3 / 100) + "." + String((radio.eon[i].mappedfreq3 % 100) / 10)) : ";") +
+             (i == radio.eon_counter - 1 ? "" : ";");
+    }
+  }
+
+  // Extract RT+ (RadioText Plus) content if available
+  String RTPLUS = "";
+  if (radio.rds.hasRDSplus) {
+    RTPLUS += radio.rds.RTContent1 + ";" + radio.rds.RTContent2;
+  }
+
+  // Construct the data row to send via UDP
   String row = currentDateTime + "," +
                frequencyFormatted + "," +
                String(radio.rds.picode).substring(0, 4) + "," +
                signal + "," +
-               Stereo + "," +
-               TA + "," +
-               TP + "," +
-               pty + "," +
+               String(radio.getStereoStatus()) + "," +
+               String(radio.rds.hasTA) + "," +
+               String(radio.rds.hasTP) + "," +
+               String(radio.rds.hasTMC) + "," +
+               String(radio.rds.stationTypeCode) + "," +
                ECC + "," +
+               LIC + "," +
                stationName + "," +
-               radioTextModified + "\n";
+               radioTextModified + "," +
+               AF + "," +
+               EON + "," +
+               RTPLUS + "\n";
 
-  Udp.beginPacket(remoteip, 9100);
-  Udp.print(row);
-  Udp.endPacket();
+  // Send the data via UDP if it's new or the scanner is active
+  if (UDPlogold != row || scanner_active == true) {
+    Udp.beginPacket(remoteip, 9100);
+    Udp.print(row);
+    Udp.endPacket();
+    UDPlogold = row;
+  }
 }

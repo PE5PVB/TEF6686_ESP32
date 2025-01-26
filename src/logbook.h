@@ -35,5 +35,5 @@ String getCurrentDateTime();
 bool isDST(time_t t);
 void handleLogo();
 void printLogbookCSV();
-void sendUDPlog();
+void sendUDPlog(bool scanner_active);
 #endif

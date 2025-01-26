@@ -1025,7 +1025,7 @@ void loop() {
             while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
             ShowFreq(0);
           }
-          if (wifi) sendUDPlog();
+          if (wifi) sendUDPlog(true);
           autologged = true;
         }
         TuneUp();
@@ -1078,6 +1078,8 @@ void loop() {
           break;
       }
     }
+  } else {
+    if (wifi) sendUDPlog(false);
   }
 
   if (millis() >= tuningtimer + 200) rdsflagreset = false;
