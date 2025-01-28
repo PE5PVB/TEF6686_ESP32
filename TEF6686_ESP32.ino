@@ -943,12 +943,14 @@ void setup() {
 }
 
 void loop() {
-  if (wifi) webserver.handleClient();
-  if (wifi && radio.rds.correctPI != 0) sendUDPlog();
+  if (wifi) {
+    webserver.handleClient();
+    sendUDPlog();
 
-  if (wifi && millis() >= NTPtimer + 1800000) {
-    NTPupdate();
-    NTPtimer = millis();
+    if (millis() >= NTPtimer + 1800000) {
+      NTPupdate();
+      NTPtimer = millis();
+    }
   }
 
   if (hardwaremodel == PORTABLE_TOUCH_ILI9341 && touch_detect) {
