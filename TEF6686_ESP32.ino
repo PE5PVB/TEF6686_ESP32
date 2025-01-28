@@ -2901,7 +2901,7 @@ void KeyUp() {
           store = true;
         }
       } else {
-        MenuUp();
+        MenuUpDown(true);
       }
     }
   }
@@ -2968,7 +2968,7 @@ void KeyDown() {
           store = true;
         }
       } else {
-        MenuDown();
+        MenuUpDown(false);
       }
     }
   }

@@ -3063,26 +3063,48 @@ void BuildDisplay() {
   xPos5 = 0;
 }
 
-void MenuUp() {
+void MenuUpDown(bool dir) {
   if (!menuopen) {
     if (hardwaremodel == PORTABLE_TOUCH_ILI9341) ShowOneButton(menuoption, menuitem, false); else ShowOneLine(menuoption, menuitem, false);
 
     if (hardwaremodel == BASE_ILI9341) {
-      menuoption += ITEM_GAP;
-      menuitem++;
-      if (menuitem > items[menupage] - 1) {
-        menuitem = 0;
-        menuoption = ITEM1;
+      if (dir) {
+        menuoption += ITEM_GAP;
+        menuitem++;
+        if (menuitem > items[menupage] - 1) {
+          menuitem = 0;
+          menuoption = ITEM1;
+        }
+      } else {
+        menuoption -= ITEM_GAP;
+        menuitem--;
+        if (menuitem > 10) {
+          menuoption = ITEM10;
+          menuitem = 9;
+          while (menuitem > items[menupage] - 1) {
+            menuoption -= ITEM_GAP;
+            menuitem --;
+          }
+        }
       }
     } else {
-      menuoption -= ITEM_GAP;
-      menuitem--;
-      if (menuitem > 10) {
-        menuoption = ITEM10;
-        menuitem = 9;
-        while (menuitem > items[menupage] - 1) {
-          menuoption -= ITEM_GAP;
-          menuitem --;
+      if (dir) {
+        menuoption -= ITEM_GAP;
+        menuitem--;
+        if (menuitem > 10) {
+          menuoption = ITEM10;
+          menuitem = 9;
+          while (menuitem > items[menupage] - 1) {
+            menuoption -= ITEM_GAP;
+            menuitem --;
+          }
+        }
+      } else {
+        menuoption += ITEM_GAP;
+        menuitem++;
+        if (menuitem > items[menupage] - 1) {
+          menuitem = 0;
+          menuoption = ITEM1;
         }
       }
     }
@@ -3101,1020 +3123,13 @@ void MenuUp() {
       case MAINSETTINGS:
         switch (menuoption) {
           case ITEM1:
-            hardwaremodel++;
-            if (hardwaremodel > RADIO_HARDWARE_CNT - 1) hardwaremodel = 0;
-
-            switch (hardwaremodel) {
-              case BASE_ILI9341: OneBigLineSprite.drawString(myLanguage[language][109], 135, 0); break;
-              case PORTABLE_ILI9341: OneBigLineSprite.drawString(myLanguage[language][110], 135, 0); break;
-              case PORTABLE_TOUCH_ILI9341: OneBigLineSprite.drawString(myLanguage[language][111], 135, 0); break;
-            }
-
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM2:
-            if (touchrotating) touchrotating = 0; else touchrotating = 1;
-            OneBigLineSprite.drawString((touchrotating ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM3:
-            switch (tot) {
-              case 0: tot = 15; break;
-              case 15: tot = 30; break;
-              case 30: tot = 60; break;
-              case 60: tot = 90; break;
-              default: tot = 0; break;
-            }
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-
-            if (tot != 0) {
-              OneBigLineSprite.drawString(myLanguage[language][80], 150, 0);
-              OneBigLineSprite.setTextDatum(TR_DATUM);
-              OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-              OneBigLineSprite.drawString(String(tot), 135, 0);
+            if (dir) {
+              hardwaremodel++;
+              if (hardwaremodel > RADIO_HARDWARE_CNT - 1) hardwaremodel = 0;
             } else {
-              OneBigLineSprite.setTextDatum(TC_DATUM);
-              OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-              OneBigLineSprite.drawString(myLanguage[language][30], 135, 0);
+              hardwaremodel--;
+              if (hardwaremodel > RADIO_HARDWARE_CNT - 1) hardwaremodel = RADIO_HARDWARE_CNT - 1;
             }
-
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM4:
-            if (autosquelch && !usesquelch) {
-              usesquelch = true;
-              autosquelch = false;
-            } else if (usesquelch && !autosquelch) {
-              usesquelch = false;
-              autosquelch = false;
-            } else {
-              usesquelch = false;
-              autosquelch = true;
-            }
-
-            if (autosquelch) OneBigLineSprite.drawString(myLanguage[language][86], 135, 0); else OneBigLineSprite.drawString((usesquelch ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM5:
-            fmagc++;
-            if (fmagc > 92) fmagc = 84;
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("dBµV", 155, 0);
-            OneBigLineSprite.setTextDatum(TR_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString(String(fmagc), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            radio.setAGC(fmagc);
-            break;
-
-          case ITEM6:
-            amagc++;
-            if (amagc > 102) amagc = 94;
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("dBµV", 155, 0);
-            OneBigLineSprite.setTextDatum(TR_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString(String(amagc), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            radio.setAMAGC(amagc);
-            break;
-
-          case ITEM7:
-            bandFM++;
-            if (bandFM > FM_BAND_CNT - 1) bandFM = FM_BAND_ALL;
-
-            switch (bandFM) {
-              case FM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][105] + String(",") + myLanguage[language][106], 135, 0); break;
-              case FM_BAND_OIRT: OneBigLineSprite.drawString(myLanguage[language][106], 135, 0); break;
-              case FM_BAND_FM: OneBigLineSprite.drawString(myLanguage[language][105], 135, 0); break;
-              case FM_BAND_NONE: OneBigLineSprite.drawString(myLanguage[language][83], 135, 0); break;
-            }
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM8:
-            bandAM++;
-            if (bandAM > AM_BAND_CNT - 1) bandAM = AM_BAND_ALL;
-#ifdef HAS_AIR_BAND
-            switch (bandAM) {
-              case AM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_LW_MW_SW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
-              case AM_BAND_LW_MW_AIR: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_LW_SW_AIR: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_MW_SW_AIR: OneBigLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_LW_MW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103], 135, 0); break;
-              case AM_BAND_LW_SW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104], 135, 0); break;
-              case AM_BAND_LW_AIR: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_MW_SW: OneBigLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
-              case AM_BAND_MW_AIR: OneBigLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_SW_AIR: OneBigLineSprite.drawString(myLanguage[language][104] + String(",") + myLanguage[language][223], 135, 0); break;
-              case AM_BAND_LW: OneBigLineSprite.drawString(myLanguage[language][102], 135, 0); break;
-              case AM_BAND_MW: OneBigLineSprite.drawString(myLanguage[language][103], 135, 0); break;
-              case AM_BAND_SW: OneBigLineSprite.drawString(myLanguage[language][104], 135, 0); break;
-              case AM_BAND_AIR: OneBigLineSprite.drawString(myLanguage[language][223], 135, 0); break;
-              case AM_BAND_NONE: OneBigLineSprite.drawString(myLanguage[language][83], 135, 0); break;
-            }
-#else
-            switch (bandAM) {
-              case AM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
-              case AM_BAND_LW_MW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][103], 135, 0); break;
-              case AM_BAND_LW_SW: OneBigLineSprite.drawString(myLanguage[language][102] + String(",") + myLanguage[language][104], 135, 0); break;
-              case AM_BAND_MW_SW: OneBigLineSprite.drawString(myLanguage[language][103] + String(",") + myLanguage[language][104], 135, 0); break;
-              case AM_BAND_LW: OneBigLineSprite.drawString(myLanguage[language][102], 135, 0); break;
-              case AM_BAND_MW: OneBigLineSprite.drawString(myLanguage[language][103], 135, 0); break;
-              case AM_BAND_SW: OneBigLineSprite.drawString(myLanguage[language][104], 135, 0); break;
-              case AM_BAND_NONE: OneBigLineSprite.drawString(myLanguage[language][83], 135, 0); break;
-            }
-#endif
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM9:
-            longbandpress++;
-            if (longbandpress > 2) longbandpress = 0;
-
-            switch (longbandpress) {
-              case STANDBY: OneBigLineSprite.drawString(myLanguage[language][225], 135, 0); break;
-              case SCREENOFF: OneBigLineSprite.drawString(myLanguage[language][226], 135, 0); break;
-              default: OneBigLineSprite.drawString(myLanguage[language][227], 135, 0); break;
-            }
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM10:
-            spispeed++;
-            if (spispeed > SPI_SPEED_COUNT - 1) spispeed = 0;
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (spispeed != 7) {
-              OneBigLineSprite.drawString("MHz", 175, 0);
-              OneBigLineSprite.setTextDatum(TR_DATUM);
-            } else {
-              OneBigLineSprite.setTextDatum(TC_DATUM);
-            }
-
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            if (spispeed == 7) {
-              OneBigLineSprite.drawString(myLanguage[language][86], 135, 0);
-            } else {
-              OneBigLineSprite.drawString((spispeed == SPI_SPEED_DEFAULT ? String(myLanguage[language][204]) + " " + String(SPI_FREQUENCY / 1000000, DEC) : String(spispeed * 10, DEC)), 160, 0);
-            }
-            OneBigLineSprite.pushSprite(24, 118);
-#ifdef DYNAMIC_SPI_SPEED
-            if (spispeed == SPI_SPEED_DEFAULT) {
-              tft.setSPISpeed(SPI_FREQUENCY / 1000000);
-            } else if (spispeed == 7) {
-              setAutoSpeedSPI();
-            } else {
-              tft.setSPISpeed(spispeed * 10);
-            }
-#endif
-            break;
-        }
-        break;
-
-      case AUDIOSETTINGS:
-        switch (menuoption) {
-          case ITEM1:
-            VolSet++;
-            if (VolSet > 10) VolSet = 10;
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("dB", 155, 0);
-            OneBigLineSprite.setTextDatum(TR_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString((VolSet > 0 ? "+" : "") + String(VolSet, DEC), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            radio.setVolume(VolSet);
-            break;
-
-          case ITEM2:
-            edgebeep = !edgebeep;
-            OneBigLineSprite.drawString((edgebeep ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM3:
-            audiomode = !audiomode;
-
-            OneBigLineSprite.drawString((audiomode ? "MPX" : "Stereo"), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            radio.setAudio(audiomode);
-            break;
-
-          case ITEM4:
-            StereoLevel ++;
-            if (StereoLevel > 60 || StereoLevel <= 30) {
-              if (StereoLevel == 1) StereoLevel = 30; else StereoLevel = 0;
-            }
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (StereoLevel != 0) OneBigLineSprite.drawString("dBµV", 155, 0);
-            if (StereoLevel != 0) OneBigLineSprite.setTextDatum(TR_DATUM); else OneBigLineSprite.setTextDatum(TC_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString((StereoLevel != 0 ? String(StereoLevel, DEC) : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            radio.setStereoLevel(StereoLevel);
-            break;
-
-          case ITEM5:
-            tftPrint(1, String(HighCutLevel * 100, DEC), 155, 118, BackgroundColor, BackgroundColor, 28);
-
-            HighCutLevel ++;
-            if (HighCutLevel > 70) HighCutLevel = 15;
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("Hz", 155, 0);
-            OneBigLineSprite.setTextDatum(TR_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString(String(HighCutLevel * 100, DEC), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            radio.setHighCutLevel(HighCutLevel);
-            break;
-
-          case ITEM6:
-            HighCutOffset ++;
-
-            if (HighCutOffset > 60 || HighCutOffset <= 20) {
-              if (HighCutOffset == 1) HighCutOffset = 20; else HighCutOffset = 0;
-            }
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (HighCutOffset != 0) OneBigLineSprite.drawString("dBµV", 155, 0);
-            if (HighCutOffset != 0) OneBigLineSprite.setTextDatum(TR_DATUM); else OneBigLineSprite.setTextDatum(TC_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString((HighCutOffset != 0 ? String(HighCutOffset, DEC) : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            radio.setHighCutOffset(HighCutOffset);
-            break;
-
-          case ITEM7:
-            fmdeemphasis++;
-            if (fmdeemphasis > DEEMPHASIS_COUNT - 1) fmdeemphasis = DEEMPHASIS_NONE;
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (fmdeemphasis != DEEMPHASIS_NONE) OneBigLineSprite.drawString("μs", 155, 0);
-            if (fmdeemphasis != DEEMPHASIS_NONE) OneBigLineSprite.setTextDatum(TR_DATUM); else OneBigLineSprite.setTextDatum(TC_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString((fmdeemphasis != DEEMPHASIS_NONE ? (fmdeemphasis == DEEMPHASIS_50 ? String(FM_DEEMPHASIS_50, DEC) : String(FM_DEEMPHASIS_75, DEC)) : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            radio.setDeemphasis(fmdeemphasis);
-            break;
-        }
-        break;
-
-      case DISPLAYSETTINGS:
-        switch (menuoption) {
-          case ITEM1:
-            language ++;
-            if (language == (sizeof (myLanguage) / sizeof (myLanguage[0]))) language = 0;
-            UpdateFonts(0);
-            OneBigLineSprite.drawString(myLanguage[language][0], 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM2:
-            ContrastSet ++;
-            if (ContrastSet > 100) ContrastSet = 1;
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("%", 155, 0);
-            OneBigLineSprite.setTextDatum(TR_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString(String(ContrastSet, DEC), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
-            break;
-
-          case ITEM3:
-            showmodulation = !showmodulation;
-
-            OneBigLineSprite.drawString((showmodulation ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM4:
-            screensaverset ++;
-            if (screensaverset > sizeof(screensaverOptions) / sizeof(screensaverOptions[0]) - 1) screensaverset = 0;
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (screensaverset) OneBigLineSprite.drawString(myLanguage[language][92], 155, 0);
-            if (screensaverset) OneBigLineSprite.setTextDatum(TR_DATUM); else OneBigLineSprite.setTextDatum(TC_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString((screensaverset ? String(screensaverOptions[screensaverset], DEC) : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM5:
-            poweroptions++;
-            if (poweroptions > RADIO_POWER_MODE_CNT - 1) poweroptions = 0;
-
-            switch (poweroptions) {
-              case LCD_OFF: OneBigLineSprite.drawString(myLanguage[language][76], 135, 0); break;
-              case LCD_BRIGHTNESS_1_PERCENT: OneBigLineSprite.drawString(myLanguage[language][94], 135, 0); break;
-              case LCD_BRIGHTNESS_A_QUARTER: OneBigLineSprite.drawString(myLanguage[language][95], 135, 0); break;
-              case LCD_BRIGHTNESS_HALF: OneBigLineSprite.drawString(myLanguage[language][96], 135, 0); break;
-            }
-
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM6:
-            batteryoptions++;
-            if (batteryoptions > RADIO_BATTERY_CNT - 1) batteryoptions = 0;
-
-            switch (batteryoptions) {
-              case BATTERY_NONE: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
-              case BATTERY_VALUE: OneBigLineSprite.drawString(myLanguage[language][174], 135, 0); break;
-              case BATTERY_PERCENT: OneBigLineSprite.drawString(myLanguage[language][175], 135, 0); break;
-            }
-
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM7:
-            unit ++;
-            if (unit > sizeof(unitString) / sizeof(unitString[0]) - 1) unit = 0;
-
-            OneBigLineSprite.drawString(unitString[unit], 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM8:
-            showclock = !showclock;
-
-            OneBigLineSprite.drawString((showclock ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM9:
-            CurrentTheme ++;
-            if (CurrentTheme > sizeof(Theme) / sizeof(Theme[0]) - 1) CurrentTheme = 0;
-            doTheme();
-            switch (CurrentTheme) {
-              case 7:
-                OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground_wo);
-                tft.pushImage (13, 30, 292, 170, popupbackground_wo);
-                break;
-              default:
-                OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground);
-                tft.pushImage (13, 30, 292, 170, popupbackground);
-                break;
-            }
-
-            showMenuOpenTouchButtons();
-            tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
-            Infoboxprint(myLanguage[language][77]);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString(Theme[CurrentTheme], 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            showMenuOpenTouchButtons();
-            break;
-
-          case ITEM10:
-            freqfont ++;
-            if (freqfont > sizeof(FreqFont) / sizeof(FreqFont[0]) - 1) freqfont = 0;
-
-            OneBigLineSprite.drawString(FreqFont[freqfont], 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-        }
-        break;
-
-      case RDSSETTINGS:
-        switch (menuoption) {
-          case ITEM1:
-            showrdserrors++;
-            if (showrdserrors > 2) showrdserrors = 0;
-
-            switch (showrdserrors) {
-              case 0: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
-              case 1: OneBigLineSprite.drawString(myLanguage[language][200], 135, 0); break;
-              case 2: OneBigLineSprite.drawString(myLanguage[language][201], 135, 0); break;
-            }
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM2:
-            if (region == REGION_EU) region = REGION_US; else region = REGION_EU;
-            if (region == REGION_EU) OneBigLineSprite.drawString(myLanguage[language][47], 135, 0);
-            if (region == REGION_US) OneBigLineSprite.drawString(myLanguage[language][48], 135, 0);
-
-            OneBigLineSprite.pushSprite(24, 118);
-            radio.rds.region = region;
-            break;
-
-          case ITEM3:
-            radio.underscore++;
-            if (radio.underscore > 2) radio.underscore = 0;
-
-            switch (radio.underscore) {
-              case 0: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
-              case 1: OneBigLineSprite.drawString(myLanguage[language][304], 135, 0); break;
-              case 2: OneBigLineSprite.drawString(myLanguage[language][42], 135, 0); break;
-            }
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM4:
-            radio.rds.filter = !radio.rds.filter;
-
-            OneBigLineSprite.drawString((radio.rds.filter ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM5:
-            radio.rds.pierrors = !radio.rds.pierrors;
-
-            OneBigLineSprite.drawString((radio.rds.pierrors ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM6:
-            af++;
-            if (af > 2) af = 0;
-
-            switch (af) {
-              case 0: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
-              case 1: OneBigLineSprite.drawString(String(myLanguage[language][42]) + " / REG " + String(myLanguage[language][42]), 135, 0); break;
-              case 2: OneBigLineSprite.drawString(String(myLanguage[language][42]) + " / REG " + String(myLanguage[language][30]), 135, 0); break;
-            }
-
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM7:
-            radio.rds.rtbuffer = !radio.rds.rtbuffer;
-
-            OneBigLineSprite.drawString((radio.rds.rtbuffer ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM8:
-            radio.rds.sortaf = !radio.rds.sortaf;
-
-            OneBigLineSprite.drawString((radio.rds.sortaf ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM9:
-            radio.rds.fastps++;
-            if (radio.rds.fastps > 2) radio.rds.fastps = 0;
-
-            switch (radio.rds.fastps) {
-              case 0: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
-              case 1: OneBigLineSprite.drawString(myLanguage[language][260], 135, 0); break;
-              case 2: OneBigLineSprite.drawString(myLanguage[language][261], 135, 0); break;
-            }
-
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM10:
-            showlongps = !showlongps;
-
-            OneBigLineSprite.drawString((showlongps ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-        }
-        break;
-
-      case FMSETTINGS:
-        switch (menuoption) {
-          case ITEM1:
-            ConverterSet++;
-            if (ConverterSet > 2400 || ConverterSet <= 200) {
-              if (ConverterSet == 1) ConverterSet = 200; else ConverterSet = 0;
-            }
-            if (ConverterSet >= 200) {
-              Wire.beginTransmission(0x12);
-              Wire.write(ConverterSet >> 8);
-              Wire.write(ConverterSet & (0xFF));
-              Wire.endTransmission();
-            }
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("MHz", 155, 0);
-            OneBigLineSprite.setTextDatum(TR_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString(String(ConverterSet, DEC), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM2:
-            LowEdgeSet ++;
-            if (LowEdgeSet > 1070) (TEF == 205 ? LowEdgeSet = 640 : LowEdgeSet = 650);
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("MHz", 155, 0);
-            OneBigLineSprite.setTextDatum(TR_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString(String(LowEdgeSet / 10 + ConverterSet, DEC) + "." + String(LowEdgeSet % 10 + ConverterSet, DEC), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM3:
-            HighEdgeSet ++;
-            if (HighEdgeSet > 1080) HighEdgeSet = 660;
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("MHz", 155, 0);
-            OneBigLineSprite.setTextDatum(TR_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString(String(HighEdgeSet / 10 + ConverterSet, DEC) + "." + String(HighEdgeSet % 10 + ConverterSet, DEC), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM4:
-            LevelOffset++;
-            if (LevelOffset > 15) LevelOffset = -25;
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("dB", 155, 0);
-            OneBigLineSprite.setTextDatum(TR_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString((LevelOffset > 0 ? "+" : "") + String(LevelOffset, DEC), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            radio.setOffset(LevelOffset);
-            change = true;
-            break;
-
-          case ITEM5:
-            LowLevelSet++;
-            if (LowLevelSet > 30) LowLevelSet = -15;
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("dBμV", 155, 0);
-            OneBigLineSprite.setTextDatum(TR_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString(String(LowLevelSet, DEC), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM6:
-            softmutefm = !softmutefm;
-
-            OneBigLineSprite.drawString((softmutefm ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            radio.setSoftmuteFM(softmutefm);
-            break;
-
-          case ITEM7:
-            fmnb ++;
-            if (fmnb > 150 || fmnb <= 50) {
-              if (fmnb == 1) fmnb = 50; else fmnb = 0;
-            }
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (fmnb != 0) OneBigLineSprite.drawString("%", 155, 0);
-            if (fmnb != 0) OneBigLineSprite.setTextDatum(TR_DATUM); else OneBigLineSprite.setTextDatum(TC_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString((fmnb != 0 ? String(fmnb, DEC) : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            radio.setFMNoiseBlanker(fmnb);
-            break;
-
-          case ITEM8:
-            fmdefaultstepsize++;
-            if (fmdefaultstepsize > 2) fmdefaultstepsize = 0;
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("kHz", 155, 0);
-            OneBigLineSprite.setTextDatum(TR_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-
-            switch (fmdefaultstepsize) {
-              case 0: OneBigLineSprite.drawString(String(FREQ_FM_STEP_50K * 10, DEC), 135, 0); break;
-              case 1: OneBigLineSprite.drawString(String(FREQ_FM_STEP_100K * 10, DEC), 135, 0); break;
-              case 2: OneBigLineSprite.drawString(String(FREQ_FM_STEP_200K * 10, DEC), 135, 0); break;
-            }
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM9:
-            if (fullsearchrds) {
-              fmsi = !fmsi;
-              OneBigLineSprite.drawString((fmsi ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-              OneBigLineSprite.pushSprite(24, 118);
-              if (fmsi) radio.setFMSI(2); else radio.setFMSI(1);
-            }
-            break;
-
-          case ITEM10:
-            fmscansens++;
-            if (fmscansens > 30) fmscansens = 1;
-
-            OneBigLineSprite.drawString(String(fmscansens), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-        }
-        break;
-
-      case AMSETTINGS:
-        switch (menuoption) {
-          case ITEM1:
-            softmuteam = !softmuteam;
-
-            OneBigLineSprite.drawString((softmuteam ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            radio.setSoftmuteAM(softmuteam);
-            break;
-
-          case ITEM2:
-            amnb ++;
-            if (amnb > 150 || amnb <= 50) {
-              if (amnb == 1) amnb = 50; else amnb = 0;
-            }
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (amnb != 0) OneBigLineSprite.drawString("%", 155, 0);
-            if (amnb != 0) OneBigLineSprite.setTextDatum(TR_DATUM); else OneBigLineSprite.setTextDatum(TC_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString((amnb != 0 ? String(amnb, DEC) : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            radio.setAMNoiseBlanker(amnb);
-            break;
-
-          case ITEM3:
-            AMLevelOffset++;
-            if (AMLevelOffset > 15) AMLevelOffset = -50;
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("dB", 155, 0);
-            OneBigLineSprite.setTextDatum(TR_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString((AMLevelOffset > 0 ? "+" : "") + String(AMLevelOffset, DEC), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            radio.setAMOffset(AMLevelOffset);
-            break;
-
-          case ITEM4:
-            showSWMIBand = !showSWMIBand;
-
-            OneBigLineSprite.drawString((showSWMIBand ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM5:
-            amcodect++;
-            if (amcodect > 150 || amcodect <= 50) {
-              if (amcodect == 1) amcodect = 50; else amcodect = 0;
-            }
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (amcodect != 0) OneBigLineSprite.drawString("%", 155, 0);
-            if (amcodect != 0) OneBigLineSprite.setTextDatum(TR_DATUM); else OneBigLineSprite.setTextDatum(TC_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString((amcodect != 0 ? String(amcodect, DEC) : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            if (band > BAND_GAP) radio.setAMCoChannel(amcodect, amcodectcount);
-            break;
-
-          case ITEM6:
-            amcodectcount++;
-            if (amcodectcount > 15) amcodectcount = 1;
-
-            OneBigLineSprite.drawString(String(amcodectcount, DEC), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            if (band > BAND_GAP) radio.setAMCoChannel(amcodect, amcodectcount);
-            break;
-
-          case ITEM7:
-            amgain += 6;
-            if (amgain > 36) amgain = 0;
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (amgain != 0) OneBigLineSprite.drawString("dB", 155, 0);
-            if (amgain != 0) OneBigLineSprite.setTextDatum(TR_DATUM); else OneBigLineSprite.setTextDatum(TC_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString((amgain != 0 ? String(amgain, DEC) : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            if (band > BAND_GAP) radio.setAMAttenuation(amgain);
-            break;
-
-          case ITEM8:
-            mwstepsize = !mwstepsize;
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("kHz", 155, 0);
-            OneBigLineSprite.setTextDatum(TR_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString((mwstepsize ? "10" : "9"), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM9:
-            amscansens++;
-            if (amscansens > 30) amscansens = 1;
-
-            OneBigLineSprite.drawString(String(amscansens, DEC), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-        }
-        break;
-
-      case CONNECTIVITY:
-        switch (menuoption) {
-          case ITEM1:
-            USBmode = !USBmode;
-
-            OneBigLineSprite.drawString((USBmode ? "RDS Spy" : "XDRGTK"), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM2:
-            wifi = !wifi;
-
-            OneBigLineSprite.drawString((wifi ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM4:
-            subnetclient ++;
-            if (subnetclient > 254) subnetclient = 1;
-
-            OneBigLineSprite.drawString(String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM5:
-            stationlistid ++;
-            if (stationlistid > 10) stationlistid = 1;
-
-            OneBigLineSprite.drawString(String(stationlistid, DEC), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM6:
-            XDRGTKMuteScreen = !XDRGTKMuteScreen;
-
-            OneBigLineSprite.drawString((XDRGTKMuteScreen ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM7:
-            NTPoffset++;
-            if (NTPoffset > 12) NTPoffset = -12;
-
-            OneBigLineSprite.setTextDatum(TR_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("GMT", 135, 0);
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString((NTPoffset > -1 ? "+" : "") + String(NTPoffset), 155, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM8:
-            autoDST = !autoDST;
-
-            OneBigLineSprite.drawString((autoDST ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM9:
-            clockampm = !clockampm;
-
-            OneBigLineSprite.drawString((clockampm ? "12" : "24"), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM10:
-            char PICT[5];
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-
-            if (radio.rds.PICTlock != 0) {
-              OneBigLineSprite.setTextDatum(TC_DATUM);
-              OneBigLineSprite.drawString(myLanguage[language][30], 135, 0);
-              radio.rds.PICTlock = 0;
-            } else {
-              if (radio.rds.correctPI != 0) {
-                radio.rds.PICTlock = radio.rds.correctPI;
-                sprintf(PICT, "%04X", radio.rds.PICTlock);
-                OneBigLineSprite.setTextDatum(TR_DATUM);
-                OneBigLineSprite.drawString(myLanguage[language][42], 135, 0);
-                OneBigLineSprite.setTextDatum(TL_DATUM);
-                OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-                OneBigLineSprite.drawString(String(PICT), 155, 0);
-              } else {
-                OneBigLineSprite.setTextDatum(TC_DATUM);
-                OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-                OneBigLineSprite.drawString(myLanguage[language][302], 135, 0);
-              }
-            }
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-        }
-        break;
-
-      case DXMODE:
-        switch (menuoption) {
-          case ITEM2:
-            scanstart++;
-            if (scanstart >= scanstop) scanstart = 0;
-            OneBigLineSprite.drawString(String(scanstart + 1, DEC), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM3:
-            scanstop++;
-            if (scanstop > EE_PRESETS_CNT - 1) scanstop = scanstart + 1;
-            OneBigLineSprite.drawString(String(scanstop + 1, DEC), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM4:
-            scanhold++;
-            if (scanhold > 30) scanhold = 0;
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString(myLanguage[language][92], 155, 0);
-            OneBigLineSprite.setTextDatum(TR_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString((scanhold == 0 ? "0.5" : String(scanhold, DEC)), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM5:
-            scanmem = !scanmem;
-            OneBigLineSprite.drawString((scanmem ? myLanguage[language][218] : myLanguage[language][217]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM6:
-            scancancel++;
-            if (scancancel > 2) scancancel = 0;
-            switch (scancancel) {
-              case OFF:  OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
-              case CORRECTPI: OneBigLineSprite.drawString(myLanguage[language][220], 135, 0); break;
-              case SIGNAL: OneBigLineSprite.drawString(myLanguage[language][221], 135, 0); break;
-            }
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM7:
-            scanmute = !scanmute;
-
-            OneBigLineSprite.drawString((scanmute ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM8:
-            autolog = !autolog;
-
-            OneBigLineSprite.drawString((autolog ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM9:
-            scanholdonsignal = !scanholdonsignal;
-
-            OneBigLineSprite.drawString((scanholdonsignal ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-        }
-        break;
-
-      case AUTOMEM:
-        switch (menuoption) {
-          case ITEM2:
-            memstartfreq ++;
-            if (memstartfreq > 1070) (TEF == 205 ? memstartfreq = 640 : memstartfreq = 650);
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("MHz", 155, 0);
-            OneBigLineSprite.setTextDatum(TR_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString(String(memstartfreq / 10 + ConverterSet, DEC) + "." + String(memstartfreq % 10 + ConverterSet, DEC), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM3:
-            memstopfreq ++;
-            if (memstopfreq > 1080) memstopfreq = 660;
-
-            OneBigLineSprite.setTextDatum(TL_DATUM);
-            OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("MHz", 155, 0);
-            OneBigLineSprite.setTextDatum(TR_DATUM);
-            OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString(String(memstopfreq / 10 + ConverterSet, DEC) + "." + String(memstopfreq % 10 + ConverterSet, DEC), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM4:
-            memstartpos++;
-            if (memstartpos >= memstoppos) memstartpos = 0;
-            OneBigLineSprite.drawString(String(memstartpos + 1, DEC), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM5:
-            memstoppos++;
-            if (memstoppos > EE_PRESETS_CNT - 1) memstoppos = memstartpos + 1;
-            OneBigLineSprite.drawString(String(memstoppos + 1, DEC), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM6:
-            mempionly = !mempionly;
-
-            OneBigLineSprite.drawString((mempionly ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM7:
-            memdoublepi++;
-            if (memdoublepi > 2) memdoublepi = 0;
-
-            switch (memdoublepi) {
-              case MEMPI_OFF: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
-              case MEMPI_RANGE: OneBigLineSprite.drawString(myLanguage[language][279], 135, 0); break;
-              default: OneBigLineSprite.drawString(myLanguage[language][280], 135, 0); break;
-            }
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM8:
-            fmscansens++;
-            if (fmscansens > 30) fmscansens = 1;
-
-            OneBigLineSprite.drawString(String(fmscansens), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-        }
-        break;
-    }
-  }
-}
-
-void MenuDown() {
-  if (!menuopen) {
-    if (hardwaremodel == PORTABLE_TOUCH_ILI9341) ShowOneButton(menuoption, menuitem, false); else ShowOneLine(menuoption, menuitem, false);
-
-    if (hardwaremodel == BASE_ILI9341) {
-      menuoption -= ITEM_GAP;
-      menuitem--;
-      if (menuitem > 10) {
-        menuoption = ITEM10;
-        menuitem = 9;
-        while (menuitem > items[menupage] - 1) {
-          menuoption -= ITEM_GAP;
-          menuitem --;
-        }
-      }
-    } else {
-      menuoption += ITEM_GAP;
-      menuitem++;
-      if (menuitem > items[menupage] - 1) {
-        menuitem = 0;
-        menuoption = ITEM1;
-      }
-    }
-
-    if (hardwaremodel == PORTABLE_TOUCH_ILI9341) ShowOneButton(menuoption, menuitem, true); else ShowOneLine(menuoption, menuitem, true);
-  } else {
-    switch (CurrentTheme) {
-      case 7: OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground_wo); break;
-      default: OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground); break;
-    }
-
-    OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-    OneBigLineSprite.setTextDatum(TC_DATUM);
-
-    switch (menupage) {
-      case MAINSETTINGS:
-        switch (menuoption) {
-          case ITEM1:
-            hardwaremodel--;
-            if (hardwaremodel > RADIO_HARDWARE_CNT - 1) hardwaremodel = RADIO_HARDWARE_CNT - 1;
 
             switch (hardwaremodel) {
               case BASE_ILI9341: OneBigLineSprite.drawString(myLanguage[language][109], 135, 0); break;
@@ -4127,18 +3142,27 @@ void MenuDown() {
 
           case ITEM2:
             touchrotating = !touchrotating;
-
             OneBigLineSprite.drawString((touchrotating ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM3:
-            switch (tot) {
-              case 15: tot = 0; break;
-              case 30: tot = 15; break;
-              case 60: tot = 30; break;
-              case 90: tot = 60; break;
-              default: tot = 90; break;
+            if (dir) {
+              switch (tot) {
+                case 0: tot = 15; break;
+                case 15: tot = 30; break;
+                case 30: tot = 60; break;
+                case 60: tot = 90; break;
+                default: tot = 0; break;
+              }
+            } else {
+              switch (tot) {
+                case 15: tot = 0; break;
+                case 30: tot = 15; break;
+                case 60: tot = 30; break;
+                case 90: tot = 60; break;
+                default: tot = 90; break;
+              }
             }
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
@@ -4175,8 +3199,13 @@ void MenuDown() {
             break;
 
           case ITEM5:
-            fmagc--;
-            if (fmagc < 84) fmagc = 92;
+            if (dir) {
+              fmagc++;
+              if (fmagc > 92) fmagc = 84;
+            } else {
+              fmagc--;
+              if (fmagc < 84) fmagc = 92;
+            }
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             OneBigLineSprite.drawString("dBµV", 155, 0);
@@ -4188,8 +3217,13 @@ void MenuDown() {
             break;
 
           case ITEM6:
-            amagc--;
-            if (amagc < 94) amagc = 102;
+            if (dir) {
+              amagc++;
+              if (amagc > 102) amagc = 94;
+            } else {
+              amagc--;
+              if (amagc < 94) amagc = 102;
+            }
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             OneBigLineSprite.drawString("dBµV", 155, 0);
@@ -4201,8 +3235,13 @@ void MenuDown() {
             break;
 
           case ITEM7:
-            bandFM--;
-            if (bandFM > FM_BAND_CNT) bandFM = FM_BAND_NONE;
+            if (dir) {
+              bandFM++;
+              if (bandFM > FM_BAND_CNT - 1) bandFM = FM_BAND_ALL;
+            } else {
+              bandFM--;
+              if (bandFM > FM_BAND_CNT) bandFM = FM_BAND_NONE;
+            }
 
             switch (bandFM) {
               case FM_BAND_ALL: OneBigLineSprite.drawString(myLanguage[language][105] + String(",") + myLanguage[language][106], 135, 0); break;
@@ -4214,8 +3253,13 @@ void MenuDown() {
             break;
 
           case ITEM8:
-            bandAM--;
-            if (bandAM > AM_BAND_CNT) bandAM = AM_BAND_NONE;
+            if (dir) {
+              bandAM++;
+              if (bandAM > AM_BAND_CNT - 1) bandAM = AM_BAND_ALL;
+            } else {
+              bandAM--;
+              if (bandAM > AM_BAND_CNT) bandAM = AM_BAND_NONE;
+            }
 
 #ifdef HAS_AIR_BAND
             switch (bandAM) {
@@ -4248,13 +3292,17 @@ void MenuDown() {
               case AM_BAND_NONE: OneBigLineSprite.drawString(myLanguage[language][83], 135, 0); break;
             }
 #endif
-
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM9:
-            longbandpress--;
-            if (longbandpress > 2) longbandpress = 2;
+            if (dir) {
+              longbandpress++;
+              if (longbandpress > 2) longbandpress = 0;
+            } else {
+              longbandpress--;
+              if (longbandpress > 2) longbandpress = 2;
+            }
 
             switch (longbandpress) {
               case STANDBY: OneBigLineSprite.drawString(myLanguage[language][225], 135, 0); break;
@@ -4264,10 +3312,15 @@ void MenuDown() {
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
-
           case ITEM10:
-            spispeed--;
-            if (spispeed > SPI_SPEED_COUNT - 1) spispeed = SPI_SPEED_COUNT - 1;
+            if (dir) {
+              spispeed++;
+              if (spispeed > SPI_SPEED_COUNT - 1) spispeed = 0;
+            } else {
+              spispeed--;
+              if (spispeed > SPI_SPEED_COUNT - 1) spispeed = SPI_SPEED_COUNT - 1;
+            }
+
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             if (spispeed != 7) {
@@ -4300,8 +3353,14 @@ void MenuDown() {
       case AUDIOSETTINGS:
         switch (menuoption) {
           case ITEM1:
-            VolSet--;
-            if (VolSet < -10) VolSet = -10;
+            if (dir) {
+              VolSet++;
+              if (VolSet > 10) VolSet = 10;
+            } else {
+              VolSet--;
+              if (VolSet < -10) VolSet = -10;
+            }
+
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             OneBigLineSprite.drawString("dB", 155, 0);
@@ -4314,7 +3373,6 @@ void MenuDown() {
 
           case ITEM2:
             edgebeep = !edgebeep;
-
             OneBigLineSprite.drawString((edgebeep ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
@@ -4328,9 +3386,16 @@ void MenuDown() {
             break;
 
           case ITEM4:
-            StereoLevel --;
-            if (StereoLevel < 30 || StereoLevel > 60) {
-              if (StereoLevel > 60) StereoLevel = 60; else StereoLevel = 0;
+            if (dir) {
+              StereoLevel ++;
+              if (StereoLevel > 60 || StereoLevel <= 30) {
+                if (StereoLevel == 1) StereoLevel = 30; else StereoLevel = 0;
+              }
+            } else {
+              StereoLevel --;
+              if (StereoLevel < 30 || StereoLevel > 60) {
+                if (StereoLevel > 60) StereoLevel = 60; else StereoLevel = 0;
+              }
             }
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
@@ -4344,8 +3409,13 @@ void MenuDown() {
             break;
 
           case ITEM5:
-            HighCutLevel --;
-            if (HighCutLevel < 15 || HighCutLevel > 70) HighCutLevel = 70;
+            if (dir) {
+              HighCutLevel ++;
+              if (HighCutLevel > 70) HighCutLevel = 15;
+            } else {
+              HighCutLevel --;
+              if (HighCutLevel < 15 || HighCutLevel > 70) HighCutLevel = 70;
+            }
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -4358,9 +3428,17 @@ void MenuDown() {
             break;
 
           case ITEM6:
-            HighCutOffset --;
-            if (HighCutOffset < 20 || HighCutOffset > 60) {
-              if (HighCutOffset > 60) HighCutOffset = 60; else HighCutOffset = 0;
+            if (dir) {
+              HighCutOffset ++;
+
+              if (HighCutOffset > 60 || HighCutOffset <= 20) {
+                if (HighCutOffset == 1) HighCutOffset = 20; else HighCutOffset = 0;
+              }
+            } else {
+              HighCutOffset --;
+              if (HighCutOffset < 20 || HighCutOffset > 60) {
+                if (HighCutOffset > 60) HighCutOffset = 60; else HighCutOffset = 0;
+              }
             }
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
@@ -4374,8 +3452,13 @@ void MenuDown() {
             break;
 
           case ITEM7:
-            fmdeemphasis--;
-            if (fmdeemphasis > DEEMPHASIS_COUNT - 1) fmdeemphasis = DEEMPHASIS_COUNT - 1;
+            if (dir) {
+              fmdeemphasis++;
+              if (fmdeemphasis > DEEMPHASIS_COUNT - 1) fmdeemphasis = DEEMPHASIS_NONE;
+            } else {
+              fmdeemphasis--;
+              if (fmdeemphasis > DEEMPHASIS_COUNT - 1) fmdeemphasis = DEEMPHASIS_COUNT - 1;
+            }
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -4392,16 +3475,27 @@ void MenuDown() {
       case DISPLAYSETTINGS:
         switch (menuoption) {
           case ITEM1:
-            language --;
-            if (language > (sizeof (myLanguage) / sizeof (myLanguage[0]))) language = (sizeof (myLanguage) / sizeof (myLanguage[0])) - 1;
+            if (dir) {
+              language ++;
+              if (language == (sizeof (myLanguage) / sizeof (myLanguage[0]))) language = 0;
+            } else {
+              language --;
+              if (language > (sizeof (myLanguage) / sizeof (myLanguage[0]))) language = (sizeof (myLanguage) / sizeof (myLanguage[0])) - 1;
+            }
+
             UpdateFonts(0);
             OneBigLineSprite.drawString(myLanguage[language][0], 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM2:
-            ContrastSet --;
-            if (ContrastSet < 1) ContrastSet = 100;
+            if (dir) {
+              ContrastSet ++;
+              if (ContrastSet > 100) ContrastSet = 1;
+            } else {
+              ContrastSet --;
+              if (ContrastSet < 1) ContrastSet = 100;
+            }
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -4421,8 +3515,13 @@ void MenuDown() {
             break;
 
           case ITEM4:
-            screensaverset --;
-            if (screensaverset > sizeof(screensaverOptions) / sizeof(screensaverOptions[0]) - 1) screensaverset = sizeof(screensaverOptions) / sizeof(screensaverOptions[0]) - 1;
+            if (dir) {
+              screensaverset ++;
+              if (screensaverset > sizeof(screensaverOptions) / sizeof(screensaverOptions[0]) - 1) screensaverset = 0;
+            } else {
+              screensaverset --;
+              if (screensaverset > sizeof(screensaverOptions) / sizeof(screensaverOptions[0]) - 1) screensaverset = sizeof(screensaverOptions) / sizeof(screensaverOptions[0]) - 1;
+            }
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -4434,8 +3533,13 @@ void MenuDown() {
             break;
 
           case ITEM5:
-            poweroptions--;
-            if (poweroptions > RADIO_POWER_MODE_CNT - 1) poweroptions = RADIO_POWER_MODE_CNT - 1;
+            if (dir) {
+              poweroptions++;
+              if (poweroptions > RADIO_POWER_MODE_CNT - 1) poweroptions = 0;
+            } else {
+              poweroptions--;
+              if (poweroptions > RADIO_POWER_MODE_CNT - 1) poweroptions = RADIO_POWER_MODE_CNT - 1;
+            }
 
             switch (poweroptions) {
               case LCD_OFF: OneBigLineSprite.drawString(myLanguage[language][76], 135, 0); break;
@@ -4448,8 +3552,13 @@ void MenuDown() {
             break;
 
           case ITEM6:
-            batteryoptions--;
-            if (batteryoptions > RADIO_BATTERY_CNT - 1) batteryoptions = RADIO_BATTERY_CNT - 1;
+            if (dir) {
+              batteryoptions++;
+              if (batteryoptions > RADIO_BATTERY_CNT - 1) batteryoptions = 0;
+            } else {
+              batteryoptions--;
+              if (batteryoptions > RADIO_BATTERY_CNT - 1) batteryoptions = RADIO_BATTERY_CNT - 1;
+            }
 
             switch (batteryoptions) {
               case BATTERY_NONE: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
@@ -4461,8 +3570,13 @@ void MenuDown() {
             break;
 
           case ITEM7:
-            unit --;
-            if (unit > sizeof(unitString) / sizeof(unitString[0]) - 1) unit = sizeof(unitString) / sizeof(unitString[0]) - 1;
+            if (dir) {
+              unit ++;
+              if (unit > sizeof(unitString) / sizeof(unitString[0]) - 1) unit = 0;
+            } else {
+              unit --;
+              if (unit > sizeof(unitString) / sizeof(unitString[0]) - 1) unit = sizeof(unitString) / sizeof(unitString[0]) - 1;
+            }
 
             OneBigLineSprite.drawString(unitString[unit], 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4476,8 +3590,13 @@ void MenuDown() {
             break;
 
           case ITEM9:
-            CurrentTheme --;
-            if (CurrentTheme > sizeof(Theme) / sizeof(Theme[0]) - 1) CurrentTheme = sizeof(Theme) / sizeof(Theme[0]) - 1;
+            if (dir) {
+              CurrentTheme ++;
+              if (CurrentTheme > sizeof(Theme) / sizeof(Theme[0]) - 1) CurrentTheme = 0;
+            } else {
+              CurrentTheme --;
+              if (CurrentTheme > sizeof(Theme) / sizeof(Theme[0]) - 1) CurrentTheme = sizeof(Theme) / sizeof(Theme[0]) - 1;
+            }
 
             doTheme();
             switch (CurrentTheme) {
@@ -4501,8 +3620,13 @@ void MenuDown() {
             break;
 
           case ITEM10:
-            freqfont --;
-            if (freqfont > sizeof(FreqFont) / sizeof(FreqFont[0]) - 1) freqfont = sizeof(FreqFont) / sizeof(FreqFont[0]) - 1;
+            if (dir) {
+              freqfont ++;
+              if (freqfont > sizeof(FreqFont) / sizeof(FreqFont[0]) - 1) freqfont = 0;
+            } else {
+              freqfont --;
+              if (freqfont > sizeof(FreqFont) / sizeof(FreqFont[0]) - 1) freqfont = sizeof(FreqFont) / sizeof(FreqFont[0]) - 1;
+            }
 
             OneBigLineSprite.drawString(FreqFont[freqfont], 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4513,8 +3637,13 @@ void MenuDown() {
       case RDSSETTINGS:
         switch (menuoption) {
           case ITEM1:
-            showrdserrors--;
-            if (showrdserrors > 2) showrdserrors = 2;
+            if (dir) {
+              showrdserrors++;
+              if (showrdserrors > 2) showrdserrors = 0;
+            } else {
+              showrdserrors--;
+              if (showrdserrors > 2) showrdserrors = 2;
+            }
 
             switch (showrdserrors) {
               case 0: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
@@ -4534,8 +3663,13 @@ void MenuDown() {
             break;
 
           case ITEM3:
-            radio.underscore--;
-            if (radio.underscore > 2) radio.underscore = 2;
+            if (dir) {
+              radio.underscore++;
+              if (radio.underscore > 2) radio.underscore = 0;
+            } else {
+              radio.underscore--;
+              if (radio.underscore > 2) radio.underscore = 2;
+            }
 
             switch (radio.underscore) {
               case 0: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
@@ -4560,8 +3694,13 @@ void MenuDown() {
             break;
 
           case ITEM6:
-            af--;
-            if (af > 2) af = 2;
+            if (dir) {
+              af++;
+              if (af > 2) af = 0;
+            } else {
+              af--;
+              if (af > 2) af = 2;
+            }
 
             switch (af) {
               case 0: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
@@ -4587,8 +3726,13 @@ void MenuDown() {
             break;
 
           case ITEM9:
-            radio.rds.fastps--;
-            if (radio.rds.fastps > 2) radio.rds.fastps = 2;
+            if (dir) {
+              radio.rds.fastps++;
+              if (radio.rds.fastps > 2) radio.rds.fastps = 0;
+            } else {
+              radio.rds.fastps--;
+              if (radio.rds.fastps > 2) radio.rds.fastps = 2;
+            }
 
             switch (radio.rds.fastps) {
               case 0: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
@@ -4611,10 +3755,18 @@ void MenuDown() {
       case FMSETTINGS:
         switch (menuoption) {
           case ITEM1:
-            ConverterSet--;
-            if (ConverterSet < 200 || ConverterSet > 2400) {
-              if (ConverterSet > 2400) ConverterSet = 2400; else ConverterSet = 0;
+            if (dir) {
+              ConverterSet++;
+              if (ConverterSet > 2400 || ConverterSet <= 200) {
+                if (ConverterSet == 1) ConverterSet = 200; else ConverterSet = 0;
+              }
+            } else {
+              ConverterSet--;
+              if (ConverterSet < 200 || ConverterSet > 2400) {
+                if (ConverterSet > 2400) ConverterSet = 2400; else ConverterSet = 0;
+              }
             }
+
             if (ConverterSet >= 200) {
               Wire.beginTransmission(0x12);
               Wire.write(ConverterSet >> 8);
@@ -4632,8 +3784,13 @@ void MenuDown() {
             break;
 
           case ITEM2:
-            LowEdgeSet -= 10;
-            if ((TEF == 205 ? LowEdgeSet < 640 : LowEdgeSet < 650)) LowEdgeSet = 1079;
+            if (dir) {
+              LowEdgeSet ++;
+              if (LowEdgeSet > 1070) (TEF == 205 ? LowEdgeSet = 640 : LowEdgeSet = 650);
+            } else {
+              LowEdgeSet -= 10;
+              if ((TEF == 205 ? LowEdgeSet < 640 : LowEdgeSet < 650)) LowEdgeSet = 1079;
+            }
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -4645,8 +3802,13 @@ void MenuDown() {
             break;
 
           case ITEM3:
-            HighEdgeSet -= 10;
-            if (HighEdgeSet < 660) HighEdgeSet = 1080;
+            if (dir) {
+              HighEdgeSet ++;
+              if (HighEdgeSet > 1080) HighEdgeSet = 660;
+            } else {
+              HighEdgeSet -= 10;
+              if (HighEdgeSet < 660) HighEdgeSet = 1080;
+            }
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -4658,8 +3820,13 @@ void MenuDown() {
             break;
 
           case ITEM4:
-            LevelOffset--;
-            if (LevelOffset < -25) LevelOffset = 15;
+            if (dir) {
+              LevelOffset++;
+              if (LevelOffset > 15) LevelOffset = -25;
+            } else {
+              LevelOffset--;
+              if (LevelOffset < -25) LevelOffset = 15;
+            }
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -4673,8 +3840,13 @@ void MenuDown() {
             break;
 
           case ITEM5:
-            LowLevelSet--;
-            if (LowLevelSet < -15) LowLevelSet = 30;
+            if (dir) {
+              LowLevelSet++;
+              if (LowLevelSet > 30) LowLevelSet = -15;
+            } else {
+              LowLevelSet--;
+              if (LowLevelSet < -15) LowLevelSet = 30;
+            }
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -4694,9 +3866,16 @@ void MenuDown() {
             break;
 
           case ITEM7:
-            fmnb --;
-            if (fmnb > 150 || fmnb <= 50) {
-              if (fmnb > 150) fmnb = 150; else fmnb = 0;
+            if (dir) {
+              fmnb ++;
+              if (fmnb > 150 || fmnb <= 50) {
+                if (fmnb == 1) fmnb = 50; else fmnb = 0;
+              }
+            } else {
+              fmnb --;
+              if (fmnb > 150 || fmnb <= 50) {
+                if (fmnb > 150) fmnb = 150; else fmnb = 0;
+              }
             }
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
@@ -4710,8 +3889,13 @@ void MenuDown() {
             break;
 
           case ITEM8:
-            fmdefaultstepsize--;
-            if (fmdefaultstepsize > 2) fmdefaultstepsize = 2;
+            if (dir) {
+              fmdefaultstepsize++;
+              if (fmdefaultstepsize > 2) fmdefaultstepsize = 0;
+            } else {
+              fmdefaultstepsize--;
+              if (fmdefaultstepsize > 2) fmdefaultstepsize = 2;
+            }
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -4737,8 +3921,13 @@ void MenuDown() {
             break;
 
           case ITEM10:
-            fmscansens--;
-            if (fmscansens == 0) fmscansens = 30;
+            if (dir) {
+              fmscansens++;
+              if (fmscansens > 30) fmscansens = 1;
+            } else {
+              fmscansens--;
+              if (fmscansens == 0) fmscansens = 30;
+            }
 
             OneBigLineSprite.drawString(String(fmscansens), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4757,9 +3946,16 @@ void MenuDown() {
             break;
 
           case ITEM2:
-            amnb --;
-            if (amnb > 150 || amnb <= 50) {
-              if (amnb > 150) amnb = 150; else amnb = 0;
+            if (dir) {
+              amnb ++;
+              if (amnb > 150 || amnb <= 50) {
+                if (amnb == 1) amnb = 50; else amnb = 0;
+              }
+            } else {
+              amnb --;
+              if (amnb > 150 || amnb <= 50) {
+                if (amnb > 150) amnb = 150; else amnb = 0;
+              }
             }
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
@@ -4773,8 +3969,13 @@ void MenuDown() {
             break;
 
           case ITEM3:
-            AMLevelOffset--;
-            if (AMLevelOffset < -50) AMLevelOffset = 15;
+            if (dir) {
+              AMLevelOffset++;
+              if (AMLevelOffset > 15) AMLevelOffset = -50;
+            } else {
+              AMLevelOffset--;
+              if (AMLevelOffset < -50) AMLevelOffset = 15;
+            }
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -4791,13 +3992,19 @@ void MenuDown() {
 
             OneBigLineSprite.drawString((showSWMIBand ? myLanguage[language][42] : myLanguage[language][30]), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
-
             break;
 
           case ITEM5:
-            amcodect--;
-            if (amcodect < 50 || amcodect > 150) {
-              if (amcodect > 150) amcodect = 150; else amcodect = 0;
+            if (dir) {
+              amcodect++;
+              if (amcodect > 150 || amcodect <= 50) {
+                if (amcodect == 1) amcodect = 50; else amcodect = 0;
+              }
+            } else {
+              amcodect--;
+              if (amcodect < 50 || amcodect > 150) {
+                if (amcodect > 150) amcodect = 150; else amcodect = 0;
+              }
             }
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
@@ -4811,8 +4018,13 @@ void MenuDown() {
             break;
 
           case ITEM6:
-            amcodectcount--;
-            if (amcodectcount < 1) amcodectcount = 15;
+            if (dir) {
+              amcodectcount++;
+              if (amcodectcount > 15) amcodectcount = 1;
+            } else {
+              amcodectcount--;
+              if (amcodectcount < 1) amcodectcount = 15;
+            }
 
             OneBigLineSprite.drawString(String(amcodectcount, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4820,8 +4032,13 @@ void MenuDown() {
             break;
 
           case ITEM7:
-            amgain -= 6;
-            if (amgain > 36) amgain = 36;
+            if (dir) {
+              amgain += 6;
+              if (amgain > 36) amgain = 0;
+            } else {
+              amgain -= 6;
+              if (amgain > 36) amgain = 36;
+            }
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -4846,8 +4063,13 @@ void MenuDown() {
             break;
 
           case ITEM9:
-            amscansens--;
-            if (amscansens == 0) amscansens = 30;
+            if (dir) {
+              amscansens++;
+              if (amscansens > 30) amscansens = 1;
+            } else {
+              amscansens--;
+              if (amscansens == 0) amscansens = 30;
+            }
 
             OneBigLineSprite.drawString(String(amscansens, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4872,16 +4094,26 @@ void MenuDown() {
             break;
 
           case ITEM4:
-            subnetclient --;
-            if (subnetclient < 1) subnetclient = 254;
+            if (dir) {
+              subnetclient ++;
+              if (subnetclient > 254) subnetclient = 1;
+            } else {
+              subnetclient --;
+              if (subnetclient < 1) subnetclient = 254;
+            }
 
             OneBigLineSprite.drawString(String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(subnetclient, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM5:
-            stationlistid --;
-            if (stationlistid == 0) stationlistid = 10;
+            if (dir) {
+              stationlistid ++;
+              if (stationlistid > 10) stationlistid = 1;
+            } else {
+              stationlistid --;
+              if (stationlistid == 0) stationlistid = 10;
+            }
 
             OneBigLineSprite.drawString(String(stationlistid, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4895,8 +4127,13 @@ void MenuDown() {
             break;
 
           case ITEM7:
-            NTPoffset--;
-            if (NTPoffset < -12) NTPoffset = 12;
+            if (dir) {
+              NTPoffset++;
+              if (NTPoffset > 12) NTPoffset = -12;
+            } else {
+              NTPoffset--;
+              if (NTPoffset < -12) NTPoffset = 12;
+            }
 
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -4952,22 +4189,40 @@ void MenuDown() {
       case DXMODE:
         switch (menuoption) {
           case ITEM2:
-            scanstart--;
-            if (scanstart >= scanstop) scanstart = scanstop - 1;
+            if (dir) {
+              scanstart++;
+              if (scanstart >= scanstop) scanstart = 0;
+            } else {
+              scanstart--;
+              if (scanstart >= scanstop) scanstart = scanstop - 1;
+            }
+
             OneBigLineSprite.drawString(String(scanstart + 1, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM3:
-            scanstop--;
-            if (scanstop <= scanstart) scanstop = EE_PRESETS_CNT - 1;
+            if (dir) {
+              scanstop++;
+              if (scanstop > EE_PRESETS_CNT - 1) scanstop = scanstart + 1;
+            } else {
+              scanstop--;
+              if (scanstop <= scanstart) scanstop = EE_PRESETS_CNT - 1;
+            }
+
             OneBigLineSprite.drawString(String(scanstop + 1, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM4:
-            scanhold--;
-            if (scanhold > 30) scanhold = 30;
+            if (dir) {
+              scanhold++;
+              if (scanhold > 30) scanhold = 0;
+            } else {
+              scanhold--;
+              if (scanhold > 30) scanhold = 30;
+            }
+
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             OneBigLineSprite.drawString(myLanguage[language][92], 155, 0);
@@ -4984,8 +4239,14 @@ void MenuDown() {
             break;
 
           case ITEM6:
-            scancancel--;
-            if (scancancel > 2) scancancel = 2;
+            if (dir) {
+              scancancel++;
+              if (scancancel > 2) scancancel = 0;
+            } else {
+              scancancel--;
+              if (scancancel > 2) scancancel = 2;
+            }
+
             switch (scancancel) {
               case OFF:  OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
               case CORRECTPI: OneBigLineSprite.drawString(myLanguage[language][220], 135, 0); break;
@@ -5020,8 +4281,13 @@ void MenuDown() {
       case AUTOMEM:
         switch (menuoption) {
           case ITEM2:
-            memstartfreq -= 10;
-            if ((TEF == 205 ? memstartfreq < 640 : memstartfreq < 650)) memstartfreq = 1079;
+            if (dir) {
+              memstartfreq ++;
+              if (memstartfreq > 1070) (TEF == 205 ? memstartfreq = 640 : memstartfreq = 650);
+            } else {
+              memstartfreq -= 10;
+              if ((TEF == 205 ? memstartfreq < 640 : memstartfreq < 650)) memstartfreq = 1079;
+            }
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -5033,8 +4299,13 @@ void MenuDown() {
             break;
 
           case ITEM3:
-            memstopfreq -= 10;
-            if (memstopfreq < 660) memstopfreq = 1080;
+            if (dir) {
+              memstopfreq ++;
+              if (memstopfreq > 1080) memstopfreq = 660;
+            } else {
+              memstopfreq -= 10;
+              if (memstopfreq < 660) memstopfreq = 1080;
+            }
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -5046,15 +4317,27 @@ void MenuDown() {
             break;
 
           case ITEM4:
-            memstartpos--;
-            if (memstartpos >= memstoppos) memstartpos = scanstop - 1;
+            if (dir) {
+              memstartpos++;
+              if (memstartpos >= memstoppos) memstartpos = 0;
+            } else {
+              memstartpos--;
+              if (memstartpos >= memstoppos) memstartpos = scanstop - 1;
+            }
+
             OneBigLineSprite.drawString(String(memstartpos + 1, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM5:
-            memstoppos--;
-            if (memstoppos <= memstartpos) memstoppos = EE_PRESETS_CNT - 1;
+            if (dir) {
+              memstoppos++;
+              if (memstoppos > EE_PRESETS_CNT - 1) memstoppos = memstartpos + 1;
+            } else {
+              memstoppos--;
+              if (memstoppos <= memstartpos) memstoppos = EE_PRESETS_CNT - 1;
+            }
+
             OneBigLineSprite.drawString(String(memstoppos + 1, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
@@ -5067,8 +4350,13 @@ void MenuDown() {
             break;
 
           case ITEM7:
-            memdoublepi--;
-            if (memdoublepi > 2) memdoublepi = 2;
+            if (dir) {
+              memdoublepi++;
+              if (memdoublepi > 2) memdoublepi = 0;
+            } else {
+              memdoublepi--;
+              if (memdoublepi > 2) memdoublepi = 2;
+            }
 
             switch (memdoublepi) {
               case MEMPI_OFF: OneBigLineSprite.drawString(myLanguage[language][30], 135, 0); break;
@@ -5079,8 +4367,13 @@ void MenuDown() {
             break;
 
           case ITEM8:
-            fmscansens--;
-            if (fmscansens == 0) fmscansens = 30;
+            if (dir) {
+              fmscansens++;
+              if (fmscansens > 30) fmscansens = 1;
+            } else {
+              fmscansens--;
+              if (fmscansens == 0) fmscansens = 30;
+            }
 
             OneBigLineSprite.drawString(String(fmscansens), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
