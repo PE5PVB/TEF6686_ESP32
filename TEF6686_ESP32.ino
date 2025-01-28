@@ -1074,7 +1074,7 @@ void loop() {
           if (RDSstatus && radio.rds.correctPI != 0) cancelDXScan();
           break;
         case SIGNAL:
-          if (scanhold) cancelDXScan();
+          if ((USN < fmscansens * 30) && (WAM < 230) && (OStatus < 80 && OStatus > -80) && (Squelch < SStatus || Squelch == 920)) cancelDXScan();
           break;
       }
     }
