@@ -1157,6 +1157,79 @@ void ShowAFEON() {
       }
     }
   }
+  if (radio.rds.hasAID) {
+    if (aid_counterold != radio.rds.aid_counter) {
+      String AIDStringTemp = "";
+      char id[5];
+
+      for (int y = 0; y < radio.rds.aid_counter; y++) {
+        bool aidProcessed = false;
+
+        for (int i = 0; i < 65; i++) {
+          if (radio.rds.aid[y] == oda_app_ids[i]) {
+            if (!aidProcessed) {
+              for (int z = 0; z < 4; z++) {
+                uint8_t nibble = (radio.rds.aid[y] >> (4 * (3 - z))) & 0xF;
+                if (nibble < 10) {
+                  id[z] = nibble + '0';
+                } else {
+                  id[z] = nibble - 10 + 'A';
+                }
+              }
+              id[4] = '\0';
+
+              AIDStringTemp += String(id);
+              AIDStringTemp += ": ";
+              AIDStringTemp += oda_app_names[i];
+
+              aidProcessed = true;
+            }
+            break;
+          }
+        }
+
+        if (aidProcessed && y < radio.rds.aid_counter - 1) {
+          AIDStringTemp += " | ";
+        }
+      }
+      aid_counterold = radio.rds.aid_counter;
+
+      if (AIDStringTemp != AIDStringold) {
+        AIDString = String(myLanguage[language][93]) + "  -  " + String(myLanguage[language][79]) + ": " + AIDStringTemp + "       ";
+        AIDWidth = FullLineSprite.textWidth(AIDString);
+        AIDStringold = AIDString;
+      }
+    }
+
+    if (FullLineSprite.textWidth(radio.trimTrailingSpaces(AIDString)) < 270) {
+      xPos = 0;
+      FullLineSprite.fillSprite(BackgroundColor);
+      FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+      FullLineSprite.drawString(AIDString, xPos, 2);
+      FullLineSprite.drawLine(283, 0, 283, 19, FrameColor);
+      FullLineSprite.pushSprite(5, 220);
+    } else {
+      if (millis() - rtticker >= 5) {
+        if (xPos < -AIDWidth) xPos = 0;
+        if (xPos == 0) {
+          if (millis() - rttickerhold >= 2000) {
+            xPos--;
+            rttickerhold = millis();
+          }
+        } else {
+          xPos--;
+          rttickerhold = millis();
+        }
+        FullLineSprite.fillSprite(BackgroundColor);
+        FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+        FullLineSprite.drawString(AIDString, xPos, 2);
+        FullLineSprite.drawString(AIDString, xPos + AIDWidth, 2);
+        FullLineSprite.drawLine(314, 0, 314, 19, FrameColor);
+        FullLineSprite.pushSprite(5, 220);
+        rtticker = millis();
+      }
+    }
+  }
 }
 
 #pragma GCC diagnostic pop
