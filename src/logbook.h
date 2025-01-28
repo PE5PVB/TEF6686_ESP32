@@ -31,9 +31,10 @@ void handleRoot();
 void handleDownloadCSV();
 bool handleCreateNewLogbook();
 byte addRowToCSV();
-String getCurrentDateTime();
+String getCurrentDateTime(bool inUTC);
 bool isDST(time_t t);
 void handleLogo();
 void printLogbookCSV();
-void sendUDPlog(bool scanner_active);
+void sendUDPlog();
+IPAddress makeBroadcastAddress(IPAddress ip);
 #endif

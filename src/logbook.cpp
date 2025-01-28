@@ -237,7 +237,7 @@ byte addRowToCSV() {
   }
 
   // Fetch the current date and time as a string
-  String currentDateTime = getCurrentDateTime();
+  String currentDateTime = getCurrentDateTime(false);
 
   // Use a placeholder ("-,-") if the date and time could not be retrieved
   if (currentDateTime == "") {
@@ -313,7 +313,7 @@ byte addRowToCSV() {
   }
 }
 
-String getCurrentDateTime() {
+String getCurrentDateTime(bool inUTC) {
   // Check if the RTC has been set
   if (!rtcset) {
     return "-,-";  // Return placeholder when the RTC is not set
@@ -325,22 +325,30 @@ String getCurrentDateTime() {
     return "-,-";  // Return placeholder if local time is unavailable
   }
 
-  // Adjust timeInfo using the GMT offset
-  time_t currentEpoch = mktime(&timeInfo);  // Convert struct tm to time_t format
+  // Convert struct tm to time_t format
+  time_t currentEpoch = mktime(&timeInfo);
 
-  // Calculate GMT offset
-  currentEpoch += (NTPupdated ? NTPoffset * 3600 : radio.rds.offset); // Apply GMT offset if NTPupdated, else RDS offset
+  // Determine UTC offset as a number
+  int utcOffsetHours = 0;
 
-  // Apply DST adjustment if NTPupdated and autoDST are true
-  if (NTPupdated && autoDST) {
-    struct tm tempTimeInfo;
-    localtime_r(&currentEpoch, &tempTimeInfo); // Convert to struct tm for DST calculation
-    if (isDST(mktime(&tempTimeInfo))) { // Check if DST is in effect
-      currentEpoch += 3600; // Add 1-hour DST offset
+  if (!inUTC) {
+    // Adjust for time zone offset and DST if not in UTC
+    currentEpoch += (NTPupdated ? NTPoffset * 3600 : radio.rds.offset); // Apply GMT offset if NTPupdated, else RDS offset
+
+    // Apply DST adjustment if NTPupdated and autoDST are true
+    if (NTPupdated && autoDST) {
+      struct tm tempTimeInfo;
+      localtime_r(&currentEpoch, &tempTimeInfo); // Convert to struct tm for DST calculation
+      if (isDST(mktime(&tempTimeInfo))) { // Check if DST is in effect
+        currentEpoch += 3600; // Add 1-hour DST offset
+      }
     }
+  } else {
+    // Calculate UTC offset in hours when inUTC is true
+    utcOffsetHours = (NTPupdated ? NTPoffset : radio.rds.offset / 3600);
   }
 
-  // Convert adjusted time back to struct tm format
+  // Convert adjusted (or original) time back to struct tm format
   localtime_r(&currentEpoch, &timeInfo);
 
   // Buffer for formatted date-time string
@@ -358,12 +366,25 @@ String getCurrentDateTime() {
 
     String timeWithAMPM = String(hour) + ":" + (timeInfo.tm_min < 10 ? "0" : "") + String(timeInfo.tm_min) + ":" + (timeInfo.tm_sec < 10 ? "0" : "") + String(timeInfo.tm_sec) + " " + ampm;
 
+    // Append UTC offset if inUTC
+    if (inUTC) {
+      String utcOffsetStr = ", " + String(utcOffsetHours) + ",";
+      return String(buf) + "," + timeWithAMPM + utcOffsetStr;
+    }
+
     // Return the final formatted date and time for the USA region
     return String(buf) + "," + timeWithAMPM;
   } else {
     // European format: DD-MM-YYYY, HH:MM:SS
     strftime(buf, sizeof(buf), "%d-%m-%Y", &timeInfo);  // Format as DD-MM-YYYY
     String timeEuropean = String(timeInfo.tm_hour) + ":" + (timeInfo.tm_min < 10 ? "0" : "") + String(timeInfo.tm_min) + ":" + (timeInfo.tm_sec < 10 ? "0" : "") + String(timeInfo.tm_sec); // Format time with leading zero if needed
+
+    // Append UTC offset if inUTC
+    if (inUTC) {
+      String utcOffsetStr = ", " + String(utcOffsetHours) + ",";
+      return String(buf) + "," + timeEuropean + utcOffsetStr;
+    }
+
     return String(buf) + "," + timeEuropean;
   }
 }
@@ -437,9 +458,9 @@ void printLogbookCSV() {
   Serial.println("===== End of logbook.csv =====");
 }
 
-void sendUDPlog(bool scanner_active) {
+void sendUDPlog() {
   // Get the current date and time as a string
-  String currentDateTime = getCurrentDateTime();
+  String currentDateTime = getCurrentDateTime(true);
 
   // Use a placeholder if the date and time could not be retrieved
   if (currentDateTime == "") {
@@ -496,7 +517,7 @@ void sendUDPlog(bool scanner_active) {
   String AF = "";
   if (radio.rds.hasAF && radio.af_counter > 0) {
     for (byte i = 0; i < radio.af_counter; i++) {
-      AF += String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10) + 
+      AF += String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10) +
             (i == radio.af_counter - 1 ? "" : ";");
     }
   }
@@ -505,7 +526,7 @@ void sendUDPlog(bool scanner_active) {
   String EON = "";
   if (radio.eon_counter > 0) {
     for (byte i = 0; i < radio.eon_counter; i++) {
-      EON += String(radio.eon[i].picode) + 
+      EON += String(radio.eon[i].picode) +
              (radio.eon[i].ps.length() > 0 ? String(";" + radio.eon[i].ps) : ";") +
              (radio.eon[i].mappedfreq > 0 ? String(";" + String(radio.eon[i].mappedfreq / 100) + "." + String((radio.eon[i].mappedfreq % 100) / 10)) : ";") +
              (radio.eon[i].mappedfreq2 > 0 ? String(";" + String(radio.eon[i].mappedfreq2 / 100) + "." + String((radio.eon[i].mappedfreq2 % 100) / 10)) : ";") +
@@ -538,11 +559,17 @@ void sendUDPlog(bool scanner_active) {
                EON + "," +
                RTPLUS + "\n";
 
-  // Send the data via UDP if it's new or the scanner is active
-  if (UDPlogold != row || scanner_active == true) {
-    Udp.beginPacket(remoteip, 9100);
+  // Send the data via UDP if it's new
+  if (UDPlogold != row) {
+	IPAddress broadcastIP = makeBroadcastAddress(remoteip);
+    Udp.beginPacket(broadcastIP, 9100);
     Udp.print(row);
     Udp.endPacket();
     UDPlogold = row;
   }
+}
+
+IPAddress makeBroadcastAddress(IPAddress ip) {
+    // Assuming a typical subnet mask of 255.255.255.0
+    return IPAddress(ip[0], ip[1], ip[2], 255);
 }

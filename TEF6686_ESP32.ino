@@ -944,6 +944,7 @@ void setup() {
 
 void loop() {
   if (wifi) webserver.handleClient();
+  if (wifi && radio.rds.correctPI != 0) sendUDPlog();
 
   if (wifi && millis() >= NTPtimer + 1800000) {
     NTPupdate();
@@ -1025,7 +1026,6 @@ void loop() {
             while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
             ShowFreq(0);
           }
-          if (wifi) sendUDPlog(true);
           autologged = true;
         }
         TuneUp();
@@ -1078,8 +1078,6 @@ void loop() {
           break;
       }
     }
-  } else {
-    if (wifi) sendUDPlog(false);
   }
 
   if (millis() >= tuningtimer + 200) rdsflagreset = false;
