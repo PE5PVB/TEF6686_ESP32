@@ -3350,11 +3350,52 @@ void ShowSignalLevel() {
       } else {
         if (SStatusold / 10 != SStatusprint / 10) tftReplace(1, String(SStatusold / 10), String(SStatusprint / 10), 288, 105, FreqColor, FreqColorSmooth, BackgroundColor, 48);
         tftReplace(1, "." + String(abs(SStatusold % 10)), "." + String(abs(SStatusprint % 10)), 310, 105, FreqColor, FreqColorSmooth, BackgroundColor, 28);
-
         if (band < BAND_GAP) segments = map(SStatus / 10, 0, 70, 0, 100); else segments = (SStatus + 200) / 10;
-        tft.fillRect(16, 105, 2 * constrain(segments, 0, 63), 6, BarInsignificantColor);
-        tft.fillRect(16 + 2 * 63, 105, 2 * (constrain(segments, 63, 94) - 63), 6, BarSignificantColor);
-        tft.fillRect(16 + 2 * constrain(segments, 0, 94), 105, 2 * (94 - constrain(segments, 0, 94)), 6, GreyoutColor);
+
+        // Extract RGB components from 16-bit colors
+        uint8_t r1 = (BarInsignificantColor >> 11) & 0x1F;
+        uint8_t g1 = (BarInsignificantColor >> 5) & 0x3F;
+        uint8_t b1 = BarInsignificantColor & 0x1F;
+
+        uint8_t r2 = (BarSignificantColor >> 11) & 0x1F;
+        uint8_t g2 = (BarSignificantColor >> 5) & 0x3F;
+        uint8_t b2 = BarSignificantColor & 0x1F;
+
+        int gradientStart = (93 * 25) / 100;  // Gradient starts at 25% of the bar
+        int gradientEnd = (93 * 60) / 100;    // Gradient ends at 60% of the bar
+
+        // Draw solid color for first 25%
+        for (int i = 0; i < min(DisplayedSegments, gradientStart); i++) {
+          tft.fillRect(16 + 2 * i, 105, 2, 6, BarInsignificantColor);
+        }
+
+        // Apply gradient only within the 25%-60% range
+        if (DisplayedSegments > gradientStart) {
+          for (int i = gradientStart; i < min(DisplayedSegments, gradientEnd); i++) {
+            // Interpolate color from 25% to 60%
+            uint8_t r = map(i, gradientStart, gradientEnd, r1, r2);
+            uint8_t g = map(i, gradientStart, gradientEnd, g1, g2);
+            uint8_t b = map(i, gradientStart, gradientEnd, b1, b2);
+
+            // Convert back to RGB565 format
+            uint16_t gradientColor = (r << 11) | (g << 5) | b;
+
+            // Draw segment with interpolated color
+            tft.fillRect(16 + 2 * i, 105, 2, 6, gradientColor);
+          }
+        }
+
+        // Draw solid end color for segments beyond 60%
+        if (DisplayedSegments > gradientEnd) {
+          for (int i = gradientEnd; i < DisplayedSegments; i++) {
+            tft.fillRect(16 + 2 * i, 105, 2, 6, BarSignificantColor);
+          }
+        }
+
+        // Grey out unused segments
+        int greyStart = 16 + 2 * DisplayedSegments;
+        int greyWidth = 2 * (94 - DisplayedSegments);
+        tft.fillRect(greyStart, 105, greyWidth, 6, GreyoutColor);
       }
       SStatusold = SStatusprint;
     }
@@ -3553,18 +3594,58 @@ void ShowModLevel() {
       }
     }
 
-    tft.fillRect(16, 133, 2 * constrain(DisplayedSegments, 0, 63), 6, ModBarInsignificantColor);
+    // Extract RGB components from 16-bit colors
+    uint8_t r1 = (ModBarInsignificantColor >> 11) & 0x1F;
+    uint8_t g1 = (ModBarInsignificantColor >> 5) & 0x3F;
+    uint8_t b1 = ModBarInsignificantColor & 0x1F;
 
-    if (DisplayedSegments > 63) tft.fillRect(16 + 2 * 63, 133, 2 * (DisplayedSegments - 63), 6, ModBarSignificantColor);
+    uint8_t r2 = (ModBarSignificantColor >> 11) & 0x1F;
+    uint8_t g2 = (ModBarSignificantColor >> 5) & 0x3F;
+    uint8_t b2 = ModBarSignificantColor & 0x1F;
 
+    int gradientStart = (93 * 25) / 100;  // Gradient starts at 25% of the bar
+    int gradientEnd = (93 * 60) / 100;    // Gradient ends at 60% of the bar
+
+    // Draw solid color for first 25%
+    for (int i = 0; i < min(DisplayedSegments, gradientStart); i++) {
+      tft.fillRect(16 + 2 * i, 133, 2, 6, ModBarInsignificantColor);
+    }
+
+    // Apply gradient only within the 25%-60% range
+    if (DisplayedSegments > gradientStart) {
+      for (int i = gradientStart; i < min(DisplayedSegments, gradientEnd); i++) {
+        // Interpolate color from 25% to 60%
+        uint8_t r = map(i, gradientStart, gradientEnd, r1, r2);
+        uint8_t g = map(i, gradientStart, gradientEnd, g1, g2);
+        uint8_t b = map(i, gradientStart, gradientEnd, b1, b2);
+
+        // Convert back to RGB565 format
+        uint16_t gradientColor = (r << 11) | (g << 5) | b;
+
+        // Draw segment with interpolated color
+        tft.fillRect(16 + 2 * i, 133, 2, 6, gradientColor);
+      }
+    }
+
+    // Draw solid end color for segments beyond 60%
+    if (DisplayedSegments > gradientEnd) {
+      for (int i = gradientEnd; i < DisplayedSegments; i++) {
+        tft.fillRect(16 + 2 * i, 133, 2, 6, ModBarSignificantColor);
+      }
+    }
+
+    // Grey out unused segments
     int greyStart = 16 + 2 * DisplayedSegments;
     int greyWidth = 2 * (94 - DisplayedSegments);
     tft.fillRect(greyStart, 133, greyWidth, 6, GreyoutColor);
 
+    // Peak Hold Indicator
     int peakHoldPosition = 16 + 2 * constrain(peakholdold, 0, 93);
     tft.fillRect(peakHoldPosition, 133, 2, 6, (MStatus > 80) ? ModBarSignificantColor : PrimaryColor);
 
-    if (millis() - peakholdmillis >= 1000 && peakholdold <= DisplayedSegments) tft.fillRect(peakHoldPosition, 133, 2, 6, GreyoutColor);
+    if (millis() - peakholdmillis >= 1000 && peakholdold <= DisplayedSegments) {
+      tft.fillRect(peakHoldPosition, 133, 2, 6, GreyoutColor);
+    }
   }
 }
 
