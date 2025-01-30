@@ -47,6 +47,7 @@ extern bool scandxmode;
 extern bool scanholdonsignal;
 extern bool scanmem;
 extern bool scanmute;
+extern bool setupmode;
 extern bool showclock;
 extern bool showlongps;
 extern bool softmuteam;

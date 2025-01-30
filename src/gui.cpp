@@ -5545,7 +5545,10 @@ void Infoboxprint(const char* input) {
     if (menu) {
       tftPrint(0, line1, 155, 48, ActiveColor, ActiveColorSmooth, 28);
       tftPrint(0, line2, 155, 78, ActiveColor, ActiveColorSmooth, 28);
-    } else {
+    } else if (setupmode) {
+		tftPrint(0, line1, 155, 40, ActiveColor, ActiveColorSmooth, 28);
+		tftPrint(0, line2, 155, 70, ActiveColor, ActiveColorSmooth, 28);
+	} else {
       FrequencySprite.drawString(line1, 100, 5);
       FrequencySprite.drawString(line2, 100, 25);
     }
@@ -5554,6 +5557,8 @@ void Infoboxprint(const char* input) {
   } else {
     if (menu) {
       tftPrint(0, input, 155, 78, ActiveColor, ActiveColorSmooth, 28);
+	  } else if (setupmode) {
+		  tftPrint(0, input, 155, 70, ActiveColor, ActiveColorSmooth, 28);
     } else {
       FrequencySprite.drawString(input, 100, 15);
     }

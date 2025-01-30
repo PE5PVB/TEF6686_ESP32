@@ -730,7 +730,7 @@ void setup() {
     EEPROM.writeByte(EE_BYTE_ROTARYMODE, rotarymode);
     EEPROM.commit();
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
-    tftPrint(0, myLanguage[language][1], 155, 70, ActiveColor, ActiveColorSmooth, 28);
+    Infoboxprint(myLanguage[language][1]);
     tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(BWBUTTON) == LOW) delay(50);
   }
@@ -754,7 +754,7 @@ void setup() {
     EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, displayflip);
     EEPROM.commit();
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
-    tftPrint(0, myLanguage[language][3], 155, 70, ActiveColor, ActiveColorSmooth, 28);
+    Infoboxprint(myLanguage[language][3]);
     tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(MODEBUTTON) == LOW) delay(50);
   }
@@ -762,7 +762,7 @@ void setup() {
   if (digitalRead(BWBUTTON) == HIGH && digitalRead(ROTARY_BUTTON) == HIGH && digitalRead(MODEBUTTON) == HIGH && digitalRead(BANDBUTTON) == LOW) {
     analogWrite(SMETERPIN, 511);
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
-    tftPrint(0, myLanguage[language][4], 155, 70, ActiveColor, ActiveColorSmooth, 28);
+    Infoboxprint(myLanguage[language][4]);
     tftPrint(0, myLanguage[language][5], 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(BANDBUTTON) == LOW) delay(50);
     analogWrite(SMETERPIN, 0);
@@ -772,10 +772,10 @@ void setup() {
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
     if (optenc == 0) {
       optenc = 1;
-      tftPrint(0, myLanguage[language][6], 155, 70, ActiveColor, ActiveColorSmooth, 28);
+      Infoboxprint(myLanguage[language][6]);
     } else {
       optenc = 0;
-      tftPrint(0, myLanguage[language][7], 155, 70, ActiveColor, ActiveColorSmooth, 28);
+      Infoboxprint(myLanguage[language][7]);
     }
     EEPROM.writeByte(EE_BYTE_OPTENC, optenc);
     EEPROM.commit();
@@ -786,7 +786,7 @@ void setup() {
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == LOW && digitalRead(MODEBUTTON) == HIGH && digitalRead(BANDBUTTON) == HIGH) {
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
     DefaultSettings();
-    tftPrint(0, myLanguage[language][66], 155, 70, ActiveColor, ActiveColorSmooth, 28);
+    Infoboxprint(myLanguage[language][66]);
     tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(ROTARY_BUTTON) == LOW && digitalRead(BWBUTTON) == LOW) delay(50);
     ESP.restart();
@@ -794,8 +794,8 @@ void setup() {
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH && digitalRead(MODEBUTTON) == LOW && digitalRead(BANDBUTTON) == HIGH) {
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
-    tftPrint(0, myLanguage[language][282], 155, 70, ActiveColor, ActiveColorSmooth, 28);
-    tftPrint(0, myLanguage[language][283], 155, 130, ActiveColor, ActiveColorSmooth, 28);
+    Infoboxprint(myLanguage[language][282]);
+    tftPrint(0, myLanguage[language][283], 155, 100, ActiveColor, ActiveColorSmooth, 28);
     tft.calibrateTouch(TouchCalData, PrimaryColor, BackgroundColor, 30);
     EEPROM.writeUInt(EE_UINT16_CALTOUCH1, TouchCalData[0]);
     EEPROM.writeUInt(EE_UINT16_CALTOUCH2, TouchCalData[1]);
@@ -807,7 +807,7 @@ void setup() {
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH && digitalRead(MODEBUTTON) == HIGH && digitalRead(BANDBUTTON) == LOW) {
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
-    tftPrint(0, myLanguage[language][284], 155, 70, ActiveColor, ActiveColorSmooth, 28);
+    Infoboxprint(myLanguage[language][284]);
     tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
     invertdisplay = !invertdisplay;
     tft.invertDisplay(!invertdisplay);
