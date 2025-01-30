@@ -923,8 +923,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Wykaz zawiera ponad 130 wpisów, których przeglądarka nie może pokazać. Pobierz plik CSV, aby je przetworzyć.", // 300
     "Synch. CT przy zablokowanym PI", // 301
     "Błąd! Brak sygnału RDS", // 302
-    "Hold BW to stop", // 303
-    "PS only" // 304
+    "Aby zatrzymać,\nprzytrzymaj przycisk BW", // 303
+    "Tylko PS" // 304
   },
 
   { "Hrvatski", // Croatian
@@ -2458,8 +2458,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Logbook obsahuje více než 130 položek, které prohlížeč nedokáže zpracovat. Pro zpracování všech položek si stáhněte CSV soubor.", // 300
     "Synchronizovat CT, když je PI uzamčeno", // 301
     "Chyba! Žádný RDS signál", // 302
-    "Hold BW to stop", // 303
-    "PS only" // 304
+    "Pro zastavení\npodržte tlačítko BW", // 303
+    "Jen PS" // 304
   },
 
   { "Magyar", // Hungarian
