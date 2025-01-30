@@ -1849,13 +1849,13 @@ static const char* const myLanguage[21][305] PROGMEM = {
   },
 
   { "Deutsch", // German
-    "Drehrichtung geändert", // 1
+    "Drehrichtung des Drehimpuls-\ngebers wird umgekehrt", // 1
     "Bitte Taste loslassen", // 2
-    "Bildschirm gedreht", // 3
-    "Analogmeter kalibrieren", // 4
+    "Bildschirm wird\num 180° gedreht", // 3
+    "Analogmeter\nwird kalibrieret", // 4
     "Taste loslassen wenn bereit", // 5
-    "Drehgeber optisch", // 6
-    "Drehgeber standard", // 7
+    "Drehimpulsgeber wechselt\nin optischen Modus", // 6
+    "Drehimpulsgeber wechselt\nin Standard-Modus", // 7
     "UKW/AM Empfänger", // 8
     "!KEIN! Tuner", // 9
     "Lautstärke:", // 10
@@ -1877,7 +1877,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Tiefpass Eckfrequenz", // 26
     "Tiefpass Schwelle", // 27
     "Low-Level-Schwelle", // 28
-    "Anzeigehelligkeit", // 29
+    "Bildschirmhelligkeit", // 29
     "Aus", // 30
     "Bildschirm abgeschaltet!", // 31
     "", // 32
@@ -2053,7 +2053,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Maximal", // 202
     "Schnelles PS", // 203
     "Standard", // 204
-    "Display aus bei\nXDRGTK-Verbindung", // 205
+    "Bildschirm aus bei\nXDRGTK-Verbindung", // 205
     "FMSI Stereo-\nVerbesserung", // 206
     "Funktion nur für\nTEF6687/6689 verfügbar!", // 207
     "Funktion für ausgewählten\nSkin nicht verfügbar!", // 208
@@ -2149,7 +2149,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Uhrzeit-Modus", // 298
     "Auto-Sommerzeit\nüber NTP", // 299
     "Das Logbuch enthält mehr als 130 Einträge, was das Anzeigeprogramm nicht verarbeiten kann. Bitte lade die CSV-Datei zum Verarbeiten herunter.", // 300
-    "Synchronisiere CT\nbei bestimmtem PI", // 301
+    "PI-Vorgabe für\nCT-Synchronisation", // 301
     "Fehler! Kein RDS-Signal", // 302
     "Zum Stoppen des DX-Scans\nTaste BW lange drücken", // 303
     "Nur für PS" // 304
