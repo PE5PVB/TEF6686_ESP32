@@ -943,7 +943,7 @@ void setup() {
 }
 
 void loop() {
-  if (wifi) {
+  if (wifi && !menu) {
     webserver.handleClient();
     sendUDPlog();
 
