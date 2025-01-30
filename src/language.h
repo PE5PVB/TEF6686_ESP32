@@ -1882,7 +1882,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Bildschirm abgeschaltet!", // 31
     "RF+ abwählen, um einzuschalten", // 32
     "AUS", // 33
-    "SCANNE...", // 34
+    "SCANVORGANG\nLÄUFT...", // 34
     "Tuner nicht erkannt", // 35
     "AM Antennengewinn", // 36
     "UKW AGC", // 37
@@ -2138,20 +2138,20 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Logbuch herunterladen", // 287
     "Logbuch ist leer", // 288
     "Zum Ende gehen", // 289
-    "Log erstellt", // 290
-    "Log fehlgeschlagen", // 291
+    "Logbuch-Eintrag\nwurde erstellt", // 290
+    "Logbuch-Eintrag\nist fehlgeschlagen", // 291
     "Logbuch löschen", // 292
     "Logbuch gelöscht", // 293
     "Löschen fehlgeschlagen", // 294
     "NTP-Zeitversatz\neinstellen", // 295
     "Automatisch loggen", // 296
-    "Logbuch ist voll!", // 297
+    "Logbucheintrag nicht möglich\nLogbuch ist voll!", // 297
     "Uhrzeit-Modus", // 298
     "Auto-Sommerzeit\nüber NTP", // 299
     "Das Logbuch enthält mehr als 130 Einträge, was das Anzeigeprogramm nicht verarbeiten kann. Bitte lade die CSV-Datei zum Verarbeiten herunter.", // 300
     "Synchronisiere CT\nbei bestimmtem PI", // 301
     "Fehler! Kein RDS-Signal", // 302
-    "Zum Stoppen BW lange drücken", // 303
+    "Zum Stoppen des DX-Scans\nTaste BW lange drücken", // 303
     "Nur für PS" // 304
   },
 
