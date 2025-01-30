@@ -38,7 +38,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Display brightness", // 29
     "Off", // 30
     "Screen is muted!", // 31
-    "To unmute uncheck RF+ box", // 32
+    "", // 32
     "OFF", // 33
     "SCANNING...", // 34
     "Tuner not detected", // 35
@@ -345,7 +345,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Stel helderheid in", // 29
     "Uit", // 30
     "Scherm is bevroren!", // 31
-    "Schakel RF+ uit om weer te activeren", // 32
+    "", // 32
     "UIT", // 33
     "ZOEKEN...", // 34
     "Tuner niet herkend!", // 35
@@ -652,7 +652,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Ustaw jasność wyświetlacza", // 29
     "Wył.", // 30
     "Ekran jest wyciszony!", // 31
-    "Aby wył. wyciszenie odznacz RF+", // 32
+    "", // 32
     "WYŁ.", // 33
     "SKANOWANIE...", // 34
     "Nie wykryto tunera", // 35
@@ -959,7 +959,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Svjetlina zaslona", // 29
     "Isključeno", // 30
     "Zaslon je isključen!", // 31
-    "Da biste uključili zaslon poništite kvadratić RF+", // 32
+    "", // 32
     "ISK.", // 33
     "SKENIRANJE...", // 34
     "Prijemnik nije pronađen", // 35
@@ -1266,7 +1266,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Φωτεινότητα οθόνης", // 29
     "Ανενεργό", // 30
     "Οθόνη σε σίγαση!", // 31
-    "Για επαναφορά ήχου\nτσεκάρετε το RF+", // 32
+    "", // 32
     "Εκτός", // 33
     "ΑΝΙΧΝΕΥΣΗ...", // 34
     "Το tuner δεν εντοπίστηκε", // 35
@@ -1573,7 +1573,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Setare luminozitate ecran", // 29
     "Oprit", // 30
     "Ecran blocat!", // 31
-    "ptr deblocare debifati RF+", // 32
+    "", // 32
     "Oprit", // 33
     "SCANEZ...", // 34
     "Tunerul nu este prezent", // 35
@@ -1880,7 +1880,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Anzeigehelligkeit", // 29
     "Aus", // 30
     "Bildschirm abgeschaltet!", // 31
-    "RF+ abwählen, um einzuschalten", // 32
+    "", // 32
     "AUS", // 33
     "SCANNE...", // 34
     "Tuner nicht erkannt", // 35
@@ -2187,7 +2187,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Jas", // 29
     "Vyp.", // 30
     "Obrazovka je ztlumena!", // 31
-    "Pro spuštění zrušte RF+", // 32
+    "", // 32
     "VYP.", // 33
     "SKENUJI...", // 34
     "Tuner nedetekován", // 35
@@ -2494,7 +2494,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Kijelző fényereje", // 29
     "Ki", // 30
     "Kijelző némítva!", // 31
-    "A némítás feloldásához\n jelöld ki az\nRF+ pipát", // 32
+    "", // 32
     "KI", // 33
     "KERESÉS...", // 34
     "Tuner nem észlelhető", // 35
@@ -2801,7 +2801,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Luminosité de l'affichage", // 29
     "Éteint", // 30
     "L'écran est désactivé!", // 31
-    "Pour le réactiver,\ndécochez la case RF+", // 32
+    "", // 32
     "FERMÉ", // 33
     "RECHERCHE...", // 34
     "Tuner non détecté", // 35
@@ -3108,7 +3108,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Яркост на дисплея", // 29
     "Изкл.", // 30
     "Дисплеят е деактивиран!", // 31
-    "За активация, изкл. RF+ опцията", // 32
+    "", // 32
     "ИЗКЛ.", // 33
     "СКАНИРАНЕ", // 34
     "Тунерът не е разпознат!", // 35
@@ -3415,7 +3415,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Яркость дисплея", // 29
     "Выкл.", // 30
     "Экран отключен!", // 31
-    "Чтобы включить звук, снимите флажок RF+", // 32
+    "", // 32
     "ВЫКЛ.", // 33
     "СКАНИРОВАНИЕ", // 34
     "Тюнер не обнаружен", // 35
@@ -3722,7 +3722,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Встановити яскравість дисплея", // 29
     "Вимкнено", // 30
     "Екран приглушено!", // 31
-    "Щоб відключити приглушення, зніміть прапорець RF+", // 32
+    "", // 32
     "ВИМКН.", // 33
     "СКАНУВАННЯ...", // 34
     "Тюнер не виявлено", // 35
@@ -4029,7 +4029,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Luminosità schermo", // 29
     "Off", // 30
     "Schermo disattivato!", // 31
-    "Deseleziona box RF+ per audio", // 32
+    "", // 32
     "OFF", // 33
     "SCANSIONE...", // 34
     "Ricevitore non rilevato", // 35
@@ -4336,7 +4336,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "屏幕亮度", // 29
     "关闭", // 30
     "屏幕静音！", // 31
-    "点击RF+按钮解除静音", // 32
+    "", // 32
     "关闭", // 33
     "搜索中...", // 34
     "未检测到收音芯片", // 35
@@ -4642,7 +4642,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Sett displayets lysstyrke", // 29
     "Av", // 30
     "Skjermen er dempet!", // 31
-    "Oppheve demping, fjern RF+-boksen", // 32
+    "", // 32
     "AV", // 33
     "SKANNER...", // 34
     "Tuner ikke oppdaget", // 35
@@ -4949,7 +4949,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Ajustar brillo de la pantalla", // 29
     "Apagar", // 30
     "¡La pantalla está en silencio!", // 31
-    "Para desactivar,\ndesmarque la casilla RF+", // 32
+    "", // 32
     "APAG.", // 33
     "ESCANEANDO...", // 34
     "Sintonizador no detectado", // 35
@@ -5256,7 +5256,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Definir brilho\nda tela", // 29
     "Desligado", // 30
     "A tela está silenciada!", // 31
-    "Para desativar o silenciamento,\ndesmarque a caixa RF+", // 32
+    "", // 32
     "DESAT.", // 33
     "ANALISANDO...", // 34
     "Sintonizador não detectado", // 35
@@ -5563,7 +5563,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Osvetljenost ekrana", // 29
     "Isključeno", // 30
     "Ekran je utišan!", // 31
-    "Ponovo uključite RF+ kutiju", // 32
+    "", // 32
     "ISKLJUČENO", // 33
     "SKENIRANJE...", // 34
     "Tuner nije\ndetektovan", // 35
@@ -5870,7 +5870,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Näytön kirkkaus", // 29
     "Pois", // 30
     "Näyttö on mykistetty!", // 31
-    "Poista mykistys,\npoista RF+ ruutuun", // 32
+    "", // 32
     "POIS", // 33
     "SKANNOIDAAN...", // 34
     "Virittintä ei havaittu", // 35
@@ -6177,7 +6177,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Visningens lysstyrke", // 29
     "Slukket", // 30
     "Skærmen er dæmpet!", // 31
-    "For at ophæve dæmpning,\nfjern markering i RF+ boksen", // 32
+    "", // 32
     "SLUKKET", // 33
     "SCANNER...", // 34
     "Tuner ikke registreret", // 35
