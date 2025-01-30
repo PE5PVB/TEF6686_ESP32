@@ -2794,6 +2794,19 @@ void ButtonPress() {
             delay(200);
             while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
             ShowFreq(0);
+          } else {
+            if (band == BAND_SW && tunemode != TUNE_MEM) {
+              nowToggleSWMIBand = !nowToggleSWMIBand;
+              tunemode = TUNE_MAN;
+              EEPROM.writeByte(EE_BYTE_BANDAUTOSW, nowToggleSWMIBand);
+              EEPROM.commit();
+              if (!screenmute) {
+                tftPrint(0, "AUTO", 22, 60, BackgroundColor, BackgroundColor, 16);
+                tftPrint(0, "BAND", 22, 60, BackgroundColor, BackgroundColor, 16);
+              }
+              doTuneMode();
+              ShowTuneMode();
+            }
           }
         }
       }
@@ -5493,18 +5506,5 @@ void toggleiMSEQ() {
     EEPROM.writeByte(EE_BYTE_EQSET, EQset);
     EEPROM.commit();
     if (XDRGTKUSB || XDRGTKTCP) DataPrint("G" + String(!EQset) + String(!iMSset) + "\n");
-  } else {
-    if (band == BAND_SW && tunemode != TUNE_MEM) {
-      nowToggleSWMIBand = !nowToggleSWMIBand;
-      tunemode = TUNE_MAN;
-      EEPROM.writeByte(EE_BYTE_BANDAUTOSW, nowToggleSWMIBand);
-      EEPROM.commit();
-      if (!screenmute) {
-        tftPrint(0, "AUTO", 22, 60, BackgroundColor, BackgroundColor, 16);
-        tftPrint(0, "BAND", 22, 60, BackgroundColor, BackgroundColor, 16);
-      }
-      doTuneMode();
-      ShowTuneMode();
-    }
   }
 }
