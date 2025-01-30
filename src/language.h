@@ -2044,7 +2044,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "UKW", // 193
     "AM", // 194
     "VERBIND./UHR", // 195
-    "DX MODE", // 196
+    "DX-MODUS", // 196
     "AUTO MEM", // 197
     "AM AGC", // 198
     "Entzerrung auf UKW", // 199
@@ -2060,8 +2060,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Starte Scan mit\nSpeicherplatz", // 209
     "Stoppe Scan mit\nSpeicherplatz", // 210
     "Wartezeit", // 211
-    "Starte DX Scan", // 212
-    "UKW DX Optionen", // 213
+    "Starte DX-Scan", // 212
+    "UKW DX-Optionen", // 213
     "Abbruch! Start-Speicher-\nplatz ist nicht belegt", // 214
     "AF Autosortierung", // 215
     "Speicherplätze scannen", // 216
