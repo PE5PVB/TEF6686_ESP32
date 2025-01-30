@@ -296,20 +296,20 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Download logbook", // 287
     "Logbook is empty", // 288
     "Go to bottom", // 289
-    "Added to log", // 290
-    "Update failed!", // 291
+    "Entry added\nto the logbook", // 290
+    "Error adding\nentry to the logbook", // 291
     "Clear logbook", // 292
     "Logbook cleared", // 293
     "Clear failed", // 294
     "Set NTP time offset", // 295
     "Autologger", // 296
-    "Logbook full!", // 297
+    "Can't add entry!\nLogbook is full!", // 297
     "Clock mode", // 298
     "Auto DST on NTP time", // 299
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
     "PI locked CT sync", // 301
     "Error! No RDS signal", // 302
-    "Hold BW to stop", // 303
+    "Hold BW button to\nstop DX scanner", // 303
     "PS only" // 304
   },
 
@@ -603,20 +603,20 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Download logboek", // 287
     "Logboek is leeg", // 288
     "Ga naar einde", // 289
-    "Logboek update", // 290
-    "Log mislukt!", // 291
+    "Toegevoegd aan\nhet logboek", // 290
+    "Toevoegen aan\nlogboek mislukt!", // 291
     "Logboek legen", // 292
     "Logboek geleegd", // 293
     "Legen mislukt", // 294
     "NTP tijdverschil\ninstellen", // 295
     "Automatisch loggen", // 296
-    "Logboek vol!", // 297
+    "Toevoegen mislukt!\nLogboek is vol!", // 297
     "Klok methode", // 298
     "Auto zomertijd\nop NTP tijd", // 299
     "Het logboek bevat meer dan 130 items, die de viewer niet kan verwerken. Download alstublieft het CSV-bestand om het te bekijken.", // 300
     "PI gebonden CT sync", // 301
     "Fout! Geen RDS!", // 302
-    "Stoppen: BW lang indrukken", // 303
+    "Houdt BW knop lang\ningedrukt om te stoppen", // 303
     "Alleen PS" // 304
   },
 

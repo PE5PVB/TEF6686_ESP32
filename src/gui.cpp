@@ -5542,13 +5542,21 @@ void Infoboxprint(const char* input) {
 
     char* line2 = (char*)malloc((length - newlineIndex) * sizeof(char));
     strcpy(line2, input + newlineIndex + 1);
-
-    tftPrint(0, line1, 155, 48, ActiveColor, ActiveColorSmooth, 28);
-    tftPrint(0, line2, 155, 78, ActiveColor, ActiveColorSmooth, 28);
+    if (menu) {
+      tftPrint(0, line1, 155, 48, ActiveColor, ActiveColorSmooth, 28);
+      tftPrint(0, line2, 155, 78, ActiveColor, ActiveColorSmooth, 28);
+    } else {
+      FrequencySprite.drawString(line1, 100, 5);
+      FrequencySprite.drawString(line2, 100, 25);
+    }
     free(line1);
     free(line2);
   } else {
-    tftPrint(0, input, 155, 78, ActiveColor, ActiveColorSmooth, 28);
+    if (menu) {
+      tftPrint(0, input, 155, 78, ActiveColor, ActiveColorSmooth, 28);
+    } else {
+      FrequencySprite.drawString(input, 100, 15);
+    }
   }
 }
 

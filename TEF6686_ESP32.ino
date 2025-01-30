@@ -3228,48 +3228,34 @@ void ShowFreq(int mode) {
           case 5: FrequencySprite.loadFont(FREQFONT5); break;
         }
 
-        FrequencySprite.setTextDatum(TR_DATUM);
+        FrequencySprite.fillSprite(BackgroundColor);
+
+        if (mode == 0) {
+          FrequencySprite.setTextDatum(TR_DATUM);
+          FrequencySprite.setTextColor(FreqColor, FreqColorSmooth, false);
+        } else {
+          FrequencySprite.unloadFont();
+          FrequencySprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FrequencySprite.setTextDatum(TC_DATUM);
+          if (language == LANGUAGE_CHS) FrequencySprite.loadFont(FONT16_CHS); else FrequencySprite.loadFont(FONT16);
+        }
+
         switch (mode) {
           case 0:
-            FrequencySprite.fillSprite(BackgroundColor);
-            FrequencySprite.setTextColor(FreqColor, FreqColorSmooth, false);
             FrequencySprite.drawString(String(freq / 100) + "." + (freq % 100 < 10 ? "0" : "") + String(freq % 100) + " ", 218, -6);
-            FrequencySprite.pushSprite(46, 46);
             freqold = freq;
             break;
 
-          case 1:
-            FrequencySprite.fillSprite(BackgroundColor);
-            FrequencySprite.pushSprite(46, 46);
-            tftPrint(0, myLanguage[language][34], 146, 58, ActiveColor, ActiveColorSmooth, 28);
-            break;
-
-          case 2:
-            FrequencySprite.fillSprite(BackgroundColor);
-            FrequencySprite.pushSprite(46, 46);
-            tftPrint(0, myLanguage[language][290], 146, 58, ActiveColor, ActiveColorSmooth, 28);
-            break;
-
-          case 3:
-            FrequencySprite.fillSprite(BackgroundColor);
-            FrequencySprite.pushSprite(46, 46);
-            tftPrint(0, myLanguage[language][291], 146, 58, SignificantColor, SignificantColorSmooth, 16);
-            break;
-
-          case 4:
-            FrequencySprite.fillSprite(BackgroundColor);
-            FrequencySprite.pushSprite(46, 46);
-            tftPrint(0, myLanguage[language][297], 146, 58, SignificantColor, SignificantColorSmooth, 16);
-            break;
-
-          case 5:
-            FrequencySprite.fillSprite(BackgroundColor);
-            FrequencySprite.pushSprite(46, 46);
-            tftPrint(0, myLanguage[language][303], 146, 58, ActiveColor, ActiveColorSmooth, 16);
-            delay(400);
-            break;
+          case 1: Infoboxprint(myLanguage[language][34]); break;
+          case 2: Infoboxprint(myLanguage[language][290]); break;
+          case 3: Infoboxprint(myLanguage[language][291]); break;
+          case 4: Infoboxprint(myLanguage[language][297]); break;
+          case 5: Infoboxprint(myLanguage[language][303]); break;
         }
+
+        FrequencySprite.pushSprite(46, 46);
         FrequencySprite.unloadFont();
+        if (mode == 5) delay(1000);
       }
     }
   }

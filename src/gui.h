@@ -211,6 +211,7 @@ extern TFT_eSprite MenuInfobox;
 extern TFT_eSprite FullLineSprite;
 extern TFT_eSprite OneBigLineSprite;
 extern TFT_eSprite PSSprite;
+extern TFT_eSprite FrequencySprite;
 
 void BuildAFScreen();
 void BuildMenu();
