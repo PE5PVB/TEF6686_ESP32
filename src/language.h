@@ -1858,38 +1858,38 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Drehimpulsgeber wechselt\nin Standard-Modus", // 7
     "UKW/AM Empfänger", // 8
     "!KEIN! Tuner", // 9
-    "Lautstärke:", // 10
-    "Konverter:", // 11
-    "Unteres Bandende:", // 12
-    "Oberes Bandende:", // 13
-    "UKW RF-Pegeloffset:", // 14
-    "Stereotrennschwelle:", // 15
-    "Tiefpass Eckfrequenz:", // 16
-    "Tiefpass Schwelle:", // 17
-    "Low-Level-Schwelle:", // 18
-    "Kontrast:", // 19
+    "Lautstärke", // 10
+    "Konverter", // 11
+    "Unteres Bandende", // 12
+    "Oberes Bandende", // 13
+    "UKW RF-Pegeloffset", // 14
+    "Stereo-Trennschwelle", // 15
+    "Tiefpass-Eckfrequenz", // 16
+    "Tiefpass-Schwelle", // 17
+    "Low-Level-Schwelle", // 18
+    "Bildschirmhelligkeit", // 19
     "Lautstärke", // 20
     "Konverteroffset", // 21
     "Unteres Bandende", // 22
     "Oberes Bandende", // 23
     "Pegeloffset", // 24
-    "Stereotrennschwelle", // 25
-    "Tiefpass Eckfrequenz", // 26
-    "Tiefpass Schwelle", // 27
+    "Stereo-Trennschwelle", // 25
+    "Tiefpass-Eckfrequenz", // 26
+    "Tiefpass-Schwelle", // 27
     "Low-Level-Schwelle", // 28
     "Bildschirmhelligkeit", // 29
     "Aus", // 30
     "Bildschirm abgeschaltet!", // 31
     "", // 32
     "AUS", // 33
-    "SCANVORGANG\nLÄUFT...", // 34
+    "Scanvorgang\nLläuft...", // 34
     "Tuner nicht erkannt", // 35
     "AM Antennengewinn", // 36
     "UKW AGC", // 37
-    "Zeige RDS Fehler", // 38
+    "Zeige RDS-Fehler", // 38
     "Sprache", // 39
     "Sprache wählen", // 40
-    "MODE drücken zum Beenden & Sichern", // 41
+    "Drücke MODE zum Sichern & Beenden", // 41
     "Ein", // 42
     "Sanfte\nStummschaltung UKW", // 43
     "Sanfte\nStummschaltung AM", // 44
@@ -1901,22 +1901,22 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "USB-Modus", // 50
     "WLAN aktiv", // 51
     "WLAN konfigurieren", // 52
-    "Verbinde mit:", // 53
+    "Verbinde mit", // 53
     "um WLAN einzustellen", // 54
     "Verbindungsversuch", // 55
-    "FEHLER!", // 56
-    "VERBUNDEN!", // 57
-    "Stationlist Rechner IP", // 58
-    "KW-Wellenlänge anzeigen", // 59
+    "Fehler!", // 56
+    "Verbunden!", // 57
+    "Stationlist Rechner-IP", // 58
+    "KW-Wellenlänge\nanzeigen", // 59
     "RDS-Filter", // 60
-    "Zeige PI Fehler", // 61
+    "Zeige PI-Fehler", // 61
     "Verwende Rauschsperre", // 62
     "Modulationspegel", // 63
     "Rauschunterdrückung", // 64
     "Rauschunterdrückung", // 65
     "Werkseinstellungen\nwurden geladen", // 66
     "Audioausgabe", // 67
-    "Tunen bei\nBildschirmschoner erlauben", // 68
+    "Bei Bildschirmschoner\nTunen erlauben", // 68
     "Anzeigefarben umkehren", // 69
     "Über diese Software", // 70
     "Hauptcode:", // 71
@@ -1941,11 +1941,11 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "UKW\nStandard-Schrittweite", // 90
     "Bildschirmschoner", // 91
     "Sek.", // 92
-    "ZUM SCHLIEßEN BAND DRÜCKEN", // 93
+    "Drücke BAND zum Schließen", // 93
     "1% Helligkeit", // 94
     "25% Helligkeit", // 95
     "50% Helligkeit", // 96
-    "RF Pegeloffset", // 97
+    "RF-Pegeloffset", // 97
     "Einheit des Signalpegels", // 98
     "Verwende AF", // 99
     "Wähle UKW Band", // 100
@@ -2032,7 +2032,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "UKW-Einstellungen", // 181
     "AM-Einstellungen", // 182
     "Verbindungen und Uhrzeit", // 183
-    "DRÜCKE MODE FÜR ZURÜCK", // 184
+    "Drücke MODE für Zurück", // 184
     "Gleichkanalerkennung", // 185
     "Gleichkanalerkennung\nEmpfindlichkeit", // 186
     "Gleichkanalerkennung\nSchwelle", // 187
@@ -2043,8 +2043,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "RDS", // 192
     "UKW", // 193
     "AM", // 194
-    "VERB./UHR", // 195
-    "DX MODE", // 196
+    "VERBIND./UHR", // 195
+    "DX-MODUS", // 196
     "AUTO MEM", // 197
     "AM AGC", // 198
     "Entzerrung auf UKW", // 199
@@ -2060,19 +2060,19 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Starte Scan mit\nSpeicherplatz", // 209
     "Stoppe Scan mit\nSpeicherplatz", // 210
     "Wartezeit", // 211
-    "Starte DX Scan", // 212
-    "UKW DX Optionen", // 213
-    "Abbruch! Start-Speicherplatz\nist nicht belegt.", // 214
+    "Starte DX-Scan", // 212
+    "UKW DX-Optionen", // 213
+    "Abbruch! Start-Speicher-\nplatz ist nicht belegt", // 214
     "AF Autosortierung", // 215
     "Speicherplätze scannen", // 216
     "Nein", // 217
     "Ja, ausschließlich", // 218
-    "Automatisches Scan-Ende", // 219
+    "Automatisches\nScan-Ende", // 219
     "Korrekter PI-Code", // 220
     "Signal", // 221
     "Stumm beim Scannen", // 222
     "AIR", // 223
-    "5 Sek. BAND-Knopf drücken", // 224
+    "BAND-Knopf 5 Sek. drücken", // 224
     "Ausschalten", // 225
     "Bildschirmschoner", // 226
     "Deaktiviert", // 227
@@ -2119,7 +2119,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Speichern nur mit RDS", // 268
     "Starte Auto-Speichern", // 269
     "Auto-Speichern", // 270
-    "Stationlist ID", // 271
+    "Stationlist-ID", // 271
     "gefunden", // 272
     "Abbruch! Speicherplätze voll", // 273
     "Abbruch! Taste wurde gedrückt", // 274
