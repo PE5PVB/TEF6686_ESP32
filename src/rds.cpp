@@ -822,7 +822,7 @@ void showCT() {
 
     // Format the time string with leading zeros for minutes
     char formattedTime[10];
-    sprintf(formattedTime, "%d:%02d %s", hour, localtime(&t)->tm_min, ampm.c_str());
+    sprintf(formattedTime, "%d:%02d%s", hour, localtime(&t)->tm_min, ampm.c_str());
 
     rds_clock = String(formattedTime);
   } else { // Other regions: 24-hour format
@@ -841,16 +841,14 @@ void showCT() {
       }
 
       // Display the updated time
-      int yCoord = advancedRDS ? 109 : 163;
-      tftReplace(1, rds_clockold, rds_clock, 208, yCoord, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+      tftReplace(0, rds_clockold, rds_clock, 26, 1, RDSColor, RDSColorSmooth, BackgroundColor, 16);
     } else { // Handle dropout scenarios
-      int yCoord = advancedRDS ? 109 : 163;
 
       if (rtcset) { // Display dropout message if RTC was set
-        tftReplace(1, rds_clockold, rds_clock, 208, yCoord, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+        tftReplace(1, rds_clockold, rds_clock, 26, 1, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
       } else { // Clear and reprint the clock
-        tftPrint(1, rds_clockold, 208, yCoord, BackgroundColor, BackgroundColor, 16);
-        tftPrint(1, rds_clock, 208, yCoord, BackgroundColor, BackgroundColor, 16);
+        tftPrint(0, rds_clockold, 26, 1, BackgroundColor, BackgroundColor, 16);
+        tftPrint(0, rds_clock, 26, 1, BackgroundColor, BackgroundColor, 16);
       }
     }
   }

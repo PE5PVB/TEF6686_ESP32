@@ -2955,6 +2955,7 @@ void BuildDisplay() {
   tft.drawRect(0, 0, 320, 240, FrameColor);
   tft.drawLine(0, 30, 320, 30, FrameColor);
   tft.drawLine(0, 100, 320, 100, FrameColor);
+  tft.drawLine(0, 15, 53, 15, FrameColor);
   tft.drawLine(120, 30, 120, 0, FrameColor);
   tft.drawLine(210, 100, 210, 217, FrameColor);
   tft.drawLine(248, 30, 248, 0, FrameColor);

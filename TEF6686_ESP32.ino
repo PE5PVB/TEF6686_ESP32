@@ -1407,11 +1407,7 @@ void loop() {
 }
 
 void GetData() {
-  if (!afscreen) {
-    showCT();
-    ShowSignalLevel();
-  }
-
+  if (!afscreen) ShowSignalLevel();
   if (!BWtune && !menu) showPS();
 
   if (band < BAND_GAP && !BWtune && !menu) {
@@ -1430,6 +1426,7 @@ void GetData() {
   ShowStereoStatus();
 
   if (!screenmute) {
+    showCT();
     ShowRSSI();
     ShowOffset();
     ShowBW();
@@ -3450,92 +3447,79 @@ void ShowOffset() {
       return;
     }
 
+    int baseX = 1;  // Left boundary
+    int baseY = 16; // Top boundary
+    int width = 51; // Max width
+    int height = 13; // Max height
+
+    int centerX = baseX + width / 2;    // Center dot X
+    int centerY = baseY + height / 2;   // Center dot Y
+
+    // **Move arrows 3px further from the dot**
+    int arrowGap = 3; // Space between dot and arrows
+    int arrowWidth = 18; // Arrow stretch size
+    int leftArrowBaseX = centerX - arrowWidth - arrowGap;  // Shift left arrow further left
+    int rightArrowBaseX = centerX + arrowWidth + arrowGap; // Shift right arrow further right
+
+    int arrowHeight = height - 2;  // Arrow height
+    int arrowBaseYTop = baseY + 1; // Adjusted top Y position
+    int arrowBaseYBottom = baseY + height - 1;
+
     if (band < BAND_GAP) {
-      if (OStatus < -500) {
-        tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
-        tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
-        tft.fillCircle(26, 15, 3, GreyoutColor);
-        tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
-        tft.fillTriangle(42, 14, 50, 8, 50, 22, SignificantColor);
-        tuned = false;
-      } else if (OStatus < -250 && OStatus > -500) {
-        tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
-        tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
-        tft.fillCircle(26, 15, 3, GreyoutColor);
-        tft.fillTriangle(32, 14, 40, 8, 40, 22, SignificantColor);
-        tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
+      if (OStatus < -250) {
+        // Left arrow active (▶)
+        tft.fillTriangle(leftArrowBaseX, arrowBaseYTop, centerX - arrowGap, centerY, leftArrowBaseX, arrowBaseYBottom, SignificantColor);
+        // Center dot
+        tft.fillCircle(centerX, centerY, 3, GreyoutColor);
+        // Right arrow dimmed (◀)
+        tft.fillTriangle(rightArrowBaseX, arrowBaseYTop, centerX + arrowGap, centerY, rightArrowBaseX, arrowBaseYBottom, GreyoutColor);
         tuned = false;
       } else if (USN < 250 && WAM < 250 && OStatus > -250 && OStatus < 250 && !SQ) {
-        tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
-        tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
-        tft.fillCircle(26, 15, 3, InsignificantColor);
-        tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
-        tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
+        // Both arrows dimmed
+        tft.fillTriangle(leftArrowBaseX, arrowBaseYTop, centerX - arrowGap, centerY, leftArrowBaseX, arrowBaseYBottom, GreyoutColor);
+        tft.fillTriangle(rightArrowBaseX, arrowBaseYTop, centerX + arrowGap, centerY, rightArrowBaseX, arrowBaseYBottom, GreyoutColor);
+        // Center dot active
+        tft.fillCircle(centerX, centerY, 3, InsignificantColor);
         tuned = true;
-      } else if (OStatus > 250 && OStatus < 500) {
-        tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
-        tft.fillTriangle(13, 8, 13, 22, 21, 14, SignificantColor);
-        tft.fillCircle(26, 15, 3, GreyoutColor);
-        tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
-        tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
-        tuned = false;
-      } else if (OStatus > 500) {
-        tft.fillTriangle(3, 8, 3, 22, 11, 14, SignificantColor);
-        tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
-        tft.fillCircle(26, 15, 3, GreyoutColor);
-        tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
-        tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
+      } else if (OStatus > 250) {
+        // Right arrow active (◀)
+        tft.fillTriangle(rightArrowBaseX, arrowBaseYTop, centerX + arrowGap, centerY, rightArrowBaseX, arrowBaseYBottom, SignificantColor);
+        // Center dot dimmed
+        tft.fillCircle(centerX, centerY, 3, GreyoutColor);
+        // Left arrow dimmed (▶)
+        tft.fillTriangle(leftArrowBaseX, arrowBaseYTop, centerX - arrowGap, centerY, leftArrowBaseX, arrowBaseYBottom, GreyoutColor);
         tuned = false;
       } else {
-        tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
-        tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
-        tft.fillCircle(26, 15, 3, GreyoutColor);
-        tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
-        tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
+        // Everything dimmed
+        tft.fillTriangle(leftArrowBaseX, arrowBaseYTop, centerX - arrowGap, centerY, leftArrowBaseX, arrowBaseYBottom, GreyoutColor);
+        tft.fillTriangle(rightArrowBaseX, arrowBaseYTop, centerX + arrowGap, centerY, rightArrowBaseX, arrowBaseYBottom, GreyoutColor);
+        tft.fillCircle(centerX, centerY, 3, GreyoutColor);
         tuned = false;
       }
     } else {
-      if (OStatus <= -3) {
-        tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
-        tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
-        tft.fillCircle(26, 15, 3, GreyoutColor);
-        tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
-        tft.fillTriangle(42, 14, 50, 8, 50, 22, SignificantColor);
-        tuned = false;
-      } else if (OStatus < -2 && OStatus > -3) {
-        tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
-        tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
-        tft.fillCircle(26, 15, 3, GreyoutColor);
-        tft.fillTriangle(32, 14, 40, 8, 40, 22, SignificantColor);
-        tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
+      if (OStatus <= -2) {
+        // Left arrow active (▶)
+        tft.fillTriangle(leftArrowBaseX, arrowBaseYTop, centerX - arrowGap, centerY, leftArrowBaseX, arrowBaseYBottom, SignificantColor);
+        tft.fillCircle(centerX, centerY, 3, GreyoutColor);
+        // Right arrow dimmed (◀)
+        tft.fillTriangle(rightArrowBaseX, arrowBaseYTop, centerX + arrowGap, centerY, rightArrowBaseX, arrowBaseYBottom, GreyoutColor);
         tuned = false;
       } else if (OStatus > -2 && OStatus < 2 && !SQ) {
-        tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
-        tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
-        tft.fillCircle(26, 15, 3, InsignificantColor);
-        tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
-        tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
+        tft.fillTriangle(leftArrowBaseX, arrowBaseYTop, centerX - arrowGap, centerY, leftArrowBaseX, arrowBaseYBottom, GreyoutColor);
+        tft.fillTriangle(rightArrowBaseX, arrowBaseYTop, centerX + arrowGap, centerY, rightArrowBaseX, arrowBaseYBottom, GreyoutColor);
+        tft.fillCircle(centerX, centerY, 3, InsignificantColor);
         tuned = true;
-      } else if (OStatus > 2 && OStatus < 3) {
-        tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
-        tft.fillTriangle(13, 8, 13, 22, 21, 14, SignificantColor);
-        tft.fillCircle(26, 15, 3, GreyoutColor);
-        tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
-        tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
-        tuned = false;
-      } else if (OStatus >= 3) {
-        tft.fillTriangle(3, 8, 3, 22, 11, 14, SignificantColor);
-        tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
-        tft.fillCircle(26, 15, 3, GreyoutColor);
-        tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
-        tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
+      } else if (OStatus > 2) {
+        // Right arrow active (◀)
+        tft.fillTriangle(rightArrowBaseX, arrowBaseYTop, centerX + arrowGap, centerY, rightArrowBaseX, arrowBaseYBottom, SignificantColor);
+        tft.fillCircle(centerX, centerY, 3, GreyoutColor);
+        // Left arrow dimmed (▶)
+        tft.fillTriangle(leftArrowBaseX, arrowBaseYTop, centerX - arrowGap, centerY, leftArrowBaseX, arrowBaseYBottom, GreyoutColor);
         tuned = false;
       } else {
-        tft.fillTriangle(3, 8, 3, 22, 11, 14, GreyoutColor);
-        tft.fillTriangle(13, 8, 13, 22, 21, 14, GreyoutColor);
-        tft.fillCircle(26, 15, 3, GreyoutColor);
-        tft.fillTriangle(32, 14, 40, 8, 40, 22, GreyoutColor);
-        tft.fillTriangle(42, 14, 50, 8, 50, 22, GreyoutColor);
+        tft.fillTriangle(leftArrowBaseX, arrowBaseYTop, centerX - arrowGap, centerY, leftArrowBaseX, arrowBaseYBottom, GreyoutColor);
+        tft.fillTriangle(rightArrowBaseX, arrowBaseYTop, centerX + arrowGap, centerY, rightArrowBaseX, arrowBaseYBottom, GreyoutColor);
+        tft.fillCircle(centerX, centerY, 3, GreyoutColor);
         tuned = false;
       }
     }
