@@ -315,7 +315,10 @@ int16_t OStatus;
 int16_t SAvg;
 int16_t SAvg2;
 int16_t SAvg3;
+int16_t SAvg4;
 int16_t SStatus;
+int16_t MP;
+int8_t MPold = 0;
 int8_t LevelOffset;
 int8_t LowLevelSet;
 int8_t NTPoffset;
@@ -3297,41 +3300,51 @@ void ShowFreq(int mode) {
 }
 
 void ShowSignalLevel() {
+  SAvg = (((SAvg * 9) + 5) / 10) + SStatus;
+  SAvg2 = (((SAvg2 * 9) + 5) / 10) + CN;
+  SAvg4 = (((SAvg4 * 9) + 5) / 10) + WAM;
+
+  float sval = 0;
+  int16_t smeter = 0;
+  int16_t segments;
+
+  if (SStatus > 0) {
+    if (SStatus < 1000) {
+      sval = 51 * ((pow(10, (((float)SStatus) / 1000))) - 1);
+      smeter = int16_t(sval);
+    } else {
+      smeter = 511;
+    }
+  }
+
+  smeter = int16_t(sval);
+  SStatus = SAvg / 10;
+  CN = SAvg2 / 10;
+  MP = SAvg4 / 10;
+
   if (!screenmute) {
     if (millis() >= SNRupdatetimer + TIMER_SNR_TIMER) {
       SNRupdatetimer = millis();
       if (!advancedRDS) {
         if (CN > (CNold + 1) || CN < (CNold - 1)) {
-          if (CNold == 0) tftPrint(1, "--", 295, 163, BackgroundColor, BackgroundColor, 16); else tftPrint(1, String(CNold), 295, 163, BackgroundColor, BackgroundColor, 16);
+          if (CNold == 0) tftPrint(1, "--", 297, 163, BackgroundColor, BackgroundColor, 16); else tftPrint(1, String(CNold), 297, 163, BackgroundColor, BackgroundColor, 16);
           if (tuned) {
-            if (CN == 0) tftPrint(1, "--", 295, 163, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(CN), 295, 163, PrimaryColor, PrimaryColorSmooth, 16);
+            if (CN == 0) tftPrint(1, "--", 297, 163, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(CN), 297, 163, PrimaryColor, PrimaryColorSmooth, 16);
             CNold = CN;
           } else {
-            tftPrint(1, "--", 295, 163, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "--", 297, 163, PrimaryColor, PrimaryColorSmooth, 16);
             CNold = 0;
           }
         }
+        byte MPprint;
+        MPprint = constrain(map(MP, 0, 1000, 0, 99), 0, 99);
+
+        if (MP != MPold) {
+          tftReplace(1, String(MPold), (band < BAND_GAP ? String(MPprint) : "--"), 248, 163, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 16);
+          MPold = MPprint;
+        }
       }
     }
-    SAvg = (((SAvg * 9) + 5) / 10) + SStatus;
-    SAvg2 = (((SAvg2 * 9) + 5) / 10) + CN;
-
-    float sval = 0;
-    int16_t smeter = 0;
-    int16_t segments;
-
-    if (SStatus > 0) {
-      if (SStatus < 1000) {
-        sval = 51 * ((pow(10, (((float)SStatus) / 1000))) - 1);
-        smeter = int16_t(sval);
-      } else {
-        smeter = 511;
-      }
-    }
-
-    smeter = int16_t(sval);
-    SStatus = SAvg / 10;
-    CN = SAvg2 / 10;
 
     if (!menu) analogWrite(SMETERPIN, smeter);
 
@@ -3699,7 +3712,7 @@ void doSquelch() {
           SquelchSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           SquelchSprite.fillSprite(BackgroundColor);
           if (Squelch == -100) {
-            SquelchSprite.drawString(String(myLanguage[language][33]), 0, 0);
+            SquelchSprite.drawString("--", 0, 0);
           } else if (Squelch == 920) {
             SquelchSprite.drawString("ST", 0, 0);
           } else {
@@ -3752,7 +3765,7 @@ void doSquelch() {
             if (Squelch == -1) {
               SquelchSprite.drawString("ST", 0, 0);
             } else if (Squelch == 0) {
-              SquelchSprite.drawString(String(myLanguage[language][33]), 0, 0);
+              SquelchSprite.drawString("--", 0, 0);
             } else {
               SquelchSprite.drawString(String(SquelchShow), 0, 0);
             }
