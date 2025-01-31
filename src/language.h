@@ -1849,7 +1849,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
   },
 
   { "Deutsch", // German
-    "Drehrichtung des Drehimpuls-\ngebers wird umgekehrt", // 1
+    "Richtung des Drehimpuls-\ngebers wird umgekehrt", // 1
     "Bitte Taste loslassen", // 2
     "Bildschirm wird\num 180° gedreht", // 3
     "Analogmeter\nwird kalibrieret", // 4
@@ -1859,7 +1859,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "UKW/AM Empfänger", // 8
     "!KEIN! Tuner", // 9
     "Lautstärke", // 10
-    "Konverter", // 11
+    "Konverteroffset", // 11
     "Unteres Bandende", // 12
     "Oberes Bandende", // 13
     "UKW RF-Pegeloffset", // 14
@@ -1872,7 +1872,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Konverteroffset", // 21
     "Unteres Bandende", // 22
     "Oberes Bandende", // 23
-    "Pegeloffset", // 24
+    "UKW RF-Pegeloffset", // 24
     "Stereo-Trennschwelle", // 25
     "Tiefpass-Eckfrequenz", // 26
     "Tiefpass-Schwelle", // 27
@@ -1882,7 +1882,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Bildschirm abgeschaltet!", // 31
     "", // 32
     "AUS", // 33
-    "Scanvorgang\nLläuft...", // 34
+    "Scanvorgang\nläuft...", // 34
     "Tuner nicht erkannt", // 35
     "AM Antennengewinn", // 36
     "UKW AGC", // 37
@@ -1916,20 +1916,20 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Rauschunterdrückung", // 65
     "Werkseinstellungen\nwurden geladen", // 66
     "Audioausgabe", // 67
-    "Bei Bildschirmschoner\nTunen erlauben", // 68
+    "Bei Bildschirm aus\nTunen erlauben", // 68
     "Anzeigefarben umkehren", // 69
     "Über diese Software", // 70
     "Hauptcode:", // 71
     "Mitwirkende:", // 72
     "Unbekannt", // 73
-    "Bildschirmschoneroptionen", // 74
+    "Bildschirmschoner-\nOptionen", // 74
     "Abschaltzeit", // 75
     "Bildschirm aus", // 76
     "Thema", // 77
     "Oberfläche", // 78
     "Erkannte Applikationen", // 79
     "Min.", // 80
-    "Dynamische \nSPI-Geschw.", // 81
+    "Dynamische\nSPI-Geschw.", // 81
     "Scanempfindlichkeit", // 82
     "KEINE", // 83
     "Softwareversion", // 84
@@ -1948,14 +1948,14 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "RF-Pegeloffset", // 97
     "Einheit des Signalpegels", // 98
     "Verwende AF", // 99
-    "Wähle UKW Band", // 100
-    "Wähle AM Band", // 101
+    "Wähle UKW-Band", // 100
+    "Wähle AM-Band", // 101
     "LW", // 102
     "MW", // 103
     "KW", // 104
     "UKW", // 105
     "OIRT", // 106
-    "Tunen bei Bildschirm aus", // 107
+    "Bei Bildschirm aus Tunen erlauben", // 107
     "Modell auswählen", // 108
     "Basismodell", // 109
     "Portabel", // 110
@@ -2072,7 +2072,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Signal", // 221
     "Stumm beim Scannen", // 222
     "AIR", // 223
-    "BAND-Knopf 5 Sek. drücken", // 224
+    "BAND-Knopf\n5 Sek. drücken", // 224
     "Ausschalten", // 225
     "Bildschirmschoner", // 226
     "Deaktiviert", // 227
