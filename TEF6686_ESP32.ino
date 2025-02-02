@@ -766,7 +766,7 @@ void setup() {
     analogWrite(SMETERPIN, 511);
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
     Infoboxprint(myLanguage[language][4]);
-    tftPrint(0, myLanguage[language][5], 155, 130, ActiveColor, ActiveColorSmooth, 28);
+    tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(BANDBUTTON) == LOW) delay(50);
     analogWrite(SMETERPIN, 0);
   }
@@ -810,7 +810,7 @@ void setup() {
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH && digitalRead(MODEBUTTON) == HIGH && digitalRead(BANDBUTTON) == LOW) {
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
-    Infoboxprint(myLanguage[language][284]);
+    Infoboxprint(myLanguage[language][69]);
     tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
     invertdisplay = !invertdisplay;
     tft.invertDisplay(!invertdisplay);
@@ -3249,8 +3249,8 @@ void ShowFreq(int mode) {
           case 1: Infoboxprint(myLanguage[language][34]); break;
           case 2: Infoboxprint(myLanguage[language][290]); break;
           case 3: Infoboxprint(myLanguage[language][291]); break;
-          case 4: Infoboxprint(myLanguage[language][297]); break;
-          case 5: Infoboxprint(myLanguage[language][303]); break;
+          case 4: Infoboxprint(myLanguage[language][295]); break;
+          case 5: Infoboxprint(myLanguage[language][284]); break;
         }
 
         FrequencySprite.pushSprite(46, 46);
