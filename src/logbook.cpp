@@ -152,7 +152,7 @@ void handleRoot() {
 
     file.close();
   } else {
-    html += "<tr><td colspan=\"100%\" style=\"text-align: center; color: red;\">" + String(myLanguage[language][300]) + "</td></tr>";
+    html += "<tr><td colspan=\"100%\" style=\"text-align: center; color: red;\">" + String(myLanguage[language][299]) + "</td></tr>";
   }
 
   if (!hasData) {

@@ -1193,7 +1193,7 @@ void ShowAFEON() {
       aid_counterold = radio.rds.aid_counter;
 
       if (AIDStringTemp != AIDStringold) {
-        AIDString = String(myLanguage[language][93]) + "  -  " + String(myLanguage[language][79]) + ": " + AIDStringTemp + "       ";
+        AIDString = String(myLanguage[language][33]) + "  -  " + String(myLanguage[language][79]) + ": " + AIDStringTemp + "       ";
         AIDWidth = FullLineSprite.textWidth(AIDString);
         AIDStringold = AIDString;
       }
