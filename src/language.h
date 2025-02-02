@@ -5,15 +5,15 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[21][305] PROGMEM = {
+static const char* const myLanguage[21][300] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
     "Screen flipped", // 3
     "Calibrate analog meter", // 4
-    "Release button when ready", // 5
-    "encoder set to optical", // 6
-    "encoder set to standard", // 7
+    "USB mode", // 5
+    "Encoder set to optical", // 6
+    "Encoder set to standard", // 7
     "FM/AM receiver", // 8
     "Tuner: !None!", // 9
     "Volume", // 10
@@ -37,9 +37,9 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Low level threshold", // 28
     "Display brightness", // 29
     "Off", // 30
-    "Screen is muted!", // 31
-    "", // 32
-    "OFF", // 33
+    "On", // 31
+    "PRESS MODE TO EXIT AND STORE", // 32
+    "PRESS BAND TO CLOSE", // 33
     "SCANNING...", // 34
     "Tuner not detected", // 35
     "AM Antenna gain", // 36
@@ -47,8 +47,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Show RDS errors", // 38
     "Language", // 39
     "Choose language", // 40
-    "PRESS MODE TO EXIT AND STORE", // 41
-    "On", // 42
+    "PI locked CT sync", // 41
+    "Error! No RDS signal", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
     "Beep at band edge", // 45
@@ -56,7 +56,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Europe", // 47
     "America", // 48
     "Show underscore in RDS", // 49
-    "USB mode", // 50
+    "PS only", // 50
     "Wi-Fi active", // 51
     "Configure Wi-Fi", // 52
     "Connect to: ", // 53
@@ -75,7 +75,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Defaults loaded", // 66
     "Audio output", // 67
     "Allow tuning without\ndeactivating screensaver", // 68
-    "Invert display", // 69
+    "Invert display colors", // 69
     "About software", // 70
     "Main code:", // 71
     "Contributors:", // 72
@@ -99,7 +99,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "FM default stepsize", // 90
     "Screensaver", // 91
     "Sec", // 92
-    "PRESS BAND TO CLOSE", // 93
+    "Clock mode", // 93
     "1% brightness", // 94
     "25% brightness", // 95
     "50% brightness", // 96
@@ -290,7 +290,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
     "To calibrate touchscreen", // 283
-    "Screen inversion toggles", // 284
+    "Hold BW button to\nstop DX scanner", // 284
     "Select Bandwidth", // 285
     "Your logbook", // 286
     "Download logbook", // 287
@@ -301,16 +301,11 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Clear logbook", // 292
     "Logbook cleared", // 293
     "Clear failed", // 294
-    "Set NTP time offset", // 295
+    "Can't add entry!\nLogbook is full!", // 295
     "Autologger", // 296
-    "Can't add entry!\nLogbook is full!", // 297
-    "Clock mode", // 298
-    "Auto DST on NTP time", // 299
-    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "PI locked CT sync", // 301
-    "Error! No RDS signal", // 302
-    "Hold BW button to\nstop DX scanner", // 303
-    "PS only" // 304
+    "Auto DST on NTP time", // 297
+    "Set NTP time offset", // 298
+    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 299
   },
 
   { "Nederlands", // Dutch
@@ -318,7 +313,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Laat aub de knop los", // 2
     "Scherm gedraaid", // 3
     "Kalibratie analoge meter", // 4
-    "Laat knop los indien gereed", // 5
+    "USB mode", // 5
     "encoder ingesteld als optisch", // 6
     "encoder ingesteld als standaard", // 7
     "FM/AM ontvanger", // 8
@@ -344,9 +339,9 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Laag signaalgrens", // 28
     "Stel helderheid in", // 29
     "Uit", // 30
-    "Scherm is bevroren!", // 31
-    "", // 32
-    "UIT", // 33
+    "Aan", // 31
+    "DRUK OP MODE OM AF TE SLUITEN", // 32
+    "DRUK OP BAND OM AF TE SLUITEN", // 33
     "ZOEKEN...", // 34
     "Tuner niet herkend!", // 35
     "AM antenne versterking", // 36
@@ -354,8 +349,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Toon RDS fouten", // 38
     "Taal", // 39
     "Kies taal", // 40
-    "DRUK OP MODE OM AF TE SLUITEN", // 41
-    "Aan", // 42
+    "PI gebonden CT sync", // 41
+    "Fout! Geen RDS!", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
     "Piep op bandeinde", // 45
@@ -363,7 +358,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Europa", // 47
     "Amerika", // 48
     "Toon underscore in RDS", // 49
-    "USB mode", // 50
+    "Alleen PS", // 50
     "Wi-Fi aktief", // 51
     "Configureer Wi-Fi", // 52
     "Verbind met: ", // 53
@@ -406,7 +401,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "FM standaard\nstapgrootte", // 90
     "Schermbeveiliging", // 91
     "sec.", // 92
-    "DRUK OP BAND OM AF TE SLUITEN", // 93
+    "Klok methode", // 93
     "1% helderheid", // 94
     "25% helderheid", // 95
     "50% helderheid", // 96
@@ -420,7 +415,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Afstemmen tijdens\nschermbeveiliging", // 107
+    "Stop scherm ontwaken bij afstemmen", // 107
     "Model keuze", // 108
     "Basis", // 109
     "Portable", // 110
@@ -574,7 +569,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Alarmtest", // 258
     "Alarm ! ALARM !", // 259
     "Initieel", // 260
-    "Altijd", //261
+    "Altijd", // 261
     "Toon klok", // 262
     "Toon long PS", // 263
     "Start frequentie", // 264
@@ -597,7 +592,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Wachttijd alleen\nbij signaal", // 281
     "Druk op aangegeven hoeken", // 282
     "om scherm te calibreren", // 283
-    "Scherm inversie gewijzigd", // 284
+    "Houdt BW knop lang\ningedrukt om te stoppen", // 284
     "Selecteer bandbreedte", // 285
     "Jouw logboek", // 286
     "Download logboek", // 287
@@ -608,16 +603,11 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Logboek legen", // 292
     "Logboek geleegd", // 293
     "Legen mislukt", // 294
-    "NTP tijdverschil\ninstellen", // 295
+    "Toevoegen mislukt!\nLogboek is vol!", // 295
     "Automatisch loggen", // 296
-    "Toevoegen mislukt!\nLogboek is vol!", // 297
-    "Klok methode", // 298
-    "Auto zomertijd\nop NTP tijd", // 299
-    "Het logboek bevat meer dan 130 items, die de viewer niet kan verwerken. Download alstublieft het CSV-bestand om het te bekijken.", // 300
-    "PI gebonden CT sync", // 301
-    "Fout! Geen RDS!", // 302
-    "Houdt BW knop lang\ningedrukt om te stoppen", // 303
-    "Alleen PS" // 304
+    "Auto zomertijd\nop NTP tijd", // 297
+    "NTP tijdverschil\ninstellen", // 298
+    "Het logboek bevat meer dan 130 items, die de viewer niet kan verwerken. Download alstublieft het CSV-bestand om het te bekijken." // 299
   },
 
   { "Polski", // Polish
@@ -625,7 +615,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Zwolnij przycisk", // 2
     "Obrócono ekran", // 3
     "Kalibracja analogowego miernika", // 4
-    "Zwolnij przycisk gdy gotowe", // 5
+    "Tryb USB", // 5
     "wybrano enkoder optyczny", // 6
     "wybrano standardowy enkoder", // 7
     "Odbiornik FM/AM", // 8
@@ -651,9 +641,9 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Ustaw dolną granicę sygnału", // 28
     "Ustaw jasność wyświetlacza", // 29
     "Wył.", // 30
-    "Ekran jest wyciszony!", // 31
-    "", // 32
-    "WYŁ.", // 33
+    "Włącz.", // 31
+    "WCIŚNIJ MODE ABY ZAMKNĄĆ I ZAPISAĆ", // 32
+    "NACIŚNIJ BAND ABY ZAMKNĄĆ", // 33
     "SKANOWANIE...", // 34
     "Nie wykryto tunera", // 35
     "AM Antenna gain", // 36
@@ -661,8 +651,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Pokaż błędy RDS", // 38
     "Język", // 39
     "Wybierz swój język", // 40
-    "WCIŚNIJ MODE ABY ZAMKNĄĆ I ZAPISAĆ", // 41
-    "Włącz.", // 42
+    "Synch. CT przy zablokowanym PI", // 41
+    "Błąd! Brak sygnału RDS", // 42
     "Łagodne wyciszanie FM", // 43
     "Łagodne wyciszanie AM", // 44
     "Beep na krawędzi pasma", // 45
@@ -670,7 +660,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Europa", // 47
     "Ameryka", // 48
     "Pokaż podkreślenia w RDS", // 49
-    "Tryb USB", // 50
+    "Tylko PS", // 50
     "Wi-Fi aktywne", // 51
     "Konfiguracja Wi-Fi", // 52
     "Połącz z: ", // 53
@@ -713,7 +703,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Minimalny krok FM", // 90
     "Wygaszacz ekranu", // 91
     "Sek", // 92
-    "NACIŚNIJ BAND ABY ZAMKNĄĆ", // 93
+    "Tryb zegara", // 93
     "1% jasności", // 94
     "25% jasności", // 95
     "50% jasności", // 96
@@ -727,7 +717,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Stroj. gdy ekran wył.", // 107
+    "Stop scherm ontwaken bij afstemmen", // 107
     "Wybór modelu", // 108
     "Podstawowy", // 109
     "Przenośny", // 110
@@ -829,8 +819,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Ulepszenie \nstereo FMSI", // 206
     "Funkcja dostępna tylko\nna TEF6687/6689!", // 207
     "Funkcja niedostępna\nz wybranym motywem!", // 208
-    "Początkowy kanał", // 209
-    "Końcowy kanał", // 210
+    "Rozpocznij skanowanie\nkanałów pamięci", // 209
+    "Zatrzymaj skanowanie\nkanałów pamięci", // 210
     "Czas oczekiwania", // 211
     "Rozpocznij skanowanie DX", // 212
     "Opcje FM DX", // 213
@@ -904,7 +894,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Czekaj tylko gdy\nwykryto stację", // 281
     "Naciśnij zaznaczony róg", // 282
     "Aby skalibrować ekran", // 283
-    "Inwersja kolorów wyświetlacza", // 284
+    "Aby zatrzymać,\nprzytrzymaj przycisk BW", // 284
     "Wybierz szer. pasma", // 285
     "Twój wykaz", // 286
     "Pobierz wykaz", // 287
@@ -915,16 +905,11 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Wyczyść wykaz", // 292
     "Wykaz wyczyszczony", // 293
     "Błąd wyczyszczenia", // 294
-    "Ustaw odchyl. czasu NTP", // 295
+    "Wykaz pełny!", // 295
     "Autologowanie stacji", // 296
-    "Wykaz pełny!", // 297
-    "Tryb zegara", // 298
-    "Auto czas letni wg NTP", // 299
-    "Wykaz zawiera ponad 130 wpisów, których przeglądarka nie może pokazać. Pobierz plik CSV, aby je przetworzyć.", // 300
-    "Synch. CT przy zablokowanym PI", // 301
-    "Błąd! Brak sygnału RDS", // 302
-    "Aby zatrzymać,\nprzytrzymaj przycisk BW", // 303
-    "Tylko PS" // 304
+    "Auto czas letni wg NTP", // 297
+    "Ustaw odchyl. czasu NTP", // 298
+    "Wykaz zawiera ponad 130 wpisów, których przeglądarka nie może pokazać. Pobierz plik CSV, aby je przetworzyć." // 299
   },
 
   { "Hrvatski", // Croatian
@@ -932,22 +917,22 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Otpustite gumb", // 2
     "Zaslon je okrenut", // 3
     "Kalibracija analog. mjerača", // 4
-    "Otpustite gumb", // 5
+    "Način rada USB-a", // 5
     "Optički enkoder postav.", // 6
     "Standardni enkoder postav.", // 7
     "FM/AM prijemnik", // 8
     "Prijemnik: !Nije pronađen!", // 9
-    "Pomak glasnoće:", // 10
-    "Pomak konvertera:", // 11
-    "Donja granica opsega:", // 12
-    "Gornja granica opsega:", // 13
-    "FM pomak RF razine:", // 14
-    "Razina stereo signala:", // 15
-    "Granična frekvencija:", // 16
-    "Razina granične frekv.:", // 17
-    "Donja granica za signal:", // 18
-    "Svjetlina:", // 19
-    "Pomak glasnoće", // 20
+    "Glasnoća", // 10
+    "Konverter", // 11
+    "Donja granica opsega", // 12
+    "Gornja granica opsega", // 13
+    "FM pomak RF razine", // 14
+    "Razina stereo signala", // 15
+    "Granična frekvencija", // 16
+    "Razina granične frekv.", // 17
+    "Donja granica za signal", // 18
+    "Svjetlina", // 19
+    "Postavi glasnoću", // 20
     "Pomak konvertera", // 21
     "Donja granica frekv. opsega", // 22
     "Gornja granica frekv. opsega", // 23
@@ -958,9 +943,9 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Donja granica za signal", // 28
     "Svjetlina zaslona", // 29
     "Isključeno", // 30
-    "Zaslon je isključen!", // 31
-    "", // 32
-    "ISK.", // 33
+    "Uključeno", // 31
+    "PRITISNITE MODE ZA IZLAZ I SPREMANJE", // 32
+    "PRITISNITE BAND ZA IZLAZ", // 33
     "SKENIRANJE...", // 34
     "Prijemnik nije pronađen", // 35
     "AM Antenna gain", // 36
@@ -968,8 +953,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Prikaži RDS pogreške", // 38
     "Jezik", // 39
     "Odaberite jezik", // 40
-    "PRITISNITE MODE ZA IZLAZ I SPREMANJE", // 41
-    "Uključeno", // 42
+    "PI locked CT sync", // 41
+    "Error! No RDS signal", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
     "Beep na rubu frekv. opsega", // 45
@@ -977,7 +962,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Europa", // 47
     "Amerika", // 48
     "Prikaži donju crtu u RDS-u", // 49
-    "Način rada USB-a", // 50
+    "PS only", // 50
     "Wi-Fi", // 51
     "Wi-Fi postavke", // 52
     "Spojite se na: ", // 53
@@ -1020,15 +1005,15 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "FM min korak", // 90
     "Čuvar zaslona", // 91
     "Sek", // 92
-    "PRITISNITE BAND ZA IZLAZ", // 93
+    "Način rada sata", // 93
     "1% svjetlina", // 94
     "25% svjetlina", // 95
     "50% svjetlina", // 96
-    "AM pomak RF razine:", // 97
-    "Jedinica mjerača signala:", // 98
-    "Koristi AF:", // 99
-    "FM opseg:", // 100
-    "AM opseg:", // 101
+    "AM pomak RF razine", // 97
+    "Jedinica mjerača signala", // 98
+    "Koristi AF", // 99
+    "Odaberi FM opseg", // 100
+    "Odaberi AM opseg", // 101
     "LW", // 102
     "MW", // 103
     "SW", // 104
@@ -1188,60 +1173,55 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Testni alarm!", // 258
     "Alarm !", // 259
     "Početno", // 260
-    "Uvijek", //261
+    "Uvijek", // 261
     "Prikaži sat", // 262
-    "Show long PS", // 263
-    "Start frequency", // 264
-    "Stop frequency", // 265
-    "Start memory channel", // 266
-    "Stop memory channel", // 267
-    "Only store with RDS", // 268
-    "Start auto memory", // 269
-    "Auto memory", // 270
-    "Stationlist ID", // 271
-    "Found", // 272
-    "Abort! Out of memorychannels", // 273
-    "Abort! User pressed button", // 274
-    "Scan finished without errors", // 275
-    "Clear memory channels", // 276
-    "cleared", // 277
-    "Prevent double PI", // 278
-    "Range", // 279
-    "Full", // 280
-    "Wait time on\nsignal only", // 281
-    "Press highlighted corner", // 282
-    "To calibrate touchscreen", // 283
-    "Screen inversion toggles", // 284
-    "Select Bandwidth", // 285
-    "Your logbook", // 286
-    "Download logbook", // 287
-    "Logbook is empty", // 288
-    "Go to bottom", // 289
-    "Added to log", // 290
-    "Update failed!", // 291
-    "Clear logbook", // 292
-    "Logbook cleared", // 293
-    "Clear failed", // 294
-    "Set NTP time offset", // 295
+    "Prikaži dugi PS", // 263
+    "Početna frekvencija", // 264
+    "Završna frekvencija", // 265
+    "Početni memorijski kanal", // 266
+    "Završni memorijski kanal", // 267
+    "Samo spremi s RDS-om", // 268
+    "Pokreni autom. memoriju", // 269
+    "Autom. memorija", // 270
+    "ID StationList", // 271
+    "Pronađeno", // 272
+    "Prekid! Nema memorijskih kanala", // 273
+    "Prekid! Korisnik je pritisnuo gumb", // 274
+    "Skeniranje završeno bez grešaka", // 275
+    "Očisti memorijske kanale", // 276
+    "Očišćeno", // 277
+    "Spriječi dupli PI", // 278
+    "Raspon", // 279
+    "Puno", // 280
+    "Vrijeme čekanja na\nsignal samo", // 281
+    "Pritisnite istaknuti kut", // 282
+    "Za kalibraciju zaslona osjetljivog na dodir", // 283
+    "Držite BW gumb za\nzaustavljanje DX skenera", // 284
+    "Odabir širine pojasa", // 285
+    "Vaš dnevnik", // 286
+    "Preuzmi dnevnik", // 287
+    "Dnevnik je prazan", // 288
+    "Idi na dno", // 289
+    "Unos dodan u dnevnik", // 290
+    "Greška pri dodavanju unosa u dnevnik", // 291
+    "Očisti dnevnik", // 292
+    "Dnevnik očišćen", // 293
+    "Čišćenje nije uspjelo", // 294
+    "Ne mogu dodati unos!\nDnevnik je pun!", // 295
     "Autologger", // 296
-    "Logbook full!", // 297
-    "Clock mode", // 298
-    "Auto DST on NTP time", // 299
-    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "PI locked CT sync", // 301
-    "Error! No RDS signal", // 302
-    "Hold BW to stop", // 303
-    "PS only" // 304
+    "Auto DST na NTP vremenu", // 297
+    "Postavi NTP pomak vremena", // 298
+    "Dnevnik sadrži preko 130 unosa, koje preglednik ne može obraditi. Preuzmite CSV datoteku za obradu." // 299
   },
 
   { "Ελληνικά", // Greek
     "Η διεύθυνση του ρότορα\nάλλαξε", // 1
     "Ελευθερώστε το πλήκτρο", // 2
-    "Η οθόνη αναποδογύρισε", // 3
+    "Η οθόνη\nαναποδογύρισε", // 3
     "Βαθμονόμηση\nαναλογικού μετρητή", // 4
-    "Αφήστε το πλήκτρο\nόταν είστε έτοιμοι", // 5
-    "ο κωδικοποιητής ρυθμίστηκε\nσε οπτικός", // 6
-    "ο κωδικοποιητής ρυθμίστηκε\nσε στάνταρ", // 7
+    "USB λειτουργία", // 5
+    "Ο κωδικοποιητής\nρυθμίστηκε σε οπτικός", // 6
+    "Ο κωδικοποιητής\nρυθμίστηκε σε στάνταρ", // 7
     "Δέκτης FM/AM", // 8
     "Tuner: !Κανένα!", // 9
     "Ένταση ήχου:", // 10
@@ -1265,9 +1245,9 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Κατώφλι χαμηλού\nεπιπέδου", // 28
     "Φωτεινότητα οθόνης", // 29
     "Ανενεργό", // 30
-    "Οθόνη σε σίγαση!", // 31
-    "", // 32
-    "Εκτός", // 33
+    "Ενεργό", // 31
+    "ΠΙΕΣΤΕ MODE ΓΙΑ ΕΞΟΔΟ & ΑΠΟΘΗΚΕΥΣΗ", // 32
+    "ΠΙΕΣΤΕ BAND ΓΙΑ ΚΛΕΙΣΙΜΟ", // 33
     "ΑΝΙΧΝΕΥΣΗ...", // 34
     "Το tuner δεν εντοπίστηκε", // 35
     "Κέρδος κεραίας AM", // 36
@@ -1275,8 +1255,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Περιθώριο σφαλμάτων\nRDS", // 38
     "Γλώσσα", // 39
     "Επιλογή γλώσσας", // 40
-    "ΠΙΕΣΤΕ MODE ΓΙΑ ΕΞΟΔΟ & ΑΠΟΘΗΚΕΥΣΗ", // 41
-    "Ενεργό", // 42
+    "Συγχρονισμός CT σε\nκλείδωμα PI", // 41
+    "Δεν υπάρχει σήμα RDS!", // 42
     "Ήπια σίγαση FM", // 43
     "Ήπια σίγαση AM", // 44
     "Ηχητικό σήμα στο όριο\nμπάντας", // 45
@@ -1284,7 +1264,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Ευρώπη", // 47
     "Αμερική", // 48
     "Εμφάνιση κάτω παύλας\nστο RDS", // 49
-    "USB λειτουργία", // 50
+    "PS μόνο", // 50
     "Wi-Fi ενεργό", // 51
     "Ρύθμιση Wi-Fi", // 52
     "Συνδεθείτε στο: ", // 53
@@ -1303,7 +1283,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Οι προεπιλογές φορτώθηκαν", // 66
     "Έξοδος ήχου", // 67
     "Συντονισμός σε\nπροστασία οθόνης", // 68
-    "Αναστροφή χρωμάτων οθόνης", // 69
+    "Αντιστροφή\nχρωμάτων οθόνης", // 69
     "Πληροφορίες λογισμικού", // 70
     "Κύριος κώδικας:", // 71
     "Συνεργάτες:", // 72
@@ -1327,7 +1307,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Μέγεθος βήματος FM", // 90
     "Προστασία οθόνης", // 91
     "Δευτ.", // 92
-    "ΠΙΕΣΤΕ BAND ΓΙΑ ΚΛΕΙΣΙΜΟ", // 93
+    "Λειτουργία ρολογιού", // 93
     "1% φωτεινή", // 94
     "25% φωτεινή", // 95
     "50% φωτεινή", // 96
@@ -1516,29 +1496,24 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Εύρος", // 279
     "Πλήρης", // 280
     "Αναμονή μόνο σε\nυπάρξη σήματος", // 281
-    "Πιέστε την\nεπισημασμένη γωνία", // 282
-    "Για βαθμονόμηση\nτης οθόνης αφής", // 283
-    "Εναλλαγή αναστροφής οθόνης", // 284
+    "Πιέστε την επισημασμένη\nγωνία για βαθμονόμηση", // 282
+    "της οθόνης αφής", // 283
+    "Κρατήστε το BW για\nδιακοπή της DX σάρωσης", // 284
     "Επιλογή εύρους μπάντας", // 285
     "Το βιβλίο καταγραφών σας", // 286
     "Λήψη βιβλίου καταγραφών", // 287
     "Το βιβλίο καταγραφών είναι άδειο", // 288
     "Μετάβαση στον πάτο", // 289
-    "Προστέθηκε στις καταγραφές", // 290
-    "Η ενημέρωση απέτυχε!", // 291
+    "Προστέθηκε\nστις καταγραφές", // 290
+    "Σφάλμα προσθήκης\nστις καταγραφές", // 291
     "Εκκαθάριση βιβλίου\nκαταγραφών", // 292
     "Εκκαθαρίστηκε", // 293
     "Αποτυχία εκκαθάρισης", // 294
-    "Ολίσθηση ώρας NTP", // 295
+    "Αδυναμία προσθήκης!\nΒιβλίο γεμάτο!", // 295
     "Αυτόματη καταγραφή", // 296
-    "Βιβλίο γεμάτο!", // 297
-    "Λειτουργία ρολογιού", // 298
-    "Αυτόματο DST\nσε ώρα NTP", // 299
-    "Το βιβλίο περιέχει πάνω από 130 καταγραφές, και είναι αδύνατη η επεξεργασία τους από το χρήστη. Κάντε λήψη του αρχείου CSV για να το επεξεργαστείτε.", // 300
-    "Συγχρονισμός CT σε\nκλείδωμα PI ", // 301
-    "Δεν υπάρχει σήμα RDS!", // 302
-    "Σταμάτημα κρατώντας το BW", // 303
-    "Μόνο στο PS" // 304
+    "Αυτόματο DST\nσε ώρα NTP", // 297
+    "Ολίσθηση ώρας NTP", // 298
+    "Το βιβλίο περιέχει πάνω από 130 καταγραφές, και είναι αδύνατη η επεξεργασία τους από το χρήστη. Κάντε λήψη του αρχείου CSV για να το επεξεργαστείτε." // 299
   },
 
   { "Română", // Romanian
@@ -1546,35 +1521,35 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Eliberați butonul", // 2
     "Ecran întors", // 3
     "Calibrați instrumentul analog", // 4
-    "Eliberați butonul când este gata", // 5
-    "encoderul setat optic", // 6
-    "encoderul setat standard", // 7
+    "Mod USB", // 5
+    "Encoder setat optic", // 6
+    "Encoder setat standard", // 7
     "Receptor FM/AM", // 8
-    "Lipsă: !Tuner!", // 9
+    "Tuner: !Niciunul!", // 9
     "Volum", // 10
     "Convertor", // 11
     "Marginea de jos a benzii", // 12
     "Marginea de sus a benzii", // 13
-    "Calibrare nivel RF FM", // 14
-    "Pragul ptr Stereo", // 15
+    "Decalaj de nivel RF FM", // 14
+    "Pragul stereo", // 15
     "Limită tăiere înalte", // 16
     "Prag tăiere înalte", // 17
     "Prag nivel joase", // 18
-    "Contrast", // 19
+    "Luminozitate", // 19
     "Setare volum", // 20
     "Setare decalaj convertor", // 21
     "Setarea limitei de jos a benzii", // 22
     "Setarea limitei de sus a benzii", // 23
     "Setare nivel decalaj", // 24
-    "Setarea pragului sep. Stereo ", // 25
-    "Setare tăiere frecv. înalte ", // 26
+    "Setarea pragului sep. Stereo", // 25
+    "Setare tăiere frecv. înalte", // 26
     "Setare prag tăiere înalte", // 27
     "Setarea pragului la joase", // 28
-    "Setare luminozitate ecran", // 29
+    "Luminozitate ecran", // 29
     "Oprit", // 30
-    "Ecran blocat!", // 31
-    "", // 32
-    "Oprit", // 33
+    "Pornit", // 31
+    "APĂSAȚI MODE PENTRU IEȘIRE ȘI SALVARE", // 32
+    "APĂSAȚI BAND PENTRU ÎNCHIDERE", // 33
     "SCANEZ...", // 34
     "Tunerul nu este prezent", // 35
     "Reglare nivel antenă AM", // 36
@@ -1582,8 +1557,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Arată erorile RDS", // 38
     "Limbă", // 39
     "Alegeți Limba", // 40
-    "Apasați MODE ptr MEMORARE și ieșire", // 41
-    "Pornit", // 42
+    "PI blocat pe sincronizare CT", // 41
+    "Eroare! Fără semnal RDS", // 42
     "Lipsă zgomot FM", // 43
     "Lipsă zgomot AM", // 44
     "Beep la capătul benzii", // 45
@@ -1591,13 +1566,13 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Europa", // 47
     "America", // 48
     "Afișează subliniere la RDS", // 49
-    "Mod USB", // 50
+    "PS only", // 50
     "Wi-Fi activ", // 51
     "Configurare Wi-Fi", // 52
     "Conectare la: ", // 53
     "Ptr configurare Wi-Fi", // 54
-    "Incerc conectarea la Wi-Fi", // 55
-    "Fară succes!", // 56
+    "Încerc conectarea la Wi-Fi", // 55
+    "Fără succes!", // 56
     "Conectat!", // 57
     "Listă adrese IP", // 58
     "Arată lungimea de undă SW", // 59
@@ -1609,7 +1584,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Eliminator de zgomot FM", // 65
     "Revenire la setările de fabrică", // 66
     "Ieșire Audio", // 67
-    "Permite reglarea in timp ce ecranul este oprit", // 68
+    "Permite reglarea în timp ce ecranul este oprit", // 68
     "Ecran inversat", // 69
     "Despre software", // 70
     "Cod principal:", // 71
@@ -1634,15 +1609,15 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Mărime pași FM", // 90
     "Screensaver", // 91
     "Sec", // 92
-    "Apăsați BAND pentru inchidere", // 93
+    "Mod ceas", // 93
     "Luminozitate 1%", // 94
     "Luminozitate 25%", // 95
     "Luminozitate 50%", // 96
     "Decalaj de nivel AM RF", // 97
     "Unitați S-metru", // 98
-    "Folosești AF", // 99
-    "Selectare banda FM", // 100
-    "Selectare banda AM", // 101
+    "Folosește AF", // 99
+    "Selectare bandă FM", // 100
+    "Selectare bandă AM", // 101
     "LW", // 102
     "MW", // 103
     "SW", // 104
@@ -1703,10 +1678,10 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Email", // 159
     "Discuții", // 160
     "Centru discuții", // 161
-    "Intrebare la vot", // 162
+    "Întrebare la vot", // 162
     "Centru votare", // 163
     "Loc", // 164
-    "Intâlnire", // 165
+    "Întâlnire", // 165
     "Identificare", // 166
     "Cumpără", // 167
     "Preiau date", // 168
@@ -1723,11 +1698,11 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Setări ecran", // 179
     "Setări RDS", // 180
     "Setări FM", // 181
-    "Setări AM ", // 182
-    "Conectivitate", // 183
-    "Apasă MODE ptr revenire", // 184
+    "Setări AM", // 182
+    "Conectivitate și ceas", // 183
+    "APĂSAȚI MODE PENTRU REVENIRE", // 184
     "Detector CoChannel", // 185
-    "Detecție sensibilitate CoChannel ", // 186
+    "Detecție sensibilitate CoChannel", // 186
     "Detecție prag CoChannel", // 187
     "Detector contor CoChannel", // 188
     "PRINCIPAL", // 189
@@ -1770,23 +1745,23 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Ecran oprit", // 226
     "Dezactivat", // 227
     "Nedefinit", // 228
-    "Radiojurnal", // 229
-    "Actualităţi", // 230
-    "Informaţii", // 231
+    "Știri", // 229
+    "Actualități", // 230
+    "Informații", // 231
     "Sport", // 232
-    "Educativ", // 233
+    "Educație", // 233
     "Teatru", // 234
-    "Cultural", // 235
-    "Ştiinţific", // 236
-    "Varietăţi", // 237
+    "Cultură", // 235
+    "Știință", // 236
+    "Varietăți", // 237
     "Muzică pop", // 238
     "Muzică rock", // 239
-    "Muzică uşoară", // 240
+    "Muzică ușoară", // 240
     "Clasic Lejer", // 241
     "Muzică Clasică", // 242
     "Altă Muzică", // 243
     "Meteo", // 244
-    "Econ Finanţe", // 245
+    "Finanțe", // 245
     "Copii", // 246
     "Social", // 247
     "Religie", // 248
@@ -1795,14 +1770,14 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Timp Liber", // 251
     "Muzică de Jazz", // 252
     "Muzică Country", // 253
-    "Muz Roman", // 254
+    "Muzică Națională", // 254
     "Muzica Retro", // 255
     "Muzică Populară", // 256
     "Documentar", // 257
     "Test Alarmă", // 258
-    "Alarmă !", // 259
+    "Alarmă!!!", // 259
     "Inițial", // 260
-    "Mereu", //261
+    "Mereu", // 261
     "Arată ceasul", // 262
     "Arată PS lung", // 263
     "Frecvență de început", // 264
@@ -1818,34 +1793,29 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Anulat! Utilizatorul a apăsat un buton", // 274
     "Scanarea s-a terminat fără erori", // 275
     "Șterge canalele de memorie", // 276
-    "șters", // 277
+    "Șters", // 277
     "Previne dublarea PI", // 278
     "Interval", // 279
     "Complet", // 280
     "Timp de așteptare doar\npe semnal", // 281
     "Apasă colțul evidențiat", // 282
     "Pentru calibrarea ecranului tactil", // 283
-    "Comută inversarea ecranului", // 284
+    "Ține apăsat BW pentru\noprirea scannerului DX", // 284
     "Selectează lățimea de bandă", // 285
     "Jurnalul tău", // 286
     "Descarcă jurnalul", // 287
     "Jurnalul este gol", // 288
     "Du-te la final", // 289
     "Adăugat în jurnal", // 290
-    "Actualizare eșuată!", // 291
+    "Eroare la adăugarea\nîn jurnal", // 291
     "Șterge jurnalul", // 292
     "Jurnal șters", // 293
     "Ștergerea a eșuat", // 294
-    "Setează offsetul pentru ora NTP", // 295
+    "Nu se poate adăuga!\nJurnalul este plin!", // 295
     "Autologger", // 296
-    "Jurnalul este plin!", // 297
-    "Modul ceas", // 298
-    "DST automat pe ora NTP", // 299
-    "Jurnalul conține peste 130 de intrări, pe care vizualizatorul nu le poate procesa. Te rog descarcă fișierul CSV pentru a le procesa.", // 300
-    "PI blocat pe sincronizare CT", // 301
-    "Eroare! Fără semnal RDS", // 302
-    "Hold BW to stop", // 303
-    "PS only" // 304
+    "Auto DST pe ora NTP", // 297
+    "Setează offsetul pentru ora NTP", // 298
+    "Jurnalul conține peste 130 de intrări, pe care vizualizatorul nu le poate procesa. Te rog descarcă fișierul CSV pentru a le procesa." // 299
   },
 
   { "Deutsch", // German
@@ -1853,13 +1823,13 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Bitte Taste loslassen", // 2
     "Bildschirm wird\num 180° gedreht", // 3
     "Analogmeter\nwird kalibrieret", // 4
-    "Taste loslassen wenn bereit", // 5
+    "USB-Modus", // 5
     "Drehimpulsgeber wechselt\nin optischen Modus", // 6
     "Drehimpulsgeber wechselt\nin Standard-Modus", // 7
     "UKW/AM Empfänger", // 8
-    "!KEIN! Tuner", // 9
+    "Tuner: !Keiner!", // 9
     "Lautstärke", // 10
-    "Konverteroffset", // 11
+    "Konverter", // 11
     "Unteres Bandende", // 12
     "Oberes Bandende", // 13
     "UKW RF-Pegeloffset", // 14
@@ -1868,29 +1838,29 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Tiefpass-Schwelle", // 17
     "Low-Level-Schwelle", // 18
     "Bildschirmhelligkeit", // 19
-    "Lautstärke", // 20
+    "Lautstärke einstellen", // 20
     "Konverteroffset", // 21
     "Unteres Bandende", // 22
     "Oberes Bandende", // 23
-    "UKW RF-Pegeloffset", // 24
+    "Pegeloffset", // 24
     "Stereo-Trennschwelle", // 25
     "Tiefpass-Eckfrequenz", // 26
     "Tiefpass-Schwelle", // 27
     "Low-Level-Schwelle", // 28
     "Bildschirmhelligkeit", // 29
     "Aus", // 30
-    "Bildschirm abgeschaltet!", // 31
-    "", // 32
-    "AUS", // 33
-    "Scanvorgang\nläuft...", // 34
+    "Ein", // 31
+    "DRÜCKE MODE ZUM VERLASSEN UND SPEICHERN", // 32
+    "DRÜCKE BAND ZUM SCHLIESSEN", // 33
+    "SCANVORGANG\nLÄUFT...", // 34
     "Tuner nicht erkannt", // 35
     "AM Antennengewinn", // 36
     "UKW AGC", // 37
     "Zeige RDS-Fehler", // 38
     "Sprache", // 39
     "Sprache wählen", // 40
-    "Drücke MODE zum Sichern & Beenden", // 41
-    "Ein", // 42
+    "PI-Vorgabe für\nCT-Synchronisation", // 41
+    "Fehler! Kein RDS-Signal", // 42
     "Sanfte\nStummschaltung UKW", // 43
     "Sanfte\nStummschaltung AM", // 44
     "Piepston am Bandende", // 45
@@ -1898,7 +1868,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Europa", // 47
     "Amerika", // 48
     "Zeige Unterstrich im RDS", // 49
-    "USB-Modus", // 50
+    "Nur PS", // 50
     "WLAN aktiv", // 51
     "WLAN konfigurieren", // 52
     "Verbinde mit", // 53
@@ -1941,11 +1911,11 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "UKW\nStandard-Schrittweite", // 90
     "Bildschirmschoner", // 91
     "Sek.", // 92
-    "Drücke BAND zum Schließen", // 93
+    "Uhrzeit-Modus", // 93
     "1% Helligkeit", // 94
     "25% Helligkeit", // 95
     "50% Helligkeit", // 96
-    "RF-Pegeloffset", // 97
+    "AM RF-Pegeloffset", // 97
     "Einheit des Signalpegels", // 98
     "Verwende AF", // 99
     "Wähle UKW-Band", // 100
@@ -2032,7 +2002,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "UKW-Einstellungen", // 181
     "AM-Einstellungen", // 182
     "Verbindungen und Uhrzeit", // 183
-    "Drücke MODE für Zurück", // 184
+    "DRÜCKE MODE FÜR ZURÜCK", // 184
     "Gleichkanalerkennung", // 185
     "Gleichkanalerkennung\nEmpfindlichkeit", // 186
     "Gleichkanalerkennung\nSchwelle", // 187
@@ -2132,7 +2102,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Wartezeit nur wenn\nSignal vorhanden", // 281
     "Markierte Ecke drücken", // 282
     "zum Kalibrieren des Touchscrees", // 283
-    "Bildschirmumkehrung umschalten", // 284
+    "Zum Stoppen des DX-Scans\nTaste BW lange drücken", // 284
     "Bandbreite wählen", // 285
     "Dein Logbuch", // 286
     "Logbuch herunterladen", // 287
@@ -2143,16 +2113,11 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Logbuch löschen", // 292
     "Logbuch gelöscht", // 293
     "Löschen fehlgeschlagen", // 294
-    "NTP-Zeitversatz\neinstellen", // 295
+    "Logbucheintrag nicht möglich\nLogbuch ist voll!", // 295
     "Automatisch loggen", // 296
-    "Logbucheintrag nicht möglich\nLogbuch ist voll!", // 297
-    "Uhrzeit-Modus", // 298
-    "Auto-Sommerzeit\nüber NTP", // 299
-    "Das Logbuch enthält mehr als 130 Einträge, was das Anzeigeprogramm nicht verarbeiten kann. Bitte lade die CSV-Datei zum Verarbeiten herunter.", // 300
-    "PI-Vorgabe für\nCT-Synchronisation", // 301
-    "Fehler! Kein RDS-Signal", // 302
-    "Zum Stoppen des DX-Scans\nTaste BW lange drücken", // 303
-    "Nur für PS" // 304
+    "Auto-Sommerzeit\nüber NTP", // 297
+    "NTP-Zeitversatz\neinstellen", // 298
+    "Das Logbuch enthält mehr als 130 Einträge, was das Anzeigeprogramm nicht verarbeiten kann. Bitte lade die CSV-Datei zum Verarbeiten herunter." // 299
   },
 
   { "Čeština", // Czech
@@ -2160,22 +2125,22 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Prosím, pusťte tlačítko", // 2
     "Obrazovka otočena", // 3
     "Kalibrace analog. měřiče", // 4
-    "Po dokončení pusťte tlačítko", // 5
-    "enkodér nastaven na optický", // 6
-    "enkodér nastaven na standardní", // 7
+    "Režim USB", // 5
+    "Enkodér nastaven na optický", // 6
+    "Enkodér nastaven na standardní", // 7
     "FM/AM přijímač", // 8
     "Tuner: !ŽÁDNÝ!", // 9
-    "Hlasitost:", // 10
-    "Konvertor:", // 11
-    "Spodek pásma:", // 12
-    "Vrch pásma:", // 13
-    "FM offset signálu:", // 14
-    "Práh pro stereo:", // 15
-    "Práh frekvence zvuku\nk utlumení:", // 16
-    "Práh signálu pro utlumení\nvysokých tónů:", // 17
-    "Práh nízkého signálu:", // 18
-    "Jas:", // 19
-    "Hlasitost", // 20
+    "Hlasitost", // 10
+    "Konvertor", // 11
+    "Spodek pásma", // 12
+    "Vrch pásma", // 13
+    "FM offset signálu", // 14
+    "Práh pro stereo", // 15
+    "Práh frekvence zvuku k utlumení", // 16
+    "Práh signálu pro utlumení výšek", // 17
+    "Práh nízkého signálu", // 18
+    "Jas", // 19
+    "Nastavení hlasitosti", // 20
     "Offset frekvence", // 21
     "Spodek pásma", // 22
     "Vrch pásma", // 23
@@ -2184,11 +2149,11 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Práh frekvence zvuku k utlumení", // 26
     "Práh signálu pro utlumení výšek", // 27
     "Práh nízkého signálu", // 28
-    "Jas", // 29
+    "Jas obrazovky", // 29
     "Vyp.", // 30
-    "Obrazovka je ztlumena!", // 31
-    "", // 32
-    "VYP.", // 33
+    "Zap.", // 31
+    "ZMÁČKNĚTE MODE PRO UKONČENÍ A ULOŽENÍ", // 32
+    "ZMÁČKNĚTE BAND PRO ZAVŘENÍ", // 33
     "SKENUJI...", // 34
     "Tuner nedetekován", // 35
     "Zisk AM antény", // 36
@@ -2196,8 +2161,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Zobrazit chyby v RDS", // 38
     "Jazyk", // 39
     "Vyberte jazyk", // 40
-    "ZMÁČKNĚTE MODE PRO ULOŽENÍ", // 41
-    "Zap.", // 42
+    "Synchronizovat CT, když je PI uzamčeno", // 41
+    "Chyba! Žádný RDS signál", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
     "Pípnout na konci pásma", // 45
@@ -2205,7 +2170,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Evropa", // 47
     "Amerika", // 48
     "Zobrazit podtržítka v RDS", // 49
-    "Režim USB", // 50
+    "Jen PS", // 50
     "Wi-Fi aktivní", // 51
     "Konfigurace Wi-Fi", // 52
     "Připojte se k: ", // 53
@@ -2248,15 +2213,15 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Výchozí krok ladění FM", // 90
     "Spořič obrazovky", // 91
     "sec.", // 92
-    "ZMÁČKNĚTE BAND PRO ZAVŘENÍ", // 93
+    "Režim hodin", // 93
     "1% jas", // 94
     "25% jas", // 95
     "50% jas", // 96
-    "AM offset signálu:", // 97
-    "Jednotka signálu:", // 98
+    "AM offset signálu", // 97
+    "Jednotka signálu", // 98
     "AF:", // 99
-    "Zvolte FM pásmo:", // 100
-    "Zvolte AM pásmo:", // 101
+    "Zvolte FM pásmo", // 100
+    "Zvolte AM pásmo", // 101
     "LW", // 102
     "MW", // 103
     "SW", // 104
@@ -2375,15 +2340,15 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Vyloučit", // 217
     "Pouze", // 218
     "Automaticky zastavit\nskenování", // 219
-    "po načtení PI", // 220
-    "při signálu", // 221
+    "Korektní PI", // 220
+    "Signál", // 221
     "Ztlumit zvuk\nběhem skenování", // 222
     "AIR", // 223
     "Po 5 sec. stisknutí\ntl. BAND", // 224
     "Vypnout", // 225
     "Vypnout displej", // 226
     "Zakázáno", // 227
-    "Nedefinovaný pr.", // 228
+    "Nedefinovaný", // 228
     "Zprávy", // 229
     "Publicistika", // 230
     "Informace", // 231
@@ -2416,7 +2381,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Alarm Test", // 258
     "Alarm – Alarm !", // 259
     "Počáteční", // 260
-    "Vždy", //261
+    "Vždy", // 261
     "Zobrazit hodiny", // 262
     "Zobrazit long PS", // 263
     "Počáteční frekvence", // 264
@@ -2439,27 +2404,22 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Čekací doba pouze na\nsignal", // 281
     "Stiskněte zvýrazněný roh", // 282
     "Pro kalibraci dotekové obrazovky", // 283
-    "Přepínání inverze obrazovky", // 284
+    "Pro zastavení\npodržte tlačítko BW", // 284
     "Vyberte šířku pásma", // 285
     "Váš logbook", // 286
     "Stáhnout logbook", // 287
     "Logbook je prázdný", // 288
     "Přejít na konec", // 289
     "Přidáno do logu", // 290
-    "Aktualizace selhala!", // 291
+    "Chyba při přidávání\npoložky do logbooku", // 291
     "Vymazat logbook", // 292
     "Logbook vymazán", // 293
     "Vymazání se nezdařilo", // 294
-    "Nastavte časový posun NTP", // 295
+    "Nelze přidat položku!\nLogbook je plný!", // 295
     "Automatický logger", // 296
-    "Logbook je plný!", // 297
-    "Režim hodin", // 298
-    "Automatický letní čas u NTP času", // 299
-    "Logbook obsahuje více než 130 položek, které prohlížeč nedokáže zpracovat. Pro zpracování všech položek si stáhněte CSV soubor.", // 300
-    "Synchronizovat CT, když je PI uzamčeno", // 301
-    "Chyba! Žádný RDS signál", // 302
-    "Pro zastavení\npodržte tlačítko BW", // 303
-    "Jen PS" // 304
+    "Auto DST u NTP času", // 297
+    "Nastavte časový posun NTP", // 298
+    "Logbook obsahuje více než 130 položek, které prohlížeč nedokáže zpracovat. Pro zpracování všech položek si stáhněte CSV soubor." // 299
   },
 
   { "Magyar", // Hungarian
@@ -2467,7 +2427,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Engedd el a gombot", // 2
     "Képernyő megfordítva", // 3
     "Analóg mérő kalibrálása", // 4
-    "Engedd el a gombot, ha kész", // 5
+    "USB mód", // 5
     "Kódoló optikaira állítva", // 6
     "Kódoló szabványosra állítva", // 7
     "FM/AM vevőkészülék", // 8
@@ -2481,8 +2441,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Magasak sarokja", // 16
     "Magasak küszöbértéke", // 17
     "Alacsonyak küszöbértéke", // 18
-    "Kontraszt", // 19
-    "Hangerő", // 20
+    "Kijelző fényereje", // 19
+    "Hangerő beállítása", // 20
     "Átalakító eltolása", // 21
     "Legkisebb sávszél", // 22
     "Legnagyobb sávszél", // 23
@@ -2493,9 +2453,9 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Alacsony szint küszöbérték", // 28
     "Kijelző fényereje", // 29
     "Ki", // 30
-    "Kijelző némítva!", // 31
-    "", // 32
-    "KI", // 33
+    "Be", // 31
+    "NYOMJ MODE-T A KILÉPÉSHEZ ÉS TÁROLÁSHOZ", // 32
+    "NYOMJ BAND-ET A BEZÁRÁSHOZ", // 33
     "KERESÉS...", // 34
     "Tuner nem észlelhető", // 35
     "AM Antenna érzékenység", // 36
@@ -2503,8 +2463,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "RDS hibák megjelenítése", // 38
     "Nyelv", // 39
     "Válassz nyelvet", // 40
-    "MODE A MENTÉSHEZ\nÉS BEZÁRÁSHOZ", // 41
-    "Be", // 42
+    "PI zárolt\nCT szinkronizálás", // 41
+    "Hiba! Nincs RDS jel", // 42
     "FM halkítás", // 43
     "AM halkítás", // 44
     "Sípszó a sáv szélén", // 45
@@ -2512,7 +2472,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Európa", // 47
     "Amerika", // 48
     "Aláhúzások megjelenítése\nRDS-ben", // 49
-    "USB mód", // 50
+    "Csak PS", // 50
     "Wi-Fi", // 51
     "Wi-Fi beállítása", // 52
     "Csatlakozz ehhez: ", // 53
@@ -2555,7 +2515,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "FM alap. lépésköz", // 90
     "Képernyővédő", // 91
     "Mp", // 92
-    "BAND A BEZÁRÁSHOZ", // 93
+    "Óra mód", // 93
     "1% fényerő", // 94
     "25% fényerő", // 95
     "50% fényerő", // 96
@@ -2645,7 +2605,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "RDS beállítások", // 180
     "FM beállítások", // 181
     "AM beállítások", // 182
-    "Csatlakoztathatóság", // 183
+    "Csatlakoztathatóság és óra", // 183
     "MODE A VISSZALÉPÉSHEZ", // 184
     "CoChannel Detektor", // 185
     "CoChannel Detektor\nérzékenység", // 186
@@ -2682,8 +2642,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Kizárása", // 217
     "Csak", // 218
     "Auto keresés\nmegszakítása", // 219
-    "Helyes PI esetén", // 220
-    "Jel esetén", // 221
+    "Helyes PI", // 220
+    "Jel", // 221
     "Hang némítása\nkeresés közben", // 222
     "AIR", // 223
     "5 mp. sávgombnyomás", // 224
@@ -2723,7 +2683,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Riasztás Teszt", // 258
     "Riasztás!!!", // 259
     "Kezdeti", // 260
-    "Mindig", //261
+    "Mindig", // 261
     "Óra mutatása", // 262
     "Hosszú PS mutatása", // 263
     "Indítási frekvencia", // 264
@@ -2746,27 +2706,22 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Várakozási idő\ncsak jel esetén", // 281
     "Nyomd meg a kiemelt sarkot", // 282
     "Érintőképernyő kalibrálásához", // 283
-    "Képernyő inverzió kapcsoló", // 284
+    "Tartsd lenyomva a\nBW-t a megállításhoz", // 284
     "Sávszélesség választása", // 285
     "A logbookod", // 286
     "Logbook letöltése", // 287
     "A logbook üres", // 288
     "Menj az aljára", // 289
     "Hozzáadva a loghoz", // 290
-    "Frissítés sikertelen!", // 291
+    "Hiba a naplóhoz adáskor", // 291
     "Logbook törlése", // 292
     "Logbook törölve", // 293
     "Sikertelen törlés", // 294
-    "NTP időeltolás beállítása", // 295
+    "Nem adható hozzá!\nLogbook megtelt!", // 295
     "Auto logoló", // 296
-    "Logbook megtelt!", // 297
-    "Óra mód", // 298
-    "Auto nyári idő(DST)\nNTP idő szerint", // 299
-    "A napló több mint 130 bejegyzést tartalmaz, amelyeket a megtekintő nem tud feldolgozni. Kérlek, töltsd le a CSV fájlt a megtekintéshez.", // 300
-    "PI zárolt\nCT szinkronizálás", // 301
-    "Hiba! Nincs RDS jel", // 302
-    "Tartsd lenyomva a\nBW-t a megállításhoz", // 303
-    "Csak PS" // 304
+    "Auto nyári idő(DST)\nNTP idő szerint", // 297
+    "NTP időeltolás beállítása", // 298
+    "A napló több mint 130 bejegyzést tartalmaz, amelyeket a megtekintő nem tud feldolgozni. Kérlek, töltsd le a CSV fájlt a megtekintéshez." // 299
   },
 
   { "Français", // French
@@ -2774,21 +2729,21 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Veuillez relâcher\nle bouton", // 2
     "Écran inversé", // 3
     "Calibrer le compteur\nanalogique", // 4
-    "Relâchez le bouton\nlorsque prêt", // 5
+    "Mode USB", // 5
     "Codeur réglé\nsur optique", // 6
     "Codeur réglé\nsur standard", // 7
     "Récepteur FM/AM", // 8
     "Tuner: Aucun!", // 9
-    "Volume:", // 10
-    "Convertisseur:", // 11
-    "Limite de bande basse:", // 12
-    "Limite de bande haute:", // 13
-    "FM décalage du niveau RF:", // 14
-    "Stéréo seuil minimum:", // 15
-    "Angle du filtre\nà coupe haute:", // 16
-    "Seuil du filtre\nà coupe haute:", // 17
-    "Seuil minimum de\nniveau bas:", // 18
-    "Contraste:", // 19
+    "Volume", // 10
+    "Convertisseur", // 11
+    "Limite de bande basse", // 12
+    "Limite de bande haute", // 13
+    "FM décalage du niveau RF", // 14
+    "Stéréo seuil minimum", // 15
+    "Angle du filtre\nà coupe haute", // 16
+    "Seuil du filtre\nà coupe haute", // 17
+    "Seuil minimum de\nniveau bas", // 18
+    "Luminosité", // 19
     "Réglage du volume", // 20
     "Décalage du convertisseur", // 21
     "Limite de bande basse", // 22
@@ -2800,9 +2755,9 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Seuil de niveau bas", // 28
     "Luminosité de l'affichage", // 29
     "Éteint", // 30
-    "L'écran est désactivé!", // 31
-    "", // 32
-    "FERMÉ", // 33
+    "Allumé", // 31
+    "APPUYEZ MODE POUR SORTIE ET STOCKAGE", // 32
+    "APPUYEZ SUR BAND POUR FERMER", // 33
     "RECHERCHE...", // 34
     "Tuner non détecté", // 35
     "Gain de l'antenne AM", // 36
@@ -2810,8 +2765,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Montrer les erreurs\nde décodage RDS", // 38
     "Langage", // 39
     "Choix de la langue", // 40
-    "APPUYEZ MODE POUR SORTIE & STOCKAGE", // 41
-    "Allumé", // 42
+    "Synch CT sur\nPI verrouillé", // 41
+    "Erreur ! Pas de signal RDS", // 42
     "Sourdine douce FM", // 43
     "Sourdine douce AM", // 44
     "Bip à la limite\nde bande", // 45
@@ -2819,7 +2774,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Europe", // 47
     "Amérique", // 48
     "Montre les tirets du\nbas du PS", // 49
-    "Mode USB", // 50
+    "PS seulement", // 50
     "Wi-Fi actif", // 51
     "Configuration du Wi-Fi", // 52
     "Se connecter au réseau:", // 53
@@ -2838,7 +2793,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Paramètres par défaut\nchargés", // 66
     "Sortie audio", // 67
     "Réglage sans\ndésactiver l'économiseur", // 68
-    "Inverser l'affichage", // 69
+    "Inversion des\ncouleurs d'écran", // 69
     "À propos du logiciel", // 70
     "Code principal :", // 71
     "Contributeurs :", // 72
@@ -2862,15 +2817,15 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Valeur du pas FM\npar défaut", // 90
     "Économiseur d'affichage", // 91
     "Sec", // 92
-    "APPUYEZ SUR BAND POUR FERMER", // 93
+    "Mode horloge", // 93
     "1% luminosité", // 94
     "25% luminosité", // 95
     "50% luminosité", // 96
-    "AM décalage du\nniveau RF:", // 97
-    "Unité de mesure\ndu signal:", // 98
-    "Utilisez le AF:", // 99
-    "Sélectionner la\nbande FM:", // 100
-    "Sélectionner la\nbande AM:", // 101
+    "AM décalage du\nniveau RF", // 97
+    "Unité de mesure\ndu signal", // 98
+    "Utilisez le AF", // 99
+    "Sélectionner la\nbande FM", // 100
+    "Sélectionner la\nbande AM", // 101
     "LW", // 102
     "AM", // 103
     "SW", // 104
@@ -2987,7 +2942,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Tri AF automatique", // 215
     "Canaux de mémoire", // 216
     "Exclure", // 217
-    "Seleument", // 218
+    "Seulement", // 218
     "Annuler automatiquement", // 219
     "PI Correct", // 220
     "Signal", // 221
@@ -3053,27 +3008,22 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Attendre que lorsque\nle signal existe", // 281
     "Appuyez sur l'angle\nmis en évidence", // 282
     "Pour calibrer l'écran tactile", // 283
-    "Inversion d'affichage bascules", // 284
+    "Tenez BW pour arrêter", // 284
     "Sélectionner la bande passante", // 285
     "Votre journal de bord", // 286
     "Télécharger le journal de bord", // 287
     "Le journal de bord est vide", // 288
     "Aller en bas", // 289
     "Ajouté au journal", // 290
-    "Mise à jour échouée!", // 291
+    "Erreur lors de l'ajout\nau journal de bord", // 291
     "Effacer le journal\nde bord", // 292
     "Journal effacé", // 293
     "Échec", // 294
-    "Décalage horaire NTP", // 295
+    "Impossible d'ajouter!\nJournal de bord plein!", // 295
     "Journal automatique", // 296
-    "Journal de bord plein!", // 297
-    "Mode horloge", // 298
-    "DST automatique\nsur l'heure NTP", // 299
-    "Le journal de bord contient plus de 130 entrées que le spectateur ne peut pas traiter. Télécharger le fichier CSV pour le traiter.", // 300
-    "Synch CT sur\nPI verrouillé", // 301
-    "Erreur ! Pas de signal RDS", // 302
-    "Tenez BW pour arrêter", // 303
-    "PS seulement" // 304
+    "DST automatique\nsur l'heure NTP", // 297
+    "Décalage horaire NTP", // 298
+    "Le journal de bord contient plus de 130 entrées que le spectateur ne peut pas traiter. Télécharger le fichier CSV pour le traiter." // 299
   },
 
   { "Български", // Bulgarian
@@ -3081,142 +3031,142 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Моля, пуснете бутона", // 2
     "Екранът бе обърнат", // 3
     "Калибрация на аналоговото измерване", // 4
-    "Пуснете бутона, когато сте готови", // 5
+    "USB mode", // 5
     "Енкодерът е настр. в оптич. р-м", // 6
     "Енкодерът е настр. в станд. р-м", // 7
     "FM/AM приемник", // 8
-    "Не е открит тунер!", // 9
+    "Тунер: !None!", // 9
     "Сила на звука:", // 10
-    "Отместване на конв.:", // 11
+    "Converter", // 11
     "Нисък край:", // 12
     "Висок край:", // 13
-    "FM Отместване на RF:", // 14
+    "FM RF Level offset", // 14
     "Стерео праг:", // 15
-    "Мин. честота на изряз.:", // 16
-    "Мин. сигнал за изряз.:", // 17
+    "High Cut corner", // 16
+    "Highcut threshold", // 17
     "Праг на слаб сигнал:", // 18
     "Яркост:", // 19
     "Сила на звука", // 20
-    "Отместване на конвертора:", // 21
+    "Converter offset", // 21
     "Нисък край на честотната лента", // 22
     "Висок край на честотната лента", // 23
-    "Отместване на RF ниво", // 24
-    "Праг за отделянето на Stereo", // 25
-    "Праг за изрязване на ниските честоти", // 26
-    "Праг за изрязване на високите честоти", // 27
+    "Level offset", // 24
+    "Stereo separation threshold", // 25
+    "High cut corner frequency", // 26
+    "High cut threshold", // 27
     "Праг за слаб сигнал", // 28
     "Яркост на дисплея", // 29
     "Изкл.", // 30
-    "Дисплеят е деактивиран!", // 31
-    "", // 32
-    "ИЗКЛ.", // 33
-    "СКАНИРАНЕ", // 34
+    "On", // 31
+    "PRESS MODE TO EXIT AND STORE", // 32
+    "PRESS BAND TO CLOSE", // 33
+    "SCANNING...", // 34
     "Тунерът не е разпознат!", // 35
     "AM Antenna gain", // 36
     "FM AGC", // 37
     "Показване на RDS грешки", // 38
     "Език", // 39
     "Изберете език", // 40
-    "НАТИСНЕТЕ MODE ЗА ИЗХОД И ЗАПАМЕТ.", // 41
-    "Вкл.", // 42
-    "Затихване при слаб сигнал FM", // 43
-    "Затихване при слаб сигнал AM", // 44
-    "Звук при край на чест. лента", // 45
+    "PI locked CT sync", // 41
+    "Error! No RDS signal", // 42
+    "Softmute FM", // 43
+    "Softmute AM", // 44
+    "Beep at band edge", // 45
     "Регион", // 46
     "Европа", // 47
     "Америка", // 48
-    "Показване на долни черти в RDS", // 49
-    "USB режим", // 50
-    "Активиране на Wi-Fi", // 51
-    "Конфигурация на Wi-Fi", // 52
-    "Свържете се към: ", // 53
-    "За конфигурирация на Wi-Fi", // 54
-    "Установява се връзка...", // 55
-    "Грешка! Wi-Fi е изкл.", // 56
-    "Установена е връзка", // 57
-    "IP адрес на клиента за Stationlist", // 58
-    "Показв. на дълж. на вълната при КВ", // 59
-    "RDS филтър", // 60
-    "Показване на PI грешки", // 61
-    "Показване на squelch индикатор", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
-    "Индикатор за модулация", // 63
-    "AM заглушител на шума", // 64
-    "FM заглушител на шума", // 65
-    "Фабр. настройки бяха зададени", // 66
-    "Аудио Изход", // 67
-    "Allow tuning during screensaver", // 68
-    "Обръщане на дисплея", // 69
+    "Show underscore in RDS", // 49
+    "PS only", // 50
+    "Wi-Fi active", // 51
+    "Configure Wi-Fi", // 52
+    "Connect to: ", // 53
+    "to configure Wi-Fi", // 54
+    "Trying to connect Wi-Fi", // 55
+    "FAILED!", // 56
+    "CONNECTED!", // 57
+    "Stationlist client IP", // 58
+    "Show SW wavelength", // 59
+    "RDS filter", // 60
+    "Show PI errors", // 61
+    "Use squelch", // 62
+    "Modulation meter", // 63
+    "AM Noise blanker", // 64
+    "FM Noise blanker", // 65
+    "Defaults loaded", // 66
+    "Audio output", // 67
+    "Allow tuning without\ndeactivating screensaver", // 68
+    "Invert display colors", // 69
     "Относно софтуера", // 70
-    "Главен код:", // 71
-    "Сътрудници:", // 72
+    "Main code:", // 71
+    "Contributors:", // 72
     "Неизвестно", // 73
     "Screensaver options", // 74
-    "Time-out timer", // 75
-    "Изключен дисплей", // 76
+    "Auto Power off", // 75
+    "Screen off", // 76
     "Тема", // 77
     "Skin", // 78
     "Detected applications", // 79
     "Мин.", // 80
     "Dynamic SPI speed", // 81
     "Scan sensitivity", // 82
-    "NONE", // 83 represents: AM/FM bands unavailable(please delete this note after translation）
+    "NONE", // 83
     "Software version", // 84
     "Frequency font", // 85
     "Auto", // 86
-    "AF опцията не е налична", // 87
-    "EON опцията не е налична", // 88
-    "RT+ опцията не е налична", // 89
-    "Размер на стъпката на FM", // 90
+    "No AF available", // 87
+    "No EON available", // 88
+    "No RT+ available", // 89
+    "FM default stepsize", // 90
     "Скрийнсейвър", // 91
-    "сек.", // 92
-    "НАТИСНЕТЕ BAND ЗА ИЗХОД", // 93
+    "Sec", // 92
+    "Clock mode", // 93
     "1% яркост", // 94
     "25% яркост", // 95
     "50% яркост", // 96
-    "AM RF Level offset:", // 97
-    "Сигнал-мерна единица:", // 98
-    "Use AF:", // 99
-    "Изберете УКВ диапазон:", // 100
-    "Изберете СВ диапазон:", // 101
-    "ДВ (LW)", // 102
-    "СВ (MW)", // 103
-    "КВ (SW)", // 104
-    "УКВ (FM)", // 105
+    "AM RF Level offset", // 97
+    "Signalmeter unit", // 98
+    "Use AF", // 99
+    "Select FM Band", // 100
+    "Select AM Band", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
     "ОИРТ", // 106
-    "Ротация при затъмнен екран", // 107
-    "Избор на модел", // 108
-    "База", // 109
-    "Портативен", // 110
-    "Портативен сенз. екран", // 111
-    "Заглавие", // 112
-    "Албум", // 113
-    "Песен", // 114
-    "Изпълнител", // 115
+    "Stop screen wake on tune", // 107
+    "Model selector", // 108
+    "Base", // 109
+    "Portable", // 110
+    "Portable touch", // 111
+    "Title", // 112
+    "Album", // 113
+    "Track", // 114
+    "Artist", // 115
     "Composition", // 116
-    "Действие", // 117
-    "Диригент", // 118
-    "Композитор", // 119
-    "Група", // 120
-    "Коментар", // 121
-    "Жанр", // 122
-    "Новини", // 123
-    "Местни новини", // 124
-    "Фин борса", // 125
-    "Спорт", // 126
-    "Лото", // 127
-    "Хороскоп", // 128
+    "Movement", // 117
+    "Conductor", // 118
+    "Composer", // 119
+    "Band", // 120
+    "Comment", // 121
+    "Genre", // 122
+    "News", // 123
+    "Local news", // 124
+    "Stockmarket", // 125
+    "Sport", // 126
+    "Lottery", // 127
+    "Horoscope", // 128
     "Daily Diversion", // 129
-    "Здраве", // 130
+    "Health", // 130
     "Event", // 131
-    "Сцена", // 132
-    "Кино", // 133
-    "ТВ", // 134
-    "Дата/време", // 135
-    "Времето", // 136
-    "Трафик", // 137
-    "Аларма", // 138
-    "Реклама", // 139
-    "Уеб страница", // 140
+    "Scene", // 132
+    "Cinema", // 133
+    "TV", // 134
+    "Date/time", // 135
+    "Weather", // 136
+    "Traffic", // 137
+    "Alarm", // 138
+    "Advertisement", // 139
+    "Website", // 140
     "Other", // 141
     "Short PS", // 142
     "Long PS", // 143
@@ -3226,25 +3176,25 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Host", // 147
     "Editor", // 148
     "Честота", // 149
-    "Начална страница", // 150
+    "Homepage", // 150
     "Subchannel", // 151
     "Гореща линия", // 152
-    "Студиен тел", // 153
-    "Телефон", // 154
+    "Studio phone", // 153
+    "Phone", // 154
     "SMS studio", // 155
     "SMS", // 156
-    "Имейл гореща линия", // 157
-    "Имейл до студиото", // 158
-    "Имейл", // 159
+    "Email hotline", // 157
+    "Email studio", // 158
+    "Email", // 159
     "Чат", // 160
-    "Чат център", // 161
+    "Chat centre", // 161
     "Vote question", // 162
     "Vote centre", // 163
     "Place", // 164
     "Appointment", // 165
     "Идентификатор", // 166
-    "Покупка", // 167
-    "Получи данни", // 168
+    "Purchase", // 167
+    "Get data", // 168
     "MW default stepsize", // 169
     "Tangerine", // 170
     "Океан", // 171
@@ -3253,32 +3203,32 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Show voltage", // 174
     "Show percentage", // 175
     "RT buffering", // 176
-    "Главни настройки", // 177
-    "Аудио-настройка", // 178
-    "Екран-настроийка", // 179
-    "RDS настройки", // 180
-    "FM настройки", // 181
-    "AM/СВ настройки", // 182
-    "Connectivity", // 183
+    "Main settings", // 177
+    "Audio settings", // 178
+    "Display settings", // 179
+    "RDS settings", // 180
+    "FM settings", // 181
+    "AM settings", // 182
+    "Connectivity & clock", // 183
     "PRESS MODE TO RETURN", // 184
-    "AM CoChannelDet", // 185
-    "CoChannelDet sensitivity", // 186
-    "AM CoChannelDet threshold", // 187
-    "CoChannelDet counter", // 188
-    "ГЛАВНО МЕНЮ", // 189
-    "АУДИО", // 190
-    "ЕКРАН", // 191
+    "CoChannel Detector", // 185
+    "CoChannel Detector\nsensitivity", // 186
+    "CoChannel Detector\nthreshold", // 187
+    "CoChannel Detector\ncounter", // 188
+    "MAIN", // 189
+    "AUDIO", // 190
+    "DISPLAY", // 191
     "RDS", // 192
-    "УКВ (FM)", // 193
-    "СВ (AM)", // 194
-    "ВРЪЗКА", // 195
+    "FM", // 193
+    "AM", // 194
+    "CONNECT", // 195
     "DX MODE", // 196
     "AUTO MEM", // 197
     "AM AGC", // 198
     "FM deemphasis", // 199
     "Small", // 200
     "Large", // 201
-    "Всички", // 202
+    "All", // 202
     "Fast PS", // 203
     "Default", // 204
     "Mute screen on\nXDRGTK connection", // 205
@@ -3302,43 +3252,43 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "AIR", // 223
     "5 sec. bandbutton press", // 224
     "Power off", // 225
-    "Mute screen", // 226
+    "Screen off", // 226
     "Disabled", // 227
-    "Без име", // 228
-    "Новини", // 229
-    "Актуално", // 230
-    "Информация", // 231
-    "Спорт", // 232
-    "Образование", // 233
-    "Радио театър", // 234
-    "Култура", // 235
-    "Наука", // 236
-    "Развлечение", // 237
-    "Поп музика", // 238
-    "Рок музика", // 239
-    "Музика за релакс", // 240
-    "Лека класика", // 241
-    "Класика", // 242
-    "Музика", // 243
-    "Времето", // 244
-    "Икономика", // 245
-    "За децата", // 246
-    "Общество", // 247
-    "Религия", // 248
-    "Открита линия", // 249
-    "Туризъм", // 250
-    "Свободно време", // 251
-    "Джаз", // 252
-    "Кънтри музика", // 253
-    "Българска музика", // 254
-    "Ретро музика", // 255
-    "Народна музика", // 256
-    "Документалистика", // 257
-    "Внимание тест", // 258
-    "Тревога!", // 259
-    "Начален", // 260
-    "Винаги", // 261
-    "Покажи часовника", // 262
+    "None", // 228
+    "News", // 229
+    "Current Affairs", // 230
+    "Information", // 231
+    "Sport", // 232
+    "Education", // 233
+    "Drama", // 234
+    "Culture", // 235
+    "Science", // 236
+    "Varied", // 237
+    "Pop Music", // 238
+    "Rock Music", // 239
+    "Easy Listening", // 240
+    "Light Classical", // 241
+    "Serious Classical", // 242
+    "Other Music", // 243
+    "Weather", // 244
+    "Finance", // 245
+    "Children's Progs", // 246
+    "Social Affairs", // 247
+    "Religion", // 248
+    "Phone-In", // 249
+    "Travel", // 250
+    "Leisure", // 251
+    "Jazz Music", // 252
+    "Country Music", // 253
+    "National Music", // 254
+    "Oldies Music", // 255
+    "Folk Music", // 256
+    "Documentary", // 257
+    "Alarm Test", // 258
+    "Alarm!!!", // 259
+    "Initial", // 260
+    "Always", // 261
+    "Show clock", // 262
     "Show long PS", // 263
     "Start frequency", // 264
     "Stop frequency", // 265
@@ -3347,7 +3297,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Only store with RDS", // 268
     "Start auto memory", // 269
     "Auto memory", // 270
-    "Stationlist Идентификатор", // 271
+    "Stationlist ID", // 271
     "Found", // 272
     "Abort! Out of memorychannels", // 273
     "Abort! User pressed button", // 274
@@ -3360,27 +3310,22 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Wait time on\nsignal only", // 281
     "Press highlighted corner", // 282
     "To calibrate touchscreen", // 283
-    "Screen inversion toggles", // 284
+    "Hold BW button to\nstop DX scanner", // 284
     "Select Bandwidth", // 285
     "Your logbook", // 286
     "Download logbook", // 287
     "Logbook is empty", // 288
     "Go to bottom", // 289
-    "Added to log", // 290
-    "Update failed!", // 291
+    "Entry added\nto the logbook", // 290
+    "Error adding\nentry to the logbook", // 291
     "Clear logbook", // 292
     "Logbook cleared", // 293
     "Clear failed", // 294
-    "Set NTP time offset", // 295
+    "Can't add entry!\nLogbook is full!", // 295
     "Autologger", // 296
-    "Logbook full!", // 297
-    "Clock mode", // 298
-    "Auto DST on NTP time", // 299
-    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "PI locked CT sync", // 301
-    "Error! No RDS signal", // 302
-    "Hold BW to stop", // 303
-    "PS only" // 304
+    "Auto DST on NTP time", // 297
+    "Set NTP time offset", // 298
+    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it." // 299
   },
 
   { "Русский", // Russian
@@ -3388,12 +3333,12 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Теперь отпустите кнопку", // 2
     "Экран перевёрнут", // 3
     "Калибровка S-метра", // 4
-    "Готово? Отпустите кнопку", // 5
+    "Режим USB", // 5
     "энкодер: оптический", // 6
     "энкодер: стандартный", // 7
     "AM/FM РАДИОПРИЁМНИК", // 8
     "Тюнер: !Нет!", // 9
-    "Линейная громкость:", // 10
+    "Громкость", // 10
     "Сдвиг конвертера:", // 11
     "Нижняя граница FM:", // 12
     "Верхняя граница FM:", // 13
@@ -3414,9 +3359,9 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Порог качества сигнала", // 28
     "Яркость дисплея", // 29
     "Выкл.", // 30
-    "Экран отключен!", // 31
-    "", // 32
-    "ВЫКЛ.", // 33
+    "Вкл.", // 31
+    "НАЖМИТЕ MODE ДЛЯ СОХРАНЕНИЯ", // 32
+    "НАЖМИТЕ BAND ДЛЯ ЗАКРЫТИЯ", // 33
     "СКАНИРОВАНИЕ", // 34
     "Тюнер не обнаружен", // 35
     "Аттеньюатор AM-антенны", // 36
@@ -3424,8 +3369,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Уровень ошибок RDS", // 38
     "Язык меню", // 39
     "Язык меню: ", // 40
-    "НАЖМИТЕ MODE ДЛЯ СОХРАНЕНИЯ", // 41
-    "Вкл.", // 42
+    "PI locked CT sync", // 41
+    "Ошибка! Нет RDS!", // 42
     "FM Soft Mute", // 43
     "AM Soft Mute", // 44
     "Край диапазона (звук): ", // 45
@@ -3433,7 +3378,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Европа", // 47
     "Америка", // 48
     "Показывать _ в RDS", // 49
-    "Режим USB", // 50
+    "Только PS", // 50
     "Wi-Fi активен", // 51
     "Настройка Wi-Fi", // 52
     "Подключиться к: ", // 53
@@ -3451,7 +3396,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "FM Noise blanker", // 65
     "Загружены настройки по умолчанию", // 66
     "Режим вывода аудио", // 67
-    "При погашенном экране", // 68 for translation reference to computer Touch Typing
+    "При погашенном экране", // 68
     "Инвертировать дисплей", // 69
     "О программе", // 70
     "Основной код:", // 71
@@ -3476,7 +3421,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Шаг FM по умолчанию", // 90
     "Таймер", // 91
     "сек", // 92
-    "НАЖМИТЕ BAND ДЛЯ ЗАКРЫТИЯ", // 93
+    "Режим часов", // 93
     "1% яркости", // 94
     "25% яркости", // 95
     "50% яркости", // 96
@@ -3485,11 +3430,11 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Переключаться по AF:", // 99
     "Активные диапазоны FM:", // 100
     "Активные диапазоны AM:", // 101
-    " ДВ", // 102
-    " СВ", // 103
-    " КВ", // 104
-    " FM", // 105
-    " УКВ", // 106
+    "ДВ", // 102
+    "СВ", // 103
+    "КВ", // 104
+    "FM", // 105
+    "УКВ", // 106
     "Настройка при погашенном экране: ", // 107
     "Выбор модели", // 108
     "Стандартный", // 109
@@ -3680,50 +3625,45 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Очистить не удалось", // 294
     "Смещение времени NTP", // 295
     "Автологгер", // 296
-    "Лог-файл полон!", // 297
-    "Режим часов", // 298
-    "Автоматическое летнее время по NTP", // 299
-    "В логе более 130 записей, которые программа просмотра не может обработать. Загрузите файл CSV для его обработки.", // 300
-    "Коррекция времени с учётом PI", // 301
-    "Ошибка! Нет RDS!", // 302
-    "Нажмите BW для остановки", // 303
-    "Только PS" // 304
+    "Автоматическое летнее время по NTP", // 297
+    "Смещение времени NTP", // 298
+    "В логе более 130 записей, которые программа просмотра не может обработать. Загрузите файл CSV для его обработки." // 299
   },
 
   { "Українська", // Ukranian
-    "Змінено напрямок обертання", // 1
+    "Змінено напрямок\nобертання", // 1
     "Будь ласка, відпустіть кнопку", // 2
     "Екран перевернуто", // 3
-    "Калібрувати аналоговий метр", // 4
-    "Відпустіть кнопку, коли будете готові", // 5
-    "енкодер установлено на оптичний", // 6
-    "енкодер установлено на стандартний", // 7
-    "FM / AM приймач", // 8
+    "Калібрувати\nаналоговий метр", // 4
+    "Режим USB", // 5
+    "енкодер установлено\nна оптичний", // 6
+    "енкодер установлено\nна стандартний", // 7
+    "FM/AM приймач", // 8
     "Тюнер: !Відсутній!", // 9
     "Гучність:", // 10
     "Конвертер:", // 11
     "Нижня межа діапазону:", // 12
     "Верхня межа діапазону:", // 13
-    "FM Зміщення рівня RF:", // 14
+    "FM Зміщення\nрівня RF:", // 14
     "Поріг стерео:", // 15
-    "Верхній край відсіку Високих частот:", // 16
+    "Верхній край відсіку\nВисоких частот:", // 16
     "Поріг відсіку Високих частот:", // 17
     "Поріг низького рівня:", // 18
     "Контрастність:", // 19
     "Встановити гучність", // 20
-    "Встановити зміщення конвертера", // 21
-    "Встановити нижню діапазону", // 22
-    "Встановити верхню діапазону", // 23
+    "Встановити зміщення\nконвертера", // 21
+    "Встановити нижню\nдіапазону", // 22
+    "Встановити верхню\nдіапазону", // 23
     "Встановити зміщення рівня", // 24
-    "Встановити поріг стерео", // 25
-    "Встановити част. верх. відсіку", // 26
-    "Встановити поріг Вис. част.", // 27
-    "Встановити поріг низького рівня", // 28
+    "Встановити поріг\nстерео", // 25
+    "Встановити част.\nверх. відсіку", // 26
+    "Встановити поріг\nВис. част.", // 27
+    "Встановити поріг\nнизького рівня", // 28
     "Встановити яскравість дисплея", // 29
     "Вимкнено", // 30
-    "Екран приглушено!", // 31
-    "", // 32
-    "ВИМКН.", // 33
+    "Увімкнено", // 31
+    "НАТИСНІТЬ MODE ДЛЯ ВИХОДУ І ЗБЕРЕЖ.", // 32
+    "Режим годинника", // 33
     "СКАНУВАННЯ...", // 34
     "Тюнер не виявлено", // 35
     "AM Antenna gain", // 36
@@ -3731,56 +3671,56 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Показувати помилки RDS", // 38
     "Мова", // 39
     "Виберіть мову", // 40
-    "НАТИСНІТЬ MODE ДЛЯ ВИХОДУ І ЗБЕРЕЖ.", // 41
-    "Увімкнено", // 42
+    "PI заблокована CT Sync", // 41
+    "Помилка! Немає сигналу RDS", // 42
     "Приглушення FM", // 43
     "Приглушення AM", // 44
-    "Сигнал звуку на межі діапазону", // 45
+    "Сигнал звуку на\nмежі діапазону", // 45
     "Регіон", // 46
     "Європа", // 47
     "америка", // 48
-    "Показувати підкреслення в RDS", // 49
-    "Режим USB", // 50
+    "Показувати підкреслення\nв RDS", // 49
+    "PS only", // 50
     "Wi-Fi активний", // 51
     "Налаштувати Wi-Fi", // 52
     "Підключитися до: ", // 53
-    "для налаштування Wi-Fi", // 54
-    "Намагається підключитися до Wi-Fi", // 55
+    "для налаштування\nWi-Fi", // 54
+    "Намагається підключитися\nдо Wi-Fi", // 55
     "НЕ ВДАЛОСЬ... Wi-Fi вимкнено", // 56
     "ПІДКЛЮЧЕНО!", // 57
-    "IP клієнта станційного списку", // 58
-    "Показувати довжину хвилі КВ", // 59
+    "IP клієнта\nстанційного списку", // 58
+    "Показувати\nдовжину хвилі КВ", // 59
     "Фільтр RDS", // 60
-    "Показувати помилки PI", // 61
-    "Показувати шумоподавлення", // 62 NEEDS NEW TRANSLATION, ENGLISH: USE SQUELCH
+    "Показувати\nпомилки PI", // 61
+    "Показувати\nшумоподавлення", // 62
     "Метр модуляції", // 63
-    "Помпи засліплення шуму AM", // 64
-    "Помпи засліплення шуму FM", // 65
-    "Завантажено параметри за замовчуванням", // 66
+    "Помпи засліплення\nшуму AM", // 64
+    "Помпи засліплення\nшуму FM", // 65
+    "Завантажено параметри\nза замовчуванням", // 66
     "Аудіо вихід", // 67
-    "Дозволити налаштування під час живлення", // 68
-    "Перевернути дисплей", // 69
-    "Про програмне забезпечення", // 70
+    "Дозволити налаштування\nпід час живлення", // 68
+    "Перемикає\nінверсію екрана", // 69
+    "Про програмне\nзабезпечення", // 70
     "Основний код:", // 71
     "Учасники:", // 72
     "Невідомо", // 73
-    "Налаштування живлення", // 74
+    "Налаштування\nживлення", // 74
     "Таймер тайм-ауту", // 75
     "Екран вимкнено", // 76
     "Тема", // 77
     "Skin", // 78
     "Виявлені програми", // 79
     "мін.", // 80
-    "Швидкість шини дисплея (SPI)", // 81
-    "Чутливість сканування", // 82
-    "NONE", // 83 represents: AM/FM bands unavailable(please delete this note after translation）
+    "Швидкість шини\nдисплея (SPI)", // 81
+    "Чутливість\nсканування", // 82
+    "NONE", // 83
     "Версія ПО", // 84
-    "Frequency font", // 85
+    "Шрифт частоти" // 85
     "Auto", // 86
     "Немає доступних AF", // 87
     "Немає доступного EON", // 88
     "Немає доступного RT+", // 89
-    "FM кроки за замовчуванням", // 90
+    "FM кроки за\nзамовчуванням", // 90
     "Живлення вимк. через", // 91
     "с", // 92
     "НАТИСНІТЬ BAND ДЛЯ ЗАКРИТТЯ", // 93
@@ -3797,7 +3737,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Обертання, коли екран вимкнено", // 107
+    "Обертання, коли\nекран вимкнено", // 107
     "Вибір моделі", // 108
     "Стандартний", // 109
     "Портативний", // 110
@@ -3895,26 +3835,26 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Усе", // 202
     "Швидкий PS", // 203
     "За замовчуванням", // 204
-    "Вимкнути екран під час підключення\nXDRGTK", // 205
+    "Вимкнути екран під\nчас підключення\nXDRGTK", // 205
     "Покращення стерео\nFMSI", // 206
-    "Функція доступна лише\nдля TEF6687/6689!", // 207
+    "Функція доступна\nлише для TEF6687/6689!", // 207
     "Функція недоступна\nдля вибраної шкіри!", // 208
     "Почати сканування\nканалів пам'яті", // 209
     "Зупинити сканування\nканалів пам'яті", // 210
     "Час очікування", // 211
-    "Почати сканування DX", // 212
+    "Почати сканування\nDX", // 212
     "Параметри FM DX", // 213
     "Припинити! Початковий канал\nпозначено як пропущений.", // 214
     "Авто сорт. AF", // 215
     "Канали пам'яті", // 216
     "Виключити", // 217
     "ільки", // 218
-    "Автоматичне скасування сканування", // 219
+    "Автоматичне\nскасування сканування", // 219
     "Правильний ПІ", // 220
     "Сигнал", // 221
     "Вимкнути звук\nпід час сканування", // 222
     "Ефір", // 223
-    "5 сек. затискання кнопки діапазону", // 224
+    "5 сек. затискання\nкнопки діапазону", // 224
     "Приймач вимкнений", // 225
     "Екран вимкнено", // 226
     "Вимкнено", // 227
@@ -3956,17 +3896,17 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Показати довгий PS", // 263
     "Стартова частота", // 264
     "Стоп частота", // 265
-    "Запуск каналу пам'яті", // 266
-    "Зупинити канал пам'яті", // 267
-    "Зберігати лише з RDS", // 268
+    "Запуск каналу\nпам'яті", // 266
+    "Зупинити канал\nпам'яті", // 267
+    "Зберігати лише\nз RDS", // 268
     "Запуск автопам'яті", // 269
     "Автопам'ять", // 270
     "Stationlist ID", // 271
     "Знайдено", // 272
-    "Скасувати! Немає каналів пам'яті", // 273
-    "Скасувати! Користувач натиснув кнопку", // 274
-    "Сканування завершено без помилок", // 275
-    "Очистити канали пам'яті", // 276
+    "Скасувати! Немає\nканалів пам'яті", // 273
+    "Скасувати! Користувач\nнатиснув кнопку", // 274
+    "Сканування завершено\nбез помилок", // 275
+    "Очистити канали\nпам'яті", // 276
     "очищено", // 277
     "Запобігти подвійному ПІ", // 278
     "Діапазон", // 279
@@ -3974,138 +3914,133 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Час очікування лише\nсигналу", // 281
     "Натисніть виділений кут", // 282
     "Калібрувати тачскрін", // 283
-    "Перемикає інверсію екрана", // 284
-    "Вибір пропускної здатності", // 285
+    "Тримайте BW, щоб\nзупинити сканер DX", // 284
+    "Вибір пропускної\nздатності", // 285
     "Твій записний журнал", // 286
     "Скачати записний журнал", // 287
     "Записний журнал порожній", // 288
     "Вниз", // 289
     "Додано до журналу", // 290
     "Помилка оновлення!", // 291
-    "Очистити записний журнал", // 292
+    "Очистити\nзаписний журнал", // 292
     "Записний журнал очищено", // 293
     "Не вдалося очистити", // 294
-    "Установити зміщення часу NTP", // 295
+    "Записний журнал повний!", // 295
     "Автореєстратор", // 296
-    "Записний журнал повний!", // 297
-    "Режим годинника", // 298
-    "Автоматичний літній час за часом NTP", // 299
-    "Журнал містить понад 130 записів, які програма перегляду не може обробити. Будь ласка, завантажте файл CSV, щоб обробити його.", // 300
-    "PI locked CT sync", // 301
-    "Помилка! Немає сигналу RDS", // 302
-    "Hold BW to stop", // 303
-    "PS only" // 304
+    "Автоматичний літній\nчас за часом NTP", // 297
+    "Установити зміщення\nчасу NTP", // 298
+    "Журнал містить понад 130 записів, які програма перегляду не може обробити. Будь ласка, завантажте файл CSV, щоб обробити його." // 299
   },
 
   { "Italiano", // Italian
     "Senso rotaz. cambiato", // 1
-    "Rilascia il pulsante", // 2
+    "Per favore rilascia il pulsante", // 2
     "Schermo capovolto", // 3
-    "Calibraz. meter analogico", // 4
-    "Al termine, rilasciare pulsante", // 5
-    "Sintonia di freq: ottica", // 6
-    "Sintonia di freq: standard", // 7
+    "Calibra il misuratore analogico", // 4
+    "Modalità USB", // 5
+    "Codificatore impostato su ottico", // 6
+    "Codificatore impostato su standard", // 7
     "Ricevitore FM/AM", // 8
-    "Ricevitore: !Nessuno!", // 9
-    "Volume: ", // 10
-    "Convertitore: ", // 11
-    "Limite di banda inf.:", // 12
-    "Limite di banda sup.:", // 13
-    "Offset livello RF FM: ", // 14
-    "Soglia stereo: ", // 15
-    "Angolo di taglio alti: ", // 16
-    "Soglia di taglio alti:", // 17
-    "Soglia di basso livello: ", // 18
-    "Contrasto: ", // 19
+    "Sintonizzatore: !Nessuno!", // 9
+    "Volume", // 10
+    "Convertitore", // 11
+    "Limite banda bassa", // 12
+    "Limite banda alta", // 13
+    "Offset livello RF FM", // 14
+    "Soglia stereo", // 15
+    "Angolo di taglio alto", // 16
+    "Soglia di taglio alto", // 17
+    "Soglia di basso livello", // 18
+    "Luminosità", // 19
     "Imposta volume", // 20
-    "Offset conversione", // 21
-    "Limite di banda inferiore", // 22
-    "Limite di banda superiore", // 23
+    "Offset convertitore", // 21
+    "Limite banda bassa", // 22
+    "Limite banda alta", // 23
     "Offset di livello", // 24
     "Soglia separazione stereo", // 25
-    "Frequenza taglio alti", // 26
-    "Soglia taglio alti", // 27
-    "Soglia di livello basso", // 28
-    "Luminosità schermo", // 29
+    "Frequenza angolo di taglio alto", // 26
+    "Soglia di taglio alto", // 27
+    "Soglia di basso livello", // 28
+    "Luminosità display", // 29
     "Off", // 30
-    "Schermo disattivato!", // 31
-    "", // 32
-    "OFF", // 33
+    "On", // 31
+    "PREMI MODE PER USCIRE E MEMORIZZARE", // 32
+    "PREMI BAND PER CHIUDERE", // 33
     "SCANSIONE...", // 34
-    "Ricevitore non rilevato", // 35
+    "Sintonizzatore non rilevato", // 35
     "Guadagno antenna AM", // 36
     "AGC FM", // 37
     "Mostra errori RDS", // 38
     "Lingua", // 39
-    "Scegli la lingua", // 40
-    "SALVA E ESCI: PREMI MODO", // 41
-    "On", // 42
+    "Scegli lingua", // 40
+    "PI bloccato CT sync", // 41
+    "Errore! Nessun segnale RDS", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
-    "Beep sul limite di banda", // 45
+    "Beeper al limite di banda", // 45
     "Regione", // 46
     "Europa", // 47
     "America", // 48
-    "Mostra trattino basso\nin RDS", // 49
-    "Modalità USB", // 50
+    "Mostra sottolineato in RDS", // 49
+    "Solo PS", // 50
     "Wi-Fi attivo", // 51
     "Configura Wi-Fi", // 52
     "Connetti a: ", // 53
-    "per configurare il Wi-Fi", // 54
-    "Connessione al Wi-Fi", // 55
-    "NON RIUSCITA!", // 56
+    "per configurare Wi-Fi", // 54
+    "Tentativo di connessione Wi-Fi", // 55
+    "FALLITO!", // 56
     "CONNESSO!", // 57
-    "IP per StationList", // 58
-    "Mostra banda SW in m.", // 59
+    "IP client stationlist", // 58
+    "Mostra lunghezza d'onda SW", // 59
     "Filtro RDS", // 60
     "Mostra errori PI", // 61
-    "Utilizzare squelch", // 62
-    "Scala di modulazione", // 63
-    "Soppressione rumore AM", // 64
-    "Soppressione rumore FM", // 65
-    "Predefiniti caricati", // 66
+    "Usa squelch", // 62
+    "Misuratore modulazione", // 63
+    "Bloccante rumore AM", // 64
+    "Bloccante rumore FM", // 65
+    "Impostazioni predefinite caricate", // 66
     "Uscita audio", // 67
-    "Consenti sintonia\ncon salvaschermo", // 68
-    "Inversione schermo", // 69
-    "Info sul software", // 70
+    "Consenti sintonia senza\ndisattivare screensaver", // 68
+    "Inverti colori display", // 69
+    "Informazioni software", // 70
     "Codice principale:", // 71
-    "Collaboratori: ", // 72
+    "Contributori:", // 72
     "Sconosciuto", // 73
-    "Opzioni salvaschermo", // 74
-    "Tempo di time-out", // 75
+    "Opzioni screensaver", // 74
+    "Spegnimento automatico", // 75
     "Schermo spento", // 76
-    "Motivo schermo", // 77
+    "Tema", // 77
     "Skin", // 78
     "Applicazioni rilevate", // 79
     "Min.", // 80
-    "Velocità SPI Dinamico", // 81
+    "Velocità dinamica SPI", // 81
     "Sensibilità scansione", // 82
-    "ASSENTE", // 83
-    "Versione Software", // 84
-    "Font frequenza", // 85
+    "NESSUNO", // 83
+    "Versione software", // 84
+    "Carattere frequenza", // 85
     "Auto", // 86
-    "AF non disponibile", // 87
-    "EON non disponibile", // 88
-    "RT + non disponibile", // 89
-    "Passo di sintonia predef. FM", // 90
-    "Salvaschermo", // 91
-    "Sec.", // 92
-    "PREMI BANDA PER CHIUDERE", // 93
+    "Nessun AF disponibile", // 87
+    "Nessun EON disponibile", // 88
+    "Nessun RT+ disponibile", // 89
+    "Passo FM predefinito", // 90
+    "Screensaver", // 91
+    "Sec", // 92
+    "Modalità orologio", // 93
     "1% luminosità", // 94
-    "25% di luminosità", // 95
-    "50% di luminosità", // 96
-    "Offset livello RF AM: ", // 97
-    "Unità S-meter: ", // 98
-    "Utilizzare AF:", // 99
-    "Selezionare banda FM:", // 100
-    "Selezionare banda AM:", // 101
+    "25% luminosità", // 95
+    "50% luminosità", // 96
+    "Offset livello RF AM", // 97
+    "Unità misuratore segnale", // 98
+    "Usa AF", // 99
+    "Seleziona banda FM", // 100
+    "Seleziona banda AM", // 101
     "LW", // 102
     "MW", // 103
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Rotazione con schermo spento", // 107
-    "Selezionare modello", // 108
+    "Ferma il risveglio schermo su sintonia", // 107
+    "Selettore modello", // 108
     "Base", // 109
     "Portatile", // 110
     "Portatile touch", // 111
@@ -4115,58 +4050,58 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Artista", // 115
     "Composizione", // 116
     "Movimento", // 117
-    "Direttore", // 118
+    "Direttore d'orchestra", // 118
     "Compositore", // 119
-    "Band", // 120
+    "Gruppo", // 120
     "Commento", // 121
     "Genere", // 122
     "Notizie", // 123
     "Notizie locali", // 124
-    "Borsa", // 125
+    "Mercato azionario", // 125
     "Sport", // 126
-    "Lotterie", // 127
+    "Lotteria", // 127
     "Oroscopo", // 128
-    "Svago quotidiano", // 129
+    "Divertimento quotidiano", // 129
     "Salute", // 130
-    "Eventi", // 131
+    "Evento", // 131
     "Scena", // 132
     "Cinema", // 133
     "TV", // 134
     "Data/ora", // 135
     "Meteo", // 136
     "Traffico", // 137
-    "Allerta", // 138
+    "Allarme", // 138
     "Pubblicità", // 139
-    "Sito Web", // 140
+    "Sito web", // 140
     "Altro", // 141
     "PS breve", // 142
     "PS lungo", // 143
-    "Adesso", // 144
+    "Ora", // 144
     "Prossimo", // 145
     "Parte", // 146
-    "Conduttore", // 147
-    "Redattore", // 148
+    "Host", // 147
+    "Editor", // 148
     "Frequenza", // 149
     "Homepage", // 150
-    "Sottocanale", // 151
-    "Telefono emergenze", // 152
+    "Subcanale", // 151
+    "Linea diretta", // 152
     "Telefono studio", // 153
     "Telefono", // 154
     "SMS studio", // 155
     "SMS", // 156
-    "Email emergenze", // 157
+    "Email hotline", // 157
     "Email studio", // 158
     "Email", // 159
     "Chat", // 160
-    "Centro Chat", // 161
-    "Domanda votazione", // 162
-    "Centro votazione", // 163
+    "Centro chat", // 161
+    "Domanda voto", // 162
+    "Centro voto", // 163
     "Luogo", // 164
     "Appuntamento", // 165
     "Identificatore", // 166
     "Acquisto", // 167
-    "Ottieni dati", // 168
-    "Passo di sintonia\nMW predefinito", // 169
+    "Ottenere dati", // 168
+    "Passo MW predefinito", // 169
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
@@ -4176,132 +4111,127 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Buffering RT", // 176
     "Impostazioni principali", // 177
     "Impostazioni audio", // 178
-    "Impostazioni schermo", // 179
+    "Impostazioni display", // 179
     "Impostazioni RDS", // 180
     "Impostazioni FM", // 181
     "Impostazioni AM", // 182
-    "Connettività", // 183
-    "PREMI MODO PER CHIUDERE", // 184
-    "CoChannelDet AM", // 185
-    "Sensibilità CoChannelDet", // 186
-    "Soglia CoChannelDet AM", // 187
-    "Contatore CoChannelDet", // 188
+    "Connettività e orologio", // 183
+    "PREMI MODE PER RITORNO", // 184
+    "Rilevatore CoCanale", // 185
+    "Sensibilità rilevatore CoCanale", // 186
+    "Soglia rilevatore CoCanale", // 187
+    "Contatore rilevatore CoCanale", // 188
     "PRINCIPALE", // 189
     "AUDIO", // 190
-    "SCHERMO", // 191
+    "DISPLAY", // 191
     "RDS", // 192
     "FM", // 193
     "AM", // 194
     "CONNETTI", // 195
-    "MODO DX", // 196
+    "DX MODE", // 196
     "AUTO MEM", // 197
     "AM AGC", // 198
-    "Deenfasi FM", // 199
+    "FM de-empasi", // 199
     "Piccolo", // 200
     "Grande", // 201
     "Tutto", // 202
-    "PS rapido", // 203
-    "Default", // 204
-    "Spegni schermo se\nconnesso a XDRGTK", // 205
-    "FMSI audio stereofonico ottimizzato", // 206
-    "Funzione disponibile\nsolo su TEF6687/6689!", // 207
-    "Funzione non disponibile\nsu skin selezionata!", // 208
-    "Avvio scansione = pos. in memoria", // 209
-    "Fine scansione =  pos. in memoria", // 210
+    "PS veloce", // 203
+    "Predefinito", // 204
+    "Disattiva schermo su\nconnessione XDRGTK", // 205
+    "Miglioramento stereo FMSI", // 206
+    "Funzione disponibile solo su TEF6687/6689!", // 207
+    "Funzione non disponibile su skin selezionata!", // 208
+    "Inizia scansione\ncanali di memoria", // 209
+    "Ferma scansione\ncanali di memoria", // 210
     "Tempo di attesa", // 211
-    "Avvio scansione DX", // 212
+    "Inizia scansione DX", // 212
     "Opzioni FM DX", // 213
-    "Fine! Canale di avvio\nimpost. su ignora", // 214
-    "Autoordinamento AF", // 215
-    "Posizioni in memoria", // 216
-    "Escluse", // 217
-    "Solamente", // 218
-    "Uscita automatica scansione", // 219
-    "PI corretto", // 220
+    "Aborto! Il canale di partenza è segnato come saltato.", // 214
+    "Auto ordina AF", // 215
+    "Canali di memoria", // 216
+    "Escludi", // 217
+    "Solo", // 218
+    "Annulla scansione automatica", // 219
+    "Correggi PI", // 220
     "Segnale", // 221
-    "Audio silenziato durante scansione", // 222
-    "AIR", // 223
-    "Premi BANDA x 5 sec.", // 224
-    "Spegni radio", // 225
-    "Spegni schermo", // 226
-    "Non abilitata", // 227
-    "Non definito", // 228
-    "Notiziario", // 229
-    "Magazine", // 230
+    "Disattiva audio\nmentre scansiona", // 222
+    "AEREO", // 223
+    "Premi per 5 sec. il pulsante di banda", // 224
+    "Spegni", // 225
+    "Schermo spento", // 226
+    "Disabilitato", // 227
+    "Nessuno", // 228
+    "Notizie", // 229
+    "Affari correnti", // 230
     "Informazioni", // 231
     "Sport", // 232
     "Educazione", // 233
-    "Prosa", // 234
+    "Dramma", // 234
     "Cultura", // 235
     "Scienza", // 236
-    "Vari Generi", // 237
+    "Varietà", // 237
     "Musica Pop", // 238
     "Musica Rock", // 239
-    "Musica Leggera", // 240
-    "Classica Leggera", // 241
-    "Musica Classica", // 242
-    "Musica Varia", // 243
+    "Musica facile", // 240
+    "Classica leggera", // 241
+    "Classica seria", // 242
+    "Altra musica", // 243
     "Meteo", // 244
-    "Economia", // 245
-    "Ragazzi", // 246
-    "Società", // 247
+    "Finanza", // 245
+    "Programmi per bambini", // 246
+    "Affari sociali", // 247
     "Religione", // 248
-    "Opinioni", // 249
-    "Viaggi e Turismo", // 250
-    "Svago", // 251
+    "Telefonata", // 249
+    "Viaggio", // 250
+    "Tempo libero", // 251
     "Musica Jazz", // 252
     "Musica Country", // 253
-    "Musica Italiana", // 254
-    "Revival", // 255
+    "Musica Nazionale", // 254
+    "Musica Oldies", // 255
     "Musica Folk", // 256
-    "Documentari", // 257
-    "Test Allarme", // 258
-    "!!Allarme!!", // 259
+    "Documentario", // 257
+    "Test allarme", // 258
+    "Allarme!!!", // 259
     "Iniziale", // 260
     "Sempre", // 261
-    "Mostra l'orologio", // 262
+    "Mostra orologio", // 262
     "Mostra PS lungo", // 263
-    "Frequenza iniziale", // 264
-    "Frequenza finale", // 265
-    "Pos. memoria iniziale", // 266
-    "Pos. memoria finale", // 267
+    "Inizia frequenza", // 264
+    "Ferma frequenza", // 265
+    "Inizia canale memoria", // 266
+    "Ferma canale memoria", // 267
     "Memorizza solo con RDS", // 268
-    "Avvia ricerca automatica", // 269
-    "Ricerca automatica", // 270
+    "Inizia auto memoria", // 269
+    "Auto memoria", // 270
     "ID Stationlist", // 271
-    "Trovate", // 272
-    "Fine! Memorie esaurite", // 273
-    "Fine! Pulsante Mode premuto", // 274
+    "Trovato", // 272
+    "Aborto! Canali di memoria esauriti", // 273
+    "Aborto! L'utente ha premuto il pulsante", // 274
     "Scansione terminata senza errori", // 275
-    "Pos. in memoria cancellate", // 276
-    "Cancellate", // 277
-    "Evita PI duplicati", // 278
-    "Intervallo", // 279
+    "Cancella canali di memoria", // 276
+    "Cancellato", // 277
+    "Prevenire doppio PI", // 278
+    "Range", // 279
     "Completo", // 280
-    "Tempo di attesa\nsolo con segnale", // 281
-    "Premi l'angolo evidenziato", // 282
-    "Per calibrare lo schermo touch", // 283
-    "Inversione colore schermo", // 284
-    "Selezionare larghezza di banda", // 285
-    "Il tuo logbook", // 286
-    "Scarica logbook", // 287
-    "Il logbook è vuoto", // 288
-    "Vai alla fine", // 289
-    "Aggiunto al log", // 290
-    "Aggiornamento non riuscito!", // 291
-    "Cancella logbook", // 292
-    "Logbook cancellato", // 293
-    "Cancellazione non riuscita", // 294
-    "Imposta offset orario NTP", // 295
+    "Tempo di attesa su\nsolo segnale", // 281
+    "Premi angolo evidenziato", // 282
+    "Per calibrare touchscreen", // 283
+    "Tieni premuto il tasto BW per\nfermare scanner DX", // 284
+    "Seleziona larghezza di banda", // 285
+    "Il tuo registro", // 286
+    "Scarica registro", // 287
+    "Registro vuoto", // 288
+    "Vai in fondo", // 289
+    "Voce aggiunta\nal registro", // 290
+    "Errore nell'aggiunta\nvoce al registro", // 291
+    "Cancella registro", // 292
+    "Registro cancellato", // 293
+    "Cancellazione fallita", // 294
+    "Impossibile aggiungere voce!\nRegistro pieno!", // 295
     "Autologger", // 296
-    "Logbook full!", // 297
-    "Clock mode", // 298
-    "Auto DST on NTP time", // 299
-    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.",// 300
-    "PI locked CT sync", // 301
-    "Error! No RDS signal", // 302
-    "Hold BW to stop", // 303
-    "PS only" // 304
+    "Auto DST su tempo NTP", // 297
+    "Imposta offset orario NTP", // 298
+    "Il registro contiene più di 130 voci, che il visualizzatore non può elaborare. Scarica il file CSV per elaborarlo." // 299
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4309,7 +4239,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "请释放按钮", // 2
     "屏幕翻转了", // 3
     "校准模拟S表", // 4
-    "校准成功后请放开按钮", // 5
+    "USB 连机模式选择", // 5
     "设置为光学编码器", // 6
     "设置为标准编码器", // 7
     "FM/AM TEF6686收音机", // 8
@@ -4335,9 +4265,9 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "设置弱信号门限", // 28
     "屏幕亮度", // 29
     "关闭", // 30
-    "屏幕静音！", // 31
-    "", // 32
-    "关闭", // 33
+    "打开", // 31
+    "按 MODE 键退出并保存", // 32
+    "时钟模式", // 33
     "搜索中...", // 34
     "未检测到收音芯片", // 35
     "AM 天线增益", // 36
@@ -4345,8 +4275,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "显示 RDS 错误", // 38
     "语言", // 39
     "选择语言", // 40
-    "按 MODE 键退出并保存", // 41
-    "打开", // 42
+    "PI锁定CT同步", // 41
+    "错误! 无RDS信号", // 42
     "FM 软静噪", // 43
     "AM 软静噪", // 44
     "频率边界提示音", // 45
@@ -4354,7 +4284,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "欧洲", // 47
     "美国", // 48
     "RDS 中显示下划线", // 49
-    "USB 连机模式选择", // 50
+    "只有PS", // 50
     "打开 Wifi", // 51
     "Wi-Fi 配置", // 52
     "连接到：", // 53
@@ -4373,7 +4303,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "恢复出厂设置", // 66
     "音频输出选择", // 67
     "盲操", // 68
-    "LCD 颜色反转", // 69
+    "屏幕颜色反演", // 69
     "关于", // 70
     "主程序", // 71
     "贡献者", // 72
@@ -4413,9 +4343,9 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "OIRT", // 106
     "熄屏操作飞梭", // 107
     "硬件型号选择", // 108
-    "原版 (ILI9341)", // 109
-    "便携版 (ILI9341)", // 110
-    "便携电阻触摸版 (ILI9341)", // 111
+    "原版", // 109
+    "便携版", // 110
+    "便携电阻触摸版", // 111
     "标题", // 112
     "专辑", // 113
     "曲目", // 114
@@ -4493,15 +4423,15 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "设置跟踪灵敏度", // 186
     "AM 载波跟踪层级", // 187
     "设置跟踪层级", // 188
-    "MAIN", // 189
-    "AUDIO", // 190
-    "DISPLAY", // 191
+    "主要的", // 189
+    "声音的", // 190
+    "展示", // 191
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "CONNECT", // 195
-    "DX MODE", // 196
-    "AUTO MEM", // 197
+    "连接", // 195
+    "DX模式", // 196
+    "自动内存", // 197
     "AM AGC", // 198
     "FM去加重", // 199
     "小", // 200
@@ -4575,7 +4505,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "只存储RDS电台", // 268
     "开始搜索并存台", // 269
     "自动搜台并存储", // 270
-    "Stationlist ID", // 271
+    "电台列表ID", // 271
     "搜索到", // 272
     "取消! 存储已满", // 273
     "取消! 用户终止了操作", // 274
@@ -4585,10 +4515,10 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "防止双 PI", // 278
     "一定范围内", // 279
     "全部", // 280
-    "Wait time on\nsignal only", // 281
+    "仅在信号上等待时间", // 281
     "触摸区边沿高亮", // 282
     "校准触摸屏", // 283
-    "Screen inversion toggles", // 284
+    "按住BW按钮停止DX扫描仪", // 284
     "选择带宽", // 285
     "你的 log记录", // 286
     "下载 log记录", // 287
@@ -4599,51 +4529,47 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "清除log记录", // 292
     "log记录已清除", // 293
     "清除失败", // 294
-    "设置NTP时区", // 295
-    "Autologger", // 296
-    "log记录已满!", // 297
-    "时钟模式", // 298
-    "联网自动同步本机时间", // 299
-    "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 300
-    "PI locked CT sync", // 301
-    "错误! 无RDS信号", // 302
-    "Hold BW to stop", // 303
-    "PS only" // 304
+    "log记录已满!", // 295
+    "自动物体", // 296
+    "联网自动同步本机时间", // 297
+    "设置NTP时区", // 298
+    "该日志包含超过130个条目，观看者无法处理。请下载CSV文件进行处理。" // 299
   },
+
   { "Norsk", // Norwegian
     "Rotasjonsretning endret", // 1
     "Vennligst slipp knappen", // 2
     "Skjermen ble snudd", // 3
     "Kalibrer analog meter", // 4
-    "Slipp knappen når du er klar", // 5
-    "encoder satt til optisk", // 6
-    "encoder satt til standard", // 7
+    "USB modus", // 5
+    "Encoder satt til optisk", // 6
+    "Encoder satt til standard", // 7
     "FM/AM Radio", // 8
     "Tuner: !Ingen!", // 9
-    "Lydstyrke:", // 10
-    "Omformer:", // 11
-    "Lav bånd grense:", // 12
-    "Høy bånd grense:", // 13
-    "FM RF-nivåforskyvning:", // 14
-    "Stereo terskel:", // 15
-    "Høyeste grense:", // 16
-    "Høyeste grense:", // 17
-    "Laveste grense:", // 18
-    "Kontrast:", // 19
+    "Lydstyrke", // 10
+    "Omformer", // 11
+    "Lav båndgrense", // 12
+    "Høy båndgrense", // 13
+    "FM RF-nivåforskyvning", // 14
+    "Stereo terskel", // 15
+    "Høyeste grense", // 16
+    "Høyeste grense", // 17
+    "Laveste grense", // 18
+    "Kontrast", // 19
     "Sett lyd", // 20
-    "Sett omformeroffset", // 21
-    "Sett lav bånd grense", // 22
-    "Sett høy bånd grense", // 23
-    "Sett nivåoffset", // 24
-    "Sett Stereo sep. terskel", // 25
-    "Sett høy grense frekvens", // 26
-    "Still inn høy grense terskel", // 27
-    "Sett lav grense terskel", // 28
-    "Sett displayets lysstyrke", // 29
+    "Omformeroffset", // 21
+    "Lav båndgrense", // 22
+    "Høy båndgrense", // 23
+    "Nivåoffset", // 24
+    "Stereo separasjons\nterskel", // 25
+    "Høy grensefrekvens", // 26
+    "Høy grenseterskel", // 27
+    "Lav grenseterskel", // 28
+    "Skjermlysstyrke", // 29
     "Av", // 30
-    "Skjermen er dempet!", // 31
-    "", // 32
-    "AV", // 33
+    "På", // 31
+    "TRYKK MODE FOR Å LAGRE OG AVSLUTTE", // 32
+    "TRYKK BAND FOR Å LUKKE", // 33
     "SKANNER...", // 34
     "Tuner ikke oppdaget", // 35
     "AM-antenneforsterkning", // 36
@@ -4651,8 +4577,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Vis RDS-feil", // 38
     "Språk", // 39
     "Velg språk", // 40
-    "TRYKK MODE FOR Å LAGRE & AVSLUTTE", // 41
-    "På", // 42
+    "PI-låst CT-synk", // 41
+    "Feil! Ingen RDS-signal", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
     "Pip ved båndkant", // 45
@@ -4660,69 +4586,69 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Europa", // 47
     "Amerika", // 48
     "Vis understrek i RDS", // 49
-    "USB modus", // 50
+    "Kun PS", // 50
     "Wi-Fi aktiv", // 51
     "Sett opp Wi-Fi", // 52
     "Koblet til: ", // 53
     "for å sette opp Wi-Fi", // 54
     "Prøver å koble til Wi-Fi", // 55
-    "MISLYKKET!", // 56
+    "FEILET!", // 56
     "TILKOBLET!", // 57
-    "Stationlist klient IP", // 58
-    "Vis SW-bånd", // 59
-    "RDS filter", // 60
-    "Vis PI feil", // 61
+    "Stationlist klient-IP", // 58
+    "Vis SW-bånde", // 59
+    "RDS-filter", // 60
+    "Vis PI-feil", // 61
     "Bruk squelch", // 62
     "Modulasjonsmåler", // 63
-    "AM Støydemper", // 64
-    "FM Støydemper", // 65
+    "AM-støydemper", // 64
+    "FM-støydemper", // 65
     "Standarder lastet", // 66
-    "Lydutgang modus", // 67
-    "Tillat tuning når\nskjerm avslått", // 68
-    "Inverter displayet", // 69
+    "Lydutgang", // 67
+    "Tillat tuning uten å\ndeaktivere skjermsparer", // 68
+    "Inverter skjermfarger", // 69
     "Om programvaren", // 70
     "Hovedkode:", // 71
     "Bidragsytere:", // 72
     "Ukjent", // 73
     "Skjermspareralternativer", // 74
-    "Tidsavbruddstimer", // 75
+    "Auto avslåing", // 75
     "Skjerm av", // 76
     "Tema", // 77
     "Skin", // 78
     "Oppdaget applikasjoner", // 79
     "Min.", // 80
-    "Dynamisk SPI hastighet", // 81
+    "Dynamisk SPI-hastighet", // 81
     "Skannefølsomhet", // 82
     "INGEN", // 83
     "Programvareversjon", // 84
-    "Frekvens skrifttype", // 85
+    "Frekvensskrifttype", // 85
     "Auto", // 86
     "Ingen AF", // 87
     "Ingen EON", // 88
     "Ingen RT+", // 89
     "FM standard\ntrinnstørrelse", // 90
     "Skjermsparer", // 91
-    "sek", // 92
-    "TRYKK BAND FOR Å LUKKE", // 93
+    "Sek.", // 92
+    "Klokkemodus", // 93
     "1% lysstyrke", // 94
     "25% lysstyrke", // 95
     "50% lysstyrke", // 96
-    "AM RF Nivå offset:", // 97
-    "Signalmeter måleenhet:", // 98
-    "Bruk AF:", // 99
-    "Velg FM Band:", // 100
-    "Velg AM Band:", // 101
-    "LB", // 102
-    "MB", // 103
-    "KB", // 104
+    "AM RF-nivå offset", // 97
+    "Signalmeterenhet", // 98
+    "Bruk AF", // 99
+    "Velg FM-bånd", // 100
+    "Velg AM-bånd", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Tune når skjerm av", // 107
-    "Velg Modell", // 108
+    "Stopp skjermvekking ved tuning", // 107
+    "Modellvelger", // 108
     "Base", // 109
     "Bærbar", // 110
     "Bærbar touch", // 111
-    "Titel", // 112
+    "Tittel", // 112
     "Album", // 113
     "Spor", // 114
     "Artist", // 115
@@ -4779,26 +4705,26 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Identifikator", // 166
     "Kjøp", // 167
     "Få data", // 168
-    "MB std. trinnstørrelse", // 169
+    "MW standard\ntrinnstørrelse", // 169
     "Tangerine", // 170
     "Ocean", // 171
     "Indigo", // 172
     "Batterialternativer", // 173
-    "Vis batterispenning", // 174
-    "Vis batteriprosent", // 175
-    "RT buffering", // 176
+    "Vis spenning", // 174
+    "Vis prosent", // 175
+    "RT buffring", // 176
     "Hovedinnstillinger", // 177
     "Lydinnstillinger", // 178
     "Skjerminnstillinger", // 179
-    "RDS Innstillinger", // 180
-    "FM Innstillinger", // 181
-    "AM Innstillinger", // 182
-    "Tilkobling", // 183
-    "TRYKK MODE FOR Å RETUNERE", // 184
-    "AM CoChannelDet", // 185
-    "CoChannelDet\nfølsomhet", // 186
-    "AM CoChannelDet teller", // 187
-    "CoChannelDet teller", // 188
+    "RDS innstillinger", // 180
+    "FM innstillinger", // 181
+    "AM innstillinger", // 182
+    "Tilkobling og klokke", // 183
+    "TRYKK MODE FOR Å RETURNERE", // 184
+    "CoChannel-detektor", // 185
+    "CoChannel-detektor\nfølsomhet", // 186
+    "CoChannel-detektor\nterskel", // 187
+    "CoChannel-detektor\nteller", // 188
     "HOVED", // 189
     "LYD", // 190
     "SKJERM", // 191
@@ -4809,226 +4735,221 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "DX MODUS", // 196
     "AUTO MEM", // 197
     "AM AGC", // 198
-    "FM ettertrykkelse", // 199
+    "FM deemphasis", // 199
     "Lite", // 200
     "Mye", // 201
     "Alt", // 202
     "Rask PS", // 203
     "Standard", // 204
-    "Dempet skjerm på\nXDRGTK tilkobling", // 205
+    "Demp skjerm under\nXDRGTK-tilkobling", // 205
     "FMSI stereo forbedring", // 206
-    "Kun tilgjengelig\npå TEF6687/6689!", // 207
+    "Funksjon kun tilgjengelig\npå TEF6687/6689!", // 207
     "Funksjon ikke tilgjengelig\npå valgt skin!", // 208
-    "Begynn å skanne\nminnekanaler", // 209
-    "Stopp skanning\nminnekanaler", // 210
+    "Start skanning av\nminnekanaler", // 209
+    "Stopp skanning av\nminnekanaler", // 210
     "Ventetid", // 211
     "Start DX-skanning", // 212
     "FM DX-alternativer", // 213
-    "Avbryt! Startkanalen er\nmerket som hoppet over.", // 214
-    "Auto sorterings AF", // 215
+    "Avbryt! Startkanalen er\nmerket som hoppet over", // 214
+    "Auto-sorter AF", // 215
     "Minnekanaler", // 216
-    "Utelukke", // 217
+    "Ekskluder", // 217
     "Kun", // 218
-    "Avbryt skanning automatisk", // 219
-    "Korrekt PI", // 220
+    "Auto-avbryt skanning", // 219
+    "Korriger PI", // 220
     "Signal", // 221
-    "Demp lyden\nmens du skanner", // 222
-    "Flybånd", // 223
-    "Hold båndknappen\n i 5 sek", // 224
-    "Slå av radio", // 225
+    "Demp lyd under\nskanning", // 222
+    "AIR", // 223
+    "Hold BAND-knappen i 5 sek", // 224
+    "Slå av", // 225
     "Slå av skjerm", // 226
     "Deaktivert", // 227
-    "Ikke definert", // 228
+    "Ingen", // 228
     "Nyheter", // 229
-    "Aktuelt", // 230
+    "Aktualiteter", // 230
     "Informasjon", // 231
     "Sport", // 232
-    "Undervisning", // 233
-    "Radioteater", // 234
+    "Utdanning", // 233
+    "Drama", // 234
     "Kultur", // 235
     "Vitenskap", // 236
     "Underholdning", // 237
-    "Pop musikk", // 238
-    "Rock musikk", // 239
+    "Popmusikk", // 238
+    "Rockmusikk", // 239
     "Lett musikk", // 240
     "Lett klassisk", // 241
     "Klassisk musikk", // 242
-    "Diverse musikk", // 243
+    "Annen musikk", // 243
     "Værmelding", // 244
     "Økonomi", // 245
-    "Barneprogram", // 246
-    "Sosialprogram", // 247
+    "Barneprogrammer", // 246
+    "Sosiale spørsmål", // 247
     "Religion", // 248
     "Ring inn", // 249
-    "Reiseliv", // 250
+    "Reise", // 250
     "Fritid", // 251
-    "Jazz musikk", // 252
+    "Jazz", // 252
     "Countrymusikk", // 253
     "Nasjonal musikk", // 254
     "Gammelpop", // 255
     "Folkemusikk", // 256
     "Dokumentar", // 257
-    "Alarm test", // 258
-    "Alarm!", // 259
+    "Alarmtest", // 258
+    "ALARM!", // 259
     "Innledende", // 260
     "Alltid", // 261
-    "Vis klokka", // 262
+    "Vis klokke", // 262
     "Vis lang PS", // 263
     "Startfrekvens", // 264
     "Stoppfrekvens", // 265
-    "Start minne kanal", // 266
-    "Stopp minne kanal", // 267
+    "Start minnekanal", // 266
+    "Stopp minnekanal", // 267
     "Lagre kun med RDS", // 268
-    "Start automatisk minne", // 269
-    "Autominne", // 270
-    "Stationlist ID", // 271
+    "Start auto-minne", // 269
+    "Auto-minne", // 270
+    "Stationlist-ID", // 271
     "Funnet", // 272
-    "Avbrutt! Tom for minnekanaler", // 273
-    "Avbrutt! Bruker trykket på knappen", // 274
+    "Avbrutt! Ingen minnekanaler", // 273
+    "Avbrutt! Bruker trykket knapp", // 274
     "Skanning fullført uten feil", // 275
     "Slett minnekanaler", // 276
     "ryddet", // 277
-    "Forhindre dobbel PI", // 278
+    "Forhindre doble PI-er", // 278
     "Spekter", // 279
-    "Full", // 280
-    "Kun ventetid\npå signal", // 281
-    "Trykk på det uthevede hjørnet", // 282
-    "For å kalibrere berøringsskjerm", // 283
-    "Veksle Skjerminversjon", // 284
-    "Velg Båndbredde", // 285
+    "Fullt", // 280
+    "Ventetid kun\nved signal", // 281
+    "Trykk på uthevet hjørne", // 282
+    "Kalibrer berøringsskjerm", // 283
+    "Hold BW-knappen for å\nstoppe DX-skanning", // 284
+    "Velg båndbredde", // 285
     "Din loggbok", // 286
     "Last ned loggbok", // 287
-    "Loggboken er tom", // 288
-    "Gå til bunnen", // 289
-    "Lagt til i loggen", // 290
-    "Oppdatering feilet!", // 291
+    "Loggbok er tom", // 288
+    "Gå til bunn", // 289
+    "Oppføring lagt til i loggen", // 290
+    "Feil ved lagring i loggen", // 291
     "Tøm loggbok", // 292
     "Loggbok tømt", // 293
-    "Slett mislyktes", // 294
-    "Angi NTP-tidsforskyvning", // 295
+    "Tømming mislyktes", // 294
+    "Kan ikke lagre!\nLoggbok er full!", // 295
     "Autologger", // 296
-    "Loggbok full!", // 297
-    "Klokkemodus", // 298
-    "Auto sommertid på NTP-tid", // 299
-    "Loggboken inneholder over 130 oppføringer, som en ikke kan behandle. Last ned CSV-filen for å behandle den.", // 300
-    "PI-låst CT-synk", // 301
-    "Feil! Ingen RDS-signal", // 302
-    "Hold BW to stop", // 303
-    "PS only" // 304
+    "Auto sommertid med NTP", // 297
+    "Angi NTP-tidsforskyvning", // 298
+    "Loggbok har over 130 oppføringer.\nLast ned CSV for behandling." // 299
   },
 
   { "Español", // Spanish
-    "La dirección rotativa\ncambió", // 1
-    "Por favor,\nsuelte el botón", // 2
+    "Dirección rotativa\ncambiada", // 1
+    "Suelte el botón", // 2
     "Pantalla girada", // 3
-    "Calibrar el medidor\nanalógico", // 4
-    "Suelte el botón\ncuando esté listo", // 5
+    "Calibrar medidor\nanalógico", // 4
+    "Modo USB", // 5
     "Codificador configurado\ncomo óptico", // 6
-    "Codificador configurado\ncomo estándar", // 7
+    "Codificador estándar", // 7 (Simplified)
     "Receptor FM/AM", // 8
     "Sintonizador: ¡Ninguno!", // 9
-    "Volumen:", // 10
-    "Convertidor:", // 11
-    "Banda baja:", // 12
-    "Banda alta:", // 13
-    "Desplazamiento de\nnivel RF de FM:", // 14
-    "Umbral estéreo:", // 15
-    "Esquina de corte alta:", // 16
-    "Umbral de corte alto:", // 17
-    "Umbral de nivel bajo:", // 18
-    "Contraste:", // 19
+    "Volumen", // 10
+    "Convertidor", // 11
+    "Banda baja", // 12
+    "Banda alta", // 13
+    "Desplazamiento\nRF FM", // 14
+    "Umbral estéreo", // 15
+    "Frecuencia de\ncorte alto", // 16
+    "Umbral de corte alto", // 17
+    "Umbral de nivel bajo", // 18
+    "Brillo", // 19
     "Ajustar volumen", // 20
-    "Ajustar desplazamiento\ndel convertidor", // 21
-    "Ajustar banda baja", // 22
-    "Ajustar banda alta", // 23
-    "Ajustar desplazamiento de nivel", // 24
-    "Ajustar umbral de\nseparación estéreo", // 25
-    "Ajustar frecuencia de corte alta", // 26
-    "Ajustar umbral de corte alto", // 27
-    "Ajustar umbral de nivel bajo", // 28
-    "Ajustar brillo de la pantalla", // 29
-    "Apagar", // 30
-    "¡La pantalla está en silencio!", // 31
-    "", // 32
-    "APAG.", // 33
+    "Desplazamiento\ndel convertidor", // 21
+    "Límite inferior de banda", // 22
+    "Límite superior de banda", // 23
+    "Desplazamiento de nivel", // 24
+    "Umbral separación\nestéreo", // 25
+    "Frecuencia de\ncorte alto", // 26
+    "Umbral de corte alto", // 27
+    "Umbral de nivel bajo", // 28
+    "Brillo de pantalla", // 29
+    "Apagado", // 30
+    "Encendido", // 31
+    "PRESIONE MODO PARA GUARDAR Y SALIR", // 32
+    "PRESIONE BANDA PARA CERRAR", // 33
     "ESCANEANDO...", // 34
     "Sintonizador no detectado", // 35
-    "AM Ganancia de antena", // 36
-    "FM AGC", // 37
+    "Ganancia antena AM", // 36
+    "AGC FM", // 37
     "Mostrar errores RDS", // 38
     "Idioma", // 39
     "Elegir idioma", // 40
-    "PRESIONE MODE PARA SALIR Y GUARDAR", // 41
-    "Encendido", // 42
+    "Sincronización PI-CT", // 41
+    "¡Error! Sin señal RDS", // 42
     "Silencio FM", // 43
     "Silencio AM", // 44
-    "Pitido en el borde\nde la banda", // 45
+    "Tono en límite de banda", // 45
     "Región", // 46
     "Europa", // 47
-    "America", // 48
-    "Mostrar guion bajo\nen RDS", // 49
-    "Modo USB", // 50
+    "América", // 48
+    "Mostrar guion\nbajo en RDS", // 49
+    "Solo PS", // 50
     "Wi-Fi activado", // 51
     "Configurar Wi-Fi", // 52
     "Conectar a: ", // 53
-    "para configurar\nWi-Fi", // 54
-    "Intentando conectar\na Wi-Fi", // 55
-    "¡FALLIDO!", // 56
+    "para configurar Wi-Fi", // 54
+    "Conectando a Wi-Fi...", // 55
+    "¡FALLÓ!", // 56
     "¡CONECTADO!", // 57
-    "IP del cliente de la\nlista de estaciones", // 58
-    "Mostrar longitud de\nonda de SW", // 59
+    "IP cliente\nStationlist", // 58 (Removed line break)
+    "Mostrar longitud\nde onda SW", // 59
     "Filtro RDS", // 60
-    "Mostrar errores de PI", // 61
+    "Mostrar errores PI", // 61
     "Usar squelch", // 62
     "Medidor de modulación", // 63
-    "Atenuador de\nruido AM", // 64
-    "Atenuador de\nruido FM", // 65
-    "Carga de configuración\npredeterminada", // 66
+    "Supresor de\nruido AM", // 64
+    "Supresor de\nruido FM", // 65
+    "Valores predeterminados\ncargados", // 66
     "Salida de audio", // 67
-    "Sintonización sin\ndesactivar el protector", // 68
-    "Invertir pantalla", // 69
+    "Sintonizar sin\ndesactivar protector", // 68 (Matched line break)
+    "Invertir colores\nde pantalla", // 69
     "Acerca del software", // 70
     "Código principal:", // 71
     "Colaboradores:", // 72
     "Desconocido", // 73
-    "Opciones de protector\nde pantalla", // 74
+    "Opciones\nde protector", // 74
     "Apagado automático", // 75
-    "Apagar pantalla", // 76
+    "Pantalla apagada", // 76
     "Tema", // 77
     "Skin", // 78
     "Aplicaciones detectadas", // 79
-    "Min.", // 80
-    "Velocidad de SPI", // 81
-    "Sensibilidad\ndel escaneo", // 82
-    "NINGUNA", // 83
+    "Mín.", // 80
+    "Velocidad SPI\ndinámica", // 81
+    "Sensibilidad\nde escaneo", // 82
+    "NINGUNO", // 83
     "Versión del software", // 84
-    "Fundición de frecuencia", // 85
-    "Auto", // 86
-    "No AF disponible", // 87
-    "No EON disponible", // 88
-    "No RT+ disponible", // 89
-    "Paso predeterminado\nde FM", // 90
-    "Protector de pantalla", // 91
-    "seg.", // 92
-    "PRESIONE BAND PARA CERRAR", // 93
-    "1% de brillo", // 94
-    "25% de brillo", // 95
-    "50% de brillo", // 96
-    "Desplazamiento de\nnivel RF de AM:", // 97
-    "Unidad de medidor\nde señal:", // 98
-    "Usar AF:", // 99
-    "Seleccionar banda de FM:", // 100
-    "Seleccionar banda de AM:", // 101
+    "Fuente de frecuencia", // 85
+    "Automático", // 86
+    "AF no disponible", // 87
+    "EON no disponible", // 88
+    "RT+ no disponible", // 89
+    "Paso predeterminado\nFM", // 90
+    "Protector\nde pantalla", // 91
+    "Seg.", // 92
+    "Modo reloj", // 93
+    "Brillo al 1%", // 94
+    "Brillo al 25%", // 95
+    "Brillo al 50%", // 96
+    "Desplazamiento\nRF AM", // 97
+    "Unidad de medidor", // 98
+    "Usar AF", // 99
+    "Seleccionar\nbanda FM", // 100
+    "Seleccionar\nbanda AM", // 101
     "LW", // 102
     "AM", // 103
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Detener pantalla\nal sintonizar", // 107
+    "No reactivar pantalla\nal sintonizar", // 107
     "Selector de modelo", // 108
     "Base", // 109
     "Portátil", // 110
-    "Táctil portátil", // 111
+    "Portátil táctil", // 111
     "Título", // 112
     "Álbum", // 113
     "Pista", // 114
@@ -5042,11 +4963,11 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Género", // 122
     "Noticias", // 123
     "Noticias locales", // 124
-    "Mercado de valores", // 125
+    "Mercado bursátil", // 125
     "Deportes", // 126
     "Lotería", // 127
     "Horóscopo", // 128
-    "Diversión diaria", // 129
+    "Entretenimiento diario", // 129
     "Salud", // 130
     "Evento", // 131
     "Escena", // 132
@@ -5056,7 +4977,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Clima", // 136
     "Tráfico", // 137
     "Alarma", // 138
-    "Anuncio", // 139
+    "Publicidad", // 139
     "Sitio web", // 140
     "Otro", // 141
     "PS corto", // 142
@@ -5064,18 +4985,18 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Ahora", // 144
     "Siguiente", // 145
     "Parte", // 146
-    "Anfitrión", // 147
+    "Presentador", // 147
     "Editor", // 148
     "Frecuencia", // 149
-    "Página de inicio", // 150
+    "Página principal", // 150
     "Subcanal", // 151
     "Línea directa", // 152
-    "Teléfono del estudio", // 153
+    "Teléfono de estudio", // 153
     "Teléfono", // 154
-    "SMS al estudio", // 155
+    "SMS de estudio", // 155
     "SMS", // 156
-    "Correo electrónico\nde la línea directa", // 157
-    "Correo electrónico\ndel estudio", // 158
+    "Correo de línea directa", // 157
+    "Correo de estudio", // 158
     "Correo electrónico", // 159
     "Chat", // 160
     "Centro de chat", // 161
@@ -5086,66 +5007,66 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Identificador", // 166
     "Compra", // 167
     "Obtener datos", // 168
-    "Tamaño de paso\nAM predeterminado", // 169
+    "Paso\npredeterminado AM", // 169
     "Mandarina", // 170
     "Océano", // 171
     "Índigo", // 172
     "Opciones de batería", // 173
     "Mostrar voltaje", // 174
     "Mostrar porcentaje", // 175
-    "Buffering de RT", // 176
-    "Configuración principal", // 177
-    "Configuración de audio", // 178
-    "Configuración de visualización", // 179
-    "Configuración de RDS", // 180
-    "Configuración de FM", // 181
-    "Configuración de AM", // 182
+    "Buffer RT", // 176
+    "Ajustes principales", // 177
+    "Ajustes de audio", // 178
+    "Ajustes de pantalla", // 179
+    "Ajustes RDS", // 180
+    "Ajustes FM", // 181
+    "Ajustes AM", // 182
     "Conectividad y reloj", // 183
-    "PRESIONE MODE PARA VOLVER", // 184
-    "Detección de\nco-canal AM", // 185
-    "Sensibilidad de\ndetección de co-canal", // 186
-    "Umbral de detección\nde co-canal", // 187
-    "Contador de detección\nde co-canal", // 188
+    "PRESIONE MODO PARA VOLVER", // 184
+    "Detector Co-Canal", // 185
+    "Sensibilidad\nCo-Canal", // 186
+    "Umbral Co-Canal", // 187
+    "Contador Co-Canal", // 188
     "PRINCIPAL", // 189
     "AUDIO", // 190
-    "VISUALIZACIÓN", // 191
+    "PANTALLA", // 191
     "RDS", // 192
     "FM", // 193
     "AM", // 194
     "CONECTAR", // 195
-    "DX MODE", // 196
-    "AUTO MEM", // 197
-    "AM AGC", // 198
-    "Despreocupación\nde FM", // 199
+    "MODO DX", // 196
+    "MEM AUTOMÁTICA", // 197
+    "AGC AM", // 198
+    "Deénfasis FM", // 199
     "Pequeño", // 200
     "Grande", // 201
     "Todo", // 202
     "PS rápido", // 203
-    "Por defecto", // 204
-    "Pantalla de mudo\nen la conexión XDRGTK", // 205
-    "FMSI mejora del\nsonido estéreo", // 206
-    "Función disponible solo\nen TEF6687/6689!", // 207
-    "Función no disponible\nsobre el skin seleccionado!", // 208
-    "Empiece a buscar\ncanales de memoria", // 209
-    "Deja de buscar\ncanales de memoria", // 210
+    "Predeterminado", // 204
+    "Silenciar pantalla\nen conexión XDRGTK", // 205
+    "Mejora estéreo FMSI", // 206
+    "¡Función solo para\nTEF6687/6689!", // 207
+    "¡Función no disponible\nen skin seleccionada!", // 208
+    "Iniciar escaneo\nde memorias", // 209
+    "Detener escaneo\nde memorias", // 210
     "Tiempo de espera", // 211
-    "Comience a buscar DX", // 212
+    "Iniciar escaneo DX", // 212
     "Opciones FM DX", // 213
-    "¡Abortar! Se omite\nel canal de inicio.", // 214
-    "Orden automático de AF", // 215
-    "Canales memorizados", // 216
+    "¡Abortar! Canal inicial\nmarcado como omitido", // 214
+    "Ordenar AF automático", // 215
+    "Canales guardados", // 216
     "Excluir", // 217
     "Solo", // 218
-    "Cancelar automáticamente\nla búsqueda", // 219
+    "Cancelaciòn automàtica", // 219
     "PI correcto", // 220
     "Señal", // 221
-    "Audio mudo\nmientras busca", // 222
+    "Silenciar audio\ndurante escaneo", // 222
     "AIR", // 223
-    "Presione el botón\nband durante 5 seg.", // 224
-    "Apagado", // 225
+    "Mantener BANDA 5 seg.", // 224
+    "Apagar", // 225
     "Apagar pantalla", // 226
-    "Inactivo", // 227
-    "No definido", // 228
+    "Desactivado", // 227
+    "Ninguno", // 228
     "Noticias", // 229
     "Magazine", // 230
     "Información", // 231
@@ -5154,74 +5075,69 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Drama", // 234
     "Cultura", // 235
     "Ciencia", // 236
-    "Varios", // 237
-    "Música Pop", // 238
-    "Música Rock", // 239
-    "Grandes éxitos", // 240
-    "Música Ligera", // 241
-    "Música Clásica", // 242
-    "Música Varia", // 243
+    "Variedades", // 237
+    "Música pop", // 238
+    "Música rock", // 239
+    "Música ligera", // 240
+    "Clásica ligera", // 241
+    "Clásica seria", // 242
+    "Otros géneros", // 243
     "Meteorología", // 244
-    "Economía", // 245
-    "Infancia", // 246
+    "Finanzas", // 245
+    "Infantiles", // 246
     "Sociedad", // 247
     "Religión", // 248
-    "Opinión – Oyentes", // 249
+    "Llamadas en vivo", // 249
     "Viajes", // 250
     "Ocio", // 251
-    "Música Jazz", // 252
-    "Música Country", // 253
-    "Música Nacional", // 254
+    "Jazz", // 252
+    "Country", // 253
+    "Música nacional", // 254
     "Música de Ayer", // 255
-    "Música Folk", // 256
+    "Folclórica", // 256
     "Documental", // 257
-    "Prueba de Alarma", // 258
-    "¡ Alarma !", // 259
+    "Prueba de alarma", // 258
+    "¡ALARMA!", // 259
     "Inicial", // 260
     "Siempre", // 261
     "Mostrar reloj", // 262
     "Mostrar PS largo", // 263
-    "Iniciar frecuencia", // 264
-    "Detener frecuencia", // 265
-    "Iniciar canal\nde memoria", // 266
-    "Detener canal\nde memoria", // 267
-    "Solo almacenar\ncon RDS", // 268
+    "Frecuencia inicial", // 264
+    "Frecuencia final", // 265
+    "Canal inicial", // 266
+    "Canal final", // 267
+    "Guardar solo\ncon RDS", // 268
     "Iniciar memoria\nautomática", // 269
     "Memoria automática", // 270
-    "ID de la lista\nde estaciones", // 271
+    "ID Stationlist", // 271
     "Encontrado", // 272
-    "¡Abortar! Sin canales\nde memoria disponibles", // 273
-    "¡Abortar! Usuario\npresionó el botón", // 274
-    "Escaneo finalizado\nsin errores", // 275
-    "Borrar canales\nde memoria", // 276
+    "¡Error! Sin memorias", // 273
+    "¡Cancelado! Usuario\ndetuvo", // 274
+    "Escaneo exitoso", // 275
+    "Borrar memorias", // 276
     "borrado", // 277
-    "Prevenir doble PI", // 278
+    "Evitar PI duplicado", // 278
     "Rango", // 279
     "Completo", // 280
-    "Tiempo de espera\ncuando la señal", // 281
-    "Presione en el\nángulo resaltado", // 282
-    "Para calibrar\nla pantalla táctil", // 283
-    "Cambio de reverso\nde la pantalla", // 284
-    "Seleccionar ancho de banda", // 285
-    "Tu libro de registro", // 286
-    "Descargar libro de registro", // 287
-    "El libro de registro está vacío", // 288
+    "Esperar solo\ncon señal", // 281
+    "Toque la esquina\nresaltada", // 282
+    "Calibrar pantalla\ntáctil", // 283
+    "Mantenga BW para\ndetener DX", // 284
+    "Seleccionar ancho\nde banda", // 285
+    "Libro de registro", // 286
+    "Descargar registro", // 287
+    "Registro vacío", // 288
     "Ir al final", // 289
-    "Añadido al registro", // 290
-    "¡Actualización fallida!", // 291
-    "Borrar libro\nde registro", // 292
-    "Libro borrado", // 293
+    "Entrada añadida", // 290
+    "Error al añadir", // 291
+    "Borrar registro", // 292
+    "Registro borrado", // 293
     "Error al borrar", // 294
-    "Desfase de tiempo NTP", // 295
-    "Registrador automático", // 296
-    "¡Libro lleno!", // 297
-    "Modo reloj", // 298
-    "DST automático\nen hora NTP", // 299
-    "El libro de registro contiene más de 130 entradas que el visor no puede procesar. Descargue el archivo CSV para procesarlo.", // 300
-    "Sync CT en\nPI bloqueado", // 301
-    "Error! No hay señal RDS", // 302
-    "Mantén BW para parar", // 303
-    "PS solo" // 304
+    "¡Registro lleno!\nNo se puede añadir", // 295
+    "Autoregistro", // 296
+    "DST automático (NTP)", // 297
+    "Ajustar\ndesplazamiento NTP", // 298
+    "El registro tiene +130 entradas.\nDescargue el CSV." // 299
   },
 
   { "Português", // Portuguese
@@ -5229,21 +5145,21 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Solte o botão,\npor favor", // 2
     "Tela invertida", // 3
     "Calibrar o medidor\nanalógico", // 4
-    "Solte o botão quando\nestiver pronto", // 5
-    "codificador definido\ncomo óptico", // 6
-    "codificador definido\ncomo padrão", // 7
+    "Modo USB", // 5
+    "Codificador definido\ncomo óptico", // 6
+    "Codificador definido\ncomo padrão", // 7
     "Receptor FM/AM", // 8
     "Sintonizador: !Nenhum!", // 9
-    "Volume:", // 10
-    "Conversor:", // 11
-    "Borda da faixa baixa:", // 12
-    "Borda da faixa alta:", // 13
-    "Deslocamento do nível\nde RF FM:", // 14
-    "Limiar estéreo:", // 15
-    "Canto de corte alto:", // 16
-    "Limiar de corte alto:", // 17
-    "Limiar de nível baixo:", // 18
-    "Contraste:", // 19
+    "Volume", // 10
+    "Conversor", // 11
+    "Borda da faixa baixa", // 12
+    "Borda da faixa alta", // 13
+    "Deslocamento do nível\nde RF FM", // 14
+    "Limiar estéreo", // 15
+    "Canto de corte alto", // 16
+    "Limiar de corte alto", // 17
+    "Limiar de nível baixo", // 18
+    "Brilho", // 19
     "Definir volume", // 20
     "Definir deslocamento\ndo conversor", // 21
     "Definir borda\nda faixa baixa", // 22
@@ -5255,9 +5171,9 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Definir limiar\nde nível baixo", // 28
     "Definir brilho\nda tela", // 29
     "Desligado", // 30
-    "A tela está silenciada!", // 31
-    "", // 32
-    "DESAT.", // 33
+    "Ligado", // 31
+    "PRESSIONE MODE PARA SAIR E SALVAR", // 32
+    "PRESSIONE BAND PARA FECHAR", // 33
     "ANALISANDO...", // 34
     "Sintonizador não detectado", // 35
     "AM Ganho da antena", // 36
@@ -5265,8 +5181,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Mostrar erros RDS", // 38
     "Idioma", // 39
     "Escolha o idioma", // 40
-    "PRESSIONE O MODE PARA SAIR E SALVAR", // 41
-    "Ligado", // 42
+    "PI bloqueado CT sync", // 41
+    "Erro! Sem sinal RDS", // 42
     "Silenciamento suave FM", // 43
     "Silenciamento suave AM", // 44
     "Bipe na borda da faixa", // 45
@@ -5274,7 +5190,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Europa", // 47
     "América", // 48
     "Mostrar sublinhado\nno RDS", // 49
-    "Modo USB", // 50
+    "PS apenas", // 50
     "Wi-Fi ativo", // 51
     "Configurar Wi-Fi", // 52
     "Conectar a: ", // 53
@@ -5292,7 +5208,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Supressor de ruído FM", // 65
     "Padrões carregados", // 66
     "Saída de áudio", // 67
-    "Ajuste sem\ndesativar o protetor", // 68
+    "Permitir sintonização\nsem desativar proteção", // 68
     "Inverter a tela", // 69
     "Sobre o software", // 70
     "Código principal:", // 71
@@ -5317,15 +5233,15 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Passo padrão FM", // 90
     "Proteção de tela", // 91
     "Segundos", // 92
-    "PRESSIONE BAND PARA FECHAR", // 93
+    "Modo de relógio", // 93
     "1% de brilho", // 94
     "25% de brilho", // 95
     "50% de brilho", // 96
-    "Deslocamento de nível\nde RF AM:", // 97
-    "Unidade de medidor\nde sinal:", // 98
-    "Usar AF:", // 99
-    "Selecionar faixa FM:", // 100
-    "Selecionar faixa AM:", // 101
+    "Deslocamento de nível\nde RF AM", // 97
+    "Unidade de medidor\nde sinal", // 98
+    "Usar AF", // 99
+    "Selecionar faixa FM", // 100
+    "Selecionar faixa AM", // 101
     "LW", // 102
     "AM", // 103
     "SW", // 104
@@ -5409,7 +5325,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Configurações AM", // 182
     "Conectividade e relógio", // 183
     "PRESSIONE MODO PARA VOLTAR", // 184
-    "AM CoChannelDet", // 185
+    "Detector CoChannel", // 185
     "Sensibilidade do\nCoChannel Det", // 186
     "Limiar do\nCoChannel Det", // 187
     "Contador do\nCoChannel Det", // 188
@@ -5431,7 +5347,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Predefinição", // 204
     "Tela mudo na\nconexão XDRGTK", // 205
     "FMSI melhoria\ndo som estéreo", // 206
-    "Function only available\non TEF6687/6689!", // 207
+    "Função disponível apenas\nno TEF6687/6689!", // 207
     "Função não disponível\nno skin selecionado!", // 208
     "Comece a pesquisar\ncanais de memória", // 209
     "Pare de pesquisar\ncanais de memória", // 210
@@ -5508,7 +5424,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Espera tempo apenas\nquando sinal", // 281
     "Pressione o\ncanto inscrito", // 282
     "Para calibração\nda tela de toque", // 283
-    "Alternar a inversão da tela", // 284
+    "Segure BW para parar", // 284
     "Selecione largura de banda", // 285
     "Seu livro de registro", // 286
     "Baixar livro de registro", // 287
@@ -5519,16 +5435,11 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Limpar livro\nde registro", // 292
     "Livro limpo", // 293
     "Falha ao limpar", // 294
-    "Deslocamento de\ntempo NTP", // 295
+    "Não é possível adicionar!\nO livro está cheio!", // 295
     "Registrador automático", // 296
-    "Livro cheio!", // 297
-    "Modo de relógio", // 298
-    "DST automático\nno horário NTP", // 299
-    "O diário de bordo contém mais de 130 entradas que o espectador não consegue processar. Descarregue o ficheiro CSV para processá-lo.", // 300
-    "Sincronizar CT\nno PI bloqueado", // 301
-    "Erro! Sem sinal RDS", // 302
-    "Segure BW para parar", // 303
-    "PS apenas" // 304
+    "DST automático\nno horário NTP", // 297
+    "Definir deslocamento\nde tempo NTP", // 298
+    "O diário de bordo contém mais de 130 entradas que o espectador não consegue processar. Descarregue o ficheiro CSV para processá-lo." // 299
   },
 
   { "Srpski", // Serbian
@@ -5536,9 +5447,9 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Pustite dugme", // 2
     "Ekran okrenut", // 3
     "Kalibracija analognog\nmerača", // 4
-    "Pustite dugme\nkada budete spremni", // 5
-    "enkoder postavljen\nna optički", // 6
-    "enkoder postavljen\nna standard", // 7
+    "Mod USB", // 5
+    "Enkoder postavljen\nna optički", // 6
+    "Enkoder postavljen\nna standard", // 7
     "FM/AM prijemnik", // 8
     "Tuner: !Nema!", // 9
     "Jačina zvuka", // 10
@@ -5562,9 +5473,9 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Prag niskog nivoa", // 28
     "Osvetljenost ekrana", // 29
     "Isključeno", // 30
-    "Ekran je utišan!", // 31
-    "", // 32
-    "ISKLJUČENO", // 33
+    "Uključeno", // 31
+    "PRITISNITE MODE DA IZLAZITE I SPASITE", // 32
+    "PRITISNITE BAND DA ZATVORITE", // 33
     "SKENIRANJE...", // 34
     "Tuner nije\ndetektovan", // 35
     "AM antena\npojačanje", // 36
@@ -5572,8 +5483,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Prikazivanje RDS\ngrešaka", // 38
     "Jezik", // 39
     "Izaberite jezik", // 40
-    "PRITISNITE MODE DA IZLAZITE I SPASITE", // 41
-    "Uključeno", // 42
+    "PI zaključan\nCT sinhronizacija", // 41
+    "Greška! Nema RDS signala!", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
     "Pucketanje na\nivici opsega", // 45
@@ -5581,7 +5492,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Evropa", // 47
     "Amerika", // 48
     "Prikazivanje\ndonje crte u RDS", // 49
-    "USB mod", // 50
+    "PS samo", // 50
     "Wi-Fi aktivan", // 51
     "Konfiguriši Wi-Fi", // 52
     "Povežite se sa: ", // 53
@@ -5624,7 +5535,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "FM podrazumevani\nkorak", // 90
     "Screensaver", // 91
     "Sek", // 92
-    "PRITISNITE BAND DA ZATVORITE", // 93
+    "Način rada sa\nsatom", // 93
     "1% osvetljenost", // 94
     "25% osvetljenost", // 95
     "50% osvetljenost", // 96
@@ -5815,7 +5726,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Vreme čekanja na signal", // 281
     "Pritisnite označeni\nugao", // 282
     "Za kalibraciju\nekrana", // 283
-    "Ekran se prebacuje", // 284
+    "Drži BW da staneš", // 284
     "Izaberi širinu\nopsega", // 285
     "Tvoj dnevnik", // 286
     "Preuzmi dnevnik", // 287
@@ -5826,131 +5737,126 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Očisti dnevnik", // 292
     "Dnevnik očišćen", // 293
     "Greška pri brisanju", // 294
-    "Postavite NTP\nvremenski offset", // 295
+    "Ne može se dodati!\nDnevnik je pun!", // 295
     "Automatski logger", // 296
-    "Dnevnik je pun!", // 297
-    "Način rada sa\nsatom", // 298
-    "Auto DST na\nNTP vremenu", // 299
-    "Dnevnik sadrži više od 130 unosa, što viewer ne može obraditi. Preuzmite CSV fajl za obradu.", // 300
-    "PI zaključan\nCT sinhronizacija", // 301
-    "Nema RDS signala!", // 302
-    "Drži BW da staneš", // 303
-    "PS samo" // 304
+    "Auto DST na\nNTP vremenu", // 297
+    "Postavite NTP\nvremenski offset", // 298
+    "Dnevnik sadrži više od 130 unosa, što viewer ne može obraditi. Preuzmite CSV fajl za obradu." // 299
   },
 
   { "Suomi", // Finnish
-    "Pyörimissuunta vaihtui", // 1
-    "Vapauta nappi", // 2
+    "Pyörimisohjauksen suunta\nmuutettu", // 1
+    "Paina nappia vapauttaaksesi", // 2
     "Näyttö käännetty", // 3
     "Kalibroi analoginen mittari", // 4
-    "Vapauta nappi,\nkun olet valmis", // 5
+    "USB-tila", // 5
     "Kooderi asetettu optiseksi", // 6
-    "Kooderi asetettu vakioksi", // 7
-    "FM/AM-vastaanotin", // 8
-    "Viritin: !Ei mikään!", // 9
+    "Kooderi asetettu\nstandardiin", // 7
+    "FM/AM vastaanotin", // 8
+    "Viritin: !Ei mitään!", // 9
     "Äänenvoimakkuus", // 10
     "Muunna", // 11
-    "Matala taajuusraja", // 12
-    "Korkea taajuusraja", // 13
-    "FM RF-tason poikkeama", // 14
-    "Stereokynnys", // 15
-    "Korkeataajuusleikkaus", // 16
-    "Korkeataajuuskynnys", // 17
-    "Matalatason kynnys", // 18
+    "Matalan taajuuden\nraja", // 12
+    "Korkean taajuuden\nraja", // 13
+    "FM RF-tason siirto", // 14
+    "Stereo kynnys", // 15
+    "Ylileikkaus kulma", // 16
+    "Ylileikkaus kynnys", // 17
+    "Matalan tason\nkynnys", // 18
     "Kirkkaus", // 19
-    "Aseta\näänenvoimakkuus", // 20
-    "Muunna poikkeama", // 21
-    "Matala taajuusraja", // 22
-    "Korkea taajuusraja", // 23
-    "Tason poikkeama", // 24
-    "Stereoseparaation kynnys", // 25
-    "Korkean leikkauksen\nkulma taajuus", // 26
-    "Korkean leikkauksen kynnys", // 27
-    "Matalan tason kynnys", // 28
+    "Aseta äänenvoimakkuus", // 20
+    "Muunna siirto", // 21
+    "Matalan taajuuden\nraja", // 22
+    "Korkean taajuuden\nraja", // 23
+    "Tason siirto", // 24
+    "Stereoerotus kynnys", // 25
+    "Ylileikkaus kulman taajuus", // 26
+    "Ylileikkaus kynnys", // 27
+    "Matalan tason\nkynnys", // 28
     "Näytön kirkkaus", // 29
     "Pois", // 30
-    "Näyttö on mykistetty!", // 31
-    "", // 32
-    "POIS", // 33
-    "SKANNOIDAAN...", // 34
-    "Virittintä ei havaittu", // 35
-    "AM-antennin vahvistus", // 36
+    "Päällä", // 31
+    "Paina MODE poistuaksesi ja tallentaaksesi", // 32
+    "Paina BAND sulkeaksesi", // 33
+    "SKANNATAAN...", // 34
+    "Virittimen havaitseminen\nepäonnistui", // 35
+    "AM-antenni vahvistus", // 36
     "FM AGC", // 37
     "Näytä RDS-virheet", // 38
     "Kieli", // 39
     "Valitse kieli", // 40
-    "PAINA MODE POISTUAKSESI JA TALLENTA", // 41
-    "Päällä", // 42
-    "Pehmeä mykistys FM", // 43
-    "Pehmeä mykistys AM", // 44
-    "Piipahdus taajuusrajan\nkohdalla", // 45
+    "PI lukittu CT synkronointi", // 41
+    "Virhe! Ei RDS-signaalia", // 42
+    "Softmute FM", // 43
+    "Softmute AM", // 44
+    "Ääni rajalla", // 45
     "Alue", // 46
     "Eurooppa", // 47
     "Amerikka", // 48
-    "Näytä alaviiva RDS:ssä", // 49
-    "USB-tila", // 50
+    "Näytä alaviiva RDS:ssa", // 49
+    "Vain PS", // 50
     "Wi-Fi aktiivinen", // 51
     "Määritä Wi-Fi", // 52
     "Yhdistä: ", // 53
-    "määrittää Wi-Fi", // 54
+    "Wi-Fi:n määrittämiseksi", // 54
     "Yritetään yhdistää Wi-Fi", // 55
     "EPÄONNISTUI!", // 56
     "YHDISTETTY!", // 57
-    "Asemalista asiakas-IP", // 58
+    "Stationlist-asiakas IP", // 58
     "Näytä SW aallonpituus", // 59
     "RDS-suodatin", // 60
     "Näytä PI-virheet", // 61
-    "Käytä squelchia", // 62
+    "Käytä squelchiä", // 62
     "Modulaatiomittari", // 63
-    "AM-noise blanker", // 64
-    "FM-noise blanker", // 65
+    "AM Melupeitto", // 64
+    "FM Melupeitto", // 65
     "Oletusarvot ladattu", // 66
-    "Ääniulostulo", // 67
-    "Viritys ilman\nruutusäästäjää", // 68
-    "Käännä näyttö", // 69
+    "Äänilähtö", // 67
+    "Salli viritys ilman\nruutusaverin poistamista", // 68
+    "Käännä näytön värit", // 69
     "Tietoja ohjelmistosta", // 70
     "Pääkoodi:", // 71
     "Avustajat:", // 72
     "Tuntematon", // 73
-    "Näytönsäästäjän\nasetukset", // 74
-    "Automaattinen\nvirrankatkaisu", // 75
+    "Näytönsäästäjäasetukset", // 74
+    "Automaattinen virransammutus", // 75
     "Näyttö pois", // 76
     "Teema", // 77
-    "Iho", // 78
+    "Pinta", // 78
     "Havaitut sovellukset", // 79
     "Min.", // 80
     "Dynaaminen SPI-nopeus", // 81
-    "Skaanna herkkyys", // 82
-    "EI MITÄÄN", // 83
+    "Skannausherkkyys", // 82
+    "EI", // 83
     "Ohjelmistoversio", // 84
     "Taajuusfontti", // 85
     "Automaattinen", // 86
-    "Ei AF:ää saatavilla", // 87
-    "Ei EON:ia saatavilla", // 88
-    "Ei RT+:aa saatavilla", // 89
-    "FM oletusaskelkoon", // 90
+    "Ei AF saatavilla", // 87
+    "Ei EON saatavilla", // 88
+    "Ei RT+ saatavilla", // 89
+    "FM oletusarvoiset askelvälit", // 90
     "Näytönsäästäjä", // 91
     "Sek", // 92
-    "PAINA BAND POISTUAKSESI", // 93
+    "Kellotila", // 93
     "1% kirkkaus", // 94
     "25% kirkkaus", // 95
     "50% kirkkaus", // 96
-    "AM RF-tason poikkeama", // 97
-    "Signaalimittari-yksikkö", // 98
+    "AM RF-tason siirto", // 97
+    "Signaalimittarin yksikkö", // 98
     "Käytä AF", // 99
-    "Valitse FM-taajuuskaista", // 100
-    "Valitse AM-taajuuskaista", // 101
+    "Valitse FM-taajuusalue", // 100
+    "Valitse AM-taajuusalue", // 101
     "LW", // 102
     "MW", // 103
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Pysäytä näytön\nherääminen virityksessä", // 107
-    "Mallivalitsin", // 108
-    "Perusta", // 109
+    "Pysäytä näytön herätys virityksessä", // 107
+    "Mallin valitsin", // 108
+    "Perus", // 109
     "Kannettava", // 110
-    "Kannettava kosketus", // 111
-    "Otsikko", // 112
+    "Koskettimellinen kannettava", // 111
+    "Nimi", // 112
     "Albumi", // 113
     "Kappale", // 114
     "Esittäjä", // 115
@@ -5963,14 +5869,14 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Genre", // 122
     "Uutiset", // 123
     "Paikalliset uutiset", // 124
-    "Pörssi", // 125
+    "Osakemarkkinat", // 125
     "Urheilu", // 126
-    "Arvonta", // 127
+    "Arpajaiset", // 127
     "Horoskooppi", // 128
-    "Päivittäinen huvi", // 129
+    "Päivittäinen viihde", // 129
     "Terveys", // 130
     "Tapahtuma", // 131
-    "Kohtaus", // 132
+    "Kohde", // 132
     "Elokuvateatteri", // 133
     "TV", // 134
     "Päivämäärä/aika", // 135
@@ -5990,39 +5896,39 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Taajuus", // 149
     "Etusivu", // 150
     "Alikanava", // 151
-    "Puhelinlinja", // 152
+    "Puh. linja", // 152
     "Studion puhelin", // 153
     "Puhelin", // 154
     "SMS studio", // 155
     "SMS", // 156
-    "Sähköposti linja", // 157
+    "Sähköposti puhelinlinja", // 157
     "Sähköposti studio", // 158
     "Sähköposti", // 159
     "Chat", // 160
-    "Chat-keskus", // 161
-    "Ääni kysymys", // 162
+    "Chattikeskus", // 161
+    "Äänestyskysymys", // 162
     "Äänestyskeskus", // 163
     "Paikka", // 164
     "Tapaaminen", // 165
     "Tunniste", // 166
     "Osto", // 167
-    "Hae dataa", // 168
-    "MW oletusaskelkoon", // 169
-    "Tangeriini", // 170
+    "Hanki data", // 168
+    "MW oletusarvoiset askelvälit", // 169
+    "Mandariini", // 170
     "Meri", // 171
     "Indigo", // 172
-    "Akkuasetukset", // 173
+    "Akkumääritykset", // 173
     "Näytä jännite", // 174
     "Näytä prosentti", // 175
-    "RT-puskurointi", // 176
-    "Pääasetukset", // 177
+    "RT pusku", // 176
+    "Pään asetukset", // 177
     "Ääniasetukset", // 178
     "Näyttöasetukset", // 179
-    "RDS asetukset", // 180
-    "FM asetukset", // 181
-    "AM asetukset", // 182
-    "Yhteydet & kello", // 183
-    "PAINA MODE PALATTAKSESI", // 184
+    "RDS-asetukset", // 180
+    "FM-asetukset", // 181
+    "AM-asetukset", // 182
+    "Yhteydet ja kello", // 183
+    "Paina MODE palataksesi", // 184
     "CoChannel-tunnistin", // 185
     "CoChannel-tunnistin\nherkkyys", // 186
     "CoChannel-tunnistin\nkynnys", // 187
@@ -6033,8 +5939,8 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "RDS", // 192
     "FM", // 193
     "AM", // 194
-    "YHTEYDET", // 195
-    "DX-MOODI", // 196
+    "YHTEYS", // 195
+    "DX-tila", // 196
     "AUTOMAATTINEN MUISTI", // 197
     "AM AGC", // 198
     "FM vähennys", // 199
@@ -6043,62 +5949,62 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Kaikki", // 202
     "Nopea PS", // 203
     "Oletus", // 204
-    "Mykistä näyttö\nXDRGTK-yhteyden aikana", // 205
+    "Hiljennä näyttö\nXDRGTK-yhteyden aikana", // 205
     "FMSI stereo\nparannus", // 206
-    "Toiminto saatavilla\nvain TEF6687/6689!", // 207
-    "Toiminto ei saatavilla\nvalitulla iholla!", // 208
-    "Aloita skannaus\nmuistikanavat", // 209
-    "Pysäytä skannaus\nmuistikanavat", // 210
+    "Toiminto saatavilla vain\nTEF6687/6689:ssä!", // 207
+    "Toiminto ei saatavilla\nvalitussa pinnassa!", // 208
+    "Aloita skannaus\nmuistikanavilla", // 209
+    "Pysäytä skannaus\nmuistikanavilla", // 210
     "Odota-aika", // 211
     "Aloita DX-skannaus", // 212
     "FM DX Asetukset", // 213
-    "Keskeytä! Alku taajuus\non merkitty ohitetuksi.", // 214
-    "Automaattinen\nlajittelu AF", // 215
+    "Keskeytä! Aloituskanava\non merkitty ohitettavaksi.", // 214
+    "Automaattinen AF lajittelu", // 215
     "Muistikanavat", // 216
     "Sulje", // 217
     "Vain", // 218
-    "Automaattinen peruutus\nskannauksessa", // 219
+    "Automaattinen skannauksen peruutus", // 219
     "Korjaa PI", // 220
     "Signaali", // 221
-    "Mykistä ääni\nskannauksen aikana", // 222
+    "Hiljennä ääni\nskannauksen aikana", // 222
     "ILMA", // 223
-    "5 sek bandin painallus", // 224
+    "5 sekunnin bandinäppäimen\npainallus", // 224
     "Virta pois", // 225
     "Näyttö pois", // 226
-    "Poistettu käytöstä", // 227
-    "Ei mikään", // 228
+    "Poistettu", // 227
+    "Ei mitään", // 228
     "Uutiset", // 229
-    "Ajankohtaiset asiat", // 230
+    "Ajankohtaiset", // 230
     "Tietoa", // 231
     "Urheilu", // 232
     "Koulutus", // 233
     "Draama", // 234
     "Kulttuuri", // 235
     "Tiede", // 236
-    "Vaihtelevia", // 237
+    "Vaihteleva", // 237
     "Pop-musiikki", // 238
     "Rock-musiikki", // 239
-    "Helppo kuuntelu", // 240
+    "Helppokuuntelu", // 240
     "Kevyt klassinen", // 241
     "Vakava klassinen", // 242
     "Muu musiikki", // 243
     "Sää", // 244
-    "Rahoitus", // 245
+    "Talous", // 245
     "Lasten ohjelmat", // 246
-    "Sosiaaliset asiat", // 247
+    "Sosiaaliasiat", // 247
     "Uskonto", // 248
     "Puhelinlinja", // 249
-    "Matkailu", // 250
+    "Matkustus", // 250
     "Vapaa-aika", // 251
     "Jazz-musiikki", // 252
     "Country-musiikki", // 253
-    "Kansallinen musiikki", // 254
-    "Vanha musiikki", // 255
+    "Kansallismusiikki", // 254
+    "Oldies-musiikki", // 255
     "Folk-musiikki", // 256
     "Dokumentti", // 257
     "Hälytyksen testi", // 258
     "Hälytys!!!", // 259
-    "Alku", // 260
+    "Alkuperäinen", // 260
     "Aina", // 261
     "Näytä kello", // 262
     "Näytä pitkä PS", // 263
@@ -6106,43 +6012,38 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Pysäytä taajuus", // 265
     "Aloita muistikanava", // 266
     "Pysäytä muistikanava", // 267
-    "Tallenna vain\nRDS:n kanssa", // 268
-    "Aloita automaattinen\nmuisti", // 269
+    "Tallenna vain RDS:n\nkanssa", // 268
+    "Aloita\nautomaattinen muistio", // 269
     "Automaattinen muisti", // 270
-    "Asemalista ID", // 271
-    "Löydetty", // 272
-    "Keskeytä!\nMuistikanavat loppu", // 273
-    "Keskeytä!\nKäyttäjä painoi nappia", // 274
-    "Skaannaus valmis\nilman virheitä", // 275
-    "Tyhjennä muistikanavat", // 276
+    "Stationlist ID", // 271
+    "Löytyi", // 272
+    "Keskeytä! Muistikanavat loppu", // 273
+    "Keskeytä! Käyttäjä painoi nappia", // 274
+    "Skannaus valmis ilman virheitä", // 275
+    "Tyhjennä\nmuistikanavat", // 276
     "tyhjennetty", // 277
-    "Estä tupla PI", // 278
+    "Estä kaksois-PI", // 278
     "Alue", // 279
     "Täysi", // 280
-    "Odota-aika\nsignaalilla vain", // 281
-    "Paina korostettua\nkulmaa", // 282
-    "Kalibroidaksesi\nkosketusnäyttö", // 283
-    "Näytön kääntö kytkee", // 284
-    "Valitse kaistanleveys", // 285
-    "Lokikirjasi", // 286
+    "Odota-aika\nvain signaalille", // 281
+    "Paina korostettua kulmaa", // 282
+    "Kalibroi kosketusnäyttö", // 283
+    "Pidä BW-nappia painettuna\npysäyttääksesi DX-skannerin", // 284
+    "Valitse\nkaistanleveys", // 285
+    "Oma lokikirja", // 286
     "Lataa lokikirja", // 287
     "Lokikirja on tyhjä", // 288
     "Mene alas", // 289
-    "Lisätty lokiin", // 290
-    "Päivitys\nepäonnistui!", // 291
+    "Merkintä lisätty\nlokikirjaan", // 290
+    "Virhe lisättäessä\nmerkintää lokikirjaan", // 291
     "Tyhjennä lokikirja", // 292
     "Lokikirja\ntyhjennetty", // 293
     "Tyhjennys\nepäonnistui", // 294
-    "Aseta NTP-aikakorjaus", // 295
-    "Autoloki", // 296
-    "Lokikirja täynnä!", // 297
-    "Kellotila", // 298
-    "Automaattinen\nkesäaika NTP-aikaa", // 299
-    "Lokikirjassa on yli 130 merkintää, joita katselija ei voi käsitellä. Lataa CSV-tiedosto käsitelläksesi sen.", // 300
-    "PI lukittu\nCT synkronointi", // 301
-    "Ei RDS-signaalia!", // 302
-    "Paina BW pysäyttääksesi", // 303
-    "PS vain" // 304
+    "Ei voida lisätä merkintää!\nLokikirja on täynnä!", // 295
+    "Autolokikirja", // 296
+    "Auto DST\nNTP-ajassa", // 297
+    "Aseta\nNTP-aikasiirto", // 298
+    "Lokikirja sisältää yli 130 merkintää, joita katselija ei pysty käsittelemään. Lataa CSV-tiedosto sen käsittelemiseksi." // 299
   },
 
   { "Dansk", // Danish
@@ -6150,7 +6051,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Slip knappen", // 2
     "Skærm vendt", // 3
     "Kalibrer analog måler", // 4
-    "Slip knappen når klar", // 5
+    "USB-tilstand", // 5
     "Encoder indstillet til optisk", // 6
     "Encoder indstillet til standard", // 7
     "FM/AM modtager", // 8
@@ -6159,14 +6060,14 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Konverter", // 11
     "Lavbåndskant", // 12
     "Højbåndskant", // 13
-    "FM RF niveau offset", // 14
+    "FM RF-niveau offset", // 14
     "Stereotærskel", // 15
     "Højfrekvensskæring\nhjørne", // 16
     "Højfrekvensskæring\ntærskel", // 17
     "Lavt niveau tærskel", // 18
     "Lysstyrke", // 19
     "Indstil volumen", // 20
-    "Converter offset", // 21
+    "Konverter offset", // 21
     "Lavbåndskant", // 22
     "Højbåndskant", // 23
     "Niveau offset", // 24
@@ -6176,18 +6077,18 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Lavt niveau tærskel", // 28
     "Visningens lysstyrke", // 29
     "Slukket", // 30
-    "Skærmen er dæmpet!", // 31
-    "", // 32
-    "SLUKKET", // 33
+    "Tændt", // 31
+    "TRYK MODE FOR AT GEMME", // 32
+    "TRYK PÅ BÅND FOR AT LUKKE", // 33
     "SCANNER...", // 34
     "Tuner ikke registreret", // 35
-    "AM Antenneforstærkning", // 36
+    "AM-antenneforstærkning", // 36
     "FM AGC", // 37
-    "Vis RDS fejl", // 38
+    "Vis RDS-fejl", // 38
     "Sprog", // 39
     "Vælg sprog", // 40
-    "TRYK MODE FOR AT GEMME", // 41
-    "Tændt", // 42
+    "PI-låst CT-synkronisering", // 41
+    "Fejl! Ingen RDS-signal", // 42
     "Blød dæmpning FM", // 43
     "Blød dæmpning AM", // 44
     "Beep ved båndkant", // 45
@@ -6195,7 +6096,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Europa", // 47
     "Amerika", // 48
     "Vis understregning\ni RDS", // 49
-    "USB tilstand", // 50
+    "PS kun", // 50
     "Wi-Fi aktiv", // 51
     "Konfigurer Wi-Fi", // 52
     "Forbind til: ", // 53
@@ -6204,13 +6105,13 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "FEJLET!", // 56
     "TILSLUTTET!", // 57
     "Stationliste\nklient IP", // 58
-    "Vis SW bølgelængde", // 59
-    "RDS filter", // 60
-    "Vis PI fejl", // 61
+    "Vis SW-bølgelængde", // 59
+    "RDS-filter", // 60
+    "Vis PI-fejl", // 61
     "Brug squelch", // 62
     "Modulationsmåler", // 63
-    "AM Støjfjerner", // 64
-    "FM Støjfjerner", // 65
+    "AM-støjfjerner", // 64
+    "FM-støjfjerner", // 65
     "Standardindstillinger\nindlæst", // 66
     "Lydudgang", // 67
     "Tillad tuning uden\nat slå pauseskærm fra", // 68
@@ -6227,26 +6128,26 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Registrerede\napplikationer", // 79
     "Min.", // 80
     "Dynamisk SPI\nhastighed", // 81
-    "Scan følsomhed", // 82
+    "Scan-følsomhed", // 82
     "INGEN", // 83
-    "Software version", // 84
-    "Frekvens skrifttype", // 85
+    "Softwareversion", // 84
+    "Frekvensskrifttype", // 85
     "Auto", // 86
     "Ingen AF tilgængelig", // 87
     "Ingen EON tilgængelig", // 88
     "Ingen RT+ tilgængelig", // 89
-    "FM standard trin", // 90
+    "FM-standardtrin", // 90
     "Pauseskærm", // 91
     "Sek", // 92
-    "TRYK PÅ BÅND FOR AT LUKKE", // 93
+    "Urtilstand", // 93
     "1% lysstyrke", // 94
     "25% lysstyrke", // 95
     "50% lysstyrke", // 96
-    "AM RF niveau offset", // 97
-    "Signal meter enhed", // 98
+    "AM RF-niveau offset", // 97
+    "Signalmålerenhed", // 98
     "Brug AF", // 99
-    "Vælg FM Bånd", // 100
-    "Vælg AM Bånd", // 101
+    "Vælg FM-bånd", // 100
+    "Vælg AM-bånd", // 101
     "LW", // 102
     "MW", // 103
     "SW", // 104
@@ -6314,26 +6215,26 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Identifikator", // 166
     "Køb", // 167
     "Hent data", // 168
-    "MW standard trin", // 169
+    "MW-standardtrin", // 169
     "Tangerine", // 170
     "Hav", // 171
     "Indigo", // 172
     "Batteriindstillinger", // 173
     "Vis spænding", // 174
     "Vis procent", // 175
-    "RT buffering", // 176
+    "RT-buffering", // 176
     "Hovedindstillinger", // 177
     "Lydindstillinger", // 178
     "Skærmindstillinger", // 179
-    "RDS indstillinger", // 180
-    "FM indstillinger", // 181
-    "AM indstillinger", // 182
+    "RDS-indstillinger", // 180
+    "FM-indstillinger", // 181
+    "AM-indstillinger", // 182
     "Tilslutning & ur", // 183
     "TRYK MODE FOR AT VENDE TILBAGE", // 184
-    "Sammenkanal detektor", // 185
-    "Sammenkanal detektor\nfølsomhed", // 186
-    "Sammenkanal detektor\ntærskel", // 187
-    "Sammenkanal detektor\ntæller", // 188
+    "Sammenkanal-detektor", // 185
+    "Sammenkanal-detektor\nfølsomhed", // 186
+    "Sammenkanal-detektor\ntærskel", // 187
+    "Sammenkanal-detektor\ntæller", // 188
     "HOVED", // 189
     "LYD", // 190
     "SKÆRM", // 191
@@ -6341,35 +6242,35 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "FM", // 193
     "AM", // 194
     "TILSLUT", // 195
-    "DX MODE", // 196
+    "DX-MODE", // 196
     "AUTO MEM", // 197
     "AM AGC", // 198
-    "FM deemphasis", // 199
+    "FM-deemphasis", // 199
     "Lille", // 200
     "Stor", // 201
     "Alle", // 202
     "Hurtig PS", // 203
     "Standard", // 204
-    "Sluk skærm ved\nXDRGTK forbindelse", // 205
+    "Sluk skærm ved\nXDRGTK-forbindelse", // 205
     "FMSI stereo\nforbedring", // 206
     "Funktion kun tilgængelig\npå TEF6687/6689!", // 207
     "Funktion ikke tilgængelig\npå valgt hud!", // 208
     "Begynd scanning\naf hukommelseskanaler", // 209
     "Stop scanning\naf hukommelseskanaler", // 210
     "Ventetid", // 211
-    "Start DX scanning", // 212
-    "FM DX Indstillinger", // 213
+    "Start DX-scanning", // 212
+    "FM DX-indstillinger", // 213
     "Afbryd! Startkanal\ner sprunget over.", // 214
     "Auto-sortering AF", // 215
     "Hukommelseskanaler", // 216
     "Udeluk", // 217
     "Kun", // 218
-    "Auto annuller scan", // 219
+    "Auto-annuller scan", // 219
     "Korrekt PI", // 220
     "Signal", // 221
     "Lyd dæmpet\nunder scanning", // 222
     "LUFT", // 223
-    "5 sek. båndknap tryk", // 224
+    "5 sek. båndknap-tryk", // 224
     "Sluk", // 225
     "Skærm slukket", // 226
     "Deaktiveret", // 227
@@ -6403,7 +6304,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Gamle hits", // 255
     "Folkemusik", // 256
     "Dokumentar", // 257
-    "Alarm Test", // 258
+    "Alarmtest", // 258
     "Alarm!!!", // 259
     "Initial", // 260
     "Altid", // 261
@@ -6414,9 +6315,9 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Start hukommelseskanal", // 266
     "Stop hukommelseskanal", // 267
     "Kun gem med RDS", // 268
-    "Start auto hukommelse", // 269
-    "Auto hukommelse", // 270
-    "Stationsliste ID", // 271
+    "Start auto-hukommelse", // 269
+    "Auto-hukommelse", // 270
+    "Stationsliste-ID", // 271
     "Fundet", // 272
     "Afbryd! Uden\nhukommelseskanaler", // 273
     "Afbryd! Brugeren\ntrykkede på knap", // 274
@@ -6429,7 +6330,7 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Ventetid på\nkun signal", // 281
     "Tryk på det markerede hjørne", // 282
     "For at kalibrere touchskærmen", // 283
-    "Skærminversion\nskifter", // 284
+    "Hold BW for at stoppe", // 284
     "Vælg båndbredde", // 285
     "Din logbog", // 286
     "Download logbog", // 287
@@ -6440,16 +6341,12 @@ static const char* const myLanguage[21][305] PROGMEM = {
     "Ryd logbog", // 292
     "Logbog ryddet", // 293
     "Rydning mislykkedes", // 294
-    "Indstil NTP\ntidsforskel", // 295
+    "Kan ikke tilføje!\nLogbogen er fuld!", // 295
     "Autologger", // 296
-    "Logbog fuld!", // 297
-    "Urtilstand", // 298
-    "Auto DST på\nNTP tid", // 299
-    "Logbogen indeholder over 130 poster, som fremviseren ikke kan behandle. Download CSV-filen for at behandle den.", // 300
-    "PI låst CT sync", // 301
-    "Fejl! Ingen RDS signal", // 302
-    "Hold BW for at stoppe", // 303
-    "PS kun" // 304
+    "Auto DST på\nNTP-tid", // 297
+    "Indstil NTP-tidsforskel", // 298
+    "Logbogen indeholder over 130 poster, som fremviseren ikke kan behandle. Download CSV-filen for at behandle den." // 299
   }
+
 };
 #endif
