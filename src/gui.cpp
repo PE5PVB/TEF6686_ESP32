@@ -431,10 +431,10 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       ActiveColorSmooth = WhiteSmooth;
       FreqColor = Pink;
       FreqColorSmooth = PinkSmooth;
-      SignificantColor = Purple;
-      SignificantColorSmooth = PurpleSmooth;
-      InsignificantColor = Cherry;
-      InsignificantColorSmooth = CherrySmooth;
+      SignificantColor = Cherry;
+      SignificantColorSmooth = CherrySmooth;
+      InsignificantColor = Cyan;
+      InsignificantColorSmooth = CyanSmooth;
       StereoColor = Cherry;
       StereoColorSmooth = CherrySmooth;
       RDSColor = Teal;
