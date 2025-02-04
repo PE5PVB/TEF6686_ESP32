@@ -466,6 +466,7 @@ void BuildAFScreen() {
   tft.fillScreen(BackgroundColor);
   tft.drawRect(0, 0, 320, 240, FrameColor);
   tft.drawLine(0, 30, 320, 30, FrameColor);
+  tft.drawLine(0, 15, 53, 15, FrameColor);
   tft.drawLine(0, 199, 320, 199, FrameColor);
   tft.drawLine(0, 218, 320, 218, FrameColor);
   tft.drawLine(53, 30, 53, 0, FrameColor);
@@ -480,9 +481,9 @@ void BuildAFScreen() {
   } else if (afpagenr == 2) {
     if (!radio.rds.hasEON) tftPrint(-1, myLanguage[language][88], 6, 48, PrimaryColor, PrimaryColorSmooth, 16);
   }
-  RDSstatusold = false;
+  RDSstatusold = !RDSstatusold;
   ShowFreq(0);
-  Stereostatusold = false;
+  Stereostatusold = !Stereostatusold;
   haseonold = false;
   hasafold = false;
   BWreset = true;
@@ -495,6 +496,9 @@ void BuildAFScreen() {
   afmethodBold = false;
   PIold = " ";
   PSold = " ";
+  rds_clockold = "";
+  dropout = false;
+  rdsreset = true;
   xPos = 0;
   xPos2 = 0;
   xPos3 = 0;
@@ -2822,6 +2826,7 @@ void BuildAdvancedRDS() {
   tft.drawRect(0, 0, 320, 240, FrameColor);
   tft.drawLine(0, 30, 320, 30, FrameColor);
   tft.drawLine(0, 68, 320, 68, FrameColor);
+  tft.drawLine(0, 15, 53, 15, FrameColor);
   tft.drawLine(0, 104, 320, 104, FrameColor);
   tft.drawLine(0, 126, 320, 126, FrameColor);
   tft.drawLine(120, 30, 120, 0, FrameColor);
@@ -2902,9 +2907,9 @@ void BuildAdvancedRDS() {
   tftPrint(-1, "S", 185, 51, GreyoutColor, BackgroundColor, 16);
   tftPrint(-1, "M", 196, 51, GreyoutColor, BackgroundColor, 16);
 
-  RDSstatusold = false;
+  RDSstatusold = !RDSstatusold;
   ShowFreq(0);
-  Stereostatusold = false;
+  Stereostatusold = !Stereostatusold;
   SStatusold = 2000;
   SStatus = 100;
   rssiold = 2000;
@@ -3029,8 +3034,8 @@ void BuildDisplay() {
 
   if (autosquelch) showAutoSquelch(1);
 
-  RDSstatusold = false;
-  Stereostatusold = false;
+  RDSstatusold = !RDSstatusold;
+  Stereostatusold = !Stereostatusold;
   LowLevelInit = true;
   updateBW();
   ShowMemoryPos();
@@ -5548,9 +5553,9 @@ void Infoboxprint(const char* input) {
       tftPrint(0, line1, 155, 48, ActiveColor, ActiveColorSmooth, 28);
       tftPrint(0, line2, 155, 78, ActiveColor, ActiveColorSmooth, 28);
     } else if (setupmode) {
-		tftPrint(0, line1, 155, 40, ActiveColor, ActiveColorSmooth, 28);
-		tftPrint(0, line2, 155, 70, ActiveColor, ActiveColorSmooth, 28);
-	} else {
+      tftPrint(0, line1, 155, 40, ActiveColor, ActiveColorSmooth, 28);
+      tftPrint(0, line2, 155, 70, ActiveColor, ActiveColorSmooth, 28);
+    } else {
       FrequencySprite.drawString(line1, 100, 5);
       FrequencySprite.drawString(line2, 100, 25);
     }
@@ -5559,8 +5564,8 @@ void Infoboxprint(const char* input) {
   } else {
     if (menu) {
       tftPrint(0, input, 155, 78, ActiveColor, ActiveColorSmooth, 28);
-	  } else if (setupmode) {
-		  tftPrint(0, input, 155, 70, ActiveColor, ActiveColorSmooth, 28);
+    } else if (setupmode) {
+      tftPrint(0, input, 155, 70, ActiveColor, ActiveColorSmooth, 28);
     } else {
       FrequencySprite.drawString(input, 100, 15);
     }
