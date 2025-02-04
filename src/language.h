@@ -1850,7 +1850,7 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "Bildschirmhelligkeit", // 29
     "Aus", // 30
     "Ein", // 31
-    "DRÜCKE MODE ZUM VERLASSEN UND SPEICHERN", // 32
+    "DRÜCKE MODE ZUM VERLASSEN & SPEICHERN", // 32
     "DRÜCKE BAND ZUM SCHLIESSEN", // 33
     "SCANVORGANG\nLÄUFT...", // 34
     "Tuner nicht erkannt", // 35
