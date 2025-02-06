@@ -36,12 +36,14 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSDropoutColorSmooth = TealSmooth;
       BarSignificantColor = Red;
       BarInsignificantColor = Green;
-      ModBarSignificantColor = Red;
-      ModBarInsignificantColor = Green;
+      ModBarSignificantColor = Green;
+      ModBarInsignificantColor = Red;
       BWAutoColor = Teal;
       BWAutoColorSmooth = TealSmooth;
       BatteryValueColor = Teal;
       BatteryValueColorSmooth = Black;
+      WifiColorLow = Red;
+      WifiColorHigh = Green;
       break;
     case 1:  // Cyan theme
       PrimaryColor = Cyan;
@@ -65,14 +67,16 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = CyanSmooth;
       RDSDropoutColor = CyanDark;
       RDSDropoutColorSmooth = CyanDarkSmooth;
-      BarSignificantColor = Red;
+      BarSignificantColor = Purple;
       BarInsignificantColor = Cyan;
-      ModBarSignificantColor = Red;
-      ModBarInsignificantColor = Cyan;
+      ModBarSignificantColor = Cyan;
+      ModBarInsignificantColor = Blue;
       BWAutoColor = Teal;
       BWAutoColorSmooth = TealSmooth;
       BatteryValueColor = Teal;
       BatteryValueColorSmooth = TealSmooth;
+      WifiColorLow = Skyblue;
+      WifiColorHigh = Cyan;
       break;
     case 2:  // Crimson theme
       PrimaryColor = Crimson;
@@ -98,12 +102,14 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSDropoutColorSmooth = CrimsonDarkSmooth;
       BarSignificantColor = Yellow;
       BarInsignificantColor = Crimson;
-      ModBarSignificantColor = Yellow;
-      ModBarInsignificantColor = Crimson;
+      ModBarSignificantColor = Watermelon;
+      ModBarInsignificantColor = Yellow;
       BWAutoColor = Coral;
       BWAutoColorSmooth = CoralSmooth;
       BatteryValueColor = Watermelon;
       BatteryValueColorSmooth = WatermelonSmooth;
+      WifiColorLow = Yellow;
+      WifiColorHigh = Crimson;
       break;
     case 3:  // Monochrome theme
       PrimaryColor = White;
@@ -127,14 +133,16 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = Black;
       RDSDropoutColor = PaleGrey;
       RDSDropoutColorSmooth = Black;
-      BarSignificantColor = Red;
-      BarInsignificantColor = Green;
-      ModBarSignificantColor = Red;
-      ModBarInsignificantColor = Green;
+      BarSignificantColor = Honeydew;
+      BarInsignificantColor = White;
+      ModBarSignificantColor = White;
+      ModBarInsignificantColor = Honeydew;
       BWAutoColor = PureGrey;
       BWAutoColorSmooth = Black;
       BatteryValueColor = White;
       BatteryValueColorSmooth = Black;
+      WifiColorLow = Honeydew;
+      WifiColorHigh = White;
       break;
     case 4:  // Volcano theme
       PrimaryColor = Orange;
@@ -160,12 +168,14 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSDropoutColorSmooth = DallasSmooth;
       BarSignificantColor = Red;
       BarInsignificantColor = Orange;
-      ModBarSignificantColor = Red;
-      ModBarInsignificantColor = Orange;
+      ModBarSignificantColor = Orange;
+      ModBarInsignificantColor = Cherry;
       BWAutoColor = Tangerine;
       BWAutoColorSmooth = TangerineSmooth;
       BatteryValueColor = Tangerine;
       BatteryValueColorSmooth = TangerineSmooth;
+      WifiColorLow = Orange;
+      WifiColorHigh = Red;
       break;
     case 5:  // Dendro theme
       PrimaryColor = Green;
@@ -189,14 +199,16 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = GreenDark;
       RDSDropoutColor = Laurel;
       RDSDropoutColorSmooth = LaurelSmooth;
-      BarSignificantColor = Red;
+      BarSignificantColor = Cabbage;
       BarInsignificantColor = Green;
-      ModBarSignificantColor = Red;
-      ModBarInsignificantColor = Green;
+      ModBarSignificantColor = Green;
+      ModBarInsignificantColor = Teal;
       BWAutoColor = Cabbage;
       BWAutoColorSmooth = CabbageSmooth;
       BatteryValueColor = Cabbage;
       BatteryValueColorSmooth = CabbageSmooth;
+      WifiColorLow = Green;
+      WifiColorHigh = Turquoise;
       break;
     case 6:  // Sakura theme
       PrimaryColor = Sakura;
@@ -220,15 +232,16 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = SakuraSmooth;
       RDSDropoutColor = SakuraGrey;
       RDSDropoutColorSmooth = SakuraGreySmooth;
-      BarSignificantColor = Black;
-      BarSignificantColor = Red;
+      BarSignificantColor = Violet;
       BarInsignificantColor = Sakura;
-      ModBarSignificantColor = Red;
-      ModBarInsignificantColor = Sakura;
+      ModBarSignificantColor = Sakura;
+      ModBarInsignificantColor = Pink;
       BWAutoColor = Cherry;
       BWAutoColorSmooth = CherrySmooth;
       BatteryValueColor = Cherry;
       BatteryValueColorSmooth = CherrySmooth;
+      WifiColorLow = Violet;
+      WifiColorHigh = Sakura;
       break;
     case 7:  // Whiteout theme
       PrimaryColor = Black;
@@ -252,14 +265,16 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = Honeydew;
       RDSDropoutColor = PureGrey;
       RDSDropoutColorSmooth = White;
-      BarSignificantColor = Black;
-      BarInsignificantColor = Green;
+      BarSignificantColor = PureGrey;
+      BarInsignificantColor = Black;
       ModBarSignificantColor = Black;
-      ModBarInsignificantColor = Green;
+      ModBarInsignificantColor = PureGrey;
       BWAutoColor = PureGrey;
       BWAutoColorSmooth = White;
       BatteryValueColor = Black;
       BatteryValueColorSmooth = White;
+      WifiColorLow = Black;
+      WifiColorHigh = Darkgrey;
       break;
     case 8:  // Tangerine theme
       PrimaryColor = Tangerine;
@@ -283,14 +298,16 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = IndigoSmooth;
       RDSDropoutColor = Copper;
       RDSDropoutColorSmooth = CopperSmooth;
-      BarSignificantColor = Red;
-      BarInsignificantColor = Green;
-      ModBarSignificantColor = Red;
-      ModBarInsignificantColor = Green;
+      BarSignificantColor = Tangerine;
+      BarInsignificantColor = Yellow;
+      ModBarSignificantColor = Yellow;
+      ModBarInsignificantColor = Orange;
       BWAutoColor = Yolk;
       BWAutoColorSmooth = YolkSmooth;
       BatteryValueColor = Yolk;
       BatteryValueColorSmooth = YolkSmooth;
+      WifiColorLow = Yellow;
+      WifiColorHigh = Orange;
       break;
     case 9:  // Ocean theme
       PrimaryColor = Ocean;
@@ -314,14 +331,16 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = OceanSmooth;
       RDSDropoutColor = Cove;
       RDSDropoutColorSmooth = CoveSmooth;
-      BarSignificantColor = Red;
+      BarSignificantColor = Skyblue;
       BarInsignificantColor = Ocean;
-      ModBarSignificantColor = Red;
-      ModBarInsignificantColor = Ocean;
+      ModBarSignificantColor = Ocean;
+      ModBarInsignificantColor = Deepsky;
       BWAutoColor = Deepsky;
       BWAutoColorSmooth = DeepskySmooth;
       BatteryValueColor = Deepsky;
       BatteryValueColorSmooth = DeepskySmooth;
+      WifiColorLow = Ocean;
+      WifiColorHigh = Skyblue;
       break;
     case 10:  // Indigo theme
       PrimaryColor = Indigo;
@@ -345,14 +364,16 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = IndigoSmooth;
       RDSDropoutColor = Logan;
       RDSDropoutColorSmooth = LoganSmooth;
-      BarSignificantColor = Red;
+      BarSignificantColor = Cherry;
       BarInsignificantColor = Indigo;
-      ModBarSignificantColor = Red;
-      ModBarInsignificantColor = Indigo;
+      ModBarSignificantColor = Indigo;
+      ModBarInsignificantColor = Purple;
       BWAutoColor = Violet;
       BWAutoColorSmooth = VioletSmooth;
       BatteryValueColor = Violet;
       BatteryValueColorSmooth = VioletSmooth;
+      WifiColorLow = Violet;
+      WifiColorHigh = Purple;
       break;
 
     case 11:  // Maroon
@@ -379,12 +400,14 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSDropoutColorSmooth = LoganSmooth;
       BarSignificantColor = Yolk;
       BarInsignificantColor = Cherry;
-      ModBarSignificantColor = Yolk;
-      ModBarInsignificantColor = Cherry;
+      ModBarSignificantColor = Cherry;
+      ModBarInsignificantColor = Violet;
       BWAutoColor = Violet;
       BWAutoColorSmooth = VioletSmooth;
       BatteryValueColor = Purple;
       BatteryValueColorSmooth = PurpleSmooth;
+      WifiColorLow = Yolk;
+      WifiColorHigh = Cherry;
       break;
 
     case 12:  // GoldBrite
@@ -409,14 +432,16 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = YellowSmooth;
       RDSDropoutColor = Teal;
       RDSDropoutColorSmooth = TealSmooth;
-      BarSignificantColor = Red;
-      BarInsignificantColor = Ocean;
-      ModBarSignificantColor = Red;
-      ModBarInsignificantColor = Green;
+      BarSignificantColor = Ocean;
+      BarInsignificantColor = Cherry;
+      ModBarSignificantColor = Green;
+      ModBarInsignificantColor = Blue;
       BWAutoColor = Teal;
       BWAutoColorSmooth = TealSmooth;
       BatteryValueColor = Teal;
       BatteryValueColorSmooth = Black;
+      WifiColorLow = Ocean;
+      WifiColorHigh = Cherry;
       break;
 
     case 13:  // Bubblegum
@@ -441,14 +466,16 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSColorSmooth = TealSmooth;
       RDSDropoutColor = Logan;
       RDSDropoutColorSmooth = LoganSmooth;
-      BarSignificantColor = Coral;
+      BarSignificantColor = Violet;
       BarInsignificantColor = Teal;
-      ModBarSignificantColor = Sakura;
-      ModBarInsignificantColor = Skyblue;
+      ModBarSignificantColor = Teal;
+      ModBarInsignificantColor = Pink;
       BWAutoColor = Violet;
       BWAutoColorSmooth = VioletSmooth;
       BatteryValueColor = Turquoise;
       BatteryValueColorSmooth = CyanDarkSmooth;
+      WifiColorLow = Violet;
+      WifiColorHigh = Turquoise;
       break;
   }
 }
@@ -466,16 +493,14 @@ void BuildAFScreen() {
   tft.fillScreen(BackgroundColor);
   tft.drawRect(0, 0, 320, 240, FrameColor);
   tft.drawLine(0, 30, 320, 30, FrameColor);
-  tft.drawLine(0, 15, 13, 15, FrameColor);
   tft.drawLine(0, 199, 320, 199, FrameColor);
   tft.drawLine(0, 218, 320, 218, FrameColor);
   tft.drawLine(30, 30, 30, 0, FrameColor);
-  tft.drawLine(67, 30, 67, 0, FrameColor);
-  tft.drawLine(107, 30, 107, 0, FrameColor);
-  tft.drawLine(107, 15, 160, 15, FrameColor);
-  tft.drawLine(160, 30, 160, 0, FrameColor);
+  tft.drawLine(66, 30, 66, 0, FrameColor);
+  tft.drawLine(105, 30, 105, 0, FrameColor);
+  tft.drawLine(162, 30, 162, 0, FrameColor);
   tft.drawLine(248, 30, 248, 0, FrameColor);
-  tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, 28);
+  tftPrint(-1, "kHz", 205, 4, ActiveColor, ActiveColorSmooth, 28);
   tftPrint(0, myLanguage[language][33], 160, 222, ActiveColor, ActiveColorSmooth, 16);
   if (afpagenr == 1) {
     if (!radio.rds.hasAF) tftPrint(-1, myLanguage[language][87], 6, 48, PrimaryColor, PrimaryColorSmooth, 16);
@@ -1394,7 +1419,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("kHz", 298, 2);
+          FullLineSprite.drawString("kHz", 300, 2);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
 
           switch (fmdefaultstepsize) {
@@ -1413,7 +1438,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString((mwstepsize ? "10" : "9"), 258, 2);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("kHz", 298, 2);
+          FullLineSprite.drawString("kHz", 300, 2);
           break;
 
         case CONNECTIVITY:
@@ -2827,15 +2852,14 @@ void BuildAdvancedRDS() {
   tft.drawRect(0, 0, 320, 240, FrameColor);
   tft.drawLine(0, 30, 320, 30, FrameColor);
   tft.drawLine(0, 68, 320, 68, FrameColor);
-  tft.drawLine(107, 15, 160, 15, FrameColor);
   tft.drawLine(0, 104, 320, 104, FrameColor);
   tft.drawLine(0, 126, 320, 126, FrameColor);
-  tft.drawLine(107, 30, 107, 0, FrameColor);
+  tft.drawLine(105, 30, 105, 0, FrameColor);
   tft.drawLine(210, 30, 210, 240, FrameColor);
   tft.drawLine(30, 30, 30, 0, FrameColor);
-  tft.drawLine(67, 30, 67, 0, FrameColor);
-  tft.drawLine(107, 30, 107, 0, FrameColor);
-  tft.drawLine(160, 30, 160, 0, FrameColor);
+  tft.drawLine(66, 30, 66, 0, FrameColor);
+  tft.drawLine(105, 30, 105, 0, FrameColor);
+  tft.drawLine(162, 30, 162, 0, FrameColor);
   tft.drawLine(248, 30, 248, 0, FrameColor);
   tft.drawLine(0, 140, 210, 140, FrameColor);
   tft.drawLine(0, 166, 210, 166, FrameColor);
@@ -2883,19 +2907,15 @@ void BuildAdvancedRDS() {
 
   for (int i = 0; i < 33; i++) tft.fillCircle((6 * i) + 10, 133, 2, GreyoutColor);
 
-  tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, 28);
+  tftPrint(-1, "kHz", 205, 4, ActiveColor, ActiveColorSmooth, 28);
 
-  tft.drawBitmap(70, 5, RDSLogo, 35, 22, GreyoutColor);
-  tft.drawBitmap(215, 45, Speaker, 21, 20, GreyoutColor);
+  tft.drawBitmap(68, 5, RDSLogo, 35, 22, GreyoutColor);
+  tft.drawBitmap(215, 47, Speaker, 21, 20, GreyoutColor);
 
   if (!StereoToggle) {
-    tft.drawCircle(48, 15, 10, SecondaryColor);
-    tft.drawCircle(48, 15, 9, SecondaryColor);
+    tft.drawBitmap(38, 5, Mono, 22, 22, SecondaryColor);
   } else {
-    tft.drawCircle(43, 15, 10, GreyoutColor);
-    tft.drawCircle(43, 15, 9, GreyoutColor);
-    tft.drawCircle(53, 15, 10, GreyoutColor);
-    tft.drawCircle(53, 15, 9, GreyoutColor);
+    tft.drawBitmap(32, 5, Stereo, 32, 22, GreyoutColor);
   }
 
   tftPrint(-1, "TP", 2, 51, GreyoutColor, BackgroundColor, 16);
@@ -2961,16 +2981,15 @@ void BuildDisplay() {
   tft.drawRect(0, 0, 320, 240, FrameColor);
   tft.drawLine(0, 30, 320, 30, FrameColor);
   tft.drawLine(0, 100, 320, 100, FrameColor);
-  tft.drawLine(107, 15, 160, 15, FrameColor);
-  tft.drawLine(107, 30, 107, 0, FrameColor);
+  tft.drawLine(105, 30, 105, 0, FrameColor);
   tft.drawLine(210, 100, 210, 217, FrameColor);
   tft.drawLine(248, 30, 248, 0, FrameColor);
   tft.drawLine(0, 160, 210, 160, FrameColor);
   tft.drawLine(0, 180, 320, 180, FrameColor);
   tft.drawLine(0, 217, 320, 217, FrameColor);
   tft.drawLine(30, 30, 30, 0, FrameColor);
-  tft.drawLine(67, 30, 67, 0, FrameColor);
-  tft.drawLine(160, 30, 160, 0, FrameColor);
+  tft.drawLine(66, 30, 66, 0, FrameColor);
+  tft.drawLine(162, 30, 162, 0, FrameColor);
   tft.drawLine(16, 114, 202, 114, ActiveColor);
 
   if (!showmodulation) tft.drawLine(16, 143, 202, 143, GreyoutColor); else tft.drawLine(16, 143, 202, 143, ActiveColor);
@@ -3017,20 +3036,16 @@ void BuildDisplay() {
     tftPrint(-1, "100", 164, 144, ActiveColor, ActiveColorSmooth, 16);
   }
 
-  tftPrint(-1, "kHz", 203, 4, ActiveColor, ActiveColorSmooth, 28);
+  tftPrint(-1, "kHz", 205, 4, ActiveColor, ActiveColorSmooth, 28);
   tftPrint(-1, unitString[unit], 282, 145, ActiveColor, ActiveColorSmooth, 16);
 
-  tft.drawBitmap(70, 5, RDSLogo, 35, 22, GreyoutColor);
-  tft.drawBitmap(253, 140, Speaker, 21, 20, GreyoutColor);
+  tft.drawBitmap(68, 5, RDSLogo, 35, 22, GreyoutColor);
+  tft.drawBitmap(253, 142, Speaker, 21, 20, GreyoutColor);
 
   if (!StereoToggle) {
-    tft.drawCircle(48, 15, 10, SecondaryColor);
-    tft.drawCircle(48, 15, 9, SecondaryColor);
+    tft.drawBitmap(38, 5, Mono, 22, 22, SecondaryColor);
   } else {
-    tft.drawCircle(43, 15, 10, GreyoutColor);
-    tft.drawCircle(43, 15, 9, GreyoutColor);
-    tft.drawCircle(53, 15, 10, GreyoutColor);
-    tft.drawCircle(53, 15, 9, GreyoutColor);
+    tft.drawBitmap(32, 5, Stereo, 32, 22, GreyoutColor);
   }
 
   if (autosquelch) showAutoSquelch(1);
