@@ -732,7 +732,7 @@ void XDRGTKRoutine() {
 
           case '\0':
             radio.setMute();
-            if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
+            if (!screenmute) tft.drawBitmap(253, 140, Speaker, 26, 22, PrimaryColor);
             if (!screenmute) {
               tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
               tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
@@ -761,7 +761,7 @@ void XDRGTKRoutine() {
             XDRScan = false;
             if (VolSet != 0) {
               radio.setUnMute();
-              if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+              if (!screenmute) tft.drawBitmap(253, 140, Speaker, 26, 22, GreyoutColor);
               radio.setVolume(((VolSet * 10) - 40) / 10);
             }
             break;
@@ -799,12 +799,12 @@ void XDRGTKRoutine() {
         VolSet = atoi(buff + 1);
         if (VolSet == 0) {
           radio.setMute();
-          if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, PrimaryColor);
+          if (!screenmute) tft.drawBitmap(253, 140, Speaker, 26, 22, PrimaryColor);
           XDRMute = true;
           SQ = true;
         } else {
           radio.setUnMute();
-          if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+          if (!screenmute) tft.drawBitmap(253, 140, Speaker, 26, 22, GreyoutColor);
           radio.setVolume((VolSet - 40) / 10);
           XDRMute = false;
         }
@@ -831,7 +831,7 @@ void XDRGTKRoutine() {
         store = true;
         XDRMute = false;
         radio.setUnMute();
-        if (!screenmute) tft.drawBitmap(92, 4, Speaker, 26, 22, GreyoutColor);
+        if (!screenmute) tft.drawBitmap(253, 140, Speaker, 26, 22, GreyoutColor);
         VolSet = EEPROM.readByte(EE_BYTE_VOLSET);
         LowLevelSet = EEPROM.readByte(EE_BYTE_LOWLEVELSET);
         softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
