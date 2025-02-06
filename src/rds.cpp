@@ -841,14 +841,14 @@ void showCT() {
       }
 
       // Display the updated time
-      tftReplace(0, rds_clockold, rds_clock, 26, 1, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+      tftReplace(0, rds_clockold, rds_clock, 135, 1, RDSColor, RDSColorSmooth, BackgroundColor, 16);
     } else { // Handle dropout scenarios
 
       if (rtcset) { // Display dropout message if RTC was set
-        tftReplace(0, rds_clockold, rds_clock, 26, 1, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+        tftReplace(0, rds_clockold, rds_clock, 135, 1, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
       } else { // Clear and reprint the clock
-        tftPrint(0, rds_clockold, 26, 1, BackgroundColor, BackgroundColor, 16);
-        tftPrint(0, rds_clock, 26, 1, BackgroundColor, BackgroundColor, 16);
+        tftPrint(0, rds_clockold, 135, 1, BackgroundColor, BackgroundColor, 16);
+        tftPrint(0, rds_clock, 135, 1, BackgroundColor, BackgroundColor, 16);
       }
     }
   }

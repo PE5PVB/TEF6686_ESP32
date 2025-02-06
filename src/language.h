@@ -2756,7 +2756,7 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "Luminosité de l'affichage", // 29
     "Éteint", // 30
     "Allumé", // 31
-    "APPUYEZ MODE POUR SORTIE ET STOCKAGE", // 32
+    "APPUYEZ MODE POUR SORTIE & STOCKAGE", // 32
     "APPUYEZ SUR BAND POUR FERMER", // 33
     "RECHERCHE...", // 34
     "Tuner non détecté", // 35
@@ -5474,7 +5474,7 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "Osvetljenost ekrana", // 29
     "Isključeno", // 30
     "Uključeno", // 31
-    "PRITISNITE MODE DA IZLAZITE I SPASITE", // 32
+    "PRITISNITE MODE ZA IZLAZ I SPAS", // 32
     "PRITISNITE BAND DA ZATVORITE", // 33
     "SKENIRANJE...", // 34
     "Tuner nije\ndetektovan", // 35
@@ -5776,8 +5776,8 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "Näytön kirkkaus", // 29
     "Pois", // 30
     "Päällä", // 31
-    "Paina MODE poistuaksesi ja tallentaaksesi", // 32
-    "Paina BAND sulkeaksesi", // 33
+    "PAINA MODE POISTU JA TALLENNA", // 32
+    "PAINA BAND SULKEAKSESI", // 33
     "SKANNATAAN...", // 34
     "Virittimen havaitseminen\nepäonnistui", // 35
     "AM-antenni vahvistus", // 36
@@ -5928,7 +5928,7 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "FM-asetukset", // 181
     "AM-asetukset", // 182
     "Yhteydet ja kello", // 183
-    "Paina MODE palataksesi", // 184
+    "PAINA MODE PALATAKSESI", // 184
     "CoChannel-tunnistin", // 185
     "CoChannel-tunnistin\nherkkyys", // 186
     "CoChannel-tunnistin\nkynnys", // 187
