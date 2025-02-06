@@ -356,13 +356,6 @@ void readRds() {
             tft.fillCircle(200, 41, 5, SignificantColor);
           }
 
-          if (radio.rds.hasCT) {
-            if (advancedRDS) {
-              tftPrint(1, rds_clock, 208, 109, RDSDropoutColor, RDSDropoutColorSmooth, 16);
-            } else {
-              tftPrint(1, rds_clock, 208, 163, RDSDropoutColor, RDSDropoutColorSmooth, 16);
-            }
-          }
           dropout = true;
         }
       } else {
@@ -423,13 +416,6 @@ void readRds() {
             tft.fillCircle(203, 234, 2, GreyoutColor);
           }
 
-          if (radio.rds.hasCT) {
-            if (advancedRDS) {
-              tftPrint(1, rds_clock, 208, 109, RDSColor, RDSColorSmooth, 16);
-            } else {
-              tftPrint(1, rds_clock, 208, 163, RDSColor, RDSColorSmooth, 16);
-            }
-          }
           dropout = false;
           memreset = false;
         }
@@ -783,8 +769,9 @@ void showPS() {
 }
 
 void showCT() {
-  // Temporary string buffer for time formatting
-  char str[6];
+  // Temporary string buffers for time and date formatting
+  char timeStr[6];   // HH:MM
+  char dateStr[9];   // DD-MM-YY
   time_t t;
 
   // Determine the current time source
@@ -811,7 +798,6 @@ void showCT() {
 
   // Format the time based on region
   if (clockampm) { // USA region: 12-hour AM/PM format
-    // Determine AM/PM and adjust hour format
     int hour = localtime(&t)->tm_hour;
     String ampm = (hour >= 12) ? "PM" : "AM";
     if (hour == 0) {
@@ -819,19 +805,20 @@ void showCT() {
     } else if (hour > 12) {
       hour -= 12; // Convert PM hours
     }
-
-    // Format the time string with leading zeros for minutes
-    char formattedTime[10];
-    sprintf(formattedTime, "%d:%02d%s", hour, localtime(&t)->tm_min, ampm.c_str());
-
-    rds_clock = String(formattedTime);
+    sprintf(timeStr, "%d:%02d%s", hour, localtime(&t)->tm_min, ampm.c_str());
   } else { // Other regions: 24-hour format
-    strftime(str, sizeof(str), "%H:%M", localtime(&t));
-    rds_clock = String(str);
+    strftime(timeStr, sizeof(timeStr), "%H:%M", localtime(&t));
   }
 
+  // Store formatted time in rds_clock
+  rds_clock = String(timeStr);
+
+  // Format the date as DD-MM-YY
+  strftime(dateStr, sizeof(dateStr), "%d-%m-%y", localtime(&t));
+  rds_date = String(dateStr);
+
   // Check if the clock or RDS CT status has changed
-  if (!screenmute && showclock && (rds_clock != rds_clockold || hasCTold != radio.rds.hasCT)) {
+  if (!screenmute && showclock && (rds_clock != rds_clockold || rds_date != rds_dateold || hasCTold != radio.rds.hasCT)) {
 
     // Update RTC if RDS CT is available or NTP was updated
     if ((radio.rds.hasCT && RDSstatus) || NTPupdated) {
@@ -840,21 +827,25 @@ void showCT() {
         rtc.setTime(radio.rds.time);
       }
 
-      // Display the updated time
+      // Display the updated time and date
       tftReplace(0, rds_clockold, rds_clock, 135, 1, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+      tftReplace(0, rds_dateold, rds_date, 135, 16, RDSColor, RDSColorSmooth, BackgroundColor, 16);
     } else { // Handle dropout scenarios
-
       if (rtcset) { // Display dropout message if RTC was set
         tftReplace(0, rds_clockold, rds_clock, 135, 1, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
-      } else { // Clear and reprint the clock
+        tftReplace(0, rds_dateold, rds_date, 135, 16, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+      } else { // Clear and reprint the clock and date
         tftPrint(0, rds_clockold, 135, 1, BackgroundColor, BackgroundColor, 16);
         tftPrint(0, rds_clock, 135, 1, BackgroundColor, BackgroundColor, 16);
+        tftPrint(0, rds_dateold, 135, 16, BackgroundColor, BackgroundColor, 16);
+        tftPrint(0, rds_date, 135, 16, BackgroundColor, BackgroundColor, 16);
       }
     }
   }
 
-  // Update previous clock and RDS CT status
+  // Update previous clock, date, and RDS CT status
   rds_clockold = rds_clock;
+  rds_dateold = rds_date;
   hasCTold = radio.rds.hasCT;
 }
 

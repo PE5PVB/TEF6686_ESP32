@@ -109,6 +109,8 @@ extern String ptynold;
 extern String PTYold;
 extern String rds_clock;
 extern String rds_clockold;
+extern String rds_date;
+extern String rds_dateold;
 extern String RDSSPYRDS;
 extern String RDSSPYRDSold;
 extern String RTold;
