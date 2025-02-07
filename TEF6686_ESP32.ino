@@ -3360,9 +3360,9 @@ void ShowSignalLevel() {
 
         // Calculate segments for signal meter
         if (band < BAND_GAP) {
-          DisplayedSignalSegments = map(SStatus / 10, 0, 70, 0, 100);
+          DisplayedSignalSegments = constrain(map(SStatus / 10, 0, 70, 0, 100), 0, 93);
         } else {
-          DisplayedSignalSegments = (SStatus + 200) / 10;
+          DisplayedSignalSegments = constrain((SStatus + 200) / 10, 0, 93);
         }
 
         // Extract RGB components from 16-bit colors
@@ -3556,15 +3556,20 @@ void ShowBW() {
 void ShowModLevel() {
   if (showmodulation) {
     int segments;
-    if (MStatus > 120) MStatus = 120;
 
+    // Ensure MStatus does not exceed 120
+    MStatus = constrain(MStatus, 0, 120);
+
+    // If seeking or squelch is active, reset modulation level
     if (seek || SQ) {
       MStatus = 0;
       MStatusold = 1;
     }
 
-    segments = map(MStatus, 0, 120, 0, 93);
+    // Map MStatus to segment count, ensuring it does not exceed 93
+    segments = constrain(map(MStatus, 0, 120, 0, 93), 0, 93);
 
+    // Smooth decrease of segments over time
     if (segments < DisplayedSegments && (millis() - ModulationpreviousMillis >= 20)) {
       DisplayedSegments = max(DisplayedSegments - 3, segments);
       ModulationpreviousMillis = millis();
@@ -3572,6 +3577,10 @@ void ShowModLevel() {
       DisplayedSegments = segments;
     }
 
+    // Ensure DisplayedSegments never exceeds 93
+    DisplayedSegments = constrain(DisplayedSegments, 0, 93);
+
+    // Peak Hold Logic
     if (DisplayedSegments > peakholdold) {
       peakholdold = DisplayedSegments;
       peakholdmillis = millis();
@@ -3584,6 +3593,9 @@ void ShowModLevel() {
       }
     }
 
+    // Ensure peak hold indicator stays within bounds
+    peakholdold = constrain(peakholdold, 0, 93);
+
     // Extract RGB components from 16-bit colors
     uint8_t r1 = (ModBarInsignificantColor >> 11) & 0x1F;
     uint8_t g1 = (ModBarInsignificantColor >> 5) & 0x3F;
@@ -3593,18 +3605,18 @@ void ShowModLevel() {
     uint8_t g2 = (ModBarSignificantColor >> 5) & 0x3F;
     uint8_t b2 = ModBarSignificantColor & 0x1F;
 
-    int gradientStart = (93 * 25) / 100;  // Gradient starts at 25% of the bar
-    int gradientEnd = (93 * 60) / 100;    // Gradient ends at 60% of the bar
+    int gradientStart = (93 * 25) / 100;  // 25% of the bar
+    int gradientEnd = (93 * 60) / 100;    // 60% of the bar
 
     // Draw solid color for first 25%
     for (int i = 0; i < min(DisplayedSegments, gradientStart); i++) {
       tft.fillRect(16 + 2 * i, 133, 2, 6, ModBarInsignificantColor);
     }
 
-    // Apply gradient only within the 25%-60% range
+    // Apply gradient from 25% to 60%
     if (DisplayedSegments > gradientStart) {
       for (int i = gradientStart; i < min(DisplayedSegments, gradientEnd); i++) {
-        // Interpolate color from 25% to 60%
+        // Interpolate color between insignificant and significant colors
         uint8_t r = map(i, gradientStart, gradientEnd, r1, r2);
         uint8_t g = map(i, gradientStart, gradientEnd, g1, g2);
         uint8_t b = map(i, gradientStart, gradientEnd, b1, b2);
@@ -3612,12 +3624,11 @@ void ShowModLevel() {
         // Convert back to RGB565 format
         uint16_t gradientColor = (r << 11) | (g << 5) | b;
 
-        // Draw segment with interpolated color
         tft.fillRect(16 + 2 * i, 133, 2, 6, gradientColor);
       }
     }
 
-    // Draw solid end color for segments beyond 60%
+    // Draw solid color for segments beyond 60%
     if (DisplayedSegments > gradientEnd) {
       for (int i = gradientEnd; i < DisplayedSegments; i++) {
         tft.fillRect(16 + 2 * i, 133, 2, 6, ModBarSignificantColor);
@@ -3626,13 +3637,14 @@ void ShowModLevel() {
 
     // Grey out unused segments
     int greyStart = 16 + 2 * DisplayedSegments;
-    int greyWidth = 2 * (94 - DisplayedSegments);
+    int greyWidth = 2 * (93 - DisplayedSegments);
     tft.fillRect(greyStart, 133, greyWidth, 6, GreyoutColor);
 
     // Peak Hold Indicator
-    int peakHoldPosition = 16 + 2 * constrain(peakholdold, 0, 93);
+    int peakHoldPosition = 16 + 2 * peakholdold;
     tft.fillRect(peakHoldPosition, 133, 2, 6, (MStatus > 80) ? ModBarSignificantColor : PrimaryColor);
 
+    // Erase peak hold indicator if it has decayed
     if (millis() - peakholdmillis >= 1000 && peakholdold <= DisplayedSegments) {
       tft.fillRect(peakHoldPosition, 133, 2, 6, GreyoutColor);
     }
