@@ -153,4 +153,5 @@ extern void NTPupdate();
 extern void handleRoot();
 extern void handleDownloadCSV();
 extern void handleLogo();
+extern void Infoboxprint(const char* input);
 #endif

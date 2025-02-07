@@ -932,6 +932,7 @@ void setup() {
     Wire.endTransmission();
   }
 
+  Stereostatusold = radio.getStereoStatus();
   BuildDisplay();
   SelectBand();
   if (tunemode == TUNE_MEM) DoMemoryPosTune();

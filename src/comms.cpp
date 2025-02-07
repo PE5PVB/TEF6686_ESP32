@@ -732,7 +732,7 @@ void XDRGTKRoutine() {
 
           case '\0':
             radio.setMute();
-            if (!screenmute && !afscreen) tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, PrimaryColor);
+            if (!screenmute && !afscreen) tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, PrimaryColor);
             if (!screenmute) {
               tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
               tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
@@ -761,7 +761,7 @@ void XDRGTKRoutine() {
             XDRScan = false;
             if (VolSet != 0) {
               radio.setUnMute();
-              if (!screenmute && !afscreen) tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, GreyoutColor);
+              if (!screenmute && !afscreen) tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, GreyoutColor);
               radio.setVolume(((VolSet * 10) - 40) / 10);
             }
             break;
@@ -799,12 +799,12 @@ void XDRGTKRoutine() {
         VolSet = atoi(buff + 1);
         if (VolSet == 0) {
           radio.setMute();
-          if (!screenmute && !afscreen) tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, PrimaryColor);
+          if (!screenmute && !afscreen) tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, PrimaryColor);
           XDRMute = true;
           SQ = true;
         } else {
           radio.setUnMute();
-          if (!screenmute && !afscreen) tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, GreyoutColor);
+          if (!screenmute && !afscreen) tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, GreyoutColor);
           radio.setVolume((VolSet - 40) / 10);
           XDRMute = false;
         }
@@ -831,7 +831,7 @@ void XDRGTKRoutine() {
         store = true;
         XDRMute = false;
         radio.setUnMute();
-        if (!screenmute && !afscreen) tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, GreyoutColor);
+        if (!screenmute && !afscreen) tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, GreyoutColor);
         VolSet = EEPROM.readByte(EE_BYTE_VOLSET);
         LowLevelSet = EEPROM.readByte(EE_BYTE_LOWLEVELSET);
         softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
@@ -903,9 +903,9 @@ void passwordcrypt() {
 
 void tryWiFi() {
   if (!setupmode && wifi) {
-    tft.drawRoundRect(1, 60, 319, 140, 5, ActiveColor);
-    tft.fillRoundRect(3, 62, 315, 136, 5, BackgroundColor);
-    tftPrint(0, myLanguage[language][55], 155, 88, ActiveColor, ActiveColorSmooth, 28);
+    tft.drawRoundRect(1, 20, 319, 180, 5, ActiveColor);
+    tft.fillRoundRect(3, 22, 315, 176, 5, BackgroundColor);
+    Infoboxprint(myLanguage[language][55]);
   }
   if (wifi) {
     if (wc.autoConnect()) {

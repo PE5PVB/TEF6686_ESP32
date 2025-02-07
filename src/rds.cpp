@@ -814,7 +814,11 @@ void showCT() {
   rds_clock = String(timeStr);
 
   // Format the date as DD-MM-YY
-  strftime(dateStr, sizeof(dateStr), "%d-%m-%y", localtime(&t));
+  if (clockampm) {
+    strftime(dateStr, sizeof(dateStr), "%m-%d-%y", localtime(&t));
+  } else {
+    strftime(dateStr, sizeof(dateStr), "%d-%m-%y", localtime(&t));
+  }
   rds_date = String(dateStr);
 
   // Check if the clock or RDS CT status has changed
@@ -829,16 +833,16 @@ void showCT() {
 
       // Display the updated time and date
       tftReplace(0, rds_clockold, rds_clock, 134, 1, RDSColor, RDSColorSmooth, BackgroundColor, 16);
-      tftReplace(0, rds_dateold, rds_date, 134, 16, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+      tftReplace(0, rds_dateold, rds_date, 134, 15, RDSColor, RDSColorSmooth, BackgroundColor, 16);
     } else { // Handle dropout scenarios
       if (rtcset) { // Display dropout message if RTC was set
         tftReplace(0, rds_clockold, rds_clock, 134, 1, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
-        tftReplace(0, rds_dateold, rds_date, 134, 16, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+        tftReplace(0, rds_dateold, rds_date, 134, 15, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
       } else { // Clear and reprint the clock and date
         tftPrint(0, rds_clockold, 134, 1, BackgroundColor, BackgroundColor, 16);
         tftPrint(0, rds_clock, 134, 1, BackgroundColor, BackgroundColor, 16);
-        tftPrint(0, rds_dateold, 134, 16, BackgroundColor, BackgroundColor, 16);
-        tftPrint(0, rds_date, 134, 16, BackgroundColor, BackgroundColor, 16);
+        tftPrint(0, rds_dateold, 134, 15, BackgroundColor, BackgroundColor, 16);
+        tftPrint(0, rds_date, 134, 15, BackgroundColor, BackgroundColor, 16);
       }
     }
   }
