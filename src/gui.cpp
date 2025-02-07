@@ -509,7 +509,7 @@ void BuildAFScreen() {
   }
   RDSstatusold = !RDSstatusold;
   ShowFreq(0);
-  Stereostatusold = !Stereostatusold;
+  Stereostatusold = false;
   haseonold = false;
   hasafold = false;
   BWreset = true;
@@ -2930,7 +2930,7 @@ void BuildAdvancedRDS() {
 
   RDSstatusold = !RDSstatusold;
   ShowFreq(0);
-  Stereostatusold = !Stereostatusold;
+  Stereostatusold = false;
   SStatusold = 2000;
   SStatus = 100;
   rssiold = 2000;
@@ -3051,7 +3051,7 @@ void BuildDisplay() {
   if (autosquelch) showAutoSquelch(1);
 
   RDSstatusold = !RDSstatusold;
-  Stereostatusold = !Stereostatusold;
+  Stereostatusold = false;
   LowLevelInit = true;
   updateBW();
   ShowMemoryPos();
