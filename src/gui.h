@@ -173,6 +173,8 @@ extern int Squelchold;
 extern int SStatusold;
 extern int StereoColor;
 extern int StereoColorSmooth;
+extern int WifiColorHigh;
+extern int WifiColorLow;
 extern int xPos;
 extern int xPos2;
 extern int xPos3;

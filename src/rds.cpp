@@ -805,7 +805,7 @@ void showCT() {
     } else if (hour > 12) {
       hour -= 12; // Convert PM hours
     }
-    sprintf(timeStr, "%d:%02d%s", hour, localtime(&t)->tm_min, ampm.c_str());
+    sprintf(timeStr, "%d:%02d %s", hour, localtime(&t)->tm_min, ampm.c_str());
   } else { // Other regions: 24-hour format
     strftime(timeStr, sizeof(timeStr), "%H:%M", localtime(&t));
   }
@@ -828,17 +828,17 @@ void showCT() {
       }
 
       // Display the updated time and date
-      tftReplace(0, rds_clockold, rds_clock, 135, 1, RDSColor, RDSColorSmooth, BackgroundColor, 16);
-      tftReplace(0, rds_dateold, rds_date, 135, 16, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+      tftReplace(0, rds_clockold, rds_clock, 134, 1, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+      tftReplace(0, rds_dateold, rds_date, 134, 16, RDSColor, RDSColorSmooth, BackgroundColor, 16);
     } else { // Handle dropout scenarios
       if (rtcset) { // Display dropout message if RTC was set
-        tftReplace(0, rds_clockold, rds_clock, 135, 1, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
-        tftReplace(0, rds_dateold, rds_date, 135, 16, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+        tftReplace(0, rds_clockold, rds_clock, 134, 1, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+        tftReplace(0, rds_dateold, rds_date, 134, 16, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
       } else { // Clear and reprint the clock and date
-        tftPrint(0, rds_clockold, 135, 1, BackgroundColor, BackgroundColor, 16);
-        tftPrint(0, rds_clock, 135, 1, BackgroundColor, BackgroundColor, 16);
-        tftPrint(0, rds_dateold, 135, 16, BackgroundColor, BackgroundColor, 16);
-        tftPrint(0, rds_date, 135, 16, BackgroundColor, BackgroundColor, 16);
+        tftPrint(0, rds_clockold, 134, 1, BackgroundColor, BackgroundColor, 16);
+        tftPrint(0, rds_clock, 134, 1, BackgroundColor, BackgroundColor, 16);
+        tftPrint(0, rds_dateold, 134, 16, BackgroundColor, BackgroundColor, 16);
+        tftPrint(0, rds_date, 134, 16, BackgroundColor, BackgroundColor, 16);
       }
     }
   }
