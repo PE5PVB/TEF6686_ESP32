@@ -1007,7 +1007,7 @@ void loop() {
     if (shouldScan) {
       if (scanmute && scanholdonsignal) {
         radio.setMute();
-        if (!screenmute && !afscreen) tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, PrimaryColor);
+        if (!screenmute && !afscreen) tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, PrimaryColor);
         SQ = true;
       }
       scanholdflag = false;
@@ -1049,7 +1049,7 @@ void loop() {
       if (scanmute && scanholdonsignal) {
         radio.setUnMute();
         SQ = false;
-        if (!screenmute && !afscreen) tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, GreyoutColor);
+        if (!screenmute && !afscreen) tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, GreyoutColor);
       }
     }
 
@@ -1105,7 +1105,7 @@ void loop() {
       if (radio.af_counter == 0) {
         if (findMemoryAF && radio.rds.correctPI != 0 && tunemode == TUNE_MEM && (USN > 250 || WAM > 250)) {
           radio.setMute();
-          tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, PrimaryColor);
+          tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, PrimaryColor);
           SQ = true;
           if (!screenmute) {
             if (advancedRDS) {
@@ -1149,7 +1149,7 @@ void loop() {
 
           radio.setUnMute();
           SQ = false;
-          tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, GreyoutColor);
+          tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, GreyoutColor);
         }
         findMemoryAF = false;
       } else {
@@ -2355,7 +2355,7 @@ void SelectBand() {
   }
 
   if (band > BAND_GAP) {
-    if (!screenmute && !afscreen) tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, GreyoutColor);
+    if (!screenmute && !afscreen) tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, GreyoutColor);
     if (tunemode == TUNE_MI_BAND && band != BAND_SW) tunemode = TUNE_MAN;
     BWreset = true;
     BWset = BWsetAM;
@@ -2484,7 +2484,7 @@ void BWButtonPress() {
   } else {
     if (!usesquelch) radio.setUnMute();
     if (!BWtune && !menu) {
-      if (!screenmute && !afscreen) tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, GreyoutColor);
+      if (!screenmute && !afscreen) tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, GreyoutColor);
       unsigned long counterold = millis();
       unsigned long counter = millis();
       while (digitalRead(BWBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
@@ -2550,7 +2550,7 @@ void ModeButtonPress() {
     } else {
       if (!BWtune && !menu) {
         if (!screenmute && !afscreen) {
-          tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, GreyoutColor);
+          tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, GreyoutColor);
         }
         memorystore = false;
         unsigned long counterold = millis();
@@ -2758,7 +2758,7 @@ void ButtonPress() {
           }
         }
       } else {
-        if (!screenmute && !afscreen) tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, GreyoutColor);
+        if (!screenmute && !afscreen) tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, GreyoutColor);
         unsigned long counterold = millis();
         unsigned long counter = millis();
         while (digitalRead(ROTARY_BUTTON) == LOW && counter - counterold <= 1000) counter = millis();
@@ -3342,13 +3342,29 @@ void ShowSignalLevel() {
     if (unit == 1) SStatusprint = ((SStatus * 100) + 10875) / 100;
     if (unit == 2) SStatusprint = round((float(SStatus) / 10.0 - 10.0 * log10(75) - 90.0) * 10.0);
 
+    static int DisplayedSignalSegments = 0;
+    static unsigned long SignalPreviousMillis = 0;
+
     if (SStatusprint > (SStatusold + 3) || SStatusprint < (SStatusold - 3)) {
       if (advancedRDS) {
-        tftReplace(1, String(SStatusold / 10) + "." + String(abs(SStatusold % 10)), String(SStatusprint / 10) + "." + String(abs(SStatusprint % 10)), 273, 51, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 16);
+        tftReplace(1, String(SStatusold / 10) + "." + String(abs(SStatusold % 10)),
+                   String(SStatusprint / 10) + "." + String(abs(SStatusprint % 10)),
+                   273, 51, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 16);
       } else {
-        if (SStatusold / 10 != SStatusprint / 10) tftReplace(1, String(SStatusold / 10), String(SStatusprint / 10), 288, 105, FreqColor, FreqColorSmooth, BackgroundColor, 48);
-        tftReplace(1, "." + String(abs(SStatusold % 10)), "." + String(abs(SStatusprint % 10)), 310, 105, FreqColor, FreqColorSmooth, BackgroundColor, 28);
-        if (band < BAND_GAP) segments = map(SStatus / 10, 0, 70, 0, 100); else segments = (SStatus + 200) / 10;
+        if (SStatusold / 10 != SStatusprint / 10) {
+          tftReplace(1, String(SStatusold / 10), String(SStatusprint / 10),
+                     288, 105, FreqColor, FreqColorSmooth, BackgroundColor, 48);
+        }
+        tftReplace(1, "." + String(abs(SStatusold % 10)),
+                   "." + String(abs(SStatusprint % 10)),
+                   310, 105, FreqColor, FreqColorSmooth, BackgroundColor, 28);
+
+        // Calculate segments for signal meter
+        if (band < BAND_GAP) {
+          DisplayedSignalSegments = map(SStatus / 10, 0, 70, 0, 100);
+        } else {
+          DisplayedSignalSegments = (SStatus + 200) / 10;
+        }
 
         // Extract RGB components from 16-bit colors
         uint8_t r1 = (BarInsignificantColor >> 11) & 0x1F;
@@ -3359,42 +3375,38 @@ void ShowSignalLevel() {
         uint8_t g2 = (BarSignificantColor >> 5) & 0x3F;
         uint8_t b2 = BarSignificantColor & 0x1F;
 
-        int gradientStart = (93 * 25) / 100;  // Gradient starts at 25% of the bar
-        int gradientEnd = (93 * 60) / 100;    // Gradient ends at 60% of the bar
+        int gradientStart = (93 * 25) / 100;
+        int gradientEnd = (93 * 60) / 100;
 
         // Draw solid color for first 25%
-        for (int i = 0; i < min(DisplayedSegments, gradientStart); i++) {
+        for (int i = 0; i < min(DisplayedSignalSegments, gradientStart); i++) {
           tft.fillRect(16 + 2 * i, 105, 2, 6, BarInsignificantColor);
         }
 
-        // Apply gradient only within the 25%-60% range
-        if (DisplayedSegments > gradientStart) {
-          for (int i = gradientStart; i < min(DisplayedSegments, gradientEnd); i++) {
-            // Interpolate color from 25% to 60%
+        // Apply gradient from 25% to 60%
+        if (DisplayedSignalSegments > gradientStart) {
+          for (int i = gradientStart; i < min(DisplayedSignalSegments, gradientEnd); i++) {
             uint8_t r = map(i, gradientStart, gradientEnd, r1, r2);
             uint8_t g = map(i, gradientStart, gradientEnd, g1, g2);
             uint8_t b = map(i, gradientStart, gradientEnd, b1, b2);
-
-            // Convert back to RGB565 format
             uint16_t gradientColor = (r << 11) | (g << 5) | b;
-
-            // Draw segment with interpolated color
             tft.fillRect(16 + 2 * i, 105, 2, 6, gradientColor);
           }
         }
 
         // Draw solid end color for segments beyond 60%
-        if (DisplayedSegments > gradientEnd) {
-          for (int i = gradientEnd; i < DisplayedSegments; i++) {
+        if (DisplayedSignalSegments > gradientEnd) {
+          for (int i = gradientEnd; i < DisplayedSignalSegments; i++) {
             tft.fillRect(16 + 2 * i, 105, 2, 6, BarSignificantColor);
           }
         }
 
         // Grey out unused segments
-        int greyStart = 16 + 2 * DisplayedSegments;
-        int greyWidth = 2 * (94 - DisplayedSegments);
+        int greyStart = 16 + 2 * DisplayedSignalSegments;
+        int greyWidth = 2 * (94 - DisplayedSignalSegments);
         tft.fillRect(greyStart, 105, greyWidth, 6, GreyoutColor);
       }
+
       SStatusold = SStatusprint;
     }
   }
@@ -3656,7 +3668,7 @@ void doSquelch() {
         if (SQ || BWreset) {
           if (!seek) radio.setUnMute();
           if (!screenmute && !seek && !afscreen) {
-            tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, GreyoutColor);
+            tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, GreyoutColor);
           }
           autosquelchtimer = millis();
           SQ = false;
@@ -3665,7 +3677,7 @@ void doSquelch() {
         if ((!SQ || BWreset) && (millis() >= autosquelchtimer + 1000)) {
           radio.setMute();
           if (!screenmute && !seek && !afscreen) {
-            tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, PrimaryColor);
+            tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, PrimaryColor);
           }
           autosquelchtimer = millis();
           SQ = true;
@@ -3675,13 +3687,13 @@ void doSquelch() {
       if ((USN < amscansens * 30) && (OStatus < 2 && OStatus > -2) && (!scandxmode || (scandxmode && !scanmute))) {
         if (!seek) radio.setUnMute();
         if (!screenmute && !seek && !afscreen) {
-          tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, GreyoutColor);
+          tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, GreyoutColor);
         }
         SQ = false;
       } else {
         radio.setMute();
         if (!screenmute && !seek && !afscreen) {
-          tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, PrimaryColor);
+          tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, PrimaryColor);
         }
         SQ = true;
       }
@@ -3715,13 +3727,13 @@ void doSquelch() {
           if (Squelch < SStatus || Squelch == -100 || Squelch == 0) {
             if (!seek) radio.setUnMute();
             if (!screenmute && !seek && !afscreen) {
-              tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, GreyoutColor);
+              tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, GreyoutColor);
             }
             SQ = false;
           } else {
             radio.setMute();
             if (!screenmute && !seek && !afscreen) {
-              tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, PrimaryColor);
+              tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, PrimaryColor);
             }
             SQ = true;
           }
@@ -3729,13 +3741,13 @@ void doSquelch() {
           if (Stereostatus) {
             radio.setUnMute();
             if (!screenmute && !seek && !afscreen) {
-              tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, GreyoutColor);
+              tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, GreyoutColor);
             }
             SQ = false;
           } else {
             radio.setMute();
             if (!screenmute && !seek && !afscreen) {
-              tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, PrimaryColor);
+              tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, PrimaryColor);
             }
             SQ = true;
           }
@@ -3764,13 +3776,13 @@ void doSquelch() {
         if (Squelch < SStatus || Squelch == -100 || Squelch == 0) {
           if (!seek) radio.setUnMute();
           if (!screenmute && !seek && !afscreen) {
-            tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, GreyoutColor);
+            tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, GreyoutColor);
           }
           SQ = false;
         } else {
           radio.setMute();
           if (!screenmute && !seek && !afscreen) {
-            tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, PrimaryColor);
+            tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, PrimaryColor);
           }
           SQ = true;
         }
@@ -3778,13 +3790,13 @@ void doSquelch() {
         if (Stereostatus) {
           if (!seek) radio.setUnMute();
           if (!screenmute && !seek && !afscreen) {
-            tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, GreyoutColor);
+            tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, GreyoutColor);
           }
           SQ = false;
         } else {
           radio.setMute();
           if (!screenmute && !seek && !afscreen) {
-            tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, PrimaryColor);
+            tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, PrimaryColor);
           }
           SQ = true;
         }
@@ -4387,12 +4399,12 @@ void EdgeBeeper() {
   if (radio.mute) {
     radio.setMute();
     if (!screenmute && !afscreen) {
-      tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, PrimaryColor);
+      tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, PrimaryColor);
     }
   } else {
     radio.setUnMute();
     if (!screenmute && !afscreen) {
-      tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, GreyoutColor);
+      tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, GreyoutColor);
     }
   }
 }
@@ -4409,7 +4421,7 @@ void Seek(bool mode) {
   }
 
   if (!screenmute && !afscreen) {
-    tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, PrimaryColor);
+    tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, PrimaryColor);
   }
   if (!mode) TuneDown(); else TuneUp();
   delay(50);
@@ -4425,7 +4437,7 @@ void Seek(bool mode) {
       seek = false;
       radio.setUnMute();
       if (!screenmute && !afscreen) {
-        tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, GreyoutColor);
+        tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, GreyoutColor);
       }
       store = true;
     } else {
@@ -4439,7 +4451,7 @@ void Seek(bool mode) {
       seek = false;
       radio.setUnMute();
       if (!screenmute && !afscreen) {
-        tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, GreyoutColor);
+        tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, GreyoutColor);
       }
       store = true;
     } else {
@@ -4813,7 +4825,7 @@ void cancelDXScan() {
   scandxmode = false;
   if (scanmute) {
     radio.setUnMute();
-    tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, GreyoutColor);
+    tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, GreyoutColor);
 
     if (!flashing) {
       tft.fillRoundRect(2, 80, 40, 18, 2, SecondaryColor);
@@ -4978,7 +4990,7 @@ void startFMDXScan() {
   }
   if (scanmute) {
     radio.setMute();
-    tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47: 142), Speaker, 21, 20, PrimaryColor);
+    tft.drawBitmap((advancedRDS ? 215 : 253), (advancedRDS ? 47 : 142), Speaker, 21, 20, PrimaryColor);
     SQ = true;
     Squelchold = -2;
   }
