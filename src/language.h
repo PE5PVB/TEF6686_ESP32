@@ -3973,7 +3973,7 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "Mostra errori RDS", // 38
     "Lingua", // 39
     "Scegli lingua", // 40
-    "PI bloccato CT sync", // 41
+    "PI agganc. su CT sync", // 41
     "Errore! Nessun segnale RDS", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
@@ -4137,7 +4137,7 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "Tutto", // 202
     "PS veloce", // 203
     "Predefinito", // 204
-    "Disattiva schermo su\nconnessione XDRGTK", // 205
+    "Spegni schermo se connesso XDRGTK", // 205
     "Miglioramento stereo FMSI", // 206
     "Funzione disponibile solo su TEF6687/6689!", // 207
     "Funzione non disponibile su skin selezionata!", // 208
@@ -4156,7 +4156,7 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "Segnale", // 221
     "Disattiva audio\nmentre scansiona", // 222
     "AEREO", // 223
-    "Premi per 5 sec. il pulsante di banda", // 224
+    "Premi x 5 sec. pulsante banda", // 224
     "Spegni", // 225
     "Schermo spento", // 226
     "Disabilitato", // 227
