@@ -2910,7 +2910,7 @@ void BuildAdvancedRDS() {
   tftPrint(-1, "kHz", 205, 4, ActiveColor, ActiveColorSmooth, 28);
 
   tft.drawBitmap(68, 5, RDSLogo, 35, 22, GreyoutColor);
-  tft.drawBitmap(215, 47, Speaker, 21, 20, GreyoutColor);
+  tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
 
   if (!StereoToggle) {
     tft.drawBitmap(38, 5, Mono, 22, 22, SecondaryColor);
@@ -3040,7 +3040,7 @@ void BuildDisplay() {
   tftPrint(-1, unitString[unit], 282, 145, ActiveColor, ActiveColorSmooth, 16);
 
   tft.drawBitmap(68, 5, RDSLogo, 35, 22, GreyoutColor);
-  tft.drawBitmap(253, 142, Speaker, 21, 20, GreyoutColor);
+  tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
 
   if (!StereoToggle) {
     tft.drawBitmap(38, 5, Mono, 22, 22, SecondaryColor);
