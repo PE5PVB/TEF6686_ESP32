@@ -3052,8 +3052,8 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "Висок край на\nчестотната лента", // 23
     "Отместване на\nнивото", // 24
     "Праг на стерео разделяне", // 25
-    "Честота на\nHigh Cut", // 26
-    "Праг на High Cut", // 27
+    "Честота на висок отрез", // 26
+    "Праг на висок отрез", // 27
     "Праг за слаб сигнал", // 28
     "Яркост на дисплея", // 29
     "Изкллючв.", // 30
@@ -3063,7 +3063,7 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "СКЕНИРАНЕ...", // 34
     "Тунерът не\nе разпознат!", // 35
     "Усилване на\nAM антена", // 36
-    "FM AGC", // 37
+    "FM АУР", // 37
     "Показване на\nRDS грешки", // 38
     "Език", // 39
     "Изберете език", // 40
@@ -3128,16 +3128,16 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "Използване на AF", // 99
     "Избор на FM лента", // 100
     "Избор на AM лента", // 101
-    "Дълги вълни", // 102
-    "Средни вълни", // 103
-    "Къси вълни", // 104
-    "FM", // 105
+    "ДВ", // 102
+    "СВ", // 103
+    "КВ", // 104
+    "ЧМ", // 105
     "ОИРТ", // 106
     "Спиране на събуждане\nна екрана", // 107
     "Избор на модел", // 108
     "База", // 109
-    "Портативен", // 110
-    "Портативен с\nдокосване", // 111
+    "Преносим", // 110
+    "Преносимо докосване", // 111
     "Заглавие", // 112
     "Албум", // 113
     "Песен", // 114
@@ -3224,7 +3224,7 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "СВЪРЗАНЕ", // 195
     "DX РЕЖИМ", // 196
     "АВТОМАТИЧНА ПАМЕТ", // 197
-    "AM AGC", // 198
+    "AM АУР", // 198
     "FM деемфаза", // 199
     "Малък", // 200
     "Голям", // 201
@@ -3324,7 +3324,7 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "Не може да се добави запис!\nДневникът е пълен!", // 295
     "Автоматичен дневник", // 296
     "Автоматично лятно\nвреме по NTP", // 297
-    "Задаване на отместване\nна NTP време", // 298
+    "Отместване на NTP", // 298
     "Дневникът съдържа над 130 записа, които не могат да бъдат обработени. Моля, изтеглете CSV файла за обработка." // 299
   },
 
@@ -3973,7 +3973,7 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "Mostra errori RDS", // 38
     "Lingua", // 39
     "Scegli lingua", // 40
-    "PI agganc. su CT sync", // 41
+    "PI bloccato CT sync", // 41
     "Errore! Nessun segnale RDS", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
@@ -4137,7 +4137,7 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "Tutto", // 202
     "PS veloce", // 203
     "Predefinito", // 204
-    "Spegni schermo se connesso XDRGTK", // 205
+    "Disattiva schermo su\nconnessione XDRGTK", // 205
     "Miglioramento stereo FMSI", // 206
     "Funzione disponibile solo su TEF6687/6689!", // 207
     "Funzione non disponibile su skin selezionata!", // 208
@@ -4156,7 +4156,7 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "Segnale", // 221
     "Disattiva audio\nmentre scansiona", // 222
     "AEREO", // 223
-    "Premi x 5 sec. pulsante banda", // 224
+    "Premi per 5 sec. il pulsante di banda", // 224
     "Spegni", // 225
     "Schermo spento", // 226
     "Disabilitato", // 227
