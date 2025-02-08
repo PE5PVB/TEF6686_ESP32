@@ -1006,7 +1006,7 @@ void loop() {
     if (shouldScan) {
       if (scanmute && scanholdonsignal) {
         radio.setMute();
-        if (!screenmute && !afscreen) tft.drawBitmap(249, 4, Speaker, 28, 24, PrimaryColor);
+        if (!screenmute) tft.drawBitmap(249, 4, Speaker, 28, 24, PrimaryColor);
         SQ = true;
       }
       scanholdflag = false;
@@ -1048,7 +1048,7 @@ void loop() {
       if (scanmute && scanholdonsignal) {
         radio.setUnMute();
         SQ = false;
-        if (!screenmute && !afscreen) tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
+        if (!screenmute) tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
       }
     }
 
@@ -2354,7 +2354,7 @@ void SelectBand() {
   }
 
   if (band > BAND_GAP) {
-    if (!screenmute && !afscreen) tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
+    if (!screenmute) tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
     if (tunemode == TUNE_MI_BAND && band != BAND_SW) tunemode = TUNE_MAN;
     BWreset = true;
     BWset = BWsetAM;
@@ -2483,7 +2483,7 @@ void BWButtonPress() {
   } else {
     if (!usesquelch) radio.setUnMute();
     if (!BWtune && !menu) {
-      if (!screenmute && !afscreen) tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
+      if (!screenmute) tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
       unsigned long counterold = millis();
       unsigned long counter = millis();
       while (digitalRead(BWBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
@@ -2548,7 +2548,7 @@ void ModeButtonPress() {
       freq_in = 0;
     } else {
       if (!BWtune && !menu) {
-        if (!screenmute && !afscreen) {
+        if (!screenmute) {
           tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
         }
         memorystore = false;
@@ -2757,7 +2757,7 @@ void ButtonPress() {
           }
         }
       } else {
-        if (!screenmute && !afscreen) tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
+        if (!screenmute) tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
         unsigned long counterold = millis();
         unsigned long counter = millis();
         while (digitalRead(ROTARY_BUTTON) == LOW && counter - counterold <= 1000) counter = millis();
@@ -3678,7 +3678,7 @@ void doSquelch() {
       if ((USN < fmscansens * 30) && (WAM < 230) && (OStatus < 100 && OStatus > -100) && (!scandxmode || (scandxmode && !scanmute))) {
         if (SQ || BWreset) {
           if (!seek) radio.setUnMute();
-          if (!screenmute && !seek && !afscreen) {
+          if (!screenmute && !seek) {
             tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
           }
           autosquelchtimer = millis();
@@ -3687,7 +3687,7 @@ void doSquelch() {
       } else {
         if ((!SQ || BWreset) && (millis() >= autosquelchtimer + 1000)) {
           radio.setMute();
-          if (!screenmute && !seek && !afscreen) {
+          if (!screenmute && !seek) {
             tft.drawBitmap(249, 4, Speaker, 28, 24, PrimaryColor);
           }
           autosquelchtimer = millis();
@@ -3697,13 +3697,13 @@ void doSquelch() {
     } else {
       if ((USN < amscansens * 30) && (OStatus < 2 && OStatus > -2) && (!scandxmode || (scandxmode && !scanmute))) {
         if (!seek) radio.setUnMute();
-        if (!screenmute && !seek && !afscreen) {
+        if (!screenmute && !seek) {
           tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
         }
         SQ = false;
       } else {
         radio.setMute();
-        if (!screenmute && !seek && !afscreen) {
+        if (!screenmute && !seek) {
           tft.drawBitmap(249, 4, Speaker, 28, 24, PrimaryColor);
         }
         SQ = true;
@@ -3737,13 +3737,13 @@ void doSquelch() {
         if (Squelch != -1) {
           if (Squelch < SStatus || Squelch == -100 || Squelch == 0) {
             if (!seek) radio.setUnMute();
-            if (!screenmute && !seek && !afscreen) {
+            if (!screenmute && !seek) {
               tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
             }
             SQ = false;
           } else {
             radio.setMute();
-            if (!screenmute && !seek && !afscreen) {
+            if (!screenmute && !seek) {
               tft.drawBitmap(249, 4, Speaker, 28, 24, PrimaryColor);
             }
             SQ = true;
@@ -3751,13 +3751,13 @@ void doSquelch() {
         } else {
           if (Stereostatus) {
             radio.setUnMute();
-            if (!screenmute && !seek && !afscreen) {
+            if (!screenmute && !seek) {
               tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
             }
             SQ = false;
           } else {
             radio.setMute();
-            if (!screenmute && !seek && !afscreen) {
+            if (!screenmute && !seek) {
               tft.drawBitmap(249, 4, Speaker, 28, 24, PrimaryColor);
             }
             SQ = true;
@@ -3786,13 +3786,13 @@ void doSquelch() {
       if (Squelch != 920) {
         if (Squelch < SStatus || Squelch == -100 || Squelch == 0) {
           if (!seek) radio.setUnMute();
-          if (!screenmute && !seek && !afscreen) {
+          if (!screenmute && !seek) {
             tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
           }
           SQ = false;
         } else {
           radio.setMute();
-          if (!screenmute && !seek && !afscreen) {
+          if (!screenmute && !seek) {
             tft.drawBitmap(249, 4, Speaker, 28, 24, PrimaryColor);
           }
           SQ = true;
@@ -3800,13 +3800,13 @@ void doSquelch() {
       } else {
         if (Stereostatus) {
           if (!seek) radio.setUnMute();
-          if (!screenmute && !seek && !afscreen) {
+          if (!screenmute && !seek) {
             tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
           }
           SQ = false;
         } else {
           radio.setMute();
-          if (!screenmute && !seek && !afscreen) {
+          if (!screenmute && !seek) {
             tft.drawBitmap(249, 4, Speaker, 28, 24, PrimaryColor);
           }
           SQ = true;
@@ -4114,18 +4114,18 @@ void ShowRSSI() {
   if (rssiold != rssi) {
     rssiold = rssi;
     if (rssi == 0) {
-      tft.drawBitmap(281, 3, WiFi4, 33, 25, BackgroundColor);
+      tft.drawBitmap(282, 3, WiFi4, 30, 25, BackgroundColor);
     } else if (rssi > -50 && rssi < 0) {
-      tft.drawBitmap(281, 3, WiFi4, 33, 25, WifiColorHigh);
+      tft.drawBitmap(282, 3, WiFi4, 30, 25, WifiColorHigh);
     } else if (rssi > -60) {
-      tft.drawBitmap(281, 3, WiFi4, 33, 25, GreyoutColor);
-      tft.drawBitmap(281, 3, WiFi3, 33, 25, WifiColorHigh);
+      tft.drawBitmap(282, 3, WiFi4, 30, 25, GreyoutColor);
+      tft.drawBitmap(282, 3, WiFi3, 30, 25, WifiColorHigh);
     } else if (rssi > -70) {
-      tft.drawBitmap(281, 3, WiFi4, 33, 25, GreyoutColor);
-      tft.drawBitmap(281, 3, WiFi2, 33, 25, WifiColorLow);
+      tft.drawBitmap(282, 3, WiFi4, 30, 25, GreyoutColor);
+      tft.drawBitmap(282, 3, WiFi2, 30, 25, WifiColorLow);
     } else if (rssi < -70) {
-      tft.drawBitmap(281, 3, WiFi4, 33, 25, GreyoutColor);
-      tft.drawBitmap(281, 3, WiFi1, 33, 25, WifiColorLow);
+      tft.drawBitmap(282, 3, WiFi4, 30, 25, GreyoutColor);
+      tft.drawBitmap(282, 3, WiFi1, 30, 25, WifiColorLow);
     }
   }
 }
@@ -4409,12 +4409,12 @@ void EdgeBeeper() {
   radio.tone(50, -5, 2000);
   if (radio.mute) {
     radio.setMute();
-    if (!screenmute && !afscreen) {
+    if (!screenmute) {
       tft.drawBitmap(249, 4, Speaker, 28, 24, PrimaryColor);
     }
   } else {
     radio.setUnMute();
-    if (!screenmute && !afscreen) {
+    if (!screenmute) {
       tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
     }
   }
@@ -4431,7 +4431,7 @@ void Seek(bool mode) {
     seekinit = false;
   }
 
-  if (!screenmute && !afscreen) {
+  if (!screenmute) {
     tft.drawBitmap(249, 4, Speaker, 28, 24, PrimaryColor);
   }
   if (!mode) TuneDown(); else TuneUp();
@@ -4447,7 +4447,7 @@ void Seek(bool mode) {
     if ((USN < fmscansens * 30) && (WAM < 230) && (OStatus < 80 && OStatus > -80) && (Squelch < SStatus || Squelch == 920)) {
       seek = false;
       radio.setUnMute();
-      if (!screenmute && !afscreen) {
+      if (!screenmute) {
         tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
       }
       store = true;
@@ -4461,7 +4461,7 @@ void Seek(bool mode) {
     if ((USN < amscansens * 30) && (OStatus < 2 && OStatus > -2) && (Squelch < SStatus || Squelch == 920)) {
       seek = false;
       radio.setUnMute();
-      if (!screenmute && !afscreen) {
+      if (!screenmute) {
         tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
       }
       store = true;
