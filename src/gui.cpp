@@ -3036,8 +3036,8 @@ void BuildDisplay() {
     tftPrint(-1, "100", 164, 144, ActiveColor, ActiveColorSmooth, 16);
   }
 
-  tftPrint(-1, "kHz", 205, 4, ActiveColor, ActiveColorSmooth, 28);
-  tftPrint(-1, unitString[unit], 282, 145, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(1, "kHz", 246, 4, ActiveColor, ActiveColorSmooth, 28);
+  tftPrint(1, unitString[unit], 316, 128, ActiveColor, ActiveColorSmooth, 16);
 
   tft.drawBitmap(68, 5, RDSLogo, 35, 22, GreyoutColor);
   tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
