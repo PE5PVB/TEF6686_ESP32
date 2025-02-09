@@ -42,8 +42,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BWAutoColorSmooth = TealSmooth;
       BatteryValueColor = Teal;
       BatteryValueColorSmooth = Black;
-      WifiColorLow = Red;
-      WifiColorHigh = Green;
+      WifiColorLow = PrimaryColor;
+      WifiColorHigh = SecondaryColor;
       break;
     case 1:  // Cyan theme
       PrimaryColor = Cyan;
@@ -75,8 +75,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BWAutoColorSmooth = TealSmooth;
       BatteryValueColor = Teal;
       BatteryValueColorSmooth = TealSmooth;
-      WifiColorLow = Skyblue;
-      WifiColorHigh = Cyan;
+      WifiColorLow = PrimaryColor;
+      WifiColorHigh = SecondaryColor;
       break;
     case 2:  // Crimson theme
       PrimaryColor = Crimson;
@@ -108,13 +108,13 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BWAutoColorSmooth = CoralSmooth;
       BatteryValueColor = Watermelon;
       BatteryValueColorSmooth = WatermelonSmooth;
-      WifiColorLow = Yellow;
-      WifiColorHigh = Crimson;
+      WifiColorLow = PrimaryColor;
+      WifiColorHigh = SecondaryColor;
       break;
     case 3:  // Monochrome theme
       PrimaryColor = White;
       PrimaryColorSmooth = Black;
-      SecondaryColor = White;
+      SecondaryColor = Honeydew;
       SecondaryColorSmooth = Black;
       FrameColor = GreenGrey;
       GreyoutColor = PaleGrey;
@@ -141,8 +141,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BWAutoColorSmooth = Black;
       BatteryValueColor = White;
       BatteryValueColorSmooth = Black;
-      WifiColorLow = Honeydew;
-      WifiColorHigh = White;
+      WifiColorLow = PrimaryColor;
+      WifiColorHigh = SecondaryColor;
       break;
     case 4:  // Volcano theme
       PrimaryColor = Orange;
@@ -174,8 +174,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BWAutoColorSmooth = TangerineSmooth;
       BatteryValueColor = Tangerine;
       BatteryValueColorSmooth = TangerineSmooth;
-      WifiColorLow = Orange;
-      WifiColorHigh = Red;
+      WifiColorLow = PrimaryColor;
+      WifiColorHigh = SecondaryColor;
       break;
     case 5:  // Dendro theme
       PrimaryColor = Green;
@@ -207,8 +207,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BWAutoColorSmooth = CabbageSmooth;
       BatteryValueColor = Cabbage;
       BatteryValueColorSmooth = CabbageSmooth;
-      WifiColorLow = Green;
-      WifiColorHigh = Turquoise;
+      WifiColorLow = PrimaryColor;
+      WifiColorHigh = SecondaryColor;
       break;
     case 6:  // Sakura theme
       PrimaryColor = Sakura;
@@ -240,8 +240,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BWAutoColorSmooth = CherrySmooth;
       BatteryValueColor = Cherry;
       BatteryValueColorSmooth = CherrySmooth;
-      WifiColorLow = Violet;
-      WifiColorHigh = Sakura;
+      WifiColorLow = PrimaryColor;
+      WifiColorHigh = SecondaryColor;
       break;
     case 7:  // Whiteout theme
       PrimaryColor = Black;
@@ -273,8 +273,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BWAutoColorSmooth = White;
       BatteryValueColor = Black;
       BatteryValueColorSmooth = White;
-      WifiColorLow = Black;
-      WifiColorHigh = Darkgrey;
+      WifiColorLow = PrimaryColor;
+      WifiColorHigh = SecondaryColor;
       break;
     case 8:  // Tangerine theme
       PrimaryColor = Tangerine;
@@ -306,8 +306,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BWAutoColorSmooth = YolkSmooth;
       BatteryValueColor = Yolk;
       BatteryValueColorSmooth = YolkSmooth;
-      WifiColorLow = Yellow;
-      WifiColorHigh = Orange;
+      WifiColorLow = PrimaryColor;
+      WifiColorHigh = SecondaryColor;
       break;
     case 9:  // Ocean theme
       PrimaryColor = Ocean;
@@ -339,8 +339,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BWAutoColorSmooth = DeepskySmooth;
       BatteryValueColor = Deepsky;
       BatteryValueColorSmooth = DeepskySmooth;
-      WifiColorLow = Ocean;
-      WifiColorHigh = Skyblue;
+      WifiColorLow = PrimaryColor;
+      WifiColorHigh = SecondaryColor;
       break;
     case 10:  // Indigo theme
       PrimaryColor = Indigo;
@@ -372,8 +372,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BWAutoColorSmooth = VioletSmooth;
       BatteryValueColor = Violet;
       BatteryValueColorSmooth = VioletSmooth;
-      WifiColorLow = Violet;
-      WifiColorHigh = Purple;
+      WifiColorLow = PrimaryColor;
+      WifiColorHigh = SecondaryColor;
       break;
 
     case 11:  // Maroon
@@ -406,8 +406,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BWAutoColorSmooth = VioletSmooth;
       BatteryValueColor = Purple;
       BatteryValueColorSmooth = PurpleSmooth;
-      WifiColorLow = Yolk;
-      WifiColorHigh = Cherry;
+      WifiColorLow = PrimaryColor;
+      WifiColorHigh = SecondaryColor;
       break;
 
     case 12:  // GoldBrite
@@ -440,8 +440,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BWAutoColorSmooth = TealSmooth;
       BatteryValueColor = Teal;
       BatteryValueColorSmooth = Black;
-      WifiColorLow = Ocean;
-      WifiColorHigh = Cherry;
+      WifiColorLow = PrimaryColor;
+      WifiColorHigh = SecondaryColor;
       break;
 
     case 13:  // Bubblegum
@@ -474,8 +474,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       BWAutoColorSmooth = VioletSmooth;
       BatteryValueColor = Turquoise;
       BatteryValueColorSmooth = CyanDarkSmooth;
-      WifiColorLow = Violet;
-      WifiColorHigh = Turquoise;
+      WifiColorLow = Turquoise;
+      WifiColorHigh = Pink;
       break;
   }
 }
