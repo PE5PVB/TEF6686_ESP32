@@ -3352,11 +3352,11 @@ void ShowSignalLevel() {
       } else {
         if (SStatusold / 10 != SStatusprint / 10) {
           tftReplace(1, String(SStatusold / 10), String(SStatusprint / 10),
-                     288, 105, FreqColor, FreqColorSmooth, BackgroundColor, 48);
+                     280, 104, FreqColor, FreqColorSmooth, BackgroundColor, 48);
         }
-        tftReplace(1, "." + String(abs(SStatusold % 10)),
-                   "." + String(abs(SStatusprint % 10)),
-                   310, 105, FreqColor, FreqColorSmooth, BackgroundColor, 28);
+        tftReplace(-1, "." + String(abs(SStatusold % 100)),
+                   "." + String(abs(SStatusprint % 100)),
+                   285, 102, FreqColor, FreqColorSmooth, BackgroundColor, 28);
 
         // Calculate segments for signal meter
         if (band < BAND_GAP) {
@@ -3659,7 +3659,7 @@ void showAutoSquelch(bool mode) {
     SquelchSprite.setTextColor(BackgroundColor, BackgroundColor, false);
   }
   SquelchSprite.fillSprite(BackgroundColor);
-  SquelchSprite.drawString(String(myLanguage[language][86]), 0, 0);
+  SquelchSprite.drawString("A.", 0, 0);
   SquelchSprite.pushSprite(235, 145);
 }
 
