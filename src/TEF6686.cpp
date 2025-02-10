@@ -1385,7 +1385,7 @@ void TEF6686::readRDS(byte showrdserrors) {
               lastrdstime = rdstime;
               lasttimeoffset = timeoffset;
             }
-            if (rdstime == lastrdstime + 60 && timeoffset == lasttimeoffset) {
+            if ((rdstime == lastrdstime + 60 && timeoffset == lasttimeoffset) || showrdserrors != 0) {
               rds.hasCT = true;
               rds.time = rdstime;
               rds.offset = timeoffset;
