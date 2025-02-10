@@ -1266,7 +1266,7 @@ void loop() {
           tftPrint(-1, "70", 117, 144, GreyoutColor, BackgroundColor, 16);
           tftPrint(-1, "100", 164, 144, GreyoutColor, BackgroundColor, 16);
           tftPrint(0, "M", 7, 128, GreyoutColor, BackgroundColor, 16);
-          tft.fillRect(16, 133, 188, 6, GreyoutColor);
+          tft.fillRect(16, 133, 187, 6, GreyoutColor);
         }
         if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
         if (region == REGION_US) {
@@ -3375,9 +3375,9 @@ void ShowSignalLevel() {
 
         // Calculate segments for signal meter
         if (band < BAND_GAP) {
-          DisplayedSignalSegments = constrain(map(SStatus / 10, 0, 70, 0, 100), 0, 93);
+          DisplayedSignalSegments = constrain(map(SStatus / 10, 0, 70, 0, 100), 0, 86);
         } else {
-          DisplayedSignalSegments = constrain((SStatus + 200) / 10, 0, 93);
+          DisplayedSignalSegments = constrain((SStatus + 200) / 10, 0, 86);
         }
 
         // Extract RGB components from 16-bit colors
@@ -3389,8 +3389,8 @@ void ShowSignalLevel() {
         uint8_t g2 = (BarSignificantColor >> 5) & 0x3F;
         uint8_t b2 = BarSignificantColor & 0x1F;
 
-        int gradientStart = (93 * 25) / 100;
-        int gradientEnd = (93 * 60) / 100;
+        int gradientStart = (86 * 25) / 100;  // Adjusted for 86 segments
+        int gradientEnd = (86 * 60) / 100;    // Adjusted for 86 segments
 
         // Draw solid color for first 25%
         for (int i = 0; i < min(DisplayedSignalSegments, gradientStart); i++) {
@@ -3417,7 +3417,7 @@ void ShowSignalLevel() {
 
         // Grey out unused segments
         int greyStart = 16 + 2 * DisplayedSignalSegments;
-        int greyWidth = 2 * (94 - DisplayedSignalSegments);
+        int greyWidth = 2 * (87 - DisplayedSignalSegments);  // Adjusted for 87 total segments
         tft.fillRect(greyStart, 105, greyWidth, 6, GreyoutColor);
       }
 
@@ -3581,8 +3581,8 @@ void ShowModLevel() {
       MStatusold = 1;
     }
 
-    // Map MStatus to segment count, ensuring it does not exceed 93
-    segments = constrain(map(MStatus, 0, 120, 0, 93), 0, 93);
+    // Map MStatus to segment count, ensuring it does not exceed 86
+    segments = constrain(map(MStatus, 0, 120, 0, 86), 0, 86);
 
     // Smooth decrease of segments over time
     if (segments < DisplayedSegments && (millis() - ModulationpreviousMillis >= 20)) {
@@ -3592,8 +3592,8 @@ void ShowModLevel() {
       DisplayedSegments = segments;
     }
 
-    // Ensure DisplayedSegments never exceeds 93
-    DisplayedSegments = constrain(DisplayedSegments, 0, 93);
+    // Ensure DisplayedSegments never exceeds 86
+    DisplayedSegments = constrain(DisplayedSegments, 0, 86);
 
     // Peak Hold Logic
     if (DisplayedSegments > peakholdold) {
@@ -3609,7 +3609,7 @@ void ShowModLevel() {
     }
 
     // Ensure peak hold indicator stays within bounds
-    peakholdold = constrain(peakholdold, 0, 93);
+    peakholdold = constrain(peakholdold, 0, 86);
 
     // Extract RGB components from 16-bit colors
     uint8_t r1 = (ModBarInsignificantColor >> 11) & 0x1F;
@@ -3620,8 +3620,8 @@ void ShowModLevel() {
     uint8_t g2 = (ModBarSignificantColor >> 5) & 0x3F;
     uint8_t b2 = ModBarSignificantColor & 0x1F;
 
-    int gradientStart = (93 * 25) / 100;  // 25% of the bar
-    int gradientEnd = (93 * 60) / 100;    // 60% of the bar
+    int gradientStart = (86 * 25) / 100;  // Adjusted for 86 segments
+    int gradientEnd = (86 * 60) / 100;    // Adjusted for 86 segments
 
     // Draw solid color for first 25%
     for (int i = 0; i < min(DisplayedSegments, gradientStart); i++) {
@@ -3652,7 +3652,7 @@ void ShowModLevel() {
 
     // Grey out unused segments
     int greyStart = 16 + 2 * DisplayedSegments;
-    int greyWidth = 2 * (93 - DisplayedSegments);
+    int greyWidth = 2 * (87 - DisplayedSegments);  // Adjusted for 87 total segments
     tft.fillRect(greyStart, 133, greyWidth, 6, GreyoutColor);
 
     // Peak Hold Indicator
@@ -3661,7 +3661,7 @@ void ShowModLevel() {
 
     // Erase peak hold indicator if it has decayed
     if (millis() - peakholdmillis >= 1000) {
-      if (peakholdold <= DisplayedSegments || peakholdold >= 93) {
+      if (peakholdold <= DisplayedSegments || peakholdold >= 86) {
         tft.fillRect(peakHoldPosition, 133, 2, 6, GreyoutColor);
       }
     }

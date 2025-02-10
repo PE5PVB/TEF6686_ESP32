@@ -2982,30 +2982,33 @@ void BuildDisplay() {
   tft.drawLine(0, 30, 320, 30, FrameColor);
   tft.drawLine(0, 100, 320, 100, FrameColor);
   tft.drawLine(105, 30, 105, 0, FrameColor);
-  tft.drawLine(210, 100, 210, 217, FrameColor);
+  tft.drawLine(210, 180, 210, 217, FrameColor);
+  tft.drawLine(195, 100, 195, 180, FrameColor);
   tft.drawLine(248, 30, 248, 0, FrameColor);
-  tft.drawLine(0, 160, 210, 160, FrameColor);
+  tft.drawLine(0, 160, 195, 160, FrameColor);
   tft.drawLine(0, 180, 320, 180, FrameColor);
   tft.drawLine(0, 217, 320, 217, FrameColor);
   tft.drawLine(30, 30, 30, 0, FrameColor);
   tft.drawLine(66, 30, 66, 0, FrameColor);
   tft.drawLine(162, 30, 162, 0, FrameColor);
-  tft.drawLine(16, 114, 202, 114, ActiveColor);
+  tft.drawLine(16, 114, 189, 114, ActiveColor);
 
-  if (!showmodulation) tft.drawLine(16, 143, 202, 143, GreyoutColor); else tft.drawLine(16, 143, 202, 143, ActiveColor);
-  for (byte segments = 0; segments < 94; segments++) {
+  if (!showmodulation) tft.drawLine(16, 143, 189, 143, GreyoutColor); else tft.drawLine(16, 143, 189, 143, ActiveColor);
+  
+  for (byte segments = 0; segments < 93; segments++) {
     if (segments > 54) {
       if (((segments - 53) % 10) == 0) {
-        tft.fillRect(16 + (2 * segments), 112, 2, 2, BarSignificantColor);
-        if (!showmodulation) tft.fillRect(16 + (2 * segments), 141, 2, 2, GreyoutColor); else tft.fillRect(16 + (2 * segments), 141, 2, 2, BarSignificantColor);
+        tft.fillRect(22 + (2 * segments), 112, 2, 2, BarSignificantColor);
+        if (!showmodulation) tft.fillRect(22 + (2 * segments), 141, 2, 2, GreyoutColor); else tft.fillRect(22 + (2 * segments), 141, 2, 2, BarSignificantColor);
       }
     } else {
       if (((segments + 1) % 6) == 0) {
-        tft.fillRect(16 + (2 * segments), 112, 2, 2, BarInsignificantColor);
-        if (!showmodulation) tft.fillRect(16 + (2 * segments), 141, 2, 2, GreyoutColor); else tft.fillRect(16 + (2 * segments), 141, 2, 2, BarInsignificantColor);
+        tft.fillRect(22 + (2 * segments), 112, 2, 2, BarInsignificantColor);
+        if (!showmodulation) tft.fillRect(22 + (2 * segments), 141, 2, 2, GreyoutColor); else tft.fillRect(22 + (2 * segments), 141, 2, 2, BarInsignificantColor);
       }
     }
   }
+  
   if (usesquelch || autosquelch) tftPrint(-1, "SQ:", 200, 145, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(-1, "US:", 261, 145, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(-1, "MP:", 261, 163, ActiveColor, ActiveColorSmooth, 16);
@@ -3019,7 +3022,7 @@ void BuildDisplay() {
   tftPrint(-1, "7", 96, 115, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(-1, "9", 120, 115, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(-1, "+10", 134, 115, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "+30", 174, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "+30", 168, 115, ActiveColor, ActiveColorSmooth, 16);
 
   if (!showmodulation) {
     tftPrint(0, "M", 7, 128, GreyoutColor, BackgroundColor, 16);
