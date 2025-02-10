@@ -3739,7 +3739,7 @@ void doSquelch() {
 
     if (!XDRGTKUSB && !XDRGTKTCP && usesquelch && (!scandxmode || (scandxmode && !scanmute))) {
       if (!screenmute && usesquelch && !advancedRDS && !afscreen) {
-        if (!BWtune && !menu && (Squelch > Squelchold + 9 || Squelch < Squelchold - 9)) {
+        if (!BWtune && !menu && (Squelch > Squelchold + 2 || Squelch < Squelchold - 2)) {
           SquelchSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           SquelchSprite.fillSprite(BackgroundColor);
           if (Squelch == -100) {
