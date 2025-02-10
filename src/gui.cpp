@@ -2891,7 +2891,7 @@ void BuildAdvancedRDS() {
   tftPrint(-1, "LIC", 214, 208, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(-1, "PIN", 214, 223, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(1, "Dynamic PTY", 300, 130, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(1, "Artif. head", 300, 145, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(1, "Artificial head", 300, 145, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(1, "Compressed", 300, 160, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(1, "Has stereo", 300, 175, ActiveColor, ActiveColorSmooth, 16);
 
@@ -3006,11 +3006,11 @@ void BuildDisplay() {
       }
     }
   }
-  if (usesquelch || autosquelch) tftPrint(-1, "SQ", 212, 145, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "US", 283, 145, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "MP", 283, 163, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "CN", 212, 163, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(1, "dB", 270, 163, ActiveColor, ActiveColorSmooth, 16);
+  if (usesquelch || autosquelch) tftPrint(-1, "SQ:", 200, 145, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "US:", 261, 145, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "MP:", 261, 163, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "CN:", 200, 163, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(1, "dB", 257, 163, ActiveColor, ActiveColorSmooth, 16);
 
   tftPrint(0, "S", 7, 101, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(-1, "1", 24, 115, ActiveColor, ActiveColorSmooth, 16);
