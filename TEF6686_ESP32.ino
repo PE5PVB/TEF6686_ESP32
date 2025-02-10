@@ -3344,7 +3344,6 @@ void ShowSignalLevel() {
 
         if (MPprint != MPold) {
           tftReplace(1, String(MPold), (band < BAND_GAP ? String(MPprint) : "--"), 299, 163, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 16);
-          tftPrint(1, "%", 316, 163, PrimaryColor, PrimaryColorSmooth, 16);
           MPold = MPprint;
         }
 
@@ -3353,7 +3352,6 @@ void ShowSignalLevel() {
 
         if (USprint != USold) {
           tftReplace(1, String(USold), (band < BAND_GAP ? String(USprint) : "--"), 299, 145, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 16);
-          tftPrint(1, "%", 316, 145, PrimaryColor, PrimaryColorSmooth, 16);
           USold = USprint;
         }
       }
@@ -3741,7 +3739,7 @@ void doSquelch() {
 
     if (!XDRGTKUSB && !XDRGTKTCP && usesquelch && (!scandxmode || (scandxmode && !scanmute))) {
       if (!screenmute && usesquelch && !advancedRDS && !afscreen) {
-        if (!BWtune && !menu && (Squelch > Squelchold + 2 || Squelch < Squelchold - 2)) {
+        if (!BWtune && !menu && (Squelch > Squelchold + 9 || Squelch < Squelchold - 9)) {
           SquelchSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           SquelchSprite.fillSprite(BackgroundColor);
           if (Squelch == -100) {
@@ -3751,11 +3749,9 @@ void doSquelch() {
           } else {
             SquelchSprite.drawString(String(SquelchShow), 0, 0);
           }
-          if (Squelch != Squelchold) {
-            SquelchSprite.pushSprite(223, 145);
-          }
+          SquelchSprite.pushSprite(223, 145);
+          Squelchold = Squelch;
         }
-        Squelchold = Squelch;
       }
     }
 

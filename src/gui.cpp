@@ -2994,7 +2994,7 @@ void BuildDisplay() {
   tft.drawLine(16, 114, 189, 114, ActiveColor);
 
   if (!showmodulation) tft.drawLine(16, 143, 189, 143, GreyoutColor); else tft.drawLine(16, 143, 189, 143, ActiveColor);
-  
+
   for (byte segments = 0; segments < 93; segments++) {
     if (segments > 54) {
       if (((segments - 53) % 10) == 0) {
@@ -3008,12 +3008,14 @@ void BuildDisplay() {
       }
     }
   }
-  
+
   if (usesquelch || autosquelch) tftPrint(-1, "SQ:", 200, 145, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(-1, "US:", 261, 145, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(-1, "MP:", 261, 163, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(-1, "CN:", 200, 163, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(1, "dB", 257, 163, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(1, "%", 316, 163, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(1, "%", 316, 145, ActiveColor, ActiveColorSmooth, 16);
 
   tftPrint(0, "S", 7, 101, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(-1, "1", 24, 115, ActiveColor, ActiveColorSmooth, 16);
