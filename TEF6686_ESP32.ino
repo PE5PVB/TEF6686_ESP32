@@ -4113,8 +4113,10 @@ void ShowRSSI() {
   if (wifi) rssi = WiFi.RSSI(); else rssi = 0;
   if (rssiold != rssi) {
     rssiold = rssi;
-    if (rssi == 0) {
+    if (!wifi && batterydetect) {
       tft.drawBitmap(282, 3, WiFi4, 30, 25, BackgroundColor);
+    } else if (rssi == 0) {
+      tft.drawBitmap(282, 3, WiFi4, 30, 25, GreyoutColor);
     } else if (rssi > -50 && rssi < 0) {
       tft.drawBitmap(282, 3, WiFi4, 30, 25, WifiColorHigh);
     } else if (rssi > -60) {
