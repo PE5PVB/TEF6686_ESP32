@@ -1441,7 +1441,7 @@ void GetData() {
     ShowOffset();
     ShowBW();
     updateCodetect();
-    if (millis() >= tuningtimer + 200) ShowBattery();
+    if (millis() >= tuningtimer + 200 && !wifi) ShowBattery();
   }
 }
 
@@ -4155,12 +4155,12 @@ void ShowBattery() {
   }
 
   uint16_t v = 0;
-  if (!wifi) v = analogRead(BATTERY_PIN);
+  v = analogRead(BATTERY_PIN);
   battery = map(constrain(v, BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, BAT_LEVEL_STAGE);
   byte batteryprobe = map(constrain(v, BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, 20);
 
   if (batteryold != batteryprobe) {
-    if (!wifi && batterydetect) {
+    if (batterydetect) {
       if (battery == 0) {
         tft.drawRoundRect(277, 6, 37, 20, 2, BarSignificantColor);
         tft.fillRoundRect(313, 13, 4, 6, 2, BarSignificantColor);
@@ -4173,17 +4173,13 @@ void ShowBattery() {
       } else {
         tft.fillRoundRect(279, 8, 33, 16, 2, BackgroundColor);
       }
-      //    } else {
-      //      tft.drawRoundRect(277, 6, 37, 20, 2, GreyoutColor);
-      //      tft.fillRoundRect(313, 13, 4, 6, 2, GreyoutColor);
-      //      tft.fillRoundRect(279, 8, 33, 16, 2, BackgroundColor);
     }
     batteryold = batteryprobe;
     batteryVold = 0;
     vPerold = 0;
 
 
-    if (!wifi && batterydetect) {
+    if (batterydetect) {
       float batteryV = constrain((((float)v / 4095.0) * 3.3 * (1100 / 1000.0) * 2.0), 0.0, 5.0);
       float vPer = constrain((batteryV - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE), 0.0, 0.99) * 100;
 
