@@ -3343,7 +3343,7 @@ void ShowSignalLevel() {
         if (USprint != USold) {
           tftReplace(1, String(USold), (band < BAND_GAP ? String(USprint) : "--"), 318, 145, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 16);
           USold = USprint;
-        }        
+        }
       }
     }
 
@@ -3658,8 +3658,10 @@ void ShowModLevel() {
     tft.fillRect(peakHoldPosition, 133, 2, 6, (MStatus > 80) ? ModBarSignificantColor : PrimaryColor);
 
     // Erase peak hold indicator if it has decayed
-    if (millis() - peakholdmillis >= 1000 && peakholdold <= DisplayedSegments) {
-      tft.fillRect(peakHoldPosition, 133, 2, 6, GreyoutColor);
+    if (millis() - peakholdmillis >= 1000) {
+      if (peakholdold <= DisplayedSegments || peakholdold >= 93) {
+        tft.fillRect(peakHoldPosition, 133, 2, 6, GreyoutColor);
+      }
     }
   }
 }
@@ -4171,10 +4173,10 @@ void ShowBattery() {
       } else {
         tft.fillRoundRect(279, 8, 33, 16, 2, BackgroundColor);
       }
-//    } else {
-//      tft.drawRoundRect(277, 6, 37, 20, 2, GreyoutColor);
-//      tft.fillRoundRect(313, 13, 4, 6, 2, GreyoutColor);
-//      tft.fillRoundRect(279, 8, 33, 16, 2, BackgroundColor);
+      //    } else {
+      //      tft.drawRoundRect(277, 6, 37, 20, 2, GreyoutColor);
+      //      tft.fillRoundRect(313, 13, 4, 6, 2, GreyoutColor);
+      //      tft.fillRoundRect(279, 8, 33, 16, 2, BackgroundColor);
     }
     batteryold = batteryprobe;
     batteryVold = 0;
