@@ -3006,10 +3006,11 @@ void BuildDisplay() {
       }
     }
   }
-  if (usesquelch || autosquelch) tftPrint(-1, "SQ:", 212, 145, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "MP", 212, 163, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(1, "C/N", 278, 163, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "dB", 300, 163, ActiveColor, ActiveColorSmooth, 16);
+  if (usesquelch || autosquelch) tftPrint(-1, "SQ", 212, 145, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "US", 283, 145, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "MP", 283, 163, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "CN", 212, 163, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(1, "dB", 270, 163, ActiveColor, ActiveColorSmooth, 16);
 
   tftPrint(0, "S", 7, 101, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(-1, "1", 24, 115, ActiveColor, ActiveColorSmooth, 16);
