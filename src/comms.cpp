@@ -9,52 +9,80 @@ void Communication() {
   if (!menu) {
     if (wifi) {
       int packetSize = Udp.parsePacket();
-      if (packetSize) {
-        char packetBuffer[packetSize];
+      if (packetSize > 0) {
+        char packetBuffer[packetSize + 1];  // +1 for null terminator
         Udp.read(packetBuffer, packetSize);
+        packetBuffer[packetSize] = '\0';  // Ensure valid string
         Udp.endPacket();
+
         String packet = String(packetBuffer);
-        if (strcmp(packetBuffer, "from=StationList;freq=?;bandwidth=?") == 0) {
+
+        if (packet.equals("from=StationList;freq=?;bandwidth=?")) {
           ShowFreq(0);
-        } else {
-          externaltune = true;
-          int symPos = packet.indexOf("freq=");
-          String stlfreq = packet.substring(symPos + 5, packetSize);
+          return;
+        }
+
+        externaltune = true;
+
+        if (packet.charAt(0) == '*') {
+          if (afscreen) BuildAdvancedRDS();
+          char command = packet.charAt(1);
+          switch (command) {
+            case 'U':
+            case 'D':
+              tunemode = TUNE_MAN;
+              ShowTuneMode();
+              if (command == 'U') TuneUp(); else TuneDown();
+              ShowFreq(0);
+              break;
+
+            case 'S': if (!scandxmode) startFMDXScan(); break;
+            case 'E': if (scandxmode) cancelDXScan(); break;
+
+            case 'R': radio.clearRDS(fullsearchrds); break;
+          }
+          return;
+        }
+
+        int symPos = packet.indexOf("freq=");
+
+        if (symPos != -1) {
+          String stlfreq = packet.substring(symPos + 5);
+          int freqValue = stlfreq.toInt();
+
           if (afscreen) BuildAdvancedRDS();
 
-          if ((stlfreq.toInt()) / 10000 > (TEF == 205 ? 6400 : 6500) && (stlfreq.toInt()) / 10000 < 10800) {
-            unsigned int tempfreq = (stlfreq.toInt()) / 10000;
+          unsigned int tempfreq;
+          if ((freqValue / 10000) > (TEF == 205 ? 6400 : 6500) && (freqValue / 10000) < 10800) {
+            tempfreq = freqValue / 10000;
             if (scandxmode) cancelDXScan();
+
             if (tempfreq >= FREQ_FM_OIRT_START && tempfreq <= FREQ_FM_OIRT_END) {
               if (band != BAND_OIRT) {
                 band = BAND_OIRT;
                 frequency_OIRT = tempfreq;
                 SelectBand();
               }
+              radio.SetFreq(frequency_OIRT);
             } else {
               if (band != BAND_FM) {
                 band = BAND_FM;
                 frequency = tempfreq;
                 SelectBand();
               }
-            }
-            if (band == BAND_OIRT) {
-              frequency_OIRT = tempfreq;
-              radio.SetFreq(frequency_OIRT);
-            } else {
-              frequency = tempfreq;
               radio.SetFreq(frequency);
             }
           }
 
-          if ((stlfreq.toInt()) / 1000 > 144 && (stlfreq.toInt()) / 1000 < 27000) {
+          if ((freqValue / 1000) > 144 && (freqValue / 1000) < 27000) {
+            tempfreq = freqValue / 1000;
             if (scandxmode) cancelDXScan();
             if (afscreen || advancedRDS) {
               BuildDisplay();
               SelectBand();
               ScreensaverTimerReopen();
             }
-            unsigned int tempfreq = (stlfreq.toInt()) / 1000;
+
             if (tempfreq >= FREQ_LW_LOW_EDGE_MIN && tempfreq <= FREQ_LW_HIGH_EDGE_MAX) {
               frequency_LW = tempfreq;
               if (band != BAND_LW) {
@@ -84,6 +112,7 @@ void Communication() {
               }
             }
           }
+
           radio.clearRDS(fullsearchrds);
           ShowFreq(0);
           store = true;

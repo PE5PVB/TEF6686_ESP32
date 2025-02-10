@@ -54,6 +54,7 @@ extern byte scanhold;
 extern byte stepsize;
 extern byte subnetclient;
 extern byte TEF;
+extern byte tunemode;
 extern char buff[16];
 extern int ActiveColor;
 extern int ActiveColorSmooth;
@@ -154,4 +155,7 @@ extern void handleRoot();
 extern void handleDownloadCSV();
 extern void handleLogo();
 extern void Infoboxprint(const char* input);
+extern void TuneUp();
+extern void TuneDown();
+extern void ShowTuneMode();
 #endif

@@ -171,6 +171,7 @@ byte BWsetFM;
 byte BWsetRecall;
 byte BWtemp;
 byte charwidth = 8;
+byte chipmodel;
 byte hardwaremodel;
 byte ContrastSet;
 byte CurrentSkin;
@@ -862,19 +863,23 @@ void setup() {
   if (lowByte(device) == 14) {
     fullsearchrds = false;
     fmsi = false;
+    chipmodel = 0;
     tft.fillRect(152, 230, 16, 6, PrimaryColor);
     tftPrint(0, "TEF6686 Lithio", 160, 172, ActiveColor, ActiveColorSmooth, 28);
   } else if (lowByte(device) == 1) {
     fullsearchrds = true;
+    chipmodel = 1;
     tft.fillRect(152, 230, 16, 6, PrimaryColor);
     tftPrint(0, "TEF6687 Lithio FMSI", 160, 172, ActiveColor, ActiveColorSmooth, 28);
   } else if (lowByte(device) == 9) {
     fullsearchrds = false;
+    chipmodel = 2;
     fmsi = false;
     tft.fillRect(152, 230, 16, 6, PrimaryColor);
     tftPrint(0, "TEF6688 Lithio DR", 160, 172, ActiveColor, ActiveColorSmooth, 28);
   } else if (lowByte(device) == 3) {
     fullsearchrds = true;
+    chipmodel = 3;
     tft.fillRect(152, 230, 16, 6, PrimaryColor);
     tftPrint(0, "TEF6689 Lithio FMSI DR", 160, 172, ActiveColor, ActiveColorSmooth, 28);
   } else {

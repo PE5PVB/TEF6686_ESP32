@@ -535,6 +535,15 @@ void sendUDPlog() {
     }
   }
 
+  // set Chipmodel
+  String CHIP = "";
+  switch (chipmodel) {
+    case 0: CHIP = "TEF6686"; break;
+    case 1: CHIP = "TEF6687"; break;
+    case 2: CHIP = "TEF6688"; break;
+    case 3: CHIP = "TEF6689"; break;
+  }
+
   // Extract RT+ (RadioText Plus) content if available
   String RTPLUS = "";
   if (radio.rds.hasRDSplus) {
@@ -542,7 +551,10 @@ void sendUDPlog() {
   }
 
   // Construct the data row to send via UDP
-  String row = currentDateTime + "," +
+  String row = CHIP + "," +
+               VERSION + "," +
+               String(scandxmode) + "," +
+               currentDateTime + "," +
                frequencyFormatted + "," +
                String(radio.rds.picode).substring(0, 4) + "," +
                signal + "," +
@@ -561,7 +573,7 @@ void sendUDPlog() {
 
   // Send the data via UDP if it's new
   if (UDPlogold != row) {
-	IPAddress broadcastIP = makeBroadcastAddress(remoteip);
+    IPAddress broadcastIP = makeBroadcastAddress(remoteip);
     Udp.beginPacket(broadcastIP, 9100);
     Udp.print(row);
     Udp.endPacket();
@@ -570,6 +582,6 @@ void sendUDPlog() {
 }
 
 IPAddress makeBroadcastAddress(IPAddress ip) {
-    // Assuming a typical subnet mask of 255.255.255.0
-    return IPAddress(ip[0], ip[1], ip[2], 255);
+  // Assuming a typical subnet mask of 255.255.255.0
+  return IPAddress(ip[0], ip[1], ip[2], 255);
 }
