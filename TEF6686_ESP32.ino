@@ -718,7 +718,7 @@ void setup() {
   PSSprite.setTextDatum(TL_DATUM);
   PSSprite.setSwapBytes(true);
 
-  SquelchSprite.createSprite(47, 19);
+  SquelchSprite.createSprite(24, 19);
   SquelchSprite.setTextDatum(TL_DATUM);
   SquelchSprite.setSwapBytes(true);
 
@@ -3320,12 +3320,12 @@ void ShowSignalLevel() {
       SNRupdatetimer = millis();
       if (!advancedRDS) {
         if (CN > (CNold + 1) || CN < (CNold - 1)) {
-          if (CNold == 0) tftPrint(1, "--", 248, 163, BackgroundColor, BackgroundColor, 16); else tftPrint(1, String(CNold), 248, 163, BackgroundColor, BackgroundColor, 16);
+          if (CNold == 0) tftPrint(1, "--", 236, 163, BackgroundColor, BackgroundColor, 16); else tftPrint(1, String(CNold), 236, 163, BackgroundColor, BackgroundColor, 16);
           if (tuned) {
-            if (CN == 0) tftPrint(1, "--", 248, 163, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(CN), 248, 163, PrimaryColor, PrimaryColorSmooth, 16);
+            if (CN == 0) tftPrint(1, "--", 236, 163, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(CN), 236, 163, PrimaryColor, PrimaryColorSmooth, 16);
             CNold = CN;
           } else {
-            tftPrint(1, "--", 248, 163, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "--", 236, 163, PrimaryColor, PrimaryColorSmooth, 16);
             CNold = 0;
           }
         }
@@ -3333,7 +3333,8 @@ void ShowSignalLevel() {
         MPprint = constrain(map(MP, 0, 1000, 0, 99), 0, 99);
 
         if (MPprint != MPold) {
-          tftReplace(1, String(MPold), (band < BAND_GAP ? String(MPprint) : "--"), 318, 163, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 16);
+          tftReplace(1, String(MPold), (band < BAND_GAP ? String(MPprint) : "--"), 299, 163, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 16);
+          tftPrint(1, "%", 316, 163, PrimaryColor, PrimaryColorSmooth, 16);
           MPold = MPprint;
         }
 
@@ -3341,7 +3342,8 @@ void ShowSignalLevel() {
         USprint = constrain(map(US, 0, 1000, 0, 99), 0, 99);
 
         if (USprint != USold) {
-          tftReplace(1, String(USold), (band < BAND_GAP ? String(USprint) : "--"), 318, 145, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 16);
+          tftReplace(1, String(USold), (band < BAND_GAP ? String(USprint) : "--"), 299, 145, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 16);
+          tftPrint(1, "%", 316, 145, PrimaryColor, PrimaryColorSmooth, 16);
           USold = USprint;
         }
       }
@@ -3675,7 +3677,7 @@ void showAutoSquelch(bool mode) {
   }
   SquelchSprite.fillSprite(BackgroundColor);
   SquelchSprite.drawString("A.", 0, 0);
-  SquelchSprite.pushSprite(235, 145);
+  SquelchSprite.pushSprite(223, 145);
 }
 
 void doSquelch() {
@@ -3740,7 +3742,7 @@ void doSquelch() {
             SquelchSprite.drawString(String(SquelchShow), 0, 0);
           }
           if (Squelch != Squelchold) {
-            SquelchSprite.pushSprite(235, 145);
+            SquelchSprite.pushSprite(223, 145);
           }
         }
         Squelchold = Squelch;
@@ -3791,7 +3793,7 @@ void doSquelch() {
               SquelchSprite.drawString(String(SquelchShow), 0, 0);
             }
             if (Squelch != Squelchold) {
-              SquelchSprite.pushSprite(235, 145);
+              SquelchSprite.pushSprite(223, 145);
             }
             Squelchold = Squelch;
           }
