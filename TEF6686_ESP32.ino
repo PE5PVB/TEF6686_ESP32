@@ -3354,8 +3354,8 @@ void ShowSignalLevel() {
           tftReplace(1, String(SStatusold / 10), String(SStatusprint / 10),
                      280, 104, FreqColor, FreqColorSmooth, BackgroundColor, 48);
         }
-        tftReplace(-1, "." + String(abs(SStatusold % 100)),
-                   "." + String(abs(SStatusprint % 100)),
+        tftReplace(-1, "." + String(abs(SStatusold % 10)),
+                   "." + String(abs(SStatusprint % 10)),
                    285, 102, FreqColor, FreqColorSmooth, BackgroundColor, 28);
 
         // Calculate segments for signal meter
