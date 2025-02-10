@@ -446,6 +446,7 @@ unsigned long scantimer;
 unsigned long signalstatustimer;
 unsigned long tottimer;
 unsigned long tuningtimer;
+unsigned long udplogtimer;
 unsigned long udptimer;
 
 mem presets[EE_PRESETS_CNT];
@@ -955,7 +956,11 @@ void setup() {
 void loop() {
   if (wifi && !menu) {
     webserver.handleClient();
-    sendUDPlog();
+
+    if (millis() >= udplogtimer + 1000) {
+      sendUDPlog();
+      udplogtimer = millis();
+    }
 
     if (millis() >= NTPtimer + 1800000) {
       NTPupdate();
