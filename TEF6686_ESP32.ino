@@ -1232,11 +1232,11 @@ void loop() {
   if ((SStatus / 10 > LowLevelSet) && !LowLevelInit && !BWtune && !menu && band < BAND_GAP) {
     if (!screenmute && !advancedRDS && !afscreen) {
       if (showmodulation) {
-        tftPrint(-1, "10", 27, 144, ActiveColor, ActiveColorSmooth, 16);
-        tftPrint(-1, "30", 57, 144, ActiveColor, ActiveColorSmooth, 16);
-        tftPrint(-1, "50", 87, 144, ActiveColor, ActiveColorSmooth, 16);
-        tftPrint(-1, "70", 117, 144, ActiveColor, ActiveColorSmooth, 16);
-        tftPrint(-1, "100", 164, 144, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, "10", 24, 144, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, "30", 54, 144, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, "50", 84, 144, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, "70", 114, 144, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(-1, "100", 160, 144, ActiveColor, ActiveColorSmooth, 16);
         tftPrint(0, "M", 7, 128, ActiveColor, ActiveColorSmooth, 16);
         for (byte segments = 0; segments < 94; segments++) {
           if (segments > 54) {
@@ -1270,11 +1270,11 @@ void loop() {
           }
         }
         if (showmodulation) {
-          tftPrint(-1, "10", 27, 144, GreyoutColor, BackgroundColor, 16);
-          tftPrint(-1, "30", 57, 144, GreyoutColor, BackgroundColor, 16);
-          tftPrint(-1, "50", 87, 144, GreyoutColor, BackgroundColor, 16);
-          tftPrint(-1, "70", 117, 144, GreyoutColor, BackgroundColor, 16);
-          tftPrint(-1, "100", 164, 144, GreyoutColor, BackgroundColor, 16);
+          tftPrint(-1, "10", 24, 144, GreyoutColor, BackgroundColor, 16);
+          tftPrint(-1, "30", 54, 144, GreyoutColor, BackgroundColor, 16);
+          tftPrint(-1, "50", 84, 144, GreyoutColor, BackgroundColor, 16);
+          tftPrint(-1, "70", 114, 144, GreyoutColor, BackgroundColor, 16);
+          tftPrint(-1, "100", 160, 144, GreyoutColor, BackgroundColor, 16);
           tftPrint(0, "M", 7, 128, GreyoutColor, BackgroundColor, 16);
           tft.fillRect(16, 133, 187, 6, GreyoutColor);
         }
@@ -3330,12 +3330,12 @@ void ShowSignalLevel() {
       SNRupdatetimer = millis();
       if (!advancedRDS) {
         if (CN > (CNold + 1) || CN < (CNold - 1)) {
-          if (CNold == 0) tftPrint(1, "--", 236, 163, BackgroundColor, BackgroundColor, 16); else tftPrint(1, String(CNold), 236, 163, BackgroundColor, BackgroundColor, 16);
+          if (CNold == 0) tftPrint(1, "--", 234, 165, BackgroundColor, BackgroundColor, 16); else tftPrint(1, String(CNold), 234, 165, BackgroundColor, BackgroundColor, 16);
           if (tuned) {
-            if (CN == 0) tftPrint(1, "--", 236, 163, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(CN), 236, 163, PrimaryColor, PrimaryColorSmooth, 16);
+            if (CN == 0) tftPrint(1, "--", 234, 165, PrimaryColor, PrimaryColorSmooth, 16); else tftPrint(1, String(CN), 234, 165, PrimaryColor, PrimaryColorSmooth, 16);
             CNold = CN;
           } else {
-            tftPrint(1, "--", 236, 163, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(1, "--", 234, 165, PrimaryColor, PrimaryColorSmooth, 16);
             CNold = 0;
           }
         }
@@ -3343,7 +3343,8 @@ void ShowSignalLevel() {
         MPprint = constrain(map(MP, 0, 1000, 0, 99), 0, 99);
 
         if (MPprint != MPold) {
-          tftReplace(1, String(MPold), (band < BAND_GAP ? String(MPprint) : "--"), 299, 163, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 16);
+          tftReplace(1, String(MPold), (band < BAND_GAP ? String(MPprint) : "--"), 299, 165, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 16);
+          tftPrint(1, "%", 316, 165, PrimaryColor, PrimaryColorSmooth, 16);
           MPold = MPprint;
         }
 
@@ -3351,7 +3352,8 @@ void ShowSignalLevel() {
         USprint = constrain(map(US, 0, 1000, 0, 99), 0, 99);
 
         if (USprint != USold) {
-          tftReplace(1, String(USold), (band < BAND_GAP ? String(USprint) : "--"), 299, 145, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 16);
+          tftReplace(1, String(USold), (band < BAND_GAP ? String(USprint) : "--"), 299, 147, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 16);
+          tftPrint(1, "%", 316, 147, PrimaryColor, PrimaryColorSmooth, 16);
           USold = USprint;
         }
       }
@@ -3677,15 +3679,11 @@ void ShowModLevel() {
 }
 
 void showAutoSquelch(bool mode) {
-  if (language == LANGUAGE_CHS) SquelchSprite.loadFont(FONT16_CHS); else SquelchSprite.loadFont(FONT16);
   if (mode) {
-    SquelchSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+    tft.drawBitmap(223, 145, AutoSQ, 18, 18, PrimaryColor);
   } else {
-    SquelchSprite.setTextColor(BackgroundColor, BackgroundColor, false);
+    tft.drawBitmap(223, 145, AutoSQ, 18, 18, BackgroundColor);
   }
-  SquelchSprite.fillSprite(BackgroundColor);
-  SquelchSprite.drawString("A.", 0, 0);
-  SquelchSprite.pushSprite(223, 145);
 }
 
 void doSquelch() {
@@ -3749,7 +3747,7 @@ void doSquelch() {
           } else {
             SquelchSprite.drawString(String(SquelchShow), 0, 0);
           }
-          SquelchSprite.pushSprite(223, 145);
+          SquelchSprite.pushSprite(223, 147);
           Squelchold = Squelch;
         }
       }
@@ -3799,7 +3797,7 @@ void doSquelch() {
               SquelchSprite.drawString(String(SquelchShow), 0, 0);
             }
             if (Squelch != Squelchold) {
-              SquelchSprite.pushSprite(223, 145);
+              SquelchSprite.pushSprite(223, 147);
             }
             Squelchold = Squelch;
           }
