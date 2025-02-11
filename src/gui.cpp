@@ -2854,19 +2854,18 @@ void BuildAdvancedRDS() {
   tft.drawLine(0, 68, 320, 68, FrameColor);
   tft.drawLine(0, 104, 320, 104, FrameColor);
   tft.drawLine(0, 126, 320, 126, FrameColor);
-  tft.drawLine(105, 30, 105, 0, FrameColor);
-  tft.drawLine(210, 30, 210, 240, FrameColor);
-  tft.drawLine(30, 30, 30, 0, FrameColor);
-  tft.drawLine(66, 30, 66, 0, FrameColor);
-  tft.drawLine(105, 30, 105, 0, FrameColor);
-  tft.drawLine(162, 30, 162, 0, FrameColor);
-  tft.drawLine(248, 30, 248, 0, FrameColor);
   tft.drawLine(0, 140, 210, 140, FrameColor);
   tft.drawLine(0, 166, 210, 166, FrameColor);
   tft.drawLine(0, 193, 210, 193, FrameColor);
-  tft.drawLine(210, 191, 320, 191, FrameColor);
   tft.drawLine(0, 217, 210, 217, FrameColor);
-  tft.drawRect(0, 0, 320, 240, FrameColor);
+  tft.drawLine(30, 30, 30, 0, FrameColor);
+  tft.drawLine(66, 30, 66, 0, FrameColor);
+  tft.drawLine(105, 30, 105, 0, FrameColor);
+  tft.drawLine(105, 30, 105, 0, FrameColor);
+  tft.drawLine(162, 30, 162, 0, FrameColor);
+  tft.drawLine(210, 30, 210, 240, FrameColor);
+  tft.drawLine(210, 191, 320, 191, FrameColor);
+  tft.drawLine(248, 30, 248, 0, FrameColor);
 
   tftPrint(-1, "ERRORS", 3, 34, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(1, "MHz", 310, 35, ActiveColor, ActiveColorSmooth, 16);
@@ -2981,17 +2980,19 @@ void BuildDisplay() {
   tft.drawRect(0, 0, 320, 240, FrameColor);
   tft.drawLine(0, 30, 320, 30, FrameColor);
   tft.drawLine(0, 100, 320, 100, FrameColor);
-  tft.drawLine(105, 30, 105, 0, FrameColor);
-  tft.drawLine(210, 180, 210, 217, FrameColor);
-  tft.drawLine(195, 100, 195, 180, FrameColor);
-  tft.drawLine(248, 30, 248, 0, FrameColor);
   tft.drawLine(0, 160, 195, 160, FrameColor);
   tft.drawLine(0, 180, 320, 180, FrameColor);
   tft.drawLine(0, 217, 320, 217, FrameColor);
+  tft.drawLine(16, 114, 189, 114, ActiveColor);
   tft.drawLine(30, 30, 30, 0, FrameColor);
   tft.drawLine(66, 30, 66, 0, FrameColor);
+  tft.drawLine(105, 30, 105, 0, FrameColor);
   tft.drawLine(162, 30, 162, 0, FrameColor);
-  tft.drawLine(16, 114, 189, 114, ActiveColor);
+  tft.drawLine(195, 100, 195, 180, FrameColor);
+  tft.drawLine(195, 144, 320, 144, FrameColor);
+  tft.drawLine(210, 180, 210, 217, FrameColor);
+  tft.drawLine(257, 144, 257, 180, FrameColor);
+  tft.drawLine(248, 30, 248, 0, FrameColor);
 
   if (!showmodulation) tft.drawLine(16, 143, 189, 143, GreyoutColor); else tft.drawLine(16, 143, 189, 143, ActiveColor);
 
@@ -3009,37 +3010,35 @@ void BuildDisplay() {
     }
   }
 
-  if (usesquelch || autosquelch) tftPrint(-1, "SQ:", 200, 145, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "US:", 261, 145, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "MP:", 261, 163, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "CN:", 200, 163, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(1, "dB", 257, 163, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(1, "%", 316, 163, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(1, "%", 316, 145, ActiveColor, ActiveColorSmooth, 16);
+  if (usesquelch || autosquelch) tftPrint(-1, "SQ:", 197, 147, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "US:", 259, 147, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "MP:", 259, 165, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "CN:", 197, 165, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(1, "dB", 255, 165, ActiveColor, ActiveColorSmooth, 16);
 
   tftPrint(0, "S", 7, 101, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "1", 24, 115, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "3", 48, 115, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "5", 72, 115, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "7", 96, 115, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "9", 120, 115, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "+10", 134, 115, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "+30", 168, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "1", 21, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "3", 41, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "5", 61, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "7", 81, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "9", 101, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "+10", 127, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(-1, "+30", 160, 115, ActiveColor, ActiveColorSmooth, 16);
 
   if (!showmodulation) {
     tftPrint(0, "M", 7, 128, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "10", 27, 144, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "30", 57, 144, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "50", 87, 144, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "70", 117, 144, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "100", 164, 144, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "10", 24, 144, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "30", 54, 144, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "50", 84, 144, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "70", 114, 144, GreyoutColor, BackgroundColor, 16);
+    tftPrint(-1, "100", 160, 144, GreyoutColor, BackgroundColor, 16);
   } else {
     tftPrint(0, "M", 7, 128, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "10", 27, 144, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "30", 57, 144, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "50", 87, 144, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "70", 117, 144, ActiveColor, BackgroundColor, 16);
-    tftPrint(-1, "100", 164, 144, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "10", 24, 144, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "30", 54, 144, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "50", 84, 144, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "70", 114, 144, ActiveColor, BackgroundColor, 16);
+    tftPrint(-1, "100", 160, 144, ActiveColor, ActiveColorSmooth, 16);
   }
 
   tftPrint(1, "kHz", 246, 4, ActiveColor, ActiveColorSmooth, 28);
