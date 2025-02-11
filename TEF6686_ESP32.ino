@@ -962,7 +962,7 @@ void loop() {
   if (wifi && !menu) {
     webserver.handleClient();
 
-    if (millis() >= udplogtimer + 1000) {
+    if (millis() >= udplogtimer + 500) {
       sendUDPlog();
       udplogtimer = millis();
     }

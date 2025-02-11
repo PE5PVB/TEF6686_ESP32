@@ -3089,6 +3089,8 @@ void BuildDisplay() {
   xPos3 = 0;
   xPos4 = 0;
   xPos5 = 0;
+  MPold = 99;
+  USold = 99;
 }
 
 void MenuUpDown(bool dir) {

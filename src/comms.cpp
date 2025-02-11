@@ -36,6 +36,46 @@ void Communication() {
               ShowFreq(0);
               break;
 
+            case '>':
+            case '<':
+              if (command == '>') direction = true; else direction = false;
+              Seek(direction);
+              ShowFreq(0);
+              break;
+
+            case 'T':
+              uint16_t freqtemp;
+              freqtemp = packet.substring(2).toInt();
+              if (BAND_FM) freqtemp -= ConverterSet * 1000;
+              if (seek) seek = false;
+              radio.clearRDS(fullsearchrds);
+
+              if (freqtemp >= LowEdgeOIRTSet && freqtemp <= HighEdgeOIRTSet) {
+                frequency_OIRT = freqtemp;
+                if (afscreen || advancedRDS) {
+                  BuildDisplay();
+                  SelectBand();
+                }
+                if (band != BAND_OIRT) {
+                  band = BAND_OIRT;
+                  SelectBand();
+                }
+                radio.SetFreq(frequency_OIRT);
+              } else if (freqtemp >= (TEF == 205 ? 6400 : 6500) && freqtemp <= 10800) {
+                frequency = freqtemp;
+                if (afscreen || advancedRDS) {
+                  BuildDisplay();
+                  SelectBand();
+                }
+                if (band != BAND_FM) {
+                  band = BAND_FM;
+                  SelectBand();
+                }
+                radio.SetFreq(frequency);
+              }
+              ShowFreq(0);
+              break;
+
             case 'S': if (!scandxmode) startFMDXScan(); break;
             case 'E': if (scandxmode) cancelDXScan(); break;
 
