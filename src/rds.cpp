@@ -1136,7 +1136,7 @@ void ShowAFEON() {
             tftPrint(-1, oldFreq3, 205, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
           }
 
-          if (radio.eon[i + y].pty > 0) {
+          if (radio.eon[i + y].ptyset) {
             if (eonptyold[i + y] != radio.eon[i + y].pty) tft.fillRect(290, 48 + (15 * i), 29, 16, BackgroundColor);
             if (radio.eon[i + y].pty != 254) tftPrint(1, String(radio.eon[i + y].pty), 310, 48 + (15 * i), RDSColor, RDSColorSmooth, 16);
             eonptyold[i + y] = radio.eon[i + y].pty;
@@ -1144,8 +1144,8 @@ void ShowAFEON() {
             tft.fillRect(290, 48 + (15 * i), 29, 16, BackgroundColor);
           }
 
-          if (radio.eon[i + y].ta) tftPrint(0, "X", 250, 48 + (15 * i), RDSColor, RDSColorSmooth, 16); else tftPrint(0, "X", 250, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
-          if (radio.eon[i + y].tp) tftPrint(0, "X", 276, 48 + (15 * i), RDSColor, RDSColorSmooth, 16); else tftPrint(0, "X", 276, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+          if (radio.eon[i + y].ta) tftPrint(0, "O", 250, 48 + (15 * i), RDSColor, RDSColorSmooth, 16); else tftPrint(0, "O", 250, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+          if (radio.eon[i + y].tp) tftPrint(0, "O", 276, 48 + (15 * i), RDSColor, RDSColorSmooth, 16); else tftPrint(0, "O", 276, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
         }
       }
     }

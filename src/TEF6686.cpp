@@ -1581,6 +1581,7 @@ void TEF6686::readRDS(byte showrdserrors) {
               eon[eonIndex].taset = true;
               eon[eonIndex].ta = bitRead(rds.rdsC, 0);
               eon[eonIndex].pty = (rds.rdsC >> 11) & 0xF;
+              eon[eonIndex].ptyset = true;
             }
 
             if (bitRead(rds.rdsB, 4) && eon[eonIndex].pi == rds.rdsD) eon[eonIndex].tp = true;
@@ -1618,6 +1619,7 @@ void TEF6686::readRDS(byte showrdserrors) {
                   std::swap(eon[j].ta, eon[j + 1].ta);
                   std::swap(eon[j].tp, eon[j + 1].tp);
                   std::swap(eon[j].taset, eon[j + 1].taset);
+                  std::swap(eon[j].ptyset, eon[j + 1].ptyset);
                   std::swap(eon_buffer[j], eon_buffer[j + 1]);
                   std::swap(EONPStext[j], EONPStext[j + 1]);
                 }
@@ -1766,6 +1768,7 @@ void TEF6686::clearRDS (bool fullsearchrds) {
     eon[i].ta = false;
     eon[i].tp = false;
     eon[i].taset = false;
+    eon[i].ptyset = false;
     for (int y = 0; y < 5; y++) {
       eon[i].picode[y] = '\0';
     }
