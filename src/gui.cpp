@@ -3015,6 +3015,8 @@ void BuildDisplay() {
   tftPrint(-1, "MP:", 259, 165, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(-1, "CN:", 197, 165, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(1, "dB", 255, 165, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(1, "%", 316, 165, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(1, "%", 316, 147, ActiveColor, ActiveColorSmooth, 16);
 
   tftPrint(0, "S", 7, 101, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(-1, "1", 21, 115, ActiveColor, ActiveColorSmooth, 16);

@@ -3344,7 +3344,6 @@ void ShowSignalLevel() {
 
         if (MPprint != MPold) {
           tftReplace(1, String(MPold), (band < BAND_GAP ? String(MPprint) : "--"), 299, 165, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 16);
-          tftPrint(1, "%", 316, 165, PrimaryColor, PrimaryColorSmooth, 16);
           MPold = MPprint;
         }
 
@@ -3353,7 +3352,6 @@ void ShowSignalLevel() {
 
         if (USprint != USold) {
           tftReplace(1, String(USold), (band < BAND_GAP ? String(USprint) : "--"), 299, 147, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 16);
-          tftPrint(1, "%", 316, 147, PrimaryColor, PrimaryColorSmooth, 16);
           USold = USprint;
         }
       }
