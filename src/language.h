@@ -2728,18 +2728,18 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "Sens de rotation modifié", // 1
     "Veuillez relâcher\nle bouton", // 2
     "Écran inversé", // 3
-    "Calibrer le compteur\nanalogique", // 4
+    "Calibrer le mesureur\nanalogique", // 4
     "Mode USB", // 5
     "Codeur réglé\nsur optique", // 6
     "Codeur réglé\nsur standard", // 7
     "Récepteur FM/AM", // 8
-    "Tuner: Aucun!", // 9
+    "Tuner : Aucun !", // 9
     "Volume", // 10
     "Convertisseur", // 11
     "Limite de bande basse", // 12
     "Limite de bande haute", // 13
-    "FM décalage du niveau RF", // 14
-    "Stéréo seuil minimum", // 15
+    "Décalage du niveau RF FM", // 14
+    "Seuil minimum pour la Stéréo", // 15
     "Angle du filtre\nà coupe haute", // 16
     "Seuil du filtre\nà coupe haute", // 17
     "Seuil minimum de\nniveau bas", // 18
@@ -2756,16 +2756,16 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "Luminosité de l'affichage", // 29
     "Éteint", // 30
     "Allumé", // 31
-    "APPUYEZ MODE POUR SORTIE & STOCKAGE", // 32
+    "APPUYEZ SUR MODE POUR SORTIR ET SAUVEGARDER", // 32
     "APPUYEZ SUR BAND POUR FERMER", // 33
-    "RECHERCHE...", // 34
+    "SCAN EN COURS...", // 34
     "Tuner non détecté", // 35
     "Gain de l'antenne AM", // 36
     "FM AGC", // 37
-    "Montrer les erreurs\nde décodage RDS", // 38
+    "Afficher les erreurs\nde décodage RDS", // 38
     "Langage", // 39
-    "Choix de la langue", // 40
-    "Synch CT sur\nPI verrouillé", // 41
+    "Choisir la langue", // 40
+    "Verrouillage de la sync. CT sur\nPI", // 41
     "Erreur ! Pas de signal RDS", // 42
     "Sourdine douce FM", // 43
     "Sourdine douce AM", // 44
@@ -2773,57 +2773,57 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "Région", // 46
     "Europe", // 47
     "Amérique", // 48
-    "Montre les tirets du\nbas du PS", // 49
-    "PS seulement", // 50
+    "Afficher les tirets du\nbas sur le PS", // 49
+    "PS uniquement", // 50
     "Wi-Fi actif", // 51
     "Configuration du Wi-Fi", // 52
     "Se connecter au réseau", // 53
     "pour configurer\nle Wi-Fi", // 54
     "Tentative de connexion\nen mode Wi-Fi", // 55
     "CONNEXION IMPOSSIBLE...\nDésactivation du Wi-Fi", // 56
-    "CONNECTÉ!", // 57
-    "Stationlist client IP", // 58
+    "CONNECTÉ !", // 57
+    "IP du client Stationlist", // 58
     "Afficher la longueur\nd'onde SW", // 59
     "Filtre RDS", // 60
     "Afficher les erreurs\nde décodage PI", // 61
     "Utiliser le squelch", // 62
-    "Compteur de modulation", // 63
+    "Mesure de la modulation", // 63
     "Réducteur de bruit AM", // 64
     "Réducteur de bruit FM", // 65
-    "Paramètres par défaut\nchargés", // 66
+    "Réglages par défaut\nchargés", // 66
     "Sortie audio", // 67
-    "Réglage sans\ndésactiver l'économiseur", // 68
-    "Inversion des\ncouleurs d'écran", // 69
+    "Autoriser le scan\nsans désactiver l'économiseur d'écran", // 68
+    "Inverser les\ncouleurs de l'écran", // 69
     "À propos du logiciel", // 70
-    "Code principal:", // 71
-    "Contributeurs:", // 72
+    "Code de base :", // 71
+    "Contributeurs :", // 72
     "Inconnu", // 73
-    "Options d'économiseur\nd'écran", // 74
+    "Options d'écran\nde veille", // 74
     "Arrêt automatique", // 75
-    "Affichage éteint", // 76
+    "Arrêt de l'afficheur", // 76
     "Thème", // 77
-    "Skin", // 78
+    "Mode d'affichage (Skin)", // 78
     "Applications détectées", // 79
     "Min.", // 80
     "Vitesse SPI\ndynamique", // 81
-    "Sensibilité\ndu scanne ", // 82
-    "AUCUNE", // 83
-    "Version de logiciel", // 84
-    "Police de fréquence", // 85
+    "Sensibilité\ndu scan", // 82
+    "AUCUN", // 83
+    "Version logicielle", // 84
+    "Police d'affichage pour la fréquence", // 85
     "Auto", // 86
     "AF indisponible", // 87
     "EON indisponible", // 88
     "RT+ indisponible", // 89
-    "Valeur du pas FM\npar défaut", // 90
-    "Économiseur d'affichage", // 91
+    "Valeur de pas FM\npar défaut", // 90
+    "Écran de veille", // 91
     "Sec", // 92
     "Mode horloge", // 93
-    "1% luminosité", // 94
-    "25% luminosité", // 95
-    "50% luminosité", // 96
-    "AM décalage du\nniveau RF", // 97
+    "Luminosité à 1%", // 94
+    "Luminosité à 25%", // 95
+    "Luminosité à 50%", // 96
+    "Décalage du\nniveau RF AM", // 97
     "Unité de mesure\ndu signal", // 98
-    "Utilisez le AF", // 99
+    "Utiliser la fonction AF", // 99
     "Sélectionner la\nbande FM", // 100
     "Sélectionner la\nbande AM", // 101
     "LW", // 102
@@ -2831,11 +2831,11 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Arrêter l'écran\nlors du réglage", // 107
-    "Sélecteur de modèle", // 108
+    "Arrêter la sortie de veille\nlors du scan", // 107
+    "Sélection du modèle", // 108
     "Base", // 109
     "Portable", // 110
-    "Portable touche", // 111
+    "Portable à écran tactile", // 111
     "Titre", // 112
     "Album", // 113
     "Piste", // 114
@@ -2869,19 +2869,19 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "PS court", // 142
     "PS long", // 143
     "Maintenant", // 144
-    "Suivant", // 145
+    "À suivre", // 145
     "Partie", // 146
-    "Hôte", // 147
+    "Animateur", // 147
     "Rédacteur", // 148
     "Fréquence", // 149
     "Page d'accueil", // 150
     "Sous-canal", // 151
     "Hotline", // 152
-    "Téléphone du studio", // 153
-    "Téléphone", // 154
-    "SMS au studio", // 155
-    "SMS", // 156
-    "Hotline par email", // 157
+    "Num. Téléphone Studio", // 153
+    "Num. Téléphone", // 154
+    "Num. SMS Studio", // 155
+    "Numéro SMS", // 156
+    "Email de la hotline", // 157
     "Email du studio", // 158
     "Email", // 159
     "Chat", // 160
@@ -2891,16 +2891,16 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "Lieu", // 164
     "Rendez-vous", // 165
     "Identifiant", // 166
-    "Achat", // 167
+    "Acheter", // 167
     "Obtenir des données", // 168
-    "AM taille de pas\npar défaut", // 169
+    "Valeur de pas AM\npar défaut", // 169
     "Mandarine", // 170
     "Océan", // 171
     "Indigo", // 172
     "Options de batterie", // 173
     "Montrer la tension", // 174
     "Montrer le pourcentage", // 175
-    "RT buffering", // 176
+    "Mise en mémoire tampon RT", // 176
     "Paramètres principaux", // 177
     "Paramètres audio", // 178
     "Paramètres d'affichage", // 179
@@ -2908,122 +2908,122 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "Paramètres FM", // 181
     "Paramètres AM", // 182
     "Connectivité et horloge", // 183
-    "APPUYEZ MODE POUR RETOURNER", // 184
-    "AM CoChannelDet", // 185
-    "CoChannelDet\nsensibilité", // 186
-    "AM CoChannelDet\nsueil", // 187
-    "CoChannelDet\ncompteur", // 188
-    "PRINCIPAUX", // 189
+    "APPUYEZ SUR MODE POUR REVENIR EN ARRIÈRE", // 184
+    "Détecteur de canal adjacent AM", // 185
+    "Sensibilité\ndu détecteur de canal adjacent", // 186
+    "Seuil\ndu détecteur de canal adjacent", // 187
+    "Compteur\ndu détecteur de canal adjacent", // 188
+    "PRINCIPAL", // 189
     "AUDIO", // 190
     "AFFICHAGE", // 191
     "RDS", // 192
     "FM", // 193
     "AM", // 194
     "CONNECTER", // 195
-    "DX MODE", // 196
-    "AUTO MEM", // 197
-    "AM AGC", // 198
-    "FM déemphasie", // 199
+    "MODE DX", // 196
+    "MEMORISATION AUTO", // 197
+    "AGC AM", // 198
+    "Désaccentuation FM", // 199
     "Petites", // 200
     "Grosses", // 201
     "Toutes", // 202
     "PS rapide", // 203
     "Défaut", // 204
-    "Écran muet sur\nla connexion XDRGTK", // 205
-    "FMSI amélioration\ndu son stéréo", // 206
-    "Fonction disponible seulement\nsur TEF6687/6689!", // 207
-    "Fonction non disponible\nsur le skin sélectionné!", // 208
-    "Commencez la scanne\ndes canaux de mémoire", // 209
-    "Arrêt de la scanne\ndes canaux de mémoire", // 210
+    "Arrêter l'écran\nlors de la connexion XDRGTK", // 205
+    "Amélioration\nde la stéréo FMSI", // 206
+    "Fonction uniquement disponible\nsur TEF6687/6689 !", // 207
+    "Fonction non disponible\nsur ce mode d'affichage !", // 208
+    "Début du scan\ndes canaux mémorisés", // 209
+    "Fin du scan\ndes canaux mémorisés", // 210
     "Temps d'attente", // 211
-    "Démarrer la scanne DX", // 212
+    "Démarrer le scan DX", // 212
     "Options FM DX", // 213
-    "Avorter! Le canal de\ndémarrage est sauté.", // 214
-    "Tri AF automatique", // 215
-    "Canaux de mémoire", // 216
+    "Abandon ! Le canal de\ndépart est indiqué comme ignoré.", // 214
+    "Tri automatique de la liste AF", // 215
+    "Canaux en mémoire", // 216
     "Exclure", // 217
-    "Seulement", // 218
-    "Annuler automatiquement", // 219
-    "PI Correct", // 220
+    "Uniquement", // 218
+    "Interrompre le scan automatiquement", // 219
+    "Code PI correct", // 220
     "Signal", // 221
-    "Audio muet lors\nde la numérisation", // 222
+    "Mettre l'audio en sourdine\nlors du scan", // 222
     "AIR", // 223
-    "Appui sur le bouton\nband 5 sec.", // 224
-    "Éteindre", // 225
-    "Écran éteint", // 226
-    "Inactif", // 227
+    "Appui de 5 sec. sur\nBAND", // 224
+    "Éteindre l'appareil", // 225
+    "Éteindre l'écran", // 226
+    "Désactivé", // 227
     "Non défini", // 228
-    "Informations", // 229
-    "Magazine", // 230
-    "Info-Service", // 231
+    "Actualités", // 229
+    "Affaires courantes", // 230
+    "Information", // 231
     "Sport", // 232
-    "Educatif", // 233
+    "Éducation", // 233
     "Fiction", // 234
     "Culture", // 235
-    "Sciences", // 236
-    "Divertissement", // 237
+    "Science", // 236
+    "Varié", // 237
     "Musique Pop", // 238
     "Musique Rock", // 239
-    "Chansons", // 240
+    "Musique légère", // 240
     "Classique Léger", // 241
-    "MusiqueClassique", // 242
+    "Classique Sérieux", // 242
     "Autre Musique", // 243
     "Météo", // 244
     "Economie", // 245
-    "Enfants", // 246
-    "Société", // 247
+    "Prog. pour enfants", // 246
+    "Affaires sociales", // 247
     "Religion", // 248
     "Ligne ouverte", // 249
-    "Voyages", // 250
+    "Voyage", // 250
     "Loisirs", // 251
-    "Jazz", // 252
-    "Country", // 253
-    "Chanson du pays", // 254
-    "Musique rétro", // 255
+    "Musique Jazz", // 252
+    "Musique Country", // 253
+    "Musique Nationale", // 254
+    "Musique Rétro", // 255
     "Folklore", // 256
     "Documentaire", // 257
-    "TEST", // 258
+    "TEST d'alerte", // 258
     "Alerte !", // 259
     "Initial", // 260
     "Toujours", // 261
     "Afficher l'horloge", // 262
-    "Afficher PS long", // 263
-    "Fréquence de début", // 264
-    "Fréquence de fin", // 265
-    "Commencer canal\nde mémoire", // 266
-    "Arrêter canal\nde mémoire", // 267
-    "Seulement stocker\navec RDS", // 268
-    "Commencer mémoire\nautomatique", // 269
-    "Mémoire automatique", // 270
-    "ID de la liste\ndes stations", // 271
+    "Afficher le PS long", // 263
+    "Fréquence initialle", // 264
+    "Fréquence finale", // 265
+    "Canal\nde mémoire initial", // 266
+    "Canal\nde mémoire final", // 267
+    "Mémoriser avec\nRDS uniquement", // 268
+    "Démarrer la mémorisation\nautomatique", // 269
+    "Mémorisation automatique", // 270
+    "Identifiant\nStationlist", // 271
     "Trouvé", // 272
-    "Abandonner! Plus\nde canaux de mémoire", // 273
-    "Abandonner! Bouton\nappuyé par l'user", // 274
-    "Analyse terminée\nsans erreurs", // 275
-    "Effacer les canaux\nde mémoire", // 276
+    "Abandon ! Mémoire de\ncanaux pleine", // 273
+    "Abandon ! Bouton\npressé par l'utilisateur", // 274
+    "Scan terminé\nsans erreurs", // 275
+    "Effacer les canaux\nmémorisés", // 276
     "effacé", // 277
-    "Prévenir double PI", // 278
+    "Empêcher doublon PI", // 278
     "Plage", // 279
     "Complet", // 280
-    "Attendre que lorsque\nle signal existe", // 281
-    "Appuyez sur l'angle\nmis en évidence", // 282
+    "Temps d'attente\nuniquement sur le signal", // 281
+    "Appuyez sur le coin\nindiqué", // 282
     "Pour calibrer l'écran tactile", // 283
-    "Tenez BW pour arrêter", // 284
+    "Pressez BW pour arrêter le scanner DX", // 284
     "Sélectionner la bande passante", // 285
     "Votre journal de bord", // 286
     "Télécharger le journal de bord", // 287
     "Le journal de bord est vide", // 288
     "Aller en bas", // 289
-    "Ajouté au journal", // 290
+    "Entrée ajoutée au journal de bord", // 290
     "Erreur lors de l'ajout\nau journal de bord", // 291
     "Effacer le journal\nde bord", // 292
     "Journal effacé", // 293
-    "Échec", // 294
-    "Impossible d'ajouter!\nJournal de bord plein!", // 295
-    "Journal automatique", // 296
+    "Échec lors de la suppression", // 294
+    "Impossible d'ajouter l'entrée !\nJournal de bord plein !", // 295
+    "Log automatique", // 296
     "DST automatique\nsur l'heure NTP", // 297
-    "Décalage horaire NTP", // 298
-    "Le journal de bord contient plus de 130 entrées que le spectateur ne peut pas traiter. Télécharger le fichier CSV pour le traiter." // 299
+    "Paramétrage du décalage horaire NTP", // 298
+    "Le journal de bord contient plus de 130 entrées que la liste ne peut pas afficher. Veuillez télécharger le fichier CSV." // 299
   },
 
   { "Български", // Bulgarian
