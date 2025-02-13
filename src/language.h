@@ -2454,8 +2454,8 @@ static const char* const myLanguage[21][300] PROGMEM = {
     "Kijelző fényereje", // 29
     "Ki", // 30
     "Be", // 31
-    "NYOMJ MODE-T A KILÉPÉSHEZ ÉS TÁROLÁSHOZ", // 32
-    "NYOMJ BAND-ET A BEZÁRÁSHOZ", // 33
+    "MODE A MENTÉSHEZ ÉS BEZÁRÁSHOZ", // 32
+    "BAND A BEZÁRÁSHOZ", // 33
     "KERESÉS...", // 34
     "Tuner nem észlelhető", // 35
     "AM Antenna érzékenység", // 36
