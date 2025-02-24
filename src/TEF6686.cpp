@@ -479,11 +479,11 @@ void TEF6686::readRDS(byte showrdserrors) {
       }
 
       // USA Station callsign decoder
-      if (ps_process && rds.correctPI != 0 && rds.region == 1 && correctPIold != rds.correctPI) {
+      if (ps_process && rds.correctPI != 0 && rds.region > 0 && correctPIold != rds.correctPI) {
         bool foundMatch = false;
         fs::File file;
 
-        if (SPIFFS.begin(true)) {
+        if (rds.region == 1 && SPIFFS.begin(true)) {
           delay(5);
           if (currentfreq2 < 9000) {
             file = SPIFFS.open("/USA_87-90.csv");
@@ -551,31 +551,35 @@ void TEF6686::readRDS(byte showrdserrors) {
 
         if (!foundMatch) {
           uint16_t stationID = rds.rdsA;
+
           if (stationID > 4096) {
-            if (stationID > 21671 && (stationID & 0xF00U) >> 8 == 0) stationID = ((uint16_t)uint8_t(0xA0 + ((stationID & 0xF000U) >> 12)) << 8) + lowByte(stationID); // C0DE -> ACDE
-            if (stationID > 21671 && lowByte(stationID) == 0) stationID = 0xAF00 + uint8_t(highByte(stationID)); // CD00 -> AFCD
+            if (stationID > 21671 && (stationID & 0xF00U) >> 8 == 0) {
+              stationID = ((uint16_t)uint8_t(0xA0 + ((stationID & 0xF000U) >> 12)) << 8) + lowByte(stationID); // C0DE -> ACDE
+            }
+            if (stationID > 21671 && lowByte(stationID) == 0) {
+              stationID = 0xAF00 + uint8_t(highByte(stationID)); // CD00 -> AFCD
+            }
+
+            // Determine prefix: 'W' or 'K' for USA, 'C' for Canada
+            if (rds.region == 1 || rds.region == 2) {
+              rds.stationID[0] = (stationID > 21671) ? 'W' : 'K';
+            } else if (rds.region == 3) {
+              rds.stationID[0] = 'C';
+            }
+
             if (stationID < 39247) {
-              if (stationID > 21671) {
-                rds.stationID[0] = 'W';
-                stationID -= 21672;
-              } else {
-                rds.stationID[0] = 'K';
-                stationID -= 4096;
-              }
-              rds.stationID[1] = char(stationID / 676 + 65);
-              rds.stationID[2] = char((stationID - 676 * int(stationID / 676)) / 26 + 65);
-              rds.stationID[3] = char(((stationID - 676 * int(stationID / 676)) % 26) + 65);
+              stationID -= (stationID > 21671) ? 21672 : 4096;
             } else {
               stationID -= 4835;
-              rds.stationID[0] = 'K';
-              rds.stationID[1] = char(stationID / 676 + 65);
-              rds.stationID[2] = char((stationID - 676 * int(stationID / 676)) / 26 + 65);
-              rds.stationID[3] = char(((stationID - 676 * int(stationID / 676)) % 26) + 65);
             }
+
+            rds.stationID[1] = char(stationID / 676 + 65);
+            rds.stationID[2] = char((stationID - 676 * int(stationID / 676)) / 26 + 65);
+            rds.stationID[3] = char(((stationID - 676 * int(stationID / 676)) % 26) + 65);
           }
 
+          // Validate callsign
           bool faultyID = false;
-
           for (byte i = 0; i < 4; i++) {
             if (!(rds.stationID[i] >= 'A' && rds.stationID[i] <= 'Z')) {
               faultyID = true;
