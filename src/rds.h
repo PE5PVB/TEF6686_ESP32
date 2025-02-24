@@ -57,7 +57,6 @@ extern byte MSold;
 extern byte eonptyold[20];
 extern byte rdsblockold;
 extern byte rdsqualityold;
-extern byte region;
 extern byte showrdserrors;
 extern byte stationlistid;
 extern char eonpicodeold[20][6];

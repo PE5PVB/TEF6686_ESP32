@@ -711,8 +711,8 @@ void ShowOneLine(byte position, byte item, bool selected) {
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          if (region == REGION_EU) FullLineSprite.drawString(myLanguage[language][47], 298, 2);
-          if (region == REGION_US) FullLineSprite.drawString(myLanguage[language][48], 298, 2);
+          if (radio.rds.region == REGION_EU) FullLineSprite.drawString(myLanguage[language][47], 298, 2);
+          if (radio.rds.region == REGION_US) FullLineSprite.drawString(myLanguage[language][48], 298, 2);
           break;
 
         case FMSETTINGS:
@@ -1802,8 +1802,8 @@ void ShowOneButton(byte position, byte item, bool selected) {
           PSSprite.drawString(shortLine(removeNewline(myLanguage[language][46])), 75, 1);
 
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          if (region == REGION_EU) PSSprite.drawString(myLanguage[language][47], 75, 15);
-          if (region == REGION_US) PSSprite.drawString(myLanguage[language][48], 75, 15);
+          if (radio.rds.region == REGION_EU) PSSprite.drawString(myLanguage[language][47], 75, 15);
+          if (radio.rds.region == REGION_US) PSSprite.drawString(myLanguage[language][48], 75, 15);
           break;
 
         case FMSETTINGS:
@@ -2870,8 +2870,9 @@ void BuildAdvancedRDS() {
   tftPrint(-1, "ERRORS", 3, 34, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(1, "MHz", 310, 35, ActiveColor, ActiveColorSmooth, 16);
   tftPrint(1, unitString[unit], 310, 51, ActiveColor, ActiveColorSmooth, 16);
-  if (region == REGION_EU) tftPrint(-1, "PI", 216, 81, ActiveColor, ActiveColorSmooth, 16);
-  if (region == REGION_US) {
+  if (radio.rds.region == 0) {
+    tftPrint(-1, "PI", 216, 81, ActiveColor, ActiveColorSmooth, 16);
+  } else {
     tftPrint(-1, "PI:", 216, 72, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "ID:", 216, 89, ActiveColor, ActiveColorSmooth, 16);
   }
@@ -3686,12 +3687,11 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM2:
-            if (region == REGION_EU) region = REGION_US; else region = REGION_EU;
-            if (region == REGION_EU) OneBigLineSprite.drawString(myLanguage[language][47], 135, 0);
-            if (region == REGION_US) OneBigLineSprite.drawString(myLanguage[language][48], 135, 0);
+            if (radio.rds.region == REGION_EU) radio.rds.region = REGION_US; else radio.rds.region = REGION_EU;
+            if (radio.rds.region == REGION_EU) OneBigLineSprite.drawString(myLanguage[language][47], 135, 0);
+            if (radio.rds.region == REGION_US) OneBigLineSprite.drawString(myLanguage[language][48], 135, 0);
 
             OneBigLineSprite.pushSprite(24, 118);
-            radio.rds.region = region;
             break;
 
           case ITEM3:
@@ -4916,8 +4916,8 @@ void DoMenu() {
           case ITEM2:
             Infoboxprint(myLanguage[language][46]);
 
-            if (region == REGION_EU) OneBigLineSprite.drawString(myLanguage[language][47], 135, 0);
-            if (region == REGION_US) OneBigLineSprite.drawString(myLanguage[language][48], 135, 0);
+            if (radio.rds.region == REGION_EU) OneBigLineSprite.drawString(myLanguage[language][47], 135, 0);
+            if (radio.rds.region == REGION_US) OneBigLineSprite.drawString(myLanguage[language][48], 135, 0);
 
             OneBigLineSprite.pushSprite(24, 118);
             break;

@@ -107,7 +107,6 @@ extern byte MSold;
 extern byte poweroptions;
 extern byte eonptyold[20];
 extern byte rdsblockold;
-extern byte region;
 extern byte scancancel;
 extern byte scanstart;
 extern byte scanstop;

@@ -668,8 +668,7 @@ void TEF6686::readRDS(byte showrdserrors) {
 
           if (!rdsBerrorThreshold) {
             rds.stationTypeCode = (rds.rdsB >> 5) & 0x1F;                                       // Get 5 PTY bits from Block B
-            if (rds.region == 0) strcpy(rds.stationType, PTY_EU[rds.stationTypeCode]);
-            if (rds.region == 1) strcpy(rds.stationType, PTY_USA[rds.stationTypeCode]);
+            if (rds.region == 0) strcpy(rds.stationType, PTY_EU[rds.stationTypeCode]); else strcpy(rds.stationType, PTY_USA[rds.stationTypeCode]);
 
             rds.hasTA = (bitRead(rds.rdsB, 4));                                                 // Read TA flag
 

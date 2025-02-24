@@ -211,7 +211,6 @@ byte MSold;
 byte poweroptions;
 byte rdsblockold;
 byte rdsqualityold;
-byte region;
 byte rotarymode;
 byte touchrotating;
 byte scancancel;
@@ -517,7 +516,7 @@ void setup() {
   band = EEPROM.readByte(EE_BYTE_BAND);
   LowLevelSet = EEPROM.readByte(EE_BYTE_LOWLEVELSET);
   memorypos = EEPROM.readByte(EE_BYTE_MEMORYPOS);
-  region = EEPROM.readByte(EE_BYTE_REGION);
+  radio.rds.region = EEPROM.readByte(EE_BYTE_REGION);
   radio.underscore = EEPROM.readByte(EE_BYTE_RDS_UNDERSCORE);
   USBmode = EEPROM.readByte(EE_BYTE_USBMODE);
   wifi = EEPROM.readByte(EE_BYTE_WIFI);
@@ -928,7 +927,6 @@ void setup() {
   radio.setFMNoiseBlanker(fmnb);
   radio.setAudio(audiomode);
   radio.setDeemphasis(fmdeemphasis);
-  radio.rds.region = region;
   radio.setAGC(fmagc);
   radio.setAMAGC(amagc);
   if (fmsi) radio.setFMSI(2); else radio.setFMSI(1);
@@ -1080,7 +1078,7 @@ void loop() {
     if (!scanholdflag) delay(100);
     radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
 
-    if (RabbitearsUser.length() && RabbitearsPassword.length() && region == REGION_US && radio.rds.correctPI != 0 && frequency >= 8810 && frequency <= 10790 && !(frequency % 10) && ((frequency / 10) % 2)) {
+    if (RabbitearsUser.length() && RabbitearsPassword.length() && radio.rds.region != 0 && radio.rds.correctPI != 0 && frequency >= 8810 && frequency <= 10790 && !(frequency % 10) && ((frequency / 10) % 2)) {
       byte i = (frequency / 10 - 881) / 2;
       if (!rabbitearspi[i]) {
         rabbitearspi[i] = radio.rds.correctPI;
@@ -1246,8 +1244,9 @@ void loop() {
           }
         }
       }
-      if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
-      if (region == REGION_US) {
+      if (radio.rds.region == 0) {
+        tftPrint(-1, "PI:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
+      } else {
         tftPrint(-1, "PI:", 212, 184, ActiveColor, ActiveColorSmooth, 16);
         tftPrint(-1, "ID:", 212, 201, ActiveColor, ActiveColorSmooth, 16);
       }
@@ -1278,8 +1277,9 @@ void loop() {
           tftPrint(0, "M", 7, 128, GreyoutColor, BackgroundColor, 16);
           tft.fillRect(16, 133, 187, 6, GreyoutColor);
         }
-        if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
-        if (region == REGION_US) {
+        if (radio.rds.region == 0) {
+          tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
+        } else {
           tftPrint(-1, "PI:", 212, 184, GreyoutColor, BackgroundColor, 16);
           tftPrint(-1, "ID:", 212, 201, GreyoutColor, BackgroundColor, 16);
         }
@@ -2394,8 +2394,9 @@ void SelectBand() {
     radio.setAMCoChannel(amcodect, amcodectcount);
     doBW();
     if (!screenmute) {
-      if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
-      if (region == REGION_US) {
+      if (radio.rds.region == 0) {
+        tftPrint(-1, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
+      } else {
         tftPrint(-1, "PI:", 212, 184, GreyoutColor, BackgroundColor, 16);
         tftPrint(-1, "ID:", 212, 201, GreyoutColor, BackgroundColor, 16);
       }
@@ -2428,8 +2429,9 @@ void SelectBand() {
     freqold = frequency_AM;
     if (!externaltune && tunemode != TUNE_MEM) CheckBandForbiddenFM();
     doBW();
-    if (region == REGION_EU) tftPrint(-1, "PI:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
-    if (region == REGION_US) {
+    if (radio.rds.region == 0) {
+      tftPrint(-1, "PI:", 212, 193, ActiveColor, ActiveColorSmooth, 16);
+    } else {
       tftPrint(-1, "PI:", 212, 184, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(-1, "ID:", 212, 201, ActiveColor, ActiveColorSmooth, 16);
     }
@@ -4896,7 +4898,7 @@ void endMenu() {
   EEPROM.writeByte(EE_BYTE_LANGUAGE, language);
   EEPROM.writeByte(EE_BYTE_SHOWRDSERRORS, showrdserrors);
   EEPROM.writeByte(EE_BYTE_LOWLEVELSET, LowLevelSet);
-  EEPROM.writeByte(EE_BYTE_REGION, region);
+  EEPROM.writeByte(EE_BYTE_REGION, radio.rds.region);
   EEPROM.writeByte(EE_BYTE_RDS_UNDERSCORE, radio.underscore);
   EEPROM.writeByte(EE_BYTE_USBMODE, USBmode);
   EEPROM.writeByte(EE_BYTE_WIFI, wifi);

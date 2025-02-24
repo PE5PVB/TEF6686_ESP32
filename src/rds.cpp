@@ -311,15 +311,13 @@ void readRds() {
     if (!screenmute && !afscreen) {
       if (!RDSstatus) {
         if (radio.rds.correctPI != 0 && !dropout) {
-          if (region == REGION_EU) {
+          if (radio.rds.region == 0) {
             if (advancedRDS) {
               tftPrint(0, PIold, 275, 75, RDSDropoutColor, RDSDropoutColorSmooth, 28);
             } else {
               tftPrint(0, PIold, 275, 187, RDSDropoutColor, RDSDropoutColorSmooth, 28);
             }
-          }
-
-          if (region == REGION_US) {
+          } else {
             if (advancedRDS) {
               tftPrint(-1, PIold, 240, 72, RDSDropoutColor, RDSDropoutColorSmooth, 16);
               tftPrint(-1, stationIDold, 240, 89, RDSDropoutColor, RDSDropoutColorSmooth, 16);
@@ -360,15 +358,13 @@ void readRds() {
         }
       } else {
         if (dropout || memreset) {
-          if (region == REGION_EU) {
+          if (radio.rds.region == 0) {
             if (advancedRDS) {
               tftPrint(0, PIold, 275, 75, RDSColor, RDSColorSmooth, 28);
             } else {
               tftPrint(0, PIold, 275, 187, RDSColor, RDSColorSmooth, 28);
             }
-          }
-
-          if (region == REGION_US) {
+          } else {
             if (advancedRDS) {
               tftPrint(-1, PIold, 240, 72, RDSColor, RDSColorSmooth, 16);
               tftPrint(-1, stationIDold, 240, 89, RDSColor, RDSColorSmooth, 16);
@@ -557,7 +553,7 @@ void ShowErrors() {
 }
 
 void showPI() {
-  if ((region == REGION_US && (String(radio.rds.picode) != PIold || radio.rds.stationIDtext != stationIDold || radio.rds.stationStatetext != stationStateold)) || (region != REGION_US && String(radio.rds.picode) != PIold)) {
+  if ((radio.rds.region != 0 && (String(radio.rds.picode) != PIold || radio.rds.stationIDtext != stationIDold || radio.rds.stationStatetext != stationStateold)) || (radio.rds.region == 0 && String(radio.rds.picode) != PIold)) {
     if (!afscreen && !radio.rds.rdsAerror && !radio.rds.rdsBerror && !radio.rds.rdsCerror && !radio.rds.rdsDerror && radio.rds.rdsA != radio.rds.correctPI && PIold.length() > 1) {
       radio.clearRDS(fullsearchrds);
       if (RDSSPYUSB) Serial.print("G:\r\nRESET-------\r\n\r\n");
@@ -566,14 +562,13 @@ void showPI() {
 
     if (!screenmute) {
       if (advancedRDS) {
-        if (region == REGION_EU) {
+        if (radio.rds.region == 0) {
           if (!RDSstatus) {
             tftReplace(0, PIold, radio.rds.picode, 275, 75, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 28);
           } else {
             tftReplace(0, PIold, radio.rds.picode, 275, 75, RDSColor, RDSColorSmooth, BackgroundColor, 28);
           }
-        }
-        if (region == REGION_US) {
+        } else {
           if (!RDSstatus) {
             if (String(radio.rds.picode) != PIold) tftReplace(-1, PIold, radio.rds.picode, 240, 72, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
             tftReplace(-1, stationIDold, radio.rds.stationIDtext, 240, 89, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
@@ -586,14 +581,13 @@ void showPI() {
       } else if (afscreen) {
         tftReplace(-1, PIold, radio.rds.picode, 30, 201, BWAutoColor, BWAutoColorSmooth, BackgroundColor, 16);
       } else {
-        if (region == REGION_EU) {
+        if (radio.rds.region == 0) {
           if (!RDSstatus) {
             tftReplace(0, PIold, radio.rds.picode, 275, 187, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 28);
           } else {
             tftReplace(0, PIold, radio.rds.picode, 275, 187, RDSColor, RDSColorSmooth, BackgroundColor, 28);
           }
-        }
-        if (region == REGION_US) {
+        } else {
           if (!RDSstatus) {
             if (String(radio.rds.picode) != PIold || radio.rds.stationIDtext != stationIDold) {
               tftReplace(-1, PIold, radio.rds.picode, 240, 184, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
@@ -623,7 +617,7 @@ void showPI() {
 
 void showPTY() {
   if (strcmp(radio.rds.stationType, programTypePrevious)) {
-    String PTYString = String(radio.rds.stationTypeCode) + ": " + (radio.rds.region == 1 ? radio.rds.stationType : myLanguage[language][228 + radio.rds.stationTypeCode]);
+    String PTYString = String(radio.rds.stationTypeCode) + ": " + (radio.rds.region != 0 ? radio.rds.stationType : myLanguage[language][228 + radio.rds.stationTypeCode]);
 
     if (radio.rds.stationTypeCode == 32) PTYString = "";
 
