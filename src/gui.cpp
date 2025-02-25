@@ -711,8 +711,12 @@ void ShowOneLine(byte position, byte item, bool selected) {
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          if (radio.rds.region == REGION_EU) FullLineSprite.drawString(myLanguage[language][47], 298, 2);
-          if (radio.rds.region == REGION_US) FullLineSprite.drawString(myLanguage[language][48], 298, 2);
+          switch (radio.rds.region) {
+            case 0: FullLineSprite.drawString(myLanguage[language][47], 298, 2); break;
+            case 1: FullLineSprite.drawString(String(myLanguage[language][48]) + " DB", 298, 2); break;
+            case 2: FullLineSprite.drawString(myLanguage[language][48], 298, 2); break;
+            case 3: FullLineSprite.drawString(myLanguage[language][300], 298, 2); break;
+          }
           break;
 
         case FMSETTINGS:
@@ -1802,8 +1806,12 @@ void ShowOneButton(byte position, byte item, bool selected) {
           PSSprite.drawString(shortLine(removeNewline(myLanguage[language][46])), 75, 1);
 
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          if (radio.rds.region == REGION_EU) PSSprite.drawString(myLanguage[language][47], 75, 15);
-          if (radio.rds.region == REGION_US) PSSprite.drawString(myLanguage[language][48], 75, 15);
+          switch (radio.rds.region) {
+            case 0: PSSprite.drawString(myLanguage[language][47], 75, 15); break;
+            case 1: PSSprite.drawString(String(myLanguage[language][48]) + " DB", 75, 15); break;
+            case 2: PSSprite.drawString(myLanguage[language][48], 75, 15); break;
+            case 3: PSSprite.drawString(myLanguage[language][300], 75, 15); break;
+          }
           break;
 
         case FMSETTINGS:
@@ -3687,10 +3695,20 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM2:
-            if (radio.rds.region == REGION_EU) radio.rds.region = REGION_US; else radio.rds.region = REGION_EU;
-            if (radio.rds.region == REGION_EU) OneBigLineSprite.drawString(myLanguage[language][47], 135, 0);
-            if (radio.rds.region == REGION_US) OneBigLineSprite.drawString(myLanguage[language][48], 135, 0);
+            if (dir) {
+              radio.rds.region++;
+              if (radio.rds.region > 3) radio.rds.region = 0;
+            } else {
+              radio.rds.region--;
+              if (radio.rds.region > 3) radio.rds.region = 3;
+            }
 
+            switch (radio.rds.region) {
+              case 0: OneBigLineSprite.drawString(myLanguage[language][47], 135, 0); break;
+              case 1: OneBigLineSprite.drawString(String(myLanguage[language][48]) + " DB", 135, 0); break;
+              case 2: OneBigLineSprite.drawString(myLanguage[language][48], 135, 0); break;
+              case 3: OneBigLineSprite.drawString(myLanguage[language][300], 135, 0); break;
+            }
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
@@ -4916,9 +4934,12 @@ void DoMenu() {
           case ITEM2:
             Infoboxprint(myLanguage[language][46]);
 
-            if (radio.rds.region == REGION_EU) OneBigLineSprite.drawString(myLanguage[language][47], 135, 0);
-            if (radio.rds.region == REGION_US) OneBigLineSprite.drawString(myLanguage[language][48], 135, 0);
-
+            switch (radio.rds.region) {
+              case 0: OneBigLineSprite.drawString(myLanguage[language][47], 135, 0); break;
+              case 1: OneBigLineSprite.drawString(String(myLanguage[language][48]) + " DB", 135, 0); break;
+              case 2: OneBigLineSprite.drawString(myLanguage[language][48], 135, 0); break;
+              case 3: OneBigLineSprite.drawString(myLanguage[language][300], 135, 0); break;
+            }
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
