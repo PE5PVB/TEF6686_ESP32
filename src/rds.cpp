@@ -764,8 +764,8 @@ void showPS() {
 
 void showCT() {
   // Temporary string buffers for time and date formatting
-  char timeStr[6];   // HH:MM
-  char dateStr[9];   // DD-MM-YY
+  char timeStr[16];   // Increased buffer size to 16
+  char dateStr[9];    // DD-MM-YY
   time_t t;
 
   // Determine the current time source
@@ -793,15 +793,27 @@ void showCT() {
   // Format the time based on region
   if (clockampm) { // USA region: 12-hour AM/PM format
     int hour = localtime(&t)->tm_hour;
-    String ampm = (hour >= 12) ? "PM" : "AM";
-    if (hour == 0) {
-      hour = 12; // Midnight case
-    } else if (hour > 12) {
-      hour -= 12; // Convert PM hours
+
+    // Ensure the hour is valid (between 1-12)
+    if (hour < 1 || hour > 12) {
+      if (hour == 0) {
+        hour = 12;  // Midnight case
+      } else if (hour > 12) {
+        hour -= 12;  // Convert PM hours
+      }
     }
-    sprintf(timeStr, "%d:%02d %s", hour, localtime(&t)->tm_min, ampm.c_str());
+
+    String ampm = (localtime(&t)->tm_hour >= 12) ? "PM" : "AM";
+    snprintf(timeStr, sizeof(timeStr), "%d:%02d %s", hour, localtime(&t)->tm_min, ampm.c_str());
   } else { // Other regions: 24-hour format
-    strftime(timeStr, sizeof(timeStr), "%H:%M", localtime(&t));
+    int hour = localtime(&t)->tm_hour;
+
+    // Ensure the hour is valid (between 0-23)
+    if (hour < 0 || hour > 23) {
+      hour = 0; // Invalid hour, reset to 0
+    }
+
+    snprintf(timeStr, sizeof(timeStr), "%02d:%02d", hour, localtime(&t)->tm_min);
   }
 
   // Store formatted time in rds_clock

@@ -1,7 +1,7 @@
 #include "TEF6686.h"
 #include <map>
 #include <Arduino.h>
-#include <TimeLib.h>                // https://github.com/PaulStoffregen/Time
+#include <TimeLib.h>
 #include "SPIFFS.h"
 #include "constants.h"
 
@@ -1360,7 +1360,7 @@ void TEF6686::readRDS(byte showrdserrors) {
             mjd = (rds.rdsB & 0x03);
             mjd <<= 15;
             mjd += ((rds.rdsC >> 1) & 0x7FFF);
-            uint16_t hour, minute, day, month, year;
+            uint16_t hour, minute, day = 1, month = 1, year = 2020;  // Set default values for day, month, and year
             int32_t timeoffset;
 
             long J, C, Y, M;
@@ -1383,6 +1383,7 @@ void TEF6686::readRDS(byte showrdserrors) {
             if (bitRead(rds.rdsD, 5)) timeoffset *= -1;
             timeoffset *= 1800;
             minute = (rds.rdsD & 0x0fc0) >> 6;
+
             if (year < 2024 || hour > 23 || minute > 59 || timeoffset > 55800 || timeoffset < -55800) break;
 
             struct tm tm;
@@ -1394,6 +1395,7 @@ void TEF6686::readRDS(byte showrdserrors) {
             tm.tm_sec = 0;
             tm.tm_isdst = -1;
             time_t rdstime = mktime(&tm);
+
             if (lastrdstime == 0) {
               lastrdstime = rdstime;
               lasttimeoffset = timeoffset;

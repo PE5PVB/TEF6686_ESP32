@@ -3310,7 +3310,6 @@ void ShowSignalLevel() {
 
   float sval = 0;
   int16_t smeter = 0;
-  int16_t segments;
 
   if (SStatus > 0) {
     if (SStatus < 1000) {
@@ -3367,7 +3366,6 @@ void ShowSignalLevel() {
     if (unit == 2) SStatusprint = round((float(SStatus) / 10.0 - 10.0 * log10(75) - 90.0) * 10.0);
 
     static int DisplayedSignalSegments = 0;
-    static unsigned long SignalPreviousMillis = 0;
 
     if (SStatusprint > (SStatusold + 3) || SStatusprint < (SStatusold - 3)) {
       if (advancedRDS) {
@@ -3493,7 +3491,6 @@ void ShowOffset() {
     int leftArrowBaseX = centerX - arrowWidth - arrowGap;  // Shift left arrow further left
     int rightArrowBaseX = centerX + arrowWidth + arrowGap; // Shift right arrow further right
 
-    int arrowHeight = height - 2;  // Arrow height
     int arrowBaseYTop = baseY + 1; // Adjusted top Y position
     int arrowBaseYBottom = baseY + height - 1;
 
@@ -3583,7 +3580,7 @@ void ShowModLevel() {
     int segments;
 
     // Ensure MStatus does not exceed 120
-    MStatus = constrain(MStatus, 0, 120);
+    MStatus = (MStatus > 120) ? 120 : MStatus;
 
     // If seeking or squelch is active, reset modulation level
     if (seek || SQ) {

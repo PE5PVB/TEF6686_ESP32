@@ -12,12 +12,19 @@ extern const unsigned char tuner_init_tab4000[] PROGMEM;
 extern const unsigned char tuner_init_tab12000[] PROGMEM;
 extern const unsigned char tuner_init_tab55000[] PROGMEM;
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
+
 enum RDS_GROUPS {
   RDS_GROUP_0A,  RDS_GROUP_0B,  RDS_GROUP_1A,  RDS_GROUP_1B,  RDS_GROUP_2A,  RDS_GROUP_2B,  RDS_GROUP_3A,  RDS_GROUP_3B,
   RDS_GROUP_4A,  RDS_GROUP_4B,  RDS_GROUP_5A,  RDS_GROUP_5B,  RDS_GROUP_6A,  RDS_GROUP_6B,  RDS_GROUP_7A,  RDS_GROUP_7B,
   RDS_GROUP_8A,  RDS_GROUP_8B,  RDS_GROUP_9A,  RDS_GROUP_9B,  RDS_GROUP_10A, RDS_GROUP_10B, RDS_GROUP_11A, RDS_GROUP_11B,
   RDS_GROUP_12A, RDS_GROUP_12B, RDS_GROUP_13A, RDS_GROUP_13B, RDS_GROUP_14A, RDS_GROUP_14B, RDS_GROUP_15A, RDS_GROUP_15B
 };
+
+// Fixed PI/callsign combinations for Canada
+static const uint16_t fixedPI[] = {0x4C10, 0x4C11, 0x4C12};
+static const char* fixedCalls[] = {"CBLA", "CBFM", "CBOT"};
 
 static const char* const PTY_EU[] {
   "None",
@@ -90,10 +97,6 @@ static const char* const PTY_USA[] {
   "EMERGENCY!",
   " "
 };
-
-// Fixed PI/callsign combinations for Canada
-inline const uint16_t fixedPI[] = {0x4C10, 0x4C11, 0x4C12};
-inline const char* fixedCalls[] = {"CBLA", "CBFM", "CBOT"};
 
 static const uint16_t oda_app_ids[] {
   0x0000, 0x0093, 0x0BCB, 0x0C24, 0x0CC1, 0x0D45, 0x0D8B, 0x0E2C, 0x0E31, 0x0F87,
@@ -563,6 +566,8 @@ const DABFrequencyLabel DABfrequencyTable[] = {
   {1483776,  "LS"}, {1485488,  "LT"}, {1487200,  "LU"}, {1488912,  "LV"},
   {1490624,  "LW"}
 };
+
+#pragma GCC diagnostic pop
 
 typedef struct _rds_ {
   byte region;
