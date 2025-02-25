@@ -342,9 +342,9 @@ void readRds() {
           }
 
           if (advancedRDS) {
-            tftPrint(-1, PTYold, 36, 109, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+            tftPrint(-1, PTYold, 34, 109, RDSDropoutColor, RDSDropoutColorSmooth, 16);
           } else {
-            tftPrint(-1, PTYold, 36, 163, RDSDropoutColor, RDSDropoutColorSmooth, 16);
+            tftPrint(-1, PTYold, 34, 163, RDSDropoutColor, RDSDropoutColorSmooth, 16);
           }
 
           if (advancedRDS) {
@@ -399,9 +399,9 @@ void readRds() {
           }
 
           if (advancedRDS) {
-            tftPrint(-1, PTYold, 36, 109, RDSColor, RDSColorSmooth, 16);
+            tftPrint(-1, PTYold, 34, 109, RDSColor, RDSColorSmooth, 16);
           } else {
-            tftPrint(-1, PTYold, 36, 163, RDSColor, RDSColorSmooth, 16);
+            tftPrint(-1, PTYold, 34, 163, RDSColor, RDSColorSmooth, 16);
           }
 
           if (!advancedRDS) {
@@ -624,15 +624,15 @@ void showPTY() {
     if (!screenmute) {
       if (advancedRDS) {
         if (!RDSstatus) {
-          tftReplace(-1, PTYold, PTYString, 36, 109, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+          tftReplace(-1, PTYold, PTYString, 34, 109, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
         } else {
-          tftReplace(-1, PTYold, PTYString, 36, 109, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+          tftReplace(-1, PTYold, PTYString, 34, 109, RDSColor, RDSColorSmooth, BackgroundColor, 16);
         }
       } else {
         if (!RDSstatus) {
-          tftReplace(-1, PTYold, PTYString, 36, 163, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+          tftReplace(-1, PTYold, PTYString, 34, 163, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
         } else {
-          tftReplace(-1, PTYold, PTYString, 36, 163, RDSColor, RDSColorSmooth, BackgroundColor, 16);
+          tftReplace(-1, PTYold, PTYString, 34, 163, RDSColor, RDSColorSmooth, BackgroundColor, 16);
         }
       }
     }
