@@ -2124,7 +2124,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Auto-Sommerzeit\nüber NTP", // 297
     "NTP-Zeitversatz\neinstellen", // 298
     "Das Logbuch enthält mehr als 130 Einträge, was das Anzeigeprogramm nicht verarbeiten kann. Bitte lade die CSV-Datei zum Verarbeiten herunter.", // 299
-    "Canada" // 300
+    "Kanada" // 300
   },
 
   { "Čeština", // Czech
