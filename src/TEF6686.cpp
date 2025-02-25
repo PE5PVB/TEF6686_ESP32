@@ -560,39 +560,49 @@ void TEF6686::readRDS(byte showrdserrors) {
               stationID = 0xAF00 + uint8_t(highByte(stationID)); // CD00 -> AFCD
             }
 
-            // Determine prefix: 'W' or 'K' for USA, 'C' for Canada
-            if (rds.region == 1 || rds.region == 2) {
-              rds.stationID[0] = (stationID > 21671) ? 'W' : 'K';
-            } else if (rds.region == 3) {
-              rds.stationID[0] = 'C';
-            }
-
-            if (stationID < 39247) {
-              stationID -= (stationID > 21671) ? 21672 : 4096;
+            // Check if the station has a fixed callsign for Canada
+            if (rds.region == 3 && isFixedCallsign(stationID, rds.stationID)) {
+              // If it matches a fixed callsign, skip the regular conversion
             } else {
-              stationID -= 4835;
+              // Determine prefix: 'W' or 'K' for USA, 'C' for Canada
+              if (rds.region == 1 || rds.region == 2) {
+                rds.stationID[0] = (stationID > 21671) ? 'W' : 'K';
+              } else if (rds.region == 3) {
+                rds.stationID[0] = 'C'; // Canadian stations start with 'C'
+              }
+
+              // Adjust stationID based on the region and PI code
+              if (stationID < 39247) {
+                stationID -= (stationID > 21671) ? 21672 : 4096;
+              } else {
+                stationID -= 4835;
+              }
+
+              // Decode the last 3 letters of the callsign
+              rds.stationID[1] = char(stationID / 676 + 65);
+              rds.stationID[2] = char((stationID - 676 * int(stationID / 676)) / 26 + 65);
+              rds.stationID[3] = char(((stationID - 676 * int(stationID / 676)) % 26) + 65);
+            }
+          }
+
+          if (!(rds.region == 3 && isFixedCallsign(stationID, rds.stationID))) {
+            // Validate callsign
+            bool faultyID = false;
+            for (byte i = 0; i < 4; i++) {
+              if (!(rds.stationID[i] >= 'A' && rds.stationID[i] <= 'Z')) {
+                faultyID = true;
+                break;
+              }
             }
 
-            rds.stationID[1] = char(stationID / 676 + 65);
-            rds.stationID[2] = char((stationID - 676 * int(stationID / 676)) / 26 + 65);
-            rds.stationID[3] = char(((stationID - 676 * int(stationID / 676)) % 26) + 65);
-          }
-
-          // Validate callsign
-          bool faultyID = false;
-          for (byte i = 0; i < 4; i++) {
-            if (!(rds.stationID[i] >= 'A' && rds.stationID[i] <= 'Z')) {
-              faultyID = true;
-              break;
+            if (faultyID) {
+              strcpy(rds.stationID, "Unknown");
+            } else {
+              rds.stationID[7] = '?';
             }
-          }
 
-          if (faultyID) {
-            strcpy(rds.stationID, "Unknown");
-          } else {
-            rds.stationID[7] = '?';
+            rds.stationID[8] = '\0';
           }
-          rds.stationID[8] = '\0';
         }
         correctPIold = rds.correctPI;
         rds.stationIDtext = rds.stationID;
@@ -2107,4 +2117,14 @@ String TEF6686::ucs2ToUtf8(const char* ucs2Input) {
     }
   }
   return utf8Output;
+}
+
+bool TEF6686::isFixedCallsign(uint16_t stationID, char* stationIDStr) {
+  for (int i = 0; i < sizeof(fixedPI) / sizeof(fixedPI[0]); i++) {
+    if (stationID == fixedPI[i]) {
+      strcpy(stationIDStr, fixedCalls[i]);  // Assign fixed callsign
+      return true;
+    }
+  }
+  return false;
 }

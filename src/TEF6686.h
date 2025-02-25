@@ -91,6 +91,10 @@ static const char* const PTY_USA[] {
   " "
 };
 
+// Fixed PI/callsign combinations for Canada
+inline const uint16_t fixedPI[] = {0x4C10, 0x4C11, 0x4C12};
+inline const char* fixedCalls[] = {"CBLA", "CBFM", "CBOT"};
+
 static const uint16_t oda_app_ids[] {
   0x0000, 0x0093, 0x0BCB, 0x0C24, 0x0CC1, 0x0D45, 0x0D8B, 0x0E2C, 0x0E31, 0x0F87,
   0x125F, 0x1BDA, 0x1C5E, 0x1C68, 0x1CB1, 0x1D47, 0x1DC2, 0x1DC5, 0x1E8F, 0x4400,
@@ -733,8 +737,8 @@ class TEF6686 {
     void RDScharConverter(const char* input, wchar_t* output, size_t size, bool under);
     String convertToUTF8(const wchar_t* input);
     String extractUTF8Substring(const String& utf8String, size_t start, size_t length, bool under);
-    String eRTconverter(const wchar_t* input);
     String ucs2ToUtf8(const char* ucs2Input);
+    bool isFixedCallsign(uint16_t stationID, char* stationIDStr);
     String PSLongtext;
     char ps_buffer[9];
     char ps_buffer2[9];
