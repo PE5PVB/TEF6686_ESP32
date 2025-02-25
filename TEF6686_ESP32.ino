@@ -2803,6 +2803,7 @@ void ButtonPress() {
               case 2: ShowFreq(4); break;
             }
             delay(200);
+            if (edgebeep) EdgeBeeper();
             while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
             ShowFreq(0);
           } else {
