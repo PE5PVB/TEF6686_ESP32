@@ -1031,23 +1031,13 @@ void loop() {
             break;
           }
         }
+        doLog();
         DoMemoryPosTune();
+        radio.clearRDS(fullsearchrds);
+        autologged = false;
         ShowMemoryPos();
       } else {
-        if (!autologged && RDSstatus && radio.rds.correctPI != 0) {
-          if (autolog) {
-            switch (addRowToCSV()) {
-              case 0: ShowFreq(2); break;
-              case 1: ShowFreq(3); break;
-              case 2: ShowFreq(4); break;
-            }
-
-            delay(200);
-            while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
-            ShowFreq(0);
-          }
-          autologged = true;
-        }
+        doLog();
         TuneUp();
         autologged = false;
         ShowFreq(0);
@@ -5512,5 +5502,21 @@ void toggleiMSEQ() {
     EEPROM.writeByte(EE_BYTE_EQSET, EQset);
     EEPROM.commit();
     if (XDRGTKUSB || XDRGTKTCP) DataPrint("G" + String(!EQset) + String(!iMSset) + "\n");
+  }
+}
+
+void doLog() {
+  if (!autologged && RDSstatus && radio.rds.correctPI != 0) {
+    if (autolog) {
+      switch (addRowToCSV()) {
+        case 0: ShowFreq(2); break;
+        case 1: ShowFreq(3); break;
+        case 2: ShowFreq(4); break;
+      }
+
+      delay(200);
+      ShowFreq(0);
+    }
+    autologged = true;
   }
 }
