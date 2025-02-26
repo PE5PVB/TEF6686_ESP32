@@ -2124,7 +2124,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Auto-Sommerzeit\nüber NTP", // 297
     "NTP-Zeitversatz\neinstellen", // 298
     "Das Logbuch enthält mehr als 130 Einträge, was das Anzeigeprogramm nicht verarbeiten kann. Bitte lade die CSV-Datei zum Verarbeiten herunter.", // 299
-    "Canada" // 300
+    "Kanada" // 300
   },
 
   { "Čeština", // Czech
@@ -2639,10 +2639,10 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "FMSI sztereó\njavítás", // 206
     "Funkció csak a\nTEF6687/6689-hez!", // 207
     "Funkció nem elérhető\nebben a kinézetben!", // 208
-    "Memóriacsatornák\nkeresésének elkezdése", // 209
-    "Memóriacsatornák\nkeresésének befejezése", // 210
+    "Mem. csat. szkennelésének\nelkezdése", // 209
+    "Mem. csat. szkennelésének\nbefejezése", // 210
     "Várakozási idő", // 211
-    "DX keresés indítása", // 212
+    "DX szkennelés indítása", // 212
     "FM DX Opciók", // 213
     "Megszakítva! A kezdőcsatorna\nkihagyottnak van jelölve.", // 214
     "Auto AF rendezés", // 215
@@ -2650,8 +2650,8 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Kizárása", // 217
     "Csak", // 218
     "Auto keresés\nmegszakítása", // 219
-    "Helyes PI", // 220
-    "Jel", // 221
+    "Jó PI esetén", // 220
+    "Jel esetén", // 221
     "Hang némítása\nkeresés közben", // 222
     "AIR", // 223
     "5 mp. sávgombnyomás", // 224
@@ -2696,8 +2696,8 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Hosszú PS mutatása", // 263
     "Indítási frekvencia", // 264
     "Befejezési frekvencia", // 265
-    "Memóriacsatorna\nindítása", // 266
-    "Memóriacsatorna\nleállítása", // 267
+    "Memóriacsatorna\nmentés indítása", // 266
+    "Memóriacsatorna\nmentés leállítása", // 267
     "Csak RDS-el tárolja", // 268
     "Auto memória indítása", // 269
     "Auto memória", // 270
@@ -2719,7 +2719,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "A logbookod", // 286
     "Logbook letöltése", // 287
     "A logbook üres", // 288
-    "Menj az aljára", // 289
+    "Ugrás az aljára", // 289
     "Hozzáadva a loghoz", // 290
     "Hiba a naplóhoz adáskor", // 291
     "Logbook törlése", // 292
@@ -2730,7 +2730,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Auto nyári idő(DST)\nNTP idő szerint", // 297
     "NTP időeltolás beállítása", // 298
     "A napló több mint 130 bejegyzést tartalmaz, amelyeket a megtekintő nem tud feldolgozni. Kérlek, töltsd le a CSV fájlt a megtekintéshez.", // 299
-    "Canada" // 300
+    "Kanada" // 300
   },
 
   { "Français", // French
