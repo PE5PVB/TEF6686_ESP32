@@ -442,15 +442,15 @@ void TEF6686::readRDS(byte showrdserrors) {
         }
       }
 
-      if (!rdsAerrorThreshold && !rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold) {
+      if (!rdsAerrorThreshold) {
         rds.picode[4] = ' ';
         rds.picode[5] = ' ';
         errorfreepi = true;
       }
 
       if (!errorfreepi) {
-        if (((rds.rdsErr >> 14) & 0x03) > 2) rds.picode[5] = '?'; else rds.picode[5] = ' ';
-        if (((rds.rdsErr >> 14) & 0x03) > 1) rds.picode[4] = '?'; else rds.picode[4] = ' ';       // Not sure, add a ?
+        if (((rds.rdsErr >> 14) & 0x03) > 1) rds.picode[5] = '?'; else rds.picode[5] = ' ';
+        if (((rds.rdsErr >> 14) & 0x03) > 0) rds.picode[4] = '?'; else rds.picode[4] = ' ';       // Not sure, add a ?
       } else {
         rds.picode[4] = ' ';
         rds.picode[5] = ' ';
@@ -479,7 +479,7 @@ void TEF6686::readRDS(byte showrdserrors) {
       }
 
       // USA Station callsign decoder
-      if (ps_process && rds.correctPI != 0 && rds.region > 0 && correctPIold != rds.correctPI) {
+      if ((rds.region == 1 ? ps_process : true) && rds.correctPI != 0 && rds.region > 0 && correctPIold != rds.correctPI) {
         bool foundMatch = false;
         fs::File file;
 
