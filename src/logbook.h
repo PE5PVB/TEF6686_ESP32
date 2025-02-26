@@ -16,6 +16,7 @@ extern bool scandxmode;
 extern byte band;
 extern byte chipmodel;
 extern byte language;
+extern byte scanhold;
 extern byte unit;
 extern int16_t SStatus;
 extern int8_t NTPoffset;

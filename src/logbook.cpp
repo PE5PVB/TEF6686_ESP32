@@ -271,7 +271,7 @@ byte addRowToCSV() {
 
   // Replace commas in the station name and radio text to avoid CSV conflicts
   String stationName = radio.rds.stationName;
-  String radioTextModified = radioText;
+  String radioTextModified = (scanhold > 4 ? radioText : "");
   stationName.replace(",", " ");  // Replace commas in station name
   radioTextModified.replace(",", " ");  // Replace commas in radio text
 
