@@ -442,7 +442,7 @@ void TEF6686::readRDS(byte showrdserrors) {
         }
       }
 
-      if (!rdsAerrorThreshold) {
+      if (ps_process && ((rds.rdsErr >> 14) & 0x03) == 0) {
         rds.picode[4] = ' ';
         rds.picode[5] = ' ';
         errorfreepi = true;
