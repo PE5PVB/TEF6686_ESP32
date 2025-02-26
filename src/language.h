@@ -719,7 +719,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "SW", // 104
     "FM", // 105
     "OIRT", // 106
-    "Stop scherm ontwaken bij afstemmen", // 107
+    "Stroj.gdy ekran wył.", // 107
     "Wybór modelu", // 108
     "Podstawowy", // 109
     "Przenośny", // 110
