@@ -449,6 +449,12 @@ unsigned long tuningtimer;
 unsigned long udplogtimer;
 unsigned long udptimer;
 
+struct HSV {
+  float h;
+  float s;
+  float v;
+};
+
 mem presets[EE_PRESETS_CNT];
 TEF6686 radio;
 ESP32Time rtc(0);
@@ -3379,14 +3385,9 @@ void ShowSignalLevel() {
           DisplayedSignalSegments = constrain((SStatus + 200) / 10, 0, 86);
         }
 
-        // Extract RGB components from 16-bit colors
-        uint8_t r1 = (BarInsignificantColor >> 11) & 0x1F;
-        uint8_t g1 = (BarInsignificantColor >> 5) & 0x3F;
-        uint8_t b1 = BarInsignificantColor & 0x1F;
-
-        uint8_t r2 = (BarSignificantColor >> 11) & 0x1F;
-        uint8_t g2 = (BarSignificantColor >> 5) & 0x3F;
-        uint8_t b2 = BarSignificantColor & 0x1F;
+        // Convert colors from RGB565 to HSV
+        HSV hsv1 = RGB565toHSV(BarInsignificantColor);
+        HSV hsv2 = RGB565toHSV(BarSignificantColor);
 
         int gradientStart = (86 * 25) / 100;  // Adjusted for 86 segments
         int gradientEnd = (86 * 60) / 100;    // Adjusted for 86 segments
@@ -3399,10 +3400,14 @@ void ShowSignalLevel() {
         // Apply gradient from 25% to 60%
         if (DisplayedSignalSegments > gradientStart) {
           for (int i = gradientStart; i < min(DisplayedSignalSegments, gradientEnd); i++) {
-            uint8_t r = map(i, gradientStart, gradientEnd, r1, r2);
-            uint8_t g = map(i, gradientStart, gradientEnd, g1, g2);
-            uint8_t b = map(i, gradientStart, gradientEnd, b1, b2);
-            uint16_t gradientColor = (r << 11) | (g << 5) | b;
+            // Interpolate HSV values
+            float h = map(i, gradientStart, gradientEnd, hsv1.h, hsv2.h);
+            float s = map(i, gradientStart, gradientEnd, hsv1.s * 100, hsv2.s * 100) / 100.0;
+            float v = map(i, gradientStart, gradientEnd, hsv1.v * 100, hsv2.v * 100) / 100.0;
+
+            // Convert interpolated HSV back to RGB565
+            uint16_t gradientColor = HSVtoRGB565(h, s, v);
+
             tft.fillRect(16 + 2 * i, 105, 2, 6, gradientColor);
           }
         }
@@ -3569,20 +3574,15 @@ void ShowBW() {
 void ShowModLevel() {
   if (showmodulation) {
     int segments;
-
-    // Ensure MStatus does not exceed 120
     MStatus = (MStatus > 120) ? 120 : MStatus;
 
-    // If seeking or squelch is active, reset modulation level
     if (seek || SQ) {
       MStatus = 0;
       MStatusold = 1;
     }
 
-    // Map MStatus to segment count, ensuring it does not exceed 86
     segments = constrain(map(MStatus, 0, 120, 0, 86), 0, 86);
 
-    // Smooth decrease of segments over time
     if (segments < DisplayedSegments && (millis() - ModulationpreviousMillis >= 20)) {
       DisplayedSegments = max(DisplayedSegments - 3, segments);
       ModulationpreviousMillis = millis();
@@ -3590,10 +3590,8 @@ void ShowModLevel() {
       DisplayedSegments = segments;
     }
 
-    // Ensure DisplayedSegments never exceeds 86
     DisplayedSegments = constrain(DisplayedSegments, 0, 86);
 
-    // Peak Hold Logic
     if (DisplayedSegments > peakholdold) {
       peakholdold = DisplayedSegments;
       peakholdmillis = millis();
@@ -3606,58 +3604,43 @@ void ShowModLevel() {
       }
     }
 
-    // Ensure peak hold indicator stays within bounds
     peakholdold = constrain(peakholdold, 0, 86);
 
-    // Extract RGB components from 16-bit colors
-    uint8_t r1 = (ModBarInsignificantColor >> 11) & 0x1F;
-    uint8_t g1 = (ModBarInsignificantColor >> 5) & 0x3F;
-    uint8_t b1 = ModBarInsignificantColor & 0x1F;
+    // Convert colors to HSV
+    HSV hsv1 = RGB565toHSV(ModBarInsignificantColor);
+    HSV hsv2 = RGB565toHSV(ModBarSignificantColor);
 
-    uint8_t r2 = (ModBarSignificantColor >> 11) & 0x1F;
-    uint8_t g2 = (ModBarSignificantColor >> 5) & 0x3F;
-    uint8_t b2 = ModBarSignificantColor & 0x1F;
+    int gradientStart = (86 * 25) / 100;
+    int gradientEnd = (86 * 60) / 100;
 
-    int gradientStart = (86 * 25) / 100;  // Adjusted for 86 segments
-    int gradientEnd = (86 * 60) / 100;    // Adjusted for 86 segments
-
-    // Draw solid color for first 25%
     for (int i = 0; i < min(DisplayedSegments, gradientStart); i++) {
       tft.fillRect(16 + 2 * i, 133, 2, 6, ModBarInsignificantColor);
     }
 
-    // Apply gradient from 25% to 60%
     if (DisplayedSegments > gradientStart) {
       for (int i = gradientStart; i < min(DisplayedSegments, gradientEnd); i++) {
-        // Interpolate color between insignificant and significant colors
-        uint8_t r = map(i, gradientStart, gradientEnd, r1, r2);
-        uint8_t g = map(i, gradientStart, gradientEnd, g1, g2);
-        uint8_t b = map(i, gradientStart, gradientEnd, b1, b2);
+        float h = map(i, gradientStart, gradientEnd, hsv1.h, hsv2.h);
+        float s = map(i, gradientStart, gradientEnd, hsv1.s * 100, hsv2.s * 100) / 100.0;
+        float v = map(i, gradientStart, gradientEnd, hsv1.v * 100, hsv2.v * 100) / 100.0;
 
-        // Convert back to RGB565 format
-        uint16_t gradientColor = (r << 11) | (g << 5) | b;
-
+        uint16_t gradientColor = HSVtoRGB565(h, s, v);
         tft.fillRect(16 + 2 * i, 133, 2, 6, gradientColor);
       }
     }
 
-    // Draw solid color for segments beyond 60%
     if (DisplayedSegments > gradientEnd) {
       for (int i = gradientEnd; i < DisplayedSegments; i++) {
         tft.fillRect(16 + 2 * i, 133, 2, 6, ModBarSignificantColor);
       }
     }
 
-    // Grey out unused segments
     int greyStart = 16 + 2 * DisplayedSegments;
-    int greyWidth = 2 * (87 - DisplayedSegments);  // Adjusted for 87 total segments
+    int greyWidth = 2 * (87 - DisplayedSegments);
     tft.fillRect(greyStart, 133, greyWidth, 6, GreyoutColor);
 
-    // Peak Hold Indicator
     int peakHoldPosition = 16 + 2 * peakholdold;
     tft.fillRect(peakHoldPosition, 133, 2, 6, (MStatus > 80) ? ModBarSignificantColor : PrimaryColor);
 
-    // Erase peak hold indicator if it has decayed
     if (millis() - peakholdmillis >= 1000) {
       if (peakholdold <= DisplayedSegments || peakholdold >= 86) {
         tft.fillRect(peakHoldPosition, 133, 2, 6, GreyoutColor);
@@ -5519,4 +5502,64 @@ void doLog() {
     }
     autologged = true;
   }
+}
+
+HSV RGB565toHSV(uint16_t color) {
+  uint8_t r = ((color >> 11) & 0x1F) * 8;  // Convert 5-bit to 8-bit
+  uint8_t g = ((color >> 5) & 0x3F) * 4;   // Convert 6-bit to 8-bit
+  uint8_t b = (color & 0x1F) * 8;          // Convert 5-bit to 8-bit
+
+  float rf = r / 255.0, gf = g / 255.0, bf = b / 255.0;
+  float maxVal = max(rf, max(gf, bf));
+  float minVal = min(rf, min(gf, bf));
+  float delta = maxVal - minVal;
+
+  HSV hsv;
+  hsv.v = maxVal;
+
+  if (delta < 0.0001) {
+    hsv.h = 0;
+    hsv.s = 0;
+  } else {
+    hsv.s = delta / maxVal;
+
+    if (maxVal == rf)
+      hsv.h = fmod(((gf - bf) / delta), 6.0);
+    else if (maxVal == gf)
+      hsv.h = ((bf - rf) / delta) + 2.0;
+    else
+      hsv.h = ((rf - gf) / delta) + 4.0;
+
+    hsv.h *= 60.0;
+    if (hsv.h < 0)
+      hsv.h += 360.0;
+  }
+  return hsv;
+}
+
+uint16_t HSVtoRGB565(float h, float s, float v) {
+  float c = v * s;
+  float x = c * (1 - fabs(fmod(h / 60.0, 2) - 1));
+  float m = v - c;
+
+  float rf, gf, bf;
+  if (h < 60) {
+    rf = c, gf = x, bf = 0;
+  } else if (h < 120) {
+    rf = x, gf = c, bf = 0;
+  } else if (h < 180) {
+    rf = 0, gf = c, bf = x;
+  } else if (h < 240) {
+    rf = 0, gf = x, bf = c;
+  } else if (h < 300) {
+    rf = x, gf = 0, bf = c;
+  } else {
+    rf = c, gf = 0, bf = x;
+  }
+
+  uint8_t r = (rf + m) * 255;
+  uint8_t g = (gf + m) * 255;
+  uint8_t b = (bf + m) * 255;
+
+  return ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
 }
