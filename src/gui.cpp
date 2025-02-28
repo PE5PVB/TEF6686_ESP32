@@ -376,7 +376,7 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       WifiColorHigh = SecondaryColor;
       break;
 
-    case 11:  // Maroon
+    case 11:  // Queer
       PrimaryColor = Cherry;
       PrimaryColorSmooth = CherrySmooth;
       SecondaryColor = Crimson;
@@ -400,8 +400,8 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
       RDSDropoutColorSmooth = LoganSmooth;
       BarSignificantColor = Yolk;
       BarInsignificantColor = Cherry;
-      ModBarSignificantColor = Orange;
-      ModBarInsignificantColor = Crimson;
+      ModBarSignificantColor = Red;
+      ModBarInsignificantColor = Purple;
       BWAutoColor = Violet;
       BWAutoColorSmooth = VioletSmooth;
       BatteryValueColor = Purple;

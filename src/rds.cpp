@@ -617,7 +617,7 @@ void showPI() {
 
 void showPTY() {
   if (strcmp(radio.rds.stationType, programTypePrevious)) {
-    String PTYString = String(radio.rds.stationTypeCode) + ": " + (radio.rds.region != 0 ? radio.rds.stationType : myLanguage[language][228 + radio.rds.stationTypeCode]);
+    String PTYString = String(radio.rds.stationTypeCode) + "/" + (radio.rds.region != 0 ? radio.rds.stationType : myLanguage[language][228 + radio.rds.stationTypeCode]);
 
     if (radio.rds.stationTypeCode == 32) PTYString = "";
 
