@@ -3380,17 +3380,17 @@ void ShowSignalLevel() {
 
         // Calculate segments for signal meter
         if (band < BAND_GAP) {
-          DisplayedSignalSegments = constrain(map(SStatus / 10, 0, 70, 0, 100), 0, 86);
+          DisplayedSignalSegments = constrain(map(SStatus / 10, 0, 70, 0, 100), 0, 87);
         } else {
-          DisplayedSignalSegments = constrain((SStatus + 200) / 10, 0, 86);
+          DisplayedSignalSegments = constrain((SStatus + 200) / 10, 0, 87);
         }
 
         // Convert colors from RGB565 to HSV
         HSV hsv1 = RGB565toHSV(BarInsignificantColor);
         HSV hsv2 = RGB565toHSV(BarSignificantColor);
 
-        int gradientStart = (86 * 25) / 100;  // Adjusted for 86 segments
-        int gradientEnd = (86 * 60) / 100;    // Adjusted for 86 segments
+        int gradientStart = (87 * 25) / 100;  // Adjusted for 87 segments
+        int gradientEnd = (87 * 60) / 100;    // Adjusted for 87 segments
 
         // Draw solid color for first 25%
         for (int i = 0; i < min(DisplayedSignalSegments, gradientStart); i++) {
