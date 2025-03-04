@@ -1266,7 +1266,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Ηχητικό σήμα στο όριο\nμπάντας", // 45
     "Περιοχή", // 46
     "Ευρώπη", // 47
-    "USA", // 48
+    "Η.Π.Α.", // 48
     "Εμφάνιση κάτω παύλας\nστο RDS", // 49
     "PS μόνο", // 50
     "Wi-Fi ενεργό", // 51
@@ -1327,7 +1327,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "OIRT", // 106
     "Μη αφύπνιση\nκατά τον συντονισμό", // 107
     "Επιλογή μοντέλου", // 108
-    "Βασικό", // 109
+    "Βάσης", // 109
     "Φορητό", // 110
     "Φορητό αφής", // 111
     "Τίτλος", // 112
@@ -2748,7 +2748,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Limite de bande basse", // 12
     "Limite de bande haute", // 13
     "Décalage du niveau RF FM", // 14
-    "Seuil minimum pour la Stéréo", // 15
+    "Seuil minimum\npour la Stéréo", // 15
     "Angle du filtre\nà coupe haute", // 16
     "Seuil du filtre\nà coupe haute", // 17
     "Seuil minimum de\nniveau bas", // 18
@@ -2765,7 +2765,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Luminosité de l'affichage", // 29
     "Éteint", // 30
     "Allumé", // 31
-    "APPUYEZ SUR MODE POUR SORTIR ET SAUVEGARDER", // 32
+    "BUTON MODE POUR SORTIR & SAUVEGARDER", // 32
     "APPUYEZ SUR BAND POUR FERMER", // 33
     "SCAN EN COURS...", // 34
     "Tuner non détecté", // 35
@@ -2781,7 +2781,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Bip à la limite\nde bande", // 45
     "Région", // 46
     "Europe", // 47
-    "USA", // 48
+    "États-Unis", // 48
     "Afficher les tirets du\nbas sur le PS", // 49
     "PS uniquement", // 50
     "Wi-Fi actif", // 51
@@ -2801,11 +2801,11 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Réducteur de bruit FM", // 65
     "Réglages par défaut\nchargés", // 66
     "Sortie audio", // 67
-    "Autoriser le scan\nsans désactiver l'économiseur d'écran", // 68
+    "Scanner sans désactiver\nl'économiseur d'écran", // 68
     "Inverser les\ncouleurs de l'écran", // 69
     "À propos du logiciel", // 70
-    "Code de base :", // 71
-    "Contributeurs :", // 72
+    "Code de base:", // 71
+    "Contributeurs:", // 72
     "Inconnu", // 73
     "Options d'écran\nde veille", // 74
     "Arrêt automatique", // 75
@@ -2818,7 +2818,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Sensibilité\ndu scan", // 82
     "AUCUN", // 83
     "Version logicielle", // 84
-    "Police d'affichage pour la fréquence", // 85
+    "Police d'affichage\npour la fréquence", // 85
     "Auto", // 86
     "AF indisponible", // 87
     "EON indisponible", // 88
@@ -2917,11 +2917,11 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Paramètres FM", // 181
     "Paramètres AM", // 182
     "Connectivité et horloge", // 183
-    "APPUYEZ SUR MODE POUR REVENIR EN ARRIÈRE", // 184
+    "BOUTON MODE POUR REVENIR EN ARRIÈRE", // 184
     "Détecteur de canal adjacent AM", // 185
-    "Sensibilité\ndu détecteur de canal adjacent", // 186
-    "Seuil\ndu détecteur de canal adjacent", // 187
-    "Compteur\ndu détecteur de canal adjacent", // 188
+    "Sensibilité du détecteur\nde canal adjacent", // 186
+    "Seuil du détecteur\nde canal adjacent", // 187
+    "Compteurdu détecteur\nde canal adjacent", // 188
     "PRINCIPAL", // 189
     "AUDIO", // 190
     "AFFICHAGE", // 191
@@ -2940,7 +2940,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Défaut", // 204
     "Arrêter l'écran\nlors de la connexion XDRGTK", // 205
     "Amélioration\nde la stéréo FMSI", // 206
-    "Fonction uniquement disponible\nsur TEF6687/6689 !", // 207
+    "Fonction disponible\nsur TEF6687/6689!", // 207
     "Fonction non disponible\nsur ce mode d'affichage !", // 208
     "Début du scan\ndes canaux mémorisés", // 209
     "Fin du scan\ndes canaux mémorisés", // 210
@@ -2948,14 +2948,14 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Démarrer le scan DX", // 212
     "Options FM DX", // 213
     "Abandon ! Le canal de\ndépart est indiqué comme ignoré.", // 214
-    "Tri automatique de la liste AF", // 215
+    "Tri automatique\nde la liste AF", // 215
     "Canaux en mémoire", // 216
     "Exclure", // 217
     "Uniquement", // 218
-    "Interrompre le scan automatiquement", // 219
+    "Interrompre le scan\nautomatiquement", // 219
     "Code PI correct", // 220
     "Signal", // 221
-    "Mettre l'audio en sourdine\nlors du scan", // 222
+    "Mettre l'audio en\nsourdine lors du scan", // 222
     "AIR", // 223
     "Appui de 5 sec. sur\nBAND", // 224
     "Éteindre l'appareil", // 225
@@ -3003,11 +3003,11 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Canal\nde mémoire final", // 267
     "Mémoriser avec\nRDS uniquement", // 268
     "Démarrer la mémorisation\nautomatique", // 269
-    "Mémorisation automatique", // 270
+    "Mémorisation\nautomatique", // 270
     "Identifiant\nStationlist", // 271
     "Trouvé", // 272
-    "Abandon ! Mémoire de\ncanaux pleine", // 273
-    "Abandon ! Bouton\npressé par l'utilisateur", // 274
+    "Abandon! Mémoire de\ncanaux pleine", // 273
+    "Abandon! Bouton\npressé par l'utilisateur", // 274
     "Scan terminé\nsans erreurs", // 275
     "Effacer les canaux\nmémorisés", // 276
     "effacé", // 277
@@ -3017,18 +3017,18 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Temps d'attente\nuniquement sur le signal", // 281
     "Appuyez sur le coin\nindiqué", // 282
     "Pour calibrer l'écran tactile", // 283
-    "Pressez BW pour arrêter le scanner DX", // 284
+    "Pressez BW pour\narrêter le scanner DX", // 284
     "Sélectionner la bande passante", // 285
     "Votre journal de bord", // 286
     "Télécharger le journal de bord", // 287
-    "Le journal de bord est vide", // 288
+    "Journal de bord vide", // 288
     "Aller en bas", // 289
     "Entrée ajoutée au journal de bord", // 290
     "Erreur lors de l'ajout\nau journal de bord", // 291
     "Effacer le journal\nde bord", // 292
     "Journal effacé", // 293
-    "Échec lors de la suppression", // 294
-    "Impossible d'ajouter l'entrée !\nJournal de bord plein !", // 295
+    "Échec lors de\nla suppression", // 294
+    "Impossible d'ajouter l'entrée!\nJournal de bord plein!", // 295
     "Log automatique", // 296
     "DST automatique\nsur l'heure NTP", // 297
     "Paramétrage du décalage horaire NTP", // 298
@@ -4902,7 +4902,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Tono en límite de banda", // 45
     "Región", // 46
     "Europa", // 47
-    "USA", // 48
+    "Estados Unidos", // 48
     "Mostrar guion\nbajo en RDS", // 49
     "Solo PS", // 50
     "Wi-Fi activado", // 51
@@ -5205,7 +5205,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Bipe na borda da faixa", // 45
     "Região", // 46
     "Europa", // 47
-    "USA", // 48
+    "Estados Unidos", // 48
     "Mostrar sublinhado\nno RDS", // 49
     "PS apenas", // 50
     "Wi-Fi ativo", // 51
@@ -5508,7 +5508,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Pucketanje na\nivici opsega", // 45
     "Region", // 46
     "Evropa", // 47
-    "USA", // 48
+    "S.A.D.", // 48
     "Prikazivanje\ndonje crte u RDS", // 49
     "PS samo", // 50
     "Wi-Fi aktivan", // 51
@@ -5811,7 +5811,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Ääni rajalla", // 45
     "Alue", // 46
     "Eurooppa", // 47
-    "USA", // 48
+    "Yhdysvallat", // 48
     "Näytä alaviiva RDS:ssa", // 49
     "Vain PS", // 50
     "Wi-Fi aktiivinen", // 51
