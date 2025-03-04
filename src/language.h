@@ -54,7 +54,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Beep at band edge", // 45
     "Region", // 46
     "Europe", // 47
-    "America", // 48
+    "USA", // 48
     "Show underscore in RDS", // 49
     "PS only", // 50
     "Wi-Fi active", // 51
@@ -357,7 +357,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Piep op bandeinde", // 45
     "Regio", // 46
     "Europa", // 47
-    "Amerika", // 48
+    "USA", // 48
     "Toon underscore in RDS", // 49
     "Alleen PS", // 50
     "Wi-Fi aktief", // 51
@@ -660,7 +660,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Beep na krawędzi pasma", // 45
     "Region", // 46
     "Europa", // 47
-    "Ameryka", // 48
+    "USA", // 48
     "Pokaż podkreślenia w RDS", // 49
     "Tylko PS", // 50
     "Wi-Fi aktywne", // 51
@@ -963,7 +963,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Beep na rubu frekv. opsega", // 45
     "Regija", // 46
     "Europa", // 47
-    "Amerika", // 48
+    "USA", // 48
     "Prikaži donju crtu u RDS-u", // 49
     "PS only", // 50
     "Wi-Fi", // 51
@@ -1266,7 +1266,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Ηχητικό σήμα στο όριο\nμπάντας", // 45
     "Περιοχή", // 46
     "Ευρώπη", // 47
-    "Αμερική", // 48
+    "USA", // 48
     "Εμφάνιση κάτω παύλας\nστο RDS", // 49
     "PS μόνο", // 50
     "Wi-Fi ενεργό", // 51
@@ -1569,7 +1569,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Beep la capătul benzii", // 45
     "Regiune", // 46
     "Europa", // 47
-    "America", // 48
+    "USA", // 48
     "Afișează subliniere la RDS", // 49
     "PS only", // 50
     "Wi-Fi activ", // 51
@@ -1872,7 +1872,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Piepston am Bandende", // 45
     "Region", // 46
     "Europa", // 47
-    "Amerika", // 48
+    "USA", // 48
     "Zeige Unterstrich im RDS", // 49
     "Nur PS", // 50
     "WLAN aktiv", // 51
@@ -2175,7 +2175,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Pípnout na konci pásma", // 45
     "Region", // 46
     "Evropa", // 47
-    "Amerika", // 48
+    "USA", // 48
     "Zobrazit podtržítka v RDS", // 49
     "Jen PS", // 50
     "Wi-Fi aktivní", // 51
@@ -2478,7 +2478,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Sípszó a sáv szélén", // 45
     "Régió", // 46
     "Európa", // 47
-    "Amerika", // 48
+    "USA", // 48
     "Aláhúzások megjelenítése\nRDS-ben", // 49
     "Csak PS", // 50
     "Wi-Fi", // 51
@@ -2781,7 +2781,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Bip à la limite\nde bande", // 45
     "Région", // 46
     "Europe", // 47
-    "Amérique", // 48
+    "USA", // 48
     "Afficher les tirets du\nbas sur le PS", // 49
     "PS uniquement", // 50
     "Wi-Fi actif", // 51
@@ -3084,7 +3084,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Сигнал при граница\nна лента", // 45
     "Регион", // 46
     "Европа", // 47
-    "Америка", // 48
+    "USA", // 48
     "Долна черта в RDS", // 49
     "Само PS", // 50
     "Wi-Fi активен", // 51
@@ -3387,7 +3387,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Край диапазона (звук): ", // 45
     "Регион", // 46
     "Европа", // 47
-    "Америка", // 48
+    "USA", // 48
     "Показывать _ в RDS", // 49
     "Только PS", // 50
     "Wi-Fi активен", // 51
@@ -3690,7 +3690,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Звуковий сигнал межі", // 45
     "Регіон", // 46
     "Європа", // 47
-    "Америка", // 48
+    "USA", // 48
     "Показувати підкреслення\nв RDS", // 49
     "Лише PS", // 50
     "Wi-Fi активний", // 51
@@ -3993,7 +3993,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Beeper al limite di banda", // 45
     "Regione", // 46
     "Europa", // 47
-    "America", // 48
+    "USA", // 48
     "Mostra sottolineato in RDS", // 49
     "Solo PS", // 50
     "Wi-Fi attivo", // 51
@@ -4296,7 +4296,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "频率边界提示音", // 45
     "国家与地区", // 46
     "欧洲", // 47
-    "美国", // 48
+    "USA", // 48
     "RDS 中显示下划线", // 49
     "只有PS", // 50
     "打开 Wifi", // 51
@@ -4599,7 +4599,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Pip ved båndkant", // 45
     "Region", // 46
     "Europa", // 47
-    "Amerika", // 48
+    "USA", // 48
     "Vis understrek i RDS", // 49
     "Kun PS", // 50
     "Wi-Fi aktiv", // 51
@@ -4902,7 +4902,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Tono en límite de banda", // 45
     "Región", // 46
     "Europa", // 47
-    "América", // 48
+    "USA", // 48
     "Mostrar guion\nbajo en RDS", // 49
     "Solo PS", // 50
     "Wi-Fi activado", // 51
@@ -5205,7 +5205,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Bipe na borda da faixa", // 45
     "Região", // 46
     "Europa", // 47
-    "América", // 48
+    "USA", // 48
     "Mostrar sublinhado\nno RDS", // 49
     "PS apenas", // 50
     "Wi-Fi ativo", // 51
@@ -5508,7 +5508,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Pucketanje na\nivici opsega", // 45
     "Region", // 46
     "Evropa", // 47
-    "Amerika", // 48
+    "USA", // 48
     "Prikazivanje\ndonje crte u RDS", // 49
     "PS samo", // 50
     "Wi-Fi aktivan", // 51
@@ -5811,7 +5811,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Ääni rajalla", // 45
     "Alue", // 46
     "Eurooppa", // 47
-    "Amerikka", // 48
+    "USA", // 48
     "Näytä alaviiva RDS:ssa", // 49
     "Vain PS", // 50
     "Wi-Fi aktiivinen", // 51
@@ -6114,7 +6114,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Beep ved båndkant", // 45
     "Region", // 46
     "Europa", // 47
-    "Amerika", // 48
+    "USA", // 48
     "Vis understregning\ni RDS", // 49
     "PS kun", // 50
     "Wi-Fi aktiv", // 51
