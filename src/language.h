@@ -2748,7 +2748,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Limite de bande basse", // 12
     "Limite de bande haute", // 13
     "Décalage du niveau RF FM", // 14
-    "Seuil minimum\npour la Stéréo", // 15
+    "Seuil minimum\npour la stéréo", // 15
     "Angle du filtre\nà coupe haute", // 16
     "Seuil du filtre\nà coupe haute", // 17
     "Seuil minimum de\nniveau bas", // 18
@@ -2774,7 +2774,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Afficher les erreurs\nde décodage RDS", // 38
     "Langage", // 39
     "Choisir la langue", // 40
-    "Verrouillage de la sync. CT sur\nPI", // 41
+    "Verrouillage de la\nsync. CT sur PI", // 41
     "Erreur ! Pas de signal RDS", // 42
     "Sourdine douce FM", // 43
     "Sourdine douce AM", // 44
@@ -2938,7 +2938,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Toutes", // 202
     "PS rapide", // 203
     "Défaut", // 204
-    "Arrêter l'écran\nlors de la connexion XDRGTK", // 205
+    "Arrêt écran à la\nconnexion XDRGTK", // 205
     "Amélioration\nde la stéréo FMSI", // 206
     "Fonction disponible\nsur TEF6687/6689!", // 207
     "Fonction non disponible\nsur ce mode d'affichage !", // 208
@@ -2957,7 +2957,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Signal", // 221
     "Mettre l'audio en\nsourdine lors du scan", // 222
     "AIR", // 223
-    "Appui de 5 sec. sur\nBAND", // 224
+    "Appui de 5 sec.\nsur BAND", // 224
     "Éteindre l'appareil", // 225
     "Éteindre l'écran", // 226
     "Désactivé", // 227
@@ -3015,8 +3015,8 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Plage", // 279
     "Complet", // 280
     "Temps d'attente\nuniquement sur le signal", // 281
-    "Appuyez sur le coin\nindiqué", // 282
-    "Pour calibrer l'écran tactile", // 283
+    "Appuyez sur le coin\nindiqué pour ", // 282
+    "calibrer l'écran tactile", // 283
     "Pressez BW pour\narrêter le scanner DX", // 284
     "Sélectionner la bande passante", // 285
     "Votre journal de bord", // 286
@@ -3031,7 +3031,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Impossible d'ajouter l'entrée!\nJournal de bord plein!", // 295
     "Log automatique", // 296
     "DST automatique\nsur l'heure NTP", // 297
-    "Paramétrage du décalage horaire NTP", // 298
+    "Décalage horaire NTP", // 298
     "Le journal de bord contient plus de 130 entrées que la liste ne peut pas afficher. Veuillez télécharger le fichier CSV.", // 299
     "Canada" // 300
   },
