@@ -912,7 +912,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Auto czas letni wg NTP", // 297
     "Ustaw odchyl. czasu NTP", // 298
     "Wykaz zawiera ponad 130 wpisów, których przeglądarka nie może pokazać. Pobierz plik CSV, aby je przetworzyć.", // 299
-    "Canada" // 300
+    "Kanada" // 300
   },
 
   { "Hrvatski", // Croatian
