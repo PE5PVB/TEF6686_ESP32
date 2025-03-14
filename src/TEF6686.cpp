@@ -427,7 +427,7 @@ void TEF6686::readRDS(byte showrdserrors) {
     }
 
     if (((!rdsAerrorThreshold && !rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold) || (rds.pierrors && !errorfreepi))) {
-      if (rds.rdsA != piold && rds.rdsA != 0) {
+      if ((piold == 0 || rds.rdsA != piold) && rds.rdsB != 0) {
         piold = rds.rdsA;
         rds.picode[0] = (rds.rdsA >> 12) & 0xF;
         rds.picode[1] = (rds.rdsA >> 8) & 0xF;
