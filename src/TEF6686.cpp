@@ -456,27 +456,9 @@ void TEF6686::readRDS(byte showrdserrors) {
         rds.picode[5] = ' ';
       }
       rds.picode[6] = '\0';
-      if (strncmp(rds.picode, "0000", 4) == 0) {
-        if (piold != 0) {
-          rds.picode[0] = (piold >> 12) & 0xF;
-          rds.picode[1] = (piold >> 8) & 0xF;
-          rds.picode[2] = (piold >> 4) & 0xF;
-          rds.picode[3] = piold & 0xF;
-          for (int i = 0; i < 4; i++) {
-            if (rds.picode[i] < 10) {
-              rds.picode[i] += '0';                                                               // Add ASCII offset for decimal digits
-            } else {
-              rds.picode[i] += 'A' - 10;                                                          // Add ASCII offset for hexadecimal letters A-F
-            }
-          }
-        } else {
-          if (rds.stationName.length() == 0) {
-            memset(rds.picode, 0, sizeof(rds.picode));
-          }
 
-          memset(rds.picode, 0, sizeof(rds.picode));
-        }
-      }
+      if (strncmp(rds.picode, "0000", 4) == 0 && rds.rdsB == 0 && rds.stationName.length() == 0) memset(rds.picode, 0, sizeof(rds.picode));
+
 
       // USA Station callsign decoder
       if ((rds.region == 1 ? ps_process : true) && rds.correctPI != 0 && rds.region > 0 && correctPIold != rds.correctPI) {
