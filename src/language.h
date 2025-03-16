@@ -2168,8 +2168,8 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Zobrazit chyby v RDS", // 38
     "Jazyk", // 39
     "Vyberte jazyk", // 40
-    "Synchronizovat CT, když je PI uzamčeno", // 41
-    "Chyba! Žádný RDS signál", // 42
+    "Synchronizovat CT,\nkdyž je PI uzamčeno", // 41
+    "Chyba! Bez RDS!", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
     "Pípnout na konci pásma", // 45
