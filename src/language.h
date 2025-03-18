@@ -648,7 +648,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "NACIŚNIJ BAND ABY ZAMKNĄĆ", // 33
     "SKANOWANIE...", // 34
     "Nie wykryto tunera", // 35
-    "Ustaw czułość gain", // 36
+    "Czułość anteny AM", // 36
     "FM AGC", // 37
     "Pokaż błędy RDS", // 38
     "Język", // 39
