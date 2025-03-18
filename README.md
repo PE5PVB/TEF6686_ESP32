@@ -9,8 +9,6 @@ The version in the repository is an ongoing development. It could and will conta
 
 # TEF6686_ESP32
 Advanced Tuner software for NXP TEF668x tuners with ESP32 board\
-Based on Catena / NXP semiconductors API
-
 More information: https://www.pe5pvb.nl/tef6686/
 
 ## Wiki
