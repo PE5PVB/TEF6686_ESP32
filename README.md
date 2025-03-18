@@ -1,5 +1,5 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/PE5PVB/TEF6686_ESP32#contributing)
-[![HitCount](https://hits.dwyl.com/PE5PVB/TEF6686_ESP32.svg?style=flat-square)](http://hits.dwyl.com/PE5PVB/TEF6686_ESP32)
+[![HitCount](https://hits.dwyl.com/PE5PVB/TEF6686_ESP32.svg?style=flat-square&show=unique)](http://hits.dwyl.com/PE5PVB/TEF6686_ESP32)
 [![License](https://img.shields.io/badge/license%20-%20GNU_GPLv3-GPLv3?color=blue)](https://github.com/PE5PVB/TEF6686_ESP32/blob/main/LICENSE)
 
 # Note:
