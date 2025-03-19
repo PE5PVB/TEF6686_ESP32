@@ -225,7 +225,7 @@
 
 // EEPROM index defines
 #define EE_PRESETS_CNT                99    // When set > 99 change the complete EEPROM adressing!
-#define EE_CHECKBYTE_VALUE            10     // 0 ~ 255,add new entry, change for new value
+#define EE_CHECKBYTE_VALUE            20     // 0 ~ 255,add new entry, change for new value
 #define EE_PRESETS_FREQUENCY          0     // Default value when memory channel should be skipped!
 #ifdef HAS_AIR_BAND
 #define EE_TOTAL_CNT                  2292  // Total occupied eeprom bytes
