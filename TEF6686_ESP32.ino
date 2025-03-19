@@ -21,7 +21,6 @@
 #include "src/FREQFONT.h"
 #include "src/TEF6686.h"
 #include "src/constants.h"
-#include "src/config.h"
 #include "src/language.h"
 #include "src/gui.h"
 #include "src/comms.h"
@@ -44,6 +43,7 @@
 #define EXT_IRQ         14
 
 #define DYNAMIC_SPI_SPEED   // uncomment to enable dynamic SPI Speed https://github.com/ohmytime/TFT_eSPI_DynamicSpeed
+//#define HAS_AIR_BAND        // uncomment to enable Air Band(Make sure you have Air Band extend board)
 
 #ifdef ARS
 TFT_eSPI tft = TFT_eSPI(320, 240);
