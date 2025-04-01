@@ -4131,8 +4131,8 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Connettività e orologio", // 183
     "PREMI MODE PER RITORNO", // 184
     "Rilevatore CoCanale", // 185
-    "Sensibilità rilevatore CoCanale", // 186
-    "Soglia rilevatore CoCanale", // 187
+    "Sensibilità rilevatore isofrequenza", // 186
+    "Soglia rilevatore isofrequenza", // 187
     "Contatore rilevatore CoCanale", // 188
     "PRINCIPALE", // 189
     "AUDIO", // 190
@@ -4144,7 +4144,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "DX MODE", // 196
     "AUTO MEM", // 197
     "AM AGC", // 198
-    "FM de-empasi", // 199
+    "FM de-enfasi", // 199
     "Piccolo", // 200
     "Grande", // 201
     "Tutto", // 202
@@ -4159,7 +4159,7 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Tempo di attesa", // 211
     "Inizia scansione DX", // 212
     "Opzioni FM DX", // 213
-    "Aborto! Il canale di partenza è segnato come saltato.", // 214
+    "Abortito! Canale iniziale contrass. da saltare", // 214
     "Auto ordina AF", // 215
     "Canali di memoria", // 216
     "Escludi", // 217
@@ -4218,8 +4218,8 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Auto memoria", // 270
     "ID Stationlist", // 271
     "Trovato", // 272
-    "Aborto! Canali di memoria esauriti", // 273
-    "Aborto! L'utente ha premuto il pulsante", // 274
+    "Abortito! Canali di memoria esauriti", // 273
+    "Abortito! L'utente ha premuto il pulsante", // 274
     "Scansione terminata senza errori", // 275
     "Cancella canali di memoria", // 276
     "Cancellato", // 277
@@ -4231,20 +4231,20 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Per calibrare touchscreen", // 283
     "Tieni premuto il tasto BW per\nfermare scanner DX", // 284
     "Seleziona larghezza di banda", // 285
-    "Il tuo registro", // 286
-    "Scarica registro", // 287
-    "Registro vuoto", // 288
+    "Il tuo registro dei log", // 286
+    "Scarica registro dei log", // 287
+    "Registro dei log vuoto", // 288
     "Vai in fondo", // 289
-    "Voce aggiunta\nal registro", // 290
-    "Errore nell'aggiunta\nvoce al registro", // 291
+    "Voce aggiunta\nal registro dei log", // 290
+    "Errore nell'aggiunta\nvoce al registro dei log", // 291
     "Cancella registro", // 292
     "Registro cancellato", // 293
     "Cancellazione fallita", // 294
-    "Impossibile aggiungere voce!\nRegistro pieno!", // 295
+    "Impossibile aggiungere voce!\nRegistro dei log pieno!", // 295
     "Autologger", // 296
     "Auto DST su tempo NTP", // 297
     "Imposta offset orario NTP", // 298
-    "Il registro contiene più di 130 voci, che il visualizzatore non può elaborare. Scarica il file CSV per elaborarlo.", // 299
+    "Registro dei log con + di 130 voci, il visualizzatore non può gestirle. Scarica il file CSV per gestirlo.", // 299
     "Canada" // 300
   },
 
