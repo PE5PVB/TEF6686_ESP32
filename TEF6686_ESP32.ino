@@ -1,7 +1,6 @@
 #include "soc/soc.h"
 #include "soc/rtc_cntl_reg.h"
 #include <WiFiClient.h>
-#include <HTTPClient.h>
 #include <EEPROM.h>
 #include <Wire.h>
 #include <math.h>
@@ -346,6 +345,7 @@ String ptynold = " ";
 String PTYold;
 String RabbitearsPassword;
 String RabbitearsUser;
+String RabbitearsHeader = "POST /tvdx/fm_spot HTTP/1.1\r\nHost: rabbitears.info\r\nUser-Agent: ESP32\r\nAccept: */*\r\nConnection: close\r\nContent-Type: application/json\r\nContent-Length: ";
 String rds_clock;
 String rds_clockold;
 String rds_date;
@@ -1038,6 +1038,7 @@ void loop() {
           }
         }
         doLog();
+        if (memorypos == scanstart) rabbitearssend();
         DoMemoryPosTune();
         radio.clearRDS(fullsearchrds);
         autologged = false;
@@ -4232,22 +4233,7 @@ void TuneUp() {
 
     if (fmdefaultstepsize == 2 && stepsize == 0 && frequency == 8795) frequency = 8790;
     if (frequency >= (HighEdgeSet * 10) + 1) {
-      if (scandxmode && RabbitearsUser.length() && RabbitearsPassword.length()) {
-        byte i = 0;
-        bool hasreport = false;
-        for (i = 0; i < 100; i++) {
-          if (rabbitearspi[i]) {
-            hasreport = true;
-            break;
-          }
-        }
-        if (hasreport) {
-          rabbitearssend();
-          for (i = 0; i < 100; i++) {
-            rabbitearspi[i] = 0;
-          }
-        }
-      }
+      if (scandxmode) rabbitearssend();
       frequency = LowEdgeSet * 10;
       if (fmdefaultstepsize == 2 && stepsize == 0 && frequency == 8750) frequency = 8775;
       if (edgebeep) EdgeBeeper();
@@ -5006,11 +4992,18 @@ void startFMDXScan() {
 }
 
 void rabbitearssend () {
+   byte i = 0;
+   bool hasreport = false;
+   for (i = 0; i < 100; i++) {
+     if (rabbitearspi[i]) {
+       hasreport = true;
+       break;
+     }
+   }
+  if (!hasreport) return;
   if (WiFi.status() != WL_CONNECTED) return;
-  String RabbitearsURL = "http://rabbitears.info/tvdx/fm_spot";
   WiFiClient RabbitearsClient;
-  HTTPClient http;
-  byte i;
+
   String json = String("{\"tuner_key\":\"");
   json += RabbitearsUser;
   json += String("\",\"password\":\"");
@@ -5026,14 +5019,17 @@ void rabbitearssend () {
       json += String("\",\"pi_code\":");
       json += String(rabbitearspi[i]);
       json += String("},");
+      rabbitearspi[i] = 0;
     }
   }
   json.remove(json.length() - 1); // remove trailing comma
   json += String("}}");
-  http.begin(RabbitearsClient, RabbitearsURL.c_str());
-  http.addHeader("Content-Type", "application/json");
-  http.POST(json);
-  http.end();
+  if(RabbitearsClient.connect("rabbitears.info",80)) {
+    String payload = RabbitearsHeader + json.length() + "\r\n\r\n" + json;
+    RabbitearsClient.print(payload);
+    RabbitearsClient.flush();
+    RabbitearsClient.stop();
+  }
 }
 
 void setAutoSpeedSPI() {
