@@ -1,8 +1,6 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-variable"
 
-#include "config.h"
-
 #define ON                         1
 #define OFF                        0
 #define REVERSE                    false
