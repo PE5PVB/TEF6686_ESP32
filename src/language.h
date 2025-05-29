@@ -4009,8 +4009,8 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Mostra errori PI", // 61
     "Usa squelch", // 62
     "Misuratore modulazione", // 63
-    "Bloccante rumore AM", // 64
-    "Bloccante rumore FM", // 65
+    "Filtro anti-rumore AM", // 64
+    "Filtro anti-rumore FM", // 65
     "Impostazioni predefinite caricate", // 66
     "Uscita audio", // 67
     "Consenti sintonia senza\ndisattivare screensaver", // 68
