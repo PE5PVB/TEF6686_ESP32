@@ -1,7 +1,6 @@
 #include "gui.h"
 #include "language.h"
 #include "constants.h"
-#include "config.h"
 #include <WiFi.h>
 #include <Wire.h>
 #include <EEPROM.h>

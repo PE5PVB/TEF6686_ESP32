@@ -2,7 +2,6 @@
 #include "language.h"
 #include "constants.h"
 #include <EEPROM.h>
-#include "language.h"
 
 String UDPlogold = "";
 
@@ -188,37 +187,42 @@ void handleDownloadCSV() {
 }
 
 bool handleCreateNewLogbook() {
+  // Quick check if SPIFFS is mounted and accessible
+  if (!SPIFFS.exists("/")) {  // "/" should always exist if mounted
+    // SPIFFS not accessible, try to format and remount
+    if (!SPIFFS.format()) {
+      return false;  // format failed
+    }
+    if (!SPIFFS.begin()) {
+      return false;  // remount failed
+    }
+  }
+
   // Check if the file "logbook.csv" already exists
   if (SPIFFS.exists("/logbook.csv")) {
     // If it exists, delete the file
     if (!SPIFFS.remove("/logbook.csv")) {
-      // Return false if the file could not be deleted
       return false;
     }
   }
 
   // Create a new "logbook.csv" file in write mode
   fs::File file = SPIFFS.open("/logbook.csv", "w");
-
-  // Check if the file was successfully created
   if (!file) {
-    // Return false if file creation fails
     return false;
   }
 
   // Write the header to the new CSV file
   String header = "Date,Time,Frequency,PI,Signal,Stereo,TA,TP,PTY,ECC,PS,Radiotext\n";
-  file.print(header); // Ensure that the header is written properly
+  file.print(header);
 
-  // Make sure the data is written before closing the file
-  file.flush(); // Ensure that everything is written to the file
-  file.close(); // Close the file after writing
+  file.flush();
+  file.close();
 
-
-  logcounter = 0; // Reset logcounter
+  logcounter = 0;
   EEPROM.writeUInt(EE_UINT16_LOGCOUNTER, logcounter);
   EEPROM.commit();
-  // Return true if the function runs without problems
+
   return true;
 }
 

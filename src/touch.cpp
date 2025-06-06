@@ -1,7 +1,6 @@
 #include "touch.h"
 #include "language.h"
 #include "constants.h"
-#include "config.h"
 #include <EEPROM.h>
 
 void doTouchEvent(uint16_t x, uint16_t y) {
