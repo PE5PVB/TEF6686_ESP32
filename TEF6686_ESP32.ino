@@ -3523,14 +3523,14 @@ void ShowOffset() {
         tuned = false;
       }
     } else {
-      if (OStatus <= -2) {
+      if (OStatus < -2) {
         // Left arrow active (▶)
         tft.fillTriangle(leftArrowBaseX, arrowBaseYTop, centerX - arrowGap, centerY, leftArrowBaseX, arrowBaseYBottom, GreyoutColor);
         tft.fillCircle(centerX, centerY, 3, GreyoutColor);
         // Right arrow dimmed (◀)
         tft.fillTriangle(rightArrowBaseX, arrowBaseYTop, centerX + arrowGap, centerY, rightArrowBaseX, arrowBaseYBottom, SignificantColor);
         tuned = false;
-      } else if (OStatus > -2 && OStatus < 2 && !SQ) {
+      } else if (OStatus >= -2 && OStatus <= 2 && !SQ) {
         tft.fillTriangle(leftArrowBaseX, arrowBaseYTop, centerX - arrowGap, centerY, leftArrowBaseX, arrowBaseYBottom, GreyoutColor);
         tft.fillTriangle(rightArrowBaseX, arrowBaseYTop, centerX + arrowGap, centerY, rightArrowBaseX, arrowBaseYBottom, GreyoutColor);
         tft.fillCircle(centerX, centerY, 3, InsignificantColor);
@@ -4992,14 +4992,14 @@ void startFMDXScan() {
 }
 
 void rabbitearssend () {
-   byte i = 0;
-   bool hasreport = false;
-   for (i = 0; i < 100; i++) {
-     if (rabbitearspi[i]) {
-       hasreport = true;
-       break;
-     }
-   }
+  byte i = 0;
+  bool hasreport = false;
+  for (i = 0; i < 100; i++) {
+    if (rabbitearspi[i]) {
+      hasreport = true;
+      break;
+    }
+  }
   if (!hasreport) return;
   if (WiFi.status() != WL_CONNECTED) return;
   WiFiClient RabbitearsClient;
@@ -5024,7 +5024,7 @@ void rabbitearssend () {
   }
   json.remove(json.length() - 1); // remove trailing comma
   json += String("}}");
-  if(RabbitearsClient.connect("rabbitears.info",80)) {
+  if (RabbitearsClient.connect("rabbitears.info", 80)) {
     String payload = RabbitearsHeader + json.length() + "\r\n\r\n" + json;
     RabbitearsClient.print(payload);
     RabbitearsClient.flush();
