@@ -1,8 +1,6 @@
 #ifndef LANGUAGE_H
 #define LANGUAGE_H
 
-#define VERSION "v2.20"
-
 // [number of languages][number of texts]
 
 static const char* const myLanguage[21][301] PROGMEM = {

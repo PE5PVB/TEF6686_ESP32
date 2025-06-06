@@ -448,6 +448,8 @@ unsigned long tottimer;
 unsigned long tuningtimer;
 unsigned long udplogtimer;
 unsigned long udptimer;
+const size_t language_totalnumber = sizeof(myLanguage) / sizeof(myLanguage[0]);
+const size_t language_entrynumber = sizeof(myLanguage[0]) / sizeof(myLanguage[0][0]);
 
 struct HSV {
   float h;
@@ -747,8 +749,8 @@ void setup() {
     EEPROM.writeByte(EE_BYTE_ROTARYMODE, rotarymode);
     EEPROM.commit();
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
-    Infoboxprint(myLanguage[language][1]);
-    tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
+    Infoboxprint(textUI(1));
+    tftPrint(0, textUI(2), 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(BWBUTTON) == LOW) delay(50);
   }
 
@@ -771,16 +773,16 @@ void setup() {
     EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, displayflip);
     EEPROM.commit();
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
-    Infoboxprint(myLanguage[language][3]);
-    tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
+    Infoboxprint(textUI(3));
+    tftPrint(0, textUI(2), 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(MODEBUTTON) == LOW) delay(50);
   }
 
   if (digitalRead(BWBUTTON) == HIGH && digitalRead(ROTARY_BUTTON) == HIGH && digitalRead(MODEBUTTON) == HIGH && digitalRead(BANDBUTTON) == LOW) {
     analogWrite(SMETERPIN, 511);
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
-    Infoboxprint(myLanguage[language][4]);
-    tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
+    Infoboxprint(textUI(4));
+    tftPrint(0, textUI(2), 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(BANDBUTTON) == LOW) delay(50);
     analogWrite(SMETERPIN, 0);
   }
@@ -789,30 +791,30 @@ void setup() {
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
     if (optenc == 0) {
       optenc = 1;
-      Infoboxprint(myLanguage[language][6]);
+      Infoboxprint(textUI(6));
     } else {
       optenc = 0;
-      Infoboxprint(myLanguage[language][7]);
+      Infoboxprint(textUI(7));
     }
     EEPROM.writeByte(EE_BYTE_OPTENC, optenc);
     EEPROM.commit();
-    tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
+    tftPrint(0, textUI(2), 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
   }
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == LOW && digitalRead(MODEBUTTON) == HIGH && digitalRead(BANDBUTTON) == HIGH) {
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
     DefaultSettings();
-    Infoboxprint(myLanguage[language][66]);
-    tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
+    Infoboxprint(textUI(66));
+    tftPrint(0, textUI(2), 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(ROTARY_BUTTON) == LOW && digitalRead(BWBUTTON) == LOW) delay(50);
     ESP.restart();
   }
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH && digitalRead(MODEBUTTON) == LOW && digitalRead(BANDBUTTON) == HIGH) {
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
-    Infoboxprint(myLanguage[language][282]);
-    tftPrint(0, myLanguage[language][283], 155, 100, ActiveColor, ActiveColorSmooth, 28);
+    Infoboxprint(textUI(282));
+    tftPrint(0, textUI(283), 155, 100, ActiveColor, ActiveColorSmooth, 28);
     tft.calibrateTouch(TouchCalData, PrimaryColor, BackgroundColor, 30);
     EEPROM.writeUInt(EE_UINT16_CALTOUCH1, TouchCalData[0]);
     EEPROM.writeUInt(EE_UINT16_CALTOUCH2, TouchCalData[1]);
@@ -824,8 +826,8 @@ void setup() {
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH && digitalRead(MODEBUTTON) == HIGH && digitalRead(BANDBUTTON) == LOW) {
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
-    Infoboxprint(myLanguage[language][69]);
-    tftPrint(0, myLanguage[language][2], 155, 130, ActiveColor, ActiveColorSmooth, 28);
+    Infoboxprint(textUI(69));
+    tftPrint(0, textUI(2), 155, 130, ActiveColor, ActiveColorSmooth, 28);
     invertdisplay = !invertdisplay;
     tft.invertDisplay(!invertdisplay);
     while (digitalRead(BWBUTTON) == LOW && digitalRead(BANDBUTTON) == LOW) delay(50);
@@ -836,7 +838,7 @@ void setup() {
   tft.setTouch(TouchCalData);
 
   tft.fillScreen(BackgroundColor);
-  tftPrint(0, myLanguage[language][8], 160, 3, PrimaryColor, PrimaryColorSmooth, 28);
+  tftPrint(0, textUI(8), 160, 3, PrimaryColor, PrimaryColorSmooth, 28);
   tftPrint(0, "Software " + String(VERSION), 160, 152, PrimaryColor, PrimaryColorSmooth, 16);
 
   tft.fillRect(120, 230, 16, 6, GreyoutColor);
@@ -888,7 +890,7 @@ void setup() {
     tft.fillRect(152, 230, 16, 6, PrimaryColor);
     tftPrint(0, "TEF6689 Lithio FMSI DR", 160, 172, ActiveColor, ActiveColorSmooth, 28);
   } else {
-    tftPrint(0, myLanguage[language][9], 160, 172, SignificantColor, SignificantColorSmooth, 28);
+    tftPrint(0, textUI(9), 160, 172, SignificantColor, SignificantColorSmooth, 28);
     tft.fillRect(152, 230, 16, 6, SignificantColor);
     while (true);
     for (;;);
@@ -1118,7 +1120,7 @@ void loop() {
             if (advancedRDS) {
               tft.drawRoundRect(10, 30, 300, 170, 2, ActiveColor);
               tft.fillRoundRect(12, 32, 296, 166, 2, BackgroundColor);
-              tftPrint(0, myLanguage[language][34], 160, 100, ActiveColor, ActiveColorSmooth, 28);
+              tftPrint(0, textUI(34), 160, 100, ActiveColor, ActiveColorSmooth, 28);
             } else {
               ShowFreq(1);
             }
@@ -2453,25 +2455,25 @@ void SelectBand() {
     ShowTuneMode();
     ShowStepSize();
 
-    tftPrint(-1, myLanguage[language][102], 70, 32, BackgroundColor, BackgroundColor, 16);
-    tftPrint(-1, myLanguage[language][103], 70, 32, BackgroundColor, BackgroundColor, 16);
-    tftPrint(-1, myLanguage[language][104], 70, 32, BackgroundColor, BackgroundColor, 16);
-    tftPrint(-1, myLanguage[language][105], 70, 32, BackgroundColor, BackgroundColor, 16);
-    tftPrint(-1, myLanguage[language][106], 70, 32, BackgroundColor, BackgroundColor, 16);
+    tftPrint(-1, textUI(102), 70, 32, BackgroundColor, BackgroundColor, 16);
+    tftPrint(-1, textUI(103), 70, 32, BackgroundColor, BackgroundColor, 16);
+    tftPrint(-1, textUI(104), 70, 32, BackgroundColor, BackgroundColor, 16);
+    tftPrint(-1, textUI(105), 70, 32, BackgroundColor, BackgroundColor, 16);
+    tftPrint(-1, textUI(106), 70, 32, BackgroundColor, BackgroundColor, 16);
 
 #ifdef HAS_AIR_BAND
-    tftPrint(-1, myLanguage[language][223], 70, 32, BackgroundColor, BackgroundColor, 16);
+    tftPrint(-1, textUI(223), 70, 32, BackgroundColor, BackgroundColor, 16);
 #endif
 
     switch (band) {
-      case BAND_LW: tftPrint(-1, myLanguage[language][102], 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
-      case BAND_MW: tftPrint(-1, myLanguage[language][103], 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
-      case BAND_SW: tftPrint(-1, myLanguage[language][104], 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
-      case BAND_FM: tftPrint(-1, myLanguage[language][105], 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
-      case BAND_OIRT: tftPrint(-1, myLanguage[language][106], 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
+      case BAND_LW: tftPrint(-1, textUI(102), 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
+      case BAND_MW: tftPrint(-1, textUI(103), 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
+      case BAND_SW: tftPrint(-1, textUI(104), 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
+      case BAND_FM: tftPrint(-1, textUI(105), 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
+      case BAND_OIRT: tftPrint(-1, textUI(106), 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
 
 #ifdef HAS_AIR_BAND
-      case BAND_AIR: tftPrint(-1, myLanguage[language][223], 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
+      case BAND_AIR: tftPrint(-1, textUI(223), 70, 32, (bandforbidden ? GreyoutColor : PrimaryColor), (bandforbidden ? BackgroundColor : PrimaryColorSmooth), 16); break;
 #endif
     }
   }
@@ -3247,11 +3249,11 @@ void ShowFreq(int mode) {
             freqold = freq;
             break;
 
-          case 1: Infoboxprint(myLanguage[language][34]); break;
-          case 2: Infoboxprint(myLanguage[language][290]); break;
-          case 3: Infoboxprint(myLanguage[language][291]); break;
-          case 4: Infoboxprint(myLanguage[language][295]); break;
-          case 5: Infoboxprint(myLanguage[language][284]); break;
+          case 1: Infoboxprint(textUI(34)); break;
+          case 2: Infoboxprint(textUI(290)); break;
+          case 3: Infoboxprint(textUI(291)); break;
+          case 4: Infoboxprint(textUI(295)); break;
+          case 5: Infoboxprint(textUI(284)); break;
         }
 
         FrequencySprite.pushSprite(46, 46);
@@ -4459,7 +4461,7 @@ void SetTunerPatch() {
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
 
     if (TEF != 102 && TEF != 205) {
-      tftPrint(0, myLanguage[language][35], 150, 78, ActiveColor, ActiveColorSmooth, 28);
+      tftPrint(0, textUI(35), 150, 78, ActiveColor, ActiveColorSmooth, 28);
       for (;;);
     }
     EEPROM.writeByte(EE_BYTE_TEF, TEF);
@@ -5100,7 +5102,7 @@ uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, ui
 
   tft.drawRect(59, 109, 202, 8, FrameColor);
   tft.fillRect(60, 110, 200, 6, GreyoutColor);
-  tftPrint(1, myLanguage[language][272], 120, 155, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(1, textUI(272), 120, 155, ActiveColor, ActiveColorSmooth, 16);
 
   for (frequency = startfreq * 10; frequency <= stopfreq * 10; frequency += 10) {
     if (stopScanning) {
@@ -5562,4 +5564,12 @@ uint16_t HSVtoRGB565(float h, float s, float v) {
   uint8_t b = (bf + m) * 255;
 
   return ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
+}
+
+const char* textUI(uint16_t number) {
+  if (number >= language_entrynumber) {
+    return "Overflow";
+  } else {
+    return (const char*)pgm_read_ptr(&(myLanguage[language][number]));
+  }
 }

@@ -1,6 +1,8 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-variable"
 
+#define VERSION "v2.20"
+
 #define ON                         1
 #define OFF                        0
 #define REVERSE                    false

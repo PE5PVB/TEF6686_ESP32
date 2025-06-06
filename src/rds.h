@@ -158,4 +158,5 @@ extern void DataPrint(String string);
 extern void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize);
 extern void tftReplace(int8_t offset, const String & textold, const String & text, int16_t x, int16_t y, int color, int smoothcolor, int background, uint8_t fontsize);
 extern bool isDST(time_t t);
+extern const char* textUI(uint16_t number);
 #endif

@@ -207,6 +207,7 @@ extern unsigned int memstartfreq;
 extern unsigned int memstopfreq;
 extern unsigned long scantimer;
 extern byte items[10];
+extern const size_t language_totalnumber;
 
 extern TFT_eSPI tft;
 extern TEF6686 radio;
@@ -255,4 +256,5 @@ extern void showAutoSquelch(bool mode);
 extern uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, uint8_t stopmem, bool rdsonly, uint8_t doublepi);
 extern void ClearMemoryRange(uint8_t start, uint8_t stop);
 extern bool handleCreateNewLogbook();
+extern const char* textUI(uint16_t number);
 #endif

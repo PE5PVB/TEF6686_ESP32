@@ -1,7 +1,6 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wbool-compare"
 #include "rds.h"
-#include "language.h"
 #include "constants.h"
 #include <TimeLib.h>
 
@@ -51,7 +50,7 @@ void ShowAdvancedRDS() {
 
   if (licold != radio.rds.LIC || rdsreset) {
     if (!screenmute) {
-      if (radio.rds.hasLIC) LICString = (radio.rds.LICtext.length() == 0 ? myLanguage[language][73] : radio.rds.LICtext); else LICString = "N/A";
+      if (radio.rds.hasLIC) LICString = (radio.rds.LICtext.length() == 0 ? textUI(73) : radio.rds.LICtext); else LICString = "N/A";
       if (LICString != LIColdString) {
         tftPrint(-1, "N/A", 242, 208, BackgroundColor, BackgroundColor, 16);
         tftPrint(-1, LIColdString, 242, 208, BackgroundColor, BackgroundColor, 16);
@@ -74,7 +73,7 @@ void ShowAdvancedRDS() {
   }
 
   String afstring;
-  if (radio.rds.hasAF && radio.af_counter > 0) for (byte i = 0; i < radio.af_counter; i++) afstring += String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10) + (i == radio.af_counter - 1 ? "        " : " | "); else afstring = myLanguage[language][87];
+  if (radio.rds.hasAF && radio.af_counter > 0) for (byte i = 0; i < radio.af_counter; i++) afstring += String(radio.af[i].frequency / 100) + "." + String((radio.af[i].frequency % 100) / 10) + (i == radio.af_counter - 1 ? "        " : " | "); else afstring = textUI(87);
   if (hasafold != radio.rds.hasAF) {
     if (!screenmute) {
       if (radio.rds.hasAF) tftPrint(-1, "AF", 50, 51, RDSColor, RDSColorSmooth, 16); else tftPrint(-1, "AF", 50, 51, GreyoutColor, BackgroundColor, 16);
@@ -115,7 +114,7 @@ void ShowAdvancedRDS() {
   }
 
   String eonstring;
-  if (radio.eon_counter > 0) for (byte i = 0; i < radio.eon_counter; i++) eonstring += String(radio.eon[i].picode) + (radio.eon[i].ps.length() > 0 ? String(": " + String(radio.eon[i].ps)) : "") + (radio.eon[i].mappedfreq > 0 ? String(" " + String(radio.eon[i].mappedfreq / 100) + "." + String((radio.eon[i].mappedfreq % 100) / 10))  : "") + (radio.eon[i].mappedfreq2 > 0 ? String(" / " + String(radio.eon[i].mappedfreq2 / 100) + "." + String((radio.eon[i].mappedfreq2 % 100) / 10))  : "") + (radio.eon[i].mappedfreq3 > 0 ? String(" /  " + String(radio.eon[i].mappedfreq3 / 100) + "." + String((radio.eon[i].mappedfreq3 % 100) / 10))  : "") + (i == radio.eon_counter - 1 ? "        " : " | "); else eonstring = myLanguage[language][88];
+  if (radio.eon_counter > 0) for (byte i = 0; i < radio.eon_counter; i++) eonstring += String(radio.eon[i].picode) + (radio.eon[i].ps.length() > 0 ? String(": " + String(radio.eon[i].ps)) : "") + (radio.eon[i].mappedfreq > 0 ? String(" " + String(radio.eon[i].mappedfreq / 100) + "." + String((radio.eon[i].mappedfreq % 100) / 10))  : "") + (radio.eon[i].mappedfreq2 > 0 ? String(" / " + String(radio.eon[i].mappedfreq2 / 100) + "." + String((radio.eon[i].mappedfreq2 % 100) / 10))  : "") + (radio.eon[i].mappedfreq3 > 0 ? String(" /  " + String(radio.eon[i].mappedfreq3 / 100) + "." + String((radio.eon[i].mappedfreq3 % 100) / 10))  : "") + (i == radio.eon_counter - 1 ? "        " : " | "); else eonstring = textUI(88);
   if (haseonold != radio.rds.hasEON) {
     if (!screenmute)  {
       if (radio.eon_counter > 0) tftPrint(-1, "EON", 153, 51, RDSColor, RDSColorSmooth, 16); else tftPrint(-1, "EON", 153, 51, GreyoutColor, BackgroundColor, 16);
@@ -156,7 +155,7 @@ void ShowAdvancedRDS() {
   }
 
   String rtplusstring;
-  if (radio.rds.hasRDSplus) rtplusstring = (radio.rds.rdsplusTag1 != 169 ? String(myLanguage[language][radio.rds.rdsplusTag1]) + ": " + String(radio.rds.RTContent1) : "") + (radio.rds.rdsplusTag2 != 169 ? " - " + String(myLanguage[language][radio.rds.rdsplusTag2]) + ": " + String(radio.rds.RTContent2) : "") + "        "; else rtplusstring = myLanguage[language][89];
+  if (radio.rds.hasRDSplus) rtplusstring = (radio.rds.rdsplusTag1 != 169 ? String(textUI(radio.rds.rdsplusTag1)) + ": " + String(radio.rds.RTContent1) : "") + (radio.rds.rdsplusTag2 != 169 ? " - " + String(textUI(radio.rds.rdsplusTag2)) + ": " + String(radio.rds.RTContent2) : "") + "        "; else rtplusstring = textUI(89);
   if (hasrtplusold != radio.rds.hasRDSplus) {
     if (!screenmute) {
       if (radio.rds.hasRDSplus) tftPrint(-1, "RT+", 123, 51, RDSColor, RDSColorSmooth, 16); else tftPrint(-1, "RT+", 123, 51, GreyoutColor, BackgroundColor, 16);
@@ -281,7 +280,7 @@ void showECC() {
   if (ECCold != radio.rds.ECC) {
     if (advancedRDS) {
       if (!screenmute) {
-        if (radio.rds.hasECC) ECCString = (radio.rds.ECCtext.length() == 0 ? myLanguage[language][73] : radio.rds.ECCtext); else ECCString = "N/A";
+        if (radio.rds.hasECC) ECCString = (radio.rds.ECCtext.length() == 0 ? textUI(73) : radio.rds.ECCtext); else ECCString = "N/A";
         if (ECCString != ECColdString) {
           tftPrint(-1, "N/A", 242, 193, BackgroundColor, BackgroundColor, 16);
           tftPrint(-1, ECColdString, 242, 193, BackgroundColor, BackgroundColor, 16);
@@ -617,7 +616,7 @@ void showPI() {
 
 void showPTY() {
   if (strcmp(radio.rds.stationType, programTypePrevious)) {
-    String PTYString = String(radio.rds.stationTypeCode) + "/" + (radio.rds.region != 0 ? radio.rds.stationType : myLanguage[language][228 + radio.rds.stationTypeCode]);
+    String PTYString = String(radio.rds.stationTypeCode) + "/" + (radio.rds.region != 0 ? radio.rds.stationType : textUI(228 + radio.rds.stationTypeCode));
 
     if (radio.rds.stationTypeCode == 32) PTYString = "";
 
@@ -1002,7 +1001,7 @@ void ShowAFEON() {
 
     if (radio.rds.hasAF && afpagenr == 1) {
       if (!hasafold) {
-        tftPrint(-1, myLanguage[language][87], 6, 48, BackgroundColor, BackgroundColor, 16);
+        tftPrint(-1, textUI(87), 6, 48, BackgroundColor, BackgroundColor, 16);
         tftPrint(-1, "AF:", 4, 32, ActiveColor, ActiveColorSmooth, 16);
         hasafold = true;
       }
@@ -1029,7 +1028,7 @@ void ShowAFEON() {
 
     if (radio.eon_counter > 0 && afpagenr > 1) {
       if (!haseonold) {
-        tftPrint(-1, myLanguage[language][88], 6, 48, BackgroundColor, BackgroundColor, 16);
+        tftPrint(-1, textUI(88), 6, 48, BackgroundColor, BackgroundColor, 16);
         tftPrint(-1, "PI", 4, 32, ActiveColor, ActiveColorSmooth, 16);
         tftPrint(0, "TA", 250, 32, ActiveColor, ActiveColorSmooth, 16);
         tftPrint(0, "TP", 276, 32, ActiveColor, ActiveColorSmooth, 16);
@@ -1194,7 +1193,7 @@ void ShowAFEON() {
       aid_counterold = radio.rds.aid_counter;
 
       if (AIDStringTemp != AIDStringold) {
-        AIDString = String(myLanguage[language][33]) + "  -  " + String(myLanguage[language][79]) + ": " + AIDStringTemp + "       ";
+        AIDString = String(textUI(33)) + "  -  " + String(textUI(79)) + ": " + AIDStringTemp + "       ";
         AIDWidth = FullLineSprite.textWidth(AIDString);
         AIDStringold = AIDString;
       }

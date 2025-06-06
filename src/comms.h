@@ -158,4 +158,5 @@ extern void Infoboxprint(const char* input);
 extern void TuneUp();
 extern void TuneDown();
 extern void ShowTuneMode();
+extern const char* textUI(uint16_t number);
 #endif

@@ -1,5 +1,4 @@
 #include "logbook.h"
-#include "language.h"
 #include "constants.h"
 #include <EEPROM.h>
 
@@ -45,9 +44,9 @@ void handleRoot() {
   html += "<img src=\"/logo.png\" alt=\"FMDX website\">";
   html += "</a>";
 
-  html += "<h1>" + String(myLanguage[language][286]) + "</h1>";
-  html += "<button onclick=\"window.location.href='/downloadCSV'\">" + String(myLanguage[language][287]) + "</button>";
-  html += "<button class=\"go-to-bottom\" onclick=\" window.scrollTo(0, document.body.scrollHeight);\">" + String(myLanguage[language][289]) + "</button>";
+  html += "<h1>" + String(textUI(286)) + "</h1>";
+  html += "<button onclick=\"window.location.href='/downloadCSV'\">" + String(textUI(287)) + "</button>";
+  html += "<button class=\"go-to-bottom\" onclick=\" window.scrollTo(0, document.body.scrollHeight);\">" + String(textUI(289)) + "</button>";
 
   // Sorting function with icons
   html += "<script>";
@@ -151,11 +150,11 @@ void handleRoot() {
 
     file.close();
   } else {
-    html += "<tr><td colspan=\"100%\" style=\"text-align: center; color: red;\">" + String(myLanguage[language][299]) + "</td></tr>";
+    html += "<tr><td colspan=\"100%\" style=\"text-align: center; color: red;\">" + String(textUI(299)) + "</td></tr>";
   }
 
   if (!hasData) {
-    html += "<tr><td colspan=\"100%\" style=\"text-align: center; color: red;\">" + String(myLanguage[language][288]) + "</td></tr>";
+    html += "<tr><td colspan=\"100%\" style=\"text-align: center; color: red;\">" + String(textUI(288)) + "</td></tr>";
   }
 
   html += "</table>";
