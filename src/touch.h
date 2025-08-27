@@ -35,7 +35,7 @@ extern int menuoption;
 
 void doTouchEvent(uint16_t x, uint16_t y);
 
-extern void ScreensaverTimerReopen();
+//extern void ScreensaverTimerReopen();
 extern void BuildDisplay();
 extern void BuildBWSelector();
 extern void SelectBand();

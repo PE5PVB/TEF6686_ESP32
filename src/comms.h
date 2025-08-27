@@ -138,7 +138,7 @@ extern void doBW();
 extern void BuildDisplay();
 extern void BuildAdvancedRDS();
 extern void ModeButtonPress();
-extern void ScreensaverTimerReopen();
+//extern void ScreensaverTimerReopen();
 extern void Seek(bool mode);
 extern void doStereoToggle();
 extern void MuteScreen(bool setting);

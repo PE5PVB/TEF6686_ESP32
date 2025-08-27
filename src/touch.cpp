@@ -198,7 +198,7 @@ void doTouchEvent(uint16_t x, uint16_t y) {
         leave = true;
         BuildDisplay();
         SelectBand();
-        ScreensaverTimerReopen();                                         // Switch to normal radio view
+//        ScreensaverTimerReopen();                                         // Switch to normal radio view
         return;
       } else if (x > 0 && x < 320 && y > 180 && y < 240) {
         BuildAFScreen();

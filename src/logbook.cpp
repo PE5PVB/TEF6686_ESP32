@@ -186,17 +186,6 @@ void handleDownloadCSV() {
 }
 
 bool handleCreateNewLogbook() {
-  // Quick check if SPIFFS is mounted and accessible
-  if (!SPIFFS.exists("/")) {  // "/" should always exist if mounted
-    // SPIFFS not accessible, try to format and remount
-    if (!SPIFFS.format()) {
-      return false;  // format failed
-    }
-    if (!SPIFFS.begin()) {
-      return false;  // remount failed
-    }
-  }
-
   // Check if the file "logbook.csv" already exists
   if (SPIFFS.exists("/logbook.csv")) {
     // If it exists, delete the file

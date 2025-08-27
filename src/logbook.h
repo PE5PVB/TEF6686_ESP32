@@ -4,6 +4,8 @@
 #include <Arduino.h>
 #include <TFT_eSPI.h>
 #include <WiFi.h>
+#include <FS.h>
+using fs::FS;
 #include <WebServer.h>
 #include <SPIFFS.h>
 #include "TEF6686.h"

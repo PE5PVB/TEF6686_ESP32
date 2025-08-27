@@ -29,6 +29,8 @@
 #include <ESP8266WebServer.h>
 #else
 #include <WiFi.h>
+#include <FS.h>
+using fs::FS;
 #include <WebServer.h>
 #endif
 #include <DNSServer.h>

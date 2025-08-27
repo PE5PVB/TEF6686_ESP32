@@ -7,6 +7,8 @@
 #include <TimeLib.h>
 #include <TFT_eSPI.h>               // https://github.com/ohmytime/TFT_eSPI_DynamicSpeed/archive/refs/heads/master.zip (please then edit the User_Setup.h as described in the Wiki)
 #include <Hash.h>                   // https://github.com/bbx10/Hash_tng/archive/refs/heads/master.zip
+#include <FS.h>
+using fs::FS;
 #include <WebServer.h>
 #include <SPIFFS.h>
 #include "src/NTPupdate.h"
@@ -475,7 +477,7 @@ WiFiClient RemoteClient;
 WiFiUDP Udp;
 WebServer webserver(80);
 
-hw_timer_t *timScreensaver = NULL;
+//hw_timer_t* timScreensaver = nullptr;
 byte screensaver_IRQ = OFF;
 
 void setup() {
@@ -714,7 +716,6 @@ void setup() {
   tft.fillScreen(BackgroundColor);
 
   SPIFFS.begin();
-  if (!SPIFFS.exists("/logbook.csv")) handleCreateNewLogbook();
 
   FrequencySprite.createSprite(200, 50);
   FrequencySprite.setTextDatum(TR_DATUM);
@@ -904,6 +905,7 @@ void setup() {
   Wire.endTransmission();
 
   if (analogRead(BATTERY_PIN) < 200) batterydetect = false;
+  if (!SPIFFS.exists("/logbook.csv")) handleCreateNewLogbook();
 
   if (wifi) {
     tryWiFi();
@@ -957,8 +959,8 @@ void setup() {
   if (!usesquelch) radio.setUnMute();
 
   if (screensaverset) {
-    ScreensaverTimerInit();
-    ScreensaverTimerSet(screensaverOptions[screensaverset]);
+    //    ScreensaverTimerInit();
+    //    ScreensaverTimerSet(screensaverOptions[screensaverset]);
   }
 
   tottimer = millis();
@@ -1338,7 +1340,7 @@ void loop() {
         for (int i = 0; i < rotarycounteraccelerator; i++) KeyUp();
         rotarycounter = 0;
       }
-      if (screensaverset && !BWtune && !menu && !screensavertriggered) ScreensaverTimerRestart();
+      //      if (screensaverset && !BWtune && !menu && !screensavertriggered) ScreensaverTimerRestart();
     }
   }
 
@@ -1357,7 +1359,7 @@ void loop() {
         for (int i = 0; i < rotarycounteraccelerator; i++) KeyDown();
         rotarycounter = 0;
       }
-      if (screensaverset && !BWtune && !menu && !screensavertriggered) ScreensaverTimerRestart();
+      //      if (screensaverset && !BWtune && !menu && !screensavertriggered) ScreensaverTimerRestart();
     }
   }
 
@@ -1478,7 +1480,7 @@ void WakeToSleep(bool yes) {
         MuteScreen(0);
         screensavertriggered = false;
         screensaver_IRQ = OFF;
-        ScreensaverTimerReopen();
+        //        ScreensaverTimerReopen();
         break;
       case LCD_BRIGHTNESS_1_PERCENT:
       case LCD_BRIGHTNESS_A_QUARTER:
@@ -1486,53 +1488,59 @@ void WakeToSleep(bool yes) {
         MuteScreen(0);
         screensavertriggered = false;
         screensaver_IRQ = OFF;
-        ScreensaverTimerReopen();
+        //        ScreensaverTimerReopen();
         break;
     }
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
   }
 }
-
-void ScreensaverTimerInit() {
-  timScreensaver = timerBegin(0, 80, true);
-  timerAttachInterrupt(timScreensaver, ScreensaverInterrupt, true);
-}
-
-void ScreensaverTimerSet(byte value) {
-  if (timScreensaver == NULL) {
-    ScreensaverTimerInit();
-    ScreensaverTimerSet(screensaverOptions[screensaverset]);
+/*
+  void IRAM_ATTR ScreensaverInterrupt() {
+  screensaver_IRQ = ON; // ISR-safe flag setting
   }
 
-  if (value == OFF) {
-    if (screensaverset) timerStop(timScreensaver);
-  } else {
-    timerStop(timScreensaver);
-    timerAlarmWrite(timScreensaver, value * TIMER_SCREENSAVER_BASE, true);
-    timerStart(timScreensaver);
+  void ScreensaverTimerInit() {
+  if (timScreensaver) return;
+
+  // Timer 0, 80 prescaler for 1us ticks, counting up
+  timScreensaver = timerBegin(0, 80, true);
+  if (!timScreensaver) {
+    Serial.println("Failed to initialize timer");
+    return;
+  }
+
+  timerAttachInterrupt(timScreensaver, &ScreensaverInterrupt, true);
+  }
+
+  void ScreensaverTimerSet(byte value) {
+  if (timScreensaver == nullptr) {
+    ScreensaverTimerInit();
+    if (!timScreensaver) return;
+  }
+
+  timerStop(timScreensaver);
+
+  if (value != OFF) {
+    uint64_t ticks = value * TIMER_SCREENSAVER_BASE * 1000; // ms to us
+    timerAlarmWrite(timScreensaver, ticks, false);
     timerAlarmEnable(timScreensaver);
   }
-}
+  }
 
-void ScreensaverTimerRestart() {
-  if (timScreensaver == NULL) {
+  void ScreensaverTimerRestart() {
+  if (timScreensaver == nullptr) {
     ScreensaverTimerInit();
     ScreensaverTimerSet(screensaverOptions[screensaverset]);
   }
   timerRestart(timScreensaver);
-}
+  }
 
-void ScreensaverTimerReopen() {
+  void ScreensaverTimerReopen() {
   ScreensaverTimerSet(OFF);
   ScreensaverTimerSet(screensaverOptions[screensaverset]);
   ScreensaverTimerRestart();
-}
-
-void ScreensaverInterrupt()
-{
-  screensaver_IRQ = ON;
-}
-
+  }
+*/
 void CheckBandForbiddenFM () {
   switch (band) {
     case BAND_FM:
@@ -1933,7 +1941,7 @@ void BANDBUTTONPress() {
             BuildDisplay();
             freq_in = 0;
             SelectBand();
-            ScreensaverTimerReopen();
+            //            ScreensaverTimerReopen();
           } else {
             doBandToggle();
           }
@@ -2555,7 +2563,7 @@ void ModeButtonPress() {
       BuildDisplay();
       freq_in = 0;
       SelectBand();
-      ScreensaverTimerReopen();
+      //      ScreensaverTimerReopen();
     } else if (afscreen) {
       if (afpagenr == 1) afpagenr = 2; else if (afpagenr == 2 && afpage) afpagenr = 3; else afpagenr = 1;
       BuildAFScreen();
@@ -2585,7 +2593,7 @@ void ModeButtonPress() {
             BuildMenu();
             freq_in = 0;
             menu = true;
-            ScreensaverTimerSet(OFF);
+            //            ScreensaverTimerSet(OFF);
           }
         }
       } else {
@@ -2609,8 +2617,8 @@ void ModeButtonPress() {
           MWHighEdgeSet = mwstepsize == false ? FREQ_MW_HIGH_EDGE_MAX_9K : FREQ_MW_HIGH_EDGE_MAX_10K;
           doBandSelectionFM();
           doBandSelectionAM();
-          ScreensaverTimerSet(screensaverOptions[screensaverset]);
-          if (screensaverset) ScreensaverTimerRestart();
+          //          ScreensaverTimerSet(screensaverOptions[screensaverset]);
+          //          if (screensaverset) ScreensaverTimerRestart();
           endMenu();
         } else {
           if (submenu) {
@@ -2822,7 +2830,7 @@ void ButtonPress() {
         }
       }
       if (screensaverset) {
-        ScreensaverTimerRestart();
+        //        ScreensaverTimerRestart();
       }
     } else {
       if (menu) DoMenu();
@@ -4945,8 +4953,8 @@ void endMenu() {
 }
 
 void startFMDXScan() {
-  ScreensaverTimerSet(screensaverOptions[screensaverset]);
-  if (screensaverset) ScreensaverTimerRestart();
+  //  ScreensaverTimerSet(screensaverOptions[screensaverset]);
+  //  if (screensaverset) ScreensaverTimerRestart();
   initdxscan = true;
   scanholdflag = false;
   autologged = false;
@@ -5218,7 +5226,7 @@ void doBandToggle() {
     startFMDXScan();
     return;
   }
-  ScreensaverTimerRestart();
+  //  ScreensaverTimerRestart();
 }
 
 void StoreMemoryPos(uint8_t _pos) {
@@ -5425,7 +5433,7 @@ void NumpadProcess(int num) {
       PSSprite.unloadFont();
       if (language == LANGUAGE_CHS) PSSprite.loadFont(FONT16_CHS); else PSSprite.loadFont(FONT16);
       BuildMenu();
-      ScreensaverTimerSet(OFF);
+      //      ScreensaverTimerSet(OFF);
     } else if (num == 13) {
       if (freq_in != 0) {
         TuneFreq(freq_in);

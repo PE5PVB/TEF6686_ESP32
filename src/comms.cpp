@@ -119,7 +119,7 @@ void Communication() {
             if (afscreen || advancedRDS) {
               BuildDisplay();
               SelectBand();
-              ScreensaverTimerReopen();
+//              ScreensaverTimerReopen();
             }
 
             if (tempfreq >= FREQ_LW_LOW_EDGE_MIN && tempfreq <= FREQ_LW_HIGH_EDGE_MAX) {
