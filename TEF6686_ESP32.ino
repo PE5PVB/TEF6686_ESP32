@@ -728,7 +728,7 @@ void setup() {
   PSSprite.setTextDatum(TL_DATUM);
   PSSprite.setSwapBytes(true);
 
-  SquelchSprite.createSprite(24, 19);
+  SquelchSprite.createSprite(27, 19);
   SquelchSprite.setTextDatum(TL_DATUM);
   SquelchSprite.setSwapBytes(true);
 
