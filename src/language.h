@@ -3,7 +3,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[21][301] PROGMEM = {
+static const char* const myLanguage[22][301] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -6365,7 +6365,309 @@ static const char* const myLanguage[21][301] PROGMEM = {
     "Indstil NTP-tidsforskel", // 298
     "Logbogen indeholder over 130 poster, som fremviseren ikke kan behandle. Download CSV-filen for at behandle den.", // 299
     "Canada" // 300
-  }
+  },
 
+  { "Svenska", // Swedish
+    "Rotationsriktning ändrad", // 1
+    "Var god släpp knappen", // 2
+    "Skärmen omvänd", // 3
+    "Kalibrera analog mätare", // 4
+    "USB-läge", // 5
+    "Rotationspulsgivare\nsatt till optisk", // 6
+    "Rotationspulsgivare\nsatt till standard", // 7
+    "FM/AM-mottagare", // 8
+    "Tuner: !Ingen!", // 9
+    "Ljudstyrka", // 10
+    "Konverter", // 11
+    "Låg bandgräns", // 12
+    "Hög bandgräns", // 13
+    "FM RF-nivåoffset", // 14
+    "Stereoseparations-\ntröskel", // 15
+    "Lågpass frekvens", // 16
+    "Lågpass tröskelnivå", // 17
+    "Tröskel för låg nivå", // 18
+    "Ljusstyrka", // 19
+    "Sätt ljudstyrka", // 20
+    "Konverter-offset", // 21
+    "Låg bandgräns", // 22
+    "Hög bandgräns", // 23
+    "FM RF-nivåoffset", // 24
+    "Stereotröskel", // 25
+    "Lågpass frekvens", // 26
+    "Lågpass tröskelnivå", // 27
+    "Tröskel för låg nivå", // 28
+    "Skärmljusstyrka", // 29
+    "Av", // 30
+    "På", // 31
+    "TRYCK MODE FÖR ATT SPARA OCH AVSLUTA", // 32
+    "TRYCK BAND FÖR ATT STÄNGA", // 33
+    "SÖKER...", // 34
+    "Tuner hittades inte", // 35
+    "AM-antennförstärkning", // 36
+    "FM AGC", // 37
+    "Visa RDS-fel", // 38
+    "Språk", // 39
+    "Välj språk", // 40
+    "PI-låst CT-synk", // 41
+    "Fel! Ingen RDS-signal", // 42
+    "Softmute FM", // 43
+    "Softmute AM", // 44
+    "Pip vid bandkant", // 45
+    "Region", // 46
+    "Europa", // 47
+    "USA", // 48
+    "Visa understreck i RDS", // 49
+    "Endast PS", // 50
+    "Wi-Fi aktiv", // 51
+    "Konfigurera Wi-Fi", // 52
+    "Anslut till: ", // 53
+    "för att konfigurera Wi-Fi", // 54
+    "Försöker att ansluta till Wi-Fi", // 55
+    "MISSLYCKADES!", // 56
+    "ANSLUTEN!", // 57
+    "Stationlist klient-IP", // 58
+    "Visa våglängd på KV", // 59
+    "RDS-filter", // 60
+    "Visa PI-fel", // 61
+    "Använd brusspärr", // 62
+    "Modulationsmätare", // 63
+    "AM noise blanker", // 64
+    "FM noise blanker", // 65
+    "Standarder laddade", // 66
+    "Ljudutgång", // 67
+    "Väck inte skärmen\nvid avstämning", // 68
+    "Invertera skärmfärger", // 69
+    "Om programvaran", // 70
+    "Huvudkod:", // 71
+    "Bidragsgivare:", // 72
+    "Okänt", // 73
+    "Skärmsläckaralternativ", // 74
+    "Auto avstängning", // 75
+    "Skärm av", // 76
+    "Tema", // 77
+    "Skinn", // 78
+    "Upptäckta applikationer", // 79
+    "Min.", // 80
+    "Dynamisk SPI", // 81
+    "Skanningskänslighet", // 82
+    "INGET", // 83
+    "Programvaruversion", // 84
+    "Frekvenstypsnitt", // 85
+    "Auto", // 86
+    "Ingen AF tillgänglig", // 87
+    "Ingen EON tillgänglig", // 88
+    "Ingen RT+ tillgänglig", // 89
+    "FM standard\nsteglängd", // 90
+    "Skärmsläckare", // 91
+    "Sek.", // 92
+    "Klockläge", // 93
+    "1% ljusstyrka", // 94
+    "25% ljusstyrka", // 95
+    "50% ljusstyrka", // 96
+    "AM RF-nivå offset", // 97
+    "Enhet för\nsignalmätare", // 98
+    "Använd AF", // 99
+    "Välj FM-band", // 100
+    "Välj AM-band", // 101
+    "LV", // 102
+    "MV", // 103
+    "KV", // 104
+    "FM", // 105
+    "OIRT", // 106
+    "Väck inte skärmen vid avstämning", // 107
+    "Modellväljare", // 108
+    "Bas", // 109
+    "Portabel", // 110
+    "Portabel touch", // 111
+    "Titel", // 112
+    "Album", // 113
+    "Spår", // 114
+    "Artist", // 115
+    "Komposition", // 116
+    "Sats", // 117
+    "Dirigent", // 118
+    "Kompositör", // 119
+    "Grupp", // 120
+    "Kommentar", // 121
+    "Genre", // 122
+    "Nyheter", // 123
+    "Lokala nyheter", // 124
+    "Aktiemarknad", // 125
+    "Sport", // 126
+    "Lotteri", // 127
+    "Horoskop", // 128
+    "Daglig förströelse", // 129
+    "Hälsa", // 130
+    "Evenemang", // 131
+    "Scen", // 132
+    "Bio", // 133
+    "TV", // 134
+    "Datum/tid", // 135
+    "Väder", // 136
+    "Trafik", // 137
+    "Alarm", // 138
+    "Reklam", // 139
+    "Webbsida", // 140
+    "Annat", // 141
+    "Kort PS", // 142
+    "Lång PS", // 143
+    "Nu", // 144
+    "Nästa", // 145
+    "Del", // 146
+    "Värd", // 147
+    "Redaktör", // 148
+    "Frekvens", // 149
+    "Hemsida", // 150
+    "Underkanal", // 151
+    "Hotline", // 152
+    "Studiotelefon", // 153
+    "Telefon", // 154
+    "SMS studio", // 155
+    "SMS", // 156
+    "E-post hotline", // 157
+    "E-post studio", // 158
+    "E-post", // 159
+    "Chat", // 160
+    "Chattcenter", // 161
+    "Röstningsfråga", // 162
+    "Röstningscenter", // 163
+    "Plats", // 164
+    "Möte", // 165
+    "Identifikator", // 166
+    "Köp", // 167
+    "Få data", // 168
+    "MV standard\nsteglängd", // 169
+    "Tangerine", // 170
+    "Ocean", // 171
+    "Indigo", // 172
+    "Batterialternativ", // 173
+    "Visa spänning", // 174
+    "Visa procent", // 175
+    "RT buffring", // 176
+    "Huvudinställningar", // 177
+    "Ljudinställningar", // 178
+    "Skärminställningar", // 179
+    "RDS-inställningar", // 180
+    "FM-inställningar", // 181
+    "AM-inställningar", // 182
+    "Anslutning & klocka", // 183
+    "TRYCK MODE FöR ATT GÅ TILLBAKA", // 184
+    "Samkanal-detektor", // 185
+    "Samkanal-det.\nkänslighet", // 186
+    "Samkanal-det.\ntröskel", // 187
+    "Samkanal-det.\nräknare", // 188
+    "HUVUD", // 189
+    "LJUD", // 190
+    "SKÄRM", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "ANSLUT", // 195
+    "DX-LÄGE", // 196
+    "AUTO MEM", // 197
+    "AM AGC", // 198
+    "FM de-emfas", // 199
+    "Små", // 200
+    "Stora", // 201
+    "Allt", // 202
+    "Snabb PS", // 203
+    "Standard", // 204
+    "Släck skärm vid\nXDRGTK-anslutning", // 205
+    "FMSI stereo\nförbättring", // 206
+    "Funktion endast tillgäng-\nlig på TEF6687/6689!", // 207
+    "Funktion ej tillgänglig\npå valt skinn!", // 208
+    "Första minnesplats", // 209
+    "Sista minnesplats", // 210
+    "Väntetid", // 211
+    "Starta DX-skanning", // 212
+    "FM DX-alternativ", // 213
+    "Avbruten! Startkanalen är\nmärkt som överhoppad.", // 214
+    "Auto-sortera AF", // 215
+    "Minnesplatser", // 216
+    "Exkludera", // 217
+    "Endast", // 218
+    "Auto-avbryt skanning", // 219
+    "Korrekt PI", // 220
+    "Signal", // 221
+    "Tyst under\nskanning", // 222
+    "AIR", // 223
+    "5 sek. BAND-knapptryck", // 224
+    "Stäng av", // 225
+    "Stäng av skärm", // 226
+    "Inaktiverat", // 227
+    "Ingen", // 228
+    "Nyheter", // 229
+    "Aktualiteter", // 230
+    "Information", // 231
+    "Sport", // 232
+    "Utbildning", // 233
+    "Drama", // 234
+    "Kultur", // 235
+    "Vetenskap", // 236
+    "Underhållning", // 237
+    "Popmusik", // 238
+    "Rockmusik", // 239
+    "Lätt musik", // 240
+    "Lätt klassisk", // 241
+    "Klassisk musik", // 242
+    "Annan musik", // 243
+    "Väder", // 244
+    "Ekonomi", // 245
+    "Barnprogram", // 246
+    "Sociala frågor", // 247
+    "Religion", // 248
+    "Ring in", // 249
+    "Resor", // 250
+    "Fritid", // 251
+    "Jazz", // 252
+    "Countrymusik", // 253
+    "Nationell musik", // 254
+    "Oldies musik", // 255
+    "Folkmusik", // 256
+    "Dokumentär", // 257
+    "Alarmtest", // 258
+    "Alarm!!!", // 259
+    "Inledande", // 260
+    "Alltid", // 261
+    "Visa klocka", // 262
+    "Visa lång PS", // 263
+    "Startfrekvens", // 264
+    "Stoppfrekvens", // 265
+    "Första minnesplats", // 266
+    "Sista minnesplats", // 267
+    "Spara endast med RDS", // 268
+    "Starta auto-minne", // 269
+    "Auto-kanalminne", // 270
+    "Stationlist-ID", // 271
+    "Hittade", // 272
+    "Avbruten! Inga minnesplatser", // 273
+    "Avbruten! Användare tryckte knapp", // 274
+    "Skanning slutförd utan fel", // 275
+    "Töm minnesplatser", // 276
+    "raderad", // 277
+    "Förhindra dubbla PI", // 278
+    "Range", // 279
+    "Fullt", // 280
+    "Väntetid bara\nvid signal", // 281
+    "Tryck på markerat hörn", // 282
+    "för att kalibrera touchskärm", // 283
+    "Håll BW-knappen för att\nstoppa DX-skanning", // 284
+    "Välj bandbredd", // 285
+    "Din loggbok", // 286
+    "Ladda ner loggbok", // 287
+    "Loggbok är tom", // 288
+    "Gå till botten", // 289
+    "Post tillagd\ni loggbok", // 290
+    "Fel vid sparande\ni loggbok", // 291
+    "Töm loggbok", // 292
+    "Loggbok tömd", // 293
+    "Tömning misslyckades", // 294
+    "Kan inte spara!\nLoggboken är full!", // 295
+    "Autologgning", // 296
+    "Auto NTP sommartid", // 297
+    "Ange NTP tidszon", // 298
+    "Loggboken har mer än 130 poster, vilket visaren inte kan hantera. Ladda ner CSV för behandling.", // 299
+    "Kanada" // 300
+  }
 };
 #endif
