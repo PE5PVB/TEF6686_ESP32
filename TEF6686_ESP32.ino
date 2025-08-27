@@ -5,7 +5,7 @@
 #include <Wire.h>
 #include <math.h>
 #include <TimeLib.h>
-#include <TFT_eSPI.h>               // https://github.com/ohmytime/TFT_eSPI_DynamicSpeed/archive/refs/heads/master.zip (please then edit the User_Setup.h as described in the Wiki)
+#include <TFT_eSPI.h>               // https://github.com/PE5PVB/TFT_eSPI_DynamicSpeed (please then edit the User_Setup.h as described in the Wiki)
 #include <Hash.h>                   // https://github.com/bbx10/Hash_tng/archive/refs/heads/master.zip
 #include <FS.h>
 using fs::FS;
