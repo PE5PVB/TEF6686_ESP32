@@ -1230,7 +1230,7 @@ void loop() {
         tftPrint(-1, "50", 84, 144, ActiveColor, ActiveColorSmooth, 16);
         tftPrint(-1, "70", 114, 144, ActiveColor, ActiveColorSmooth, 16);
         tftPrint(-1, "100", 160, 144, ActiveColor, ActiveColorSmooth, 16);
-        tftPrint(0, "M", 7, 128, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(0, "A", 7, 128, ActiveColor, ActiveColorSmooth, 16);
         for (byte segments = 0; segments < 94; segments++) {
           if (segments > 54) {
             if (((segments - 53) % 10) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, BarSignificantColor);
@@ -1269,7 +1269,7 @@ void loop() {
           tftPrint(-1, "50", 84, 144, GreyoutColor, BackgroundColor, 16);
           tftPrint(-1, "70", 114, 144, GreyoutColor, BackgroundColor, 16);
           tftPrint(-1, "100", 160, 144, GreyoutColor, BackgroundColor, 16);
-          tftPrint(0, "M", 7, 128, GreyoutColor, BackgroundColor, 16);
+          tftPrint(0, "A", 7, 128, GreyoutColor, BackgroundColor, 16);
           tft.fillRect(16, 133, 187, 6, GreyoutColor);
         }
         if (radio.rds.region == 0) {

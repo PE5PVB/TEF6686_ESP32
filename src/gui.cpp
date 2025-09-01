@@ -3035,14 +3035,14 @@ void BuildDisplay() {
   tftPrint(-1, "+30", 160, 115, ActiveColor, ActiveColorSmooth, 16);
 
   if (!showmodulation) {
-    tftPrint(0, "M", 7, 128, GreyoutColor, BackgroundColor, 16);
+    tftPrint(0, "A", 7, 128, GreyoutColor, BackgroundColor, 16);
     tftPrint(-1, "10", 24, 144, GreyoutColor, BackgroundColor, 16);
     tftPrint(-1, "30", 54, 144, GreyoutColor, BackgroundColor, 16);
     tftPrint(-1, "50", 84, 144, GreyoutColor, BackgroundColor, 16);
     tftPrint(-1, "70", 114, 144, GreyoutColor, BackgroundColor, 16);
     tftPrint(-1, "100", 160, 144, GreyoutColor, BackgroundColor, 16);
   } else {
-    tftPrint(0, "M", 7, 128, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(0, "A", 7, 128, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "10", 24, 144, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "30", 54, 144, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "50", 84, 144, ActiveColor, ActiveColorSmooth, 16);

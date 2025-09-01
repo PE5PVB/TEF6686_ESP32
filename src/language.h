@@ -67,7 +67,7 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "RDS filter", // 60
     "Show PI errors", // 61
     "Use squelch", // 62
-    "Modulation meter", // 63
+    "Audio level meter", // 63
     "AM Noise blanker", // 64
     "FM Noise blanker", // 65
     "Defaults loaded", // 66
@@ -370,7 +370,7 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "RDS filter", // 60
     "Toon PI fouten", // 61
     "Gebruik squelch", // 62
-    "Modulatie meter", // 63
+    "Audio niveau meter", // 63
     "AM ruis filter", // 64
     "FM ruis filter", // 65
     "Opnieuw geconfigureerd", // 66
