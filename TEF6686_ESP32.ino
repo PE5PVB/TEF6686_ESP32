@@ -5,7 +5,7 @@
 #include <Wire.h>
 #include <math.h>
 #include <TimeLib.h>
-#include <TFT_eSPI.h>               // https://github.com/PE5PVB/TFT_eSPI_DynamicSpeed (please then edit the User_Setup.h as described in the Wiki)
+#include <TFT_eSPI.h>               // https://github.com/PE5PVB/TFT_eSPI_DynamicSpeed
 #include <Hash.h>                   // https://github.com/bbx10/Hash_tng/archive/refs/heads/master.zip
 #include <FS.h>
 using fs::FS;
@@ -445,6 +445,7 @@ unsigned long rtticker;
 unsigned long rttickerhold;
 unsigned long rotarytimer;
 unsigned long scantimer;
+unsigned long screensavertimer;
 unsigned long signalstatustimer;
 unsigned long tottimer;
 unsigned long tuningtimer;
@@ -476,9 +477,6 @@ WiFiServer Server(7373);
 WiFiClient RemoteClient;
 WiFiUDP Udp;
 WebServer webserver(80);
-
-//hw_timer_t* timScreensaver = nullptr;
-byte screensaver_IRQ = OFF;
 
 void setup() {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
@@ -958,11 +956,7 @@ void setup() {
   if (edgebeep) radio.tone(50, -5, 2000);
   if (!usesquelch) radio.setUnMute();
 
-  if (screensaverset) {
-    //    ScreensaverTimerInit();
-    //    ScreensaverTimerSet(screensaverOptions[screensaverset]);
-  }
-
+  screensavertimer = millis();
   tottimer = millis();
 }
 
@@ -1340,7 +1334,7 @@ void loop() {
         for (int i = 0; i < rotarycounteraccelerator; i++) KeyUp();
         rotarycounter = 0;
       }
-      //      if (screensaverset && !BWtune && !menu && !screensavertriggered) ScreensaverTimerRestart();
+      if (screensaverset > 0 && !BWtune && !menu && !screensavertriggered) screensavertimer = millis();
     }
   }
 
@@ -1359,7 +1353,7 @@ void loop() {
         for (int i = 0; i < rotarycounteraccelerator; i++) KeyDown();
         rotarycounter = 0;
       }
-      //      if (screensaverset && !BWtune && !menu && !screensavertriggered) ScreensaverTimerRestart();
+      if (screensaverset > 0 && !BWtune && !menu && !screensavertriggered) screensavertimer = millis();
     }
   }
 
@@ -1416,15 +1410,7 @@ void loop() {
     }
   }
 
-  if (screensaverset) {
-    if (screensaver_IRQ)
-    {
-      screensaver_IRQ = OFF;
-      if (!screensavertriggered && !BWtune && !menu) {
-        WakeToSleep(true);
-      }
-    }
-  }
+  if (screensaverset > 0 && !screensavertriggered && !BWtune && !menu && millis() >= screensavertimer + 1000 * screensaverOptions[screensaverset]) WakeToSleep(true);
 }
 
 void GetData() {
@@ -1479,68 +1465,20 @@ void WakeToSleep(bool yes) {
       case LCD_OFF:
         MuteScreen(0);
         screensavertriggered = false;
-        screensaver_IRQ = OFF;
-        //        ScreensaverTimerReopen();
+        screensavertimer = millis();
         break;
       case LCD_BRIGHTNESS_1_PERCENT:
       case LCD_BRIGHTNESS_A_QUARTER:
       case LCD_BRIGHTNESS_HALF:
         MuteScreen(0);
         screensavertriggered = false;
-        screensaver_IRQ = OFF;
-        //        ScreensaverTimerReopen();
+        screensavertimer = millis();
         break;
     }
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
   }
 }
-/*
-  void IRAM_ATTR ScreensaverInterrupt() {
-  screensaver_IRQ = ON; // ISR-safe flag setting
-  }
 
-  void ScreensaverTimerInit() {
-  if (timScreensaver) return;
-
-  // Timer 0, 80 prescaler for 1us ticks, counting up
-  timScreensaver = timerBegin(0, 80, true);
-  if (!timScreensaver) {
-    Serial.println("Failed to initialize timer");
-    return;
-  }
-
-  timerAttachInterrupt(timScreensaver, &ScreensaverInterrupt, true);
-  }
-
-  void ScreensaverTimerSet(byte value) {
-  if (timScreensaver == nullptr) {
-    ScreensaverTimerInit();
-    if (!timScreensaver) return;
-  }
-
-  timerStop(timScreensaver);
-
-  if (value != OFF) {
-    uint64_t ticks = value * TIMER_SCREENSAVER_BASE * 1000; // ms to us
-    timerAlarmWrite(timScreensaver, ticks, false);
-    timerAlarmEnable(timScreensaver);
-  }
-  }
-
-  void ScreensaverTimerRestart() {
-  if (timScreensaver == nullptr) {
-    ScreensaverTimerInit();
-    ScreensaverTimerSet(screensaverOptions[screensaverset]);
-  }
-  timerRestart(timScreensaver);
-  }
-
-  void ScreensaverTimerReopen() {
-  ScreensaverTimerSet(OFF);
-  ScreensaverTimerSet(screensaverOptions[screensaverset]);
-  ScreensaverTimerRestart();
-  }
-*/
 void CheckBandForbiddenFM () {
   switch (band) {
     case BAND_FM:
@@ -1941,7 +1879,7 @@ void BANDBUTTONPress() {
             BuildDisplay();
             freq_in = 0;
             SelectBand();
-            //            ScreensaverTimerReopen();
+            screensavertimer = millis();
           } else {
             doBandToggle();
           }
@@ -2563,7 +2501,7 @@ void ModeButtonPress() {
       BuildDisplay();
       freq_in = 0;
       SelectBand();
-      //      ScreensaverTimerReopen();
+      screensavertimer = millis();
     } else if (afscreen) {
       if (afpagenr == 1) afpagenr = 2; else if (afpagenr == 2 && afpage) afpagenr = 3; else afpagenr = 1;
       BuildAFScreen();
@@ -2593,7 +2531,6 @@ void ModeButtonPress() {
             BuildMenu();
             freq_in = 0;
             menu = true;
-            //            ScreensaverTimerSet(OFF);
           }
         }
       } else {
@@ -2617,8 +2554,7 @@ void ModeButtonPress() {
           MWHighEdgeSet = mwstepsize == false ? FREQ_MW_HIGH_EDGE_MAX_9K : FREQ_MW_HIGH_EDGE_MAX_10K;
           doBandSelectionFM();
           doBandSelectionAM();
-          //          ScreensaverTimerSet(screensaverOptions[screensaverset]);
-          //          if (screensaverset) ScreensaverTimerRestart();
+          screensavertimer = millis();
           endMenu();
         } else {
           if (submenu) {
@@ -2829,9 +2765,7 @@ void ButtonPress() {
           }
         }
       }
-      if (screensaverset) {
-        //        ScreensaverTimerRestart();
-      }
+      screensavertimer = millis();
     } else {
       if (menu) DoMenu();
       if (BWtune) {
@@ -4953,8 +4887,7 @@ void endMenu() {
 }
 
 void startFMDXScan() {
-  //  ScreensaverTimerSet(screensaverOptions[screensaverset]);
-  //  if (screensaverset) ScreensaverTimerRestart();
+  screensavertimer = millis();
   initdxscan = true;
   scanholdflag = false;
   autologged = false;
@@ -5226,7 +5159,7 @@ void doBandToggle() {
     startFMDXScan();
     return;
   }
-  //  ScreensaverTimerRestart();
+  screensavertimer = millis();
 }
 
 void StoreMemoryPos(uint8_t _pos) {
@@ -5433,7 +5366,6 @@ void NumpadProcess(int num) {
       PSSprite.unloadFont();
       if (language == LANGUAGE_CHS) PSSprite.loadFont(FONT16_CHS); else PSSprite.loadFont(FONT16);
       BuildMenu();
-      //      ScreensaverTimerSet(OFF);
     } else if (num == 13) {
       if (freq_in != 0) {
         TuneFreq(freq_in);

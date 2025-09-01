@@ -17,7 +17,6 @@
 #define TIMER_BW_TIMER              (TIMER_500_TICK)
 #define TIMER_SNR_TIMER             100
 #define TIMER_BAT_TIMER             (TIMER_500_TICK)
-#define TIMER_SCREENSAVER_BASE      1000000
 #define TIMER_500_TICK              500
 
 #define BAT_LEVEL_EMPTY             1600
