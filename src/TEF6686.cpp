@@ -175,6 +175,10 @@ void TEF6686::power(bool mode) {
   if (mode == 0) devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 1, 10000);
 }
 
+void TEF6686::extendBW(bool yesno) {
+  devTEF_Radio_Extend_BW(yesno);
+}
+
 void TEF6686::SetFreq(uint16_t frequency) {
   devTEF_Radio_Tune_To(frequency);
   currentfreq = ((frequency + 5) / 10) * 10;
@@ -597,8 +601,8 @@ void TEF6686::readRDS(byte showrdserrors) {
 
     if (!rds.rdsBerror || showrdserrors == 3) rdsblock = rds.rdsB >> 11; else return;
     rds.blockcounter[rdsblock]++;
-	processed_rdsblocks++;
-	
+    processed_rdsblocks++;
+
     switch (rdsblock) {
       case RDS_GROUP_0A:
       case RDS_GROUP_0B:

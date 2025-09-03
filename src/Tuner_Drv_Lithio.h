@@ -36,6 +36,7 @@ typedef enum {
   Cmd_Set_StHiBlend_Max       = 75,
   Cmd_Set_RDS                 = 81,
   Cmd_Set_Specials            = 85,
+  Cmd_Set_Bandwidth_Options   = 86,
   Cmd_Set_StBandBlend_Time    = 90,
   Cmd_Set_StBandBlend_Gain    = 91,
   Cmd_Set_StBandBlend_Bias    = 92,
@@ -103,6 +104,7 @@ void devTEF_Radio_Set_NoisBlanker(uint8_t mode, uint16_t start);
 void devTEF_Radio_Set_Wavegen(bool mode, int16_t amplitude, uint16_t freq);
 void devTEF_Radio_Set_I2S_Input(bool mode);
 void devTEF_Radio_Set_GPIO(uint8_t mode);
+void devTEF_Radio_Extend_BW(bool yesno);
 
 bool devTEF_Radio_Get_Identification (uint16_t *device, uint16_t *hw_version, uint16_t *sw_version);
 bool devTEF_Radio_Get_Quality_Status (uint16_t *status, int16_t *level, uint16_t *usn, uint16_t *wam, int16_t *offset, uint16_t *bandwidth, uint16_t *mod, int8_t *snr);

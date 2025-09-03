@@ -132,6 +132,10 @@ void devTEF_Radio_Set_ChannelEqualizer(bool eq) {
   devTEF_Set_Cmd(TEF_FM, Cmd_Set_ChannelEqualizer, 5, eq);
 }
 
+void devTEF_Radio_Extend_BW(bool yesno) {
+  devTEF_Set_Cmd(TEF_FM, Cmd_Set_Bandwidth_Options, 5, (yesno ? 400 : 950));
+}
+
 void devTEF_Radio_Set_Stereo_Min(bool mode) {
   if (mode) devTEF_Set_Cmd(TEF_FM, Cmd_Set_Stereo_Min, 7, 2); else devTEF_Set_Cmd(TEF_FM, Cmd_Set_Stereo_Min, 7, 0);
 }

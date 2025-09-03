@@ -3455,6 +3455,7 @@ void ShowOffset() {
         // Right arrow dimmed (◀)
         tft.fillTriangle(rightArrowBaseX, arrowBaseYTop, centerX + arrowGap, centerY, rightArrowBaseX, arrowBaseYBottom, SignificantColor);
         tuned = false;
+        radio.extendBW(false);
       } else if (USN < 250 && WAM < 250 && OStatus > -250 && OStatus < 250 && !SQ) {
         // Both arrows dimmed
         tft.fillTriangle(leftArrowBaseX, arrowBaseYTop, centerX - arrowGap, centerY, leftArrowBaseX, arrowBaseYBottom, GreyoutColor);
@@ -3462,6 +3463,7 @@ void ShowOffset() {
         // Center dot active
         tft.fillCircle(centerX, centerY, 3, InsignificantColor);
         tuned = true;
+        radio.extendBW(true);
       } else if (OStatus > 250) {
         // Right arrow active (◀)
         tft.fillTriangle(rightArrowBaseX, arrowBaseYTop, centerX + arrowGap, centerY, rightArrowBaseX, arrowBaseYBottom, GreyoutColor);
@@ -3470,12 +3472,14 @@ void ShowOffset() {
         // Left arrow dimmed (▶)
         tft.fillTriangle(leftArrowBaseX, arrowBaseYTop, centerX - arrowGap, centerY, leftArrowBaseX, arrowBaseYBottom, SignificantColor);
         tuned = false;
+        radio.extendBW(false);
       } else {
         // Everything dimmed
         tft.fillTriangle(leftArrowBaseX, arrowBaseYTop, centerX - arrowGap, centerY, leftArrowBaseX, arrowBaseYBottom, GreyoutColor);
         tft.fillTriangle(rightArrowBaseX, arrowBaseYTop, centerX + arrowGap, centerY, rightArrowBaseX, arrowBaseYBottom, GreyoutColor);
         tft.fillCircle(centerX, centerY, 3, GreyoutColor);
         tuned = false;
+        radio.extendBW(false);
       }
     } else {
       if (OStatus < -2) {
