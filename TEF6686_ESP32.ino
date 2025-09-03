@@ -110,6 +110,7 @@ bool NTPupdated;
 bool optenc;
 bool rdsflagreset;
 bool rdsreset;
+bool rdsstatscreen;
 bool RDSSPYTCP;
 bool RDSSPYUSB;
 bool RDSstatus;
@@ -427,6 +428,7 @@ unsigned long afticker;
 unsigned long aftickerhold;
 unsigned long aftimer;
 unsigned long autosquelchtimer;
+unsigned long blockcounterold[33];
 unsigned long eonticker;
 unsigned long eontickerhold;
 unsigned long flashingtimer;
@@ -437,6 +439,7 @@ unsigned long ModulationpreviousMillis;
 unsigned long ModulationpeakPreviousMillis;
 unsigned long NTPtimer;
 unsigned long peakholdmillis;
+unsigned long processed_rdsblocksold[33];
 unsigned long pslongticker;
 unsigned long pslongtickerhold;
 unsigned long rtplusticker;
@@ -1104,7 +1107,7 @@ void loop() {
     }
   }
 
-  if (!BWtune && !menu && !afscreen && !scandxmode) {
+  if (!BWtune && !menu && !afscreen && !rdsstatscreen && !scandxmode) {
     if (af != 0 && dropout && millis() >= aftimer + 1000) {
       aftimer = millis();
       if (radio.af_counter == 0) {
@@ -1223,7 +1226,7 @@ void loop() {
   if (seek) Seek(direction);
 
   if ((SStatus / 10 > LowLevelSet) && !LowLevelInit && !BWtune && !menu && band < BAND_GAP) {
-    if (!screenmute && !advancedRDS && !afscreen) {
+    if (!screenmute && !advancedRDS && !rdsstatscreen && !afscreen) {
       if (showmodulation) {
         tftPrint(-1, "10", 24, 144, ActiveColor, ActiveColorSmooth, 16);
         tftPrint(-1, "30", 54, 144, ActiveColor, ActiveColorSmooth, 16);
@@ -1255,7 +1258,7 @@ void loop() {
 
   if ((SStatus / 10 <= LowLevelSet) && band < BAND_GAP) {
     if (LowLevelInit && !BWtune && !menu) {
-      if (!screenmute && !afscreen && !advancedRDS) {
+      if (!screenmute && !rdsstatscreen && !afscreen && !advancedRDS) {
         for (byte segments = 0; segments < 94; segments++) {
           if (segments > 54) {
             if (((segments - 53) % 10) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, GreyoutColor);
@@ -1315,7 +1318,7 @@ void loop() {
       doSquelch();
       if (millis() >= tuningtimer + 200) readRds();
       GetData();
-      if (!screenmute && !afscreen && !advancedRDS) ShowModLevel();
+      if (!screenmute && !rdsstatscreen && !afscreen && !advancedRDS) ShowModLevel();
     }
   }
 
@@ -1373,7 +1376,7 @@ void loop() {
       WakeToSleep(REVERSE);
       while (digitalRead(ROTARY_BUTTON) == LOW);
     } else {
-      if (!afscreen) ButtonPress();
+      if (!afscreen && !rdsstatscreen) ButtonPress();
     }
   }
 
@@ -1393,7 +1396,7 @@ void loop() {
       WakeToSleep(REVERSE);
       while (digitalRead(BWBUTTON) == LOW);
     } else {
-      if (!screenmute && !afscreen) BWButtonPress();
+      if (!screenmute) BWButtonPress();
     }
   }
 
@@ -1403,7 +1406,7 @@ void loop() {
     num = GetNum();
     if (num != -1)
     {
-      if (!screenmute && !BWtune && !menu && !advancedRDS && !afscreen)
+      if (!screenmute && !BWtune && !menu && !advancedRDS && !rdsstatscreen && !afscreen)
       {
         NumpadProcess(num);
       }
@@ -1414,13 +1417,14 @@ void loop() {
 }
 
 void GetData() {
-  if (!afscreen) ShowSignalLevel();
-  if (!BWtune && !menu) showPS();
+  if (!afscreen && !rdsstatscreen) ShowSignalLevel();
+  if (!BWtune && !menu && !rdsstatscreen) showPS();
 
   if (band < BAND_GAP && !BWtune && !menu) {
-    if (advancedRDS && !afscreen && !screenmute) ShowAdvancedRDS();
+    if (advancedRDS && !afscreen && !rdsstatscreen && !screenmute) ShowAdvancedRDS();
+    if (!advancedRDS && !afscreen && rdsstatscreen && !screenmute) ShowRDSStatistics();
     if (afscreen && !screenmute) ShowAFEON();
-    if (!afscreen) {
+    if (!afscreen && !rdsstatscreen) {
       if (!screenmute) ShowErrors();
       showPTY();
       showECC();
@@ -1870,7 +1874,7 @@ void BANDBUTTONPress() {
         while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
 
         if (counter - counterold < 1000) {
-          if (afscreen) {
+          if (afscreen || rdsstatscreen) {
             leave = true;
             BuildAdvancedRDS();
             freq_in = 0;
@@ -2306,7 +2310,7 @@ void ToggleSWMIBand(bool frequencyup) {
 }
 
 void SelectBand() {
-  if (afscreen || advancedRDS) {
+  if (afscreen || advancedRDS || rdsstatscreen) {
     BuildDisplay();
     freq_in = 0;
   }
@@ -2429,37 +2433,41 @@ void SelectBand() {
 void BWButtonPress() {
   if (seek) radio.setUnMute();
   seek = false;
-  if (scandxmode) {
-    unsigned long counterold = millis();
-    unsigned long counter = millis();
-    while (digitalRead(BWBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
-
-    if (counter - counterold < 1000) {
-      ShowFreq(5);
-      ShowFreq(0);
-    } else {
-      cancelDXScan();
-    }
+  if (afscreen || rdsstatscreen) {
+    BuildRDSStatScreen();
   } else {
-    if (!usesquelch) radio.setUnMute();
-    if (!BWtune && !menu) {
-      if (!screenmute) tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
+    if (scandxmode) {
       unsigned long counterold = millis();
       unsigned long counter = millis();
       while (digitalRead(BWBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
 
       if (counter - counterold < 1000) {
-        BuildBWSelector();
-        freq_in = 0;
-        BWtune = true;
-        BWtemp = BWset;
+        ShowFreq(5);
+        ShowFreq(0);
       } else {
-        if (band == BAND_FM || band == BAND_OIRT) {
-          doStereoToggle();
-        } else {
+        cancelDXScan();
+      }
+    } else {
+      if (!usesquelch) radio.setUnMute();
+      if (!BWtune && !menu) {
+        if (!screenmute) tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
+        unsigned long counterold = millis();
+        unsigned long counter = millis();
+        while (digitalRead(BWBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
+
+        if (counter - counterold < 1000) {
           BuildBWSelector();
           freq_in = 0;
           BWtune = true;
+          BWtemp = BWset;
+        } else {
+          if (band == BAND_FM || band == BAND_OIRT) {
+            doStereoToggle();
+          } else {
+            BuildBWSelector();
+            freq_in = 0;
+            BWtune = true;
+          }
         }
       }
     }
@@ -2504,6 +2512,9 @@ void ModeButtonPress() {
       screensavertimer = millis();
     } else if (afscreen) {
       if (afpagenr == 1) afpagenr = 2; else if (afpagenr == 2 && afpage) afpagenr = 3; else afpagenr = 1;
+      BuildAFScreen();
+      freq_in = 0;
+    } else if (rdsstatscreen) {
       BuildAFScreen();
       freq_in = 0;
     } else {
@@ -2813,7 +2824,7 @@ void KeyUp() {
     ShowFreq(5);
     ShowFreq(0);
   } else {
-    if (!afscreen) {
+    if (!afscreen && !rdsstatscreen) {
       if (!BWtune && !menu) {
         switch (tunemode) {
           case TUNE_MAN:
@@ -2881,7 +2892,7 @@ void KeyDown() {
     ShowFreq(5);
     ShowFreq(0);
   } else {
-    if (!afscreen) {
+    if (!afscreen && !rdsstatscreen) {
       if (!BWtune && !menu) {
         switch (tunemode) {
           case TUNE_MAN:
@@ -3226,7 +3237,7 @@ void ShowFreq(int mode) {
   }
   tuningtimer = millis();
 
-  if (!rdsflagreset && !screenmute && !afscreen) {
+  if (!rdsflagreset && !screenmute && !afscreen && !rdsstatscreen) {
     ShowRDSLogo(false);
     if (!advancedRDS) {
       FullLineSprite.fillSprite(BackgroundColor);
@@ -3652,7 +3663,7 @@ void doSquelch() {
     if (language == LANGUAGE_CHS) SquelchSprite.loadFont(FONT16_CHS); else SquelchSprite.loadFont(FONT16);
 
     if (!XDRGTKUSB && !XDRGTKTCP && usesquelch && (!scandxmode || (scandxmode && !scanmute))) {
-      if (!screenmute && usesquelch && !advancedRDS && !afscreen) {
+      if (!screenmute && usesquelch && !advancedRDS && !afscreen && !rdsstatscreen) {
         if (!BWtune && !menu && (Squelch > Squelchold + 2 || Squelch < Squelchold - 2)) {
           SquelchSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           SquelchSprite.fillSprite(BackgroundColor);
@@ -3700,7 +3711,7 @@ void doSquelch() {
             SQ = true;
           }
         }
-        if (!screenmute && usesquelch && !advancedRDS && !afscreen) {
+        if (!screenmute && usesquelch && !advancedRDS && !afscreen && !rdsstatscreen) {
           if (Squelch != Squelchold) {
             SquelchSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             SquelchSprite.fillSprite(BackgroundColor);
@@ -3756,13 +3767,13 @@ void doSquelch() {
 
 void updateBW() {//todo air
   if (BWset == 0) {
-    if (!BWtune && !screenmute && !advancedRDS && !afscreen) {
+    if (!BWtune && !screenmute && !advancedRDS && !afscreen && !rdsstatscreen) {
       tft.fillRoundRect(248, 36, 69, 18, 2, SecondaryColor);
       tftPrint(0, "AUTO BW", 282, 38, BackgroundColor, SecondaryColor, 16);
     }
     radio.setFMABandw();
   } else {
-    if (!BWtune && !screenmute && !advancedRDS && !afscreen) {
+    if (!BWtune && !screenmute && !advancedRDS && !afscreen && !rdsstatscreen) {
       tft.fillRoundRect(248, 36, 69, 18, 2, GreyoutColor);
       tftPrint(0, "AUTO BW", 282, 38, BackgroundColor, GreyoutColor, 16);
     }
@@ -3772,13 +3783,13 @@ void updateBW() {//todo air
 void updateiMS() {
   if (band < BAND_GAP) {
     if (iMSset == 0) {
-      if (!screenmute && !advancedRDS && !afscreen && !BWtune) {
+      if (!screenmute && !advancedRDS && !afscreen && !rdsstatscreen && !BWtune) {
         tft.fillRoundRect(249, 57, 30, 18, 2, SecondaryColor);
         tftPrint(0, "iMS", 265, 59, BackgroundColor, SecondaryColor, 16);
       }
       radio.setiMS(1);
     } else {
-      if (!screenmute && !advancedRDS && !afscreen && !BWtune) {
+      if (!screenmute && !advancedRDS && !afscreen && !rdsstatscreen && !BWtune) {
         tft.fillRoundRect(249, 57, 30, 18, 2, GreyoutColor);
         tftPrint(0, "iMS", 265, 59, BackgroundColor, GreyoutColor, 16);
       }
@@ -3790,13 +3801,13 @@ void updateiMS() {
 void updateEQ() {
   if (band < BAND_GAP) {
     if (EQset == 0) {
-      if (!screenmute && !advancedRDS && !afscreen && !BWtune) {
+      if (!screenmute && !advancedRDS && !afscreen && !rdsstatscreen && !BWtune) {
         tft.fillRoundRect(287, 57, 30, 18, 2, SecondaryColor);
         tftPrint(0, "EQ", 301, 59, BackgroundColor, SecondaryColor, 16);
       }
       radio.setEQ(1);
     } else {
-      if (!screenmute && !advancedRDS && !afscreen && !BWtune) {
+      if (!screenmute && !advancedRDS && !afscreen && !rdsstatscreen && !BWtune) {
         tft.fillRoundRect(287, 57, 30, 18, 2, GreyoutColor);
         tftPrint(0, "EQ", 301, 59, BackgroundColor, GreyoutColor, 16);
       }
@@ -4477,6 +4488,9 @@ void MuteScreen(bool setting) {
       } else if (advancedRDS) {
         BuildAdvancedRDS();
         freq_in = 0;
+      } else if (rdsstatscreen) {
+        BuildRDSStatScreen();
+        freq_in = 0;
       } else {
         BuildDisplay();
         freq_in = 0;
@@ -4897,7 +4911,7 @@ void startFMDXScan() {
   }
 
   if (menu) endMenu();
-  if (afscreen || advancedRDS) {
+  if (afscreen || advancedRDS || rdsstatscreen) {
     BuildDisplay();
     freq_in = 0;
   }

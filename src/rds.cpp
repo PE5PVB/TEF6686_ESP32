@@ -4,6 +4,8 @@
 #include "constants.h"
 #include <TimeLib.h>
 
+String HexStringold;
+
 int RadiotextWidth, PSLongWidth, AIDWidth, afstringWidth, eonstringWidth, rtplusstringWidth, lengths[7];
 String afstringold, eonstringold, rtplusstringold, stationNameLongOld, AIDStringold;
 bool rtABold, ps12errorold, ps34errorold, ps56errorold, ps78errorold;
@@ -307,7 +309,7 @@ void readRds() {
     RDSstatus = radio.rds.hasRDS;
     ShowRDSLogo(RDSstatus);
 
-    if (!screenmute && !afscreen) {
+    if (!screenmute && !afscreen && !rdsstatscreen) {
       if (!RDSstatus) {
         if (radio.rds.correctPI != 0 && !dropout) {
           if (radio.rds.region == 0) {
@@ -553,7 +555,7 @@ void ShowErrors() {
 
 void showPI() {
   if ((radio.rds.region != 0 && (String(radio.rds.picode) != PIold || radio.rds.stationIDtext != stationIDold || radio.rds.stationStatetext != stationStateold)) || (radio.rds.region == 0 && String(radio.rds.picode) != PIold)) {
-    if (!afscreen && !radio.rds.rdsAerror && !radio.rds.rdsBerror && !radio.rds.rdsCerror && !radio.rds.rdsDerror && radio.rds.rdsA != radio.rds.correctPI && PIold.length() > 1) {
+    if (!rdsstatscreen && !afscreen && !radio.rds.rdsAerror && !radio.rds.rdsBerror && !radio.rds.rdsCerror && !radio.rds.rdsDerror && radio.rds.rdsA != radio.rds.correctPI && PIold.length() > 1) {
       radio.clearRDS(fullsearchrds);
       if (RDSSPYUSB) Serial.print("G:\r\nRESET-------\r\n\r\n");
       if (RDSSPYTCP) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
@@ -579,7 +581,7 @@ void showPI() {
         }
       } else if (afscreen) {
         tftReplace(-1, PIold, radio.rds.picode, 30, 201, BWAutoColor, BWAutoColorSmooth, BackgroundColor, 16);
-      } else {
+      } else if (!rdsstatscreen) {
         if (radio.rds.region == 0) {
           if (!RDSstatus) {
             tftReplace(0, PIold, radio.rds.picode, 275, 187, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 28);
@@ -661,7 +663,7 @@ void showPS() {
       if (!screenmute) {
         tftReplace(0, PSold, radio.rds.stationName, 160, 201, BWAutoColor, BWAutoColorSmooth, BackgroundColor, 16);
       }
-    } else {
+    } else if (!rdsstatscreen) {
       // Handle long PS display
       if (radio.rds.hasLongPS && showlongps) {
         String stationNameLongString = String(radio.rds.stationNameLong) + "     "; // Add trailing spaces for scrolling
@@ -1230,4 +1232,120 @@ void ShowAFEON() {
   }
 }
 
+void ShowRDSStatistics() {
+  // Only update if RDS is active, blocks processed, and no errors in Block A-D
+  if (RDSstatus && radio.processed_rdsblocks > 0 &&
+      !radio.rds.rdsAerror && !radio.rds.rdsBerror &&
+      !radio.rds.rdsCerror && !radio.rds.rdsDerror) {
+
+    // --- Draw A-D error circles ---
+    const uint8_t xErr[4] = {86, 124, 162, 200}; // X positions for A-D
+    const bool errors[4] = {radio.rds.rdsAerror, radio.rds.rdsBerror,
+                            radio.rds.rdsCerror, radio.rds.rdsDerror
+                           };
+
+    for (uint8_t i = 0; i < 4; i++) {
+      tft.fillCircle(xErr[i], 41, 5, errors[i] ? SignificantColor : InsignificantColor);
+    }
+
+    // --- Update total processed RDS blocks if changed ---
+    if (processed_rdsblocksold[32] != radio.processed_rdsblocks) {
+      tftReplace(1, String(processed_rdsblocksold[32]), String(radio.processed_rdsblocks),
+                 318, 34, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 16);
+      processed_rdsblocksold[32] = radio.processed_rdsblocks;
+    }
+
+    // --- Row Y positions (repeats every 8 groups) ---
+    const uint8_t rdsYpos[] PROGMEM = {56, 76, 96, 116, 136, 156, 176, 196};
+
+    uint8_t rb = radio.rdsblock; // current RDS block
+
+    // --- Determine column X positions based on group range ---
+    uint16_t xpos, xposPct;
+    if      (rb <= RDS_GROUP_3B )  {
+      xpos =  60;
+      xposPct =  70;
+    }
+    else if (rb <= RDS_GROUP_7B )  {
+      xpos = 140;
+      xposPct = 150;
+    }
+    else if (rb <= RDS_GROUP_11B)  {
+      xpos = 220;
+      xposPct = 230;
+    }
+    else                            {
+      xpos = 300;
+      xposPct = 310;
+    }
+
+    // --- Determine row Y position (wraps every 8 groups) ---
+    uint8_t row  = rb & 0x07;                     // modulo 8
+    uint8_t ypos = pgm_read_byte(&rdsYpos[row]);  // Y position
+
+    // --- Persist last drawn dot between calls ---
+    static int16_t lastX = -1, lastY = -1; // -1 = "none yet"
+
+    // Only update if the block counter has changed
+    if (blockcounterold[rb] != radio.rds.blockcounter[rb]) {
+      // --- Calculate old and new percentage ---
+      float oldPerc = (blockcounterold[rb] * 100.0f) / processed_rdsblocksold[rb];
+      float newPerc = (radio.rds.blockcounter[rb] * 100.0f) / radio.processed_rdsblocks;
+
+      char oldBuf[6], newBuf[6];  // buffers for dtostrf
+      dtostrf(oldPerc, 0, 1, oldBuf);
+      dtostrf(newPerc, 0, 1, newBuf);
+
+      // --- Draw previous position as "Significant" if it exists and is different ---
+      if (lastX >= 0 && (lastX != xpos || lastY != ypos)) {
+        tft.fillCircle(lastX - 55, lastY + 7, 2, SignificantColor);
+      }
+
+      // --- Update percentage display ---
+      tftReplace(1, oldBuf, newBuf, xpos, ypos, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 16);
+      tftPrint(0, "%", xposPct, ypos, ActiveColor, ActiveColorSmooth, 16);
+
+      // --- Draw current dot as "Insignificant" ---
+      tft.fillCircle(xpos - 55, ypos + 7, 2, InsignificantColor);
+
+      // --- Save current as last for next update ---
+      lastX = xpos;
+      lastY = ypos;
+
+      // --- Store updated block counters ---
+      blockcounterold[rb]        = radio.rds.blockcounter[rb];
+      processed_rdsblocksold[rb] = radio.processed_rdsblocks;
+    }
+
+    String HexString;
+    // Convert 16-bit blocks rdsA..rdsD into 4-digit HEX strings
+    HexString = String(((radio.rds.rdsA >> 12) & 0xF), HEX) +
+                String(((radio.rds.rdsA >> 8)  & 0xF), HEX) +
+                String(((radio.rds.rdsA >> 4)  & 0xF), HEX) +
+                String(( radio.rds.rdsA        & 0xF), HEX) + " ";
+
+    HexString += String(((radio.rds.rdsB >> 12) & 0xF), HEX) +
+                 String(((radio.rds.rdsB >> 8)  & 0xF), HEX) +
+                 String(((radio.rds.rdsB >> 4)  & 0xF), HEX) +
+                 String(( radio.rds.rdsB        & 0xF), HEX) + " ";
+
+    HexString += String(((radio.rds.rdsC >> 12) & 0xF), HEX) +
+                 String(((radio.rds.rdsC >> 8)  & 0xF), HEX) +
+                 String(((radio.rds.rdsC >> 4)  & 0xF), HEX) +
+                 String(( radio.rds.rdsC        & 0xF), HEX) + " ";
+
+    HexString += String(((radio.rds.rdsD >> 12) & 0xF), HEX) +
+                 String(((radio.rds.rdsD >> 8)  & 0xF), HEX) +
+                 String(((radio.rds.rdsD >> 4)  & 0xF), HEX) +
+                 String(( radio.rds.rdsD        & 0xF), HEX);
+
+    // Make uppercase
+    HexString.toUpperCase();
+
+    if (HexString != HexStringold) {
+      tftReplace(0, HexStringold, HexString, 160, 222, ActiveColor, ActiveColorSmooth, BackgroundColor, 16);
+      HexStringold = HexString;
+    }
+  }
+}
 #pragma GCC diagnostic pop

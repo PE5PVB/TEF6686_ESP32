@@ -592,6 +592,7 @@ typedef struct _rds_ {
   char stationState[3];
   char dabafeid[5];
   char dabafchannel[4];
+  unsigned long blockcounter[33];
   uint16_t rdsA, rdsB, rdsC, rdsD, rdsErr, rdsStat, correctPI, rdsplusTag1, rdsplusTag2, PICTlock = 0;
   bool ps12error, ps34error, ps56error, ps78error;
   time_t time;
@@ -732,6 +733,7 @@ class TEF6686 {
     uint8_t eon_counter;
     uint8_t logbook_counter;
     uint8_t rdsblock;
+    unsigned long processed_rdsblocks;
     bool mute;
     bool afmethodB;
     byte underscore;

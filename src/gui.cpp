@@ -478,6 +478,92 @@ void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de
   }
 }
 
+void BuildRDSStatScreen() {
+  // Only build screen if not already active
+  if (!rdsstatscreen) {
+    // Set page flags
+    afscreen      = false;
+    advancedRDS   = false;
+    rdsstatscreen = true;
+
+    // --- Draw frame and static lines ---
+    tft.fillScreen(BackgroundColor);
+    tft.drawRect(0, 0, 320, 240, FrameColor);
+    tft.drawLine(0, 30, 320, 30, FrameColor);
+    tft.drawLine(0, 218, 320, 218, FrameColor);
+    tft.drawLine(30, 30, 30, 0, FrameColor);
+    tft.drawLine(66, 30, 66, 0, FrameColor);
+    tft.drawLine(105, 30, 105, 0, FrameColor);
+    tft.drawLine(162, 30, 162, 0, FrameColor);
+    tft.drawLine(248, 30, 248, 0, FrameColor);
+    tft.drawLine(0, 50, 320, 50, FrameColor);
+    tft.drawLine(208, 30, 208, 50, FrameColor);
+    tft.drawLine(80, 30, 80, 218, FrameColor);
+    tft.drawLine(160, 30, 160, 218, FrameColor);
+    tft.drawLine(240, 30, 240, 218, FrameColor);
+
+    // --- Column headers ---
+    tftPrint(-1, "kHz", 205, 4, ActiveColor, ActiveColorSmooth, 28);
+
+    // --- Labels above packet columns ---
+    tftPrint(-1, "ERRORS", 3, 34, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "A:", 66, 34, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "B:", 104, 34, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "C:", 142, 34, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "D:", 180, 34, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "PACKETS", 210, 34, ActiveColor, ActiveColorSmooth, 16);
+
+    // --- Group labels setup ---
+    const uint16_t xcol[4] = {10, 90, 170, 250};       // column X positions
+    const uint16_t rowY[8] = {56, 76, 96, 116, 136, 156, 176, 196}; // row Y positions
+
+    // Labels for each group (A/B)
+    const char* const groups[16][2] = {
+      {"0A", "0B"}, {"1A", "1B"}, {"2A", "2B"}, {"3A", "3B"},
+      {"4A", "4B"}, {"5A", "5B"}, {"6A", "6B"}, {"7A", "7B"},
+      {"8A", "8B"}, {"9A", "9B"}, {"10A", "10B"}, {"11A", "11B"},
+      {"12A", "12B"}, {"13A", "13B"}, {"14A", "14B"}, {"15A", "15B"}
+    };
+
+    // --- Draw group labels in columns with correct Y positions ---
+    for (uint8_t col = 0; col < 4; col++) {      // 4 columns
+      for (uint8_t row = 0; row < 4; row++) {    // 4 groups per column
+        uint8_t g = col * 4 + row;               // group index 0..15
+        tftPrint(-1, groups[g][0], xcol[col], rowY[row * 2], ActiveColor, ActiveColorSmooth, 16);   // A
+        tftPrint(-1, groups[g][1], xcol[col], rowY[row * 2 + 1], ActiveColor, ActiveColorSmooth, 16); // B
+      }
+    }
+
+    // --- Draw 0.0 % in four columns ---
+    const uint16_t pctX[4] = {70, 150, 230, 310};
+    for (uint8_t c = 0; c < 4; c++) {
+      for (uint8_t y = 56; y < 216; y += 20) {
+        tftPrint(1, "0.0", pctX[c] - 10, y, GreyoutColor, BackgroundColor, 16); // placeholder value
+        tftPrint(0, "%", pctX[c], y, GreyoutColor, BackgroundColor, 16);
+      }
+    }
+
+    // --- Reset stored states ---
+    RDSstatusold      = !RDSstatusold;
+    Stereostatusold   = false;
+    BWreset           = true;
+    rssiold           = 2000;
+    batteryold        = 6;
+    batteryVold       = 0;
+    vPerold           = 0;
+    rds_clockold      = "";
+    dropout           = false;
+    rdsreset          = true;
+
+    // --- Clear previous RDS block counters ---
+    for (int x = 0; x < 33; x++) {
+      processed_rdsblocksold[x] = 0;
+      blockcounterold[x]       = 0;
+    }
+  }
+}
+
+
 void BuildAFScreen() {
   if (!afscreen && RDSstatus) {
     tft.drawRoundRect(20, 30, 274, 170, 5, ActiveColor);
@@ -487,6 +573,7 @@ void BuildAFScreen() {
   }
   afscreen = true;
   advancedRDS = false;
+  rdsstatscreen = false;
 
   tft.fillScreen(BackgroundColor);
   tft.drawRect(0, 0, 320, 240, FrameColor);
@@ -2850,6 +2937,7 @@ void BuildMenu() {
 
 void BuildAdvancedRDS() {
   afscreen = false;
+  rdsstatscreen = false;
   afpage = false;
   afpagenr = 1;
   advancedRDS = true;
@@ -2980,6 +3068,7 @@ void BuildAdvancedRDS() {
 
 void BuildDisplay() {
   afscreen = false;
+  rdsstatscreen = false;
   advancedRDS = false;
   BWtune = false;
 

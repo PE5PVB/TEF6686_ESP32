@@ -596,6 +596,9 @@ void TEF6686::readRDS(byte showrdserrors) {
     }
 
     if (!rds.rdsBerror || showrdserrors == 3) rdsblock = rds.rdsB >> 11; else return;
+    rds.blockcounter[rdsblock]++;
+	processed_rdsblocks++;
+	
     switch (rdsblock) {
       case RDS_GROUP_0A:
       case RDS_GROUP_0B:
@@ -1783,9 +1786,12 @@ void TEF6686::clearRDS (bool fullsearchrds) {
     RDSplus2[i] = 0;
   }
 
+  for (i = 0; i < 33; i++) rds.blockcounter[i] = 0;
+
   for (i = 0; i < 10; i++) rds.aid[i] = 0;
 
   rdsblock = 254;
+  processed_rdsblocks = 0;
   piold = 0;
   rds.correctPI = 0;
   rds.ECC = 254;
