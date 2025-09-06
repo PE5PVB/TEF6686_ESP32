@@ -1885,7 +1885,7 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "RDS-Filter", // 60
     "Zeige PI-Fehler", // 61
     "Verwende Rauschsperre", // 62
-    "Modulationspegel", // 63
+    "Audiopegelanzeige", // 63
     "Rauschunterdrückung", // 64
     "Rauschunterdrückung", // 65
     "Werkseinstellungen\nwurden geladen", // 66
