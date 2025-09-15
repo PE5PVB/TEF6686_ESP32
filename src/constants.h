@@ -1,7 +1,7 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-variable"
 
-#define VERSION "v2.20.3"
+#define VERSION "v2.20.4"
 
 #define ON                         1
 #define OFF                        0
