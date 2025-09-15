@@ -147,6 +147,7 @@ extern int BarInsignificantColor;
 extern int BarSignificantColor;
 extern int BatteryValueColor;
 extern int BatteryValueColorSmooth;
+extern int berPercentold;
 extern int BWAutoColor;
 extern int BWAutoColorSmooth;
 extern int FrameColor;

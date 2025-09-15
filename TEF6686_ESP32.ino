@@ -258,6 +258,7 @@ int BarInsignificantColor;
 int BatteryValueColor;
 int BatteryValueColorSmooth;
 int batupdatetimer;
+int berPercentold;
 int BWAutoColor;
 int BWAutoColorSmooth;
 int BWOld;

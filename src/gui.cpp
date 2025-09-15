@@ -497,10 +497,9 @@ void BuildRDSStatScreen() {
     tft.drawLine(162, 30, 162, 0, FrameColor);
     tft.drawLine(248, 30, 248, 0, FrameColor);
     tft.drawLine(0, 50, 320, 50, FrameColor);
-    tft.drawLine(208, 30, 208, 50, FrameColor);
-    tft.drawLine(80, 30, 80, 218, FrameColor);
-    tft.drawLine(160, 30, 160, 218, FrameColor);
-    tft.drawLine(240, 30, 240, 218, FrameColor);
+    tft.drawLine(80, 50, 80, 218, FrameColor);
+    tft.drawLine(160, 50, 160, 218, FrameColor);
+    tft.drawLine(240, 50, 240, 218, FrameColor);
 
     // --- Column headers ---
     tftPrint(-1, "kHz", 205, 4, ActiveColor, ActiveColorSmooth, 28);
@@ -511,7 +510,7 @@ void BuildRDSStatScreen() {
     tftPrint(-1, "B:", 104, 34, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "C:", 142, 34, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(-1, "D:", 180, 34, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "PACKETS", 210, 34, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(-1, "BER", 250, 34, ActiveColor, ActiveColorSmooth, 16);
 
     // --- Group labels setup ---
     const uint16_t xcol[4] = {10, 90, 170, 250};       // column X positions
@@ -547,6 +546,7 @@ void BuildRDSStatScreen() {
     RDSstatusold      = !RDSstatusold;
     Stereostatusold   = false;
     BWreset           = true;
+    berPercentold     = 255;
     rssiold           = 2000;
     batteryold        = 6;
     batteryVold       = 0;

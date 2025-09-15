@@ -70,6 +70,7 @@ extern int BackgroundColor2;
 extern int BackgroundColor4;
 extern int BarSignificantColor;
 extern int BarInsignificantColor;
+extern int berPercentold;
 extern int BWAutoColor;
 extern int BWAutoColorSmooth;
 extern int FrameColor;
