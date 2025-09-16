@@ -196,9 +196,8 @@ void doTouchEvent(uint16_t x, uint16_t y) {
     if (!BWtune && !menu && advancedRDS && !seek && !afscreen) {          // Advanced RDS mode
       if (x > 0 && x < 320 && y > 120 && y < 170) {                       // -----------------
         leave = true;
-        BuildDisplay();
+        BuildDisplay();                                                   // Switch to normal radio view
         SelectBand();
-//        ScreensaverTimerReopen();                                         // Switch to normal radio view
         return;
       } else if (x > 0 && x < 320 && y > 180 && y < 240) {
         BuildAFScreen();

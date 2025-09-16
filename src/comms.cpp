@@ -554,14 +554,14 @@ void XDRGTKRoutine() {
         if (autosquelch) {
           DataPrint("H1\n");
           if (!screenmute) {
-            tftPrint(-1, "SQ:", 212, 145, ActiveColor, ActiveColorSmooth, 16);
+            tftPrint(ALEFT, "SQ:", 212, 145, ActiveColor, ActiveColorSmooth, 16);
             showAutoSquelch(1);
           }
         } else {
           DataPrint("H0\n");
           if (!screenmute) {
             if (!usesquelch) {
-              tftPrint(-1, "SQ:", 212, 145, BackgroundColor, BackgroundColor, 16);
+              tftPrint(ALEFT, "SQ:", 212, 145, BackgroundColor, BackgroundColor, 16);
               showAutoSquelch(0);
             } else {
               Squelch = -150;
@@ -804,7 +804,7 @@ void XDRGTKRoutine() {
             if (!screenmute) {
               tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
               tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
-              tftPrint(0, textUI(34), 160, 100, ActiveColor, ActiveColorSmooth, 28);
+              tftPrint(ACENTER, textUI(34), 160, 100, ActiveColor, ActiveColorSmooth, 28);
             }
 
             DataPrint("U");
@@ -985,9 +985,9 @@ void tryWiFi() {
       webserver.begin();
       NTPupdate();
       remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
-      if (!setupmode) tftPrint(0, textUI(57), 155, 128, InsignificantColor, InsignificantColorSmooth, 28);
+      if (!setupmode) tftPrint(ACENTER, textUI(57), 155, 128, InsignificantColor, InsignificantColorSmooth, 28);
     } else {
-      if (!setupmode) tftPrint(0, textUI(56), 155, 128, SignificantColor, SignificantColorSmooth, 28);
+      if (!setupmode) tftPrint(ACENTER, textUI(56), 155, 128, SignificantColor, SignificantColorSmooth, 28);
       Server.end();
       webserver.stop();
       Udp.stop();

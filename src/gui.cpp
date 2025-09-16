@@ -502,15 +502,15 @@ void BuildRDSStatScreen() {
     tft.drawLine(240, 50, 240, 218, FrameColor);
 
     // --- Column headers ---
-    tftPrint(-1, "kHz", 205, 4, ActiveColor, ActiveColorSmooth, 28);
+    tftPrint(ALEFT, "kHz", 205, 4, ActiveColor, ActiveColorSmooth, 28);
 
     // --- Labels above packet columns ---
-    tftPrint(-1, "ERRORS", 3, 34, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "A:", 66, 34, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "B:", 104, 34, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "C:", 142, 34, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "D:", 180, 34, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "BER", 250, 34, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(ALEFT, "ERRORS", 3, 34, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(ALEFT, "A:", 66, 34, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(ALEFT, "B:", 104, 34, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(ALEFT, "C:", 142, 34, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(ALEFT, "D:", 180, 34, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(ALEFT, "BER", 250, 34, ActiveColor, ActiveColorSmooth, 16);
 
     // --- Group labels setup ---
     const uint16_t xcol[4] = {10, 90, 170, 250};       // column X positions
@@ -528,8 +528,8 @@ void BuildRDSStatScreen() {
     for (uint8_t col = 0; col < 4; col++) {      // 4 columns
       for (uint8_t row = 0; row < 4; row++) {    // 4 groups per column
         uint8_t g = col * 4 + row;               // group index 0..15
-        tftPrint(-1, groups[g][0], xcol[col], rowY[row * 2], ActiveColor, ActiveColorSmooth, 16);   // A
-        tftPrint(-1, groups[g][1], xcol[col], rowY[row * 2 + 1], ActiveColor, ActiveColorSmooth, 16); // B
+        tftPrint(ALEFT, groups[g][0], xcol[col], rowY[row * 2], ActiveColor, ActiveColorSmooth, 16);   // A
+        tftPrint(ALEFT, groups[g][1], xcol[col], rowY[row * 2 + 1], ActiveColor, ActiveColorSmooth, 16); // B
       }
     }
 
@@ -537,8 +537,8 @@ void BuildRDSStatScreen() {
     const uint16_t pctX[4] = {70, 150, 230, 310};
     for (uint8_t c = 0; c < 4; c++) {
       for (uint8_t y = 56; y < 216; y += 20) {
-        tftPrint(1, "0.0", pctX[c] - 10, y, GreyoutColor, BackgroundColor, 16); // placeholder value
-        tftPrint(0, "%", pctX[c], y, GreyoutColor, BackgroundColor, 16);
+        tftPrint(ARIGHT, "0.0", pctX[c] - 10, y, GreyoutColor, BackgroundColor, 16); // placeholder value
+        tftPrint(ACENTER, "%", pctX[c], y, GreyoutColor, BackgroundColor, 16);
       }
     }
 
@@ -568,7 +568,7 @@ void BuildAFScreen() {
   if (!afscreen && RDSstatus) {
     tft.drawRoundRect(20, 30, 274, 170, 5, ActiveColor);
     tft.fillRoundRect(22, 32, 270, 166, 5, BackgroundColor);
-    tftPrint(0, textUI(34), 155, 98, ActiveColor, ActiveColorSmooth, 28);
+    tftPrint(ACENTER, textUI(34), 155, 98, ActiveColor, ActiveColorSmooth, 28);
     radio.TestAFEON();
   }
   afscreen = true;
@@ -585,12 +585,12 @@ void BuildAFScreen() {
   tft.drawLine(105, 30, 105, 0, FrameColor);
   tft.drawLine(162, 30, 162, 0, FrameColor);
   tft.drawLine(248, 30, 248, 0, FrameColor);
-  tftPrint(-1, "kHz", 205, 4, ActiveColor, ActiveColorSmooth, 28);
-  tftPrint(0, textUI(33), 160, 222, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "kHz", 205, 4, ActiveColor, ActiveColorSmooth, 28);
+  tftPrint(ACENTER, textUI(33), 160, 222, ActiveColor, ActiveColorSmooth, 16);
   if (afpagenr == 1) {
-    if (!radio.rds.hasAF) tftPrint(-1, textUI(87), 6, 48, PrimaryColor, PrimaryColorSmooth, 16);
+    if (!radio.rds.hasAF) tftPrint(ALEFT, textUI(87), 6, 48, PrimaryColor, PrimaryColorSmooth, 16);
   } else if (afpagenr == 2) {
-    if (!radio.rds.hasEON) tftPrint(-1, textUI(88), 6, 48, PrimaryColor, PrimaryColorSmooth, 16);
+    if (!radio.rds.hasEON) tftPrint(ALEFT, textUI(88), 6, 48, PrimaryColor, PrimaryColorSmooth, 16);
   }
   RDSstatusold = !RDSstatusold;
   ShowFreq(0);
@@ -625,7 +625,7 @@ void BuildAFScreen() {
   }
   for (byte i = 0; i < 20; i++) std::memset(eonpicodeold[i], '\0', sizeof(eonpicodeold[i]));
 
-  if (afpagenr == 1 && radio.rds.hasDABAF && radio.rds.dabaffreq != 0) tftPrint(1, "DAB: " + String(radio.rds.dabafchannel) + " (" + String(radio.rds.dabafeid) + ")", 166, 32, SecondaryColor, SecondaryColorSmooth, 16);
+  if (afpagenr == 1 && radio.rds.hasDABAF && radio.rds.dabaffreq != 0) tftPrint(ARIGHT, "DAB: " + String(radio.rds.dabafchannel) + " (" + String(radio.rds.dabafeid) + ")", 166, 32, SecondaryColor, SecondaryColorSmooth, 16);
 
 }
 
@@ -2870,7 +2870,7 @@ void BuildBWSelector() {
     case 7: tft.pushImage (0, 0, 320, 240, configurationbackground_wo); break;
     default: tft.pushImage (0, 0, 320, 240, configurationbackground); break;
   }
-  tftPrint(0, textUI(285), 160, 6, PrimaryColor, PrimaryColorSmooth, 16);
+  tftPrint(ACENTER, textUI(285), 160, 6, PrimaryColor, PrimaryColorSmooth, 16);
   showBWSelector();
 }
 
@@ -2898,10 +2898,10 @@ void BuildMenu() {
   }
 
   if (!submenu) {
-    tftPrint(0, textUI(32), 160, 6, PrimaryColor, PrimaryColorSmooth, 16);
+    tftPrint(ACENTER, textUI(32), 160, 6, PrimaryColor, PrimaryColorSmooth, 16);
   } else {
-    tftPrint(-1, textUI(184), (hardwaremodel == PORTABLE_TOUCH_ILI9341 ? 20 : 8), 6, PrimaryColor, PrimaryColorSmooth, 16);
-    tftPrint(1, textUI(189 + menupage - 1), 312, 6, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(ALEFT, textUI(184), (hardwaremodel == PORTABLE_TOUCH_ILI9341 ? 20 : 8), 6, PrimaryColor, PrimaryColorSmooth, 16);
+    tftPrint(ARIGHT, textUI(189 + menupage - 1), 312, 6, ActiveColor, ActiveColorSmooth, 16);
   }
 
   if (hardwaremodel == PORTABLE_TOUCH_ILI9341) {
@@ -2961,33 +2961,33 @@ void BuildAdvancedRDS() {
   tft.drawLine(210, 191, 320, 191, FrameColor);
   tft.drawLine(248, 30, 248, 0, FrameColor);
 
-  tftPrint(-1, "ERRORS", 3, 34, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(1, "MHz", 310, 35, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(1, unitString[unit], 310, 51, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "ERRORS", 3, 34, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ARIGHT, "MHz", 310, 35, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ARIGHT, unitString[unit], 310, 51, ActiveColor, ActiveColorSmooth, 16);
   if (radio.rds.region == 0) {
-    tftPrint(-1, "PI", 216, 81, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(ALEFT, "PI", 216, 81, ActiveColor, ActiveColorSmooth, 16);
   } else {
-    tftPrint(-1, "PI:", 216, 72, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "ID:", 216, 89, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(ALEFT, "PI:", 216, 72, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(ALEFT, "ID:", 216, 89, ActiveColor, ActiveColorSmooth, 16);
   }
-  tftPrint(-1, "PS", 3, 81, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "PTY", 3, 109, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "RT+", 3, 147, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "AF", 3, 199, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "EON", 3, 174, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "RT", 3, 222, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "PS", 3, 81, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "PTY", 3, 109, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "RT+", 3, 147, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "AF", 3, 199, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "EON", 3, 174, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "RT", 3, 222, ActiveColor, ActiveColorSmooth, 16);
 
-  tftPrint(-1, "A:", 66, 34, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "B:", 104, 34, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "C:", 142, 34, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "D:", 180, 34, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "ECC", 214, 193, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "LIC", 214, 208, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "PIN", 214, 223, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(1, "Dynamic PTY", 300, 130, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(1, "Artificial head", 300, 145, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(1, "Compressed", 300, 160, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(1, "Has stereo", 300, 175, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "A:", 66, 34, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "B:", 104, 34, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "C:", 142, 34, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "D:", 180, 34, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "ECC", 214, 193, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "LIC", 214, 208, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "PIN", 214, 223, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ARIGHT, "Dynamic PTY", 300, 130, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ARIGHT, "Artificial head", 300, 145, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ARIGHT, "Compressed", 300, 160, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ARIGHT, "Has stereo", 300, 175, ActiveColor, ActiveColorSmooth, 16);
 
   tft.fillCircle(86, 41, 5, SignificantColor);
   tft.fillCircle(124, 41, 5, SignificantColor);
@@ -3001,7 +3001,7 @@ void BuildAdvancedRDS() {
 
   for (int i = 0; i < 33; i++) tft.fillCircle((6 * i) + 10, 133, 2, GreyoutColor);
 
-  tftPrint(-1, "kHz", 205, 4, ActiveColor, ActiveColorSmooth, 28);
+  tftPrint(ALEFT, "kHz", 205, 4, ActiveColor, ActiveColorSmooth, 28);
 
   tft.drawBitmap(68, 5, RDSLogo, 35, 22, GreyoutColor);
   tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
@@ -3012,15 +3012,15 @@ void BuildAdvancedRDS() {
     tft.drawBitmap(32, 5, Stereo, 32, 22, GreyoutColor);
   }
 
-  tftPrint(-1, "TP", 2, 51, GreyoutColor, BackgroundColor, 16);
-  tftPrint(-1, "TA", 24, 51, GreyoutColor, BackgroundColor, 16);
-  tftPrint(-1, "AF", 50, 51, GreyoutColor, BackgroundColor, 16);
-  tftPrint(-1, "-B", 68, 51, GreyoutColor, BackgroundColor, 16);
-  tftPrint(-1, "TMC", 88, 51, GreyoutColor, BackgroundColor, 16);
-  tftPrint(-1, "RT+", 123, 51, GreyoutColor, BackgroundColor, 16);
-  tftPrint(-1, "EON", 153, 51, GreyoutColor, BackgroundColor, 16);
-  tftPrint(-1, "S", 185, 51, GreyoutColor, BackgroundColor, 16);
-  tftPrint(-1, "M", 196, 51, GreyoutColor, BackgroundColor, 16);
+  tftPrint(ALEFT, "TP", 2, 51, GreyoutColor, BackgroundColor, 16);
+  tftPrint(ALEFT, "TA", 24, 51, GreyoutColor, BackgroundColor, 16);
+  tftPrint(ALEFT, "AF", 50, 51, GreyoutColor, BackgroundColor, 16);
+  tftPrint(ALEFT, "-B", 68, 51, GreyoutColor, BackgroundColor, 16);
+  tftPrint(ALEFT, "TMC", 88, 51, GreyoutColor, BackgroundColor, 16);
+  tftPrint(ALEFT, "RT+", 123, 51, GreyoutColor, BackgroundColor, 16);
+  tftPrint(ALEFT, "EON", 153, 51, GreyoutColor, BackgroundColor, 16);
+  tftPrint(ALEFT, "S", 185, 51, GreyoutColor, BackgroundColor, 16);
+  tftPrint(ALEFT, "M", 196, 51, GreyoutColor, BackgroundColor, 16);
 
   RDSstatusold = !RDSstatusold;
   ShowFreq(0);
@@ -3106,41 +3106,41 @@ void BuildDisplay() {
     }
   }
 
-  if (usesquelch || autosquelch) tftPrint(-1, "SQ:", 197, 147, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "US:", 259, 147, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "MP:", 259, 165, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "CN:", 197, 165, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(1, "dB", 255, 165, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(1, "%", 316, 165, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(1, "%", 316, 147, ActiveColor, ActiveColorSmooth, 16);
+  if (usesquelch || autosquelch) tftPrint(ALEFT, "SQ:", 197, 147, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "US:", 259, 147, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "MP:", 259, 165, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "CN:", 197, 165, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ARIGHT, "dB", 255, 165, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ARIGHT, "%", 316, 165, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ARIGHT, "%", 316, 147, ActiveColor, ActiveColorSmooth, 16);
 
-  tftPrint(0, "S", 7, 101, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "1", 21, 115, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "3", 41, 115, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "5", 61, 115, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "7", 81, 115, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "9", 101, 115, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "+10", 127, 115, ActiveColor, ActiveColorSmooth, 16);
-  tftPrint(-1, "+30", 160, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ACENTER, "S", 7, 101, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "1", 21, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "3", 41, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "5", 61, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "7", 81, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "9", 101, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "+10", 127, 115, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ALEFT, "+30", 160, 115, ActiveColor, ActiveColorSmooth, 16);
 
   if (!showmodulation) {
-    tftPrint(0, "A", 7, 128, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "10", 24, 144, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "30", 54, 144, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "50", 84, 144, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "70", 114, 144, GreyoutColor, BackgroundColor, 16);
-    tftPrint(-1, "100", 160, 144, GreyoutColor, BackgroundColor, 16);
+    tftPrint(ACENTER, "A", 7, 128, GreyoutColor, BackgroundColor, 16);
+    tftPrint(ALEFT, "10", 24, 144, GreyoutColor, BackgroundColor, 16);
+    tftPrint(ALEFT, "30", 54, 144, GreyoutColor, BackgroundColor, 16);
+    tftPrint(ALEFT, "50", 84, 144, GreyoutColor, BackgroundColor, 16);
+    tftPrint(ALEFT, "70", 114, 144, GreyoutColor, BackgroundColor, 16);
+    tftPrint(ALEFT, "100", 160, 144, GreyoutColor, BackgroundColor, 16);
   } else {
-    tftPrint(0, "A", 7, 128, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "10", 24, 144, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "30", 54, 144, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "50", 84, 144, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(-1, "70", 114, 144, ActiveColor, BackgroundColor, 16);
-    tftPrint(-1, "100", 160, 144, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(ACENTER, "A", 7, 128, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(ALEFT, "10", 24, 144, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(ALEFT, "30", 54, 144, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(ALEFT, "50", 84, 144, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(ALEFT, "70", 114, 144, ActiveColor, BackgroundColor, 16);
+    tftPrint(ALEFT, "100", 160, 144, ActiveColor, ActiveColorSmooth, 16);
   }
 
-  tftPrint(1, "kHz", 246, 4, ActiveColor, ActiveColorSmooth, 28);
-  tftPrint(1, unitString[unit], 316, 128, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ARIGHT, "kHz", 246, 4, ActiveColor, ActiveColorSmooth, 28);
+  tftPrint(ARIGHT, unitString[unit], 316, 128, ActiveColor, ActiveColorSmooth, 16);
 
   tft.drawBitmap(68, 5, RDSLogo, 35, 22, GreyoutColor);
   tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
@@ -4532,11 +4532,11 @@ void showMenuOpenTouchButtons() {
     if (!submenu && menuoption == ITEM9) {
       tft.fillRoundRect(240, 36, 60, 40, 6, FrameColor);
       tft.drawRoundRect(240, 36, 60, 40, 6, ActiveColor);
-      tftPrint(0, "OK", 270, 44, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
+      tftPrint(ACENTER, "OK", 270, 44, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
     } else {
       tft.fillRoundRect(130, 154, 60, 40, 6, FrameColor);
       tft.drawRoundRect(130, 154, 60, 40, 6, ActiveColor);
-      tftPrint(0, "OK", 160, 162, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
+      tftPrint(ACENTER, "OK", 160, 162, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
     }
   }
 }
@@ -4556,7 +4556,7 @@ void DoMenu() {
           case 7: tft.pushImage (0, 0, 320, 240, configurationbackground_wo); break;
           default: tft.pushImage (0, 0, 320, 240, configurationbackground); break;
         }
-        tftPrint(0, textUI(189 + menupage - 1), 160, 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(ACENTER, textUI(189 + menupage - 1), 160, 6, ActiveColor, ActiveColorSmooth, 16);
       }
     }
 
@@ -4647,31 +4647,31 @@ void DoMenu() {
             menuopen = true;
             tft.drawRoundRect(10, 6, 300, 230, 5, ActiveColor);
             tft.fillRoundRect(12, 8, 296, 226, 5, BackgroundColor);
-            tftPrint(0, textUI(71), 155, 13, ActiveColor, ActiveColorSmooth, 28);
-            tftPrint(0, textUI(72), 155, 55, ActiveColor, ActiveColorSmooth, 28);
-            tftPrint(0, "PE5PVB", 155, 38, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "ohmytime", 145, 80, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "HyperDX", 145, 95, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "MCelliotG", 155, 80, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "andimik", 155, 95, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "DXHR05", 145, 110, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "NoobishSVK", 145, 125, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "yo2ldk", 155, 110, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "Justin_Peng(Portable)", 155, 125, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "Overland DX", 145, 140, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "elektronik232", 155, 140, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "KOTYA8", 145, 155, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "mrwish7", 155, 155, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "lxsxl", 145, 170, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "leryfm", 155, 170, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "marsel90-1", 145, 185, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(-1, "lawendel", 155, 185, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(1, "KB8U", 145, 200, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(0, "github.com/PE5PVB/TEF6686_ESP32", 155, 215, ActiveColor, ActiveColorSmooth, 16);
+            tftPrint(ACENTER, textUI(71), 155, 13, ActiveColor, ActiveColorSmooth, 28);
+            tftPrint(ACENTER, textUI(72), 155, 55, ActiveColor, ActiveColorSmooth, 28);
+            tftPrint(ACENTER, "PE5PVB", 155, 38, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ARIGHT, "ohmytime", 145, 80, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ARIGHT, "HyperDX", 145, 95, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ALEFT, "MCelliotG", 155, 80, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ALEFT, "andimik", 155, 95, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ARIGHT, "DXHR05", 145, 110, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ARIGHT, "NoobishSVK", 145, 125, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ALEFT, "yo2ldk", 155, 110, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ALEFT, "Justin_Peng(Portable)", 155, 125, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ARIGHT, "Overland DX", 145, 140, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ALEFT, "elektronik232", 155, 140, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ARIGHT, "KOTYA8", 145, 155, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ALEFT, "mrwish7", 155, 155, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ARIGHT, "lxsxl", 145, 170, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ALEFT, "leryfm", 155, 170, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ARIGHT, "marsel90-1", 145, 185, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ALEFT, "lawendel", 155, 185, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ARIGHT, "KB8U", 145, 200, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ACENTER, "github.com/PE5PVB/TEF6686_ESP32", 155, 215, ActiveColor, ActiveColorSmooth, 16);
             if (hardwaremodel == PORTABLE_TOUCH_ILI9341) {
               tft.fillRoundRect(240, 36, 60, 40, 6, FrameColor);
               tft.drawRoundRect(240, 36, 60, 40, 6, ActiveColor);
-              tftPrint(0, "OK", 270, 44, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
+              tftPrint(ACENTER, "OK", 270, 44, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
             }
             break;
         }
@@ -5329,10 +5329,10 @@ void DoMenu() {
             break;
 
           case ITEM3: {
-              tftPrint(0, textUI(53), 155, 58, ActiveColor, ActiveColorSmooth, 28);
-              tftPrint(0, "ESP_" + String(ESP_getChipId()), 155, 98, PrimaryColor, PrimaryColorSmooth, 28);
-              tftPrint(0, textUI(54), 155, 138, ActiveColor, ActiveColorSmooth, 28);
-              tftPrint(0, "http://192.168.4.1", 155, 174, PrimaryColor, PrimaryColorSmooth, 16);
+              tftPrint(ACENTER, textUI(53), 155, 58, ActiveColor, ActiveColorSmooth, 28);
+              tftPrint(ACENTER, "ESP_" + String(ESP_getChipId()), 155, 98, PrimaryColor, PrimaryColorSmooth, 28);
+              tftPrint(ACENTER, textUI(54), 155, 138, ActiveColor, ActiveColorSmooth, 28);
+              tftPrint(ACENTER, "http://192.168.4.1", 155, 174, PrimaryColor, PrimaryColorSmooth, 16);
               char key [9];
               XDRGTK_key.toCharArray(key, 9);
               char rabbitearsuser [9];
@@ -5532,7 +5532,7 @@ void DoMenu() {
             if (hardwaremodel == PORTABLE_TOUCH_ILI9341) {
               tft.fillRoundRect(130, 154, 60, 40, 6, FrameColor);
               tft.drawRoundRect(130, 154, 60, 40, 6, ActiveColor);
-              tftPrint(0, "OK", 160, 162, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
+              tftPrint(ACENTER, "OK", 160, 162, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
             }
             break;
         }
@@ -5544,21 +5544,21 @@ void DoMenu() {
             Infoboxprint(textUI(270));
             switch (doAutoMemory(memstartfreq, memstopfreq, memstartpos, memstoppos, mempionly, memdoublepi)) {
               case 0:
-                tftPrint(0, textUI(275), 160, 175, ActiveColor, ActiveColorSmooth, 16);
+                tftPrint(ACENTER, textUI(275), 160, 175, ActiveColor, ActiveColorSmooth, 16);
                 break;
 
               case 1:
-                tftPrint(0, textUI(273), 160, 175, ActiveColor, ActiveColorSmooth, 16);
+                tftPrint(ACENTER, textUI(273), 160, 175, ActiveColor, ActiveColorSmooth, 16);
                 break;
 
               case 2:
-                tftPrint(0, textUI(274), 160, 175, ActiveColor, ActiveColorSmooth, 16);
+                tftPrint(ACENTER, textUI(274), 160, 175, ActiveColor, ActiveColorSmooth, 16);
                 break;
             }
             if (hardwaremodel == PORTABLE_TOUCH_ILI9341) {
               tft.fillRoundRect(240, 36, 60, 40, 6, FrameColor);
               tft.drawRoundRect(240, 36, 60, 40, 6, ActiveColor);
-              tftPrint(0, "OK", 270, 44, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
+              tftPrint(ACENTER, "OK", 270, 44, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
             }
             break;
 
@@ -5641,7 +5641,7 @@ void DoMenu() {
             if (hardwaremodel == PORTABLE_TOUCH_ILI9341) {
               tft.fillRoundRect(240, 36, 60, 40, 6, FrameColor);
               tft.drawRoundRect(240, 36, 60, 40, 6, ActiveColor);
-              tftPrint(0, "OK", 270, 44, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
+              tftPrint(ACENTER, "OK", 270, 44, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
             }
             break;
         }
@@ -5683,11 +5683,11 @@ void Infoboxprint(const char* input) {
     char* line2 = (char*)malloc((length - newlineIndex) * sizeof(char));
     strcpy(line2, input + newlineIndex + 1);
     if (menu) {
-      tftPrint(0, line1, 155, 48, ActiveColor, ActiveColorSmooth, 28);
-      tftPrint(0, line2, 155, 78, ActiveColor, ActiveColorSmooth, 28);
+      tftPrint(ACENTER, line1, 155, 48, ActiveColor, ActiveColorSmooth, 28);
+      tftPrint(ACENTER, line2, 155, 78, ActiveColor, ActiveColorSmooth, 28);
     } else if (setupmode) {
-      tftPrint(0, line1, 155, 40, ActiveColor, ActiveColorSmooth, 28);
-      tftPrint(0, line2, 155, 70, ActiveColor, ActiveColorSmooth, 28);
+      tftPrint(ACENTER, line1, 155, 40, ActiveColor, ActiveColorSmooth, 28);
+      tftPrint(ACENTER, line2, 155, 70, ActiveColor, ActiveColorSmooth, 28);
     } else {
       FrequencySprite.drawString(line1, 100, 5);
       FrequencySprite.drawString(line2, 100, 25);
@@ -5696,9 +5696,9 @@ void Infoboxprint(const char* input) {
     free(line2);
   } else {
     if (menu) {
-      tftPrint(0, input, 155, 78, ActiveColor, ActiveColorSmooth, 28);
+      tftPrint(ACENTER, input, 155, 78, ActiveColor, ActiveColorSmooth, 28);
     } else if (setupmode) {
-      tftPrint(0, input, 155, 70, ActiveColor, ActiveColorSmooth, 28);
+      tftPrint(ACENTER, input, 155, 70, ActiveColor, ActiveColorSmooth, 28);
     } else {
       FrequencySprite.drawString(input, 100, 15);
     }
@@ -5758,7 +5758,7 @@ void drawButton(const char* text, byte button_number, bool active, bool selected
   if (button_number != 19) tft.fillRect(lineX, lineY, lineWidth, lineHeight, (active ? InsignificantColor : GreyoutColor));
 
   // Draw the button text
-  tftPrint(0, text, x + buttonWidth / 2, y + (buttonHeight / 4) - 2, ActiveColor, ActiveColorSmooth, 16);
+  tftPrint(ACENTER, text, x + buttonWidth / 2, y + (buttonHeight / 4) - 2, ActiveColor, ActiveColorSmooth, 16);
 }
 
 String shortLine(String text) {
