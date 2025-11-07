@@ -1569,7 +1569,7 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "Europa", // 47
     "USA", // 48
     "Afișează subliniere la RDS", // 49
-    "PS only", // 50
+    "Doar PS", // 50
     "Wi-Fi activ", // 51
     "Configurare Wi-Fi", // 52
     "Conectare la: ", // 53
