@@ -3400,7 +3400,7 @@ void ShowSignalLevel() {
       }
     }
   }
-  
+
   if (wifi && millis() >= udptimer + 2000) {
     udptimer = millis();
     Udp.beginPacket(remoteip, 9030);
@@ -4392,7 +4392,7 @@ void Seek(bool mode) {
 
   if (band < BAND_GAP) {
     radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
-    if ((USN < fmscansens * 30) && (WAM < 230) && (OStatus < 80 && OStatus > -80) && (Squelch < SStatus || Squelch == 920)) {
+    if ((USN < fmscansens * 30) && (WAM < 230) && (OStatus < 80 && OStatus > -80) && (!usesquelch || (Squelch < SStatus || Squelch == 920))) {
       seek = false;
       radio.setUnMute();
       if (!screenmute) {
@@ -4406,7 +4406,7 @@ void Seek(bool mode) {
     }
   } else {
     radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
-    if ((USN < amscansens * 30) && (OStatus < 2 && OStatus > -2) && (Squelch < SStatus || Squelch == 920)) {
+    if ((USN < amscansens * 30) && (OStatus < 2 && OStatus > -2) && (!usesquelch || (Squelch < SStatus || Squelch == 920))) {
       seek = false;
       radio.setUnMute();
       if (!screenmute) {
