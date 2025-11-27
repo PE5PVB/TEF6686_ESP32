@@ -119,7 +119,6 @@ void Communication() {
             if (afscreen || advancedRDS) {
               BuildDisplay();
               SelectBand();
-//              ScreensaverTimerReopen();
             }
 
             if (tempfreq >= FREQ_LW_LOW_EDGE_MIN && tempfreq <= FREQ_LW_HIGH_EDGE_MAX) {
@@ -598,6 +597,13 @@ void XDRGTKRoutine() {
           EEPROM.commit();
         }
         DataPrint("K" + String(scanhold) + "\n");
+        break;
+
+      case 'L':
+        byte mpx;
+        mpx = atol(buff + 1);
+        DataPrint("L" + String(mpx) + "\n");
+        radio.setAudio(mpx);
         break;
 
       case 'M':
