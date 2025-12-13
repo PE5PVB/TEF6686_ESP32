@@ -2,6 +2,8 @@
 #include "constants.h"
 #include <EEPROM.h>
 
+
+bool MPXsetbyXDR = false;
 extern mem presets[];
 
 void Communication() {
@@ -451,8 +453,26 @@ void XDRGTKRoutine() {
         byte stmo;
         stmo = atol(buff + 1);
         DataPrint("B" + String(stmo) + "\n");
-        if (stmo == 0) StereoToggle = false; else StereoToggle = true;
-        doStereoToggle();
+        if (stmo == 0) {
+          StereoToggle = false;
+          if (MPXsetbyXDR) {
+            radio.setAudio(false);
+            MPXsetbyXDR = false;
+          }
+          doStereoToggle();
+        } else if (stmo == 1) {
+          StereoToggle = true;
+          if (MPXsetbyXDR) {
+            radio.setAudio(false);
+            MPXsetbyXDR = false;
+          }
+          doStereoToggle();
+        } else {
+          MPXsetbyXDR = true;
+          StereoToggle = false;
+          doStereoToggle();
+          radio.setAudio(true);
+        }
         break;
 
       case 'C':
@@ -597,13 +617,6 @@ void XDRGTKRoutine() {
           EEPROM.commit();
         }
         DataPrint("K" + String(scanhold) + "\n");
-        break;
-
-      case 'L':
-        byte mpx;
-        mpx = atol(buff + 1);
-        DataPrint("L" + String(mpx) + "\n");
-        radio.setAudio(mpx);
         break;
 
       case 'M':
