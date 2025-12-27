@@ -3133,12 +3133,11 @@ void ShowFreq(int mode) {
       FrequencySprite.fillSprite(BackgroundColor);
 
       switch (freqfont) {
-        case 0: FrequencySprite.loadFont(FREQFONT0); break;
         case 1: FrequencySprite.loadFont(FREQFONT1); break;
         case 2: FrequencySprite.loadFont(FREQFONT2); break;
         case 3: FrequencySprite.loadFont(FREQFONT3); break;
         case 4: FrequencySprite.loadFont(FREQFONT4); break;
-        case 5: FrequencySprite.loadFont(FREQFONT5); break;
+        default: FrequencySprite.loadFont(FREQFONT0); break;
       }
 
       FrequencySprite.setTextDatum(TR_DATUM);
@@ -3178,12 +3177,11 @@ void ShowFreq(int mode) {
         freqold = freq;
       } else {
         switch (freqfont) {
-          case 0: FrequencySprite.loadFont(FREQFONT0); break;
           case 1: FrequencySprite.loadFont(FREQFONT1); break;
           case 2: FrequencySprite.loadFont(FREQFONT2); break;
           case 3: FrequencySprite.loadFont(FREQFONT3); break;
           case 4: FrequencySprite.loadFont(FREQFONT4); break;
-          case 5: FrequencySprite.loadFont(FREQFONT5); break;
+          default: FrequencySprite.loadFont(FREQFONT0); break;
         }
 
         FrequencySprite.fillSprite(BackgroundColor);
@@ -5305,12 +5303,11 @@ int GetNum(void) {
 
 void ShowNum(int val) {
   switch (freqfont) {
-    case 0: FrequencySprite.loadFont(FREQFONT0); break;
     case 1: FrequencySprite.loadFont(FREQFONT1); break;
     case 2: FrequencySprite.loadFont(FREQFONT2); break;
     case 3: FrequencySprite.loadFont(FREQFONT3); break;
     case 4: FrequencySprite.loadFont(FREQFONT4); break;
-    case 5: FrequencySprite.loadFont(FREQFONT5); break;
+    default: FrequencySprite.loadFont(FREQFONT0); break;
   }
 
   FrequencySprite.setTextDatum(TR_DATUM);
