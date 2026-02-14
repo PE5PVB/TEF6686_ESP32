@@ -1,0 +1,16 @@
+# Build output
+build/
+.pio/
+
+# VS Code
+.vscode/*
+!.vscode/arduino.json
+!.vscode/c_cpp_properties.json
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# OS files
+.DS_Store
+Thumbs.db
+/.claude
+/.vscode
