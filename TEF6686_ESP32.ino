@@ -655,9 +655,9 @@ void setup() {
   if (USBmode) Serial.begin(19200); else Serial.begin(115200);
 
   if (iMSset && EQset) iMSEQ = 2;
-  if (!iMSset && EQset) iMSEQ = 3;
-  if (iMSset && !EQset) iMSEQ = 4;
-  if (!iMSset && !EQset) iMSEQ = 1;
+  else if (!iMSset && EQset) iMSEQ = 3;
+  else if (iMSset && !EQset) iMSEQ = 4;
+  else iMSEQ = 1;
 
   switch (band) {
     case BAND_LW:
@@ -898,7 +898,6 @@ void setup() {
   } else {
     tftPrint(ACENTER, textUI(9), 160, 172, SignificantColor, SignificantColorSmooth, 28);
     tft.fillRect(152, 230, 16, 6, SignificantColor);
-    while (true);
     for (;;);
   }
   tftPrint(ACENTER, "Patch: v" + String(TEF), 160, 202, ActiveColor, ActiveColorSmooth, 28);
@@ -2798,9 +2797,9 @@ void ButtonPress() {
           if (BWsettemp == 18) iMSset = !iMSset;
           if (BWsettemp == 19) EQset = !EQset;
           if (!iMSset && !EQset) iMSEQ = 0;
-          if (iMSset && EQset) iMSEQ = 2;
-          if (!iMSset && EQset) iMSEQ = 3;
-          if (iMSset && !EQset) iMSEQ = 4;
+          else if (iMSset && EQset) iMSEQ = 2;
+          else if (!iMSset && EQset) iMSEQ = 3;
+          else iMSEQ = 4;
           EEPROM.writeByte(EE_BYTE_IMSSET, iMSset);
           EEPROM.writeByte(EE_BYTE_EQSET, EQset);
           EEPROM.commit();
@@ -3285,7 +3284,6 @@ void ShowSignalLevel() {
     }
   }
 
-  smeter = int16_t(sval);
   SStatus = SAvg / 10;
   CN = SAvg2 / 10;
   MP = SAvg4 / 10;
@@ -4201,9 +4199,9 @@ void TuneUp() {
     }
   }
   if (stepsize == 1) temp = 1;
-  if (stepsize == 2) temp = 10;
-  if (stepsize == 3) temp = 100;
-  if (stepsize == 4) temp = 1000;
+  else if (stepsize == 2) temp = 10;
+  else if (stepsize == 3) temp = 100;
+  else if (stepsize == 4) temp = 1000;
   if (rotaryaccelerate && rotarycounter > 2) temp *= 2;
 
   if (band == BAND_FM) {
@@ -4310,9 +4308,9 @@ void TuneDown() {
     }
   }
   if (stepsize == 1) temp = 1;
-  if (stepsize == 2) temp = 10;
-  if (stepsize == 3) temp = 100;
-  if (stepsize == 4) temp = 1000;
+  else if (stepsize == 2) temp = 10;
+  else if (stepsize == 3) temp = 100;
+  else if (stepsize == 4) temp = 1000;
   if (rotaryaccelerate && rotarycounter > 2) temp *= 2;
 
   if (band == BAND_FM) {

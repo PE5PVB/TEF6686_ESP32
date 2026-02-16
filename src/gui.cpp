@@ -1347,7 +1347,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           if (fmdeemphasis != DEEMPHASIS_NONE) FullLineSprite.drawString(String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_75), DEC), 258, 2);
           if (fmdeemphasis != DEEMPHASIS_NONE) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(((fmdeemphasis != DEEMPHASIS_NONE) != 0 ? "μs" : textUI(30)), 298, 2);
+          FullLineSprite.drawString((fmdeemphasis != DEEMPHASIS_NONE ? "μs" : textUI(30)), 298, 2);
           break;
 
         case DISPLAYSETTINGS:
@@ -2955,7 +2955,6 @@ void BuildAdvancedRDS() {
   tft.drawLine(30, 30, 30, 0, FrameColor);
   tft.drawLine(66, 30, 66, 0, FrameColor);
   tft.drawLine(105, 30, 105, 0, FrameColor);
-  tft.drawLine(105, 30, 105, 0, FrameColor);
   tft.drawLine(162, 30, 162, 0, FrameColor);
   tft.drawLine(210, 30, 210, 240, FrameColor);
   tft.drawLine(210, 191, 320, 191, FrameColor);
@@ -3075,6 +3074,7 @@ void BuildDisplay() {
   rdsstatscreen = false;
   advancedRDS = false;
   BWtune = false;
+  rdsreset = true;
 
   tft.fillScreen(BackgroundColor);
   tft.drawRect(0, 0, 320, 240, FrameColor);
@@ -3139,7 +3139,7 @@ void BuildDisplay() {
     tftPrint(ALEFT, "10", 24, 144, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(ALEFT, "30", 54, 144, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(ALEFT, "50", 84, 144, ActiveColor, ActiveColorSmooth, 16);
-    tftPrint(ALEFT, "70", 114, 144, ActiveColor, BackgroundColor, 16);
+    tftPrint(ALEFT, "70", 114, 144, ActiveColor, ActiveColorSmooth, 16);
     tftPrint(ALEFT, "100", 160, 144, ActiveColor, ActiveColorSmooth, 16);
   }
 
@@ -4463,7 +4463,7 @@ void MenuUpDown(bool dir) {
               if (memstartpos >= memstoppos) memstartpos = 0;
             } else {
               memstartpos--;
-              if (memstartpos >= memstoppos) memstartpos = scanstop - 1;
+              if (memstartpos >= memstoppos) memstartpos = memstoppos - 1;
             }
 
             OneBigLineSprite.drawString(String(memstartpos + 1, DEC), 135, 0);

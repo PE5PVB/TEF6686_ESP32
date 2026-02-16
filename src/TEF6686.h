@@ -7,10 +7,6 @@
 #include "RdsPiBuffer.hpp"
 
 extern const unsigned char tuner_init_tab[] PROGMEM;
-extern const unsigned char tuner_init_tab9216[] PROGMEM;
-extern const unsigned char tuner_init_tab4000[] PROGMEM;
-extern const unsigned char tuner_init_tab12000[] PROGMEM;
-extern const unsigned char tuner_init_tab55000[] PROGMEM;
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-variable"
@@ -21,10 +17,6 @@ enum RDS_GROUPS {
   RDS_GROUP_8A,  RDS_GROUP_8B,  RDS_GROUP_9A,  RDS_GROUP_9B,  RDS_GROUP_10A, RDS_GROUP_10B, RDS_GROUP_11A, RDS_GROUP_11B,
   RDS_GROUP_12A, RDS_GROUP_12B, RDS_GROUP_13A, RDS_GROUP_13B, RDS_GROUP_14A, RDS_GROUP_14B, RDS_GROUP_15A, RDS_GROUP_15B
 };
-
-// Fixed PI/callsign combinations for Canada
-static const uint16_t fixedPI[] = {0x4C10, 0x4C11, 0x4C12};
-static const char* fixedCalls[] = {"CBLA", "CBFM", "CBOT"};
 
 static const char* const PTY_EU[] {
   "None",
@@ -746,7 +738,6 @@ class TEF6686 {
     String convertToUTF8(const wchar_t* input);
     String extractUTF8Substring(const String& utf8String, size_t start, size_t length, bool under);
     String ucs2ToUtf8(const char* ucs2Input);
-    bool isFixedCallsign(uint16_t stationID, char* stationIDStr);
     String PSLongtext;
     char ps_buffer[9];
     char ps_buffer2[9];

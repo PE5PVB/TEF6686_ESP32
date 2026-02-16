@@ -150,6 +150,7 @@ void handleRoot() {
 
     file.close();
   } else {
+    file.close();
     html += "<tr><td colspan=\"100%\" style=\"text-align: center; color: red;\">" + String(textUI(299)) + "</td></tr>";
   }
 
@@ -396,18 +397,20 @@ bool isDST(time_t t) {
     if (day > lastSunday || (day == lastSunday && hour >= 2)) {
       return true;
     }
+    return false;
   }
 
   // DST ends last Sunday in October at 3:00 AM
-  if (month == 10) {
+  else if (month == 10) {
     int lastSunday = 31 - ((weekday + 31 - day) % 7);
     if (day < lastSunday || (day == lastSunday && hour < 3)) {
-      return false;
+      return true;
     }
+    return false;
   }
 
   // DST is active from April to September
-  if (month > 3 && month < 10) {
+  else if (month > 3 && month < 10) {
     return true;
   }
 

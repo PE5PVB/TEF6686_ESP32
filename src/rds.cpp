@@ -1,5 +1,3 @@
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wbool-compare"
 #include "rds.h"
 #include "constants.h"
 #include "rtc_rx8010.h"
@@ -380,7 +378,7 @@ void readRds() {
             PSSprite.fillSprite(BackgroundColor);
             if ((ps12errorold || ps34errorold || ps56errorold || ps78errorold) && radio.ps_process) {
               // Mark partial errors
-              for (uint8_t i = 0; i < 7; i++) {
+              for (uint8_t i = 0; i < 8; i++) {
                 bool error = (i < 2 && ps12errorold) ||
                              (i < 4 && ps34errorold) ||
                              (i < 6 && ps56errorold) || ps78errorold;
@@ -439,11 +437,8 @@ void readRds() {
       RDSSPYRDS += F("\r\n\r\n");
 
       if (RDSSPYRDS != RDSSPYRDSold) {
-        if (RDSSPYUSB) {
-          Serial.print(RDSSPYRDS);
-        } else {
-          RemoteClient.print(RDSSPYRDS);
-        }
+        if (RDSSPYUSB) Serial.print(RDSSPYRDS);
+        if (RDSSPYTCP) RemoteClient.print(RDSSPYRDS);
         RDSSPYRDSold = RDSSPYRDS;
       }
     }
@@ -659,9 +654,9 @@ void showPTY() {
 void showPS() {
   // Check if station name or errors have changed, or long PS should be displayed
   if ((radio.rds.stationName != PSold) ||
-      (RDSstatus && !(ps12errorold == radio.rds.ps12error ||
-                      ps34errorold == radio.rds.ps34error ||
-                      ps56errorold == radio.rds.ps56error ||
+      (RDSstatus && !(ps12errorold == radio.rds.ps12error &&
+                      ps34errorold == radio.rds.ps34error &&
+                      ps56errorold == radio.rds.ps56error &&
                       ps78errorold == radio.rds.ps78error)) ||
       (radio.rds.hasLongPS && showlongps)) {
 
@@ -688,11 +683,14 @@ void showPS() {
         } else {
           if (millis() - pslongticker >= 5) {
             if (xPos5 < -PSLongWidth) xPos5 = 0; // Reset position if fully scrolled
-            if (xPos5 == 0 && millis() - pslongtickerhold >= 2000) {
-              xPos5--; // Hold position for 2 seconds before scrolling
-              pslongtickerhold = millis();
+            if (xPos5 == 0) {
+              if (millis() - pslongtickerhold >= 2000) {
+                xPos5--;
+                pslongtickerhold = millis();
+              }
             } else {
-              xPos5--; // Scroll
+              xPos5--;
+              pslongtickerhold = millis();
             }
             pslongticker = millis();
 
@@ -723,11 +721,11 @@ void showPS() {
         if (ps78errorold) ps78errorold = radio.rds.ps78error;
 
         // Set text color based on RDS status and error state
-        if (!RDSstatus || band > BAND_GAP) {
+        if (!RDSstatus || band >= BAND_GAP) {
           PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
           PSSprite.drawString(radio.rds.stationName, 0, 2);
         } else if ((ps12errorold || ps34errorold || ps56errorold || ps78errorold) && radio.ps_process) {
-          for (int i = 0; i < 7; i++) {
+          for (int i = 0; i < 8; i++) {
             PSSprite.setTextColor((i < 2 && ps12errorold) || (i < 4 && ps34errorold) ||
                                   (i < 6 && ps56errorold) || ps78errorold ?
                                   RDSDropoutColor : RDSColor,
@@ -1055,31 +1053,14 @@ void ShowAFEON() {
 
         byte eon_numbers;
         if (afpagenr != 3) {
-          if (radio.eon_counter > 9) eon_numbers = 10; else eon_numbers = radio.eon_counter;
+          eon_numbers = (radio.eon_counter > 10) ? 10 : radio.eon_counter;
         } else {
-          eon_numbers = radio.eon_counter - 10;
+          eon_numbers = (radio.eon_counter > 10) ? radio.eon_counter - 10 : 0;
+          if (eon_numbers > 10) eon_numbers = 10;
         }
 
 
         for (byte i = 0; i < eon_numbers; i++) {
-          if (eonpicodeold[i + y] == nullptr) {
-            strcpy(eonpicodeold[i + y], "");
-          }
-          if (eonpsold[i + y] == nullptr) {
-            eonpsold[i + y] = "";
-          }
-          if (mappedfreqold[i + y] == 0) {
-            mappedfreqold[i + y] = 0;
-          }
-          if (mappedfreqold2[i + y] == 0) {
-            mappedfreqold2[i + y] = 0;
-          }
-          if (mappedfreqold3[i + y] == 0) {
-            mappedfreqold3[i + y] = 0;
-          }
-          if (eonptyold[i + y] == 0) {
-            eonptyold[i + y] = 0;
-          }
 
           if (strcmp(eonpicodeold[i + y], radio.eon[i + y].picode) != 0) {
             tftPrint(ALEFT, eonpicodeold[i + y], 4, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
@@ -1175,7 +1156,7 @@ void ShowAFEON() {
       for (int y = 0; y < radio.rds.aid_counter; y++) {
         bool aidProcessed = false;
 
-        for (int i = 0; i < 65; i++) {
+        for (int i = 0; i < (int)(sizeof(oda_app_ids) / sizeof(oda_app_ids[0])); i++) {
           if (radio.rds.aid[y] == oda_app_ids[i]) {
             if (!aidProcessed) {
               for (int z = 0; z < 4; z++) {
@@ -1289,8 +1270,8 @@ void ShowRDSStatistics() {
     // --- Update only if block counter has changed ---
     if (blockcounterold[rb] != radio.rds.blockcounter[rb]) {
       // Calculate old and new percentages
-      float oldPerc = (blockcounterold[rb] * 100.0f) / processed_rdsblocksold[rb];
-      float newPerc = (radio.rds.blockcounter[rb] * 100.0f) / radio.processed_rdsblocks;
+      float oldPerc = processed_rdsblocksold[rb] ? (blockcounterold[rb] * 100.0f) / processed_rdsblocksold[rb] : 0;
+      float newPerc = radio.processed_rdsblocks ? (radio.rds.blockcounter[rb] * 100.0f) / radio.processed_rdsblocks : 0;
 
       char oldBuf[6], newBuf[6];  // buffers for dtostrf
       dtostrf(oldPerc, 0, 1, oldBuf);

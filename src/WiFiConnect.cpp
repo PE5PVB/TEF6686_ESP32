@@ -140,14 +140,10 @@ void WiFiConnect::setAPModeTimeoutMins(int mins) {
 */
 /**************************************************************************/
 void WiFiConnect::setAPName(const char *apName) {
-  if(strlen(apName)>32){return;}
-  if (strlen(apName)==0||(apName == NULL)) {
+  if (apName == NULL || strlen(apName) == 0 || strlen(apName) > 32) {
     String ssid = "ESP_" + String(ESP_getChipId());
-    //_apName = ssid.c_str();
     strcpy(_apName,ssid.c_str());
-
-  } else if (apName != NULL &&  strlen(apName)>0) {
-   // _apName = apName;
+  } else {
     strcpy(_apName,apName);
   }
 }
@@ -159,7 +155,7 @@ void WiFiConnect::setAPName(const char *apName) {
 */
 /**************************************************************************/
 const char* WiFiConnect::getAPName() {
-  if ((_apName == NULL ) || strlen(_apName)==0) {
+  if (strlen(_apName)==0) {
     setAPName(NULL);
   }
   return _apName;
@@ -320,15 +316,14 @@ boolean WiFiConnect::startConfigurationPortal(AP_Continue apcontinue, const char
   setAPName(apName);
   DEBUG_WC(_apName);
 
-  if (strlen(apPassword)>0){
+  if (apPassword != NULL && strlen(apPassword) > 0) {
     if (strlen(apPassword) < 8 || strlen(apPassword) > 63) {
-      // fail passphrase to short or long!
       DEBUG_WC(F("Invalid AccessPoint password. Ignoring"));
-      apPassword = NULL;
+      _apPassword[0] = '\0';
+    } else {
+      strcpy(_apPassword, apPassword);
+      DEBUG_WC(_apPassword);
     }
-    //_apPassword = apPassword;
-    strcpy(_apPassword,apPassword);
-    DEBUG_WC(_apPassword);
   }
 
   //optional soft ip config
@@ -337,9 +332,8 @@ boolean WiFiConnect::startConfigurationPortal(AP_Continue apcontinue, const char
     WiFi.softAPConfig(_ap_static_ip, _ap_static_gw, _ap_static_sn);
   }
 
-  //if (_apPassword != NULL && _apPassword!="") {
-  if(strlen(apPassword)>0){
-    WiFi.softAP(_apName, _apPassword);//password option
+  if(strlen(_apPassword) > 0){
+    WiFi.softAP(_apName, _apPassword);
   } else {
     WiFi.softAP(_apName);
     DEBUG_WC("startConfigurationPortal(): WiFi.softAP(_apName)");
@@ -451,7 +445,7 @@ boolean WiFiConnect::startConfigurationPortal(AP_Continue apcontinue, const char
       case AP_LOOP:
         DEBUG_WC(F("AP to turn off and stay in loop lockup not being accessible."));
         displayManualReset();
-        displayTurnOFF(5 * 60 * 100); //5mins
+        displayTurnOFF(5 * 60 * 1000); //5mins
         WiFi.mode(WIFI_OFF);
         while (true) {
           displayLoop();

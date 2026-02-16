@@ -6,8 +6,7 @@ void doTouchEvent(uint16_t x, uint16_t y) {
   if (seek) radio.setUnMute();
   seek = false;
   if (scandxmode) {
-    ShowFreq(5);
-    ShowFreq(0);
+    cancelDXScan();
   } else {
     if (menu) {
       if (x > 0 && x < 320 && y > 0 && y < 33) {
@@ -137,11 +136,11 @@ void doTouchEvent(uint16_t x, uint16_t y) {
           if (x > 7 && x < 77) BWtemp = 0;
           if (x > 87 && x < 157) iMSset = !iMSset;
           if (x > 167 && x < 237) EQset = !EQset;
-          if (x > 87 && x < 237) {
+          if ((x > 87 && x < 157) || (x > 167 && x < 237)) {
             if (!iMSset && !EQset) iMSEQ = 0;
-            if (iMSset && EQset) iMSEQ = 2;
-            if (!iMSset && EQset) iMSEQ = 3;
-            if (iMSset && !EQset) iMSEQ = 4;
+            else if (iMSset && EQset) iMSEQ = 2;
+            else if (!iMSset && EQset) iMSEQ = 3;
+            else iMSEQ = 4;
             EEPROM.writeByte(EE_BYTE_IMSSET, iMSset);
             EEPROM.writeByte(EE_BYTE_EQSET, EQset);
             EEPROM.commit();

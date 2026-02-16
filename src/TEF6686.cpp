@@ -1,8 +1,6 @@
 #include "TEF6686.h"
-#include <map>
 #include <Arduino.h>
 #include <TimeLib.h>
-#include "SPIFFS.h"
 #include "constants.h"
 #include "usa_stations.h"
 
@@ -37,7 +35,7 @@ void TEF6686::TestAFEON() {
         devTEF_Radio_Get_Quality_Status(&status, &aflevel, &afusn, &afwam, &afoffset, &dummy1, &dummy2, &dummy3);
         timing = lowByte(status);
       }
-      if (afoffset > -125 || afoffset < 125) {
+      if (afoffset > -125 && afoffset < 125) {
         devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, af[x].frequency);
         delay(187);
         devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
@@ -142,16 +140,16 @@ void TEF6686::init(byte TEF) {
     xtalADC = analogRead(15);
 
     if (xtalADC < XTAL_0V_ADC + XTAL_ADC_TOL) {
-      Tuner_Init(tuner_init_tab9216);
+      Tuner_Init_Clock(1);
       log_d("TEF668X XTAL : 9.216M");
     } else if (xtalADC > XTAL_1V_ADC - XTAL_ADC_TOL && xtalADC < XTAL_1V_ADC + XTAL_ADC_TOL) {
-      Tuner_Init(tuner_init_tab12000);
+      Tuner_Init_Clock(2);
       log_d("TEF668X XTAL : 12M");
     } else if (xtalADC > XTAL_2V_ADC - XTAL_ADC_TOL && xtalADC < XTAL_2V_ADC + XTAL_ADC_TOL) {
-      Tuner_Init(tuner_init_tab55000);
+      Tuner_Init_Clock(3);
       log_d("TEF668X XTAL : 55M");
     } else {
-      Tuner_Init(tuner_init_tab4000);
+      Tuner_Init_Clock(0);
       log_d("TEF668X XTAL : 4M");
     }
     power(1);
@@ -160,10 +158,7 @@ void TEF6686::init(byte TEF) {
 }
 
 bool TEF6686::getIdentification(uint16_t &device, uint16_t &hw_version, uint16_t &sw_version) {
-  devTEF_Radio_Get_Identification(&device, &hw_version, &sw_version);
-  return device;
-  return hw_version;
-  return sw_version;
+  return devTEF_Radio_Get_Identification(&device, &hw_version, &sw_version);
 }
 
 void TEF6686::setCoax(uint8_t mode) {
@@ -191,7 +186,7 @@ void TEF6686::SetFreqAM(uint16_t frequency) {
 }
 
 void TEF6686::SetFreqAIR(uint16_t frequency) {
-  devTEF_Radio_Tune_AM (10700);
+  devTEF_Radio_Tune_AM(frequency);
 }
 
 void TEF6686::setOffset(int8_t offset) {
@@ -357,35 +352,16 @@ void TEF6686::setStHiBlendOffset(uint8_t start) {
 }
 
 bool TEF6686::getProcessing(uint16_t &highcut, uint16_t &stereo, uint16_t &sthiblend, uint8_t &stband_1, uint8_t &stband_2, uint8_t &stband_3, uint8_t &stband_4) {
-  devTEF_Radio_Get_Processing_Status(&highcut, &stereo, &sthiblend, &stband_1, &stband_2, &stband_3, &stband_4);
-  return highcut;
-  return stereo;
-  return sthiblend;
-  return stband_1;
-  return stband_2;
-  return stband_3;
-  return stband_4;
+  return devTEF_Radio_Get_Processing_Status(&highcut, &stereo, &sthiblend, &stband_1, &stband_2, &stband_3, &stband_4);
 }
 
 bool TEF6686::getStatus(int16_t &level, uint16_t &USN, uint16_t &WAM, int16_t &offset, uint16_t &bandwidth, uint16_t &modulation, int8_t &snr) {
   uint16_t status;
-  devTEF_Radio_Get_Quality_Status(&status, &level, &USN, &WAM, &offset, &bandwidth, &modulation, &snr);
-  return level;
-  return USN;
-  return WAM;
-  return bandwidth;
-  return modulation;
-  return snr;
+  return devTEF_Radio_Get_Quality_Status(&status, &level, &USN, &WAM, &offset, &bandwidth, &modulation, &snr);
 }
 
 bool TEF6686::getStatusAM(int16_t &level, uint16_t &noise, uint16_t &cochannel, int16_t &offset, uint16_t &bandwidth, uint16_t &modulation, int8_t &snr) {
-  devTEF_Radio_Get_Quality_Status_AM(&level, &noise, &cochannel, &offset, &bandwidth, &modulation, &snr);
-  return level;
-  return noise;
-  return cochannel;
-  return bandwidth;
-  return modulation;
-  return snr;
+  return devTEF_Radio_Get_Quality_Status_AM(&level, &noise, &cochannel, &offset, &bandwidth, &modulation, &snr);
 }
 
 void TEF6686::readRDS(byte showrdserrors) {
@@ -2062,12 +2038,3 @@ String TEF6686::ucs2ToUtf8(const char* ucs2Input) {
   return utf8Output;
 }
 
-bool TEF6686::isFixedCallsign(uint16_t stationID, char* stationIDStr) {
-  for (int i = 0; i < sizeof(fixedPI) / sizeof(fixedPI[0]); i++) {
-    if (stationID == fixedPI[i]) {
-      strcpy(stationIDStr, fixedCalls[i]);  // Assign fixed callsign
-      return true;
-    }
-  }
-  return false;
-}

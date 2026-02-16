@@ -194,14 +194,14 @@ void devTEF_Radio_Set_Softmute_Max_AM(uint8_t mode) {
 
 bool devTEF_APPL_Get_Operation_Status (uint8_t *bootstatus) {
   uint8_t buf[2];
-  uint16_t r = devTEF_Get_Cmd(TEF_APPL, Cmd_Get_Operation_Status, buf, sizeof(buf));
+  bool r = devTEF_Get_Cmd(TEF_APPL, Cmd_Get_Operation_Status, buf, sizeof(buf));
   *bootstatus = Convert8bto16b(buf);
   return r;
 }
 
 bool devTEF_Radio_Get_Processing_Status (uint16_t *highcut, uint16_t *stereo, uint16_t *sthiblend, uint8_t *stband_1, uint8_t *stband_2, uint8_t *stband_3, uint8_t *stband_4) {
   uint8_t buf[12];
-  uint16_t r = devTEF_Get_Cmd(TEF_FM, Cmd_Get_Processing_Status, buf, sizeof(buf));
+  bool r = devTEF_Get_Cmd(TEF_FM, Cmd_Get_Processing_Status, buf, sizeof(buf));
   *highcut = Convert8bto16b(buf + 2) / 10;
   *stereo = Convert8bto16b(buf + 4) / 10;
   *sthiblend = Convert8bto16b(buf + 6) / 10;
@@ -216,7 +216,7 @@ bool devTEF_Radio_Get_Processing_Status (uint16_t *highcut, uint16_t *stereo, ui
 
 bool devTEF_Radio_Get_Quality_Status (uint16_t *status, int16_t *level, uint16_t *usn, uint16_t *wam, int16_t *offset, uint16_t *bandwidth, uint16_t *mod, int8_t *snr) {
   uint8_t buf[14];
-  uint16_t r = devTEF_Get_Cmd(TEF_FM, Cmd_Get_Quality_Data, buf, sizeof(buf));
+  bool r = devTEF_Get_Cmd(TEF_FM, Cmd_Get_Quality_Data, buf, sizeof(buf));
   *status = Convert8bto16b(buf);
   *level = Convert8bto16b(buf + 2);
   *usn = Convert8bto16b(buf + 4);
@@ -232,7 +232,7 @@ bool devTEF_Radio_Get_Quality_Status (uint16_t *status, int16_t *level, uint16_t
 
 bool devTEF_Radio_Get_Quality_Status_AM (int16_t *level, uint16_t *noise, uint16_t *cochannel, int16_t *offset, uint16_t *bandwidth, uint16_t *mod, int8_t *snr) {
   uint8_t buf[14];
-  uint16_t r = devTEF_Get_Cmd(TEF_AM, Cmd_Get_Quality_Data, buf, sizeof(buf));
+  bool r = devTEF_Get_Cmd(TEF_AM, Cmd_Get_Quality_Data, buf, sizeof(buf));
 
   *level = Convert8bto16b(buf + 2);
   *noise = Convert8bto16b(buf + 4);
@@ -273,7 +273,7 @@ bool devTEF_Radio_Get_RDS_Data (uint16_t *status, uint16_t *A_block, uint16_t *B
 
 bool devTEF_Radio_Get_Stereo_Status(uint16_t *status) {
   uint8_t buf[2];
-  uint16_t r = devTEF_Get_Cmd(TEF_FM, Cmd_Get_Signal_Status, buf, sizeof(buf));
+  bool r = devTEF_Get_Cmd(TEF_FM, Cmd_Get_Signal_Status, buf, sizeof(buf));
 
   *status = Convert8bto16b(buf);
   return r;
@@ -281,7 +281,7 @@ bool devTEF_Radio_Get_Stereo_Status(uint16_t *status) {
 
 bool devTEF_Radio_Get_Identification (uint16_t *device, uint16_t *hw_version, uint16_t *sw_version) {
   uint8_t buf[6];
-  uint16_t r = devTEF_Get_Cmd(TEF_APPL, Cmd_Get_Identification, buf, sizeof(buf));
+  bool r = devTEF_Get_Cmd(TEF_APPL, Cmd_Get_Identification, buf, sizeof(buf));
 
   *device = Convert8bto16b(buf);
   *hw_version = Convert8bto16b(buf + 2);
@@ -295,7 +295,7 @@ void devTEF_Radio_Set_Wavegen(bool mode, int16_t amplitude, uint16_t freq) {
     devTEF_Set_Cmd(TEF_AUDIO, Cmd_Set_WaveGen, 15, 5, 0, amplitude * 10, freq, amplitude * 10 , freq);
   } else {
     devTEF_Set_Cmd(TEF_AUDIO, Cmd_Set_Input, 5, 0);
-    devTEF_Set_Cmd(TEF_AUDIO, Cmd_Set_WaveGen, 15, 0);
+    devTEF_Set_Cmd(TEF_AUDIO, Cmd_Set_WaveGen, 15, 0, 0, 0, 0, 0, 0);
   }
 }
 
@@ -308,8 +308,10 @@ void devTEF_Radio_Set_I2S_Input(bool mode) {
 }
 
 void devTEF_Radio_Set_GPIO(uint8_t mode) {
-  if (mode == 0) devTEF_Set_Cmd(TEF_APPL, Cmd_Set_GPIO, 9, 0, 33, 2);
-  if (mode == 1) devTEF_Set_Cmd(TEF_APPL, Cmd_Set_GPIO, 9, 0, 33, 3);
-  if (mode == 2) devTEF_Set_Cmd(TEF_APPL, Cmd_Set_GPIO, 9, 0, 32, 2);
-  if (mode == 3) devTEF_Set_Cmd(TEF_APPL, Cmd_Set_GPIO, 9, 0, 32, 3);
+  switch (mode) {
+    case 0: devTEF_Set_Cmd(TEF_APPL, Cmd_Set_GPIO, 9, 0, 33, 2); break;
+    case 1: devTEF_Set_Cmd(TEF_APPL, Cmd_Set_GPIO, 9, 0, 33, 3); break;
+    case 2: devTEF_Set_Cmd(TEF_APPL, Cmd_Set_GPIO, 9, 0, 32, 2); break;
+    case 3: devTEF_Set_Cmd(TEF_APPL, Cmd_Set_GPIO, 9, 0, 32, 3); break;
+  }
 }

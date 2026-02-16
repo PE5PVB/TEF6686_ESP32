@@ -47,7 +47,7 @@ void Communication() {
             case 'T':
               uint16_t freqtemp;
               freqtemp = packet.substring(2).toInt();
-              if (BAND_FM) freqtemp -= ConverterSet * 1000;
+              if (band == BAND_FM) freqtemp -= ConverterSet * 100;
               if (seek) seek = false;
               radio.clearRDS(fullsearchrds);
 
@@ -442,10 +442,10 @@ void XDRGTKRoutine() {
         AGC = atol(buff + 1);
         DataPrint("A" + String(AGC) + "\n");
         switch (AGC) {
-          case 0: if (band == BAND_FM || BAND_OIRT) radio.setAGC(92); else radio.setAMAGC(102); break;
-          case 1: if (band == BAND_FM || BAND_OIRT) radio.setAGC(90); else radio.setAMAGC(99); break;
-          case 2: if (band == BAND_FM || BAND_OIRT) radio.setAGC(87); else radio.setAMAGC(96); break;
-          case 3: if (band == BAND_FM || BAND_OIRT) radio.setAGC(84); else radio.setAMAGC(94); break;
+          case 0: if (band == BAND_FM || band == BAND_OIRT) radio.setAGC(92); else radio.setAMAGC(102); break;
+          case 1: if (band == BAND_FM || band == BAND_OIRT) radio.setAGC(90); else radio.setAMAGC(99); break;
+          case 2: if (band == BAND_FM || band == BAND_OIRT) radio.setAGC(87); else radio.setAMAGC(96); break;
+          case 3: if (band == BAND_FM || band == BAND_OIRT) radio.setAGC(84); else radio.setAMAGC(94); break;
         }
         break;
 
@@ -493,8 +493,7 @@ void XDRGTKRoutine() {
           direction = false;
           Seek(direction);
           ShowFreq(0);
-        }
-        if (scanmethod == 2) {
+        } else if (scanmethod == 2) {
           DataPrint("C2\n");
           direction = true;
           Seek(direction);
@@ -537,18 +536,15 @@ void XDRGTKRoutine() {
           iMSset = 1;
           EQset = 1;
           DataPrint("G00\n");
-        }
-        if (offsetg == 10) {
+        } else if (offsetg == 10) {
           iMSset = 1;
           EQset = 0;
           DataPrint("G10\n");
-        }
-        if (offsetg == 1) {
+        } else if (offsetg == 1) {
           iMSset = 0;
           EQset = 1;
           DataPrint("G01\n");
-        }
-        if (offsetg == 11) {
+        } else if (offsetg == 11) {
           iMSset = 0;
           EQset = 0;
           DataPrint("G11\n");
@@ -665,7 +661,7 @@ void XDRGTKRoutine() {
         unsigned int freqtemp;
         freqtemp = atoi(buff + 1);
 
-        if (BAND_FM) freqtemp -= ConverterSet * 1000;
+        if (band == BAND_FM) freqtemp -= ConverterSet * 1000;
         if (seek) seek = false;
         radio.clearRDS(fullsearchrds);
 
@@ -901,9 +897,9 @@ void XDRGTKRoutine() {
 
       case 'x':
         DataPrint("OK\n");
-        if (BAND_FM) {
+        if (band == BAND_FM) {
           DataPrint("T" + String((frequency + ConverterSet * 100) * 10) + "\n");
-        } else if (BAND_OIRT) {
+        } else if (band == BAND_OIRT) {
           DataPrint("T" + String(frequency_OIRT * 10) + "\n");
         } else {
           DataPrint("T" + String(frequency_AM) + "\n");
@@ -935,11 +931,11 @@ void XDRGTKRoutine() {
         ANT = atol(buff + 1);
         switch (ANT) {
           case 0:
-            if (BAND_FM || BAND_OIRT) radio.setCoax(2); else radio.setCoax(0);
+            if (band == BAND_FM || band == BAND_OIRT) radio.setCoax(2); else radio.setCoax(0);
             break;
 
           case 1:
-            if (BAND_FM || BAND_OIRT) radio.setCoax(3); else radio.setCoax(1);
+            if (band == BAND_FM || band == BAND_OIRT) radio.setCoax(3); else radio.setCoax(1);
             break;
 
           case 2:
@@ -980,7 +976,6 @@ void passwordcrypt() {
   {
     byte randomValue = random(0, 26);
     char letter = randomValue + 'a';
-    if (randomValue > 26) letter = (randomValue - 26);
     saltkey.setCharAt(generated, letter);
     generated ++;
   }
