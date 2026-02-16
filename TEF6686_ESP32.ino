@@ -3605,11 +3605,12 @@ void ShowModLevel() {
       }
     }
 
+    // Grey out from end of bar to end of scale (94 segments = x 16..203)
     int greyStart = 16 + 2 * DisplayedSegments;
-    int greyWidth = 2 * (87 - DisplayedSegments);
+    int greyWidth = (16 + 2 * 94) - greyStart;
     tft.fillRect(greyStart, 133, greyWidth, 6, GreyoutColor);
 
-    int peakHoldPosition = 16 + 2 * peakholdold;
+    int peakHoldPosition = constrain(16 + 2 * peakholdold, 16, 16 + 2 * 86);
     tft.fillRect(peakHoldPosition, 133, 2, 6, (MStatus > 80) ? ModBarSignificantColor : PrimaryColor);
 
     if (millis() - peakholdmillis >= 1000) {
