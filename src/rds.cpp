@@ -595,9 +595,10 @@ void showPI() {
           }
         } else {
           if (!RDSstatus) {
-            if (String(radio.rds.picode) != PIold || radio.rds.stationIDtext != stationIDold) {
+            if (String(radio.rds.picode) != PIold || radio.rds.stationIDtext != stationIDold || radio.rds.stationStatetext != stationStateold) {
               tftReplace(ALEFT, PIold, radio.rds.picode, 240, 184, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
               tftReplace(ALEFT, stationIDold, radio.rds.stationIDtext, 240, 201, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
+              tftReplace(ARIGHT, stationStateold, radio.rds.stationStatetext, 318, 201, RDSDropoutColor, RDSDropoutColorSmooth, BackgroundColor, 16);
             }
           } else {
             if (String(radio.rds.picode) != PIold || radio.rds.stationIDtext != stationIDold) {
