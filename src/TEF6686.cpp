@@ -485,12 +485,14 @@ void TEF6686::readRDS(byte showrdserrors) {
           // If stationID is greater than 4096
           if (stationID > 4096) {
 
-            // Adjust stationID based on specific conditions
-            if (stationID > 21671) {
-              if ((stationID & 0xF00U) == 0) {
-                stationID = ((uint16_t)(0xA0 + ((stationID & 0xF000U) >> 12)) << 8) + lowByte(stationID); // C0DE -> ACDE
-              } else if (lowByte(stationID) == 0) {
-                stationID = 0xAF00 + uint8_t(highByte(stationID)); // CD00 -> AFCD
+            // RBDS alternative PI decoding (Annex D)
+            // Method A: Transmitted 0xANXY → Standard 0xN0XY (2nd hex digit was 0)
+            // Method B: Transmitted 0xAFNM → Standard 0xNM00 (4th hex digit was 0)
+            if ((stationID & 0xF000U) == 0xA000 && (stationID & 0x0F00U) != 0) {
+              if ((stationID & 0xFF00U) == 0xAF00) {
+                stationID = (uint16_t)(stationID & 0x00FF) << 8;
+              } else {
+                stationID = ((uint16_t)((stationID >> 8) & 0x0F) << 12) | (stationID & 0x00FF);
               }
             }
 
