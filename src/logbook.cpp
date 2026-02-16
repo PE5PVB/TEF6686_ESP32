@@ -415,13 +415,7 @@ bool isDST(time_t t) {
 }
 
 void handleLogo() {
-  fs::File file = SPIFFS.open("/logo.png", "r");
-  if (!file) {
-    webserver.send(404, "text/plain", "Logo not found");
-    return;
-  }
-  webserver.streamFile(file, "image/png");
-  file.close();
+  webserver.send_P(200, "image/png", (const char*)logo_png, sizeof(logo_png));
 }
 
 void printLogbookCSV() {

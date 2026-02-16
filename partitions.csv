@@ -1,5 +1,5 @@
 # Name      ,Type ,SubType ,Offset   ,Size
-# 4MB flash — App: 3MB (7% headroom), SPIFFS: 960KB
+# 4MB flash — App: 3.75MB (20% headroom), SPIFFS: 192KB (logbook)
 nvs         ,data ,nvs     ,0x9000   ,0x4000
-app         ,app  ,factory ,0x10000  ,0x300000
-spiffs      ,data ,spiffs  ,0x310000 ,0xF0000
+app         ,app  ,factory ,0x10000  ,0x3C0000
+spiffs      ,data ,spiffs  ,0x3D0000 ,0x30000

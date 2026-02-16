@@ -4,6 +4,7 @@
 #include <TimeLib.h>
 #include "SPIFFS.h"
 #include "constants.h"
+#include "usa_stations.h"
 
 unsigned long rdstimer = 0;
 unsigned long bitStartTime = 0;
@@ -467,71 +468,14 @@ void TEF6686::readRDS(byte showrdserrors) {
       // USA Station callsign decoder
       if ((rds.region == 1 ? ps_process : true) && rds.correctPI != 0 && rds.region > 0 && correctPIold != rds.correctPI) {
         bool foundMatch = false;
-        fs::File file;
 
-        if (rds.region == 1 && SPIFFS.begin(true)) {
-          delay(5);
-          if (currentfreq2 < 9000) {
-            file = SPIFFS.open("/USA_87-90.csv");
-          } else if (currentfreq2 > 9000 && currentfreq2 < 9200) {
-            file = SPIFFS.open("/USA_90-92.csv");
-          } else if (currentfreq2 > 9200 && currentfreq2 < 9400) {
-            file = SPIFFS.open("/USA_92-94.csv");
-          } else if (currentfreq2 > 9400 && currentfreq2 < 9600) {
-            file = SPIFFS.open("/USA_94-96.csv");
-          } else if (currentfreq2 > 9600 && currentfreq2 < 9800) {
-            file = SPIFFS.open("/USA_96-98.csv");
-          } else if (currentfreq2 > 9800 && currentfreq2 < 10000) {
-            file = SPIFFS.open("/USA_98-100.csv");
-          } else if (currentfreq2 > 10000 && currentfreq2 < 10200) {
-            file = SPIFFS.open("/USA_100-102.csv");
-          } else if (currentfreq2 > 10200 && currentfreq2 < 10400) {
-            file = SPIFFS.open("/USA_102-104.csv");
-          } else if (currentfreq2 > 10400 && currentfreq2 < 10600) {
-            file = SPIFFS.open("/USA_104-106.csv");
-          } else if (currentfreq2 > 10600) {
-            file = SPIFFS.open("/USA_106-108.csv");
-          }
-
-          delay(5);
-          if (file) {
-            int i = 0;
-            while (file.available() && !isprint(file.peek())) {
-              file.read();
-              i++;
-            }
-
-            char buffer[25];
-            while (file.available()) {
-              int bytesRead = file.readBytesUntil('\n', buffer, sizeof(buffer) - 1);
-              buffer[bytesRead] = '\0';
-
-              char *token = strtok(buffer, ";");
-
-              int firstColumnValue = 0;
-              uint16_t frequencyValue = 0;
-              char stationID[8];
-              char stationState[8];
-
-              if (token) {
-                firstColumnValue = atoi(token);
-                token = strtok(NULL, ";");
-                frequencyValue = atoi(token);
-                token = strtok(NULL, ";");
-                strncpy(stationID, token, sizeof(stationID) - 1);
-                stationID[sizeof(stationID) - 1] = '\0';
-                token = strtok(NULL, ";");
-                strncpy(stationState, token, sizeof(stationState) - 1);
-                stationState[sizeof(stationState) - 1] = '\0';
-              }
-
-              if (frequencyValue == currentfreq2 && static_cast<uint16_t>(firstColumnValue) == rds.correctPI) {
-                strncpy(rds.stationID, stationID, 7);
-                strncpy(rds.stationState, stationState, 2);
-                foundMatch = true;
-                break;
-              }
-            }
+        if (rds.region == 1) {
+          char callBuf[7];
+          char stateBuf[3];
+          if (findUSAStation(currentfreq2, rds.correctPI, callBuf, stateBuf)) {
+            strncpy(rds.stationID, callBuf, 7);
+            strncpy(rds.stationState, stateBuf, 2);
+            foundMatch = true;
           }
         }
 
