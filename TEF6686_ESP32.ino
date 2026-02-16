@@ -1015,6 +1015,7 @@ void loop() {
   if (freq_in != 0 && millis() >= keypadtimer + 2000) {
     freq_in = 0;
     ShowFreq(0);
+    if (tunemode == TUNE_MEM) ShowMemoryPos();
   }
 
   if (scandxmode) {
@@ -5380,6 +5381,58 @@ void NumpadProcess(int num) {
     if (num == 127) {
       ShowFreq(5);
       ShowFreq(0);
+    }
+  } else if (tunemode == TUNE_MEM) {
+    if (num == 127) {
+      freq_in = 0;
+      menuoption = ITEM1;
+      menupage = DXMODE;
+      menuitem = 0;
+#ifdef DYNAMIC_SPI_SPEED
+      if (spispeed == 7) tft.setSPISpeed(40);
+#endif
+      submenu = true;
+      menu = true;
+      PSSprite.unloadFont();
+      if (language == LANGUAGE_CHS) PSSprite.loadFont(FONT16_CHS); else PSSprite.loadFont(FONT16);
+      BuildMenu();
+    } else if (num == 13) {
+      if (freq_in > 0 && freq_in <= EE_PRESETS_CNT) {
+        byte oldmemorypos = memorypos;
+        memorypos = freq_in - 1;
+        if (IsStationEmpty()) {
+          // Flash red and revert
+          switch (freqfont) {
+            case 1: FrequencySprite.loadFont(FREQFONT1); break;
+            case 2: FrequencySprite.loadFont(FREQFONT2); break;
+            case 3: FrequencySprite.loadFont(FREQFONT3); break;
+            case 4: FrequencySprite.loadFont(FREQFONT4); break;
+            default: FrequencySprite.loadFont(FREQFONT0); break;
+          }
+          FrequencySprite.setTextDatum(TR_DATUM);
+          FrequencySprite.fillSprite(BackgroundColor);
+          FrequencySprite.setTextColor(SignificantColor, SignificantColorSmooth, false);
+          FrequencySprite.drawString(String(freq_in) + " ", 218, -6);
+          FrequencySprite.pushSprite(46, 46);
+          FrequencySprite.unloadFont();
+          delay(500);
+          memorypos = oldmemorypos;
+          ShowFreq(0);
+          ShowMemoryPos();
+        } else {
+          DoMemoryPosTune();
+          ShowMemoryPos();
+        }
+      } else {
+        ShowFreq(0);
+      }
+      freq_in = 0;
+    } else {
+      if (freq_in / 100 == 0) {
+        int temp = freq_in * 10 + num;
+        if (temp <= EE_PRESETS_CNT) freq_in = temp;
+      }
+      ShowNum(freq_in);
     }
   } else {
     if (num == 127) {
