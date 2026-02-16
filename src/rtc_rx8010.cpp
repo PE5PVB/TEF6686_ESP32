@@ -1,13 +1,19 @@
 #include "rtc_rx8010.h"
 #include <RX8010SJ.h>
+#include <Wire.h>
 
 bool hasRX8010 = false;
 static RX8010SJ::Adapter rtcChip(0x32);
 
 bool rx8010_init() {
-  hasRX8010 = rtcChip.initAdapter();
-  if (hasRX8010) rtcChip.initModule();
-  return hasRX8010;
+  // Probe I2C address 0x32 to check if chip is present
+  Wire.beginTransmission(0x32);
+  if (Wire.endTransmission() != 0) return false;
+
+  // Chip responded; don't call initAdapter() as it overrides Wire.begin() pins
+  hasRX8010 = true;
+  rtcChip.initModule();
+  return true;
 }
 
 bool rx8010_getTime(struct tm *t) {
