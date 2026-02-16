@@ -1,4 +1,5 @@
 #include "NTPupdate.h"
+#include "rtc_rx8010.h"
 
 // Sends an NTP request packet to the specified server address
 void sendNTPpacket(IPAddress &address) {
@@ -73,6 +74,8 @@ void NTPupdate() {
   if (currentTime) {
     // Set the RTC if valid time is received
     rtc.setTime(currentTime);
+    struct tm *t = localtime(&currentTime);
+    rx8010_setTime(t);
     rtcset = true;
     NTPupdated = true;
     radio.rds.ctupdate = false;

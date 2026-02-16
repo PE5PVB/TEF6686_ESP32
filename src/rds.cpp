@@ -2,6 +2,7 @@
 #pragma GCC diagnostic ignored "-Wbool-compare"
 #include "rds.h"
 #include "constants.h"
+#include "rtc_rx8010.h"
 #include <TimeLib.h>
 
 String HexStringold;
@@ -842,6 +843,9 @@ void showCT() {
       rtcset = true;
       if (!NTPupdated) {
         rtc.setTime(radio.rds.time);
+        time_t ct = radio.rds.time;
+        struct tm *t = localtime(&ct);
+        rx8010_setTime(t);
       }
 
       // Display the updated time and date

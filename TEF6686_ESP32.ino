@@ -7,6 +7,7 @@
 #include <TimeLib.h>                // https://github.com/PaulStoffregen/Time
 #include <TFT_eSPI.h>               // https://github.com/PE5PVB/TFT_eSPI_DynamicSpeed
 #include <Hash.h>                   // https://github.com/bbx10/Hash_tng/archive/refs/heads/master.zip
+#include <RX8010SJ.h>               // https://github.com/Wh1teRabbitHU/RX8010SJ
 #include <FS.h>
 using fs::FS;
 #include <WebServer.h>
@@ -28,6 +29,7 @@ using fs::FS;
 #include "src/rds.h"
 #include "src/touch.h"
 #include "src/logbook.h"
+#include "src/rtc_rx8010.h"
 
 #define ROTARY_PIN_A    34
 #define ROTARY_PIN_B    36
@@ -906,6 +908,15 @@ void setup() {
   Wire.write(0xFF);
   Wire.write(0xFF);
   Wire.endTransmission();
+
+  // Detect and read RX8010SJ RTC if present
+  if (rx8010_init()) {
+    struct tm t;
+    if (rx8010_getTime(&t)) {
+      rtc.setTime(mktime(&t));
+      rtcset = true;
+    }
+  }
 
   if (analogRead(BATTERY_PIN) < 200) batterydetect = false;
   if (!SPIFFS.exists("/logbook.csv")) handleCreateNewLogbook();
