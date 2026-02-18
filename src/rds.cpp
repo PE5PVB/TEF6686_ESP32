@@ -776,9 +776,11 @@ void showCT() {
 
   // Determine the current time source
   if (radio.rds.hasCT && !dropout && !NTPupdated) {
+    // RDS CT active: use RDS time + RDS local offset
     t = radio.rds.time + radio.rds.offset;
   } else {
-    t = rtc.getEpoch() + (NTPupdated ? 0 : radio.rds.offset);
+    // Use RTC epoch; only apply rds.offset during dropout (hasCT still valid)
+    t = rtc.getEpoch() + ((!NTPupdated && radio.rds.hasCT) ? radio.rds.offset : 0);
 
     // Update RDS time during dropout
     if (dropout) {
@@ -786,13 +788,12 @@ void showCT() {
     }
   }
 
-  // Apply the GMT offset only if NTPupdated is true
-  if (NTPupdated) {
-    t += NTPoffset * 3600; // Convert offset from hours to seconds
+  // Apply NTPoffset when no valid RDS CT offset is available
+  if (NTPupdated || (!radio.rds.hasCT && rtcset)) {
+    t += NTPoffset * 3600;
 
-    // Apply DST adjustment if autoDST is enabled
     if (autoDST && isDST(t)) {
-      t += 3600; // Add 1 hour for DST
+      t += 3600;
     }
   }
 
