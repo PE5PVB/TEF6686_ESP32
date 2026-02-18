@@ -110,7 +110,6 @@ void WiFiConnectParam::init(const char *id, const char *placeholder, const char 
 /**************************************************************************/
 void WiFiConnectParam::setValue(const char *newValue){
   if(_length>0){
-  if (_value) delete[] _value;
   _value = new char[_length + 1];
   for (int i = 0; i < _length; i++) {
     _value[i] = 0;
