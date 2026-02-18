@@ -232,7 +232,7 @@ bool devTEF_Radio_Get_Quality_Status (uint16_t *status, int16_t *level, uint16_t
 
 bool devTEF_Radio_Get_Quality_Status_AM (int16_t *level, uint16_t *noise, uint16_t *cochannel, int16_t *offset, uint16_t *bandwidth, uint16_t *mod, int8_t *snr) {
   uint8_t buf[14];
-  bool r = devTEF_Get_Cmd(TEF_AM, Cmd_Get_Quality_Data, buf, sizeof(buf));
+  bool r = devTEF_Get_Cmd(TEF_AM, Cmd_Get_Quality_Status, buf, sizeof(buf));
 
   *level = Convert8bto16b(buf + 2);
   *noise = Convert8bto16b(buf + 4);
