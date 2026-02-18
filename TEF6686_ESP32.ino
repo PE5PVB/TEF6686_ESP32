@@ -14,7 +14,6 @@ using fs::FS;
 #include <SPIFFS.h>
 #include "src/NTPupdate.h"
 #include "src/WiFiConnect.h"
-#include "src/WiFiConnectParam.h"
 #include "src/FONT16.h"
 #include "src/FONT16_CHS.h"
 #include "src/FONT28.h"

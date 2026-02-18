@@ -3,7 +3,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[22][301] PROGMEM = {
+static const char* const myLanguage[22][323] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -304,7 +304,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "Auto DST on NTP time", // 297
     "Set NTP time offset", // 298
     "The logbook contains over 130 entries, which the viewer cannot process. Please download the CSV file to process it.", // 299
-    "Canada" // 300
+    "Canada", // 300
+    "Connect this device to a WiFi network to enable remote features.", // 301
+    "Configure WiFi", // 302
+    "Hidden network", // 303
+    "WiFi Network Name", // 304
+    "Enter SSID or tap a network above", // 305
+    "Password", // 306
+    "Enter password", // 307
+    "Save and Connect", // 308
+    "Scan again", // 309
+    "Connecting to", // 310
+    "Connected to", // 311
+    "You may now close this page.", // 312
+    "Could not connect to", // 313
+    "Click here to try again", // 314
+    "Options", // 315
+    "Select WiFi", // 316
+    "No networks found. Refresh to scan again.", // 317
+    "Credentials Saved", // 318
+    "Set XDRGTK password (max 8 characters)", // 319
+    "Set rabbitears.info live bandscan user ID", // 320
+    "Set rabbitears.info password", // 321
+    "ID" // 322
   },
 
   { "Nederlands", // Dutch
@@ -607,7 +629,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "Auto zomertijd\nop NTP tijd", // 297
     "NTP tijdverschil\ninstellen", // 298
     "Het logboek bevat meer dan 130 items, die de viewer niet kan verwerken. Download alstublieft het CSV-bestand om het te bekijken.", // 299
-    "Canada" // 300
+    "Canada", // 300
+    "Configureer de verbinding met een WiFi netwerk.<br>Hierna zal de radio automatisch proberen verbinding te maken.", // 301
+    "WiFi configureren", // 302
+    "Verborgen netwerk", // 303
+    "WiFi netwerknaam", // 304
+    "Voer SSID in of klik op een netwerk", // 305
+    "Wachtwoord", // 306
+    "Voer wachtwoord in", // 307
+    "Opslaan en verbinden", // 308
+    "Opnieuw zoeken", // 309
+    "Verbinden met", // 310
+    "Verbonden met", // 311
+    "Je kunt deze pagina sluiten.", // 312
+    "Kan niet verbinden met", // 313
+    "Klik hier om opnieuw te proberen", // 314
+    "Opties", // 315
+    "Selecteer WiFi", // 316
+    "Geen netwerken gevonden. Ververs om opnieuw te zoeken.", // 317
+    "Gegevens opgeslagen", // 318
+    "Voer XDRGTK wachtwoord (max 8 karakters) in", // 319
+    "Voer rabbitears.info live bandscan user ID in", // 320
+    "Voer rabbitears.info wachtwoord in", // 321
+    "ID" // 322
   },
 
   { "Polski", // Polish
@@ -910,7 +954,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "Auto czas letni wg NTP", // 297
     "Ustaw odchyl. czasu NTP", // 298
     "Wykaz zawiera ponad 130 wpisów, których przeglądarka nie może pokazać. Pobierz plik CSV, aby je przetworzyć.", // 299
-    "Kanada" // 300
+    "Kanada", // 300
+    "Połącz to urządzenie z siecią WiFi, aby włączyć funkcje zdalne.", // 301
+    "Konfiguruj WiFi", // 302
+    "Ukryta sieć", // 303
+    "Nazwa sieci WiFi", // 304
+    "Wpisz SSID lub wybierz sieć powyżej", // 305
+    "Hasło", // 306
+    "Wpisz hasło", // 307
+    "Zapisz i połącz", // 308
+    "Skanuj ponownie", // 309
+    "Łączenie z", // 310
+    "Połączono z", // 311
+    "Możesz teraz zamknąć tę stronę.", // 312
+    "Nie można połączyć z", // 313
+    "Kliknij tutaj, aby spróbować ponownie", // 314
+    "Opcje", // 315
+    "Wybierz WiFi", // 316
+    "Nie znaleziono sieci. Odśwież, aby skanować ponownie.", // 317
+    "Dane zapisane", // 318
+    "Ustaw hasło XDRGTK (maks. 8 znaków)", // 319
+    "Ustaw ID użytkownika rabbitears.info", // 320
+    "Ustaw hasło rabbitears.info", // 321
+    "ID" // 322
   },
 
   { "Hrvatski", // Croatian
@@ -1213,7 +1279,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "Auto DST na NTP vremenu", // 297
     "Postavi NTP pomak vremena", // 298
     "Dnevnik sadrži preko 130 unosa, koje preglednik ne može obraditi. Preuzmite CSV datoteku za obradu.", // 299
-    "Canada" // 300
+    "Canada", // 300
+    "Povežite ovaj uređaj na WiFi mrežu za omogućavanje daljinskih funkcija.", // 301
+    "Konfiguriraj WiFi", // 302
+    "Skrivena mreža", // 303
+    "Naziv WiFi mreže", // 304
+    "Unesite SSID ili odaberite mrežu iznad", // 305
+    "Lozinka", // 306
+    "Unesite lozinku", // 307
+    "Spremi i poveži", // 308
+    "Skeniraj ponovo", // 309
+    "Povezivanje na", // 310
+    "Povezano na", // 311
+    "Sada možete zatvoriti ovu stranicu.", // 312
+    "Nije moguće povezati se na", // 313
+    "Kliknite ovdje za ponovni pokušaj", // 314
+    "Opcije", // 315
+    "Odaberi WiFi", // 316
+    "Mreže nisu pronađene. Osvježite za ponovno skeniranje.", // 317
+    "Podaci spremljeni", // 318
+    "Postavi XDRGTK lozinku (maks. 8 znakova)", // 319
+    "Postavi rabbitears.info korisničko ime", // 320
+    "Postavi rabbitears.info lozinku", // 321
+    "ID" // 322
   },
 
   { "Ελληνικά", // Greek
@@ -1516,7 +1604,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "Αυτόματο DST\nσε ώρα NTP", // 297
     "Ολίσθηση ώρας NTP", // 298
     "Το βιβλίο περιέχει πάνω από 130 καταγραφές, και είναι αδύνατη η επεξεργασία τους από το χρήστη. Κάντε λήψη του αρχείου CSV για να το επεξεργαστείτε.", // 299
-    "Καναδάς" // 300
+    "Καναδάς", // 300
+    "Συνδέστε αυτή τη συσκευή σε δίκτυο WiFi για ενεργοποίηση λειτουργιών.", // 301
+    "Ρύθμιση WiFi", // 302
+    "Κρυφό δίκτυο", // 303
+    "Όνομα δικτύου WiFi", // 304
+    "Εισάγετε SSID ή επιλέξτε δίκτυο", // 305
+    "Κωδικός πρόσβασης", // 306
+    "Εισάγετε κωδικό", // 307
+    "Αποθήκευση και σύνδεση", // 308
+    "Σάρωση ξανά", // 309
+    "Σύνδεση με", // 310
+    "Συνδεδεμένο με", // 311
+    "Μπορείτε να κλείσετε αυτή τη σελίδα.", // 312
+    "Αδύνατη η σύνδεση με", // 313
+    "Κάντε κλικ εδώ για να ξαναδοκιμάσετε", // 314
+    "Επιλογές", // 315
+    "Επιλογή WiFi", // 316
+    "Δεν βρέθηκαν δίκτυα. Ανανεώστε για σάρωση.", // 317
+    "Στοιχεία αποθηκεύτηκαν", // 318
+    "Ορισμός κωδικού XDRGTK (μέγ. 8 χαρακτήρες)", // 319
+    "Ορισμός ID χρήστη rabbitears.info", // 320
+    "Ορισμός κωδικού rabbitears.info", // 321
+    "ID" // 322
   },
 
   { "Română", // Romanian
@@ -1819,7 +1929,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "Auto DST pe ora NTP", // 297
     "Setează offsetul pentru ora NTP", // 298
     "Jurnalul conține peste 130 de intrări, pe care vizualizatorul nu le poate procesa. Te rog descarcă fișierul CSV pentru a le procesa.", // 299
-    "Canada" // 300
+    "Canada", // 300
+    "Conectați acest dispozitiv la o rețea WiFi pentru a activa funcțiile la distanță.", // 301
+    "Configurare WiFi", // 302
+    "Rețea ascunsă", // 303
+    "Numele rețelei WiFi", // 304
+    "Introduceți SSID sau selectați o rețea", // 305
+    "Parolă", // 306
+    "Introduceți parola", // 307
+    "Salvează și conectează", // 308
+    "Scanează din nou", // 309
+    "Conectare la", // 310
+    "Conectat la", // 311
+    "Puteți închide această pagină.", // 312
+    "Nu s-a putut conecta la", // 313
+    "Apăsați aici pentru a încerca din nou", // 314
+    "Opțiuni", // 315
+    "Selectați WiFi", // 316
+    "Nu s-au găsit rețele. Reîmprospătați pentru a scana din nou.", // 317
+    "Date salvate", // 318
+    "Setați parola XDRGTK (max. 8 caractere)", // 319
+    "Setați ID utilizator rabbitears.info", // 320
+    "Setați parola rabbitears.info", // 321
+    "ID" // 322
   },
 
   { "Deutsch", // German
@@ -2122,7 +2254,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "Auto-Sommerzeit\nüber NTP", // 297
     "NTP-Zeitversatz\neinstellen", // 298
     "Das Logbuch enthält mehr als 130 Einträge, was das Anzeigeprogramm nicht verarbeiten kann. Bitte lade die CSV-Datei zum Verarbeiten herunter.", // 299
-    "Kanada" // 300
+    "Kanada", // 300
+    "Verbinden Sie dieses Gerät mit einem WiFi-Netzwerk, um Fernfunktionen zu aktivieren.", // 301
+    "WiFi konfigurieren", // 302
+    "Verstecktes Netzwerk", // 303
+    "WiFi-Netzwerkname", // 304
+    "SSID eingeben oder Netzwerk oben wählen", // 305
+    "Passwort", // 306
+    "Passwort eingeben", // 307
+    "Speichern und verbinden", // 308
+    "Erneut scannen", // 309
+    "Verbinde mit", // 310
+    "Verbunden mit", // 311
+    "Sie können diese Seite jetzt schließen.", // 312
+    "Verbindung fehlgeschlagen mit", // 313
+    "Hier klicken, um es erneut zu versuchen", // 314
+    "Optionen", // 315
+    "WiFi auswählen", // 316
+    "Keine Netzwerke gefunden. Aktualisieren zum erneuten Scannen.", // 317
+    "Zugangsdaten gespeichert", // 318
+    "XDRGTK-Passwort festlegen (max. 8 Zeichen)", // 319
+    "rabbitears.info Benutzer-ID festlegen", // 320
+    "rabbitears.info Passwort festlegen", // 321
+    "ID" // 322
   },
 
   { "Čeština", // Czech
@@ -2425,7 +2579,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "Auto DST u NTP času", // 297
     "Nastavte časový posun NTP", // 298
     "Logbook obsahuje více než 130 položek, které prohlížeč nedokáže zpracovat. Pro zpracování všech položek si stáhněte CSV soubor.", // 299
-    "Canada" // 300
+    "Canada", // 300
+    "Připojte toto zařízení k WiFi síti pro povolení vzdálených funkcí.", // 301
+    "Konfigurace WiFi", // 302
+    "Skrytá síť", // 303
+    "Název WiFi sítě", // 304
+    "Zadejte SSID nebo vyberte síť výše", // 305
+    "Heslo", // 306
+    "Zadejte heslo", // 307
+    "Uložit a připojit", // 308
+    "Znovu skenovat", // 309
+    "Připojování k", // 310
+    "Připojeno k", // 311
+    "Nyní můžete tuto stránku zavřít.", // 312
+    "Nelze se připojit k", // 313
+    "Klikněte zde pro opakování pokusu", // 314
+    "Možnosti", // 315
+    "Vyberte WiFi", // 316
+    "Žádné sítě nenalezeny. Obnovte pro opakované skenování.", // 317
+    "Údaje uloženy", // 318
+    "Nastavte heslo XDRGTK (max. 8 znaků)", // 319
+    "Nastavte ID uživatele rabbitears.info", // 320
+    "Nastavte heslo rabbitears.info", // 321
+    "ID" // 322
   },
 
   { "Magyar", // Hungarian
@@ -2728,7 +2904,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "Auto nyári idő(DST)\nNTP idő szerint", // 297
     "NTP időeltolás beállítása", // 298
     "A napló több mint 130 bejegyzést tartalmaz, amelyeket a megtekintő nem tud feldolgozni. Kérlek, töltsd le a CSV fájlt a megtekintéshez.", // 299
-    "Kanada" // 300
+    "Kanada", // 300
+    "Csatlakoztassa ezt az eszközt egy WiFi hálózathoz a távoli funkciók engedélyezéséhez.", // 301
+    "WiFi beállítása", // 302
+    "Rejtett hálózat", // 303
+    "WiFi hálózat neve", // 304
+    "Írja be az SSID-t vagy válasszon hálózatot fent", // 305
+    "Jelszó", // 306
+    "Írja be a jelszót", // 307
+    "Mentés és csatlakozás", // 308
+    "Újraszkennelés", // 309
+    "Csatlakozás a következőhöz", // 310
+    "Csatlakoztatva a következőhöz", // 311
+    "Most már bezárhatja ezt az oldalt.", // 312
+    "Nem sikerült csatlakozni a következőhöz", // 313
+    "Kattintson ide az újrapróbálkozáshoz", // 314
+    "Beállítások", // 315
+    "WiFi kiválasztása", // 316
+    "Nem található hálózat. Frissítse az újraszkenneléshez.", // 317
+    "Adatok mentve", // 318
+    "Állítsa be az XDRGTK jelszót (max. 8 karakter)", // 319
+    "Állítsa be a rabbitears.info felhasználói azonosítót", // 320
+    "Állítsa be a rabbitears.info jelszót", // 321
+    "ID" // 322
   },
 
   { "Français", // French
@@ -3031,7 +3229,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "DST automatique\nsur l'heure NTP", // 297
     "Décalage horaire NTP", // 298
     "Le journal de bord contient plus de 130 entrées que la liste ne peut pas afficher. Veuillez télécharger le fichier CSV.", // 299
-    "Canada" // 300
+    "Canada", // 300
+    "Connectez cet appareil à un réseau WiFi pour activer les fonctions à distance.", // 301
+    "Configurer le WiFi", // 302
+    "Réseau caché", // 303
+    "Nom du réseau WiFi", // 304
+    "Entrez le SSID ou sélectionnez un réseau", // 305
+    "Mot de passe", // 306
+    "Entrez le mot de passe", // 307
+    "Enregistrer et connecter", // 308
+    "Scanner à nouveau", // 309
+    "Connexion à", // 310
+    "Connecté à", // 311
+    "Vous pouvez maintenant fermer cette page.", // 312
+    "Impossible de se connecter à", // 313
+    "Cliquez ici pour réessayer", // 314
+    "Options", // 315
+    "Sélectionner le WiFi", // 316
+    "Aucun réseau trouvé. Actualisez pour scanner à nouveau.", // 317
+    "Identifiants enregistrés", // 318
+    "Définir le mot de passe XDRGTK (max. 8 caractères)", // 319
+    "Définir ID utilisateur rabbitears.info", // 320
+    "Définir le mot de passe rabbitears.info", // 321
+    "ID" // 322
   },
 
   { "Български", // Bulgarian
@@ -3334,7 +3554,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "Автоматично лятно\nвреме по NTP", // 297
     "Отместване на NTP", // 298
     "Дневникът съдържа над 130 записа, които не могат да бъдат обработени. Моля, изтеглете CSV файла за обработка.", // 299
-    "Канада" // 300
+    "Канада", // 300
+    "Свържете това устройство към WiFi мрежа за отдалечени функции.", // 301
+    "Настройка на WiFi", // 302
+    "Скрита мрежа", // 303
+    "Име на WiFi мрежа", // 304
+    "Въведете SSID или изберете мрежа", // 305
+    "Парола", // 306
+    "Въведете парола", // 307
+    "Запази и свържи", // 308
+    "Сканиране отново", // 309
+    "Свързване към", // 310
+    "Свързан към", // 311
+    "Можете да затворите тази страница.", // 312
+    "Не може да се свърже към", // 313
+    "Натиснете тук за нов опит", // 314
+    "Опции", // 315
+    "Изберете WiFi", // 316
+    "Не са намерени мрежи. Опреснете за сканиране.", // 317
+    "Данните са запазени", // 318
+    "Задайте парола за XDRGTK (макс. 8 знака)", // 319
+    "Задайте ID на потребител rabbitears.info", // 320
+    "Задайте парола за rabbitears.info", // 321
+    "ID" // 322
   },
 
   { "Русский", // Russian
@@ -3637,7 +3879,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "Автоматическое летнее время по NTP", // 297
     "Смещение времени NTP", // 298
     "В логе более 130 записей, которые программа просмотра не может обработать. Загрузите файл CSV для его обработки.", // 299
-    "Канада" // 300
+    "Канада", // 300
+    "Подключите это устройство к сети WiFi для включения удалённых функций.", // 301
+    "Настройка WiFi", // 302
+    "Скрытая сеть", // 303
+    "Имя сети WiFi", // 304
+    "Введите SSID или выберите сеть выше", // 305
+    "Пароль", // 306
+    "Введите пароль", // 307
+    "Сохранить и подключить", // 308
+    "Сканировать снова", // 309
+    "Подключение к", // 310
+    "Подключено к", // 311
+    "Теперь вы можете закрыть эту страницу.", // 312
+    "Не удалось подключиться к", // 313
+    "Нажмите здесь, чтобы попробовать снова", // 314
+    "Настройки", // 315
+    "Выбор WiFi", // 316
+    "Сети не найдены. Обновите для повторного сканирования.", // 317
+    "Данные сохранены", // 318
+    "Установите пароль XDRGTK (макс. 8 символов)", // 319
+    "Установите ID пользователя rabbitears.info", // 320
+    "Установите пароль rabbitears.info", // 321
+    "ID" // 322
   },
 
   { "Українська", // Ukranian
@@ -3940,7 +4204,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "Автоматичний літній\nчас за NTP", // 297
     "Встановити зміщення\nчасу NTP", // 298
     "Журнал містить понад 130 записів, які оглядач не може обробити. Будь ласка, завантажте файл CSV, щоб обробити його.", // 299
-    "Канада" // 300
+    "Канада", // 300
+    "Підключіть цей пристрій до мережі WiFi для увімкнення віддалених функцій.", // 301
+    "Налаштування WiFi", // 302
+    "Прихована мережа", // 303
+    "Назва мережі WiFi", // 304
+    "Введіть SSID або оберіть мережу вище", // 305
+    "Пароль", // 306
+    "Введіть пароль", // 307
+    "Зберегти і підключити", // 308
+    "Сканувати знову", // 309
+    "Підключення до", // 310
+    "Підключено до", // 311
+    "Тепер ви можете закрити цю сторінку.", // 312
+    "Не вдалося підключитися до", // 313
+    "Натисніть тут, щоб спробувати знову", // 314
+    "Налаштування", // 315
+    "Вибір WiFi", // 316
+    "Мережі не знайдено. Оновіть для повторного сканування.", // 317
+    "Дані збережено", // 318
+    "Встановіть пароль XDRGTK (макс. 8 символів)", // 319
+    "Встановіть ID користувача rabbitears.info", // 320
+    "Встановіть пароль rabbitears.info", // 321
+    "ID" // 322
   },
 
   { "Italiano", // Italian
@@ -4243,7 +4529,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "Auto DST su tempo NTP", // 297
     "Imposta offset orario NTP", // 298
     "Registro dei log con + di 130 voci, il visualizzatore non può gestirle. Scarica il file CSV per gestirlo.", // 299
-    "Canada" // 300
+    "Canada", // 300
+    "Collega questo dispositivo a una rete WiFi per abilitare le funzioni remote.", // 301
+    "Configura WiFi", // 302
+    "Rete nascosta", // 303
+    "Nome rete WiFi", // 304
+    "Inserisci SSID o seleziona una rete sopra", // 305
+    "Password", // 306
+    "Inserisci password", // 307
+    "Salva e connetti", // 308
+    "Scansiona di nuovo", // 309
+    "Connessione a", // 310
+    "Connesso a", // 311
+    "Ora puoi chiudere questa pagina.", // 312
+    "Impossibile connettersi a", // 313
+    "Clicca qui per riprovare", // 314
+    "Opzioni", // 315
+    "Seleziona WiFi", // 316
+    "Nessuna rete trovata. Aggiorna per scansionare di nuovo.", // 317
+    "Credenziali salvate", // 318
+    "Imposta password XDRGTK (max. 8 caratteri)", // 319
+    "Imposta ID utente rabbitears.info", // 320
+    "Imposta password rabbitears.info", // 321
+    "ID" // 322
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4546,7 +4854,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "联网自动同步本机时间", // 297
     "设置NTP时区", // 298
     "该日志包含超过130个条目，观看者无法处理。请下载CSV文件进行处理。", // 299
-    "加拿大" // 300
+    "加拿大", // 300
+    "将此设备连接到WiFi网络以启用远程功能。", // 301
+    "配置WiFi", // 302
+    "隐藏网络", // 303
+    "WiFi网络名称", // 304
+    "输入SSID或选择上方网络", // 305
+    "密码", // 306
+    "输入密码", // 307
+    "保存并连接", // 308
+    "重新扫描", // 309
+    "正在连接", // 310
+    "已连接到", // 311
+    "您现在可以关闭此页面。", // 312
+    "无法连接到", // 313
+    "点击此处重试", // 314
+    "选项", // 315
+    "选择WiFi", // 316
+    "未找到网络。刷新以重新扫描。", // 317
+    "凭据已保存", // 318
+    "设置XDRGTK密码（最多8个字符）", // 319
+    "设置rabbitears.info用户ID", // 320
+    "设置rabbitears.info密码", // 321
+    "ID" // 322
   },
 
   { "Norsk", // Norwegian
@@ -4849,7 +5179,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "Auto sommertid med NTP", // 297
     "Angi NTP-tidsforskyvning", // 298
     "Loggbok har over 130 oppføringer.\nLast ned CSV for behandling.", // 299
-    "Canada" // 300
+    "Canada", // 300
+    "Koble denne enheten til et WiFi-nettverk for å aktivere fjernfunksjoner.", // 301
+    "Konfigurer WiFi", // 302
+    "Skjult nettverk", // 303
+    "WiFi-nettverksnavn", // 304
+    "Skriv inn SSID eller velg et nettverk ovenfor", // 305
+    "Passord", // 306
+    "Skriv inn passord", // 307
+    "Lagre og koble til", // 308
+    "Skann på nytt", // 309
+    "Kobler til", // 310
+    "Koblet til", // 311
+    "Du kan nå lukke denne siden.", // 312
+    "Kunne ikke koble til", // 313
+    "Klikk her for å prøve igjen", // 314
+    "Alternativer", // 315
+    "Velg WiFi", // 316
+    "Ingen nettverk funnet. Oppdater for å skanne på nytt.", // 317
+    "Legitimasjon lagret", // 318
+    "Sett XDRGTK-passord (maks. 8 tegn)", // 319
+    "Sett rabbitears.info bruker-ID", // 320
+    "Sett rabbitears.info passord", // 321
+    "ID" // 322
   },
 
   { "Español", // Spanish
@@ -5152,7 +5504,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "DST automático (NTP)", // 297
     "Ajustar\ndesplazamiento NTP", // 298
     "El registro tiene +130 entradas.\nDescargue el CSV.", // 299
-    "Canadá" // 300
+    "Canadá", // 300
+    "Conecte este dispositivo a una red WiFi para habilitar las funciones remotas.", // 301
+    "Configurar WiFi", // 302
+    "Red oculta", // 303
+    "Nombre de red WiFi", // 304
+    "Ingrese SSID o seleccione una red arriba", // 305
+    "Contraseña", // 306
+    "Ingrese contraseña", // 307
+    "Guardar y conectar", // 308
+    "Escanear de nuevo", // 309
+    "Conectando a", // 310
+    "Conectado a", // 311
+    "Ahora puede cerrar esta página.", // 312
+    "No se pudo conectar a", // 313
+    "Haga clic aquí para intentar de nuevo", // 314
+    "Opciones", // 315
+    "Seleccionar WiFi", // 316
+    "No se encontraron redes. Actualice para escanear de nuevo.", // 317
+    "Credenciales guardadas", // 318
+    "Establecer contraseña XDRGTK (máx. 8 caracteres)", // 319
+    "Establecer ID de usuario rabbitears.info", // 320
+    "Establecer contraseña rabbitears.info", // 321
+    "ID" // 322
   },
 
   { "Português", // Portuguese
@@ -5455,7 +5829,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "DST automático\nno horário NTP", // 297
     "Definir deslocamento\nde tempo NTP", // 298
     "O diário de bordo contém mais de 130 entradas que o espectador não consegue processar. Descarregue o ficheiro CSV para processá-lo.", // 299
-    "Canadá" // 300
+    "Canadá", // 300
+    "Conecte este dispositivo a uma rede WiFi para ativar recursos remotos.", // 301
+    "Configurar WiFi", // 302
+    "Rede oculta", // 303
+    "Nome da rede WiFi", // 304
+    "Digite o SSID ou selecione uma rede acima", // 305
+    "Senha", // 306
+    "Digite a senha", // 307
+    "Salvar e conectar", // 308
+    "Escanear novamente", // 309
+    "Conectando a", // 310
+    "Conectado a", // 311
+    "Agora você pode fechar esta página.", // 312
+    "Não foi possível conectar a", // 313
+    "Clique aqui para tentar novamente", // 314
+    "Opções", // 315
+    "Selecionar WiFi", // 316
+    "Nenhuma rede encontrada. Atualize para escanear novamente.", // 317
+    "Credenciais salvas", // 318
+    "Definir senha XDRGTK (máx. 8 caracteres)", // 319
+    "Definir ID de usuário rabbitears.info", // 320
+    "Definir senha rabbitears.info", // 321
+    "ID" // 322
   },
 
   { "Srpski", // Serbian
@@ -5758,7 +6154,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "Auto DST na\nNTP vremenu", // 297
     "Postavite NTP\nvremenski offset", // 298
     "Dnevnik sadrži više od 130 unosa, što viewer ne može obraditi. Preuzmite CSV fajl za obradu.", // 299
-    "Canada" // 300
+    "Canada", // 300
+    "Повежите овај уређај на WiFi мрежу за омогућавање даљинских функција.", // 301
+    "Конфигурација WiFi", // 302
+    "Скривена мрежа", // 303
+    "Назив WiFi мреже", // 304
+    "Унесите SSID или изаберите мрежу изнад", // 305
+    "Лозинка", // 306
+    "Унесите лозинку", // 307
+    "Сачувај и повежи", // 308
+    "Скенирај поново", // 309
+    "Повезивање са", // 310
+    "Повезано са", // 311
+    "Сада можете затворити ову страницу.", // 312
+    "Није могуће повезати се са", // 313
+    "Кликните овде да покушате поново", // 314
+    "Опције", // 315
+    "Изаберите WiFi", // 316
+    "Мреже нису пронађене. Освежите за поновно скенирање.", // 317
+    "Подаци сачувани", // 318
+    "Поставите XDRGTK лозинку (макс. 8 знакова)", // 319
+    "Поставите rabbitears.info корисничко име", // 320
+    "Поставите rabbitears.info лозинку", // 321
+    "ID" // 322
   },
 
   { "Suomi", // Finnish
@@ -6061,7 +6479,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "Auto DST\nNTP-ajassa", // 297
     "Aseta\nNTP-aikasiirto", // 298
     "Lokikirja sisältää yli 130 merkintää, joita katselija ei pysty käsittelemään. Lataa CSV-tiedosto sen käsittelemiseksi.", // 299
-    "Kanada" // 300
+    "Kanada", // 300
+    "Yhdistä tämä laite WiFi-verkkoon etäominaisuuksien käyttöön ottamiseksi.", // 301
+    "Määritä WiFi", // 302
+    "Piilotettu verkko", // 303
+    "WiFi-verkon nimi", // 304
+    "Syötä SSID tai valitse verkko ylhäältä", // 305
+    "Salasana", // 306
+    "Syötä salasana", // 307
+    "Tallenna ja yhdistä", // 308
+    "Skannaa uudelleen", // 309
+    "Yhdistetään kohteeseen", // 310
+    "Yhdistetty kohteeseen", // 311
+    "Voit nyt sulkea tämän sivun.", // 312
+    "Ei voitu yhdistää kohteeseen", // 313
+    "Napsauta tästä yrittääksesi uudelleen", // 314
+    "Asetukset", // 315
+    "Valitse WiFi", // 316
+    "Verkkoja ei löydetty. Päivitä skannataksesi uudelleen.", // 317
+    "Tunnukset tallennettu", // 318
+    "Aseta XDRGTK-salasana (enint. 8 merkkiä)", // 319
+    "Aseta rabbitears.info käyttäjätunnus", // 320
+    "Aseta rabbitears.info salasana", // 321
+    "ID" // 322
   },
 
   { "Dansk", // Danish
@@ -6364,7 +6804,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "Auto DST på\nNTP-tid", // 297
     "Indstil NTP-tidsforskel", // 298
     "Logbogen indeholder over 130 poster, som fremviseren ikke kan behandle. Download CSV-filen for at behandle den.", // 299
-    "Canada" // 300
+    "Canada", // 300
+    "Forbind denne enhed til et WiFi-netværk for at aktivere fjernfunktioner.", // 301
+    "Konfigurer WiFi", // 302
+    "Skjult netværk", // 303
+    "WiFi-netværksnavn", // 304
+    "Indtast SSID eller vælg et netværk ovenfor", // 305
+    "Adgangskode", // 306
+    "Indtast adgangskode", // 307
+    "Gem og forbind", // 308
+    "Scan igen", // 309
+    "Forbinder til", // 310
+    "Forbundet til", // 311
+    "Du kan nu lukke denne side.", // 312
+    "Kunne ikke forbinde til", // 313
+    "Klik her for at prøve igen", // 314
+    "Indstillinger", // 315
+    "Vælg WiFi", // 316
+    "Ingen netværk fundet. Opdater for at scanne igen.", // 317
+    "Legitimationsoplysninger gemt", // 318
+    "Indstil XDRGTK-adgangskode (maks. 8 tegn)", // 319
+    "Indstil rabbitears.info bruger-ID", // 320
+    "Indstil rabbitears.info adgangskode", // 321
+    "ID" // 322
   },
 
   { "Svenska", // Swedish
@@ -6667,7 +7129,29 @@ static const char* const myLanguage[22][301] PROGMEM = {
     "Auto NTP sommartid", // 297
     "Ange NTP tidszon", // 298
     "Loggboken har mer än 130 poster, vilket visaren inte kan hantera. Ladda ner CSV för behandling.", // 299
-    "Kanada" // 300
+    "Kanada", // 300
+    "Anslut denna enhet till ett WiFi-nätverk för att aktivera fjärrfunktioner.", // 301
+    "Konfigurera WiFi", // 302
+    "Dolt nätverk", // 303
+    "WiFi-nätverksnamn", // 304
+    "Ange SSID eller välj ett nätverk ovan", // 305
+    "Lösenord", // 306
+    "Ange lösenord", // 307
+    "Spara och anslut", // 308
+    "Skanna igen", // 309
+    "Ansluter till", // 310
+    "Ansluten till", // 311
+    "Du kan nu stänga denna sida.", // 312
+    "Kunde inte ansluta till", // 313
+    "Klicka här för att försöka igen", // 314
+    "Alternativ", // 315
+    "Välj WiFi", // 316
+    "Inga nätverk hittades. Uppdatera för att skanna igen.", // 317
+    "Uppgifter sparade", // 318
+    "Ställ in XDRGTK-lösenord (max. 8 tecken)", // 319
+    "Ställ in rabbitears.info användar-ID", // 320
+    "Ställ in rabbitears.info lösenord", // 321
+    "ID" // 322
   }
 };
 #endif

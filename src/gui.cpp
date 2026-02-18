@@ -5335,7 +5335,7 @@ void DoMenu() {
 
           case ITEM3: {
               tftPrint(ACENTER, textUI(53), 155, 58, ActiveColor, ActiveColorSmooth, 28);
-              tftPrint(ACENTER, "ESP_" + String(ESP_getChipId()), 155, 98, PrimaryColor, PrimaryColorSmooth, 28);
+              tftPrint(ACENTER, "TEF_" + String(ESP_getChipId()), 155, 98, PrimaryColor, PrimaryColorSmooth, 28);
               tftPrint(ACENTER, textUI(54), 155, 138, ActiveColor, ActiveColorSmooth, 28);
               tftPrint(ACENTER, "http://192.168.4.1", 155, 174, PrimaryColor, PrimaryColorSmooth, 16);
               char key [9];
@@ -5349,12 +5349,12 @@ void DoMenu() {
                 wifi = false;
                 tryWiFi();
               }
-              WiFiConnectParam XDRGTK_key_text("Set XDRGTK Password: (max 8 characters)");
-              WiFiConnectParam XDRGTK_key_input("XDRGTK_key", "Password", key, 9);
-              WiFiConnectParam RabbitearsUser_text("Set rabbitears.info live bandscan user ID");
-              WiFiConnectParam RabbitearsUser_input("RabbitearsUser", "ID", rabbitearsuser, 9);
-              WiFiConnectParam RabbitearsPassword_text("Set rabbitears.info password");
-              WiFiConnectParam RabbitearsPassword_input("RabbitearsPassword", "Password", rabbitearspw, 9);
+              WiFiConnectParam XDRGTK_key_text(textUI(319));
+              WiFiConnectParam XDRGTK_key_input("XDRGTK_key", textUI(306), key, 9);
+              WiFiConnectParam RabbitearsUser_text(textUI(320));
+              WiFiConnectParam RabbitearsUser_input("RabbitearsUser", textUI(322), rabbitearsuser, 9);
+              WiFiConnectParam RabbitearsPassword_text(textUI(321));
+              WiFiConnectParam RabbitearsPassword_input("RabbitearsPassword", textUI(306), rabbitearspw, 9);
               if (!setWiFiConnectParam) {
                 wc.addParameter(&XDRGTK_key_text);
                 wc.addParameter(&XDRGTK_key_input);
@@ -5364,7 +5364,7 @@ void DoMenu() {
                 wc.addParameter(&RabbitearsPassword_input);
                 setWiFiConnectParam = true;
               }
-              wc.startConfigurationPortal(AP_WAIT);
+              wc.startConfigurationPortal();
               XDRGTK_key = XDRGTK_key_input.getValue();
               RabbitearsUser = RabbitearsUser_input.getValue();
               RabbitearsPassword = RabbitearsPassword_input.getValue();

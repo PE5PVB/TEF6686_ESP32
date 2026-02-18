@@ -8,7 +8,6 @@
 #include <WiFi.h>
 #include <Hash.h>
 #include "WiFiConnect.h"
-#include "WiFiConnectParam.h"
 
 extern bool advancedRDS;
 extern bool afscreen;

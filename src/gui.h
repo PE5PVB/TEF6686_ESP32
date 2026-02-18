@@ -5,7 +5,6 @@
 #include <TFT_eSPI.h>
 #include "TEF6686.h"
 #include "WiFiConnect.h"
-#include "WiFiConnectParam.h"
 #include "menugraphics.h"
 
 #define SMETERPIN       27

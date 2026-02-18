@@ -1,189 +1,129 @@
 /*!
    @file WiFiConnect.h
 
-   This is the documentation for WiFiConnect for the Arduino platform.
-   It is a WiFi connection manager for use with the popular ESP8266 and ESP32 chips.
-   It contains a captive portal to allow easy connection and changing of WiFi netwoks
-   via a web based interface and allows for additional user parameters.
+   WiFi Connection Manager with Captive Portal for ESP32.
 
-   You can view the project at <a href="https://github.com/smurf0969/WiFiConnect">https://github.com/smurf0969/WiFiConnect</a>.
-   Further information is also available in the project <a href="https://github.com/smurf0969/WiFiConnect/wiki">Wiki</a>.
+   Provides WiFi auto-connect and a web-based configuration portal
+   with support for custom user parameters.
 
-   This is a heavily customised version from the origional <a href="https://github.com/tzapu/WiFiManager">WiFiManager</a>
-   developed by https://github.com/tzapu .
+   Based on WiFiConnect by Stuart Blair
+   (https://github.com/smurf0969/WiFiConnect), itself derived from
+   WiFiManager by tzapu (https://github.com/tzapu/WiFiManager).
 
-   This library depends on <a href="https://github.com/esp8266/Arduino">
-    ESP8266 Arduino Core</a> and <a href="https://github.com/espressif/arduino-esp32">ESP32 Arduino Core</a> being present on your system.
-    Please make sure you have installed the latest version before using this library.
+   Simplified for ESP32-only use. Removed: ESP8266 support, OLED display,
+   static IP configuration, debug output, params-only portal, and callbacks.
 
-   Written by Stuart Blair.
-
-   GNU General Public License v3.0 licence, all text here must be included in any redistribution and you should receive a copy of the license file.
-
+   GNU General Public License v3.0
 */
 #ifndef WiFiConnect_h
 #define WiFiConnect_h
+
 #include <Arduino.h>
-#if defined(ESP8266)
-#include <ESP8266WiFi.h>
-#include <ESP8266WebServer.h>
-#else
 #include <WiFi.h>
-#include <FS.h>
-using fs::FS;
 #include <WebServer.h>
-#endif
 #include <DNSServer.h>
+#include <esp_wifi.h>
 #include <memory>
 
-#if defined(ESP8266)
-extern "C" {
-#include "user_interface.h"
-}
-#define ESP_getChipId()   (ESP.getChipId()) ///< Gets an ID from the chip
-#else
-#include <esp_wifi.h>
-#define ESP_getChipId()   ((uint32_t)ESP.getEfuseMac())///< Gets an ID from the chip
-#endif
+/// Maximum number of custom parameters
+#define WiFiConnect_MAX_PARAMS 10
 
-#include "WC_AP_HTML.h"
-#include "WiFiConnectParam.h"
-/** Options for how a access point should continue if no WiFi connected */
-enum AP_Continue {
-  AP_NONE, ///< No action, continues to run code
-  AP_LOOP, ///< Stalls execution with an infinate loop
-  AP_RESTART, ///< Restarts the chip, allowing it to try to setup again. Handy for sensors when wifi is lost.
-  AP_RESET, ///< Same as AP_RESTART
-  AP_WAIT   // Keep the AP and webserver running, sit quietly and be patient.
-};
+/// Gets a unique chip identifier from the ESP32 eFuse MAC
+#define ESP_getChipId() ((uint32_t)ESP.getEfuseMac())
+
+extern const char* textUI(uint16_t number);
+
+class WiFiConnect;
+
 /**************************************************************************/
 /*!
-    @brief  Class that helps to connect to WiFi networks, that also has
-            captive portal web interface for configuration.
-            This is the base class for WiFiConntectOLED which displays
-            information on a OLED display.
+    @brief  Stores a custom parameter for the configuration portal.
+            Parameters can be plain HTML labels or input fields.
+*/
+/**************************************************************************/
+class WiFiConnectParam {
+public:
+  /// Construct a custom HTML-only parameter (label, no input field)
+  WiFiConnectParam(const char *custom);
+
+  /// Construct an input field parameter
+  WiFiConnectParam(const char *id, const char *placeholder, const char *defaultValue, int length);
+
+  /// Destructor - frees the allocated value buffer
+  ~WiFiConnectParam();
+
+  const char *getID();
+  const char *getValue();
+  const char *getPlaceholder();
+  int         getValueLength();
+  const char *getCustomHTML();
+
+private:
+  const char *_id;
+  const char *_placeholder;
+  char       *_value;
+  int         _length;
+  const char *_customHTML;
+
+  void init(const char *id, const char *placeholder, const char *defaultValue, int length, const char *custom);
+  void setValue(const char *newValue);
+
+  friend class WiFiConnect;
+};
+
+/**************************************************************************/
+/*!
+    @brief  WiFi connection manager with captive portal.
+            Tries to connect to the last-known network, and if that fails,
+            opens an access point with a web interface for configuration.
 */
 /**************************************************************************/
 class WiFiConnect {
-  public:
-    /// Create WiFiConnect class
-    WiFiConnect();
+public:
+  WiFiConnect();
 
-    boolean startConfigurationPortal();
-    boolean startConfigurationPortal(AP_Continue apcontinue);
-    boolean startConfigurationPortal(AP_Continue apcontinue, const char*  apName, const char*  apPassword = NULL, bool paramsMode = false);
+  /// Try to connect to the last-known WiFi network (3 retries, 10s timeout)
+  boolean autoConnect();
 
-    boolean startParamsPortal();
-    boolean startParamsPortal(AP_Continue apcontinue);
-    boolean startParamsPortal(AP_Continue apcontinue, const char*  apName, const char*  apPassword = NULL);
+  /// Add a custom parameter to the configuration portal
+  void addParameter(WiFiConnectParam *p);
 
-    void addParameter(WiFiConnectParam *p);
+  /// Start the configuration portal access point (blocks until configured)
+  boolean startConfigurationPortal();
 
-    void setAPName(const char*  apName);
-    const char* getAPName();
+private:
+  static const int RETRY_ATTEMPTS = 3;
+  static const int CONNECTION_TIMEOUT_SECS = 10;
+  static const byte DNS_PORT = 53;
+  static const int MINIMUM_QUALITY = 8;
 
-    void resetSettings();
+  int _paramsCount = 0;
+  boolean _readyToConnect = false;
+  String _ssid;
+  String _password;
 
-    boolean autoConnect();
-    boolean autoConnect(const char*  ssidName, const char*  ssidPassword = NULL, WiFiMode_t acWiFiMode = WIFI_STA);
+  WiFiConnectParam* _params[WiFiConnect_MAX_PARAMS];
 
+  std::unique_ptr<DNSServer> dnsServer;
+  std::unique_ptr<WebServer> server;
 
-    //sets a custom ip /gateway /subnet configuration
-    void          setAPStaticIPConfig(IPAddress ip, IPAddress gw, IPAddress sn);
-    //sets config for a static IP
-    void          setSTAStaticIPConfig(IPAddress ip, IPAddress gw, IPAddress sn);
+  char _apName[33];
 
-    //called when AP mode and config portal is started
-    void          setAPCallback( void (*func)(WiFiConnect*) );
-    //called when settings have been changed and connection was successful
-    void          setSaveConfigCallback( void (*func)(void) );
+  void setAPName();
 
-    void setDebug(boolean isDebug);
+  boolean autoConnect(const char *ssidName, const char *ssidPassword, WiFiMode_t acWiFiMode);
 
-    void setRetryAttempts(int attempts);
-    void setConnectionTimeoutSecs(int timeout);
-    void setAPModeTimeoutMins(int mins);
+  void handleRoot();
+  void handleWifi();
+  void handleScan();
+  void handleWifiSave();
+  void handleLogo();
+  void handleNotFound();
 
-    boolean       captivePortal();
-
-    //helpers
-    const char* statusToString(int state);
-    int           getRSSIasQuality(int RSSI);
-    boolean       isIp(String str);
-    String        toStringIp(IPAddress ip);
-    virtual  void displayTurnOFF(int ms = 5000); ///< Virtual method overriden in WiFiConnectOLED
-    virtual void displayLoop(); ///< Virtual method overriden in WiFiConnectOLED
-    virtual void displayON(); ///< Virtual method overriden in WiFiConnectOLED
-  protected:
-    boolean _debug = false; ///< Flag to determine wheter to output mesages or not
-    template <typename Generic>
-    void    DEBUG_WC(Generic text);
-    virtual   void displayConnecting(int attempt, int totalAttempts); ///< Virtual method overriden in WiFiConnectOLED
-    virtual void displayConnected(); ///< Virtual method overriden in WiFiConnectOLED
-    virtual void displayAP(); ///< Virtual method overriden in WiFiConnectOLED
-    virtual void displayParams(); ///< Virtual method overriden in WiFiConnectOLED
-    virtual void displayManualReset(); ///< Virtual method overriden in WiFiConnectOLED
-
-  private:
-
-
-    int _retryAttempts = 3; ///< Number of attempts when trying to connect to WiFi network
-    int _connectionTimeoutSecs = 10; ///< How log to wait for the connection to succeed or fail
-    int _apTimeoutMins = 3; ///< The amount of minutes of inactivity before the access point exits it routine
-    // DNS server
-    const byte    DNS_PORT = 53; ///< Standard DNS Port number
-
-    long _lastAPPage = 0; ///< The last time a page was accessed in the portal. Used for the inactivity timeout.
-    boolean _removeDuplicateAPs = true; ///< Flag to remove duplicate networks from scan results.
-    int _minimumQuality = 8; ///< The minimum netqork quality to be included in scan results.
-    int _paramsCount = 0; ///< The amount of custom parameters added via addParameter
-    boolean _readyToConnect = false; ///< Flag used in access point to determine if it should try to connect to the network.
-    String _ssid      = "                            "; ///< Tempory holder for the network ssid
-    String _password  = "                            "; ///< Tempory holder for the network password
-
-    WiFiConnectParam* _params[WiFiConnect_MAX_PARAMS]; ///< Array to hold custom parameters
-
-    std::unique_ptr<DNSServer>        dnsServer; ///< DNS Server for captive portal to redirect to Access Point
-#ifdef ESP8266
-    std::unique_ptr<ESP8266WebServer> server; ///< Web server for serving access point pages
-#else
-    std::unique_ptr<WebServer>        server; ///< Web server for serving access point pages
-#endif
-
-     char _apName[33] ; ///< Holder for the access point name
-     char _apPassword[65] ; ///< Holder for the access point password
-    
-    IPAddress     _ap_static_ip; ///< Variable for holding Static IP Address for the access point
-    IPAddress     _ap_static_gw; ///< Variable for holding Static Gateway IP Address for the access point
-    IPAddress     _ap_static_sn; ///< Variable for holding Static Subnet Mask IP Address for the access point
-    IPAddress     _sta_static_ip; ///< Variable for holding Static IP Address for the network connection
-    IPAddress     _sta_static_gw; ///< Variable for holding Static Gateway IP Address for the network connection
-    IPAddress     _sta_static_sn; ///< Variable for holding Static Subnet Mask IP Address for the network connection
-
-    void (*_apcallback)(WiFiConnect*) = NULL;
-    void (*_savecallback)(void) = NULL;
-
-
-
-    void handleRoot();
-    void handleParamRoot();
-    void handleParams();
-    void handleWifi(boolean scan);
-    void handleWifiSave();
-    void handleInfo();
-    void handleReset();
-    void handle204();
-    void handleNotFound();
-
-    template <class T>
-    auto optionalIPFromString(T *obj, const char *s) -> decltype(  obj->fromString(s)  ) {
-      return  obj->fromString(s);
-    }
-    auto optionalIPFromString(...) -> bool {
-      DEBUG_WC("NO fromString METHOD ON IPAddress, you need ESP8266 core 2.1.0 or newer for Custom IP configuration to work.");
-      return false;
-    }
-
+  boolean captivePortal();
+  boolean isIp(String str);
+  String  toStringIp(IPAddress ip);
+  int     getRSSIasQuality(int RSSI);
 };
 
 #endif
