@@ -3075,6 +3075,7 @@ void BuildDisplay() {
   advancedRDS = false;
   BWtune = false;
   rdsreset = true;
+  modLevelForceRedraw = true;
 
   tft.fillScreen(BackgroundColor);
   tft.drawRect(0, 0, 320, 240, FrameColor);

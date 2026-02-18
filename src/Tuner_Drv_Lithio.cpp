@@ -216,7 +216,7 @@ bool devTEF_Radio_Get_Processing_Status (uint16_t *highcut, uint16_t *stereo, ui
 
 bool devTEF_Radio_Get_Quality_Status (uint16_t *status, int16_t *level, uint16_t *usn, uint16_t *wam, int16_t *offset, uint16_t *bandwidth, uint16_t *mod, int8_t *snr) {
   uint8_t buf[14];
-  bool r = devTEF_Get_Cmd(TEF_FM, Cmd_Get_Quality_Data, buf, sizeof(buf));
+  bool r = devTEF_Get_Cmd(TEF_FM, Cmd_Get_Quality_Status, buf, sizeof(buf));
   *status = Convert8bto16b(buf);
   *level = Convert8bto16b(buf + 2);
   *usn = Convert8bto16b(buf + 4);

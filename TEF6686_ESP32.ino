@@ -280,6 +280,7 @@ int menuoption = ITEM1;
 int ModBarInsignificantColor;
 int ModBarSignificantColor;
 int MStatusold;
+bool modLevelForceRedraw = true;
 int offsetupdatetimer;
 int OStatusold;
 int peakholdold;
@@ -1297,9 +1298,10 @@ void loop() {
         tftPrint(ALEFT, "PS:", 3, 193, GreyoutColor, BackgroundColor, 16);
         tftPrint(ALEFT, "RT:", 3, 221, GreyoutColor, BackgroundColor, 16);
         tftPrint(ALEFT, "PTY:", 3, 163, GreyoutColor, BackgroundColor, 16);
-        tft.drawLine(16, 143, 203, 143, GreyoutColor);
+        tft.drawLine(16, 143, 189, 143, GreyoutColor);
         tft.drawBitmap(68, 5, RDSLogo, 35, 22, GreyoutColor);
       }
+      modLevelForceRedraw = true;
       LowLevelInit = false;
     }
 
@@ -3587,32 +3589,45 @@ void ShowModLevel() {
 
     peakholdold = constrain(peakholdold, 0, 86);
 
-    // Convert colors to HSV
-    HSV hsv1 = RGB565toHSV(ModBarInsignificantColor);
-    HSV hsv2 = RGB565toHSV(ModBarSignificantColor);
+    // Skip redraw when nothing changed
+    static int prevDisplayedSegments = -1;
+    static int prevPeakhold = -1;
+    if (!modLevelForceRedraw && DisplayedSegments == prevDisplayedSegments && peakholdold == prevPeakhold) {
+      return;
+    }
+    modLevelForceRedraw = false;
 
-    int gradientStart = (86 * 25) / 100;
-    int gradientEnd = (86 * 60) / 100;
+    // Pre-computed gradient color lookup table (cached, recomputed only on theme change)
+    static uint16_t modGradient[87];
+    static uint16_t cachedInsigColor = 0;
+    static uint16_t cachedSigColor = 0;
+    static bool gradientReady = false;
 
-    for (int i = 0; i < min(DisplayedSegments, gradientStart); i++) {
-      tft.fillRect(16 + 2 * i, 133, 2, 6, ModBarInsignificantColor);
+    if (!gradientReady || cachedInsigColor != ModBarInsignificantColor || cachedSigColor != ModBarSignificantColor) {
+      HSV hsv1 = RGB565toHSV(ModBarInsignificantColor);
+      HSV hsv2 = RGB565toHSV(ModBarSignificantColor);
+      int gStart = (86 * 25) / 100;
+      int gEnd = (86 * 60) / 100;
+      for (int i = 0; i < 87; i++) {
+        if (i < gStart) {
+          modGradient[i] = ModBarInsignificantColor;
+        } else if (i < gEnd) {
+          float h = map(i, gStart, gEnd, hsv1.h, hsv2.h);
+          float s = map(i, gStart, gEnd, hsv1.s * 100, hsv2.s * 100) / 100.0;
+          float v = map(i, gStart, gEnd, hsv1.v * 100, hsv2.v * 100) / 100.0;
+          modGradient[i] = HSVtoRGB565(h, s, v);
+        } else {
+          modGradient[i] = ModBarSignificantColor;
+        }
+      }
+      cachedInsigColor = ModBarInsignificantColor;
+      cachedSigColor = ModBarSignificantColor;
+      gradientReady = true;
     }
 
-    if (DisplayedSegments > gradientStart) {
-      for (int i = gradientStart; i < min(DisplayedSegments, gradientEnd); i++) {
-        float h = map(i, gradientStart, gradientEnd, hsv1.h, hsv2.h);
-        float s = map(i, gradientStart, gradientEnd, hsv1.s * 100, hsv2.s * 100) / 100.0;
-        float v = map(i, gradientStart, gradientEnd, hsv1.v * 100, hsv2.v * 100) / 100.0;
-
-        uint16_t gradientColor = HSVtoRGB565(h, s, v);
-        tft.fillRect(16 + 2 * i, 133, 2, 6, gradientColor);
-      }
-    }
-
-    if (DisplayedSegments > gradientEnd) {
-      for (int i = gradientEnd; i < DisplayedSegments; i++) {
-        tft.fillRect(16 + 2 * i, 133, 2, 6, ModBarSignificantColor);
-      }
+    // Draw bar segments using cached gradient colors
+    for (int i = 0; i < DisplayedSegments; i++) {
+      tft.fillRect(16 + 2 * i, 133, 2, 6, modGradient[i]);
     }
 
     // Grey out from end of bar to end of scale (87 segments = x 16..189)
@@ -3620,6 +3635,7 @@ void ShowModLevel() {
     int greyWidth = (16 + 2 * 87) - greyStart;
     tft.fillRect(greyStart, 133, greyWidth, 6, GreyoutColor);
 
+    // Draw peak hold marker
     int peakHoldPosition = constrain(16 + 2 * peakholdold, 16, 16 + 2 * 86);
     tft.fillRect(peakHoldPosition, 133, 2, 6, (MStatus > 80) ? ModBarSignificantColor : PrimaryColor);
 
@@ -3628,6 +3644,9 @@ void ShowModLevel() {
         tft.fillRect(peakHoldPosition, 133, 2, 6, GreyoutColor);
       }
     }
+
+    prevDisplayedSegments = DisplayedSegments;
+    prevPeakhold = peakholdold;
   }
 }
 

@@ -224,6 +224,7 @@ void BuildAFScreen();
 void BuildRDSStatScreen();
 void BuildMenu();
 void BuildAdvancedRDS();
+extern bool modLevelForceRedraw;
 void BuildDisplay();
 void BuildBWSelector();
 void MenuUpDown(bool dir);
