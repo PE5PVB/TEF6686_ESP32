@@ -3096,7 +3096,7 @@ void BuildDisplay() {
 
   if (!showmodulation) tft.drawLine(16, 143, 189, 143, GreyoutColor); else tft.drawLine(16, 143, 189, 143, ActiveColor);
 
-  for (byte segments = 0; segments < 93; segments++) {
+  for (byte segments = 0; segments < 84; segments++) {
     if (segments > 54) {
       if (((segments - 53) % 10) == 0) {
         tft.fillRect(22 + (2 * segments), 112, 2, 2, BarSignificantColor);

@@ -1247,7 +1247,7 @@ void loop() {
         tftPrint(ALEFT, "70", 114, 144, ActiveColor, ActiveColorSmooth, 16);
         tftPrint(ALEFT, "100", 160, 144, ActiveColor, ActiveColorSmooth, 16);
         tftPrint(ACENTER, "A", 7, 128, ActiveColor, ActiveColorSmooth, 16);
-        for (byte segments = 0; segments < 94; segments++) {
+        for (byte segments = 0; segments < 87; segments++) {
           if (segments > 54) {
             if (((segments - 53) % 10) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, BarSignificantColor);
           } else {
@@ -1264,7 +1264,7 @@ void loop() {
       tftPrint(ALEFT, "PS:", 3, 193, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(ALEFT, "RT:", 3, 221, ActiveColor, ActiveColorSmooth, 16);
       tftPrint(ALEFT, "PTY:", 3, 163, ActiveColor, ActiveColorSmooth, 16);
-      if (!showmodulation) tft.drawLine(16, 143, 203, 143, GreyoutColor); else tft.drawLine(16, 143, 203, 143, ActiveColor);
+      if (!showmodulation) tft.drawLine(16, 143, 189, 143, GreyoutColor); else tft.drawLine(16, 143, 189, 143, ActiveColor);
     }
     LowLevelInit = true;
   }
@@ -1272,7 +1272,7 @@ void loop() {
   if ((SStatus / 10 <= LowLevelSet) && band < BAND_GAP) {
     if (LowLevelInit && !BWtune && !menu) {
       if (!screenmute && !rdsstatscreen && !afscreen && !advancedRDS) {
-        for (byte segments = 0; segments < 94; segments++) {
+        for (byte segments = 0; segments < 87; segments++) {
           if (segments > 54) {
             if (((segments - 53) % 10) == 0) tft.fillRect(16 + (2 * segments), 141, 2, 2, GreyoutColor);
           } else {
@@ -1286,7 +1286,7 @@ void loop() {
           tftPrint(ALEFT, "70", 114, 144, GreyoutColor, BackgroundColor, 16);
           tftPrint(ALEFT, "100", 160, 144, GreyoutColor, BackgroundColor, 16);
           tftPrint(ACENTER, "A", 7, 128, GreyoutColor, BackgroundColor, 16);
-          tft.fillRect(16, 133, 187, 6, GreyoutColor);
+          tft.fillRect(16, 133, 174, 6, GreyoutColor);
         }
         if (radio.rds.region == 0) {
           tftPrint(ALEFT, "PI:", 212, 193, GreyoutColor, BackgroundColor, 16);
@@ -3615,9 +3615,9 @@ void ShowModLevel() {
       }
     }
 
-    // Grey out from end of bar to end of scale (94 segments = x 16..203)
+    // Grey out from end of bar to end of scale (87 segments = x 16..189)
     int greyStart = 16 + 2 * DisplayedSegments;
-    int greyWidth = (16 + 2 * 94) - greyStart;
+    int greyWidth = (16 + 2 * 87) - greyStart;
     tft.fillRect(greyStart, 133, greyWidth, 6, GreyoutColor);
 
     int peakHoldPosition = constrain(16 + 2 * peakholdold, 16, 16 + 2 * 86);
