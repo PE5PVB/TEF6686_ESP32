@@ -1015,10 +1015,8 @@ void loop() {
     if (millis() >= tottimer + totprobe) deepSleep();
   }
 
-  if (freq_in != 0 && millis() >= keypadtimer + 2000) {
-    freq_in = 0;
-    ShowFreq(0);
-    if (tunemode == TUNE_MEM) ShowMemoryPos();
+  if (freq_in != 0 && millis() >= keypadtimer + 1000) {
+    NumpadProcess(13);
   }
 
   if (scandxmode) {
