@@ -5342,14 +5342,16 @@ void ShowNum(int val) {
   FrequencySprite.unloadFont();
 }
 
-void TuneFreq(int temp) {
+bool TuneFreq(int temp) {
   aftest = true;
   aftimer = millis();
+  bool accepted = true;
 
   if (band == BAND_FM) {
     while (temp < (LowEdgeSet * 10)) temp = temp * 10;
     if (temp > (HighEdgeSet * 10)) {
       if (edgebeep) EdgeBeeper();
+      accepted = false;
     } else {
       frequency = temp;
     }
@@ -5358,6 +5360,7 @@ void TuneFreq(int temp) {
     while (temp < LowEdgeOIRTSet) temp = temp * 10;
     if (temp > HighEdgeOIRTSet) {
       if (edgebeep) EdgeBeeper();
+      accepted = false;
     } else {
       frequency_OIRT = temp;
     }
@@ -5366,6 +5369,7 @@ void TuneFreq(int temp) {
     while (temp < LWLowEdgeSet) temp = temp * 10;
     if (temp > LWHighEdgeSet) {
       if (edgebeep) EdgeBeeper();
+      accepted = false;
     } else {
       frequency_AM = temp;
     }
@@ -5375,6 +5379,7 @@ void TuneFreq(int temp) {
     while (temp < MWLowEdgeSet) temp = temp * 10;
     if (temp > MWHighEdgeSet) {
       if (edgebeep) EdgeBeeper();
+      accepted = false;
     } else {
       frequency_AM = temp;
     }
@@ -5384,6 +5389,7 @@ void TuneFreq(int temp) {
     while (temp < SWLowEdgeSet) temp = temp * 10;
     if (temp > SWHighEdgeSet) {
       if (edgebeep) EdgeBeeper();
+      accepted = false;
     } else {
       frequency_AM = temp;
     }
@@ -5394,6 +5400,7 @@ void TuneFreq(int temp) {
   radio.clearRDS(fullsearchrds);
   if (RDSSPYUSB) Serial.print("G:\r\nRESET-------\r\n\r\n");
   if (RDSSPYTCP) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
+  return accepted;
 }
 
 void NumpadProcess(int num) {
@@ -5470,15 +5477,27 @@ void NumpadProcess(int num) {
       BuildMenu();
     } else if (num == 13) {
       if (freq_in != 0) {
-        TuneFreq(freq_in);
-        if (XDRGTKUSB || XDRGTKTCP) {
-          if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n"); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n"); else DataPrint("M1\nT" + String(frequency_AM) + "\n");
-        }
-        if (!memorystore) {
-          if (!memtune) radio.clearRDS(fullsearchrds);
-          memtune = false;
+        if (TuneFreq(freq_in)) {
+          if (XDRGTKUSB || XDRGTKTCP) {
+            if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n"); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n"); else DataPrint("M1\nT" + String(frequency_AM) + "\n");
+          }
+          if (!memorystore) {
+            if (!memtune) radio.clearRDS(fullsearchrds);
+            memtune = false;
+            ShowFreq(0);
+            store = true;
+          }
+        } else {
+          ShowNum(freq_in);
+          FrequencySprite.loadFont(freqfont == 1 ? FREQFONT1 : freqfont == 2 ? FREQFONT2 : freqfont == 3 ? FREQFONT3 : freqfont == 4 ? FREQFONT4 : FREQFONT0);
+          FrequencySprite.setTextDatum(TR_DATUM);
+          FrequencySprite.fillSprite(BackgroundColor);
+          FrequencySprite.setTextColor(SignificantColor, SignificantColorSmooth, false);
+          FrequencySprite.drawString(String(freq_in) + " ", 218, -6);
+          FrequencySprite.pushSprite(46, 46);
+          FrequencySprite.unloadFont();
+          delay(1000);
           ShowFreq(0);
-          store = true;
         }
       } else {
         ShowFreq(0);
