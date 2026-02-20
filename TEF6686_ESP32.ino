@@ -484,7 +484,6 @@ WiFiServer Server(7373);
 WiFiClient RemoteClient;
 WiFiUDP Udp;
 WebServer webserver(80);
-
 void setup() {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
   gpio_set_drive_capability((gpio_num_t) 5, GPIO_DRIVE_CAP_0);
@@ -5356,7 +5355,7 @@ void TuneFreq(int temp) {
     }
     radio.SetFreq(frequency);
   } else if (band == BAND_OIRT) {
-    while (temp < (LowEdgeOIRTSet * 10)) temp = temp * 10;
+    while (temp < LowEdgeOIRTSet) temp = temp * 10;
     if (temp > HighEdgeOIRTSet) {
       if (edgebeep) EdgeBeeper();
     } else {
