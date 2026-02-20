@@ -1,6 +1,7 @@
 #include "comms.h"
 #include "constants.h"
 #include <EEPROM.h>
+#include <ESPmDNS.h>
 
 
 bool MPXsetbyXDR = false;
@@ -983,37 +984,107 @@ void passwordcrypt() {
   cryptedpassword = String(sha1(salt));
 }
 
-void tryWiFi() {
-  if (!setupmode && wifi) {
-    tft.drawRoundRect(1, 20, 319, 180, 5, ActiveColor);
-    tft.fillRoundRect(3, 22, 315, 176, 5, BackgroundColor);
-    Infoboxprint(textUI(55));
+// ---- Non-blocking WiFi connection state machine ----
+
+static uint8_t  _wifiConnState   = 0;  // 0=idle, 1=connecting
+static unsigned long _wifiConnMs = 0;
+static uint8_t  _wifiConnRetry   = 0;
+static bool     _wifiServicesUp  = false;
+static bool     _wifiHandlersSet = false;
+static const uint8_t  WIFI_MAX_RETRIES       = 3;
+static const unsigned long WIFI_TIMEOUT_MS   = 10000;  // 10s per attempt
+static const unsigned long WIFI_RECONNECT_MS = 30000;  // 30s between reconnect cycles
+
+static void wifiStartServices() {
+  Server.begin();
+  Udp.begin(9031);
+  if (!_wifiHandlersSet) {
+    webserver.on("/", handleRoot);
+    webserver.on("/downloadCSV", HTTP_GET, handleDownloadCSV);
+    webserver.on("/logo.png", handleLogo);
+    _wifiHandlersSet = true;
   }
-  if (wifi) {
-    if (wc.autoConnect()) {
-      Server.begin();
-      Udp.begin(9031);
-      webserver.on("/", handleRoot);
-      webserver.on("/downloadCSV", HTTP_GET, handleDownloadCSV);
-      webserver.on("/logo.png", handleLogo);
-      webserver.begin();
-      NTPupdate();
-      remoteip = IPAddress (WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
-      if (!setupmode) tftPrint(ACENTER, textUI(57), 155, 128, InsignificantColor, InsignificantColorSmooth, 28);
-    } else {
-      if (!setupmode) tftPrint(ACENTER, textUI(56), 155, 128, SignificantColor, SignificantColorSmooth, 28);
-      Server.end();
-      webserver.stop();
-      Udp.stop();
-      WiFi.mode(WIFI_OFF);
-      wifi = false;
-      XDRGTKTCP = false;
-      RDSSPYTCP = false;
-    }
-  } else {
-    Server.end();
-    webserver.stop();
-    Udp.stop();
+  webserver.begin();
+  MDNS.begin("tef");
+  NTPupdate();
+  remoteip = IPAddress(WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
+  _wifiServicesUp = true;
+  if (menu && menupage == CONNECTIVITY) BuildMenu();
+}
+
+static void wifiStopServices() {
+  _wifiServicesUp = false;
+  MDNS.end();
+  Server.end();
+  webserver.stop();
+  Udp.stop();
+}
+
+void tryWiFi() {
+  if (!wifi) {
+    _wifiConnState = 0;
+    if (_wifiServicesUp) wifiStopServices();
     WiFi.mode(WIFI_OFF);
+
+    return;
+  }
+
+  if (WiFi.status() == WL_CONNECTED) {
+    _wifiConnState = 0;
+    if (!_wifiServicesUp) wifiStartServices();
+    return;
+  }
+
+  // Start non-blocking connection
+  WiFi.mode(WIFI_STA);
+  WiFi.begin();
+  _wifiConnState  = 1;
+  _wifiConnMs     = millis();
+  _wifiConnRetry  = 0;
+  _wifiServicesUp = false;
+
+}
+
+void wifiPoll() {
+  if (!wifi) return;
+
+  // ---- State 1: actively connecting ----
+  if (_wifiConnState == 1) {
+    if (WiFi.status() == WL_CONNECTED) {
+      _wifiConnState = 0;
+      wifiStartServices();
+      return;
+    }
+
+    if (millis() - _wifiConnMs >= WIFI_TIMEOUT_MS) {
+      _wifiConnRetry++;
+      if (_wifiConnRetry < WIFI_MAX_RETRIES) {
+        WiFi.begin();
+        _wifiConnMs = millis();
+      } else {
+        // All retries exhausted — wait before trying again
+        _wifiConnState = 0;
+        _wifiConnMs = millis();  // start reconnect cooldown
+      }
+    }
+    return;
+  }
+
+  // ---- State 0: idle — monitor connection ----
+  if (WiFi.status() == WL_CONNECTED) {
+    if (!_wifiServicesUp) wifiStartServices();
+    return;
+  }
+
+  // Connection lost or never established — try to reconnect
+  if (_wifiServicesUp) wifiStopServices();
+
+  if (millis() - _wifiConnMs >= WIFI_RECONNECT_MS) {
+    WiFi.mode(WIFI_STA);
+    WiFi.begin();
+    _wifiConnState = 1;
+    _wifiConnMs    = millis();
+    _wifiConnRetry = 0;
+  
   }
 }

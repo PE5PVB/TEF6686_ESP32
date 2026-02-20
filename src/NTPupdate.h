@@ -24,5 +24,5 @@ extern bool rtcset;
 
 void sendNTPpacket(IPAddress &address);
 void NTPupdate();
-time_t getNtpTime();
+void ntpPoll();
 #endif

@@ -847,9 +847,8 @@ void setup() {
   tftPrint(ACENTER, textUI(8), 160, 3, PrimaryColor, PrimaryColorSmooth, 28);
   tftPrint(ACENTER, "Software " + String(VERSION), 160, 152, PrimaryColor, PrimaryColorSmooth, 16);
 
-  tft.fillRect(120, 230, 16, 6, GreyoutColor);
-  tft.fillRect(152, 230, 16, 6, GreyoutColor);
-  tft.fillRect(184, 230, 16, 6, GreyoutColor);
+  tft.fillRect(136, 230, 16, 6, GreyoutColor);
+  tft.fillRect(168, 230, 16, 6, GreyoutColor);
 
   tft.pushImage (78, 34, 163, 84, openradiologo);
   tft.drawBitmap(130, 124, TEFLogo, 59, 23, ActiveColor);
@@ -859,7 +858,7 @@ void setup() {
     delay(30);
   }
 
-  tft.fillRect(120, 230, 16, 6, PrimaryColor);
+  tft.fillRect(136, 230, 16, 6, PrimaryColor);
 
   TEF = EEPROM.readByte(EE_BYTE_TEF);
 
@@ -877,27 +876,27 @@ void setup() {
     fullsearchrds = false;
     fmsi = false;
     chipmodel = 0;
-    tft.fillRect(152, 230, 16, 6, PrimaryColor);
+    tft.fillRect(168, 230, 16, 6, PrimaryColor);
     tftPrint(ACENTER, "TEF6686 Lithio", 160, 172, ActiveColor, ActiveColorSmooth, 28);
   } else if (lowByte(device) == 1) {
     fullsearchrds = true;
     chipmodel = 1;
-    tft.fillRect(152, 230, 16, 6, PrimaryColor);
+    tft.fillRect(168, 230, 16, 6, PrimaryColor);
     tftPrint(ACENTER, "TEF6687 Lithio FMSI", 160, 172, ActiveColor, ActiveColorSmooth, 28);
   } else if (lowByte(device) == 9) {
     fullsearchrds = false;
     chipmodel = 2;
     fmsi = false;
-    tft.fillRect(152, 230, 16, 6, PrimaryColor);
+    tft.fillRect(168, 230, 16, 6, PrimaryColor);
     tftPrint(ACENTER, "TEF6688 Lithio DR", 160, 172, ActiveColor, ActiveColorSmooth, 28);
   } else if (lowByte(device) == 3) {
     fullsearchrds = true;
     chipmodel = 3;
-    tft.fillRect(152, 230, 16, 6, PrimaryColor);
+    tft.fillRect(168, 230, 16, 6, PrimaryColor);
     tftPrint(ACENTER, "TEF6689 Lithio FMSI DR", 160, 172, ActiveColor, ActiveColorSmooth, 28);
   } else {
     tftPrint(ACENTER, textUI(9), 160, 172, SignificantColor, SignificantColorSmooth, 28);
-    tft.fillRect(152, 230, 16, 6, SignificantColor);
+    tft.fillRect(168, 230, 16, 6, SignificantColor);
     for (;;);
   }
   tftPrint(ACENTER, "Patch: v" + String(TEF), 160, 202, ActiveColor, ActiveColorSmooth, 28);
@@ -920,15 +919,7 @@ void setup() {
   if (analogRead(BATTERY_PIN) < 200) batterydetect = false;
   if (!SPIFFS.exists("/logbook.csv")) handleCreateNewLogbook();
 
-  if (wifi) {
-    tryWiFi();
-    tft.fillRect(184, 230, 16, 6, PrimaryColor);
-    delay(2000);
-  } else {
-    Server.end();
-    Udp.stop();
-    tft.fillRect(184, 230, 16, 6, SignificantColor);
-  }
+  tryWiFi();
   delay(1500);
 
   radio.setVolume(VolSet);
@@ -976,8 +967,11 @@ void setup() {
 }
 
 void loop() {
+  wifiPoll();
+
   if (wifi && !menu) {
     webserver.handleClient();
+    ntpPoll();
 
     if (millis() >= udplogtimer + 500) {
       sendUDPlog();
@@ -2586,7 +2580,6 @@ void ModeButtonPress() {
             if (menuopen) {
               if (menupage == CONNECTIVITY && menuoption == ITEM2 && wifi) {
                 tryWiFi();
-                delay(2000);
               }
               if (menupage == DISPLAYSETTINGS && menuoption == ITEM5) {
                 doTheme();
@@ -4109,6 +4102,7 @@ void ShowRSSI() {
       tft.drawBitmap(282, 3, WiFi4, 30, 25, BackgroundColor);
     } else if (rssi == 0) {
       tft.drawBitmap(282, 3, WiFi4, 30, 25, GreyoutColor);
+      tft.drawBitmap(282, 3, WiFiX, 30, 25, BarSignificantColor);
     } else if (rssi > -50 && rssi < 0) {
       tft.drawBitmap(282, 3, WiFi4, 30, 25, WifiColorHigh);
     } else if (rssi > -60) {

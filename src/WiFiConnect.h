@@ -88,8 +88,9 @@ public:
   /// Add a custom parameter to the configuration portal
   void addParameter(WiFiConnectParam *p);
 
-  /// Start the configuration portal access point (blocks until configured)
-  boolean startConfigurationPortal();
+  /// Start the configuration portal access point (blocks until configured or cancelled)
+  /// @param cancelPin  GPIO pin (active LOW) to cancel the portal, or -1 to disable
+  boolean startConfigurationPortal(int8_t cancelPin = -1);
 
 private:
   static const int RETRY_ATTEMPTS = 3;

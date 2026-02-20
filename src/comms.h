@@ -129,6 +129,7 @@ void Communication();
 void XDRGTKRoutine();
 void passwordcrypt();
 void tryWiFi();
+void wifiPoll();
 
 extern void DataPrint(String string);
 extern void ShowFreq(int mode);
@@ -150,6 +151,10 @@ extern void startFMDXScan();
 extern void cancelDXScan();
 extern void printLogbookCSV();
 extern void NTPupdate();
+extern void ntpPoll();
+extern void BuildMenu();
+extern byte menupage;
+extern bool menuopen;
 extern void handleRoot();
 extern void handleDownloadCSV();
 extern void handleLogo();

@@ -22,66 +22,70 @@ void sendNTPpacket(IPAddress &address) {
   Udp.endPacket();
 }
 
-// Retrieves the current time from an NTP server
-time_t getNtpTime() {
+// ---- Non-blocking NTP state machine ----
+
+static uint8_t       _ntpState   = 0;  // 0=idle, 1=waiting for reply
+static unsigned long _ntpSendMs  = 0;
+static const unsigned long NTP_TIMEOUT_MS = 1500;
+
+// Starts an NTP request (non-blocking). Call ntpPoll() in loop to process the reply.
+void NTPupdate() {
+  if (!wifi || WiFi.status() != WL_CONNECTED) {
+    NTPupdated = false;
+    return;
+  }
+
   IPAddress ntpServerIP;
-  byte packetBuffer[NTP_PACKET_SIZE];
 
   // Clear any previously received UDP packets
   while (Udp.parsePacket() > 0);
 
   // Resolve the NTP server's hostname to its IP address
   if (!WiFi.hostByName(ntpServerName, ntpServerIP)) {
-    return 0; // Return 0 if hostname resolution fails
-  }
-
-  // Send an NTP request
-  sendNTPpacket(ntpServerIP);
-
-  // Wait for a response with a 1500ms timeout
-  uint32_t startWait = millis();
-  while (millis() - startWait < 1500) {
-    if (Udp.parsePacket() >= NTP_PACKET_SIZE) { // Check if a valid packet is received
-      Udp.read(packetBuffer, NTP_PACKET_SIZE);
-
-      // Extract "seconds since 1900" from the packet (bytes 40-43)
-      unsigned long secsSince1900 =
-        ((unsigned long)packetBuffer[40] << 24) |
-        ((unsigned long)packetBuffer[41] << 16) |
-        ((unsigned long)packetBuffer[42] << 8)  |
-        (unsigned long)packetBuffer[43];
-
-      // Convert to UNIX epoch time (seconds since 1970)
-      return secsSince1900 - 2208988800UL;
-    }
-  }
-
-  // Return 0 if no valid response is received
-  return 0;
-}
-
-// Updates the RTC with the time from an NTP server
-void NTPupdate() {
-  // Abort if Wi-Fi is not connected
-  if (!wifi) {
     NTPupdated = false;
+    radio.rds.ctupdate = true;
     return;
   }
 
-  // Retrieve the current time from the NTP server
-  time_t currentTime = getNtpTime();
+  // Send an NTP request and enter waiting state
+  sendNTPpacket(ntpServerIP);
+  _ntpState  = 1;
+  _ntpSendMs = millis();
+}
 
-  if (currentTime) {
-    // Set the RTC if valid time is received
+// Poll for NTP response (called from loop). Returns immediately if idle.
+void ntpPoll() {
+  if (_ntpState != 1) return;
+
+  byte packetBuffer[NTP_PACKET_SIZE];
+
+  if (Udp.parsePacket() >= NTP_PACKET_SIZE) {
+    Udp.read(packetBuffer, NTP_PACKET_SIZE);
+
+    // Extract "seconds since 1900" from the packet (bytes 40-43)
+    unsigned long secsSince1900 =
+      ((unsigned long)packetBuffer[40] << 24) |
+      ((unsigned long)packetBuffer[41] << 16) |
+      ((unsigned long)packetBuffer[42] << 8)  |
+      (unsigned long)packetBuffer[43];
+
+    // Convert to UNIX epoch time (seconds since 1970)
+    time_t currentTime = secsSince1900 - 2208988800UL;
+
     rtc.setTime(currentTime);
     struct tm *t = localtime(&currentTime);
     rx8010_setTime(t);
     rtcset = true;
     NTPupdated = true;
     radio.rds.ctupdate = false;
-  } else {
-    // Indicate that the update failed
+    _ntpState = 0;
+    return;
+  }
+
+  // Timeout
+  if (millis() - _ntpSendMs >= NTP_TIMEOUT_MS) {
     NTPupdated = false;
     radio.rds.ctupdate = true;
+    _ntpState = 0;
   }
 }
