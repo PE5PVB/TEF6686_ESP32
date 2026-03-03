@@ -5930,6 +5930,7 @@ void DoMenu() {
             tftPrint(ARIGHT, "marsel90-1", 145, 185, PrimaryColor, PrimaryColorSmooth, 16);
             tftPrint(ALEFT, "lawendel", 155, 185, PrimaryColor, PrimaryColorSmooth, 16);
             tftPrint(ARIGHT, "KB8U", 145, 200, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ALEFT, "kazek5p (Accessibility)", 155, 200, PrimaryColor, PrimaryColorSmooth, 16);
             tftPrint(ACENTER, "github.com/PE5PVB/TEF6686_ESP32", 155, 215, ActiveColor, ActiveColorSmooth, 16);
             if (hardwaremodel == PORTABLE_TOUCH_ILI9341) {
               tft.fillRoundRect(240, 36, 60, 40, 6, FrameColor);
