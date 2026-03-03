@@ -82,6 +82,9 @@ bool compressedold;
 bool direction;
 bool dropout;
 bool dynamicPTYold;
+bool accessibilityMenuBeep;
+bool accessibilityConfirmBeep;
+bool accessibilityBackBeep;
 bool edgebeep;
 bool externaltune;
 bool findMemoryAF;
@@ -197,7 +200,7 @@ byte amgain;
 byte freqoldcount;
 byte HighCutLevel;
 byte HighCutOffset;
-byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 10, 10, 9};
+byte items[11] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 10, 10, 9, 4};
 byte iMSEQ;
 byte iMSset;
 byte language;
@@ -485,6 +488,11 @@ WiFiServer Server(7373);
 WiFiClient RemoteClient;
 WiFiUDP Udp;
 WebServer webserver(80);
+
+static inline void playAccessibilityBackBeep() {
+  if (accessibilityBackBeep) radio.tone(70, -6, 900);
+}
+
 void setup() {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
   gpio_set_drive_capability((gpio_num_t) 5, GPIO_DRIVE_CAP_0);
@@ -515,6 +523,12 @@ void setup() {
   LevelOffset = EEPROM.readByte(EE_BYTE_LEVELOFFSET);
   radio.rds.rtbuffer = EEPROM.readByte(EE_BYTE_RTBUFFER);
   edgebeep = EEPROM.readByte(EE_BYTE_EDGEBEEP);
+  accessibilityMenuBeep = EEPROM.readByte(EE_BYTE_ACCESS_MENU_BEEP);
+  accessibilityConfirmBeep = EEPROM.readByte(EE_BYTE_ACCESS_CONFIRM_BEEP);
+  accessibilityBackBeep = EEPROM.readByte(EE_BYTE_ACCESS_BACK_BEEP);
+  if (accessibilityMenuBeep > 1) accessibilityMenuBeep = 0;
+  if (accessibilityConfirmBeep > 1) accessibilityConfirmBeep = 1;
+  if (accessibilityBackBeep > 1) accessibilityBackBeep = 1;
   softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
   softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
   frequency_AM = EEPROM.readUInt(EE_UINT16_FREQUENCY_AM);
@@ -2579,6 +2593,7 @@ void ModeButtonPress() {
           doBandSelectionFM();
           doBandSelectionAM();
           screensavertimer = millis();
+          playAccessibilityBackBeep();
           endMenu();
         } else {
           if (submenu) {
@@ -2591,6 +2606,7 @@ void ModeButtonPress() {
               }
               menuopen = false;
             }
+            playAccessibilityBackBeep();
             submenu = false;
             menuoption = ITEM1;
             menupage = INDEX;
@@ -4569,6 +4585,9 @@ void DefaultSettings() {
   EEPROM.writeByte(EE_BYTE_LEVELOFFSET, 0);
   EEPROM.writeByte(EE_BYTE_RTBUFFER, 1);
   EEPROM.writeByte(EE_BYTE_EDGEBEEP, 0);
+  EEPROM.writeByte(EE_BYTE_ACCESS_MENU_BEEP, 0);
+  EEPROM.writeByte(EE_BYTE_ACCESS_CONFIRM_BEEP, 1);
+  EEPROM.writeByte(EE_BYTE_ACCESS_BACK_BEEP, 1);
   EEPROM.writeByte(EE_BYTE_SOFTMUTEAM, 1);
   EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, 0);
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, 828);
@@ -4855,6 +4874,9 @@ void endMenu() {
   EEPROM.writeByte(EE_BYTE_LEVELOFFSET, LevelOffset);
   EEPROM.writeByte(EE_BYTE_RTBUFFER, radio.rds.rtbuffer);
   EEPROM.writeByte(EE_BYTE_EDGEBEEP, edgebeep);
+  EEPROM.writeByte(EE_BYTE_ACCESS_MENU_BEEP, accessibilityMenuBeep);
+  EEPROM.writeByte(EE_BYTE_ACCESS_CONFIRM_BEEP, accessibilityConfirmBeep);
+  EEPROM.writeByte(EE_BYTE_ACCESS_BACK_BEEP, accessibilityBackBeep);
   EEPROM.writeByte(EE_BYTE_SOFTMUTEAM, softmuteam);
   EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, softmutefm);
   EEPROM.writeByte(EE_BYTE_LANGUAGE, language);
