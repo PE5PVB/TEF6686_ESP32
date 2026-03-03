@@ -494,6 +494,13 @@ static inline void playAccessibilityBackBeep() {
   if (accessibilityBackBeep) radio.tone(70, -6, 900);
 }
 
+static inline void playAccessibilityExitMenuBeep() {
+  if (!accessibilityBackBeep) return;
+  radio.tone(18, -10, 1350);
+  delay(6);
+  radio.tone(24, -10, 900);
+}
+
 static inline void playAccessibilityDigitVoiceLite(uint8_t digit) {
   if (!accessibilityVoiceLite || digit > 9) return;
 
@@ -2605,7 +2612,6 @@ void ModeButtonPress() {
           doBandSelectionFM();
           doBandSelectionAM();
           screensavertimer = millis();
-          playAccessibilityBackBeep();
           endMenu();
         } else {
           if (submenu) {
@@ -4866,6 +4872,7 @@ void cancelDXScan() {
 }
 
 void endMenu() {
+  playAccessibilityExitMenuBeep();
   radio.clearRDS(fullsearchrds);
   menu = false;
   menuopen = false;
