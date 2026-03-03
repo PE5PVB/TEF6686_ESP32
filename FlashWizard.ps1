@@ -61,39 +61,192 @@ function Get-SortedComPorts {
 function Invoke-Esptool {
     param(
         [Parameter(Mandatory = $true)][string[]]$Arguments,
-        [Parameter(Mandatory = $true)][System.Windows.Forms.TextBox]$LogBox
+        [Parameter(Mandatory = $true)][System.Windows.Forms.TextBox]$LogBox,
+        [Parameter(Mandatory = $true)][System.Windows.Forms.ProgressBar]$ProgressBar,
+        [Parameter(Mandatory = $true)][System.Windows.Forms.Label]$ProgressLabel,
+        [Parameter(Mandatory = $true)][string]$StageName
     )
 
     $exe = Join-Path $scriptDir "esptool.exe"
     $stdOutFile = [System.IO.Path]::GetTempFileName()
     $stdErrFile = [System.IO.Path]::GetTempFileName()
+    $stdOutPos = 0
+    $stdErrPos = 0
+    $stdOutRemainder = ""
+    $stdErrRemainder = ""
+    $highestPercent = 0
 
     try {
         Append-Log -LogBox $LogBox -Text ("Uruchamiam: esptool.exe " + ($Arguments -join " "))
+        Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text ("Postep: " + $StageName + " (inicjalizacja...)") -Indeterminate $true
 
         $process = Start-Process -FilePath $exe `
             -ArgumentList $Arguments `
             -WorkingDirectory $scriptDir `
             -NoNewWindow `
-            -Wait `
             -PassThru `
             -RedirectStandardOutput $stdOutFile `
             -RedirectStandardError $stdErrFile
 
-        $stdout = ""
-        $stderr = ""
-        if (Test-Path $stdOutFile) { $stdout = Get-Content -Raw $stdOutFile }
-        if (Test-Path $stdErrFile) { $stderr = Get-Content -Raw $stdErrFile }
+        while (-not $process.HasExited) {
+            Consume-EsptoolOutput `
+                -Path $stdOutFile `
+                -LastLength ([ref]$stdOutPos) `
+                -Remainder ([ref]$stdOutRemainder) `
+                -LogBox $LogBox `
+                -ProgressBar $ProgressBar `
+                -ProgressLabel $ProgressLabel `
+                -StageName $StageName `
+                -HighestPercent ([ref]$highestPercent)
 
-        if ($stdout) { Append-Log -LogBox $LogBox -Text $stdout.TrimEnd() }
-        if ($stderr) { Append-Log -LogBox $LogBox -Text $stderr.TrimEnd() }
+            Consume-EsptoolOutput `
+                -Path $stdErrFile `
+                -LastLength ([ref]$stdErrPos) `
+                -Remainder ([ref]$stdErrRemainder) `
+                -LogBox $LogBox `
+                -ProgressBar $ProgressBar `
+                -ProgressLabel $ProgressLabel `
+                -StageName $StageName `
+                -HighestPercent ([ref]$highestPercent)
+
+            [System.Windows.Forms.Application]::DoEvents()
+            Start-Sleep -Milliseconds 70
+        }
+
+        $process.WaitForExit()
+
+        Consume-EsptoolOutput `
+            -Path $stdOutFile `
+            -LastLength ([ref]$stdOutPos) `
+            -Remainder ([ref]$stdOutRemainder) `
+            -LogBox $LogBox `
+            -ProgressBar $ProgressBar `
+            -ProgressLabel $ProgressLabel `
+            -StageName $StageName `
+            -HighestPercent ([ref]$highestPercent) `
+            -FlushRemainder
+
+        Consume-EsptoolOutput `
+            -Path $stdErrFile `
+            -LastLength ([ref]$stdErrPos) `
+            -Remainder ([ref]$stdErrRemainder) `
+            -LogBox $LogBox `
+            -ProgressBar $ProgressBar `
+            -ProgressLabel $ProgressLabel `
+            -StageName $StageName `
+            -HighestPercent ([ref]$highestPercent) `
+            -FlushRemainder
+
         Append-Log -LogBox $LogBox -Text ("Kod wyjscia: " + $process.ExitCode)
+
+        if ($process.ExitCode -eq 0) {
+            Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text ("Postep: " + $StageName + " (100%)") -Percent 100
+        }
+        else {
+            $finalPercent = $highestPercent
+            if ($finalPercent -lt 0) { $finalPercent = 0 }
+            Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text ("Postep: " + $StageName + " (blad)") -Percent $finalPercent
+        }
 
         return [int]$process.ExitCode
     }
     finally {
         if (Test-Path $stdOutFile) { Remove-Item $stdOutFile -Force -ErrorAction SilentlyContinue }
         if (Test-Path $stdErrFile) { Remove-Item $stdErrFile -Force -ErrorAction SilentlyContinue }
+    }
+}
+
+function Set-ProgressUi {
+    param(
+        [Parameter(Mandatory = $true)][System.Windows.Forms.ProgressBar]$ProgressBar,
+        [Parameter(Mandatory = $true)][System.Windows.Forms.Label]$ProgressLabel,
+        [Parameter(Mandatory = $true)][string]$Text,
+        [int]$Percent = 0,
+        [bool]$Indeterminate = $false
+    )
+
+    if ($Indeterminate) {
+        $ProgressBar.Style = [System.Windows.Forms.ProgressBarStyle]::Marquee
+        $ProgressBar.MarqueeAnimationSpeed = 25
+    }
+    else {
+        $ProgressBar.Style = [System.Windows.Forms.ProgressBarStyle]::Continuous
+        $ProgressBar.MarqueeAnimationSpeed = 0
+        $value = [Math]::Min([Math]::Max($Percent, 0), 100)
+        $ProgressBar.Value = $value
+    }
+
+    $ProgressLabel.Text = $Text
+    [System.Windows.Forms.Application]::DoEvents()
+}
+
+function Update-ProgressFromLine {
+    param(
+        [Parameter(Mandatory = $true)][string]$Line,
+        [Parameter(Mandatory = $true)][System.Windows.Forms.ProgressBar]$ProgressBar,
+        [Parameter(Mandatory = $true)][System.Windows.Forms.Label]$ProgressLabel,
+        [Parameter(Mandatory = $true)][string]$StageName,
+        [Parameter(Mandatory = $true)][ref]$HighestPercent
+    )
+
+    if ($Line -notmatch '\((\d{1,3})\s*%\)') { return }
+    $percent = [Math]::Min([Math]::Max([int]$Matches[1], 0), 100)
+    if ($percent -le $HighestPercent.Value) { return }
+
+    $HighestPercent.Value = $percent
+    Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text ("Postep: " + $StageName + " (" + $percent + "%)") -Percent $percent
+}
+
+function Consume-EsptoolOutput {
+    param(
+        [Parameter(Mandatory = $true)][string]$Path,
+        [Parameter(Mandatory = $true)][ref]$LastLength,
+        [Parameter(Mandatory = $true)][ref]$Remainder,
+        [Parameter(Mandatory = $true)][System.Windows.Forms.TextBox]$LogBox,
+        [Parameter(Mandatory = $true)][System.Windows.Forms.ProgressBar]$ProgressBar,
+        [Parameter(Mandatory = $true)][System.Windows.Forms.Label]$ProgressLabel,
+        [Parameter(Mandatory = $true)][string]$StageName,
+        [Parameter(Mandatory = $true)][ref]$HighestPercent,
+        [switch]$FlushRemainder
+    )
+
+    if (-not (Test-Path $Path)) { return }
+
+    $content = Get-Content -Raw -Path $Path -ErrorAction SilentlyContinue
+    if ($null -eq $content) { return }
+    if ($content.Length -le $LastLength.Value -and -not $FlushRemainder) { return }
+
+    $newText = ""
+    if ($content.Length -gt $LastLength.Value) {
+        $newText = $content.Substring($LastLength.Value)
+        $LastLength.Value = $content.Length
+    }
+
+    $combined = $Remainder.Value + $newText
+    if ([string]::IsNullOrEmpty($combined)) { return }
+
+    $parts = $combined -split "`r`n|`n|`r"
+    $endsWithNewline = ($combined -match "(`r`n|`n|`r)$")
+    $lines = @()
+
+    if ($endsWithNewline -or $FlushRemainder) {
+        $lines = $parts
+        $Remainder.Value = ""
+    }
+    else {
+        if ($parts.Count -gt 0) { $Remainder.Value = $parts[-1] } else { $Remainder.Value = "" }
+        if ($parts.Count -gt 1) { $lines = $parts[0..($parts.Count - 2)] }
+    }
+
+    foreach ($line in $lines) {
+        if ([string]::IsNullOrWhiteSpace($line)) { continue }
+        Append-Log -LogBox $LogBox -Text $line
+        Update-ProgressFromLine `
+            -Line $line `
+            -ProgressBar $ProgressBar `
+            -ProgressLabel $ProgressLabel `
+            -StageName $StageName `
+            -HighestPercent $HighestPercent
     }
 }
 
@@ -196,9 +349,24 @@ $lblHint.Location = New-Object System.Drawing.Point(18, 98)
 $lblHint.Size = New-Object System.Drawing.Size(714, 20)
 $form.Controls.Add($lblHint)
 
+$lblProgress = New-Object System.Windows.Forms.Label
+$lblProgress.Text = "Postep: oczekiwanie"
+$lblProgress.Location = New-Object System.Drawing.Point(18, 121)
+$lblProgress.Size = New-Object System.Drawing.Size(150, 20)
+$form.Controls.Add($lblProgress)
+
+$progressFlash = New-Object System.Windows.Forms.ProgressBar
+$progressFlash.Location = New-Object System.Drawing.Point(170, 118)
+$progressFlash.Size = New-Object System.Drawing.Size(562, 23)
+$progressFlash.Minimum = 0
+$progressFlash.Maximum = 100
+$progressFlash.Style = [System.Windows.Forms.ProgressBarStyle]::Continuous
+$progressFlash.Value = 0
+$form.Controls.Add($progressFlash)
+
 $txtLog = New-Object System.Windows.Forms.TextBox
-$txtLog.Location = New-Object System.Drawing.Point(18, 125)
-$txtLog.Size = New-Object System.Drawing.Size(714, 390)
+$txtLog.Location = New-Object System.Drawing.Point(18, 150)
+$txtLog.Size = New-Object System.Drawing.Size(714, 365)
 $txtLog.Multiline = $true
 $txtLog.ScrollBars = "Vertical"
 $txtLog.ReadOnly = $true
@@ -254,7 +422,12 @@ function Run-FormatStep {
             "0x10000", "format_Spiffs.ino.bin"
         )
 
-        $code = Invoke-Esptool -Arguments $args -LogBox $txtLog
+        $code = Invoke-Esptool `
+            -Arguments $args `
+            -LogBox $txtLog `
+            -ProgressBar $progressFlash `
+            -ProgressLabel $lblProgress `
+            -StageName "Formatowanie"
         if ($code -ne 0) {
             [System.Windows.Forms.MessageBox]::Show(
                 "Formatowanie nieudane. Sprawdz port COM i tryb BOOT.",
@@ -320,7 +493,12 @@ function Run-FlashStep {
             Append-Log -LogBox $txtLog -Text "SPIFFS pominiety (brak pliku)."
         }
 
-        $code = Invoke-Esptool -Arguments $args -LogBox $txtLog
+        $code = Invoke-Esptool `
+            -Arguments $args `
+            -LogBox $txtLog `
+            -ProgressBar $progressFlash `
+            -ProgressLabel $lblProgress `
+            -StageName "Wgrywanie softu"
         if ($code -ne 0) {
             [System.Windows.Forms.MessageBox]::Show(
                 "Wgrywanie nieudane. Sprawdz port COM i tryb BOOT.",
