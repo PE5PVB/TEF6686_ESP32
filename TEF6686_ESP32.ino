@@ -560,6 +560,12 @@ static inline void playAccessibilityBWVoiceLite() {
   }
 }
 
+static inline void playAccessibilityStereoModeVoiceLite() {
+  if (!accessibilityVoiceLite) return;
+  // Distinct cues: lower for MONO, higher for STEREO.
+  radio.tone(20, -10, (StereoToggle ? 1560 : 860));
+}
+
 static inline void playAccessibilityBandVoiceLiteImmediatePreview() {
   if (!accessibilityVoiceLite) return;
 
@@ -2607,6 +2613,7 @@ void doStereoToggle() {
     Stereostatusold = false;
     StereoToggle = true;
   }
+  playAccessibilityStereoModeVoiceLite();
   EEPROM.writeByte(EE_BYTE_STEREO, StereoToggle);
   EEPROM.commit();
 }
