@@ -561,6 +561,22 @@ static inline void playAccessibilityBWVoiceLite() {
   }
 }
 
+static inline void playAccessibilityBWSelectorCursorVoiceLite() {
+  if (!accessibilityVoiceLite) return;
+
+  if (band < BAND_GAP) {
+    // FM/OIRT selector slots: 1..16 BW, 17 Auto, 18 iMS, 19 EQ, 20 OK
+    uint8_t slot = 0;
+    if (BWsettemp == 20) slot = 19;
+    else if (BWsettemp >= 1 && BWsettemp <= 19) slot = BWsettemp - 1;
+    playAccessibilityVoiceLitePosition(slot, 20, 740, 2300, 18);
+  } else {
+    // AM selector slots: 1..4 BW, 20 OK
+    uint8_t slot = (BWsettemp == 20) ? 4 : ((BWsettemp >= 1 && BWsettemp <= 4) ? (BWsettemp - 1) : 0);
+    playAccessibilityVoiceLitePosition(slot, 5, 740, 2300, 18);
+  }
+}
+
 static inline void playAccessibilityStereoModeVoiceLite() {
   if (!accessibilityVoiceLite) return;
   // Distinct cues: lower for MONO, higher for STEREO.
@@ -2668,6 +2684,7 @@ void BWButtonPress() {
           freq_in = 0;
           BWtune = true;
           BWtemp = BWset;
+          playAccessibilityBWSelectorCursorVoiceLite();
         } else {
           if (band == BAND_FM || band == BAND_OIRT) {
             doStereoToggle();
@@ -2675,6 +2692,7 @@ void BWButtonPress() {
             BuildBWSelector();
             freq_in = 0;
             BWtune = true;
+            playAccessibilityBWSelectorCursorVoiceLite();
           }
         }
       }
@@ -4184,6 +4202,7 @@ void doBWtuneDown() {
     if (BWsettemp > 4 && BWsettemp < 20) BWsettemp = 4; else if (BWsettemp == 0) BWsettemp = 20;
     drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsAM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp ? true : false), true);
   }
+  playAccessibilityBWSelectorCursorVoiceLite();
 }
 
 void doBWtuneUp() {
@@ -4199,6 +4218,7 @@ void doBWtuneUp() {
     if (BWsettemp > 4 && BWsettemp < 20) BWsettemp = 20; else if (BWsettemp > 20) BWsettemp = 1;
     drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsAM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp ? true : false), true);
   }
+  playAccessibilityBWSelectorCursorVoiceLite();
 }
 
 void doTuneMode() {
