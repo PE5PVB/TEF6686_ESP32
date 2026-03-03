@@ -4793,8 +4793,8 @@ void showMenuOpenTouchButtons() {
 }
 
 void DoMenu() {
-  // Confirm tone only when entering an option, not when confirming inside open popup.
-  if (!menuopen) playAccessibilityConfirmBeep();
+  const bool enteringSubmenuWithVoiceLite = (!menuopen && menupage == INDEX && accessibilityVoiceLite);
+  if (!menuopen && !enteringSubmenuWithVoiceLite) playAccessibilityConfirmBeep();
 
   if (!menuopen) {
     if (menupage != INDEX) {
