@@ -517,6 +517,30 @@ static inline void playAccessibilityDigitVoiceLite(uint8_t digit) {
   radio.tone(22, -10, frequency);
 }
 
+static inline void playAccessibilityVoiceLitePosition(uint8_t pos, uint8_t count, uint16_t minFreq, uint16_t maxFreq, uint8_t durationMs) {
+  if (!accessibilityVoiceLite || count == 0) return;
+  if (pos >= count) pos = count - 1;
+  uint16_t frequency = minFreq;
+  if (count > 1) {
+    frequency = minFreq + static_cast<uint16_t>(((uint32_t)(maxFreq - minFreq) * pos) / (count - 1));
+  }
+  radio.tone(durationMs, -10, frequency);
+}
+
+static inline void playAccessibilityMemoryPosVoiceLite() {
+  playAccessibilityVoiceLitePosition(memorypos, EE_PRESETS_CNT, 640, 2080, 22);
+}
+
+static inline void playAccessibilityBandVoiceLite() {
+  uint8_t slot = (band < BAND_GAP) ? band : (band - 1);
+#ifdef HAS_AIR_BAND
+  const uint8_t count = 6;
+#else
+  const uint8_t count = 5;
+#endif
+  playAccessibilityVoiceLitePosition(slot, count, 700, 2200, 24);
+}
+
 void setup() {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
   gpio_set_drive_capability((gpio_num_t) 5, GPIO_DRIVE_CAP_0);
@@ -2904,6 +2928,7 @@ void KeyUp() {
                 }
               }
             }
+            playAccessibilityMemoryPosVoiceLite();
             if (!memorystore) {
               DoMemoryPosTune();
             } else {
@@ -2972,6 +2997,7 @@ void KeyDown() {
                 }
               }
             }
+            playAccessibilityMemoryPosVoiceLite();
             if (!memorystore) {
               DoMemoryPosTune();
             } else {
@@ -5257,6 +5283,7 @@ void doBandToggle() {
     radio.clearRDS(fullsearchrds);
     StoreFrequency();
     SelectBand();
+    playAccessibilityBandVoiceLite();
     if (XDRGTKUSB || XDRGTKTCP) {
       if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n");
       else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n");
