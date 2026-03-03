@@ -494,6 +494,15 @@ static inline void playAccessibilityBackBeep() {
   if (accessibilityBackBeep) radio.tone(70, -6, 900);
 }
 
+static inline void playAccessibilityDigitVoiceLite(uint8_t digit) {
+  if (!accessibilityVoiceLite || digit > 9) return;
+
+  const uint16_t minFreq = 620;
+  const uint16_t maxFreq = 2060;
+  const uint16_t frequency = minFreq + static_cast<uint16_t>(((uint32_t)(maxFreq - minFreq) * digit) / 9);
+  radio.tone(22, -10, frequency);
+}
+
 void setup() {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
   gpio_set_drive_capability((gpio_num_t) 5, GPIO_DRIVE_CAP_0);
@@ -5539,6 +5548,7 @@ void NumpadProcess(int num) {
     } else {
       if (freq_in / 10000 == 0) {
         freq_in = freq_in * 10 + num;
+        if (num >= 0 && num <= 9) playAccessibilityDigitVoiceLite(static_cast<uint8_t>(num));
       }
       ShowNum(freq_in);
     }
