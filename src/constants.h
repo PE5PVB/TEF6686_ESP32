@@ -36,6 +36,7 @@
 #define XTAL_2V_ADC                 2250
 #define XTAL_ADC_TOL                300
 
+#define LANGUAGE_POL                2
 #define LANGUAGE_CHS                14
 
 #define FREQ_MW_STEP_9K             9
@@ -231,9 +232,9 @@
 #define EE_CHECKBYTE_VALUE            20     // 0 ~ 255,add new entry, change for new value
 #define EE_PRESETS_FREQUENCY          0     // Default value when memory channel should be skipped!
 #ifdef HAS_AIR_BAND
-#define EE_TOTAL_CNT                  2292  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                  2297  // Total occupied eeprom bytes
 #else
-#define EE_TOTAL_CNT                  2287  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                  2292  // Total occupied eeprom bytes
 #endif
 
 #define EE_PRESETS_BAND_START         0     // 99 * 1 byte
@@ -360,6 +361,17 @@
 #ifdef HAS_AIR_BAND
 #define EE_BYTE_AIRSTEPSIZE           2287
 #define EE_UINT16_FREQUENCY_AIR       2288
+#define EE_BYTE_ACCESS_MENU_BEEP      2292
+#define EE_BYTE_ACCESS_CONFIRM_BEEP   2293
+#define EE_BYTE_ACCESS_BACK_BEEP      2294
+#define EE_BYTE_ACCESS_VOICE_LITE     2295
+#define EE_BYTE_ACCESS_VOICE_ACTIONS  2296
+#else
+#define EE_BYTE_ACCESS_MENU_BEEP      2287
+#define EE_BYTE_ACCESS_CONFIRM_BEEP   2288
+#define EE_BYTE_ACCESS_BACK_BEEP      2289
+#define EE_BYTE_ACCESS_VOICE_LITE     2290
+#define EE_BYTE_ACCESS_VOICE_ACTIONS  2291
 #endif
 // End of EEPROM index defines
 
@@ -384,7 +396,7 @@ enum LONGBANDBUTTONPRESS {
   STANDBY = 0, SCREENOFF
 };
 
-enum menupage {INDEX, MAINSETTINGS, AUDIOSETTINGS, DISPLAYSETTINGS, RDSSETTINGS, FMSETTINGS, AMSETTINGS, CONNECTIVITY, DXMODE, AUTOMEM
+enum menupage {INDEX, MAINSETTINGS, AUDIOSETTINGS, DISPLAYSETTINGS, RDSSETTINGS, FMSETTINGS, AMSETTINGS, CONNECTIVITY, DXMODE, AUTOMEM, ACCESSIBILITY
               };
 
 enum AUTOMEMPIMODES {
