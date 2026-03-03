@@ -83,7 +83,25 @@ static const char* accessibilityVoiceLiteInfo() {
 }
 
 static inline void playAccessibilityNavigateBeep() {
-  if (accessibilityMenuBeep) radio.tone(20, -10, 1800);
+  if (!accessibilityMenuBeep) return;
+
+  const uint16_t minFreq = 650;
+  const uint16_t maxFreq = 2100;
+  uint8_t itemCount = items[menupage];
+  uint8_t itemPos = menuitem;
+
+  if (itemCount == 0) {
+    radio.tone(20, -10, minFreq);
+    return;
+  }
+  if (itemPos >= itemCount) itemPos = itemCount - 1;
+
+  uint16_t frequency = minFreq;
+  if (itemCount > 1) {
+    frequency = minFreq + static_cast<uint16_t>(((uint32_t)(maxFreq - minFreq) * itemPos) / (itemCount - 1));
+  }
+
+  radio.tone(20, -10, frequency);
 }
 
 static inline void playAccessibilityConfirmBeep() {
