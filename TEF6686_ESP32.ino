@@ -538,7 +538,7 @@ static inline void playAccessibilityBandVoiceLite() {
 #else
   const uint8_t count = 5;
 #endif
-  playAccessibilityVoiceLitePosition(slot, count, 700, 2200, 24);
+  playAccessibilityVoiceLitePosition(slot, count, 700, 2200, 14);
 }
 
 void setup() {
@@ -5280,10 +5280,10 @@ uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, ui
 void doBandToggle() {
   if (tunemode != TUNE_MEM) {
     ToggleBand(band);
+    playAccessibilityBandVoiceLite();
     radio.clearRDS(fullsearchrds);
     StoreFrequency();
     SelectBand();
-    playAccessibilityBandVoiceLite();
     if (XDRGTKUSB || XDRGTKTCP) {
       if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n");
       else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n");
