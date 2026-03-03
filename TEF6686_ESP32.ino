@@ -548,6 +548,18 @@ static inline void playAccessibilityBandVoiceLite() {
   playAccessibilityBandVoiceLiteForBand(band);
 }
 
+static inline void playAccessibilityBWVoiceLite() {
+  if (!accessibilityVoiceLite || !BWtune) return;
+
+  if (band < BAND_GAP) {
+    uint8_t slot = (BWset > 16) ? 16 : BWset; // 0..16 (Auto..311 kHz)
+    playAccessibilityVoiceLitePosition(slot, 17, 740, 2300, 18);
+  } else {
+    uint8_t slot = (BWset < 1) ? 0 : ((BWset > 4) ? 3 : (BWset - 1)); // 1..4
+    playAccessibilityVoiceLitePosition(slot, 4, 740, 2300, 18);
+  }
+}
+
 static inline void playAccessibilityBandVoiceLiteImmediatePreview() {
   if (!accessibilityVoiceLite) return;
 
@@ -4058,6 +4070,7 @@ void doBW() {
     EEPROM.writeByte(EE_BYTE_BWSET_AM, BWsetAM);
   }
   updateBW();
+  playAccessibilityBWVoiceLite();
   BWreset = true;
   EEPROM.commit();
 }
