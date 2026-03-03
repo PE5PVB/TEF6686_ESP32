@@ -455,7 +455,6 @@ unsigned long rtplusticker;
 unsigned long rtplustickerhold;
 unsigned long rtticker;
 unsigned long rttickerhold;
-unsigned long rotaryButtonDebounceMs;
 unsigned long rotarytimer;
 unsigned long scantimer;
 unsigned long screensavertimer;
@@ -1425,16 +1424,13 @@ void loop() {
   }
 
   if (digitalRead(ROTARY_BUTTON) == LOW) {
-    if (millis() - rotaryButtonDebounceMs >= 120) {
-      tottimer = millis();
-      if (screensavertriggered) {
-        WakeToSleep(REVERSE);
-      } else {
-        if (!afscreen && !rdsstatscreen) ButtonPress();
-      }
-      rotaryButtonDebounceMs = millis();
+    tottimer = millis();
+    if (screensavertriggered) {
+      WakeToSleep(REVERSE);
+      while (digitalRead(ROTARY_BUTTON) == LOW);
+    } else {
+      if (!afscreen && !rdsstatscreen) ButtonPress();
     }
-    while (digitalRead(ROTARY_BUTTON) == LOW) delay(1);
   }
 
   if (digitalRead(MODEBUTTON) == LOW) {
