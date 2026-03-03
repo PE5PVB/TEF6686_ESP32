@@ -569,11 +569,11 @@ static inline void playAccessibilityStereoModeVoiceLite() {
 static inline void playStartupTriadBeep() {
   if (!edgebeep) return;
   // C major triad for a softer startup cue.
-  radio.tone(36, -8, 1047);
-  delay(10);
-  radio.tone(36, -8, 1319);
-  delay(10);
-  radio.tone(52, -8, 1568);
+  radio.tone(72, -8, 1047);
+  delay(20);
+  radio.tone(72, -8, 1319);
+  delay(20);
+  radio.tone(104, -8, 1568);
 }
 
 static inline void playAccessibilityBandVoiceLiteImmediatePreview() {
