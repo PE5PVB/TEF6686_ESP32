@@ -566,6 +566,16 @@ static inline void playAccessibilityStereoModeVoiceLite() {
   radio.tone(20, -10, (StereoToggle ? 1560 : 860));
 }
 
+static inline void playStartupTriadBeep() {
+  if (!edgebeep) return;
+  // C major triad for a softer startup cue.
+  radio.tone(36, -8, 1047);
+  delay(10);
+  radio.tone(36, -8, 1319);
+  delay(10);
+  radio.tone(52, -8, 1568);
+}
+
 static inline void playAccessibilityBandVoiceLiteImmediatePreview() {
   if (!accessibilityVoiceLite) return;
 
@@ -1069,7 +1079,7 @@ void setup() {
 
   setupmode = false;
 
-  if (edgebeep) radio.tone(50, -5, 2000);
+  playStartupTriadBeep();
   if (!usesquelch) radio.setUnMute();
 
   screensavertimer = millis();
