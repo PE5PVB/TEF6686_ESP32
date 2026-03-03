@@ -566,6 +566,11 @@ static inline void playAccessibilityStereoModeVoiceLite() {
   radio.tone(20, -10, (StereoToggle ? 1560 : 860));
 }
 
+static inline void playAccessibilityFreqEnterVoiceLite(bool manualEnter) {
+  if (!accessibilityVoiceLite || !manualEnter) return;
+  radio.tone(120, -8, 1420);
+}
+
 static inline void playStartupTriadBeep() {
   if (!edgebeep) return;
   // C major triad for a softer startup cue.
@@ -5619,6 +5624,8 @@ void NumpadProcess(int num) {
       BuildMenu();
     } else if (num == 13) {
       if (freq_in != 0) {
+        bool manualEnter = (millis() - keypadtimer) < 1000;
+        playAccessibilityFreqEnterVoiceLite(manualEnter);
         if (TuneFreq(freq_in)) {
           if (XDRGTKUSB || XDRGTKTCP) {
             if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n"); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n"); else DataPrint("M1\nT" + String(frequency_AM) + "\n");
