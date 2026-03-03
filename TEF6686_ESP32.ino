@@ -491,14 +491,21 @@ WiFiUDP Udp;
 WebServer webserver(80);
 
 static inline void playAccessibilityBackBeep() {
-  if (accessibilityBackBeep) radio.tone(70, -6, 900);
+  if (accessibilityBackBeep) radio.tone(45, -8, 980);
+}
+
+static inline void playAccessibilityEnterMenuBeep() {
+  if (!accessibilityBackBeep) return;
+  radio.tone(55, -9, 780);
+  delay(10);
+  radio.tone(95, -9, 1260);
 }
 
 static inline void playAccessibilityExitMenuBeep() {
   if (!accessibilityBackBeep) return;
-  radio.tone(18, -10, 1350);
-  delay(6);
-  radio.tone(24, -10, 900);
+  radio.tone(95, -9, 1260);
+  delay(10);
+  radio.tone(55, -9, 760);
 }
 
 static inline void playAccessibilityDigitVoiceLite(uint8_t digit) {
@@ -2585,6 +2592,7 @@ void ModeButtonPress() {
 #endif
             PSSprite.unloadFont();
             if (language == LANGUAGE_CHS) PSSprite.loadFont(FONT16_CHS); else PSSprite.loadFont(FONT16);
+            playAccessibilityEnterMenuBeep();
             BuildMenu();
             freq_in = 0;
             menu = true;
@@ -5471,6 +5479,7 @@ void NumpadProcess(int num) {
       menu = true;
       PSSprite.unloadFont();
       if (language == LANGUAGE_CHS) PSSprite.loadFont(FONT16_CHS); else PSSprite.loadFont(FONT16);
+      playAccessibilityEnterMenuBeep();
       BuildMenu();
     } else if (num == 13) {
       if (freq_in > 0 && freq_in <= EE_PRESETS_CNT) {
@@ -5523,6 +5532,7 @@ void NumpadProcess(int num) {
       menu = true;
       PSSprite.unloadFont();
       if (language == LANGUAGE_CHS) PSSprite.loadFont(FONT16_CHS); else PSSprite.loadFont(FONT16);
+      playAccessibilityEnterMenuBeep();
       BuildMenu();
     } else if (num == 13) {
       if (freq_in != 0) {
