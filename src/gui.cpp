@@ -62,6 +62,10 @@ static const char* accessibilityBackLabel() {
   return currentAccessibilityText().backerror;
 }
 
+static const char* accessibilityVoiceLiteLabel() {
+  return "Voice Lite";
+}
+
 static const char* accessibilityNavigationInfo() {
   return accessibilityNavigationLabel();
 }
@@ -74,6 +78,10 @@ static const char* accessibilityBackInfo() {
   return accessibilityBackLabel();
 }
 
+static const char* accessibilityVoiceLiteInfo() {
+  return "Voice-like menu cue tones";
+}
+
 static inline void playAccessibilityNavigateBeep() {
   if (accessibilityMenuBeep) radio.tone(20, -10, 1800);
 }
@@ -84,6 +92,23 @@ static inline void playAccessibilityConfirmBeep() {
 
 static inline void playAccessibilityBackBeep() {
   if (accessibilityBackBeep) radio.tone(70, -6, 900);
+}
+
+static inline void playVoiceLiteMenuHint() {
+  if (!accessibilityVoiceLite || !menu || !submenu || menuopen) return;
+
+  uint8_t slot = menuitem + 1;
+  radio.tone(12, -12, static_cast<uint16_t>(700 + (menupage * 55)));
+
+  if (slot > 5) {
+    radio.tone(12, -12, 550);
+    slot -= 5;
+  }
+
+  for (uint8_t i = 0; i < slot; i++) {
+    radio.tone(10, -10, 1650);
+    delay(5);
+  }
 }
 
 void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
@@ -1307,6 +1332,16 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString(String(memstoppos + 1, DEC), 298, 2);
           break;
+
+        case ACCESSIBILITY:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(accessibilityVoiceLiteLabel(), 6, 2);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((accessibilityVoiceLite ? textUI(31) : textUI(30)), 298, 2);
+          break;
       }
       break;
 
@@ -2452,6 +2487,15 @@ void ShowOneButton(byte position, byte item, bool selected) {
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           PSSprite.drawString(String(memstoppos + 1, DEC), 75, 15);
           break;
+
+        case ACCESSIBILITY:
+          PSSprite.setTextDatum(TC_DATUM);
+          PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          PSSprite.drawString(shortLine(removeNewline(accessibilityVoiceLiteLabel())), 75, 1);
+
+          PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          PSSprite.drawString((accessibilityVoiceLite ? textUI(31) : textUI(30)), 75, 15);
+          break;
       }
       break;
 
@@ -3083,6 +3127,8 @@ void BuildMenu() {
     ShowOneLine(ITEM10, 9, (menuoption == ITEM10 ? true : false));
   }
 
+  if (submenu) playVoiceLiteMenuHint();
+
   analogWrite(SMETERPIN, 0);
 }
 
@@ -3395,6 +3441,7 @@ void MenuUpDown(bool dir) {
 
     if (hardwaremodel == PORTABLE_TOUCH_ILI9341) ShowOneButton(menuoption, menuitem, true); else ShowOneLine(menuoption, menuitem, true);
     playAccessibilityNavigateBeep();
+    playVoiceLiteMenuHint();
   } else {
     switch (CurrentTheme) {
       case 7: OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground_wo); break;
@@ -4695,6 +4742,12 @@ void MenuUpDown(bool dir) {
             OneBigLineSprite.drawString((accessibilityBackBeep ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
+
+          case ITEM5:
+            accessibilityVoiceLite = !accessibilityVoiceLite;
+            OneBigLineSprite.drawString((accessibilityVoiceLite ? textUI(31) : textUI(30)), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
         }
         break;
     }
@@ -5858,6 +5911,13 @@ void DoMenu() {
               tft.drawRoundRect(240, 36, 60, 40, 6, ActiveColor);
               tftPrint(ACENTER, "OK", 270, 44, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
             }
+            break;
+
+          case ITEM5:
+            Infoboxprint(accessibilityVoiceLiteInfo());
+
+            OneBigLineSprite.drawString((accessibilityVoiceLite ? textUI(31) : textUI(30)), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
             break;
         }
         break;
