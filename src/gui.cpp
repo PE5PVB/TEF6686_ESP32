@@ -117,18 +117,22 @@ static inline void playAccessibilityBackBeep() {
 static inline void playVoiceLiteMenuHint() {
   if (!accessibilityVoiceLite || !menu || !submenu || menuopen) return;
 
-  uint8_t slot = menuitem + 1;
-  radio.tone(12, -12, static_cast<uint16_t>(700 + (menupage * 55)));
+  const uint16_t minFreq = 760;
+  const uint16_t maxFreq = 2200;
+  uint8_t itemCount = items[menupage];
+  uint8_t itemPos = menuitem;
 
-  if (slot > 5) {
-    radio.tone(12, -12, 550);
-    slot -= 5;
+  if (itemCount == 0) {
+    radio.tone(22, -10, minFreq);
+    return;
   }
+  if (itemPos >= itemCount) itemPos = itemCount - 1;
 
-  for (uint8_t i = 0; i < slot; i++) {
-    radio.tone(10, -10, 1650);
-    delay(5);
+  uint16_t frequency = minFreq;
+  if (itemCount > 1) {
+    frequency = minFreq + static_cast<uint16_t>(((uint32_t)(maxFreq - minFreq) * itemPos) / (itemCount - 1));
   }
+  radio.tone(24, -10, frequency);
 }
 
 void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
