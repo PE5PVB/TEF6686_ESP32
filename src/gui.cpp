@@ -4793,8 +4793,7 @@ void showMenuOpenTouchButtons() {
 }
 
 void DoMenu() {
-  // Confirm tone only when entering an option, not when confirming inside open popup.
-  if (!menuopen) playAccessibilityConfirmBeep();
+  playAccessibilityConfirmBeep();
 
   if (!menuopen) {
     if (menupage != INDEX) {
