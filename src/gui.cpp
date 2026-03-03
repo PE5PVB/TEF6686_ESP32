@@ -1,4 +1,4 @@
-#include "gui.h"
+﻿#include "gui.h"
 #include "constants.h"
 #include <WiFi.h>
 #include <Wire.h>
@@ -13,34 +13,35 @@ struct AccessibilityTextSet {
   const char* navigation;
   const char* confirm;
   const char* backerror;
+  const char* basicCues;
+  const char* actionCues;
 };
 
 // Keep accessibility labels localized without touching the large base language table.
 static const AccessibilityTextSet kAccessibilityText[] = {
-  { "Accessibility", "Menu beep", "Confirm beep", "Back/error beep" },                 // English
-  { "Toegankelijkheid", "Menu piep", "Bevestig piep", "Terug/fout piep" },              // Dutch
-  { "Dostepnosc", "Beep menu", "Beep OK", "Beep wstecz/blad" },                          // Polish
-  { "Pristupacnost", "Zvuk izbornika", "Zvuk potvrde", "Zvuk nazad/greska" },            // Croatian
-  { "Προσβασιμότητα", "Ήχος μενού", "Ήχος επιβεβαίωσης", "Ήχος πίσω/σφάλμα" },           // Greek
-  { "Accesibilitate", "Bip meniu", "Bip confirmare", "Bip inapoi/eroare" },              // Romanian
-  { "Barrierefreiheit", "Menu-Piepton", "Bestaetigungs-Piepton", "Zurueck/Fehler-Piepton" }, // German
-  { "Pristupnost", "Pipnuti menu", "Pipnuti potvrzeni", "Pipnuti zpet/chyba" },          // Czech
-  { "Akadalymentesites", "Menu csippanas", "Megerosites csippanas", "Vissza/hiba csippanas" }, // Hungarian
-  { "Accessibilite", "Bip menu", "Bip confirmation", "Bip retour/erreur" },              // French
-  { "Достъпност", "Звук меню", "Звук потвърждение", "Звук назад/грешка" },               // Bulgarian
-  { "Доступность", "Звук меню", "Звук подтверждения", "Звук назад/ошибка" },             // Russian
-  { "Доступність", "Звук меню", "Звук підтвердження", "Звук назад/помилка" },            // Ukrainian
-  { "Accessibilita", "Bip menu", "Bip conferma", "Bip indietro/errore" },                // Italian
-  { "无障碍", "菜单提示音", "确认提示音", "返回/错误提示音" },                               // Simplified Chinese
-  { "Tilgjengelighet", "Menylyd", "Bekreftelseslyd", "Tilbake/feil-lyd" },                // Norwegian
-  { "Accesibilidad", "Pitido menu", "Pitido confirmar", "Pitido atras/error" },          // Spanish
-  { "Acessibilidade", "Bip menu", "Bip confirmar", "Bip voltar/erro" },                   // Portuguese
-  { "Pristupacnost", "Zvuk menija", "Zvuk potvrde", "Zvuk nazad/greska" },                // Serbian
-  { "Esteettomyys", "Valikkoaani", "Vahvistusaani", "Takaisin/virheaani" },               // Finnish
-  { "Tilgaengelighed", "Menu bip", "Bekraeftelsesbip", "Tilbage/fejl-bip" },              // Danish
-  { "Tillganglighet", "Menypip", "Bekraftelsepip", "Tillbaka/fel-pip" }                   // Swedish
+  { "Accessibility", "Menu beep", "Confirm beep", "Back/error beep", "Basic cues", "Action cues" },                  // English
+  { "Toegankelijkheid", "Menu piep", "Bevestig piep", "Terug/fout piep", "Basistonen", "Actietonen" },               // Dutch
+  { "Dostepnosc", "Beep menu", "Beep OK", "Beep wstecz/blad", "Sygnaly podstawowe", "Sygnaly akcji" },               // Polish
+  { "Pristupacnost", "Zvuk izbornika", "Zvuk potvrde", "Zvuk nazad/greska", "Osnovni zvukovi", "Zvukovi akcija" },   // Croatian
+  { "Prosvasimotita", "Ihos menou", "Ihos epivevaiosis", "Ihos piso/sfalma", "Vasikoi ihoi", "Ihoi energeion" },     // Greek
+  { "Accesibilitate", "Bip meniu", "Bip confirmare", "Bip inapoi/eroare", "Sunete de baza", "Sunete de actiune" },   // Romanian
+  { "Barrierefreiheit", "Menu-Piepton", "Bestaetigungs-Piepton", "Zurueck/Fehler-Piepton", "Grundtoene", "Aktionstoene" }, // German
+  { "Pristupnost", "Pipnuti menu", "Pipnuti potvrzeni", "Pipnuti zpet/chyba", "Zakladni zvuky", "Zvuky akci" },      // Czech
+  { "Akadalymentesites", "Menu csippanas", "Megerosites csippanas", "Vissza/hiba csippanas", "Alap hangok", "Muveleti hangok" }, // Hungarian
+  { "Accessibilite", "Bip menu", "Bip confirmation", "Bip retour/erreur", "Sons de base", "Sons d action" },         // French
+  { "Dostapnost", "Zvuk menu", "Zvuk potvarzhdenie", "Zvuk nazad/greshka", "Osnovni zvuci", "Zvuci deistviya" },     // Bulgarian
+  { "Dostupnost", "Zvuk menyu", "Zvuk podtverzhdeniya", "Zvuk nazad/oshibka", "Bazovye zvuki", "Zvuki deystviy" },   // Russian
+  { "Dostupnist", "Zvuk menyu", "Zvuk pidtverdzhennya", "Zvuk nazad/pomylka", "Bazovi zvuky", "Zvuky diy" },         // Ukrainian
+  { "Accessibilita", "Bip menu", "Bip conferma", "Bip indietro/errore", "Suoni base", "Suoni azioni" },              // Italian
+  { "Wuzhangai", "Caidan tishi yin", "Queren tishi yin", "Fanhu i cuowu yin", "Jiben tishi yin", "Dongzuo tishi yin" }, // Simplified Chinese
+  { "Tilgjengelighet", "Menylyd", "Bekreftelseslyd", "Tilbake/feil-lyd", "Grunnlyder", "Handlingslyder" },            // Norwegian
+  { "Accesibilidad", "Pitido menu", "Pitido confirmar", "Pitido atras/error", "Sonidos basicos", "Sonidos de accion" }, // Spanish
+  { "Acessibilidade", "Bip menu", "Bip confirmar", "Bip voltar/erro", "Sons basicos", "Sons de acao" },               // Portuguese
+  { "Pristupacnost", "Zvuk menija", "Zvuk potvrde", "Zvuk nazad/greska", "Osnovni zvukovi", "Zvukovi akcija" },       // Serbian
+  { "Esteettomyys", "Valikkoaani", "Vahvistusaani", "Takaisin/virheaani", "Perusaanet", "Toimintaaanet" },            // Finnish
+  { "Tilgaengelighed", "Menu bip", "Bekraeftelsesbip", "Tilbage/fejl-bip", "Grundlyde", "Handlingslyde" },            // Danish
+  { "Tillganglighet", "Menypip", "Bekraftelsepip", "Tillbaka/fel-pip", "Grundljud", "Handlingsljud" }                 // Swedish
 };
-
 static inline const AccessibilityTextSet& currentAccessibilityText() {
   const size_t langCount = sizeof(kAccessibilityText) / sizeof(kAccessibilityText[0]);
   return kAccessibilityText[(language < langCount) ? language : 0];
@@ -63,7 +64,11 @@ static const char* accessibilityBackLabel() {
 }
 
 static const char* accessibilityVoiceLiteLabel() {
-  return "Voice Lite";
+  return currentAccessibilityText().basicCues;
+}
+
+static const char* accessibilityVoiceLiteActionsLabel() {
+  return currentAccessibilityText().actionCues;
 }
 
 static const char* accessibilityNavigationInfo() {
@@ -79,7 +84,11 @@ static const char* accessibilityBackInfo() {
 }
 
 static const char* accessibilityVoiceLiteInfo() {
-  return "Voice-like menu cue tones";
+  return accessibilityVoiceLiteLabel();
+}
+
+static const char* accessibilityVoiceLiteActionsInfo() {
+  return accessibilityVoiceLiteActionsLabel();
 }
 
 static inline void playAccessibilityNavigateBeep() {
@@ -1158,7 +1167,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           if (StereoLevel != 0) FullLineSprite.drawString(String(StereoLevel, DEC), 258, 2);
           if (StereoLevel != 0) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString((StereoLevel != 0 ? "dBμV" : textUI(30)), 298, 2);
+          FullLineSprite.drawString((StereoLevel != 0 ? "dBÎĽV" : textUI(30)), 298, 2);
           break;
 
         case DISPLAYSETTINGS:
@@ -1260,7 +1269,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("dBµV", 298, 2);
+          FullLineSprite.drawString("dBÂµV", 298, 2);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString(String(fmagc, DEC), 258, 2);
           break;
@@ -1310,7 +1319,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("dBμV", 298, 2);
+          FullLineSprite.drawString("dBÎĽV", 298, 2);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString(String(LowLevelSet, DEC), 258, 2);
           break;
@@ -1384,7 +1393,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("dBµV", 298, 2);
+          FullLineSprite.drawString("dBÂµV", 298, 2);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString(String(amagc, DEC), 258, 2);
           break;
@@ -1398,7 +1407,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           if (HighCutOffset != 0) FullLineSprite.drawString(String(HighCutOffset, DEC), 258, 2);
           if (HighCutOffset != 0) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString((HighCutOffset != 0 ? "dBμV" : textUI(30)), 298, 2);
+          FullLineSprite.drawString((HighCutOffset != 0 ? "dBÎĽV" : textUI(30)), 298, 2);
           break;
 
         case DISPLAYSETTINGS:
@@ -1484,6 +1493,16 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString((mempionly ? textUI(31) : textUI(30)), 298, 2);
           break;
+
+        case ACCESSIBILITY:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(accessibilityVoiceLiteActionsLabel(), 6, 2);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((accessibilityVoiceLiteActions ? textUI(31) : textUI(30)), 298, 2);
+          break;
       }
       break;
 
@@ -1520,7 +1539,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           if (fmdeemphasis != DEEMPHASIS_NONE) FullLineSprite.drawString(String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_75), DEC), 258, 2);
           if (fmdeemphasis != DEEMPHASIS_NONE) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString((fmdeemphasis != DEEMPHASIS_NONE ? "μs" : textUI(30)), 298, 2);
+          FullLineSprite.drawString((fmdeemphasis != DEEMPHASIS_NONE ? "ÎĽs" : textUI(30)), 298, 2);
           break;
 
         case DISPLAYSETTINGS:
@@ -2306,7 +2325,7 @@ void ShowOneButton(byte position, byte item, bool selected) {
             PSSprite.drawString(String(StereoLevel, DEC), 73, 15);
             PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             PSSprite.setTextDatum(TL_DATUM);
-            PSSprite.drawString("dBμV", 77, 15);
+            PSSprite.drawString("dBÎĽV", 77, 15);
           }
           break;
 
@@ -2412,7 +2431,7 @@ void ShowOneButton(byte position, byte item, bool selected) {
 
           PSSprite.setTextDatum(TL_DATUM);
           PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString("dBµV", 77, 15);
+          PSSprite.drawString("dBÂµV", 77, 15);
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           PSSprite.setTextDatum(TR_DATUM);
           PSSprite.drawString(String(fmagc, DEC), 73, 15);
@@ -2462,7 +2481,7 @@ void ShowOneButton(byte position, byte item, bool selected) {
 
           PSSprite.setTextDatum(TL_DATUM);
           PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString("dBμV", 77, 15);
+          PSSprite.drawString("dBÎĽV", 77, 15);
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           PSSprite.setTextDatum(TR_DATUM);
           PSSprite.drawString(String(LowLevelSet, DEC), 73, 15);
@@ -2538,7 +2557,7 @@ void ShowOneButton(byte position, byte item, bool selected) {
 
           PSSprite.setTextDatum(TL_DATUM);
           PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString("dBµV", 77, 15);
+          PSSprite.drawString("dBÂµV", 77, 15);
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           PSSprite.setTextDatum(TR_DATUM);
           PSSprite.drawString(String(amagc, DEC), 73, 15);
@@ -2557,7 +2576,7 @@ void ShowOneButton(byte position, byte item, bool selected) {
             PSSprite.drawString(String(HighCutOffset, DEC), 73, 15);
             PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             PSSprite.setTextDatum(TL_DATUM);
-            PSSprite.drawString("dBμV", 77, 15);
+            PSSprite.drawString("dBÎĽV", 77, 15);
           }
           break;
 
@@ -2637,6 +2656,15 @@ void ShowOneButton(byte position, byte item, bool selected) {
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           PSSprite.drawString((mempionly ? textUI(31) : textUI(30)), 75, 15);
           break;
+
+        case ACCESSIBILITY:
+          PSSprite.setTextDatum(TC_DATUM);
+          PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          PSSprite.drawString(shortLine(removeNewline(accessibilityVoiceLiteActionsLabel())), 75, 1);
+
+          PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          PSSprite.drawString((accessibilityVoiceLiteActions ? textUI(31) : textUI(30)), 75, 15);
+          break;
       }
       break;
 
@@ -2676,7 +2704,7 @@ void ShowOneButton(byte position, byte item, bool selected) {
             PSSprite.drawString(String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_75), DEC), 73, 15);
             PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             PSSprite.setTextDatum(TL_DATUM);
-            PSSprite.drawString("μs", 77, 15);
+            PSSprite.drawString("ÎĽs", 77, 15);
           }
           break;
 
@@ -3564,7 +3592,7 @@ void MenuUpDown(bool dir) {
             }
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("dBµV", 155, 0);
+            OneBigLineSprite.drawString("dBÂµV", 155, 0);
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString(String(fmagc), 135, 0);
@@ -3582,7 +3610,7 @@ void MenuUpDown(bool dir) {
             }
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("dBµV", 155, 0);
+            OneBigLineSprite.drawString("dBÂµV", 155, 0);
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString(String(amagc), 135, 0);
@@ -3756,7 +3784,7 @@ void MenuUpDown(bool dir) {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (StereoLevel != 0) OneBigLineSprite.drawString("dBµV", 155, 0);
+            if (StereoLevel != 0) OneBigLineSprite.drawString("dBÂµV", 155, 0);
             if (StereoLevel != 0) OneBigLineSprite.setTextDatum(TR_DATUM); else OneBigLineSprite.setTextDatum(TC_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString((StereoLevel != 0 ? String(StereoLevel, DEC) : textUI(30)), 135, 0);
@@ -3799,7 +3827,7 @@ void MenuUpDown(bool dir) {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (HighCutOffset != 0) OneBigLineSprite.drawString("dBµV", 155, 0);
+            if (HighCutOffset != 0) OneBigLineSprite.drawString("dBÂµV", 155, 0);
             if (HighCutOffset != 0) OneBigLineSprite.setTextDatum(TR_DATUM); else OneBigLineSprite.setTextDatum(TC_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString((HighCutOffset != 0 ? String(HighCutOffset, DEC) : textUI(30)), 135, 0);
@@ -3818,7 +3846,7 @@ void MenuUpDown(bool dir) {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (fmdeemphasis != DEEMPHASIS_NONE) OneBigLineSprite.drawString("μs", 155, 0);
+            if (fmdeemphasis != DEEMPHASIS_NONE) OneBigLineSprite.drawString("ÎĽs", 155, 0);
             if (fmdeemphasis != DEEMPHASIS_NONE) OneBigLineSprite.setTextDatum(TR_DATUM); else OneBigLineSprite.setTextDatum(TC_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString((fmdeemphasis != DEEMPHASIS_NONE ? (fmdeemphasis == DEEMPHASIS_50 ? String(FM_DEEMPHASIS_50, DEC) : String(FM_DEEMPHASIS_75, DEC)) : textUI(30)), 135, 0);
@@ -4215,7 +4243,7 @@ void MenuUpDown(bool dir) {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("dBμV", 155, 0);
+            OneBigLineSprite.drawString("dBÎĽV", 155, 0);
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString(String(LowLevelSet, DEC), 135, 0);
@@ -4772,6 +4800,12 @@ void MenuUpDown(bool dir) {
             OneBigLineSprite.drawString((accessibilityVoiceLite ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
+
+          case ITEM6:
+            accessibilityVoiceLiteActions = !accessibilityVoiceLiteActions;
+            OneBigLineSprite.drawString((accessibilityVoiceLiteActions ? textUI(31) : textUI(30)), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
         }
         break;
     }
@@ -4965,7 +4999,7 @@ void DoMenu() {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("dBµV", 155, 0);
+            OneBigLineSprite.drawString("dBÂµV", 155, 0);
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString(String(fmagc), 135, 0);
@@ -4977,7 +5011,7 @@ void DoMenu() {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("dBµV", 155, 0);
+            OneBigLineSprite.drawString("dBÂµV", 155, 0);
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString(String(amagc), 135, 0);
@@ -5101,7 +5135,7 @@ void DoMenu() {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (StereoLevel != 0) OneBigLineSprite.drawString("dBµV", 155, 0);
+            if (StereoLevel != 0) OneBigLineSprite.drawString("dBÂµV", 155, 0);
             if (StereoLevel != 0) OneBigLineSprite.setTextDatum(TR_DATUM); else OneBigLineSprite.setTextDatum(TC_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString((StereoLevel != 0 ? String(StereoLevel, DEC) : textUI(30)), 135, 0);
@@ -5125,7 +5159,7 @@ void DoMenu() {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (HighCutOffset != 0) OneBigLineSprite.drawString("dBµV", 155, 0);
+            if (HighCutOffset != 0) OneBigLineSprite.drawString("dBÂµV", 155, 0);
             if (HighCutOffset != 0) OneBigLineSprite.setTextDatum(TR_DATUM); else OneBigLineSprite.setTextDatum(TC_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString((HighCutOffset != 0 ? String(HighCutOffset, DEC) : textUI(30)), 135, 0);
@@ -5137,7 +5171,7 @@ void DoMenu() {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (fmdeemphasis != DEEMPHASIS_NONE) OneBigLineSprite.drawString("μs", 155, 0);
+            if (fmdeemphasis != DEEMPHASIS_NONE) OneBigLineSprite.drawString("ÎĽs", 155, 0);
             if (fmdeemphasis != DEEMPHASIS_NONE) OneBigLineSprite.setTextDatum(TR_DATUM); else OneBigLineSprite.setTextDatum(TC_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString((fmdeemphasis != DEEMPHASIS_NONE ? (fmdeemphasis == DEEMPHASIS_50 ? String(FM_DEEMPHASIS_50, DEC) : String(FM_DEEMPHASIS_75, DEC)) : textUI(30)), 135, 0);
@@ -5393,7 +5427,7 @@ void DoMenu() {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("dBμV", 155, 0);
+            OneBigLineSprite.drawString("dBÎĽV", 155, 0);
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString(String(LowLevelSet, DEC), 135, 0);
@@ -5945,6 +5979,13 @@ void DoMenu() {
             OneBigLineSprite.drawString((accessibilityVoiceLite ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
+
+          case ITEM6:
+            Infoboxprint(accessibilityVoiceLiteActionsInfo());
+
+            OneBigLineSprite.drawString((accessibilityVoiceLiteActions ? textUI(31) : textUI(30)), 135, 0);
+            OneBigLineSprite.pushSprite(24, 118);
+            break;
         }
         break;
     }
@@ -6077,3 +6118,4 @@ String shortLine(String text) {
   }
   return text;
 }
+

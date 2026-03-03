@@ -30,6 +30,7 @@ extern bool accessibilityMenuBeep;
 extern bool accessibilityConfirmBeep;
 extern bool accessibilityBackBeep;
 extern bool accessibilityVoiceLite;
+extern bool accessibilityVoiceLiteActions;
 extern bool edgebeep;
 extern bool fmsi;
 extern bool fullsearchrds;
