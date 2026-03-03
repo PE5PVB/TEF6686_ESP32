@@ -1249,7 +1249,11 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case ACCESSIBILITY:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(textUI(70)), 6, 2);
+          FullLineSprite.drawString(accessibilityVoiceLiteLabel(), 6, 2);
+
+          FullLineSprite.setTextDatum(TR_DATUM);
+          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          FullLineSprite.drawString((accessibilityVoiceLite ? textUI(31) : textUI(30)), 298, 2);
           break;
       }
       break;
@@ -1369,11 +1373,11 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case ACCESSIBILITY:
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(accessibilityVoiceLiteLabel(), 6, 2);
+          FullLineSprite.drawString(accessibilityVoiceLiteActionsLabel(), 6, 2);
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((accessibilityVoiceLite ? textUI(31) : textUI(30)), 298, 2);
+          FullLineSprite.drawString((accessibilityVoiceLiteActions ? textUI(31) : textUI(30)), 298, 2);
           break;
       }
       break;
@@ -1494,15 +1498,6 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.drawString((mempionly ? textUI(31) : textUI(30)), 298, 2);
           break;
 
-        case ACCESSIBILITY:
-          FullLineSprite.setTextDatum(TL_DATUM);
-          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(accessibilityVoiceLiteActionsLabel(), 6, 2);
-
-          FullLineSprite.setTextDatum(TR_DATUM);
-          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((accessibilityVoiceLiteActions ? textUI(31) : textUI(30)), 298, 2);
-          break;
       }
       break;
 
@@ -1673,6 +1668,12 @@ void ShowOneLine(byte position, byte item, bool selected) {
           }
           break;
 #endif
+
+        case AUDIOSETTINGS:
+          FullLineSprite.setTextDatum(TL_DATUM);
+          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          FullLineSprite.drawString(removeNewline(accessibilityTitle()), 6, 2);
+          break;
 
         case DISPLAYSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
@@ -1851,7 +1852,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
         case INDEX:
           FullLineSprite.setTextDatum(TC_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(accessibilityTitle()), 152, 2);
+          FullLineSprite.drawString(removeNewline(textUI(70)), 152, 2);
           break;
 
         case MAINSETTINGS:
@@ -2411,7 +2412,10 @@ void ShowOneButton(byte position, byte item, bool selected) {
         case ACCESSIBILITY:
           PSSprite.setTextDatum(TC_DATUM);
           PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString(shortLine(removeNewline(textUI(70))), 75, 8);
+          PSSprite.drawString(shortLine(removeNewline(accessibilityVoiceLiteLabel())), 75, 1);
+
+          PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+          PSSprite.drawString((accessibilityVoiceLite ? textUI(31) : textUI(30)), 75, 15);
           break;
       }
       break;
@@ -2534,10 +2538,10 @@ void ShowOneButton(byte position, byte item, bool selected) {
         case ACCESSIBILITY:
           PSSprite.setTextDatum(TC_DATUM);
           PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString(shortLine(removeNewline(accessibilityVoiceLiteLabel())), 75, 1);
+          PSSprite.drawString(shortLine(removeNewline(accessibilityVoiceLiteActionsLabel())), 75, 1);
 
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          PSSprite.drawString((accessibilityVoiceLite ? textUI(31) : textUI(30)), 75, 15);
+          PSSprite.drawString((accessibilityVoiceLiteActions ? textUI(31) : textUI(30)), 75, 15);
           break;
       }
       break;
@@ -2657,14 +2661,6 @@ void ShowOneButton(byte position, byte item, bool selected) {
           PSSprite.drawString((mempionly ? textUI(31) : textUI(30)), 75, 15);
           break;
 
-        case ACCESSIBILITY:
-          PSSprite.setTextDatum(TC_DATUM);
-          PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString(shortLine(removeNewline(accessibilityVoiceLiteActionsLabel())), 75, 1);
-
-          PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          PSSprite.drawString((accessibilityVoiceLiteActions ? textUI(31) : textUI(30)), 75, 15);
-          break;
       }
       break;
 
@@ -2846,6 +2842,12 @@ void ShowOneButton(byte position, byte item, bool selected) {
           break;
 #endif
 
+        case AUDIOSETTINGS:
+          PSSprite.setTextDatum(TC_DATUM);
+          PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+          PSSprite.drawString(shortLine(removeNewline(accessibilityTitle())), 75, 8);
+          break;
+
         case DISPLAYSETTINGS:
           PSSprite.setTextDatum(TC_DATUM);
           PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -3017,7 +3019,7 @@ void ShowOneButton(byte position, byte item, bool selected) {
         case INDEX:
           PSSprite.setTextDatum(TC_DATUM);
           PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString(shortLine(removeNewline(accessibilityTitle())), 75, 8);
+          PSSprite.drawString(shortLine(removeNewline(textUI(70))), 75, 8);
           break;
 
         case MAINSETTINGS:
@@ -4795,13 +4797,13 @@ void MenuUpDown(bool dir) {
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
-          case ITEM5:
+          case ITEM4:
             accessibilityVoiceLite = !accessibilityVoiceLite;
             OneBigLineSprite.drawString((accessibilityVoiceLite ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
-          case ITEM6:
+          case ITEM5:
             accessibilityVoiceLiteActions = !accessibilityVoiceLiteActions;
             OneBigLineSprite.drawString((accessibilityVoiceLiteActions ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4813,7 +4815,7 @@ void MenuUpDown(bool dir) {
 }
 
 void showMenuOpenTouchButtons() {
-  if (hardwaremodel == PORTABLE_TOUCH_ILI9341 && !((menupage == CONNECTIVITY && menuoption == ITEM3) || (menupage == AUTOMEM && (menuoption == ITEM1 || menuoption == ITEM9)) || (menupage == MAINSETTINGS && menuoption == ITEM1) || (menupage == DXMODE && menuoption == ITEM10) || (menupage == ACCESSIBILITY && menuoption == ITEM4))) {
+  if (hardwaremodel == PORTABLE_TOUCH_ILI9341 && !((menupage == CONNECTIVITY && menuoption == ITEM3) || (menupage == AUTOMEM && (menuoption == ITEM1 || menuoption == ITEM9)) || (menupage == MAINSETTINGS && menuoption == ITEM1) || (menupage == DXMODE && menuoption == ITEM10))) {
     tft.fillRoundRect(18, 154, 60, 40, 6, FrameColor);
     tft.drawRoundRect(18, 154, 60, 40, 6, ActiveColor);
     tft.fillRoundRect(240, 154, 60, 40, 6, FrameColor);
@@ -4938,11 +4940,36 @@ void DoMenu() {
             break;
 
           case ITEM10:
-            menupage = ACCESSIBILITY;
-            menuoption = ITEM1;
-            menuitem = 0;
-            submenu = true;
-            BuildMenu();
+            menuopen = true;
+            tft.drawRoundRect(10, 6, 300, 230, 5, ActiveColor);
+            tft.fillRoundRect(12, 8, 296, 226, 5, BackgroundColor);
+            tftPrint(ACENTER, textUI(71), 155, 13, ActiveColor, ActiveColorSmooth, 28);
+            tftPrint(ACENTER, textUI(72), 155, 55, ActiveColor, ActiveColorSmooth, 28);
+            tftPrint(ACENTER, "PE5PVB", 155, 38, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ARIGHT, "ohmytime", 145, 80, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ARIGHT, "HyperDX", 145, 95, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ALEFT, "MCelliotG", 155, 80, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ALEFT, "andimik", 155, 95, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ARIGHT, "DXHR05", 145, 110, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ARIGHT, "NoobishSVK", 145, 125, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ALEFT, "yo2ldk", 155, 110, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ALEFT, "Justin_Peng(Portable)", 155, 125, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ARIGHT, "Overland DX", 145, 140, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ALEFT, "elektronik232", 155, 140, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ARIGHT, "KOTYA8", 145, 155, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ALEFT, "mrwish7", 155, 155, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ARIGHT, "lxsxl", 145, 170, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ALEFT, "leryfm", 155, 170, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ARIGHT, "marsel90-1", 145, 185, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ALEFT, "lawendel", 155, 185, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ARIGHT, "KB8U", 145, 200, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ALEFT, "kazek5p (Accessibility)", 155, 200, PrimaryColor, PrimaryColorSmooth, 16);
+            tftPrint(ACENTER, "github.com/PE5PVB/TEF6686_ESP32", 155, 215, ActiveColor, ActiveColorSmooth, 16);
+            if (hardwaremodel == PORTABLE_TOUCH_ILI9341) {
+              tft.fillRoundRect(240, 36, 60, 40, 6, FrameColor);
+              tft.drawRoundRect(240, 36, 60, 40, 6, ActiveColor);
+              tftPrint(ACENTER, "OK", 270, 44, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
+            }
             break;
         }
         break;
@@ -5177,6 +5204,15 @@ void DoMenu() {
             OneBigLineSprite.drawString((fmdeemphasis != DEEMPHASIS_NONE ? (fmdeemphasis == DEEMPHASIS_50 ? String(FM_DEEMPHASIS_50, DEC) : String(FM_DEEMPHASIS_75, DEC)) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
+
+          case ITEM8:
+            menuopen = false;
+            menupage = ACCESSIBILITY;
+            menuoption = ITEM1;
+            menuitem = 0;
+            submenu = true;
+            BuildMenu();
+            return;
         }
         break;
 
@@ -5941,46 +5977,13 @@ void DoMenu() {
             break;
 
           case ITEM4:
-            menuopen = true;
-            tft.drawRoundRect(10, 6, 300, 230, 5, ActiveColor);
-            tft.fillRoundRect(12, 8, 296, 226, 5, BackgroundColor);
-            tftPrint(ACENTER, textUI(71), 155, 13, ActiveColor, ActiveColorSmooth, 28);
-            tftPrint(ACENTER, textUI(72), 155, 55, ActiveColor, ActiveColorSmooth, 28);
-            tftPrint(ACENTER, "PE5PVB", 155, 38, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(ARIGHT, "ohmytime", 145, 80, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(ARIGHT, "HyperDX", 145, 95, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(ALEFT, "MCelliotG", 155, 80, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(ALEFT, "andimik", 155, 95, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(ARIGHT, "DXHR05", 145, 110, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(ARIGHT, "NoobishSVK", 145, 125, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(ALEFT, "yo2ldk", 155, 110, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(ALEFT, "Justin_Peng(Portable)", 155, 125, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(ARIGHT, "Overland DX", 145, 140, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(ALEFT, "elektronik232", 155, 140, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(ARIGHT, "KOTYA8", 145, 155, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(ALEFT, "mrwish7", 155, 155, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(ARIGHT, "lxsxl", 145, 170, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(ALEFT, "leryfm", 155, 170, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(ARIGHT, "marsel90-1", 145, 185, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(ALEFT, "lawendel", 155, 185, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(ARIGHT, "KB8U", 145, 200, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(ALEFT, "kazek5p (Accessibility)", 155, 200, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(ACENTER, "github.com/PE5PVB/TEF6686_ESP32", 155, 215, ActiveColor, ActiveColorSmooth, 16);
-            if (hardwaremodel == PORTABLE_TOUCH_ILI9341) {
-              tft.fillRoundRect(240, 36, 60, 40, 6, FrameColor);
-              tft.drawRoundRect(240, 36, 60, 40, 6, ActiveColor);
-              tftPrint(ACENTER, "OK", 270, 44, (CurrentTheme == 7 ? White : ActiveColor), ActiveColorSmooth, 28);
-            }
-            break;
-
-          case ITEM5:
             Infoboxprint(accessibilityVoiceLiteInfo());
 
             OneBigLineSprite.drawString((accessibilityVoiceLite ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
-          case ITEM6:
+          case ITEM5:
             Infoboxprint(accessibilityVoiceLiteActionsInfo());
 
             OneBigLineSprite.drawString((accessibilityVoiceLiteActions ? textUI(31) : textUI(30)), 135, 0);
