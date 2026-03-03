@@ -84,6 +84,8 @@ static const char* accessibilityVoiceLiteInfo() {
 
 static inline void playAccessibilityNavigateBeep() {
   if (!accessibilityMenuBeep) return;
+  // In submenu navigation, Voice Lite already provides dynamic position tones.
+  if (accessibilityVoiceLite && menu && submenu && !menuopen) return;
 
   const uint16_t minFreq = 650;
   const uint16_t maxFreq = 2100;
