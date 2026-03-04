@@ -203,7 +203,13 @@ byte amgain;
 byte freqoldcount;
 byte HighCutLevel;
 byte HighCutOffset;
-byte items[11] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 8, 10, 10, 10, 9, 10, 10, 9, 5};
+byte accessibilityOnOffCueLength;
+byte accessibilityMenuCueLength;
+byte accessibilityConfirmCueLength;
+byte accessibilityBackCueLength;
+byte accessibilityCueVolume;
+byte startupJingleVariant;
+byte items[11] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 8, 10, 10, 10, 9, 10, 10, 9, 10};
 byte iMSEQ;
 byte iMSset;
 byte language;
@@ -440,6 +446,7 @@ unsigned long aftickerhold;
 unsigned long aftimer;
 unsigned long autosquelchtimer;
 unsigned long blockcounterold[33];
+unsigned long accessibilityLastCueMs;
 unsigned long eonticker;
 unsigned long eontickerhold;
 unsigned long flashingtimer;
@@ -494,41 +501,109 @@ WebServer webserver(80);
 
 void ToggleBand(byte nowBand);
 
+static inline uint8_t accessibilityCueDurationMs(byte cueLength, uint8_t shortMs, uint8_t mediumMs, uint8_t longMs) {
+  switch (cueLength) {
+    case ACCESS_CUE_LEN_SHORT: return shortMs;
+    case ACCESS_CUE_LEN_LONG: return longMs;
+    default: return mediumMs;
+  }
+}
+
+static inline int8_t accessibilityCueVolumeLevel(int8_t baseLevel) {
+  int8_t level = baseLevel;
+  switch (accessibilityCueVolume) {
+    case ACCESS_CUE_VOL_LOW: level -= 4; break;
+    case ACCESS_CUE_VOL_HIGH: level += 4; break;
+    default: break;
+  }
+  if (level < -20) level = -20;
+  if (level > -2) level = -2;
+  return level;
+}
+
+static inline bool accessibilityCueGuard(uint16_t minGapMs = 18) {
+  const unsigned long nowMs = millis();
+  if (nowMs - accessibilityLastCueMs < minGapMs) return false;
+  accessibilityLastCueMs = nowMs;
+  return true;
+}
+
+static inline void sanitizeAccessibilitySettings() {
+  if (accessibilityMenuBeep > 1) accessibilityMenuBeep = 0;
+  if (accessibilityConfirmBeep > 1) accessibilityConfirmBeep = 1;
+  if (accessibilityBackBeep > 1) accessibilityBackBeep = 1;
+  if (accessibilityVoiceLite > 1) accessibilityVoiceLite = 0;
+  if (accessibilityVoiceLiteActions > 1) accessibilityVoiceLiteActions = 0;
+  if (accessibilityOnOffCueLength > ACCESS_CUE_LEN_LONG) accessibilityOnOffCueLength = ACCESS_CUE_LEN_MEDIUM;
+  if (accessibilityMenuCueLength > ACCESS_CUE_LEN_LONG) accessibilityMenuCueLength = ACCESS_CUE_LEN_MEDIUM;
+  if (accessibilityConfirmCueLength > ACCESS_CUE_LEN_LONG) accessibilityConfirmCueLength = ACCESS_CUE_LEN_MEDIUM;
+  if (accessibilityBackCueLength > ACCESS_CUE_LEN_LONG) accessibilityBackCueLength = ACCESS_CUE_LEN_MEDIUM;
+  if (accessibilityCueVolume > ACCESS_CUE_VOL_HIGH) accessibilityCueVolume = ACCESS_CUE_VOL_MEDIUM;
+  if (startupJingleVariant > ACCESS_STARTUP_JINGLE_EXTENDED) startupJingleVariant = ACCESS_STARTUP_JINGLE_CLASSIC;
+}
+
+static inline void writeAccessibilitySettingsToEEPROM() {
+  EEPROM.writeByte(EE_BYTE_ACCESS_MENU_BEEP, accessibilityMenuBeep);
+  EEPROM.writeByte(EE_BYTE_ACCESS_CONFIRM_BEEP, accessibilityConfirmBeep);
+  EEPROM.writeByte(EE_BYTE_ACCESS_BACK_BEEP, accessibilityBackBeep);
+  EEPROM.writeByte(EE_BYTE_ACCESS_VOICE_LITE, accessibilityVoiceLite);
+  EEPROM.writeByte(EE_BYTE_ACCESS_VOICE_ACTIONS, accessibilityVoiceLiteActions);
+  EEPROM.writeByte(EE_BYTE_ACCESS_ONOFF_CUE_LEN, accessibilityOnOffCueLength);
+  EEPROM.writeByte(EE_BYTE_ACCESS_MENU_CUE_LEN, accessibilityMenuCueLength);
+  EEPROM.writeByte(EE_BYTE_ACCESS_CONFIRM_CUE_LEN, accessibilityConfirmCueLength);
+  EEPROM.writeByte(EE_BYTE_ACCESS_BACK_CUE_LEN, accessibilityBackCueLength);
+  EEPROM.writeByte(EE_BYTE_ACCESS_CUE_VOLUME, accessibilityCueVolume);
+  EEPROM.writeByte(EE_BYTE_STARTUP_JINGLE_VARIANT, startupJingleVariant);
+}
+
+static inline uint8_t accessibilityBackCueDurationMs(bool secondTone) {
+  return secondTone ? accessibilityCueDurationMs(accessibilityBackCueLength, 62, 95, 145) : accessibilityCueDurationMs(accessibilityBackCueLength, 36, 55, 84);
+}
+
+static inline uint8_t accessibilityBackSingleCueDurationMs() {
+  return accessibilityCueDurationMs(accessibilityBackCueLength, 30, 45, 70);
+}
+
+static inline uint8_t accessibilityBackCueGapMs() {
+  return accessibilityCueDurationMs(accessibilityBackCueLength, 6, 10, 14);
+}
+
 static inline void playAccessibilityBackBeep() {
-  if (accessibilityBackBeep) radio.tone(45, -8, 980);
+  if (!accessibilityBackBeep || !accessibilityCueGuard()) return;
+  radio.tone(accessibilityBackSingleCueDurationMs(), accessibilityCueVolumeLevel(-8), 980);
 }
 
 static inline void playAccessibilityEnterMenuBeep() {
-  if (!accessibilityBackBeep) return;
-  radio.tone(55, -9, 780);
-  delay(10);
-  radio.tone(95, -9, 1260);
+  if (!accessibilityBackBeep || !accessibilityCueGuard()) return;
+  radio.tone(accessibilityBackCueDurationMs(false), accessibilityCueVolumeLevel(-9), 780);
+  delay(accessibilityBackCueGapMs());
+  radio.tone(accessibilityBackCueDurationMs(true), accessibilityCueVolumeLevel(-9), 1260);
 }
 
 static inline void playAccessibilityExitMenuBeep() {
-  if (!accessibilityBackBeep) return;
-  radio.tone(95, -9, 1260);
-  delay(10);
-  radio.tone(55, -9, 760);
+  if (!accessibilityBackBeep || !accessibilityCueGuard()) return;
+  radio.tone(accessibilityBackCueDurationMs(true), accessibilityCueVolumeLevel(-9), 1260);
+  delay(accessibilityBackCueGapMs());
+  radio.tone(accessibilityBackCueDurationMs(false), accessibilityCueVolumeLevel(-9), 760);
 }
 
 static inline void playAccessibilityDigitVoiceLite(uint8_t digit) {
-  if (!accessibilityVoiceLite || digit > 9) return;
+  if (!accessibilityVoiceLite || digit > 9 || !accessibilityCueGuard()) return;
 
   const uint16_t minFreq = 620;
   const uint16_t maxFreq = 2060;
   const uint16_t frequency = minFreq + static_cast<uint16_t>(((uint32_t)(maxFreq - minFreq) * digit) / 9);
-  radio.tone(22, -10, frequency);
+  radio.tone(22, accessibilityCueVolumeLevel(-10), frequency);
 }
 
 static inline void playAccessibilityVoiceLitePosition(uint8_t pos, uint8_t count, uint16_t minFreq, uint16_t maxFreq, uint8_t durationMs) {
-  if (!accessibilityVoiceLite || count == 0) return;
+  if (!accessibilityVoiceLite || count == 0 || !accessibilityCueGuard()) return;
   if (pos >= count) pos = count - 1;
   uint16_t frequency = minFreq;
   if (count > 1) {
     frequency = minFreq + static_cast<uint16_t>(((uint32_t)(maxFreq - minFreq) * pos) / (count - 1));
   }
-  radio.tone(durationMs, -10, frequency);
+  radio.tone(durationMs, accessibilityCueVolumeLevel(-10), frequency);
 }
 
 static inline void playAccessibilityMemoryPosVoiceLite() {
@@ -549,13 +624,17 @@ static inline void playAccessibilityBandVoiceLite() {
   playAccessibilityBandVoiceLiteForBand(band);
 }
 
+static inline uint8_t accessibilityOnOffCueDurationMs(bool secondTone) {
+  return secondTone ? accessibilityCueDurationMs(accessibilityOnOffCueLength, 44, 72, 108) : accessibilityCueDurationMs(accessibilityOnOffCueLength, 36, 60, 90);
+}
+
 static inline void playAccessibilityOnOffVoiceLite(bool enabled) {
-  if (!accessibilityVoiceLite) return;
+  if (!accessibilityVoiceLite || !accessibilityCueGuard()) return;
   const uint16_t lowFreq = 860;
   const uint16_t highFreq = 1560;
-  radio.tone(60, -10, (enabled ? lowFreq : highFreq));
+  radio.tone(accessibilityOnOffCueDurationMs(false), accessibilityCueVolumeLevel(-10), (enabled ? lowFreq : highFreq));
   delay(8);
-  radio.tone(72, -10, (enabled ? highFreq : lowFreq));
+  radio.tone(accessibilityOnOffCueDurationMs(true), accessibilityCueVolumeLevel(-10), (enabled ? highFreq : lowFreq));
 }
 
 static inline void playAccessibilityBWVoiceLite() {
@@ -592,8 +671,8 @@ static inline void playAccessibilityStereoModeVoiceLite() {
 }
 
 static inline void playAccessibilityFreqEnterVoiceLite(bool manualEnter) {
-  if (!accessibilityVoiceLite || !manualEnter) return;
-  radio.tone(120, -8, 1420);
+  if (!accessibilityVoiceLite || !manualEnter || !accessibilityCueGuard()) return;
+  radio.tone(120, accessibilityCueVolumeLevel(-8), 1420);
 }
 
 static inline bool accessibilityVoiceLiteActionsEnabled() {
@@ -612,28 +691,28 @@ static inline void playAccessibilityTuneModeVoiceLite() {
     default: break;
   }
 
-  if (frequency != 0) radio.tone(24, -10, frequency);
+  if (frequency != 0 && accessibilityCueGuard()) radio.tone(24, accessibilityCueVolumeLevel(-10), frequency);
 }
 
 static inline void playAccessibilityScanStateVoiceLite(bool start) {
-  if (!accessibilityVoiceLiteActionsEnabled()) return;
-  radio.tone(30, -9, (start ? 940 : 1520));
+  if (!accessibilityVoiceLiteActionsEnabled() || !accessibilityCueGuard()) return;
+  radio.tone(30, accessibilityCueVolumeLevel(-9), (start ? 940 : 1520));
   delay(8);
-  radio.tone(36, -9, (start ? 1520 : 940));
+  radio.tone(36, accessibilityCueVolumeLevel(-9), (start ? 1520 : 940));
 }
 
 static inline void playAccessibilityMemoryStoreVoiceLite() {
-  if (!accessibilityVoiceLiteActionsEnabled()) return;
-  radio.tone(22, -9, 1120);
+  if (!accessibilityVoiceLiteActionsEnabled() || !accessibilityCueGuard()) return;
+  radio.tone(22, accessibilityCueVolumeLevel(-9), 1120);
   delay(6);
-  radio.tone(30, -9, 1760);
+  radio.tone(30, accessibilityCueVolumeLevel(-9), 1760);
 }
 
 static inline void playAccessibilityMemoryClearVoiceLite() {
-  if (!accessibilityVoiceLiteActionsEnabled()) return;
-  radio.tone(30, -9, 1760);
+  if (!accessibilityVoiceLiteActionsEnabled() || !accessibilityCueGuard()) return;
+  radio.tone(30, accessibilityCueVolumeLevel(-9), 1760);
   delay(8);
-  radio.tone(42, -9, 920);
+  radio.tone(42, accessibilityCueVolumeLevel(-9), 920);
 }
 
 static inline void playStartupTriadBeep() {
@@ -644,6 +723,12 @@ static inline void playStartupTriadBeep() {
   radio.tone(72, -8, 1319);
   delay(20);
   radio.tone(104, -8, 1568);
+  if (startupJingleVariant == ACCESS_STARTUP_JINGLE_EXTENDED) {
+    delay(20);
+    radio.tone(72, -8, 1319);
+    delay(20);
+    radio.tone(104, -8, 1568);
+  }
 }
 
 static inline void playAccessibilityBandVoiceLiteImmediatePreview() {
@@ -695,11 +780,13 @@ void setup() {
   accessibilityBackBeep = EEPROM.readByte(EE_BYTE_ACCESS_BACK_BEEP);
   accessibilityVoiceLite = EEPROM.readByte(EE_BYTE_ACCESS_VOICE_LITE);
   accessibilityVoiceLiteActions = EEPROM.readByte(EE_BYTE_ACCESS_VOICE_ACTIONS);
-  if (accessibilityMenuBeep > 1) accessibilityMenuBeep = 0;
-  if (accessibilityConfirmBeep > 1) accessibilityConfirmBeep = 1;
-  if (accessibilityBackBeep > 1) accessibilityBackBeep = 1;
-  if (accessibilityVoiceLite > 1) accessibilityVoiceLite = 0;
-  if (accessibilityVoiceLiteActions > 1) accessibilityVoiceLiteActions = 0;
+  accessibilityOnOffCueLength = EEPROM.readByte(EE_BYTE_ACCESS_ONOFF_CUE_LEN);
+  accessibilityMenuCueLength = EEPROM.readByte(EE_BYTE_ACCESS_MENU_CUE_LEN);
+  accessibilityConfirmCueLength = EEPROM.readByte(EE_BYTE_ACCESS_CONFIRM_CUE_LEN);
+  accessibilityBackCueLength = EEPROM.readByte(EE_BYTE_ACCESS_BACK_CUE_LEN);
+  accessibilityCueVolume = EEPROM.readByte(EE_BYTE_ACCESS_CUE_VOLUME);
+  startupJingleVariant = EEPROM.readByte(EE_BYTE_STARTUP_JINGLE_VARIANT);
+  sanitizeAccessibilitySettings();
   softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
   softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
   frequency_AM = EEPROM.readUInt(EE_UINT16_FREQUENCY_AM);
@@ -1043,11 +1130,7 @@ void setup() {
     accessibilityBackBeep = enableAccessibility;
     accessibilityVoiceLite = enableAccessibility;
 
-    EEPROM.writeByte(EE_BYTE_ACCESS_MENU_BEEP, accessibilityMenuBeep);
-    EEPROM.writeByte(EE_BYTE_ACCESS_CONFIRM_BEEP, accessibilityConfirmBeep);
-    EEPROM.writeByte(EE_BYTE_ACCESS_BACK_BEEP, accessibilityBackBeep);
-    EEPROM.writeByte(EE_BYTE_ACCESS_VOICE_LITE, accessibilityVoiceLite);
-    EEPROM.writeByte(EE_BYTE_ACCESS_VOICE_ACTIONS, accessibilityVoiceLiteActions);
+    writeAccessibilitySettingsToEEPROM();
     EEPROM.commit();
 
     Infoboxprint("A11Y");
@@ -4804,6 +4887,12 @@ void DefaultSettings() {
   EEPROM.writeByte(EE_BYTE_ACCESS_BACK_BEEP, 1);
   EEPROM.writeByte(EE_BYTE_ACCESS_VOICE_LITE, 0);
   EEPROM.writeByte(EE_BYTE_ACCESS_VOICE_ACTIONS, 0);
+  EEPROM.writeByte(EE_BYTE_ACCESS_ONOFF_CUE_LEN, ACCESS_CUE_LEN_MEDIUM);
+  EEPROM.writeByte(EE_BYTE_ACCESS_MENU_CUE_LEN, ACCESS_CUE_LEN_MEDIUM);
+  EEPROM.writeByte(EE_BYTE_ACCESS_CONFIRM_CUE_LEN, ACCESS_CUE_LEN_MEDIUM);
+  EEPROM.writeByte(EE_BYTE_ACCESS_BACK_CUE_LEN, ACCESS_CUE_LEN_MEDIUM);
+  EEPROM.writeByte(EE_BYTE_ACCESS_CUE_VOLUME, ACCESS_CUE_VOL_MEDIUM);
+  EEPROM.writeByte(EE_BYTE_STARTUP_JINGLE_VARIANT, ACCESS_STARTUP_JINGLE_CLASSIC);
   EEPROM.writeByte(EE_BYTE_SOFTMUTEAM, 1);
   EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, 0);
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, 828);
@@ -5092,11 +5181,7 @@ void endMenu() {
   EEPROM.writeByte(EE_BYTE_LEVELOFFSET, LevelOffset);
   EEPROM.writeByte(EE_BYTE_RTBUFFER, radio.rds.rtbuffer);
   EEPROM.writeByte(EE_BYTE_EDGEBEEP, edgebeep);
-  EEPROM.writeByte(EE_BYTE_ACCESS_MENU_BEEP, accessibilityMenuBeep);
-  EEPROM.writeByte(EE_BYTE_ACCESS_CONFIRM_BEEP, accessibilityConfirmBeep);
-  EEPROM.writeByte(EE_BYTE_ACCESS_BACK_BEEP, accessibilityBackBeep);
-  EEPROM.writeByte(EE_BYTE_ACCESS_VOICE_LITE, accessibilityVoiceLite);
-  EEPROM.writeByte(EE_BYTE_ACCESS_VOICE_ACTIONS, accessibilityVoiceLiteActions);
+  writeAccessibilitySettingsToEEPROM();
   EEPROM.writeByte(EE_BYTE_SOFTMUTEAM, softmuteam);
   EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, softmutefm);
   EEPROM.writeByte(EE_BYTE_LANGUAGE, language);

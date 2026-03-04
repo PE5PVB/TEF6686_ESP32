@@ -231,10 +231,18 @@
 #define EE_PRESETS_CNT                99    // When set > 99 change the complete EEPROM adressing!
 #define EE_CHECKBYTE_VALUE            20     // 0 ~ 255,add new entry, change for new value
 #define EE_PRESETS_FREQUENCY          0     // Default value when memory channel should be skipped!
+#define ACCESS_CUE_LEN_SHORT          0
+#define ACCESS_CUE_LEN_MEDIUM         1
+#define ACCESS_CUE_LEN_LONG           2
+#define ACCESS_CUE_VOL_LOW            0
+#define ACCESS_CUE_VOL_MEDIUM         1
+#define ACCESS_CUE_VOL_HIGH           2
+#define ACCESS_STARTUP_JINGLE_CLASSIC 0
+#define ACCESS_STARTUP_JINGLE_EXTENDED 1
 #ifdef HAS_AIR_BAND
-#define EE_TOTAL_CNT                  2297  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                  2303  // Total occupied eeprom bytes
 #else
-#define EE_TOTAL_CNT                  2292  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                  2298  // Total occupied eeprom bytes
 #endif
 
 #define EE_PRESETS_BAND_START         0     // 99 * 1 byte
@@ -366,12 +374,24 @@
 #define EE_BYTE_ACCESS_BACK_BEEP      2294
 #define EE_BYTE_ACCESS_VOICE_LITE     2295
 #define EE_BYTE_ACCESS_VOICE_ACTIONS  2296
+#define EE_BYTE_ACCESS_ONOFF_CUE_LEN  2297
+#define EE_BYTE_ACCESS_MENU_CUE_LEN   2298
+#define EE_BYTE_ACCESS_CONFIRM_CUE_LEN 2299
+#define EE_BYTE_ACCESS_BACK_CUE_LEN   2300
+#define EE_BYTE_ACCESS_CUE_VOLUME     2301
+#define EE_BYTE_STARTUP_JINGLE_VARIANT 2302
 #else
 #define EE_BYTE_ACCESS_MENU_BEEP      2287
 #define EE_BYTE_ACCESS_CONFIRM_BEEP   2288
 #define EE_BYTE_ACCESS_BACK_BEEP      2289
 #define EE_BYTE_ACCESS_VOICE_LITE     2290
 #define EE_BYTE_ACCESS_VOICE_ACTIONS  2291
+#define EE_BYTE_ACCESS_ONOFF_CUE_LEN  2292
+#define EE_BYTE_ACCESS_MENU_CUE_LEN   2293
+#define EE_BYTE_ACCESS_CONFIRM_CUE_LEN 2294
+#define EE_BYTE_ACCESS_BACK_CUE_LEN   2295
+#define EE_BYTE_ACCESS_CUE_VOLUME     2296
+#define EE_BYTE_STARTUP_JINGLE_VARIANT 2297
 #endif
 // End of EEPROM index defines
 
