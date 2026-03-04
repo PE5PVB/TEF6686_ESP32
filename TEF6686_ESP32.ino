@@ -588,6 +588,20 @@ static inline void writeAccessibilitySettingsToEEPROM() {
   EEPROM.writeByte(EE_BYTE_STARTUP_JINGLE_VARIANT, startupJingleVariant);
 }
 
+static inline void applyFullAccessibilityTestBootProfile() {
+  accessibilityMenuBeep = 1;
+  accessibilityConfirmBeep = 1;
+  accessibilityBackBeep = 1;
+  accessibilityVoiceLite = 1;
+  accessibilityVoiceLiteActions = 1;
+  accessibilityOnOffCueLength = ACCESS_CUE_LEN_LONG;
+  accessibilityMenuCueLength = ACCESS_CUE_LEN_MEDIUM;
+  accessibilityConfirmCueLength = ACCESS_CUE_LEN_LONG;
+  accessibilityBackCueLength = ACCESS_CUE_LEN_LONG;
+  accessibilityCueVolume = ACCESS_CUE_VOL_HIGH;
+  startupJingleVariant = ACCESS_STARTUP_JINGLE_EXTENDED;
+}
+
 static inline uint8_t accessibilityBackCueDurationMs(bool secondTone) {
   return secondTone ? accessibilityCueDurationMs(accessibilityBackCueLength, 62, 95, 145) : accessibilityCueDurationMs(accessibilityBackCueLength, 36, 55, 84);
 }
@@ -1167,6 +1181,9 @@ void setup() {
     tftPrint(ACENTER, textUI(2), 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(BWBUTTON) == LOW && digitalRead(MODEBUTTON) == LOW && digitalRead(BANDBUTTON) == LOW) delay(50);
   }
+
+  // Full test build: force all accessibility options ON at each boot.
+  applyFullAccessibilityTestBootProfile();
 
   tft.setTouch(TouchCalData);
 
