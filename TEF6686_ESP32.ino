@@ -726,6 +726,16 @@ static inline void playAccessibilityTuneModeVoiceLite() {
   if (frequency != 0 && accessibilityCueGuard()) radio.tone(24, accessibilityCueVolumeLevel(-10), frequency);
 }
 
+static inline void playAccessibilityStepSizeVoiceLite() {
+  if (!accessibilityVoiceLiteActionsEnabled()) return;
+
+  uint8_t count = ((band == BAND_SW || band < BAND_GAP) ? 5 : 4);
+  uint8_t slot = stepsize;
+  if (slot >= count) slot = 0;
+
+  playAccessibilityVoiceLitePosition(slot, count, 760, 2200, 20);
+}
+
 static inline void playAccessibilityScanStateVoiceLite(bool start) {
   if (!accessibilityVoiceLiteActionsEnabled() || !accessibilityCueGuard()) return;
   radio.tone(30, accessibilityCueVolumeLevel(-9), (start ? 940 : 1520));
@@ -3071,6 +3081,7 @@ void ButtonPress() {
 
             EEPROM.writeByte(EE_BYTE_STEPSIZE, stepsize);
             EEPROM.commit();
+            playAccessibilityStepSizeVoiceLite();
             if (stepsize == 0) {
               RoundStep();
               ShowFreq(0);

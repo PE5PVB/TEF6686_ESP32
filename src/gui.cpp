@@ -104,7 +104,8 @@ static constexpr byte ACCESS_QUICK_PRESET_STRONG = 5;
 static constexpr byte ACCESS_QUICK_TEST = 6;
 static constexpr byte ACCESS_QUICK_STARTUP_CLASSIC = 7;
 static constexpr byte ACCESS_QUICK_STARTUP_EXTENDED = 8;
-static constexpr byte ACCESS_QUICK_MAX = ACCESS_QUICK_STARTUP_EXTENDED;
+static constexpr byte ACCESS_QUICK_PRESET_FULL = 9;
+static constexpr byte ACCESS_QUICK_MAX = ACCESS_QUICK_PRESET_FULL;
 static byte accessibilityQuickAction = ACCESS_QUICK_VOL_MEDIUM;
 
 static const char* accessibilityQuickActionLabel() {
@@ -132,6 +133,7 @@ static inline const char* accessibilityQuickActionValue() {
     case ACCESS_QUICK_TEST: return (polish ? "Test sygnalow" : "Test cues");
     case ACCESS_QUICK_STARTUP_CLASSIC: return (polish ? "Start melodia 1" : "Startup melody 1");
     case ACCESS_QUICK_STARTUP_EXTENDED: return (polish ? "Start melodia 2" : "Startup melody 2");
+    case ACCESS_QUICK_PRESET_FULL: return (polish ? "Profil pelny test" : "Full test profile");
     default: return (polish ? "Glosn. srednia" : "Volume medium");
   }
 }
@@ -299,8 +301,41 @@ static inline void playAccessibilityCueTestSequence() {
   radio.tone(accessibilityOnOffCueDurationMs(true), accessibilityCueVolumeLevel(-10), 1560);
 }
 
+static inline void playAccessibilityOptionVoiceLite(uint8_t position, uint8_t count, uint16_t minFreq = 760, uint16_t maxFreq = 2200, uint8_t durationMs = 20) {
+  if (!accessibilityVoiceLiteActions || count == 0) return;
+  if (position >= count) position = count - 1;
+  if (!accessibilityCueGuard()) return;
+
+  uint16_t frequency = minFreq;
+  if (count > 1) {
+    frequency = minFreq + static_cast<uint16_t>(((uint32_t)(maxFreq - minFreq) * position) / (count - 1));
+  }
+  radio.tone(durationMs, accessibilityCueVolumeLevel(-10), frequency);
+}
+
+static inline void playAccessibilityRangeVoiceLite(int value, int minValue, int maxValue, uint16_t minFreq = 760, uint16_t maxFreq = 2200, uint8_t durationMs = 20) {
+  if (maxValue <= minValue) return;
+  if (value < minValue) value = minValue;
+  if (value > maxValue) value = maxValue;
+  playAccessibilityOptionVoiceLite(static_cast<uint8_t>(value - minValue), static_cast<uint8_t>((maxValue - minValue) + 1), minFreq, maxFreq, durationMs);
+}
+
 static inline void playAccessibilityConfirmFeedback() {
   if (accessibilityCueGuard()) radio.tone(accessibilityConfirmCueDurationMs(), accessibilityCueVolumeLevel(-6), 1400);
+}
+
+static inline void applyAccessibilityFullTestProfile() {
+  accessibilityMenuBeep = 1;
+  accessibilityConfirmBeep = 1;
+  accessibilityBackBeep = 1;
+  accessibilityVoiceLite = 1;
+  accessibilityVoiceLiteActions = 1;
+  accessibilityCueVolume = ACCESS_CUE_VOL_HIGH;
+  accessibilityOnOffCueLength = ACCESS_CUE_LEN_LONG;
+  accessibilityMenuCueLength = ACCESS_CUE_LEN_MEDIUM;
+  accessibilityConfirmCueLength = ACCESS_CUE_LEN_LONG;
+  accessibilityBackCueLength = ACCESS_CUE_LEN_LONG;
+  startupJingleVariant = ACCESS_STARTUP_JINGLE_EXTENDED;
 }
 
 static inline void applyAccessibilityQuickActionSelection() {
@@ -335,6 +370,10 @@ static inline void applyAccessibilityQuickActionSelection() {
     case ACCESS_QUICK_STARTUP_EXTENDED:
       startupJingleVariant = ACCESS_STARTUP_JINGLE_EXTENDED;
       playAccessibilityConfirmFeedback();
+      break;
+    case ACCESS_QUICK_PRESET_FULL:
+      applyAccessibilityFullTestProfile();
+      playAccessibilityCueTestSequence();
       break;
     default:
       accessibilityCueVolume = ACCESS_CUE_VOL_MEDIUM;
@@ -4120,6 +4159,7 @@ void MenuUpDown(bool dir) {
             OneBigLineSprite.drawString((VolSet > 0 ? "+" : "") + String(VolSet, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             radio.setVolume(VolSet);
+            playAccessibilityRangeVoiceLite(VolSet, -10, 10);
             break;
 
           case ITEM2:
@@ -4157,6 +4197,11 @@ void MenuUpDown(bool dir) {
             OneBigLineSprite.drawString((StereoLevel != 0 ? String(StereoLevel, DEC) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             radio.setStereoLevel(StereoLevel);
+            if (StereoLevel == 0) {
+              playAccessibilityOptionVoiceLite(0, 2, 760, 2200, 20);
+            } else {
+              playAccessibilityRangeVoiceLite(StereoLevel, 30, 60, 900, 2200, 20);
+            }
             break;
 
           case ITEM5:
@@ -4176,6 +4221,7 @@ void MenuUpDown(bool dir) {
             OneBigLineSprite.drawString(String(HighCutLevel * 100, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             radio.setHighCutLevel(HighCutLevel);
+            playAccessibilityRangeVoiceLite(HighCutLevel, 15, 70, 840, 2200, 20);
             break;
 
           case ITEM6:
@@ -4200,6 +4246,11 @@ void MenuUpDown(bool dir) {
             OneBigLineSprite.drawString((HighCutOffset != 0 ? String(HighCutOffset, DEC) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             radio.setHighCutOffset(HighCutOffset);
+            if (HighCutOffset == 0) {
+              playAccessibilityOptionVoiceLite(0, 2, 760, 2200, 20);
+            } else {
+              playAccessibilityRangeVoiceLite(HighCutOffset, 20, 60, 900, 2200, 20);
+            }
             break;
 
           case ITEM7:
@@ -4219,6 +4270,7 @@ void MenuUpDown(bool dir) {
             OneBigLineSprite.drawString((fmdeemphasis != DEEMPHASIS_NONE ? (fmdeemphasis == DEEMPHASIS_50 ? String(FM_DEEMPHASIS_50, DEC) : String(FM_DEEMPHASIS_75, DEC)) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             radio.setDeemphasis(fmdeemphasis);
+            playAccessibilityOptionVoiceLite(fmdeemphasis, DEEMPHASIS_COUNT, 860, 2200, 20);
             break;
         }
         break;
@@ -4237,6 +4289,7 @@ void MenuUpDown(bool dir) {
             UpdateFonts(0);
             OneBigLineSprite.drawString(textUI(0), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
+            playAccessibilityOptionVoiceLite(language, static_cast<uint8_t>(language_totalnumber), 760, 2200, 20);
             break;
 
           case ITEM2:
@@ -4256,6 +4309,7 @@ void MenuUpDown(bool dir) {
             OneBigLineSprite.drawString(String(ContrastSet, DEC), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
+            playAccessibilityRangeVoiceLite(ContrastSet, 1, 100, 760, 2200, 18);
             break;
 
           case ITEM3:
@@ -4281,6 +4335,7 @@ void MenuUpDown(bool dir) {
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString((screensaverset ? String(screensaverOptions[screensaverset], DEC) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
+            playAccessibilityOptionVoiceLite(screensaverset, static_cast<uint8_t>(sizeof(screensaverOptions) / sizeof(screensaverOptions[0])), 760, 2200, 18);
             break;
 
           case ITEM5:
@@ -4300,6 +4355,7 @@ void MenuUpDown(bool dir) {
             }
 
             OneBigLineSprite.pushSprite(24, 118);
+            playAccessibilityOptionVoiceLite(poweroptions, RADIO_POWER_MODE_CNT, 820, 2200, 18);
             break;
 
           case ITEM6:
