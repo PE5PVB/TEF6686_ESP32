@@ -144,6 +144,17 @@ static inline void playVoiceLiteMenuHint() {
   radio.tone(24, -10, frequency);
 }
 
+template <typename T>
+static inline void toggleValueWithOnOffCue(T& value) {
+  value = !value;
+  const bool enabledState = (value != 0);
+  const uint16_t lowFreq = 860;
+  const uint16_t highFreq = 1560;
+  radio.tone(18, -10, (enabledState ? lowFreq : highFreq));
+  delay(8);
+  radio.tone(24, -10, (enabledState ? highFreq : lowFreq));
+}
+
 void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
   switch (CurrentTheme) {
     case 0:  // Default PE5PVB theme
@@ -3527,7 +3538,7 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM2:
-            touchrotating = !touchrotating;
+            toggleValueWithOnOffCue(touchrotating);
             OneBigLineSprite.drawString((touchrotating ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
@@ -3758,13 +3769,13 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM2:
-            edgebeep = !edgebeep;
+            toggleValueWithOnOffCue(edgebeep);
             OneBigLineSprite.drawString((edgebeep ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM3:
-            audiomode = !audiomode;
+            toggleValueWithOnOffCue(audiomode);
 
             OneBigLineSprite.drawString((audiomode ? "MPX" : "Stereo"), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -3894,7 +3905,7 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM3:
-            showmodulation = !showmodulation;
+            toggleValueWithOnOffCue(showmodulation);
 
             OneBigLineSprite.drawString((showmodulation ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -3969,7 +3980,7 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM8:
-            showclock = !showclock;
+            toggleValueWithOnOffCue(showclock);
 
             OneBigLineSprite.drawString((showclock ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4075,14 +4086,14 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM4:
-            radio.rds.filter = !radio.rds.filter;
+            toggleValueWithOnOffCue(radio.rds.filter);
 
             OneBigLineSprite.drawString((radio.rds.filter ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM5:
-            radio.rds.pierrors = !radio.rds.pierrors;
+            toggleValueWithOnOffCue(radio.rds.pierrors);
 
             OneBigLineSprite.drawString((radio.rds.pierrors ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4107,14 +4118,14 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM7:
-            radio.rds.rtbuffer = !radio.rds.rtbuffer;
+            toggleValueWithOnOffCue(radio.rds.rtbuffer);
 
             OneBigLineSprite.drawString((radio.rds.rtbuffer ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM8:
-            radio.rds.sortaf = !radio.rds.sortaf;
+            toggleValueWithOnOffCue(radio.rds.sortaf);
 
             OneBigLineSprite.drawString((radio.rds.sortaf ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4139,7 +4150,7 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM10:
-            showlongps = !showlongps;
+            toggleValueWithOnOffCue(showlongps);
 
             OneBigLineSprite.drawString((showlongps ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4253,7 +4264,7 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM6:
-            softmutefm = !softmutefm;
+            toggleValueWithOnOffCue(softmutefm);
 
             OneBigLineSprite.drawString((softmutefm ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4308,7 +4319,7 @@ void MenuUpDown(bool dir) {
 
           case ITEM9:
             if (fullsearchrds) {
-              fmsi = !fmsi;
+              toggleValueWithOnOffCue(fmsi);
               OneBigLineSprite.drawString((fmsi ? textUI(31) : textUI(30)), 135, 0);
               OneBigLineSprite.pushSprite(24, 118);
               if (fmsi) radio.setFMSI(2); else radio.setFMSI(1);
@@ -4333,7 +4344,7 @@ void MenuUpDown(bool dir) {
       case AMSETTINGS:
         switch (menuoption) {
           case ITEM1:
-            softmuteam = !softmuteam;
+            toggleValueWithOnOffCue(softmuteam);
 
             OneBigLineSprite.drawString((softmuteam ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4383,7 +4394,7 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM4:
-            showSWMIBand = !showSWMIBand;
+            toggleValueWithOnOffCue(showSWMIBand);
 
             OneBigLineSprite.drawString((showSWMIBand ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4446,7 +4457,7 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM8:
-            mwstepsize = !mwstepsize;
+            toggleValueWithOnOffCue(mwstepsize);
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -4475,14 +4486,14 @@ void MenuUpDown(bool dir) {
       case CONNECTIVITY:
         switch (menuoption) {
           case ITEM1:
-            USBmode = !USBmode;
+            toggleValueWithOnOffCue(USBmode);
 
             OneBigLineSprite.drawString((USBmode ? "RDS Spy" : "XDRGTK"), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM2:
-            wifi = !wifi;
+            toggleValueWithOnOffCue(wifi);
 
             OneBigLineSprite.drawString((wifi ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4515,7 +4526,7 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM6:
-            XDRGTKMuteScreen = !XDRGTKMuteScreen;
+            toggleValueWithOnOffCue(XDRGTKMuteScreen);
 
             OneBigLineSprite.drawString((XDRGTKMuteScreen ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4540,14 +4551,14 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM8:
-            autoDST = !autoDST;
+            toggleValueWithOnOffCue(autoDST);
 
             OneBigLineSprite.drawString((autoDST ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM9:
-            clockampm = !clockampm;
+            toggleValueWithOnOffCue(clockampm);
 
             OneBigLineSprite.drawString((clockampm ? "12" : "24"), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4629,7 +4640,7 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM5:
-            scanmem = !scanmem;
+            toggleValueWithOnOffCue(scanmem);
             OneBigLineSprite.drawString((scanmem ? textUI(218) : textUI(217)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
@@ -4652,21 +4663,21 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM7:
-            scanmute = !scanmute;
+            toggleValueWithOnOffCue(scanmute);
 
             OneBigLineSprite.drawString((scanmute ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM8:
-            autolog = !autolog;
+            toggleValueWithOnOffCue(autolog);
 
             OneBigLineSprite.drawString((autolog ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM9:
-            scanholdonsignal = !scanholdonsignal;
+            toggleValueWithOnOffCue(scanholdonsignal);
 
             OneBigLineSprite.drawString((scanholdonsignal ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4739,7 +4750,7 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM6:
-            mempionly = !mempionly;
+            toggleValueWithOnOffCue(mempionly);
 
             OneBigLineSprite.drawString((mempionly ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4780,31 +4791,31 @@ void MenuUpDown(bool dir) {
       case ACCESSIBILITY:
         switch (menuoption) {
           case ITEM1:
-            accessibilityMenuBeep = !accessibilityMenuBeep;
+            toggleValueWithOnOffCue(accessibilityMenuBeep);
             OneBigLineSprite.drawString((accessibilityMenuBeep ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM2:
-            accessibilityConfirmBeep = !accessibilityConfirmBeep;
+            toggleValueWithOnOffCue(accessibilityConfirmBeep);
             OneBigLineSprite.drawString((accessibilityConfirmBeep ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM3:
-            accessibilityBackBeep = !accessibilityBackBeep;
+            toggleValueWithOnOffCue(accessibilityBackBeep);
             OneBigLineSprite.drawString((accessibilityBackBeep ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM4:
-            accessibilityVoiceLite = !accessibilityVoiceLite;
+            toggleValueWithOnOffCue(accessibilityVoiceLite);
             OneBigLineSprite.drawString((accessibilityVoiceLite ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM5:
-            accessibilityVoiceLiteActions = !accessibilityVoiceLiteActions;
+            toggleValueWithOnOffCue(accessibilityVoiceLiteActions);
             OneBigLineSprite.drawString((accessibilityVoiceLiteActions ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
