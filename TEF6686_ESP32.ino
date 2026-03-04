@@ -549,6 +549,15 @@ static inline void playAccessibilityBandVoiceLite() {
   playAccessibilityBandVoiceLiteForBand(band);
 }
 
+static inline void playAccessibilityOnOffVoiceLite(bool enabled) {
+  if (!accessibilityVoiceLite) return;
+  const uint16_t lowFreq = 860;
+  const uint16_t highFreq = 1560;
+  radio.tone(18, -10, (enabled ? lowFreq : highFreq));
+  delay(8);
+  radio.tone(24, -10, (enabled ? highFreq : lowFreq));
+}
+
 static inline void playAccessibilityBWVoiceLite() {
   if (!accessibilityVoiceLite || !BWtune) return;
 
@@ -578,9 +587,8 @@ static inline void playAccessibilityBWSelectorCursorVoiceLite() {
 }
 
 static inline void playAccessibilityStereoModeVoiceLite() {
-  if (!accessibilityVoiceLite) return;
-  // Distinct cues: lower for MONO, higher for STEREO.
-  radio.tone(20, -10, (StereoToggle ? 1560 : 860));
+  // Stereo ON = low->high, Mono OFF = high->low.
+  playAccessibilityOnOffVoiceLite(StereoToggle);
 }
 
 static inline void playAccessibilityFreqEnterVoiceLite(bool manualEnter) {
@@ -605,13 +613,6 @@ static inline void playAccessibilityTuneModeVoiceLite() {
   }
 
   if (frequency != 0) radio.tone(24, -10, frequency);
-}
-
-static inline void playAccessibilityIMSEQVoiceLite() {
-  if (!accessibilityVoiceLite) return;
-  radio.tone(18, -10, (iMSset ? 1540 : 980));
-  delay(8);
-  radio.tone(18, -10, (EQset ? 1920 : 1180));
 }
 
 static inline void playAccessibilityScanStateVoiceLite(bool start) {
@@ -2991,6 +2992,7 @@ void ButtonPress() {
           } else {
             if (band == BAND_SW && tunemode != TUNE_MEM) {
               nowToggleSWMIBand = !nowToggleSWMIBand;
+              playAccessibilityOnOffVoiceLite(nowToggleSWMIBand);
               tunemode = TUNE_MAN;
               EEPROM.writeByte(EE_BYTE_BANDAUTOSW, nowToggleSWMIBand);
               EEPROM.commit();
@@ -3009,8 +3011,14 @@ void ButtonPress() {
       if (menu) DoMenu();
       if (BWtune) {
         if (BWsettemp == 18 || BWsettemp == 19) {
-          if (BWsettemp == 18) iMSset = !iMSset;
-          if (BWsettemp == 19) EQset = !EQset;
+          if (BWsettemp == 18) {
+            iMSset = !iMSset;
+            playAccessibilityOnOffVoiceLite(iMSset);
+          }
+          if (BWsettemp == 19) {
+            EQset = !EQset;
+            playAccessibilityOnOffVoiceLite(EQset);
+          }
           if (!iMSset && !EQset) iMSEQ = 0;
           else if (iMSset && EQset) iMSEQ = 2;
           else if (!iMSset && EQset) iMSEQ = 3;
@@ -3020,7 +3028,6 @@ void ButtonPress() {
           EEPROM.commit();
           updateiMS();
           updateEQ();
-          playAccessibilityIMSEQVoiceLite();
           if (XDRGTKUSB || XDRGTKTCP) DataPrint("G" + String(!EQset) + String(!iMSset) + "\n");
           showBWSelector();
           if (band < BAND_GAP) {
