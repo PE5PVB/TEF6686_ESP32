@@ -553,9 +553,9 @@ static inline void playAccessibilityOnOffVoiceLite(bool enabled) {
   if (!accessibilityVoiceLite) return;
   const uint16_t lowFreq = 860;
   const uint16_t highFreq = 1560;
-  radio.tone(30, -10, (enabled ? lowFreq : highFreq));
+  radio.tone(60, -10, (enabled ? lowFreq : highFreq));
   delay(8);
-  radio.tone(36, -10, (enabled ? highFreq : lowFreq));
+  radio.tone(72, -10, (enabled ? highFreq : lowFreq));
 }
 
 static inline void playAccessibilityBWVoiceLite() {
