@@ -18,6 +18,9 @@ More information: https://www.pe5pvb.nl/tef6686/
 - [How to use the FM DX scanner](https://github.com/PE5PVB/TEF6686_ESP32/wiki/How-to-use-the-FM-DX-scanner)
 - [Menu options explained](https://github.com/PE5PVB/TEF6686_ESP32/wiki/Menu-options-explained)
 
+## Accessibility note
+- `Short press BW` means a quick tap (not hold) of the `BW` button on the main screen (outside menu): it toggles `Stereo/Mono` and uses the same ON/OFF two-tone cue pattern.
+
 ## Contributing
 We are open for a new ideas in our project. Feel free to share your thoughts in [Discussions](https://github.com/PE5PVB/TEF6686_ESP32/discussions).\
 You can also contribute your own code using [Pull Requests](https://github.com/PE5PVB/TEF6686_ESP32/pulls). We will review it and merge into main branch.
@@ -35,4 +38,3 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 ## If you like this software
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/pe5pvb)
-

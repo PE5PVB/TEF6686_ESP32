@@ -17,6 +17,552 @@ Add-Type -AssemblyName System.Net.Http
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 Set-Location $scriptDir
 
+function Get-UiLanguage {
+    $supported = @("pl", "en", "de", "es", "fr", "it")
+
+    $forcedLang = $env:FLASHWIZARD_LANG
+    if (-not [string]::IsNullOrWhiteSpace($forcedLang)) {
+        $code = $forcedLang.Trim().ToLowerInvariant()
+        if ($code.Length -ge 2) {
+            $code = $code.Substring(0, 2)
+        }
+        if ($supported -contains $code) { return $code }
+        return "en"
+    }
+
+    $culture = [System.Globalization.CultureInfo]::CurrentUICulture
+    if ($null -eq $culture) { return "en" }
+
+    $langCode = $culture.TwoLetterISOLanguageName
+    if ([string]::IsNullOrWhiteSpace($langCode)) { return "en" }
+
+    $langCode = $langCode.ToLowerInvariant()
+    if ($supported -contains $langCode) { return $langCode }
+    return "en"
+}
+
+$script:Translations = @{
+    pl = @{
+        app_title = 'TEF6686 Flash Wizard'
+        label_com = 'Port COM:'
+        btn_refresh = 'Odswiez'
+        chk_boot = 'Radio ma przycisk BOOT (zalecane)'
+        btn_format = '1) Formatuj'
+        btn_flash = '2) Wgraj soft'
+        btn_all = 'Format + wgranie'
+        btn_update = '3) Aktualizuj (PE5PVB)'
+        btn_close = 'Zamknij'
+        hint_boot = 'Tryb BOOT: POWER OFF -> przytrzymaj BOOT -> POWER ON -> pusc BOOT po ~2 s.'
+        progress_idle = 'Postep: oczekiwanie'
+        progress_update_failed = 'Postep: blad aktualizacji'
+        progress_done = 'Postep: {0} (100%)'
+        progress_error = 'Postep: {0} (blad)'
+        progress_init = 'Postep: {0} (inicjalizacja...)'
+        progress_connecting = 'Postep: {0} (polaczenie...)'
+        progress_downloading = 'Postep: {0} (pobieranie...)'
+        progress_percent = 'Postep: {0} ({1}%)'
+        progress_extracting = 'Postep: Rozpakowywanie paczki...'
+        progress_update_done = 'Postep: Aktualizacja zakonczona (100%)'
+        stage_update_download = 'Pobieranie aktualizacji'
+        stage_format = 'Formatowanie'
+        stage_flash = 'Wgrywanie softu'
+        title_error = 'Blad'
+        title_no_port = 'Brak portu'
+        title_prepare = 'Przygotowanie'
+        title_after_format = 'Krok po formacie'
+        title_success = 'Sukces'
+        title_update = 'Aktualizacja z PE5PVB'
+        title_update_done = 'Aktualizacja zakonczona'
+        msg_missing_file = 'Brak pliku: {0}`n`nUmiesc FlashWizard.ps1 w folderze z plikami firmware.'
+        msg_select_com = 'Wybierz port COM.'
+        msg_boot_prompt = 'Wprowadz radio w tryb BOOT i kliknij OK.`n`nPOWER OFF -> BOOT + POWER ON -> pusc BOOT po ~2 s.'
+        msg_format_failed = 'Formatowanie nieudane. Sprawdz port COM i tryb BOOT.'
+        msg_after_format = 'Teraz uruchom radio normalnie i poczekaj na komunikat formatowania.`nNastepnie wylacz radio i ponownie wejdz w tryb BOOT przed wgrywaniem softu.'
+        msg_flash_failed = 'Wgrywanie nieudane. Sprawdz port COM i tryb BOOT.'
+        msg_flash_success = 'Gotowe. Firmware zostal wgrany.'
+        msg_refresh_failed = 'Nie udalo sie odswiezyc portow COM.`n{0}'
+        msg_update_confirm = 'Wykryto release {0} z PE5PVB.`n`nKreator pobierze paczke i zaktualizuje pliki bazowe.`nPlik TEF6686_ESP32.ino.bin zostanie podmieniony tylko jesli wykryte beda markery accessibility (Accessibility + Voice Lite).`n`nKontynuowac aktualizacje?'
+        msg_update_done = 'Aktualizacja zakonczona.`n`nTag: {0}`nBackup: {1}`n`nFirmware accessibility {2}'
+        msg_update_failed = 'Nie udalo sie wykonac aktualizacji.`n{0}'
+        log_check_release = 'Sprawdzam release: {0}/{1}'
+        log_download_package = 'Pobieram paczke: {0}'
+        log_package_extracted = 'Paczka rozpakowana.'
+        log_backup_dir = 'Backup plikow: {0}'
+        log_target_skipped = 'Pominieto {0} (brak w paczce).'
+        log_target_updated = 'Zaktualizowano {0}.'
+        log_fw_replaced_markers = 'Firmware zostal podmieniony (wykryto markery accessibility).'
+        log_fw_skipped_protect = 'Firmware z release pominiety, aby nie nadpisac wersji accessibility.'
+        log_fw_not_found = 'Nie znaleziono firmware w paczce release.'
+        log_running = 'Uruchamiam: esptool.exe {0}'
+        log_exit_code = 'Kod wyjscia: {0}'
+        log_format_cancelled = 'Anulowano format.'
+        log_format_start = 'Start formatowania...'
+        log_format_done = 'Formatowanie zakonczone.'
+        log_flash_cancelled = 'Anulowano wgrywanie.'
+        log_flash_start = 'Start wgrywania firmware...'
+        log_spiffs_yes = 'SPIFFS bedzie wgrany.'
+        log_spiffs_large = 'SPIFFS pominiety (za duzy plik).'
+        log_spiffs_missing = 'SPIFFS pominiety (brak pliku).'
+        log_flash_done = 'Wgrywanie zakonczone pomyslnie.'
+        log_ports_refreshed = 'Odswiezono liste portow COM.'
+        log_error = 'Blad: {0}'
+        log_update_start = 'Rozpoczynam sprawdzanie aktualizacji z PE5PVB...'
+        log_latest_release = 'Najnowszy release: {0} ({1})'
+        log_selected_package = 'Wybrana paczka: {0}'
+        log_update_cancelled = 'Anulowano aktualizacje.'
+        log_update_completed = 'Zakonczono aktualizacje. Zmienione pliki: {0}'
+        log_update_fw_replaced = 'Firmware accessibility zostal zaktualizowany z paczki release.'
+        log_update_fw_kept = 'Firmware accessibility pozostawiono bez zmian.'
+        log_update_error = 'Blad aktualizacji: {0}'
+        log_wizard_ready = 'Kreator gotowy.'
+        log_instruction = 'Wybierz COM, potem: Formatuj -> Wgraj soft.'
+        log_update_option = 'Opcja Aktualizuj (PE5PVB) aktualizuje pliki bazowe i chroni firmware accessibility.'
+        log_ui_language = 'Jezyk interfejsu: {0}'
+        text_no_date = 'brak daty'
+        status_fw_replaced = 'zostal podmieniony.'
+        status_fw_kept = 'pozostal bez zmian.'
+        err_no_zip = 'Brak paczki ZIP w release na GitHub.'
+        err_no_match_files = 'Nie znaleziono zadnych pasujacych plikow do aktualizacji.'
+        err_release_no_zip = 'Release nie zawiera paczki ZIP.'
+    }
+    en = @{
+        app_title = 'TEF6686 Flash Wizard'
+        label_com = 'COM Port:'
+        btn_refresh = 'Refresh'
+        chk_boot = 'Radio has BOOT button (recommended)'
+        btn_format = '1) Format'
+        btn_flash = '2) Flash firmware'
+        btn_all = 'Format + flash'
+        btn_update = '3) Update (PE5PVB)'
+        btn_close = 'Close'
+        hint_boot = 'BOOT mode: POWER OFF -> hold BOOT -> POWER ON -> release BOOT after ~2 s.'
+        progress_idle = 'Progress: waiting'
+        progress_update_failed = 'Progress: update failed'
+        progress_done = 'Progress: {0} (100%)'
+        progress_error = 'Progress: {0} (error)'
+        progress_init = 'Progress: {0} (initializing...)'
+        progress_connecting = 'Progress: {0} (connecting...)'
+        progress_downloading = 'Progress: {0} (downloading...)'
+        progress_percent = 'Progress: {0} ({1}%)'
+        progress_extracting = 'Progress: Extracting package...'
+        progress_update_done = 'Progress: Update completed (100%)'
+        stage_update_download = 'Downloading update'
+        stage_format = 'Formatting'
+        stage_flash = 'Flashing firmware'
+        title_error = 'Error'
+        title_no_port = 'No port'
+        title_prepare = 'Preparation'
+        title_after_format = 'After format'
+        title_success = 'Success'
+        title_update = 'Update from PE5PVB'
+        title_update_done = 'Update completed'
+        msg_missing_file = 'Missing file: {0}`n`nPlace FlashWizard.ps1 in the firmware folder.'
+        msg_select_com = 'Select a COM port.'
+        msg_boot_prompt = 'Put the radio into BOOT mode and click OK.`n`nPOWER OFF -> BOOT + POWER ON -> release BOOT after ~2 s.'
+        msg_format_failed = 'Formatting failed. Check COM port and BOOT mode.'
+        msg_after_format = 'Now start the radio normally and wait for the format message.`nThen power it off and enter BOOT mode again before flashing.'
+        msg_flash_failed = 'Flashing failed. Check COM port and BOOT mode.'
+        msg_flash_success = 'Done. Firmware was flashed.'
+        msg_refresh_failed = 'Failed to refresh COM ports.`n{0}'
+        msg_update_confirm = 'Release {0} detected on PE5PVB.`n`nWizard will download the package and update base files.`nTEF6686_ESP32.ino.bin will be replaced only if accessibility markers are detected (Accessibility + Voice Lite).`n`nContinue update?'
+        msg_update_done = 'Update completed.`n`nTag: {0}`nBackup: {1}`n`nAccessibility firmware {2}'
+        msg_update_failed = 'Could not complete update.`n{0}'
+        log_check_release = 'Checking release: {0}/{1}'
+        log_download_package = 'Downloading package: {0}'
+        log_package_extracted = 'Package extracted.'
+        log_backup_dir = 'Backup files: {0}'
+        log_target_skipped = 'Skipped {0} (not found in package).'
+        log_target_updated = 'Updated {0}.'
+        log_fw_replaced_markers = 'Firmware replaced (accessibility markers detected).'
+        log_fw_skipped_protect = 'Release firmware skipped to avoid overwriting accessibility build.'
+        log_fw_not_found = 'Firmware not found in release package.'
+        log_running = 'Running: esptool.exe {0}'
+        log_exit_code = 'Exit code: {0}'
+        log_format_cancelled = 'Formatting cancelled.'
+        log_format_start = 'Formatting started...'
+        log_format_done = 'Formatting completed.'
+        log_flash_cancelled = 'Flashing cancelled.'
+        log_flash_start = 'Firmware flashing started...'
+        log_spiffs_yes = 'SPIFFS will be flashed.'
+        log_spiffs_large = 'SPIFFS skipped (file too large).'
+        log_spiffs_missing = 'SPIFFS skipped (file missing).'
+        log_flash_done = 'Flashing completed successfully.'
+        log_ports_refreshed = 'COM port list refreshed.'
+        log_error = 'Error: {0}'
+        log_update_start = 'Starting update check from PE5PVB...'
+        log_latest_release = 'Latest release: {0} ({1})'
+        log_selected_package = 'Selected package: {0}'
+        log_update_cancelled = 'Update cancelled.'
+        log_update_completed = 'Update completed. Changed files: {0}'
+        log_update_fw_replaced = 'Accessibility firmware was updated from release package.'
+        log_update_fw_kept = 'Accessibility firmware left unchanged.'
+        log_update_error = 'Update error: {0}'
+        log_wizard_ready = 'Wizard ready.'
+        log_instruction = 'Select COM, then: Format -> Flash firmware.'
+        log_update_option = 'Update (PE5PVB) updates base files and protects accessibility firmware.'
+        log_ui_language = 'UI language: {0}'
+        text_no_date = 'no date'
+        status_fw_replaced = 'was replaced.'
+        status_fw_kept = 'remained unchanged.'
+        err_no_zip = 'No ZIP package found in GitHub release.'
+        err_no_match_files = 'No matching files were found for update.'
+        err_release_no_zip = 'Release does not include a ZIP package.'
+    }
+    de = @{
+        app_title = 'TEF6686 Flash Wizard'
+        label_com = 'COM-Port:'
+        btn_refresh = 'Aktualisieren'
+        chk_boot = 'Radio hat BOOT-Taste (empfohlen)'
+        btn_format = '1) Formatieren'
+        btn_flash = '2) Firmware flashen'
+        btn_all = 'Formatieren + flashen'
+        btn_update = '3) Update (PE5PVB)'
+        btn_close = 'Schliessen'
+        hint_boot = 'BOOT-Modus: POWER OFF -> BOOT halten -> POWER ON -> BOOT nach ~2 s loslassen.'
+        progress_idle = 'Fortschritt: warten'
+        progress_update_failed = 'Fortschritt: Update fehlgeschlagen'
+        progress_done = 'Fortschritt: {0} (100%)'
+        progress_error = 'Fortschritt: {0} (Fehler)'
+        progress_init = 'Fortschritt: {0} (Initialisierung...)'
+        progress_connecting = 'Fortschritt: {0} (Verbinden...)'
+        progress_downloading = 'Fortschritt: {0} (Download...)'
+        progress_percent = 'Fortschritt: {0} ({1}%)'
+        progress_extracting = 'Fortschritt: Paket wird entpackt...'
+        progress_update_done = 'Fortschritt: Update abgeschlossen (100%)'
+        stage_update_download = 'Update herunterladen'
+        stage_format = 'Formatieren'
+        stage_flash = 'Firmware flashen'
+        title_error = 'Fehler'
+        title_no_port = 'Kein Port'
+        title_prepare = 'Vorbereitung'
+        title_after_format = 'Nach dem Formatieren'
+        title_success = 'Erfolg'
+        title_update = 'Update von PE5PVB'
+        title_update_done = 'Update abgeschlossen'
+        msg_missing_file = 'Datei fehlt: {0}`n`nLege FlashWizard.ps1 in den Firmware-Ordner.'
+        msg_select_com = 'Waehle einen COM-Port.'
+        msg_boot_prompt = 'Versetze das Radio in den BOOT-Modus und klicke OK.`n`nPOWER OFF -> BOOT + POWER ON -> BOOT nach ~2 s loslassen.'
+        msg_format_failed = 'Formatieren fehlgeschlagen. COM-Port und BOOT-Modus pruefen.'
+        msg_after_format = 'Starte das Radio jetzt normal und warte auf die Formatmeldung.`nDann ausschalten und vor dem Flashen erneut in den BOOT-Modus wechseln.'
+        msg_flash_failed = 'Flashen fehlgeschlagen. COM-Port und BOOT-Modus pruefen.'
+        msg_flash_success = 'Fertig. Firmware wurde geflasht.'
+        msg_refresh_failed = 'COM-Ports konnten nicht aktualisiert werden.`n{0}'
+        msg_update_confirm = 'Release {0} auf PE5PVB gefunden.`n`nDer Wizard laedt das Paket herunter und aktualisiert Basisdateien.`nTEF6686_ESP32.ino.bin wird nur ersetzt, wenn Accessibility-Marker erkannt werden (Accessibility + Voice Lite).`n`nUpdate fortsetzen?'
+        msg_update_done = 'Update abgeschlossen.`n`nTag: {0}`nBackup: {1}`n`nAccessibility-Firmware {2}'
+        msg_update_failed = 'Update konnte nicht ausgefuehrt werden.`n{0}'
+        log_check_release = 'Pruefe Release: {0}/{1}'
+        log_download_package = 'Paket wird heruntergeladen: {0}'
+        log_package_extracted = 'Paket entpackt.'
+        log_backup_dir = 'Backup-Dateien: {0}'
+        log_target_skipped = '{0} uebersprungen (nicht im Paket gefunden).'
+        log_target_updated = '{0} aktualisiert.'
+        log_fw_replaced_markers = 'Firmware ersetzt (Accessibility-Marker erkannt).'
+        log_fw_skipped_protect = 'Release-Firmware uebersprungen, um Accessibility-Build nicht zu ueberschreiben.'
+        log_fw_not_found = 'Firmware nicht im Release-Paket gefunden.'
+        log_running = 'Starte: esptool.exe {0}'
+        log_exit_code = 'Exit-Code: {0}'
+        log_format_cancelled = 'Formatieren abgebrochen.'
+        log_format_start = 'Formatieren gestartet...'
+        log_format_done = 'Formatieren abgeschlossen.'
+        log_flash_cancelled = 'Flashen abgebrochen.'
+        log_flash_start = 'Firmware-Flashen gestartet...'
+        log_spiffs_yes = 'SPIFFS wird geflasht.'
+        log_spiffs_large = 'SPIFFS uebersprungen (Datei zu gross).'
+        log_spiffs_missing = 'SPIFFS uebersprungen (Datei fehlt).'
+        log_flash_done = 'Flashen erfolgreich abgeschlossen.'
+        log_ports_refreshed = 'COM-Port-Liste aktualisiert.'
+        log_error = 'Fehler: {0}'
+        log_update_start = 'Starte Update-Pruefung von PE5PVB...'
+        log_latest_release = 'Neuestes Release: {0} ({1})'
+        log_selected_package = 'Ausgewaehltes Paket: {0}'
+        log_update_cancelled = 'Update abgebrochen.'
+        log_update_completed = 'Update abgeschlossen. Geaenderte Dateien: {0}'
+        log_update_fw_replaced = 'Accessibility-Firmware wurde aus dem Release-Paket aktualisiert.'
+        log_update_fw_kept = 'Accessibility-Firmware blieb unveraendert.'
+        log_update_error = 'Update-Fehler: {0}'
+        log_wizard_ready = 'Wizard bereit.'
+        log_instruction = 'COM waehlen, dann: Formatieren -> Firmware flashen.'
+        log_update_option = 'Update (PE5PVB) aktualisiert Basisdateien und schuetzt Accessibility-Firmware.'
+        log_ui_language = 'UI-Sprache: {0}'
+        text_no_date = 'kein Datum'
+        status_fw_replaced = 'wurde ersetzt.'
+        status_fw_kept = 'blieb unveraendert.'
+        err_no_zip = 'Kein ZIP-Paket im GitHub-Release gefunden.'
+        err_no_match_files = 'Keine passenden Dateien fuer das Update gefunden.'
+        err_release_no_zip = 'Release enthaelt kein ZIP-Paket.'
+    }
+    es = @{
+        app_title = 'TEF6686 Flash Wizard'
+        label_com = 'Puerto COM:'
+        btn_refresh = 'Actualizar'
+        chk_boot = 'La radio tiene boton BOOT (recomendado)'
+        btn_format = '1) Formatear'
+        btn_flash = '2) Flashear firmware'
+        btn_all = 'Formatear + flashear'
+        btn_update = '3) Actualizar (PE5PVB)'
+        btn_close = 'Cerrar'
+        hint_boot = 'Modo BOOT: POWER OFF -> mantener BOOT -> POWER ON -> soltar BOOT tras ~2 s.'
+        progress_idle = 'Progreso: en espera'
+        progress_update_failed = 'Progreso: actualizacion fallida'
+        progress_done = 'Progreso: {0} (100%)'
+        progress_error = 'Progreso: {0} (error)'
+        progress_init = 'Progreso: {0} (inicializando...)'
+        progress_connecting = 'Progreso: {0} (conectando...)'
+        progress_downloading = 'Progreso: {0} (descargando...)'
+        progress_percent = 'Progreso: {0} ({1}%)'
+        progress_extracting = 'Progreso: Extrayendo paquete...'
+        progress_update_done = 'Progreso: Actualizacion completada (100%)'
+        stage_update_download = 'Descargando actualizacion'
+        stage_format = 'Formateando'
+        stage_flash = 'Flasheando firmware'
+        title_error = 'Error'
+        title_no_port = 'Sin puerto'
+        title_prepare = 'Preparacion'
+        title_after_format = 'Despues del formateo'
+        title_success = 'Exito'
+        title_update = 'Actualizacion desde PE5PVB'
+        title_update_done = 'Actualizacion completada'
+        msg_missing_file = 'Falta el archivo: {0}`n`nColoca FlashWizard.ps1 en la carpeta de firmware.'
+        msg_select_com = 'Selecciona un puerto COM.'
+        msg_boot_prompt = 'Pon la radio en modo BOOT y pulsa OK.`n`nPOWER OFF -> BOOT + POWER ON -> suelta BOOT tras ~2 s.'
+        msg_format_failed = 'Fallo al formatear. Revisa el puerto COM y el modo BOOT.'
+        msg_after_format = 'Ahora enciende la radio normalmente y espera el mensaje de formateo.`nDespues apagala y vuelve a entrar en modo BOOT antes de flashear.'
+        msg_flash_failed = 'Fallo al flashear. Revisa el puerto COM y el modo BOOT.'
+        msg_flash_success = 'Listo. El firmware se flasheo.'
+        msg_refresh_failed = 'No se pudieron actualizar los puertos COM.`n{0}'
+        msg_update_confirm = 'Se detecto el release {0} en PE5PVB.`n`nEl asistente descargara el paquete y actualizara los archivos base.`nTEF6686_ESP32.ino.bin se reemplazara solo si se detectan marcadores de accesibilidad (Accessibility + Voice Lite).`n`nContinuar con la actualizacion?'
+        msg_update_done = 'Actualizacion completada.`n`nTag: {0}`nBackup: {1}`n`nFirmware de accesibilidad {2}'
+        msg_update_failed = 'No se pudo completar la actualizacion.`n{0}'
+        log_check_release = 'Comprobando release: {0}/{1}'
+        log_download_package = 'Descargando paquete: {0}'
+        log_package_extracted = 'Paquete extraido.'
+        log_backup_dir = 'Archivos de backup: {0}'
+        log_target_skipped = 'Se omite {0} (no encontrado en el paquete).'
+        log_target_updated = '{0} actualizado.'
+        log_fw_replaced_markers = 'Firmware reemplazado (marcadores de accesibilidad detectados).'
+        log_fw_skipped_protect = 'Se omitio el firmware del release para no sobrescribir la version de accesibilidad.'
+        log_fw_not_found = 'No se encontro firmware en el paquete del release.'
+        log_running = 'Ejecutando: esptool.exe {0}'
+        log_exit_code = 'Codigo de salida: {0}'
+        log_format_cancelled = 'Formateo cancelado.'
+        log_format_start = 'Iniciando formateo...'
+        log_format_done = 'Formateo completado.'
+        log_flash_cancelled = 'Flasheo cancelado.'
+        log_flash_start = 'Iniciando flasheo de firmware...'
+        log_spiffs_yes = 'SPIFFS se flasheara.'
+        log_spiffs_large = 'SPIFFS omitido (archivo demasiado grande).'
+        log_spiffs_missing = 'SPIFFS omitido (archivo ausente).'
+        log_flash_done = 'Flasheo completado correctamente.'
+        log_ports_refreshed = 'Lista de puertos COM actualizada.'
+        log_error = 'Error: {0}'
+        log_update_start = 'Iniciando comprobacion de actualizaciones desde PE5PVB...'
+        log_latest_release = 'Release mas reciente: {0} ({1})'
+        log_selected_package = 'Paquete seleccionado: {0}'
+        log_update_cancelled = 'Actualizacion cancelada.'
+        log_update_completed = 'Actualizacion completada. Archivos cambiados: {0}'
+        log_update_fw_replaced = 'El firmware de accesibilidad se actualizo desde el paquete release.'
+        log_update_fw_kept = 'El firmware de accesibilidad se dejo sin cambios.'
+        log_update_error = 'Error de actualizacion: {0}'
+        log_wizard_ready = 'Asistente listo.'
+        log_instruction = 'Selecciona COM y luego: Formatear -> Flashear firmware.'
+        log_update_option = 'Actualizar (PE5PVB) actualiza archivos base y protege el firmware de accesibilidad.'
+        log_ui_language = 'Idioma de UI: {0}'
+        text_no_date = 'sin fecha'
+        status_fw_replaced = 'fue reemplazado.'
+        status_fw_kept = 'quedo sin cambios.'
+        err_no_zip = 'No se encontro paquete ZIP en el release de GitHub.'
+        err_no_match_files = 'No se encontraron archivos coincidentes para actualizar.'
+        err_release_no_zip = 'El release no contiene paquete ZIP.'
+    }
+    fr = @{
+        app_title = 'TEF6686 Flash Wizard'
+        label_com = 'Port COM:'
+        btn_refresh = 'Actualiser'
+        chk_boot = 'La radio a un bouton BOOT (recommande)'
+        btn_format = '1) Formater'
+        btn_flash = '2) Flasher le firmware'
+        btn_all = 'Formater + flasher'
+        btn_update = '3) Mettre a jour (PE5PVB)'
+        btn_close = 'Fermer'
+        hint_boot = 'Mode BOOT: POWER OFF -> maintenir BOOT -> POWER ON -> relacher BOOT apres ~2 s.'
+        progress_idle = 'Progression: en attente'
+        progress_update_failed = 'Progression: echec de mise a jour'
+        progress_done = 'Progression: {0} (100%)'
+        progress_error = 'Progression: {0} (erreur)'
+        progress_init = 'Progression: {0} (initialisation...)'
+        progress_connecting = 'Progression: {0} (connexion...)'
+        progress_downloading = 'Progression: {0} (telechargement...)'
+        progress_percent = 'Progression: {0} ({1}%)'
+        progress_extracting = 'Progression: extraction du paquet...'
+        progress_update_done = 'Progression: mise a jour terminee (100%)'
+        stage_update_download = 'Telechargement de la mise a jour'
+        stage_format = 'Formatage'
+        stage_flash = 'Flash du firmware'
+        title_error = 'Erreur'
+        title_no_port = 'Aucun port'
+        title_prepare = 'Preparation'
+        title_after_format = 'Apres formatage'
+        title_success = 'Succes'
+        title_update = 'Mise a jour depuis PE5PVB'
+        title_update_done = 'Mise a jour terminee'
+        msg_missing_file = 'Fichier manquant: {0}`n`nPlace FlashWizard.ps1 dans le dossier firmware.'
+        msg_select_com = 'Selectionne un port COM.'
+        msg_boot_prompt = 'Mets la radio en mode BOOT puis clique sur OK.`n`nPOWER OFF -> BOOT + POWER ON -> relacher BOOT apres ~2 s.'
+        msg_format_failed = 'Le formatage a echoue. Verifie le port COM et le mode BOOT.'
+        msg_after_format = 'Demarre la radio normalement et attends le message de formatage.`nEnsuite eteins-la et repasse en mode BOOT avant le flash.'
+        msg_flash_failed = 'Le flash a echoue. Verifie le port COM et le mode BOOT.'
+        msg_flash_success = 'Termine. Le firmware a ete flashe.'
+        msg_refresh_failed = 'Impossible de mettre a jour les ports COM.`n{0}'
+        msg_update_confirm = 'Release {0} detecte sur PE5PVB.`n`nL assistant telechargera le paquet et mettra a jour les fichiers de base.`nTEF6686_ESP32.ino.bin sera remplace uniquement si des marqueurs d accessibilite sont detectes (Accessibility + Voice Lite).`n`nContinuer la mise a jour?'
+        msg_update_done = 'Mise a jour terminee.`n`nTag: {0}`nBackup: {1}`n`nFirmware accessibilite {2}'
+        msg_update_failed = 'Impossible de terminer la mise a jour.`n{0}'
+        log_check_release = 'Verification du release: {0}/{1}'
+        log_download_package = 'Telechargement du paquet: {0}'
+        log_package_extracted = 'Paquet extrait.'
+        log_backup_dir = 'Fichiers de sauvegarde: {0}'
+        log_target_skipped = '{0} ignore (introuvable dans le paquet).'
+        log_target_updated = '{0} mis a jour.'
+        log_fw_replaced_markers = 'Firmware remplace (marqueurs d accessibilite detectes).'
+        log_fw_skipped_protect = 'Firmware du release ignore pour eviter d ecraser la version accessibilite.'
+        log_fw_not_found = 'Firmware introuvable dans le paquet release.'
+        log_running = 'Execution: esptool.exe {0}'
+        log_exit_code = 'Code de sortie: {0}'
+        log_format_cancelled = 'Formatage annule.'
+        log_format_start = 'Demarrage du formatage...'
+        log_format_done = 'Formatage termine.'
+        log_flash_cancelled = 'Flash annule.'
+        log_flash_start = 'Demarrage du flash firmware...'
+        log_spiffs_yes = 'SPIFFS sera flashe.'
+        log_spiffs_large = 'SPIFFS ignore (fichier trop volumineux).'
+        log_spiffs_missing = 'SPIFFS ignore (fichier absent).'
+        log_flash_done = 'Flash termine avec succes.'
+        log_ports_refreshed = 'Liste des ports COM actualisee.'
+        log_error = 'Erreur: {0}'
+        log_update_start = 'Demarrage de la verification des mises a jour depuis PE5PVB...'
+        log_latest_release = 'Dernier release: {0} ({1})'
+        log_selected_package = 'Paquet selectionne: {0}'
+        log_update_cancelled = 'Mise a jour annulee.'
+        log_update_completed = 'Mise a jour terminee. Fichiers modifies: {0}'
+        log_update_fw_replaced = 'Le firmware accessibilite a ete mis a jour depuis le paquet release.'
+        log_update_fw_kept = 'Le firmware accessibilite est reste inchange.'
+        log_update_error = 'Erreur de mise a jour: {0}'
+        log_wizard_ready = 'Assistant pret.'
+        log_instruction = 'Selectionne COM puis: Formater -> Flasher le firmware.'
+        log_update_option = 'Mettre a jour (PE5PVB) met a jour les fichiers de base et protege le firmware accessibilite.'
+        log_ui_language = 'Langue UI: {0}'
+        text_no_date = 'pas de date'
+        status_fw_replaced = 'a ete remplace.'
+        status_fw_kept = 'est reste inchange.'
+        err_no_zip = 'Aucun paquet ZIP trouve dans le release GitHub.'
+        err_no_match_files = 'Aucun fichier correspondant trouve pour la mise a jour.'
+        err_release_no_zip = 'Le release ne contient pas de paquet ZIP.'
+    }
+    it = @{
+        app_title = 'TEF6686 Flash Wizard'
+        label_com = 'Porta COM:'
+        btn_refresh = 'Aggiorna'
+        chk_boot = 'La radio ha il pulsante BOOT (consigliato)'
+        btn_format = '1) Formatta'
+        btn_flash = '2) Flasha firmware'
+        btn_all = 'Formatta + flasha'
+        btn_update = '3) Aggiorna (PE5PVB)'
+        btn_close = 'Chiudi'
+        hint_boot = 'Modalita BOOT: POWER OFF -> tieni premuto BOOT -> POWER ON -> rilascia BOOT dopo ~2 s.'
+        progress_idle = 'Progresso: in attesa'
+        progress_update_failed = 'Progresso: aggiornamento fallito'
+        progress_done = 'Progresso: {0} (100%)'
+        progress_error = 'Progresso: {0} (errore)'
+        progress_init = 'Progresso: {0} (inizializzazione...)'
+        progress_connecting = 'Progresso: {0} (connessione...)'
+        progress_downloading = 'Progresso: {0} (download...)'
+        progress_percent = 'Progresso: {0} ({1}%)'
+        progress_extracting = 'Progresso: Estrazione pacchetto...'
+        progress_update_done = 'Progresso: Aggiornamento completato (100%)'
+        stage_update_download = 'Download aggiornamento'
+        stage_format = 'Formattazione'
+        stage_flash = 'Flash firmware'
+        title_error = 'Errore'
+        title_no_port = 'Nessuna porta'
+        title_prepare = 'Preparazione'
+        title_after_format = 'Dopo la formattazione'
+        title_success = 'Successo'
+        title_update = 'Aggiornamento da PE5PVB'
+        title_update_done = 'Aggiornamento completato'
+        msg_missing_file = 'File mancante: {0}`n`nMetti FlashWizard.ps1 nella cartella firmware.'
+        msg_select_com = 'Seleziona una porta COM.'
+        msg_boot_prompt = 'Metti la radio in modalita BOOT e premi OK.`n`nPOWER OFF -> BOOT + POWER ON -> rilascia BOOT dopo ~2 s.'
+        msg_format_failed = 'Formattazione non riuscita. Controlla porta COM e modalita BOOT.'
+        msg_after_format = 'Ora avvia la radio normalmente e attendi il messaggio di formattazione.`nPoi spegnila ed entra di nuovo in modalita BOOT prima del flash.'
+        msg_flash_failed = 'Flash non riuscito. Controlla porta COM e modalita BOOT.'
+        msg_flash_success = 'Fatto. Firmware flashato.'
+        msg_refresh_failed = 'Impossibile aggiornare le porte COM.`n{0}'
+        msg_update_confirm = 'Release {0} rilevata su PE5PVB.`n`nIl wizard scarichera il pacchetto e aggiornera i file base.`nTEF6686_ESP32.ino.bin verra sostituito solo se vengono rilevati i marker di accessibilita (Accessibility + Voice Lite).`n`nContinuare con l aggiornamento?'
+        msg_update_done = 'Aggiornamento completato.`n`nTag: {0}`nBackup: {1}`n`nFirmware accessibilita {2}'
+        msg_update_failed = 'Impossibile completare l aggiornamento.`n{0}'
+        log_check_release = 'Controllo release: {0}/{1}'
+        log_download_package = 'Download pacchetto: {0}'
+        log_package_extracted = 'Pacchetto estratto.'
+        log_backup_dir = 'File di backup: {0}'
+        log_target_skipped = '{0} saltato (non trovato nel pacchetto).'
+        log_target_updated = '{0} aggiornato.'
+        log_fw_replaced_markers = 'Firmware sostituito (marker accessibilita rilevati).'
+        log_fw_skipped_protect = 'Firmware release saltato per evitare sovrascrittura della build accessibilita.'
+        log_fw_not_found = 'Firmware non trovato nel pacchetto release.'
+        log_running = 'Esecuzione: esptool.exe {0}'
+        log_exit_code = 'Codice uscita: {0}'
+        log_format_cancelled = 'Formattazione annullata.'
+        log_format_start = 'Avvio formattazione...'
+        log_format_done = 'Formattazione completata.'
+        log_flash_cancelled = 'Flash annullato.'
+        log_flash_start = 'Avvio flash firmware...'
+        log_spiffs_yes = 'SPIFFS verra flashato.'
+        log_spiffs_large = 'SPIFFS saltato (file troppo grande).'
+        log_spiffs_missing = 'SPIFFS saltato (file mancante).'
+        log_flash_done = 'Flash completato con successo.'
+        log_ports_refreshed = 'Elenco porte COM aggiornato.'
+        log_error = 'Errore: {0}'
+        log_update_start = 'Avvio controllo aggiornamenti da PE5PVB...'
+        log_latest_release = 'Ultimo release: {0} ({1})'
+        log_selected_package = 'Pacchetto selezionato: {0}'
+        log_update_cancelled = 'Aggiornamento annullato.'
+        log_update_completed = 'Aggiornamento completato. File modificati: {0}'
+        log_update_fw_replaced = 'Il firmware accessibilita e stato aggiornato dal pacchetto release.'
+        log_update_fw_kept = 'Il firmware accessibilita e rimasto invariato.'
+        log_update_error = 'Errore aggiornamento: {0}'
+        log_wizard_ready = 'Wizard pronto.'
+        log_instruction = 'Seleziona COM, poi: Formatta -> Flasha firmware.'
+        log_update_option = 'Aggiorna (PE5PVB) aggiorna i file base e protegge il firmware accessibilita.'
+        log_ui_language = 'Lingua UI: {0}'
+        text_no_date = 'nessuna data'
+        status_fw_replaced = 'e stato sostituito.'
+        status_fw_kept = 'e rimasto invariato.'
+        err_no_zip = 'Nessun pacchetto ZIP trovato nel release GitHub.'
+        err_no_match_files = 'Nessun file corrispondente trovato per l aggiornamento.'
+        err_release_no_zip = 'Il release non contiene un pacchetto ZIP.'
+    }
+}
+
+function T {
+    param(
+        [Parameter(Mandatory = $true)][string]$Key,
+        [object[]]$Args = @()
+    )
+
+    $lang = $script:UiLanguage
+    if (-not $script:Translations.ContainsKey($lang)) { $lang = "en" }
+    $dict = $script:Translations[$lang]
+
+    if (-not $dict.ContainsKey($Key)) {
+        $dict = $script:Translations["en"]
+        if (-not $dict.ContainsKey($Key)) { return $Key }
+    }
+
+    $template = [string]$dict[$Key]
+    if ($null -eq $Args -or $Args.Count -eq 0) { return $template }
+    return [string]::Format($template, $Args)
+}
+
+$script:UiLanguage = Get-UiLanguage
 $updateRepoOwner = "PE5PVB"
 $updateRepoName = "TEF6686_ESP32"
 
@@ -32,8 +578,8 @@ $requiredFiles = @(
 foreach ($file in $requiredFiles) {
     if (-not (Test-Path (Join-Path $scriptDir $file))) {
         [System.Windows.Forms.MessageBox]::Show(
-            "Brak pliku: $file`n`nUmiesc FlashWizard.ps1 w folderze z plikami firmware.",
-            "Blad",
+            (T "msg_missing_file" @($file)),
+            (T "title_error"),
             [System.Windows.Forms.MessageBoxButtons]::OK,
             [System.Windows.Forms.MessageBoxIcon]::Error
         ) | Out-Null
@@ -75,7 +621,7 @@ function Get-LatestGitHubRelease {
         "Accept" = "application/vnd.github+json"
     }
 
-    Append-Log -LogBox $LogBox -Text ("Sprawdzam release: $Owner/$Repo")
+    Append-Log -LogBox $LogBox -Text (T "log_check_release" @($Owner, $Repo))
     return Invoke-RestMethod -Method Get -Uri $uri -Headers $headers -TimeoutSec 25
 }
 
@@ -153,7 +699,7 @@ function Download-FileWithProgress {
     try {
         $client.Timeout = [TimeSpan]::FromMinutes(10)
         [void]$client.DefaultRequestHeaders.UserAgent.ParseAdd("TEF6686-FlashWizard")
-        Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text ("Postep: " + $StageName + " (polaczenie...)") -Indeterminate $true
+        Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text (T "progress_connecting" @($StageName)) -Indeterminate $true
 
         $response = $client.GetAsync($Url, [System.Net.Http.HttpCompletionOption]::ResponseHeadersRead).Result
         $response.EnsureSuccessStatusCode()
@@ -167,10 +713,10 @@ function Download-FileWithProgress {
         $lastPercent = -1
 
         if ($totalBytes -gt 0) {
-            Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text ("Postep: " + $StageName + " (0%)") -Percent 0
+            Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text (T "progress_percent" @($StageName, 0)) -Percent 0
         }
         else {
-            Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text ("Postep: " + $StageName + " (pobieranie...)") -Indeterminate $true
+            Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text (T "progress_downloading" @($StageName)) -Indeterminate $true
         }
 
         while ($true) {
@@ -185,7 +731,7 @@ function Download-FileWithProgress {
                 if ($percent -gt 100) { $percent = 100 }
                 if ($percent -gt $lastPercent) {
                     $lastPercent = $percent
-                    Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text ("Postep: " + $StageName + " (" + $percent + "%)") -Percent $percent
+                    Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text (T "progress_percent" @($StageName, $percent)) -Percent $percent
                 }
             }
 
@@ -210,7 +756,7 @@ function Invoke-SafeReleaseUpdate {
 
     $asset = Select-PreferredReleaseZipAsset -Release $Release
     if (-not $asset) {
-        throw "Brak paczki ZIP w release na GitHub."
+        throw (T "err_no_zip")
     }
 
     $tempRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("tef_update_" + [Guid]::NewGuid().ToString("N"))
@@ -224,20 +770,20 @@ function Invoke-SafeReleaseUpdate {
     New-Item -Path $tempRoot -ItemType Directory -Force | Out-Null
 
     try {
-        Append-Log -LogBox $LogBox -Text ("Pobieram paczke: " + $asset.name)
+        Append-Log -LogBox $LogBox -Text (T "log_download_package" @([string]$asset.name))
         Download-FileWithProgress `
             -Url ([string]$asset.browser_download_url) `
             -DestinationPath $zipPath `
             -ProgressBar $ProgressBar `
             -ProgressLabel $ProgressLabel `
-            -StageName "Pobieranie aktualizacji"
+            -StageName (T "stage_update_download")
 
-        Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text "Postep: Rozpakowywanie paczki..." -Indeterminate $true
+        Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text (T "progress_extracting") -Indeterminate $true
         Expand-Archive -Path $zipPath -DestinationPath $extractDir -Force
-        Append-Log -LogBox $LogBox -Text "Paczka rozpakowana."
+        Append-Log -LogBox $LogBox -Text (T "log_package_extracted")
 
         New-Item -Path $backupDir -ItemType Directory -Force | Out-Null
-        Append-Log -LogBox $LogBox -Text ("Backup plikow: " + $backupDir)
+        Append-Log -LogBox $LogBox -Text (T "log_backup_dir" @($backupDir))
 
         $baseTargets = @(
             @{ Target = "bootloader.bin"; Exact = @("bootloader.bin"); Patterns = @("*bootloader*.bin") },
@@ -249,7 +795,7 @@ function Invoke-SafeReleaseUpdate {
         foreach ($target in $baseTargets) {
             $source = Find-ExtractedFile -Root $extractDir -ExactNames $target.Exact -Patterns $target.Patterns
             if (-not $source) {
-                Append-Log -LogBox $LogBox -Text ("Pominieto " + $target.Target + " (brak w paczce).")
+                Append-Log -LogBox $LogBox -Text (T "log_target_skipped" @($target.Target))
                 continue
             }
 
@@ -260,7 +806,7 @@ function Invoke-SafeReleaseUpdate {
 
             Copy-Item -Path $source.FullName -Destination $destination -Force
             $updatedFiles.Add($target.Target)
-            Append-Log -LogBox $LogBox -Text ("Zaktualizowano " + $target.Target + ".")
+            Append-Log -LogBox $LogBox -Text (T "log_target_updated" @($target.Target))
         }
 
         $firmwareSource = Find-ExtractedFile `
@@ -278,21 +824,21 @@ function Invoke-SafeReleaseUpdate {
                 Copy-Item -Path $firmwareSource.FullName -Destination $firmwareDest -Force
                 $firmwareReplaced = $true
                 $updatedFiles.Add("TEF6686_ESP32.ino.bin")
-                Append-Log -LogBox $LogBox -Text "Firmware zostal podmieniony (wykryto markery accessibility)."
+                Append-Log -LogBox $LogBox -Text (T "log_fw_replaced_markers")
             }
             else {
-                Append-Log -LogBox $LogBox -Text "Firmware z release pominiety, aby nie nadpisac wersji accessibility."
+                Append-Log -LogBox $LogBox -Text (T "log_fw_skipped_protect")
             }
         }
         else {
-            Append-Log -LogBox $LogBox -Text "Nie znaleziono firmware w paczce release."
+            Append-Log -LogBox $LogBox -Text (T "log_fw_not_found")
         }
 
         if ($updatedFiles.Count -eq 0) {
-            throw "Nie znaleziono zadnych pasujacych plikow do aktualizacji."
+            throw (T "err_no_match_files")
         }
 
-        Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text "Postep: Aktualizacja zakonczona (100%)" -Percent 100
+        Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text (T "progress_update_done") -Percent 100
         return [PSCustomObject]@{
             TagName = [string]$Release.tag_name
             UpdatedFiles = ($updatedFiles -join ", ")
@@ -326,8 +872,8 @@ function Invoke-Esptool {
     $highestPercent = 0
 
     try {
-        Append-Log -LogBox $LogBox -Text ("Uruchamiam: esptool.exe " + ($Arguments -join " "))
-        Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text ("Postep: " + $StageName + " (inicjalizacja...)") -Indeterminate $true
+        Append-Log -LogBox $LogBox -Text (T "log_running" @(($Arguments -join " ")))
+        Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text (T "progress_init" @($StageName)) -Indeterminate $true
 
         $process = Start-Process -FilePath $exe `
             -ArgumentList $Arguments `
@@ -386,15 +932,15 @@ function Invoke-Esptool {
             -HighestPercent ([ref]$highestPercent) `
             -FlushRemainder
 
-        Append-Log -LogBox $LogBox -Text ("Kod wyjscia: " + $process.ExitCode)
+        Append-Log -LogBox $LogBox -Text (T "log_exit_code" @($process.ExitCode))
 
         if ($process.ExitCode -eq 0) {
-            Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text ("Postep: " + $StageName + " (100%)") -Percent 100
+            Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text (T "progress_done" @($StageName)) -Percent 100
         }
         else {
             $finalPercent = $highestPercent
             if ($finalPercent -lt 0) { $finalPercent = 0 }
-            Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text ("Postep: " + $StageName + " (blad)") -Percent $finalPercent
+            Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text (T "progress_error" @($StageName)) -Percent $finalPercent
         }
 
         return [int]$process.ExitCode
@@ -443,7 +989,7 @@ function Update-ProgressFromLine {
     if ($percent -le $HighestPercent.Value) { return }
 
     $HighestPercent.Value = $percent
-    Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text ("Postep: " + $StageName + " (" + $percent + "%)") -Percent $percent
+    Set-ProgressUi -ProgressBar $ProgressBar -ProgressLabel $ProgressLabel -Text (T "progress_percent" @($StageName, $percent)) -Percent $percent
 }
 
 function Consume-EsptoolOutput {
@@ -537,14 +1083,14 @@ function Build-BaseArgs {
 }
 
 $form = New-Object System.Windows.Forms.Form
-$form.Text = "TEF6686 Flash Wizard"
+$form.Text = T "app_title"
 $form.StartPosition = "CenterScreen"
 $form.Size = New-Object System.Drawing.Size(760, 560)
 $form.MinimumSize = New-Object System.Drawing.Size(760, 560)
 $form.MaximizeBox = $false
 
 $lblCom = New-Object System.Windows.Forms.Label
-$lblCom.Text = "Port COM:"
+$lblCom.Text = T "label_com"
 $lblCom.Location = New-Object System.Drawing.Point(18, 18)
 $lblCom.Size = New-Object System.Drawing.Size(90, 24)
 $form.Controls.Add($lblCom)
@@ -556,56 +1102,56 @@ $cmbCom.Size = New-Object System.Drawing.Size(120, 24)
 $form.Controls.Add($cmbCom)
 
 $btnRefresh = New-Object System.Windows.Forms.Button
-$btnRefresh.Text = "Odswiez"
+$btnRefresh.Text = T "btn_refresh"
 $btnRefresh.Location = New-Object System.Drawing.Point(220, 13)
 $btnRefresh.Size = New-Object System.Drawing.Size(85, 27)
 $form.Controls.Add($btnRefresh)
 
 $chkBoot = New-Object System.Windows.Forms.CheckBox
-$chkBoot.Text = "Radio ma przycisk BOOT (zalecane)"
+$chkBoot.Text = T "chk_boot"
 $chkBoot.Checked = $true
 $chkBoot.Location = New-Object System.Drawing.Point(320, 16)
 $chkBoot.Size = New-Object System.Drawing.Size(270, 24)
 $form.Controls.Add($chkBoot)
 
 $btnFormat = New-Object System.Windows.Forms.Button
-$btnFormat.Text = "1) Formatuj"
+$btnFormat.Text = T "btn_format"
 $btnFormat.Location = New-Object System.Drawing.Point(18, 54)
 $btnFormat.Size = New-Object System.Drawing.Size(120, 34)
 $form.Controls.Add($btnFormat)
 
 $btnFlash = New-Object System.Windows.Forms.Button
-$btnFlash.Text = "2) Wgraj soft"
+$btnFlash.Text = T "btn_flash"
 $btnFlash.Location = New-Object System.Drawing.Point(146, 54)
 $btnFlash.Size = New-Object System.Drawing.Size(120, 34)
 $form.Controls.Add($btnFlash)
 
 $btnAll = New-Object System.Windows.Forms.Button
-$btnAll.Text = "Format + wgranie"
+$btnAll.Text = T "btn_all"
 $btnAll.Location = New-Object System.Drawing.Point(274, 54)
 $btnAll.Size = New-Object System.Drawing.Size(140, 34)
 $form.Controls.Add($btnAll)
 
 $btnUpdate = New-Object System.Windows.Forms.Button
-$btnUpdate.Text = "3) Aktualizuj (PE5PVB)"
+$btnUpdate.Text = T "btn_update"
 $btnUpdate.Location = New-Object System.Drawing.Point(422, 54)
 $btnUpdate.Size = New-Object System.Drawing.Size(190, 34)
 $form.Controls.Add($btnUpdate)
 
 $btnClose = New-Object System.Windows.Forms.Button
-$btnClose.Text = "Zamknij"
+$btnClose.Text = T "btn_close"
 $btnClose.Location = New-Object System.Drawing.Point(622, 54)
 $btnClose.Size = New-Object System.Drawing.Size(110, 34)
 $form.Controls.Add($btnClose)
 
 $lblHint = New-Object System.Windows.Forms.Label
-$lblHint.Text = "Tryb BOOT: POWER OFF -> przytrzymaj BOOT -> POWER ON -> pusc BOOT po ~2 s."
+$lblHint.Text = T "hint_boot"
 $lblHint.Location = New-Object System.Drawing.Point(18, 98)
 $lblHint.Size = New-Object System.Drawing.Size(714, 20)
 $form.Controls.Add($lblHint)
 
 $lblProgress = New-Object System.Windows.Forms.Label
-$lblProgress.Text = "Postep: oczekiwanie"
+$lblProgress.Text = T "progress_idle"
 $lblProgress.Location = New-Object System.Drawing.Point(18, 121)
 $lblProgress.Size = New-Object System.Drawing.Size(240, 20)
 $form.Controls.Add($lblProgress)
@@ -648,8 +1194,8 @@ function Set-BusyState {
 function Get-SelectedComOrWarn {
     if ($cmbCom.SelectedItem -eq $null) {
         [System.Windows.Forms.MessageBox]::Show(
-            "Wybierz port COM.",
-            "Brak portu",
+            (T "msg_select_com"),
+            (T "title_no_port"),
             [System.Windows.Forms.MessageBoxButtons]::OK,
             [System.Windows.Forms.MessageBoxIcon]::Warning
         ) | Out-Null
@@ -662,14 +1208,14 @@ function Run-FormatStep {
     $comPort = Get-SelectedComOrWarn
     if (-not $comPort) { return $false }
 
-    if (-not (Confirm-BootMode -BootCheckBox $chkBoot -Title "Przygotowanie" -Message "Wprowadz radio w tryb BOOT i kliknij OK.`n`nPOWER OFF -> BOOT + POWER ON -> pusc BOOT po ~2 s.")) {
-        Append-Log -LogBox $txtLog -Text "Anulowano format."
+    if (-not (Confirm-BootMode -BootCheckBox $chkBoot -Title (T "title_prepare") -Message (T "msg_boot_prompt"))) {
+        Append-Log -LogBox $txtLog -Text (T "log_format_cancelled")
         return $false
     }
 
     Set-BusyState -Busy $true
     try {
-        Append-Log -LogBox $txtLog -Text "Start formatowania..."
+        Append-Log -LogBox $txtLog -Text (T "log_format_start")
         $args = Build-BaseArgs -ComPort $comPort
         $args += @(
             "0x1000", "bootloader.bin",
@@ -683,23 +1229,23 @@ function Run-FormatStep {
             -LogBox $txtLog `
             -ProgressBar $progressFlash `
             -ProgressLabel $lblProgress `
-            -StageName "Formatowanie"
+            -StageName (T "stage_format")
         if ($code -ne 0) {
             [System.Windows.Forms.MessageBox]::Show(
-                "Formatowanie nieudane. Sprawdz port COM i tryb BOOT.",
-                "Blad",
+                (T "msg_format_failed"),
+                (T "title_error"),
                 [System.Windows.Forms.MessageBoxButtons]::OK,
                 [System.Windows.Forms.MessageBoxIcon]::Error
             ) | Out-Null
             return $false
         }
 
-        Append-Log -LogBox $txtLog -Text "Formatowanie zakonczone."
+        Append-Log -LogBox $txtLog -Text (T "log_format_done")
 
         if ($chkBoot.Checked) {
             [System.Windows.Forms.MessageBox]::Show(
-                "Teraz uruchom radio normalnie i poczekaj na komunikat formatowania.`nNastepnie wylacz radio i ponownie wejdz w tryb BOOT przed wgrywaniem softu.",
-                "Krok po formacie",
+                (T "msg_after_format"),
+                (T "title_after_format"),
                 [System.Windows.Forms.MessageBoxButtons]::OK,
                 [System.Windows.Forms.MessageBoxIcon]::Information
             ) | Out-Null
@@ -716,14 +1262,14 @@ function Run-FlashStep {
     $comPort = Get-SelectedComOrWarn
     if (-not $comPort) { return $false }
 
-    if (-not (Confirm-BootMode -BootCheckBox $chkBoot -Title "Przygotowanie" -Message "Wprowadz radio w tryb BOOT i kliknij OK.`n`nPOWER OFF -> BOOT + POWER ON -> pusc BOOT po ~2 s.")) {
-        Append-Log -LogBox $txtLog -Text "Anulowano wgrywanie."
+    if (-not (Confirm-BootMode -BootCheckBox $chkBoot -Title (T "title_prepare") -Message (T "msg_boot_prompt"))) {
+        Append-Log -LogBox $txtLog -Text (T "log_flash_cancelled")
         return $false
     }
 
     Set-BusyState -Busy $true
     try {
-        Append-Log -LogBox $txtLog -Text "Start wgrywania firmware..."
+        Append-Log -LogBox $txtLog -Text (T "log_flash_start")
 
         $args = Build-BaseArgs -ComPort $comPort
         $args += @(
@@ -739,14 +1285,14 @@ function Run-FlashStep {
             $spiffsSize = (Get-Item $spiffsFile).Length
             if ($spiffsSize -le $spiffsMax) {
                 $args += @("0x003D0000", "TEF6686_ESP32.spiffs.bin")
-                Append-Log -LogBox $txtLog -Text "SPIFFS bedzie wgrany."
+                Append-Log -LogBox $txtLog -Text (T "log_spiffs_yes")
             }
             else {
-                Append-Log -LogBox $txtLog -Text "SPIFFS pominiety (za duzy plik)."
+                Append-Log -LogBox $txtLog -Text (T "log_spiffs_large")
             }
         }
         else {
-            Append-Log -LogBox $txtLog -Text "SPIFFS pominiety (brak pliku)."
+            Append-Log -LogBox $txtLog -Text (T "log_spiffs_missing")
         }
 
         $code = Invoke-Esptool `
@@ -754,21 +1300,21 @@ function Run-FlashStep {
             -LogBox $txtLog `
             -ProgressBar $progressFlash `
             -ProgressLabel $lblProgress `
-            -StageName "Wgrywanie softu"
+            -StageName (T "stage_flash")
         if ($code -ne 0) {
             [System.Windows.Forms.MessageBox]::Show(
-                "Wgrywanie nieudane. Sprawdz port COM i tryb BOOT.",
-                "Blad",
+                (T "msg_flash_failed"),
+                (T "title_error"),
                 [System.Windows.Forms.MessageBoxButtons]::OK,
                 [System.Windows.Forms.MessageBoxIcon]::Error
             ) | Out-Null
             return $false
         }
 
-        Append-Log -LogBox $txtLog -Text "Wgrywanie zakonczone pomyslnie."
+        Append-Log -LogBox $txtLog -Text (T "log_flash_done")
         [System.Windows.Forms.MessageBox]::Show(
-            "Gotowe. Firmware zostal wgrany.",
-            "Sukces",
+            (T "msg_flash_success"),
+            (T "title_success"),
             [System.Windows.Forms.MessageBoxButtons]::OK,
             [System.Windows.Forms.MessageBoxIcon]::Information
         ) | Out-Null
@@ -782,12 +1328,12 @@ function Run-FlashStep {
 $btnRefresh.Add_Click({
     try {
         Refresh-ComUI
-        Append-Log -LogBox $txtLog -Text "Odswiezono liste portow COM."
+        Append-Log -LogBox $txtLog -Text (T "log_ports_refreshed")
     }
     catch {
         [System.Windows.Forms.MessageBox]::Show(
-            "Nie udalo sie odswiezyc portow COM.`n$($_.Exception.Message)",
-            "Blad",
+            (T "msg_refresh_failed" @($_.Exception.Message)),
+            (T "title_error"),
             [System.Windows.Forms.MessageBoxButtons]::OK,
             [System.Windows.Forms.MessageBoxIcon]::Error
         ) | Out-Null
@@ -797,14 +1343,14 @@ $btnRefresh.Add_Click({
 $btnFormat.Add_Click({
     try { [void](Run-FormatStep) }
     catch {
-        Append-Log -LogBox $txtLog -Text ("Blad: " + $_.Exception.Message)
+        Append-Log -LogBox $txtLog -Text (T "log_error" @($_.Exception.Message))
     }
 })
 
 $btnFlash.Add_Click({
     try { [void](Run-FlashStep) }
     catch {
-        Append-Log -LogBox $txtLog -Text ("Blad: " + $_.Exception.Message)
+        Append-Log -LogBox $txtLog -Text (T "log_error" @($_.Exception.Message))
     }
 })
 
@@ -815,22 +1361,22 @@ $btnAll.Add_Click({
         }
     }
     catch {
-        Append-Log -LogBox $txtLog -Text ("Blad: " + $_.Exception.Message)
+        Append-Log -LogBox $txtLog -Text (T "log_error" @($_.Exception.Message))
     }
 })
 
 $btnUpdate.Add_Click({
     Set-BusyState -Busy $true
     try {
-        Append-Log -LogBox $txtLog -Text "Rozpoczynam sprawdzanie aktualizacji z PE5PVB..."
+        Append-Log -LogBox $txtLog -Text (T "log_update_start")
 
         $release = Get-LatestGitHubRelease -Owner $updateRepoOwner -Repo $updateRepoName -LogBox $txtLog
         $asset = Select-PreferredReleaseZipAsset -Release $release
         if (-not $asset) {
-            throw "Release nie zawiera paczki ZIP."
+            throw (T "err_release_no_zip")
         }
 
-        $publishedText = "brak daty"
+        $publishedText = T "text_no_date"
         if ($release.published_at) {
             try {
                 $publishedText = ([DateTime]::Parse($release.published_at)).ToLocalTime().ToString("yyyy-MM-dd HH:mm")
@@ -838,24 +1384,21 @@ $btnUpdate.Add_Click({
             catch { }
         }
 
-        Append-Log -LogBox $txtLog -Text ("Najnowszy release: " + $release.tag_name + " (" + $publishedText + ")")
-        Append-Log -LogBox $txtLog -Text ("Wybrana paczka: " + $asset.name)
+        Append-Log -LogBox $txtLog -Text (T "log_latest_release" @([string]$release.tag_name, $publishedText))
+        Append-Log -LogBox $txtLog -Text (T "log_selected_package" @([string]$asset.name))
 
-        $msg = "Wykryto release " + $release.tag_name + " z PE5PVB.`n`n" +
-            "Kreator pobierze paczke i zaktualizuje pliki bazowe.`n" +
-            "Plik TEF6686_ESP32.ino.bin zostanie podmieniony tylko jesli wykryte beda markery accessibility (Accessibility + Voice Lite).`n`n" +
-            "Kontynuowac aktualizacje?"
+        $msg = T "msg_update_confirm" @([string]$release.tag_name)
 
         $confirm = [System.Windows.Forms.MessageBox]::Show(
             $msg,
-            "Aktualizacja z PE5PVB",
+            (T "title_update"),
             [System.Windows.Forms.MessageBoxButtons]::YesNo,
             [System.Windows.Forms.MessageBoxIcon]::Question
         )
 
         if ($confirm -ne [System.Windows.Forms.DialogResult]::Yes) {
-            Append-Log -LogBox $txtLog -Text "Anulowano aktualizacje."
-            Set-ProgressUi -ProgressBar $progressFlash -ProgressLabel $lblProgress -Text "Postep: oczekiwanie" -Percent 0
+            Append-Log -LogBox $txtLog -Text (T "log_update_cancelled")
+            Set-ProgressUi -ProgressBar $progressFlash -ProgressLabel $lblProgress -Text (T "progress_idle") -Percent 0
             return
         }
 
@@ -865,27 +1408,27 @@ $btnUpdate.Add_Click({
             -ProgressBar $progressFlash `
             -ProgressLabel $lblProgress
 
-        Append-Log -LogBox $txtLog -Text ("Zakonczono aktualizacje. Zmienione pliki: " + $result.UpdatedFiles)
+        Append-Log -LogBox $txtLog -Text (T "log_update_completed" @($result.UpdatedFiles))
         if ($result.FirmwareReplaced) {
-            Append-Log -LogBox $txtLog -Text "Firmware accessibility zostal zaktualizowany z paczki release."
+            Append-Log -LogBox $txtLog -Text (T "log_update_fw_replaced")
         }
         else {
-            Append-Log -LogBox $txtLog -Text "Firmware accessibility pozostawiono bez zmian."
+            Append-Log -LogBox $txtLog -Text (T "log_update_fw_kept")
         }
 
         [System.Windows.Forms.MessageBox]::Show(
-            "Aktualizacja zakonczona.`n`nTag: " + $result.TagName + "`nBackup: " + $result.BackupDir + "`n`nFirmware accessibility " + ($(if ($result.FirmwareReplaced) { "zostal podmieniony." } else { "pozostal bez zmian." })),
-            "Aktualizacja zakonczona",
+            (T "msg_update_done" @($result.TagName, $result.BackupDir, $(if ($result.FirmwareReplaced) { T "status_fw_replaced" } else { T "status_fw_kept" }))),
+            (T "title_update_done"),
             [System.Windows.Forms.MessageBoxButtons]::OK,
             [System.Windows.Forms.MessageBoxIcon]::Information
         ) | Out-Null
     }
     catch {
-        Set-ProgressUi -ProgressBar $progressFlash -ProgressLabel $lblProgress -Text "Postep: blad aktualizacji" -Percent 0
-        Append-Log -LogBox $txtLog -Text ("Blad aktualizacji: " + $_.Exception.Message)
+        Set-ProgressUi -ProgressBar $progressFlash -ProgressLabel $lblProgress -Text (T "progress_update_failed") -Percent 0
+        Append-Log -LogBox $txtLog -Text (T "log_update_error" @($_.Exception.Message))
         [System.Windows.Forms.MessageBox]::Show(
-            "Nie udalo sie wykonac aktualizacji.`n$($_.Exception.Message)",
-            "Blad",
+            (T "msg_update_failed" @($_.Exception.Message)),
+            (T "title_error"),
             [System.Windows.Forms.MessageBoxButtons]::OK,
             [System.Windows.Forms.MessageBoxIcon]::Error
         ) | Out-Null
@@ -898,8 +1441,9 @@ $btnUpdate.Add_Click({
 $btnClose.Add_Click({ $form.Close() })
 
 Refresh-ComUI
-Append-Log -LogBox $txtLog -Text "Kreator gotowy."
-Append-Log -LogBox $txtLog -Text "Wybierz COM, potem: Formatuj -> Wgraj soft."
-Append-Log -LogBox $txtLog -Text "Opcja Aktualizuj (PE5PVB) aktualizuje pliki bazowe i chroni firmware accessibility."
+Append-Log -LogBox $txtLog -Text (T "log_ui_language" @($script:UiLanguage))
+Append-Log -LogBox $txtLog -Text (T "log_wizard_ready")
+Append-Log -LogBox $txtLog -Text (T "log_instruction")
+Append-Log -LogBox $txtLog -Text (T "log_update_option")
 
 [void]$form.ShowDialog()
