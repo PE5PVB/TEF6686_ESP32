@@ -136,8 +136,8 @@ static inline const char* accessibilityQuickActionValue() {
     case ACCESS_QUICK_STARTUP_CLASSIC: return (polish ? "Start melodia 1" : "Startup melody 1");
     case ACCESS_QUICK_STARTUP_EXTENDED: return (polish ? "Start melodia 2" : "Startup melody 2");
     case ACCESS_QUICK_PRESET_FULL: return (polish ? "Profil pelny test" : "Full test profile");
-    case ACCESS_QUICK_TESTMODE_OFF: return (polish ? "Tryb test start OFF" : "Test mode boot OFF");
-    case ACCESS_QUICK_TESTMODE_ON: return (polish ? "Tryb test start ON" : "Test mode boot ON");
+    case ACCESS_QUICK_TESTMODE_OFF: return (polish ? "Wszystkie dzwieki: Wyl" : "All sounds: OFF");
+    case ACCESS_QUICK_TESTMODE_ON: return (polish ? "Wszystkie dzwieki: Wl" : "All sounds: ON");
     default: return (polish ? "Glosn. srednia" : "Volume medium");
   }
 }
