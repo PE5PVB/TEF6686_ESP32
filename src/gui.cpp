@@ -150,9 +150,9 @@ static inline void toggleValueWithOnOffCue(T& value) {
   const bool enabledState = (value != 0);
   const uint16_t lowFreq = 860;
   const uint16_t highFreq = 1560;
-  radio.tone(18, -10, (enabledState ? lowFreq : highFreq));
+  radio.tone(30, -10, (enabledState ? lowFreq : highFreq));
   delay(8);
-  radio.tone(24, -10, (enabledState ? highFreq : lowFreq));
+  radio.tone(36, -10, (enabledState ? highFreq : lowFreq));
 }
 
 void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
