@@ -541,6 +541,39 @@ static inline void sanitizeAccessibilitySettings() {
   if (startupJingleVariant > ACCESS_STARTUP_JINGLE_EXTENDED) startupJingleVariant = ACCESS_STARTUP_JINGLE_CLASSIC;
 }
 
+static inline bool isValidCurrentBand(byte currentBand) {
+#ifdef HAS_AIR_BAND
+  return currentBand == BAND_OIRT || currentBand == BAND_FM || currentBand == BAND_LW || currentBand == BAND_MW || currentBand == BAND_SW || currentBand == BAND_AIR;
+#else
+  return currentBand == BAND_OIRT || currentBand == BAND_FM || currentBand == BAND_LW || currentBand == BAND_MW || currentBand == BAND_SW;
+#endif
+}
+
+static inline void sanitizeBandSettings() {
+  if (bandFM >= FM_BAND_CNT) bandFM = FM_BAND_ALL;
+  if (bandAM >= AM_BAND_CNT) bandAM = AM_BAND_ALL;
+
+  // Keep at least one family enabled to avoid a dead-end BAND button path.
+  if (bandFM == FM_BAND_NONE && bandAM == AM_BAND_NONE) {
+    bandFM = FM_BAND_ALL;
+    bandAM = AM_BAND_ALL;
+  }
+
+  if (tunemode > TUNE_MI_BAND) tunemode = TUNE_MAN;
+
+#ifndef HAS_AIR_BAND
+  if (band == BAND_AIR) band = BAND_FM;
+#endif
+
+  if (!isValidCurrentBand(band)) {
+    if (bandFM != FM_BAND_NONE) {
+      band = (bandFM == FM_BAND_OIRT ? BAND_OIRT : BAND_FM);
+    } else {
+      band = BAND_LW;
+    }
+  }
+}
+
 static inline void writeAccessibilitySettingsToEEPROM() {
   EEPROM.writeByte(EE_BYTE_ACCESS_MENU_BEEP, accessibilityMenuBeep);
   EEPROM.writeByte(EE_BYTE_ACCESS_CONFIRM_BEEP, accessibilityConfirmBeep);
@@ -786,6 +819,7 @@ void setup() {
   iMSset = EEPROM.readByte(EE_BYTE_IMSSET);
   EQset = EEPROM.readByte(EE_BYTE_EQSET);
   band = EEPROM.readByte(EE_BYTE_BAND);
+  sanitizeBandSettings();
   LowLevelSet = EEPROM.readByte(EE_BYTE_LOWLEVELSET);
   memorypos = EEPROM.readByte(EE_BYTE_MEMORYPOS);
   radio.rds.region = EEPROM.readByte(EE_BYTE_REGION);
@@ -5510,21 +5544,22 @@ uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, ui
 }
 
 void doBandToggle() {
-  if (tunemode != TUNE_MEM) {
-    ToggleBand(band);
-    playAccessibilityBandVoiceLite();
-    radio.clearRDS(fullsearchrds);
-    StoreFrequency();
-    SelectBand();
-    if (XDRGTKUSB || XDRGTKTCP) {
-      if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n");
-      else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n");
-      else DataPrint("M1\nT" + String(frequency_AM) + "\n");
-    }
-  } else {
-    scanmodeold = tunemode;
-    startFMDXScan();
-    return;
+  // BAND button must always switch bands; do not hijack it for DX scan in memory mode.
+  if (tunemode == TUNE_MEM) {
+    tunemode = TUNE_MAN;
+    EEPROM.writeByte(EE_BYTE_TUNEMODE, tunemode);
+    EEPROM.commit();
+  }
+
+  ToggleBand(band);
+  playAccessibilityBandVoiceLite();
+  radio.clearRDS(fullsearchrds);
+  StoreFrequency();
+  SelectBand();
+  if (XDRGTKUSB || XDRGTKTCP) {
+    if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n");
+    else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n");
+    else DataPrint("M1\nT" + String(frequency_AM) + "\n");
   }
   screensavertimer = millis();
 }
