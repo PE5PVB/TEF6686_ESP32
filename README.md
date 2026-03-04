@@ -18,8 +18,32 @@ More information: https://www.pe5pvb.nl/tef6686/
 - [How to use the FM DX scanner](https://github.com/PE5PVB/TEF6686_ESP32/wiki/How-to-use-the-FM-DX-scanner)
 - [Menu options explained](https://github.com/PE5PVB/TEF6686_ESP32/wiki/Menu-options-explained)
 
-## Accessibility note
+## Accessibility
+This firmware includes an optional audio accessibility layer for blind and low-vision users.
+
+What it adds in practice:
+- variable-pitch navigation cues in menus and submenus, so you can hear your relative position from beginning to end
+- clear menu state cues for `enter`, `back`, `exit`, and `confirm`
+- consistent toggle pattern: `ON = low -> high`, `OFF = high -> low`
+- the same ON/OFF two-tone pattern for quick actions outside menu (including `Stereo/Mono`)
+- Voice Lite cues for selected actions (for example manual frequency entry digits and menu position feedback)
+
+Shortcut notes:
 - `Short press BW` means a quick tap (not hold) of the `BW` button on the main screen (outside menu): it toggles `Stereo/Mono` and uses the same ON/OFF two-tone cue pattern.
+- Boot shortcut for quick accessibility toggle: hold `BW + MODE + BAND` while powering on.
+
+## Regression Checklist (2026-03-04)
+| Area | Expected behavior | Status |
+|---|---|---|
+| Main menu navigation | One position-dependent beep per step (no duplicate fixed tone) | PASS |
+| Submenu navigation | One position-dependent beep per step (no duplicate fixed tone) | PASS |
+| Menu transitions | Distinct cues for enter menu, back, and exit | PASS |
+| Confirm action | Confirm cue present in menu and nested submenus | PASS |
+| Quick Stereo/Mono (`short BW`) | ON/OFF two-tone pattern is applied consistently | PASS |
+| BW selector (`Filter/iMS/EQ`) | Cursor navigation and toggle cues are audible | PASS |
+| BAND switching | FM/AM switching works without freeze or lockup | PASS |
+| Persisted band settings | Invalid stored values are sanitized on startup | PASS |
+| FlashWizard i18n | Auto-detect OS language, full UI for PL/EN/DE/ES/FR/IT, EN fallback | PASS |
 
 ## Contributing
 We are open for a new ideas in our project. Feel free to share your thoughts in [Discussions](https://github.com/PE5PVB/TEF6686_ESP32/discussions).\
