@@ -87,7 +87,6 @@ bool accessibilityConfirmBeep;
 bool accessibilityBackBeep;
 bool accessibilityVoiceLite;
 bool accessibilityVoiceLiteActions;
-bool accessibilityBandPreviewCuePlayed;
 bool edgebeep;
 bool externaltune;
 bool findMemoryAF;
@@ -729,20 +728,6 @@ static inline void playStartupTriadBeep() {
     delay(20);
     radio.tone(104, -8, 1568);
   }
-}
-
-static inline void playAccessibilityBandVoiceLiteImmediatePreview() {
-  if (!accessibilityVoiceLite) return;
-
-  byte savedBand = band;
-  byte savedStepSize = stepsize;
-  ToggleBand(savedBand);
-  byte nextBand = band;
-  band = savedBand;
-  stepsize = savedStepSize;
-
-  playAccessibilityBandVoiceLiteForBand(nextBand);
-  accessibilityBandPreviewCuePlayed = true;
 }
 
 void setup() {
@@ -2152,7 +2137,6 @@ void ToggleBand(byte nowBand) {
 }
 
 void BANDBUTTONPress() {
-  accessibilityBandPreviewCuePlayed = false;
   if (seek) radio.setUnMute();
   seek = false;
   if (scandxmode) {
@@ -2176,9 +2160,6 @@ void BANDBUTTONPress() {
       unsigned long counterold = millis();
       unsigned long counter = millis();
       if (!BWtune && !menu) {
-        if (!afscreen && !rdsstatscreen && !advancedRDS && tunemode != TUNE_MEM) {
-          playAccessibilityBandVoiceLiteImmediatePreview();
-        }
         while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
 
         if (counter - counterold < 1000) {
@@ -5531,8 +5512,7 @@ uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, ui
 void doBandToggle() {
   if (tunemode != TUNE_MEM) {
     ToggleBand(band);
-    if (!accessibilityBandPreviewCuePlayed) playAccessibilityBandVoiceLite();
-    accessibilityBandPreviewCuePlayed = false;
+    playAccessibilityBandVoiceLite();
     radio.clearRDS(fullsearchrds);
     StoreFrequency();
     SelectBand();
