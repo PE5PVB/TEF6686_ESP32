@@ -105,7 +105,9 @@ static constexpr byte ACCESS_QUICK_TEST = 6;
 static constexpr byte ACCESS_QUICK_STARTUP_CLASSIC = 7;
 static constexpr byte ACCESS_QUICK_STARTUP_EXTENDED = 8;
 static constexpr byte ACCESS_QUICK_PRESET_FULL = 9;
-static constexpr byte ACCESS_QUICK_MAX = ACCESS_QUICK_PRESET_FULL;
+static constexpr byte ACCESS_QUICK_TESTMODE_OFF = 10;
+static constexpr byte ACCESS_QUICK_TESTMODE_ON = 11;
+static constexpr byte ACCESS_QUICK_MAX = ACCESS_QUICK_TESTMODE_ON;
 static byte accessibilityQuickAction = ACCESS_QUICK_VOL_MEDIUM;
 
 static const char* accessibilityQuickActionLabel() {
@@ -134,6 +136,8 @@ static inline const char* accessibilityQuickActionValue() {
     case ACCESS_QUICK_STARTUP_CLASSIC: return (polish ? "Start melodia 1" : "Startup melody 1");
     case ACCESS_QUICK_STARTUP_EXTENDED: return (polish ? "Start melodia 2" : "Startup melody 2");
     case ACCESS_QUICK_PRESET_FULL: return (polish ? "Profil pelny test" : "Full test profile");
+    case ACCESS_QUICK_TESTMODE_OFF: return (polish ? "Tryb test start OFF" : "Test mode boot OFF");
+    case ACCESS_QUICK_TESTMODE_ON: return (polish ? "Tryb test start ON" : "Test mode boot ON");
     default: return (polish ? "Glosn. srednia" : "Volume medium");
   }
 }
@@ -372,6 +376,15 @@ static inline void applyAccessibilityQuickActionSelection() {
       playAccessibilityConfirmFeedback();
       break;
     case ACCESS_QUICK_PRESET_FULL:
+      applyAccessibilityFullTestProfile();
+      playAccessibilityCueTestSequence();
+      break;
+    case ACCESS_QUICK_TESTMODE_OFF:
+      accessibilityTestMode = ACCESS_TEST_MODE_OFF;
+      playAccessibilityConfirmFeedback();
+      break;
+    case ACCESS_QUICK_TESTMODE_ON:
+      accessibilityTestMode = ACCESS_TEST_MODE_ON;
       applyAccessibilityFullTestProfile();
       playAccessibilityCueTestSequence();
       break;

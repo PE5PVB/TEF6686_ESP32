@@ -239,10 +239,12 @@
 #define ACCESS_CUE_VOL_HIGH           2
 #define ACCESS_STARTUP_JINGLE_CLASSIC 0
 #define ACCESS_STARTUP_JINGLE_EXTENDED 1
+#define ACCESS_TEST_MODE_OFF          0
+#define ACCESS_TEST_MODE_ON           1
 #ifdef HAS_AIR_BAND
-#define EE_TOTAL_CNT                  2303  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                  2304  // Total occupied eeprom bytes
 #else
-#define EE_TOTAL_CNT                  2298  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                  2299  // Total occupied eeprom bytes
 #endif
 
 #define EE_PRESETS_BAND_START         0     // 99 * 1 byte
@@ -380,6 +382,7 @@
 #define EE_BYTE_ACCESS_BACK_CUE_LEN   2300
 #define EE_BYTE_ACCESS_CUE_VOLUME     2301
 #define EE_BYTE_STARTUP_JINGLE_VARIANT 2302
+#define EE_BYTE_ACCESS_TEST_MODE      2303
 #else
 #define EE_BYTE_ACCESS_MENU_BEEP      2287
 #define EE_BYTE_ACCESS_CONFIRM_BEEP   2288
@@ -392,6 +395,7 @@
 #define EE_BYTE_ACCESS_BACK_CUE_LEN   2295
 #define EE_BYTE_ACCESS_CUE_VOLUME     2296
 #define EE_BYTE_STARTUP_JINGLE_VARIANT 2297
+#define EE_BYTE_ACCESS_TEST_MODE      2298
 #endif
 // End of EEPROM index defines
 

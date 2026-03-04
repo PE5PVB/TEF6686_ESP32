@@ -77,6 +77,7 @@ extern byte accessibilityConfirmCueLength;
 extern byte accessibilityBackCueLength;
 extern byte accessibilityCueVolume;
 extern byte startupJingleVariant;
+extern byte accessibilityTestMode;
 extern byte band;
 extern byte bandAM;
 extern byte bandFM;

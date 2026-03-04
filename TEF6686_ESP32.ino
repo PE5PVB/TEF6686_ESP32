@@ -208,6 +208,7 @@ byte accessibilityConfirmCueLength;
 byte accessibilityBackCueLength;
 byte accessibilityCueVolume;
 byte startupJingleVariant;
+byte accessibilityTestMode;
 byte items[11] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 8, 10, 10, 10, 9, 10, 10, 9, 10};
 byte iMSEQ;
 byte iMSset;
@@ -539,6 +540,7 @@ static inline void sanitizeAccessibilitySettings() {
   if (accessibilityBackCueLength > ACCESS_CUE_LEN_LONG) accessibilityBackCueLength = ACCESS_CUE_LEN_MEDIUM;
   if (accessibilityCueVolume > ACCESS_CUE_VOL_HIGH) accessibilityCueVolume = ACCESS_CUE_VOL_MEDIUM;
   if (startupJingleVariant > ACCESS_STARTUP_JINGLE_EXTENDED) startupJingleVariant = ACCESS_STARTUP_JINGLE_CLASSIC;
+  if (accessibilityTestMode > ACCESS_TEST_MODE_ON) accessibilityTestMode = ACCESS_TEST_MODE_OFF;
 }
 
 static inline bool isValidCurrentBand(byte currentBand) {
@@ -586,6 +588,7 @@ static inline void writeAccessibilitySettingsToEEPROM() {
   EEPROM.writeByte(EE_BYTE_ACCESS_BACK_CUE_LEN, accessibilityBackCueLength);
   EEPROM.writeByte(EE_BYTE_ACCESS_CUE_VOLUME, accessibilityCueVolume);
   EEPROM.writeByte(EE_BYTE_STARTUP_JINGLE_VARIANT, startupJingleVariant);
+  EEPROM.writeByte(EE_BYTE_ACCESS_TEST_MODE, accessibilityTestMode);
 }
 
 static inline void applyFullAccessibilityTestBootProfile() {
@@ -828,6 +831,7 @@ void setup() {
   accessibilityBackCueLength = EEPROM.readByte(EE_BYTE_ACCESS_BACK_CUE_LEN);
   accessibilityCueVolume = EEPROM.readByte(EE_BYTE_ACCESS_CUE_VOLUME);
   startupJingleVariant = EEPROM.readByte(EE_BYTE_STARTUP_JINGLE_VARIANT);
+  accessibilityTestMode = EEPROM.readByte(EE_BYTE_ACCESS_TEST_MODE);
   sanitizeAccessibilitySettings();
   softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
   softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
@@ -1182,8 +1186,9 @@ void setup() {
     while (digitalRead(BWBUTTON) == LOW && digitalRead(MODEBUTTON) == LOW && digitalRead(BANDBUTTON) == LOW) delay(50);
   }
 
-  // Full test build: force all accessibility options ON at each boot.
-  applyFullAccessibilityTestBootProfile();
+  if (accessibilityTestMode == ACCESS_TEST_MODE_ON) {
+    applyFullAccessibilityTestBootProfile();
+  }
 
   tft.setTouch(TouchCalData);
 
@@ -4936,6 +4941,7 @@ void DefaultSettings() {
   EEPROM.writeByte(EE_BYTE_ACCESS_BACK_CUE_LEN, ACCESS_CUE_LEN_MEDIUM);
   EEPROM.writeByte(EE_BYTE_ACCESS_CUE_VOLUME, ACCESS_CUE_VOL_MEDIUM);
   EEPROM.writeByte(EE_BYTE_STARTUP_JINGLE_VARIANT, ACCESS_STARTUP_JINGLE_CLASSIC);
+  EEPROM.writeByte(EE_BYTE_ACCESS_TEST_MODE, ACCESS_TEST_MODE_OFF);
   EEPROM.writeByte(EE_BYTE_SOFTMUTEAM, 1);
   EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, 0);
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, 828);
