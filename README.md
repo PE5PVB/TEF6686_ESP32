@@ -27,14 +27,12 @@ What it adds in practice:
 - consistent toggle pattern: `ON = low -> high`, `OFF = high -> low`
 - the same ON/OFF two-tone pattern for quick actions outside menu (including `Stereo/Mono` on supported bands)
 - Voice Lite cues for selected actions (for example manual frequency entry digits and menu position feedback)
-- optional stereo panorama for position-based cues (`left` at menu start -> `right` at menu end) for headphone use
 
 Shortcut notes:
 - `Short press BW` means a quick tap (not hold) of the `BW` button on the main screen (outside menu): it opens the `BW` selector (`Filter/iMS/EQ`).
 - `Long press BW` on `FM/OIRT` toggles `Stereo/Mono` and uses the ON/OFF two-tone cue pattern.
 - `Long press BW` on `LW/MW/SW` keeps the `BW` selector flow (no Stereo/Mono toggle on AM bands).
 - Boot shortcut for quick accessibility toggle: hold `BW + MODE + BAND` while powering on.
-- Accessibility quick action includes `Panorama: ON/OFF` for stereo cue panning (default: `OFF`).
 
 BW selector notes (important for audio navigation):
 - In `FM/OIRT` selector, item order is: filter values (`56 kHz` ... `311 kHz`), then `Auto BW`, then `iMS`, then `EQ`, and the last item is `OK`.

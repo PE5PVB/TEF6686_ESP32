@@ -107,9 +107,7 @@ static constexpr byte ACCESS_QUICK_STARTUP_EXTENDED = 8;
 static constexpr byte ACCESS_QUICK_PRESET_FULL = 9;
 static constexpr byte ACCESS_QUICK_TESTMODE_OFF = 10;
 static constexpr byte ACCESS_QUICK_TESTMODE_ON = 11;
-static constexpr byte ACCESS_QUICK_PAN_OFF = 12;
-static constexpr byte ACCESS_QUICK_PAN_ON = 13;
-static constexpr byte ACCESS_QUICK_MAX = ACCESS_QUICK_PAN_ON;
+static constexpr byte ACCESS_QUICK_MAX = ACCESS_QUICK_TESTMODE_ON;
 static byte accessibilityQuickAction = ACCESS_QUICK_VOL_MEDIUM;
 
 static const char* accessibilityQuickActionLabel() {
@@ -140,8 +138,6 @@ static inline const char* accessibilityQuickActionValue() {
     case ACCESS_QUICK_PRESET_FULL: return (polish ? "Profil pelny test" : "Full test profile");
     case ACCESS_QUICK_TESTMODE_OFF: return (polish ? "Wszystkie dzwieki: Wyl" : "All sounds: OFF");
     case ACCESS_QUICK_TESTMODE_ON: return (polish ? "Wszystkie dzwieki: Wl" : "All sounds: ON");
-    case ACCESS_QUICK_PAN_OFF: return (polish ? "Panorama: Wyl" : "Panorama: OFF");
-    case ACCESS_QUICK_PAN_ON: return (polish ? "Panorama: Wl" : "Panorama: ON");
     default: return (polish ? "Glosn. srednia" : "Volume medium");
   }
 }
@@ -270,36 +266,6 @@ static inline uint8_t accessibilityOnOffCueDurationMs(bool secondTone) {
   return secondTone ? accessibilityCueDurationMs(accessibilityOnOffCueLength, 44, 72, 108) : accessibilityCueDurationMs(accessibilityOnOffCueLength, 36, 60, 90);
 }
 
-static inline int16_t clampAccessibilityCueLevel(int16_t level) {
-  if (level < -30) return -30;
-  if (level > -2) return -2;
-  return level;
-}
-
-static inline void playToneWithOptionalPan(uint8_t pos, uint8_t count, uint8_t durationMs, int16_t baseLevel, uint16_t frequency) {
-  if (!accessibilityPanCues || count < 2) {
-    radio.tone(durationMs, baseLevel, frequency);
-    return;
-  }
-
-  const int16_t kMaxPanAttenuationDb = 20;
-  const int16_t kMaxPanBoostDb = 4;
-  const int16_t balance = static_cast<int16_t>((static_cast<uint32_t>(pos) * 200) / (count - 1)) - 100;
-
-  int16_t leftLevel = baseLevel;
-  int16_t rightLevel = baseLevel;
-
-  if (balance < 0) {
-    leftLevel = baseLevel + static_cast<int16_t>(((-balance) * kMaxPanBoostDb) / 100);
-    rightLevel = baseLevel - static_cast<int16_t>(((-balance) * kMaxPanAttenuationDb) / 100);
-  } else if (balance > 0) {
-    leftLevel = baseLevel - static_cast<int16_t>((balance * kMaxPanAttenuationDb) / 100);
-    rightLevel = baseLevel + static_cast<int16_t>((balance * kMaxPanBoostDb) / 100);
-  }
-
-  radio.toneStereo(durationMs, clampAccessibilityCueLevel(leftLevel), frequency, clampAccessibilityCueLevel(rightLevel), frequency);
-}
-
 static inline void applyAccessibilityPreset(byte preset) {
   switch (preset) {
     case ACCESS_QUICK_PRESET_QUIET:
@@ -348,7 +314,7 @@ static inline void playAccessibilityOptionVoiceLite(uint8_t position, uint8_t co
   if (count > 1) {
     frequency = minFreq + static_cast<uint16_t>(((uint32_t)(maxFreq - minFreq) * position) / (count - 1));
   }
-  playToneWithOptionalPan(position, count, durationMs, accessibilityCueVolumeLevel(-10), frequency);
+  radio.tone(durationMs, accessibilityCueVolumeLevel(-10), frequency);
 }
 
 static inline void playAccessibilityRangeVoiceLite(int value, int minValue, int maxValue, uint16_t minFreq = 760, uint16_t maxFreq = 2200, uint8_t durationMs = 20) {
@@ -422,14 +388,6 @@ static inline void applyAccessibilityQuickActionSelection() {
       applyAccessibilityFullTestProfile();
       playAccessibilityCueTestSequence();
       break;
-    case ACCESS_QUICK_PAN_OFF:
-      accessibilityPanCues = 0;
-      playAccessibilityConfirmFeedback();
-      break;
-    case ACCESS_QUICK_PAN_ON:
-      accessibilityPanCues = 1;
-      playAccessibilityConfirmFeedback();
-      break;
     default:
       accessibilityCueVolume = ACCESS_CUE_VOL_MEDIUM;
       playAccessibilityConfirmFeedback();
@@ -460,7 +418,7 @@ static inline void playAccessibilityNavigateBeep() {
     frequency = minFreq + static_cast<uint16_t>(((uint32_t)(maxFreq - minFreq) * itemPos) / (itemCount - 1));
   }
 
-  playToneWithOptionalPan(itemPos, itemCount, duration, accessibilityCueVolumeLevel(-10), frequency);
+  radio.tone(duration, accessibilityCueVolumeLevel(-10), frequency);
 }
 
 static inline void playAccessibilityConfirmBeep() {
@@ -490,7 +448,7 @@ static inline void playVoiceLiteMenuHint() {
   if (itemCount > 1) {
     frequency = minFreq + static_cast<uint16_t>(((uint32_t)(maxFreq - minFreq) * itemPos) / (itemCount - 1));
   }
-  playToneWithOptionalPan(itemPos, itemCount, accessibilityMenuHintDurationMs(true), accessibilityCueVolumeLevel(-10), frequency);
+  radio.tone(accessibilityMenuHintDurationMs(true), accessibilityCueVolumeLevel(-10), frequency);
 }
 
 template <typename T>

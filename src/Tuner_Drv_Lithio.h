@@ -102,7 +102,6 @@ void devTEF_Radio_Set_StHiBlend_Noise(uint8_t mode, uint16_t start, uint16_t slo
 void devTEF_Radio_Set_StHiBlend_Mph(uint8_t mode, uint16_t start, uint16_t slope);
 void devTEF_Radio_Set_NoisBlanker(uint8_t mode, uint16_t start);
 void devTEF_Radio_Set_Wavegen(bool mode, int16_t amplitude, uint16_t freq);
-void devTEF_Radio_Set_WavegenStereo(bool mode, int16_t leftAmplitude, uint16_t leftFreq, int16_t rightAmplitude, uint16_t rightFreq);
 void devTEF_Radio_Set_I2S_Input(bool mode);
 void devTEF_Radio_Set_GPIO(uint8_t mode);
 void devTEF_Radio_Extend_BW(bool yesno);

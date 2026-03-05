@@ -31,7 +31,6 @@ extern bool accessibilityConfirmBeep;
 extern bool accessibilityBackBeep;
 extern bool accessibilityVoiceLite;
 extern bool accessibilityVoiceLiteActions;
-extern bool accessibilityPanCues;
 extern bool edgebeep;
 extern bool fmsi;
 extern bool fullsearchrds;
