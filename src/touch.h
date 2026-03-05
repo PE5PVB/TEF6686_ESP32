@@ -29,7 +29,7 @@ extern byte EQset;
 extern byte iMSEQ;
 extern byte iMSset;
 extern byte menuitem;
-extern byte items[11];
+extern byte items[10];
 extern byte menupage;
 extern int menuoption;
 

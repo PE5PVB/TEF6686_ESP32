@@ -1,4 +1,4 @@
-﻿#include "gui.h"
+#include "gui.h"
 #include "constants.h"
 #include <WiFi.h>
 #include <Wire.h>
@@ -7,409 +7,6 @@
 
 extern mem presets[];
 bool setWiFiConnectParam = false;
-
-struct AccessibilityTextSet {
-  const char* title;
-  const char* navigation;
-  const char* confirm;
-  const char* backerror;
-  const char* basicCues;
-  const char* actionCues;
-  const char* menuCueLength;
-  const char* confirmCueLength;
-  const char* backCueLength;
-  const char* onOffCueLength;
-  const char* cueShort;
-  const char* cueMedium;
-  const char* cueLong;
-  const char* quickAction;
-};
-
-// Keep accessibility labels localized without touching the large base language table.
-static const AccessibilityTextSet kAccessibilityText[] = {
-  { "Accessibility", "Menu beep", "Confirm beep", "Back/error beep", "Basic cues", "Action cues", "Menu beep length", "Confirm beep length", "Back/error beep length", "ON/OFF cue length", "Short", "Medium", "Long" }, // English
-  { "Toegankelijkheid", "Menu piep", "Bevestig piep", "Terug/fout piep", "Basistonen", "Actietonen", "Menu piep lengte", "Bevestig piep lengte", "Terug/fout piep lengte", "ON/OFF toonlengte", "Kort", "Middel", "Lang" }, // Dutch
-  { "Dostepnosc", "Sygnal menu", "Sygnal potwierdzenia", "Sygnal wstecz/blad", "Sygnaly podstawowe", "Sygnaly akcji", "Dlugosc sygnalu menu", "Dlugosc sygnalu potwierdzenia", "Dlugosc sygnalu wstecz/blad", "Dlugosc sygnalu wl/wyl", "Krotki", "Sredni", "Dlugi", "Szybka akcja" }, // Polish
-  { "Pristupacnost", "Zvuk izbornika", "Zvuk potvrde", "Zvuk nazad/greska", "Osnovni zvukovi", "Zvukovi akcija", "Duljina zvuka izbornika", "Duljina zvuka potvrde", "Duljina zvuka nazad", "Duljina ON/OFF tona", "Kratko", "Srednje", "Dugo" }, // Croatian
-  { "Prosvasimotita", "Ihos menou", "Ihos epivevaiosis", "Ihos piso/sfalma", "Vasikoi ihoi", "Ihoi energeion", "Diarkeia ichou menou", "Diarkeia ichou epivevaiosis", "Diarkeia ichou piso/sfalma", "Diarkeia ichou ON/OFF", "Syntomo", "Mesaio", "Makry" }, // Greek
-  { "Accesibilitate", "Bip meniu", "Bip confirmare", "Bip inapoi/eroare", "Sunete de baza", "Sunete de actiune", "Durata bip meniu", "Durata bip confirmare", "Durata bip inapoi/eroare", "Durata ton ON/OFF", "Scurt", "Mediu", "Lung" }, // Romanian
-  { "Barrierefreiheit", "Menu-Piepton", "Bestaetigungs-Piepton", "Zurueck/Fehler-Piepton", "Grundtoene", "Aktionstoene", "Menu-Piepton-Laenge", "Bestaetigungs-Piepton-Laenge", "Zurueck/Fehler-Piepton-Laenge", "ON/OFF Tonlaenge", "Kurz", "Mittel", "Lang" }, // German
-  { "Pristupnost", "Pipnuti menu", "Pipnuti potvrzeni", "Pipnuti zpet/chyba", "Zakladni zvuky", "Zvuky akci", "Delka pipnuti menu", "Delka pipnuti potvrzeni", "Delka pipnuti zpet/chyba", "Delka tonu ON/OFF", "Kratky", "Stredni", "Dlouhy" }, // Czech
-  { "Akadalymentesites", "Menu csippanas", "Megerosites csippanas", "Vissza/hiba csippanas", "Alap hangok", "Muveleti hangok", "Menu csippanas hossza", "Megerosites csippanas hossza", "Vissza/hiba csippanas hossza", "ON/OFF hanghossz", "Rovid", "Kozepes", "Hosszu" }, // Hungarian
-  { "Accessibilite", "Bip menu", "Bip confirmation", "Bip retour/erreur", "Sons de base", "Sons d action", "Duree bip menu", "Duree bip confirmation", "Duree bip retour/erreur", "Duree son ON/OFF", "Court", "Moyen", "Long" }, // French
-  { "Dostapnost", "Zvuk menu", "Zvuk potvarzhdenie", "Zvuk nazad/greshka", "Osnovni zvuci", "Zvuci deistviya", "Dalzhina zvuk menu", "Dalzhina zvuk potvarzhdenie", "Dalzhina zvuk nazad/greshka", "Dalzhina zvuk ON/OFF", "Kratak", "Sreden", "Dalag" }, // Bulgarian
-  { "Dostupnost", "Zvuk menyu", "Zvuk podtverzhdeniya", "Zvuk nazad/oshibka", "Bazovye zvuki", "Zvuki deystviy", "Dlina zvuka menyu", "Dlina zvuka podtverzhdeniya", "Dlina zvuka nazad/oshibka", "Dlina signala ON/OFF", "Korotkiy", "Sredniy", "Dlinnyy" }, // Russian
-  { "Dostupnist", "Zvuk menyu", "Zvuk pidtverdzhennya", "Zvuk nazad/pomylka", "Bazovi zvuky", "Zvuky diy", "Dovzhyna zvuku menyu", "Dovzhyna zvuku pidtverdzhennya", "Dovzhyna zvuku nazad/pomylka", "Dovzhyna syhnalu ON/OFF", "Korotkyi", "Serednii", "Dovhyi" }, // Ukrainian
-  { "Accessibilita", "Bip menu", "Bip conferma", "Bip indietro/errore", "Suoni base", "Suoni azioni", "Durata bip menu", "Durata bip conferma", "Durata bip indietro/errore", "Durata tono ON/OFF", "Corto", "Medio", "Lungo" }, // Italian
-  { "Wuzhangai", "Caidan tishi yin", "Queren tishi yin", "Fanhu i cuowu yin", "Jiben tishi yin", "Dongzuo tishi yin", "Caidan tishi yin changdu", "Queren tishi yin changdu", "Fanhui/cuowu yin changdu", "ON/OFF tishi changdu", "Duan", "Zhong", "Chang" }, // Simplified Chinese
-  { "Tilgjengelighet", "Menylyd", "Bekreftelseslyd", "Tilbake/feil-lyd", "Grunnlyder", "Handlingslyder", "Menylyd lengde", "Bekreftelseslyd lengde", "Tilbake/feil-lyd lengde", "ON/OFF lydlengde", "Kort", "Middels", "Lang" }, // Norwegian
-  { "Accesibilidad", "Pitido menu", "Pitido confirmar", "Pitido atras/error", "Sonidos basicos", "Sonidos de accion", "Duracion pitido menu", "Duracion pitido confirmar", "Duracion pitido atras/error", "Duracion tono ON/OFF", "Corto", "Medio", "Largo" }, // Spanish
-  { "Acessibilidade", "Bip menu", "Bip confirmar", "Bip voltar/erro", "Sons basicos", "Sons de acao", "Duracao bip menu", "Duracao bip confirmar", "Duracao bip voltar/erro", "Duracao tom ON/OFF", "Curto", "Medio", "Longo" }, // Portuguese
-  { "Pristupacnost", "Zvuk menija", "Zvuk potvrde", "Zvuk nazad/greska", "Osnovni zvukovi", "Zvukovi akcija", "Duzina zvuka menija", "Duzina zvuka potvrde", "Duzina zvuka nazad/greska", "Duzina ON/OFF tona", "Kratko", "Srednje", "Dugo" }, // Serbian
-  { "Esteettomyys", "Valikkoaani", "Vahvistusaani", "Takaisin/virheaani", "Perusaanet", "Toimintaaanet", "Valikkoaanen pituus", "Vahvistusaanen pituus", "Takaisin/virheaanen pituus", "ON/OFF aanen pituus", "Lyhyt", "Keskitaso", "Pitka" }, // Finnish
-  { "Tilgaengelighed", "Menu bip", "Bekraeftelsesbip", "Tilbage/fejl-bip", "Grundlyde", "Handlingslyde", "Menu bip laengde", "Bekraeftelsesbip laengde", "Tilbage/fejl-bip laengde", "ON/OFF lydlaengde", "Kort", "Mellem", "Lang" }, // Danish
-  { "Tillganglighet", "Menypip", "Bekraftelsepip", "Tillbaka/fel-pip", "Grundljud", "Handlingsljud", "Menypip langd", "Bekraftelsepip langd", "Tillbaka/fel-pip langd", "ON/OFF tonlangd", "Kort", "Mellan", "Lang" } // Swedish
-};
-static inline const AccessibilityTextSet& currentAccessibilityText() {
-  const size_t langCount = sizeof(kAccessibilityText) / sizeof(kAccessibilityText[0]);
-  return kAccessibilityText[(language < langCount) ? language : 0];
-}
-
-static const char* accessibilityTitle() {
-  return currentAccessibilityText().title;
-}
-
-static const char* accessibilityNavigationLabel() {
-  return currentAccessibilityText().navigation;
-}
-
-static const char* accessibilityConfirmLabel() {
-  return currentAccessibilityText().confirm;
-}
-
-static const char* accessibilityBackLabel() {
-  return currentAccessibilityText().backerror;
-}
-
-static const char* accessibilityVoiceLiteLabel() {
-  return currentAccessibilityText().basicCues;
-}
-
-static const char* accessibilityVoiceLiteActionsLabel() {
-  return currentAccessibilityText().actionCues;
-}
-
-static const char* accessibilityMenuCueLengthLabel() {
-  return currentAccessibilityText().menuCueLength;
-}
-
-static const char* accessibilityConfirmCueLengthLabel() {
-  return currentAccessibilityText().confirmCueLength;
-}
-
-static const char* accessibilityBackCueLengthLabel() {
-  return currentAccessibilityText().backCueLength;
-}
-
-static const char* accessibilityOnOffCueLengthLabel() {
-  return currentAccessibilityText().onOffCueLength;
-}
-
-static constexpr byte ACCESS_QUICK_VOL_LOW = 0;
-static constexpr byte ACCESS_QUICK_VOL_MEDIUM = 1;
-static constexpr byte ACCESS_QUICK_VOL_HIGH = 2;
-static constexpr byte ACCESS_QUICK_PRESET_QUIET = 3;
-static constexpr byte ACCESS_QUICK_PRESET_STANDARD = 4;
-static constexpr byte ACCESS_QUICK_PRESET_STRONG = 5;
-static constexpr byte ACCESS_QUICK_TEST = 6;
-static constexpr byte ACCESS_QUICK_STARTUP_CLASSIC = 7;
-static constexpr byte ACCESS_QUICK_STARTUP_EXTENDED = 8;
-static constexpr byte ACCESS_QUICK_MAX = ACCESS_QUICK_STARTUP_EXTENDED;
-static byte accessibilityQuickAction = ACCESS_QUICK_VOL_MEDIUM;
-
-static const char* accessibilityQuickActionLabel() {
-  const char* custom = currentAccessibilityText().quickAction;
-  if (custom && custom[0] != '\0') return custom;
-  return (language == LANGUAGE_POL ? "Szybka akcja" : "Quick action");
-}
-
-static inline byte accessibilityVolumeToQuickAction(byte volume) {
-  switch (volume) {
-    case ACCESS_CUE_VOL_LOW: return ACCESS_QUICK_VOL_LOW;
-    case ACCESS_CUE_VOL_HIGH: return ACCESS_QUICK_VOL_HIGH;
-    default: return ACCESS_QUICK_VOL_MEDIUM;
-  }
-}
-
-static inline const char* accessibilityQuickActionValue() {
-  const bool polish = (language == LANGUAGE_POL);
-  switch (accessibilityQuickAction) {
-    case ACCESS_QUICK_VOL_LOW: return (polish ? "Glosn. niska" : "Volume low");
-    case ACCESS_QUICK_VOL_HIGH: return (polish ? "Glosn. wysoka" : "Volume high");
-    case ACCESS_QUICK_PRESET_QUIET: return (polish ? "Preset cichy" : "Preset quiet");
-    case ACCESS_QUICK_PRESET_STANDARD: return (polish ? "Preset standard" : "Preset standard");
-    case ACCESS_QUICK_PRESET_STRONG: return (polish ? "Preset wyrazny" : "Preset strong");
-    case ACCESS_QUICK_TEST: return (polish ? "Test sygnalow" : "Test cues");
-    case ACCESS_QUICK_STARTUP_CLASSIC: return (polish ? "Start melodia 1" : "Startup melody 1");
-    case ACCESS_QUICK_STARTUP_EXTENDED: return (polish ? "Start melodia 2" : "Startup melody 2");
-    default: return (polish ? "Glosn. srednia" : "Volume medium");
-  }
-}
-
-static inline const char* accessibilityCueLengthValue(byte cueLength) {
-  const auto& text = currentAccessibilityText();
-  switch (cueLength) {
-    case ACCESS_CUE_LEN_SHORT: return text.cueShort;
-    case ACCESS_CUE_LEN_LONG: return text.cueLong;
-    default: return text.cueMedium;
-  }
-}
-
-static const char* accessibilityOnOffCueLengthValue() {
-  return accessibilityCueLengthValue(accessibilityOnOffCueLength);
-}
-
-static const char* accessibilityMenuCueLengthValue() {
-  return accessibilityCueLengthValue(accessibilityMenuCueLength);
-}
-
-static const char* accessibilityConfirmCueLengthValue() {
-  return accessibilityCueLengthValue(accessibilityConfirmCueLength);
-}
-
-static const char* accessibilityBackCueLengthValue() {
-  return accessibilityCueLengthValue(accessibilityBackCueLength);
-}
-
-static const char* accessibilityNavigationInfo() {
-  return accessibilityNavigationLabel();
-}
-
-static const char* accessibilityConfirmInfo() {
-  return accessibilityConfirmLabel();
-}
-
-static const char* accessibilityBackInfo() {
-  return accessibilityBackLabel();
-}
-
-static const char* accessibilityVoiceLiteInfo() {
-  return accessibilityVoiceLiteLabel();
-}
-
-static const char* accessibilityVoiceLiteActionsInfo() {
-  return accessibilityVoiceLiteActionsLabel();
-}
-
-static const char* accessibilityOnOffCueLengthInfo() {
-  return accessibilityOnOffCueLengthLabel();
-}
-
-static const char* accessibilityMenuCueLengthInfo() {
-  return accessibilityMenuCueLengthLabel();
-}
-
-static const char* accessibilityConfirmCueLengthInfo() {
-  return accessibilityConfirmCueLengthLabel();
-}
-
-static const char* accessibilityBackCueLengthInfo() {
-  return accessibilityBackCueLengthLabel();
-}
-
-static const char* accessibilityQuickActionInfo() {
-  return accessibilityQuickActionLabel();
-}
-
-static const char* accessibilityEnabledLabel() {
-  return (language == LANGUAGE_POL ? "Wlacz" : textUI(31));
-}
-
-static const char* accessibilityDisabledLabel() {
-  return (language == LANGUAGE_POL ? "Wylacz" : textUI(30));
-}
-
-static inline const char* accessibilityToggleValue(bool enabled) {
-  return (enabled ? accessibilityEnabledLabel() : accessibilityDisabledLabel());
-}
-
-static inline uint8_t accessibilityCueDurationMs(byte cueLength, uint8_t shortMs, uint8_t mediumMs, uint8_t longMs) {
-  switch (cueLength) {
-    case ACCESS_CUE_LEN_SHORT: return shortMs;
-    case ACCESS_CUE_LEN_LONG: return longMs;
-    default: return mediumMs;
-  }
-}
-
-static inline int8_t accessibilityCueVolumeLevel(int8_t baseLevel) {
-  int8_t level = baseLevel;
-  switch (accessibilityCueVolume) {
-    case ACCESS_CUE_VOL_LOW: level -= 4; break;
-    case ACCESS_CUE_VOL_HIGH: level += 4; break;
-    default: break;
-  }
-  if (level < -20) level = -20;
-  if (level > -2) level = -2;
-  return level;
-}
-
-static inline bool accessibilityCueGuard(uint16_t minGapMs = 18) {
-  const unsigned long nowMs = millis();
-  if (nowMs - accessibilityLastCueMs < minGapMs) return false;
-  accessibilityLastCueMs = nowMs;
-  return true;
-}
-
-static inline uint8_t accessibilityMenuCueDurationMs() {
-  return accessibilityCueDurationMs(accessibilityMenuCueLength, 12, 20, 32);
-}
-
-static inline uint8_t accessibilityMenuHintDurationMs(bool extended) {
-  return extended ? accessibilityCueDurationMs(accessibilityMenuCueLength, 16, 24, 36) : accessibilityCueDurationMs(accessibilityMenuCueLength, 14, 22, 34);
-}
-
-static inline uint8_t accessibilityConfirmCueDurationMs() {
-  return accessibilityCueDurationMs(accessibilityConfirmCueLength, 28, 40, 64);
-}
-
-static inline uint8_t accessibilityBackCueDurationMs() {
-  return accessibilityCueDurationMs(accessibilityBackCueLength, 45, 70, 108);
-}
-
-static inline uint8_t accessibilityOnOffCueDurationMs(bool secondTone) {
-  return secondTone ? accessibilityCueDurationMs(accessibilityOnOffCueLength, 44, 72, 108) : accessibilityCueDurationMs(accessibilityOnOffCueLength, 36, 60, 90);
-}
-
-static inline void applyAccessibilityPreset(byte preset) {
-  switch (preset) {
-    case ACCESS_QUICK_PRESET_QUIET:
-      accessibilityCueVolume = ACCESS_CUE_VOL_LOW;
-      accessibilityMenuCueLength = ACCESS_CUE_LEN_SHORT;
-      accessibilityConfirmCueLength = ACCESS_CUE_LEN_SHORT;
-      accessibilityBackCueLength = ACCESS_CUE_LEN_MEDIUM;
-      accessibilityOnOffCueLength = ACCESS_CUE_LEN_SHORT;
-      break;
-    case ACCESS_QUICK_PRESET_STRONG:
-      accessibilityCueVolume = ACCESS_CUE_VOL_HIGH;
-      accessibilityMenuCueLength = ACCESS_CUE_LEN_MEDIUM;
-      accessibilityConfirmCueLength = ACCESS_CUE_LEN_LONG;
-      accessibilityBackCueLength = ACCESS_CUE_LEN_LONG;
-      accessibilityOnOffCueLength = ACCESS_CUE_LEN_LONG;
-      break;
-    default:
-      accessibilityCueVolume = ACCESS_CUE_VOL_MEDIUM;
-      accessibilityMenuCueLength = ACCESS_CUE_LEN_MEDIUM;
-      accessibilityConfirmCueLength = ACCESS_CUE_LEN_MEDIUM;
-      accessibilityBackCueLength = ACCESS_CUE_LEN_MEDIUM;
-      accessibilityOnOffCueLength = ACCESS_CUE_LEN_MEDIUM;
-      break;
-  }
-}
-
-static inline void playAccessibilityCueTestSequence() {
-  accessibilityLastCueMs = 0;
-  radio.tone(accessibilityMenuCueDurationMs(), accessibilityCueVolumeLevel(-10), 980);
-  delay(50);
-  radio.tone(accessibilityConfirmCueDurationMs(), accessibilityCueVolumeLevel(-6), 1400);
-  delay(80);
-  radio.tone(accessibilityBackCueDurationMs(), accessibilityCueVolumeLevel(-6), 900);
-  delay(110);
-  radio.tone(accessibilityOnOffCueDurationMs(false), accessibilityCueVolumeLevel(-10), 860);
-  delay(8);
-  radio.tone(accessibilityOnOffCueDurationMs(true), accessibilityCueVolumeLevel(-10), 1560);
-}
-
-static inline void playAccessibilityConfirmFeedback() {
-  if (accessibilityCueGuard()) radio.tone(accessibilityConfirmCueDurationMs(), accessibilityCueVolumeLevel(-6), 1400);
-}
-
-static inline void applyAccessibilityQuickActionSelection() {
-  switch (accessibilityQuickAction) {
-    case ACCESS_QUICK_VOL_LOW:
-      accessibilityCueVolume = ACCESS_CUE_VOL_LOW;
-      playAccessibilityConfirmFeedback();
-      break;
-    case ACCESS_QUICK_VOL_HIGH:
-      accessibilityCueVolume = ACCESS_CUE_VOL_HIGH;
-      playAccessibilityConfirmFeedback();
-      break;
-    case ACCESS_QUICK_PRESET_QUIET:
-      applyAccessibilityPreset(ACCESS_QUICK_PRESET_QUIET);
-      playAccessibilityConfirmFeedback();
-      break;
-    case ACCESS_QUICK_PRESET_STANDARD:
-      applyAccessibilityPreset(ACCESS_QUICK_PRESET_STANDARD);
-      playAccessibilityConfirmFeedback();
-      break;
-    case ACCESS_QUICK_PRESET_STRONG:
-      applyAccessibilityPreset(ACCESS_QUICK_PRESET_STRONG);
-      playAccessibilityConfirmFeedback();
-      break;
-    case ACCESS_QUICK_TEST:
-      playAccessibilityCueTestSequence();
-      break;
-    case ACCESS_QUICK_STARTUP_CLASSIC:
-      startupJingleVariant = ACCESS_STARTUP_JINGLE_CLASSIC;
-      playAccessibilityConfirmFeedback();
-      break;
-    case ACCESS_QUICK_STARTUP_EXTENDED:
-      startupJingleVariant = ACCESS_STARTUP_JINGLE_EXTENDED;
-      playAccessibilityConfirmFeedback();
-      break;
-    default:
-      accessibilityCueVolume = ACCESS_CUE_VOL_MEDIUM;
-      playAccessibilityConfirmFeedback();
-      break;
-  }
-}
-
-static inline void playAccessibilityNavigateBeep() {
-  if (!accessibilityMenuBeep) return;
-  // In submenu navigation, Voice Lite already provides dynamic position tones.
-  if (accessibilityVoiceLite && menu && submenu && !menuopen) return;
-  if (!accessibilityCueGuard()) return;
-  const uint8_t duration = accessibilityMenuCueDurationMs();
-
-  const uint16_t minFreq = 650;
-  const uint16_t maxFreq = 2100;
-  uint8_t itemCount = items[menupage];
-  uint8_t itemPos = menuitem;
-
-  if (itemCount == 0) {
-    radio.tone(duration, accessibilityCueVolumeLevel(-10), minFreq);
-    return;
-  }
-  if (itemPos >= itemCount) itemPos = itemCount - 1;
-
-  uint16_t frequency = minFreq;
-  if (itemCount > 1) {
-    frequency = minFreq + static_cast<uint16_t>(((uint32_t)(maxFreq - minFreq) * itemPos) / (itemCount - 1));
-  }
-
-  radio.tone(duration, accessibilityCueVolumeLevel(-10), frequency);
-}
-
-static inline void playAccessibilityConfirmBeep() {
-  if (accessibilityConfirmBeep && accessibilityCueGuard()) radio.tone(accessibilityConfirmCueDurationMs(), accessibilityCueVolumeLevel(-6), 1400);
-}
-
-static inline void playAccessibilityBackBeep() {
-  if (accessibilityBackBeep && accessibilityCueGuard()) radio.tone(accessibilityBackCueDurationMs(), accessibilityCueVolumeLevel(-6), 900);
-}
-
-static inline void playVoiceLiteMenuHint() {
-  if (!accessibilityVoiceLite || !menu || !submenu || menuopen) return;
-  if (!accessibilityCueGuard()) return;
-
-  const uint16_t minFreq = 760;
-  const uint16_t maxFreq = 2200;
-  uint8_t itemCount = items[menupage];
-  uint8_t itemPos = menuitem;
-
-  if (itemCount == 0) {
-    radio.tone(accessibilityMenuHintDurationMs(false), accessibilityCueVolumeLevel(-10), minFreq);
-    return;
-  }
-  if (itemPos >= itemCount) itemPos = itemCount - 1;
-
-  uint16_t frequency = minFreq;
-  if (itemCount > 1) {
-    frequency = minFreq + static_cast<uint16_t>(((uint32_t)(maxFreq - minFreq) * itemPos) / (itemCount - 1));
-  }
-  radio.tone(accessibilityMenuHintDurationMs(true), accessibilityCueVolumeLevel(-10), frequency);
-}
-
-template <typename T>
-static inline void toggleValueWithOnOffCue(T& value) {
-  value = !value;
-  if (!accessibilityCueGuard()) return;
-  const bool enabledState = (value != 0);
-  const uint16_t lowFreq = 860;
-  const uint16_t highFreq = 1560;
-  radio.tone(accessibilityOnOffCueDurationMs(false), accessibilityCueVolumeLevel(-10), (enabledState ? lowFreq : highFreq));
-  delay(8);
-  radio.tone(accessibilityOnOffCueDurationMs(true), accessibilityCueVolumeLevel(-10), (enabledState ? highFreq : lowFreq));
-}
 
 void doTheme() {  // Use this to put your own colors in: http://www.barth-dev.de/online/rgb565-color-picker/
   switch (CurrentTheme) {
@@ -1149,16 +746,6 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
           FullLineSprite.drawString(removeNewline(textUI(269)), 6, 2);
           break;
-
-        case ACCESSIBILITY:
-          FullLineSprite.setTextDatum(TL_DATUM);
-          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(accessibilityNavigationLabel(), 6, 2);
-
-          FullLineSprite.setTextDatum(TR_DATUM);
-          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(accessibilityToggleValue(accessibilityMenuBeep), 298, 2);
-          break;
       }
       break;
 
@@ -1272,16 +859,6 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString(String(memstartfreq / 10 + ConverterSet, DEC) + "." + String(memstartfreq % 10 + ConverterSet, DEC), 258, 2);
           break;
-
-        case ACCESSIBILITY:
-          FullLineSprite.setTextDatum(TL_DATUM);
-          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(accessibilityConfirmLabel(), 6, 2);
-
-          FullLineSprite.setTextDatum(TR_DATUM);
-          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(accessibilityToggleValue(accessibilityConfirmBeep), 298, 2);
-          break;
       }
       break;
 
@@ -1394,16 +971,6 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString(String(memstopfreq / 10 + ConverterSet, DEC) + "." + String(memstopfreq % 10 + ConverterSet, DEC), 258, 2);
           break;
-
-        case ACCESSIBILITY:
-          FullLineSprite.setTextDatum(TL_DATUM);
-          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(accessibilityBackLabel(), 6, 2);
-
-          FullLineSprite.setTextDatum(TR_DATUM);
-          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(accessibilityToggleValue(accessibilityBackBeep), 298, 2);
-          break;
       }
       break;
 
@@ -1434,7 +1001,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           if (StereoLevel != 0) FullLineSprite.drawString(String(StereoLevel, DEC), 258, 2);
           if (StereoLevel != 0) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString((StereoLevel != 0 ? "dBÎĽV" : textUI(30)), 298, 2);
+          FullLineSprite.drawString((StereoLevel != 0 ? "dBμV" : textUI(30)), 298, 2);
           break;
 
         case DISPLAYSETTINGS:
@@ -1512,16 +1079,6 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString(String(memstartpos + 1, DEC), 298, 2);
           break;
-
-        case ACCESSIBILITY:
-          FullLineSprite.setTextDatum(TL_DATUM);
-          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(accessibilityVoiceLiteLabel(), 6, 2);
-
-          FullLineSprite.setTextDatum(TR_DATUM);
-          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(accessibilityToggleValue(accessibilityVoiceLite), 298, 2);
-          break;
       }
       break;
 
@@ -1540,7 +1097,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("dBÂµV", 298, 2);
+          FullLineSprite.drawString("dBµV", 298, 2);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString(String(fmagc, DEC), 258, 2);
           break;
@@ -1590,7 +1147,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("dBÎĽV", 298, 2);
+          FullLineSprite.drawString("dBμV", 298, 2);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString(String(LowLevelSet, DEC), 258, 2);
           break;
@@ -1636,16 +1193,6 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString(String(memstoppos + 1, DEC), 298, 2);
           break;
-
-        case ACCESSIBILITY:
-          FullLineSprite.setTextDatum(TL_DATUM);
-          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(accessibilityVoiceLiteActionsLabel(), 6, 2);
-
-          FullLineSprite.setTextDatum(TR_DATUM);
-          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(accessibilityToggleValue(accessibilityVoiceLiteActions), 298, 2);
-          break;
       }
       break;
 
@@ -1664,7 +1211,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("dBÂµV", 298, 2);
+          FullLineSprite.drawString("dBµV", 298, 2);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString(String(amagc, DEC), 258, 2);
           break;
@@ -1678,7 +1225,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           if (HighCutOffset != 0) FullLineSprite.drawString(String(HighCutOffset, DEC), 258, 2);
           if (HighCutOffset != 0) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString((HighCutOffset != 0 ? "dBÎĽV" : textUI(30)), 298, 2);
+          FullLineSprite.drawString((HighCutOffset != 0 ? "dBμV" : textUI(30)), 298, 2);
           break;
 
         case DISPLAYSETTINGS:
@@ -1764,17 +1311,6 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString((mempionly ? textUI(31) : textUI(30)), 298, 2);
           break;
-
-        case ACCESSIBILITY:
-          FullLineSprite.setTextDatum(TL_DATUM);
-          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(accessibilityOnOffCueLengthLabel(), 6, 2);
-
-          FullLineSprite.setTextDatum(TR_DATUM);
-          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(accessibilityOnOffCueLengthValue(), 298, 2);
-          break;
-
       }
       break;
 
@@ -1811,7 +1347,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           if (fmdeemphasis != DEEMPHASIS_NONE) FullLineSprite.drawString(String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_75), DEC), 258, 2);
           if (fmdeemphasis != DEEMPHASIS_NONE) FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString((fmdeemphasis != DEEMPHASIS_NONE ? "ÎĽs" : textUI(30)), 298, 2);
+          FullLineSprite.drawString((fmdeemphasis != DEEMPHASIS_NONE ? "μs" : textUI(30)), 298, 2);
           break;
 
         case DISPLAYSETTINGS:
@@ -1894,16 +1430,6 @@ void ShowOneLine(byte position, byte item, bool selected) {
             default: FullLineSprite.drawString(textUI(280), 298, 2); break;
           }
           break;
-
-        case ACCESSIBILITY:
-          FullLineSprite.setTextDatum(TL_DATUM);
-          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(accessibilityMenuCueLengthLabel(), 6, 2);
-
-          FullLineSprite.setTextDatum(TR_DATUM);
-          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(accessibilityMenuCueLengthValue(), 298, 2);
-          break;
       }
       break;
 
@@ -1955,12 +1481,6 @@ void ShowOneLine(byte position, byte item, bool selected) {
           }
           break;
 #endif
-
-        case AUDIOSETTINGS:
-          FullLineSprite.setTextDatum(TL_DATUM);
-          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(removeNewline(accessibilityTitle()), 6, 2);
-          break;
 
         case DISPLAYSETTINGS:
           FullLineSprite.setTextDatum(TL_DATUM);
@@ -2038,16 +1558,6 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           FullLineSprite.drawString(String(fmscansens), 298, 2);
-          break;
-
-        case ACCESSIBILITY:
-          FullLineSprite.setTextDatum(TL_DATUM);
-          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(accessibilityConfirmCueLengthLabel(), 6, 2);
-
-          FullLineSprite.setTextDatum(TR_DATUM);
-          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(accessibilityConfirmCueLengthValue(), 298, 2);
           break;
       }
       break;
@@ -2141,16 +1651,6 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
           FullLineSprite.drawString(removeNewline(textUI(276)), 6, 2);
           break;
-
-        case ACCESSIBILITY:
-          FullLineSprite.setTextDatum(TL_DATUM);
-          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(accessibilityBackCueLengthLabel(), 6, 2);
-
-          FullLineSprite.setTextDatum(TR_DATUM);
-          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(accessibilityBackCueLengthValue(), 298, 2);
-          break;
       }
       break;
 
@@ -2230,16 +1730,6 @@ void ShowOneLine(byte position, byte item, bool selected) {
           FullLineSprite.setTextDatum(TL_DATUM);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
           FullLineSprite.drawString(removeNewline(textUI(292)), 6, 2);
-          break;
-
-        case ACCESSIBILITY:
-          FullLineSprite.setTextDatum(TL_DATUM);
-          FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString(accessibilityQuickActionLabel(), 6, 2);
-
-          FullLineSprite.setTextDatum(TR_DATUM);
-          FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString(accessibilityQuickActionValue(), 298, 2);
           break;
       }
       break;
@@ -2353,15 +1843,6 @@ void ShowOneButton(byte position, byte item, bool selected) {
           PSSprite.setTextDatum(TC_DATUM);
           PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
           PSSprite.drawString(shortLine(removeNewline(textUI(269))), 75, 8);
-          break;
-
-        case ACCESSIBILITY:
-          PSSprite.setTextDatum(TC_DATUM);
-          PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString(shortLine(removeNewline(accessibilityNavigationLabel())), 75, 1);
-
-          PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          PSSprite.drawString(accessibilityToggleValue(accessibilityMenuBeep), 75, 15);
           break;
       }
       break;
@@ -2479,15 +1960,6 @@ void ShowOneButton(byte position, byte item, bool selected) {
           PSSprite.setTextDatum(TR_DATUM);
           PSSprite.drawString(String(memstartfreq / 10 + ConverterSet, DEC) + "." + String(memstartfreq % 10 + ConverterSet, DEC), 73, 15);
           break;
-
-        case ACCESSIBILITY:
-          PSSprite.setTextDatum(TC_DATUM);
-          PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString(shortLine(removeNewline(accessibilityConfirmLabel())), 75, 1);
-
-          PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          PSSprite.drawString(accessibilityToggleValue(accessibilityConfirmBeep), 75, 15);
-          break;
       }
       break;
 
@@ -2601,15 +2073,6 @@ void ShowOneButton(byte position, byte item, bool selected) {
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           PSSprite.drawString(String(memstopfreq / 10 + ConverterSet, DEC) + "." + String(memstopfreq % 10 + ConverterSet, DEC), 73, 15);
           break;
-
-        case ACCESSIBILITY:
-          PSSprite.setTextDatum(TC_DATUM);
-          PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString(shortLine(removeNewline(accessibilityBackLabel())), 75, 1);
-
-          PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          PSSprite.drawString(accessibilityToggleValue(accessibilityBackBeep), 75, 15);
-          break;
       }
       break;
 
@@ -2643,7 +2106,7 @@ void ShowOneButton(byte position, byte item, bool selected) {
             PSSprite.drawString(String(StereoLevel, DEC), 73, 15);
             PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             PSSprite.setTextDatum(TL_DATUM);
-            PSSprite.drawString("dBÎĽV", 77, 15);
+            PSSprite.drawString("dBμV", 77, 15);
           }
           break;
 
@@ -2725,15 +2188,6 @@ void ShowOneButton(byte position, byte item, bool selected) {
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           PSSprite.drawString(String(memstartpos + 1, DEC), 75, 15);
           break;
-
-        case ACCESSIBILITY:
-          PSSprite.setTextDatum(TC_DATUM);
-          PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString(shortLine(removeNewline(accessibilityVoiceLiteLabel())), 75, 1);
-
-          PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          PSSprite.drawString(accessibilityToggleValue(accessibilityVoiceLite), 75, 15);
-          break;
       }
       break;
 
@@ -2752,7 +2206,7 @@ void ShowOneButton(byte position, byte item, bool selected) {
 
           PSSprite.setTextDatum(TL_DATUM);
           PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString("dBÂµV", 77, 15);
+          PSSprite.drawString("dBµV", 77, 15);
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           PSSprite.setTextDatum(TR_DATUM);
           PSSprite.drawString(String(fmagc, DEC), 73, 15);
@@ -2802,7 +2256,7 @@ void ShowOneButton(byte position, byte item, bool selected) {
 
           PSSprite.setTextDatum(TL_DATUM);
           PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString("dBÎĽV", 77, 15);
+          PSSprite.drawString("dBμV", 77, 15);
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           PSSprite.setTextDatum(TR_DATUM);
           PSSprite.drawString(String(LowLevelSet, DEC), 73, 15);
@@ -2851,15 +2305,6 @@ void ShowOneButton(byte position, byte item, bool selected) {
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           PSSprite.drawString(String(memstoppos + 1, DEC), 75, 15);
           break;
-
-        case ACCESSIBILITY:
-          PSSprite.setTextDatum(TC_DATUM);
-          PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString(shortLine(removeNewline(accessibilityVoiceLiteActionsLabel())), 75, 1);
-
-          PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          PSSprite.drawString(accessibilityToggleValue(accessibilityVoiceLiteActions), 75, 15);
-          break;
       }
       break;
 
@@ -2878,7 +2323,7 @@ void ShowOneButton(byte position, byte item, bool selected) {
 
           PSSprite.setTextDatum(TL_DATUM);
           PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString("dBÂµV", 77, 15);
+          PSSprite.drawString("dBµV", 77, 15);
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           PSSprite.setTextDatum(TR_DATUM);
           PSSprite.drawString(String(amagc, DEC), 73, 15);
@@ -2897,7 +2342,7 @@ void ShowOneButton(byte position, byte item, bool selected) {
             PSSprite.drawString(String(HighCutOffset, DEC), 73, 15);
             PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             PSSprite.setTextDatum(TL_DATUM);
-            PSSprite.drawString("dBÎĽV", 77, 15);
+            PSSprite.drawString("dBμV", 77, 15);
           }
           break;
 
@@ -2977,16 +2422,6 @@ void ShowOneButton(byte position, byte item, bool selected) {
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           PSSprite.drawString((mempionly ? textUI(31) : textUI(30)), 75, 15);
           break;
-
-        case ACCESSIBILITY:
-          PSSprite.setTextDatum(TC_DATUM);
-          PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString(shortLine(removeNewline(accessibilityOnOffCueLengthLabel())), 75, 1);
-
-          PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          PSSprite.drawString(accessibilityOnOffCueLengthValue(), 75, 15);
-          break;
-
       }
       break;
 
@@ -3026,7 +2461,7 @@ void ShowOneButton(byte position, byte item, bool selected) {
             PSSprite.drawString(String((fmdeemphasis == DEEMPHASIS_50 ? FM_DEEMPHASIS_50 : FM_DEEMPHASIS_75), DEC), 73, 15);
             PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             PSSprite.setTextDatum(TL_DATUM);
-            PSSprite.drawString("ÎĽs", 77, 15);
+            PSSprite.drawString("μs", 77, 15);
           }
           break;
 
@@ -3117,15 +2552,6 @@ void ShowOneButton(byte position, byte item, bool selected) {
             default: PSSprite.drawString(textUI(280), 75, 15); break;
           }
           break;
-
-        case ACCESSIBILITY:
-          PSSprite.setTextDatum(TC_DATUM);
-          PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString(shortLine(removeNewline(accessibilityMenuCueLengthLabel())), 75, 1);
-
-          PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          PSSprite.drawString(accessibilityMenuCueLengthValue(), 75, 15);
-          break;
       }
       break;
 
@@ -3176,12 +2602,6 @@ void ShowOneButton(byte position, byte item, bool selected) {
           }
           break;
 #endif
-
-        case AUDIOSETTINGS:
-          PSSprite.setTextDatum(TC_DATUM);
-          PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString(shortLine(removeNewline(accessibilityTitle())), 75, 8);
-          break;
 
         case DISPLAYSETTINGS:
           PSSprite.setTextDatum(TC_DATUM);
@@ -3257,15 +2677,6 @@ void ShowOneButton(byte position, byte item, bool selected) {
 
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           PSSprite.drawString(String(fmscansens), 75, 15);
-          break;
-
-        case ACCESSIBILITY:
-          PSSprite.setTextDatum(TC_DATUM);
-          PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString(shortLine(removeNewline(accessibilityConfirmCueLengthLabel())), 75, 1);
-
-          PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          PSSprite.drawString(accessibilityConfirmCueLengthValue(), 75, 15);
           break;
       }
       break;
@@ -3355,15 +2766,6 @@ void ShowOneButton(byte position, byte item, bool selected) {
           PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
           PSSprite.drawString(shortLine(removeNewline(textUI(276))), 75, 8);
           break;
-
-        case ACCESSIBILITY:
-          PSSprite.setTextDatum(TC_DATUM);
-          PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString(shortLine(removeNewline(accessibilityBackCueLengthLabel())), 75, 1);
-
-          PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          PSSprite.drawString(accessibilityBackCueLengthValue(), 75, 15);
-          break;
       }
       break;
 
@@ -3450,15 +2852,6 @@ void ShowOneButton(byte position, byte item, bool selected) {
           PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
           PSSprite.drawString(shortLine(removeNewline(textUI(292))), 75, 8);
           break;
-
-        case ACCESSIBILITY:
-          PSSprite.setTextDatum(TC_DATUM);
-          PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          PSSprite.drawString(shortLine(removeNewline(accessibilityQuickActionLabel())), 75, 1);
-
-          PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          PSSprite.drawString(accessibilityQuickActionValue(), 75, 15);
-          break;
       }
       break;
   }
@@ -3498,9 +2891,6 @@ void showBWSelector() {
 void BuildMenu() {
   advancedRDS = false;
   BWtune = false;
-  if (menupage == ACCESSIBILITY && accessibilityQuickAction <= ACCESS_QUICK_VOL_HIGH) {
-    accessibilityQuickAction = accessibilityVolumeToQuickAction(accessibilityCueVolume);
-  }
 
   switch (CurrentTheme) {
     case 7: tft.pushImage (0, 0, 320, 240, configurationbackground_wo); break;
@@ -3511,11 +2901,7 @@ void BuildMenu() {
     tftPrint(ACENTER, textUI(32), 160, 6, PrimaryColor, PrimaryColorSmooth, 16);
   } else {
     tftPrint(ALEFT, textUI(184), (hardwaremodel == PORTABLE_TOUCH_ILI9341 ? 20 : 8), 6, PrimaryColor, PrimaryColorSmooth, 16);
-    if (menupage == ACCESSIBILITY) {
-      tftPrint(ARIGHT, accessibilityTitle(), 312, 6, ActiveColor, ActiveColorSmooth, 16);
-    } else {
-      tftPrint(ARIGHT, textUI(189 + menupage - 1), 312, 6, ActiveColor, ActiveColorSmooth, 16);
-    }
+    tftPrint(ARIGHT, textUI(189 + menupage - 1), 312, 6, ActiveColor, ActiveColorSmooth, 16);
   }
 
   if (hardwaremodel == PORTABLE_TOUCH_ILI9341) {
@@ -3545,8 +2931,6 @@ void BuildMenu() {
     ShowOneLine(ITEM9, 8, (menuoption == ITEM9 ? true : false));
     ShowOneLine(ITEM10, 9, (menuoption == ITEM10 ? true : false));
   }
-
-  if (submenu) playVoiceLiteMenuHint();
 
   analogWrite(SMETERPIN, 0);
 }
@@ -3859,8 +3243,6 @@ void MenuUpDown(bool dir) {
     }
 
     if (hardwaremodel == PORTABLE_TOUCH_ILI9341) ShowOneButton(menuoption, menuitem, true); else ShowOneLine(menuoption, menuitem, true);
-    playAccessibilityNavigateBeep();
-    playVoiceLiteMenuHint();
   } else {
     switch (CurrentTheme) {
       case 7: OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground_wo); break;
@@ -3892,7 +3274,7 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM2:
-            toggleValueWithOnOffCue(touchrotating);
+            touchrotating = !touchrotating;
             OneBigLineSprite.drawString((touchrotating ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
@@ -3959,7 +3341,7 @@ void MenuUpDown(bool dir) {
             }
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("dBÂµV", 155, 0);
+            OneBigLineSprite.drawString("dBµV", 155, 0);
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString(String(fmagc), 135, 0);
@@ -3977,7 +3359,7 @@ void MenuUpDown(bool dir) {
             }
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("dBÂµV", 155, 0);
+            OneBigLineSprite.drawString("dBµV", 155, 0);
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString(String(amagc), 135, 0);
@@ -4123,13 +3505,13 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM2:
-            toggleValueWithOnOffCue(edgebeep);
+            edgebeep = !edgebeep;
             OneBigLineSprite.drawString((edgebeep ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM3:
-            toggleValueWithOnOffCue(audiomode);
+            audiomode = !audiomode;
 
             OneBigLineSprite.drawString((audiomode ? "MPX" : "Stereo"), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4151,7 +3533,7 @@ void MenuUpDown(bool dir) {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (StereoLevel != 0) OneBigLineSprite.drawString("dBÂµV", 155, 0);
+            if (StereoLevel != 0) OneBigLineSprite.drawString("dBµV", 155, 0);
             if (StereoLevel != 0) OneBigLineSprite.setTextDatum(TR_DATUM); else OneBigLineSprite.setTextDatum(TC_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString((StereoLevel != 0 ? String(StereoLevel, DEC) : textUI(30)), 135, 0);
@@ -4194,7 +3576,7 @@ void MenuUpDown(bool dir) {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (HighCutOffset != 0) OneBigLineSprite.drawString("dBÂµV", 155, 0);
+            if (HighCutOffset != 0) OneBigLineSprite.drawString("dBµV", 155, 0);
             if (HighCutOffset != 0) OneBigLineSprite.setTextDatum(TR_DATUM); else OneBigLineSprite.setTextDatum(TC_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString((HighCutOffset != 0 ? String(HighCutOffset, DEC) : textUI(30)), 135, 0);
@@ -4213,7 +3595,7 @@ void MenuUpDown(bool dir) {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (fmdeemphasis != DEEMPHASIS_NONE) OneBigLineSprite.drawString("ÎĽs", 155, 0);
+            if (fmdeemphasis != DEEMPHASIS_NONE) OneBigLineSprite.drawString("μs", 155, 0);
             if (fmdeemphasis != DEEMPHASIS_NONE) OneBigLineSprite.setTextDatum(TR_DATUM); else OneBigLineSprite.setTextDatum(TC_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString((fmdeemphasis != DEEMPHASIS_NONE ? (fmdeemphasis == DEEMPHASIS_50 ? String(FM_DEEMPHASIS_50, DEC) : String(FM_DEEMPHASIS_75, DEC)) : textUI(30)), 135, 0);
@@ -4259,7 +3641,7 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM3:
-            toggleValueWithOnOffCue(showmodulation);
+            showmodulation = !showmodulation;
 
             OneBigLineSprite.drawString((showmodulation ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4334,7 +3716,7 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM8:
-            toggleValueWithOnOffCue(showclock);
+            showclock = !showclock;
 
             OneBigLineSprite.drawString((showclock ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4440,14 +3822,14 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM4:
-            toggleValueWithOnOffCue(radio.rds.filter);
+            radio.rds.filter = !radio.rds.filter;
 
             OneBigLineSprite.drawString((radio.rds.filter ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM5:
-            toggleValueWithOnOffCue(radio.rds.pierrors);
+            radio.rds.pierrors = !radio.rds.pierrors;
 
             OneBigLineSprite.drawString((radio.rds.pierrors ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4472,14 +3854,14 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM7:
-            toggleValueWithOnOffCue(radio.rds.rtbuffer);
+            radio.rds.rtbuffer = !radio.rds.rtbuffer;
 
             OneBigLineSprite.drawString((radio.rds.rtbuffer ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM8:
-            toggleValueWithOnOffCue(radio.rds.sortaf);
+            radio.rds.sortaf = !radio.rds.sortaf;
 
             OneBigLineSprite.drawString((radio.rds.sortaf ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4504,7 +3886,7 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM10:
-            toggleValueWithOnOffCue(showlongps);
+            showlongps = !showlongps;
 
             OneBigLineSprite.drawString((showlongps ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4610,7 +3992,7 @@ void MenuUpDown(bool dir) {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("dBÎĽV", 155, 0);
+            OneBigLineSprite.drawString("dBμV", 155, 0);
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString(String(LowLevelSet, DEC), 135, 0);
@@ -4618,7 +4000,7 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM6:
-            toggleValueWithOnOffCue(softmutefm);
+            softmutefm = !softmutefm;
 
             OneBigLineSprite.drawString((softmutefm ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4673,7 +4055,7 @@ void MenuUpDown(bool dir) {
 
           case ITEM9:
             if (fullsearchrds) {
-              toggleValueWithOnOffCue(fmsi);
+              fmsi = !fmsi;
               OneBigLineSprite.drawString((fmsi ? textUI(31) : textUI(30)), 135, 0);
               OneBigLineSprite.pushSprite(24, 118);
               if (fmsi) radio.setFMSI(2); else radio.setFMSI(1);
@@ -4698,7 +4080,7 @@ void MenuUpDown(bool dir) {
       case AMSETTINGS:
         switch (menuoption) {
           case ITEM1:
-            toggleValueWithOnOffCue(softmuteam);
+            softmuteam = !softmuteam;
 
             OneBigLineSprite.drawString((softmuteam ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4748,7 +4130,7 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM4:
-            toggleValueWithOnOffCue(showSWMIBand);
+            showSWMIBand = !showSWMIBand;
 
             OneBigLineSprite.drawString((showSWMIBand ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4811,7 +4193,7 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM8:
-            toggleValueWithOnOffCue(mwstepsize);
+            mwstepsize = !mwstepsize;
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
@@ -4840,14 +4222,14 @@ void MenuUpDown(bool dir) {
       case CONNECTIVITY:
         switch (menuoption) {
           case ITEM1:
-            toggleValueWithOnOffCue(USBmode);
+            USBmode = !USBmode;
 
             OneBigLineSprite.drawString((USBmode ? "RDS Spy" : "XDRGTK"), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM2:
-            toggleValueWithOnOffCue(wifi);
+            wifi = !wifi;
 
             OneBigLineSprite.drawString((wifi ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4880,7 +4262,7 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM6:
-            toggleValueWithOnOffCue(XDRGTKMuteScreen);
+            XDRGTKMuteScreen = !XDRGTKMuteScreen;
 
             OneBigLineSprite.drawString((XDRGTKMuteScreen ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4905,14 +4287,14 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM8:
-            toggleValueWithOnOffCue(autoDST);
+            autoDST = !autoDST;
 
             OneBigLineSprite.drawString((autoDST ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM9:
-            toggleValueWithOnOffCue(clockampm);
+            clockampm = !clockampm;
 
             OneBigLineSprite.drawString((clockampm ? "12" : "24"), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -4939,7 +4321,6 @@ void MenuUpDown(bool dir) {
                 OneBigLineSprite.setTextDatum(TC_DATUM);
                 OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
                 OneBigLineSprite.drawString(textUI(42), 135, 0);
-                playAccessibilityBackBeep();
               }
             }
             OneBigLineSprite.pushSprite(24, 118);
@@ -4994,7 +4375,7 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM5:
-            toggleValueWithOnOffCue(scanmem);
+            scanmem = !scanmem;
             OneBigLineSprite.drawString((scanmem ? textUI(218) : textUI(217)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
@@ -5017,21 +4398,21 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM7:
-            toggleValueWithOnOffCue(scanmute);
+            scanmute = !scanmute;
 
             OneBigLineSprite.drawString((scanmute ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM8:
-            toggleValueWithOnOffCue(autolog);
+            autolog = !autolog;
 
             OneBigLineSprite.drawString((autolog ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
           case ITEM9:
-            toggleValueWithOnOffCue(scanholdonsignal);
+            scanholdonsignal = !scanholdonsignal;
 
             OneBigLineSprite.drawString((scanholdonsignal ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -5104,7 +4485,7 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM6:
-            toggleValueWithOnOffCue(mempionly);
+            mempionly = !mempionly;
 
             OneBigLineSprite.drawString((mempionly ? textUI(31) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
@@ -5141,109 +4522,6 @@ void MenuUpDown(bool dir) {
             break;
         }
         break;
-
-      case ACCESSIBILITY:
-        switch (menuoption) {
-          case ITEM1:
-            toggleValueWithOnOffCue(accessibilityMenuBeep);
-            OneBigLineSprite.drawString(accessibilityToggleValue(accessibilityMenuBeep), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM2:
-            toggleValueWithOnOffCue(accessibilityConfirmBeep);
-            OneBigLineSprite.drawString(accessibilityToggleValue(accessibilityConfirmBeep), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM3:
-            toggleValueWithOnOffCue(accessibilityBackBeep);
-            OneBigLineSprite.drawString(accessibilityToggleValue(accessibilityBackBeep), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM4:
-            toggleValueWithOnOffCue(accessibilityVoiceLite);
-            OneBigLineSprite.drawString(accessibilityToggleValue(accessibilityVoiceLite), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM5:
-            toggleValueWithOnOffCue(accessibilityVoiceLiteActions);
-            OneBigLineSprite.drawString(accessibilityToggleValue(accessibilityVoiceLiteActions), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM6:
-            if (dir) {
-              accessibilityOnOffCueLength = (accessibilityOnOffCueLength >= ACCESS_CUE_LEN_LONG ? ACCESS_CUE_LEN_SHORT : accessibilityOnOffCueLength + 1);
-            } else {
-              accessibilityOnOffCueLength = (accessibilityOnOffCueLength == ACCESS_CUE_LEN_SHORT ? ACCESS_CUE_LEN_LONG : accessibilityOnOffCueLength - 1);
-            }
-
-            if (accessibilityCueGuard()) {
-              radio.tone(accessibilityOnOffCueDurationMs(false), accessibilityCueVolumeLevel(-10), 860);
-              delay(8);
-              radio.tone(accessibilityOnOffCueDurationMs(true), accessibilityCueVolumeLevel(-10), 1560);
-            }
-
-            OneBigLineSprite.drawString(accessibilityOnOffCueLengthValue(), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM7:
-            if (dir) {
-              accessibilityMenuCueLength = (accessibilityMenuCueLength >= ACCESS_CUE_LEN_LONG ? ACCESS_CUE_LEN_SHORT : accessibilityMenuCueLength + 1);
-            } else {
-              accessibilityMenuCueLength = (accessibilityMenuCueLength == ACCESS_CUE_LEN_SHORT ? ACCESS_CUE_LEN_LONG : accessibilityMenuCueLength - 1);
-            }
-
-            if (accessibilityCueGuard()) radio.tone(accessibilityMenuCueDurationMs(), accessibilityCueVolumeLevel(-10), 1180);
-
-            OneBigLineSprite.drawString(accessibilityMenuCueLengthValue(), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM8:
-            if (dir) {
-              accessibilityConfirmCueLength = (accessibilityConfirmCueLength >= ACCESS_CUE_LEN_LONG ? ACCESS_CUE_LEN_SHORT : accessibilityConfirmCueLength + 1);
-            } else {
-              accessibilityConfirmCueLength = (accessibilityConfirmCueLength == ACCESS_CUE_LEN_SHORT ? ACCESS_CUE_LEN_LONG : accessibilityConfirmCueLength - 1);
-            }
-
-            if (accessibilityCueGuard()) radio.tone(accessibilityConfirmCueDurationMs(), accessibilityCueVolumeLevel(-8), 1400);
-
-            OneBigLineSprite.drawString(accessibilityConfirmCueLengthValue(), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM9:
-            if (dir) {
-              accessibilityBackCueLength = (accessibilityBackCueLength >= ACCESS_CUE_LEN_LONG ? ACCESS_CUE_LEN_SHORT : accessibilityBackCueLength + 1);
-            } else {
-              accessibilityBackCueLength = (accessibilityBackCueLength == ACCESS_CUE_LEN_SHORT ? ACCESS_CUE_LEN_LONG : accessibilityBackCueLength - 1);
-            }
-
-            if (accessibilityCueGuard()) radio.tone(accessibilityBackCueDurationMs(), accessibilityCueVolumeLevel(-8), 900);
-
-            OneBigLineSprite.drawString(accessibilityBackCueLengthValue(), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM10:
-            if (dir) {
-              accessibilityQuickAction = (accessibilityQuickAction >= ACCESS_QUICK_MAX ? ACCESS_QUICK_VOL_LOW : accessibilityQuickAction + 1);
-            } else {
-              accessibilityQuickAction = (accessibilityQuickAction == ACCESS_QUICK_VOL_LOW ? ACCESS_QUICK_MAX : accessibilityQuickAction - 1);
-            }
-
-            if (accessibilityCueGuard()) radio.tone(28, accessibilityCueVolumeLevel(-9), 1260);
-
-            OneBigLineSprite.drawString(accessibilityQuickActionValue(), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-        }
-        break;
     }
   }
 }
@@ -5269,9 +4547,6 @@ void showMenuOpenTouchButtons() {
 }
 
 void DoMenu() {
-  const bool enteringSubmenuWithVoiceLite = (!menuopen && menupage == INDEX && accessibilityVoiceLite);
-  if (!menuopen && !enteringSubmenuWithVoiceLite) playAccessibilityConfirmBeep();
-
   if (!menuopen) {
     if (menupage != INDEX) {
       menuopen = true;
@@ -5397,7 +4672,6 @@ void DoMenu() {
             tftPrint(ARIGHT, "marsel90-1", 145, 185, PrimaryColor, PrimaryColorSmooth, 16);
             tftPrint(ALEFT, "lawendel", 155, 185, PrimaryColor, PrimaryColorSmooth, 16);
             tftPrint(ARIGHT, "KB8U", 145, 200, PrimaryColor, PrimaryColorSmooth, 16);
-            tftPrint(ALEFT, "kazek5p (Accessibility)", 155, 200, PrimaryColor, PrimaryColorSmooth, 16);
             tftPrint(ACENTER, "github.com/PE5PVB/TEF6686_ESP32", 155, 215, ActiveColor, ActiveColorSmooth, 16);
             if (hardwaremodel == PORTABLE_TOUCH_ILI9341) {
               tft.fillRoundRect(240, 36, 60, 40, 6, FrameColor);
@@ -5460,7 +4734,7 @@ void DoMenu() {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("dBÂµV", 155, 0);
+            OneBigLineSprite.drawString("dBµV", 155, 0);
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString(String(fmagc), 135, 0);
@@ -5472,7 +4746,7 @@ void DoMenu() {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("dBÂµV", 155, 0);
+            OneBigLineSprite.drawString("dBµV", 155, 0);
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString(String(amagc), 135, 0);
@@ -5596,7 +4870,7 @@ void DoMenu() {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (StereoLevel != 0) OneBigLineSprite.drawString("dBÂµV", 155, 0);
+            if (StereoLevel != 0) OneBigLineSprite.drawString("dBµV", 155, 0);
             if (StereoLevel != 0) OneBigLineSprite.setTextDatum(TR_DATUM); else OneBigLineSprite.setTextDatum(TC_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString((StereoLevel != 0 ? String(StereoLevel, DEC) : textUI(30)), 135, 0);
@@ -5620,7 +4894,7 @@ void DoMenu() {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (HighCutOffset != 0) OneBigLineSprite.drawString("dBÂµV", 155, 0);
+            if (HighCutOffset != 0) OneBigLineSprite.drawString("dBµV", 155, 0);
             if (HighCutOffset != 0) OneBigLineSprite.setTextDatum(TR_DATUM); else OneBigLineSprite.setTextDatum(TC_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString((HighCutOffset != 0 ? String(HighCutOffset, DEC) : textUI(30)), 135, 0);
@@ -5632,21 +4906,12 @@ void DoMenu() {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            if (fmdeemphasis != DEEMPHASIS_NONE) OneBigLineSprite.drawString("ÎĽs", 155, 0);
+            if (fmdeemphasis != DEEMPHASIS_NONE) OneBigLineSprite.drawString("μs", 155, 0);
             if (fmdeemphasis != DEEMPHASIS_NONE) OneBigLineSprite.setTextDatum(TR_DATUM); else OneBigLineSprite.setTextDatum(TC_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString((fmdeemphasis != DEEMPHASIS_NONE ? (fmdeemphasis == DEEMPHASIS_50 ? String(FM_DEEMPHASIS_50, DEC) : String(FM_DEEMPHASIS_75, DEC)) : textUI(30)), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
-
-          case ITEM8:
-            menuopen = false;
-            menupage = ACCESSIBILITY;
-            menuoption = ITEM1;
-            menuitem = 0;
-            submenu = true;
-            BuildMenu();
-            return;
         }
         break;
 
@@ -5897,7 +5162,7 @@ void DoMenu() {
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-            OneBigLineSprite.drawString("dBÎĽV", 155, 0);
+            OneBigLineSprite.drawString("dBμV", 155, 0);
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
             OneBigLineSprite.drawString(String(LowLevelSet, DEC), 135, 0);
@@ -6386,80 +5651,6 @@ void DoMenu() {
             break;
         }
         break;
-
-      case ACCESSIBILITY:
-        switch (menuoption) {
-          case ITEM1:
-            Infoboxprint(accessibilityNavigationInfo());
-
-            OneBigLineSprite.drawString(accessibilityToggleValue(accessibilityMenuBeep), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM2:
-            Infoboxprint(accessibilityConfirmInfo());
-
-            OneBigLineSprite.drawString(accessibilityToggleValue(accessibilityConfirmBeep), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM3:
-            Infoboxprint(accessibilityBackInfo());
-
-            OneBigLineSprite.drawString(accessibilityToggleValue(accessibilityBackBeep), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM4:
-            Infoboxprint(accessibilityVoiceLiteInfo());
-
-            OneBigLineSprite.drawString(accessibilityToggleValue(accessibilityVoiceLite), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM5:
-            Infoboxprint(accessibilityVoiceLiteActionsInfo());
-
-            OneBigLineSprite.drawString(accessibilityToggleValue(accessibilityVoiceLiteActions), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM6:
-            Infoboxprint(accessibilityOnOffCueLengthInfo());
-
-            OneBigLineSprite.drawString(accessibilityOnOffCueLengthValue(), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM7:
-            Infoboxprint(accessibilityMenuCueLengthInfo());
-
-            OneBigLineSprite.drawString(accessibilityMenuCueLengthValue(), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM8:
-            Infoboxprint(accessibilityConfirmCueLengthInfo());
-
-            OneBigLineSprite.drawString(accessibilityConfirmCueLengthValue(), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM9:
-            Infoboxprint(accessibilityBackCueLengthInfo());
-
-            OneBigLineSprite.drawString(accessibilityBackCueLengthValue(), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-
-          case ITEM10:
-            Infoboxprint(accessibilityQuickActionInfo());
-
-            OneBigLineSprite.drawString(accessibilityQuickActionValue(), 135, 0);
-            OneBigLineSprite.pushSprite(24, 118);
-            break;
-        }
-        break;
     }
   } else {
     if (menupage == CONNECTIVITY && menuoption == ITEM2) {
@@ -6467,9 +5658,6 @@ void DoMenu() {
     }
     if (menupage == DISPLAYSETTINGS && menuoption == ITEM5) {
       doTheme();
-    }
-    if (menupage == ACCESSIBILITY && menuoption == ITEM10) {
-      applyAccessibilityQuickActionSelection();
     }
 
     menuopen = false;
@@ -6593,4 +5781,3 @@ String shortLine(String text) {
   }
   return text;
 }
-

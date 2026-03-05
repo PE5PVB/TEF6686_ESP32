@@ -82,11 +82,6 @@ bool compressedold;
 bool direction;
 bool dropout;
 bool dynamicPTYold;
-bool accessibilityMenuBeep;
-bool accessibilityConfirmBeep;
-bool accessibilityBackBeep;
-bool accessibilityVoiceLite;
-bool accessibilityVoiceLiteActions;
 bool edgebeep;
 bool externaltune;
 bool findMemoryAF;
@@ -202,13 +197,7 @@ byte amgain;
 byte freqoldcount;
 byte HighCutLevel;
 byte HighCutOffset;
-byte accessibilityOnOffCueLength;
-byte accessibilityMenuCueLength;
-byte accessibilityConfirmCueLength;
-byte accessibilityBackCueLength;
-byte accessibilityCueVolume;
-byte startupJingleVariant;
-byte items[11] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 8, 10, 10, 10, 9, 10, 10, 9, 10};
+byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 10, 10, 9};
 byte iMSEQ;
 byte iMSset;
 byte language;
@@ -445,7 +434,6 @@ unsigned long aftickerhold;
 unsigned long aftimer;
 unsigned long autosquelchtimer;
 unsigned long blockcounterold[33];
-unsigned long accessibilityLastCueMs;
 unsigned long eonticker;
 unsigned long eontickerhold;
 unsigned long flashingtimer;
@@ -497,272 +485,6 @@ WiFiServer Server(7373);
 WiFiClient RemoteClient;
 WiFiUDP Udp;
 WebServer webserver(80);
-
-void ToggleBand(byte nowBand);
-
-static inline uint8_t accessibilityCueDurationMs(byte cueLength, uint8_t shortMs, uint8_t mediumMs, uint8_t longMs) {
-  switch (cueLength) {
-    case ACCESS_CUE_LEN_SHORT: return shortMs;
-    case ACCESS_CUE_LEN_LONG: return longMs;
-    default: return mediumMs;
-  }
-}
-
-static inline int8_t accessibilityCueVolumeLevel(int8_t baseLevel) {
-  int8_t level = baseLevel;
-  switch (accessibilityCueVolume) {
-    case ACCESS_CUE_VOL_LOW: level -= 4; break;
-    case ACCESS_CUE_VOL_HIGH: level += 4; break;
-    default: break;
-  }
-  if (level < -20) level = -20;
-  if (level > -2) level = -2;
-  return level;
-}
-
-static inline bool accessibilityCueGuard(uint16_t minGapMs = 18) {
-  const unsigned long nowMs = millis();
-  if (nowMs - accessibilityLastCueMs < minGapMs) return false;
-  accessibilityLastCueMs = nowMs;
-  return true;
-}
-
-static inline void sanitizeAccessibilitySettings() {
-  if (accessibilityMenuBeep > 1) accessibilityMenuBeep = 0;
-  if (accessibilityConfirmBeep > 1) accessibilityConfirmBeep = 1;
-  if (accessibilityBackBeep > 1) accessibilityBackBeep = 1;
-  if (accessibilityVoiceLite > 1) accessibilityVoiceLite = 0;
-  if (accessibilityVoiceLiteActions > 1) accessibilityVoiceLiteActions = 0;
-  if (accessibilityOnOffCueLength > ACCESS_CUE_LEN_LONG) accessibilityOnOffCueLength = ACCESS_CUE_LEN_MEDIUM;
-  if (accessibilityMenuCueLength > ACCESS_CUE_LEN_LONG) accessibilityMenuCueLength = ACCESS_CUE_LEN_MEDIUM;
-  if (accessibilityConfirmCueLength > ACCESS_CUE_LEN_LONG) accessibilityConfirmCueLength = ACCESS_CUE_LEN_MEDIUM;
-  if (accessibilityBackCueLength > ACCESS_CUE_LEN_LONG) accessibilityBackCueLength = ACCESS_CUE_LEN_MEDIUM;
-  if (accessibilityCueVolume > ACCESS_CUE_VOL_HIGH) accessibilityCueVolume = ACCESS_CUE_VOL_MEDIUM;
-  if (startupJingleVariant > ACCESS_STARTUP_JINGLE_EXTENDED) startupJingleVariant = ACCESS_STARTUP_JINGLE_CLASSIC;
-}
-
-static inline bool isValidCurrentBand(byte currentBand) {
-#ifdef HAS_AIR_BAND
-  return currentBand == BAND_OIRT || currentBand == BAND_FM || currentBand == BAND_LW || currentBand == BAND_MW || currentBand == BAND_SW || currentBand == BAND_AIR;
-#else
-  return currentBand == BAND_OIRT || currentBand == BAND_FM || currentBand == BAND_LW || currentBand == BAND_MW || currentBand == BAND_SW;
-#endif
-}
-
-static inline void sanitizeBandSettings() {
-  if (bandFM >= FM_BAND_CNT) bandFM = FM_BAND_ALL;
-  if (bandAM >= AM_BAND_CNT) bandAM = AM_BAND_ALL;
-
-  // Keep at least one family enabled to avoid a dead-end BAND button path.
-  if (bandFM == FM_BAND_NONE && bandAM == AM_BAND_NONE) {
-    bandFM = FM_BAND_ALL;
-    bandAM = AM_BAND_ALL;
-  }
-
-  if (tunemode > TUNE_MI_BAND) tunemode = TUNE_MAN;
-
-#ifndef HAS_AIR_BAND
-  if (band == BAND_AIR) band = BAND_FM;
-#endif
-
-  if (!isValidCurrentBand(band)) {
-    if (bandFM != FM_BAND_NONE) {
-      band = (bandFM == FM_BAND_OIRT ? BAND_OIRT : BAND_FM);
-    } else {
-      band = BAND_LW;
-    }
-  }
-}
-
-static inline void writeAccessibilitySettingsToEEPROM() {
-  EEPROM.writeByte(EE_BYTE_ACCESS_MENU_BEEP, accessibilityMenuBeep);
-  EEPROM.writeByte(EE_BYTE_ACCESS_CONFIRM_BEEP, accessibilityConfirmBeep);
-  EEPROM.writeByte(EE_BYTE_ACCESS_BACK_BEEP, accessibilityBackBeep);
-  EEPROM.writeByte(EE_BYTE_ACCESS_VOICE_LITE, accessibilityVoiceLite);
-  EEPROM.writeByte(EE_BYTE_ACCESS_VOICE_ACTIONS, accessibilityVoiceLiteActions);
-  EEPROM.writeByte(EE_BYTE_ACCESS_ONOFF_CUE_LEN, accessibilityOnOffCueLength);
-  EEPROM.writeByte(EE_BYTE_ACCESS_MENU_CUE_LEN, accessibilityMenuCueLength);
-  EEPROM.writeByte(EE_BYTE_ACCESS_CONFIRM_CUE_LEN, accessibilityConfirmCueLength);
-  EEPROM.writeByte(EE_BYTE_ACCESS_BACK_CUE_LEN, accessibilityBackCueLength);
-  EEPROM.writeByte(EE_BYTE_ACCESS_CUE_VOLUME, accessibilityCueVolume);
-  EEPROM.writeByte(EE_BYTE_STARTUP_JINGLE_VARIANT, startupJingleVariant);
-}
-
-static inline uint8_t accessibilityBackCueDurationMs(bool secondTone) {
-  return secondTone ? accessibilityCueDurationMs(accessibilityBackCueLength, 62, 95, 145) : accessibilityCueDurationMs(accessibilityBackCueLength, 36, 55, 84);
-}
-
-static inline uint8_t accessibilityBackSingleCueDurationMs() {
-  return accessibilityCueDurationMs(accessibilityBackCueLength, 30, 45, 70);
-}
-
-static inline uint8_t accessibilityBackCueGapMs() {
-  return accessibilityCueDurationMs(accessibilityBackCueLength, 6, 10, 14);
-}
-
-static inline void playAccessibilityBackBeep() {
-  if (!accessibilityBackBeep || !accessibilityCueGuard()) return;
-  radio.tone(accessibilityBackSingleCueDurationMs(), accessibilityCueVolumeLevel(-8), 980);
-}
-
-static inline void playAccessibilityEnterMenuBeep() {
-  if (!accessibilityBackBeep || !accessibilityCueGuard()) return;
-  radio.tone(accessibilityBackCueDurationMs(false), accessibilityCueVolumeLevel(-9), 780);
-  delay(accessibilityBackCueGapMs());
-  radio.tone(accessibilityBackCueDurationMs(true), accessibilityCueVolumeLevel(-9), 1260);
-}
-
-static inline void playAccessibilityExitMenuBeep() {
-  if (!accessibilityBackBeep || !accessibilityCueGuard()) return;
-  radio.tone(accessibilityBackCueDurationMs(true), accessibilityCueVolumeLevel(-9), 1260);
-  delay(accessibilityBackCueGapMs());
-  radio.tone(accessibilityBackCueDurationMs(false), accessibilityCueVolumeLevel(-9), 760);
-}
-
-static inline void playAccessibilityDigitVoiceLite(uint8_t digit) {
-  if (!accessibilityVoiceLite || digit > 9 || !accessibilityCueGuard()) return;
-
-  const uint16_t minFreq = 620;
-  const uint16_t maxFreq = 2060;
-  const uint16_t frequency = minFreq + static_cast<uint16_t>(((uint32_t)(maxFreq - minFreq) * digit) / 9);
-  radio.tone(22, accessibilityCueVolumeLevel(-10), frequency);
-}
-
-static inline void playAccessibilityVoiceLitePosition(uint8_t pos, uint8_t count, uint16_t minFreq, uint16_t maxFreq, uint8_t durationMs) {
-  if (!accessibilityVoiceLite || count == 0 || !accessibilityCueGuard()) return;
-  if (pos >= count) pos = count - 1;
-  uint16_t frequency = minFreq;
-  if (count > 1) {
-    frequency = minFreq + static_cast<uint16_t>(((uint32_t)(maxFreq - minFreq) * pos) / (count - 1));
-  }
-  radio.tone(durationMs, accessibilityCueVolumeLevel(-10), frequency);
-}
-
-static inline void playAccessibilityMemoryPosVoiceLite() {
-  playAccessibilityVoiceLitePosition(memorypos, EE_PRESETS_CNT, 640, 2080, 22);
-}
-
-static inline void playAccessibilityBandVoiceLiteForBand(uint8_t targetBand) {
-  uint8_t slot = (targetBand < BAND_GAP) ? targetBand : (targetBand - 1);
-#ifdef HAS_AIR_BAND
-  const uint8_t count = 6;
-#else
-  const uint8_t count = 5;
-#endif
-  playAccessibilityVoiceLitePosition(slot, count, 700, 2200, 14);
-}
-
-static inline void playAccessibilityBandVoiceLite() {
-  playAccessibilityBandVoiceLiteForBand(band);
-}
-
-static inline uint8_t accessibilityOnOffCueDurationMs(bool secondTone) {
-  return secondTone ? accessibilityCueDurationMs(accessibilityOnOffCueLength, 44, 72, 108) : accessibilityCueDurationMs(accessibilityOnOffCueLength, 36, 60, 90);
-}
-
-static inline void playAccessibilityOnOffVoiceLite(bool enabled) {
-  if (!accessibilityVoiceLite || !accessibilityCueGuard()) return;
-  const uint16_t lowFreq = 860;
-  const uint16_t highFreq = 1560;
-  radio.tone(accessibilityOnOffCueDurationMs(false), accessibilityCueVolumeLevel(-10), (enabled ? lowFreq : highFreq));
-  delay(8);
-  radio.tone(accessibilityOnOffCueDurationMs(true), accessibilityCueVolumeLevel(-10), (enabled ? highFreq : lowFreq));
-}
-
-static inline void playAccessibilityBWVoiceLite() {
-  if (!accessibilityVoiceLite || !BWtune) return;
-
-  if (band < BAND_GAP) {
-    uint8_t slot = (BWset > 16) ? 16 : BWset; // 0..16 (Auto..311 kHz)
-    playAccessibilityVoiceLitePosition(slot, 17, 740, 2300, 18);
-  } else {
-    uint8_t slot = (BWset < 1) ? 0 : ((BWset > 4) ? 3 : (BWset - 1)); // 1..4
-    playAccessibilityVoiceLitePosition(slot, 4, 740, 2300, 18);
-  }
-}
-
-static inline void playAccessibilityBWSelectorCursorVoiceLite() {
-  if (!accessibilityVoiceLite) return;
-
-  if (band < BAND_GAP) {
-    // FM/OIRT selector slots: 1..16 BW, 17 Auto, 18 iMS, 19 EQ, 20 OK
-    uint8_t slot = 0;
-    if (BWsettemp == 20) slot = 19;
-    else if (BWsettemp >= 1 && BWsettemp <= 19) slot = BWsettemp - 1;
-    playAccessibilityVoiceLitePosition(slot, 20, 740, 2300, 18);
-  } else {
-    // AM selector slots: 1..4 BW, 20 OK
-    uint8_t slot = (BWsettemp == 20) ? 4 : ((BWsettemp >= 1 && BWsettemp <= 4) ? (BWsettemp - 1) : 0);
-    playAccessibilityVoiceLitePosition(slot, 5, 740, 2300, 18);
-  }
-}
-
-static inline void playAccessibilityStereoModeVoiceLite() {
-  // Stereo ON = low->high, Mono OFF = high->low.
-  playAccessibilityOnOffVoiceLite(StereoToggle);
-}
-
-static inline void playAccessibilityFreqEnterVoiceLite(bool manualEnter) {
-  if (!accessibilityVoiceLite || !manualEnter || !accessibilityCueGuard()) return;
-  radio.tone(120, accessibilityCueVolumeLevel(-8), 1420);
-}
-
-static inline bool accessibilityVoiceLiteActionsEnabled() {
-  return accessibilityVoiceLite && accessibilityVoiceLiteActions;
-}
-
-static inline void playAccessibilityTuneModeVoiceLite() {
-  if (!accessibilityVoiceLite) return;
-
-  uint16_t frequency = 0;
-  switch (tunemode) {
-    case TUNE_MAN: frequency = 860; break;
-    case TUNE_AUTO: frequency = 1220; break;
-    case TUNE_MEM: frequency = 1660; break;
-    case TUNE_MI_BAND: frequency = 2080; break;
-    default: break;
-  }
-
-  if (frequency != 0 && accessibilityCueGuard()) radio.tone(24, accessibilityCueVolumeLevel(-10), frequency);
-}
-
-static inline void playAccessibilityScanStateVoiceLite(bool start) {
-  if (!accessibilityVoiceLiteActionsEnabled() || !accessibilityCueGuard()) return;
-  radio.tone(30, accessibilityCueVolumeLevel(-9), (start ? 940 : 1520));
-  delay(8);
-  radio.tone(36, accessibilityCueVolumeLevel(-9), (start ? 1520 : 940));
-}
-
-static inline void playAccessibilityMemoryStoreVoiceLite() {
-  if (!accessibilityVoiceLiteActionsEnabled() || !accessibilityCueGuard()) return;
-  radio.tone(22, accessibilityCueVolumeLevel(-9), 1120);
-  delay(6);
-  radio.tone(30, accessibilityCueVolumeLevel(-9), 1760);
-}
-
-static inline void playAccessibilityMemoryClearVoiceLite() {
-  if (!accessibilityVoiceLiteActionsEnabled() || !accessibilityCueGuard()) return;
-  radio.tone(30, accessibilityCueVolumeLevel(-9), 1760);
-  delay(8);
-  radio.tone(42, accessibilityCueVolumeLevel(-9), 920);
-}
-
-static inline void playStartupTriadBeep() {
-  if (!edgebeep) return;
-  // C major triad for a softer startup cue.
-  radio.tone(72, -8, 1047);
-  delay(20);
-  radio.tone(72, -8, 1319);
-  delay(20);
-  radio.tone(104, -8, 1568);
-  if (startupJingleVariant == ACCESS_STARTUP_JINGLE_EXTENDED) {
-    delay(20);
-    radio.tone(72, -8, 1319);
-    delay(20);
-    radio.tone(104, -8, 1568);
-  }
-}
-
 void setup() {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
   gpio_set_drive_capability((gpio_num_t) 5, GPIO_DRIVE_CAP_0);
@@ -793,18 +515,6 @@ void setup() {
   LevelOffset = EEPROM.readByte(EE_BYTE_LEVELOFFSET);
   radio.rds.rtbuffer = EEPROM.readByte(EE_BYTE_RTBUFFER);
   edgebeep = EEPROM.readByte(EE_BYTE_EDGEBEEP);
-  accessibilityMenuBeep = EEPROM.readByte(EE_BYTE_ACCESS_MENU_BEEP);
-  accessibilityConfirmBeep = EEPROM.readByte(EE_BYTE_ACCESS_CONFIRM_BEEP);
-  accessibilityBackBeep = EEPROM.readByte(EE_BYTE_ACCESS_BACK_BEEP);
-  accessibilityVoiceLite = EEPROM.readByte(EE_BYTE_ACCESS_VOICE_LITE);
-  accessibilityVoiceLiteActions = EEPROM.readByte(EE_BYTE_ACCESS_VOICE_ACTIONS);
-  accessibilityOnOffCueLength = EEPROM.readByte(EE_BYTE_ACCESS_ONOFF_CUE_LEN);
-  accessibilityMenuCueLength = EEPROM.readByte(EE_BYTE_ACCESS_MENU_CUE_LEN);
-  accessibilityConfirmCueLength = EEPROM.readByte(EE_BYTE_ACCESS_CONFIRM_CUE_LEN);
-  accessibilityBackCueLength = EEPROM.readByte(EE_BYTE_ACCESS_BACK_CUE_LEN);
-  accessibilityCueVolume = EEPROM.readByte(EE_BYTE_ACCESS_CUE_VOLUME);
-  startupJingleVariant = EEPROM.readByte(EE_BYTE_STARTUP_JINGLE_VARIANT);
-  sanitizeAccessibilitySettings();
   softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
   softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
   frequency_AM = EEPROM.readUInt(EE_UINT16_FREQUENCY_AM);
@@ -819,7 +529,6 @@ void setup() {
   iMSset = EEPROM.readByte(EE_BYTE_IMSSET);
   EQset = EEPROM.readByte(EE_BYTE_EQSET);
   band = EEPROM.readByte(EE_BYTE_BAND);
-  sanitizeBandSettings();
   LowLevelSet = EEPROM.readByte(EE_BYTE_LOWLEVELSET);
   memorypos = EEPROM.readByte(EE_BYTE_MEMORYPOS);
   radio.rds.region = EEPROM.readByte(EE_BYTE_REGION);
@@ -1139,25 +848,6 @@ void setup() {
     EEPROM.commit();
   }
 
-  // Boot shortcut: hold BW + MODE + BAND while powering on to toggle accessibility.
-  if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH && digitalRead(MODEBUTTON) == LOW && digitalRead(BANDBUTTON) == LOW) {
-    analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
-    const bool enableAccessibility = !(accessibilityMenuBeep || accessibilityConfirmBeep || accessibilityBackBeep || accessibilityVoiceLite);
-
-    accessibilityMenuBeep = enableAccessibility;
-    accessibilityConfirmBeep = enableAccessibility;
-    accessibilityBackBeep = enableAccessibility;
-    accessibilityVoiceLite = enableAccessibility;
-
-    writeAccessibilitySettingsToEEPROM();
-    EEPROM.commit();
-
-    Infoboxprint("A11Y");
-    tftPrint(ACENTER, (enableAccessibility ? textUI(31) : textUI(30)), 155, 100, PrimaryColor, PrimaryColorSmooth, 28);
-    tftPrint(ACENTER, textUI(2), 155, 130, ActiveColor, ActiveColorSmooth, 28);
-    while (digitalRead(BWBUTTON) == LOW && digitalRead(MODEBUTTON) == LOW && digitalRead(BANDBUTTON) == LOW) delay(50);
-  }
-
   tft.setTouch(TouchCalData);
 
   tft.fillScreen(BackgroundColor);
@@ -1276,7 +966,7 @@ void setup() {
 
   setupmode = false;
 
-  playStartupTriadBeep();
+  if (edgebeep) radio.tone(50, -5, 2000);
   if (!usesquelch) radio.setUnMute();
 
   screensavertimer = millis();
@@ -2783,7 +2473,6 @@ void BWButtonPress() {
           freq_in = 0;
           BWtune = true;
           BWtemp = BWset;
-          playAccessibilityBWSelectorCursorVoiceLite();
         } else {
           if (band == BAND_FM || band == BAND_OIRT) {
             doStereoToggle();
@@ -2791,7 +2480,6 @@ void BWButtonPress() {
             BuildBWSelector();
             freq_in = 0;
             BWtune = true;
-            playAccessibilityBWSelectorCursorVoiceLite();
           }
         }
       }
@@ -2818,7 +2506,6 @@ void doStereoToggle() {
     Stereostatusold = false;
     StereoToggle = true;
   }
-  playAccessibilityStereoModeVoiceLite();
   EEPROM.writeByte(EE_BYTE_STEREO, StereoToggle);
   EEPROM.commit();
 }
@@ -2865,7 +2552,6 @@ void ModeButtonPress() {
 #endif
             PSSprite.unloadFont();
             if (language == LANGUAGE_CHS) PSSprite.loadFont(FONT16_CHS); else PSSprite.loadFont(FONT16);
-            playAccessibilityEnterMenuBeep();
             BuildMenu();
             freq_in = 0;
             menu = true;
@@ -2905,7 +2591,6 @@ void ModeButtonPress() {
               }
               menuopen = false;
             }
-            playAccessibilityBackBeep();
             submenu = false;
             menuoption = ITEM1;
             menupage = INDEX;
@@ -3090,7 +2775,6 @@ void ButtonPress() {
           } else {
             if (band == BAND_SW && tunemode != TUNE_MEM) {
               nowToggleSWMIBand = !nowToggleSWMIBand;
-              playAccessibilityOnOffVoiceLite(nowToggleSWMIBand);
               tunemode = TUNE_MAN;
               EEPROM.writeByte(EE_BYTE_BANDAUTOSW, nowToggleSWMIBand);
               EEPROM.commit();
@@ -3109,14 +2793,8 @@ void ButtonPress() {
       if (menu) DoMenu();
       if (BWtune) {
         if (BWsettemp == 18 || BWsettemp == 19) {
-          if (BWsettemp == 18) {
-            iMSset = !iMSset;
-            playAccessibilityOnOffVoiceLite(iMSset);
-          }
-          if (BWsettemp == 19) {
-            EQset = !EQset;
-            playAccessibilityOnOffVoiceLite(EQset);
-          }
+          if (BWsettemp == 18) iMSset = !iMSset;
+          if (BWsettemp == 19) EQset = !EQset;
           if (!iMSset && !EQset) iMSEQ = 0;
           else if (iMSset && EQset) iMSEQ = 2;
           else if (!iMSset && EQset) iMSEQ = 3;
@@ -3184,7 +2862,6 @@ void KeyUp() {
                 }
               }
             }
-            playAccessibilityMemoryPosVoiceLite();
             if (!memorystore) {
               DoMemoryPosTune();
             } else {
@@ -3253,7 +2930,6 @@ void KeyDown() {
                 }
               }
             }
-            playAccessibilityMemoryPosVoiceLite();
             if (!memorystore) {
               DoMemoryPosTune();
             } else {
@@ -4289,7 +3965,6 @@ void doBW() {
     EEPROM.writeByte(EE_BYTE_BWSET_AM, BWsetAM);
   }
   updateBW();
-  playAccessibilityBWVoiceLite();
   BWreset = true;
   EEPROM.commit();
 }
@@ -4307,7 +3982,6 @@ void doBWtuneDown() {
     if (BWsettemp > 4 && BWsettemp < 20) BWsettemp = 4; else if (BWsettemp == 0) BWsettemp = 20;
     drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsAM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp ? true : false), true);
   }
-  playAccessibilityBWSelectorCursorVoiceLite();
 }
 
 void doBWtuneUp() {
@@ -4323,7 +3997,6 @@ void doBWtuneUp() {
     if (BWsettemp > 4 && BWsettemp < 20) BWsettemp = 20; else if (BWsettemp > 20) BWsettemp = 1;
     drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsAM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp ? true : false), true);
   }
-  playAccessibilityBWSelectorCursorVoiceLite();
 }
 
 void doTuneMode() {
@@ -4351,7 +4024,6 @@ void doTuneMode() {
   }
   ShowTuneMode();
   ShowMemoryPos();
-  playAccessibilityTuneModeVoiceLite();
   EEPROM.writeByte(EE_BYTE_TUNEMODE, tunemode);
   EEPROM.commit();
 }
@@ -4897,17 +4569,6 @@ void DefaultSettings() {
   EEPROM.writeByte(EE_BYTE_LEVELOFFSET, 0);
   EEPROM.writeByte(EE_BYTE_RTBUFFER, 1);
   EEPROM.writeByte(EE_BYTE_EDGEBEEP, 0);
-  EEPROM.writeByte(EE_BYTE_ACCESS_MENU_BEEP, 0);
-  EEPROM.writeByte(EE_BYTE_ACCESS_CONFIRM_BEEP, 1);
-  EEPROM.writeByte(EE_BYTE_ACCESS_BACK_BEEP, 1);
-  EEPROM.writeByte(EE_BYTE_ACCESS_VOICE_LITE, 0);
-  EEPROM.writeByte(EE_BYTE_ACCESS_VOICE_ACTIONS, 0);
-  EEPROM.writeByte(EE_BYTE_ACCESS_ONOFF_CUE_LEN, ACCESS_CUE_LEN_MEDIUM);
-  EEPROM.writeByte(EE_BYTE_ACCESS_MENU_CUE_LEN, ACCESS_CUE_LEN_MEDIUM);
-  EEPROM.writeByte(EE_BYTE_ACCESS_CONFIRM_CUE_LEN, ACCESS_CUE_LEN_MEDIUM);
-  EEPROM.writeByte(EE_BYTE_ACCESS_BACK_CUE_LEN, ACCESS_CUE_LEN_MEDIUM);
-  EEPROM.writeByte(EE_BYTE_ACCESS_CUE_VOLUME, ACCESS_CUE_VOL_MEDIUM);
-  EEPROM.writeByte(EE_BYTE_STARTUP_JINGLE_VARIANT, ACCESS_STARTUP_JINGLE_CLASSIC);
   EEPROM.writeByte(EE_BYTE_SOFTMUTEAM, 1);
   EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, 0);
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, 828);
@@ -5169,12 +4830,10 @@ void cancelDXScan() {
 
   ShowTuneMode();
   ShowMemoryPos();
-  playAccessibilityScanStateVoiceLite(false);
   if (XDRGTKUSB || XDRGTKTCP) DataPrint("J0\n");
 }
 
 void endMenu() {
-  playAccessibilityExitMenuBeep();
   radio.clearRDS(fullsearchrds);
   menu = false;
   menuopen = false;
@@ -5196,7 +4855,6 @@ void endMenu() {
   EEPROM.writeByte(EE_BYTE_LEVELOFFSET, LevelOffset);
   EEPROM.writeByte(EE_BYTE_RTBUFFER, radio.rds.rtbuffer);
   EEPROM.writeByte(EE_BYTE_EDGEBEEP, edgebeep);
-  writeAccessibilitySettingsToEEPROM();
   EEPROM.writeByte(EE_BYTE_SOFTMUTEAM, softmuteam);
   EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, softmutefm);
   EEPROM.writeByte(EE_BYTE_LANGUAGE, language);
@@ -5330,7 +4988,6 @@ void startFMDXScan() {
   scantimer = millis();
   scandxmode = true;
   ShowTuneMode();
-  playAccessibilityScanStateVoiceLite(true);
   if (XDRGTKUSB || XDRGTKTCP) DataPrint("J1\n");
 }
 
@@ -5544,22 +5201,20 @@ uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, ui
 }
 
 void doBandToggle() {
-  // BAND button must always switch bands; do not hijack it for DX scan in memory mode.
-  if (tunemode == TUNE_MEM) {
-    tunemode = TUNE_MAN;
-    EEPROM.writeByte(EE_BYTE_TUNEMODE, tunemode);
-    EEPROM.commit();
-  }
-
-  ToggleBand(band);
-  playAccessibilityBandVoiceLite();
-  radio.clearRDS(fullsearchrds);
-  StoreFrequency();
-  SelectBand();
-  if (XDRGTKUSB || XDRGTKTCP) {
-    if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n");
-    else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n");
-    else DataPrint("M1\nT" + String(frequency_AM) + "\n");
+  if (tunemode != TUNE_MEM) {
+    ToggleBand(band);
+    radio.clearRDS(fullsearchrds);
+    StoreFrequency();
+    SelectBand();
+    if (XDRGTKUSB || XDRGTKTCP) {
+      if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n");
+      else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n");
+      else DataPrint("M1\nT" + String(frequency_AM) + "\n");
+    }
+  } else {
+    scanmodeold = tunemode;
+    startFMDXScan();
+    return;
   }
   screensavertimer = millis();
 }
@@ -5601,7 +5256,6 @@ void StoreMemoryPos(uint8_t _pos) {
   }
 
   EEPROM.commit();
-  playAccessibilityMemoryStoreVoiceLite();
 
   if (band == BAND_FM) {//todo air
     presets[_pos].frequency = frequency;
@@ -5637,7 +5291,6 @@ void ClearMemoryRange(uint8_t start, uint8_t stop) {
     presets[pos].band = BAND_FM;
     presets[pos].frequency = EE_PRESETS_FREQUENCY;
   }
-  playAccessibilityMemoryClearVoiceLite();
 }
 
 void Touch_IRQ_Handler() {
@@ -5775,7 +5428,6 @@ void NumpadProcess(int num) {
       menu = true;
       PSSprite.unloadFont();
       if (language == LANGUAGE_CHS) PSSprite.loadFont(FONT16_CHS); else PSSprite.loadFont(FONT16);
-      playAccessibilityEnterMenuBeep();
       BuildMenu();
     } else if (num == 13) {
       if (freq_in > 0 && freq_in <= EE_PRESETS_CNT) {
@@ -5828,12 +5480,9 @@ void NumpadProcess(int num) {
       menu = true;
       PSSprite.unloadFont();
       if (language == LANGUAGE_CHS) PSSprite.loadFont(FONT16_CHS); else PSSprite.loadFont(FONT16);
-      playAccessibilityEnterMenuBeep();
       BuildMenu();
     } else if (num == 13) {
       if (freq_in != 0) {
-        bool manualEnter = (millis() - keypadtimer) < 1000;
-        playAccessibilityFreqEnterVoiceLite(manualEnter);
         if (TuneFreq(freq_in)) {
           if (XDRGTKUSB || XDRGTKTCP) {
             if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n"); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n"); else DataPrint("M1\nT" + String(frequency_AM) + "\n");
@@ -5863,7 +5512,6 @@ void NumpadProcess(int num) {
     } else {
       if (freq_in / 10000 == 0) {
         freq_in = freq_in * 10 + num;
-        if (num >= 0 && num <= 9) playAccessibilityDigitVoiceLite(static_cast<uint8_t>(num));
       }
       ShowNum(freq_in);
     }
