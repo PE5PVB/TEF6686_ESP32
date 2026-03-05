@@ -34,6 +34,12 @@ Shortcut notes:
 - `Long press BW` on `LW/MW/SW` keeps the `BW` selector flow (no Stereo/Mono toggle on AM bands).
 - Boot shortcut for quick accessibility toggle: hold `BW + MODE + BAND` while powering on.
 
+BW selector notes (important for audio navigation):
+- In `FM/OIRT` selector, item order is: filter values (`56 kHz` ... `311 kHz`), then `Auto BW`, then `iMS`, then `EQ`, and the last item is `OK`.
+- The highest cursor tone corresponds to the last selector item (`OK`).
+- `iMS` and `EQ` are toggle items (activate with knob press), and `OK` confirms the selector changes.
+- In `AM` selector, order is: AM filter values and final `OK` (last/highest-tone item).
+
 ## Regression Checklist (2026-03-04)
 | Area | Expected behavior | Status |
 |---|---|---|
