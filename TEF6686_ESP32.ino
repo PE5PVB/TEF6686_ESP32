@@ -760,16 +760,6 @@ static inline void playAccessibilityStepSizeVoiceLite() {
   playAccessibilityVoiceLitePosition(stepsize, count, 760, 2200, 18);
 }
 
-static inline void playAccessibilityStepSizeVoiceLite() {
-  if (!accessibilityVoiceLiteActionsEnabled()) return;
-
-  uint8_t count = ((band == BAND_SW || band < BAND_GAP) ? 5 : 4);
-  uint8_t slot = stepsize;
-  if (slot >= count) slot = 0;
-
-  playAccessibilityVoiceLitePosition(slot, count, 760, 2200, 20);
-}
-
 static inline void playAccessibilityScanStateVoiceLite(bool start) {
   if (!accessibilityVoiceLiteActionsEnabled() || !accessibilityCueGuard()) return;
   radio.tone(30, accessibilityCueVolumeLevel(-9), (start ? 940 : 1520));
