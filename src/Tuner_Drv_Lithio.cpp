@@ -290,9 +290,13 @@ bool devTEF_Radio_Get_Identification (uint16_t *device, uint16_t *hw_version, ui
 }
 
 void devTEF_Radio_Set_Wavegen(bool mode, int16_t amplitude, uint16_t freq) {
+  devTEF_Radio_Set_WavegenStereo(mode, amplitude, freq, amplitude, freq);
+}
+
+void devTEF_Radio_Set_WavegenStereo(bool mode, int16_t leftAmplitude, uint16_t leftFreq, int16_t rightAmplitude, uint16_t rightFreq) {
   if (mode) {
     devTEF_Set_Cmd(TEF_AUDIO, Cmd_Set_Input, 5, 240);
-    devTEF_Set_Cmd(TEF_AUDIO, Cmd_Set_WaveGen, 15, 5, 0, amplitude * 10, freq, amplitude * 10 , freq);
+    devTEF_Set_Cmd(TEF_AUDIO, Cmd_Set_WaveGen, 15, 5, 0, leftAmplitude * 10, leftFreq, rightAmplitude * 10, rightFreq);
   } else {
     devTEF_Set_Cmd(TEF_AUDIO, Cmd_Set_Input, 5, 0);
     devTEF_Set_Cmd(TEF_AUDIO, Cmd_Set_WaveGen, 15, 0, 0, 0, 0, 0, 0);

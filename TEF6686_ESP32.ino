@@ -88,6 +88,7 @@ bool accessibilityConfirmBeep;
 bool accessibilityBackBeep;
 bool accessibilityVoiceLite;
 bool accessibilityVoiceLiteActions;
+bool accessibilityPanCues;
 bool edgebeep;
 bool externaltune;
 bool findMemoryAF;
@@ -577,6 +578,10 @@ void setup() {
   accessibilityCueVolume = EEPROM.readByte(EE_BYTE_ACCESS_CUE_VOLUME);
   startupJingleVariant = EEPROM.readByte(EE_BYTE_STARTUP_JINGLE_VARIANT);
   accessibilityTestMode = EEPROM.readByte(EE_BYTE_ACCESS_TEST_MODE);
+  {
+    const byte panRaw = EEPROM.readByte(EE_BYTE_ACCESS_PAN_CUES);
+    accessibilityPanCues = (panRaw <= 1) ? panRaw : 0;
+  }
   sanitizeAccessibilitySettings();
   softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
   softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
@@ -4687,6 +4692,7 @@ void DefaultSettings() {
   EEPROM.writeByte(EE_BYTE_ACCESS_CUE_VOLUME, ACCESS_CUE_VOL_MEDIUM);
   EEPROM.writeByte(EE_BYTE_STARTUP_JINGLE_VARIANT, ACCESS_STARTUP_JINGLE_CLASSIC);
   EEPROM.writeByte(EE_BYTE_ACCESS_TEST_MODE, ACCESS_TEST_MODE_OFF);
+  EEPROM.writeByte(EE_BYTE_ACCESS_PAN_CUES, 0);
   EEPROM.writeByte(EE_BYTE_SOFTMUTEAM, 1);
   EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, 0);
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_AM, 828);

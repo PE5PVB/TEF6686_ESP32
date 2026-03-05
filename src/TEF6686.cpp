@@ -1789,10 +1789,14 @@ void TEF6686::clearRDS (bool fullsearchrds) {
 }
 
 void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {
+  toneStereo(time, amplitude, frequency, amplitude, frequency);
+}
+
+void TEF6686::toneStereo(uint16_t time, int16_t leftAmplitude, uint16_t leftFrequency, int16_t rightAmplitude, uint16_t rightFrequency) {
   devTEF_Audio_Set_Mute(0);
-  devTEF_Radio_Set_Wavegen(1, amplitude, frequency);
+  devTEF_Radio_Set_WavegenStereo(1, leftAmplitude, leftFrequency, rightAmplitude, rightFrequency);
   delay (time);
-  devTEF_Radio_Set_Wavegen(0, 0, 0);
+  devTEF_Radio_Set_WavegenStereo(0, 0, 0, 0, 0);
 }
 
 void TEF6686::I2Sin(bool mode) {
