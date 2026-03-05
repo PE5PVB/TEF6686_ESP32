@@ -271,7 +271,7 @@ static inline uint8_t accessibilityOnOffCueDurationMs(bool secondTone) {
 }
 
 static inline int16_t clampAccessibilityCueLevel(int16_t level) {
-  if (level < -20) return -20;
+  if (level < -30) return -30;
   if (level > -2) return -2;
   return level;
 }
@@ -282,16 +282,19 @@ static inline void playToneWithOptionalPan(uint8_t pos, uint8_t count, uint8_t d
     return;
   }
 
-  const int16_t kMaxPanAttenuationDb = 12;
+  const int16_t kMaxPanAttenuationDb = 20;
+  const int16_t kMaxPanBoostDb = 4;
   const int16_t balance = static_cast<int16_t>((static_cast<uint32_t>(pos) * 200) / (count - 1)) - 100;
 
   int16_t leftLevel = baseLevel;
   int16_t rightLevel = baseLevel;
 
   if (balance < 0) {
+    leftLevel = baseLevel + static_cast<int16_t>(((-balance) * kMaxPanBoostDb) / 100);
     rightLevel = baseLevel - static_cast<int16_t>(((-balance) * kMaxPanAttenuationDb) / 100);
   } else if (balance > 0) {
     leftLevel = baseLevel - static_cast<int16_t>((balance * kMaxPanAttenuationDb) / 100);
+    rightLevel = baseLevel + static_cast<int16_t>((balance * kMaxPanBoostDb) / 100);
   }
 
   radio.toneStereo(durationMs, clampAccessibilityCueLevel(leftLevel), frequency, clampAccessibilityCueLevel(rightLevel), frequency);
