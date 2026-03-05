@@ -25,11 +25,13 @@ What it adds in practice:
 - variable-pitch navigation cues in menus and submenus, so you can hear your relative position from beginning to end
 - clear menu state cues for `enter`, `back`, `exit`, and `confirm`
 - consistent toggle pattern: `ON = low -> high`, `OFF = high -> low`
-- the same ON/OFF two-tone pattern for quick actions outside menu (including `Stereo/Mono`)
+- the same ON/OFF two-tone pattern for quick actions outside menu (including `Stereo/Mono` on supported bands)
 - Voice Lite cues for selected actions (for example manual frequency entry digits and menu position feedback)
 
 Shortcut notes:
-- `Short press BW` means a quick tap (not hold) of the `BW` button on the main screen (outside menu): it toggles `Stereo/Mono` and uses the same ON/OFF two-tone cue pattern.
+- `Short press BW` means a quick tap (not hold) of the `BW` button on the main screen (outside menu): it opens the `BW` selector (`Filter/iMS/EQ`).
+- `Long press BW` on `FM/OIRT` toggles `Stereo/Mono` and uses the ON/OFF two-tone cue pattern.
+- `Long press BW` on `LW/MW/SW` keeps the `BW` selector flow (no Stereo/Mono toggle on AM bands).
 - Boot shortcut for quick accessibility toggle: hold `BW + MODE + BAND` while powering on.
 
 ## Regression Checklist (2026-03-04)
@@ -39,11 +41,30 @@ Shortcut notes:
 | Submenu navigation | One position-dependent beep per step (no duplicate fixed tone) | PASS |
 | Menu transitions | Distinct cues for enter menu, back, and exit | PASS |
 | Confirm action | Confirm cue present in menu and nested submenus | PASS |
-| Quick Stereo/Mono (`short BW`) | ON/OFF two-tone pattern is applied consistently | PASS |
+| Quick Stereo/Mono (`long BW`, FM/OIRT) | ON/OFF two-tone pattern is applied consistently | PASS |
 | BW selector (`Filter/iMS/EQ`) | Cursor navigation and toggle cues are audible | PASS |
 | BAND switching | FM/AM switching works without freeze or lockup | PASS |
 | Persisted band settings | Invalid stored values are sanitized on startup | PASS |
 | FlashWizard i18n | Auto-detect OS language, full UI for PL/EN/DE/ES/FR/IT, EN fallback | PASS |
+
+## OTA And Recovery (2026-03-05)
+This tree now includes a serial-triggered HTTP OTA path with a boot-health guard.
+
+Serial commands (only when USB is not in XDR mode):
+- `O?` - print OTA status (`running`, `next`, pending guard state)
+- `OU<url>` - download firmware from HTTP/HTTPS URL and reboot
+- `OR` - rollback to previously saved app partition and reboot
+- `OC` - clear pending guard state manually
+
+Important constraints:
+- Current 4MB build image is about 3.0 MB (`TEF6686_ESP32.ino.bin`), so dual-slot A/B OTA does **not** fit in 4MB.
+- A dedicated 8MB dual-OTA layout is provided in `partitions_8mb_ota.csv`.
+- PlatformIO environment for this profile: `esp32_ota8mb`.
+
+Build example:
+```bash
+pio run -e esp32_ota8mb
+```
 
 ## Contributing
 We are open for a new ideas in our project. Feel free to share your thoughts in [Discussions](https://github.com/PE5PVB/TEF6686_ESP32/discussions).\
