@@ -38,6 +38,7 @@ BW selector notes (important for audio navigation):
 - In `FM/OIRT` selector, item order is: filter values (`56 kHz` ... `311 kHz`), then `Auto BW`, then `iMS`, then `EQ`, and the last item is `OK`.
 - The highest cursor tone corresponds to the last selector item (`OK`).
 - `iMS` and `EQ` are toggle items (activate with knob press), and `OK` confirms the selector changes.
+- In short: `56 kHz` ... `311 kHz` -> `Auto` -> `iMS` -> `EQ` -> `OK`; you must confirm with `OK`, otherwise leaving the selector will not save your changes.
 - In `AM` selector, order is: AM filter values and final `OK` (last/highest-tone item).
 
 ## Regression Checklist (2026-03-04)
