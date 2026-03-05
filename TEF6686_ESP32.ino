@@ -731,16 +731,33 @@ static inline bool accessibilityVoiceLiteActionsEnabled() {
 static inline void playAccessibilityTuneModeVoiceLite() {
   if (!accessibilityVoiceLite) return;
 
-  uint16_t frequency = 0;
-  switch (tunemode) {
-    case TUNE_MAN: frequency = 860; break;
-    case TUNE_AUTO: frequency = 1220; break;
-    case TUNE_MEM: frequency = 1660; break;
-    case TUNE_MI_BAND: frequency = 2080; break;
-    default: break;
+  const bool swBandMode = (band == BAND_SW && showSWMIBand && nowToggleSWMIBand);
+  uint8_t slot = 0;
+  const uint8_t count = 3;
+
+  if (swBandMode) {
+    switch (tunemode) {
+      case TUNE_MAN: slot = 0; break;
+      case TUNE_MI_BAND: slot = 1; break;
+      case TUNE_MEM: slot = 2; break;
+      default: return;
+    }
+  } else {
+    switch (tunemode) {
+      case TUNE_MAN: slot = 0; break;
+      case TUNE_AUTO: slot = 1; break;
+      case TUNE_MEM: slot = 2; break;
+      default: return;
+    }
   }
 
-  if (frequency != 0 && accessibilityCueGuard()) radio.tone(24, accessibilityCueVolumeLevel(-10), frequency);
+  playAccessibilityVoiceLitePosition(slot, count, 760, 2200, 18);
+}
+
+static inline void playAccessibilityStepSizeVoiceLite() {
+  if (!accessibilityVoiceLite) return;
+  const uint8_t count = (band == BAND_SW || band < BAND_GAP) ? 5 : 4;
+  playAccessibilityVoiceLitePosition(stepsize, count, 760, 2200, 18);
 }
 
 static inline void playAccessibilityStepSizeVoiceLite() {
@@ -3100,10 +3117,10 @@ void ButtonPress() {
             }
 
             if (!screenmute) ShowStepSize();
+            playAccessibilityStepSizeVoiceLite();
 
             EEPROM.writeByte(EE_BYTE_STEPSIZE, stepsize);
             EEPROM.commit();
-            playAccessibilityStepSizeVoiceLite();
             if (stepsize == 0) {
               RoundStep();
               ShowFreq(0);
