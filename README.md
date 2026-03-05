@@ -54,25 +54,6 @@ BW selector notes (important for audio navigation):
 | Persisted band settings | Invalid stored values are sanitized on startup | PASS |
 | FlashWizard i18n | Auto-detect OS language, full UI for PL/EN/DE/ES/FR/IT, EN fallback | PASS |
 
-## OTA And Recovery (2026-03-05)
-This tree now includes a serial-triggered HTTP OTA path with a boot-health guard.
-
-Serial commands (only when USB is not in XDR mode):
-- `O?` - print OTA status (`running`, `next`, pending guard state)
-- `OU<url>` - download firmware from HTTP/HTTPS URL and reboot
-- `OR` - rollback to previously saved app partition and reboot
-- `OC` - clear pending guard state manually
-
-Important constraints:
-- Current 4MB build image is about 3.0 MB (`TEF6686_ESP32.ino.bin`), so dual-slot A/B OTA does **not** fit in 4MB.
-- A dedicated 8MB dual-OTA layout is provided in `partitions_8mb_ota.csv`.
-- PlatformIO environment for this profile: `esp32_ota8mb`.
-
-Build example:
-```bash
-pio run -e esp32_ota8mb
-```
-
 ## Contributing
 We are open for a new ideas in our project. Feel free to share your thoughts in [Discussions](https://github.com/PE5PVB/TEF6686_ESP32/discussions).\
 You can also contribute your own code using [Pull Requests](https://github.com/PE5PVB/TEF6686_ESP32/pulls). We will review it and merge into main branch.
