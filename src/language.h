@@ -7152,6 +7152,331 @@ static const char* const myLanguage[22][323] PROGMEM = {
     "Ställ in rabbitears.info användar-ID", // 320
     "Ställ in rabbitears.info lösenord", // 321
     "ID" // 322
+  },
+
+  { "Gaeilge", // Irish
+    "Treo an rothlóra athraithe", // 1
+    "Scaoil an cnaipe, le do thoil", // 2
+    "Scáileán iompaithe", // 3
+    "Calabraigh an méadar analógach", // 4
+    "Mód USB", // 5
+    "Ionchódóir socraithe mar optúil", // 6
+    "Ionchódóir socraithe mar chaighdeánach", // 7
+    "Glacadóir FM/AM", // 8
+    "Tiúnóir: !Dada!", // 9
+    "Airde fuaime", // 10
+    "Tiontaire", // 11
+    "Imeall an bhanna íseal", // 12
+    "Imeall an bhanna ard", // 13
+    "Fritháireamh Leibhéil FM RF", // 14
+    "Tairseach steiréó", // 15
+    "Cúinne High Cut", // 16
+    "Tairseach Highcut", // 17
+    "Tairseach leibhéil ísil", // 18
+    "Gile", // 19
+    "Socraigh an airde fuaime", // 20
+    "Fritháireamh an tiontaire", // 21
+    "Imeall an bhanna íseal", // 22
+    "Imeall an bhanna ard", // 23
+    "Fritháireamh leibhéil", // 24
+    "Tairseach deighilte steiréó", // 25
+    "Minicíocht cúinne High Cut", // 26
+    "Tairseach High Cut", // 27
+    "Tairseach leibhéil ísil", // 28
+    "Gile an taispeána", // 29
+    "As", // 30
+    "Air", // 31
+    "BRÚIGH 'MODE' LE hIMEACHT AGUS LE STÓRÁIL", // 32
+    "BRÚIGH 'BAND' LE DÚNADH", // 33
+    "AG SCANADH...", // 34
+    "Níor braitheadh tiúnóir ar bith", // 35
+    "Gnóthachan aeróige AM", // 36
+    "FM AGC", // 37
+    "Taispeáin earráidí RDS", // 38
+    "Teanga", // 39
+    "Roghnaigh teanga", // 40
+    "PI faoi ghlas / CT sioncronaithe", // 41
+    "Earráid! Gan comhartha RDS", // 42
+    "Múchadh bog (Softmute) FM", // 43
+    "Múchadh bog (Softmute) AM", // 44
+    "Bíp ag imeall an bhanna", // 45
+    "Réigiún", // 46
+    "An Eoraip", // 47
+    "SAM", // 48
+    "Taispeáin fo-líne in RDS", // 49
+    "PS amháin", // 50
+    "Wi-Fi gníomhach", // 51
+    "Cumraigh Wi-Fi", // 52
+    "Ceangail le: ", // 53
+    "le Wi-Fi a chumrú", // 54
+    "Ag iarraidh ceangal le Wi-Fi", // 55
+    "THEIP AIR!", // 56
+    "CEANGAILTE!", // 57
+    "IP Cliaint don liosta stáisiún", // 58
+    "Taispeáin tonnfhad SW", // 59
+    "Scagaire RDS", // 60
+    "Taispeáin earráidí PI", // 61
+    "Úsáid scuailse", // 62
+    "Méadar leibhéil fuaime", // 63
+    "AM Noise blanker", // 64
+    "FM Noise blanker", // 65
+    "Socruithe réamhshocraithe lódáilte", // 66
+    "Aschur fuaime", // 67
+    "Ceadaigh tiúnadh gan an\ntaispeánach coigiltis a mhúchadh", // 68
+    "Inbhartaigh dathanna an taispeána", // 69
+    "Maidir leis an bhogearra", // 70
+    "Príomhchód:", // 71
+    "Rannpháirtithe:", // 72
+    "Anaithnid", // 73
+    "Roghanna an taispeánaiga choigiltis", // 74
+    "Cumhacht as go huathoibríoch", // 75
+    "Múch an scáileán", // 76
+    "Téama", // 77
+    "Craiceann", // 78
+    "Feidhmchláir a braitheadh", // 79
+    "Min.", // 80
+    "Luas dinimiciúil SPI", // 81
+    "Íogaireacht scanta", // 82
+    "DADA", // 83
+    "Leagan an bhogearra", // 84
+    "Cló na minicíochta", // 85
+    "Uathoibríoch", // 86
+    "Níl AF ar fáil", // 87
+    "Níl EON ar fáil", // 88
+    "Níl RT+ ar fáil", // 89
+    "Céimréim réamhshocraithe FM", // 90
+    "Taispeánach coigiltis", // 91
+    "Soic", // 92
+    "Mód an chloig", // 93
+    "Gile 1%", // 94
+    "Gile 25%", // 95
+    "Gile 50%", // 96
+    "Fritháireamh Leibhéil AM RF", // 97
+    "Aonad an mhéadair chomhartha", // 98
+    "Úsáid AF", // 99
+    "Roghnaigh Banna FM", // 100
+    "Roghnaigh Banna AM", // 101
+    "LW", // 102
+    "MW", // 103
+    "SW", // 104
+    "FM", // 105
+    "OIRT", // 106
+    "Ná múscail an scáileán le linn tiúnadh", // 107
+    "Roghnóir múnla", // 108
+    "Bonn", // 109
+    "Inaistrithe", // 110
+    "Inaistrithe (teagmháil)", // 111
+    "Teideal", // 112
+    "Albam", // 113
+    "Rian", // 114
+    "Ealaíontóir", // 115
+    "Comhdhéanamh", // 116
+    "Gluaiseacht", // 117
+    "Stiúrthóir", // 118
+    "Cumadóir", // 119
+    "Banna", // 120
+    "Nóta", // 121
+    "Seánra", // 122
+    "Nuacht", // 123
+    "Nuacht áitiúil", // 124
+    "Margadh stoc", // 125
+    "Spórt", // 126
+    "Crannchur", // 127
+    "Horoscóp", // 128
+    "Caitheamh Aimsire", // 129
+    "Sláinte", // 130
+    "Imeacht", // 131
+    "Radharc", // 132
+    "Cineama", // 133
+    "Teilifís", // 134
+    "Dáta/Am", // 135
+    "Aimsir", // 136
+    "Trácht", // 137
+    "Aláram", // 138
+    "Fógraíocht", // 139
+    "Suíomh gréasáin", // 140
+    "Eile", // 141
+    "PS Gearr", // 142
+    "PS Fada", // 143
+    "Anois", // 144
+    "Ar aghaidh", // 145
+    "Cuid", // 146
+    "Láithreoir", // 147
+    "Eagarthóir", // 148
+    "Minicíocht", // 149
+    "Príomhleathanach", // 150
+    "Fo-chainéal", // 151
+    "Líne chabhrach", // 152
+    "Fón an stiúideo", // 153
+    "Fón", // 154
+    "SMS an stiúideo", // 155
+    "SMS", // 156
+    "Ríomhphost cabhrach", // 157
+    "Ríomhphost an stiúideo", // 158
+    "Ríomhphost", // 159
+    "Comhrá", // 160
+    "Ionad comhrá", // 161
+    "Ceist vótála", // 162
+    "Ionad vótála", // 163
+    "Áit", // 164
+    "Coinne", // 165
+    "Aitheantóir", // 166
+    "Ceannach", // 167
+    "Faigh sonraí", // 168
+    "Céimréim réamhshocraithe MW", // 169
+    "Oráisteach", // 170
+    "Aigéan", // 171
+    "Indigó", // 172
+    "Roghanna ceallraí", // 173
+    "Taispeáin voltas", // 174
+    "Taispeáin céatadán", // 175
+    "Maolánú RT", // 176
+    "Príomhshocruithe", // 177
+    "Socruithe fuaime", // 178
+    "Socruithe taispeána", // 179
+    "Socruithe RDS", // 180
+    "Socruithe FM", // 181
+    "Socruithe AM", // 182
+    "Nascacht & clog", // 183
+    "BRÚIGH 'MODE' LE hARMHILLEADH", // 184
+    "Braitheadóir CoChannel", // 185
+    "Íogaireacht an bhraitheadóra\nCoChannel", // 186
+    "Tairseach an bhraitheadóra\nCoChannel", // 187
+    "Áiritheoir an bhraitheadóra\nCoChannel", // 188
+    "PRÍOMH", // 189
+    "FUAIM", // 190
+    "TAISPEÁINT", // 191
+    "RDS", // 192
+    "FM", // 193
+    "AM", // 194
+    "NASC", // 195
+    "MÓD DX", // 196
+    "CUIMHNE UATH.", // 197
+    "AM AGC", // 198
+    "Dí-bhéim FM", // 199
+    "Beag", // 200
+    "Mór", // 201
+    "Uile", // 202
+    "PS Tapa", // 203
+    "Réamhshocrú", // 204
+    "Múch an scáileán ar\nnasc XDRGTK", // 205
+    "Feabhsú steiréó FMSI", // 206
+    "Níl an fheidhm seo ar fáil\nach amháin ar TEF6687/6689!", // 207
+    "Níl an fheidhm seo ar fáil\nar an chraiceann roghnaithe!", // 208
+    "Tosaigh ag scanadh\nchainéil chuimhne", // 209
+    "Stad de scanadh\nchainéil chuimhne", // 210
+    "Am feithimh", // 211
+    "Tosaigh scanadh DX", // 212
+    "Roghanna FM DX", // 213
+    "Tobscoir! Tá an tús-chainéal\nmar chainéal le bacadh.", // 214
+    "Sórtáil uathoibríoch AF", // 215
+    "Cainéil chuimhne", // 216
+    "Eisigh", // 217
+    "Amháin", // 218
+    "Cealaigh scanadh go huathoibríoch", // 219
+    "Ceartaigh PI", // 220
+    "Comhartha", // 221
+    "Múch an fhuaim\nle linn scanta", // 222
+    "AER", // 223
+    "Brúigh an cnaipe banna ar feadh 5 shoic.", // 224
+    "Cumhacht as", // 225
+    "Scáileán as", // 226
+    "Díchumasaithe", // 227
+    "Dada", // 228
+    "Nuacht", // 229
+    "Cúrsaí Reatha", // 230
+    "Faisnéis", // 231
+    "Spórt", // 232
+    "Oideachas", // 233
+    "Dráma", // 234
+    "Cultúr", // 235
+    "Eolaíocht", // 236
+    "Éagsúil", // 237
+    "Ceol Pop", // 238
+    "Ceol Rock", // 239
+    "Ceol Éasca", // 240
+    "Ceol Clasaiceach Éadrom", // 241
+    "Ceol Clasaiceach Trom", // 242
+    "Ceol Eile", // 243
+    "Aimsir", // 244
+    "Airgeadas", // 245
+    "Cláir do Pháistí", // 246
+    "Cúrsaí Sóisialta", // 247
+    "Creideamh", // 248
+    "Glaonna Gutháin", // 249
+    "Taisteal", // 250
+    "Caitheamh Aimsire", // 251
+    "Snagcheol", // 252
+    "Ceol Tuaithe", // 253
+    "Ceol Náisiúnta", // 254
+    "Seancheol", // 255
+    "Ceol Tíre", // 256
+    "Faisnéisnéis", // 257
+    "Tástáil Aláraim", // 258
+    "Aláram!!!", // 259
+    "Túsach", // 260
+    "I gcónaí", // 261
+    "Taispeáin an clog", // 262
+    "Taispeáin PS fada", // 263
+    "Minicíocht tosaigh", // 264
+    "Minicíocht stad", // 265
+    "Cainéal cuimhne tosaigh", // 266
+    "Cainéal cuimhne stad", // 267
+    "Ná stóráil ach le RDS", // 268
+    "Tosaigh cuimhne uathoibríoch", // 269
+    "Cuimhne uathoibríoch", // 270
+    "ID an liosta stáisiún", // 271
+    "Aimsithe", // 272
+    "Tobscoir! Cainéil chuimhne lán", // 273
+    "Tobscoir! Brúigh an t-úsáideoir cnaipe", // 274
+    "Scanadh críochnaithe gan earráid", // 275
+    "Glan cainéil chuimhne", // 276
+    "glanta", // 277
+    "Cosc ar dhúblach PI", // 278
+    "Raon", // 279
+    "Iomlán", // 280
+    "Am feithimh ar\nchomhartha amháin", // 281
+    "Brúigh an cúinne aibhsithe", // 282
+    "Chun an scáileán teagmhála a chalabrú", // 283
+    "Coinnigh an cnaipe BW le\nstad a chur leis an scanóir DX", // 284
+    "Roghnaigh Leithead Banna", // 285
+    "Do logleabhar", // 286
+    "Íoslódáil an logleabhar", // 287
+    "Tá an logleabhar folamh", // 288
+    "Go dtí an bun", // 289
+    "Iontráil curtha\nleis an logleabhar", // 290
+    "Earráid agus iontráil\ná cur leis an logleabhar", // 291
+    "Glan an logleabhar", // 292
+    "Logleabhar glanta", // 293
+    "Theip ar an ghlanadh", // 294
+    "Ní féidir iontráil a chur leis!\nTá an logleabhar lán!", // 295
+    "Logálaí uathoibríoch", // 296
+    "DST uathoibríoch ar am NTP", // 297
+    "Socraigh fritháireamh ama NTP", // 298
+    "Tá os cionn 130 iontráil sa logleabhar, rud nach féidir leis an amharcóir a láimhseáil. Íoslódáil an comhad CSV le do thoil.", // 299
+    "Ceanada", // 300
+    "Ceangail an gléas seo le líonra Wi-Fi le gnéithe cianda a chumasú.", // 301
+    "Cumraigh Wi-Fi", // 302
+    "Líonra i bhfolach", // 303
+    "Ainm an Líonra Wi-Fi", // 304
+    "Iontráil SSID nó tapáil líonra thuas", // 305
+    "Pasfhocal", // 306
+    "Iontráil an pasfhocal", // 307
+    "Sábháil agus Ceangail", // 308
+    "Scan arís", // 309
+    "Ag ceangal le", // 310
+    "Ceangailte le", // 311
+    "Is féidir leat an leathanach seo a dhúnadh anois.", // 312
+    "Níorbh fhéidir ceangal le", // 313
+    "Cliceáil anseo le triail eile a bhaint as", // 314
+    "Roghanna", // 315
+    "Roghnaigh Wi-Fi", // 316
+    "Níor aimsíodh líonra ar bith. Athnuachan le scanadh arís.", // 317
+    "Dintiúir Sábháilte", // 318
+    "Socraigh pasfhocal XDRGTK (uas. 8 gcarachtar)", // 319
+    "Socraigh ID úsáideora rabbitears.info live bandscan", // 320
+    "Socraigh pasfhocal rabbitears.info", // 321
+    "ID" // 322
   }
 };
 #endif
