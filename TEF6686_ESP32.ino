@@ -4150,9 +4150,6 @@ void ShowBattery() {
       }
     }
     batteryold = batteryprobe;
-    batteryVold = 0;
-    vPerold = 0;
-
 
     if (batterydetect) {
       float vPer = constrain((v - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE), 0.0, 1.0) * 100;
@@ -4166,6 +4163,8 @@ void ShowBattery() {
       }
     }
   }
+  batteryVold = 0;
+  vPerold = 0;
 }
 
 void DataPrint(String string) {
