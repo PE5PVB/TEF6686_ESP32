@@ -4130,8 +4130,7 @@ void ShowBattery() {
     return;
   }
 
-  uint16_t v = 0;
-  v = analogRead(BATTERY_PIN);
+  float v = analogReadMilliVolts(BATTERY_PIN) * 0.002; // assume a half divider
   battery = map(constrain(v, BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, BAT_LEVEL_STAGE);
   byte batteryprobe = map(constrain(v, BAT_LEVEL_EMPTY, BAT_LEVEL_FULL), BAT_LEVEL_EMPTY, BAT_LEVEL_FULL, 0, 20);
 
@@ -4156,12 +4155,11 @@ void ShowBattery() {
 
 
     if (batterydetect) {
-      float batteryV = constrain((((float)v / 4095.0) * 3.3 * (1100 / 1000.0) * 2.0), 0.0, 5.0);
-      float vPer = constrain((batteryV - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE), 0.0, 0.99) * 100;
+      float vPer = constrain((v - BATTERY_LOW_VALUE) / (BATTERY_FULL_VALUE - BATTERY_LOW_VALUE), 0.0, 1.0) * 100;
 
-      if (abs(batteryV - batteryVold) > 0.05 && batteryoptions == BATTERY_VALUE) {
-        tftPrint(ALEFT, String(batteryV, 2) + "V", 279, 9, BatteryValueColor, BatteryValueColorSmooth, 16);
-        batteryVold = batteryV;
+      if (fabs(v - batteryVold) > 0.05 && batteryoptions == BATTERY_VALUE) {
+        tftPrint(ALEFT, String(v, 2) + "V", 279, 9, BatteryValueColor, BatteryValueColorSmooth, 16);
+        batteryVold = v;
       } else if (int(vPer) != int(vPerold) && batteryoptions == BATTERY_PERCENT && abs(vPer - vPerold) > 0.5) {
         tftPrint(ALEFT, String(vPer, 0) + "%", 279, 9, BatteryValueColor, BatteryValueColorSmooth, 16);
         vPerold = vPer;
