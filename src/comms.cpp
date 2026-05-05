@@ -5,6 +5,7 @@
 
 
 bool MPXsetbyXDR = false;
+bool scanner_is_am = false;
 extern mem presets[];
 
 void Communication() {
@@ -764,9 +765,9 @@ void XDRGTKRoutine() {
         Data_Accelerator = true;
 
         switch (buff[1]) {
-          case 'a': scanner_start = (atol(buff + 2) + 5) / 10; break;
-          case 'b': scanner_end = (atol(buff + 2) + 5) / 10; return;
-          case 'c': scanner_step = (atol(buff + 2) + 5) / 10; break;
+          case 'a': scanner_is_am = atol(buff + 2) < 30000; scanner_start = scanner_is_am ? atol(buff + 2) : (atol(buff + 2) + 5) / 10; break;
+          case 'b': scanner_end   = scanner_is_am ? atol(buff + 2) : (atol(buff + 2) + 5) / 10; return;
+          case 'c': scanner_step  = scanner_is_am ? max(1L, atol(buff + 2)) : max(1L, (atol(buff + 2) + 5) / 10); break;
           case 'f':
             scanner_filter = atol(buff + 2);
             switch (scanner_filter) {
@@ -823,21 +824,35 @@ void XDRGTKRoutine() {
               tftPrint(ACENTER, textUI(34), 160, 100, ActiveColor, ActiveColorSmooth, 28);
             }
 
+            if (scanner_step == 0) scanner_step = 1;
             DataPrint("U");
             frequencyold = frequency;
 
+            byte bandold = band;
+            if (!scanner_is_am && bandold > BAND_GAP) {
+              band = BAND_FM;
+              SelectBand();
+              delay(50);
+            }
+
             for (freq_scan = scanner_start; freq_scan <= scanner_end; freq_scan += scanner_step) {
-              radio.SetFreq(freq_scan);
-              delay(5);
-              DataPrint(String(freq_scan * 10, DEC));
+              if (scanner_is_am) {
+                radio.SetFreqAM(freq_scan);
+                delay(8);
+              } else {
+                radio.SetFreq(freq_scan);
+                delay(5);
+              }
+              DataPrint(String(scanner_is_am ? freq_scan : freq_scan * 10, DEC));
               DataPrint(" = ");
-              if (band < BAND_GAP) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN); else  radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
+              if (!scanner_is_am) radio.getStatus(SStatus, USN, WAM, OStatus, BW, MStatus, CN); else radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
               DataPrint(String((SStatus / 10) + 10, DEC));
               DataPrint(", ");
             }
             DataPrint("\n");
 
-            radio.SetFreq(frequencyold);
+            if (bandold > BAND_GAP) radio.SetFreqAM(frequency_AM); else radio.SetFreq(frequencyold);
+            band = bandold;
             BuildDisplay();
             SelectBand();
             BWset = BWsetRecall;
