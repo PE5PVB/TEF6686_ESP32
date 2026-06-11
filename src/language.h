@@ -3,7 +3,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[22][323] PROGMEM = {
+static const char* const myLanguage[23][323] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
