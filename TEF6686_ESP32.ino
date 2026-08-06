@@ -720,7 +720,7 @@ void setup() {
   tft.setSwapBytes(true);
   tft.fillScreen(BackgroundColor);
 
-  SPIFFS.begin();
+  SPIFFS.begin(true);
 
   FrequencySprite.createSprite(200, 50);
   FrequencySprite.setTextDatum(TR_DATUM);
