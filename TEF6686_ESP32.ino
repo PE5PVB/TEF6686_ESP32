@@ -5441,7 +5441,14 @@ void NumpadProcess(int num) {
       if (freq_in > 0 && freq_in <= EE_PRESETS_CNT) {
         byte oldmemorypos = memorypos;
         memorypos = freq_in - 1;
-        if (IsStationEmpty()) {
+        if (memorystore) {
+          memorystore = false;
+          StoreMemoryPos(memorypos);
+          ShowTuneMode();
+          if (memoryposstatus == MEM_DARK || memoryposstatus == MEM_EXIST) memoryposstatus = MEM_NORMAL;
+          ShowFreq(0);
+          ShowMemoryPos();
+        } else if (IsStationEmpty()) {
           // Flash red and revert
           switch (freqfont) {
             case 1: FrequencySprite.loadFont(FREQFONT1); break;
