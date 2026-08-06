@@ -1041,9 +1041,9 @@ void ShowAFEON() {
       if (!haseonold) {
         tftPrint(ALEFT, textUI(88), 6, 48, BackgroundColor, BackgroundColor, 16);
         tftPrint(ALEFT, "PI", 4, 32, ActiveColor, ActiveColorSmooth, 16);
-        tftPrint(ACENTER, "TA", 256, 32, ActiveColor, ActiveColorSmooth, 16);
-        tftPrint(ACENTER, "TP", 282, 32, ActiveColor, ActiveColorSmooth, 16);
-        tftPrint(ACENTER, "PTY", 310, 32, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(ACENTER, "TA", 253, 32, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(ACENTER, "TP", 278, 32, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(ACENTER, "PTY", 305, 32, ActiveColor, ActiveColorSmooth, 16);
         haseonold = true;
       }
 
@@ -1136,15 +1136,15 @@ void ShowAFEON() {
           }
 
           if (radio.eon[i + y].ptyset) {
-            if (eonptyold[i + y] != radio.eon[i + y].pty) tft.fillRect(296, 48 + (15 * i), 24, 16, BackgroundColor);
-            if (radio.eon[i + y].pty != 254) tftPrint(ARIGHT, String(radio.eon[i + y].pty), 316, 48 + (15 * i), RDSColor, RDSColorSmooth, 16);
+            if (eonptyold[i + y] != radio.eon[i + y].pty) tft.fillRect(291, 48 + (15 * i), 24, 16, BackgroundColor);
+            if (radio.eon[i + y].pty != 254) tftPrint(ARIGHT, String(radio.eon[i + y].pty), 311, 48 + (15 * i), RDSColor, RDSColorSmooth, 16);
             eonptyold[i + y] = radio.eon[i + y].pty;
           } else {
-            tft.fillRect(296, 48 + (15 * i), 24, 16, BackgroundColor);
+            tft.fillRect(291, 48 + (15 * i), 24, 16, BackgroundColor);
           }
 
-          if (radio.eon[i + y].ta) tftPrint(ACENTER, "O", 256, 48 + (15 * i), RDSColor, RDSColorSmooth, 16); else tftPrint(ACENTER, "O", 256, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
-          if (radio.eon[i + y].tp) tftPrint(ACENTER, "O", 282, 48 + (15 * i), RDSColor, RDSColorSmooth, 16); else tftPrint(ACENTER, "O", 282, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+          if (radio.eon[i + y].ta) tftPrint(ACENTER, "O", 253, 48 + (15 * i), RDSColor, RDSColorSmooth, 16); else tftPrint(ACENTER, "O", 253, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
+          if (radio.eon[i + y].tp) tftPrint(ACENTER, "O", 278, 48 + (15 * i), RDSColor, RDSColorSmooth, 16); else tftPrint(ACENTER, "O", 278, 48 + (15 * i), BackgroundColor, BackgroundColor, 16);
         }
       }
     }
