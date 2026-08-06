@@ -8,9 +8,11 @@ bool MPXsetbyXDR = false;
 bool scanner_is_am = false;
 extern mem presets[];
 
+static bool _wifiServicesUp = false;
+
 void Communication() {
   if (!menu) {
-    if (wifi) {
+    if (wifi && _wifiServicesUp) {
       int packetSize = Udp.parsePacket();
       if (packetSize > 0) {
         char packetBuffer[packetSize + 1];  // +1 for null terminator
@@ -1004,7 +1006,6 @@ void passwordcrypt() {
 static uint8_t  _wifiConnState   = 0;  // 0=idle, 1=connecting
 static unsigned long _wifiConnMs = 0;
 static uint8_t  _wifiConnRetry   = 0;
-static bool     _wifiServicesUp  = false;
 static bool     _wifiHandlersSet = false;
 static bool     _ntpInitPending  = false;
 static const uint8_t  WIFI_MAX_RETRIES       = 3;
