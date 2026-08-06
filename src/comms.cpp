@@ -1006,6 +1006,7 @@ static unsigned long _wifiConnMs = 0;
 static uint8_t  _wifiConnRetry   = 0;
 static bool     _wifiServicesUp  = false;
 static bool     _wifiHandlersSet = false;
+static bool     _ntpInitPending  = false;
 static const uint8_t  WIFI_MAX_RETRIES       = 3;
 static const unsigned long WIFI_TIMEOUT_MS   = 10000;  // 10s per attempt
 static const unsigned long WIFI_RECONNECT_MS = 30000;  // 30s between reconnect cycles
@@ -1021,7 +1022,7 @@ static void wifiStartServices() {
   }
   webserver.begin();
   MDNS.begin("tef");
-  NTPupdate();
+  _ntpInitPending = true;
   remoteip = IPAddress(WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], subnetclient);
   _wifiServicesUp = true;
   if (menu && menupage == CONNECTIVITY) BuildMenu();
@@ -1061,6 +1062,11 @@ void tryWiFi() {
 }
 
 void wifiPoll() {
+  if (_ntpInitPending) {
+    _ntpInitPending = false;
+    NTPupdate();
+  }
+
   if (!wifi) return;
 
   // ---- State 1: actively connecting ----

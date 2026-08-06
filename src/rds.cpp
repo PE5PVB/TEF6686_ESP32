@@ -258,7 +258,7 @@ void ShowAdvancedRDS() {
 
 void doAF() {
   if (radio.af_counter != af_counterold && radio.rds.hasAF) {
-    if (wifi) {
+    if (wifi && remoteip != IPAddress(0, 0, 0, 0)) {
       Udp.beginPacket(remoteip, 9030);
       Udp.print("from=TEF_tuner_" + String(stationlistid, DEC) + ";AF=");
 
@@ -292,7 +292,7 @@ void showECC() {
       ECColdString = ECCString;
     }
 
-    if (wifi) {
+    if (wifi && remoteip != IPAddress(0, 0, 0, 0)) {
       Udp.beginPacket(remoteip, 9030);
       Udp.print("from=TEF_tuner_" + String(stationlistid, DEC) + ";ECC=");
       if (radio.rds.ECC < 0x10) Udp.print("0");
@@ -610,7 +610,7 @@ void showPI() {
       stationStateold = radio.rds.stationStatetext;
     }
 
-    if (wifi) {
+    if (wifi && remoteip != IPAddress(0, 0, 0, 0)) {
       Udp.beginPacket(remoteip, 9030);
       Udp.print("from=TEF_tuner_" + String(stationlistid, DEC) + ";PI=" + String(radio.rds.picode, 4));
       Udp.endPacket();
@@ -641,7 +641,7 @@ void showPTY() {
     }
     PTYold = PTYString;
 
-    if (wifi) {
+    if (wifi && remoteip != IPAddress(0, 0, 0, 0)) {
       Udp.beginPacket(remoteip, 9030);
       Udp.print("from=TEF_tuner_" + String(stationlistid, DEC) + ";PTY=");
       Udp.print(String(radio.rds.stationTypeCode, HEX));
@@ -749,7 +749,7 @@ void showPS() {
       }
 
       // Handle WiFi update if PS has changed
-      if (wifi && radio.rds.stationName.length() > 0 && PSold != radio.rds.stationName) {
+      if (wifi && remoteip != IPAddress(0, 0, 0, 0) && radio.rds.stationName.length() > 0 && PSold != radio.rds.stationName) {
         Udp.beginPacket(remoteip, 9030);
         Udp.print("from=TEF_tuner_" + String(stationlistid, DEC) + ";PS=");
         char PShex[9];
@@ -981,7 +981,7 @@ void showRadioText() {
   if (RTold != RTString) {
     RadiotextWidth = (advancedRDS ? RDSSprite.textWidth(RTString) : FullLineSprite.textWidth(RTString));
 
-    if (wifi) {
+    if (wifi && remoteip != IPAddress(0, 0, 0, 0)) {
       Udp.beginPacket(remoteip, 9030);
       Udp.print("from=TEF_tuner_" + String(stationlistid, DEC) + ";RT1=");
 

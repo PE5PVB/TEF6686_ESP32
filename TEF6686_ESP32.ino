@@ -980,7 +980,7 @@ void loop() {
     webserver.handleClient();
     ntpPoll();
 
-    if (millis() >= udplogtimer + 500) {
+    if (remoteip != IPAddress(0, 0, 0, 0) && millis() >= udplogtimer + 500) {
       sendUDPlog();
       udplogtimer = millis();
     }
@@ -3234,7 +3234,7 @@ void ShowFreq(int mode) {
   aid_counterold = 0;
   dropout = false;
 
-  if (wifi) {
+  if (wifi && remoteip != IPAddress(0, 0, 0, 0)) {
     Udp.beginPacket(remoteip, 9030);
     if (band == BAND_FM) {
       Udp.print("from=TEF_tuner_" + String(stationlistid, DEC) + ";freq=" + String(frequency) + "0000");
@@ -3408,7 +3408,7 @@ void ShowSignalLevel() {
     }
   }
 
-  if (wifi && millis() >= udptimer + 2000) {
+  if (wifi && remoteip != IPAddress(0, 0, 0, 0) && millis() >= udptimer + 2000) {
     udptimer = millis();
     Udp.beginPacket(remoteip, 9030);
     Udp.print("from=TEF_tuner_" + String(stationlistid, DEC) + ";RcvLevel=" + String(SStatus / 10));
@@ -3543,7 +3543,7 @@ void ShowBW() {
     if (BWset == 0) tftReplace(ARIGHT, String (BWOld, DEC), String (BW, DEC), 203, 4, BWAutoColor, BWAutoColorSmooth, BackgroundColor, 28); else tftReplace(ARIGHT, String (BWOld, DEC), String (BW, DEC), 203, 4, PrimaryColor, PrimaryColorSmooth, BackgroundColor, 28);
     BWOld = BW;
     BWreset = false;
-    if (wifi) {
+    if (wifi && remoteip != IPAddress(0, 0, 0, 0)) {
       Udp.beginPacket(remoteip, 9030);
       Udp.print("from=TEF_tuner_" + String(stationlistid, DEC) + ";bandwidth=" + String(BW * 1000));
       Udp.endPacket();
