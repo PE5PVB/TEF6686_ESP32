@@ -23,9 +23,9 @@
 #define TIMER_BAT_TIMER             (TIMER_500_TICK)
 #define TIMER_500_TICK              500
 
-#define BAT_LEVEL_EMPTY             1600
-#define BAT_LEVEL_WARN              1700
-#define BAT_LEVEL_FULL              2270
+#define BAT_LEVEL_EMPTY             2.82
+#define BAT_LEVEL_WARN              3
+#define BAT_LEVEL_FULL              4
 #define BAT_LEVEL_STAGE             4
 #define BATTERY_WARN_VALUE          3.68
 #define BATTERY_LOW_VALUE           3.0
