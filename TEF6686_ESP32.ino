@@ -1023,8 +1023,9 @@ void loop() {
     if (millis() >= tottimer + totprobe) deepSleep();
   }
 
-  if (freq_in != 0 && millis() >= keypadtimer + 1000) {
-    NumpadProcess(13);
+  if (freq_in != 0 && millis() >= keypadtimer + 3000) {
+    freq_in = 0;
+    ShowFreq(0);
   }
 
   if (scandxmode) {
@@ -5305,6 +5306,7 @@ int GetNum(void) {
   int16_t temp;
   int cnt = 0;
   unsigned int num;
+  static int heldNum = -1;
 
   Wire.beginTransmission(0x20);
   Wire.write(0x00);
@@ -5316,14 +5318,20 @@ int GetNum(void) {
     temp = Wire.read() & 0xFF;
     temp |= (Wire.read() & 0xFF) * 256;
     for (int i = 0; i < 16; i++) {
-      if ((temp & 0x01) == 0) {
+      if (i != 2 && (temp & 0x01) == 0) {
         num = numval[i];
         cnt ++;
       }
       temp >>= 1;
     }
-    if (cnt == 1)
-      return num;
+    if (cnt == 1) {
+      if (heldNum == -1) {
+        heldNum = num;
+        return num;
+      }
+    } else if (cnt == 0) {
+      heldNum = -1;
+    }
   }
 
   return -1;
