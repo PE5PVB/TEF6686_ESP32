@@ -4103,6 +4103,7 @@ void ShowTuneMode() {
 void ShowRSSI() {
   if (wifi) rssi = WiFi.RSSI(); else rssi = 0;
   if (rssiold != rssi) {
+    if (rssiold == 0) tft.drawBitmap(282, 3, WiFiX, 30, 25, BackgroundColor);
     rssiold = rssi;
     if (!wifi && batterydetect) {
       tft.drawBitmap(282, 3, WiFi4, 30, 25, BackgroundColor);
@@ -4117,7 +4118,7 @@ void ShowRSSI() {
     } else if (rssi > -70) {
       tft.drawBitmap(282, 3, WiFi4, 30, 25, GreyoutColor);
       tft.drawBitmap(282, 3, WiFi2, 30, 25, WifiColorLow);
-    } else if (rssi < -70) {
+    } else {
       tft.drawBitmap(282, 3, WiFi4, 30, 25, GreyoutColor);
       tft.drawBitmap(282, 3, WiFi1, 30, 25, WifiColorLow);
     }
