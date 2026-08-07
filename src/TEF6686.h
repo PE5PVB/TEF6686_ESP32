@@ -586,7 +586,7 @@ typedef struct _rds_ {
   char dabafchannel[4];
   unsigned long blockcounter[33];
   uint16_t rdsA, rdsB, rdsC, rdsD, rdsErr, rdsStat, correctPI, rdsplusTag1, rdsplusTag2, PICTlock = 0;
-  bool ps12error, ps34error, ps56error, ps78error;
+  bool psCharError[8];
   time_t time;
   int32_t offset;
   uint16_t aid[10];
@@ -738,9 +738,15 @@ class TEF6686 {
     String convertToUTF8(const wchar_t* input);
     String extractUTF8Substring(const String& utf8String, size_t start, size_t length, bool under);
     String ucs2ToUtf8(const char* ucs2Input);
+    bool psUpdateChar(uint8_t position, uint8_t input, uint8_t error, bool commit);
     String PSLongtext;
     char ps_buffer[9];
-    char ps_buffer2[9];
+    char psChars[9];
+    uint8_t psCharErrorLevel[8];
+    bool psProgressive;
+    uint8_t psAdaptiveCounter;
+    int8_t psAdaptiveErrors;
+    bool psComplete;
     char ptyn_buffer[9];
     char eon_buffer[20][9];
     bool pslong_process;

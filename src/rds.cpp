@@ -8,7 +8,8 @@ float smoothBER = 0;
 
 int RadiotextWidth, PSLongWidth, AIDWidth, afstringWidth, eonstringWidth, rtplusstringWidth, lengths[7];
 String afstringold, eonstringold, rtplusstringold, stationNameLongOld, AIDStringold;
-bool rtABold, ps12errorold, ps34errorold, ps56errorold, ps78errorold;
+bool rtABold;
+bool psCharErrorOld[8];
 
 void ShowAdvancedRDS() {
   if (!dropout) {
@@ -376,13 +377,11 @@ void readRds() {
           // PS handling
           if (!radio.rds.hasLongPS) {
             PSSprite.fillSprite(BackgroundColor);
-            if ((ps12errorold || ps34errorold || ps56errorold || ps78errorold) && radio.ps_process) {
-              // Mark partial errors
+            bool psHasCharError = false;
+            for (uint8_t i = 0; i < 8; i++) if (psCharErrorOld[i]) { psHasCharError = true; break; }
+            if (psHasCharError && radio.ps_process) {
               for (uint8_t i = 0; i < 8; i++) {
-                bool error = (i < 2 && ps12errorold) ||
-                             (i < 4 && ps34errorold) ||
-                             (i < 6 && ps56errorold) || ps78errorold;
-                PSSprite.setTextColor(error ? RDSDropoutColor : RDSColor,
+                PSSprite.setTextColor(psCharErrorOld[i] ? RDSDropoutColor : RDSColor,
                                       RDSColorSmooth, false);
                 PSSprite.drawString(radio.rds.stationName.substring(i, i + 1),
                                     i == 0 ? 0 : lengths[i - 1], 2);
@@ -653,11 +652,13 @@ void showPTY() {
 
 void showPS() {
   // Check if station name or errors have changed, or long PS should be displayed
+  bool psCharErrorChanged = false;
+  for (uint8_t i = 0; i < 8; i++) {
+    if (psCharErrorOld[i] != radio.rds.psCharError[i]) { psCharErrorChanged = true; break; }
+  }
+
   if ((radio.rds.stationName != PSold) ||
-      (RDSstatus && !(ps12errorold == radio.rds.ps12error &&
-                      ps34errorold == radio.rds.ps34error &&
-                      ps56errorold == radio.rds.ps56error &&
-                      ps78errorold == radio.rds.ps78error)) ||
+      (RDSstatus && psCharErrorChanged) ||
       (radio.rds.hasLongPS && showlongps)) {
 
     // Handle AF screen update
@@ -714,21 +715,20 @@ void showPS() {
           }
         }
 
-        // Update error states only when their respective flags are true
-        if (ps12errorold) ps12errorold = radio.rds.ps12error;
-        if (ps34errorold) ps34errorold = radio.rds.ps34error;
-        if (ps56errorold) ps56errorold = radio.rds.ps56error;
-        if (ps78errorold) ps78errorold = radio.rds.ps78error;
+        for (uint8_t i = 0; i < 8; i++) {
+          if (psCharErrorOld[i]) psCharErrorOld[i] = radio.rds.psCharError[i];
+        }
+
+        bool psHasCharError = false;
+        for (uint8_t i = 0; i < 8; i++) if (psCharErrorOld[i]) { psHasCharError = true; break; }
 
         // Set text color based on RDS status and error state
         if (!RDSstatus || band >= BAND_GAP) {
           PSSprite.setTextColor(RDSDropoutColor, RDSDropoutColorSmooth, false);
           PSSprite.drawString(radio.rds.stationName, 0, 2);
-        } else if ((ps12errorold || ps34errorold || ps56errorold || ps78errorold) && radio.ps_process) {
+        } else if (psHasCharError && radio.ps_process) {
           for (int i = 0; i < 8; i++) {
-            PSSprite.setTextColor((i < 2 && ps12errorold) || (i < 4 && ps34errorold) ||
-                                  (i < 6 && ps56errorold) || ps78errorold ?
-                                  RDSDropoutColor : RDSColor,
+            PSSprite.setTextColor(psCharErrorOld[i] ? RDSDropoutColor : RDSColor,
                                   RDSColorSmooth, false);
             PSSprite.drawString(radio.rds.stationName.substring(i, i + 1), i == 0 ? 0 : lengths[i - 1], 2);
           }
@@ -739,7 +739,7 @@ void showPS() {
 
         // Reset PS error flags if the station name changes
         if (PSold != radio.rds.stationName) {
-          ps12errorold = ps34errorold = ps56errorold = ps78errorold = true;
+          for (uint8_t i = 0; i < 8; i++) psCharErrorOld[i] = true;
         }
       }
 
