@@ -44,7 +44,7 @@ void devTEF_Radio_Tune_AM (uint16_t frequency) {
 }
 
 void devTEF_Radio_Set_Bandwidth(uint8_t mode, uint16_t bandwidth) {
-  devTEF_Set_Cmd(TEF_FM, Cmd_Set_Bandwidth, 7, mode, bandwidth);
+  devTEF_Set_Cmd(TEF_FM, Cmd_Set_Bandwidth, 11, mode, bandwidth, 1000, 1000);
 }
 
 void devTEF_Radio_Set_BandwidthAM(uint8_t mode, uint16_t bandwidth) {
@@ -137,7 +137,7 @@ void devTEF_Radio_Extend_BW(bool yesno) {
 }
 
 void devTEF_Radio_Set_Stereo_Min(bool mode) {
-  if (mode) devTEF_Set_Cmd(TEF_FM, Cmd_Set_Stereo_Min, 7, 2); else devTEF_Set_Cmd(TEF_FM, Cmd_Set_Stereo_Min, 7, 0);
+  if (mode) devTEF_Set_Cmd(TEF_FM, Cmd_Set_Stereo_Min, 7, 2, 400); else devTEF_Set_Cmd(TEF_FM, Cmd_Set_Stereo_Min, 7, 0, 400);
 }
 
 void devTEF_Radio_Set_RFAGC(uint16_t agc) {
