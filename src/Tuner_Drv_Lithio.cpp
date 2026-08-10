@@ -61,7 +61,7 @@ void devTEF_Radio_Set_Attenuator_AM(uint16_t start) {
 }
 
 void devTEF_Radio_Set_CoChannel_AM(uint8_t mode, uint16_t start, uint8_t level) {
-  devTEF_Set_Cmd(TEF_AM, Cmd_Set_CoChannelDet, 11, mode, 2, start, 1000, level);
+  devTEF_Set_Cmd(TEF_AM, Cmd_Set_CoChannelDet, 11, mode, 2, start, level);
 }
 
 void devTEF_Radio_Set_LevelOffset(int16_t offset) {
@@ -145,7 +145,7 @@ void devTEF_Radio_Set_RFAGC(uint16_t agc) {
 }
 
 void devTEF_Radio_Set_AMRFAGC(uint16_t agc) {
-  devTEF_Set_Cmd(TEF_AM, Cmd_Set_RFAGC, 7, agc * 10, 0);
+  devTEF_Set_Cmd(TEF_AM, Cmd_Set_RFAGC, 5, agc * 10);
 }
 
 void devTEF_Radio_Set_Deemphasis(uint16_t timeconstant) {
