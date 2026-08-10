@@ -739,8 +739,8 @@ class TEF6686 {
     String extractUTF8Substring(const String& utf8String, size_t start, size_t length, bool under);
     String ucs2ToUtf8(const char* ucs2Input);
     bool psUpdateChar(uint8_t position, uint8_t input, uint8_t error, bool commit);
+    void processRDSGroup(byte showrdserrors);
     String PSLongtext;
-    char ps_buffer[9];
     char psChars[9];
     uint8_t psCharErrorLevel[8];
     bool psProgressive;
@@ -780,7 +780,7 @@ class TEF6686 {
     bool afinit;
     bool errorfreepi;
     bool rdsAerrorThreshold, rdsBerrorThreshold, rdsCerrorThreshold, rdsDerrorThreshold;
-    bool packet0, packet1, packet2, packet3, packet0long, packet1long, packet2long, packet3long;
+    bool packet0long, packet1long, packet2long, packet3long;
     uint16_t previous_rdsA, previous_rdsB, previous_rdsC, previous_rdsD;
     bool afmethodBprobe;
     bool eRTcoding;

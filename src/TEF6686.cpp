@@ -368,16 +368,18 @@ bool TEF6686::getStatusAM(int16_t &level, uint16_t &noise, uint16_t &cochannel, 
 }
 
 void TEF6686::readRDS(byte showrdserrors) {
-  uint8_t offset;
   if (rds.filter && ps_process) {
-    devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
+    devTEF_Radio_Get_RDS_Data(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
   } else {
     if (millis() >= rdstimer + 87) {
       rdstimer += 87;
       devTEF_Radio_Get_RDS_Data(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
 
       if ((rds.rdsStat & (1 << 14))) {
-        for (int i = 0; i < 22; i++) devTEF_Radio_Get_RDS_Data(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
+        for (int i = 0; i < 22; i++) {
+          devTEF_Radio_Get_RDS_Data(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
+          processRDSGroup(showrdserrors);                                                          // Decode every drained group, not just the last one
+        }
       }
     }
   }
@@ -393,6 +395,12 @@ void TEF6686::readRDS(byte showrdserrors) {
     }
   }
 
+  processRDSGroup(showrdserrors);                                                                  // Decode whatever the most recent fetch above left in rds.rdsA/B/C/D.
+}
+
+void TEF6686::processRDSGroup(byte showrdserrors) {
+  uint8_t offset;
+
   rdsAerrorThreshold = (((rds.rdsErr >> 14) & 0x03) > showrdserrors);
   rdsBerrorThreshold = (((rds.rdsErr >> 12) & 0x03) > showrdserrors);
   rdsCerrorThreshold = (((rds.rdsErr >> 10) & 0x03) > showrdserrors);
@@ -405,9 +413,15 @@ void TEF6686::readRDS(byte showrdserrors) {
     rds.rdsDerror = (((rds.rdsErr >> 8) & 0x03) > 1);
 
     //PI decoder
-    if (!rdsAerrorThreshold && afreset) {
-      rds.correctPI = rds.rdsA;
-      afreset = false;
+    if (afreset) {
+      uint8_t piErrorLevel = (rds.rdsErr >> 14) & 0x03;
+      if (piErrorLevel < 3) {
+        RdsPiBuffer::State piState = rds.piBuffer.add(rds.rdsA, piErrorLevel != 0);
+        if (piState == RdsPiBuffer::STATE_CORRECT || piState == RdsPiBuffer::STATE_VERY_LIKELY) {
+          rds.correctPI = rds.rdsA;
+          afreset = false;
+        }
+      }
     }
 
     if (((!rdsAerrorThreshold && !rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold) || (rds.pierrors && !errorfreepi))) {
@@ -524,13 +538,16 @@ void TEF6686::readRDS(byte showrdserrors) {
       }
     }
 
-    if (!rds.rdsBerror || showrdserrors == 3) rdsblock = rds.rdsB >> 11; else return;
-    rds.blockcounter[rdsblock]++;
-    processed_rdsblocks++;
+    // Block B/C/D are only valid for ordinary group data (status bit 13 = 0); for a first-PI event
+    // (bit 13 = 1) the datasheet documents B/C/D as undefined, so skip the group-type decode below.
+    if (!bitRead(rds.rdsStat, 13)) {
+      if (!rds.rdsBerror || showrdserrors == 3) rdsblock = rds.rdsB >> 11; else return;
+      rds.blockcounter[rdsblock]++;
+      processed_rdsblocks++;
 
-    switch (rdsblock) {
-      case RDS_GROUP_0A:
-      case RDS_GROUP_0B:
+      switch (rdsblock) {
+        case RDS_GROUP_0A:
+        case RDS_GROUP_0B:
         {
           //PS decoder
           if (showrdserrors == 3 || (!rdsBerrorThreshold && (!rdsDerrorThreshold))) {
@@ -540,88 +557,64 @@ void TEF6686::readRDS(byte showrdserrors) {
             rds.psCharError[(offset * 2) + 0] = psCharErrorNow;
             rds.psCharError[(offset * 2) + 1] = psCharErrorNow;
 
-            bool psUseAdaptive = (rds.fastps == 0) || (rds.fastps == 1 && ps_process);
+            uint8_t psInfoError = (rds.rdsErr >> 12) & 0x03;
+            uint8_t psDataError = (rds.rdsErr >> 8) & 0x03;
+            uint8_t psCurrError = 2 * psInfoError + 3 * psDataError;
+            if (psCurrError) psCurrError--;
 
-            if (psUseAdaptive) {
-              if (rds.fastps == 1 && !psComplete) {
-                for (uint8_t i = 0; i < 8; i++) {
-                  psChars[i] = ps_buffer[i];
-                  psCharErrorLevel[i] = 0;
+            psAdaptiveErrors = constrain(psAdaptiveErrors + (psCurrError == 0 ? -1 : 1), 0, 4);
+
+            uint8_t position = offset * 2;
+            uint8_t psPrevError = max(psCharErrorLevel[position], psCharErrorLevel[position + 1]);
+            uint8_t psInput[2] = { (uint8_t)(rds.rdsD >> 8), (uint8_t)(rds.rdsD & 0xFF) };
+            bool changed = false;
+            for (uint8_t i = 0; i < 2; i++) {
+              changed |= psUpdateChar(position + i, psInput[i], psCurrError, false);
+            }
+
+            bool psProtect = (rds.fastps == 0) || (rds.fastps == 1 && psComplete);
+            bool psSuspicious = false;
+            if (psProtect && psCurrError == 0 && psPrevError == 0) {
+              if (changed) {
+                if (psProgressive && psAdaptiveCounter >= 20 && psAdaptiveErrors) {
+                  psAdaptiveCounter = 6;
+                  psSuspicious = true;
+                } else {
+                  psProgressive = false;
+                  psAdaptiveCounter = 0;
                 }
-                psComplete = true;
-              }
-
-              uint8_t psInfoError = (rds.rdsErr >> 12) & 0x03;
-              uint8_t psDataError = (rds.rdsErr >> 8) & 0x03;
-              uint8_t psCurrError = 2 * psInfoError + 3 * psDataError;
-              if (psCurrError) psCurrError--;
-
-              psAdaptiveErrors = constrain(psAdaptiveErrors + (psCurrError == 0 ? -1 : 1), 0, 4);
-
-              uint8_t position = offset * 2;
-              uint8_t psPrevError = max(psCharErrorLevel[position], psCharErrorLevel[position + 1]);
-              uint8_t psInput[2] = { (uint8_t)(rds.rdsD >> 8), (uint8_t)(rds.rdsD & 0xFF) };
-              bool changed = false;
-              for (uint8_t i = 0; i < 2; i++) {
-                changed |= psUpdateChar(position + i, psInput[i], psCurrError, false);
-              }
-
-              bool psSuspicious = false;
-              if (psCurrError == 0 && psPrevError == 0) {
-                if (changed) {
-                  if (psProgressive && psAdaptiveCounter >= 20 && psAdaptiveErrors) {
-                    psAdaptiveCounter = 6;
-                    psSuspicious = true;
-                  } else {
-                    psProgressive = false;
-                    psAdaptiveCounter = 0;
-                  }
-                } else if (psAdaptiveCounter != 20) {
-                  psAdaptiveCounter++;
-                  if (!psProgressive && psAdaptiveCounter == 6) {
-                    psProgressive = true;
-                    changed = true;
-                  }
-                }
-              }
-
-              if (!psSuspicious) {
-                for (uint8_t i = 0; i < 2; i++) {
-                  psUpdateChar(position + i, psInput[i], psCurrError, true);
-                }
-              }
-
-              if (!psComplete) {
-                bool psAllSeen = true;
-                for (uint8_t i = 0; i < 8; i++) {
-                  if (psCharErrorLevel[i] == 255) { psAllSeen = false; break; }
-                }
-                if (psAllSeen) {
-                  psComplete = true;
+              } else if (psAdaptiveCounter != 20) {
+                psAdaptiveCounter++;
+                if (!psProgressive && psAdaptiveCounter == 6) {
+                  psProgressive = true;
                   changed = true;
                 }
               }
+            }
 
-              if (changed && psComplete) {
-                psChars[8] = '\0';
-                RDScharConverter(psChars, PStext, sizeof(PStext) / sizeof(wchar_t), (underscore > 0 ? true : false));
-                String utf8String = convertToUTF8(PStext);
-                rds.stationName = extractUTF8Substring(utf8String, 0, 8, (underscore > 0 ? true : false));
-                ps_process = true;
+            if (!psSuspicious) {
+              for (uint8_t i = 0; i < 2; i++) {
+                psUpdateChar(position + i, psInput[i], psCurrError, true);
               }
-            } else {
-              ps_buffer[(offset * 2)  + 0] = rds.rdsD >> 8;
-              ps_buffer[(offset * 2)  + 1] = rds.rdsD & 0xFF;
-              ps_buffer[8] = '\0';
+            }
 
-              if (offset == 0) packet0 = true;
-              if (offset == 1) packet1 = true;
-              if (offset == 2) packet2 = true;
-              if (offset == 3) packet3 = true;
-              RDScharConverter(ps_buffer, PStext, sizeof(PStext) / sizeof(wchar_t), (underscore > 0 ? true : false));
+            if (!psComplete) {
+              bool psAllSeen = true;
+              for (uint8_t i = 0; i < 8; i++) {
+                if (psCharErrorLevel[i] == 255) { psAllSeen = false; break; }
+              }
+              if (psAllSeen) {
+                psComplete = true;
+                changed = true;
+              }
+            }
+
+            if (changed && (rds.fastps != 0 || psComplete)) {
+              psChars[8] = '\0';
+              RDScharConverter(psChars, PStext, sizeof(PStext) / sizeof(wchar_t), (underscore > 0 ? true : false));
               String utf8String = convertToUTF8(PStext);
               rds.stationName = extractUTF8Substring(utf8String, 0, 8, (underscore > 0 ? true : false));
-              if (packet0 && packet1 && packet2 && packet3) ps_process = true;
+              ps_process = true;
             }
 
             if (offset == 0) rds.hasDynamicPTY = bitRead(rds.rdsB, 2) & 0x1F;                   // Dynamic PTY flag
@@ -735,8 +728,8 @@ void TEF6686::readRDS(byte showrdserrors) {
                           af[x].regional = false;
                           af_updatecounter++;
                         }
+                        break;
                       }
-                      break;
                     }
                   }
 
@@ -1239,7 +1232,7 @@ void TEF6686::readRDS(byte showrdserrors) {
 
             byte endmarkerRT32 = 32;
             for (byte i = 0; i < endmarkerRT32; i++) {
-              if (rt_buffer[i] == 0x0d) {
+              if (rt_buffer32[i] == 0x0d) {
                 endmarkerRT32 = i;
                 break;
               }
@@ -1279,7 +1272,7 @@ void TEF6686::readRDS(byte showrdserrors) {
               }
             }
 
-            if (!isValuePresent) {
+            if (!isValuePresent && rds.aid_counter < 10) {
               rds.aid[rds.aid_counter] = rds.rdsD;
               rds.aid_counter++;
             }
@@ -1427,11 +1420,17 @@ void TEF6686::readRDS(byte showrdserrors) {
             }
 
             if (rds.rtAB == rtABold) {
-              for (int i = 0; i <= length_marker_1; i++)RDSplus1[i] = rt_buffer2[i + start_marker_1];
-              RDSplus1[length_marker_1 + 1] = 0;
+              uint16_t copyLen1 = length_marker_1 + 1;
+              if (copyLen1 > sizeof(RDSplus1) - 1) copyLen1 = sizeof(RDSplus1) - 1;                  // Leave room for the null terminator
+              if (start_marker_1 + copyLen1 > sizeof(rt_buffer2)) copyLen1 = (start_marker_1 < sizeof(rt_buffer2)) ? sizeof(rt_buffer2) - start_marker_1 : 0;
+              for (uint16_t i = 0; i < copyLen1; i++) RDSplus1[i] = rt_buffer2[i + start_marker_1];
+              RDSplus1[copyLen1] = 0;
 
-              for (int i = 0; i <= length_marker_2; i++)RDSplus2[i] = rt_buffer2[i + start_marker_2];
-              RDSplus2[length_marker_2 + 1] = 0;
+              uint16_t copyLen2 = length_marker_2 + 1;
+              if (copyLen2 > sizeof(RDSplus2) - 1) copyLen2 = sizeof(RDSplus2) - 1;                  // Leave room for the null terminator
+              if (start_marker_2 + copyLen2 > sizeof(rt_buffer2)) copyLen2 = (start_marker_2 < sizeof(rt_buffer2)) ? sizeof(rt_buffer2) - start_marker_2 : 0;
+              for (uint16_t i = 0; i < copyLen2; i++) RDSplus2[i] = rt_buffer2[i + start_marker_2];
+              RDSplus2[copyLen2] = 0;
             }
 
             wchar_t RTtext1[45] = L"";                                                          // Create 16 bit char buffer for Extended ASCII
@@ -1647,12 +1646,13 @@ void TEF6686::readRDS(byte showrdserrors) {
           }
         }
         break;
-    }
+      }                                                                                              // closes switch(rdsblock)
+    }                                                                                                // closes if (!bitRead(rds.rdsStat, 13))
     previous_rdsA = rds.rdsA;
     previous_rdsB = rds.rdsB;
     previous_rdsC = rds.rdsC;
     previous_rdsD = rds.rdsD;
-  }
+  }                                                                                                  // closes if (bitRead(rds.rdsStat, 9) && new-block check)
 }
 
 void TEF6686::clearRDS (bool fullsearchrds) {
@@ -1674,7 +1674,6 @@ void TEF6686::clearRDS (bool fullsearchrds) {
 
   uint8_t i;
   for (i = 0; i < 8; i++) {
-    ps_buffer[i] = 0x20;
     psChars[i] = 0x20;
     psCharErrorLevel[i] = 255;
     rds.psCharError[i] = true;
@@ -1682,7 +1681,6 @@ void TEF6686::clearRDS (bool fullsearchrds) {
     ptyn_buffer[i] = 0x20;
     PTYNtext[i] = L'\0';
   }
-  ps_buffer[8] = 0;
   psChars[8] = 0;
   ptyn_buffer[8] = 0;
   PStext[8] = L'\0';
@@ -1762,6 +1760,10 @@ void TEF6686::clearRDS (bool fullsearchrds) {
 
   rdsblock = 254;
   processed_rdsblocks = 0;
+  previous_rdsA = 0;
+  previous_rdsB = 0;
+  previous_rdsC = 0;
+  previous_rdsD = 0;
   piold = 0;
   rds.correctPI = 0;
   rds.ECC = 254;
@@ -1816,10 +1818,6 @@ void TEF6686::clearRDS (bool fullsearchrds) {
   afinit = false;
   errorfreepi = false;
   afmethodB = false;
-  packet0 = false;
-  packet1 = false;
-  packet2 = false;
-  packet3 = false;
   packet0long = false;
   packet1long = false;
   packet2long = false;

@@ -461,7 +461,7 @@ void readRds() {
 
       if (XDRGTKRDS != XDRGTKRDSold) {
         uint8_t piError = radio.rds.rdsErr >> 14;
-        if (piError < 3) {
+        if (piError < 3 && radio.rds.correctPI != 0) {                       // Skip while TEF6686::processRDSGroup() is still feeding piBuffer itself (pre-lock), to avoid double-counting the same sample
           uint8_t piState = radio.rds.piBuffer.add(radio.rds.rdsA, piError);
           if (piState != RdsPiBuffer::STATE_INVALID) {
             DataPrint(F("P"));
@@ -472,7 +472,6 @@ void readRds() {
           }
         }
         XDRGTKRDSold = XDRGTKRDS;
-        XDRGTKRDS.toUpperCase();
         DataPrint(XDRGTKRDS);
       }
     }
