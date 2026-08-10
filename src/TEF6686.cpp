@@ -132,7 +132,10 @@ void TEF6686::init(byte TEF) {
   uint8_t bootstatus;
   int xtalADC = 0;
   Tuner_I2C_Init();
-  devTEF_APPL_Get_Operation_Status(&bootstatus);
+  for (uint8_t retry = 0; retry < 20; retry++) {
+    if (devTEF_APPL_Get_Operation_Status(&bootstatus)) break;
+    delay(5);
+  }
   if (bootstatus == 0) {
     Tuner_Patch(TEF);
     delay(50);
