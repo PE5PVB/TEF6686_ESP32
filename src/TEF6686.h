@@ -748,6 +748,7 @@ class TEF6686 {
     uint8_t psAdaptiveCounter;
     int8_t psAdaptiveErrors;
     bool psComplete;
+    bool psPushSeen[8];
     char ptyn_buffer[9];
     char eon_buffer[20][9];
     bool pslong_process;

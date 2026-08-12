@@ -594,12 +594,14 @@ void TEF6686::processRDSGroup(byte showrdserrors) {
               }
             }
 
+            bool psCommitChanged = false;
             if (!psSuspicious) {
               for (uint8_t i = 0; i < 2; i++) {
-                psUpdateChar(position + i, psInput[i], psCurrError, true);
+                psCommitChanged |= psUpdateChar(position + i, psInput[i], psCurrError, true);
               }
             }
 
+            bool psWasComplete = psComplete;
             if (!psComplete) {
               bool psAllSeen = true;
               for (uint8_t i = 0; i < 8; i++) {
@@ -611,7 +613,35 @@ void TEF6686::processRDSGroup(byte showrdserrors) {
               }
             }
 
-            if (changed && (rds.fastps != 0 || psComplete)) {
+            bool psForceFast = (rds.fastps == 2) || (rds.fastps == 1 && !psComplete);
+
+            if (!psForceFast && psWasComplete) {
+              if (psCommitChanged) {
+                for (uint8_t i = 0; i < 8; i++) psPushSeen[i] = false;
+              } else {
+                psPushSeen[position + 0] = true;
+                psPushSeen[position + 1] = true;
+              }
+            }
+
+            bool psPush;
+            if (psForceFast) {
+              psPush = changed;
+            } else if (!psComplete) {
+              psPush = false;
+            } else if (!psWasComplete) {
+              psPush = true;
+            } else {
+              psPush = true;
+              for (uint8_t i = 0; i < 8; i++) {
+                if (!psPushSeen[i]) { psPush = false; break; }
+              }
+              if (psPush) {
+                for (uint8_t i = 0; i < 8; i++) psPushSeen[i] = false;
+              }
+            }
+
+            if (psPush) {
               psChars[8] = '\0';
               RDScharConverter(psChars, PStext, sizeof(PStext) / sizeof(wchar_t), (underscore > 0 ? true : false));
               String utf8String = convertToUTF8(PStext);
@@ -1798,6 +1828,7 @@ void TEF6686::clearRDS (bool fullsearchrds) {
   psAdaptiveCounter = 0;
   psAdaptiveErrors = 0;
   psComplete = false;
+  for (uint8_t i = 0; i < 8; i++) psPushSeen[i] = false;
   pslong_process = false;
   rds.rdsreset = true;
   rds.hasArtificialhead = false;
