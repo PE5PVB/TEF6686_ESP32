@@ -3688,7 +3688,7 @@ void doSquelch() {
         }
       }
     } else {
-      if ((USN < amscansens * 30) && (OStatus < 2 && OStatus > -2) && (!scandxmode || (scandxmode && !scanmute))) {
+      if ((USN < amscansens * 30) && (OStatus < 20 && OStatus > -20) && (!scandxmode || (scandxmode && !scanmute))) {
         if (!seek) radio.setUnMute();
         if (!screenmute && !seek) {
           tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
@@ -4431,7 +4431,7 @@ void Seek(bool mode) {
     }
   } else {
     radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
-    if ((USN < amscansens * 30) && (OStatus < 2 && OStatus > -2) && (!usesquelch || (Squelch < SStatus || Squelch == 920))) {
+    if ((USN < amscansens * 30) && (OStatus < 20 && OStatus > -20) && (!usesquelch || (Squelch < SStatus || Squelch == 920))) {
       seek = false;
       radio.setUnMute();
       if (!screenmute) {
