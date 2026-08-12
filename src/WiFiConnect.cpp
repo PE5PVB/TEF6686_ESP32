@@ -119,7 +119,7 @@ static const char TPL_WIFI_JS[] PROGMEM =
     "document.getElementById('p').focus();}"
   "function togglePw(){"
     "var p=document.getElementById('p');"
-    "p.type=p.type==='password'?'text':'password';}"
+    "p.style.webkitTextSecurity=p.style.webkitTextSecurity==='disc'?'none':'disc';}"
   "function toggleHn(){"
     "var c=document.getElementById('hn').checked;"
     "var s=document.getElementById('s');"
@@ -249,11 +249,7 @@ boolean WiFiConnect::autoConnect(char const *ssidName, char const *ssidPassword,
 boolean WiFiConnect::startConfigurationPortal(int8_t cancelPin) {
   delay(50);
 
-  if (WiFi.status() != WL_CONNECTED) {
-    WiFi.mode(WIFI_AP);
-  } else {
-    WiFi.mode(WIFI_AP_STA);
-  }
+  WiFi.mode(WIFI_AP_STA);
 
   dnsServer.reset(new DNSServer());
   server.reset(new WebServer(80));
@@ -375,7 +371,7 @@ void WiFiConnect::handleWifi() {
   // ---- Connection form card ----
   page += F("<div class='cd'><h2>");
   page += textUI(308);
-  page += F("</h2><form method='post' action='wifisave'>");
+  page += F("</h2><form method='post' action='wifisave' autocomplete='off'>");
 
   // Hidden network toggle
   page += F("<label class='hn'><input type='checkbox' id='hn' onchange='toggleHn()'> ");
@@ -385,14 +381,15 @@ void WiFiConnect::handleWifi() {
   // SSID field
   page += F("<label>");
   page += textUI(304);
-  page += F("</label><input type='text' id='s' name='s' maxlength='32' placeholder='");
+  page += F("</label><input type='text' id='s' name='s' maxlength='32' autocomplete='off' placeholder='");
   page += textUI(305);
   page += F("'>");
 
   // Password field with SVG eye toggle
   page += F("<label>");
   page += textUI(306);
-  page += F("</label><div class='pw'><input type='password' id='p' name='p' maxlength='64' placeholder='");
+  page += F("</label><div class='pw'><input type='text' id='p' name='p' maxlength='64' autocomplete='new-password' "
+    "autocapitalize='off' autocorrect='off' spellcheck='false' style='-webkit-text-security:disc' placeholder='");
   page += textUI(307);
   page += F("'><button type='button' onclick='togglePw()'>"
     "<svg viewBox='0 0 24 24'><path d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'/>"
