@@ -4477,16 +4477,15 @@ void SetTunerPatch() {
 
 void read_encoder() {
   if (!digitalRead(ROTARY_PIN_A) || !digitalRead(ROTARY_PIN_B)) {
-    if (millis() - rotarytimer >= 15) {
-      rotarycounteraccelerator = 2;  // Steady fast
+    unsigned long rotaryElapsed = millis() - rotarytimer;
+    if (rotaryElapsed >= 45) {
+      rotarycounteraccelerator = 6;  // Quick flicks
       rotarycounter = 0;
-    }
-    if (millis() - rotarytimer >= 30) {
+    } else if (rotaryElapsed >= 30) {
       rotarycounteraccelerator = 4;
       rotarycounter = 0;
-    }
-    if (millis() - rotarytimer >= 45) {
-      rotarycounteraccelerator = 6;  // Quick flicks
+    } else if (rotaryElapsed >= 15) {
+      rotarycounteraccelerator = 2;  // Steady fast
       rotarycounter = 0;
     }
   }
@@ -4523,6 +4522,8 @@ void read_encoder() {
       encval = 0;
     }
   }
+
+  if ((old_AB & 0x03) == 0x03) encval = 0; // Discard stale partial count at rest
 }
 
 void MuteScreen(bool setting) {
