@@ -400,13 +400,14 @@ void TEF6686::readRDS(byte showrdserrors) {
 
 void TEF6686::processRDSGroup(byte showrdserrors) {
   uint8_t offset;
+  rds.hasCompleteGroup = false;
 
   rdsAerrorThreshold = (((rds.rdsErr >> 14) & 0x03) > showrdserrors);
   rdsBerrorThreshold = (((rds.rdsErr >> 12) & 0x03) > showrdserrors);
   rdsCerrorThreshold = (((rds.rdsErr >> 10) & 0x03) > showrdserrors);
   rdsDerrorThreshold = (((rds.rdsErr >> 8) & 0x03) > showrdserrors);
 
-  if (bitRead(rds.rdsStat, 9) && (rds.rdsA != previous_rdsA || rds.rdsB != previous_rdsB || rds.rdsC != previous_rdsC || rds.rdsD != previous_rdsD)) {
+  if (bitRead(rds.rdsStat, 9) && bitRead(rds.rdsStat, 15) && (rds.rdsA != previous_rdsA || rds.rdsB != previous_rdsB || rds.rdsC != previous_rdsC || rds.rdsD != previous_rdsD)) {
     rds.rdsAerror = (((rds.rdsErr >> 14) & 0x03) > 1);                                                                 // We have all data to decode... let's go...
     rds.rdsBerror = (((rds.rdsErr >> 12) & 0x03) > 1);
     rds.rdsCerror = (((rds.rdsErr >> 10) & 0x03) > 1);
@@ -542,6 +543,7 @@ void TEF6686::processRDSGroup(byte showrdserrors) {
     // (bit 13 = 1) the datasheet documents B/C/D as undefined, so skip the group-type decode below.
     if (!bitRead(rds.rdsStat, 13)) {
       if (!rds.rdsBerror || showrdserrors == 3) rdsblock = rds.rdsB >> 11; else return;
+      rds.hasCompleteGroup = true;
       rds.blockcounter[rdsblock]++;
       processed_rdsblocks++;
 
