@@ -11,7 +11,7 @@
    WiFiManager by tzapu (https://github.com/tzapu/WiFiManager).
 
    Simplified for ESP32-only use. Removed: ESP8266 support, OLED display,
-   static IP configuration, debug output, params-only portal, and callbacks.
+   debug output, params-only portal, and callbacks.
 
    GNU General Public License v3.0
 */
@@ -90,6 +90,14 @@ public:
   /// Add a custom parameter to the configuration portal
   void addParameter(WiFiConnectParam *p);
 
+  /// Pre-fill the static IP configuration shown in the portal (call before startConfigurationPortal)
+  void setStaticIP(boolean enabled, uint32_t ip, uint32_t gateway, uint32_t subnet);
+
+  boolean getStaticIPEnabled();
+  uint32_t getStaticIP();
+  uint32_t getGateway();
+  uint32_t getSubnetMask();
+
   /// Start the configuration portal access point (blocks until configured or cancelled)
   /// @param cancelPin  GPIO pin (active LOW) to cancel the portal, or -1 to disable
   boolean startConfigurationPortal(int8_t cancelPin = -1);
@@ -104,6 +112,11 @@ private:
   boolean _readyToConnect = false;
   String _ssid;
   String _password;
+
+  boolean _staticIPEnabled = false;
+  IPAddress _ip;
+  IPAddress _gw;
+  IPAddress _sn;
 
   WiFiConnectParam* _params[WiFiConnect_MAX_PARAMS];
 

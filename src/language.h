@@ -3,7 +3,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[23][323] PROGMEM = {
+static const char* const myLanguage[23][327] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -326,7 +326,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "Set XDRGTK password (max 8 characters)", // 319
     "Set rabbitears.info live bandscan user ID", // 320
     "Set rabbitears.info password", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Nederlands", // Dutch
@@ -651,7 +655,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "Voer XDRGTK wachtwoord (max 8 karakters) in", // 319
     "Voer rabbitears.info live bandscan user ID in", // 320
     "Voer rabbitears.info wachtwoord in", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP-adres", // 324
+    "Subnetmasker", // 325
+    "Gateway" // 326
   },
 
   { "Polski", // Polish
@@ -976,7 +984,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "Ustaw hasło XDRGTK (maks. 8 znaków)", // 319
     "Ustaw ID użytkownika rabbitears.info", // 320
     "Ustaw hasło rabbitears.info", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Hrvatski", // Croatian
@@ -1301,7 +1313,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "Postavi XDRGTK lozinku (maks. 8 znakova)", // 319
     "Postavi rabbitears.info korisničko ime", // 320
     "Postavi rabbitears.info lozinku", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Ελληνικά", // Greek
@@ -1626,7 +1642,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "Ορισμός κωδικού XDRGTK (μέγ. 8 χαρακτήρες)", // 319
     "Ορισμός ID χρήστη rabbitears.info", // 320
     "Ορισμός κωδικού rabbitears.info", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Română", // Romanian
@@ -1951,7 +1971,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "Setați parola XDRGTK (max. 8 caractere)", // 319
     "Setați ID utilizator rabbitears.info", // 320
     "Setați parola rabbitears.info", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Deutsch", // German
@@ -2276,7 +2300,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "XDRGTK-Passwort festlegen (max. 8 Zeichen)", // 319
     "rabbitears.info Benutzer-ID festlegen", // 320
     "rabbitears.info Passwort festlegen", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Čeština", // Czech
@@ -2601,7 +2629,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "Nastavte heslo XDRGTK (max. 8 znaků)", // 319
     "Nastavte ID uživatele rabbitears.info", // 320
     "Nastavte heslo rabbitears.info", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Magyar", // Hungarian
@@ -2926,7 +2958,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "Állítsa be az XDRGTK jelszót (max. 8 karakter)", // 319
     "Állítsa be a rabbitears.info felhasználói azonosítót", // 320
     "Állítsa be a rabbitears.info jelszót", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Français", // French
@@ -3251,7 +3287,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "Définir le mot de passe XDRGTK (max. 8 caractères)", // 319
     "Définir ID utilisateur rabbitears.info", // 320
     "Définir le mot de passe rabbitears.info", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Български", // Bulgarian
@@ -3576,7 +3616,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "Задайте парола за XDRGTK (макс. 8 знака)", // 319
     "Задайте ID на потребител rabbitears.info", // 320
     "Задайте парола за rabbitears.info", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Русский", // Russian
@@ -3901,7 +3945,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "Установите пароль XDRGTK (макс. 8 символов)", // 319
     "Установите ID пользователя rabbitears.info", // 320
     "Установите пароль rabbitears.info", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Українська", // Ukranian
@@ -4226,7 +4274,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "Встановіть пароль XDRGTK (макс. 8 символів)", // 319
     "Встановіть ID користувача rabbitears.info", // 320
     "Встановіть пароль rabbitears.info", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Italiano", // Italian
@@ -4551,7 +4603,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "Imposta password XDRGTK (max. 8 caratteri)", // 319
     "Imposta ID utente rabbitears.info", // 320
     "Imposta password rabbitears.info", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4876,7 +4932,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "设置XDRGTK密码（最多8个字符）", // 319
     "设置rabbitears.info用户ID", // 320
     "设置rabbitears.info密码", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Norsk", // Norwegian
@@ -5201,7 +5261,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "Sett XDRGTK-passord (maks. 8 tegn)", // 319
     "Sett rabbitears.info bruker-ID", // 320
     "Sett rabbitears.info passord", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Español", // Spanish
@@ -5526,7 +5590,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "Establecer contraseña XDRGTK (máx. 8 caracteres)", // 319
     "Establecer ID de usuario rabbitears.info", // 320
     "Establecer contraseña rabbitears.info", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Português", // Portuguese
@@ -5851,7 +5919,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "Definir senha XDRGTK (máx. 8 caracteres)", // 319
     "Definir ID de usuário rabbitears.info", // 320
     "Definir senha rabbitears.info", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Srpski", // Serbian
@@ -6176,7 +6248,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "Поставите XDRGTK лозинку (макс. 8 знакова)", // 319
     "Поставите rabbitears.info корисничко име", // 320
     "Поставите rabbitears.info лозинку", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Suomi", // Finnish
@@ -6501,7 +6577,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "Aseta XDRGTK-salasana (enint. 8 merkkiä)", // 319
     "Aseta rabbitears.info käyttäjätunnus", // 320
     "Aseta rabbitears.info salasana", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Dansk", // Danish
@@ -6826,7 +6906,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "Indstil XDRGTK-adgangskode (maks. 8 tegn)", // 319
     "Indstil rabbitears.info bruger-ID", // 320
     "Indstil rabbitears.info adgangskode", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Svenska", // Swedish
@@ -7151,7 +7235,11 @@ static const char* const myLanguage[23][323] PROGMEM = {
     "Ställ in XDRGTK-lösenord (max. 8 tecken)", // 319
     "Ställ in rabbitears.info användar-ID", // 320
     "Ställ in rabbitears.info lösenord", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway" // 326
   },
 
   { "Gaeilge", // Irish

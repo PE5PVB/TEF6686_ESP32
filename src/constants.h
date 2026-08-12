@@ -231,9 +231,9 @@
 #define EE_CHECKBYTE_VALUE            20     // 0 ~ 255,add new entry, change for new value
 #define EE_PRESETS_FREQUENCY          0     // Default value when memory channel should be skipped!
 #ifdef HAS_AIR_BAND
-#define EE_TOTAL_CNT                  2292  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                  2305  // Total occupied eeprom bytes
 #else
-#define EE_TOTAL_CNT                  2287  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                  2300  // Total occupied eeprom bytes
 #endif
 
 #define EE_PRESETS_BAND_START         0     // 99 * 1 byte
@@ -360,6 +360,15 @@
 #ifdef HAS_AIR_BAND
 #define EE_BYTE_AIRSTEPSIZE           2287
 #define EE_UINT16_FREQUENCY_AIR       2288
+#define EE_BYTE_WIFI_STATICIP         2292
+#define EE_UINT16_WIFI_IP             2293
+#define EE_UINT16_WIFI_GATEWAY        2297
+#define EE_UINT16_WIFI_SUBNET         2301
+#else
+#define EE_BYTE_WIFI_STATICIP         2287
+#define EE_UINT16_WIFI_IP             2288
+#define EE_UINT16_WIFI_GATEWAY        2292
+#define EE_UINT16_WIFI_SUBNET         2296
 #endif
 // End of EEPROM index defines
 

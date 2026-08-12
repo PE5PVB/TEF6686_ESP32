@@ -5364,14 +5364,23 @@ void DoMenu() {
                 wc.addParameter(&RabbitearsPassword_input);
                 setWiFiConnectParam = true;
               }
+              wc.setStaticIP(wifiStaticIP, wifiIP, wifiGateway, wifiSubnet);
               tftPrint(ACENTER, textUI(32), 155, 202, ActiveColor, ActiveColorSmooth, 16);
               wc.startConfigurationPortal(26);
               XDRGTK_key = XDRGTK_key_input.getValue();
               RabbitearsUser = RabbitearsUser_input.getValue();
               RabbitearsPassword = RabbitearsPassword_input.getValue();
+              wifiStaticIP = wc.getStaticIPEnabled();
+              wifiIP = wc.getStaticIP();
+              wifiGateway = wc.getGateway();
+              wifiSubnet = wc.getSubnetMask();
               EEPROM.writeString(EE_STRING_XDRGTK_KEY, XDRGTK_key);
               EEPROM.writeString(EE_STRING_RABBITEARSUSER, RabbitearsUser);
               EEPROM.writeString(EE_STRING_RABBITEARSPASSWORD, RabbitearsPassword);
+              EEPROM.writeByte(EE_BYTE_WIFI_STATICIP, wifiStaticIP);
+              EEPROM.writeUInt(EE_UINT16_WIFI_IP, wifiIP);
+              EEPROM.writeUInt(EE_UINT16_WIFI_GATEWAY, wifiGateway);
+              EEPROM.writeUInt(EE_UINT16_WIFI_SUBNET, wifiSubnet);
               EEPROM.commit();
               UpdateFonts(0);
               wifi = true;

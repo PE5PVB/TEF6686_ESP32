@@ -1054,6 +1054,11 @@ void tryWiFi() {
 
   // Start non-blocking connection
   WiFi.mode(WIFI_STA);
+  if (wifiStaticIP) {
+    WiFi.config(IPAddress(wifiIP), IPAddress(wifiGateway), IPAddress(wifiSubnet), IPAddress(wifiGateway));
+  } else {
+    WiFi.config(IPAddress((uint32_t)0), IPAddress((uint32_t)0), IPAddress((uint32_t)0));
+  }
   WiFi.begin();
   _wifiConnState  = 1;
   _wifiConnMs     = millis();

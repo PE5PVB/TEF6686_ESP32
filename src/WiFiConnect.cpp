@@ -90,6 +90,7 @@ static const char TPL_STYLE[] PROGMEM =
   ".hn{display:flex;align-items:center;gap:8px;font-size:.8em;color:#506070;"
     "margin:0 0 12px;cursor:pointer;font-weight:400;text-transform:none;letter-spacing:0}"
   ".hn input{width:auto;margin:0;accent-color:#4db691;-webkit-appearance:auto;appearance:auto}"
+  ".ipf{display:none}"
   "</style>";
 
 // ---- JavaScript for the WiFi configuration page (AJAX scan, password toggle, hidden network) ----
@@ -124,6 +125,9 @@ static const char TPL_WIFI_JS[] PROGMEM =
     "var c=document.getElementById('hn').checked;"
     "var s=document.getElementById('s');"
     "if(c){s.value='';s.focus();}}"
+  "function toggleDhcp(){"
+    "var c=document.getElementById('dhcp').checked;"
+    "document.getElementById('ipf').style.display=c?'none':'block';}"
   "window.addEventListener('load',scan);";
 
 // ---- WiFiConnectParam implementation ----
@@ -202,6 +206,29 @@ void WiFiConnect::addParameter(WiFiConnectParam *p) {
   }
 }
 
+void WiFiConnect::setStaticIP(boolean enabled, uint32_t ip, uint32_t gateway, uint32_t subnet) {
+  _staticIPEnabled = enabled;
+  _ip = IPAddress(ip);
+  _gw = IPAddress(gateway);
+  _sn = IPAddress(subnet);
+}
+
+boolean WiFiConnect::getStaticIPEnabled() {
+  return _staticIPEnabled;
+}
+
+uint32_t WiFiConnect::getStaticIP() {
+  return (uint32_t)_ip;
+}
+
+uint32_t WiFiConnect::getGateway() {
+  return (uint32_t)_gw;
+}
+
+uint32_t WiFiConnect::getSubnetMask() {
+  return (uint32_t)_sn;
+}
+
 boolean WiFiConnect::autoConnect() {
   return autoConnect(NULL, NULL, WIFI_STA);
 }
@@ -211,6 +238,12 @@ boolean WiFiConnect::autoConnect(char const *ssidName, char const *ssidPassword,
 
   if (WiFi.status() == WL_CONNECTED) {
     return true;
+  }
+
+  if (_staticIPEnabled) {
+    WiFi.config(_ip, _gw, _sn, _gw);
+  } else {
+    WiFi.config(IPAddress((uint32_t)0), IPAddress((uint32_t)0), IPAddress((uint32_t)0));
   }
 
   int c = 0;
@@ -395,6 +428,33 @@ void WiFiConnect::handleWifi() {
     "<svg viewBox='0 0 24 24'><path d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'/>"
     "<circle cx='12' cy='12' r='3'/></svg></button></div>");
 
+  // DHCP toggle + static IP fields
+  page += F("<label class='hn'><input type='checkbox' id='dhcp' onchange='toggleDhcp()'");
+  if (!_staticIPEnabled) page += F(" checked");
+  page += F("> ");
+  page += textUI(323);
+  page += F("</label><div id='ipf' class='ipf'");
+  if (_staticIPEnabled) page += F(" style='display:block'");
+  page += F(">");
+
+  page += F("<label>");
+  page += textUI(324);
+  page += F("</label><input type='text' id='ip' name='ip' maxlength='15' autocomplete='off' value='");
+  if (_staticIPEnabled) page += toStringIp(_ip);
+  page += F("'>");
+
+  page += F("<label>");
+  page += textUI(325);
+  page += F("</label><input type='text' id='sn' name='sn' maxlength='15' autocomplete='off' value='");
+  if (_staticIPEnabled) page += toStringIp(_sn);
+  page += F("'>");
+
+  page += F("<label>");
+  page += textUI(326);
+  page += F("</label><input type='text' id='gw' name='gw' maxlength='15' autocomplete='off' value='");
+  if (_staticIPEnabled) page += toStringIp(_gw);
+  page += F("'></div>");
+
   // Custom parameters
   for (int i = 0; i < _paramsCount; i++) {
     if (_params[i] == NULL) break;
@@ -505,6 +565,20 @@ void WiFiConnect::handleWifiSave() {
     if (_params[i] == NULL || _params[i]->getID() == NULL) continue;
     String value = server->arg(_params[i]->getID()).c_str();
     value.toCharArray(_params[i]->_value, _params[i]->_length);
+  }
+
+  // Static IP configuration
+  IPAddress ip, sn, gw;
+  boolean validStaticIP = !server->hasArg("dhcp") &&
+    ip.fromString(server->arg("ip")) &&
+    sn.fromString(server->arg("sn")) &&
+    gw.fromString(server->arg("gw"));
+
+  _staticIPEnabled = validStaticIP;
+  if (validStaticIP) {
+    _ip = ip;
+    _sn = sn;
+    _gw = gw;
   }
 
   String page = F("<!DOCTYPE html><html lang='en'><head>"
