@@ -210,6 +210,7 @@ byte longbandpress;
 byte memdoublepi;
 byte memorypos;
 byte memoryposold;
+byte memoryposprevious;
 byte memoryposstatus;
 byte mempionly;
 byte memstartpos;
@@ -5478,6 +5479,7 @@ void NumpadProcess(int num) {
           ShowFreq(0);
           ShowMemoryPos();
         } else {
+          memoryposprevious = oldmemorypos;
           DoMemoryPosTune();
           ShowMemoryPos();
         }
@@ -5485,6 +5487,16 @@ void NumpadProcess(int num) {
         ShowFreq(0);
       }
       freq_in = 0;
+    } else if (num == 0 && freq_in == 0 && !memorystore) {
+      byte oldmemorypos = memorypos;
+      memorypos = memoryposprevious;
+      if (!IsStationEmpty()) {
+        memoryposprevious = oldmemorypos;
+        DoMemoryPosTune();
+        ShowMemoryPos();
+      } else {
+        memorypos = oldmemorypos;
+      }
     } else {
       if (freq_in / 100 == 0) {
         int temp = freq_in * 10 + num;
