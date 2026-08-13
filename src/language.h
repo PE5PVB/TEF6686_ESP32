@@ -3,7 +3,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[23][327] PROGMEM = {
+static const char* const myLanguage[23][328] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -330,7 +330,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Direct tuning" // 327
   },
 
   { "Nederlands", // Dutch
@@ -659,7 +660,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP-adres", // 324
     "Subnetmasker", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Directe frequentieinvoer" // 327
   },
 
   { "Polski", // Polish
@@ -988,7 +990,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Bezpośrednie strojenie" // 327
   },
 
   { "Hrvatski", // Croatian
@@ -1317,7 +1320,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Izravno ugađanje" // 327
   },
 
   { "Ελληνικά", // Greek
@@ -1646,7 +1650,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Άμεσος συντονισμός" // 327
   },
 
   { "Română", // Romanian
@@ -1975,7 +1980,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Acordare directă" // 327
   },
 
   { "Deutsch", // German
@@ -2304,7 +2310,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Direkte Abstimmung" // 327
   },
 
   { "Čeština", // Czech
@@ -2633,7 +2640,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Přímé ladění" // 327
   },
 
   { "Magyar", // Hungarian
@@ -2962,7 +2970,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Közvetlen hangolás" // 327
   },
 
   { "Français", // French
@@ -3291,7 +3300,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Accord direct" // 327
   },
 
   { "Български", // Bulgarian
@@ -3620,7 +3630,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Директно настройване" // 327
   },
 
   { "Русский", // Russian
@@ -3949,7 +3960,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Прямая настройка" // 327
   },
 
   { "Українська", // Ukranian
@@ -4278,7 +4290,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Пряме налаштування" // 327
   },
 
   { "Italiano", // Italian
@@ -4607,7 +4620,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Sintonia diretta" // 327
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4936,7 +4950,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "直接调谐" // 327
   },
 
   { "Norsk", // Norwegian
@@ -5265,7 +5280,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Direkte innstilling" // 327
   },
 
   { "Español", // Spanish
@@ -5594,7 +5610,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Sintonización directa" // 327
   },
 
   { "Português", // Portuguese
@@ -5923,7 +5940,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Sintonização direta" // 327
   },
 
   { "Srpski", // Serbian
@@ -6252,7 +6270,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Директно подешавање" // 327
   },
 
   { "Suomi", // Finnish
@@ -6581,7 +6600,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Suora viritys" // 327
   },
 
   { "Dansk", // Danish
@@ -6910,7 +6930,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Direkte indstilling" // 327
   },
 
   { "Svenska", // Swedish
@@ -7239,7 +7260,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "DHCP", // 323
     "IP address", // 324
     "Subnet mask", // 325
-    "Gateway" // 326
+    "Gateway", // 326
+    "Direktinställning" // 327
   },
 
   { "Gaeilge", // Irish
@@ -7564,7 +7586,12 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "Socraigh pasfhocal XDRGTK (uas. 8 gcarachtar)", // 319
     "Socraigh ID úsáideora rabbitears.info live bandscan", // 320
     "Socraigh pasfhocal rabbitears.info", // 321
-    "ID" // 322
+    "ID", // 322
+    "DHCP", // 323
+    "IP address", // 324
+    "Subnet mask", // 325
+    "Gateway", // 326
+    "Tiúnadh díreach" // 327
   }
 };
 #endif

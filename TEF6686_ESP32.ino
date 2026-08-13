@@ -76,6 +76,11 @@ bool beepresetstop;
 bool BWreset;
 bool bwtouchtune;
 bool BWtune;
+bool freqkeypadtune;
+bool freqBandPicker;
+byte freqPickerCount;
+byte freqPickerBands[5];
+int freqPickerFreqs[5];
 bool change;
 bool clockampm;
 bool compressedold;
@@ -1033,7 +1038,7 @@ void loop() {
     if (millis() >= tottimer + totprobe) deepSleep();
   }
 
-  if (freq_in != 0 && millis() >= keypadtimer + 3000) {
+  if (!freqkeypadtune && !freqBandPicker && freq_in != 0 && millis() >= keypadtimer + 3000) {
     freq_in = 0;
     ShowFreq(0);
   }
@@ -1130,7 +1135,7 @@ void loop() {
     }
   }
 
-  if (!BWtune && !menu && !afscreen && !rdsstatscreen && !scandxmode) {
+  if (!BWtune && !freqkeypadtune && !freqBandPicker && !menu && !afscreen && !rdsstatscreen && !scandxmode) {
     if (af != 0 && dropout && millis() >= aftimer + 1000) {
       aftimer = millis();
       if (radio.af_counter == 0) {
@@ -1248,7 +1253,7 @@ void loop() {
 
   if (seek) Seek(direction);
 
-  if ((SStatus / 10 > LowLevelSet) && !LowLevelInit && !BWtune && !menu && band < BAND_GAP) {
+  if ((SStatus / 10 > LowLevelSet) && !LowLevelInit && !BWtune && !freqkeypadtune && !freqBandPicker && !menu && band < BAND_GAP) {
     if (!screenmute && !advancedRDS && !rdsstatscreen && !afscreen) {
       if (showmodulation) {
         tftPrint(ALEFT, "10", 24, 144, ActiveColor, ActiveColorSmooth, 16);
@@ -1280,7 +1285,7 @@ void loop() {
   }
 
   if ((SStatus / 10 <= LowLevelSet) && band < BAND_GAP) {
-    if (LowLevelInit && !BWtune && !menu) {
+    if (LowLevelInit && !BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
       if (!screenmute && !rdsstatscreen && !afscreen && !advancedRDS) {
         for (byte segments = 0; segments < 87; segments++) {
           if (segments > 54) {
@@ -1314,7 +1319,7 @@ void loop() {
       LowLevelInit = false;
     }
 
-    if (!BWtune && !menu && (screenmute || radio.rds.correctPI != 0)) readRds();
+    if (!BWtune && !freqkeypadtune && !freqBandPicker && !menu && (screenmute || radio.rds.correctPI != 0)) readRds();
     if (millis() >= lowsignaltimer + 300) {
       lowsignaltimer = millis();
       if (af || (!screenmute || (screenmute && (XDRGTKTCP || XDRGTKUSB)))) {
@@ -1324,7 +1329,7 @@ void loop() {
           radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
         }
       }
-      if (!BWtune && !menu) {
+      if (!BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
         doSquelch();
         GetData();
       }
@@ -1338,7 +1343,7 @@ void loop() {
         radio.getStatusAM(SStatus, USN, WAM, OStatus, BW, MStatus, CN);
       }
     }
-    if (!BWtune && !menu) {
+    if (!BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
       doSquelch();
       if (millis() >= tuningtimer + 200) readRds();
       GetData();
@@ -1353,15 +1358,15 @@ void loop() {
         rotary = 0;
         WakeToSleep(REVERSE);
       } else {
-        if (BWtune) doBWtuneUp(); else KeyUp();
+        if (BWtune) doBWtuneUp(); else if (!freqkeypadtune && !freqBandPicker) KeyUp();
       }
     } else {
-      if (BWtune) doBWtuneUp(); else KeyUp();
-      if (rotaryaccelerate && rotarycounter > 2 && !BWtune && !menu) {
+      if (BWtune) doBWtuneUp(); else if (!freqkeypadtune && !freqBandPicker) KeyUp();
+      if (rotaryaccelerate && rotarycounter > 2 && !BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
         for (int i = 0; i < rotarycounteraccelerator; i++) KeyUp();
         rotarycounter = 0;
       }
-      if (screensaverset > 0 && !BWtune && !menu && !screensavertriggered) screensavertimer = millis();
+      if (screensaverset > 0 && !BWtune && !freqkeypadtune && !freqBandPicker && !menu && !screensavertriggered) screensavertimer = millis();
     }
   }
 
@@ -1372,15 +1377,15 @@ void loop() {
         rotary = 0;
         WakeToSleep(REVERSE);
       } else {
-        if (BWtune) doBWtuneDown(); else KeyDown();
+        if (BWtune) doBWtuneDown(); else if (!freqkeypadtune && !freqBandPicker) KeyDown();
       }
     } else {
-      if (BWtune) doBWtuneDown(); else KeyDown();
-      if (rotaryaccelerate && rotarycounter > 2 && !BWtune && !menu) {
+      if (BWtune) doBWtuneDown(); else if (!freqkeypadtune && !freqBandPicker) KeyDown();
+      if (rotaryaccelerate && rotarycounter > 2 && !BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
         for (int i = 0; i < rotarycounteraccelerator; i++) KeyDown();
         rotarycounter = 0;
       }
-      if (screensaverset > 0 && !BWtune && !menu && !screensavertriggered) screensavertimer = millis();
+      if (screensaverset > 0 && !BWtune && !freqkeypadtune && !freqBandPicker && !menu && !screensavertriggered) screensavertimer = millis();
     }
   }
 
@@ -1390,7 +1395,7 @@ void loop() {
       WakeToSleep(REVERSE);
       while (digitalRead(BANDBUTTON) == LOW);
     } else {
-      BANDBUTTONPress();
+      if (!freqkeypadtune && !freqBandPicker) BANDBUTTONPress();
     }
   }
 
@@ -1400,7 +1405,7 @@ void loop() {
       WakeToSleep(REVERSE);
       while (digitalRead(ROTARY_BUTTON) == LOW);
     } else {
-      if (!afscreen && !rdsstatscreen) ButtonPress();
+      if (!afscreen && !rdsstatscreen && !freqkeypadtune && !freqBandPicker) ButtonPress();
     }
   }
 
@@ -1410,11 +1415,11 @@ void loop() {
       WakeToSleep(REVERSE);
       while (digitalRead(MODEBUTTON) == LOW);
     } else {
-      if (!screenmute) ModeButtonPress();
+      if (!screenmute && !freqkeypadtune && !freqBandPicker) ModeButtonPress();
     }
   }
 
-  if (digitalRead(BWBUTTON) == LOW && !BWtune) {
+  if (digitalRead(BWBUTTON) == LOW && !BWtune && !freqkeypadtune && !freqBandPicker) {
     tottimer = millis();
     if (screensavertriggered) {
       WakeToSleep(REVERSE);
@@ -1430,21 +1435,26 @@ void loop() {
     num = GetNum();
     if (num != -1)
     {
-      if (!screenmute && !BWtune && !menu && !advancedRDS && !rdsstatscreen && !afscreen)
+      if (!screenmute && !BWtune && !freqkeypadtune && !freqBandPicker && !menu && !advancedRDS && !rdsstatscreen && !afscreen)
       {
         NumpadProcess(num);
+      } else if (freqkeypadtune && num >= 0 && num <= 9) {
+        if (freq_in / 10000 == 0) freq_in = freq_in * 10 + num;
+        ShowNum(freq_in);
+      } else if (freqkeypadtune && num == 13) {
+        FreqKeypadConfirm();
       }
     }
   }
 
-  if (screensaverset > 0 && !screensavertriggered && !BWtune && !menu && millis() >= screensavertimer + 1000 * screensaverOptions[screensaverset]) WakeToSleep(true);
+  if (screensaverset > 0 && !screensavertriggered && !BWtune && !freqkeypadtune && !freqBandPicker && !menu && millis() >= screensavertimer + 1000 * screensaverOptions[screensaverset]) WakeToSleep(true);
 }
 
 void GetData() {
   if (!afscreen && !rdsstatscreen) ShowSignalLevel();
-  if (!BWtune && !menu && !rdsstatscreen) showPS();
+  if (!BWtune && !freqkeypadtune && !freqBandPicker && !menu && !rdsstatscreen) showPS();
 
-  if (band < BAND_GAP && !BWtune && !menu) {
+  if (band < BAND_GAP && !BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
     if (advancedRDS && !afscreen && !rdsstatscreen && !screenmute) ShowAdvancedRDS();
     if (!advancedRDS && !afscreen && rdsstatscreen && !screenmute) ShowRDSStatistics();
     if (afscreen && !screenmute) ShowAFEON();
@@ -1894,7 +1904,7 @@ void BANDBUTTONPress() {
       if (!usesquelch) radio.setUnMute();
       unsigned long counterold = millis();
       unsigned long counter = millis();
-      if (!BWtune && !menu) {
+      if (!BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
         while (digitalRead(BANDBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
 
         if (counter - counterold < 1000) {
@@ -2473,7 +2483,7 @@ void BWButtonPress() {
       }
     } else {
       if (!usesquelch) radio.setUnMute();
-      if (!BWtune && !menu) {
+      if (!BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
         if (!screenmute) tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
         unsigned long counterold = millis();
         unsigned long counter = millis();
@@ -2542,7 +2552,7 @@ void ModeButtonPress() {
       BuildAFScreen();
       freq_in = 0;
     } else {
-      if (!BWtune && !menu) {
+      if (!BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
         if (!screenmute) {
           tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
         }
@@ -2554,7 +2564,7 @@ void ModeButtonPress() {
         if (counter - counterold <= 1000) {
           doTuneMode();
         } else {
-          if (!BWtune && !menu) {
+          if (!BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
             menuoption = ITEM1;
             menupage = INDEX;
             menuitem = 0;
@@ -2729,7 +2739,7 @@ void ButtonPress() {
       freq_in = 0;
       SelectBand();
     }
-    if (!BWtune && !menu) {
+    if (!BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
       if (tunemode == TUNE_MEM) {
         if (!memorystore) {
           memorystore = true;
@@ -2848,7 +2858,7 @@ void KeyUp() {
     ShowFreq(0);
   } else {
     if (!afscreen && !rdsstatscreen) {
-      if (!BWtune && !menu) {
+      if (!BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
         switch (tunemode) {
           case TUNE_MAN:
             TuneUp();
@@ -2920,7 +2930,7 @@ void KeyDown() {
     ShowFreq(0);
   } else {
     if (!afscreen && !rdsstatscreen) {
-      if (!BWtune && !menu) {
+      if (!BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
         switch (tunemode) {
           case TUNE_MAN:
             TuneDown();
@@ -3552,10 +3562,10 @@ void ShowOffset() {
 }
 
 void ShowBW() {
-  if (!BWtune && millis() >= bwupdatetimer + TIMER_BW_TIMER) {
+  if (!BWtune && !freqkeypadtune && !freqBandPicker && millis() >= bwupdatetimer + TIMER_BW_TIMER) {
     bwupdatetimer = millis();
   } else {
-    if (!BWtune) return;
+    if (!BWtune && !freqkeypadtune && !freqBandPicker) return;
   }
 
   if (BW != BWOld || BWreset) {
@@ -3725,7 +3735,7 @@ void doSquelch() {
 
     if (!XDRGTKUSB && !XDRGTKTCP && usesquelch && (!scandxmode || (scandxmode && !scanmute))) {
       if (!screenmute && usesquelch && !advancedRDS && !afscreen && !rdsstatscreen) {
-        if (!BWtune && !menu && (Squelch > Squelchold + 2 || Squelch < Squelchold - 2)) {
+        if (!BWtune && !freqkeypadtune && !freqBandPicker && !menu && (Squelch > Squelchold + 2 || Squelch < Squelchold - 2)) {
           SquelchSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
           SquelchSprite.fillSprite(BackgroundColor);
           if (Squelch == -100) {
@@ -3828,13 +3838,13 @@ void doSquelch() {
 
 void updateBW() {//todo air
   if (BWset == 0) {
-    if (!BWtune && !screenmute && !advancedRDS && !afscreen && !rdsstatscreen) {
+    if (!BWtune && !freqkeypadtune && !freqBandPicker && !screenmute && !advancedRDS && !afscreen && !rdsstatscreen) {
       tft.fillRoundRect(248, 36, 69, 18, 2, SecondaryColor);
       tftPrint(ACENTER, "AUTO BW", 282, 38, BackgroundColor, SecondaryColor, 16);
     }
     radio.setFMABandw();
   } else {
-    if (!BWtune && !screenmute && !advancedRDS && !afscreen && !rdsstatscreen) {
+    if (!BWtune && !freqkeypadtune && !freqBandPicker && !screenmute && !advancedRDS && !afscreen && !rdsstatscreen) {
       tft.fillRoundRect(248, 36, 69, 18, 2, GreyoutColor);
       tftPrint(ACENTER, "AUTO BW", 282, 38, BackgroundColor, GreyoutColor, 16);
     }
@@ -3844,13 +3854,13 @@ void updateBW() {//todo air
 void updateiMS() {
   if (band < BAND_GAP) {
     if (iMSset == 0) {
-      if (!screenmute && !advancedRDS && !afscreen && !rdsstatscreen && !BWtune) {
+      if (!screenmute && !advancedRDS && !afscreen && !rdsstatscreen && !BWtune && !freqkeypadtune && !freqBandPicker) {
         tft.fillRoundRect(249, 57, 30, 18, 2, SecondaryColor);
         tftPrint(ACENTER, "iMS", 265, 59, BackgroundColor, SecondaryColor, 16);
       }
       radio.setiMS(1);
     } else {
-      if (!screenmute && !advancedRDS && !afscreen && !rdsstatscreen && !BWtune) {
+      if (!screenmute && !advancedRDS && !afscreen && !rdsstatscreen && !BWtune && !freqkeypadtune && !freqBandPicker) {
         tft.fillRoundRect(249, 57, 30, 18, 2, GreyoutColor);
         tftPrint(ACENTER, "iMS", 265, 59, BackgroundColor, GreyoutColor, 16);
       }
@@ -3862,13 +3872,13 @@ void updateiMS() {
 void updateEQ() {
   if (band < BAND_GAP) {
     if (EQset == 0) {
-      if (!screenmute && !advancedRDS && !afscreen && !rdsstatscreen && !BWtune) {
+      if (!screenmute && !advancedRDS && !afscreen && !rdsstatscreen && !BWtune && !freqkeypadtune && !freqBandPicker) {
         tft.fillRoundRect(287, 57, 30, 18, 2, SecondaryColor);
         tftPrint(ACENTER, "EQ", 301, 59, BackgroundColor, SecondaryColor, 16);
       }
       radio.setEQ(1);
     } else {
-      if (!screenmute && !advancedRDS && !afscreen && !rdsstatscreen && !BWtune) {
+      if (!screenmute && !advancedRDS && !afscreen && !rdsstatscreen && !BWtune && !freqkeypadtune && !freqBandPicker) {
         tft.fillRoundRect(287, 57, 30, 18, 2, GreyoutColor);
         tftPrint(ACENTER, "EQ", 301, 59, BackgroundColor, GreyoutColor, 16);
       }
@@ -5358,7 +5368,7 @@ int GetNum(void) {
   return -1;
 }
 
-void ShowNum(int val) {
+void ShowNum(int val, int color, int colorSmooth) {
   switch (freqfont) {
     case 1: FrequencySprite.loadFont(FREQFONT1); break;
     case 2: FrequencySprite.loadFont(FREQFONT2); break;
@@ -5370,72 +5380,118 @@ void ShowNum(int val) {
   FrequencySprite.setTextDatum(TR_DATUM);
 
   FrequencySprite.fillSprite(BackgroundColor);
-  FrequencySprite.setTextColor(SecondaryColor, SecondaryColorSmooth, false);
+  FrequencySprite.setTextColor((color == -1 ? SecondaryColor : color), (colorSmooth == -1 ? SecondaryColorSmooth : colorSmooth), false);
   FrequencySprite.drawString(String(val) + " ", 218, -6);
   FrequencySprite.pushSprite(46, 46);
 
   FrequencySprite.unloadFont();
 }
 
-bool TuneFreq(int temp) {
-  aftest = true;
-  aftimer = millis();
-  bool accepted = true;
+byte FindBandMatches(int temp, byte* outBands, int* outFreqs) {
+  byte candidates[5] = { BAND_FM, BAND_OIRT, BAND_LW, BAND_MW, BAND_SW };
+  byte count = 0;
 
-  if (band == BAND_FM) {
-    while (temp < (LowEdgeSet * 10)) temp = temp * 10;
-    if (temp > (HighEdgeSet * 10)) {
-      if (edgebeep) EdgeBeeper();
-      accepted = false;
-    } else {
-      frequency = temp;
+  for (byte i = 0; i < 5; i++) {
+    byte b = candidates[i];
+    int t = temp;
+    unsigned int lo, hi;
+    switch (b) {
+      case BAND_FM:   lo = LowEdgeSet * 10;  hi = HighEdgeSet * 10;  break;
+      case BAND_OIRT: lo = LowEdgeOIRTSet;   hi = HighEdgeOIRTSet;   break;
+      case BAND_LW:   lo = LWLowEdgeSet;     hi = LWHighEdgeSet;     break;
+      case BAND_MW:   lo = MWLowEdgeSet;     hi = MWHighEdgeSet;     break;
+      default:        lo = SWLowEdgeSet;     hi = SWHighEdgeSet;     break;
     }
-    radio.SetFreq(frequency);
-  } else if (band == BAND_OIRT) {
-    while (temp < LowEdgeOIRTSet) temp = temp * 10;
-    if (temp > HighEdgeOIRTSet) {
-      if (edgebeep) EdgeBeeper();
-      accepted = false;
-    } else {
-      frequency_OIRT = temp;
+    while (t < lo) t = t * 10;
+    if (t <= hi) {
+      outBands[count] = b;
+      outFreqs[count] = t;
+      count++;
     }
-    radio.SetFreq(frequency_OIRT);
-  } else if (band == BAND_LW) {
-    while (temp < LWLowEdgeSet) temp = temp * 10;
-    if (temp > LWHighEdgeSet) {
-      if (edgebeep) EdgeBeeper();
-      accepted = false;
-    } else {
-      frequency_AM = temp;
-    }
-    radio.SetFreqAM(frequency_AM);
-    frequency_LW = frequency_AM;
-  } else if (band == BAND_MW) {
-    while (temp < MWLowEdgeSet) temp = temp * 10;
-    if (temp > MWHighEdgeSet) {
-      if (edgebeep) EdgeBeeper();
-      accepted = false;
-    } else {
-      frequency_AM = temp;
-    }
-    radio.SetFreqAM(frequency_AM);
-    frequency_MW = frequency_AM;
-  } else if (band == BAND_SW) {
-    while (temp < SWLowEdgeSet) temp = temp * 10;
-    if (temp > SWHighEdgeSet) {
-      if (edgebeep) EdgeBeeper();
-      accepted = false;
-    } else {
-      frequency_AM = temp;
-    }
-    radio.SetFreqAM(frequency_AM);
-    frequency_SW = frequency_AM;
   }
+  return count;
+}
 
+void ApplyBandMatch(byte b, int freq) {
+  if (band != b) {
+    band = b;
+    SelectBand();
+  }
+  switch (b) {
+    case BAND_FM:
+      frequency = freq;
+      radio.SetFreq(frequency);
+      break;
+    case BAND_OIRT:
+      frequency_OIRT = freq;
+      radio.SetFreq(frequency_OIRT);
+      break;
+    case BAND_LW:
+      frequency_AM = freq;
+      frequency_LW = freq;
+      radio.SetFreqAM(frequency_AM);
+      break;
+    case BAND_MW:
+      frequency_AM = freq;
+      frequency_MW = freq;
+      radio.SetFreqAM(frequency_AM);
+      break;
+    case BAND_SW:
+      frequency_AM = freq;
+      frequency_SW = freq;
+      radio.SetFreqAM(frequency_AM);
+      break;
+  }
   radio.clearRDS(fullsearchrds);
   if (RDSSPYUSB) Serial.print("G:\r\nRESET-------\r\n\r\n");
   if (RDSSPYTCP) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
-  return accepted;
+}
+
+// Returns 0 = rejected, 1 = applied, 2 = ambiguous (band picker popup opened)
+int TuneFreq(int temp) {
+  aftest = true;
+  aftimer = millis();
+
+  byte matchBands[5];
+  int matchFreqs[5];
+  byte count = FindBandMatches(temp, matchBands, matchFreqs);
+
+  if (count == 0) {
+    if (edgebeep) EdgeBeeper();
+    radio.clearRDS(fullsearchrds);
+    if (RDSSPYUSB) Serial.print("G:\r\nRESET-------\r\n\r\n");
+    if (RDSSPYTCP) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
+    return 0;
+  }
+
+  if (count == 1) {
+    ApplyBandMatch(matchBands[0], matchFreqs[0]);
+    return 1;
+  }
+
+  freqPickerCount = count;
+  for (byte i = 0; i < count; i++) {
+    freqPickerBands[i] = matchBands[i];
+    freqPickerFreqs[i] = matchFreqs[i];
+  }
+  freqBandPicker = true;
+  BuildFreqBandPicker();
+  return 2;
+}
+
+void FreqKeypadConfirm() {
+  if (freq_in == 0) return;
+  int result = TuneFreq(freq_in);
+  if (result == 1) {
+    freqkeypadtune = false;
+    freq_in = 0;
+    BuildDisplay();
+    SelectBand();
+  } else if (result == 0) {
+    ShowNum(freq_in, SignificantColor, SignificantColorSmooth);
+  } else {
+    freq_in = 0;
+  }
 }
 
 void NumpadProcess(int num) {
@@ -5530,7 +5586,8 @@ void NumpadProcess(int num) {
       BuildMenu();
     } else if (num == 13) {
       if (freq_in != 0) {
-        if (TuneFreq(freq_in)) {
+        int result = TuneFreq(freq_in);
+        if (result == 1) {
           if (XDRGTKUSB || XDRGTKTCP) {
             if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n"); else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n"); else DataPrint("M1\nT" + String(frequency_AM) + "\n");
           }
@@ -5540,7 +5597,7 @@ void NumpadProcess(int num) {
             ShowFreq(0);
             store = true;
           }
-        } else {
+        } else if (result == 0) {
           ShowNum(freq_in);
           FrequencySprite.loadFont(freqfont == 1 ? FREQFONT1 : freqfont == 2 ? FREQFONT2 : freqfont == 3 ? FREQFONT3 : freqfont == 4 ? FREQFONT4 : FREQFONT0);
           FrequencySprite.setTextDatum(TR_DATUM);

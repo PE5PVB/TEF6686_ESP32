@@ -2888,6 +2888,64 @@ void showBWSelector() {
   }
 }
 
+void BuildFreqKeypad() {
+  freq_in = 0;
+  switch (CurrentTheme) {
+    case 7: tft.pushImage (0, 0, 320, 240, configurationbackground_wo); break;
+    default: tft.pushImage (0, 0, 320, 240, configurationbackground); break;
+  }
+  tftPrint(ACENTER, textUI(327), 160, 6, PrimaryColor, PrimaryColorSmooth, 16);
+  showFreqKeypad();
+}
+
+void showFreqKeypad() {
+  drawButton("1", 0, false, false, 66, false, 4);
+  drawButton("2", 1, false, false, 66, false, 4);
+  drawButton("3", 2, false, false, 66, false, 4);
+  drawButton("X", 3, true, false, 66, false, 4);
+  drawButton("4", 4, false, false, 66, false, 4);
+  drawButton("5", 5, false, false, 66, false, 4);
+  drawButton("6", 6, false, false, 66, false, 4);
+  drawButton("7", 8, false, false, 66, false, 4);
+  drawButton("8", 9, false, false, 66, false, 4);
+  drawButton("9", 10, false, false, 66, false, 4);
+  drawButton("C", 12, false, false, 66, false, 4);
+  drawButton("0", 13, false, false, 66, false, 4);
+  drawButton("<-", 14, false, false, 66, false, 4);
+  drawButton("OK", 15, true, false, 66, false, 4);
+}
+
+void BuildFreqBandPicker() {
+  switch (CurrentTheme) {
+    case 7: tft.pushImage (0, 0, 320, 240, configurationbackground_wo); break;
+    default: tft.pushImage (0, 0, 320, 240, configurationbackground); break;
+  }
+  tftPrint(ACENTER, textUI(327), 160, 6, PrimaryColor, PrimaryColorSmooth, 16);
+  showFreqBandPicker();
+}
+
+void showFreqBandPicker() {
+  int totalHeight = freqPickerCount * 40 - 8;
+  int startY = 30 + (210 - totalHeight) / 2;
+  if (startY < 35) startY = 35;
+
+  for (byte i = 0; i < freqPickerCount; i++) {
+    int y = startY + i * 40;
+    tft.drawRect(10, y, 300, 32, GreyoutColor);
+
+    String label;
+    int f = freqPickerFreqs[i];
+    switch (freqPickerBands[i]) {
+      case BAND_FM:   label = "FM " + String(f / 100) + "." + (f % 100 < 10 ? "0" : "") + String(f % 100) + " MHz"; break;
+      case BAND_OIRT: label = "OIRT " + String(f / 100) + "." + (f % 100 < 10 ? "0" : "") + String(f % 100) + " MHz"; break;
+      case BAND_LW:   label = "LW " + String(f) + " kHz"; break;
+      case BAND_MW:   label = "MW " + String(f) + " kHz"; break;
+      case BAND_SW:   label = "SW " + String(f) + " kHz"; break;
+    }
+    tftPrint(ACENTER, label, 160, y + 8, ActiveColor, ActiveColorSmooth, 16);
+  }
+}
+
 void BuildMenu() {
   advancedRDS = false;
   BWtune = false;
@@ -5730,16 +5788,15 @@ String removeNewline(String inputString) {
   return outputString;
 }
 
-void drawButton(const char* text, byte button_number, bool active, bool selected) {
+void drawButton(const char* text, byte button_number, bool active, bool selected, int yOffset, bool showUnderline, int spacingY) {
   const int buttonWidth = 70;
   const int buttonHeight = 30;
   const int spacingX = 10;
-  const int spacingY = 10;
   const int numColumns = 4;
   const int numRows = 5;
 
   const int startX = 6;
-  const int startY = 35;
+  const int startY = 35 + yOffset;
 
   if (button_number >= numColumns * numRows) return;
 
@@ -5768,7 +5825,7 @@ void drawButton(const char* text, byte button_number, bool active, bool selected
   int lineWidth = (buttonWidth / 2) - 6;      // Half the button width, minus 6px
   int lineX = x + (buttonWidth - lineWidth) / 2; // Center the line horizontally
   int lineY = y + buttonHeight - lineHeight - 3; // Move the line 3px up
-  if (button_number != 19) tft.fillRect(lineX, lineY, lineWidth, lineHeight, (active ? InsignificantColor : GreyoutColor));
+  if (button_number != 19 && showUnderline) tft.fillRect(lineX, lineY, lineWidth, lineHeight, (active ? InsignificantColor : GreyoutColor));
 
   // Draw the button text
   tftPrint(ACENTER, text, x + buttonWidth / 2, y + (buttonHeight / 4) - 2, ActiveColor, ActiveColorSmooth, 16);
