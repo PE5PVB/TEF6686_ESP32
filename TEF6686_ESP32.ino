@@ -2861,15 +2861,19 @@ void KeyUp() {
             break;
 
           case TUNE_MEM:
-            memorypos++;
-            if (memorypos > EE_PRESETS_CNT - 1) memorypos = 0;
-            if (!memorystore) {
-              while (IsStationEmpty()) {
-                memorypos++;
-                if (memorypos > EE_PRESETS_CNT - 1) {
-                  memorypos = 0;
-                  break;
+            {
+              byte oldmemorypos = memorypos;
+              memorypos++;
+              if (memorypos > EE_PRESETS_CNT - 1) memorypos = 0;
+              if (!memorystore) {
+                while (IsStationEmpty()) {
+                  memorypos++;
+                  if (memorypos > EE_PRESETS_CNT - 1) {
+                    memorypos = 0;
+                    break;
+                  }
                 }
+                memoryposprevious = oldmemorypos;
               }
             }
             if (!memorystore) {
@@ -2929,15 +2933,19 @@ void KeyDown() {
             break;
 
           case TUNE_MEM:
-            memorypos--;
-            if (memorypos > EE_PRESETS_CNT - 1) memorypos = EE_PRESETS_CNT - 1;
-            if (!memorystore) {
-              while (IsStationEmpty()) {
-                memorypos--;
-                if (memorypos > EE_PRESETS_CNT - 1) {
-                  memorypos = EE_PRESETS_CNT - 1;
-                  break;
+            {
+              byte oldmemorypos = memorypos;
+              memorypos--;
+              if (memorypos > EE_PRESETS_CNT - 1) memorypos = EE_PRESETS_CNT - 1;
+              if (!memorystore) {
+                while (IsStationEmpty()) {
+                  memorypos--;
+                  if (memorypos > EE_PRESETS_CNT - 1) {
+                    memorypos = EE_PRESETS_CNT - 1;
+                    break;
+                  }
                 }
+                memoryposprevious = oldmemorypos;
               }
             }
             if (!memorystore) {
