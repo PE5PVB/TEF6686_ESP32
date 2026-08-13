@@ -2302,8 +2302,8 @@ static const char* const myLanguage[23][327] PROGMEM = {
     "rabbitears.info Passwort festlegen", // 321
     "ID", // 322
     "DHCP", // 323
-    "IP address", // 324
-    "Subnet mask", // 325
+    "IP-Adresse", // 324
+    "Subnetzmaske", // 325
     "Gateway" // 326
   },
 
