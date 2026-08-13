@@ -536,6 +536,7 @@ void setup() {
   band = EEPROM.readByte(EE_BYTE_BAND);
   LowLevelSet = EEPROM.readByte(EE_BYTE_LOWLEVELSET);
   memorypos = EEPROM.readByte(EE_BYTE_MEMORYPOS);
+  memoryposprevious = memorypos;
   radio.rds.region = EEPROM.readByte(EE_BYTE_REGION);
   radio.underscore = EEPROM.readByte(EE_BYTE_RDS_UNDERSCORE);
   USBmode = EEPROM.readByte(EE_BYTE_USBMODE);
