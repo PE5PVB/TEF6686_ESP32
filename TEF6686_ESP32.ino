@@ -369,7 +369,6 @@ String rds_clockold;
 String rds_date;
 String rds_dateold;
 String RDSSPYRDS;
-String RDSSPYRDSold;
 String RTold;
 String salt;
 String saltkey = "                ";

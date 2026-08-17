@@ -412,7 +412,7 @@ void readRds() {
   }
 
   // --- Data output for RDS Spy / XDRGTK ---
-  if (bitRead(radio.rds.rdsStat, 9)) {
+  {
     char hexbuf[5];  // buffer for 4-digit HEX
 
     // RDS Spy output
@@ -435,11 +435,8 @@ void readRds() {
       }
       RDSSPYRDS += F("\r\n\r\n");
 
-      if (RDSSPYRDS != RDSSPYRDSold) {
-        if (RDSSPYUSB) Serial.print(RDSSPYRDS);
-        if (RDSSPYTCP) RemoteClient.print(RDSSPYRDS);
-        RDSSPYRDSold = RDSSPYRDS;
-      }
+      if (RDSSPYUSB) Serial.print(RDSSPYRDS);
+      if (RDSSPYTCP) RemoteClient.print(RDSSPYRDS);
     }
 
     // XDRGTK output

@@ -542,7 +542,15 @@ void TEF6686::processRDSGroup(byte showrdserrors) {
     // Block B/C/D are only valid for ordinary group data (status bit 13 = 0); for a first-PI event
     // (bit 13 = 1) the datasheet documents B/C/D as undefined, so skip the group-type decode below.
     if (!bitRead(rds.rdsStat, 13)) {
-      if (!rds.rdsBerror || showrdserrors == 3) rdsblock = rds.rdsB >> 11; else return;
+      if (!rds.rdsBerror || showrdserrors == 3) {
+        rdsblock = rds.rdsB >> 11;
+      } else {
+        previous_rdsA = rds.rdsA;
+        previous_rdsB = rds.rdsB;
+        previous_rdsC = rds.rdsC;
+        previous_rdsD = rds.rdsD;
+        return;
+      }
       rds.hasCompleteGroup = true;
       rds.blockcounter[rdsblock]++;
       processed_rdsblocks++;

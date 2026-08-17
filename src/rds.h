@@ -113,7 +113,6 @@ extern String rds_clockold;
 extern String rds_date;
 extern String rds_dateold;
 extern String RDSSPYRDS;
-extern String RDSSPYRDSold;
 extern String RTold;
 extern String stationIDold;
 extern String stationStateold;
