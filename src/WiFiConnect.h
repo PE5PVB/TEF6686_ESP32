@@ -35,6 +35,8 @@ using fs::FS;              // ESP32 core 3.x: WebServer.h needs FS in global sco
 
 extern const char* textUI(uint16_t number);
 
+void setWiFiCountryWorldwide();
+
 class WiFiConnect;
 
 /**************************************************************************/

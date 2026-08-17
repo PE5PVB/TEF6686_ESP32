@@ -229,12 +229,24 @@ uint32_t WiFiConnect::getSubnetMask() {
   return (uint32_t)_sn;
 }
 
+void setWiFiCountryWorldwide() {
+  wifi_country_t country = {
+    .cc = "01",
+    .schan = 1,
+    .nchan = 13,
+    .max_tx_power = 20,
+    .policy = WIFI_COUNTRY_POLICY_MANUAL
+  };
+  esp_wifi_set_country(&country);
+}
+
 boolean WiFiConnect::autoConnect() {
   return autoConnect(NULL, NULL, WIFI_STA);
 }
 
 boolean WiFiConnect::autoConnect(char const *ssidName, char const *ssidPassword, WiFiMode_t acWiFiMode) {
   WiFi.mode(acWiFiMode);
+  setWiFiCountryWorldwide();
 
   if (WiFi.status() == WL_CONNECTED) {
     return true;
@@ -283,6 +295,7 @@ boolean WiFiConnect::startConfigurationPortal(int8_t cancelPin) {
   delay(50);
 
   WiFi.mode(WIFI_AP_STA);
+  setWiFiCountryWorldwide();
 
   dnsServer.reset(new DNSServer());
   server.reset(new WebServer(80));

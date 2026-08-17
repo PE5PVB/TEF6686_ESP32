@@ -1054,6 +1054,7 @@ void tryWiFi() {
 
   // Start non-blocking connection
   WiFi.mode(WIFI_STA);
+  setWiFiCountryWorldwide();
   if (wifiStaticIP) {
     WiFi.config(IPAddress(wifiIP), IPAddress(wifiGateway), IPAddress(wifiSubnet), IPAddress(wifiGateway));
   } else {
@@ -1108,6 +1109,7 @@ void wifiPoll() {
 
   if (millis() - _wifiConnMs >= WIFI_RECONNECT_MS) {
     WiFi.mode(WIFI_STA);
+    setWiFiCountryWorldwide();
     WiFi.begin();
     _wifiConnState = 1;
     _wifiConnMs    = millis();
