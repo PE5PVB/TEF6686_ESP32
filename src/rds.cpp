@@ -416,8 +416,12 @@ void readRds() {
     char hexbuf[5];  // buffer for 4-digit HEX
 
     // RDS Spy output
+    static uint16_t pendingBlocks[4] = {0, 0, 0, 0};
+    static bool pendingErrors[4] = {true, true, true, true};
+    static bool pendingValid = false;
+    static unsigned long pendingTicker = 0;
+
     if (RDSstatus && radio.rds.hasCompleteGroup && (RDSSPYUSB || RDSSPYTCP)) {
-      RDSSPYRDS = F("G:\r\n");
       uint16_t blocks[4] = {radio.rds.rdsA, radio.rds.rdsB,
                             radio.rds.rdsC, radio.rds.rdsD
                            };
@@ -425,18 +429,43 @@ void readRds() {
                         radio.rds.rdsCerror, radio.rds.rdsDerror
                        };
 
+      bool sameGroup = pendingValid && (blocks[0] == pendingBlocks[0]) && (blocks[1] == pendingBlocks[1]);
+
+      if (pendingValid && !sameGroup) {
+        RDSSPYRDS = F("G:\r\n");
+        for (uint8_t i = 0; i < 4; i++) {
+          if (pendingErrors[i]) {
+            RDSSPYRDS += F("----");
+          } else {
+            sprintf(hexbuf, "%04X", pendingBlocks[i]);
+            RDSSPYRDS += hexbuf;
+          }
+        }
+        RDSSPYRDS += F("\r\n\r\n");
+        if (RDSSPYUSB) Serial.print(RDSSPYRDS);
+        if (RDSSPYTCP) RemoteClient.print(RDSSPYRDS);
+      }
+
       for (uint8_t i = 0; i < 4; i++) {
-        if (errors[i]) {
+        pendingBlocks[i] = blocks[i];
+        pendingErrors[i] = errors[i];
+      }
+      pendingValid = true;
+      pendingTicker = millis();
+    } else if (pendingValid && (millis() - pendingTicker > 200)) {
+      RDSSPYRDS = F("G:\r\n");
+      for (uint8_t i = 0; i < 4; i++) {
+        if (pendingErrors[i]) {
           RDSSPYRDS += F("----");
         } else {
-          sprintf(hexbuf, "%04X", blocks[i]); // format word into HEX
+          sprintf(hexbuf, "%04X", pendingBlocks[i]);
           RDSSPYRDS += hexbuf;
         }
       }
       RDSSPYRDS += F("\r\n\r\n");
-
       if (RDSSPYUSB) Serial.print(RDSSPYRDS);
       if (RDSSPYTCP) RemoteClient.print(RDSSPYRDS);
+      pendingValid = false;
     }
 
     // XDRGTK output
