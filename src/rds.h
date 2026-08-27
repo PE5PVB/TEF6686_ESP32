@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include <TFT_eSPI.h>
 #include <WiFiClient.h>
-#include "TEF6686.h"
+#include "TEF668X.h"
 #include <WiFi.h>
 #include <ESP32Time.h>
 

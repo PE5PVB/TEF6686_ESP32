@@ -7,7 +7,7 @@
 #include <WiFiUdp.h>
 #include <ESP32Time.h>              // https://github.com/fbiego/ESP32Time
 #include <TimeLib.h>
-#include "TEF6686.h"
+#include "TEF668X.h"
 
 static const char ntpServerName[] = "0.pool.ntp.org";
 static const int localPort = 8944;

@@ -21,7 +21,7 @@ using fs::FS;
 #include "src/FONT28_CHS.h"
 #include "src/FONT48DEC.h"
 #include "src/FREQFONT.h"
-#include "src/TEF6686.h"
+#include "src/TEF668X.h"
 #include "src/constants.h"
 #include "src/language.h"
 #include "src/gui.h"

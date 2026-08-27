@@ -8,7 +8,7 @@
 using fs::FS;
 #include <WebServer.h>
 #include <SPIFFS.h>
-#include "TEF6686.h"
+#include "TEF668X.h"
 
 extern bool autoDST;
 extern bool clockampm;

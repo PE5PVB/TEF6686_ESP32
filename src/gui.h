@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include <TFT_eSPI.h>
-#include "TEF6686.h"
+#include "TEF668X.h"
 #include "WiFiConnect.h"
 #include "menugraphics.h"
 
