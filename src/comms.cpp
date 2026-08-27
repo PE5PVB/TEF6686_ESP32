@@ -860,10 +860,10 @@ void XDRGTKRoutine() {
             BWset = BWsetRecall;
             doBW();
             XDRScan = false;
-            if (VolSet != 0) {
+            if (!XDRMute) {
               radio.setUnMute();
               if (!screenmute) tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
-              radio.setVolume(((VolSet * 10) - 40) / 10);
+              radio.setVolume(VolSet);
             }
             break;
         }
@@ -897,8 +897,10 @@ void XDRGTKRoutine() {
         break;
 
       case 'Y':
-        VolSet = atoi(buff + 1);
-        if (VolSet == 0) {
+        int xdrvol;
+        xdrvol = atoi(buff + 1);
+        if (xdrvol == 0) {
+          VolSet = 0;
           radio.setMute();
           if (!screenmute) tft.drawBitmap(249, 4, Speaker, 28, 24, PrimaryColor);
           XDRMute = true;
@@ -906,11 +908,17 @@ void XDRGTKRoutine() {
         } else {
           radio.setUnMute();
           if (!screenmute) tft.drawBitmap(249, 4, Speaker, 28, 24, GreyoutColor);
-          radio.setVolume((VolSet - 40) / 10);
+          // VolSet holds the volume in dB and is what the menu shows, what is
+          // written to EEPROM and what is fed to setVolume everywhere else.
+          // Keep it equal to the level actually applied, or the display and
+          // the audio disagree.
+          VolSet = (xdrvol - 40) / 10;
+          if (VolSet > 10) VolSet = 10;
+          if (VolSet < -10) VolSet = -10;
+          radio.setVolume(VolSet);
           XDRMute = false;
         }
-        DataPrint("Y" + String(VolSet) + "\n");
-        VolSet /= 10;
+        DataPrint("Y" + String(xdrvol) + "\n");
         break;
 
       case 'x':
