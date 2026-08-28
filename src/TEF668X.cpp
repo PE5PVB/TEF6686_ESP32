@@ -593,7 +593,7 @@ void TEF6686::processRDSGroup(byte showrdserrors) {
       }
     }
 
-    if (((!rdsAerrorThreshold && !rdsBerrorThreshold && !rdsCerrorThreshold && !rdsDerrorThreshold) || (rds.pierrors && !errorfreepi))) {
+    if (!rdsAerrorThreshold || (rds.pierrors && !errorfreepi)) {
       if (piold == 0 || rds.rdsA != piold) {
         piold = rds.rdsA;
         rds.picode[0] = (rds.rdsA >> 12) & 0xF;
