@@ -11,6 +11,7 @@ extern TEF6686 radio;
 extern bool advancedRDS;
 extern bool afpage;
 extern bool afscreen;
+extern bool batteryWarningActive;
 extern bool bwtouchtune;
 extern bool BWtune;
 extern bool freqkeypadtune;

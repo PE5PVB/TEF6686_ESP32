@@ -71,6 +71,7 @@ bool autolog;
 bool autologged;
 bool autosquelch = true;
 bool batterydetect = true;
+bool batteryWarningActive;
 bool beepresetstart;
 bool beepresetstop;
 bool BWreset;
@@ -442,6 +443,7 @@ unsigned long afticker;
 unsigned long aftickerhold;
 unsigned long aftimer;
 unsigned long autosquelchtimer;
+unsigned long batteryWarningTimer;
 unsigned long blockcounterold[33];
 unsigned long eonticker;
 unsigned long eontickerhold;
@@ -1037,6 +1039,9 @@ void loop() {
     if (millis() >= tottimer + totprobe) deepSleep();
   }
 
+  CheckBatteryWarning();
+
+  if (!batteryWarningActive) {
   if (!freqkeypadtune && !freqBandPicker && freq_in != 0 && millis() >= keypadtimer + 3000) {
     freq_in = 0;
     ShowFreq(0);
@@ -1349,10 +1354,14 @@ void loop() {
       if (!screenmute && !rdsstatscreen && !afscreen && !advancedRDS) ShowModLevel();
     }
   }
+  }
 
   if (rotary == -1) {
     tottimer = millis();
-    if (screensavertriggered) {
+    if (batteryWarningActive) {
+      batteryWarningActive = false;
+      BuildDisplay();
+    } else if (screensavertriggered) {
       if (!touchrotating) {
         rotary = 0;
         WakeToSleep(REVERSE);
@@ -1371,7 +1380,10 @@ void loop() {
 
   if (rotary == 1) {
     tottimer = millis();
-    if (screensavertriggered) {
+    if (batteryWarningActive) {
+      batteryWarningActive = false;
+      BuildDisplay();
+    } else if (screensavertriggered) {
       if (!touchrotating) {
         rotary = 0;
         WakeToSleep(REVERSE);
@@ -1390,7 +1402,11 @@ void loop() {
 
   if (digitalRead(BANDBUTTON) == LOW) {
     tottimer = millis();
-    if (screensavertriggered) {
+    if (batteryWarningActive) {
+      batteryWarningActive = false;
+      BuildDisplay();
+      while (digitalRead(BANDBUTTON) == LOW);
+    } else if (screensavertriggered) {
       WakeToSleep(REVERSE);
       while (digitalRead(BANDBUTTON) == LOW);
     } else {
@@ -1400,7 +1416,11 @@ void loop() {
 
   if (digitalRead(ROTARY_BUTTON) == LOW) {
     tottimer = millis();
-    if (screensavertriggered) {
+    if (batteryWarningActive) {
+      batteryWarningActive = false;
+      BuildDisplay();
+      while (digitalRead(ROTARY_BUTTON) == LOW);
+    } else if (screensavertriggered) {
       WakeToSleep(REVERSE);
       while (digitalRead(ROTARY_BUTTON) == LOW);
     } else {
@@ -1410,7 +1430,11 @@ void loop() {
 
   if (digitalRead(MODEBUTTON) == LOW) {
     tottimer = millis();
-    if (screensavertriggered) {
+    if (batteryWarningActive) {
+      batteryWarningActive = false;
+      BuildDisplay();
+      while (digitalRead(MODEBUTTON) == LOW);
+    } else if (screensavertriggered) {
       WakeToSleep(REVERSE);
       while (digitalRead(MODEBUTTON) == LOW);
     } else {
@@ -1420,7 +1444,11 @@ void loop() {
 
   if (digitalRead(BWBUTTON) == LOW && !BWtune && !freqkeypadtune && !freqBandPicker) {
     tottimer = millis();
-    if (screensavertriggered) {
+    if (batteryWarningActive) {
+      batteryWarningActive = false;
+      BuildDisplay();
+      while (digitalRead(BWBUTTON) == LOW);
+    } else if (screensavertriggered) {
       WakeToSleep(REVERSE);
       while (digitalRead(BWBUTTON) == LOW);
     } else {
@@ -4194,6 +4222,25 @@ void ShowBattery() {
   }
   batteryVold = 0;
   vPerold = 0;
+}
+
+void CheckBatteryWarning() {
+  if (!batterydetect || wifi || screenmute || batteryWarningActive) return;
+  if (menu || BWtune || freqkeypadtune || freqBandPicker || afscreen || rdsstatscreen || scandxmode) return;
+  if (batteryWarningTimer != 0 && millis() - batteryWarningTimer < TIMER_BATTERY_WARNING_REPEAT) return;
+
+  float v = analogReadMilliVolts(BATTERY_PIN) * 0.002; // assume a half divider
+  if (v > BAT_LEVEL_WARN) return;
+
+  batteryWarningActive = true;
+  batteryWarningTimer = millis();
+
+  tft.drawRoundRect(10, 30, 300, 170, 5, ActiveColor);
+  tft.fillRoundRect(12, 32, 296, 166, 5, BackgroundColor);
+  tftPrint(ACENTER, textUI(328), 160, 90, ActiveColor, ActiveColorSmooth, 28);
+  tftPrint(ACENTER, textUI(329), 160, 140, ActiveColor, ActiveColorSmooth, 16);
+
+  radio.tone(200, -5, 2000);
 }
 
 void DataPrint(String string) {

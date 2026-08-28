@@ -3,6 +3,11 @@
 #include <EEPROM.h>
 
 void doTouchEvent(uint16_t x, uint16_t y) {
+  if (batteryWarningActive) {
+    batteryWarningActive = false;
+    BuildDisplay();
+    return;
+  }
   if (seek) radio.setUnMute();
   seek = false;
   if (scandxmode) {

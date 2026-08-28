@@ -22,6 +22,7 @@
 #define TIMER_SNR_TIMER             100
 #define TIMER_BAT_TIMER             (TIMER_500_TICK)
 #define TIMER_500_TICK              500
+#define TIMER_BATTERY_WARNING_REPEAT 60000
 
 #define BAT_LEVEL_EMPTY             2.82
 #define BAT_LEVEL_WARN              3

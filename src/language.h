@@ -3,7 +3,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[23][328] PROGMEM = {
+static const char* const myLanguage[23][330] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -331,7 +331,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "Direct tuning" // 327
+    "Direct tuning", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Nederlands", // Dutch
@@ -661,7 +663,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP-adres", // 324
     "Subnetmasker", // 325
     "Gateway", // 326
-    "Directe frequentieinvoer" // 327
+    "Directe frequentieinvoer", // 327
+    "Batterij bijna leeg", // 328
+    "DRUK OP EEN KNOP OM TE SLUITEN" // 329
   },
 
   { "Polski", // Polish
@@ -991,7 +995,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "Bezpośrednie strojenie" // 327
+    "Bezpośrednie strojenie", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Hrvatski", // Croatian
@@ -1321,7 +1327,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "Izravno ugađanje" // 327
+    "Izravno ugađanje", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Ελληνικά", // Greek
@@ -1651,7 +1659,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "Άμεσος συντονισμός" // 327
+    "Άμεσος συντονισμός", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Română", // Romanian
@@ -1981,7 +1991,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "Acordare directă" // 327
+    "Acordare directă", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Deutsch", // German
@@ -2311,7 +2323,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP-Adresse", // 324
     "Subnetzmaske", // 325
     "Gateway", // 326
-    "Direkte Abstimmung" // 327
+    "Direkte Abstimmung", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Čeština", // Czech
@@ -2641,7 +2655,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "Přímé ladění" // 327
+    "Přímé ladění", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Magyar", // Hungarian
@@ -2971,7 +2987,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "Közvetlen hangolás" // 327
+    "Közvetlen hangolás", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Français", // French
@@ -3301,7 +3319,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "Accord direct" // 327
+    "Accord direct", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Български", // Bulgarian
@@ -3631,7 +3651,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "Директно настройване" // 327
+    "Директно настройване", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Русский", // Russian
@@ -3961,7 +3983,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "Прямая настройка" // 327
+    "Прямая настройка", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Українська", // Ukranian
@@ -4291,7 +4315,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "Пряме налаштування" // 327
+    "Пряме налаштування", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Italiano", // Italian
@@ -4621,7 +4647,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "Sintonia diretta" // 327
+    "Sintonia diretta", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4951,7 +4979,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "直接调谐" // 327
+    "直接调谐", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Norsk", // Norwegian
@@ -5281,7 +5311,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "Direkte innstilling" // 327
+    "Direkte innstilling", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Español", // Spanish
@@ -5611,7 +5643,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "Sintonización directa" // 327
+    "Sintonización directa", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Português", // Portuguese
@@ -5941,7 +5975,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "Sintonização direta" // 327
+    "Sintonização direta", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Srpski", // Serbian
@@ -6271,7 +6307,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "Директно подешавање" // 327
+    "Директно подешавање", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Suomi", // Finnish
@@ -6601,7 +6639,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "Suora viritys" // 327
+    "Suora viritys", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Dansk", // Danish
@@ -6931,7 +6971,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "Direkte indstilling" // 327
+    "Direkte indstilling", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Svenska", // Swedish
@@ -7261,7 +7303,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "Direktinställning" // 327
+    "Direktinställning", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   },
 
   { "Gaeilge", // Irish
@@ -7591,7 +7635,9 @@ static const char* const myLanguage[23][328] PROGMEM = {
     "IP address", // 324
     "Subnet mask", // 325
     "Gateway", // 326
-    "Tiúnadh díreach" // 327
+    "Tiúnadh díreach", // 327
+    "Battery almost empty", // 328
+    "PRESS ANY BUTTON TO CLOSE" // 329
   }
 };
 #endif
