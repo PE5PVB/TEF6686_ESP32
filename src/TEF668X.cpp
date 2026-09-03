@@ -732,8 +732,8 @@ void TEF6686::processRDSGroup(byte showrdserrors) {
             offset = rds.rdsB & 0x03;                                                           // Let's get the character offset for PS
 
             bool psCharErrorNow = ((rds.rdsErr >> 8) & 0x03) > 1;
-            rds.psCharError[(offset * 2) + 0] = psCharErrorNow;
-            rds.psCharError[(offset * 2) + 1] = psCharErrorNow;
+            psCharErrorPending[(offset * 2) + 0] = psCharErrorNow;
+            psCharErrorPending[(offset * 2) + 1] = psCharErrorNow;
 
             uint8_t psInfoError = (rds.rdsErr >> 12) & 0x03;
             uint8_t psDataError = (rds.rdsErr >> 8) & 0x03;
@@ -791,6 +791,11 @@ void TEF6686::processRDSGroup(byte showrdserrors) {
 
             bool psForceFast = (rds.fastps == 2) || (rds.fastps == 1 && !psComplete);
 
+            if (psForceFast) {
+              rds.psCharError[position + 0] = psCharErrorPending[position + 0];
+              rds.psCharError[position + 1] = psCharErrorPending[position + 1];
+            }
+
             if (!psForceFast && psWasComplete) {
               if (psCommitChanged) {
                 for (uint8_t i = 0; i < 8; i++) psPushSeen[i] = false;
@@ -818,6 +823,9 @@ void TEF6686::processRDSGroup(byte showrdserrors) {
             }
 
             if (psPush) {
+              if (!psForceFast) {
+                for (uint8_t i = 0; i < 8; i++) rds.psCharError[i] = psCharErrorPending[i];
+              }
               psChars[8] = '\0';
               RDScharConverter(psChars, PStext, sizeof(PStext) / sizeof(wchar_t), (underscore > 0 ? true : false));
               String utf8String = convertToUTF8(PStext);
@@ -1886,6 +1894,7 @@ void TEF6686::clearRDS (bool fullsearchrds) {
     psChars[i] = 0x20;
     psCharErrorLevel[i] = 255;
     rds.psCharError[i] = true;
+    psCharErrorPending[i] = true;
     PStext[i] = L'\0';
     ptyn_buffer[i] = 0x20;
     PTYNtext[i] = L'\0';

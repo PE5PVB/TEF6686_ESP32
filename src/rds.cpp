@@ -650,7 +650,7 @@ void showPS() {
   // Check if station name or errors have changed, or long PS should be displayed
   bool psCharErrorChanged = false;
   for (uint8_t i = 0; i < 8; i++) {
-    if (psCharErrorOld[i] != radio.rds.psCharError[i]) { psCharErrorChanged = true; break; }
+    if (psCharErrorOld[i] && !radio.rds.psCharError[i]) { psCharErrorChanged = true; break; }
   }
 
   if ((radio.rds.stationName != PSold) ||
@@ -704,11 +704,9 @@ void showPS() {
         PSSprite.fillSprite(BackgroundColor);
 
         // Calculate widths for individual characters (ensures proper spacing)
+        int trailerWidth = PSSprite.textWidth(" ");
         for (int i = 0; i < 7; i++) {
-          lengths[i] = PSSprite.textWidth(radio.rds.stationName.substring(0, i + 1));
-          if (i > 0 && lengths[i] <= lengths[i - 1]) {
-            lengths[i] = lengths[i - 1] + 23; // Ensure consistent spacing
-          }
+          lengths[i] = PSSprite.textWidth(radio.rds.stationName.substring(0, i + 1) + " ") - trailerWidth;
         }
 
         for (uint8_t i = 0; i < 8; i++) {
