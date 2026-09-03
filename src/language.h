@@ -2324,8 +2324,8 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Subnetzmaske", // 325
     "Gateway", // 326
     "Direkte Abstimmung", // 327
-    "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "Der Akku ist fast leer", // 328
+    "DRÜCKE EINEN KNOPF ZUM SCHLIESSEN" // 329
   },
 
   { "Čeština", // Czech
