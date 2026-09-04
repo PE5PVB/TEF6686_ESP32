@@ -5105,7 +5105,7 @@ void rabbitearssend () {
   if (RabbitearsClient.connect("rabbitears.info", 80)) {
     String payload = RabbitearsHeader + json.length() + "\r\n\r\n" + json;
     RabbitearsClient.print(payload);
-    RabbitearsClient.flush();
+    RabbitearsClient.clear();
     RabbitearsClient.stop();
   }
 }

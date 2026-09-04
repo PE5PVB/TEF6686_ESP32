@@ -167,15 +167,15 @@ void Communication() {
 
     if (Server.hasClient()) {
       if (RemoteClient.connected()) {
-        Server.available().stop();
+        Server.accept().stop();
       } else {
         wificonnected = true;
-        RemoteClient = Server.available();
+        RemoteClient = Server.accept();
         passwordcrypt();
         RemoteClient.print(saltkey + "\n");
       }
     } else {
-      if (Server.hasClient()) Server.available().stop();
+      if (Server.hasClient()) Server.accept().stop();
     }
 
     if (wificonnected && !RemoteClient.connected()) {

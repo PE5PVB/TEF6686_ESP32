@@ -448,9 +448,9 @@ void readRds() {
 
       // Pack error bits
       uint8_t erroutput = 0;
-      erroutput |= ((radio.rds.rdsErr >> 8) & B00110000) >> 4;
-      erroutput |= ((radio.rds.rdsErr >> 8) & B00001100);
-      erroutput |= ((radio.rds.rdsErr >> 8) & B00000011) << 4;
+      erroutput |= ((radio.rds.rdsErr >> 8) & 0b00110000) >> 4;
+      erroutput |= ((radio.rds.rdsErr >> 8) & 0b00001100);
+      erroutput |= ((radio.rds.rdsErr >> 8) & 0b00000011) << 4;
 
       sprintf(hexbuf, "%X%X", (erroutput >> 4) & 0xF, erroutput & 0xF);
       XDRGTKRDS += hexbuf;
@@ -1343,9 +1343,9 @@ void ShowRDSStatistics() {
 
     // --- Advanced error levels (0=clean, 1=small, 2=medium, 3=big) ---
     int errA = (radio.rds.rdsErr >> 14) & 0x03;
-    int errB = ((radio.rds.rdsErr >> 8) & B00110000) >> 4;
-    int errC = ((radio.rds.rdsErr >> 8) & B00001100) >> 2;
-    int errD = (radio.rds.rdsErr & B00000011);
+    int errB = ((radio.rds.rdsErr >> 8) & 0b00110000) >> 4;
+    int errC = ((radio.rds.rdsErr >> 8) & 0b00001100) >> 2;
+    int errD = (radio.rds.rdsErr & 0b00000011);
 
     // Aggressive weights per error level
     const int weights[4] = {0, 2, 6, 12};

@@ -115,7 +115,7 @@ RdsGroupBuffer::set(Block    blockId,
     }
 
     this->rdsData[blockId] = value;
-    this->rdsError &= ~(B11 << (6 - 2 * blockId));
+    this->rdsError &= ~(0b11 << (6 - 2 * blockId));
     this->rdsError |= error << (6 - 2 * blockId);
 
     for (Block i = (Block)(blockId + 1); i <= BLOCK_D; i = (Block)(i + 1))
@@ -164,7 +164,7 @@ void
 RdsGroupBuffer::invalidate(Block blockId)
 {
     this->rdsData[blockId] = 0;
-    this->rdsError |= (B11 << (6 - 2 * blockId));
+    this->rdsError |= (0b11 << (6 - 2 * blockId));
 }
 
 uint16_t TEF6686::getBlockA(void) {
