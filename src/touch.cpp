@@ -189,8 +189,11 @@ void doTouchEvent(uint16_t x, uint16_t y) {
       for (byte i = 0; i < freqPickerCount; i++) {
         int by = startY + i * 40;
         if (y > by && y < by + 32 && x > 10 && x < 310) {
-          freqPickerSel = i;
-          FreqPickerConfirm();
+          ApplyBandMatch(freqPickerBands[i], freqPickerFreqs[i]);
+          freqBandPicker = false;
+          freqkeypadtune = false;
+          BuildDisplay();
+          SelectBand();
           break;
         }
       }

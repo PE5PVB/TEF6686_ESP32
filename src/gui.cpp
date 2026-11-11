@@ -2925,28 +2925,25 @@ void BuildFreqBandPicker() {
 }
 
 void showFreqBandPicker() {
-  for (byte i = 0; i < freqPickerCount; i++) drawFreqPickerItem(i, i == freqPickerSel);
-}
-
-void drawFreqPickerItem(byte i, bool selected) {
   int totalHeight = freqPickerCount * 40 - 8;
   int startY = 30 + (210 - totalHeight) / 2;
   if (startY < 35) startY = 35;
-  int y = startY + i * 40;
 
-  tft.drawRect(10, y, 300, 32, selected ? PrimaryColor : GreyoutColor);
-  tft.drawRect(11, y + 1, 298, 30, selected ? PrimaryColor : BackgroundColor);
+  for (byte i = 0; i < freqPickerCount; i++) {
+    int y = startY + i * 40;
+    tft.drawRect(10, y, 300, 32, GreyoutColor);
 
-  String label;
-  int f = freqPickerFreqs[i];
-  switch (freqPickerBands[i]) {
-    case BAND_FM:   label = "FM " + String(f / 100) + "." + (f % 100 < 10 ? "0" : "") + String(f % 100) + " MHz"; break;
-    case BAND_OIRT: label = "OIRT " + String(f / 100) + "." + (f % 100 < 10 ? "0" : "") + String(f % 100) + " MHz"; break;
-    case BAND_LW:   label = "LW " + String(f) + " kHz"; break;
-    case BAND_MW:   label = "MW " + String(f) + " kHz"; break;
-    case BAND_SW:   label = "SW " + String(f) + " kHz"; break;
+    String label;
+    int f = freqPickerFreqs[i];
+    switch (freqPickerBands[i]) {
+      case BAND_FM:   label = "FM " + String(f / 100) + "." + (f % 100 < 10 ? "0" : "") + String(f % 100) + " MHz"; break;
+      case BAND_OIRT: label = "OIRT " + String(f / 100) + "." + (f % 100 < 10 ? "0" : "") + String(f % 100) + " MHz"; break;
+      case BAND_LW:   label = "LW " + String(f) + " kHz"; break;
+      case BAND_MW:   label = "MW " + String(f) + " kHz"; break;
+      case BAND_SW:   label = "SW " + String(f) + " kHz"; break;
+    }
+    tftPrint(ACENTER, label, 160, y + 8, ActiveColor, ActiveColorSmooth, 16);
   }
-  tftPrint(ACENTER, label, 160, y + 8, ActiveColor, ActiveColorSmooth, 16);
 }
 
 void BuildMenu() {

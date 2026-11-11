@@ -82,7 +82,6 @@ bool freqBandPicker;
 byte freqPickerCount;
 byte freqPickerBands[5];
 int freqPickerFreqs[5];
-byte freqPickerSel;
 bool change;
 bool clockampm;
 bool compressedold;
@@ -1369,10 +1368,10 @@ void loop() {
         rotary = 0;
         WakeToSleep(REVERSE);
       } else {
-        if (BWtune) doBWtuneUp(); else if (freqBandPicker) doFreqPickerNext(); else if (!freqkeypadtune) KeyUp();
+        if (BWtune) doBWtuneUp(); else if (!freqkeypadtune && !freqBandPicker) KeyUp();
       }
     } else {
-      if (BWtune) doBWtuneUp(); else if (freqBandPicker) doFreqPickerNext(); else if (!freqkeypadtune) KeyUp();
+      if (BWtune) doBWtuneUp(); else if (!freqkeypadtune && !freqBandPicker) KeyUp();
       if (rotaryaccelerate && rotarycounter > 2 && !BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
         for (int i = 0; i < rotarycounteraccelerator; i++) KeyUp();
         rotarycounter = 0;
@@ -1391,10 +1390,10 @@ void loop() {
         rotary = 0;
         WakeToSleep(REVERSE);
       } else {
-        if (BWtune) doBWtuneDown(); else if (freqBandPicker) doFreqPickerPrev(); else if (!freqkeypadtune) KeyDown();
+        if (BWtune) doBWtuneDown(); else if (!freqkeypadtune && !freqBandPicker) KeyDown();
       }
     } else {
-      if (BWtune) doBWtuneDown(); else if (freqBandPicker) doFreqPickerPrev(); else if (!freqkeypadtune) KeyDown();
+      if (BWtune) doBWtuneDown(); else if (!freqkeypadtune && !freqBandPicker) KeyDown();
       if (rotaryaccelerate && rotarycounter > 2 && !BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
         for (int i = 0; i < rotarycounteraccelerator; i++) KeyDown();
         rotarycounter = 0;
@@ -1427,10 +1426,7 @@ void loop() {
       WakeToSleep(REVERSE);
       while (digitalRead(ROTARY_BUTTON) == LOW);
     } else {
-      if (freqBandPicker) {
-        while (digitalRead(ROTARY_BUTTON) == LOW) delay(10);
-        FreqPickerConfirm();
-      } else if (!afscreen && !rdsstatscreen && !freqkeypadtune) ButtonPress();
+      if (!afscreen && !rdsstatscreen && !freqkeypadtune && !freqBandPicker) ButtonPress();
     }
   }
 
@@ -1480,11 +1476,6 @@ void loop() {
         ShowNum(freq_in);
       } else if (freqkeypadtune && num == 13) {
         FreqKeypadConfirm();
-      } else if (freqBandPicker && num >= 1 && num <= freqPickerCount) {
-        freqPickerSel = num - 1;
-        FreqPickerConfirm();
-      } else if (freqBandPicker && num == 13) {
-        FreqPickerConfirm();
       }
     }
   }
@@ -5535,34 +5526,9 @@ int TuneFreq(int temp) {
     freqPickerBands[i] = matchBands[i];
     freqPickerFreqs[i] = matchFreqs[i];
   }
-  freqPickerSel = 0;
   freqBandPicker = true;
   BuildFreqBandPicker();
   return 2;
-}
-
-void doFreqPickerNext() {
-  rotary = 0;
-  drawFreqPickerItem(freqPickerSel, false);
-  freqPickerSel++;
-  if (freqPickerSel >= freqPickerCount) freqPickerSel = 0;
-  drawFreqPickerItem(freqPickerSel, true);
-}
-
-void doFreqPickerPrev() {
-  rotary = 0;
-  drawFreqPickerItem(freqPickerSel, false);
-  if (freqPickerSel == 0) freqPickerSel = freqPickerCount - 1; else freqPickerSel--;
-  drawFreqPickerItem(freqPickerSel, true);
-}
-
-void FreqPickerConfirm() {
-  ApplyBandMatch(freqPickerBands[freqPickerSel], freqPickerFreqs[freqPickerSel]);
-  freqBandPicker = false;
-  freqkeypadtune = false;
-  freq_in = 0;
-  BuildDisplay();
-  SelectBand();
 }
 
 void FreqKeypadConfirm() {
