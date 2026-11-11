@@ -183,17 +183,20 @@ void TEF6686::TestAFEON() {
   uint16_t afusn;
   uint16_t afwam;
   int16_t afoffset;
-  byte timing;
 
   if (af_counter != 0) {
     setMute();
     for (int x = 0; x < af_counter; x++) {
-      timing = 0;
       devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 3, af[x].frequency);
-      while (timing == 0 && !bitRead(timing, 15)) {
+      // Poll Get_Quality_Status until the AF_Update sample is there (bit 15 set, or time
+      // stamp non-zero), then read it once with Get_Quality_Data. That read releases the
+      // frozen AF sample; without it every later quality read (display, averaging and the
+      // next TestAF) keeps returning this AF's values until the next Tune_To (UM 4.1).
+      for (byte tries = 0; tries < 250; tries++) {
         devTEF_Radio_Get_Quality_Status(&status, &aflevel, &afusn, &afwam, &afoffset, &dummy1, &dummy2, &dummy3);
-        timing = lowByte(status);
+        if (bitRead(status, 15) || (status & 0x3FF) != 0) break;
       }
+      devTEF_Radio_Get_Quality_Data(&status, &aflevel, &afusn, &afwam, &afoffset, &dummy1, &dummy2, &dummy3);
       if (afoffset > -125 && afoffset < 125) {
         devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, af[x].frequency);
         delay(187);
@@ -234,18 +237,20 @@ uint16_t TEF6686::TestAF() {
     uint16_t currentwam;
     int16_t currentoffset;
 
-    byte timing;
-
     devTEF_Radio_Get_Quality_Status(&status, &currentlevel, &currentusn, &currentwam, &currentoffset, &dummy1, &dummy2, &dummy3);
     devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
 
     for (int x = 0; x < af_counter; x++) {
-      timing = 0;
       devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 3, af[x].frequency);
-      while (timing == 0 && !bitRead(timing, 15)) {
+      // Poll Get_Quality_Status until the AF_Update sample is there (bit 15 set, or time
+      // stamp non-zero), then read it once with Get_Quality_Data. That read releases the
+      // frozen AF sample; without it every later quality read (display, averaging and the
+      // next TestAF) keeps returning this AF's values until the next Tune_To (UM 4.1).
+      for (byte tries = 0; tries < 250; tries++) {
         devTEF_Radio_Get_Quality_Status(&status, &aflevel, &afusn, &afwam, &afoffset, &dummy1, &dummy2, &dummy3);
-        timing = lowByte(status);
+        if (bitRead(status, 15) || (status & 0x3FF) != 0) break;
       }
+      devTEF_Radio_Get_Quality_Data(&status, &aflevel, &afusn, &afwam, &afoffset, &dummy1, &dummy2, &dummy3);
       af[x].score = aflevel - afusn - afwam;
       if (afoffset < -125 || afoffset > 125) af[x].score = -32767;
     }
@@ -560,8 +565,10 @@ void TEF6686::readRDS(byte showrdserrors) {
   rds.rdsC = groupData[2];
   rds.rdsD = groupData[3];
   rds.rdsErr = ((uint16_t)groupErr) << 8;
-  bitSet(rds.rdsStat, 9);
-  bitSet(rds.rdsStat, 15);
+  // Groups only enter the buffer when status bit 13 (first-PI-only event) is clear,
+  // so rebuild the status from scratch here. Otherwise a bit 13 left behind by the
+  // Get_RDS_Status read in TestAF() would disable all group decoding until reboot.
+  rds.rdsStat = (1 << 9) | (1 << 15);
 
   processRDSGroup(showrdserrors);
 }

@@ -214,9 +214,9 @@ bool devTEF_Radio_Get_Processing_Status (uint16_t *highcut, uint16_t *stereo, ui
   return r;
 }
 
-bool devTEF_Radio_Get_Quality_Status (uint16_t *status, int16_t *level, uint16_t *usn, uint16_t *wam, int16_t *offset, uint16_t *bandwidth, uint16_t *mod, int8_t *snr) {
+static bool devTEF_Radio_Get_Quality_FM (uint8_t cmd, uint16_t *status, int16_t *level, uint16_t *usn, uint16_t *wam, int16_t *offset, uint16_t *bandwidth, uint16_t *mod, int8_t *snr) {
   uint8_t buf[14];
-  bool r = devTEF_Get_Cmd(TEF_FM, Cmd_Get_Quality_Status, buf, sizeof(buf));
+  bool r = devTEF_Get_Cmd(TEF_FM, cmd, buf, sizeof(buf));
   *status = Convert8bto16b(buf);
   *level = Convert8bto16b(buf + 2);
   *usn = Convert8bto16b(buf + 4);
@@ -228,6 +228,17 @@ bool devTEF_Radio_Get_Quality_Status (uint16_t *status, int16_t *level, uint16_t
   if (*level > 1200) *level = 1200;
   *snr = int(0.46222375 * (float)(*level) / 10 - 0.082495118 * (float)(*usn) / 10) + 10;
   return r;
+}
+
+// Get_Quality_Status (128): status poll, frozen AF_Update sample data stays frozen.
+bool devTEF_Radio_Get_Quality_Status (uint16_t *status, int16_t *level, uint16_t *usn, uint16_t *wam, int16_t *offset, uint16_t *bandwidth, uint16_t *mod, int8_t *snr) {
+  return devTEF_Radio_Get_Quality_FM(Cmd_Get_Quality_Status, status, level, usn, wam, offset, bandwidth, mod, snr);
+}
+
+// Get_Quality_Data (129): same data, but releases frozen AF_Update sample data after the
+// read so the detectors return to continuous data for the current frequency (UM 4.1).
+bool devTEF_Radio_Get_Quality_Data (uint16_t *status, int16_t *level, uint16_t *usn, uint16_t *wam, int16_t *offset, uint16_t *bandwidth, uint16_t *mod, int8_t *snr) {
+  return devTEF_Radio_Get_Quality_FM(Cmd_Get_Quality_Data, status, level, usn, wam, offset, bandwidth, mod, snr);
 }
 
 bool devTEF_Radio_Get_Quality_Status_AM (int16_t *level, uint16_t *noise, uint16_t *cochannel, int16_t *offset, uint16_t *bandwidth, uint16_t *mod, int8_t *snr) {
