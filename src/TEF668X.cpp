@@ -199,19 +199,24 @@ void TEF6686::TestAFEON() {
       devTEF_Radio_Get_Quality_Data(&status, &aflevel, &afusn, &afwam, &afoffset, &dummy1, &dummy2, &dummy3);
       if (afoffset > -125 && afoffset < 125) {
         devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, af[x].frequency);
-        delay(187);
-        devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
+        // Wait up to 300 ms for the first PI of the new frequency (status bit 15 = data
+        // available) instead of sampling once after a fixed delay.
+        unsigned long piwait = millis();
+        do {
+          delay(10);
+          devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
+        } while (!bitRead(rds.rdsStat, 15) && millis() - piwait < 300);
 
-        if (rds.rdsStat & (1 << 9)) {
+        if (bitRead(rds.rdsStat, 15)) {
           if ((afmethodB && rds.afreg ? (((rds.rdsA >> 8) & 0xF) > 2 && ((rds.correctPI >> 8) & 0xF) > 2 && ((rds.rdsA >> 12) & 0xF) == ((rds.correctPI >> 12) & 0xF) && (rds.rdsA & 0xFF) == (rds.correctPI & 0xFF)) || rds.rdsA == rds.correctPI : rds.rdsA == rds.correctPI)) {
             af[x].checked = true;
             af[x].afvalid = true;
           } else {
             af[x].checked = false;
-            af[x].afvalid = false;
+            af[x].afvalid = false;             // a different PI: really not our program
           }
         } else {
-          af[x].checked = false;
+          af[x].checked = false;               // no RDS yet: unknown, not invalid
         }
       }
     }
@@ -267,9 +272,14 @@ uint16_t TEF6686::TestAF() {
 
     if (af_counter != 0 && af[highestIndex].afvalid && af[highestIndex].score > (currentlevel - currentusn - currentwam) && (af[highestIndex].score - (currentlevel - currentusn - currentwam)) >= 70) {
       devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, af[highestIndex].frequency);
-      delay(187);
-      devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
-      if (rds.rdsStat & (1 << 9)) {
+      // Wait up to 300 ms for the first PI of the new frequency (status bit 15 = data
+      // available) instead of sampling once after a fixed delay.
+      unsigned long piwait = millis();
+      do {
+        delay(10);
+        devTEF_Radio_Get_RDS_Status(&rds.rdsStat, &rds.rdsA, &rds.rdsB, &rds.rdsC, &rds.rdsD, &rds.rdsErr);
+      } while (!bitRead(rds.rdsStat, 15) && millis() - piwait < 300);
+      if (bitRead(rds.rdsStat, 15)) {
         if ((afmethodB && rds.afreg ? (((rds.rdsA >> 8) & 0xF) > 2 && ((rds.correctPI >> 8) & 0xF) > 2 && ((rds.rdsA >> 12) & 0xF) == ((rds.correctPI >> 12) & 0xF) && (rds.rdsA & 0xFF) == (rds.correctPI & 0xFF)) || rds.rdsA == rds.correctPI : rds.rdsA == rds.correctPI)) {
           currentfreq = af[highestIndex].frequency;
           for (byte y = 0; y < 50; y++) {
@@ -280,10 +290,11 @@ uint16_t TEF6686::TestAF() {
           }
           af_counter = 0;
         } else {
-          af[highestIndex].afvalid = false;
+          af[highestIndex].afvalid = false;    // a different PI: really not our program
           devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, currentfreq);
         }
       } else {
+        // No RDS data within the window: tune back but keep the AF valid for a retry.
         devTEF_Set_Cmd(TEF_FM, Cmd_Tune_To, 7, 4, currentfreq);
       }
     }
