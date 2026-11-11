@@ -581,6 +581,13 @@ void setup() {
   AMLevelOffset = EEPROM.readInt(EE_INT16_AMLEVELOFFSET);
   unit = EEPROM.readByte(EE_BYTE_UNIT);
   af = EEPROM.readByte(EE_BYTE_AF);
+  // AF cannot work behind a converter: the RDS AF list carries the real broadcast
+  // frequencies, which do not exist on the tuner side of the converter.
+  if (ConverterSet != 0 && af != 0) {
+    af = 0;
+    EEPROM.writeByte(EE_BYTE_AF, 0);
+    EEPROM.commit();
+  }
   if (af == 2) radio.rds.afreg = true; else radio.rds.afreg = false;
   StereoToggle = EEPROM.readByte(EE_BYTE_STEREO);
   batteryoptions = EEPROM.readByte(EE_BYTE_BATTERY_OPTIONS);

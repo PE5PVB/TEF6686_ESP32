@@ -565,7 +565,7 @@ void BuildRDSStatScreen() {
 
 
 void BuildAFScreen() {
-  if (!afscreen && RDSstatus) {
+  if (!afscreen && RDSstatus && ConverterSet == 0) {  // AF quality check is meaningless behind a converter
     tft.drawRoundRect(20, 30, 274, 170, 5, ActiveColor);
     tft.fillRoundRect(22, 32, 270, 166, 5, BackgroundColor);
     tftPrint(ACENTER, textUI(34), 155, 98, ActiveColor, ActiveColorSmooth, 28);
@@ -3914,7 +3914,9 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM6:
-            if (dir) {
+            if (ConverterSet != 0) {
+              af = 0;                              // AF stays off behind a converter
+            } else if (dir) {
               af++;
               if (af > 2) af = 0;
             } else {
@@ -3992,6 +3994,8 @@ void MenuUpDown(bool dir) {
               Wire.write(ConverterSet >> 8);
               Wire.write(ConverterSet & (0xFF));
               Wire.endTransmission();
+              af = 0;                              // AF cannot work behind a converter
+              radio.rds.afreg = false;
             }
 
             OneBigLineSprite.setTextDatum(TL_DATUM);
