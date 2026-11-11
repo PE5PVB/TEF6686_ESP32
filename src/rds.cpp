@@ -492,19 +492,19 @@ void ShowErrors() {
   if (calc != rdsqualityold || BWreset) {
     switch (calc) {
       case 0:
-        tft.fillRoundRect(205, (advancedRDS ? 74 : 186), 4, 26, 2, BarInsignificantColor);
-        tft.fillRoundRect(199, (advancedRDS ? 80 : 192), 4, 20, 2, BarInsignificantColor);
-        tft.fillRoundRect(193, (advancedRDS ? 86 : 198), 4, 14, 2, BarInsignificantColor);
-        tft.fillRoundRect(187, (advancedRDS ? 92 : 204), 4, 8, 2, BarInsignificantColor);
+        tft.fillRoundRect(205, (advancedRDS ? 74 : 186), 4, 26, 2, PrimaryColor);
+        tft.fillRoundRect(199, (advancedRDS ? 80 : 192), 4, 20, 2, PrimaryColor);
+        tft.fillRoundRect(193, (advancedRDS ? 86 : 198), 4, 14, 2, PrimaryColor);
+        tft.fillRoundRect(187, (advancedRDS ? 92 : 204), 4, 8, 2, PrimaryColor);
         break;
 
       case 1:
         tft.fillRoundRect(205, (advancedRDS ? 74 : 186), 4, 26, 2, BackgroundColor);
         tft.drawRoundRect(205, (advancedRDS ? 74 : 186), 4, 26, 2, GreyoutColor);
 
-        tft.fillRoundRect(199, (advancedRDS ? 80 : 192), 4, 20, 2, BarInsignificantColor);
-        tft.fillRoundRect(193, (advancedRDS ? 86 : 198), 4, 14, 2, BarInsignificantColor);
-        tft.fillRoundRect(187, (advancedRDS ? 92 : 204), 4, 8, 2, BarInsignificantColor);
+        tft.fillRoundRect(199, (advancedRDS ? 80 : 192), 4, 20, 2, PrimaryColor);
+        tft.fillRoundRect(193, (advancedRDS ? 86 : 198), 4, 14, 2, PrimaryColor);
+        tft.fillRoundRect(187, (advancedRDS ? 92 : 204), 4, 8, 2, PrimaryColor);
         break;
 
       case 2:
@@ -514,8 +514,8 @@ void ShowErrors() {
         tft.fillRoundRect(199, (advancedRDS ? 80 : 192), 4, 20, 2, BackgroundColor);
         tft.drawRoundRect(199, (advancedRDS ? 80 : 192), 4, 20, 2, GreyoutColor);
 
-        tft.fillRoundRect(193, (advancedRDS ? 86 : 198), 4, 14, 2, BarSignificantColor);
-        tft.fillRoundRect(187, (advancedRDS ? 92 : 204), 4, 8, 2, BarSignificantColor);
+        tft.fillRoundRect(193, (advancedRDS ? 86 : 198), 4, 14, 2, SecondaryColor);
+        tft.fillRoundRect(187, (advancedRDS ? 92 : 204), 4, 8, 2, SecondaryColor);
         break;
 
       case 3:
@@ -528,7 +528,7 @@ void ShowErrors() {
         tft.fillRoundRect(193, (advancedRDS ? 86 : 198), 4, 14, 2, BackgroundColor);
         tft.drawRoundRect(193, (advancedRDS ? 86 : 198), 4, 14, 2, GreyoutColor);
 
-        tft.fillRoundRect(187, (advancedRDS ? 92 : 204), 4, 8, 2, BarSignificantColor);
+        tft.fillRoundRect(187, (advancedRDS ? 92 : 204), 4, 8, 2, SecondaryColor);
         break;
 
       case 4:
