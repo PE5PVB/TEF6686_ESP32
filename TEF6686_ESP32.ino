@@ -5596,17 +5596,18 @@ int TuneFreq(int temp) {
     return 0;
   }
 
-  // Direct entry prefers the current band, so 9900 on FM is 99.00 MHz at once.
-  for (byte i = 0; i < count; i++) {
-    if (matchBands[i] == band || count == 1) {
-      ApplyBandMatch(matchBands[i], matchFreqs[i]);
-      return 1;
-    }
+  if (count == 1) {
+    ApplyBandMatch(matchBands[0], matchFreqs[0]);
+    return 1;
   }
 
-  // Valid in more than one other band: let the user pick it on the entry screen.
+  // Valid in more than one band: show the entry screen so the user can choose.
+  // The current band is preselected when it is one of the candidates.
   OpenFreqInput(temp);
   freqInputBand = matchBands[0];
+  for (byte i = 0; i < count; i++) {
+    if (matchBands[i] == band) freqInputBand = band;
+  }
   showFreqKeypad();
   return 2;
 }
