@@ -3015,14 +3015,66 @@ void BuildFreqKeypad() {
   showFreqKeypad();
 }
 
-void showFreqKeypad() {
+// Band validity for the digits entered so far; also returns the frequency the
+// selected band would tune to (0 = none).
+static int FreqInputMatches(bool validBands[5]) {
   byte matches[5];
   int freqs[5];
   byte count = FindBandMatches(freq_in, matches, freqs);
   int normalized = 0;
-  for (byte i = 0; i < count; i++) {
-    if (matches[i] == freqInputBand) normalized = freqs[i];
+  for (byte i = 0; i < 5; i++) {
+    validBands[i] = !freq_in;
+    for (byte j = 0; j < count; j++) if (matches[j] == freqInputBands[i]) validBands[i] = true;
   }
+  for (byte j = 0; j < count; j++) if (matches[j] == freqInputBand) normalized = freqs[j];
+  return normalized;
+}
+
+static void drawFreqInputBand(byte i, bool valid) {
+  const FreqInputRect bounds = FreqInputBounds(i);
+  bool selected = freqInputBand == freqInputBands[i];
+  tft.fillRect(bounds.x, bounds.y, bounds.w, bounds.h, selected ? FrameColor : BackgroundColor);
+  tft.drawRect(bounds.x, bounds.y, bounds.w, bounds.h, freqKeyFocus == i ? PrimaryColor : GreyoutColor);
+  if (selected) tft.fillRect(bounds.x + 15, 91, 28, 2, PrimaryColor);
+  tftPrint(ACENTER, freqInputBandNames[i], bounds.x + 29, 73,
+           valid ? ActiveColor : GreyoutColor, selected ? FrameColor : BackgroundColor, 16);
+}
+
+static void drawFreqInputKey(byte key) {
+  if (!FreqInputControlVisible(key + 5)) return;
+  const FreqInputRect bounds = FreqInputBounds(key + 5);
+  const int x = bounds.x + 2, y = bounds.y + 2;
+  tft.fillRect(bounds.x, bounds.y, bounds.w, bounds.h, BackgroundColor);
+  tft.drawRect(bounds.x, bounds.y, bounds.w, bounds.h,
+               freqKeyFocus == key + 5 ? PrimaryColor : GreyoutColor);
+  tft.pushImage(x, y, 70, 30, CurrentTheme == 7 ? bwselector_wo : bwselector);
+  if (key == 14) {
+    // Draw <- on one centerline; font glyph baselines differ between languages.
+    tft.fillRect(x + 25, y + 14, 23, 2, ActiveColor);
+    for (int d = 0; d < 8; ++d) {
+      tft.fillRect(x + 25 + d, y + 14 - d, 2, 2, ActiveColor);
+      tft.fillRect(x + 25 + d, y + 14 + d, 2, 2, ActiveColor);
+    }
+  } else {
+    tftPrint(ACENTER, freqInputKeys[key], x + 35, y + 5, ActiveColor, ActiveColorSmooth, 16);
+  }
+}
+
+// One control only: used when the rotary focus moves, so the rest stays untouched.
+void drawFreqInputControl(byte focus) {
+  if (focus < 5) {
+    bool valid[5];
+    FreqInputMatches(valid);
+    drawFreqInputBand(focus, valid[focus]);
+  } else {
+    drawFreqInputKey(focus - 5);
+  }
+}
+
+// Preview line and band row: everything that depends on the digits or the band.
+void showFreqInputStatus() {
+  bool valid[5];
+  int normalized = FreqInputMatches(valid);
   tft.fillRect(4, 30, 312, 34, BackgroundColor);
   // Show exactly what will be tuned, in addition to the digits being entered.
   String preview = String(freq_in);
@@ -3034,38 +3086,12 @@ void showFreqKeypad() {
   tftPrint(ACENTER, preview, 160, 39,
            normalized || !freq_in ? PrimaryColor : SignificantColor,
            PrimaryColorSmooth, 16);
-  for (byte i = 0; i < 5; i++) {
-    const FreqInputRect bounds = FreqInputBounds(i);
-    int x = bounds.x;
-    bool selected = freqInputBand == freqInputBands[i];
-    bool valid = !freq_in;
-    for (byte j = 0; j < count; j++) if (matches[j] == freqInputBands[i]) valid = true;
-    tft.fillRect(bounds.x, bounds.y, bounds.w, bounds.h, selected ? FrameColor : BackgroundColor);
-    tft.drawRect(bounds.x, bounds.y, bounds.w, bounds.h, freqKeyFocus == i ? PrimaryColor : GreyoutColor);
-    if (selected) tft.fillRect(x + 15, 91, 28, 2, PrimaryColor);
-    tftPrint(ACENTER, freqInputBandNames[i], x + 29, 73,
-             valid ? ActiveColor : GreyoutColor, selected ? FrameColor : BackgroundColor, 16);
-  }
-  for (byte key = 0; key < 16; key++) {
-    if (FreqInputControlVisible(key + 5)) {
-      const FreqInputRect bounds = FreqInputBounds(key + 5);
-      const int x = bounds.x + 2, y = bounds.y + 2;
-      tft.fillRect(bounds.x, bounds.y, bounds.w, bounds.h, BackgroundColor);
-      tft.drawRect(bounds.x, bounds.y, bounds.w, bounds.h,
-                   freqKeyFocus == key + 5 ? PrimaryColor : GreyoutColor);
-      tft.pushImage(x, y, 70, 30, CurrentTheme == 7 ? bwselector_wo : bwselector);
-      if (key == 14) {
-        // Draw <- on one centerline; font glyph baselines differ between languages.
-        tft.fillRect(x + 25, y + 14, 23, 2, ActiveColor);
-        for (int d = 0; d < 8; ++d) {
-          tft.fillRect(x + 25 + d, y + 14 - d, 2, 2, ActiveColor);
-          tft.fillRect(x + 25 + d, y + 14 + d, 2, 2, ActiveColor);
-        }
-      } else {
-        tftPrint(ACENTER, freqInputKeys[key], x + 35, y + 5, ActiveColor, ActiveColorSmooth, 16);
-      }
-    }
-  }
+  for (byte i = 0; i < 5; i++) drawFreqInputBand(i, valid[i]);
+}
+
+void showFreqKeypad() {
+  showFreqInputStatus();
+  for (byte key = 0; key < 16; key++) drawFreqInputKey(key);
 }
 
 void BuildFreqBandPicker() {

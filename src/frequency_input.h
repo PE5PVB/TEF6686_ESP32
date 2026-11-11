@@ -42,4 +42,6 @@ void FreqInputNumber(int num);
 void FreqInputMove(bool dir);
 void FreqInputCycleBand();
 void FreqInputBackspace();
+void drawFreqInputControl(byte focus);
+void showFreqInputStatus();
 #endif

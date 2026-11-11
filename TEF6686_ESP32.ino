@@ -5710,7 +5710,7 @@ void FreqKeypadConfirm() {
     return;
   }
   // Invalid or empty input stays editable, without changing the tuner.
-  showFreqKeypad();
+  showFreqInputStatus();
   tft.drawRect(4, 30, 312, 34, SignificantColor);
   if (edgebeep) EdgeBeeper();
 }
@@ -5721,7 +5721,7 @@ void FreqInputNumber(int num) {
   screensavertimer = millis();
   if (num >= 0 && num <= 9) {
     if (freq_in < 10000) freq_in = freq_in * 10 + num;
-    showFreqKeypad();
+    showFreqInputStatus();
   } else if (num == 13) {
     FreqKeypadConfirm();
   }
@@ -5729,7 +5729,7 @@ void FreqInputNumber(int num) {
 
 void FreqInputBackspace() {
   freq_in /= 10;
-  showFreqKeypad();
+  showFreqInputStatus();
 }
 
 // Activates a control: 0..4 band buttons, 5..20 keypad cells (7 and 11 are empty).
@@ -5738,7 +5738,7 @@ void FreqInputAction(byte focus) {
   screensavertimer = millis();
   if (focus < 5) {
     freqInputBand = freqInputBands[focus];
-    showFreqKeypad();
+    showFreqInputStatus();
     return;
   }
   switch (focus - 5) {
@@ -5746,7 +5746,7 @@ void FreqInputAction(byte focus) {
     case 4: case 5: case 6: FreqInputNumber(focus - 5); break;
     case 8: case 9: case 10: FreqInputNumber(focus - 6); break;
     case 3: CancelFreqEntry(); break;
-    case 12: freq_in = 0; showFreqKeypad(); break;
+    case 12: freq_in = 0; showFreqInputStatus(); break;
     case 13: FreqInputNumber(0); break;
     case 14: FreqInputBackspace(); break;
     case 15: FreqKeypadConfirm(); break;
@@ -5758,10 +5758,13 @@ void FreqInputMove(bool dir) {
   rotary = 0;
   bool forward = (hardwaremodel == BASE_ILI9341) ? dir : !dir;
   int step = forward ? 1 : 20;
+  byte previous = freqKeyFocus;
   do {
     freqKeyFocus = (freqKeyFocus + step) % 21;
   } while (!FreqInputControlVisible(freqKeyFocus));
-  showFreqKeypad();
+  // Only the two affected controls change, so leave the rest of the screen alone.
+  drawFreqInputControl(previous);
+  drawFreqInputControl(freqKeyFocus);
 }
 
 // BAND button steps through the band buttons.
@@ -5769,7 +5772,7 @@ void FreqInputCycleBand() {
   byte i = 0;
   while (i < 5 && freqInputBands[i] != freqInputBand) i++;
   freqInputBand = freqInputBands[(i + 1) % 5];
-  showFreqKeypad();
+  showFreqInputStatus();
 }
 
 void NumpadProcess(int num) {
