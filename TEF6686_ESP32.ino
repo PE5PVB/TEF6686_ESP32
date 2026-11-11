@@ -4202,6 +4202,21 @@ void ShowRSSI() {
   }
 }
 
+void CycleBatteryDisplay() {
+  screensavertimer = millis();
+  tottimer = millis();
+  batteryoptions = (batteryoptions + 1) % RADIO_BATTERY_CNT;
+  EEPROM.writeByte(EE_BYTE_BATTERY_OPTIONS, batteryoptions);
+  EEPROM.commit();
+  // Erase the previous representation and invalidate all cached values.
+  tft.fillRect(277, 3, 41, 25, BackgroundColor);
+  batteryold = 255;
+  batteryVold = -100;
+  vPerold = -100;
+  batupdatetimer = millis() - TIMER_BAT_TIMER;
+  ShowBattery();
+}
+
 void ShowBattery() {
   if (millis() - batupdatetimer >= TIMER_BAT_TIMER) {  // overflow safe
     batupdatetimer = millis();

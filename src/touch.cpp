@@ -98,6 +98,11 @@ void doTouchEvent(uint16_t x, uint16_t y) {
     }
 
     if (!menu && !BWtune && !freqkeypadtune && !freqBandPicker) {         // All pages except menu
+      if (x >= 276 && x < 319 && y >= 1 && y < 30 && batterydetect && !wifi && !screenmute) {
+        touchrepeat = false;
+        CycleBatteryDisplay();                                            // Battery icon: cycle display mode
+        return;
+      }
       if (x > 30 && x < 65 && y > 0 && y < 30 && band < BAND_GAP) {       // ---------------------
         doStereoToggle();                                                 // Stereo toggle
         return;
