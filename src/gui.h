@@ -24,6 +24,7 @@ extern bool freqkeypadtune;
 extern bool freqBandPicker;
 extern byte freqPickerCount;
 extern byte freqPickerSel;
+extern byte freqKeyFocus;
 extern byte freqPickerBands[5];
 extern int freqPickerFreqs[5];
 extern bool change;

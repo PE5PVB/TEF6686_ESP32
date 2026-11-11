@@ -81,6 +81,7 @@ bool freqkeypadtune;
 bool freqBandPicker;
 byte freqPickerCount;
 byte freqPickerSel;
+byte freqKeyFocus;
 byte freqPickerBands[5];
 int freqPickerFreqs[5];
 bool change;
@@ -1369,10 +1370,10 @@ void loop() {
         rotary = 0;
         WakeToSleep(REVERSE);
       } else {
-        if (BWtune) doBWtuneUp(); else if (freqBandPicker) FreqPickerMove(true); else if (!freqkeypadtune) KeyUp();
+        if (BWtune) doBWtuneUp(); else if (freqBandPicker) FreqPickerMove(true); else if (freqkeypadtune) FreqKeypadMove(true); else KeyUp();
       }
     } else {
-      if (BWtune) doBWtuneUp(); else if (freqBandPicker) FreqPickerMove(true); else if (!freqkeypadtune) KeyUp();
+      if (BWtune) doBWtuneUp(); else if (freqBandPicker) FreqPickerMove(true); else if (freqkeypadtune) FreqKeypadMove(true); else KeyUp();
       if (rotaryaccelerate && rotarycounter > 2 && !BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
         for (int i = 0; i < rotarycounteraccelerator; i++) KeyUp();
         rotarycounter = 0;
@@ -1391,10 +1392,10 @@ void loop() {
         rotary = 0;
         WakeToSleep(REVERSE);
       } else {
-        if (BWtune) doBWtuneDown(); else if (freqBandPicker) FreqPickerMove(false); else if (!freqkeypadtune) KeyDown();
+        if (BWtune) doBWtuneDown(); else if (freqBandPicker) FreqPickerMove(false); else if (freqkeypadtune) FreqKeypadMove(false); else KeyDown();
       }
     } else {
-      if (BWtune) doBWtuneDown(); else if (freqBandPicker) FreqPickerMove(false); else if (!freqkeypadtune) KeyDown();
+      if (BWtune) doBWtuneDown(); else if (freqBandPicker) FreqPickerMove(false); else if (freqkeypadtune) FreqKeypadMove(false); else KeyDown();
       if (rotaryaccelerate && rotarycounter > 2 && !BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
         for (int i = 0; i < rotarycounteraccelerator; i++) KeyDown();
         rotarycounter = 0;
@@ -1430,7 +1431,10 @@ void loop() {
       if (freqBandPicker) {
         FreqPickerConfirm();
         while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
-      } else if (!afscreen && !rdsstatscreen && !freqkeypadtune) {
+      } else if (freqkeypadtune) {
+        FreqKeypadAction();
+        while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
+      } else if (!afscreen && !rdsstatscreen) {
         ButtonPress();
       }
     }
@@ -5610,6 +5614,45 @@ int TuneFreq(int temp) {
 // Moves the highlight on the frequency band picker. Sets without a touch
 // screen have no other way to pick a row. The dir flag means the same thing
 // as in MenuUpDown, so the knob turns the same way on both screens.
+// Keypad buttons on the 4 x 4 grid: 7 and 11 are empty cells and are skipped.
+static bool FreqKeypadButtonExists(byte pos) {
+  return pos < 16 && pos != 7 && pos != 11;
+}
+
+void FreqKeypadMove(bool dir) {
+  rotary = 0;
+  bool forward = (hardwaremodel == BASE_ILI9341) ? dir : !dir;   // same rule as MenuUpDown
+  do {
+    if (forward) freqKeyFocus = (freqKeyFocus + 1) % 16;
+    else freqKeyFocus = (freqKeyFocus + 15) % 16;
+  } while (!FreqKeypadButtonExists(freqKeyFocus));
+  showFreqKeypad();
+}
+
+void FreqKeypadAction() {
+  int digit = -1;
+  switch (freqKeyFocus) {
+    case 0: digit = 1; break;
+    case 1: digit = 2; break;
+    case 2: digit = 3; break;
+    case 4: digit = 4; break;
+    case 5: digit = 5; break;
+    case 6: digit = 6; break;
+    case 8: digit = 7; break;
+    case 9: digit = 8; break;
+    case 10: digit = 9; break;
+    case 13: digit = 0; break;
+    case 3: CancelFreqEntry(); return;              // X
+    case 12: freq_in = 0; ShowNum(freq_in); return; // C
+    case 14: freq_in = freq_in / 10; ShowNum(freq_in); return; // backspace
+    case 15: FreqKeypadConfirm(); return;           // OK
+  }
+  if (digit != -1) {
+    if (freq_in / 10000 == 0) freq_in = freq_in * 10 + digit;
+    ShowNum(freq_in);
+  }
+}
+
 void FreqPickerMove(bool dir) {
   rotary = 0;
   if (freqPickerCount == 0) return;

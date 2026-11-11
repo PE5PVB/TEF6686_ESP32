@@ -2989,6 +2989,7 @@ void showBWSelector() {
 
 void BuildFreqKeypad() {
   freq_in = 0;
+  freqKeyFocus = 15;  // rotary cursor starts on OK
   switch (CurrentTheme) {
     case 7: tft.pushImage (0, 0, 320, 240, configurationbackground_wo); break;
     default: tft.pushImage (0, 0, 320, 240, configurationbackground); break;
@@ -2998,20 +2999,20 @@ void BuildFreqKeypad() {
 }
 
 void showFreqKeypad() {
-  drawButton("1", 0, false, false, 66, false, 4);
-  drawButton("2", 1, false, false, 66, false, 4);
-  drawButton("3", 2, false, false, 66, false, 4);
-  drawButton("X", 3, true, false, 66, false, 4);
-  drawButton("4", 4, false, false, 66, false, 4);
-  drawButton("5", 5, false, false, 66, false, 4);
-  drawButton("6", 6, false, false, 66, false, 4);
-  drawButton("7", 8, false, false, 66, false, 4);
-  drawButton("8", 9, false, false, 66, false, 4);
-  drawButton("9", 10, false, false, 66, false, 4);
-  drawButton("C", 12, false, false, 66, false, 4);
-  drawButton("0", 13, false, false, 66, false, 4);
-  drawButton("<-", 14, false, false, 66, false, 4);
-  drawButton("OK", 15, true, false, 66, false, 4);
+  drawButton("1", 0, false, freqKeyFocus == 0, 66, false, 4);
+  drawButton("2", 1, false, freqKeyFocus == 1, 66, false, 4);
+  drawButton("3", 2, false, freqKeyFocus == 2, 66, false, 4);
+  drawButton("X", 3, true, freqKeyFocus == 3, 66, false, 4);
+  drawButton("4", 4, false, freqKeyFocus == 4, 66, false, 4);
+  drawButton("5", 5, false, freqKeyFocus == 5, 66, false, 4);
+  drawButton("6", 6, false, freqKeyFocus == 6, 66, false, 4);
+  drawButton("7", 8, false, freqKeyFocus == 8, 66, false, 4);
+  drawButton("8", 9, false, freqKeyFocus == 9, 66, false, 4);
+  drawButton("9", 10, false, freqKeyFocus == 10, 66, false, 4);
+  drawButton("C", 12, false, freqKeyFocus == 12, 66, false, 4);
+  drawButton("0", 13, false, freqKeyFocus == 13, 66, false, 4);
+  drawButton("<-", 14, false, freqKeyFocus == 14, 66, false, 4);
+  drawButton("OK", 15, true, freqKeyFocus == 15, 66, false, 4);
 }
 
 void BuildFreqBandPicker() {
