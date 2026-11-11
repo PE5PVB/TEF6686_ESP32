@@ -3068,6 +3068,57 @@ void showFreqKeypad() {
   }
 }
 
+void BuildFreqBandPicker() {
+  switch (CurrentTheme) {
+    case 7: tft.pushImage (0, 0, 320, 240, configurationbackground_wo); break;
+    default: tft.pushImage (0, 0, 320, 240, configurationbackground); break;
+  }
+  tftPrint(ACENTER, textUI(327), 160, 6, PrimaryColor, PrimaryColorSmooth, 16);
+  showFreqBandPicker();
+}
+
+// Row positions for the frequency band picker. gui.cpp draws with this and
+// touch.cpp hit tests with it, so the two cannot drift apart. The rows are
+// centred above the hint line at the bottom, and the spacing is tightened if
+// there are too many matches to fit.
+void FreqBandPickerLayout(int &startY, int &pitch) {
+  const int span = FREQPICKER_HINT_Y - FREQPICKER_TOP;
+  pitch = FREQPICKER_ROW_H + 8;
+  int totalHeight = freqPickerCount * pitch - (pitch - FREQPICKER_ROW_H);
+  if (totalHeight > span) {
+    pitch = FREQPICKER_ROW_H + 2;
+    totalHeight = freqPickerCount * pitch - (pitch - FREQPICKER_ROW_H);
+  }
+  startY = FREQPICKER_TOP + (span - totalHeight) / 2;
+  if (startY < FREQPICKER_TOP) startY = FREQPICKER_TOP;
+}
+
+void showFreqBandPicker() {
+  int startY, pitch;
+  FreqBandPickerLayout(startY, pitch);
+
+  for (byte i = 0; i < freqPickerCount; i++) {
+    int y = startY + i * pitch;
+    tft.drawRect(10, y, 300, FREQPICKER_ROW_H, (i == freqPickerSel) ? PrimaryColor : GreyoutColor);
+
+    String label;
+    int f = freqPickerFreqs[i];
+    switch (freqPickerBands[i]) {
+      case BAND_FM:   label = "FM " + String(f / 100) + "." + (f % 100 < 10 ? "0" : "") + String(f % 100) + " MHz"; break;
+      case BAND_OIRT: label = "OIRT " + String(f / 100) + "." + (f % 100 < 10 ? "0" : "") + String(f % 100) + " MHz"; break;
+      case BAND_LW:   label = "LW " + String(f) + " kHz"; break;
+      case BAND_MW:   label = "MW " + String(f) + " kHz"; break;
+      case BAND_SW:   label = "SW " + String(f) + " kHz"; break;
+    }
+    bool selected = (i == freqPickerSel);
+    tftPrint(ACENTER, label, 160, y + 8, selected ? PrimaryColor : ActiveColor, selected ? PrimaryColorSmooth : ActiveColorSmooth, 16);
+  }
+
+  // Tells the user how to get out. Needed on sets without a touch screen,
+  // where nothing on this screen can be tapped.
+  tftPrint(ACENTER, textUI(184), 160, FREQPICKER_HINT_Y, SecondaryColor, SecondaryColorSmooth, 16);
+}
+
 void BuildMenu() {
   items[SCREENSETTINGS] = hardwaremodel == PORTABLE_TOUCH_ILI9341 ? 4 : 3;  // touch calibration only with touch
   advancedRDS = false;

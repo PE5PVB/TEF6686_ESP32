@@ -97,7 +97,7 @@ void doTouchEvent(uint16_t x, uint16_t y) {
       }
     }
 
-    if (!menu && !BWtune && !freqkeypadtune) {                           // All pages except menu
+    if (!menu && !BWtune && !freqkeypadtune && !freqBandPicker) {                           // All pages except menu
       if (x >= 276 && x < 319 && y >= 1 && y < 30 && batterydetect && !wifi && !screenmute) {
         touchrepeat = false;
         CycleBatteryDisplay();                                            // Battery icon: cycle display mode
@@ -182,6 +182,20 @@ void doTouchEvent(uint16_t x, uint16_t y) {
         showBWSelector();
         doBW();
         bwtouchtune = false;
+      }
+      return;
+    }
+
+    if (freqBandPicker) {                                                 // Band choice popup (DP-666 entry)
+      int startY, pitch;
+      FreqBandPickerLayout(startY, pitch);
+      for (byte i = 0; i < freqPickerCount; i++) {
+        int by = startY + i * pitch;
+        if (y >= by && y < by + pitch && x > 10 && x < 310) {
+          freqPickerSel = i;
+          FreqPickerConfirm();
+          return;
+        }
       }
       return;
     }

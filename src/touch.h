@@ -20,6 +20,11 @@ extern void CycleBatteryDisplay();
 extern bool bwtouchtune;
 extern bool BWtune;
 extern bool freqkeypadtune;
+extern bool freqBandPicker;
+extern byte freqPickerCount;
+extern byte freqPickerSel;
+extern byte freqPickerBands[5];
+extern int freqPickerFreqs[5];
 extern bool leave;
 extern bool menu;
 extern bool menuopen;
@@ -71,6 +76,8 @@ extern void ShowNum(int val, int color = -1, int colorSmooth = -1);
 extern void BuildFreqKeypad();
 extern void showFreqKeypad();
 extern void FreqKeypadConfirm();
+extern void FreqBandPickerLayout(int &startY, int &pitch);
+extern void FreqPickerConfirm();
 extern void ApplyBandMatch(byte b, int freq);
 
 #endif
