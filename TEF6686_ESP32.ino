@@ -787,23 +787,7 @@ void setup() {
   }
 
   if (digitalRead(BWBUTTON) == HIGH && digitalRead(ROTARY_BUTTON) == HIGH && digitalRead(MODEBUTTON) == LOW && digitalRead(BANDBUTTON) == HIGH) {
-    if (displayflip == 0) {
-      displayflip = 1;
-#ifdef ARS
-      tft.setRotation(2);
-#else
-      tft.setRotation(1);
-#endif
-    } else {
-      displayflip = 0;
-#ifdef ARS
-      tft.setRotation(0);
-#else
-      tft.setRotation(3);
-#endif
-    }
-    EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, displayflip);
-    EEPROM.commit();
+    ApplyScreenFlip(!displayflip);
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
     Infoboxprint(textUI(3));
     tftPrint(ACENTER, textUI(2), 155, 130, ActiveColor, ActiveColorSmooth, 28);
@@ -5861,3 +5845,20 @@ const char* textUI(uint16_t number) {
   }
 }
 
+void ApplyScreenFlip(byte flipped) {
+  if (displayflip == flipped) return;
+  displayflip = flipped;
+#ifdef ARS
+  tft.setRotation(displayflip ? 2 : 0);
+#else
+  tft.setRotation(displayflip ? 1 : 3);
+#endif
+  if (hardwaremodel == PORTABLE_TOUCH_ILI9341) {
+    // A 180 degree turn reverses both touch axes; the measured raw ranges stay valid.
+    TouchCalData[4] ^= 0x06;
+    tft.setTouch(TouchCalData);
+    EEPROM.writeUInt(EE_UINT16_CALTOUCH5, TouchCalData[4]);
+  }
+  EEPROM.writeByte(EE_BYTE_DISPLAYFLIP, displayflip);
+  EEPROM.commit();
+}
