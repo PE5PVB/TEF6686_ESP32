@@ -1487,6 +1487,11 @@ void loop() {
         ShowNum(freq_in);
       } else if (freqkeypadtune && num == 13) {
         FreqKeypadConfirm();
+      } else if (freqBandPicker && num >= 1 && num <= freqPickerCount) {
+        freqPickerSel = num - 1;  // digit picks the row directly
+        FreqPickerConfirm();
+      } else if (freqBandPicker && num == 13) {
+        FreqPickerConfirm();
       }
     }
   }
