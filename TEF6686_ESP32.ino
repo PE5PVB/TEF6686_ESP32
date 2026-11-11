@@ -916,6 +916,15 @@ void setup() {
   Wire.write(0xFF);
   Wire.write(0xFF);
   keypadpresent = (Wire.endTransmission() == 0);
+  if (keypadpresent) {
+    // Let the inputs settle, then discard one sample. The read also clears a pending INT.
+    delay(50);
+    Wire.beginTransmission(0x20);
+    Wire.write(0x00);
+    Wire.endTransmission();
+    Wire.requestFrom(0x20, 2);
+    while (Wire.available()) Wire.read();
+  }
 
   // Detect and read RX8010SJ RTC if present
   if (rx8010_init()) {
@@ -5386,35 +5395,74 @@ byte numval[16] = {
 };
 
 int GetNum(void) {
-  int16_t temp;
-  int cnt = 0;
-  unsigned int num;
+  // DP-666 keypad on a PCA9555: 12 keys on P0..P11, active low. P2 is skipped (it
+  // opened the menu spontaneously), P12..P15 are not connected and never count.
+  const uint16_t usable = 0x0FFB;
   static int heldNum = -1;
+  static bool firstRead = true;
+  static uint16_t stuckMask = 0;          // pins ignored until seen high again
+  static uint16_t lastLow = 0;            // previous sample, for confirmation
+  static unsigned long lowSince[16];      // when each pin went low, 0 = high
 
   Wire.beginTransmission(0x20);
   Wire.write(0x00);
   Wire.endTransmission();
   Wire.requestFrom(0x20, 2);
+  if (Wire.available() != 2) {
+    while (Wire.available()) Wire.read();
+    return -1;
+  }
+  uint16_t raw = Wire.read() & 0xFF;
+  raw |= (Wire.read() & 0xFF) << 8;
+  uint16_t low = (~raw) & usable;         // pressed pins
 
-  if (Wire.available() == 2) {
-    temp = Wire.read() & 0xFF;
-    temp |= (Wire.read() & 0xFF) * 256;
-    for (int i = 0; i < 16; i++) {
-      if (i != 2 && (temp & 0x01) == 0) {
-        num = numval[i];
-        cnt ++;
-      }
-      temp >>= 1;
+  if (firstRead) {
+    // A pin that is already low at boot is not a key press; ignore it until it releases.
+    firstRead = false;
+    stuckMask = low;
+    lastLow = low;
+    return -1;
+  }
+
+  unsigned long now = millis();
+  if (now == 0) now = 1;
+  for (byte b = 0; b < 16; b++) {
+    uint16_t bit = 1 << b;
+    if (!(usable & bit)) continue;
+    if (low & bit) {
+      if (lowSince[b] == 0) lowSince[b] = now;
+      else if (now - lowSince[b] > 2000) stuckMask |= bit;   // held or stuck: stop counting it
+    } else {
+      lowSince[b] = 0;
+      stuckMask &= ~bit;                                      // released: usable again
     }
-    if (cnt == 1) {
-      if (heldNum == -1) {
-        heldNum = num;
-        keypadtimer = millis();
-        return num;
-      }
-    } else if (cnt == 0) {
-      heldNum = -1;
+  }
+
+  uint16_t pressed = low & ~stuckMask;
+
+  // Accept a state only when two consecutive samples agree (glitch filter, 25 ms poll).
+  if (pressed != lastLow) {
+    lastLow = pressed;
+    return -1;
+  }
+
+  byte cnt = 0;
+  byte key = 0;
+  for (byte b = 0; b < 12; b++) {
+    if (pressed & (1 << b)) {
+      cnt++;
+      key = b;
     }
+  }
+
+  if (cnt == 1) {
+    if (heldNum == -1) {
+      heldNum = numval[key];
+      keypadtimer = millis();
+      return heldNum;
+    }
+  } else if (cnt == 0) {
+    heldNum = -1;
   }
 
   return -1;
