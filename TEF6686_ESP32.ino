@@ -5440,6 +5440,7 @@ void ShowNum(int val, int color, int colorSmooth) {
 }
 
 byte FindBandMatches(int temp, byte* outBands, int* outFreqs) {
+  if (temp <= 0 || temp > 99999) return 0;  // nothing sensible beyond five digits
   byte candidates[5] = { BAND_FM, BAND_OIRT, BAND_LW, BAND_MW, BAND_SW };
   byte count = 0;
 
