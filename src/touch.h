@@ -17,6 +17,7 @@ extern bool BWtune;
 extern bool freqkeypadtune;
 extern bool freqBandPicker;
 extern byte freqPickerCount;
+extern byte freqPickerSel;
 extern byte freqPickerBands[5];
 extern int freqPickerFreqs[5];
 extern bool leave;
@@ -72,5 +73,8 @@ extern void showFreqKeypad();
 extern void FreqKeypadConfirm();
 extern void ApplyBandMatch(byte b, int freq);
 extern void showFreqBandPicker();
+extern void FreqBandPickerLayout(int &startY, int &pitch);
+extern void CancelFreqEntry();
+extern void FreqPickerConfirm();
 
 #endif

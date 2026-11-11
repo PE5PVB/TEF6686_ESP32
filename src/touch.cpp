@@ -182,19 +182,17 @@ void doTouchEvent(uint16_t x, uint16_t y) {
     }
 
     if (freqBandPicker) {                                                 // Frequency band choice popup
-      int totalHeight = freqPickerCount * 40 - 8;
-      int startY = 30 + (210 - totalHeight) / 2;
-      if (startY < 35) startY = 35;
+      int startY, pitch;
+      FreqBandPickerLayout(startY, pitch);
 
+      // The hit band is the full pitch, not just the drawn row, so a tap in
+      // the gap between two rows still lands on one of them.
       for (byte i = 0; i < freqPickerCount; i++) {
-        int by = startY + i * 40;
-        if (y > by && y < by + 32 && x > 10 && x < 310) {
-          ApplyBandMatch(freqPickerBands[i], freqPickerFreqs[i]);
-          freqBandPicker = false;
-          freqkeypadtune = false;
-          BuildDisplay();
-          SelectBand();
-          break;
+        int by = startY + i * pitch;
+        if (y >= by && y < by + pitch && x > 10 && x < 310) {
+          freqPickerSel = i;
+          FreqPickerConfirm();
+          return;
         }
       }
       return;
@@ -239,10 +237,7 @@ void doTouchEvent(uint16_t x, uint16_t y) {
       } else if (doOK) {
         FreqKeypadConfirm();
       } else if (doCancel) {
-        freqkeypadtune = false;
-        freq_in = 0;
-        BuildDisplay();
-        SelectBand();
+        CancelFreqEntry();
       }
       return;
     }

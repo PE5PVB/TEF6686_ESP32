@@ -22,6 +22,11 @@
 #define TIMER_SNR_TIMER             100
 #define TIMER_BAT_TIMER             (TIMER_500_TICK)
 #define TIMER_500_TICK              500
+
+// Frequency band picker screen, see showFreqBandPicker() and doTouchEvent()
+#define FREQPICKER_ROW_H            32   // height of one band row
+#define FREQPICKER_TOP              34   // first row cannot start above this
+#define FREQPICKER_HINT_Y          220   // y of the "press mode to return" line
 #define TIMER_BATTERY_WARNING_REPEAT 60000
 
 #define BAT_LEVEL_EMPTY             2.82

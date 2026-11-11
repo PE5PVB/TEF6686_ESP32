@@ -80,6 +80,7 @@ bool BWtune;
 bool freqkeypadtune;
 bool freqBandPicker;
 byte freqPickerCount;
+byte freqPickerSel;
 byte freqPickerBands[5];
 int freqPickerFreqs[5];
 bool change;
@@ -1368,10 +1369,10 @@ void loop() {
         rotary = 0;
         WakeToSleep(REVERSE);
       } else {
-        if (BWtune) doBWtuneUp(); else if (!freqkeypadtune && !freqBandPicker) KeyUp();
+        if (BWtune) doBWtuneUp(); else if (freqBandPicker) FreqPickerMove(true); else if (!freqkeypadtune) KeyUp();
       }
     } else {
-      if (BWtune) doBWtuneUp(); else if (!freqkeypadtune && !freqBandPicker) KeyUp();
+      if (BWtune) doBWtuneUp(); else if (freqBandPicker) FreqPickerMove(true); else if (!freqkeypadtune) KeyUp();
       if (rotaryaccelerate && rotarycounter > 2 && !BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
         for (int i = 0; i < rotarycounteraccelerator; i++) KeyUp();
         rotarycounter = 0;
@@ -1390,10 +1391,10 @@ void loop() {
         rotary = 0;
         WakeToSleep(REVERSE);
       } else {
-        if (BWtune) doBWtuneDown(); else if (!freqkeypadtune && !freqBandPicker) KeyDown();
+        if (BWtune) doBWtuneDown(); else if (freqBandPicker) FreqPickerMove(false); else if (!freqkeypadtune) KeyDown();
       }
     } else {
-      if (BWtune) doBWtuneDown(); else if (!freqkeypadtune && !freqBandPicker) KeyDown();
+      if (BWtune) doBWtuneDown(); else if (freqBandPicker) FreqPickerMove(false); else if (!freqkeypadtune) KeyDown();
       if (rotaryaccelerate && rotarycounter > 2 && !BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
         for (int i = 0; i < rotarycounteraccelerator; i++) KeyDown();
         rotarycounter = 0;
@@ -1426,7 +1427,12 @@ void loop() {
       WakeToSleep(REVERSE);
       while (digitalRead(ROTARY_BUTTON) == LOW);
     } else {
-      if (!afscreen && !rdsstatscreen && !freqkeypadtune && !freqBandPicker) ButtonPress();
+      if (freqBandPicker) {
+        FreqPickerConfirm();
+        while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
+      } else if (!afscreen && !rdsstatscreen && !freqkeypadtune) {
+        ButtonPress();
+      }
     }
   }
 
@@ -1440,7 +1446,12 @@ void loop() {
       WakeToSleep(REVERSE);
       while (digitalRead(MODEBUTTON) == LOW);
     } else {
-      if (!screenmute && !freqkeypadtune && !freqBandPicker) ModeButtonPress();
+      if (freqBandPicker || freqkeypadtune) {
+        CancelFreqEntry();
+        while (digitalRead(MODEBUTTON) == LOW) delay(50);
+      } else if (!screenmute) {
+        ModeButtonPress();
+      }
     }
   }
 
@@ -5526,9 +5537,54 @@ int TuneFreq(int temp) {
     freqPickerBands[i] = matchBands[i];
     freqPickerFreqs[i] = matchFreqs[i];
   }
+  freqPickerSel = 0;
   freqBandPicker = true;
   BuildFreqBandPicker();
   return 2;
+}
+
+// Moves the highlight on the frequency band picker. Sets without a touch
+// screen have no other way to pick a row. The dir flag means the same thing
+// as in MenuUpDown, so the knob turns the same way on both screens.
+void FreqPickerMove(bool dir) {
+  rotary = 0;
+  if (freqPickerCount == 0) return;
+
+  bool forward = (hardwaremodel == BASE_ILI9341) ? dir : !dir;
+  if (forward) {
+    freqPickerSel++;
+    if (freqPickerSel >= freqPickerCount) freqPickerSel = 0;
+  } else {
+    if (freqPickerSel == 0) freqPickerSel = freqPickerCount - 1; else freqPickerSel--;
+  }
+
+  // Only the rows change, so redraw them and leave the background image alone.
+  // Same as doBWtuneUp using showBWSelector instead of BuildBWSelector.
+  showFreqBandPicker();
+}
+
+// Tunes the highlighted row and leaves the picker. Touch uses this too, after
+// setting freqPickerSel to the row that was tapped.
+void FreqPickerConfirm() {
+  if (freqPickerSel >= freqPickerCount) freqPickerSel = 0;
+  ApplyBandMatch(freqPickerBands[freqPickerSel], freqPickerFreqs[freqPickerSel]);
+  freqBandPicker = false;
+  freqkeypadtune = false;
+  freq_in = 0;
+  BuildDisplay();
+  SelectBand();
+}
+
+// Leaves direct frequency entry and goes back to the normal screen. Used by
+// the MODE button and by the keypad cancel button, so both paths clear the
+// same flags. Without this the band picker traps the radio, because every
+// button handler is blocked while freqBandPicker is set.
+void CancelFreqEntry() {
+  freqBandPicker = false;
+  freqkeypadtune = false;
+  freq_in = 0;
+  BuildDisplay();
+  SelectBand();
 }
 
 void FreqKeypadConfirm() {
@@ -5542,7 +5598,10 @@ void FreqKeypadConfirm() {
   } else if (result == 0) {
     ShowNum(freq_in, SignificantColor, SignificantColorSmooth);
   } else {
+    // The band picker is on screen now, so the keypad is gone. Clear its flag
+    // as well, or both screens are marked active at the same time.
     freq_in = 0;
+    freqkeypadtune = false;
   }
 }
 
