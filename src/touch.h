@@ -40,7 +40,7 @@ extern byte EQset;
 extern byte iMSEQ;
 extern byte iMSset;
 extern byte menuitem;
-extern byte items[10];
+extern byte items[];
 extern byte menupage;
 extern byte tunemode;
 extern int menuoption;

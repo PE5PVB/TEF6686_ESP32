@@ -3,7 +3,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[23][330] PROGMEM = {
+static const char* const myLanguage[23][350] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -333,7 +333,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Direct tuning", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "Input settings", // 330
+    "Frequency keypad", // 331
+    "INPUT", // 332
+    "MODE: BACK", // 333
+    "Device settings", // 334
+    "DEVICE", // 335
+    "Screen settings", // 336
+    "SCREEN", // 337
+    "Reverse encoder", // 338
+    "Optical encoder", // 339
+    "Flip screen 180°", // 340
+    "Invert colors", // 341
+    "Analog meter", // 342
+    "Factory reset", // 343
+    "No", // 344
+    "Yes", // 345
+    "Start calibration?", // 346
+    "Erase settings\nand presets?", // 347
+    "Release all\ncontrols", // 348
+    "Full scale" // 349
   },
 
   { "Nederlands", // Dutch
@@ -665,7 +685,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Directe frequentieinvoer", // 327
     "Batterij bijna leeg", // 328
-    "DRUK OP EEN KNOP OM TE SLUITEN" // 329
+    "DRUK OP EEN KNOP OM TE SLUITEN", // 329
+    "Invoerinstellingen", // 330
+    "Frequentietoetsen", // 331
+    "INVOER", // 332
+    "MODE: TERUG", // 333
+    "Apparaatinstellingen", // 334
+    "APPARAAT", // 335
+    "Scherminstellingen", // 336
+    "SCHERM", // 337
+    "Draairichting omkeren", // 338
+    "Optische encoder", // 339
+    "Scherm 180° draaien", // 340
+    "Kleuren omkeren", // 341
+    "Analoge meter", // 342
+    "Fabrieksreset", // 343
+    "Nee", // 344
+    "Ja", // 345
+    "Kalibratie starten?", // 346
+    "Instellingen en\nzenders wissen?", // 347
+    "Laat alle\nbedieningen los", // 348
+    "Volle uitslag" // 349
   },
 
   { "Polski", // Polish
@@ -997,7 +1037,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Bezpośrednie strojenie", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "Ustawienia wejścia", // 330
+    "Klawiatura częst.", // 331
+    "WEJŚCIE", // 332
+    "MODE: WSTECZ", // 333
+    "Ustawienia urządzenia", // 334
+    "URZĄDZENIE", // 335
+    "Ustawienia ekranu", // 336
+    "EKRAN", // 337
+    "Odwróć kierunek", // 338
+    "Enkoder optyczny", // 339
+    "Obróć ekran o 180°", // 340
+    "Odwróć kolory", // 341
+    "Miernik analogowy", // 342
+    "Reset fabryczny", // 343
+    "Nie", // 344
+    "Tak", // 345
+    "Rozpocząć kalibrację?", // 346
+    "Usunąć ustawienia\ni zapisane stacje?", // 347
+    "Zwolnij wszystkie\nprzyciski", // 348
+    "Pełna skala" // 349
   },
 
   { "Hrvatski", // Croatian
@@ -1329,7 +1389,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Izravno ugađanje", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "Postavke unosa", // 330
+    "Tipkovnica frekv.", // 331
+    "UNOS", // 332
+    "MODE: NATRAG", // 333
+    "Postavke uređaja", // 334
+    "UREĐAJ", // 335
+    "Postavke zaslona", // 336
+    "ZASLON", // 337
+    "Obrni smjer enkodera", // 338
+    "Optički enkoder", // 339
+    "Okreni zaslon 180°", // 340
+    "Obrni boje", // 341
+    "Analogni mjerač", // 342
+    "Tvorničke postavke", // 343
+    "Ne", // 344
+    "Da", // 345
+    "Pokrenuti kalibraciju?", // 346
+    "Obrisati postavke\ni spremljene postaje?", // 347
+    "Otpustite sve\nkontrole", // 348
+    "Puni otklon" // 349
   },
 
   { "Ελληνικά", // Greek
@@ -1661,7 +1741,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Άμεσος συντονισμός", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "Ρυθμίσεις εισόδου", // 330
+    "Αριθμ. πληκτρολόγιο", // 331
+    "ΕΙΣΟΔΟΣ", // 332
+    "MODE: ΕΠΙΣΤΡΟΦΗ", // 333
+    "Ρυθμίσεις συσκευής", // 334
+    "ΣΥΣΚΕΥΗ", // 335
+    "Ρυθμίσεις οθόνης", // 336
+    "ΟΘΟΝΗ", // 337
+    "Αντιστροφή ρότορα", // 338
+    "Οπτικός κωδικοποιητής", // 339
+    "Περιστροφή 180°", // 340
+    "Αντιστροφή χρωμάτων", // 341
+    "Αναλογικό όργανο", // 342
+    "Εργοστασιακή επαναφορά", // 343
+    "Όχι", // 344
+    "Ναι", // 345
+    "Έναρξη βαθμονόμησης;", // 346
+    "Διαγραφή ρυθμίσεων\nκαι σταθμών μνήμης;", // 347
+    "Αφήστε όλα\nτα χειριστήρια", // 348
+    "Πλήρης κλίμακα" // 349
   },
 
   { "Română", // Romanian
@@ -1993,7 +2093,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Acordare directă", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "Setări de intrare", // 330
+    "Tastatură frecv.", // 331
+    "INTRARE", // 332
+    "MODE: ÎNAPOI", // 333
+    "Setări dispozitiv", // 334
+    "DISPOZITIV", // 335
+    "Setări ecran", // 336
+    "ECRAN", // 337
+    "Inversare encoder", // 338
+    "Encoder optic", // 339
+    "Rotire ecran 180°", // 340
+    "Inversare culori", // 341
+    "Indicator analogic", // 342
+    "Resetare din fabrică", // 343
+    "Nu", // 344
+    "Da", // 345
+    "Începeți calibrarea?", // 346
+    "Ștergeți setările\nși posturile memorate?", // 347
+    "Eliberați toate\ncomenzile", // 348
+    "Scală completă" // 349
   },
 
   { "Deutsch", // German
@@ -2325,7 +2445,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Direkte Abstimmung", // 327
     "Der Akku ist fast leer", // 328
-    "DRÜCKE EINEN KNOPF ZUM SCHLIESSEN" // 329
+    "DRÜCKE EINEN KNOPF ZUM SCHLIESSEN", // 329
+    "Eingabeeinstellungen", // 330
+    "Frequenztastatur", // 331
+    "EINGABE", // 332
+    "MODE: ZURÜCK", // 333
+    "Geräteeinstellungen", // 334
+    "GERÄT", // 335
+    "Bildschirmeinstellungen", // 336
+    "BILDSCHIRM", // 337
+    "Drehrichtung umkehren", // 338
+    "Optischer Encoder", // 339
+    "Anzeige um 180° drehen", // 340
+    "Farben umkehren", // 341
+    "Analoges Messgerät", // 342
+    "Werkseinstellungen", // 343
+    "Nein", // 344
+    "Ja", // 345
+    "Kalibrierung starten?", // 346
+    "Einstellungen und\nSenderspeicher löschen?", // 347
+    "Alle Bedienelemente\nloslassen", // 348
+    "Vollausschlag" // 349
   },
 
   { "Čeština", // Czech
@@ -2657,7 +2797,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Přímé ladění", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "Nastavení vstupu", // 330
+    "Číselná klávesnice", // 331
+    "VSTUP", // 332
+    "MODE: ZPĚT", // 333
+    "Nastavení zařízení", // 334
+    "ZAŘÍZENÍ", // 335
+    "Nastavení displeje", // 336
+    "DISPLEJ", // 337
+    "Obrátit směr enkodéru", // 338
+    "Optický enkodér", // 339
+    "Otočit displej o 180°", // 340
+    "Invertovat barvy", // 341
+    "Analogový měřič", // 342
+    "Tovární nastavení", // 343
+    "Ne", // 344
+    "Ano", // 345
+    "Spustit kalibraci?", // 346
+    "Smazat nastavení\na uložené stanice?", // 347
+    "Uvolněte všechny\novládací prvky", // 348
+    "Plná výchylka" // 349
   },
 
   { "Magyar", // Hungarian
@@ -2989,7 +3149,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Közvetlen hangolás", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "Beviteli beállítások", // 330
+    "Frekv. billentyűzet", // 331
+    "BEVITEL", // 332
+    "MODE: VISSZA", // 333
+    "Eszközbeállítások", // 334
+    "ESZKÖZ", // 335
+    "Kijelzőbeállítások", // 336
+    "KIJELZŐ", // 337
+    "Forgásirány váltása", // 338
+    "Optikai enkóder", // 339
+    "Kijelző forgatása 180°", // 340
+    "Színek invertálása", // 341
+    "Analóg műszer", // 342
+    "Gyári visszaállítás", // 343
+    "Nem", // 344
+    "Igen", // 345
+    "Kalibrálás indítása?", // 346
+    "Beállítások és tárolt\nállomások törlése?", // 347
+    "Engedjen el minden\nkezelőszervet", // 348
+    "Végkitérés" // 349
   },
 
   { "Français", // French
@@ -3321,7 +3501,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Accord direct", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "Réglages de saisie", // 330
+    "Clavier fréquence", // 331
+    "SAISIE", // 332
+    "MODE: RETOUR", // 333
+    "Réglages appareil", // 334
+    "APPAREIL", // 335
+    "Réglages écran", // 336
+    "ÉCRAN", // 337
+    "Inverser le sens", // 338
+    "Encodeur optique", // 339
+    "Tourner écran à 180°", // 340
+    "Inverser les couleurs", // 341
+    "Indicateur analogique", // 342
+    "Réglages usine", // 343
+    "Non", // 344
+    "Oui", // 345
+    "Lancer le calibrage ?", // 346
+    "Effacer réglages\net stations mémorisées ?", // 347
+    "Relâchez toutes\nles commandes", // 348
+    "Pleine échelle" // 349
   },
 
   { "Български", // Bulgarian
@@ -3653,7 +3853,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Директно настройване", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "Настройки за вход", // 330
+    "Цифрова клавиатура", // 331
+    "ВХОД", // 332
+    "MODE: НАЗАД", // 333
+    "Настройки на уреда", // 334
+    "УРЕД", // 335
+    "Настройки на екрана", // 336
+    "ЕКРАН", // 337
+    "Обръщане на енкодера", // 338
+    "Оптичен енкодер", // 339
+    "Завъртане на 180°", // 340
+    "Обръщане на цветовете", // 341
+    "Аналогов уред", // 342
+    "Фабрични настройки", // 343
+    "Не", // 344
+    "Да", // 345
+    "Начало на калибриране?", // 346
+    "Нулиране на\nнастройки и станции?", // 347
+    "Отпуснете всички\nбутони", // 348
+    "Пълно отклонение" // 349
   },
 
   { "Русский", // Russian
@@ -3985,7 +4205,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Прямая настройка", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "Настройки ввода", // 330
+    "Цифровая клавиатура", // 331
+    "ВВОД", // 332
+    "MODE: НАЗАД", // 333
+    "Настройки устройства", // 334
+    "УСТРОЙСТВО", // 335
+    "Настройки экрана", // 336
+    "ЭКРАН", // 337
+    "Обратное вращение", // 338
+    "Оптический энкодер", // 339
+    "Поворот экрана на 180°", // 340
+    "Инверсия цветов", // 341
+    "Аналоговый индикатор", // 342
+    "Заводской сброс", // 343
+    "Нет", // 344
+    "Да", // 345
+    "Начать калибровку?", // 346
+    "Удалить настройки\nи сохранённые станции?", // 347
+    "Отпустите все\nорганы управления", // 348
+    "Полная шкала" // 349
   },
 
   { "Українська", // Ukranian
@@ -4317,7 +4557,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Пряме налаштування", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "Налаштування вводу", // 330
+    "Цифрова клавіатура", // 331
+    "ВВІД", // 332
+    "MODE: НАЗАД", // 333
+    "Налаштування пристрою", // 334
+    "ПРИСТРІЙ", // 335
+    "Налаштування екрана", // 336
+    "ЕКРАН", // 337
+    "Зворотне обертання", // 338
+    "Оптичний енкодер", // 339
+    "Поворот екрана на 180°", // 340
+    "Інверсія кольорів", // 341
+    "Аналоговий індикатор", // 342
+    "Заводське скидання", // 343
+    "Ні", // 344
+    "Так", // 345
+    "Почати калібрування?", // 346
+    "Скинути параметри\nі станції?", // 347
+    "Відпустіть усі\nоргани керування", // 348
+    "Повна шкала" // 349
   },
 
   { "Italiano", // Italian
@@ -4649,7 +4909,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Sintonia diretta", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "Impostazioni input", // 330
+    "Tastiera frequenza", // 331
+    "INGRESSO", // 332
+    "MODE: INDIETRO", // 333
+    "Impostazioni dispositivo", // 334
+    "DISPOSITIVO", // 335
+    "Impostazioni schermo", // 336
+    "SCHERMO", // 337
+    "Inverti rotazione", // 338
+    "Encoder ottico", // 339
+    "Ruota schermo di 180°", // 340
+    "Inverti colori", // 341
+    "Indicatore analogico", // 342
+    "Ripristino di fabbrica", // 343
+    "No", // 344
+    "Sì", // 345
+    "Avviare calibrazione?", // 346
+    "Cancellare impostazioni\ne stazioni memorizzate?", // 347
+    "Rilasciare tutti\ni comandi", // 348
+    "Fondo scala" // 349
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4981,7 +5261,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "直接调谐", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "输入设置", // 330
+    "频率数字键盘", // 331
+    "输入", // 332
+    "MODE: 返回", // 333
+    "设备设置", // 334
+    "设备", // 335
+    "屏幕设置", // 336
+    "屏幕", // 337
+    "反转旋钮方向", // 338
+    "光学编码器", // 339
+    "屏幕旋转180°", // 340
+    "反转颜色", // 341
+    "模拟信号表", // 342
+    "恢复出厂设置", // 343
+    "否", // 344
+    "是", // 345
+    "开始校准？", // 346
+    "清除设置和\n已存储的电台？", // 347
+    "松开所有\n按键及触摸屏", // 348
+    "满刻度" // 349
   },
 
   { "Norsk", // Norwegian
@@ -5313,7 +5613,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Direkte innstilling", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "Innstillinger for inndata", // 330
+    "Frekvenstastatur", // 331
+    "INNDATA", // 332
+    "MODE: TILBAKE", // 333
+    "Enhetsinnstillinger", // 334
+    "ENHET", // 335
+    "Skjerminnstillinger", // 336
+    "SKJERM", // 337
+    "Snu dreieretning", // 338
+    "Optisk enkoder", // 339
+    "Roter skjermen 180°", // 340
+    "Inverter farger", // 341
+    "Analogt måleinstrument", // 342
+    "Fabrikkinnstillinger", // 343
+    "Nei", // 344
+    "Ja", // 345
+    "Starte kalibrering?", // 346
+    "Slette innstillinger\nog lagrede stasjoner?", // 347
+    "Slipp alle\nkontroller", // 348
+    "Fullt utslag" // 349
   },
 
   { "Español", // Spanish
@@ -5645,7 +5965,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Sintonización directa", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "Ajustes de entrada", // 330
+    "Teclado frecuencia", // 331
+    "ENTRADA", // 332
+    "MODE: VOLVER", // 333
+    "Ajustes del dispositivo", // 334
+    "DISPOSITIVO", // 335
+    "Ajustes de pantalla", // 336
+    "PANTALLA", // 337
+    "Invertir giro", // 338
+    "Codificador óptico", // 339
+    "Girar pantalla 180°", // 340
+    "Invertir colores", // 341
+    "Medidor analógico", // 342
+    "Restablecer de fábrica", // 343
+    "No", // 344
+    "Sí", // 345
+    "¿Iniciar calibración?", // 346
+    "¿Borrar ajustes\ny emisoras guardadas?", // 347
+    "Suelte todos\nlos controles", // 348
+    "Escala completa" // 349
   },
 
   { "Português", // Portuguese
@@ -5977,7 +6317,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Sintonização direta", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "Definições de entrada", // 330
+    "Teclado frequência", // 331
+    "ENTRADA", // 332
+    "MODE: VOLTAR", // 333
+    "Definições do aparelho", // 334
+    "APARELHO", // 335
+    "Definições do ecrã", // 336
+    "ECRÃ", // 337
+    "Inverter rotação", // 338
+    "Codificador óptico", // 339
+    "Rodar ecrã 180°", // 340
+    "Inverter cores", // 341
+    "Medidor analógico", // 342
+    "Reposição de fábrica", // 343
+    "Não", // 344
+    "Sim", // 345
+    "Iniciar calibração?", // 346
+    "Apagar definições\ne estações guardadas?", // 347
+    "Solte todos\nos controlos", // 348
+    "Escala completa" // 349
   },
 
   { "Srpski", // Serbian
@@ -6309,7 +6669,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Директно подешавање", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "Podešavanja unosa", // 330
+    "Tastatura frekv.", // 331
+    "UNOS", // 332
+    "MODE: NAZAD", // 333
+    "Podešavanja uređaja", // 334
+    "UREĐAJ", // 335
+    "Podešavanja ekrana", // 336
+    "EKRAN", // 337
+    "Obrni smer enkodera", // 338
+    "Optički enkoder", // 339
+    "Okreni ekran 180°", // 340
+    "Obrni boje", // 341
+    "Analogni merač", // 342
+    "Fabrička podešavanja", // 343
+    "Ne", // 344
+    "Da", // 345
+    "Pokrenuti kalibraciju?", // 346
+    "Obrisati podešavanja\ni sačuvane stanice?", // 347
+    "Otpustite sve\nkontrole", // 348
+    "Pun otklon" // 349
   },
 
   { "Suomi", // Finnish
@@ -6641,7 +7021,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Suora viritys", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "Syöttöasetukset", // 330
+    "Taajuusnäppäimistö", // 331
+    "SYÖTTÖ", // 332
+    "MODE: TAKAISIN", // 333
+    "Laiteasetukset", // 334
+    "LAITE", // 335
+    "Näyttöasetukset", // 336
+    "NÄYTTÖ", // 337
+    "Käännä kiertosuunta", // 338
+    "Optinen enkooderi", // 339
+    "Käännä näyttöä 180°", // 340
+    "Käänteiset värit", // 341
+    "Analoginen mittari", // 342
+    "Tehdasasetukset", // 343
+    "Ei", // 344
+    "Kyllä", // 345
+    "Aloitetaanko kalibrointi?", // 346
+    "Poistetaanko asetukset\nja tallennetut asemat?", // 347
+    "Vapauta kaikki\nohjaimet", // 348
+    "Täysi asteikko" // 349
   },
 
   { "Dansk", // Danish
@@ -6973,7 +7373,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Direkte indstilling", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "Indtastningsvalg", // 330
+    "Frekvenstastatur", // 331
+    "INDTAST", // 332
+    "MODE: TILBAGE", // 333
+    "Enhedsindstillinger", // 334
+    "ENHED", // 335
+    "Skærmindstillinger", // 336
+    "SKÆRM", // 337
+    "Vend drejeretning", // 338
+    "Optisk enkoder", // 339
+    "Drej skærmen 180°", // 340
+    "Inverter farver", // 341
+    "Analogt måleinstrument", // 342
+    "Fabriksindstillinger", // 343
+    "Nej", // 344
+    "Ja", // 345
+    "Start kalibrering?", // 346
+    "Slet indstillinger\nog gemte stationer?", // 347
+    "Slip alle\nbetjeningselementer", // 348
+    "Fuldt udslag" // 349
   },
 
   { "Svenska", // Swedish
@@ -7305,7 +7725,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Direktinställning", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "Inmatningsinställningar", // 330
+    "Frekvenstangentbord", // 331
+    "INMATNING", // 332
+    "MODE: TILLBAKA", // 333
+    "Enhetsinställningar", // 334
+    "ENHET", // 335
+    "Skärminställningar", // 336
+    "SKÄRM", // 337
+    "Vänd vridriktning", // 338
+    "Optisk enkoder", // 339
+    "Rotera skärmen 180°", // 340
+    "Invertera färger", // 341
+    "Analog mätare", // 342
+    "Fabriksinställningar", // 343
+    "Nej", // 344
+    "Ja", // 345
+    "Starta kalibrering?", // 346
+    "Radera inställningar\noch sparade stationer?", // 347
+    "Släpp alla\nreglage", // 348
+    "Fullt utslag" // 349
   },
 
   { "Gaeilge", // Irish
@@ -7637,7 +8077,27 @@ static const char* const myLanguage[23][330] PROGMEM = {
     "Gateway", // 326
     "Tiúnadh díreach", // 327
     "Battery almost empty", // 328
-    "PRESS ANY BUTTON TO CLOSE" // 329
+    "PRESS ANY BUTTON TO CLOSE", // 329
+    "Socruithe ionchuir", // 330
+    "Eochracha minicíochta", // 331
+    "IONCHUR", // 332
+    "MODE: AR AIS", // 333
+    "Socruithe gléis", // 334
+    "GLÉAS", // 335
+    "Socruithe scáileáin", // 336
+    "SCÁILEÁN", // 337
+    "Aisiompaigh rothlú", // 338
+    "Ionchódóir optúil", // 339
+    "Rothlaigh scáileán 180°", // 340
+    "Aisiompaigh dathanna", // 341
+    "Méadar analógach", // 342
+    "Athshocrú monarchan", // 343
+    "Níl", // 344
+    "Tá", // 345
+    "Tosaigh calabrú?", // 346
+    "Scrios socruithe\nagus stáisiúin shábháilte?", // 347
+    "Scaoil na rialtáin\ngo léir", // 348
+    "Lánscála" // 349
   }
 };
 #endif

@@ -209,7 +209,7 @@ byte amgain;
 byte freqoldcount;
 byte HighCutLevel;
 byte HighCutOffset;
-byte items[10] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 10, 10, 9};
+byte items[12] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 10, 10, 9, 3, 6};
 byte iMSEQ;
 byte iMSset;
 byte language;
@@ -837,15 +837,7 @@ void setup() {
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH && digitalRead(MODEBUTTON) == LOW && digitalRead(BANDBUTTON) == HIGH) {
     analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
-    Infoboxprint(textUI(282));
-    tftPrint(ACENTER, textUI(283), 155, 100, ActiveColor, ActiveColorSmooth, 28);
-    tft.calibrateTouch(TouchCalData, PrimaryColor, BackgroundColor, 30);
-    EEPROM.writeUInt(EE_UINT16_CALTOUCH1, TouchCalData[0]);
-    EEPROM.writeUInt(EE_UINT16_CALTOUCH2, TouchCalData[1]);
-    EEPROM.writeUInt(EE_UINT16_CALTOUCH3, TouchCalData[2]);
-    EEPROM.writeUInt(EE_UINT16_CALTOUCH4, TouchCalData[3]);
-    EEPROM.writeUInt(EE_UINT16_CALTOUCH5, TouchCalData[4]);
-    EEPROM.commit();
+    RunTouchCalibration();
   }
 
   if (digitalRead(BWBUTTON) == LOW && digitalRead(ROTARY_BUTTON) == HIGH && digitalRead(MODEBUTTON) == HIGH && digitalRead(BANDBUTTON) == LOW) {
@@ -2585,6 +2577,12 @@ void doStereoToggle() {
 }
 
 void ModeButtonPress() {
+  if (menu && IsSetupPage(menupage)) {
+    BackSetupMenu();
+    while (digitalRead(MODEBUTTON) == LOW) delay(50);
+    delay(100);
+    return;
+  }
   if (seek) radio.setUnMute();
   seek = false;
   if (scandxmode) {
@@ -4953,6 +4951,7 @@ void cancelDXScan() {
 }
 
 void endMenu() {
+  CancelSetupMenu();
   radio.clearRDS(fullsearchrds);
   menu = false;
   menuopen = false;
@@ -5961,6 +5960,34 @@ const char* textUI(uint16_t number) {
   } else {
     return (const char*)pgm_read_ptr(&(myLanguage[language][number]));
   }
+}
+
+void WaitSetupControlsReleased() {
+  while (digitalRead(ROTARY_BUTTON) == LOW || digitalRead(BWBUTTON) == LOW ||
+         digitalRead(MODEBUTTON) == LOW || digitalRead(BANDBUTTON) == LOW) delay(10);
+  if (hardwaremodel == PORTABLE_TOUCH_ILI9341) {
+    while (tft.getTouchRawZ() > 100) delay(10);
+  }
+  rotary = 0;
+  rotarycounter = 0;
+}
+
+void RunTouchCalibration() {
+  if (hardwaremodel != PORTABLE_TOUCH_ILI9341) return;
+  SetupPrompt(348);
+  WaitSetupControlsReleased();
+  DrawTouchCalibrationScreen();
+  tft.calibrateTouch(TouchCalData, PrimaryColor, BackgroundColor, 30);
+  EEPROM.writeUInt(EE_UINT16_CALTOUCH1, TouchCalData[0]);
+  EEPROM.writeUInt(EE_UINT16_CALTOUCH2, TouchCalData[1]);
+  EEPROM.writeUInt(EE_UINT16_CALTOUCH3, TouchCalData[2]);
+  EEPROM.writeUInt(EE_UINT16_CALTOUCH4, TouchCalData[3]);
+  EEPROM.writeUInt(EE_UINT16_CALTOUCH5, TouchCalData[4]);
+  EEPROM.commit();
+  tft.setTouch(TouchCalData);
+  WaitSetupControlsReleased();
+  screensavertimer = millis();
+  tottimer = millis();
 }
 
 void ApplyScreenFlip(byte flipped) {

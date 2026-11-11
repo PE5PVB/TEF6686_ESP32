@@ -2,6 +2,7 @@
 #define GUI_H
 
 #include <Arduino.h>
+#include "setup_menu.h"
 #include <TFT_eSPI.h>
 #include "TEF668X.h"
 #include "WiFiConnect.h"
@@ -103,7 +104,7 @@ extern byte amgain;
 extern byte hardwaremodel;
 extern byte HighCutLevel;
 extern byte HighCutOffset;
-extern byte items[10];
+extern byte items[];
 extern byte language;
 extern byte licold;
 extern byte longbandpress;

@@ -741,6 +741,17 @@ void ShowOneLine(byte position, byte item, bool selected) {
     }
   }
 
+  int setupLabel = SetupMenuLabel(menupage, item);
+  if (setupLabel) {
+    FullLineSprite.setTextDatum(TL_DATUM);
+    FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+    FullLineSprite.drawString(FitSetupText(removeNewline(textUI(setupLabel)), 284 - FullLineSprite.textWidth(SetupMenuValue(menupage, item))), 6, 2);
+    FullLineSprite.setTextDatum(TR_DATUM);
+    FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+    FullLineSprite.drawString(SetupMenuValue(menupage, item), 298, 2);
+    FullLineSprite.pushSprite(8, 2 + position);
+    return;
+  }
   switch (item) {
     case 0:
       switch (menupage) {
@@ -1842,6 +1853,14 @@ void ShowOneButton(byte position, byte item, bool selected) {
     default: PSSprite.pushImage (0, 0, 150, 32, touchselback); break;
   }
 
+  int setupLabel = SetupMenuLabel(menupage, item);
+  if (setupLabel) {
+    PSSprite.setTextDatum(TC_DATUM);
+    PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
+    PSSprite.drawString(shortLine(removeNewline(textUI(setupLabel))), 75, 1);
+    PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+    PSSprite.drawString(shortLine(SetupMenuValue(menupage, item)), 75, 15);
+  } else
   switch (item) {
     case 0:
       switch (menupage) {
@@ -3067,6 +3086,7 @@ void showFreqBandPicker() {
 }
 
 void BuildMenu() {
+  items[SCREENSETTINGS] = hardwaremodel == PORTABLE_TOUCH_ILI9341 ? 3 : 2;  // touch calibration only with touch
   advancedRDS = false;
   BWtune = false;
 
@@ -3078,8 +3098,15 @@ void BuildMenu() {
   if (!submenu) {
     tftPrint(ACENTER, textUI(32), 160, 6, PrimaryColor, PrimaryColorSmooth, 16);
   } else {
-    tftPrint(ALEFT, textUI(184), (hardwaremodel == PORTABLE_TOUCH_ILI9341 ? 20 : 8), 6, PrimaryColor, PrimaryColorSmooth, 16);
-    tftPrint(ARIGHT, textUI(189 + menupage - 1), 312, 6, ActiveColor, ActiveColorSmooth, 16);
+    const int left = hardwaremodel == PORTABLE_TOUCH_ILI9341 ? 20 : 8;
+    const char* title = textUI(SetupMenuTitle(menupage));
+    const char* back = textUI(184);
+    // FullLineSprite uses the same 16 px font as the header.
+    if (IsSetupPage(menupage) && FullLineSprite.textWidth(back) + FullLineSprite.textWidth(title) > 312 - left - 8) {
+      back = textUI(333);
+    }
+    tftPrint(ALEFT, back, left, 6, PrimaryColor, PrimaryColorSmooth, 16);
+    tftPrint(ARIGHT, title, 312, 6, ActiveColor, ActiveColorSmooth, 16);
   }
 
   if (hardwaremodel == PORTABLE_TOUCH_ILI9341) {
@@ -3375,6 +3402,7 @@ void BuildDisplay() {
 }
 
 void MenuUpDown(bool dir) {
+  if (menuopen && IsSetupPage(menupage)) { AdjustSetupMenu(dir); return; }
   if (!menuopen) {
     if (hardwaremodel == PORTABLE_TOUCH_ILI9341) ShowOneButton(menuoption, menuitem, false); else ShowOneLine(menuoption, menuitem, false);
 
@@ -4730,6 +4758,24 @@ void showMenuOpenTouchButtons() {
 
 void DoMenu() {
   if (!menuopen) {
+    int child = -1;
+    if (menupage == MAINSETTINGS && menuitem == 0) child = DEVICESETTINGS;
+    if (menupage == DISPLAYSETTINGS && menuitem == 9) child = SCREENSETTINGS;
+    if (child >= 0) {
+      menupage = child;
+      menuitem = 0;
+      menuoption = ITEM1;
+      submenu = true;
+      BuildMenu();
+      return;
+    }
+  }
+  if (IsSetupPage(menupage)) {
+    if (menuopen) AcceptSetupMenu(); else OpenSetupMenu();
+    return;
+  }
+
+  if (!menuopen) {
     if (menupage != INDEX) {
       menuopen = true;
       switch (CurrentTheme) {
@@ -4743,7 +4789,7 @@ void DoMenu() {
           case 7: tft.pushImage (0, 0, 320, 240, configurationbackground_wo); break;
           default: tft.pushImage (0, 0, 320, 240, configurationbackground); break;
         }
-        tftPrint(ACENTER, textUI(189 + menupage - 1), 160, 6, ActiveColor, ActiveColorSmooth, 16);
+        tftPrint(ACENTER, (textUI(SetupMenuTitle(menupage))), 160, 6, ActiveColor, ActiveColorSmooth, 16);
       }
     }
 
@@ -5970,4 +6016,205 @@ String shortLine(String text) {
     text = tempText + "..."; // Add "..." to the truncated text
   }
   return text;
+}
+
+// Startup-function settings shared by touch and physical controls.
+// Edits are staged: OK applies, MODE cancels. Actions always start at No.
+static byte setupValue;
+static bool meterCalibrationActive;
+
+bool IsSetupPage(byte page) {
+  return page == SCREENSETTINGS || page == DEVICESETTINGS;
+}
+int SetupMenuTitle(byte page) {
+  if (page == SCREENSETTINGS) return 337;
+  if (page == DEVICESETTINGS) return 335;
+  return 189 + page - 1;
+}
+// Screen: frequency font, 180 degree flip, touch calibration (touch model only).
+// Device: hardware model, reverse encoder, optical encoder, invert colours,
+//         analog meter full scale, factory reset.
+static byte ScreenItemCount() {
+  return hardwaremodel == PORTABLE_TOUCH_ILI9341 ? 3 : 2;
+}
+static bool SetupIsAction(byte page, byte item) {        // yes / no prompts
+  return (page == SCREENSETTINGS && item == 2) || (page == DEVICESETTINGS && item == 5);
+}
+int SetupMenuLabel(byte page, byte item) {
+  if (page == MAINSETTINGS && item == 0) return 334;
+  if (page == DISPLAYSETTINGS && item == 9) return 336;
+  const int screen[] = {85, 340, 283};
+  const int device[] = {108, 338, 339, 341, 342, 343};
+  if (page == SCREENSETTINGS && item < ScreenItemCount()) return screen[item];
+  if (page == DEVICESETTINGS && item < 6) return device[item];
+  return 0;
+}
+static byte SetupCurrentValue(byte page, byte item) {
+  if (page == SCREENSETTINGS) {
+    switch (item) {
+      case 0: return freqfont;
+      case 1: return displayflip;
+    }
+  }
+  if (page == DEVICESETTINGS) {
+    switch (item) {
+      case 0: return hardwaremodel;
+      case 1: return rotarymode;
+      case 2: return optenc;
+      case 3: return invertdisplay;
+    }
+  }
+  return 0;
+}
+static String SetupValueText(byte page, byte item, byte value) {
+  if (page == SCREENSETTINGS && item == 0) return FreqFont[value];
+  if (page == DEVICESETTINGS && item == 0) return textUI(109 + value);
+  if (SetupIsAction(page, item)) return textUI(value ? 345 : 344);
+  if (page == DEVICESETTINGS && item == 4) return textUI(349);
+  return textUI(value ? 31 : 30);
+}
+String SetupMenuValue(byte page, byte item) {
+  if (!IsSetupPage(page) || SetupIsAction(page, item) || (page == DEVICESETTINGS && item == 4)) return "";
+  return SetupValueText(page, item, SetupCurrentValue(page, item));
+}
+static void DrawSetupValue() {
+  switch (CurrentTheme) {
+    case 7: OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground_wo); break;
+    default: OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground); break;
+  }
+  OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
+  OneBigLineSprite.setTextDatum(TC_DATUM);
+  OneBigLineSprite.drawString(SetupValueText(menupage, menuitem, setupValue), 135, 0);
+  OneBigLineSprite.pushSprite(24, 118);
+}
+String FitSetupText(String text, int width) {
+  if (FullLineSprite.textWidth(text) <= width) return text;
+  while (text.length() && FullLineSprite.textWidth(text + "...") > width) {
+    int last = text.length() - 1;
+    while (last > 0 && (static_cast<unsigned char>(text[last]) & 0xC0) == 0x80) --last;
+    text.remove(last);
+  }
+  return text + "...";
+}
+void DrawSetupTitle(String text, int y, int color, int smoothColor) {
+  text.replace("\n", " ");
+  // OneBigLineSprite has the same 28 px font as the existing popup titles.
+  int split = -1;
+  if (OneBigLineSprite.textWidth(text) > 270) {
+    split = text.length();
+    while (split > 0 && OneBigLineSprite.textWidth(text.substring(0, split)) > 270) {
+      --split;
+      while (split > 0 && (static_cast<unsigned char>(text[split]) & 0xC0) == 0x80) --split;
+    }
+    int space = text.lastIndexOf(' ', split);
+    if (space > 0) split = space;
+  }
+  if (split >= 0) {
+    tftPrint(ACENTER, text.substring(0, split), 155, y, color, smoothColor, 28);
+    int next = split;
+    if (text[next] == ' ') ++next;
+    tftPrint(ACENTER, text.substring(next), 155, y + 30, color, smoothColor, 28);
+  } else {
+    tftPrint(ACENTER, text, 155, y + 30, color, smoothColor, 28);
+  }
+}
+void SetupPrompt(int label) {
+  DrawSetupTitle(textUI(label), 48, ActiveColor, ActiveColorSmooth);
+}
+void DrawTouchCalibrationScreen() {
+  tft.fillScreen(BackgroundColor);
+  // Keep both texts clear of the four 31 x 31 calibration targets.
+  DrawSetupTitle(textUI(283), 45, PrimaryColor, PrimaryColorSmooth);
+  DrawSetupTitle(textUI(282), 120, ActiveColor, ActiveColorSmooth);
+}
+void OpenSetupMenu() {
+  if (!SetupMenuLabel(menupage, menuitem)) return;
+  setupValue = SetupCurrentValue(menupage, menuitem);
+  menuopen = true;
+  tft.pushImage(13, 30, 292, 170, CurrentTheme == 7 ? popupbackground_wo : popupbackground);
+  showMenuOpenTouchButtons();
+  int label = SetupMenuLabel(menupage, menuitem);
+  if (menupage == SCREENSETTINGS && menuitem == 2) label = 346;
+  if (menupage == DEVICESETTINGS && menuitem == 5) label = 347;
+  SetupPrompt(label);
+  if (menupage == DEVICESETTINGS && menuitem == 4) {
+    meterCalibrationActive = true;
+    analogWrite(SMETERPIN, 511);
+  }
+  DrawSetupValue();
+}
+void AdjustSetupMenu(bool dir) {
+  if (meterCalibrationActive) return;
+  int count = 2;
+  if (menupage == SCREENSETTINGS && menuitem == 0) count = sizeof(FreqFont) / sizeof(FreqFont[0]);
+  if (menupage == DEVICESETTINGS && menuitem == 0) count = RADIO_HARDWARE_CNT;
+  setupValue = (setupValue + (dir ? 1 : count - 1)) % count;
+  DrawSetupValue();
+}
+void CancelSetupMenu() {
+  if (meterCalibrationActive) analogWrite(SMETERPIN, 0);
+  meterCalibrationActive = false;
+  setupValue = 0;
+}
+void AcceptSetupMenu() {
+  if (!SetupMenuLabel(menupage, menuitem)) {
+    CancelSetupMenu();
+    menuopen = false;
+    BuildMenu();
+    return;
+  }
+  if (menupage == SCREENSETTINGS) {
+    switch (menuitem) {
+      case 0: freqfont = setupValue; break;
+      case 1: ApplyScreenFlip(setupValue); break;
+      case 2:
+        if (setupValue && hardwaremodel == PORTABLE_TOUCH_ILI9341) RunTouchCalibration();
+        break;
+    }
+  } else if (menupage == DEVICESETTINGS) {
+    switch (menuitem) {
+      case 0: hardwaremodel = setupValue; break;
+      case 1:
+        rotarymode = setupValue;
+        EEPROM.writeByte(EE_BYTE_ROTARYMODE, rotarymode);
+        EEPROM.commit();
+        break;
+      case 2:
+        optenc = setupValue;
+        EEPROM.writeByte(EE_BYTE_OPTENC, optenc);
+        EEPROM.commit();
+        break;
+      case 3:
+        invertdisplay = setupValue;
+        tft.invertDisplay(!invertdisplay);
+        EEPROM.writeByte(EE_BYTE_INVERTDISPLAY, invertdisplay);
+        EEPROM.commit();
+        break;
+      case 5:
+        if (setupValue) {
+          SetupPrompt(348);
+          WaitSetupControlsReleased();
+          DefaultSettings(); // Same complete reset (including presets) as BW + encoder at boot.
+          ESP.restart();
+          return;
+        }
+        break;
+    }
+  }
+  CancelSetupMenu();
+  menuopen = false;
+  BuildMenu();
+}
+void BackSetupMenu() {
+  CancelSetupMenu();
+  if (menuopen) {
+    menuopen = false;
+  } else {
+    byte parent = menupage == SCREENSETTINGS ? DISPLAYSETTINGS : MAINSETTINGS;
+    menuitem = menupage == SCREENSETTINGS ? 9 : 0;
+    menuoption = ITEM1 + menuitem * ITEM_GAP;
+    menupage = parent;
+    submenu = true;
+  }
+  BuildMenu();
 }
