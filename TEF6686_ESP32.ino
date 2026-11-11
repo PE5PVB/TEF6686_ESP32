@@ -4196,7 +4196,7 @@ void ShowRSSI() {
 }
 
 void ShowBattery() {
-  if (millis() >= batupdatetimer + TIMER_BAT_TIMER) {
+  if (millis() - batupdatetimer >= TIMER_BAT_TIMER) {  // overflow safe
     batupdatetimer = millis();
   } else {
     return;
