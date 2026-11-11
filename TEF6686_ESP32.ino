@@ -5120,7 +5120,11 @@ void rabbitearssend () {
   if (RabbitearsClient.connect("rabbitears.info", 80)) {
     String payload = RabbitearsHeader + json.length() + "\r\n\r\n" + json;
     RabbitearsClient.print(payload);
+#if ESP_ARDUINO_VERSION_MAJOR >= 3
     RabbitearsClient.clear();
+#else
+    RabbitearsClient.flush();  // core 2.x: flush() clears the receive buffer
+#endif
     RabbitearsClient.stop();
   }
 }
