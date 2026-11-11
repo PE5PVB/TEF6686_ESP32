@@ -25,6 +25,7 @@ extern bool freqBandPicker;
 extern byte freqPickerCount;
 extern byte freqPickerBands[5];
 extern int freqPickerFreqs[5];
+extern byte freqPickerSel;
 extern bool change;
 extern bool clockampm;
 extern bool compressedold;
@@ -248,6 +249,7 @@ void BuildFreqKeypad();
 void showFreqKeypad();
 void BuildFreqBandPicker();
 void showFreqBandPicker();
+void drawFreqPickerItem(byte i, bool selected);
 
 extern void ShowFreq(int mode);
 extern void ShowBandSelectionFM(bool notglanceview, bool normaldisplay);

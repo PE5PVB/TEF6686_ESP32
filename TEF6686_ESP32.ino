@@ -82,6 +82,7 @@ bool freqBandPicker;
 byte freqPickerCount;
 byte freqPickerBands[5];
 int freqPickerFreqs[5];
+byte freqPickerSel;
 bool change;
 bool clockampm;
 bool compressedold;
@@ -449,6 +450,8 @@ unsigned long eonticker;
 unsigned long eontickerhold;
 unsigned long flashingtimer;
 unsigned long keypadtimer;
+unsigned long keypadpolltimer;
+bool keypadpresent;
 unsigned long lastTouchTime = 0;
 unsigned long lowsignaltimer;
 unsigned long ModulationpreviousMillis;
@@ -928,7 +931,7 @@ void setup() {
   Wire.write(0x06);
   Wire.write(0xFF);
   Wire.write(0xFF);
-  Wire.endTransmission();
+  keypadpresent = (Wire.endTransmission() == 0);
 
   // Detect and read RX8010SJ RTC if present
   if (rx8010_init()) {
@@ -1366,10 +1369,10 @@ void loop() {
         rotary = 0;
         WakeToSleep(REVERSE);
       } else {
-        if (BWtune) doBWtuneUp(); else if (!freqkeypadtune && !freqBandPicker) KeyUp();
+        if (BWtune) doBWtuneUp(); else if (freqBandPicker) doFreqPickerNext(); else if (!freqkeypadtune) KeyUp();
       }
     } else {
-      if (BWtune) doBWtuneUp(); else if (!freqkeypadtune && !freqBandPicker) KeyUp();
+      if (BWtune) doBWtuneUp(); else if (freqBandPicker) doFreqPickerNext(); else if (!freqkeypadtune) KeyUp();
       if (rotaryaccelerate && rotarycounter > 2 && !BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
         for (int i = 0; i < rotarycounteraccelerator; i++) KeyUp();
         rotarycounter = 0;
@@ -1388,10 +1391,10 @@ void loop() {
         rotary = 0;
         WakeToSleep(REVERSE);
       } else {
-        if (BWtune) doBWtuneDown(); else if (!freqkeypadtune && !freqBandPicker) KeyDown();
+        if (BWtune) doBWtuneDown(); else if (freqBandPicker) doFreqPickerPrev(); else if (!freqkeypadtune) KeyDown();
       }
     } else {
-      if (BWtune) doBWtuneDown(); else if (!freqkeypadtune && !freqBandPicker) KeyDown();
+      if (BWtune) doBWtuneDown(); else if (freqBandPicker) doFreqPickerPrev(); else if (!freqkeypadtune) KeyDown();
       if (rotaryaccelerate && rotarycounter > 2 && !BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
         for (int i = 0; i < rotarycounteraccelerator; i++) KeyDown();
         rotarycounter = 0;
@@ -1424,7 +1427,10 @@ void loop() {
       WakeToSleep(REVERSE);
       while (digitalRead(ROTARY_BUTTON) == LOW);
     } else {
-      if (!afscreen && !rdsstatscreen && !freqkeypadtune && !freqBandPicker) ButtonPress();
+      if (freqBandPicker) {
+        while (digitalRead(ROTARY_BUTTON) == LOW) delay(10);
+        FreqPickerConfirm();
+      } else if (!afscreen && !rdsstatscreen && !freqkeypadtune) ButtonPress();
     }
   }
 
@@ -1456,12 +1462,16 @@ void loop() {
     }
   }
 
-  if (digitalRead(EXT_IRQ) == LOW) {
-    if (screensavertriggered) WakeToSleep(REVERSE);
+  // Read the keypad on interrupt, and poll every 25 ms as a safety net.
+  // The PCA9555 releases INT by itself when the input returns to the last
+  // read state, so a short press between two loop passes would be lost otherwise.
+  if (digitalRead(EXT_IRQ) == LOW || (keypadpresent && millis() - keypadpolltimer >= 25)) {
+    keypadpolltimer = millis();
     int num;
     num = GetNum();
     if (num != -1)
     {
+      if (screensavertriggered) WakeToSleep(REVERSE);
       if (!screenmute && !BWtune && !freqkeypadtune && !freqBandPicker && !menu && !advancedRDS && !rdsstatscreen && !afscreen)
       {
         NumpadProcess(num);
@@ -1470,6 +1480,11 @@ void loop() {
         ShowNum(freq_in);
       } else if (freqkeypadtune && num == 13) {
         FreqKeypadConfirm();
+      } else if (freqBandPicker && num >= 1 && num <= freqPickerCount) {
+        freqPickerSel = num - 1;
+        FreqPickerConfirm();
+      } else if (freqBandPicker && num == 13) {
+        FreqPickerConfirm();
       }
     }
   }
@@ -5391,7 +5406,6 @@ int GetNum(void) {
   Wire.requestFrom(0x20, 2);
 
   if (Wire.available() == 2) {
-    keypadtimer = millis();
     temp = Wire.read() & 0xFF;
     temp |= (Wire.read() & 0xFF) * 256;
     for (int i = 0; i < 16; i++) {
@@ -5404,6 +5418,7 @@ int GetNum(void) {
     if (cnt == 1) {
       if (heldNum == -1) {
         heldNum = num;
+        keypadtimer = millis();
         return num;
       }
     } else if (cnt == 0) {
@@ -5520,9 +5535,34 @@ int TuneFreq(int temp) {
     freqPickerBands[i] = matchBands[i];
     freqPickerFreqs[i] = matchFreqs[i];
   }
+  freqPickerSel = 0;
   freqBandPicker = true;
   BuildFreqBandPicker();
   return 2;
+}
+
+void doFreqPickerNext() {
+  rotary = 0;
+  drawFreqPickerItem(freqPickerSel, false);
+  freqPickerSel++;
+  if (freqPickerSel >= freqPickerCount) freqPickerSel = 0;
+  drawFreqPickerItem(freqPickerSel, true);
+}
+
+void doFreqPickerPrev() {
+  rotary = 0;
+  drawFreqPickerItem(freqPickerSel, false);
+  if (freqPickerSel == 0) freqPickerSel = freqPickerCount - 1; else freqPickerSel--;
+  drawFreqPickerItem(freqPickerSel, true);
+}
+
+void FreqPickerConfirm() {
+  ApplyBandMatch(freqPickerBands[freqPickerSel], freqPickerFreqs[freqPickerSel]);
+  freqBandPicker = false;
+  freqkeypadtune = false;
+  freq_in = 0;
+  BuildDisplay();
+  SelectBand();
 }
 
 void FreqKeypadConfirm() {
