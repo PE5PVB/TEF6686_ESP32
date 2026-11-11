@@ -1012,9 +1012,9 @@ void loop() {
 
   if (hardwaremodel == PORTABLE_TOUCH_ILI9341 && touch_detect) {
     if (tft.getTouchRawZ() > 100) {  // Check if the touch is active
-      uint16_t x, y;
-      tft.getTouch(&x, &y);
-      if (x > 0 || y > 0) {
+      uint16_t x = 0, y = 0;
+      // Failed or unstable samples must never become screen coordinates.
+      if (tft.getTouch(&x, &y) && x < 320 && y < 240) {
         if (!firstTouchHandled) {
           // Handle the initial touch event immediately
           doTouchEvent(x, y);
