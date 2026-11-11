@@ -23,10 +23,6 @@
 #define TIMER_BAT_TIMER             (TIMER_500_TICK)
 #define TIMER_500_TICK              500
 
-// Frequency band picker screen, see showFreqBandPicker() and doTouchEvent()
-#define FREQPICKER_ROW_H            32   // height of one band row
-#define FREQPICKER_TOP              34   // first row cannot start above this
-#define FREQPICKER_HINT_Y          220   // y of the "press mode to return" line
 #define TIMER_BATTERY_WARNING_REPEAT 60000
 
 #define BAT_LEVEL_EMPTY             2.82
@@ -237,9 +233,9 @@
 #define EE_CHECKBYTE_VALUE            20     // 0 ~ 255,add new entry, change for new value
 #define EE_PRESETS_FREQUENCY          0     // Default value when memory channel should be skipped!
 #ifdef HAS_AIR_BAND
-#define EE_TOTAL_CNT                  2305  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                  2306  // Total occupied eeprom bytes
 #else
-#define EE_TOTAL_CNT                  2300  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                  2301  // Total occupied eeprom bytes
 #endif
 
 #define EE_PRESETS_BAND_START         0     // 99 * 1 byte
@@ -376,6 +372,7 @@
 #define EE_UINT16_WIFI_GATEWAY        2292
 #define EE_UINT16_WIFI_SUBNET         2296
 #endif
+#define EE_BYTE_FREQ_KEYPAD          (EE_TOTAL_CNT - 1)
 #define EE_BYTE_FREQ_KEYPAD          (EE_TOTAL_CNT - 1)
 // End of EEPROM index defines
 

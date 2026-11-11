@@ -3007,86 +3007,69 @@ void showBWSelector() {
 }
 
 void BuildFreqKeypad() {
-  freq_in = 0;
-  freqKeyFocus = 15;  // rotary cursor starts on OK
   switch (CurrentTheme) {
-    case 7: tft.pushImage (0, 0, 320, 240, configurationbackground_wo); break;
-    default: tft.pushImage (0, 0, 320, 240, configurationbackground); break;
+    case 7: tft.pushImage(0, 0, 320, 240, configurationbackground_wo); break;
+    default: tft.pushImage(0, 0, 320, 240, configurationbackground); break;
   }
   tftPrint(ACENTER, textUI(327), 160, 6, PrimaryColor, PrimaryColorSmooth, 16);
   showFreqKeypad();
 }
 
 void showFreqKeypad() {
-  drawButton("1", 0, false, freqKeyFocus == 0, 66, false, 4);
-  drawButton("2", 1, false, freqKeyFocus == 1, 66, false, 4);
-  drawButton("3", 2, false, freqKeyFocus == 2, 66, false, 4);
-  drawButton("X", 3, true, freqKeyFocus == 3, 66, false, 4);
-  drawButton("4", 4, false, freqKeyFocus == 4, 66, false, 4);
-  drawButton("5", 5, false, freqKeyFocus == 5, 66, false, 4);
-  drawButton("6", 6, false, freqKeyFocus == 6, 66, false, 4);
-  drawButton("7", 8, false, freqKeyFocus == 8, 66, false, 4);
-  drawButton("8", 9, false, freqKeyFocus == 9, 66, false, 4);
-  drawButton("9", 10, false, freqKeyFocus == 10, 66, false, 4);
-  drawButton("C", 12, false, freqKeyFocus == 12, 66, false, 4);
-  drawButton("0", 13, false, freqKeyFocus == 13, 66, false, 4);
-  drawButton("<-", 14, false, freqKeyFocus == 14, 66, false, 4);
-  drawButton("OK", 15, true, freqKeyFocus == 15, 66, false, 4);
-}
-
-void BuildFreqBandPicker() {
-  switch (CurrentTheme) {
-    case 7: tft.pushImage (0, 0, 320, 240, configurationbackground_wo); break;
-    default: tft.pushImage (0, 0, 320, 240, configurationbackground); break;
+  byte matches[5];
+  int freqs[5];
+  byte count = FindBandMatches(freq_in, matches, freqs);
+  int normalized = 0;
+  for (byte i = 0; i < count; i++) {
+    if (matches[i] == freqInputBand) normalized = freqs[i];
   }
-  tftPrint(ACENTER, textUI(327), 160, 6, PrimaryColor, PrimaryColorSmooth, 16);
-  showFreqBandPicker();
-}
-
-// Row positions for the frequency band picker. gui.cpp draws with this and
-// touch.cpp hit tests with it, so the two cannot drift apart. The rows are
-// centred above the hint line at the bottom, and the spacing is tightened if
-// there are too many matches to fit.
-void FreqBandPickerLayout(int &startY, int &pitch) {
-  const int span = FREQPICKER_HINT_Y - FREQPICKER_TOP;
-  pitch = FREQPICKER_ROW_H + 8;
-  int totalHeight = freqPickerCount * pitch - (pitch - FREQPICKER_ROW_H);
-  if (totalHeight > span) {
-    pitch = FREQPICKER_ROW_H + 2;
-    totalHeight = freqPickerCount * pitch - (pitch - FREQPICKER_ROW_H);
+  tft.fillRect(4, 30, 312, 34, BackgroundColor);
+  // Show exactly what will be tuned, in addition to the digits being entered.
+  String preview = String(freq_in);
+  if (normalized) {
+    preview += " > ";
+    if (freqInputBand < BAND_GAP) preview += String(normalized / 100.0, 2) + " MHz";
+    else preview += String(normalized) + " kHz";
   }
-  startY = FREQPICKER_TOP + (span - totalHeight) / 2;
-  if (startY < FREQPICKER_TOP) startY = FREQPICKER_TOP;
-}
-
-void showFreqBandPicker() {
-  int startY, pitch;
-  FreqBandPickerLayout(startY, pitch);
-
-  for (byte i = 0; i < freqPickerCount; i++) {
-    int y = startY + i * pitch;
-    tft.drawRect(10, y, 300, FREQPICKER_ROW_H, (i == freqPickerSel) ? PrimaryColor : GreyoutColor);
-
-    String label;
-    int f = freqPickerFreqs[i];
-    switch (freqPickerBands[i]) {
-      case BAND_FM:   label = "FM " + String(f / 100) + "." + (f % 100 < 10 ? "0" : "") + String(f % 100) + " MHz"; break;
-      case BAND_OIRT: label = "OIRT " + String(f / 100) + "." + (f % 100 < 10 ? "0" : "") + String(f % 100) + " MHz"; break;
-      case BAND_LW:   label = "LW " + String(f) + " kHz"; break;
-      case BAND_MW:   label = "MW " + String(f) + " kHz"; break;
-      case BAND_SW:   label = "SW " + String(f) + " kHz"; break;
+  tftPrint(ACENTER, preview, 160, 39,
+           normalized || !freq_in ? PrimaryColor : SignificantColor,
+           PrimaryColorSmooth, 16);
+  for (byte i = 0; i < 5; i++) {
+    const FreqInputRect bounds = FreqInputBounds(i);
+    int x = bounds.x;
+    bool selected = freqInputBand == freqInputBands[i];
+    bool valid = !freq_in;
+    for (byte j = 0; j < count; j++) if (matches[j] == freqInputBands[i]) valid = true;
+    tft.fillRect(bounds.x, bounds.y, bounds.w, bounds.h, selected ? FrameColor : BackgroundColor);
+    tft.drawRect(bounds.x, bounds.y, bounds.w, bounds.h, freqKeyFocus == i ? PrimaryColor : GreyoutColor);
+    if (selected) tft.fillRect(x + 15, 91, 28, 2, PrimaryColor);
+    tftPrint(ACENTER, freqInputBandNames[i], x + 29, 73,
+             valid ? ActiveColor : GreyoutColor, selected ? FrameColor : BackgroundColor, 16);
+  }
+  for (byte key = 0; key < 16; key++) {
+    if (FreqInputControlVisible(key + 5)) {
+      const FreqInputRect bounds = FreqInputBounds(key + 5);
+      const int x = bounds.x + 2, y = bounds.y + 2;
+      tft.fillRect(bounds.x, bounds.y, bounds.w, bounds.h, BackgroundColor);
+      tft.drawRect(bounds.x, bounds.y, bounds.w, bounds.h,
+                   freqKeyFocus == key + 5 ? PrimaryColor : GreyoutColor);
+      tft.pushImage(x, y, 70, 30, CurrentTheme == 7 ? bwselector_wo : bwselector);
+      if (key == 14) {
+        // Draw <- on one centerline; font glyph baselines differ between languages.
+        tft.fillRect(x + 25, y + 14, 23, 2, ActiveColor);
+        for (int d = 0; d < 8; ++d) {
+          tft.fillRect(x + 25 + d, y + 14 - d, 2, 2, ActiveColor);
+          tft.fillRect(x + 25 + d, y + 14 + d, 2, 2, ActiveColor);
+        }
+      } else {
+        tftPrint(ACENTER, freqInputKeys[key], x + 35, y + 5, ActiveColor, ActiveColorSmooth, 16);
+      }
     }
-    bool selected = (i == freqPickerSel);
-    tftPrint(ACENTER, label, 160, y + 8, selected ? PrimaryColor : ActiveColor, selected ? PrimaryColorSmooth : ActiveColorSmooth, 16);
   }
-
-  // Tells the user how to get out. Needed on sets without a touch screen,
-  // where nothing on this screen can be tapped.
-  tftPrint(ACENTER, textUI(184), 160, FREQPICKER_HINT_Y, SecondaryColor, SecondaryColorSmooth, 16);
 }
 
 void BuildMenu() {
-  items[SCREENSETTINGS] = hardwaremodel == PORTABLE_TOUCH_ILI9341 ? 3 : 2;  // touch calibration only with touch
+  items[SCREENSETTINGS] = hardwaremodel == PORTABLE_TOUCH_ILI9341 ? 4 : 3;  // touch calibration only with touch
   advancedRDS = false;
   BWtune = false;
 
@@ -6031,19 +6014,19 @@ int SetupMenuTitle(byte page) {
   if (page == DEVICESETTINGS) return 335;
   return 189 + page - 1;
 }
-// Screen: frequency font, 180 degree flip, touch calibration (touch model only).
+// Screen: frequency font, 180 degree flip, frequency keypad, touch calibration (touch model only).
 // Device: hardware model, reverse encoder, optical encoder, invert colours,
 //         analog meter full scale, factory reset.
 static byte ScreenItemCount() {
-  return hardwaremodel == PORTABLE_TOUCH_ILI9341 ? 3 : 2;
+  return hardwaremodel == PORTABLE_TOUCH_ILI9341 ? 4 : 3;
 }
 static bool SetupIsAction(byte page, byte item) {        // yes / no prompts
-  return (page == SCREENSETTINGS && item == 2) || (page == DEVICESETTINGS && item == 5);
+  return (page == SCREENSETTINGS && item == 3) || (page == DEVICESETTINGS && item == 5);
 }
 int SetupMenuLabel(byte page, byte item) {
   if (page == MAINSETTINGS && item == 0) return 334;
   if (page == DISPLAYSETTINGS && item == 9) return 336;
-  const int screen[] = {85, 340, 283};
+  const int screen[] = {85, 340, 331, 283};
   const int device[] = {108, 338, 339, 341, 342, 343};
   if (page == SCREENSETTINGS && item < ScreenItemCount()) return screen[item];
   if (page == DEVICESETTINGS && item < 6) return device[item];
@@ -6054,6 +6037,7 @@ static byte SetupCurrentValue(byte page, byte item) {
     switch (item) {
       case 0: return freqfont;
       case 1: return displayflip;
+      case 2: return freqKeypadEnabled;
     }
   }
   if (page == DEVICESETTINGS) {
@@ -6134,7 +6118,7 @@ void OpenSetupMenu() {
   tft.pushImage(13, 30, 292, 170, CurrentTheme == 7 ? popupbackground_wo : popupbackground);
   showMenuOpenTouchButtons();
   int label = SetupMenuLabel(menupage, menuitem);
-  if (menupage == SCREENSETTINGS && menuitem == 2) label = 346;
+  if (menupage == SCREENSETTINGS && menuitem == 3) label = 346;
   if (menupage == DEVICESETTINGS && menuitem == 5) label = 347;
   SetupPrompt(label);
   if (menupage == DEVICESETTINGS && menuitem == 4) {
@@ -6167,7 +6151,8 @@ void AcceptSetupMenu() {
     switch (menuitem) {
       case 0: freqfont = setupValue; break;
       case 1: ApplyScreenFlip(setupValue); break;
-      case 2:
+      case 2: freqKeypadEnabled = setupValue; break;
+      case 3:
         if (setupValue && hardwaremodel == PORTABLE_TOUCH_ILI9341) RunTouchCalibration();
         break;
     }

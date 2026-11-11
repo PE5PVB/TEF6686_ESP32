@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include "setup_menu.h"
+#include "frequency_input.h"
 #include <TFT_eSPI.h>
 #include "TEF668X.h"
 #include "WiFiConnect.h"
@@ -22,12 +23,6 @@ extern bool autosquelch;
 extern bool BWreset;
 extern bool BWtune;
 extern bool freqkeypadtune;
-extern bool freqBandPicker;
-extern byte freqPickerCount;
-extern byte freqPickerSel;
-extern byte freqKeyFocus;
-extern byte freqPickerBands[5];
-extern int freqPickerFreqs[5];
 extern bool change;
 extern bool clockampm;
 extern bool compressedold;
@@ -249,9 +244,6 @@ void showMenuOpenTouchButtons();
 void showBWSelector();
 void BuildFreqKeypad();
 void showFreqKeypad();
-void BuildFreqBandPicker();
-void showFreqBandPicker();
-void FreqBandPickerLayout(int &startY, int &pitch);
 
 extern void ShowFreq(int mode);
 extern void ShowBandSelectionFM(bool notglanceview, bool normaldisplay);
