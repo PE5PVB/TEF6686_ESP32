@@ -4,9 +4,10 @@
 #include <Arduino.h>
 #include "frequency_input.h"
 #include <TFT_eSPI.h>
+#include "tft_panel.h"
 #include "TEF668X.h"
 
-extern TFT_eSPI tft;
+extern TFTPanel tft;
 extern TEF6686 radio;
 
 extern bool advancedRDS;

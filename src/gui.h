@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include "frequency_input.h"
 #include <TFT_eSPI.h>
+#include "tft_panel.h"
 #include "TEF668X.h"
 #include "WiFiConnect.h"
 #include "menugraphics.h"
@@ -222,7 +223,7 @@ extern unsigned long processed_rdsblocksold[33];
 extern unsigned long scantimer;
 extern const size_t language_totalnumber;
 
-extern TFT_eSPI tft;
+extern TFTPanel tft;
 extern TEF6686 radio;
 extern WiFiConnect wc;
 extern TFT_eSprite MenuInfobox;
@@ -281,6 +282,7 @@ extern byte displayflip;
 extern byte rotarymode;
 extern bool invertdisplay;
 extern bool optenc;
+extern bool arsdisplay;
 bool IsSetupPage(byte page);
 int SetupMenuLabel(byte page, byte item);
 int SetupMenuTitle(byte page);
@@ -294,6 +296,7 @@ void AcceptSetupMenu();
 void CancelSetupMenu();
 void BackSetupMenu();
 extern void ApplyScreenFlip(byte flipped);
+extern void ApplyArsDisplay(bool ars);
 extern void RunTouchCalibration();
 extern void WaitSetupControlsReleased();
 extern void DefaultSettings();

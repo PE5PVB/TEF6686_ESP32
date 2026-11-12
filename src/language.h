@@ -3,7 +3,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[23][350] PROGMEM = {
+static const char* const myLanguage[23][351] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -353,7 +353,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Start calibration?", // 346
     "Erase settings\nand presets?", // 347
     "Release all\ncontrols", // 348
-    "Full scale" // 349
+    "Full scale", // 349
+    "ARS display" // 350
   },
 
   { "Nederlands", // Dutch
@@ -705,7 +706,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Kalibratie starten?", // 346
     "Instellingen en\nzenders wissen?", // 347
     "Laat alle\nbedieningen los", // 348
-    "Volle uitslag" // 349
+    "Volle uitslag", // 349
+    "ARS display" // 350
   },
 
   { "Polski", // Polish
@@ -1057,7 +1059,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Rozpocząć kalibrację?", // 346
     "Usunąć ustawienia\ni zapisane stacje?", // 347
     "Zwolnij wszystkie\nprzyciski", // 348
-    "Pełna skala" // 349
+    "Pełna skala", // 349
+    "ARS display" // 350
   },
 
   { "Hrvatski", // Croatian
@@ -1409,7 +1412,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Pokrenuti kalibraciju?", // 346
     "Obrisati postavke\ni spremljene postaje?", // 347
     "Otpustite sve\nkontrole", // 348
-    "Puni otklon" // 349
+    "Puni otklon", // 349
+    "ARS display" // 350
   },
 
   { "Ελληνικά", // Greek
@@ -1761,7 +1765,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Έναρξη βαθμονόμησης;", // 346
     "Διαγραφή ρυθμίσεων\nκαι σταθμών μνήμης;", // 347
     "Αφήστε όλα\nτα χειριστήρια", // 348
-    "Πλήρης κλίμακα" // 349
+    "Πλήρης κλίμακα", // 349
+    "ARS display" // 350
   },
 
   { "Română", // Romanian
@@ -2113,7 +2118,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Începeți calibrarea?", // 346
     "Ștergeți setările\nși posturile memorate?", // 347
     "Eliberați toate\ncomenzile", // 348
-    "Scală completă" // 349
+    "Scală completă", // 349
+    "ARS display" // 350
   },
 
   { "Deutsch", // German
@@ -2465,7 +2471,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Kalibrierung starten?", // 346
     "Einstellungen und\nSenderspeicher löschen?", // 347
     "Alle Bedienelemente\nloslassen", // 348
-    "Vollausschlag" // 349
+    "Vollausschlag", // 349
+    "ARS display" // 350
   },
 
   { "Čeština", // Czech
@@ -2817,7 +2824,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Spustit kalibraci?", // 346
     "Smazat nastavení\na uložené stanice?", // 347
     "Uvolněte všechny\novládací prvky", // 348
-    "Plná výchylka" // 349
+    "Plná výchylka", // 349
+    "ARS display" // 350
   },
 
   { "Magyar", // Hungarian
@@ -3169,7 +3177,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Kalibrálás indítása?", // 346
     "Beállítások és tárolt\nállomások törlése?", // 347
     "Engedjen el minden\nkezelőszervet", // 348
-    "Végkitérés" // 349
+    "Végkitérés", // 349
+    "ARS display" // 350
   },
 
   { "Français", // French
@@ -3521,7 +3530,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Lancer le calibrage ?", // 346
     "Effacer réglages\net stations mémorisées ?", // 347
     "Relâchez toutes\nles commandes", // 348
-    "Pleine échelle" // 349
+    "Pleine échelle", // 349
+    "ARS display" // 350
   },
 
   { "Български", // Bulgarian
@@ -3873,7 +3883,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Начало на калибриране?", // 346
     "Нулиране на\nнастройки и станции?", // 347
     "Отпуснете всички\nбутони", // 348
-    "Пълно отклонение" // 349
+    "Пълно отклонение", // 349
+    "ARS display" // 350
   },
 
   { "Русский", // Russian
@@ -4225,7 +4236,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Начать калибровку?", // 346
     "Удалить настройки\nи сохранённые станции?", // 347
     "Отпустите все\nорганы управления", // 348
-    "Полная шкала" // 349
+    "Полная шкала", // 349
+    "ARS display" // 350
   },
 
   { "Українська", // Ukranian
@@ -4577,7 +4589,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Почати калібрування?", // 346
     "Скинути параметри\nі станції?", // 347
     "Відпустіть усі\nоргани керування", // 348
-    "Повна шкала" // 349
+    "Повна шкала", // 349
+    "ARS display" // 350
   },
 
   { "Italiano", // Italian
@@ -4929,7 +4942,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Avviare calibrazione?", // 346
     "Cancellare impostazioni\ne stazioni memorizzate?", // 347
     "Rilasciare tutti\ni comandi", // 348
-    "Fondo scala" // 349
+    "Fondo scala", // 349
+    "ARS display" // 350
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -5281,7 +5295,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "开始校准？", // 346
     "清除设置和\n已存储的电台？", // 347
     "松开所有\n按键及触摸屏", // 348
-    "满刻度" // 349
+    "满刻度", // 349
+    "ARS display" // 350
   },
 
   { "Norsk", // Norwegian
@@ -5633,7 +5648,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Starte kalibrering?", // 346
     "Slette innstillinger\nog lagrede stasjoner?", // 347
     "Slipp alle\nkontroller", // 348
-    "Fullt utslag" // 349
+    "Fullt utslag", // 349
+    "ARS display" // 350
   },
 
   { "Español", // Spanish
@@ -5985,7 +6001,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "¿Iniciar calibración?", // 346
     "¿Borrar ajustes\ny emisoras guardadas?", // 347
     "Suelte todos\nlos controles", // 348
-    "Escala completa" // 349
+    "Escala completa", // 349
+    "ARS display" // 350
   },
 
   { "Português", // Portuguese
@@ -6337,7 +6354,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Iniciar calibração?", // 346
     "Apagar definições\ne estações guardadas?", // 347
     "Solte todos\nos controlos", // 348
-    "Escala completa" // 349
+    "Escala completa", // 349
+    "ARS display" // 350
   },
 
   { "Srpski", // Serbian
@@ -6689,7 +6707,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Pokrenuti kalibraciju?", // 346
     "Obrisati podešavanja\ni sačuvane stanice?", // 347
     "Otpustite sve\nkontrole", // 348
-    "Pun otklon" // 349
+    "Pun otklon", // 349
+    "ARS display" // 350
   },
 
   { "Suomi", // Finnish
@@ -7041,7 +7060,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Aloitetaanko kalibrointi?", // 346
     "Poistetaanko asetukset\nja tallennetut asemat?", // 347
     "Vapauta kaikki\nohjaimet", // 348
-    "Täysi asteikko" // 349
+    "Täysi asteikko", // 349
+    "ARS display" // 350
   },
 
   { "Dansk", // Danish
@@ -7393,7 +7413,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Start kalibrering?", // 346
     "Slet indstillinger\nog gemte stationer?", // 347
     "Slip alle\nbetjeningselementer", // 348
-    "Fuldt udslag" // 349
+    "Fuldt udslag", // 349
+    "ARS display" // 350
   },
 
   { "Svenska", // Swedish
@@ -7745,7 +7766,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Starta kalibrering?", // 346
     "Radera inställningar\noch sparade stationer?", // 347
     "Släpp alla\nreglage", // 348
-    "Fullt utslag" // 349
+    "Fullt utslag", // 349
+    "ARS display" // 350
   },
 
   { "Gaeilge", // Irish
@@ -8097,7 +8119,8 @@ static const char* const myLanguage[23][350] PROGMEM = {
     "Tosaigh calabrú?", // 346
     "Scrios socruithe\nagus stáisiúin shábháilte?", // 347
     "Scaoil na rialtáin\ngo léir", // 348
-    "Lánscála" // 349
+    "Lánscála", // 349
+    "ARS display" // 350
   }
 };
 #endif

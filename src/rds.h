@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include <TFT_eSPI.h>
+#include "tft_panel.h"
 #include <WiFiClient.h>
 #include "TEF668X.h"
 #include <WiFi.h>
@@ -136,7 +137,7 @@ extern unsigned long rtticker;
 extern unsigned long rttickerhold;
 
 extern ESP32Time rtc;
-extern TFT_eSPI tft;
+extern TFTPanel tft;
 extern TEF6686 radio;
 extern WiFiClient RemoteClient;
 extern WiFiUDP Udp;

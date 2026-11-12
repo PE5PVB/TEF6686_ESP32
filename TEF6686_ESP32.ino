@@ -48,11 +48,7 @@ using fs::FS;
 #define DYNAMIC_SPI_SPEED   // uncomment to enable dynamic SPI Speed https://github.com/ohmytime/TFT_eSPI_DynamicSpeed
 //#define HAS_AIR_BAND        // uncomment to enable Air Band(Make sure you have Air Band extend board)
 
-#ifdef ARS
-TFT_eSPI tft = TFT_eSPI(320, 240);
-#else
-TFT_eSPI tft = TFT_eSPI(240, 320);
-#endif
+TFTPanel tft = TFTPanel(240, 320);  // switched to 320 x 240 at boot for an ARS panel
 
 #ifdef DYNAMIC_SPI_SPEED
 bool dynamicspi = true;
@@ -84,6 +80,7 @@ byte freqPickerSel;
 byte freqPickerBands[5];
 int freqPickerFreqs[5];
 bool freqKeypadEnabled = true;
+bool arsdisplay;
 byte freqInputBand;
 byte freqKeyFocus;
 const byte freqInputBands[5] = {BAND_FM, BAND_OIRT, BAND_LW, BAND_MW, BAND_SW};
@@ -212,7 +209,7 @@ byte amgain;
 byte freqoldcount;
 byte HighCutLevel;
 byte HighCutOffset;
-byte items[12] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 10, 10, 9, 4, 6};
+byte items[12] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 10, 10, 9, 4, 7};
 byte iMSEQ;
 byte iMSset;
 byte language;
@@ -520,6 +517,13 @@ void setup() {
 
   // An erased or new byte reads 0xFF and means enabled; existing settings are kept.
   freqKeypadEnabled = EEPROM.readByte(EE_BYTE_FREQ_KEYPAD) != 0;
+  // A build with ARS defined in the TFT_eSPI User_Setup keeps working: the panel type
+  // defaults to ARS until it is set in the menu (a new byte reads 0xFF).
+#ifdef ARS
+  arsdisplay = EEPROM.readByte(EE_BYTE_ARS_DISPLAY) != 0;
+#else
+  arsdisplay = EEPROM.readByte(EE_BYTE_ARS_DISPLAY) == 1;
+#endif
   frequency = EEPROM.readUInt(EE_UINT16_FREQUENCY_FM);
   frequency_OIRT = EEPROM.readUInt(EE_UINT16_FREQUENCY_OIRT);
   VolSet = EEPROM.readByte(EE_BYTE_VOLSET);
@@ -713,24 +717,14 @@ void setup() {
       break;
   }
 
+  if (arsdisplay) tft.setPanelSize(320, 240);
+
   tft.init();
   tft.initDMA();
 
   doTheme();
 
-  if (displayflip == 0) {
-#ifdef ARS
-    tft.setRotation(0);
-#else
-    tft.setRotation(3);
-#endif
-  } else {
-#ifdef ARS
-    tft.setRotation(2);
-#else
-    tft.setRotation(1);
-#endif
-  }
+  SetDisplayRotation();
 
   tft.invertDisplay(!invertdisplay);
 
@@ -805,6 +799,16 @@ void setup() {
     Infoboxprint(textUI(3));
     tftPrint(ACENTER, textUI(2), 155, 130, ActiveColor, ActiveColorSmooth, 28);
     while (digitalRead(MODEBUTTON) == LOW) delay(50);
+  }
+
+  // MODE + encoder button at boot: toggle the panel type. Needed when the stored
+  // setting does not match the panel and the menu is unreadable.
+  if (digitalRead(BWBUTTON) == HIGH && digitalRead(ROTARY_BUTTON) == LOW && digitalRead(MODEBUTTON) == LOW && digitalRead(BANDBUTTON) == HIGH) {
+    ApplyArsDisplay(!arsdisplay);
+    analogWrite(CONTRASTPIN, map(ContrastSet, 0, 100, 15, 255));
+    Infoboxprint((String(textUI(350)) + ": " + textUI(arsdisplay ? 31 : 30)).c_str());
+    tftPrint(ACENTER, textUI(2), 155, 130, ActiveColor, ActiveColorSmooth, 28);
+    while (digitalRead(MODEBUTTON) == LOW || digitalRead(ROTARY_BUTTON) == LOW) delay(50);
   }
 
   if (digitalRead(BWBUTTON) == HIGH && digitalRead(ROTARY_BUTTON) == HIGH && digitalRead(MODEBUTTON) == HIGH && digitalRead(BANDBUTTON) == LOW) {
@@ -4680,6 +4684,7 @@ void MuteScreen(bool setting) {
 
 void DefaultSettings() {
   EEPROM.writeByte(EE_BYTE_FREQ_KEYPAD, 1);
+  EEPROM.writeByte(EE_BYTE_ARS_DISPLAY, 0);
   EEPROM.writeByte(EE_BYTE_CHECKBYTE, EE_CHECKBYTE_VALUE);
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, 10000);
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_OIRT, FREQ_FM_OIRT_START);
@@ -6054,14 +6059,29 @@ void RunTouchCalibration() {
   tottimer = millis();
 }
 
+// Rotation and colour order of the panel. Standard panels are BGR and landscape at
+// rotation 3 / 1; the ARS panel is RGB and landscape at rotation 0 / 2. The colour
+// order is written explicitly, so the build-time TFT_RGB_ORDER no longer matters.
+void SetDisplayRotation() {
+  byte r = arsdisplay ? (displayflip ? 2 : 0) : (displayflip ? 1 : 3);
+  tft.setRotation(r);
+  static const uint8_t madctl[4] = {TFT_MAD_MX, TFT_MAD_MV, TFT_MAD_MY, TFT_MAD_MX | TFT_MAD_MY | TFT_MAD_MV};
+  tft.writecommand(TFT_MADCTL);
+  tft.writedata(madctl[r] | (arsdisplay ? TFT_MAD_RGB : TFT_MAD_BGR));
+}
+
+void ApplyArsDisplay(bool ars) {
+  arsdisplay = ars;
+  EEPROM.writeByte(EE_BYTE_ARS_DISPLAY, arsdisplay);
+  EEPROM.commit();
+  tft.setPanelSize(arsdisplay ? 320 : 240, arsdisplay ? 240 : 320);
+  SetDisplayRotation();
+}
+
 void ApplyScreenFlip(byte flipped) {
   if (displayflip == flipped) return;
   displayflip = flipped;
-#ifdef ARS
-  tft.setRotation(displayflip ? 2 : 0);
-#else
-  tft.setRotation(displayflip ? 1 : 3);
-#endif
+  SetDisplayRotation();
   if (hardwaremodel == PORTABLE_TOUCH_ILI9341) {
     // A 180 degree turn reverses both touch axes; the measured raw ranges stay valid.
     TouchCalData[4] ^= 0x06;
