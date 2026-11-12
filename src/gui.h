@@ -2,7 +2,6 @@
 #define GUI_H
 
 #include <Arduino.h>
-#include "setup_menu.h"
 #include "frequency_input.h"
 #include <TFT_eSPI.h>
 #include "TEF668X.h"
@@ -277,4 +276,25 @@ extern uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t start
 extern void ClearMemoryRange(uint8_t start, uint8_t stop);
 extern bool handleCreateNewLogbook();
 extern const char* textUI(uint16_t number);
+// Screen and Device settings pages (gui.cpp), startup functions reachable from the menu.
+extern byte displayflip;
+extern byte rotarymode;
+extern bool invertdisplay;
+extern bool optenc;
+bool IsSetupPage(byte page);
+int SetupMenuLabel(byte page, byte item);
+int SetupMenuTitle(byte page);
+String SetupMenuValue(byte page, byte item);
+String FitSetupText(String text, int width);
+void SetupPrompt(int label);
+void DrawTouchCalibrationScreen();
+void OpenSetupMenu();
+void AdjustSetupMenu(bool dir);
+void AcceptSetupMenu();
+void CancelSetupMenu();
+void BackSetupMenu();
+extern void ApplyScreenFlip(byte flipped);
+extern void RunTouchCalibration();
+extern void WaitSetupControlsReleased();
+extern void DefaultSettings();
 #endif
