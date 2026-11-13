@@ -30,6 +30,7 @@ using fs::FS;
 #include "src/touch.h"
 #include "src/logbook.h"
 #include "src/rtc_rx8010.h"
+#include "src/splash.h"
 
 #define ROTARY_PIN_A    34
 #define ROTARY_PIN_B    36
@@ -500,6 +501,21 @@ WiFiServer Server(7373);
 WiFiClient RemoteClient;
 WiFiUDP Udp;
 WebServer webserver(80);
+
+// Tuner start-up (patch, clock, init table) runs on the other core while the boot
+// animation plays; it only uses I2C, the animation only SPI.
+struct {
+  uint16_t device, hw, sw;
+  volatile bool done;
+} tunerBoot;
+
+static void TunerBootTask(void *) {
+  radio.init(TEF);
+  radio.getIdentification(tunerBoot.device, tunerBoot.hw, tunerBoot.sw);
+  tunerBoot.done = true;
+  vTaskDelete(NULL);
+}
+
 void setup() {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
   gpio_set_drive_capability((gpio_num_t) 5, GPIO_DRIVE_CAP_0);
@@ -655,15 +671,7 @@ void setup() {
   logcounter = EEPROM.readUInt(EE_UINT16_LOGCOUNTER);
   radio.rds.PICTlock = EEPROM.readUInt(EE_UINT16_PICTLOCK);
 
-#ifdef DYNAMIC_SPI_SPEED
-  if (spispeed == SPI_SPEED_DEFAULT) {
-    tft.setSPISpeed(SPI_FREQUENCY / 1000000);
-  } else if (spispeed == 7) {
-    setAutoSpeedSPI();
-  } else {
-    tft.setSPISpeed(spispeed * 10);
-  }
-#endif
+  ApplySPISpeed();
 
   LWLowEdgeSet = FREQ_LW_LOW_EDGE_MIN;
   LWHighEdgeSet = FREQ_LW_HIGH_EDGE_MAX;
@@ -869,26 +877,30 @@ void setup() {
   tft.fillRect(136, 230, 16, 6, GreyoutColor);
   tft.fillRect(168, 230, 16, 6, GreyoutColor);
 
-  tft.pushImage (78, 34, 163, 84, openradiologo);
-  tft.drawBitmap(130, 124, TEFLogo, 59, 23, ActiveColor);
+  TEF = EEPROM.readByte(EE_BYTE_TEF);
+  if (TEF != 102 && TEF != 205) SetTunerPatch();  // first boot: finds the patch version and restarts
 
+  // Boot animation. The tuner loads its patch on the other core meanwhile, and the SPI
+  // bus runs at full speed so the animation plays smoothly.
+  tunerBoot.done = false;
+  xTaskCreatePinnedToCore(TunerBootTask, "tunerboot", 8192, NULL, 1, NULL, 0);
+#ifdef DYNAMIC_SPI_SPEED
+  tft.setSPISpeed(40);
+#endif
+  SplashIntro();
   for (int x = 0; x <= ContrastSet; x++) {
     analogWrite(CONTRASTPIN, map(x, 0, 100, 15, 255));
-    delay(30);
+    delay(5);
   }
+  SplashPlay();
+  ApplySPISpeed();
+  while (!tunerBoot.done) delay(1);
 
   tft.fillRect(136, 230, 16, 6, PrimaryColor);
 
-  TEF = EEPROM.readByte(EE_BYTE_TEF);
-
-  if (TEF != 102 && TEF != 205) SetTunerPatch();
-
-  radio.init(TEF);
-  uint16_t device;
-  uint16_t hw;
-  uint16_t sw;
-
-  radio.getIdentification(device, hw, sw);
+  uint16_t device = tunerBoot.device;
+  uint16_t hw = tunerBoot.hw;
+  uint16_t sw = tunerBoot.sw;
   if (TEF != (highByte(hw) * 100 + highByte(sw))) SetTunerPatch();
 
   if (lowByte(device) == 14) {
@@ -4906,6 +4918,22 @@ void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int colo
   tft.unloadFont();
 }
 
+// Width in pixels of a text in one of the smooth fonts used by tftPrint()
+uint16_t tftTextWidth(const String & text, uint8_t fontsize) {
+  const uint8_t *selectedFont = FONT16;
+  if (language == LANGUAGE_CHS) {
+    if (fontsize == 16) selectedFont = FONT16_CHS;
+    if (fontsize == 28) selectedFont = FONT28_CHS;
+  } else {
+    if (fontsize == 28) selectedFont = FONT28;
+  }
+  if (fontsize == 48) selectedFont = FONT48;
+  tft.loadFont(selectedFont);
+  uint16_t width = tft.textWidth(text);
+  tft.unloadFont();
+  return width;
+}
+
 void deepSleep() {
   analogWrite(SMETERPIN, 0);
   pinMode (STANDBYLED, OUTPUT);
@@ -5172,6 +5200,19 @@ void rabbitearssend () {
 #endif
     RabbitearsClient.stop();
   }
+}
+
+// SPI speed for the display as set in the menu: default, fixed or automatic per frequency.
+void ApplySPISpeed() {
+#ifdef DYNAMIC_SPI_SPEED
+  if (spispeed == SPI_SPEED_DEFAULT) {
+    tft.setSPISpeed(SPI_FREQUENCY / 1000000);
+  } else if (spispeed == 7) {
+    setAutoSpeedSPI();
+  } else {
+    tft.setSPISpeed(spispeed * 10);
+  }
+#endif
 }
 
 void setAutoSpeedSPI() {

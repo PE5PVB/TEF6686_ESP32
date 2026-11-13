@@ -271,6 +271,7 @@ extern void startFMDXScan();
 extern void DoMemoryPosTune();
 extern void UpdateFonts(byte mode);
 extern void tftPrint(int8_t offset, const String & text, int16_t x, int16_t y, int color, int smoothcolor, uint8_t fontsize);
+extern uint16_t tftTextWidth(const String & text, uint8_t fontsize);
 extern void setAutoSpeedSPI();
 extern void showAutoSquelch(bool mode);
 extern uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, uint8_t stopmem, bool rdsonly, uint8_t doublepi);
