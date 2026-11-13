@@ -3,8 +3,10 @@
 #include "Tuner_Patch_Lithio_V205_p512.h"
 #include <Wire.h>
 
-#define TEF_I2C_ADDR 0x64
+#define TEF_I2C_ADDR     0x64   // most modules
+#define TEF_I2C_ADDR_ALT 0x65   // some modules, see discussion #820
 
+static uint8_t tefAddress = TEF_I2C_ADDR;  // the address the tuner was found on
 bool Data_Accelerator = false;
 
 const unsigned char tuner_init_tab[] PROGMEM = {
@@ -32,7 +34,7 @@ static const unsigned char clock_12000[] PROGMEM = {0x00, 0xB7, 0x1B, 0x00, 0x00
 static const unsigned char clock_55000[] PROGMEM = {0x03, 0x4E, 0x5A, 0xAE, 0x00, 0x01};
 
 bool Tuner_WriteBuffer(unsigned char *buf, uint16_t len) {
-  Wire.beginTransmission(TEF_I2C_ADDR);
+  Wire.beginTransmission(tefAddress);
   Wire.write(buf, len);
   uint8_t r = Wire.endTransmission();
   if (!Data_Accelerator) delay(2);
@@ -40,7 +42,7 @@ bool Tuner_WriteBuffer(unsigned char *buf, uint16_t len) {
 }
 
 bool Tuner_ReadBuffer(unsigned char *buf, uint16_t len) {
-  Wire.requestFrom((uint8_t)TEF_I2C_ADDR, (uint8_t)len);
+  Wire.requestFrom((uint8_t)tefAddress, (uint8_t)len);
   if (Wire.available() == len) {
     for (uint16_t i = 0; i < len; i++) buf[i] = Wire.read();
     return true;
@@ -73,8 +75,8 @@ bool Tuner_Table_Write(const unsigned char *tab) {
   }
 }
 
-void Tuner_Reset(void) {
-  Wire.beginTransmission(TEF_I2C_ADDR);
+static void Tuner_Reset_To(uint8_t address) {
+  Wire.beginTransmission(address);
   Wire.write(0x1e);
   Wire.write(0x5a);
   Wire.write(0x01);
@@ -83,16 +85,62 @@ void Tuner_Reset(void) {
   Wire.endTransmission();
 }
 
+void Tuner_Reset(void) {
+  Tuner_Reset_To(tefAddress);
+}
+
+static bool Tuner_Present(uint8_t address) {
+  Wire.beginTransmission(address);
+  return Wire.endTransmission() == 0;
+}
+
+// Finds the tuner on the bus, trying both addresses for 100 ms as the chip needs a moment
+// after power up. A chip that does not answer at all may be stuck in patch mode after an
+// interrupted load; it then still listens to the general call address 0. So the patch mode
+// is left and a reset is sent to address 0 and to both addresses, and the search is repeated.
+bool Tuner_Find() {
+  const uint8_t addresses[] = {TEF_I2C_ADDR, TEF_I2C_ADDR_ALT};
+  for (byte attempt = 0; attempt < 2; attempt++) {
+    for (byte retry = 0; retry < 20; retry++) {
+      for (byte i = 0; i < sizeof(addresses); i++) {
+        if (Tuner_Present(addresses[i])) {
+          tefAddress = addresses[i];
+          return true;
+        }
+      }
+      delay(5);
+    }
+    if (attempt) break;
+    const uint8_t targets[] = {0x00, TEF_I2C_ADDR, TEF_I2C_ADDR_ALT};
+    for (byte i = 0; i < sizeof(targets); i++) {
+      Wire.beginTransmission(targets[i]);  // leave patch mode
+      Wire.write(0x1c);
+      Wire.write(0x00);
+      Wire.write(0x00);
+      Wire.endTransmission();
+      delay(5);
+      Tuner_Reset_To(targets[i]);
+      delay(5);
+    }
+    delay(100);
+  }
+  return false;
+}
+
+uint8_t Tuner_Address() {
+  return tefAddress;
+}
+
 void Tuner_Patch(byte TEF) {
   Tuner_Reset();
   delay(100);
-  Wire.beginTransmission(TEF_I2C_ADDR);
+  Wire.beginTransmission(tefAddress);
   Wire.write(0x1c);
   Wire.write(0x00);
   Wire.write(0x00);
   Wire.endTransmission();
   delay(100);
-  Wire.beginTransmission(TEF_I2C_ADDR);
+  Wire.beginTransmission(tefAddress);
   Wire.write(0x1c);
   Wire.write(0x00);
   Wire.write(0x74);
@@ -106,13 +154,13 @@ void Tuner_Patch(byte TEF) {
       Tuner_Patch_Load(pPatchBytes205, PatchSize205);
       break;
   }
-  Wire.beginTransmission(TEF_I2C_ADDR);
+  Wire.beginTransmission(tefAddress);
   Wire.write(0x1c);
   Wire.write(0x00);
   Wire.write(0x00);
   Wire.endTransmission();
   delay(100);
-  Wire.beginTransmission(TEF_I2C_ADDR);
+  Wire.beginTransmission(tefAddress);
   Wire.write(0x1c);
   Wire.write(0x00);
   Wire.write(0x75);
@@ -126,7 +174,7 @@ void Tuner_Patch(byte TEF) {
       Tuner_Patch_Load(pLutBytes205, LutSize205);
       break;
   }
-  Wire.beginTransmission(TEF_I2C_ADDR);
+  Wire.beginTransmission(tefAddress);
   Wire.write(0x1c);
   Wire.write(0x00);
   Wire.write(0x00);
