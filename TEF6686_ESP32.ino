@@ -32,6 +32,7 @@ using fs::FS;
 #include "src/rtc_rx8010.h"
 #include "src/splash.h"
 #include "src/audiocues.h"
+#include "src/games.h"
 
 #define ROTARY_PIN_A    34
 #define ROTARY_PIN_B    36
@@ -2613,6 +2614,25 @@ void doStereoToggle() {
 
 void ModeButtonPress() {
   morseStop();
+  if (menu && digitalRead(MODEBUTTON) == LOW) {  // held for three seconds in the menu: the games
+    unsigned long start = millis();
+    while (digitalRead(MODEBUTTON) == LOW && millis() - start < 3000) delay(10);
+    if (millis() - start >= 3000) {
+#ifdef DYNAMIC_SPI_SPEED
+      tft.setSPISpeed(40);
+#endif
+      GamesMenu(ROTARY_BUTTON, MODEBUTTON, BWBUTTON, BANDBUTTON);
+#ifdef DYNAMIC_SPI_SPEED
+      if (spispeed != 7) ApplySPISpeed();  // the menu itself runs at 40 MHz in auto mode
+#endif
+      CancelSetupMenu();
+      menuopen = false;
+      BuildMenu();
+      while (digitalRead(MODEBUTTON) == LOW) delay(50);
+      delay(100);
+      return;
+    }
+  }
   if (menu && IsSetupPage(menupage)) {
     BackSetupMenu();
     while (digitalRead(MODEBUTTON) == LOW) delay(50);
@@ -4768,6 +4788,12 @@ void MuteScreen(bool setting) {
 void DefaultSettings() {
   EEPROM.writeByte(EE_BYTE_FREQ_KEYPAD, 1);
   EEPROM.writeByte(EE_BYTE_ARS_DISPLAY, 0);
+  for (byte i = 0; i < 30; i++) {  // empty halls of fame
+    EEPROM.writeByte(EE_SNAKE_SCORES + i, 0xFF);
+    EEPROM.writeByte(EE_TETRIS_SCORES + i, 0xFF);
+    EEPROM.writeByte(EE_TEFMAN_SCORES + i, 0xFF);
+    EEPROM.writeByte(EE_INVADERS_SCORES + i, 0xFF);
+  }
   EEPROM.writeByte(EE_BYTE_CHECKBYTE, EE_CHECKBYTE_VALUE);
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_FM, 10000);
   EEPROM.writeUInt(EE_UINT16_FREQUENCY_OIRT, FREQ_FM_OIRT_START);
