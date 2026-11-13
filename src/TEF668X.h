@@ -774,6 +774,8 @@ class TEF6686 {
     void setUnMute();
     void setVolume(int8_t volume);
     void tone(uint16_t time, int16_t amplitude, uint16_t frequency);
+    void toneStart(int16_t amplitude, uint16_t frequency);
+    void toneStop();
     void extendBW(bool yesno);
     uint16_t getBlockA(void);
     String trimTrailingSpaces(String str);

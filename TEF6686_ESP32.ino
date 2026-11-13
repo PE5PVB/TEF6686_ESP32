@@ -1008,6 +1008,7 @@ void setup() {
 }
 
 void loop() {
+  morseStep();
   wifiPoll();
 
   if (wifi && !menu) {
@@ -1154,6 +1155,7 @@ void loop() {
     if (store) {
       StoreFrequency();
       store = false;
+      MorseFrequency(false);
     }
   }
 
@@ -1958,6 +1960,7 @@ void ToggleBand(byte nowBand) {
 }
 
 void BANDBUTTONPress() {
+  morseStop();
   if (seek) radio.setUnMute();
   seek = false;
   if (scandxmode) {
@@ -2542,6 +2545,7 @@ void SelectBand() {
 }
 
 void BWButtonPress() {
+  morseStop();
   if (seek) radio.setUnMute();
   seek = false;
   if (afscreen || rdsstatscreen) {
@@ -2605,6 +2609,7 @@ void doStereoToggle() {
 }
 
 void ModeButtonPress() {
+  morseStop();
   if (menu && IsSetupPage(menupage)) {
     BackSetupMenu();
     while (digitalRead(MODEBUTTON) == LOW) delay(50);
@@ -2815,6 +2820,7 @@ void RoundStep() {//todo air
 }
 
 void ButtonPress() {
+  morseStop();
   if (seek) radio.setUnMute();
   seek = false;
   if (scandxmode) {
@@ -2918,6 +2924,7 @@ void ButtonPress() {
 }
 
 void KeyUp() {
+  morseStop();
   rotary = 0;
   if (scandxmode) {
     ShowFreq(5);
@@ -2991,6 +2998,7 @@ void KeyUp() {
 }
 
 void KeyDown() {
+  morseStop();
   rotary = 0;
   if (scandxmode) {
     ShowFreq(5);
@@ -5443,6 +5451,23 @@ uint8_t doAutoMemory(uint16_t startfreq, uint16_t stopfreq, uint8_t startmem, ui
   return error;
 }
 
+// Morse mode: the frequency in morse. FM and OIRT as digits without the point (985 is
+// 98.5), with the full 10 kHz value when it does not end on a zero; AM in kHz. Memory
+// tuning puts the preset number first, a band change the band letter.
+void MorseFrequency(bool withBand) {
+  if (audiofeedback != AUDIO_MORSE) return;
+  String text;
+  if (withBand) {
+    static const char letters[] = "OF LMSA";  // in the order of the band enum
+    text = String(letters[band]) + " ";
+  }
+  if (tunemode == TUNE_MEM && !memorystore) text += String(memorypos + 1) + " ";
+  if (band == BAND_FM) text += frequency % 10 ? String(frequency) : String(frequency / 10);
+  else if (band == BAND_OIRT) text += frequency_OIRT % 10 ? String(frequency_OIRT) : String(frequency_OIRT / 10);
+  else text += String(frequency_AM);
+  morseSend(text);
+}
+
 void doBandToggle() {
   if (tunemode != TUNE_MEM) {
     ToggleBand(band);
@@ -5450,6 +5475,7 @@ void doBandToggle() {
     StoreFrequency();
     SelectBand();
     cuePosition(band < BAND_GAP ? band : band - 1, 6);  // OIRT, FM, LW, MW, SW, AIR
+    MorseFrequency(true);
     if (XDRGTKUSB || XDRGTKTCP) {
       if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n");
       else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n");
@@ -5911,6 +5937,7 @@ void NumpadProcess(int num) {
       PSSprite.unloadFont();
       if (language == LANGUAGE_CHS) PSSprite.loadFont(FONT16_CHS); else PSSprite.loadFont(FONT16);
       BuildMenu();
+      cueOpen();
     } else if (num == 13) {
       if (freq_in > 0 && freq_in <= EE_PRESETS_CNT) {
         byte oldmemorypos = memorypos;
@@ -5938,6 +5965,7 @@ void NumpadProcess(int num) {
           FrequencySprite.drawString(String(freq_in) + " ", 218, -6);
           FrequencySprite.pushSprite(46, 46);
           FrequencySprite.unloadFont();
+          cueError();
           delay(500);
           memorypos = oldmemorypos;
           ShowFreq(0);
@@ -5946,6 +5974,8 @@ void NumpadProcess(int num) {
           memoryposprevious = oldmemorypos;
           DoMemoryPosTune();
           ShowMemoryPos();
+          cueConfirm();
+          store = true;
         }
       } else {
         ShowFreq(0);
@@ -5958,6 +5988,8 @@ void NumpadProcess(int num) {
         memoryposprevious = oldmemorypos;
         DoMemoryPosTune();
         ShowMemoryPos();
+        cueConfirm();
+        store = true;
       } else {
         memorypos = oldmemorypos;
       }
@@ -5967,6 +5999,7 @@ void NumpadProcess(int num) {
         if (temp <= EE_PRESETS_CNT) freq_in = temp;
       }
       ShowNum(freq_in);
+      cueDigit(num);
     }
   } else {
     if (num == 127) {
@@ -5982,6 +6015,7 @@ void NumpadProcess(int num) {
       PSSprite.unloadFont();
       if (language == LANGUAGE_CHS) PSSprite.loadFont(FONT16_CHS); else PSSprite.loadFont(FONT16);
       BuildMenu();
+      cueOpen();
     } else if (num == 13) {
       if (freq_in != 0) {
         int result = TuneFreq(freq_in);
@@ -6004,6 +6038,7 @@ void NumpadProcess(int num) {
           FrequencySprite.drawString(String(freq_in) + " ", 218, -6);
           FrequencySprite.pushSprite(46, 46);
           FrequencySprite.unloadFont();
+          cueError();
           delay(1000);
           ShowFreq(0);
         }
@@ -6016,6 +6051,7 @@ void NumpadProcess(int num) {
         freq_in = freq_in * 10 + num;
       }
       ShowNum(freq_in);
+      cueDigit(num);
     }
   }
 }

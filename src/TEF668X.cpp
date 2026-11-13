@@ -2080,9 +2080,18 @@ bool TEF6686::psUpdateChar(uint8_t position, uint8_t input, uint8_t error, bool 
 }
 
 void TEF6686::tone(uint16_t time, int16_t amplitude, uint16_t frequency) {
+  toneStart(amplitude, frequency);
+  delay (time);
+  toneStop();
+}
+
+// The tone generator plays through the audio path, so the audio is unmuted for it
+void TEF6686::toneStart(int16_t amplitude, uint16_t frequency) {
   devTEF_Audio_Set_Mute(0);
   devTEF_Radio_Set_Wavegen(1, amplitude, frequency);
-  delay (time);
+}
+
+void TEF6686::toneStop() {
   devTEF_Radio_Set_Wavegen(0, 0, 0);
 }
 

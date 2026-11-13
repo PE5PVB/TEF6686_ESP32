@@ -2,9 +2,9 @@
 #define AUDIOCUES_H
 #include <Arduino.h>
 
-// Audio feedback for use without looking at the screen (Audio settings). The setting
-// is kept in EE_BYTE_EDGEBEEP: off, cues, cues with morse. The band edge beep and the
-// scan beeps are part of it as before.
+// Audio feedback for blind and low-vision users (Audio settings). The setting is kept
+// in EE_BYTE_EDGEBEEP: off, cues, cues with morse. The band edge beep and the scan
+// beeps are part of it as before.
 #define AUDIO_OFF   0
 #define AUDIO_ON    1
 #define AUDIO_MORSE 2
@@ -18,7 +18,7 @@ extern byte audiofeedback;
 //   cueOnOff     the same two tones for a setting that goes on or off
 //   cueConfirm   one long tone: saved or applied
 //   cueError     low buzz: refused
-//   cueDigit     tick, pitch per digit 0 - 9 (keypad entry)
+//   cueDigit     tick, pitch per digit 0 - 9 (keypad entry); the digit itself in morse mode
 void cuePosition(byte index, byte count);
 void cueValue(bool up);
 void cueOpen();
@@ -27,5 +27,11 @@ void cueOnOff(bool on);
 void cueConfirm();
 void cueError();
 void cueDigit(byte digit);
+
+// Morse (on + morse only): digits, letters, point and space. The text plays from loop()
+// through morseStep(), so the radio keeps running; any cue or morseStop() cuts it short.
+void morseSend(const String &text);
+void morseStep();
+void morseStop();
 
 #endif
