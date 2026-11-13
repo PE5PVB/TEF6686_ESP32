@@ -3,7 +3,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[23][351] PROGMEM = {
+static const char* const myLanguage[23][352] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -49,7 +49,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Error! No RDS signal", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
-    "Beep at band edge", // 45
+    "Audio feedback", // 45
     "Region", // 46
     "Europe", // 47
     "USA", // 48
@@ -354,7 +354,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Erase settings\nand presets?", // 347
     "Release all\ncontrols", // 348
     "Full scale", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "On + morse" // 351
   },
 
   { "Nederlands", // Dutch
@@ -402,7 +403,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Fout! Geen RDS!", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
-    "Piep op bandeinde", // 45
+    "Audio feedback", // 45
     "Regio", // 46
     "Europa", // 47
     "USA", // 48
@@ -707,7 +708,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Instellingen en\nzenders wissen?", // 347
     "Laat alle\nbedieningen los", // 348
     "Volle uitslag", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "Aan + morse" // 351
   },
 
   { "Polski", // Polish
@@ -755,7 +757,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Błąd! Brak sygnału RDS", // 42
     "Łagodne wyciszanie FM", // 43
     "Łagodne wyciszanie AM", // 44
-    "Beep na krawędzi pasma", // 45
+    "Sygnały dźwiękowe", // 45
     "Region", // 46
     "Europa", // 47
     "USA", // 48
@@ -1060,7 +1062,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Usunąć ustawienia\ni zapisane stacje?", // 347
     "Zwolnij wszystkie\nprzyciski", // 348
     "Pełna skala", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "Włącz. + morse" // 351
   },
 
   { "Hrvatski", // Croatian
@@ -1108,7 +1111,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Error! No RDS signal", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
-    "Beep na rubu frekv. opsega", // 45
+    "Zvučni signali", // 45
     "Regija", // 46
     "Europa", // 47
     "USA", // 48
@@ -1413,7 +1416,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Obrisati postavke\ni spremljene postaje?", // 347
     "Otpustite sve\nkontrole", // 348
     "Puni otklon", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "Uključeno + morse" // 351
   },
 
   { "Ελληνικά", // Greek
@@ -1461,7 +1465,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Δεν υπάρχει σήμα RDS!", // 42
     "Ήπια σίγαση FM", // 43
     "Ήπια σίγαση AM", // 44
-    "Ηχητικό σήμα στο όριο\nμπάντας", // 45
+    "Ηχητική ανάδραση", // 45
     "Περιοχή", // 46
     "Ευρώπη", // 47
     "Η.Π.Α.", // 48
@@ -1766,7 +1770,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Διαγραφή ρυθμίσεων\nκαι σταθμών μνήμης;", // 347
     "Αφήστε όλα\nτα χειριστήρια", // 348
     "Πλήρης κλίμακα", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "Ενεργό + μορς" // 351
   },
 
   { "Română", // Romanian
@@ -1814,7 +1819,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Eroare! Fără semnal RDS", // 42
     "Lipsă zgomot FM", // 43
     "Lipsă zgomot AM", // 44
-    "Beep la capătul benzii", // 45
+    "Feedback audio", // 45
     "Regiune", // 46
     "Europa", // 47
     "USA", // 48
@@ -2119,7 +2124,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Ștergeți setările\nși posturile memorate?", // 347
     "Eliberați toate\ncomenzile", // 348
     "Scală completă", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "Pornit + morse" // 351
   },
 
   { "Deutsch", // German
@@ -2167,7 +2173,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Fehler! Kein RDS-Signal", // 42
     "Sanfte\nStummschaltung UKW", // 43
     "Sanfte\nStummschaltung AM", // 44
-    "Piepston am Bandende", // 45
+    "Tonsignale", // 45
     "Region", // 46
     "Europa", // 47
     "USA", // 48
@@ -2472,7 +2478,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Einstellungen und\nSenderspeicher löschen?", // 347
     "Alle Bedienelemente\nloslassen", // 348
     "Vollausschlag", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "Ein + Morse" // 351
   },
 
   { "Čeština", // Czech
@@ -2520,7 +2527,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Chyba! Bez RDS!", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
-    "Pípnout na konci pásma", // 45
+    "Zvukové signály", // 45
     "Region", // 46
     "Evropa", // 47
     "USA", // 48
@@ -2825,7 +2832,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Smazat nastavení\na uložené stanice?", // 347
     "Uvolněte všechny\novládací prvky", // 348
     "Plná výchylka", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "Zap. + morse" // 351
   },
 
   { "Magyar", // Hungarian
@@ -2873,7 +2881,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Hiba! Nincs RDS jel", // 42
     "FM halkítás", // 43
     "AM halkítás", // 44
-    "Sípszó a sáv szélén", // 45
+    "Hangjelzések", // 45
     "Régió", // 46
     "Európa", // 47
     "USA", // 48
@@ -3178,7 +3186,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Beállítások és tárolt\nállomások törlése?", // 347
     "Engedjen el minden\nkezelőszervet", // 348
     "Végkitérés", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "Be + morze" // 351
   },
 
   { "Français", // French
@@ -3226,7 +3235,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Erreur ! Pas de signal RDS", // 42
     "Sourdine douce FM", // 43
     "Sourdine douce AM", // 44
-    "Bip à la limite\nde bande", // 45
+    "Signaux sonores", // 45
     "Région", // 46
     "Europe", // 47
     "États-Unis", // 48
@@ -3531,7 +3540,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Effacer réglages\net stations mémorisées ?", // 347
     "Relâchez toutes\nles commandes", // 348
     "Pleine échelle", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "Allumé + morse" // 351
   },
 
   { "Български", // Bulgarian
@@ -3579,7 +3589,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Няма RDS сигнал", // 42
     "Меко мютиране FM", // 43
     "Меко мютиране AM", // 44
-    "Сигнал при граница\nна лента", // 45
+    "Звукови сигнали", // 45
     "Регион", // 46
     "Европа", // 47
     "USA", // 48
@@ -3884,7 +3894,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Нулиране на\nнастройки и станции?", // 347
     "Отпуснете всички\nбутони", // 348
     "Пълно отклонение", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "Включв. + морз" // 351
   },
 
   { "Русский", // Russian
@@ -3932,7 +3943,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Ошибка! Нет RDS!", // 42
     "FM Soft Mute", // 43
     "AM Soft Mute", // 44
-    "Край диапазона (звук): ", // 45
+    "Звуковые сигналы", // 45
     "Регион", // 46
     "Европа", // 47
     "USA", // 48
@@ -4237,7 +4248,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Удалить настройки\nи сохранённые станции?", // 347
     "Отпустите все\nорганы управления", // 348
     "Полная шкала", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "Вкл. + морзе" // 351
   },
 
   { "Українська", // Ukranian
@@ -4285,7 +4297,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Помилка! Відсутній/nсигнал RDS", // 42
     "Приглушення FM", // 43
     "Приглушення СХ", // 44
-    "Сигнал на межі/nдіапазону", // 45
+    "Звукові сигнали", // 45
     "Регіон", // 46
     "Європа", // 47
     "США", // 48
@@ -4590,7 +4602,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Скинути параметри\nі станції?", // 347
     "Відпустіть усі\nоргани керування", // 348
     "Повна шкала", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "Увімк. + морзе" // 351
   },
 
   { "Italiano", // Italian
@@ -4638,7 +4651,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Errore! Nessun segnale RDS", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
-    "Beeper al limite di banda", // 45
+    "Segnali acustici", // 45
     "Regione", // 46
     "Europa", // 47
     "USA", // 48
@@ -4943,7 +4956,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Cancellare impostazioni\ne stazioni memorizzate?", // 347
     "Rilasciare tutti\ni comandi", // 348
     "Fondo scala", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "On + morse" // 351
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -4991,7 +5005,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "错误! 无RDS信号", // 42
     "FM 软静噪", // 43
     "AM 软静噪", // 44
-    "频率边界提示音", // 45
+    "声音反馈", // 45
     "国家与地区", // 46
     "欧洲", // 47
     "USA", // 48
@@ -5296,7 +5310,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "清除设置和\n已存储的电台？", // 347
     "松开所有\n按键及触摸屏", // 348
     "满刻度", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "打开 + 莫尔斯" // 351
   },
 
   { "Norsk", // Norwegian
@@ -5344,7 +5359,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Feil! Ingen RDS-signal", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
-    "Pip ved båndkant", // 45
+    "Lydsignaler", // 45
     "Region", // 46
     "Europa", // 47
     "USA", // 48
@@ -5649,7 +5664,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Slette innstillinger\nog lagrede stasjoner?", // 347
     "Slipp alle\nkontroller", // 348
     "Fullt utslag", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "På + morse" // 351
   },
 
   { "Español", // Spanish
@@ -5697,7 +5713,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "¡Error! Sin señal RDS", // 42
     "Silencio FM", // 43
     "Silencio AM", // 44
-    "Tono en límite de banda", // 45
+    "Señales acústicas", // 45
     "Región", // 46
     "Europa", // 47
     "Estados Unidos", // 48
@@ -6002,7 +6018,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "¿Borrar ajustes\ny emisoras guardadas?", // 347
     "Suelte todos\nlos controles", // 348
     "Escala completa", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "Encendido + morse" // 351
   },
 
   { "Português", // Portuguese
@@ -6050,7 +6067,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Erro! Sem sinal RDS", // 42
     "Silenciamento suave FM", // 43
     "Silenciamento suave AM", // 44
-    "Bipe na borda da faixa", // 45
+    "Sinais sonoros", // 45
     "Região", // 46
     "Europa", // 47
     "Estados Unidos", // 48
@@ -6355,7 +6372,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Apagar definições\ne estações guardadas?", // 347
     "Solte todos\nos controlos", // 348
     "Escala completa", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "Ligado + morse" // 351
   },
 
   { "Srpski", // Serbian
@@ -6403,7 +6421,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Greška! Nema RDS signala!", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
-    "Pucketanje na\nivici opsega", // 45
+    "Zvučni signali", // 45
     "Region", // 46
     "Evropa", // 47
     "S.A.D.", // 48
@@ -6708,7 +6726,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Obrisati podešavanja\ni sačuvane stanice?", // 347
     "Otpustite sve\nkontrole", // 348
     "Pun otklon", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "Uključeno + morse" // 351
   },
 
   { "Suomi", // Finnish
@@ -6756,7 +6775,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Virhe! Ei RDS-signaalia", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
-    "Ääni rajalla", // 45
+    "Äänimerkit", // 45
     "Alue", // 46
     "Eurooppa", // 47
     "Yhdysvallat", // 48
@@ -7061,7 +7080,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Poistetaanko asetukset\nja tallennetut asemat?", // 347
     "Vapauta kaikki\nohjaimet", // 348
     "Täysi asteikko", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "Päällä + morse" // 351
   },
 
   { "Dansk", // Danish
@@ -7109,7 +7129,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Fejl! Ingen RDS-signal", // 42
     "Blød dæmpning FM", // 43
     "Blød dæmpning AM", // 44
-    "Beep ved båndkant", // 45
+    "Lydsignaler", // 45
     "Region", // 46
     "Europa", // 47
     "USA", // 48
@@ -7414,7 +7434,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Slet indstillinger\nog gemte stationer?", // 347
     "Slip alle\nbetjeningselementer", // 348
     "Fuldt udslag", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "Tændt + morse" // 351
   },
 
   { "Svenska", // Swedish
@@ -7462,7 +7483,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Fel! Ingen RDS-signal", // 42
     "Softmute FM", // 43
     "Softmute AM", // 44
-    "Pip vid bandkant", // 45
+    "Ljudsignaler", // 45
     "Region", // 46
     "Europa", // 47
     "USA", // 48
@@ -7767,7 +7788,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Radera inställningar\noch sparade stationer?", // 347
     "Släpp alla\nreglage", // 348
     "Fullt utslag", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "På + morse" // 351
   },
 
   { "Gaeilge", // Irish
@@ -7815,7 +7837,7 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Earráid! Gan comhartha RDS", // 42
     "Múchadh bog (Softmute) FM", // 43
     "Múchadh bog (Softmute) AM", // 44
-    "Bíp ag imeall an bhanna", // 45
+    "Aiseolas fuaime", // 45
     "Réigiún", // 46
     "An Eoraip", // 47
     "SAM", // 48
@@ -8120,7 +8142,8 @@ static const char* const myLanguage[23][351] PROGMEM = {
     "Scrios socruithe\nagus stáisiúin shábháilte?", // 347
     "Scaoil na rialtáin\ngo léir", // 348
     "Lánscála", // 349
-    "ARS display" // 350
+    "ARS display", // 350
+    "Air + morse" // 351
   }
 };
 #endif

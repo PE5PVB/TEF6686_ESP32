@@ -34,7 +34,7 @@ extern bool compressedold;
 extern bool dropout;
 extern bool dynamicPTYold;
 extern bool dynamicspi;
-extern bool edgebeep;
+extern byte audiofeedback;
 extern bool fmsi;
 extern bool fullsearchrds;
 extern bool hasafold;

@@ -1,9 +1,15 @@
 #include "gui.h"
 #include "constants.h"
+#include "audiocues.h"
 #include <WiFi.h>
 #include <Wire.h>
 #include <EEPROM.h>
 #include <cstring>
+
+// Off, On or On + morse
+static String AudioFeedbackText() {
+  return textUI(audiofeedback == AUDIO_MORSE ? 351 : audiofeedback ? 31 : 30);
+}
 
 extern mem presets[];
 bool setWiFiConnectParam = false;
@@ -884,7 +890,7 @@ void ShowOneLine(byte position, byte item, bool selected) {
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((edgebeep ? textUI(31) : textUI(30)), 298, 2);
+          FullLineSprite.drawString(AudioFeedbackText(), 298, 2);
           break;
 
         case DISPLAYSETTINGS:
@@ -1987,7 +1993,7 @@ void ShowOneButton(byte position, byte item, bool selected) {
           PSSprite.drawString(shortLine(removeNewline(textUI(45))), 75, 1);
 
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          PSSprite.drawString((edgebeep ? textUI(31) : textUI(30)), 75, 15);
+          PSSprite.drawString(AudioFeedbackText(), 75, 15);
           break;
 
         case DISPLAYSETTINGS:
@@ -3509,7 +3515,9 @@ void MenuUpDown(bool dir) {
     }
 
     if (hardwaremodel == PORTABLE_TOUCH_ILI9341) ShowOneButton(menuoption, menuitem, true); else ShowOneLine(menuoption, menuitem, true);
+    cuePosition(menuitem, items[menupage]);
   } else {
+    cueValue(dir);
     switch (CurrentTheme) {
       case 7: OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground_wo); break;
       default: OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground); break;
@@ -3771,8 +3779,8 @@ void MenuUpDown(bool dir) {
             break;
 
           case ITEM2:
-            edgebeep = !edgebeep;
-            OneBigLineSprite.drawString((edgebeep ? textUI(31) : textUI(30)), 135, 0);
+            audiofeedback = (audiofeedback + (dir ? 1 : 2)) % 3;
+            OneBigLineSprite.drawString(AudioFeedbackText(), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
@@ -4822,6 +4830,7 @@ void DoMenu() {
     if (menupage == MAINSETTINGS && menuitem == 0) child = DEVICESETTINGS;
     if (menupage == DISPLAYSETTINGS && menuitem == 9) child = SCREENSETTINGS;
     if (child >= 0) {
+      cueOpen();
       menupage = child;
       menuitem = 0;
       menuoption = ITEM1;
@@ -4836,6 +4845,7 @@ void DoMenu() {
   }
 
   if (!menuopen) {
+    cueOpen();
     if (menupage != INDEX) {
       menuopen = true;
       switch (CurrentTheme) {
@@ -5142,7 +5152,7 @@ void DoMenu() {
           case ITEM2:
             Infoboxprint(textUI(45));
 
-            OneBigLineSprite.drawString((edgebeep ? textUI(31) : textUI(30)), 135, 0);
+            OneBigLineSprite.drawString(AudioFeedbackText(), 135, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
@@ -5957,6 +5967,7 @@ void DoMenu() {
       doTheme();
     }
 
+    cueConfirm();
     menuopen = false;
     if (scanstart >= scanstop) scanstart = scanstop - 1;
     if (scanstop <= scanstart) scanstop = scanstart + 1;
@@ -6193,6 +6204,7 @@ void OpenSetupMenu() {
   if (!SetupMenuLabel(menupage, menuitem)) return;
   setupValue = SetupCurrentValue(menupage, menuitem);
   menuopen = true;
+  cueOpen();
   tft.pushImage(13, 30, 292, 170, CurrentTheme == 7 ? popupbackground_wo : popupbackground);
   showMenuOpenTouchButtons();
   int label = SetupMenuLabel(menupage, menuitem);
@@ -6212,6 +6224,7 @@ void AdjustSetupMenu(bool dir) {
   if (menupage == DEVICESETTINGS && menuitem == 0) count = RADIO_HARDWARE_CNT;
   setupValue = (setupValue + (dir ? 1 : count - 1)) % count;
   DrawSetupValue();
+  if (count == 2) cueOnOff(setupValue); else cuePosition(setupValue, count);
 }
 void CancelSetupMenu() {
   if (meterCalibrationActive) analogWrite(SMETERPIN, 0);
@@ -6265,11 +6278,13 @@ void AcceptSetupMenu() {
         break;
     }
   }
+  cueConfirm();
   CancelSetupMenu();
   menuopen = false;
   BuildMenu();
 }
 void BackSetupMenu() {
+  cueBack();
   CancelSetupMenu();
   if (menuopen) {
     menuopen = false;

@@ -31,6 +31,7 @@ using fs::FS;
 #include "src/logbook.h"
 #include "src/rtc_rx8010.h"
 #include "src/splash.h"
+#include "src/audiocues.h"
 
 #define ROTARY_PIN_A    34
 #define ROTARY_PIN_B    36
@@ -90,7 +91,7 @@ bool compressedold;
 bool direction;
 bool dropout;
 bool dynamicPTYold;
-bool edgebeep;
+byte audiofeedback;  // AUDIO_OFF, AUDIO_ON or AUDIO_MORSE, see audiocues.h
 bool externaltune;
 bool findMemoryAF;
 bool firstTouchHandled = false;
@@ -553,7 +554,8 @@ void setup() {
   HighCutOffset = EEPROM.readByte(EE_BYTE_HIGHCUTOFFSET);
   LevelOffset = EEPROM.readByte(EE_BYTE_LEVELOFFSET);
   radio.rds.rtbuffer = EEPROM.readByte(EE_BYTE_RTBUFFER);
-  edgebeep = EEPROM.readByte(EE_BYTE_EDGEBEEP);
+  audiofeedback = EEPROM.readByte(EE_BYTE_EDGEBEEP);
+  if (audiofeedback > AUDIO_MORSE) audiofeedback = AUDIO_OFF;
   softmuteam = EEPROM.readByte(EE_BYTE_SOFTMUTEAM);
   softmutefm = EEPROM.readByte(EE_BYTE_SOFTMUTEFM);
   frequency_AM = EEPROM.readUInt(EE_UINT16_FREQUENCY_AM);
@@ -998,7 +1000,7 @@ void setup() {
 
   setupmode = false;
 
-  if (edgebeep) radio.tone(50, -5, 2000);
+  if (audiofeedback) radio.tone(50, -5, 2000);
   if (!usesquelch) radio.setUnMute();
 
   screensavertimer = millis();
@@ -1468,6 +1470,7 @@ void loop() {
       while (digitalRead(MODEBUTTON) == LOW);
     } else {
       if (freqBandPicker || freqkeypadtune) {
+        cueBack();
         CancelFreqEntry();
         while (digitalRead(MODEBUTTON) == LOW) delay(50);
       } else if (!screenmute) {
@@ -1612,10 +1615,10 @@ void doBandSelectionFM() {
         band = BAND_OIRT;
         if (frequency_OIRT > FREQ_FM_OIRT_END) {
           frequency_OIRT = FREQ_FM_OIRT_START;
-          if (edgebeep) EdgeBeeper();
+          if (audiofeedback) EdgeBeeper();
         } else if (frequency_OIRT < FREQ_FM_OIRT_START) {
           frequency_OIRT = FREQ_FM_OIRT_END;
-          if (edgebeep) EdgeBeeper();
+          if (audiofeedback) EdgeBeeper();
         }
         SelectBand();
       }
@@ -1625,10 +1628,10 @@ void doBandSelectionFM() {
         band = BAND_FM;
         if (frequency > HighEdgeSet * 10) {
           frequency = LowEdgeSet * 10;
-          if (edgebeep) EdgeBeeper();
+          if (audiofeedback) EdgeBeeper();
         } else if (frequency < LowEdgeSet * 10) {
           frequency = HighEdgeSet * 10;
-          if (edgebeep) EdgeBeeper();
+          if (audiofeedback) EdgeBeeper();
         }
         SelectBand();
       }
@@ -1968,6 +1971,7 @@ void BANDBUTTONPress() {
       presets[memorypos].band = BAND_FM;
       presets[memorypos].frequency = EE_PRESETS_FREQUENCY;
       memorystore = false;
+      cueBack();
       ShowTuneMode();
       if (memoryposstatus == MEM_DARK || memoryposstatus == MEM_EXIST) {
         memoryposstatus = MEM_NORMAL;
@@ -2597,6 +2601,7 @@ void doStereoToggle() {
   }
   EEPROM.writeByte(EE_BYTE_STEREO, StereoToggle);
   EEPROM.commit();
+  cueOnOff(StereoToggle);
 }
 
 void ModeButtonPress() {
@@ -2656,12 +2661,14 @@ void ModeButtonPress() {
             BuildMenu();
             freq_in = 0;
             menu = true;
+            cueOpen();
           }
         }
       } else {
         if (menuopen && !submenu) {
           ButtonPress();
         } else if (!submenu) {
+          cueBack();
           OStatusold = 1000;
           Stereostatusold = false;
           SStatusold = 2000;
@@ -2683,6 +2690,7 @@ void ModeButtonPress() {
           endMenu();
         } else {
           if (submenu) {
+            cueBack();
             if (menuopen) {
               if (menupage == CONNECTIVITY && menuoption == ITEM2 && wifi) {
                 tryWiFi();
@@ -2823,6 +2831,7 @@ void ButtonPress() {
       if (tunemode == TUNE_MEM) {
         if (!memorystore) {
           memorystore = true;
+          cueOpen();
           if (!IsStationEmpty()) memoryposstatus = MEM_EXIST;
           else memoryposstatus = MEM_NORMAL;
           ShowMemoryPos();
@@ -2831,6 +2840,7 @@ void ButtonPress() {
         } else {
           memorystore = false;
           StoreMemoryPos(memorypos);
+          cueConfirm();
 
           ShowTuneMode();
           if (memoryposstatus == MEM_DARK || memoryposstatus == MEM_EXIST) {
@@ -2854,6 +2864,7 @@ void ButtonPress() {
             }
 
             if (!screenmute) ShowStepSize();
+            cuePosition(stepsize, (band == BAND_SW || band < BAND_GAP) ? 5 : 4);
 
             EEPROM.writeByte(EE_BYTE_STEPSIZE, stepsize);
             EEPROM.commit();
@@ -2870,12 +2881,13 @@ void ButtonPress() {
               case 2: ShowFreq(4); break;
             }
             delay(200);
-            if (edgebeep) EdgeBeeper();
+            if (audiofeedback) EdgeBeeper();
             while (digitalRead(ROTARY_BUTTON) == LOW) delay(50);
             ShowFreq(0);
           } else {
             if (band == BAND_SW && tunemode != TUNE_MEM) {
               nowToggleSWMIBand = !nowToggleSWMIBand;
+              cueOnOff(nowToggleSWMIBand);
               tunemode = TUNE_MAN;
               EEPROM.writeByte(EE_BYTE_BANDAUTOSW, nowToggleSWMIBand);
               EEPROM.commit();
@@ -2947,6 +2959,7 @@ void KeyUp() {
               if (!IsStationEmpty()) memoryposstatus = MEM_EXIST; else memoryposstatus = MEM_DARK;
             }
             ShowMemoryPos();
+            cuePosition(memorypos, EE_PRESETS_CNT);
             EEPROM.writeByte(EE_BYTE_MEMORYPOS, memorypos);
             EEPROM.commit();
             break;
@@ -3019,6 +3032,7 @@ void KeyDown() {
               if (!IsStationEmpty()) memoryposstatus = MEM_EXIST; else memoryposstatus = MEM_DARK;
             }
             ShowMemoryPos();
+            cuePosition(memorypos, EE_PRESETS_CNT);
             EEPROM.writeByte(EE_BYTE_MEMORYPOS, memorypos);
             EEPROM.commit();
             break;
@@ -3971,7 +3985,7 @@ void updateSWMIBand() {
     case SW_MI_BAND_160M:
       FrequencySprite.drawString(SWMIBandstring + " ", 0, 0);
       beepresetstart = true;
-      if (edgebeep && beepresetstop) {
+      if (audiofeedback && beepresetstop) {
         EdgeBeeper();
         beepresetstop = false;
       }
@@ -3979,7 +3993,7 @@ void updateSWMIBand() {
 
     case SW_MI_BAND_GAP:
       beepresetstop = true;
-      if (edgebeep && beepresetstart) {
+      if (audiofeedback && beepresetstart) {
         EdgeBeeper();
         beepresetstart = false;
       }
@@ -4062,6 +4076,7 @@ void BWSelectorOpen() {
   BuildBWSelector();
   freq_in = 0;
   BWtune = true;
+  cueOpen();
 }
 
 // One button of the selector; the underline marks the saved filter and the iMS / EQ state
@@ -4077,8 +4092,7 @@ void BWSelectorPreview() {
   doBW();
 }
 
-void BWSelectorToggle(bool ims) {
-  if (ims) iMSset = !iMSset; else EQset = !EQset;
+static void BWSelectorApplyiMSEQ() {
   if (!iMSset && !EQset) iMSEQ = 0;
   else if (iMSset && EQset) iMSEQ = 2;
   else if (!iMSset && EQset) iMSEQ = 3;
@@ -4088,15 +4102,26 @@ void BWSelectorToggle(bool ims) {
   if (XDRGTKUSB || XDRGTKTCP) DataPrint("G" + String(!EQset) + String(!iMSset) + "\n");
 }
 
+void BWSelectorToggle(bool ims) {
+  if (ims) iMSset = !iMSset; else EQset = !EQset;
+  BWSelectorApplyiMSEQ();
+  cueOnOff(ims ? iMSset : EQset);
+}
+
 void BWSelectorClose(bool save) {
   if (save) {
     EEPROM.writeByte(EE_BYTE_IMSSET, iMSset);
     EEPROM.writeByte(EE_BYTE_EQSET, EQset);
+    cueConfirm();
   } else {
     BWset = BWsetOpen;
     doBW();  // the selector is still open, so this only brings the tuner back
-    if (iMSset != iMSsetOpen) BWSelectorToggle(true);
-    if (EQset != EQsetOpen) BWSelectorToggle(false);
+    if (iMSset != iMSsetOpen || EQset != EQsetOpen) {
+      iMSset = iMSsetOpen;
+      EQset = EQsetOpen;
+      BWSelectorApplyiMSEQ();
+    }
+    cueBack();
   }
   BWtune = false;
   freq_in = 0;
@@ -4124,6 +4149,7 @@ void doBWtuneDown() {
   BWSelectorPreview();
   drawBWButton(old, false);
   drawBWButton(BWsettemp, true);
+  cuePosition(BWsettemp == 20 ? (band < BAND_GAP ? 19 : 4) : BWsettemp - 1, band < BAND_GAP ? 20 : 5);
 }
 
 void doBWtuneUp() {
@@ -4138,6 +4164,7 @@ void doBWtuneUp() {
   BWSelectorPreview();
   drawBWButton(old, false);
   drawBWButton(BWsettemp, true);
+  cuePosition(BWsettemp == 20 ? (band < BAND_GAP ? 19 : 4) : BWsettemp - 1, band < BAND_GAP ? 20 : 5);
 }
 
 void doTuneMode() {
@@ -4165,6 +4192,7 @@ void doTuneMode() {
   }
   ShowTuneMode();
   ShowMemoryPos();
+  cuePosition(tunemode == TUNE_MAN ? 0 : tunemode == TUNE_MEM ? 2 : 1, 3);
   EEPROM.writeByte(EE_BYTE_TUNEMODE, tunemode);
   EEPROM.commit();
 }
@@ -4407,7 +4435,7 @@ void TuneUp() {
       if (scandxmode) rabbitearssend();
       frequency = LowEdgeSet * 10;
       if (fmdefaultstepsize == 2 && stepsize == 0 && frequency == 8750) frequency = 8775;
-      if (edgebeep) EdgeBeeper();
+      if (audiofeedback) EdgeBeeper();
     }
     radio.SetFreq(frequency);
   } else if (band == BAND_OIRT) {
@@ -4419,14 +4447,14 @@ void TuneUp() {
     }
     if (frequency_OIRT > HighEdgeOIRTSet) {
       frequency_OIRT = LowEdgeOIRTSet;
-      if (edgebeep) EdgeBeeper();
+      if (audiofeedback) EdgeBeeper();
     }
     radio.SetFreq(frequency_OIRT);
   } else if (band == BAND_LW) {
     frequency_AM += temp;
     if (frequency_AM > LWHighEdgeSet) {
       frequency_AM = LWLowEdgeSet;
-      if (edgebeep) EdgeBeeper();
+      if (audiofeedback) EdgeBeeper();
     }
     radio.SetFreqAM(frequency_AM);
     frequency_LW = frequency_AM;
@@ -4434,7 +4462,7 @@ void TuneUp() {
     frequency_AM += temp;
     if (frequency_AM > MWHighEdgeSet) {
       frequency_AM = MWLowEdgeSet;
-      if (edgebeep) EdgeBeeper();
+      if (audiofeedback) EdgeBeeper();
     }
     radio.SetFreqAM(frequency_AM);
     frequency_MW = frequency_AM;
@@ -4443,7 +4471,7 @@ void TuneUp() {
     frequency_AM += temp;
     if (frequency_AM > SWHighEdgeSet) {
       frequency_AM = SWLowEdgeSet;
-      if (edgebeep) EdgeBeeper();
+      if (audiofeedback) EdgeBeeper();
     }
     radio.SetFreqAM(frequency_AM);
     frequency_SW = frequency_AM;
@@ -4453,7 +4481,7 @@ void TuneUp() {
     frequency_AM += temp;
     if (frequency_AIR > AIRHighEdgeSet) {
       frequency_AM = AIRLowEdgeSet;
-      if (edgebeep) EdgeBeeper();
+      if (audiofeedback) EdgeBeeper();
     }
     radio.SetFreqAM(frequency_AM);
     frequency_AIR = frequency_AM;
@@ -4511,21 +4539,21 @@ void TuneDown() {
     if (frequency < LowEdgeSet * 10) {
       frequency = HighEdgeSet * 10;
       if (fmdefaultstepsize == 2 && stepsize == 0 && frequency == 10800) frequency = 10790;
-      if (edgebeep) EdgeBeeper();
+      if (audiofeedback) EdgeBeeper();
     }
     radio.SetFreq(frequency);
   } else if (band == BAND_OIRT) {
     frequency_OIRT -= temp;
     if (frequency_OIRT < LowEdgeOIRTSet) {
       frequency_OIRT = HighEdgeOIRTSet;
-      if (edgebeep) EdgeBeeper();
+      if (audiofeedback) EdgeBeeper();
     }
     radio.SetFreq(frequency_OIRT);
   } else if (band == BAND_LW) {
     frequency_AM -= temp;
     if (frequency_AM < LWLowEdgeSet) {
       frequency_AM = LWHighEdgeSet;
-      if (edgebeep) EdgeBeeper();
+      if (audiofeedback) EdgeBeeper();
     }
     radio.SetFreqAM(frequency_AM);
     frequency_LW = frequency_AM;
@@ -4533,7 +4561,7 @@ void TuneDown() {
     frequency_AM -= temp;
     if (frequency_AM < MWLowEdgeSet) {
       frequency_AM = MWHighEdgeSet;
-      if (edgebeep) EdgeBeeper();
+      if (audiofeedback) EdgeBeeper();
     }
     radio.SetFreqAM(frequency_AM);
     frequency_MW = frequency_AM;
@@ -4542,7 +4570,7 @@ void TuneDown() {
     frequency_AM -= temp;
     if (frequency_AM < SWLowEdgeSet) {
       frequency_AM = SWHighEdgeSet;
-      if (edgebeep) EdgeBeeper();
+      if (audiofeedback) EdgeBeeper();
     }
     radio.SetFreqAM(frequency_AM);
     frequency_SW = frequency_AM;
@@ -5052,7 +5080,7 @@ void endMenu() {
   EEPROM.writeByte(EE_BYTE_HIGHCUTOFFSET, HighCutOffset);
   EEPROM.writeByte(EE_BYTE_LEVELOFFSET, LevelOffset);
   EEPROM.writeByte(EE_BYTE_RTBUFFER, radio.rds.rtbuffer);
-  EEPROM.writeByte(EE_BYTE_EDGEBEEP, edgebeep);
+  EEPROM.writeByte(EE_BYTE_EDGEBEEP, audiofeedback);
   EEPROM.writeByte(EE_BYTE_SOFTMUTEAM, softmuteam);
   EEPROM.writeByte(EE_BYTE_SOFTMUTEFM, softmutefm);
   EEPROM.writeByte(EE_BYTE_LANGUAGE, language);
@@ -5421,6 +5449,7 @@ void doBandToggle() {
     radio.clearRDS(fullsearchrds);
     StoreFrequency();
     SelectBand();
+    cuePosition(band < BAND_GAP ? band : band - 1, 6);  // OIRT, FM, LW, MW, SW, AIR
     if (XDRGTKUSB || XDRGTKTCP) {
       if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n");
       else if (band == BAND_OIRT) DataPrint("M0\nT" + String(frequency_OIRT * 10) + "\n");
@@ -5680,7 +5709,7 @@ int TuneFreq(int temp) {
   byte count = FindBandMatches(temp, matchBands, matchFreqs);
 
   if (count == 0) {
-    if (edgebeep) EdgeBeeper();
+    if (audiofeedback) EdgeBeeper();
     radio.clearRDS(fullsearchrds);
     if (RDSSPYUSB) Serial.print("G:\r\nRESET-------\r\n\r\n");
     if (RDSSPYTCP) RemoteClient.print("G:\r\nRESET-------\r\n\r\n");
@@ -5706,6 +5735,7 @@ int TuneFreq(int temp) {
 }
 
 void OpenFreqInput(int value) {
+  cueOpen();
   tottimer = millis();
   screensavertimer = millis();
   freq_in = value;
@@ -5754,12 +5784,14 @@ void FreqPickerMove(bool dir) {
   // Only the rows change, so redraw them and leave the background image alone.
   // Same as doBWtuneUp using showBWSelector instead of BuildBWSelector.
   showFreqBandPicker();
+  cuePosition(freqPickerSel, freqPickerCount);
 }
 
 // Tunes the highlighted row and leaves the picker. Touch uses this too, after
 // setting freqPickerSel to the row that was tapped.
 void FreqPickerConfirm() {
   if (freqPickerSel >= freqPickerCount) freqPickerSel = 0;
+  cueConfirm();
   ApplyBandMatch(freqPickerBands[freqPickerSel], freqPickerFreqs[freqPickerSel]);
   freqBandPicker = false;
   freqkeypadtune = false;
@@ -5776,6 +5808,7 @@ void FreqKeypadConfirm() {
     if (bands[i] != freqInputBand) continue;
     aftest = true;
     aftimer = millis();
+    cueConfirm();
     ApplyBandMatch(bands[i], freqs[i]);
     memtune = false;
     CancelFreqEntry();
@@ -5790,7 +5823,7 @@ void FreqKeypadConfirm() {
   // Invalid or empty input stays editable, without changing the tuner.
   showFreqInputStatus();
   tft.drawRect(4, 30, 312, 34, SignificantColor);
-  if (edgebeep) EdgeBeeper();
+  cueError();
 }
 
 // DP-666 key while the entry screen is open.
@@ -5800,6 +5833,7 @@ void FreqInputNumber(int num) {
   if (num >= 0 && num <= 9) {
     if (freq_in < 10000) freq_in = freq_in * 10 + num;
     showFreqInputStatus();
+    cueDigit(num);
   } else if (num == 13) {
     FreqKeypadConfirm();
   }
@@ -5808,6 +5842,7 @@ void FreqInputNumber(int num) {
 void FreqInputBackspace() {
   freq_in /= 10;
   showFreqInputStatus();
+  cueBack();
 }
 
 // Activates a control: 0..4 band buttons, 5..20 keypad cells (7 and 11 are empty).
@@ -5817,14 +5852,15 @@ void FreqInputAction(byte focus) {
   if (focus < 5) {
     freqInputBand = freqInputBands[focus];
     showFreqInputStatus();
+    cuePosition(focus, 5);
     return;
   }
   switch (focus - 5) {
     case 0: case 1: case 2: FreqInputNumber(focus - 4); break;
     case 4: case 5: case 6: FreqInputNumber(focus - 5); break;
     case 8: case 9: case 10: FreqInputNumber(focus - 6); break;
-    case 3: CancelFreqEntry(); break;
-    case 12: freq_in = 0; showFreqInputStatus(); break;
+    case 3: cueBack(); CancelFreqEntry(); break;
+    case 12: freq_in = 0; showFreqInputStatus(); cueBack(); break;
     case 13: FreqInputNumber(0); break;
     case 14: FreqInputBackspace(); break;
     case 15: FreqKeypadConfirm(); break;
@@ -5843,10 +5879,12 @@ void FreqInputMove(bool dir) {
   // Only the two affected controls change, so leave the rest of the screen alone.
   drawFreqInputControl(previous);
   drawFreqInputControl(freqKeyFocus);
+  cuePosition(freqKeyFocus, 21);
 }
 
 // BAND button steps through the band buttons.
 void FreqInputCycleBand() {
+  cueValue(true);
   byte i = 0;
   while (i < 5 && freqInputBands[i] != freqInputBand) i++;
   freqInputBand = freqInputBands[(i + 1) % 5];
@@ -5880,6 +5918,7 @@ void NumpadProcess(int num) {
         if (memorystore) {
           memorystore = false;
           StoreMemoryPos(memorypos);
+          cueConfirm();
           ShowTuneMode();
           if (memoryposstatus == MEM_DARK || memoryposstatus == MEM_EXIST) memoryposstatus = MEM_NORMAL;
           ShowFreq(0);
@@ -6016,6 +6055,7 @@ void toggleiMSEQ() {
     EEPROM.writeByte(EE_BYTE_IMSSET, iMSset);
     EEPROM.writeByte(EE_BYTE_EQSET, EQset);
     EEPROM.commit();
+    cueValue(true);
     if (XDRGTKUSB || XDRGTKTCP) DataPrint("G" + String(!EQset) + String(!iMSset) + "\n");
   }
 }
