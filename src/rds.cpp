@@ -784,7 +784,7 @@ void showCT() {
 
   // Apply NTPoffset when no valid RDS CT offset is available
   if (NTPupdated || (!radio.rds.hasCT && rtcset)) {
-    t += NTPoffset * 3600;
+    t += NTPoffsetSeconds();
 
     if (autoDST && isDST(t)) {
       t += 3600;

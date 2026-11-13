@@ -321,12 +321,12 @@ String getCurrentDateTime(bool inUTC) {
   // Convert struct tm to time_t format
   time_t currentEpoch = mktime(&timeInfo);
 
-  // Determine UTC offset as a number
-  int utcOffsetHours = 0;
+  // UTC offset as text, for the log in UTC
+  String utcOffset;
 
   if (!inUTC) {
     // Adjust for time zone offset and DST if not in UTC
-    currentEpoch += (NTPupdated ? NTPoffset * 3600 : radio.rds.offset); // Apply GMT offset if NTPupdated, else RDS offset
+    currentEpoch += (NTPupdated ? NTPoffsetSeconds() : radio.rds.offset); // Apply GMT offset if NTPupdated, else RDS offset
 
     // Apply DST adjustment if NTPupdated and autoDST are true
     if (NTPupdated && autoDST) {
@@ -337,8 +337,7 @@ String getCurrentDateTime(bool inUTC) {
       }
     }
   } else {
-    // Calculate UTC offset in hours when inUTC is true
-    utcOffsetHours = (NTPupdated ? NTPoffset : radio.rds.offset / 3600);
+    utcOffset = UTCoffsetText(NTPupdated ? NTPoffsetSeconds() : radio.rds.offset);
   }
 
   // Convert adjusted (or original) time back to struct tm format
@@ -361,7 +360,7 @@ String getCurrentDateTime(bool inUTC) {
 
     // Append UTC offset if inUTC
     if (inUTC) {
-      String utcOffsetStr = ", " + String(utcOffsetHours) + ",";
+      String utcOffsetStr = ", " + utcOffset + ",";
       return String(buf) + "," + timeWithAMPM + utcOffsetStr;
     }
 
@@ -374,7 +373,7 @@ String getCurrentDateTime(bool inUTC) {
 
     // Append UTC offset if inUTC
     if (inUTC) {
-      String utcOffsetStr = ", " + String(utcOffsetHours) + ",";
+      String utcOffsetStr = ", " + utcOffset + ",";
       return String(buf) + "," + timeEuropean + utcOffsetStr;
     }
 

@@ -6,6 +6,20 @@
 #include <EEPROM.h>
 #include <cstring>
 
+// UTC offset of the clock: whole hours in NTPoffset, the minutes in NTPoffsetmin
+long NTPoffsetSeconds() {
+  long seconds = 3600L * abs(NTPoffset) + 60L * NTPoffsetmin;
+  return NTPoffset < 0 ? -seconds : seconds;
+}
+
+// +1, -3:30, +5:45
+String UTCoffsetText(long seconds) {
+  long minutes = abs(seconds) / 60;
+  String text = (seconds < 0 ? "-" : "+") + String(minutes / 60);
+  if (minutes % 60) text += ":" + String(minutes % 60);
+  return text;
+}
+
 // Off, On or On + morse
 static String AudioFeedbackText() {
   return textUI(audiofeedback == AUDIO_MORSE ? 351 : audiofeedback ? 31 : 30);
@@ -1517,9 +1531,9 @@ void ShowOneLine(byte position, byte item, bool selected) {
 
           FullLineSprite.setTextDatum(TR_DATUM);
           FullLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          FullLineSprite.drawString((NTPoffset > -1 ? "+" : "") + String(NTPoffset, DEC), 298, 2);
+          FullLineSprite.drawString(UTCoffsetText(NTPoffsetSeconds()), 298, 2);
           FullLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
-          FullLineSprite.drawString("GMT", 258, 2);
+          FullLineSprite.drawString("GMT", 292 - FullLineSprite.textWidth(UTCoffsetText(NTPoffsetSeconds())), 2);  // keeps clear of +12:45
           break;
 
         case DXMODE:
@@ -2648,7 +2662,7 @@ void ShowOneButton(byte position, byte item, bool selected) {
 
           PSSprite.setTextDatum(TL_DATUM);
           PSSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-          PSSprite.drawString((NTPoffset > -1 ? "+" : "") + String(NTPoffset, DEC), 77, 15);
+          PSSprite.drawString(UTCoffsetText(NTPoffsetSeconds()), 77, 15);
           PSSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
           PSSprite.setTextDatum(TR_DATUM);
           PSSprite.drawString("GMT", 73, 15);
@@ -4546,23 +4560,30 @@ void MenuUpDown(bool dir) {
             OneBigLineSprite.pushSprite(24, 118);
             break;
 
-          case ITEM7:
+          case ITEM7: {
+            // Steps through the UTC offsets in use around the world, in quarter hours
+            static const int8_t zones[] = {-48, -44, -40, -38, -36, -32, -28, -24, -20, -16, -14, -12, -8, -4, 0,
+                                           4, 8, 12, 14, 16, 18, 20, 22, 23, 24, 26, 28, 32, 35, 36, 38, 40, 42, 44, 48, 51, 52, 56};
+            const byte count = sizeof(zones);
+            int current = NTPoffsetSeconds() / 900;
+            byte i = 0;
+            while (i < count - 1 && zones[i] < current) i++;  // first zone at or above the current one
             if (dir) {
-              NTPoffset++;
-              if (NTPoffset > 12) NTPoffset = -12;
+              if (zones[i] <= current) i = (i + 1) % count;
             } else {
-              NTPoffset--;
-              if (NTPoffset < -12) NTPoffset = 12;
+              i = i ? i - 1 : count - 1;
             }
+            NTPoffset = zones[i] / 4;
+            NTPoffsetmin = abs(zones[i] % 4) * 15;
 
             OneBigLineSprite.setTextDatum(TR_DATUM);
             OneBigLineSprite.setTextColor(ActiveColor, ActiveColorSmooth, false);
             OneBigLineSprite.drawString("GMT", 135, 0);
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString((NTPoffset > -1 ? "+" : "") + String(NTPoffset), 155, 0);
+            OneBigLineSprite.drawString(UTCoffsetText(NTPoffsetSeconds()), 155, 0);
             OneBigLineSprite.pushSprite(24, 118);
-            break;
+          } break;
 
           case ITEM8:
             autoDST = !autoDST;
@@ -5721,7 +5742,7 @@ void DoMenu() {
             OneBigLineSprite.drawString("GMT", 135, 0);
             OneBigLineSprite.setTextDatum(TL_DATUM);
             OneBigLineSprite.setTextColor(PrimaryColor, PrimaryColorSmooth, false);
-            OneBigLineSprite.drawString((NTPoffset > -1 ? "+" : "") + String(NTPoffset), 155, 0);
+            OneBigLineSprite.drawString(UTCoffsetText(NTPoffsetSeconds()), 155, 0);
             OneBigLineSprite.pushSprite(24, 118);
             break;
 

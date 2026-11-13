@@ -347,7 +347,8 @@ int8_t MPold = 0;
 int8_t USold = 0;
 int8_t LevelOffset;
 int8_t LowLevelSet;
-int8_t NTPoffset;
+int8_t NTPoffset;    // UTC offset of the clock in whole hours
+byte NTPoffsetmin;   // and 0, 15, 30 or 45 minutes further from UTC
 int8_t CN;
 int8_t CNold;
 int8_t VolSet;
@@ -666,6 +667,8 @@ void setup() {
   TouchCalData[4] = EEPROM.readUInt(EE_UINT16_CALTOUCH5);
   invertdisplay = EEPROM.readByte(EE_BYTE_INVERTDISPLAY);
   NTPoffset = EEPROM.readByte(EE_BYTE_NTPOFFSET);
+  NTPoffsetmin = EEPROM.readByte(EE_BYTE_NTPOFFSET_MIN);
+  if (NTPoffsetmin > 45) NTPoffsetmin = 0;  // new byte reads 0xFF
   autolog = EEPROM.readByte(EE_BYTE_AUTOLOG);
   autoDST = EEPROM.readByte(EE_BYTE_AUTODST);
   clockampm = EEPROM.readByte(EE_BYTE_CLOCKAMPM);
@@ -4873,6 +4876,7 @@ void DefaultSettings() {
   EEPROM.writeUInt(EE_UINT16_CALTOUCH4, 3450);
   EEPROM.writeUInt(EE_UINT16_CALTOUCH5, 3);
   EEPROM.writeByte(EE_BYTE_NTPOFFSET, 1);
+  EEPROM.writeByte(EE_BYTE_NTPOFFSET_MIN, 0);
   EEPROM.writeByte(EE_BYTE_AUTOLOG, 1);
   EEPROM.writeByte(EE_BYTE_AUTODST, 1);
   EEPROM.writeByte(EE_BYTE_CLOCKAMPM, 0);
@@ -5159,6 +5163,7 @@ void endMenu() {
   EEPROM.writeByte(EE_BYTE_MEMDOUBLEPI, memdoublepi);
   EEPROM.writeByte(EE_BYTE_WAITONLYONSIGNAL, scanholdonsignal);
   EEPROM.writeByte(EE_BYTE_NTPOFFSET, NTPoffset);
+  EEPROM.writeByte(EE_BYTE_NTPOFFSET_MIN, NTPoffsetmin);
   EEPROM.writeByte(EE_BYTE_AUTOLOG, autolog);
   EEPROM.writeByte(EE_BYTE_AUTODST, autoDST);
   EEPROM.writeByte(EE_BYTE_CLOCKAMPM, clockampm);

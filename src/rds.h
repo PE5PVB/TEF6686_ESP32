@@ -95,7 +95,7 @@ extern int xPos2;
 extern int xPos3;
 extern int xPos4;
 extern int xPos5;
-extern int8_t NTPoffset;
+extern long NTPoffsetSeconds();
 extern int16_t SAvg3;
 extern IPAddress remoteip;
 extern String AIDString;
