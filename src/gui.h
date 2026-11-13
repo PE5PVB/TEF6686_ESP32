@@ -86,6 +86,7 @@ extern byte batteryold;
 extern byte batteryoptions;
 extern byte BWset;
 extern byte BWsettemp;
+extern byte BWsetOpen;
 extern byte ContrastSet;
 extern byte CurrentSkin;
 extern byte CurrentTheme;

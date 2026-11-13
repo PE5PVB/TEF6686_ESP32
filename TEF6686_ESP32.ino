@@ -72,7 +72,6 @@ bool batteryWarningActive;
 bool beepresetstart;
 bool beepresetstop;
 bool BWreset;
-bool bwtouchtune;
 bool BWtune;
 bool freqkeypadtune;
 bool freqBandPicker;
@@ -187,7 +186,7 @@ byte BWsettemp;
 byte BWsetAM;
 byte BWsetFM;
 byte BWsetRecall;
-byte BWtemp;
+byte BWsetOpen, iMSsetOpen, EQsetOpen;  // settings the bandwidth selector was opened with
 byte charwidth = 8;
 byte chipmodel;
 byte hardwaremodel;
@@ -2564,17 +2563,12 @@ void BWButtonPress() {
         while (digitalRead(BWBUTTON) == LOW && counter - counterold <= 1000) counter = millis();
 
         if (counter - counterold < 1000) {
-          BuildBWSelector();
-          freq_in = 0;
-          BWtune = true;
-          BWtemp = BWset;
+          BWSelectorOpen();
         } else {
           if (band == BAND_FM || band == BAND_OIRT) {
             doStereoToggle();
           } else {
-            BuildBWSelector();
-            freq_in = 0;
-            BWtune = true;
+            BWSelectorOpen();
           }
         }
       }
@@ -2608,6 +2602,12 @@ void doStereoToggle() {
 void ModeButtonPress() {
   if (menu && IsSetupPage(menupage)) {
     BackSetupMenu();
+    while (digitalRead(MODEBUTTON) == LOW) delay(50);
+    delay(100);
+    return;
+  }
+  if (BWtune) {  // back out of the bandwidth selector: nothing is saved
+    BWSelectorClose(false);
     while (digitalRead(MODEBUTTON) == LOW) delay(50);
     delay(100);
     return;
@@ -2894,36 +2894,10 @@ void ButtonPress() {
       if (menu) DoMenu();
       if (BWtune) {
         if (BWsettemp == 18 || BWsettemp == 19) {
-          if (BWsettemp == 18) iMSset = !iMSset;
-          if (BWsettemp == 19) EQset = !EQset;
-          if (!iMSset && !EQset) iMSEQ = 0;
-          else if (iMSset && EQset) iMSEQ = 2;
-          else if (!iMSset && EQset) iMSEQ = 3;
-          else iMSEQ = 4;
-          EEPROM.writeByte(EE_BYTE_IMSSET, iMSset);
-          EEPROM.writeByte(EE_BYTE_EQSET, EQset);
-          EEPROM.commit();
-          updateiMS();
-          updateEQ();
-          if (XDRGTKUSB || XDRGTKTCP) DataPrint("G" + String(!EQset) + String(!iMSset) + "\n");
-          showBWSelector();
-          if (band < BAND_GAP) {
-            drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsFM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), true);
-          } else {
-            drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsAM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), true);
-          }
-        } else if (BWsettemp == 20) {
-          BuildDisplay();
-          freq_in = 0;
-          SelectBand();
+          BWSelectorToggle(BWsettemp == 18);
+          drawBWButton(BWsettemp, true);
         } else {
-          doBW();
-          showBWSelector();
-          if (band < BAND_GAP) {
-            drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsFM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), true);
-          } else {
-            drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsAM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), true);
-          }
+          BWSelectorClose(true);  // the filter under the cursor, or OK, confirms
         }
       }
     }
@@ -4014,8 +3988,6 @@ void updateSWMIBand() {
 }
 
 void doBW() {
-  if (BWtune && !bwtouchtune) BWset = BWsettemp;
-
   if (band < BAND_GAP) {
     if (BWset > 16) BWset = 0;
 
@@ -4038,7 +4010,7 @@ void doBW() {
       case 16: radio.setFMBandw(311); break;
     }
     BWsetFM = BWset;
-    EEPROM.writeByte(EE_BYTE_BWSET_FM, BWsetFM);
+    if (!BWtune) EEPROM.writeByte(EE_BYTE_BWSET_FM, BWsetFM);
 
     if ((XDRGTKUSB || XDRGTKTCP) && !XDRScan) {
       switch (BWset) {
@@ -4071,41 +4043,101 @@ void doBW() {
       case 4: radio.setAMBandw(8); break;
     }
     BWsetAM = BWset;
-    EEPROM.writeByte(EE_BYTE_BWSET_AM, BWsetAM);
+    if (!BWtune) EEPROM.writeByte(EE_BYTE_BWSET_AM, BWsetAM);
   }
   updateBW();
   BWreset = true;
-  EEPROM.commit();
+  if (!BWtune) EEPROM.commit();
+}
+
+// Bandwidth selector. Cursor positions: FM 1 - 16 filters, 17 auto, 18 iMS, 19 EQ, 20 OK;
+// AM 1 - 4 filters, 20 OK. The filter under the cursor and an iMS or EQ toggle are applied
+// straight away, so the result can be heard. A push on a filter or on OK confirms: only
+// then is anything written to the EEPROM. MODE closes the selector and restores the
+// settings it was opened with. The underline marks the saved filter meanwhile.
+void BWSelectorOpen() {
+  BWsetOpen = BWset;
+  iMSsetOpen = iMSset;
+  EQsetOpen = EQset;
+  BuildBWSelector();
+  freq_in = 0;
+  BWtune = true;
+}
+
+// One button of the selector; the underline marks the saved filter and the iMS / EQ state
+void drawBWButton(byte sel, bool selected) {
+  const char *label = sel == 20 ? "OK" : (band < BAND_GAP ? BWButtonLabelsFM : BWButtonLabelsAM)[sel - 1];
+  bool active = BWsetOpen == sel || (band < BAND_GAP && ((sel == 17 && BWsetOpen == 0) || (sel == 18 && !iMSset) || (sel == 19 && !EQset)));
+  drawButton(label, sel - 1, active, selected);
+}
+
+void BWSelectorPreview() {
+  if (band < BAND_GAP ? BWsettemp > 17 : BWsettemp > 4) return;  // iMS, EQ or OK
+  BWset = BWsettemp == 17 ? 0 : BWsettemp;
+  doBW();
+}
+
+void BWSelectorToggle(bool ims) {
+  if (ims) iMSset = !iMSset; else EQset = !EQset;
+  if (!iMSset && !EQset) iMSEQ = 0;
+  else if (iMSset && EQset) iMSEQ = 2;
+  else if (!iMSset && EQset) iMSEQ = 3;
+  else iMSEQ = 4;
+  updateiMS();
+  updateEQ();
+  if (XDRGTKUSB || XDRGTKTCP) DataPrint("G" + String(!EQset) + String(!iMSset) + "\n");
+}
+
+void BWSelectorClose(bool save) {
+  if (save) {
+    EEPROM.writeByte(EE_BYTE_IMSSET, iMSset);
+    EEPROM.writeByte(EE_BYTE_EQSET, EQset);
+  } else {
+    BWset = BWsetOpen;
+    doBW();  // the selector is still open, so this only brings the tuner back
+    if (iMSset != iMSsetOpen) BWSelectorToggle(true);
+    if (EQset != EQsetOpen) BWSelectorToggle(false);
+  }
+  BWtune = false;
+  freq_in = 0;
+  if (advancedRDS) {
+    BuildAdvancedRDS();
+    doBW();
+  } else if (afscreen) {
+    BuildAFScreen();
+    doBW();
+  } else {
+    BuildDisplay();
+    SelectBand();  // applies and saves the bandwidth, and shows iMS and EQ again
+  }
 }
 
 void doBWtuneDown() {
   rotary = 0;
+  byte old = BWsettemp;
+  BWsettemp--;
   if (band < BAND_GAP) {
-    drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsFM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), false);
-    BWsettemp--;
     if (BWsettemp > 20 || BWsettemp == 0) BWsettemp = 20;
-    drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsFM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), true);
   } else {
-    drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsAM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp ? true : false), false);
-    BWsettemp--;
     if (BWsettemp > 4 && BWsettemp < 20) BWsettemp = 4; else if (BWsettemp == 0) BWsettemp = 20;
-    drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsAM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp ? true : false), true);
   }
+  BWSelectorPreview();
+  drawBWButton(old, false);
+  drawBWButton(BWsettemp, true);
 }
 
 void doBWtuneUp() {
   rotary = 0;
+  byte old = BWsettemp;
+  BWsettemp++;
   if (band < BAND_GAP) {
-    drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsFM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), false);
-    BWsettemp++;
     if (BWsettemp > 20) BWsettemp = 1;
-    drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsFM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp || (BWsettemp == 17 && BWset == 0) || (BWsettemp == 18 && !iMSset) || (BWsettemp == 19 && !EQset) ? true : false), true);
   } else {
-    drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsAM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp ? true : false), false);
-    BWsettemp++;
     if (BWsettemp > 4 && BWsettemp < 20) BWsettemp = 20; else if (BWsettemp > 20) BWsettemp = 1;
-    drawButton((BWsettemp == 20 ? "OK" : BWButtonLabelsAM[BWsettemp - 1]), BWsettemp - 1, (BWset == BWsettemp ? true : false), true);
   }
+  BWSelectorPreview();
+  drawBWButton(old, false);
+  drawBWButton(BWsettemp, true);
 }
 
 void doTuneMode() {

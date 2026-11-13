@@ -107,81 +107,25 @@ void doTouchEvent(uint16_t x, uint16_t y) {
         doStereoToggle();                                                 // Stereo toggle
         return;
       } else if (x > 155 && x < 250 && y > 0 && y < 30) {
-        BuildBWSelector();                                                // Set bandwidth
-        BWtune = true;
+        BWSelectorOpen();                                                 // Set bandwidth
         return;
       }
     }
 
-    if (BWtune) {                                                         // BW menu
-      if (y > 35 && y < 65) {
-        if (x > 7 && x < 77) BWtemp = 1;
-        if (x > 87 && x < 157) BWtemp = 2;
-        if (x > 167 && x < 237) BWtemp = 3;
-        if (x > 247 && x < 317) BWtemp = 4;
-      }
-      if (band < BAND_GAP) {
-        if (y > 75 && y < 105) {
-          if (x > 7 && x < 77) BWtemp = 5;
-          if (x > 87 && x < 157) BWtemp = 6;
-          if (x > 167 && x < 237) BWtemp = 7;
-          if (x > 247 && x < 317) BWtemp = 8;
-        }
-
-        if (y > 115 && y < 145) {
-          if (x > 7 && x < 77) BWtemp = 9;
-          if (x > 87 && x < 157) BWtemp = 10;
-          if (x > 167 && x < 237) BWtemp = 11;
-          if (x > 247 && x < 317) BWtemp = 12;
-        }
-
-        if (y > 155 && y < 185) {
-          if (x > 7 && x < 77) BWtemp = 13;
-          if (x > 87 && x < 157) BWtemp = 14;
-          if (x > 167 && x < 237) BWtemp = 15;
-          if (x > 247 && x < 317) BWtemp = 16;
-        }
-
-        if (y > 195 && y < 225) {
-          if (x > 7 && x < 77) BWtemp = 0;
-          if (x > 87 && x < 157) iMSset = !iMSset;
-          if (x > 167 && x < 237) EQset = !EQset;
-          if ((x > 87 && x < 157) || (x > 167 && x < 237)) {
-            if (!iMSset && !EQset) iMSEQ = 0;
-            else if (iMSset && EQset) iMSEQ = 2;
-            else if (!iMSset && EQset) iMSEQ = 3;
-            else iMSEQ = 4;
-            EEPROM.writeByte(EE_BYTE_IMSSET, iMSset);
-            EEPROM.writeByte(EE_BYTE_EQSET, EQset);
-            EEPROM.commit();
-            updateiMS();
-            updateEQ();
-            if (XDRGTKUSB || XDRGTKTCP) DataPrint("G" + String(!EQset) + String(!iMSset) + "\n");
-          }
-        }
-      }
-
-      if (y > 195 && y < 225 && x > 247 && x < 317) {
+    if (BWtune) {                                                         // BW selector, 4 x 5 buttons
+      int col = -1, row = -1;
+      for (byte i = 0; i < 4; i++) if (x > 7 + i * 80 && x < 77 + i * 80) col = i;
+      for (byte i = 0; i < 5; i++) if (y > 35 + i * 40 && y < 65 + i * 40) row = i;
+      if (col < 0 || row < 0) return;
+      byte sel = row * 4 + col + 1;                                       // same numbering as the rotary cursor
+      if (sel != 20 && (band < BAND_GAP ? sel > 19 : sel > 4)) return;
+      BWsettemp = sel;
+      if (sel == 20) {
         leave = true;
-        bwtouchtune = true;
-        BWset = BWtemp;
-        doBW();
-        BWtune = false;
-        bwtouchtune = false;
-        if (advancedRDS) {
-          BuildAdvancedRDS();
-        } else if (afscreen) {
-          BuildAFScreen();
-        } else {
-          BuildDisplay();
-          SelectBand();
-        }
+        BWSelectorClose(true);
       } else {
-        bwtouchtune = true;
-        BWset = BWtemp;
+        if (sel == 18 || sel == 19) BWSelectorToggle(sel == 18); else BWSelectorPreview();
         showBWSelector();
-        doBW();
-        bwtouchtune = false;
       }
       return;
     }

@@ -2994,13 +2994,13 @@ void BuildBWSelector() {
 
 void showBWSelector() {
   if (band < BAND_GAP) {
-    for (int x = 0; x < 17; x++) drawButton(BWButtonLabelsFM[x], x, (BWset == x + 1 || (BWset == 0 && x == 16) ? true : false), false);
+    for (int x = 0; x < 17; x++) drawButton(BWButtonLabelsFM[x], x, (BWsetOpen == x + 1 || (BWsetOpen == 0 && x == 16) ? true : false), false);
     drawButton(BWButtonLabelsFM[17], 17, (!iMSset ? true : false), false);
     drawButton(BWButtonLabelsFM[18], 18, (!EQset ? true : false), false);
     drawButton("OK", 19, false, false);
   } else {
     for (int x = 0; x < 4; x++) {
-      drawButton(BWButtonLabelsAM[x], x, (BWset == x + 1 ? true : false), false);
+      drawButton(BWButtonLabelsAM[x], x, (BWsetOpen == x + 1 ? true : false), false);
     }
     drawButton("OK", 19, false, false);
   }
