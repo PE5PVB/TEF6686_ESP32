@@ -3003,7 +3003,7 @@ void ShowOneButton(byte position, byte item, bool selected) {
 }
 
 void BuildBWSelector() {
-  BWsettemp = BWset;
+  BWsettemp = (band < BAND_GAP && BWset == 0) ? 17 : BWset;  // Auto has cursor position 17
   switch (CurrentTheme) {
     case 7: tft.pushImage (0, 0, 320, 240, configurationbackground_wo); break;
     default: tft.pushImage (0, 0, 320, 240, configurationbackground); break;

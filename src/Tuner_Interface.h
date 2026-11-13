@@ -10,5 +10,4 @@ bool Tuner_ReadBuffer(unsigned char *buf, uint16_t len);
 bool Tuner_Table_Write(const unsigned char *tab);
 void Tuner_Reset(void);
 bool Tuner_Find();
-uint8_t Tuner_Address();
 #endif

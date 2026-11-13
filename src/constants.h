@@ -265,7 +265,7 @@
 #define EE_BYTE_RTBUFFER              2104
 #define EE_BYTE_SORTAF                2105
 #define EE_BYTE_STATIONLISTID         2106
-#define EE_BYTE_EDGEBEEP              2107
+#define EE_BYTE_EDGEBEEP              2107  // audiofeedback: 0 off, 1 on, 2 on + morse (was the band edge beep)
 #define EE_BYTE_SOFTMUTEAM            2108
 #define EE_BYTE_SOFTMUTEFM            2109
 #define EE_UINT16_FREQUENCY_AM        2110

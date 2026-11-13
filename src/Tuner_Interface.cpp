@@ -127,10 +127,6 @@ bool Tuner_Find() {
   return false;
 }
 
-uint8_t Tuner_Address() {
-  return tefAddress;
-}
-
 void Tuner_Patch(byte TEF) {
   Tuner_Reset();
   delay(100);

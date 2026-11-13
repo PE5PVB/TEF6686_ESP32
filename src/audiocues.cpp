@@ -74,7 +74,7 @@ static const uint16_t MORSE_UNIT = 60;
 static char morseText[24];
 static byte morseIdx;        // character being sent
 static byte morseElem;       // element of that character
-static bool morseActive, morseKeyed, morseWasMuted;
+static bool morseActive, morseKeyed;
 static uint32_t morseNext;
 
 static const char *morsePattern(char c) {
@@ -89,13 +89,14 @@ static const char *morsePattern(char c) {
 }
 
 // The tone generator plays through the audio path, so the mute goes off while a tone
-// sounds and back on in the gaps when it was on
+// sounds and back on in the gaps when it is on at that moment (the squelch may change
+// its mind while a text plays)
 static void morseKey(bool on) {
   if (on) {
     radio.toneStart(CUE_LEVEL, MORSE_HZ);
   } else {
     radio.toneStop();
-    if (morseWasMuted) radio.setMute();
+    if (radio.mute) radio.setMute();
   }
   morseKeyed = on;
 }
@@ -105,7 +106,6 @@ void morseSend(const String &text) {
   morseStop();
   text.toCharArray(morseText, sizeof(morseText));
   morseIdx = morseElem = 0;
-  morseWasMuted = radio.mute;
   morseActive = true;
   morseNext = millis() + 3 * MORSE_UNIT;  // a little silence first, a cue may just have ended
 }

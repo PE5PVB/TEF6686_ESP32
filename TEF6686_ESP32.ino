@@ -2614,7 +2614,8 @@ void doStereoToggle() {
 
 void ModeButtonPress() {
   morseStop();
-  if (menu && digitalRead(MODEBUTTON) == LOW) {  // held for three seconds in the menu: the games
+  // Held for three seconds in the menu: the games. A shorter press does what it did, on release.
+  if (menu && digitalRead(MODEBUTTON) == LOW) {
     unsigned long start = millis();
     while (digitalRead(MODEBUTTON) == LOW && millis() - start < 3000) delay(10);
     if (millis() - start >= 3000) {
@@ -2851,7 +2852,7 @@ void ButtonPress() {
     ShowFreq(0);
   } else {
     if (!usesquelch) radio.setUnMute();
-    if (advancedRDS) {
+    if (advancedRDS && !BWtune) {  // the bandwidth selector may be open on top of it
       BuildDisplay();
       freq_in = 0;
       SelectBand();

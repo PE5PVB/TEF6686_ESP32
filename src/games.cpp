@@ -19,6 +19,16 @@ static void sfx(uint16_t ms, uint16_t hz) {
 
 static void sfxFame() { sfx(60, 784); sfx(60, 988); sfx(60, 1175); sfx(60, 1568); sfx(150, 2093); }
 
+// The scores are 16 bits in the EEPROM, so they stop at 65000
+static uint16_t addPoints(uint16_t score, uint32_t points) {
+  return score + points > 65000 ? 65000 : score + points;
+}
+
+// A smooth text in a colour of its own: the anti-aliasing shade for it
+static int smoothOf(uint16_t color) {
+  return tft.alphaBlend(128, color, BackgroundColor);
+}
+
 // A push, waited out with a little debounce
 static bool pressed(byte pin) {
   if (digitalRead(pin) == HIGH) return false;
@@ -111,7 +121,7 @@ struct HallOfFame {
     tft.drawRoundRect(40, 66, 240, 112, 8, PrimaryColor);
     tft.drawRoundRect(42, 68, 236, 108, 7, frameInner);
     tftPrint(ACENTER, "HIGH SCORE!", 160, 74, PrimaryColor, PrimaryColorSmooth, 28);
-    tftPrint(ACENTER, "Turn: letter   Push: next", 160, 152, ActiveColor, ActiveColorSmooth, 16);
+    tftPrint(ACENTER, "Turn: letter  Push: next  MODE: done", 160, 152, ActiveColor, ActiveColorSmooth, 16);
     rotary = 0;
     for (;;) {
       for (byte i = 0; i < NAME_LEN; i++) {
@@ -236,11 +246,10 @@ static void drawFrame(uint16_t color) {
 }
 
 // Ring index k of the snake: scales in two tones, the tail tapered
-static void drawSegment(int k) {
-  int tail = (head - length + 1 + CELLS) % CELLS;
+static void drawSegment(int k, bool isTail) {
   byte x = bodyX[k], y = bodyY[k];
   uint16_t color = k & 1 ? scaleA : scaleB;
-  if (k == tail) {
+  if (isTail) {
     clearCell(x, y);
     tft.fillRoundRect(px(x) + 2, py(y) + 2, CELL - 4, CELL - 4, 3, color);
   } else {
@@ -347,7 +356,7 @@ static void drawField() {
 
 static void drawSnake() {
   for (int i = 0, k = head; i < length; i++, k = (k + CELLS - 1) % CELLS) {
-    if (i) drawSegment(k); else drawHead(bodyX[k], bodyY[k]);
+    if (i) drawSegment(k, i == length - 1); else drawHead(bodyX[k], bodyY[k]);
   }
 }
 
@@ -373,16 +382,20 @@ static void flashFrame() {
 
 // ---------------------------------------------------------------- game
 // A free cell, away from the food and the bonus. Worked out in locals: the result may
-// be foodX and foodY themselves, which the check compares against.
+// be foodX and foodY themselves, which the check compares against. With the field
+// (nearly) full the result is off the field, so nothing can be eaten there.
 static void freeCell(byte &outX, byte &outY, bool awayFromHead) {
   byte x, y;
-  do {
+  for (uint16_t tries = 0; tries < 2000; tries++) {
     x = random(COLS);
     y = random(ROWS);
-  } while (grid[x][y] != FREE || (x == foodX && y == foodY) || (bonusLeft && x == bonusX && y == bonusY) ||
-           (awayFromHead && abs(x - bodyX[head]) < 4 && abs(y - bodyY[head]) < 4));
-  outX = x;
-  outY = y;
+    if (grid[x][y] != FREE || (x == foodX && y == foodY) || (bonusLeft && x == bonusX && y == bonusY)) continue;
+    if (awayFromHead && abs(x - bodyX[head]) < 4 && abs(y - bodyY[head]) < 4) continue;
+    outX = x;
+    outY = y;
+    return;
+  }
+  outX = outY = 255;
 }
 
 static void addWalls() {
@@ -452,18 +465,23 @@ static bool step() {
 
   // The tail leaves first unless the snake grows, so chasing it is allowed
   int tail = (head - length + 1 + CELLS) % CELLS;
-  if (grow) {
-    grow--;
-    length++;
-  } else {
+  bool tailGone = !grow;
+  if (tailGone) {
     grid[bodyX[tail]][bodyY[tail]] = FREE;
     clearCell(bodyX[tail], bodyY[tail]);
     tail = (tail + 1) % CELLS;
-    drawSegment(tail);  // the new tail tapers
+    drawSegment(tail, true);  // the new tail tapers
   }
-  if (grid[x][y] != FREE) return false;
+  if (grid[x][y] != FREE) {
+    if (tailGone) length--;  // what is left on the field, for the dissolve
+    return false;
+  }
+  if (grow) {
+    grow--;
+    length++;
+  }
 
-  drawSegment(head);  // the old head is body now
+  drawSegment(head, false);  // the old head is body now
   head = (head + 1) % CELLS;
   bodyX[head] = x;
   bodyY[head] = y;
@@ -528,8 +546,8 @@ static bool play() {
       next = millis() + stepInterval;
     }
     if (millis() >= next) {
-      next += stepInterval;
       if (!step()) return true;
+      next = millis() + stepInterval;  // from now: a level flash must not be caught up on
     }
     delay(2);
   }
@@ -850,7 +868,7 @@ static void clearLines() {
   }
   drawField();
   static const uint16_t points[] = {0, 40, 100, 300, 1200};
-  score += points[n] * (level + 1);
+  score = addPoints(score, (uint32_t)points[n] * (level + 1));
   lines += n;
   sfxLines(n);
   if (lines / 10 != level) {
@@ -880,7 +898,7 @@ static void hardDrop() {
   hidePiece();
   int from = cy;
   cy = landingY();
-  score += 2 * (cy - from);
+  score = addPoints(score, 2 * (cy - from));
   showPiece();
   sfxDrop();
   updatePanels();
@@ -928,7 +946,6 @@ static bool play() {
       next = millis() + interval;
     }
     if (millis() >= next) {
-      next += interval;
       if (fits(cur, rot, cx, cy + 1)) {
         hidePiece();
         cy++;
@@ -936,6 +953,7 @@ static bool play() {
       } else if (!lock()) {
         return true;
       }
+      next = millis() + interval;  // from now: a line flash must not be caught up on
     }
     delay(2);
   }
@@ -1028,7 +1046,7 @@ static char grid[ROWS][COLS];
 enum { UP, RIGHT, DOWN, LEFT, NONE };
 static const int8_t DX[] = {0, 1, 0, -1}, DY[] = {-1, 0, 1, 0};
 enum { CHASE, SCATTER, FRIGHT, EYES, HOUSE };
-enum { TURN_NONE, TURN_LEFT, TURN_RIGHT, TURN_BACK };
+enum { TURN_NONE, TURN_LEFT, TURN_RIGHT };
 
 struct Mover {
   int x, y;    // pixels within the maze
@@ -1037,7 +1055,7 @@ struct Mover {
 static Mover pac, ghost[4];
 static byte ghostMode[4];
 static uint32_t ghostLeave[4];   // when a ghost in the house may come out
-static byte pacTurn, mouth, lives, level, fruitKind;
+static byte pacTurn, mouth, lives, level;
 static bool pacStopped, fruitOn, powerVisible;
 static uint16_t score, pelletsLeft, pelletsEaten;
 static uint32_t frightUntil, fruitUntil, phaseStart, tick;
@@ -1108,8 +1126,6 @@ static void drawFruit() {
   tft.drawLine(x0 + 7, y0 + 2, x0 + 6, y0, 0x07E0);
 }
 
-static void drawWalls(uint16_t color);
-
 // Puts the maze back under a rectangle in maze pixels: background, then the pellets and
 // the door of the cells it touches. The wall lines sit 4 px inside their cells, so the
 // sprites never touch them; a popup does, and gets the walls redrawn.
@@ -1126,9 +1142,9 @@ static void restoreRect(int x, int y, int w, int h, bool walls) {
   if (walls) drawWalls(WALL_COLOR);
 }
 
-// Under a sprite at pixel x, y: one pixel of margin all round
+// Under a sprite at pixel x, y: a ghost reaches 2 px above its cell, 1 px elsewhere
 static void restoreArea(int x, int y) {
-  restoreRect(x - 1, y - 1, 12, 12, false);
+  restoreRect(x - 1, y - 2, 12, 13, false);
 }
 
 static void drawPac() {
@@ -1267,7 +1283,6 @@ static void steerGhost(byte g) {
   for (byte d = 0; d < 4; d++) {
     if (d == back) continue;
     if (!passable(cx + DX[d], cy + DY[d], door)) continue;
-    if (mode == HOUSE && cy == 10 && d == DOWN) continue;
     options++;
     long dx = cx + DX[d] - tx, dy = cy + DY[d] - ty;
     long dist = dx * dx + dy * dy;
@@ -1281,8 +1296,8 @@ static void steerGhost(byte g) {
 static void ghostStep(byte g) {
   Mover &m = ghost[g];
   byte mode = ghostMode[g];
-  if (mode == HOUSE && millis() < ghostLeave[g]) {  // waiting: bobs up and down
-    if (aligned(m)) m.dir = (tick / 10) & 1 ? UP : DOWN;
+  if (mode == HOUSE && millis() < ghostLeave[g]) {  // waiting in the house, facing the door
+    m.dir = UP;
     return;
   }
   byte steps = mode == EYES ? 2 : 1;
@@ -1298,7 +1313,7 @@ static void pacStep() {
   if (aligned(pac)) {
     int cx = pac.x / CELL, cy = pac.y / CELL;
     if (pacTurn != TURN_NONE) {
-      byte nd = pacTurn == TURN_LEFT ? (pac.dir + 3) % 4 : pacTurn == TURN_RIGHT ? (pac.dir + 1) % 4 : (pac.dir + 2) % 4;
+      byte nd = pacTurn == TURN_LEFT ? (pac.dir + 3) % 4 : (pac.dir + 1) % 4;
       if (passable(cx + DX[nd], cy + DY[nd], false)) {
         pac.dir = nd;
         pacTurn = TURN_NONE;
@@ -1310,7 +1325,7 @@ static void pacStep() {
       grid[cy][cx] = ' ';
       pelletsLeft--;
       pelletsEaten++;
-      score += c == 'o' ? 50 : 10;
+      score = addPoints(score, c == 'o' ? 50 : 10);
       if (c == 'o') {
         frightUntil = millis() + max(2000, 7000 - 500 * level);
         ghostsEaten = 0;
@@ -1393,11 +1408,17 @@ static byte play() {
     if (pressed(modePin)) return 2;
     if (pressed(bandPin)) {
       sfx(30, 600);
+      uint32_t pausedAt = millis();
       box("PAUSED", "Push BAND or the knob", "to go on");
       while (!pressed(bandPin) && !pressed(knobPin)) {
         if (pressed(modePin)) return 2;
         delay(10);
       }
+      uint32_t paused = millis() - pausedAt;  // the clocks of the game stood still meanwhile
+      if (frightUntil) frightUntil += paused;
+      if (fruitOn) fruitUntil += paused;
+      phaseStart += paused;
+      for (byte g = 0; g < 4; g++) ghostLeave[g] += paused;
       redrawAll();
       rotary = 0;
       next = millis();
@@ -1406,7 +1427,7 @@ static byte play() {
       delay(1);
       continue;
     }
-    next += 30;
+    next = millis() + 30;  // from now: a popup or a sound must not be caught up on
     tick++;
 
     // Timed things: the fright, the fruit, the scatter and chase phases, blinking pellets
@@ -1446,18 +1467,19 @@ static byte play() {
     if (fruitOn && abs(pac.x - 15 * CELL) < 6 && abs(pac.y - 12 * CELL) < 6) {
       static const uint16_t fruitPoints[] = {100, 300, 500, 700};
       uint16_t points = fruitPoints[min(level - 1, 3)];
-      score += points;
+      score = addPoints(score, points);
       fruitOn = false;
       sfxFruit();
       drawCell(15, 12);
       showScoreAt(15 * CELL, 12 * CELL, points);
+      next = millis();
     }
     for (byte g = 0; g < 4; g++) {
       if (abs(pac.x - ghost[g].x) >= 7 || abs(pac.y - ghost[g].y) >= 7) continue;
       if (ghostMode[g] == FRIGHT) {
         uint16_t points = 200 << ghostsEaten;
         if (ghostsEaten < 3) ghostsEaten++;
-        score += points;
+        score = addPoints(score, points);
         ghostMode[g] = EYES;
         sfxGhost();
         showScoreAt(ghost[g].x, ghost[g].y, points);
@@ -1490,7 +1512,7 @@ static bool startScreen() {
   tft.fillScreen(BackgroundColor);
   tft.drawRect(7, 7, 306, 226, WALL_COLOR);
   tft.drawRect(9, 9, 302, 222, frameInner);
-  tftPrint(ACENTER, "TEFMAN", 160, 22, PAC_COLOR, PAC_COLOR, 28);
+  tftPrint(ACENTER, "TEFMAN", 160, 22, PAC_COLOR, smoothOf(PAC_COLOR), 28);
   tftPrint(ACENTER, "HALL OF FAME", 160, 56, SecondaryColor, SecondaryColorSmooth, 16);
   tefmanFame.draw(104, 76, 16);
   tftPrint(ACENTER, "Turn: left or right   Push: turn round", 160, 160, ActiveColor, ActiveColorSmooth, 16);
@@ -1543,7 +1565,7 @@ namespace invaders {
 // bottom follows the knob, a push fires. Sprites are 12 x 8 bits, pushed through a small
 // sprite buffer so a whole step of the formation stays quick.
 static const byte INV_COLS = 11, INV_ROWS = 5, SW = 12, SH = 8;
-static const int COL_PITCH = 16, ROW_PITCH = 14, FORM_W = INV_COLS * COL_PITCH - 4;
+static const int COL_PITCH = 16, ROW_PITCH = 14;
 static const int CANNON_Y = 222, SHIELD_Y = 190, TOP = 22;
 static const byte MAX_SHOTS = 3;
 
@@ -1561,8 +1583,8 @@ static TFT_eSprite spr = TFT_eSprite(&tft);
 static bool alive[INV_ROWS][INV_COLS];
 static int formX, formY, formDir;
 static byte frame, aliveCount, level, lives;
-static uint32_t stepAt, stepInterval, shotAt, ufoAt, burstUntil, explodeUntil;
-static int cannonX, shotX, shotY, burstX, burstY;
+static uint32_t stepAt, stepInterval, shotAt, ufoAt, ufoSoundAt, burstUntil;
+static int cannonX, shotX, shotY, burstX, burstY, burstW, burstH;
 static bool shotOn;
 static struct { int x, y; bool on; } bombs[MAX_SHOTS];
 static int ufoX, ufoDir;
@@ -1615,16 +1637,16 @@ static void drawCannon() {
   drawSprite(cannonX, CANNON_Y, cannonSprite, CANNON_COLOR);
 }
 
+static void drawUfoAt(int x, int y) {
+  tft.fillRoundRect(x, y + 2, 16, 5, 2, UFO_COLOR);
+  tft.fillRoundRect(x + 4, y, 8, 4, 2, UFO_COLOR);
+  tft.drawPixel(x + 3, y + 4, BackgroundColor);
+  tft.drawPixel(x + 8, y + 4, BackgroundColor);
+  tft.drawPixel(x + 13, y + 4, BackgroundColor);
+}
+
 static void drawUfo(bool on) {
-  if (!on) {
-    tft.fillRect(ufoX, TOP, 16, 7, BackgroundColor);
-    return;
-  }
-  tft.fillRoundRect(ufoX, TOP + 2, 16, 5, 2, UFO_COLOR);
-  tft.fillRoundRect(ufoX + 4, TOP, 8, 4, 2, UFO_COLOR);
-  tft.drawPixel(ufoX + 3, TOP + 4, BackgroundColor);
-  tft.drawPixel(ufoX + 8, TOP + 4, BackgroundColor);
-  tft.drawPixel(ufoX + 13, TOP + 4, BackgroundColor);
+  if (on) drawUfoAt(ufoX, TOP); else tft.fillRect(ufoX, TOP, 16, 7, BackgroundColor);
 }
 
 static void drawStatus() {
@@ -1685,43 +1707,55 @@ static void newShields() {
   for (byte s = 0; s < 4; s++) for (byte r = 0; r < 8; r++) shields[s][r] = shieldShape[r];
 }
 
-// A shot or a bomb against the shields: true when it hit, the shield crumbles a little
-static bool hitShield(int x, int y) {
+// A projectile of 2 px wide against the shields, over the h pixel rows it just moved
+// through: true when it hit a block, and the shield crumbles a little around it
+static bool hitShield(int x, int y, int h) {
   for (byte s = 0; s < 4; s++) {
     int sx = 44 + s * 72;
-    if (x < sx || x >= sx + 22 || y < SHIELD_Y || y >= SHIELD_Y + 16) continue;
-    byte c = (x - sx) / 2, r = (y - SHIELD_Y) / 2;
-    if (!((shields[s][r] >> (10 - c)) & 1)) return false;
-    for (int dr = -1; dr <= 1; dr++) {
-      for (int dc = -1; dc <= 1; dc++) {
-        int rr = r + dr, cc = c + dc;
-        if (rr < 0 || rr > 7 || cc < 0 || cc > 10 || (dr && dc && random(2))) continue;
-        shields[s][rr] &= ~(1 << (10 - cc));
-        drawShieldBlock(s, rr, cc);
+    if (x + 1 < sx || x >= sx + 22 || y + h <= SHIELD_Y || y >= SHIELD_Y + 16) continue;
+    for (int yy = y; yy < y + h; yy++) {
+      for (int xx = x; xx <= x + 1; xx++) {
+        if (xx < sx || xx >= sx + 22 || yy < SHIELD_Y || yy >= SHIELD_Y + 16) continue;
+        byte c = (xx - sx) / 2, r = (yy - SHIELD_Y) / 2;
+        if (!((shields[s][r] >> (10 - c)) & 1)) continue;
+        for (int dr = -1; dr <= 1; dr++) {
+          for (int dc = -1; dc <= 1; dc++) {
+            int rr = r + dr, cc = c + dc;
+            if (rr < 0 || rr > 7 || cc < 0 || cc > 10 || (dr && dc && random(2))) continue;
+            shields[s][rr] &= ~(1 << (10 - cc));
+            drawShieldBlock(s, rr, cc);
+          }
+        }
+        return true;
       }
     }
-    return true;
   }
   return false;
 }
 
+static void wipeBurst() {
+  if (burstUntil) tft.fillRect(burstX, burstY, burstW, burstH, BackgroundColor);
+  burstUntil = 0;
+}
+
 static void burst(int x, int y) {
-  if (burstUntil) eraseSprite(burstX, burstY);
+  wipeBurst();
   burstX = x;
   burstY = y;
+  burstW = SW;
+  burstH = SH;
   burstUntil = millis() + 120;
   drawSprite(x, y, burstSprite, White);
 }
 
 static void stepInvaders() {
   // The lowest and highest alive columns decide when the formation turns
-  int lo = INV_COLS, hi = -1, bottom = -1;
+  int lo = INV_COLS, hi = -1;
   for (byte r = 0; r < INV_ROWS; r++) {
     for (byte c = 0; c < INV_COLS; c++) {
       if (!alive[r][c]) continue;
       if (c < lo) lo = c;
       if (c > hi) hi = c;
-      if ((int)r > bottom) bottom = r;
     }
   }
   for (byte r = 0; r < INV_ROWS; r++) for (byte c = 0; c < INV_COLS; c++) if (alive[r][c]) eraseSprite(invX(c), invY(r));
@@ -1773,14 +1807,20 @@ static void loseLife() {
   if (shotOn) tft.fillRect(shotX, shotY, 2, 6, BackgroundColor);
   shotOn = false;
   delay(600);
-  cannonX = 154;
-  drawCannon();
+}
+
+// After a pause or a lost life the game clocks start afresh instead of catching up
+static void restartClocks() {
+  stepAt = millis() + stepInterval;
+  shotAt = millis() + 800;
+  if (ufoAt < millis()) ufoAt = millis() + 3000;
 }
 
 // One wave; 0 = cannon lost (lives left), 1 = wave cleared, 2 = MODE, 3 = invaded
 static byte play() {
   cannonX = 154;
   redrawAll();
+  restartClocks();
   rotary = 0;
   uint32_t next = millis();
   bool knobWasDown = true;
@@ -1794,6 +1834,7 @@ static byte play() {
         delay(10);
       }
       redrawAll();
+      restartClocks();
       rotary = 0;
       next = millis();
       knobWasDown = true;
@@ -1802,7 +1843,7 @@ static byte play() {
       delay(1);
       continue;
     }
-    next += 20;
+    next = millis() + 20;
 
     // The cannon
     if (rotary) {
@@ -1828,17 +1869,20 @@ static byte play() {
       tft.fillRect(shotX, shotY, 2, 6, BackgroundColor);
       shotY -= 6;
       bool gone = shotY < TOP;
-      if (!gone && hitShield(shotX, shotY)) gone = true;
+      if (!gone && hitShield(shotX, shotY, 6)) gone = true;
       if (!gone && ufoOn && shotY <= TOP + 7 && shotX >= ufoX - 1 && shotX < ufoX + 17) {
         uint16_t points = 50 * (1 + random(6));
-        score += points;
+        score = addPoints(score, points);
         drawUfo(false);
         ufoOn = false;
         sfxUfoHit();
-        tftPrint(ACENTER, String(points), ufoX + 8, TOP, White, White, 16);
-        burstUntil = millis() + 400;  // the number goes with the next burst wipe
-        burstX = ufoX - 6;
+        wipeBurst();
+        tftPrint(ACENTER, String(points), ufoX + 8, TOP, White, smoothOf(White), 16);
+        burstX = ufoX - 8;  // the number goes with the burst wipe
         burstY = TOP;
+        burstW = 32;
+        burstH = 16;
+        burstUntil = millis() + 400;
         gone = true;
       }
       if (!gone) {
@@ -1850,7 +1894,7 @@ static byte play() {
             alive[r][c] = false;
             aliveCount--;
             setStepInterval();
-            score += (3 - invType(r)) * 10;
+            score = addPoints(score, (3 - invType(r)) * 10);
             eraseSprite(ix, iy);
             burst(ix, iy);
             sfxKill();
@@ -1875,7 +1919,7 @@ static byte play() {
       if (!bombs[i].on) continue;
       tft.fillRect(bombs[i].x, bombs[i].y, 2, 6, BackgroundColor);
       bombs[i].y += 3;
-      bool gone = bombs[i].y > 230 || hitShield(bombs[i].x, bombs[i].y + 5);
+      bool gone = bombs[i].y > 230 || hitShield(bombs[i].x, bombs[i].y + 3, 3);
       if (!gone && bombs[i].y + 5 >= CANNON_Y && bombs[i].x >= cannonX - 1 && bombs[i].x < cannonX + SW) {
         loseLife();
         return 0;
@@ -1889,8 +1933,8 @@ static byte play() {
 
     // The formation
     if (millis() >= stepAt) {
-      stepAt += stepInterval;
       stepInvaders();
+      stepAt = millis() + stepInterval;
       for (byte r = 0; r < INV_ROWS; r++) {
         for (byte c = 0; c < INV_COLS; c++) if (alive[r][c] && invY(r) + SH >= SHIELD_Y + 16) return 3;
       }
@@ -1899,7 +1943,10 @@ static byte play() {
 
     // The ufo
     if (ufoOn) {
-      if (frame == 0 && (millis() / 20) % 6 == 0) sfxUfo();
+      if (millis() - ufoSoundAt >= 150) {  // the warble
+        sfxUfo();
+        ufoSoundAt = millis();
+      }
       drawUfo(false);
       ufoX += ufoDir * 2;
       if (ufoX < -16 || ufoX > 320) ufoOn = false; else drawUfo(true);
@@ -1910,10 +1957,7 @@ static byte play() {
       ufoAt = millis() + 20000 + random(15000);
     }
 
-    if (burstUntil && millis() >= burstUntil) {
-      tft.fillRect(burstX, burstY, 28, 16, BackgroundColor);
-      burstUntil = 0;
-    }
+    if (burstUntil && millis() >= burstUntil) wipeBurst();
     updateStatus();
   }
 }
@@ -1931,8 +1975,7 @@ static bool startScreen() {
     drawSprite(100 + t * 40, 204, sprites[t][0], invColor[t]);
     tftPrint(ALEFT, String((3 - t) * 10), 116 + t * 40, 202, ActiveColor, ActiveColorSmooth, 16);
   }
-  ufoX = 40;
-  drawUfo(true);
+  drawUfoAt(40, 204);
   tftPrint(ALEFT, "?", 60, 202, ActiveColor, ActiveColorSmooth, 16);
   drawSprite(240, 204, cannonSprite, CANNON_COLOR);
   return waitForKnob();
@@ -1994,9 +2037,9 @@ static void drawCard(byte i, bool selected) {
   uint16_t best;
   switch (i) {
     case 0: {  // a little snake with an apple
-      static const int8_t sx[] = {0, 1, 2, 2, 2, 3, 4}, sy[] = {2, 2, 2, 1, 0, 0, 0};
-      for (byte k = 0; k < 7; k++) tft.fillRoundRect(x + 10 + sx[k] * 8, y + 44 + sy[k] * 8, 8, 8, 2, k == 6 ? PrimaryColor : (k & 1 ? SecondaryColor : tft.alphaBlend(170, SecondaryColor, BackgroundColor)));
-      tft.fillCircle(x + 10 + 6 * 8 + 4, y + 44 + 4, 3, SignificantColor);
+      static const int8_t sx[] = {0, 1, 2, 2, 2, 3}, sy[] = {2, 2, 2, 1, 0, 0};
+      for (byte k = 0; k < 6; k++) tft.fillRoundRect(x + 10 + sx[k] * 8, y + 44 + sy[k] * 8, 8, 8, 2, k == 5 ? PrimaryColor : (k & 1 ? SecondaryColor : tft.alphaBlend(170, SecondaryColor, BackgroundColor)));
+      tft.fillCircle(x + 10 + 5 * 8 + 4, y + 44 + 4, 3, SignificantColor);
       name = "SNAKE";
       best = snakeFame.entry[0].score;
     } break;
