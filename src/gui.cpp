@@ -6125,7 +6125,7 @@ int SetupMenuTitle(byte page) {
 }
 // Screen: frequency font, 180 degree flip, frequency keypad, touch calibration (touch model only).
 // Device: hardware model, reverse encoder, optical encoder, invert colours,
-//         ARS display, analog meter full scale, factory reset.
+//         ARS display, analog meter full scale, factory reset, keypad tuning.
 static byte ScreenItemCount() {
   return hardwaremodel == PORTABLE_TOUCH_ILI9341 ? 4 : 3;
 }
@@ -6136,9 +6136,9 @@ int SetupMenuLabel(byte page, byte item) {
   if (page == MAINSETTINGS && item == 0) return 334;
   if (page == DISPLAYSETTINGS && item == 9) return 336;
   const int screen[] = {85, 340, 331, 283};
-  const int device[] = {108, 338, 339, 341, 350, 342, 343};
+  const int device[] = {108, 338, 339, 341, 350, 342, 343, 352};
   if (page == SCREENSETTINGS && item < ScreenItemCount()) return screen[item];
-  if (page == DEVICESETTINGS && item < 7) return device[item];
+  if (page == DEVICESETTINGS && item < 8) return device[item];
   return 0;
 }
 static byte SetupCurrentValue(byte page, byte item) {
@@ -6156,6 +6156,7 @@ static byte SetupCurrentValue(byte page, byte item) {
       case 2: return optenc;
       case 3: return invertdisplay;
       case 4: return arsdisplay;
+      case 7: return keypadCurrentBand;
     }
   }
   return 0;
@@ -6165,6 +6166,7 @@ static String SetupValueText(byte page, byte item, byte value) {
   if (page == DEVICESETTINGS && item == 0) return textUI(109 + value);
   if (SetupIsAction(page, item)) return textUI(value ? 345 : 344);
   if (page == DEVICESETTINGS && item == 5) return textUI(349);
+  if (page == DEVICESETTINGS && item == 7) return textUI(value ? 353 : 86);
   return textUI(value ? 31 : 30);
 }
 String SetupMenuValue(byte page, byte item) {
@@ -6288,6 +6290,7 @@ void AcceptSetupMenu() {
         EEPROM.commit();
         break;
       case 4: ApplyArsDisplay(setupValue); break;
+      case 7: keypadCurrentBand = setupValue; break;
       case 6:
         if (setupValue) {
           SetupPrompt(348);

@@ -4,6 +4,7 @@
 
 // Direct frequency entry screen: a preview line, five band buttons and a 4 x 4 keypad.
 // Works with touch, the rotary encoder (focus + button), the DP-666 keypad and MODE.
+extern bool keypadCurrentBand;          // physical keypad: false Auto, true current band only
 extern bool freqKeypadEnabled;          // false: digits hidden, band buttons + X + OK only
 extern byte freqInputBand;              // band the entered number is interpreted in
 extern byte freqKeyFocus;               // 0..4 band buttons, 5..20 keypad cells
