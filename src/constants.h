@@ -237,9 +237,9 @@
 #define EE_CHECKBYTE_VALUE            20     // 0 ~ 255,add new entry, change for new value
 #define EE_PRESETS_FREQUENCY          0     // Default value when memory channel should be skipped!
 #ifdef HAS_AIR_BAND
-#define EE_TOTAL_CNT                  2436  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                  2437  // Total occupied eeprom bytes
 #else
-#define EE_TOTAL_CNT                  2431  // Total occupied eeprom bytes
+#define EE_TOTAL_CNT                  2432  // Total occupied eeprom bytes
 #endif
 
 #define EE_PRESETS_BAND_START         0     // 99 * 1 byte
@@ -384,6 +384,7 @@
 #define EE_TETRIS_SCORES              2340
 #define EE_TEFMAN_SCORES              2372
 #define EE_INVADERS_SCORES            2404
+#define EE_BYTE_KEYPAD_CURRENT_BAND   2436
 #else
 #define EE_BYTE_FREQ_KEYPAD           2300
 #define EE_BYTE_ARS_DISPLAY           2301
@@ -392,6 +393,7 @@
 #define EE_TETRIS_SCORES              2335
 #define EE_TEFMAN_SCORES              2367
 #define EE_INVADERS_SCORES            2399
+#define EE_BYTE_KEYPAD_CURRENT_BAND   2431
 #endif
 // End of EEPROM index defines
 

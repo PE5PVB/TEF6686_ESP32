@@ -82,6 +82,7 @@ byte freqPickerSel;
 byte freqPickerBands[5];
 int freqPickerFreqs[5];
 bool freqKeypadEnabled = true;
+bool keypadCurrentBand = false;
 bool arsdisplay;
 byte freqInputBand;
 byte freqKeyFocus;
@@ -211,7 +212,7 @@ byte amgain;
 byte freqoldcount;
 byte HighCutLevel;
 byte HighCutOffset;
-byte items[12] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 10, 10, 9, 4, 7};
+byte items[12] = {10, static_cast<byte>(dynamicspi ? 10 : 9), 7, 10, 10, 10, 9, 10, 10, 9, 4, 8};
 byte iMSEQ;
 byte iMSset;
 byte language;
@@ -535,6 +536,8 @@ void setup() {
 
   // An erased or new byte reads 0xFF and means enabled; existing settings are kept.
   freqKeypadEnabled = EEPROM.readByte(EE_BYTE_FREQ_KEYPAD) != 0;
+  // Only an explicit 1 enables current-band entry; erased/new bytes keep Auto.
+  keypadCurrentBand = EEPROM.readByte(EE_BYTE_KEYPAD_CURRENT_BAND) == 1;
   // A build with ARS defined in the TFT_eSPI User_Setup keeps working: the panel type
   // defaults to ARS until it is set in the menu (a new byte reads 0xFF).
 #ifdef ARS
@@ -4788,6 +4791,7 @@ void MuteScreen(bool setting) {
 
 void DefaultSettings() {
   EEPROM.writeByte(EE_BYTE_FREQ_KEYPAD, 1);
+  EEPROM.writeByte(EE_BYTE_KEYPAD_CURRENT_BAND, 0);
   EEPROM.writeByte(EE_BYTE_ARS_DISPLAY, 0);
   for (byte i = 0; i < 30; i++) {  // empty halls of fame
     EEPROM.writeByte(EE_SNAKE_SCORES + i, 0xFF);
@@ -5099,6 +5103,7 @@ void cancelDXScan() {
 void endMenu() {
   CancelSetupMenu();
   EEPROM.writeByte(EE_BYTE_FREQ_KEYPAD, freqKeypadEnabled);
+  EEPROM.writeByte(EE_BYTE_KEYPAD_CURRENT_BAND, keypadCurrentBand);
   radio.clearRDS(fullsearchrds);
   menu = false;
   menuopen = false;
@@ -5765,6 +5770,20 @@ int TuneFreq(int temp) {
   byte matchBands[5];
   int matchFreqs[5];
   byte count = FindBandMatches(temp, matchBands, matchFreqs);
+
+  // This path is used by the physical keypad, not the on-screen band buttons.
+  // In current-band mode, reject entries that do not fit the active band.
+  if (keypadCurrentBand) {
+    byte i = 0;
+    while (i < count && matchBands[i] != band) i++;
+    if (i < count) {
+      matchBands[0] = matchBands[i];
+      matchFreqs[0] = matchFreqs[i];
+      count = 1;
+    } else {
+      count = 0;
+    }
+  }
 
   if (count == 0) {
     if (audiofeedback) EdgeBeeper();

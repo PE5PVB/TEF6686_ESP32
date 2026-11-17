@@ -3,7 +3,7 @@
 
 // [number of languages][number of texts]
 
-static const char* const myLanguage[23][352] PROGMEM = {
+static const char* const myLanguage[23][354] PROGMEM = {
   { "English", // English
     "Rotary direction changed", // 1
     "Please release button", // 2
@@ -355,7 +355,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Release all\ncontrols", // 348
     "Full scale", // 349
     "ARS display", // 350
-    "On + morse" // 351
+    "On + morse", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Nederlands", // Dutch
@@ -709,7 +711,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Laat alle\nbedieningen los", // 348
     "Volle uitslag", // 349
     "ARS display", // 350
-    "Aan + morse" // 351
+    "Aan + morse", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Polski", // Polish
@@ -1063,7 +1067,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Zwolnij wszystkie\nprzyciski", // 348
     "Pełna skala", // 349
     "ARS display", // 350
-    "Włącz. + morse" // 351
+    "Włącz. + morse", // 351
+    "Strojenie klawiaturą", // 352
+    "Bieżące pasmo" // 353
   },
 
   { "Hrvatski", // Croatian
@@ -1417,7 +1423,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Otpustite sve\nkontrole", // 348
     "Puni otklon", // 349
     "ARS display", // 350
-    "Uključeno + morse" // 351
+    "Uključeno + morse", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Ελληνικά", // Greek
@@ -1771,7 +1779,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Αφήστε όλα\nτα χειριστήρια", // 348
     "Πλήρης κλίμακα", // 349
     "ARS display", // 350
-    "Ενεργό + μορς" // 351
+    "Ενεργό + μορς", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Română", // Romanian
@@ -2125,7 +2135,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Eliberați toate\ncomenzile", // 348
     "Scală completă", // 349
     "ARS display", // 350
-    "Pornit + morse" // 351
+    "Pornit + morse", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Deutsch", // German
@@ -2479,7 +2491,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Alle Bedienelemente\nloslassen", // 348
     "Vollausschlag", // 349
     "ARS display", // 350
-    "Ein + Morse" // 351
+    "Ein + Morse", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Čeština", // Czech
@@ -2833,7 +2847,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Uvolněte všechny\novládací prvky", // 348
     "Plná výchylka", // 349
     "ARS display", // 350
-    "Zap. + morse" // 351
+    "Zap. + morse", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Magyar", // Hungarian
@@ -3187,7 +3203,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Engedjen el minden\nkezelőszervet", // 348
     "Végkitérés", // 349
     "ARS display", // 350
-    "Be + morze" // 351
+    "Be + morze", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Français", // French
@@ -3541,7 +3559,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Relâchez toutes\nles commandes", // 348
     "Pleine échelle", // 349
     "ARS display", // 350
-    "Allumé + morse" // 351
+    "Allumé + morse", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Български", // Bulgarian
@@ -3895,7 +3915,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Отпуснете всички\nбутони", // 348
     "Пълно отклонение", // 349
     "ARS display", // 350
-    "Включв. + морз" // 351
+    "Включв. + морз", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Русский", // Russian
@@ -4249,7 +4271,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Отпустите все\nорганы управления", // 348
     "Полная шкала", // 349
     "ARS display", // 350
-    "Вкл. + морзе" // 351
+    "Вкл. + морзе", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Українська", // Ukranian
@@ -4603,7 +4627,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Відпустіть усі\nоргани керування", // 348
     "Повна шкала", // 349
     "ARS display", // 350
-    "Увімк. + морзе" // 351
+    "Увімк. + морзе", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Italiano", // Italian
@@ -4957,7 +4983,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Rilasciare tutti\ni comandi", // 348
     "Fondo scala", // 349
     "ARS display", // 350
-    "On + morse" // 351
+    "On + morse", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Simplified Chinese", // Simplified Chinese
@@ -5311,7 +5339,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "松开所有\n按键及触摸屏", // 348
     "满刻度", // 349
     "ARS display", // 350
-    "打开 + 莫尔斯" // 351
+    "打开 + 莫尔斯", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Norsk", // Norwegian
@@ -5665,7 +5695,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Slipp alle\nkontroller", // 348
     "Fullt utslag", // 349
     "ARS display", // 350
-    "På + morse" // 351
+    "På + morse", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Español", // Spanish
@@ -6019,7 +6051,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Suelte todos\nlos controles", // 348
     "Escala completa", // 349
     "ARS display", // 350
-    "Encendido + morse" // 351
+    "Encendido + morse", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Português", // Portuguese
@@ -6373,7 +6407,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Solte todos\nos controlos", // 348
     "Escala completa", // 349
     "ARS display", // 350
-    "Ligado + morse" // 351
+    "Ligado + morse", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Srpski", // Serbian
@@ -6727,7 +6763,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Otpustite sve\nkontrole", // 348
     "Pun otklon", // 349
     "ARS display", // 350
-    "Uključeno + morse" // 351
+    "Uključeno + morse", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Suomi", // Finnish
@@ -7081,7 +7119,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Vapauta kaikki\nohjaimet", // 348
     "Täysi asteikko", // 349
     "ARS display", // 350
-    "Päällä + morse" // 351
+    "Päällä + morse", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Dansk", // Danish
@@ -7435,7 +7475,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Slip alle\nbetjeningselementer", // 348
     "Fuldt udslag", // 349
     "ARS display", // 350
-    "Tændt + morse" // 351
+    "Tændt + morse", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Svenska", // Swedish
@@ -7789,7 +7831,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Släpp alla\nreglage", // 348
     "Fullt utslag", // 349
     "ARS display", // 350
-    "På + morse" // 351
+    "På + morse", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   },
 
   { "Gaeilge", // Irish
@@ -8143,7 +8187,9 @@ static const char* const myLanguage[23][352] PROGMEM = {
     "Scaoil na rialtáin\ngo léir", // 348
     "Lánscála", // 349
     "ARS display", // 350
-    "Air + morse" // 351
+    "Air + morse", // 351
+    "Keypad tuning", // 352
+    "Current band" // 353
   }
 };
 #endif
