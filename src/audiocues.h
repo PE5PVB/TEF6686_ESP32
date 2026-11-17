@@ -20,6 +20,7 @@ extern byte audiofeedback;
 //   cueError     low buzz: refused
 //   cueDigit     tick, pitch per digit 0 - 9 (keypad entry); the digit itself in morse mode
 void cuePosition(byte index, byte count);
+void cueAudioFeedback(byte previousMode);  // includes an audible transition to Off
 void cueValue(bool up);
 void cueOpen();
 void cueBack();
