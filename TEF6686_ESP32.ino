@@ -1390,10 +1390,10 @@ void loop() {
         rotary = 0;
         WakeToSleep(REVERSE);
       } else {
-        if (BWtune) doBWtuneUp(); else if (freqBandPicker) FreqPickerMove(true); else if (freqkeypadtune) FreqInputMove(true); else KeyUp();
+        if (BWtune) BWSelectorMove(true); else if (freqBandPicker) FreqPickerMove(true); else if (freqkeypadtune) FreqInputMove(true); else KeyUp();
       }
     } else {
-      if (BWtune) doBWtuneUp(); else if (freqBandPicker) FreqPickerMove(true); else if (freqkeypadtune) FreqInputMove(true); else KeyUp();
+      if (BWtune) BWSelectorMove(true); else if (freqBandPicker) FreqPickerMove(true); else if (freqkeypadtune) FreqInputMove(true); else KeyUp();
       if (rotaryaccelerate && rotarycounter > 2 && !BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
         for (int i = 0; i < rotarycounteraccelerator; i++) KeyUp();
         rotarycounter = 0;
@@ -1412,10 +1412,10 @@ void loop() {
         rotary = 0;
         WakeToSleep(REVERSE);
       } else {
-        if (BWtune) doBWtuneDown(); else if (freqBandPicker) FreqPickerMove(false); else if (freqkeypadtune) FreqInputMove(false); else KeyDown();
+        if (BWtune) BWSelectorMove(false); else if (freqBandPicker) FreqPickerMove(false); else if (freqkeypadtune) FreqInputMove(false); else KeyDown();
       }
     } else {
-      if (BWtune) doBWtuneDown(); else if (freqBandPicker) FreqPickerMove(false); else if (freqkeypadtune) FreqInputMove(false); else KeyDown();
+      if (BWtune) BWSelectorMove(false); else if (freqBandPicker) FreqPickerMove(false); else if (freqkeypadtune) FreqInputMove(false); else KeyDown();
       if (rotaryaccelerate && rotarycounter > 2 && !BWtune && !freqkeypadtune && !freqBandPicker && !menu) {
         for (int i = 0; i < rotarycounteraccelerator; i++) KeyDown();
         rotarycounter = 0;
@@ -4197,6 +4197,12 @@ void doBWtuneUp() {
   drawBWButton(old, false);
   drawBWButton(BWsettemp, true);
   cuePosition(BWsettemp == 20 ? (band < BAND_GAP ? 19 : 4) : BWsettemp - 1, band < BAND_GAP ? 20 : 5);
+}
+
+// Follow the same model-dependent direction as the regular menu and band picker.
+void BWSelectorMove(bool dir) {
+  bool forward = (hardwaremodel == BASE_ILI9341) ? dir : !dir;
+  if (forward) doBWtuneUp(); else doBWtuneDown();
 }
 
 void doTuneMode() {
