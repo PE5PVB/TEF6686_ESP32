@@ -5506,7 +5506,6 @@ void doBandToggle() {
     radio.clearRDS(fullsearchrds);
     StoreFrequency();
     SelectBand();
-    cuePosition(band < BAND_GAP ? band : band - 1, 6);  // OIRT, FM, LW, MW, SW, AIR
     MorseFrequency(true);
     if (XDRGTKUSB || XDRGTKTCP) {
       if (band == BAND_FM) DataPrint("M0\nT" + String(frequency * 10) + "\n");
