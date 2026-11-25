@@ -1512,7 +1512,8 @@ void loop() {
     keypadpolltimer = millis();
     int num;
     num = GetNum();
-    if (num != -1)
+    if (num == 127) NumpadBackspace();
+    else if (num != -1)
     {
       if (screensavertriggered) WakeToSleep(REVERSE);
       if (!screenmute && !BWtune && !freqkeypadtune && !freqBandPicker && !menu && !advancedRDS && !rdsstatscreen && !afscreen)
@@ -5603,9 +5604,39 @@ byte numval[16] = {
   2, 3, 127, 5, 6, 0, 9, 13, 8, 7, 4, 1, 0, 0, 0, 0
 };
 
+static bool DirectFrequencyEntryActive() {
+  return freq_in > 0 && tunemode != TUNE_MEM && !scandxmode &&
+         !screenmute && !screensavertriggered && !batteryWarningActive &&
+         !BWtune && !freqkeypadtune && !freqBandPicker && !menu &&
+         !advancedRDS && !rdsstatscreen && !afscreen;
+}
+
+// P2 is noisy on some sets. Keep it out of digit scanning and accept only a
+// debounced press/release while editing; a held key at boot cannot be a click.
+static bool DXBackspaceClick(uint16_t raw, bool enabled) {
+  static bool lastDown = true, stableDown = true, armed = false;
+  static unsigned long changedAt = 0;
+  const bool down = (raw & 0x0004) == 0;
+  const unsigned long now = millis();
+  if (!enabled) armed = false;
+  if (down != lastDown) {
+    lastDown = down;
+    changedAt = now;
+  }
+  if (now - changedAt < 20 || down == stableDown) return false;
+  stableDown = down;
+  if (down) {
+    armed = enabled;
+    return false;
+  }
+  const bool click = armed && enabled;
+  armed = false;
+  return click;
+}
+
 int GetNum(void) {
-  // DP-666 keypad on a PCA9555: 12 keys on P0..P11, active low. P2 is skipped (it
-  // opened the menu spontaneously), P12..P15 are not connected and never count.
+  // DP-666 keypad on a PCA9555: 12 keys on P0..P11, active low. P2 is handled
+  // separately for backspace; P12..P15 are not connected and never count.
   const uint16_t usable = 0x0FFB;
   static int heldNum = -1;
   static bool firstRead = true;
@@ -5624,6 +5655,8 @@ int GetNum(void) {
   uint16_t raw = Wire.read() & 0xFF;
   raw |= (Wire.read() & 0xFF) << 8;
   uint16_t low = (~raw) & usable;         // pressed pins
+  const bool dxClick = DXBackspaceClick(raw, DirectFrequencyEntryActive() &&
+                                       !(low & ~stuckMask) && heldNum == -1);
 
   if (firstRead) {
     // A pin that is already low at boot is not a key press; ignore it until it releases.
@@ -5674,6 +5707,10 @@ int GetNum(void) {
     heldNum = -1;
   }
 
+  if (dxClick) {
+    keypadtimer = now;
+    return 127;
+  }
   return -1;
 }
 
@@ -5947,6 +5984,13 @@ void FreqInputCycleBand() {
   while (i < 5 && freqInputBands[i] != freqInputBand) i++;
   freqInputBand = freqInputBands[(i + 1) % 5];
   showFreqInputStatus();
+}
+
+void NumpadBackspace() {
+  if (!DirectFrequencyEntryActive()) return;
+  freq_in /= 10;
+  if (freq_in) ShowNum(freq_in); else ShowFreq(0);
+  cueBackspace();
 }
 
 void NumpadProcess(int num) {

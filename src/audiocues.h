@@ -27,6 +27,7 @@ void cueOnOff(bool on);
 void cueConfirm();
 void cueError();
 void cueDigit(byte digit);
+void cueBackspace();  // short tick below all keypad digit pitches
 
 // Morse (on + morse only): digits, letters, point and space. The text plays from loop()
 // through morseStep(), so the radio keeps running; any cue or morseStop() cuts it short.

@@ -66,6 +66,11 @@ void cueDigit(byte digit) {
   else cueTone(25, 600 + 140 * digit);
 }
 
+void cueBackspace() {
+  if (cuesOff()) return;
+  cueTone(25, 450);
+}
+
 // ---------------------------------------------------------------------------
 // Morse player. 20 words per minute: a dit is one unit, a dah three, the gap in a
 // character one, between characters three and between words seven.
