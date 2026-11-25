@@ -30,6 +30,14 @@ void cuePosition(byte index, byte count) {
   cueTone(25, count > 1 ? 600 + 1200UL * index / (count - 1) : 1200);
 }
 
+// Report all three modes, including the last audible tick when turning cues off.
+// Opening an already disabled setting remains silent; setup also remains silent.
+void cueAudioFeedback(byte previousMode) {
+  if (setupmode || audiofeedback > AUDIO_MORSE ||
+      (audiofeedback == AUDIO_OFF && previousMode == AUDIO_OFF)) return;
+  cueTone(25, 600 + 600 * audiofeedback);
+}
+
 void cueValue(bool up) {
   if (cuesOff()) return;
   cueTone(25, up ? 1500 : 900);

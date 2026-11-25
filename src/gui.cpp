@@ -3481,6 +3481,116 @@ void BuildDisplay() {
   USold = 99;
 }
 
+// Named choices report their current value; numeric editors retain direction cues.
+// Called after rendering, both on entry and after an edit. It never changes settings.
+static bool CueMenuChoice(byte value, byte count) {
+  if (value >= count) return false;
+  cuePosition(value, count);
+  return true;
+}
+static bool CueMenuToggle(bool on) {
+  cueOnOff(on);
+  return true;
+}
+static bool CueMenuValue(byte previousAudiofeedback) {
+  switch (menupage) {
+    case MAINSETTINGS:
+      switch (menuoption) {
+        case ITEM2: return CueMenuToggle(touchrotating);
+        case ITEM3:
+          switch (tot) {
+            case 0: return CueMenuChoice(0, 5);
+            case 15: return CueMenuChoice(1, 5);
+            case 30: return CueMenuChoice(2, 5);
+            case 60: return CueMenuChoice(3, 5);
+            case 90: return CueMenuChoice(4, 5);
+          }
+          return false;
+        case ITEM4: return CueMenuChoice(autosquelch ? 2 : usesquelch ? 1 : 0, 3);
+        case ITEM7: return CueMenuChoice(bandFM, FM_BAND_CNT);
+        case ITEM8: return CueMenuChoice(bandAM, AM_BAND_CNT);
+        case ITEM9: return CueMenuChoice(longbandpress, 3);
+        case ITEM10: return CueMenuChoice(spispeed, SPI_SPEED_COUNT);
+      }
+      break;
+    case AUDIOSETTINGS:
+      switch (menuoption) {
+        case ITEM2: cueAudioFeedback(previousAudiofeedback); return true;
+        case ITEM3: return CueMenuChoice(audiomode, 2);  // Stereo, MPX
+        case ITEM7: return CueMenuChoice(fmdeemphasis, DEEMPHASIS_COUNT);
+      }
+      break;
+    case DISPLAYSETTINGS:
+      switch (menuoption) {
+        case ITEM1: return CueMenuChoice(language, language_totalnumber);
+        case ITEM3: return CueMenuToggle(showmodulation);
+        case ITEM4: return CueMenuChoice(screensaverset, sizeof(screensaverOptions) / sizeof(screensaverOptions[0]));
+        case ITEM5: return CueMenuChoice(poweroptions, RADIO_POWER_MODE_CNT);
+        case ITEM6: return CueMenuChoice(batteryoptions, RADIO_BATTERY_CNT);
+        case ITEM7: return CueMenuChoice(unit, sizeof(unitString) / sizeof(unitString[0]));
+        case ITEM8: return CueMenuToggle(showclock);
+        case ITEM9: return CueMenuChoice(CurrentTheme, sizeof(Theme) / sizeof(Theme[0]));
+      }
+      break;
+    case RDSSETTINGS:
+      switch (menuoption) {
+        case ITEM1: return CueMenuChoice(showrdserrors, 3);
+        case ITEM2: return CueMenuChoice(radio.rds.region, 4);
+        case ITEM3: return CueMenuChoice(radio.underscore, 3);
+        case ITEM4: return CueMenuToggle(radio.rds.filter);
+        case ITEM5: return CueMenuToggle(radio.rds.pierrors);
+        case ITEM6: return CueMenuChoice(af, 3);
+        case ITEM7: return CueMenuToggle(radio.rds.rtbuffer);
+        case ITEM8: return CueMenuToggle(radio.rds.sortaf);
+        case ITEM9: return CueMenuChoice(radio.rds.fastps, 3);
+        case ITEM10: return CueMenuToggle(showlongps);
+      }
+      break;
+    case FMSETTINGS:
+      switch (menuoption) {
+        case ITEM6: return CueMenuToggle(softmutefm);
+        case ITEM8: return CueMenuChoice(fmdefaultstepsize, 3);
+        case ITEM9:
+          if (!fullsearchrds) { cueError(); return true; }
+          return CueMenuToggle(fmsi);
+      }
+      break;
+    case AMSETTINGS:
+      switch (menuoption) {
+        case ITEM1: return CueMenuToggle(softmuteam);
+        case ITEM4: return CueMenuToggle(showSWMIBand);
+        case ITEM8: return CueMenuChoice(mwstepsize, 2);  // 9, 10 kHz
+      }
+      break;
+    case CONNECTIVITY:
+      switch (menuoption) {
+        case ITEM1: return CueMenuChoice(USBmode, 2);  // XDRGTK, RDS Spy
+        case ITEM2: return CueMenuToggle(wifi);
+        case ITEM6: return CueMenuToggle(XDRGTKMuteScreen);
+        case ITEM8: return CueMenuToggle(autoDST);
+        case ITEM9: return CueMenuChoice(clockampm, 2);  // 24, 12 hours
+        case ITEM10: return CueMenuToggle(radio.rds.PICTlock != 0);
+      }
+      break;
+    case DXMODE:
+      switch (menuoption) {
+        case ITEM5: return CueMenuChoice(scanmem, 2);  // memory scan behaviour
+        case ITEM6: return CueMenuChoice(scancancel, 3);
+        case ITEM7: return CueMenuToggle(scanmute);
+        case ITEM8: return CueMenuToggle(autolog);
+        case ITEM9: return CueMenuToggle(scanholdonsignal);
+      }
+      break;
+    case AUTOMEM:
+      switch (menuoption) {
+        case ITEM6: return CueMenuToggle(mempionly);
+        case ITEM7: return CueMenuChoice(memdoublepi, 3);
+      }
+      break;
+  }
+  return false;
+}
+
 void MenuUpDown(bool dir) {
   if (menuopen && IsSetupPage(menupage)) { AdjustSetupMenu(dir); return; }
   if (!menuopen) {
@@ -3531,7 +3641,7 @@ void MenuUpDown(bool dir) {
     if (hardwaremodel == PORTABLE_TOUCH_ILI9341) ShowOneButton(menuoption, menuitem, true); else ShowOneLine(menuoption, menuitem, true);
     cuePosition(menuitem, items[menupage]);
   } else {
-    cueValue(dir);
+    const byte previousAudiofeedback = audiofeedback;
     switch (CurrentTheme) {
       case 7: OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground_wo); break;
       default: OneBigLineSprite.pushImage(-11, -88, 292, 170, popupbackground); break;
@@ -4822,6 +4932,7 @@ void MenuUpDown(bool dir) {
         }
         break;
     }
+    if (!CueMenuValue(previousAudiofeedback)) cueValue(dir);
   }
 }
 
@@ -5980,6 +6091,7 @@ void DoMenu() {
         }
         break;
     }
+    if (menuopen) CueMenuValue(audiofeedback);
   } else {
     if (menupage == CONNECTIVITY && menuoption == ITEM2) {
       tryWiFi();
@@ -6221,6 +6333,16 @@ void DrawTouchCalibrationScreen() {
   DrawSetupTitle(textUI(283), 45, PrimaryColor, PrimaryColorSmooth);
   DrawSetupTitle(textUI(282), 120, ActiveColor, ActiveColorSmooth);
 }
+static byte SetupValueCount() {
+  if (menupage == SCREENSETTINGS && menuitem == 0) return sizeof(FreqFont) / sizeof(FreqFont[0]);
+  if (menupage == DEVICESETTINGS && menuitem == 0) return RADIO_HARDWARE_CNT;
+  return 2;
+}
+static void CueSetupValue() {
+  if (meterCalibrationActive) return;
+  const byte count = SetupValueCount();
+  if (count == 2) cueOnOff(setupValue); else cuePosition(setupValue, count);
+}
 void OpenSetupMenu() {
   if (!SetupMenuLabel(menupage, menuitem)) return;
   setupValue = SetupCurrentValue(menupage, menuitem);
@@ -6237,15 +6359,14 @@ void OpenSetupMenu() {
     analogWrite(SMETERPIN, 511);
   }
   DrawSetupValue();
+  CueSetupValue();
 }
 void AdjustSetupMenu(bool dir) {
   if (meterCalibrationActive) return;
-  int count = 2;
-  if (menupage == SCREENSETTINGS && menuitem == 0) count = sizeof(FreqFont) / sizeof(FreqFont[0]);
-  if (menupage == DEVICESETTINGS && menuitem == 0) count = RADIO_HARDWARE_CNT;
+  const byte count = SetupValueCount();
   setupValue = (setupValue + (dir ? 1 : count - 1)) % count;
   DrawSetupValue();
-  if (count == 2) cueOnOff(setupValue); else cuePosition(setupValue, count);
+  CueSetupValue();
 }
 void CancelSetupMenu() {
   if (meterCalibrationActive) analogWrite(SMETERPIN, 0);
